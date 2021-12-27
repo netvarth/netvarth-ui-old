@@ -238,6 +238,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     if (this.sessionStorageService.getitemfromSessionStorage('deviceName')) {
       req = req.clone({ headers: req.headers.append('device-name', this.sessionStorageService.getitemfromSessionStorage('deviceName')), withCredentials: true });
     }
+    req = req.clone({ headers: req.headers.append('BOOKING_REQ_FROM', 'SP_APP'), withCredentials: true });
     if (this.sessionStorageService.getitemfromSessionStorage('tabId')) {
       req = req.clone({ headers: req.headers.append('tab', this.sessionStorageService.getitemfromSessionStorage('tabId')), withCredentials: true });
     } else {

@@ -10,7 +10,7 @@
                 <th>Sales Officer</th>
                 <th>Employee Code</th>
                 <th>Applicant Name</th>
-                <th>Product</th>                
+                <th>Product</th>
                 <th *ngFor="let bL of headerColumns | keyvalue">
                     {{bL.value}}
                 </th>
@@ -21,32 +21,57 @@
                     <td>{{i+1}}</td>
                     <td *ngIf="bl.queue">{{bl.queue.location.place}}</td>
                     <td *ngIf="bl.schedule && bl.location">{{bl.location.place}}</td>
-                    <td><span *ngIf="bl.provider">{{bl.provider.firstName + ' ' + bl.provider.lastName}}</span></td>
+                    <td><span *ngIf="bl.provider">{{bl.providerName | capitalizeFirst}}</span></td>
                     <td><span *ngIf="bl.provider && bl.provider.employeeId">{{bl.provider.employeeId}}</span></td>
-                    <td *ngIf="bl.waitlistingFor">{{bl.waitlistingFor[0].firstName + ' ' +bl.waitlistingFor[0].lastName}}</td>
-                    <td  *ngIf="bl.appmtFor">{{bl.appmtFor[0].firstName + ' ' +bl.appmtFor[0].lastName}}</td>
-                    <td>{{bl.service.name}}</td>                   
+                    <!-- <td *ngIf="bl.waitlistingFor[0].firstName === undefined && bl.waitlistingFor[0].lastName === undefined ">NIL
+                    </td> -->
+                    <td *ngIf="bl.waitlistingFor">
+                        <span>{{bl.customerName | capitalizeFirst}}</span>
+                        <span
+                            *ngIf="bl.waitlistingFor[0].firstName === undefined && bl.waitlistingFor[0].lastName === undefined ">NIL</span>
+
+                    </td>
+                    <!-- <td *ngIf="bl.appmtFor[0].firstName === undefined && bl.appmtFor[0].lastName === undefined ">NIL
+                    </td> -->
+                    <td *ngIf="bl.appmtFor">
+                        <span>{{bl.customerName | capitalizeFirst}}</span>
+                        <span
+                            *ngIf="bl.appmtFor[0].firstName === undefined && bl.appmtFor[0].lastName === undefined ">NIL</span>
+                    </td>
+
+                    <td>{{bl.service.name}}</td>
                     <td *ngFor="let header of headerColumns | keyvalue">
                         <ng-container
                             *ngIf="bl['questionList'] && bl['answerList'] && bl['answerList'][header.key] && bl['answerList'][header.key][0]['answer']">
                             <ng-container *ngIf="bl['answerList'][header.key][0]['answer'].plainText">
                                 {{bl['answerList'][header.key][0]['answer'].plainText}}
                             </ng-container>
+                            <ng-container *ngIf="bl['answerList'][header.key][0]['answer'].date">
+                                <span
+                                    *ngIf="bl['answerList'][header.key][0]['answer'].date !== '12:00 AM'">{{bl['answerList'][header.key][0]['answer'].date
+                                    | date: dateFormat}}</span>
+                            </ng-container>
                             <ng-container
                                 *ngIf="bl['answerList'][header.key][0]['answer'].fileUpload && bl['answerList'][header.key][0]['answer'].fileUpload.length > 0">
-                                Yes
+                                <span style="color:green">Yes</span>
                             </ng-container>
                             <ng-container
                                 *ngIf="bl['answerList'][header.key][0]['answer'].fileUpload && bl['answerList'][header.key][0]['answer'].fileUpload.length == 0">
-                                No
+                                <span style="color:red">No</span>
                             </ng-container>
                             <ng-container
                                 *ngIf="bl['answerList'][header.key][0]['answer'].bool && bl['answerList'][header.key][0]['answer'].bool == 'true'">
-                                Yes
+                                <span style="color:green">Yes</span>
                             </ng-container>
                             <ng-container
                                 *ngIf="bl['answerList'][header.key][0]['answer'].bool && bl['answerList'][header.key][0]['answer'].bool == 'false'">
-                                No
+                                <span style="color:red">No</span>
+                            </ng-container>
+                            <ng-container
+                                *ngIf="bl['answerList'][header.key][0]['answer'].list && bl['answerList'][header.key][0]['answer'].list.length>0">
+                                <div *ngFor="let rows of bl['answerList'][header.key][0]['answer'].list; let i=index">
+                                    {{rows}}
+                                </div>
                             </ng-container>
                             <ng-container
                                 *ngIf="bl['answerList'][header.key][0]['answer'].dataGrid && bl['answerList'][header.key][0]['answer'].dataGrid.length>0">
@@ -56,19 +81,29 @@
                                         <ng-container *ngIf="rowHeader.column.plainText">
                                             {{rowHeader.columnId}}: <strong>{{rowHeader.column.plainText}}</strong>
                                         </ng-container>
+                                        <ng-container *ngIf="rowHeader.column.date">
+                                            <span *ngIf="rowHeader.column.date !== '12:00 AM'">>
+                                                {{rowHeader.columnId}}: {{rowHeader.column.date | date: dateFormat}}
+                                            </span>
+                                        </ng-container>
                                         <ng-container
                                             *ngIf="rowHeader.column.fileUpload && rowHeader.column.fileUpload.length > 0">
-                                            {{rowHeader.columnId}}: Yes
+                                            {{rowHeader.columnId}}: <span style="color:green">Yes</span>
                                         </ng-container>
                                         <ng-container
                                             *ngIf="rowHeader.column.fileUpload && rowHeader.column.fileUpload.length == 0">
-                                            {{rowHeader.columnId}}: No
+                                            {{rowHeader.columnId}}: <span style="color:red">No</span>
                                         </ng-container>
                                         <ng-container *ngIf="rowHeader.column.bool && rowHeader.column.bool == 'true'">
-                                            {{rowHeader.columnId}}: Yes
+                                            {{rowHeader.columnId}}: <span style="color:green">Yes</span>
                                         </ng-container>
                                         <ng-container *ngIf="rowHeader.column.bool && rowHeader.column.bool == 'false'">
-                                            {{rowHeader.columnId}}: No
+                                            {{rowHeader.columnId}}: <span style="color:red">No</span>
+                                        </ng-container>
+                                        <ng-container *ngIf="rowHeader.column.list && rowHeader.column.list.length>0">
+                                            <div *ngFor="let rows of rowHeader.column.list; let i=index">
+                                                {{rows}}
+                                            </div>
                                         </ng-container>
                                     </p>
                                 </div>

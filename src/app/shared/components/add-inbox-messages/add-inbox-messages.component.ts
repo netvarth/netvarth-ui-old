@@ -72,6 +72,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   IsTelegramDisable: any;
   countryCod;
   ynw_credentials;
+  customers_label;
   constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -93,7 +94,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     this.isBusinessOwner = this.localStorageService.getitemfromLocalStorage('isBusinessOwner');
     console.log(this.isBusinessOwner);
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    this.typeOfMsg = this.data.typeOfMsg;
+    this.typeOfMsg = this.data.typeOfMsg || null;
     this.user_id = this.data.user_id || null;
     this.userId = this.data.userId || null;
     this.uuid = this.data.uuid || null;
@@ -236,6 +237,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         consumer_label = consumer_label + 's';
       }
     }
+    if(this.source === 'provider-sendAll'){
+      consumer_label = (this.terminologies && this.terminologies['customer']) ? this.terminologies['customer'] : 'customer';
+      this.customers_label = consumer_label + 's';
+    }
     switch (this.source) {
       case 'provider-waitlist': this.message_label = 'Message to ' + consumer_label; break;
       case 'provider-waitlist-inbox': this.message_label = 'Message to ' + consumer_label; break;
@@ -244,6 +249,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       case 'provider-common': this.message_label = 'Message to ' + consumer_label; break;
       case 'customer-list': this.message_label = 'Message to ' + consumer_label; break;
       case 'donation-list': this.message_label = 'Message to ' + consumer_label; break;
+      case 'provider-sendAll': this.message_label = 'Message to ' + this.customers_label; break;
     }
   }
   createForm() {
@@ -313,7 +319,74 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 }
               );
           }
-        } else {
+        } 
+        else if (this.data.source === 'donation-list'){
+          if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
+            this.api_error = 'share message via options are not selected';
+            setTimeout(() => {
+              this.api_error='';
+             }, projectConstants.TIMEOUT_DELAY);
+          } else {
+            const post_data = {
+              medium: {
+                email: this.email,
+                sms: this.sms,
+                pushNotification: this.pushnotify,
+                telegram: this.telegram
+              },
+              communicationMessage: form_data.message,
+              uuid: this.uuid
+            };
+          const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+          dataToSend.append('communication', blobpost_Data);
+          this.shared_services.donationMassCommunication(dataToSend).
+            subscribe(() => {
+              this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+              setTimeout(() => {
+                this.dialogRef.close('reloadlist');
+              }, projectConstants.TIMEOUT_DELAY);
+            },
+              error => {
+                this.wordProcessor.apiErrorAutoHide(this, error);
+                this.disableButton = false;
+              }
+            );
+          }
+        }
+        else if (this.source === 'provider-sendAll') {
+          if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
+            this.api_error = 'share message via options are not selected';
+            setTimeout(() => {
+             this.api_error='';
+            }, projectConstants.TIMEOUT_DELAY);
+          
+          } else {
+            const post_data = {
+              medium: {
+                email: this.email,
+                sms: this.sms,
+                pushNotification: this.pushnotify,
+                telegram: this.telegram
+              },
+              communicationMessage: form_data.message,
+            };
+            const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+            dataToSend.append('communication', blobpost_Data);
+            this.shared_services.customerAllMassCommunication(dataToSend).
+              subscribe(() => {
+                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                setTimeout(() => {
+                  this.dialogRef.close('reloadlist');
+                }, projectConstants.TIMEOUT_DELAY);
+              },
+                error => {
+                  this.wordProcessor.apiErrorAutoHide(this, error);
+                  this.disableButton = false;
+                }
+              );
+          }
+        }
+        else {
           if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
             this.api_error = 'share message via options are not selected';
             setTimeout(() => {
@@ -332,7 +405,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               uuid: this.uuid
             };
             if (this.type === 'appt') {
-              this.shared_services.consumerMassCommunicationAppt(post_data).
+              const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+              dataToSend.append('communication', blobpost_Data);
+              this.shared_services.consumerMassCommunicationAppt(dataToSend).
                 subscribe(() => {
                   this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
                   setTimeout(() => {
@@ -345,22 +420,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                   }
                 );
             } else if (this.type === 'order') {
-              this.shared_services.consumerOrderMassCommunicationAppt(post_data).
-                subscribe(() => {
-                  this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
-                  setTimeout(() => {
-                    this.dialogRef.close('reloadlist');
-                  }, projectConstants.TIMEOUT_DELAY);
-                },
-                  error => {
-                    this.wordProcessor.apiErrorAutoHide(this, error);
-                    this.disableButton = false;
-                  }
-                );
-            } else if (this.source === 'donation-list') {
               const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
               dataToSend.append('communication', blobpost_Data);
-              this.shared_services.donationMassCommunication(dataToSend).
+              this.shared_services.consumerOrderMassCommunicationAppt(dataToSend).
                 subscribe(() => {
                   this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
                   setTimeout(() => {
@@ -372,8 +434,11 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                     this.disableButton = false;
                   }
                 );
-            } else {
-              this.shared_services.consumerMassCommunication(post_data).
+            } 
+            else if (this.type === 'wl') {
+              const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+              dataToSend.append('communication', blobpost_Data);
+              this.shared_services.consumerMassCommunication(dataToSend).
                 subscribe(() => {
                   this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
                   setTimeout(() => {
@@ -388,7 +453,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
             }
           }
         }
-      } else {
+      }
+      else {
         if (this.data.source === 'customer-list') {
           if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
             this.api_error = 'share message via options are not selected';
@@ -455,7 +521,110 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 }
               );
           }
-        } else {
+        }
+        else if (this.data.source === 'provider-waitlist' && this.type === 'appt') {
+          if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
+            this.api_error = 'share message via options are not selected';
+            setTimeout(() => {
+             this.api_error='';
+            }, projectConstants.TIMEOUT_DELAY);
+          
+          } else {
+            const post_data = {
+              medium: {
+                email: this.email,
+                sms: this.sms,
+                pushNotification: this.pushnotify,
+                telegram: this.telegram
+              },
+              communicationMessage: form_data.message,
+              uuid: [this.uuid]
+            };
+            const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+            dataToSend.append('communication', blobpost_Data);
+            this.shared_services.consumerMassCommunicationAppt(dataToSend).
+              subscribe(() => {
+                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                setTimeout(() => {
+                  this.dialogRef.close('reloadlist');
+                }, projectConstants.TIMEOUT_DELAY);
+              },
+                error => {
+                  this.wordProcessor.apiErrorAutoHide(this, error);
+                  this.disableButton = false;
+                }
+              );
+          }
+        }
+        else if (this.data.source === 'provider-waitlist' && this.type === 'wl') {
+          if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
+            this.api_error = 'share message via options are not selected';
+            setTimeout(() => {
+             this.api_error='';
+            }, projectConstants.TIMEOUT_DELAY);
+          
+          } else {
+            const post_data = {
+              medium: {
+                email: this.email,
+                sms: this.sms,
+                pushNotification: this.pushnotify,
+                telegram: this.telegram
+              },
+              communicationMessage: form_data.message,
+              uuid: [this.uuid]
+            };
+            const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+            dataToSend.append('communication', blobpost_Data);
+            this.shared_services.consumerMassCommunication(dataToSend).
+              subscribe(() => {
+                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                setTimeout(() => {
+                  this.dialogRef.close('reloadlist');
+                }, projectConstants.TIMEOUT_DELAY);
+              },
+                error => {
+                  this.wordProcessor.apiErrorAutoHide(this, error);
+                  this.disableButton = false;
+                }
+              );
+          }
+        }
+        else if (this.data.source === 'provider-waitlist' && this.type === 'orders') {
+          if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
+            this.api_error = 'share message via options are not selected';
+            setTimeout(() => {
+             this.api_error='';
+            }, projectConstants.TIMEOUT_DELAY);
+          
+          } else {
+            const post_data = {
+              medium: {
+                email: this.email,
+                sms: this.sms,
+                pushNotification: this.pushnotify,
+                telegram: this.telegram
+              },
+              communicationMessage: form_data.message,
+              uuid: [this.uuid]
+            };
+            const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+            dataToSend.append('communication', blobpost_Data);
+            this.shared_services.consumerOrderMassCommunicationAppt(dataToSend).
+              subscribe(() => {
+                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                setTimeout(() => {
+                  this.dialogRef.close('reloadlist');
+                }, projectConstants.TIMEOUT_DELAY);
+              },
+                error => {
+                  this.wordProcessor.apiErrorAutoHide(this, error);
+                  this.disableButton = false;
+                }
+              );
+          }
+        }
+         else {
           // IsTelegramDisable && !this.telegram  && !this.telegram (IsTelegramDisable && !this.telegram)
           if (this.data.source === 'provider-waitlist') {
             if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
@@ -888,8 +1057,14 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     }
   }
   keyPressed(event) {
-    if (event.length == 330) {
-      this.snackbarService.openSnackBar('Character limit reached ');
+    if (event.length === 160) {
+      setTimeout(() => {
+        this.api_error = '2 SMS credit will be used';
+      }, 500);
+     
     }
+    // if (event.length === 330) {
+    //   this.snackbarService.openSnackBar('Character limit reached ');
+    // }
   }
 }

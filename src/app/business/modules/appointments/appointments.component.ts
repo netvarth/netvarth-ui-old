@@ -345,6 +345,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   selected_type = '';
   apptByTimeSlot: any = [];
   scheduleSlots: any = [];
+  slotbyId: any = [];
   qloading: boolean;
   firstTime = true;
   endminday;
@@ -360,6 +361,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('closebutton') closebutton;
   showattachmentDialogRef: any;
   unassignview = false;
+  todaybyId: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -813,7 +815,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQIdsFromView(view) {
     const qIds = [];
-    if (view && view.customViewConditions.schedules && view.customViewConditions.schedules.length > 0) {
+    if (view && view.customViewConditions && view.customViewConditions.schedules && view.customViewConditions.schedules.length > 0) {
       for (let i = 0; i < view.customViewConditions.schedules.length; i++) {
         qIds.push(view.customViewConditions.schedules[i]['id']);
       }
@@ -1928,7 +1930,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (event.target.checked) {
       this.apptMultiSelection = true;
       for (let aIndex = 0; aIndex < this.check_in_filtered_list.length; aIndex++) {
-        if (this.check_in_filtered_list[aIndex].consumer) {
+        if (this.check_in_filtered_list[aIndex].consumer||this.check_in_filtered_list[aIndex].providerConsumer) {
           this.chkAptHistoryClicked(aIndex, this.check_in_filtered_list[aIndex]);
         }
       }
@@ -2741,7 +2743,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         timetype: this.time_type,
         multiSelection: multiSelection,
         labelFilterData: this.labelFilterData,
-        labelsCount: this.labelsCount
+        labelsCount: this.labelsCount,
+        status:this.statusAction
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
@@ -2792,10 +2795,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.router.navigate(['provider', 'appointments', 'appointment'], { queryParams: { source: 'appt-block', uid: appt.uid, virtualServicemode: virtualServicemode, virtualServicenumber: virtualServicenumber, serviceId: appt.service.id, apptMode: appt.appointmentMode } });
   }
-  selectAllStarted() {
+  selectAllStarted(event) {
     this.startedAppointmentsChecked = {};
     this.startedChkAppointments = {};
-    if (this.chkStartedSelectAppointments) {
+    if (event.target.checked) {
+      this.apptStartedMultiSelection = true;
       for (let aIndex = 0; aIndex < this.startedAppts.length; aIndex++) {
         this.chkStartedAptHistoryClicked(aIndex, this.startedAppts[aIndex]);
       }
@@ -2866,23 +2870,36 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.provider_services.getSlotsByScheduleandDate(scheduleid, date).subscribe(
       (data: any) => {
         this.scheduleSlots = [];
+        this.slotbyId = [];
         for (let i = 0; i < data.length; i++) {
           if (data[i].availableSlots) {
             for (let j = 0; j < data[i].availableSlots.length; j++) {
               if ((this.selected_type === 'all' && this.apptByTimeSlot[data[i].availableSlots[j].time] && this.apptByTimeSlot[data[i].availableSlots[j].time][0].schedule.id === data[i].scheduleId) || (data[i].availableSlots[j].active && data[i].availableSlots[j].noOfAvailbleSlots !== '0')) {
                 data[i].availableSlots[j]['scheduleId'] = data[i].scheduleId;
+                data[i].availableSlots[j]['scheduleName'] = data[i].scheduleName + '(' + data[i].timeSlot + ')';
                 if (this.scheduleSlots.indexOf(data[i].availableSlots[j]) === -1) {
                   this.scheduleSlots.push(data[i].availableSlots[j]);
+               
                 }
               }
             }
           }
         }
+        this.slotbyId = this.shared_functions.groupBySlot(this.scheduleSlots, 'scheduleName');
         setTimeout(() => {
           this.loading = false;
         }, 200);
       }
     );
+  }
+  isObject(slotbyId) {
+    if (typeof (slotbyId) === "object" && Object.keys(slotbyId).length > 0) {
+     
+      return true;
+    } else if (typeof (slotbyId) === "object" && Object.keys(slotbyId).length < 0) {
+      console.log('false');
+      return false;
+    }
   }
   handleApptSelectionType(type?) {
     if (type) {

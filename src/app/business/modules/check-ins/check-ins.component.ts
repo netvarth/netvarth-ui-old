@@ -1101,7 +1101,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getQIdsFromView(view) {
     const qIds = [];
-    if (view && view.customViewConditions.queues && view.customViewConditions.queues.length > 0) {
+    if (view && view.customViewConditions && view.customViewConditions.queues && view.customViewConditions.queues.length > 0) {
       for (let i = 0; i < view.customViewConditions.queues.length; i++) {
         qIds.push(view.customViewConditions.queues[i]['id']);
       }
@@ -1982,6 +1982,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         api_filter['token-eq'] = this.token;
       }
     }
+    console.log(this.filter)
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
     }
@@ -3068,7 +3069,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         multiSelection: multiSelection,
         status: status,
         labelFilterData: this.labelFilterData,
-        labelsCount: this.labelsCount
+        labelsCount: this.labelsCount,
+        statusBooking :this.statusAction
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
