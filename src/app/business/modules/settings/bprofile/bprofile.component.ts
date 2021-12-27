@@ -691,11 +691,11 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
           if (this.bProfile.customId) {
             this.generateQR(this.bProfile.customId);
             this.qrCodegenerateOnlineID(this.bProfile.customId);
-            this.shareLink = this.wndw_path + this.bProfile.customId;
+            this.shareLink = this.wndw_path + this.bProfile.customId + '/';
           } else {
             this.generateQR(this.bProfile.accEncUid);
             this.qrCodegenerateOnlineID(this.bProfile.accEncUid);
-            this.shareLink = this.wndw_path + this.bProfile.accEncUid;
+            this.shareLink = this.wndw_path + this.bProfile.accEncUid + '/';
           }
           if (this.bProfile.businessName && this.bProfile.businessDesc) {
             this.domainVirtualFieldFilledStatus = this.provider_datastorage.getWeightageObjectOfDomain();
@@ -1292,7 +1292,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   generateQR(id) {
-    this.qr_value = projectConstants.PATH + id;
+    this.qr_value = projectConstants.PATH + id + "/";
   }
 
   // Getting Provider Profile Pic
@@ -1414,7 +1414,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   // dwnld QR
   qrCodegenerateOnlineID(valuetogenerate) {
     this.imageUrl = this.wndw_path + 'assets/images/logo.png';
-    this.qr_value = projectConstants.PATH + valuetogenerate;
+    this.qr_value = projectConstants.PATH + valuetogenerate + "/";
     this.qr_code_oId = true;
     this.changeDetectorRef.detectChanges();
     setTimeout(() => {

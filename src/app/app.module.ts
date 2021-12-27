@@ -57,6 +57,7 @@ import { IonicModule } from '@ionic/angular';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { Device } from '@ionic-native/device/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { ChunkErrorHandler } from './shared/modules/error-handler/chunk-error-handler';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
@@ -85,6 +86,7 @@ export function init_app(globalService: GlobalService) {
     FirebaseX,
     Device,
     LocalNotifications,
+    ChunkErrorHandler,
     ProviderServices,
     DatePipe,
     BsModalService,
