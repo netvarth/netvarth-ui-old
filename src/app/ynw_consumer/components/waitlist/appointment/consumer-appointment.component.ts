@@ -966,13 +966,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     else {
                         //this.isClickedOnce=false;
                         //this.disablebutton = true;
-                        if(!this.selected_payment_mode){
-                            this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
-                            this.isClickedOnce=false;
+                        // if(!this.selected_payment_mode){
+                        //     this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
+                        //     this.isClickedOnce=false;
                 
-                           }else{
-                        this.addCheckInConsumer(post_Data, paymenttype);
-                           }
+                        //    }else{
+                        // this.addCheckInConsumer(post_Data, paymenttype);
+                        //    }
+                             this.addCheckInConsumer(post_Data, paymenttype);
                     }
                 } else if (this.sel_ser_det.isPrePayment) {
                     this.addApptAdvancePayment(post_Data);
