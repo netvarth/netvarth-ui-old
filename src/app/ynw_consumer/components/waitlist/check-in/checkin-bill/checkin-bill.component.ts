@@ -455,7 +455,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
                     } else if (this.remainingadvanceamount > 0 && this.checkJcash) {
-                        if(this.selected_payment_mode==='cash'){
+                        if(this.selected_payment_mode.toLowerCase()==='cash'){
                             this.cashPayment();
                         }else{
                         const postData = {
@@ -497,7 +497,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                     });
         }
         else {
-            if(this.selected_payment_mode==='cash'){
+            if(this.selected_payment_mode.toLowerCase()==='cash'){
                 this.cashPayment();
             }else{
             this.pay_data.uuid = this.uuid;
@@ -532,6 +532,9 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                         }
                     );
 
+            }else if(!this.selected_payment_mode && this.bill_data.amountDue>0){
+                this.snackbarService.openSnackBar('Please Choose Payment Option', { 'panelClass': 'snackbarerror' });  
+                this.isClickedOnce=false;
             }
         }
         }

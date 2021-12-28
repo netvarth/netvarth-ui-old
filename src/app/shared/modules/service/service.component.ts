@@ -718,13 +718,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             }
         }
     }
-    getRazorModes(indiamodes) {
-       return  indiamodes.filter(mode=>mode.gateway==='RAZORPAY');
-
-    }
-    getpaytmmodes(indiamodes){
-        return  indiamodes.filter(mode=>mode.gateway==='PAYTM');
-    }
+   
     getPayTMmodesByGroup(indiamodes){
         console.log(indiamodes)
      
