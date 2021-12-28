@@ -6,12 +6,9 @@ import { LocalStorageService } from '../shared/services/local-storage.service';
 })
 export class CustomappService {
   
- 
-  
   templateJson;
   accountEncId: any;
   custId;
-  accountId;
   businessJsons: any;
 
   constructor(private lStorageService: LocalStorageService) { } 
@@ -57,19 +54,11 @@ export class CustomappService {
 
   /**
    * 
-   * @param accountEncId 
-   */
-   setAccountId(accountId) {
-    this.accountId = accountId;
-  }
-
-  /**
-   * 
    * @param accountId 
    * @returns account  Id
    */
   getAccountId() {
-    return this.accountId;
+    return this.getBusinessProfile().id;
   }
 
   /**

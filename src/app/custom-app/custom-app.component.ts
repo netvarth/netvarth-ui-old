@@ -89,7 +89,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
                     console.log(businessJsons);
                     _this.customappService.setBusinessJsons(businessJsons);
                     // const businessProfile = this.s3Processor.getJson(businessJsons['businessProfile']);                
-                    // _this.accountId = businessProfile.id;
+                    _this.accountId = _this.customappService.getAccountId();
                     this.loading = false;
                     _this.router.navigate(['customapp',_this.accountEncId, { outlets : {template: [templateJson.template]}}]);
                   }
