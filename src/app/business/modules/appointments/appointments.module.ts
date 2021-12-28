@@ -25,6 +25,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
 import { FormsModule } from '@angular/forms';
+import { BookingHistoryModule } from '../../shared/booking-history/booking-history.module';
 const routes: Routes = [
     { path: '', component: AppointmentsComponent },
     {
@@ -69,6 +70,7 @@ const routes: Routes = [
         VoicecallDetailsSendModule,
         AppointmentActionsModule,
         FormsModule,
+        BookingHistoryModule,
         [RouterModule.forChild(routes)]
     ],
     declarations: [

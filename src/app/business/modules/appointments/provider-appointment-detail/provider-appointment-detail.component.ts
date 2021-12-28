@@ -164,20 +164,6 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       this.notedialogRef.close();
     }
   }
- openbookinghistory() {
-  this.bookinghistorydialogref = this.dialog.open(BookingHistoryComponent, {
-    width: '60%',
-    height: 'auto',
-    data: {
-      type:'Appointment History',
-      providername:this.spName,
-      appointmentby:this.waitlist_data.apptBy,
-      bookingmode:this.getAppointmentMode(this.waitlist_data.appointmentMode),
-      consumername:this.waitlist_data.appmtFor[0].firstName + ' '+ this.waitlist_data.appmtFor[0].lastName,
-      details:this.waitlist_history, 
-    }
-  })
-}
   getProviderSettings() {
     this.api_loading = true;
     this.provider_services.getWaitlistMgr()
@@ -629,4 +615,19 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     currentmode=this.appointmentModes.filter(obj=>obj.mode===mode);
     return currentmode[0].value;
   }
+
+openbookinghistory() {
+  this.bookinghistorydialogref = this.dialog.open(BookingHistoryComponent, {
+    width: '60%',
+    height: 'auto',
+    data: {
+      type:'Appointment History',
+      providername:this.spName,
+      appointmentby:this.waitlist_data.apptBy,
+      bookingmode:this.getAppointmentMode(this.waitlist_data.appointmentMode),
+      consumername:this.waitlist_data.appmtFor[0].firstName + ' '+ this.waitlist_data.appmtFor[0].lastName,
+      details:this.waitlist_history, 
+    }
+  })
+}
 }

@@ -1,0 +1,38 @@
+<div class="mat-dialog-title slotdiv">
+  <div class="row head-section">
+      <div class="mgn-up-10 col-lg-10 col-md-10 col-sm-10 col-xs-10"><h4>{{type}}</h4></div>
+      <div class="cross-img col-lg-2 col-md-2 col-sm-2 col-xs-2">
+          <img  (click)="dismissModal()" src="../../../../assets/images/cross.jpg" style="width: 30px;height: 30px;">
+      </div>
+  </div>
+  <!-- <div style="padding: 10px;"><h6>{{type}}</h6></div> -->
+  <div class="main-section">
+      <!-- <mat-tab-group> -->
+          <!-- <mat-tab label="Appointment History"> -->
+              
+              <div class="table section">
+                <table class="mgn-lt-10 "> 
+                  <tr>
+                    <th>Action</th>
+                    <th>Who did it</th>
+                    <th>How</th>
+                    <th>Date & Time</th>
+                  </tr>
+                  <tr *ngFor="let data of bookinghistorydetails">
+                    <td *ngIf="type != 'Token History'">{{check_in_statuses[data.appointmentStatus | capitalizeFirst]}}</td>
+                    <td *ngIf="type == 'Token History'"> {{check_in_statuses[data.waitlistStatus | capitalizeFirst]}}</td>
+                    <td>{{data.statusChangedUser ? data.statusChangedUser : 'Nil'}}</td>
+                    <td *ngIf="data.statusChangedMode === 'OPD'"> {{provider_label | capitalizeFirst}}</td>
+                    <td *ngIf="data.statusChangedMode ==='Online'"> {{customer_label | capitalizeFirst}}</td>
+                    <td *ngIf="!data.statusChangedMode"> Nil</td>
+                    <td *ngIf="type != 'Token History' ">{{data.date | date: newDateFormat}} {{data.time}}</td>
+                    <td *ngIf="type == 'Token History' ">{{getformatedTime(data.time) | date: newTimeDateFormat}}</td>
+                  </tr>
+              </table>
+              </div>
+          <!-- </mat-tab> -->
+  
+        <!-- </mat-tab-group> -->
+        
+  </div>
+  </div>
