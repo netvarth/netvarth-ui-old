@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-cust-template4',
   templateUrl: './cust-template4.component.html',
@@ -11,8 +12,11 @@ export class CustTemplate4Component implements OnInit {
   @Input() templateJson;
   userId;
   pSource;
+  loading = true;
   
-  constructor(private locationobj: Location) { }
+  constructor(
+    private locationobj: Location, 
+ ) { }
 
   ngOnInit(): void {
   }

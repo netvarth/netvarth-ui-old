@@ -162,53 +162,7 @@
     <img src="assets/images/jaldee1.gif" style="position: fixed; top: 50%;left: 50%; transform: translate(-50%, -50%); " /></div>
   <app-root></app-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
-  <div id="whitescreen" class="whitescreen">
-    <div class="whitescreen-top">
-      <p class="whitescreen-icon">:-(</p>
-      <p class="whitescreen-message">
-        It looks like the application is not working properly on this device.
-        Please send us a screenshot of this message, so that we can help you:
-      </p>
-      <p class="whitescreen-email">manikandan.velayudhan@jaldee.com</p>
-    </div>
-    <div class="whitescreen-bottom">
-      <p id="whitescreen-stack"></p>
-    </div>
-  </div>
-
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-
-
-  <script>
-    var WHITESCREEN_EMPTY_APP_ROOT_DELAY = 8000;
-    var WHITESCREEN_ERROR_DELAY = 5000;
-
-    // Show white screen error
-    function showWhitescreenError(error) {
-      console.error(error);
-      var whitescreen = document.getElementById("whitescreen");
-      if (whitescreen.style.display !== "block") {
-        document.getElementById("whitescreen-stack").innerHTML = error.stack.replace(/\n/g, '<br/>');
-        whitescreen.style.display = "block";
-        document.body.style.display = "block"; // only for ionic
-      }
-    }
-
-    // Handle global errors
-    window.addEventListener("error", function (event) {
-      setTimeout(() => {
-        showWhitescreenError(event.error);
-      }, WHITESCREEN_ERROR_DELAY);
-    });
-
-    // Detect empty app-root
-    setTimeout(function () {
-      if (!document.getElementsByTagName("app-root")[0].children.length) {
-        showWhitesreenError(new Error("Empty app-root"));
-      }
-    }, WHITESCREEN_EMPTY_APP_ROOT_DELAY);
-  </script>
   <script>
     var DEBUG_MODE_ON = true;
     // hide browser console in production

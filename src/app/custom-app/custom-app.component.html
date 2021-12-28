@@ -1,3 +1,26 @@
-<app-cust-template1 *ngIf="templateJson && templateJson.template==='template1'" [templateJson]="templateJson"></app-cust-template1>
-<app-cust-template2 *ngIf="templateJson && templateJson.template==='template2'" [templateJson]="templateJson"> </app-cust-template2>
-<app-cust-template4 *ngIf="templateJson && templateJson.template==='template4'" [templateJson]="templateJson"> </app-cust-template4>
+<section class="container" *ngIf="!loading">
+    <section id="section1 " class="bus-page">
+        <div class="row card no-padding">
+            <div class="col-12 " style="color:#545871">
+                <div class="pad-bt-10 bus-page-header" >
+                    <div class="panel panel-default">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            &nbsp;
+                        </div>
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
+                            <app-header *ngIf="accountExists && isLoggedIn" 
+                                [includedfrom]="'pdetails'" [accountId]="accountId" [customId]="accountEncId" 
+                                [showHeaderAction]="true"></app-header>
+                            <div class="view-booking" *ngIf="accountExists && !isLoggedIn">
+                                <button class="pull-right btn btn-primary dashboard-btn" (click)="dashboardClicked()">My
+                                    Bookings</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row card no-padding">
+            <router-outlet name="template"></router-outlet>
+        </div>
+    </section>

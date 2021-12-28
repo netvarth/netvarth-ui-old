@@ -17,7 +17,6 @@ const routes: Routes = [
     { path: 'departments/list', loadChildren: ()=> import('./departments/department-list/department-list.module').then(m=>m.DepartmentListModule)},
     { path: 'department/:id', loadChildren: ()=> import('./departments/details/department-details.module').then(m=>m.DepartmentDetailsModule)},
     { path: 'questionnaire', loadChildren: () => import('../../settings/general/questionnaire/questionnaire.module').then(m => m.QuestionnaireListModule)},
-    { path: 'templates', loadChildren: ()=> import('../../../../custom-templates/custom-templates.module').then(m=> m.CustomTemplatesModule)},
     { path: 'newsfeed', loadChildren: ()=> import('../../../../news-feed/newsfeed.component.module').then(m=> m.NewsfeedModule)}
 ];
 @NgModule({

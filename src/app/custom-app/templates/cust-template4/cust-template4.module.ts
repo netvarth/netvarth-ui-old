@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustTemplate4Component } from './cust-template4.component';
-import { HeaderModule } from '../../shared/modules/header/header.module';
+import { HeaderModule } from '../../../shared/modules/header/header.module';
+import { SafeHtmlModule } from '../../../shared/pipes/safe-html/safehtml.module';
 
 
 
@@ -11,7 +12,8 @@ import { HeaderModule } from '../../shared/modules/header/header.module';
   ],
   imports: [
     CommonModule,
-    HeaderModule
+    HeaderModule,
+    SafeHtmlModule
   ],
   exports: [
     CustTemplate4Component

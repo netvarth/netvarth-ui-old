@@ -11,11 +11,10 @@ import { HeaderModule } from "../../../shared/modules/header/header.module";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { projectConstantsLocal } from "../../constants/project-constants";
 import { MatDialogModule } from "@angular/material/dialog";
 import {MatDatepickerModule} from '@angular/material/datepicker';
 export function homeHttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http,projectConstantsLocal.PATH+ 'assets/i18n/home/', '.json');
+    return new TranslateHttpLoader(http,projectConstants.PATH+ 'assets/i18n/home/', '.json');
   }
 import { AddInboxMessagesModule } from "../add-inbox-messages/add-inbox-messages.module";
 import { JDNDetailModule } from "../jdn-detail/jdn-detail.module";
@@ -26,6 +25,7 @@ import { ConfirmBoxModule } from "../confirm-box/confirm-box.module";
 import { QRCodeGeneratordetailModule } from "../qrcodegenerator/qrcodegeneratordetail.module";
 import { RouterModule, Routes } from "@angular/router";
 import { CheckavailabilityModule } from "../checkavailability/checkavaiablity.module";
+import { projectConstants } from "../../../app.component";
 // import { Checkavailability } from "../checkavailability/checkavailability.component";
 
 const routes: Routes = [

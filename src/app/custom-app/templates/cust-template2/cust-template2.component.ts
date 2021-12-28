@@ -1,39 +1,35 @@
-import { projectConstants } from '../../app.component';
-import { LocalStorageService } from '../../shared/services/local-storage.service';
-import { MatDialog } from '@angular/material/dialog';
-// import { AuthService } from '../../shared/services/auth-service';
-import { Component, OnInit, HostListener, ViewEncapsulation, Input } from '@angular/core';
-import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
-import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
-import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
+import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { Location } from '@angular/common';
-import { Meta, Title } from '@angular/platform-browser';
-import { Messages } from '../../shared/constants/project-messages';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image, PlainGalleryConfig, PlainGalleryStrategy } from '@ks89/angular-modal-gallery';
+import { projectConstants } from '../../../app.component';
+import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
+import { ConfirmBoxComponent } from '../../../shared/components/confirm-box/confirm-box.component';
+import { CouponsComponent } from '../../../shared/components/coupons/coupons.component';
+import { JdnComponent } from '../../../shared/components/jdn-detail/jdn-detail-component';
+import { QRCodeGeneratordetailComponent } from '../../../shared/components/qrcodegenerator/qrcodegeneratordetail.component';
+import { SearchDetailServices } from '../../../shared/components/search-detail/search-detail-services.service';
+import { ServiceDetailComponent } from '../../../shared/components/service-detail/service-detail.component';
+import { SignUpComponent } from '../../../shared/components/signup/signup.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { Messages } from '../../../shared/constants/project-messages';
+import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
+import { DomainConfigGenerator } from '../../../shared/services/domain-config-generator.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { S3UrlProcessor } from '../../../shared/services/s3-url-processor.service';
+import { SharedServices } from '../../../shared/services/shared-services';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { SubSink } from 'subsink';
-import { SharedFunctions } from '../../shared/functions/shared-functions';
-import { SharedServices } from '../../shared/services/shared-services';
-import { SearchDetailServices } from '../../shared/components/search-detail/search-detail-services.service';
-import { GroupStorageService } from '../../shared/services/group-storage.service';
-import { WordProcessor } from '../../shared/services/word-processor.service';
-import { SnackbarService } from '../../shared/services/snackbar.service';
-import { DomainConfigGenerator } from '../../shared/services/domain-config-generator.service';
-import { DateTimeProcessor } from '../../shared/services/datetime-processor.service';
-import { S3UrlProcessor } from '../../shared/services/s3-url-processor.service';
-import { projectConstantsLocal } from '../../shared/constants/project-constants';
-import { AddInboxMessagesComponent } from '../../shared/components/add-inbox-messages/add-inbox-messages.component';
-import { JdnComponent } from '../../shared/components/jdn-detail/jdn-detail-component';
-import { ConsumerJoinComponent } from '../../ynw_consumer/components/consumer-join/join.component';
-import { SignUpComponent } from '../../shared/components/signup/signup.component';
-import { ServiceDetailComponent } from '../../shared/components/service-detail/service-detail.component';
-import { CouponsComponent } from '../../shared/components/coupons/coupons.component';
-import { VisualizeComponent } from '../../shared/modules/visualizer/visualize.component';
-import { ConfirmBoxComponent } from '../../shared/components/confirm-box/confirm-box.component';
-import { QRCodeGeneratordetailComponent } from '../../shared/components/qrcodegenerator/qrcodegeneratordetail.component';
 @Component({
-  selector: 'app-cust-template1',
-  templateUrl: './cust-template1.component.html',
-  styleUrls: ['./cust-template1.component.css'],
-  encapsulation: ViewEncapsulation.None,
+  selector: 'app-cust-template2',
+  templateUrl: './cust-template2.component.html',
+  styleUrls: ['./cust-template2.component.css'],
   animations: [
     trigger('search_data', [
       transition('* => *', [
@@ -49,7 +45,7 @@ import { QRCodeGeneratordetailComponent } from '../../shared/components/qrcodege
 
   ]
 })
-export class CustTemplate1Component implements OnInit {
+export class CustTemplate2Component implements OnInit {
   @Input() templateJson;
   catalogimage_list_popup: Image[];
   catalogImage = '../../../../assets/images/order/catalogueimg.svg';
@@ -153,17 +149,6 @@ export class CustTemplate1Component implements OnInit {
   playstore = true;
   appstore = true;
   selectedLocation;
-  selectedUserBranch;
-  selectedServicesBranch;
-
-  filteredServices;
-  filteredUsers;
-  userLocation;
-
-  showUserSection = false;
-
-  selectedUser;
-  branches: any = [];
   catlog: any;
   catalogItem: any;
   order_count: number;
@@ -288,8 +273,11 @@ export class CustTemplate1Component implements OnInit {
   nextAvailableTime;
   customId: any;
   accEncUid: any;
+
   accountEncId: string;
   userEncId: string;
+
+  // bsModalRef: BsModalRef;
   nonfirstCouponCount = 0;
   activeUser: any;
   checkinProviderList: any = [];
@@ -306,18 +294,11 @@ export class CustTemplate1Component implements OnInit {
   businessName;
   businessId;
   accountId: any;
-  req_from = 'cuA';
   terms = false;
   privacy = false;
   pwaIOShint: boolean;
   iosConfig = false;
   accountIdExists = false;
-  onlyVirtualItems = false;
-  providercustomId: any;
-  provideraccEncUid: any;
-  customOptions;
-  users: any;
-  newsFeeds: any = [];
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -327,8 +308,6 @@ export class CustTemplate1Component implements OnInit {
     private searchdetailserviceobj: SearchDetailServices,
     public router: Router,
     private locationobj: Location,
-    private titleService: Title,
-    private metaService: Meta,
     private lStorageService: LocalStorageService,
     private groupService: GroupStorageService,
     public wordProcessor: WordProcessor,
@@ -336,8 +315,8 @@ export class CustTemplate1Component implements OnInit {
     private domainConfigService: DomainConfigGenerator,
     private dateTimeProcessor: DateTimeProcessor,
     private s3Processor: S3UrlProcessor
-    // private authService: AuthService
   ) {
+    // this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     };
@@ -357,6 +336,8 @@ export class CustTemplate1Component implements OnInit {
     }
   }
   ngOnInit() {
+    // this.translate.use(JSON.parse(localStorage.getItem('myData')))
+
     this.api_loading = true;
     this.accountIdExists = false;
     this.userId = null;
@@ -367,40 +348,6 @@ export class CustTemplate1Component implements OnInit {
     this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.loc_details = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
     this.jdnTooltip = this.wordProcessor.getProjectMesssages('JDN_TOOPTIP');
-
-    const isMobile = {
-      Android: function () {
-        return navigator.userAgent.match(/Android/i);
-      },
-      BlackBerry: function () {
-        return navigator.userAgent.match(/BlackBerry/i);
-      },
-      iOS: function () {
-        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-      },
-      Opera: function () {
-        return navigator.userAgent.match(/Opera Mini/i);
-      },
-      Windows: function () {
-        return navigator.userAgent.match(/IEMobile/i);
-      },
-      any: function () {
-        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
-      }
-    };
-    //  console.log("Mobile:");
-    // console.log(isMobile);
-    if (isMobile.Android()) {
-      this.playstore = true;
-      this.appstore = false;
-    } else if (isMobile.iOS()) {
-      //  console.log("IOS:");
-      this.playstore = false;
-      this.appstore = true;
-    } else {
-      this.playstore = true;
-      this.appstore = true;
-    }
     if (this.activeUser) {
       this.isfirstCheckinOffer = this.activeUser.firstCheckIn;
     }
@@ -409,10 +356,7 @@ export class CustTemplate1Component implements OnInit {
     this.activaterouterobj.queryParams.subscribe(qparams => {
       if (qparams.src) {
         this.pSource = qparams.src;
-      }
-      if (qparams.at) {
-        this.lStorageService.setitemonLocalStorage('authToken', qparams.at);
-        console.log(qparams.at);
+
       }
       this.businessjson = [];
       this.servicesjson = [];
@@ -451,11 +395,10 @@ export class CustTemplate1Component implements OnInit {
             this.getAccountIdFromEncId(this.accountEncId).then(
               (id: any) => {
                 _this.provider_id = id;
-                _this.setNewsFeeds(this.provider_id);
                 _this.customId = _this.accountEncId;
+                console.log("fdhf" + _this.customId);
                 _this.accEncUid = _this.accountEncId;
                 _this.accountIdExists = true;
-                _this.getproviderBprofileDetails();
                 _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
                   (uiconfig: any) => {
                     if (uiconfig['terms']) {
@@ -480,24 +423,13 @@ export class CustTemplate1Component implements OnInit {
                 )
               }, (error) => {
                 console.log(error);
-                // _this.gets3curl();
               }
             );
           }
         )
       });
   }
-  getproviderBprofileDetails() {
-    let accountS3List = 'businessProfile';
-    this.subscriptions.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
-      null, accountS3List).subscribe(
-        (accountS3s: any) => {
-          if (accountS3s.businessProfile.customId) {
-            this.providercustomId = accountS3s.businessProfile.customId;
-          }
-          this.provideraccEncUid = accountS3s.businessProfile.accEncUid;
-        });
-  }
+
   /**
    * 
    * @param encId encId/customId which represents the Account
@@ -518,27 +450,6 @@ export class CustTemplate1Component implements OnInit {
         }
       );
     });
-  }
-  isPhysicalItemsPresent() {
-    let physical_item_present = true;
-    const virtualItems = this.activeCatalog.catalogItem.filter(catalogItem => catalogItem.item.itemType === 'VIRTUAL')
-    if (virtualItems.length > 0 && this.activeCatalog.catalogItem.length === virtualItems.length) {
-      physical_item_present = false;
-      this.onlyVirtualItems = true;
-    }
-    return physical_item_present;
-  }
-  checkVirtualOrPhysical() {
-    console.log('checkvirtualorphysical');
-    let showCatalogItems = false;
-    if (this.activeCatalog.nextAvailableDeliveryDetails || this.activeCatalog.nextAvailablePickUpDetails) {
-      showCatalogItems = true;
-    }
-
-    if (!this.isPhysicalItemsPresent()) {
-      showCatalogItems = true;
-    }
-    return showCatalogItems
   }
   ngOnDestroy() {
     if (this.commdialogRef) {
@@ -647,12 +558,6 @@ export class CustTemplate1Component implements OnInit {
 
             if (accountS3s['businessProfile']) {
               this.processS3s('businessProfile', accountS3s['businessProfile']);
-              this.titleService.setTitle(this.businessjson.businessName);
-              this.metaService.addTags([
-                // {name: 'keywords', content: 'Angular, Universal, Example'},
-                { name: 'description', content: this.businessjson.businessDesc }
-                // {name: 'robots', content: 'index, follow'}
-              ]);
             }
 
             if (accountS3s['virtualFields']) {
@@ -734,11 +639,9 @@ export class CustTemplate1Component implements OnInit {
       }
       case 'departmentProviders': {
         this.deptUsers = result;
-        console.log("Users:");
-        console.log(this.deptUsers);
-        // if (!this.userId) {
-        this.setUserWaitTime();
-        // }
+        if (!this.userId) {
+          this.setUserWaitTime();
+        }
         break;
       }
       case 'jaldeediscount': {
@@ -787,11 +690,9 @@ export class CustTemplate1Component implements OnInit {
     this.onlinePresence = res['onlinePresence'];
     console.log("response" + res);
     console.log(res['customId']);
-    const custID = res['customId'] ? res['customId'] : res['accEncUid'];
-    this.customId = custID;
-    this.lStorageService.setitemonLocalStorage('customId', custID);
-    this.lStorageService.setitemonLocalStorage('accountId', res['id']);
-    this.lStorageService.setitemonLocalStorage('reqFrom', this.req_from);
+    if (res['customId']) {
+      this.customId = res['customId'];
+    }
     this.accEncUid = res['accEncUid'];
     if (!this.userId) {
       this.api_loading = false;
@@ -801,6 +702,9 @@ export class CustTemplate1Component implements OnInit {
       this.businessId = this.accEncUid;
       this.accountId = this.businessjson.id;
       this.businessName = this.businessjson.businessName;
+      // if (this.businessjson.serviceSector.name !== 'healthCare') {
+      //   this.service_cap = 'Services';
+      // }
       if (this.businessjson.cover) {
         this.bgCover = this.businessjson.cover.url;
       }
@@ -1017,12 +921,6 @@ export class CustTemplate1Component implements OnInit {
   setUserBusinessProfile(res) {
     this.socialMedialist = [];
     this.businessjson = res;
-    this.titleService.setTitle(this.businessjson.businessName);
-    this.metaService.addTags([
-      // {name: 'keywords', content: 'Angular, Universal, Example'},
-      { name: 'description', content: this.businessjson.businessDesc },
-      // {name: 'robots', content: 'index, follow'}
-    ]);
     const dom = this.domainList.bdata.filter(domain => domain.id === this.businessjson.serviceSector.id);
     this.subDomainList = dom[0].subDomains;
     const subDom = this.subDomainList.filter(subdomain => subdomain.id === this.businessjson.userSubdomain);
@@ -1298,9 +1196,11 @@ export class CustTemplate1Component implements OnInit {
         });
     }
   }
-  changeLocation(loc, type?) {
+  changeLocation(loc) {
+    console.log("fgf" + JSON.stringify(loc));
     this.selectedLocation = loc;
     this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
+
   }
 
   sortVfields(dataF) {
@@ -1536,44 +1436,34 @@ export class CustTemplate1Component implements OnInit {
 
 
   goThroughLogin() {
-    const _this = this;
-    console.log("Entered to goThroughLogin Method");
     return new Promise((resolve) => {
-      if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')) {
-        resolve(true);
+      const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
+      let qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+      qrusr = JSON.parse(qrusr);
+      if (qrusr && qrpw) {
+        const data = {
+          'countryCode': qrusr.countryCode,
+          'loginId': qrusr.loginId,
+          'password': qrpw,
+          'mUniqueId': null
+        };
+        this.shared_services.ConsumerLogin(data).subscribe(
+          (loginInfo: any) => {
+            this.lStorageService.setitemonLocalStorage('qrp', data.password);
+            resolve(true);
+          },
+          (error) => {
+            if (error.status === 401 && error.error === 'Session already exists.') {
+              resolve(true);
+            } else {
+              resolve(false);
+            }
+          }
+        );
       } else {
         resolve(false);
       }
     });
-    // return new Promise((resolve) => {
-    //   const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
-    //   let qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
-    //   qrusr = JSON.parse(qrusr);
-    //   if (qrusr && qrpw) {
-    //     const data = {
-    //       'countryCode': qrusr.countryCode,
-    //       'loginId': qrusr.loginId,
-    //       'password': qrpw,
-    //       'mUniqueId': null
-    //     };
-    //     this.shared_services.ConsumerLogin(data).subscribe(
-    //       (loginInfo: any) => {
-    //         this.authService.setLoginData(loginInfo, data, 'consumer');
-    //         this.lStorageService.setitemonLocalStorage('qrp', data.password);
-    //         resolve(true);
-    //       },
-    //       (error) => {
-    //         if (error.status === 401 && error.error === 'Session already exists.') {
-    //           resolve(true);
-    //         } else {
-    //           resolve(false);
-    //         }
-    //       }
-    //     );
-    //   } else {
-    //     resolve(false);
-    //   }
-    // });
   }
   redirectToHistory() {
     const _this = this;
@@ -1683,7 +1573,7 @@ export class CustTemplate1Component implements OnInit {
           //console.log("logged In");
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           if (_this.userType === 'consumer') {
-            _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer');
+              _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer');
           }
         } else {
           const passParam = { callback: '', current_provider: current_provider };
@@ -1735,7 +1625,7 @@ export class CustTemplate1Component implements OnInit {
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           // console.log("User Type:" + _this.userType);
           if (_this.userType === 'consumer') {
-            _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+              _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
           }
         } else {
           const passParam = { callback: 'appointment', current_provider: current_provider };
@@ -1743,6 +1633,7 @@ export class CustTemplate1Component implements OnInit {
         }
       });
   }
+  
   doLogin(origin?, passParam?) {
     // this.snackbarService.openSnackBar('You need to login to check in');
     const current_provider = passParam['current_provider'];
@@ -1781,7 +1672,7 @@ export class CustTemplate1Component implements OnInit {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+            this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1789,7 +1680,7 @@ export class CustTemplate1Component implements OnInit {
             this.checkout();
           }
         } else {
-          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
@@ -1822,7 +1713,7 @@ export class CustTemplate1Component implements OnInit {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+            this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1830,7 +1721,7 @@ export class CustTemplate1Component implements OnInit {
             this.checkout();
           }
         } else {
-          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
       } else {
         this.loading_direct = false;
@@ -1838,11 +1729,6 @@ export class CustTemplate1Component implements OnInit {
     });
   }
   showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?) {
-    // console.log("Service Checkin ");
-    // console.log(service);
-    // if (this.servicesjson[0] && this.servicesjson[0].department) {
-    //   deptId = this.servicesjson[0].department;
-    // }
     let queryParam = {
       loc_id: locid,
       locname: locname,
@@ -1855,7 +1741,7 @@ export class CustTemplate1Component implements OnInit {
       service_id: service.id,
       virtual_info: JSON.stringify(virtualinfo)
     };
-    if (service['serviceType'] === 'virtualService') {
+    if (service['serviceType']==='virtualService') {
       queryParam['tel_serv_stat'] = true;
     } else {
       queryParam['tel_serv_stat'] = false;
@@ -1871,12 +1757,6 @@ export class CustTemplate1Component implements OnInit {
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
   }
   showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?) {
-    //console.log("Service Appt: ");
-    // console.log(service);
-    // let deptId;
-    // if (this.servicesjson[0] && this.servicesjson[0].department) {
-    //   deptId = this.servicesjson[0].department;
-    // }
     let queryParam = {
       loc_id: locid,
       locname: locname,
@@ -1890,7 +1770,7 @@ export class CustTemplate1Component implements OnInit {
       sel_date: curdate,
       virtual_info: JSON.stringify(virtualinfo)
     };
-    if (service['serviceType'] === 'virtualService') {
+    if (service['serviceType']==='virtualService') {
       queryParam['tel_serv_stat'] = true;
     } else {
       queryParam['tel_serv_stat'] = false;
@@ -1916,32 +1796,6 @@ export class CustTemplate1Component implements OnInit {
   }
   onButtonAfterHook() { }
   showServiceDetail(serv, busname) {
-    // if (serv.serviceType && serv.serviceType === 'donationService') {
-    //   const navigationExtras: NavigationExtras = {
-    //     queryParams: {
-    //       bname: busname,
-    //       sector: this.businessjson.serviceSector.domain
-    //       serv_type: 'donation'}
-    //   };
-    //   if(this.userId){
-    //     this.routerobj.navigate([this.accountEncId,this.userId,'service',serv.id], navigationExtras);
-    //   }else{
-    //     this.routerobj.navigate([this.accountEncId,'service',serv.id], navigationExtras);
-    //   }
-
-    // } else {
-    //   const navigationExtras: NavigationExtras = {
-    //     queryParams: {
-    //        bname: busname,
-    //       sector: this.businessjson.serviceSector.domain
-    //     }
-    //   };
-    //   if(this.userId){
-    //     this.routerobj.navigate([this.accountEncId,this.userId,'service',serv.id], navigationExtras);
-    //   }else{
-    //     this.routerobj.navigate([this.accountEncId,'service',serv.id], navigationExtras);
-    //   }
-    // }
     let servData;
     if (serv.serviceType && serv.serviceType === 'donationService') {
       servData = {
@@ -2184,11 +2038,6 @@ export class CustTemplate1Component implements OnInit {
     }
   }
   providerDetClicked(userId) {
-    // const navigationExtras: NavigationExtras = {
-    //   queryParams: {
-    //     src: 'bp'
-    //   }
-    // };
     this.routerobj.navigate([this.accountEncId, userId]);
   }
 
@@ -2269,14 +2118,14 @@ export class CustTemplate1Component implements OnInit {
         }
       }
     }
-    this.dialog.open(VisualizeComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'displayContent': contactinfo
-      }
-    });
+    // this.dialog.open(VisualizeComponent, {
+    //   width: '50%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+    //   disableClose: true,
+    //   data: {
+    //     'displayContent': contactinfo
+    //   }
+    // });
   }
   showMoreInfo() {
     this.showMore = !this.showMore;
@@ -2339,55 +2188,124 @@ export class CustTemplate1Component implements OnInit {
    * Order Related Code
    */
   setServiceUserDetails() {
-    this.services = [];
-    if (this.apptServices) {
-      for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
-        this.services.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
-        this.serviceCount++;
-      }
-    }
-    if (this.wlServices) {
-      for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
-        this.services.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
-        this.serviceCount++;
-      }
-    }
-    this.filteredServices = this.services;
-    this.users = [];
-    this.branches = [];
-    console.log(this.deptUsers);
-    for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
-      const deptItem = {};
-      deptItem['departmentName'] = this.deptUsers[dIndex]['departmentName'];
-      deptItem['departmentCode'] = this.deptUsers[dIndex]['departmentCode'];
-      deptItem['departmentId'] = this.deptUsers[dIndex]['departmentId'];
-      // deptItem['departmentItems'] = [];
-      if (this.showDepartments) {
-        this.branches.push(deptItem);
-        for (let pIndex = 0; pIndex < this.deptUsers[dIndex]['users'].length; pIndex++) {
-          const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
-          const userApptTime = this.appttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
-          this.deptUsers[dIndex]['users'][pIndex]['waitingTime'] = userWaitTime[0];
-          this.deptUsers[dIndex]['users'][pIndex]['apptTime'] = userApptTime[0];
-          // deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex]['users'][pIndex] });
-          this.users.push({ 'type': 'provider', 'item': this.deptUsers[dIndex]['users'][pIndex] });
-          console.log(pIndex);
-          console.log(this.users);
-          this.userCount++;
+    this.servicesAndProviders = [];
+    const servicesAndProviders = [];
+    this.donationServices = [];
+    this.serviceCount = 0;
+    this.userCount = 0;
+    if (this.showDepartments) {
+      if (this.userId) {
+        if (this.apptServices) {
+          for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+            if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === JSON.parse(this.userId) && this.apptServices[aptIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+              this.serviceCount++;
+            }
+          }
+        }
+        if (this.wlServices) {
+          for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+            if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === JSON.parse(this.userId) && this.wlServices[wlIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+              this.serviceCount++;
+            }
+          }
         }
       } else {
-        const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex].id);
-        const userApptTime = this.appttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex].id);
-        this.deptUsers[dIndex]['waitingTime'] = userWaitTime[0];
-        this.deptUsers[dIndex]['apptTime'] = userApptTime[0];
-        // deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
-        this.users.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
-        this.userCount++;
+        for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
+          const deptItem = {};
+          deptItem['departmentName'] = this.deptUsers[dIndex]['departmentName'];
+          deptItem['departmentCode'] = this.deptUsers[dIndex]['departmentCode'];
+          deptItem['departmentId'] = this.deptUsers[dIndex]['departmentId'];
+          deptItem['departmentItems'] = [];
+          if (this.apptServices) {
+            for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+              if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability && deptItem['departmentId'] === this.apptServices[aptIndex].department) {
+                deptItem['departmentItems'].push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+                this.serviceCount++;
+              }
+            }
+          }
+          if (this.wlServices) {
+            for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+              if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability && deptItem['departmentId'] === this.wlServices[wlIndex].department) {
+                deptItem['departmentItems'].push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+                this.serviceCount++;
+              }
+            }
+          }
+          if (!this.userId && (this.settingsjson.enabledWaitlist || this.apptSettingsJson.enableAppt)) {
+            for (let pIndex = 0; pIndex < this.deptUsers[dIndex]['users'].length; pIndex++) {
+              const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
+              const userApptTime = this.appttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
+              this.deptUsers[dIndex]['users'][pIndex]['waitingTime'] = userWaitTime[0];
+              this.deptUsers[dIndex]['users'][pIndex]['apptTime'] = userApptTime[0];
+              deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex]['users'][pIndex] });
+              this.userCount++;
+            }
+          }
+          servicesAndProviders.push(deptItem);
+        }
       }
-      this.filteredUsers = this.users;
+      this.servicesAndProviders = servicesAndProviders;
+      // console.log("tyuhjhj"+this.servicesAndProviders);
+      // });
+    } else {
+      // tslint:disable-next-line:no-shadowed-variable
+      const servicesAndProviders = [];
+      if (this.userId) {
+        if (this.apptServices) {
+          for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+            if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === JSON.parse(this.userId) && this.apptServices[aptIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+              this.serviceCount++;
+            }
+          }
+        }
+        if (this.wlServices) {
+          for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+            if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === JSON.parse(this.userId) && this.wlServices[wlIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+              this.serviceCount++;
+            }
+          }
+        }
+      } else {
+        if (this.apptServices) {
+          for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+            if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+              this.serviceCount++;
+            }
+          }
+        }
+        if (this.wlServices) {
+          for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+            if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+              this.serviceCount++;
+            }
+          }
+        }
+        if (this.settingsjson.enabledWaitlist || this.apptSettingsJson.enableAppt) {
+          if (this.deptUsers) {
+            for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
+              this.deptUsers[dIndex]['waitingTime'] = this.waitlisttime_arr[dIndex];
+              this.deptUsers[dIndex]['apptTime'] = this.appttime_arr[dIndex];
+              servicesAndProviders.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
+              this.userCount++;
+            }
+          }
+        }
+      }
+      this.servicesAndProviders = servicesAndProviders;
+      // console.log("hjhj"+this.servicesAndProviders);
     }
-    if (this.users.length > 0) {
-      this.showUserSection = true;
+    if (this.businessjson.donationFundRaising && this.onlinePresence && this.donationServicesjson.length >= 1) {
+      for (let dIndex = 0; dIndex < this.donationServicesjson.length; dIndex++) {
+        this.donationServices.push({ 'type': 'donation', 'item': this.donationServicesjson[dIndex] });
+        this.serviceCount++;
+      }
     }
   }
   getCatalogs(locationId) {
@@ -2701,11 +2619,7 @@ export class CustTemplate1Component implements OnInit {
       data: {
         accencUid: accEncUid,
         path: this.wndw_path,
-        userId: this.userId,
-        businessName: this.businessjson.businessName,
-        businessDesc: this.businessjson.businessDesc,
-        businessUserName: this.businessjson.businessUserName
-
+        businessName: this.businessjson.businessName
       }
     });
 
@@ -2743,79 +2657,5 @@ export class CustTemplate1Component implements OnInit {
       queryParams: queryParam
     };
     this.routerobj.navigate(['consumer'], navigationExtras);
-  }
-  changeBranch(selectedBranch, type) {
-    this.userLocation = '';
-    if (selectedBranch === '') {
-      if (type === 'services') {
-        this.selectedServicesBranch = '';
-        this.filteredServices = this.services;
-      } else if (type === 'user') {
-        this.selectedUserBranch = '';
-        this.filteredUsers = this.users;
-      }
-    } else {
-      if (type === 'services') {
-        this.selectedServicesBranch = selectedBranch;
-        this.filteredServices = this.services.filter(service => service.item.department === selectedBranch.departmentId);
-      } else if (type === 'user') {
-        this.selectedUserBranch = selectedBranch;
-        this.filteredUsers = this.users.filter(user => user.item.deptId === selectedBranch.departmentId);
-      }
-    }
-  }
-  filterUserByLocName(locationName) {
-    // const users = this.users;
-    let filteredUsers = this.users;
-    console.log(filteredUsers);
-    if (this.selectedUserBranch) {
-      filteredUsers = filteredUsers.filter(user => user.item.deptId === this.selectedUserBranch.departmentId)
-    }
-    if (locationName && locationName.trim() !== '') {
-      filteredUsers = filteredUsers.filter(user => user.item.locationName.includes(locationName));
-    }
-    console.log(filteredUsers);
-    this.filteredUsers = filteredUsers;
-
-  }
-  openNews(link) {
-    window.open(link);
-  }
-  setNewsFeeds(uniqueid): void {
-    const _this = this;
-    const url = projectConstantsLocal.UIS3PATH + uniqueid + "/news_feed.json?" + new Date();
-    _this.shared_services.getNewsFeeds(url).subscribe(
-      (newsfeeds) => {
-        _this.newsFeeds = newsfeeds;
-        _this.customOptions = {
-          loop: true,
-          margin: 10,
-          mouseDrag: true,
-          touchDrag: true,
-          pullDrag: true,
-          autoplay: true,
-          navSpeed: 200,
-          dots: true,
-          center: true,
-          // nav:true,
-          // navText: [ '<i class="fa fa-caret-right"></i>', '<i class="fa fa-caret-left"></i>"' ],
-          responsiveClass: true,
-          responsive: {
-            0: {
-              items: 2
-            },
-            400: {
-              items: 2
-            },
-            740: {
-              items: 3
-            },
-            940: {
-              items: 3
-            }
-          }
-        };
-      }
-    )
   }
 }

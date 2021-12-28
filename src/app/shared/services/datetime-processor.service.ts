@@ -309,4 +309,34 @@ export class DateTimeProcessor {
   getDay(num) {
     return this.myweekdaysSchedule[num];
   }
+
+  /**
+   * Convert Date to String in YYYYMMDD format
+   * @param inputDate input date
+   * @returns string
+   */
+  getStringFromDate_YYYYMMDD(inputDate) {
+    const today = new Date(inputDate);
+    const dd = today.getDate();
+    const mm = today.getMonth() + 1; // January is 0!
+    const yyyy = today.getFullYear();
+    let cday = '';
+    if (dd < 10) {
+      cday = '0' + dd;
+    } else {
+      cday = '' + dd;
+    }
+    let cmon;
+    if (mm < 10) {
+      cmon = '0' + mm;
+    } else {
+      cmon = '' + mm;
+    }
+    const dateString = yyyy + '-' + cmon + '-' + cday;
+    return dateString;
+  }
+
+  getLocaleDateFromServer(serverDate) {
+    return new Date(serverDate.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })
+  }
 }
