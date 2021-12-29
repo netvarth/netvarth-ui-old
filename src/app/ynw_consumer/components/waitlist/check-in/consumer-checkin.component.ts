@@ -138,6 +138,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     selectedUser;
     callingModesDisplayName = projectConstants.CALLING_MODES;
     tele_srv_stat: any;
+
     couponvalid = true;
     selected_coupons: any = [];
     selected_coupon;
@@ -274,6 +275,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     countryCode;
     commObj = {}
     waitlistForPrev: any = [];
+    selectedTime: any;
 
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -302,8 +304,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         private customerService: CustomerService,
         @Inject(DOCUMENT) public document
     ) {
+
         this.subs.sink = this.route.queryParams.subscribe(
             params => {
+                if (params.ctime) {
+                    // console.log('****************************')
+                    this.selectedTime = params.ctime
+
+                }
                 this.sel_loc = params.loc_id;
                 this.locationName = params.locname;
                 this.googleMapUrl = params.googleMapUrl;
@@ -778,7 +786,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         this.sel_queue_personaahead = 0;
                     }
                     if (type) {
+                        if(this.selectedTime) {
+                            this.selectedQTime = this.selectedTime
+                        } else {
                         this.selectedQTime = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
+
+                        }
                         this.personsAhead = this.sel_queue_personaahead;
                         this.waitingTime = this.sel_queue_waitingmins;
                         this.serviceTime = this.sel_queue_servicetime;

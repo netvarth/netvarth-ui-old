@@ -1641,6 +1641,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       'cdate': service.serviceAvailability.availableDate,
       'service': service
     };
+    if(location.time) {
+      current_provider['ctime']=location.time
+    }    if(location.date) {
+      service.serviceAvailability.availableDate=location.date
+    }
+
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
@@ -1667,7 +1673,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     console.log(this.userType);
     if (this.userType === 'consumer') {   
-        this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer');
+        this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer',current_provider['ctime']);
     } else if (this.userType === '') {
       const passParam = { callback: 'checkin', current_provider: current_provider, serviceType: service.serviceType };
       this.doLogin('consumer', passParam);
@@ -1825,7 +1831,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       }
     });
   }
-  showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?) {
+  showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?,ctime?) {
 
     const queryParam = {
       loc_id: locid,
@@ -1838,7 +1844,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       user: this.userId,
       service_type: service.serviceType,
       service_id: service.id,
-      virtual_info: JSON.stringify(virtualinfo)
+      virtual_info: JSON.stringify(virtualinfo),
+      ctime:ctime
     };
     if (service['serviceType']==='virtualService') {
       queryParam['tel_serv_stat'] = true;
@@ -2373,7 +2380,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       if(result!='undefined') { 
         actionObj['location']['time']=result[0];
         actionObj['location']['date']=result[1];
-        this.appointmentClicked(actionObj['location'], actionObj['service']);
+        if(actionObj['service']['bType']=='Appointment') {
+          this.appointmentClicked(actionObj['location'], actionObj['service']);
+        } if(actionObj['service']['bType']=='Waitlist' || !actionObj['service']['bType']) {
+          console.log("***Waitlist***");
+          this.checkinClicked(actionObj['location'], actionObj['service']);
+        }
 
 
       }

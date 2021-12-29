@@ -50,6 +50,8 @@ export class CheckavailabilityComponent implements OnInit {
     amountdifference: any;
     changePrice: number;
     currentScheduleId: any;
+    queuejson:  any = [];
+    queueloader=true;
     constructor(
         public dialogRef: MatDialogRef<CheckavailabilityComponent>,
         public dateTimeProcessor: DateTimeProcessor,
@@ -60,7 +62,7 @@ export class CheckavailabilityComponent implements OnInit {
     ) {
 
         this.actionObj=data.alldetails,
-        console.log('actionobj.............',this.actionObj)
+        console.log('actionobj.............',this.actionObj,this.actionObj['service']['bType'])
         this.apptSettings=data.apptSettingsJson
   
             this.account_id=String(this.apptSettings['account']['id']);
@@ -69,19 +71,40 @@ export class CheckavailabilityComponent implements OnInit {
       
        
             this.sel_ser=this.actionObj['service']['id'];
-        if(this.actionObj['service']['serviceAvailability']['nextAvailableDate']) {
-            this.sel_checkindate=this.hold_sel_checkindate=this.selectedDate=this.actionObj['service']['serviceAvailability']['nextAvailableDate'];
+            if(this.actionObj['service']['bType']=="Appointment") {
+                if(this.actionObj['service']['serviceAvailability']['nextAvailableDate']) {
+                    this.sel_checkindate=this.hold_sel_checkindate=this.selectedDate=this.actionObj['service']['serviceAvailability']['nextAvailableDate'];
+        
+                } else {
+                this.sel_checkindate=this.hold_sel_checkindate=this.selectedDate=this.actionObj['service']['serviceAvailability']['availableDate'];
+                    
+                }
+                console.log('sel_loc,',this.sel_loc,'sel_ser',this.sel_ser,'checkindate',this.sel_checkindate,'accountid',this.account_id)
+                this.getAvailableSlotByLocationandService(this.sel_loc,this.sel_ser,this.sel_checkindate, this.account_id)
+                this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc,this.sel_ser,this.account_id);
+            } else {
+                this.sel_checkindate=this.hold_sel_checkindate=this.selectedDate=this.actionObj['service']['serviceAvailability']['availableDate'];
+                this.getQueuesbyLocationandServiceIdavailability(this.sel_loc,this.sel_ser,this.account_id)
+                this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id)
+            }
 
-        } else {
-        this.sel_checkindate=this.hold_sel_checkindate=this.selectedDate=this.actionObj['service']['serviceAvailability']['availableDate'];
-
-        }
-
-        console.log('sel_loc,',this.sel_loc,'sel_ser',this.sel_ser,'checkindate',this.sel_checkindate,'accountid',this.account_id)
-        this.getAvailableSlotByLocationandService(this.sel_loc,this.sel_ser,this.sel_checkindate, this.account_id)
-        this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc,this.sel_ser,this.account_id);
+     
         
      }
+     handleQueueSelection(queue,selecteddate) {
+        const queues=[queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime'] , selecteddate];
+        this.dialogRef.close(queues)
+     }
+     getQueuesbyLocationandServiceId(locid, servid, pdate, accountid, type?) {
+        // this.queueQryExecuted = false;
+        if (locid && servid) {
+            this.subs.sink = this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
+                .subscribe(data => {
+                    this.queuejson = data;
+                    this.queueloader=false
+                })
+                }
+            }
     timeSelected(slot,date) {
         // this.apptTime = slot;
         const slots=[slot['displayTime'],date]
@@ -112,6 +135,20 @@ export class CheckavailabilityComponent implements OnInit {
         // console.log("*********************************",this.availableDates)
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
+    getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
+        const _this = this;
+        if (locid && servid && accountid) {
+            _this.subs.sink = _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
+                .subscribe((data: any) => {
+                    const availables = data.filter(obj => obj.isAvailable);
+                    const availDates = availables.map(function (a) { return a.date; });
+                    _this.availableDates = availDates.filter(function (elem, index, self) {
+                        return index === self.indexOf(elem);
+                    });
+                });
+        }
+    }
+
     getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
         if (locid && servid && accountid) {
@@ -188,8 +225,14 @@ handleFutureDateChange(e) {
     }
     const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
     this.sel_checkindate = seldate;
-   
+    if(this.actionObj['service']['bType']=='Appointment') {
     this.getAvailableSlotByLocationandService( this.sel_loc,this.sel_ser,this.sel_checkindate, this.account_id)   
+    }
+    else{
+        this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+
+    }
+   
 }
     disableMinus() {
 
@@ -218,6 +261,7 @@ handleFutureDateChange(e) {
         }
     }
 calculateDate(days):any {
+    console.log("calculation")
     const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
     const newdate = new Date(date);
@@ -230,9 +274,14 @@ calculateDate(days):any {
     const strtDt1 = this.todaydate + ' 00:00:00';
     const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
     const nDt = new Date(ndate);
-    if (nDt.getTime() >= strtDt.getTime()) {
+    if (nDt.getTime() >= strtDt.getTime() && this.actionObj['service']['bType']=='Appointment') {
         this.sel_checkindate = ndate;
         this.getAvailableSlotByLocationandService(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+    } if(nDt.getTime() >= strtDt.getTime() && this.actionObj['service']['bType']=='Waitlist' || !this.actionObj['service']['bType']) {
+        console.log('waitlist')
+        this.sel_checkindate = ndate;
+        this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+    
     }
     const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
