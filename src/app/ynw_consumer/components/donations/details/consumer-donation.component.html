@@ -25,18 +25,21 @@
                                         *ngIf="action==''">
                                         <div
                                             class="col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt">
-                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-
+                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding ">
+                                                
                                                 <div
-                                                    class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 donation_label">
-                                                    Donation
+                                                    class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 donation_label mobile-donation-for-styling">
+                                                    Donation   <span *ngIf="sel_ser"> {{sel_ser_det.name | capitalizeFirst}} 
+                                                        <br>
+                                                        <p>{{sel_ser_det.description}}</p>
+                                                    </span>
                                                 </div>
-                                                <div class="col-sm-12 col-xs-12 col-md-12 c-checkin-new">
+                                                <!-- <div class="col-sm-12 col-xs-12 col-md-12 c-checkin-new">
                                                     <div class="card-body" *ngIf="sel_ser">
                                                         <h6 class="card-title service">
                                                             {{sel_ser_det.name | capitalizeFirst}}
-                                                            <!-- <span class="donate-by"> by </span>
-                                                            {{this.businessjson.businessName}} -->
+                                                            <span class="donate-by"> by </span>
+                                                            {{this.businessjson.businessName}}
                                                             <p>{{sel_ser_det.description}}</p>
                                                         </h6>
                                                     </div>
@@ -45,73 +48,16 @@
                                                         <div [innerHTML]="sel_ser_det.preInfoText">
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
 
 
 
                                         </div>
-                                        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12 border-tp check-new-group">
-                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                                <div
-                                                    class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 no-padding c-checkin-new">
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding">
-                                                        Donor name <a
-                                                            class="lnk pointer-cursor action mgn-lt-5 mgn-rt-20"
-                                                            (click)="editDonor()">Change
-                                                        </a>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                    <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
-                                                        <div class="card-body">
-                                                            <h6 class="card-title service"
-                                                                *ngFor="let member of waitlist_for">
-                                                                {{donorName}}
-                                                            </h6>
-                                                            <div class="">
-                                                                <i class="fa fa-mobile "></i>
-                                                                <span class="mgn-lt-10 phonevallabel"
-                                                                    *ngIf="userPhone">{{dialCode}} {{userPhone}}</span>
-                                                                <!-- <span class="mgn-lt-10 phonevallabel"
-                                                                    *ngIf="currentPhone && changePhno">{{currentPhone}}</span> -->
-                                                                <a class="mgn-lt-5 lnk pointer-cursor"><i
-                                                                        class="fa fa-pencil"
-                                                                        (click)="editPhone()"></i></a>
-                                                            </div>
-                                                            <div class=""
-                                                                *ngIf="userData && userData.userProfile && userData.userProfile.email">
-                                                                <i class="fa fa-envelope-o "></i>
-                                                                <span
-                                                                    class="mgn-lt-5 emailvallabel">{{userData.userProfile.email}}</span>
-                                                                <a class="mgn-lt-5 lnk pointer-cursor"><i
-                                                                        class="fa fa-pencil"
-                                                                        (click)="handleEmail()"></i></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                        <div class="clearfix"></div><br>
 
-
-                                                    <div
-                                                        class="col-sm-12 col-xs-12 chk-btns-div col-md-12 mgn-up-10 no-padding">
-                                                        <mat-chip-list class="btns">
-                                                            <mat-chip [class.mandatoryChip]="sel_ser_det.consumerNoteMandatory"
-                                                            (click)="handleSideScreen('note')"><a
-                                                                    class="lnk action pointer-cursor"><i
-                                                                        class="fa fa-file-text-o mgn-rt-5"
-                                                                        aria-hidden="true"></i>{{sel_ser_det.consumerNoteTitle}}
-                                                                        <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span>
-                                                                </a>
-                                                            </mat-chip>
-                                                        </mat-chip-list>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
-                                        *ngIf="action==''">
-                                        <div class="col-md-6 col-xs-12 col-sm-12">
+                                        <!-- <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding amount-section-mobile"> -->
+                                        <div class="col-md-6 col-xs-12 col-sm-12 amount-section-mobile">
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding ">
                                                 <div class="mgn-up-5 input-group mobile-error c-checkin-new">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding amount">
@@ -147,31 +93,126 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-xs-12 col-sm-12">
-                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20">
-                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                                    <div class="mainouter checkin-page c-checkin-new">
-                                                        <div class="lnk">Make payment
-                                                        </div>
-                                                        <div class="mgn-bt-10">
+                                       
+                                    <!-- </div> -->
+                                        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12 border-tp check-new-group">
+                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                                <div
+                                                    class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 no-padding c-checkin-new">
+                                                    <!-- <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding">
+                                                        Donor name <a
+                                                            class="lnk pointer-cursor action mgn-lt-5 mgn-rt-20"
+                                                            (click)="editDonor()">Change
+                                                        </a>
+                                                    </div> -->
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
+                                                        <div class="card-body">
+                                                            <!-- <h6 class="card-title service"
+                                                                *ngFor="let member of waitlist_for">
+                                                                {{donorName}}
+                                                            </h6> -->
+                                                            <div class="mobile-donor-details">
+                                                                <div class="">
 
+                                                                    <div style="color:#7a7a7a;font-size: 1rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name</div>
+                                                                    <div class="mobile-edit-icon">
+                                                                                                
+                                                                        <span
+                                                                        class="mgn-lt-10 phonevallabel boldmobiletext"
+                                                                        *ngFor="let member of waitlist_for ">
+                                                                        <i class="fa fa-user"></i>&nbsp; {{donorName}}</span>
+                                                                        <a
+                                                                        class="mgn-lt-5  lnk pointer-cursor"><i
+                                                                            class="fa fa-pencil"
+                                                                            (click)="editDonor()"
+                                                                            data-toggle="modal"
+                                                                            data-target="#exampleModalCenter"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="">
+                                                                    <div style="color:#7a7a7a;font-size: 1rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone</div>
+                                                                    <div class="mobile-edit-icon">
+                                                                        <span
+                                                                        class="mgn-lt-10 phonevallabel boldmobiletext"
+                                                                        *ngIf="userPhone"><i class="fa fa-mobile "></i>&nbsp;{{dialCode}}
+                                                                        {{userPhone}}</span>
+                                                                    <a
+                                                                        class="mgn-lt-5 lnk pointer-cursor"><i
+                                                                            class="fa fa-pencil"
+                                                                            (click)="editPhone()"
+                                                                            data-toggle="modal"
+                                                                            data-target="#exampleModalCenter"></i></a>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class=""  *ngIf="userData && userData.userProfile && userData.userProfile.email">
+                                                                    <div style="color:#7a7a7a;font-size: 1rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email</div>
+
+                                                                    <div class="mobile-edit-icon">
+                                                                                                                                                               
+                                                                    <span
+                                                                    class="mgn-lt-5 emailvallabel boldmobiletext"> <i class="fa fa-envelope-o "></i>&nbsp;{{userData.userProfile.email}}</span>
+                                                                <a
+                                                                    class="mgn-lt-5 lnk pointer-cursor"><i
+                                                                        class="fa fa-pencil"
+                                                                        (click)="handleEmail()"
+                                                                        data-toggle="modal"
+                                                                        data-target="#exampleModalCenter"></i></a>
+                                                                    </div>
+
+                                                                 
+                                                                </div>
+
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding"
-                                                        style="display: flex;">
-                                                        <div class="donate-btn-bp pointer-cursor col-md-6 mgn-rt-10"
-                                                            (click)="payuPayment()">
-                                                            CC/DC/Net Banking/UPI
+                                                
+
+                                                    <div
+                                                        class="col-sm-12 col-xs-12 chk-btns-div col-md-12 mgn-up-10 no-padding">
+                                                        <mat-chip-list class="btns">
+                                                            <mat-chip [class.mandatoryChip]="sel_ser_det.consumerNoteMandatory"
+                                                            (click)="handleSideScreen('note')"><a
+                                                                    class="lnk action pointer-cursor"><i
+                                                                        class="fa fa-file-text-o mgn-rt-5"
+                                                                        aria-hidden="true"></i>{{sel_ser_det.consumerNoteTitle}}
+                                                                        <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span>
+                                                                </a>
+                                                            </mat-chip>
+                                                        </mat-chip-list>
+                                                    </div>
+                                                    <div class="col-md-6 col-xs-12 col-sm-12 mobile-xs-center">
+                                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20">
+                                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                                                <div class="mainouter checkin-page c-checkin-new">
+                                                                    <div class="lnk">Make payment
+                                                                    </div>
+                                                                    <div class="mgn-bt-10">
+                
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding"
+                                                                    style="">                                                                    <div class="donate-btn-bp mobile-button-color pointer-cursor col-md-6 mgn-rt-10"
+                                                                        (click)="payuPayment()">
+                                                                        CC/DC/Net Banking/UPI
+                                                                    </div>
+                                                                    <!-- <div class="donate-btn-bp pointer-cursor col-md-4"
+                                                                        (click)="paytmPayment()">
+                                                                        Paytm
+                                                                    </div> -->
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <!-- <div class="donate-btn-bp pointer-cursor col-md-4"
-                                                            (click)="paytmPayment()">
-                                                            Paytm
-                                                        </div> -->
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+                               
+
+                                   
                                 </div>
                                 <div class="addnote lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
                                     *ngIf="action=='note'">

@@ -13,12 +13,37 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="mgn-up-30 mgn-bt-20"  *ngIf="!userId" style="text-align: center;">
-                        <img class="" src="../../../../assets/images/Capture.PNG" >
+                    <div class="mgn-up-30 mgn-bt-20 name-dept"  *ngIf="!userId" style="text-align: center;">
+                        <!-- <div class="bname dept"><h2>{{businessjson.businessName | capitalizeFirst}}</h2></div>
+
+                        <img class=""  >
+                        <div *ngIf="businessjson.businessDesc.length>1" class="subhead">About us</div>
+                            <div *ngIf="businessjson.businessDesc.length>1" class="bname dept">{{businessjson.businessDesc | capitalizeFirst}}</div>
+                             -->
                     </div>
                     <!-- <div class="text-center mgn-bt-20" *ngIf="!userId">
                         <img src="assets/images/heartfulness/heartfulness-doctor.png">
                     </div> -->
+                    <div style="text-align: center;" >
+                        <div >
+                         <img class="img img-responsive" alt="Profile Image" src="{{bLogo}}">
+                        </div>
+                         <div class="name-dept" style="text-align: center;">
+                             <div class="bname dept">{{businessjson.businessName | capitalizeFirst}}</div>
+                             <div class="bname">{{businessjson.businessUserName | capitalizeFirst}}</div>
+                             <div *ngIf="businessjson.businessDesc.length>1" class="subhead"><b>About us</b></div>
+                             <div *ngIf="businessjson.businessDesc.length>1" class="bname dept">{{businessjson.businessDesc | capitalizeFirst}}</div>
+                             
+                             <div *ngIf="businessjson.specialization.length>0" class="subhead">Specialization</div>
+                             <div *ngIf="businessjson.specialization.length>0" class="bname">{{businessjson.specialization[0] | capitalizeFirst}}</div>
+                             <div  class="subhead" *ngIf="mobileNo || email"><b>Contact Us</b></div>
+                             <div class="bname" *ngIf="mobileNo">+{{countryCode}} {{mobileNo}}</div>
+                             <div class="bname">{{email}}</div>
+                             <div class="bname dept" *ngIf="apptServices && apptServices[0]"> {{apptServices[0].deptName}}</div>
+                             <div class="bname dept" *ngIf="(apptServices && !apptServices[0]) && (wlServices && wlServices[0])">
+                                 {{wlServices[0].deptName}}</div>
+                         </div>
+                     </div>
                     <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9 mgn-bt-10 no-padding bus-title-content"
                         *ngIf="!userId">
                         <div
@@ -53,26 +78,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="bSection" *ngIf="userId">
-                       <div style="text-align: center;">
-                        <img class="img img-circle img-responsive" alt="Profile Image" src="{{bLogo}}">
-                       </div>
-                        <div class="name-dept">
-                            <div class="bname dept">{{businessjson.businessName | capitalizeFirst}}</div>
-                            <div class="bname">{{businessjson.businessUserName | capitalizeFirst}}</div>
-                            <div *ngIf="businessjson.businessDesc.length>1" class="subhead">About us</div>
-                            <div *ngIf="businessjson.businessDesc.length>1" class="bname dept">{{businessjson.businessDesc | capitalizeFirst}}</div>
-                            
-                            <div *ngIf="businessjson.specialization.length>0" class="subhead">Specialization</div>
-                            <div *ngIf="businessjson.specialization.length>0" class="bname">{{businessjson.specialization[0] | capitalizeFirst}}</div>
-                            <div  class="subhead">Contact Us</div>
-                            <div class="bname">+{{countryCode}} {{mobileNo}}</div>
-                            <div class="bname">{{email}}</div>
-                            <div class="bname dept" *ngIf="apptServices && apptServices[0]"> {{apptServices[0].deptName}}</div>
-                            <div class="bname dept" *ngIf="(apptServices && !apptServices[0]) && (wlServices && wlServices[0])">
-                                {{wlServices[0].deptName}}</div>
-                        </div>
-                    </div>
+                  
                 </div>
             </div>
         </div>

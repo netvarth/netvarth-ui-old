@@ -121,6 +121,75 @@
     .bus-item-medium .card.card-item-n h6 {
       font-size: 1rem!important;
     }
+    .mobile-donation-for-styling {
+      /* background-color: #fae5af; */
+      font-size: 1.0rem !important;
+      line-height:normal !important;
+      font-weight: bold;
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+      border-radius: 10px;
+      -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19) !important;
+      box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19) !important;
+      /* display: flex !important; */
+  
+    }
+    .c-checkin-new .card-title.service {
+      /* all: initial; */
+      font-size: 1.0rem !important;
+      color: black !important;
+    }
+    .amount-section-mobile {
+      text-align:center;
+      /* border: 1px solid darkblue; */
+      background-color: #f2f5fa;
+      border-radius: 10px;
+      padding: 5px;
+      -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+    }
+    .mobile-input input{
+      border-radius: 5px;
+      /* border: 1px solid black; */
+      padding: 20px;
+      /* font-size: 1.5rem; */
+    }
+    .form-level-settings {
+      color: black !important;
+    }
+    .mobile-xs-center {
+      text-align: center;
+    }
+    
+    .mobile-button-color {
+      background-color:  #f0b51b !important;
+      border:1px solid #f0b51b !important;
+      border-radius: 5px;
+    }
+    .boldmobiletext {
+      font-weight: bold;
+      
+    }
+    .mobile-edit-icon {
+      display: flex;
+      justify-content: space-between;
+      /* background-color: chartreuse; */
+    }
+    .mobile-visibility {
+      display:none !important
+    }
+    .mobile-donor-details {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #dadcdf;
+    }
+    .chk-btns-div mat-chip {
+      width: 100%;
+      font-size: 1rem !important;
+      /* color: black !important; */
+    }
+  
   }
   
   .bus-item-medium.div-selected-outline  .card.card-item-n{
@@ -169,7 +238,7 @@
     color: white;
     cursor: pointer;
     padding: 10px !important;
-    background: #334b99 !important;
+    background:  #f0b51b !important;
   }
   .c-checkin-new .lnk a {
     color: #1572a8 !important;
