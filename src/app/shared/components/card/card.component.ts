@@ -151,6 +151,15 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 break;
         }
     }
+    getServiceName(serviceName) {
+        let name = '';
+        if (serviceName.length > 12) {
+          name = serviceName.substring(0, 12) + '...';
+        } else {
+          name = serviceName;
+        }
+        return name;
+      }
     ngOnChanges() {
         // this.itemQty = this.quantity;
         // this.cdref.detectChanges();

@@ -5,14 +5,14 @@
 .removeotherstyling .card {
     width: 400px !important;
     all: initial !important;
-    min-height: 500px;
+    min-height: 400px !important;
     /* margin-bottom: 20px; */
    
     
     
 }
 .row.text-xs-center {
-    min-height: 130px;
+    min-height: 100px;
 }
 .bookingButton {
     width: 90%;
@@ -87,9 +87,23 @@
         align-items: center;
         justify-content: center;
     }
+    .getappointmentbutton{
+        width: 60% !important;
+    }
+    .service-image {
+        width: 50px !important;
+        height: 50px !important;
+    }
     .imagesectionincards {
         width:100px !important;
         height: 100px !important;
+      }
+      .mobile-img-size {
+        width:100px !important;
+        height: 100px !important;
+      }
+      .font-xs-size {
+          font-size: 14px;
       }
 }
 @media(min-width: 700px) {
@@ -500,7 +514,7 @@ button.fxmenu1{
     padding: 2px 5px 0px 5px;
     text-align: center;
 }
-.getappointmentbutton{
+.getbookbutton {
     width: 100%;
     margin-top: 1%;
     border: 2px solid #1E4079;
@@ -522,6 +536,30 @@ button.fxmenu1{
     /* border: 1px solid transparent; */
     padding: 6px 12px;
     font-size: 12px;
+    line-height: 1.42857143;
+}
+.getappointmentbutton{
+    width:100%;
+    margin-top: 1%;
+    border: 2px solid #1E4079;
+    border-radius: 25px;
+    background-color:#1E4079;
+    
+    color: white;
+    font-weight: 400;
+    font-family: "Poppins";
+    /* font-style: Montserrat;  */
+    display: inline-block;
+    margin-bottom: 0;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    /* background-image: none; */
+    /* border: 1px solid transparent; */
+    padding: 6px 12px;
+    font-size: 0.7rem;
     line-height: 1.42857143;
     /* border-radius: 4px; */
 }
