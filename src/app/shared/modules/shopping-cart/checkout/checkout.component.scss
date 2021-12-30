@@ -564,3 +564,16 @@ box-shadow: 4px 4px 5px gainsboro;
   ::ng-deep .payment-mode-card-styles .mat-radio-container .mat-radio-label{
     display: inline;
   }
+  @media  (max-width: 750px)  {
+    .pic_size{
+      width: 30px !important;
+      height: 30px !important;
+    }
+  }
+  @media (min-width: 450px) {
+    .pic_size  {
+      width: 40px !important;
+      height: 40px !important;
+    }
+  }
+  

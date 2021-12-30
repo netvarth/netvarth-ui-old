@@ -524,7 +524,6 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                         if(this.selected_payment_mode &&this.selected_payment_mode.toLowerCase()==='cash'){
                             this.cashPayment();
                         }else{
-                            alert('hdfgdgdf');
                         const postData = {
                             'amountToPay': this.bill_data.amountDue,
                             'accountId': this.accountId,
