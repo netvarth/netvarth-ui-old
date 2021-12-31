@@ -106,6 +106,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     { mode: 'ONLINE_CHECKIN', value: 'Online ' },
   ];
   bookinghistorydialogref: any;
+  booking_stat;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -162,21 +163,6 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     return currentmode[0].value;
 
   }
-  openbookinghistory() {
-    this.bookinghistorydialogref = this.dialog.open(BookingHistoryComponent, {
-      width: '60%',
-      height: 'auto',
-      data: {
-        type:'Token History',
-        providername:this.spName,
-        appointmentby:this.waitlist_data.waitlistedBy,
-        bookingmode:this.getWaitListMode(this.waitlist_data.waitlistMode),
-        consumername:this.waitlist_data.consumer.firstName+" "+this.waitlist_data.consumer.lastName,
-        details:this.waitlist_history
-      }
-    })
-  }
-
   ngOnDestroy() {
     if (this.sendmsgdialogRef) {
       this.sendmsgdialogRef.close();
@@ -324,6 +310,22 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         );
     });
 
+  }
+
+  openbookinghistory() {
+    this.bookinghistorydialogref = this.dialog.open(BookingHistoryComponent, {
+      width: '60%',
+      height: 'auto',
+      data: {
+        type:'Token History',
+        providername:this.spName,
+        appointmentby:this.waitlist_data.waitlistedBy,
+        bookingmode:this.getWaitListMode(this.waitlist_data.waitlistMode),
+        consumername:this.waitlist_data.consumer.firstName+" "+this.waitlist_data.consumer.lastName,
+        details:this.waitlist_history,
+        booking_stat : this.booking_stat
+      }
+    })
   }
   // getWaitlistNotes() {
   //   this.provider_services.getProviderWaitlistNotes(this.waitlist_data.consumer.id)

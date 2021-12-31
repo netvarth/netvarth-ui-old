@@ -13,9 +13,9 @@ import { LoginComponent } from "./login.component";
 import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { projectConstantsLocal } from '../../constants/project-constants';
+import { projectConstants } from "../../../app.component";
 export function homeHttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, projectConstantsLocal.PATH+'assets/i18n/home/', '.json');
+  return new TranslateHttpLoader(http, projectConstants.PATH+'assets/i18n/home/', '.json');
 }
 @NgModule({
     imports: [

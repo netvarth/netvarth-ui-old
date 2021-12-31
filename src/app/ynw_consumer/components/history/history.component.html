@@ -111,7 +111,7 @@
                                                             prescription</button>
                                                         <button mat-menu-item *ngIf="his_wait.waitlistStatus == 'done'"
                                                             [class.rated]="isRated(his_wait)"
-                                                            (click)="rateService(his_wait)">
+                                                            (click)="rateService(his_wait)"><i class="fa fa-star-o" aria-hidden="true"></i>
                                                             Rate Your
                                                             Visit</button>
                                                     </mat-menu>
@@ -190,7 +190,7 @@
                                                             prescription</button>
                                                         <button mat-menu-item *ngIf="his_wait.apptStatus == 'Completed'"
                                                             [class.rated]="isRated(his_wait)"
-                                                            (click)="rateApptService(his_wait)">
+                                                            (click)="rateApptService(his_wait)"><i class="fa fa-star-o" aria-hidden="true"></i>
                                                             Rate Your
                                                             Visit</button>
                                                     </mat-menu>                                                

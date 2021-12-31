@@ -6,9 +6,11 @@
           
                 </span>&nbsp; &nbsp;
                <span class="mx-2">Shared Files</span> 
-                <p class="text-secondary mx-5">Manage the files uploaded by the providers and consumers!</p>
+                <p class="text-secondary mx-5" *ngIf="!isHealthCare"> Manage the files uploaded by the providers or consumers!</p>
+                <p class="text-secondary mx-5" *ngIf="isHealthCare">Manage the files uploaded by the doctors or patients!</p>
              
-           
+                <!-- {{provider_label | capitalizeFirst}}
+                {{provider_label | capitalizeFirst}} -->
 
         </div>
     </div>

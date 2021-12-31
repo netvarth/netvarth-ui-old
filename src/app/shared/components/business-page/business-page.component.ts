@@ -577,6 +577,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.providercustomId = accountS3s.businessProfile.customId;
           }
           this.provideraccEncUid = accountS3s.businessProfile.accEncUid;
+          if (this.providercustomId) {
+          this.lStorageService.setitemonLocalStorage('customId', this.providercustomId);
+        } else {
+          this.lStorageService.setitemonLocalStorage('customId', this.provideraccEncUid);
+        }
+        this.lStorageService.setitemonLocalStorage('accountId',  accountS3s.businessProfile.id);
         });
   }
   /**
@@ -2309,21 +2315,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.routerobj.navigate([this.accountEncId, userId]);
   }
   opencheckavail(actionObj) {
-    // console.log("checkbox in business page")
-    // this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    // console.log('usertype...........', this.userType)
-    // const current_provider = {
-    //   'id': actionObj['location']['id'],
-    //   'place': actionObj['location']['place'],
-    //   'location': actionObj['location'],
-    //   'service': actionObj['service'],
-    //   'cdate': actionObj['service'].serviceAvailability.nextAvailableDate
-    // };
-    // if(this.userType === '') {
-    //   const passParam = { callback: 'checkavailability', current_provider: current_provider, serviceType:  actionObj['service'].serviceType,actionObjtype:actionObj };
-    //   this.doLogin('consumer', passParam);
-
-    // }else {
     this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
       width: '90%',
       height: 'auto',
@@ -2332,8 +2323,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         apptSettingsJson: this.apptSettingsJson,
       }
     });
-    // }
-
     this.checkavailabilitydialogref.afterClosed().subscribe(result => {
       console.log('result.......', result)
       if (result != 'undefined') {
@@ -2348,9 +2337,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           this.checkinClicked(actionObj['location'], actionObj['service']);
         }
       }
-
-
-
     });
 
   }

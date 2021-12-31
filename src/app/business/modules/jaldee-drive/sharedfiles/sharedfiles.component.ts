@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { Location } from '@angular/common';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-sharedfiles',
@@ -9,9 +10,14 @@ import { Location } from '@angular/common';
 })
 export class SharedfilesComponent implements OnInit {
   sharedFolder: any;
+  isHealthCare = false;
+  customer_label='';
+  provider_label='';
 
   constructor(private router: Router,
-    public location: Location) {
+    public location: Location, private wordProcessor:WordProcessor) {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
 
   }
 

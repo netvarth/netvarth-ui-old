@@ -848,7 +848,13 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.paymentDetails.amountRequiredNow)
                             .subscribe(data => {
                                 this.remainingadvanceamount = data;
+                                if(!this.selected_payment_mode){
+                                    this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
+                                    this.isClickedOnce=false;
+                        
+                                   }else{
                                 this.addCheckInConsumer(post_Data, paymenttype);
+                                   }
                             });
                     }
                     else {
@@ -863,15 +869,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
     saveCheckin(type?, paymenttype?) {
         if (type === 'appt') {
-            if (this.interNatioanalPaid) {
-                this.isClickedOnce = true
-                this.paymentBtnDisabled = false;
-
-            }
-            if (this.razorpayEnabled && !this.paytmEnabled) {
-                this.isClickedOnce = true
-                this.paymentBtnDisabled = false;
-            }
+          
+            this.isClickedOnce = true;   
+            
 
         }
         if (this.selectedService.serviceType === 'virtualService' && type === 'next') {
