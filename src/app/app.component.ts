@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Device } from '@ionic-native/device/ngx';
-import { Platform } from '@ionic/angular';
+// import { Device } from '@ionic-native/device/ngx';
+// import { Platform } from '@ionic/angular';
 import { LocalStorageService } from './shared/services/local-storage.service';
 import { GlobalService } from './shared/services/global-service';
 import { version } from './shared/constants/version';
@@ -29,8 +29,8 @@ export class AppComponent implements OnInit {
    * @param lStorageService 
    */
   constructor(
-    private device: Device,
-    private platform: Platform,
+    // private device: Device,
+    // private platform: Platform,
     private lStorageService: LocalStorageService,
     private globalService: GlobalService,
     private domainConfig: DomainConfigGenerator,
@@ -46,22 +46,22 @@ export class AppComponent implements OnInit {
    * 
    */
   ngOnInit() {
-    if (this.device.uuid) {
-      console.log(this.device.uuid);
-      this.lStorageService.setitemonLocalStorage('authToken', this.device.uuid);
+    // if (this.device.uuid) {
+      // console.log(this.device.uuid);
+      // this.lStorageService.setitemonLocalStorage('authToken', this.device.uuid);
       // this.lStorageService.setitemonLocalStorage('authToken', 'abcd'.toString());
-    }
+    // }
     let token = this.lStorageService.getitemfromLocalStorage('authToken');
     if (token) {
       let regexToReplace = /\-/gi;
       let authToken = token.replace(regexToReplace, "&");
       this.lStorageService.setitemonLocalStorage('authToken', authToken);
     }
-    this.platform.ready().then(() => {
+    // this.platform.ready().then(() => {
       // Okay, so the platform is ready.
       // Here you can do any higher level native things you might need.
-      console.log('here');
-      console.log('Device UUID is: ' + this.device.manufacturer);
+      // console.log('here');
+      // console.log('Device UUID is: ' + this.device.manufacturer);
 
       // this.firebaseX.grantPermission().then(hasPermission => {
       //   console.log("Permission was " + (hasPermission ? "granted" : "denied"));
@@ -97,14 +97,14 @@ export class AppComponent implements OnInit {
       //     this.lStorageService.setitemonLocalStorage('mUniqueId', token);
       //     console.log(`Got a new token ${token}`);
       //   });
-    });
+    // });
     projectConstants = this.globalService.getGlobalConstants();
     const cVersion = version.desktop;
     // projectConstantsLocal.PROVIDER_ACCOUNT_ID
     this.getAppVersion(projectConstantsLocal.S3UNIQUE_ID).then(
       (versionInfo) => {
         if (versionInfo) {
-          if (version.android_version !== versionInfo['playstore']['version']) {
+          if (version.android_version !== versionInfo['appstore']['version']) {
             this._forceUpdate(versionInfo);
           }
         }

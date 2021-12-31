@@ -55,6 +55,12 @@
   function alertDismissed() {
   }
   function onDeviceReady() {
+
+    // localStorage.setItem('deviceName', device.name);
+    // localStorage.setItem('authToken', device.uuid);
+    // localStorage.setItem('deviceName', device.name);
+    localStorage.setItem('authToken','abcd');
+
     document.addEventListener("backbutton", function (e) {
       e.preventDefault();
       if (exitApp) {
