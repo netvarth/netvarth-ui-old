@@ -577,6 +577,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.providercustomId = accountS3s.businessProfile.customId;
           }
           this.provideraccEncUid = accountS3s.businessProfile.accEncUid;
+          if (this.providercustomId) {
+          this.lStorageService.setitemonLocalStorage('customId', this.providercustomId);
+        } else {
+          this.lStorageService.setitemonLocalStorage('customId', this.provideraccEncUid);
+        }
+        this.lStorageService.setitemonLocalStorage('accountId',  accountS3s.businessProfile.id);
         });
   }
   /**
