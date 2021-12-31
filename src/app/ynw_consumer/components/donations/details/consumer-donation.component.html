@@ -64,10 +64,10 @@
                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding amount">
                                                             Amount
                                                         </div>
-                                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10">
                                                             <label>
-                                                                <input type="number" min="0" class="form-control rupee-font"
-                                                                    placeholder="&#8377; 0"
+                                                                <input style="height: 40px !important;" type="number" min="0" class="form-control mobile-input rupee-font"
+                                                                    placeholder="&#8377; 0" 
                                                                     [(ngModel)]="donationAmount">
                                                             </label>
                                                         </div>
@@ -78,12 +78,12 @@
                                                         class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding red">
                                                         <p class="form-level-settings applybill"
                                                             *ngIf="sel_ser_det.minDonationAmount != sel_ser_det.maxDonationAmount">
-                                                            Minimum <span
+                                                            Donate <span
                                                                 class="bold rupee-font">{{sel_ser_det.minDonationAmount|
-                                                                currency:'&#8377;'}}</span>
-                                                            Maximum <span
+                                                                currency:'&#8377;'}} or more</span>
+                                                            <!-- Maximum <span
                                                                 class="bold rupee-font">{{sel_ser_det.maxDonationAmount|
-                                                                currency:'&#8377;'}}</span>
+                                                                currency:'&#8377;'}}</span> -->
                                                         </p>
                                                         <p class="form-level-settings applybill"
                                                             *ngIf="sel_ser_det.minDonationAmount == sel_ser_det.maxDonationAmount">
@@ -115,9 +115,9 @@
                                                                 {{donorName}}
                                                             </h6> -->
                                                             <div class="mobile-donor-details">
-                                                                <div class="">
+                                                                <div class="mgn-bt-5">
 
-                                                                    <div style="color:#7a7a7a;font-size: 1rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name</div>
+                                                                    <div style="color:#7a7a7a;font-size: 1rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name</div>
                                                                     <div class="mobile-edit-icon">
                                                                                                 
                                                                         <span
@@ -132,12 +132,12 @@
                                                                             data-target="#exampleModalCenter"></i></a>
                                                                     </div>
                                                                 </div>
-                                                                <div class="">
-                                                                    <div style="color:#7a7a7a;font-size: 1rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone</div>
+                                                                <div class="mgn-bt-5">
+                                                                    <div style="color:#7a7a7a;font-size: 1rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone</div>
                                                                     <div class="mobile-edit-icon">
                                                                         <span
                                                                         class="mgn-lt-10 phonevallabel boldmobiletext"
-                                                                        *ngIf="userPhone"><i class="fa fa-mobile "></i>&nbsp;{{dialCode}}
+                                                                        *ngIf="userPhone"><i class="fa fa-mobile "></i>&nbsp;&nbsp;{{dialCode}}
                                                                         {{userPhone}}</span>
                                                                     <a
                                                                         class="mgn-lt-5 lnk pointer-cursor"><i
@@ -148,13 +148,13 @@
                                                                     </div>
 
                                                                 </div>
-                                                                <div class=""  *ngIf="userData && userData.userProfile && userData.userProfile.email">
-                                                                    <div style="color:#7a7a7a;font-size: 1rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email</div>
+                                                                <div class="mgn-bt-5"  *ngIf="userData && userData.userProfile && userData.userProfile.email">
+                                                                    <div style="color:#7a7a7a;font-size: 1rem;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email</div>
 
                                                                     <div class="mobile-edit-icon">
                                                                                                                                                                
                                                                     <span
-                                                                    class="mgn-lt-5 emailvallabel boldmobiletext"> <i class="fa fa-envelope-o "></i>&nbsp;{{userData.userProfile.email}}</span>
+                                                                    class="mgn-lt-5 emailvallabel boldmobiletext"> <i class="fa fa-envelope-o "></i>&nbsp;&nbsp;{{userData.userProfile.email}}</span>
                                                                 <a
                                                                     class="mgn-lt-5 lnk pointer-cursor"><i
                                                                         class="fa fa-pencil"
@@ -178,11 +178,17 @@
                                                             (click)="handleSideScreen('note')"><a
                                                                     class="lnk action pointer-cursor"><i
                                                                         class="fa fa-file-text-o mgn-rt-5" 
-                                                                        aria-hidden="true"></i>{{sel_ser_det.consumerNoteTitle}}
+                                                                        aria-hidden="true"></i><span style="font-size: 13px !important;">Donor's Note</span>
                                                                         <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span>
                                                                 </a>
                                                             </mat-chip>
                                                         </mat-chip-list>
+                                                        <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding mgn-up-20"
+                                                       >      
+                                                        <div class="donate-btn-bp mobile-button-color pointer-cursor col-md-6  "
+                                                            (click)="payuPayment()">
+                                                            Donate
+                                                        </div>
                                                     </div>
                                                     <div class="col-md-6 col-xs-12 col-sm-12 mobile-xs-center">
                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20">
@@ -194,11 +200,7 @@
                 
                                                                     </div>
                                                                 </div> -->
-                                                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding"
-                                                                    style="">                                                                    <div class="donate-btn-bp mobile-button-color pointer-cursor col-md-6 mgn-rt-10"
-                                                                        (click)="payuPayment()">
-                                                                        Donate
-                                                                    </div>
+                                                            
                                                                     <!-- <div class="donate-btn-bp pointer-cursor col-md-4"
                                                                         (click)="paytmPayment()">
                                                                         Paytm

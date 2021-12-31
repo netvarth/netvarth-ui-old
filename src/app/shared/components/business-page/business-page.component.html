@@ -31,12 +31,12 @@
                          <div class="name-dept" style="text-align: center;">
                              <div class="bname dept">{{businessjson.businessName | capitalizeFirst}}</div>
                              <div class="bname">{{businessjson.businessUserName | capitalizeFirst}}</div>
-                             <div *ngIf="businessjson.businessDesc.length>1" class="subhead"><b>About us</b></div>
+                             <div *ngIf="businessjson.businessDesc.length>1" class="subhead">About us</div>
                              <div *ngIf="businessjson.businessDesc.length>1" class="bname dept">{{businessjson.businessDesc | capitalizeFirst}}</div>
                              
                              <div *ngIf="businessjson.specialization.length>0" class="subhead">Specialization</div>
                              <div *ngIf="businessjson.specialization.length>0" class="bname">{{businessjson.specialization[0] | capitalizeFirst}}</div>
-                             <div  class="subhead" *ngIf="mobileNo || email"><b>Contact Us</b></div>
+                             <div  class="subhead" *ngIf="mobileNo || email">Contact Us</div>
                              <div class="bname" *ngIf="mobileNo">+{{countryCode}} {{mobileNo}}</div>
                              <div class="bname">{{email}}</div>
                              <div class="bname dept" *ngIf="apptServices && apptServices[0]"> {{apptServices[0].deptName}}</div>
@@ -162,7 +162,7 @@
                                     {{sp.item.name}}
                                     <br>
                                 </div>
-                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10">
                                     <button type="button" class="book-btn btn">Donate</button>
                                     
                                 </div>

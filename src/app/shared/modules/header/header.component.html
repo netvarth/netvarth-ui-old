@@ -15,7 +15,7 @@
                     <a (click)="gotoDetails()" class="logo pointer-cursor">     <!-- (click)="gotoActiveHome()" -->
                     <!-- mini logo for sidebar mini 50x50 pixels -->
 
-                    <span class="logo-mini visible-xs flat-icon-btn"><img  alt="Jaldee" style="width: 50px !important;height: 50px !important"></span>
+                    <span class="logo-mini visible-xs flat-icon-btn"><img class="img-circle" src="../../../../assets/images/Capture.PNG"  alt="Jaldee" style="width: 50px !important;height: 50px !important"></span>
   
                     <!-- logo for regular state and mobile devices -->
                     <span class="logo-lg hidden-xs flat-icon-btn"><img src="../../../../assets/images/Capture.PNG" alt="Jaldee"></span>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="tp-r">
                     <div class="tc1"
-                        [ngClass]="{'pad-rt-10 mgn-up-5': (!shared_functions.checkLogin() && pageSource == 'details')}">
+                        [ngClass]="{'pad-rt-10 pad-bt-10 mgn-up-5': (!shared_functions.checkLogin() && pageSource == 'details')}">
                         <div class="topsignouter">
                             <!-- <button class="join_nw_btn mgn-rt-10" (click)="doLogin('consumer')"
                                 *ngIf="!shared_functions.checkLogin() && source !== 'business'">{{sign_in_cap}}</button>

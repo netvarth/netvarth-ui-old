@@ -125,7 +125,7 @@ div {
     }
     .mobile-donation-for-styling {
       /* background-color: #fae5af; */
-      width: 95%;
+      width: 93.5%;
       font-size: 1.0rem !important;
       line-height:normal !important;
       font-weight: bold;
@@ -144,21 +144,30 @@ div {
     }
     .amount-section-mobile {
       /* margin: 10px; */
-      width: 100%;
+      /* width: 105%; */
       text-align:center !important;
       /* border: 1px solid darkblue; */
       background-color: #f2f5fa;
       border-radius: 10px;
       padding: 5px;
-      -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+      -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19) !important;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19) !important;
     }
     .mobile-input input{
       border-radius: 5px;
       /* border: 1px solid black; */
       padding: 20px;
+      height:50px !important;
       /* font-size: 1.5rem; */
     }
+    .fa-pencil{
+      font-size: 16px !important;
+      /* background-color: hotpink; */
+    }
+    .fa-file-text-o{
+      font-size: 13px !important;
+    }
+    
     .form-level-settings {
       color: black !important;
       font-size: 1rem !important;
@@ -176,6 +185,22 @@ div {
       font-weight: bold;
       
     }
+    ::-webkit-input-placeholder {
+      
+      font-size: 18px !important;
+    }
+    ::-moz-placeholder {
+      
+      font-size: 18px !important;
+    }
+    :-ms-input-placeholder {
+      
+      font-size: 18px !important;
+    }
+    ::placeholder {
+      
+      font-size: 18px !important;
+    }
     .mobile-edit-icon {
       display: flex;
       justify-content: space-between;
@@ -192,7 +217,7 @@ div {
     }
     .chk-btns-div mat-chip {
       width: 100%;
-      font-size: 1rem !important;
+      font-size: 1.5rem !important;
       /* color: black !important; */
     }
   
@@ -240,7 +265,7 @@ div {
   }
   .donate-btn-bp {
     text-align: center;
-    height: 40px;
+    /* height: 40px; */
     color: white;
     cursor: pointer;
     padding: 10px !important;
