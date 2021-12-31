@@ -435,4 +435,8 @@ togglepaymentMode(){
   billview() {
     this.showbill = !this.showbill;
   }
+  getImageSrc(mode){
+    
+    return 'assets/images/payment-modes/'+mode+'.png';
+  }
 }
