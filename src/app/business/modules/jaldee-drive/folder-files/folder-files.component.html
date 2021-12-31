@@ -8,9 +8,15 @@
       {{foldername}} Files
 
     </h5>
-    <p *ngIf="foldertype === 'shared' || foldertype === 'public'" class="text-secondary mx-5 no-padding">
+    <p *ngIf="foldertype === 'shared' || foldertype === 'public' && !isHealthCare" class="text-secondary mx-5 no-padding">
       Manage the files uploaded by the {{foldername=='Provider' ? 'provider' : 'consumer'}} lable!</p>
-    <p *ngIf="foldertype === 'Private'" class="text-secondary mx-5 no-padding">Manage the files uploaded by you!
+      
+    <p *ngIf="foldertype === 'public' && provider_label && isHealthCare" class="text-secondary mx-5 no-padding">
+      Manage the files uploaded by the {{provider_label}} lable!</p>
+      <p *ngIf="foldertype === 'shared'&& customer_label && isHealthCare" class="text-secondary mx-5 no-padding">
+        Manage the files uploaded by the {{customer_label}} lable!</p>
+      
+    <p *ngIf="foldertype === 'Private'" class="text-secondary mx-5 no-padding">Manage your own files!
     </p>
   </div>
 </section>
@@ -486,19 +492,19 @@
                 <div class="card-body">
                   <div class="filterTextinput filter-text-input">
                     <li class="filterli filter-li">
-                      <input type="text" id="fileSize" [(ngModel)]="filter.fileSize" #fileSize (keyup)="doSearch()"
-                        maxlength="20" class="filterTextbox filter-textbox" placeholder="Enter file size">
+                      <input type="text" id="fileSize" [(ngModel)]="filter.fileSize"   #fileSize (keyup)="doSearch()"
+                        maxlength="20" class="filterTextbox filter-textbox" placeholder="Enter file size" >
                     </li>
                   </div>
                   <div class="filter-checkbox-input">
                     <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                      <mat-checkbox class="filter-checkbox" [checked]="lessMb"
-                        (change)="setFilterDataCheckbox('fileSize', 'true')">
+                      <mat-checkbox class="filter-checkbox" [checked]="lessMb" 
+                        (change)="setFilterDataCheckbox('fileSize', 'lessMb')">
                         Less than 1MB</mat-checkbox>
                       <!--  (change)="setFilterDataCheckbox('fileSize', 'false')"  [checked]="grateMB" -->
                     </li>
                     <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                      <mat-checkbox class="filter-checkbox" (change)="setFilterDataCheckbox('fileSize', 'false')"
+                      <mat-checkbox class="filter-checkbox" (change)="setFilterDataCheckbox('fileSize', 'grateMB')"
                         [checked]="grateMB">
                         Greater than 1MB</mat-checkbox>
                     </li>

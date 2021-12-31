@@ -12,8 +12,7 @@ import { ProviderServices } from '../../../../business/services/provider-service
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
-// import { WordProcessor } from 'src/app/shared/services/word-processor.service';
-// import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { projectConstants } from '../../../../app.component';
 
 
@@ -91,8 +90,8 @@ export class FolderFilesComponent implements OnInit {
     folderName: '',
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1,
-    providerconsumer: 'providerconsumer',
-    jaldeeconsumer: 'jaldeeconsumer'
+    // providerconsumer: 'providerconsumer',
+    // jaldeeconsumer: 'jaldeeconsumer'
 
   };
   filtericonTooltip = '';
@@ -131,8 +130,9 @@ export class FolderFilesComponent implements OnInit {
   availabileSelected: boolean;
   notAvailabileSelected: boolean;
   tooltipcl = projectConstants.TOOLTIP_CLS;
-
-
+  customer_label='';
+  provider_label='';
+  isHealthCare = false;
 
   constructor(
     private _location: Location,
@@ -141,13 +141,15 @@ export class FolderFilesComponent implements OnInit {
     public dialog: MatDialog,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
-    // private wordProcessor: WordProcessor,
+     private wordProcessor: WordProcessor,
 
     //private router: Router,
 
     private groupService: GroupStorageService,
 
   ) {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.activated_route.queryParams.subscribe(params => {
       this.foldertype = params.foldername;
       // this.foldertype + ' ' + 'folder';
@@ -353,8 +355,8 @@ export class FolderFilesComponent implements OnInit {
       folderName: '',
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 1,
-      providerconsumer: 'providerconsumer',
-      jaldeeconsumer: 'jaldeeconsumer'
+      // providerconsumer: 'providerconsumer',
+      // jaldeeconsumer: 'jaldeeconsumer'
 
     };
     this.selectedSpecialization = [];
@@ -404,6 +406,13 @@ export class FolderFilesComponent implements OnInit {
       }
     }
     if (type === 'fileType') {
+      // if(value === ''){
+      //   this.png = false;
+      //   this.jpeg = false;
+      //   this.jpg = false;
+      //   this.pdf = false;
+      //   this.filter.fileType = ''; 
+      // }
       if (value === 'png') {
         this.png = true;
         this.jpeg = false;
@@ -412,7 +421,7 @@ export class FolderFilesComponent implements OnInit {
         this.filter.fileType = 'png';
 
       }
-      if (value === 'jpeg') {
+     else if (value === 'jpeg') {
         this.png = false;
         this.jpeg = true;
         this.jpg = false;
@@ -420,7 +429,7 @@ export class FolderFilesComponent implements OnInit {
         this.filter.fileType = 'jpeg';
 
       }
-      if (value === 'jpg') {
+     else if (value === 'jpg') {
         this.png = false;
         this.jpeg = false;
         this.jpg = true;
@@ -428,7 +437,7 @@ export class FolderFilesComponent implements OnInit {
         this.filter.fileType = 'jpg';
 
       }
-      if (value === 'pdf') {
+     else if (value === 'pdf') {
         this.png = false;
         this.jpeg = false;
         this.jpg = false;
@@ -436,21 +445,35 @@ export class FolderFilesComponent implements OnInit {
         this.filter.fileType = 'pdf';
 
       }
+      else{
+        this.png = false;
+        this.jpeg = false;
+        this.jpg = false;
+        this.pdf = false;
+        this.filter.fileType = ''; 
+      }
     }
 
     if (type === 'fileSize') {
-      if (value === 'true') {
+      console.log("Checked",type,value)
+      if (value === 'lessMb') {
         this.lessMb = true;
         this.grateMB = false;
         this.filter.fileSize = '1';
+        
         // this.filter.ownerType = 'jaldeeconsumer'
       }
-      else {
+     else if(value === 'grateMB') {
         this.lessMb = false;
         this.grateMB = true;
         this.filter.fileSize = '1';
         // this.filter.ownerType = 'jaldeeconsumer'
 
+      }
+      else{
+        this.lessMb = false;
+        this.grateMB = false;
+        this.filter.fileSize = '';
       }
     }
     this.doSearch();

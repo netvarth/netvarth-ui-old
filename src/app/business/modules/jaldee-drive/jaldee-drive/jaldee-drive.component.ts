@@ -173,6 +173,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   totalcount: any;
   storageleft: any;
   remainingStorage: any;
+  totalStorage:any;
   weightageValue = 0;
   addondialogRef: any;
   fileviewdialogRef: any;
@@ -245,8 +246,12 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
         this.storageleft = data;
         console.log("Space Left :", Math.round(this.storageleft.remainingStorage))
         this.remainingStorage = Math.round(this.storageleft.remainingStorage);
+        this.totalStorage = Math.round(this.storageleft.totalStorage);
+        console.log("Total Space  :", Math.round(this.storageleft.totalStorage))
+        console.log("Used Space  :", Math.round(this.storageleft.usedStorage))
 
-        this.weightageValue = this.storageleft.usedStorage
+
+        this.weightageValue = 4;
       }
     );
   }

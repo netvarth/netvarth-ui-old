@@ -248,10 +248,10 @@
               <div class="mx-2" *ngIf="onSharedClicked">
                 <h5 class="mgn-up-10">
                   <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
-            
+
                   </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   {{sharedFolder}} File
-            
+
                 </h5>
                 <div class=" row cust-name d-flex">
 
@@ -292,8 +292,9 @@
                   </div> -->
                   <!-- <img src="../../../assets/images/Group 818.jpg" class=" fa fa-folder pull-left text-light "
                   style="width: 22px !important; margin-top: 2px !important;"> -->
-                  <div (click)="publicfolder('Private')" *ngIf="!sharedFolder" class="pointer-cursor top-droppable folder tooltiper tooltiper-up"
-                    data-tooltip="0 file" id="folder2">
+                  <div (click)="publicfolder('Private')" *ngIf="!sharedFolder"
+                    class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                    id="folder2">
 
                     <i class="fa fa-folder" aria-hidden="true">
 
@@ -302,7 +303,7 @@
                     <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
                   style="width: 22px !important; margin-top: 2px !important;"> -->
                   </div>
-                  <div (click)="onClicked('Shared')" *ngIf="!sharedFolder" 
+                  <div (click)="onClicked('Shared')" *ngIf="!sharedFolder"
                     class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                     id="folder2">
 
@@ -582,7 +583,7 @@
           </div>
         </div>
       </div>
-     
+
     </ul>
   </section>
   <div class="filter-footer" *ngIf="filterapplied === true">
@@ -688,9 +689,10 @@
                         </div>
 
                         <div class="progress mb-1" style="height:6px">
-                          <div class="progress-bar bg-primary" style="width:50%"></div>
+                          <div class="progress-bar bg-primary"  style="width:50%"></div>
                         </div>
-
+                        <!-- value="weightageValue" min='0' max='remainingStorage' <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+ -->
                       </div>
                       <!-- <div class="card color" style="word-wrap: normal !important;">
                       <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
@@ -847,10 +849,10 @@
               <div class="mx-2" *ngIf="onSharedClicked">
                 <h5 class="mgn-up-10">
                   <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
-            
+
                   </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   {{sharedFolder}} Files
-            
+
                 </h5>
                 <div class=" row cust-name d-flex">
 
@@ -888,13 +890,15 @@
                         <p (click)="publicfolder('Public')"> Public Files</p>
                       </i>
                     </div> -->
-                    <div (click)="publicfolder('Private')"  class="pointer-cursor top-droppable folder tooltiper tooltiper-up"
-                      data-tooltip="0 file" id="folder2">
+                    <div (click)="publicfolder('Private')"
+                      class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                      id="folder2">
                       <i class="fa fa-folder" aria-hidden="true">
                         <p (click)="publicfolder('Private')"> My Files</p>
                       </i>
                     </div>
-                    <div (click)="onClicked('Shared')"  class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                    <div (click)="onClicked('Shared')"
+                      class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                       id="folder2">
 
                       <i class="fa fa-folder" aria-hidden="true">
