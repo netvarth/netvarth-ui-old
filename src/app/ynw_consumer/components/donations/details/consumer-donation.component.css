@@ -1,4 +1,6 @@
-
+div {
+  font-size: 1rem;
+}
 .bus-item-medium .card.card-item-n {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
     transition: 0.3s;
@@ -123,6 +125,7 @@
     }
     .mobile-donation-for-styling {
       /* background-color: #fae5af; */
+      width: 95%;
       font-size: 1.0rem !important;
       line-height:normal !important;
       font-weight: bold;
@@ -140,7 +143,9 @@
       color: black !important;
     }
     .amount-section-mobile {
-      text-align:center;
+      /* margin: 10px; */
+      width: 100%;
+      text-align:center !important;
       /* border: 1px solid darkblue; */
       background-color: #f2f5fa;
       border-radius: 10px;
@@ -156,6 +161,7 @@
     }
     .form-level-settings {
       color: black !important;
+      font-size: 1rem !important;
     }
     .mobile-xs-center {
       text-align: center;
@@ -259,7 +265,7 @@
     display: block !important;
   }
   .amount {
-    font-size: 1rem !important;
+    font-size: 1.2rem !important;
     font-weight: 700;
   }
   .donate-by {

@@ -142,15 +142,29 @@
                         </div>
                     </ng-container>
                     <ng-container *ngIf="donationServices && donationServices.length >0">
-                        <div class="mgn-bt-15 " *ngFor="let sp of donationServices">
-                            <div class="dept-card" (click)="gotoDonation(sp.item)">
+                        <div class="mgn-bt-15 row" *ngFor="let sp of donationServices">
+                            <!-- <div class="dept-card" (click)="gotoDonation(sp.item)">
                                 <div class="dept-img">
                                     <img src="assets/images/donation.png">
                                 </div>
                                 <div class="dept-name">
                                     {{sp.item.name}}</div>
+                                    
                                 <div class="service-buttons">
                                     <button type="button" class="book-btn">Donate</button>
+                                </div>
+                            </div> -->
+                            <div (click)="gotoDonation(sp.item)" class="col-md-12 col-sm-12 col-xs-12" style="background-color: white;padding: 10px;box-shadow: 0px 34px 55px #28282814 !important;border-radius: 10px;text-align: center;">
+                                <div class="col-sm-12 col-xs-12 col-md-12" >
+                                    <img  src="assets/images/moneybag.png" style="width: 50px !important;height: 50px !important; " >
+                                </div>
+                                <div class="col-sm-12 col-xs-12 col-md-12 dept-name " style="text-align: center !important">
+                                    {{sp.item.name}}
+                                    <br>
+                                </div>
+                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                    <button type="button" class="book-btn btn">Donate</button>
+                                    
                                 </div>
                             </div>
                         </div>

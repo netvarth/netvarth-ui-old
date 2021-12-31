@@ -2316,6 +2316,25 @@ img.ordericon.home {
   padding: 8px;
   border: none;
 }
+.book-btn {
+  width: 100%;
+  color: white;
+  font-weight: 600;
+  border-radius: 10px;
+  background: #16254b !important;
+  /* background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important; */
+  opacity: 1;
+  padding: 8px;
+  border: none;
+}
+.dept-name {
+  color: #946394 !important;
+  font-weight: bold;    
+  /* width: 45%; */
+  /* margin-left: 5px; */
+  font-size: 1.2rem;    
+  /* margin-right: 5px; */
+}
 .dept-card .dept-name {
   color: #946394 !important;
   font-weight: bold;    

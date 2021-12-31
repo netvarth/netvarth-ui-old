@@ -787,6 +787,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       // this.getbusinessprofiledetails_json('location', true);
     }
   }
+  getfoundationname(Name) {
+    let name=Name;
+    if(name.length>15){
+      name=name.substr(0,15)+'...';
+    }
+    return name;
+  }
   setAccountSettings(res) {
     this.settingsjson = res;
     this.showToken = this.settingsjson.showTokenId;

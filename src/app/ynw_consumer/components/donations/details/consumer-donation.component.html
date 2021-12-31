@@ -10,13 +10,13 @@
                 <div class="c-outer m0">
                     <div class="c-body">
                         <div class="card title-gb m0">
-                            <h5 class="mgn-up-10">
+                            <h4 class="mgn-up-10">
                                 <!-- <span class="selected-date">Date: {{sel_day}}
                                 {{todaydate | date: dateFormat}}
                             </span> -->
                                 <a class="back-btn" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
-                                <span class=" mgn-lt-10 amount">{{businessjson.businessName}}</span>
-                            </h5>
+                                <span class=" mgn-lt-10 amount" style="font-size: 1.2rem !important;">{{businessjson.businessName}}</span>
+                            </h4>
                         </div>
                         <div class="col-md-12 no-padding">
                             <div class="card p0 ">
@@ -25,11 +25,11 @@
                                         *ngIf="action==''">
                                         <div
                                             class="col-md-6 col-lg-6 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt">
-                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding ">
+                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding " style="display: flex;justify-content: center;">
                                                 
                                                 <div
-                                                    class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 donation_label mobile-donation-for-styling">
-                                                    Donation   <span *ngIf="sel_ser"> {{sel_ser_det.name | capitalizeFirst}} 
+                                                    class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 donation_label mobile-donation-for-styling " style="font-size: 1.2rem !important;">
+                                                    Donation   <span *ngIf="sel_ser" > {{sel_ser_det.name | capitalizeFirst}} 
                                                         <br>
                                                         <p>{{sel_ser_det.description}}</p>
                                                     </span>
@@ -57,39 +57,41 @@
                                         <div class="clearfix"></div><br>
 
                                         <!-- <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding amount-section-mobile"> -->
-                                        <div class="col-md-6 col-xs-12 col-sm-12 amount-section-mobile">
-                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding ">
-                                                <div class="mgn-up-5 input-group mobile-error c-checkin-new">
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding amount">
-                                                        Amount
-                                                    </div>
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                                        <label>
-                                                            <input type="number" min="0" class="form-control rupee-font"
-                                                                placeholder="&#8377; Enter Amount"
-                                                                [(ngModel)]="donationAmount">
-                                                        </label>
+                                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12"  style="display: flex;justify-content: center; ">
+                                            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 amount-section-mobile">
+                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding ">
+                                                    <div class="input-group mobile-error c-checkin-new">
+                                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding amount">
+                                                            Amount
+                                                        </div>
+                                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                                            <label>
+                                                                <input type="number" min="0" class="form-control rupee-font"
+                                                                    placeholder="&#8377; 0"
+                                                                    [(ngModel)]="donationAmount">
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="prepay-amt mgn-bt-20">
-                                                <div *ngIf="sel_ser_det"
-                                                    class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding red">
-                                                    <p class="form-level-settings applybill"
-                                                        *ngIf="sel_ser_det.minDonationAmount != sel_ser_det.maxDonationAmount">
-                                                        Minimum <span
-                                                            class="bold rupee-font">{{sel_ser_det.minDonationAmount|
-                                                            currency:'&#8377;'}}</span>
-                                                        Maximum <span
-                                                            class="bold rupee-font">{{sel_ser_det.maxDonationAmount|
-                                                            currency:'&#8377;'}}</span>
-                                                    </p>
-                                                    <p class="form-level-settings applybill"
-                                                        *ngIf="sel_ser_det.minDonationAmount == sel_ser_det.maxDonationAmount">
-                                                        Donation Amount <span
-                                                            class="bold rupee-font">{{sel_ser_det.minDonationAmount|
-                                                            currency:'&#8377;'}}</span>
-                                                    </p>
+                                                <div class="prepay-amt mgn-bt-20">
+                                                    <div *ngIf="sel_ser_det"
+                                                        class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding red">
+                                                        <p class="form-level-settings applybill"
+                                                            *ngIf="sel_ser_det.minDonationAmount != sel_ser_det.maxDonationAmount">
+                                                            Minimum <span
+                                                                class="bold rupee-font">{{sel_ser_det.minDonationAmount|
+                                                                currency:'&#8377;'}}</span>
+                                                            Maximum <span
+                                                                class="bold rupee-font">{{sel_ser_det.maxDonationAmount|
+                                                                currency:'&#8377;'}}</span>
+                                                        </p>
+                                                        <p class="form-level-settings applybill"
+                                                            *ngIf="sel_ser_det.minDonationAmount == sel_ser_det.maxDonationAmount">
+                                                            Donation Amount <span
+                                                                class="bold rupee-font">{{sel_ser_det.minDonationAmount|
+                                                                currency:'&#8377;'}}</span>
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -170,12 +172,12 @@
                                                 
 
                                                     <div
-                                                        class="col-sm-12 col-xs-12 chk-btns-div col-md-12 mgn-up-10 no-padding">
+                                                        class="col-sm-12 col-xs-12 chk-btns-div col-md-12 mgn-up-10 no-padding" style="font-size: 1rem !important;">
                                                         <mat-chip-list class="btns">
                                                             <mat-chip [class.mandatoryChip]="sel_ser_det.consumerNoteMandatory"
                                                             (click)="handleSideScreen('note')"><a
                                                                     class="lnk action pointer-cursor"><i
-                                                                        class="fa fa-file-text-o mgn-rt-5"
+                                                                        class="fa fa-file-text-o mgn-rt-5" 
                                                                         aria-hidden="true"></i>{{sel_ser_det.consumerNoteTitle}}
                                                                         <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span>
                                                                 </a>
@@ -185,17 +187,17 @@
                                                     <div class="col-md-6 col-xs-12 col-sm-12 mobile-xs-center">
                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20">
                                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                                                <div class="mainouter checkin-page c-checkin-new">
-                                                                    <div class="lnk">Make payment
+                                                                <!-- <div class="mainouter checkin-page c-checkin-new">
+                                                                    <div class="lnk" style="font-size: 1rem !important;">Make payment
                                                                     </div>
                                                                     <div class="mgn-bt-10">
                 
                                                                     </div>
-                                                                </div>
+                                                                </div> -->
                                                                 <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding"
                                                                     style="">                                                                    <div class="donate-btn-bp mobile-button-color pointer-cursor col-md-6 mgn-rt-10"
                                                                         (click)="payuPayment()">
-                                                                        CC/DC/Net Banking/UPI
+                                                                        Donate
                                                                     </div>
                                                                     <!-- <div class="donate-btn-bp pointer-cursor col-md-4"
                                                                         (click)="paytmPayment()">
