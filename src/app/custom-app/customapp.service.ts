@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from '../shared/services/local-storage.service';
+import { ServiceMeta } from '../shared/services/service-meta';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class CustomappService {
   custId;
   businessJsons: any;
 
-  constructor(private lStorageService: LocalStorageService) { } 
+  constructor(private lStorageService: LocalStorageService, private servicemeta: ServiceMeta) { } 
 
   /**
    * 
@@ -50,6 +51,10 @@ export class CustomappService {
    */
   getAccountEncId() {
     return this.accountEncId;
+  }
+
+  getSystemDate() {
+    return this.servicemeta.httpGet('provider/server/date');
   }
 
   /**
