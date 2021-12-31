@@ -36,8 +36,8 @@
                 <h3 *ngIf="actionObj.service.description">Price</h3>
                 <p *ngIf="actionObj.service.description" style="color: lightgrey;">{{actionObj.service.description}}</p>
             <!-- </div> -->
-            <h6  style="color:  #2653B7;" *ngIf="actionObj.service.totalAmount">Service Price:{{actionObj.service.totalAmount}}</h6>
-            <h6  style="color:  #2653B7" *ngIf="actionObj.service.minPrePaymentAmount">Advance Payment: {{actionObj.service.minPrePaymentAmount}}</h6>
+            <h6  style="color:  #2653B7;margin-top: 2px;" *ngIf="actionObj.service.totalAmount">Service Price:{{actionObj.service.totalAmount}}</h6>
+            <h6  style="color:  #2653B7;margin-top: 2px;" *ngIf="actionObj.service.minPrePaymentAmount">Advance Payment: {{actionObj.service.minPrePaymentAmount}}</h6>
         </div>
         
     </div>
@@ -101,7 +101,7 @@
         </div>
         <app-common-innerloading-spinner *ngIf="queuejson.length==0 && actionObj['service']['bType']=='Waitlist' && queueloader "></app-common-innerloading-spinner>
     
-        <div *ngIf="queuejson.length==0 && actionObj['service']['bType']=='Waitlist'  " style="color: red;text-align: center;">No Available queues</div>
+        <div *ngIf="queuejson.length==0 && (actionObj['service']['bType']=='Waitlist' || !actionObj['service']['bType'])  " style="color: red;text-align: center;">No Available queues</div>
 
         <div class="pad-lg-20 slots" *ngIf="queuejson && queuejson.length>0">
             

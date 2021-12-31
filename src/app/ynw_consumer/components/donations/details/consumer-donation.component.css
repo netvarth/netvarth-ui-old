@@ -323,7 +323,7 @@
   .mobile-edit-icon {
     display: flex;
     justify-content: space-between;
-    background-color: chartreuse;
+    /* background-color: chartreuse; */
   }
   .mobile-visibility {
     display:none !important

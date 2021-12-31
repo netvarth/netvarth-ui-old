@@ -1781,6 +1781,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       'cdate': service.serviceAvailability.availableDate,
       'service': service
     };
+    if(location.time) {
+      current_provider['ctime']=location.time
+    }    if(location.date) {
+      service.serviceAvailability.availableDate=location.date
+    }
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
@@ -1812,7 +1817,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           //console.log("logged In");
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           if (_this.userType === 'consumer') {
-            _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer');
+            _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer',current_provider['ctime']);
           }
         } else {
           const passParam = { callback: '', current_provider: current_provider };
@@ -1978,7 +1983,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
   }
-  showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?) {
+  showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?,ctime?) {
     let queryParam = {
       loc_id: locid,
       locname: locname,
@@ -1989,7 +1994,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       account_id: this.provider_bussiness_id,
       user: this.userId,
       service_id: service.id,
-      virtual_info: JSON.stringify(virtualinfo)
+      virtual_info: JSON.stringify(virtualinfo),
+      ctime:ctime
     };
     if (service['serviceType'] === 'virtualService') {
       queryParam['tel_serv_stat'] = true;
@@ -2334,7 +2340,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         actionObj['location']['time'] = result[0];
         actionObj['location']['date'] = result[1];
         // console.log('action..........',actionObj);
+        if(actionObj['service']['bType']=='Appointment') {
         this.appointmentClicked(actionObj['location'], actionObj['service']);
+        }
+        if(actionObj['service']['bType']=='Waitlist' || !actionObj['service']['bType']) {
+          console.log("***Waitlist***");
+          this.checkinClicked(actionObj['location'], actionObj['service']);
+        }
       }
 
 
