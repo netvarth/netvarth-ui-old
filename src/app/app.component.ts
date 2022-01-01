@@ -104,7 +104,7 @@ export class AppComponent implements OnInit {
     this.getAppVersion(projectConstantsLocal.S3UNIQUE_ID).then(
       (versionInfo) => {
         if (versionInfo) {
-          if (version.android_version !== versionInfo['playstore']['version']) {
+          if (version.android_version !== versionInfo['playstore']['version'] && !versionInfo['playstore']['playstore_review']) {
             this._forceUpdate(versionInfo);
           }
         }
