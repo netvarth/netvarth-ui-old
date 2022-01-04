@@ -1,6 +1,6 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { ProviderServices } from '../../../../../ynw_provider/services/provider-services.service';
+import { ProviderServices } from '../../../../services/provider-services.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
 // import { projectConstants } from '../../../../../app.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -211,6 +211,29 @@ export class DisplayboardsComponent implements OnInit, OnChanges {
     gotoDisplayboardQSet() {
         this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'q-set']);
     }
+
+    //this is new one
+
+    
+    // ViewDisplayboardLayout(layout) {
+    //     const navigationExtras: NavigationExtras = {
+    //         queryParams: {
+    //             value: 'view',
+    //             id: layout.id
+    //         }
+    //     };
+
+    //     // if(source){
+    //     //     this.router.navigate(['provider', 'settings', 'q-manager',
+    //     //     'displayboards', 'view'], navigationExtras);
+    //     // }
+    //     this.router.navigate(['provider', 'settings', 'q-manager',
+    //         'displayboards', 'view'], navigationExtras);
+    //     // this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'q-set','view'],navigationExtras);
+
+    // }
+
+// this is old one
     ViewDisplayboardLayout(layout) {
         const navigationExtras: NavigationExtras = {
             queryParams: {
@@ -218,15 +241,8 @@ export class DisplayboardsComponent implements OnInit, OnChanges {
                 id: layout.id
             }
         };
-
-        // if(source){
-        //     this.router.navigate(['provider', 'settings', 'q-manager',
-        //     'displayboards', 'view'], navigationExtras);
-        // }
         this.router.navigate(['provider', 'settings', 'q-manager',
             'displayboards', 'view'], navigationExtras);
-        // this.router.navigate(['provider', 'settings', 'q-manager', 'displayboards', 'q-set','view'],navigationExtras);
-
     }
     addToQBoardGroup(sel_QBoard, refreshInterval) {
         if (!this.sel_QBoard) {
@@ -330,30 +346,46 @@ export class DisplayboardsComponent implements OnInit, OnChanges {
                     this.container_count = data.length;
                 });
     }
-    goDisplayboardLayoutDetails(layout, source?) {
-        //this.id = layout.id;
-        const navigationExtras: NavigationExtras = {
-            queryParams: { type: 'wl' }
-        };
+    // this is for showing displayboard in same component
+    // goDisplayboardLayoutDetails(layout, source?) {
+    //     //this.id = layout.id;
+    //     const navigationExtras: NavigationExtras = {
+    //         queryParams: { type: 'wl' }
+    //     };
 
-        // this.router.navigate(['provider', 'settings', 'q-manager',
-        //     'displayboards', `${this.id}`], navigationExtras);
+    //     // this.router.navigate(['provider', 'settings', 'q-manager',
+    //     //     'displayboards', `${this.id}`], navigationExtras);
 
-        console.log("Layout : ", layout.name, layout.metric, layout.metric[0].queueSet['fieldList']);
+    //     console.log("Layout : ", layout.name, layout.metric, layout.metric[0].queueSet['fieldList']);
+    //     if (source) {
+    //         // const path = 'provider/settings/q-manager/displayboards/' + layout.id;
+    //         // const path = projectConstants.PATH + 'displayboard/' + layout.id + '?type=wl';
+    //         //  window.open(path, '_blank');
+    //         // const path = 'displayboard/' + layout.id + '?type=wl';
+    //         console.log("Route", 'displayboard/' + layout.id + '?type=wl')
+    //         this.router.navigate(['displayboard/'+layout.id],navigationExtras);
+
+    //         // this.router.navigate(['provider', 'settings', 'q-manager',
+    //         // 'displayboards', `${this.id}`]);
+    //         // this.router.navigate([path + `?${this.type='wl'}`]);
+    //     }
+
+    //     else {
+    //         const navigationExtras: NavigationExtras = {
+    //             queryParams: { id: layout.id }
+    //         };
+    //         this.router.navigate(['provider', 'settings', 'q-manager',
+    //             'displayboards', 'view'], navigationExtras);
+    //     }
+    // }
+
+    //this is for showing display baord in other window.
+    goDisplayboardLayoutDetails(layout,source){
         if (source) {
-            // const path = 'provider/settings/q-manager/displayboards/' + layout.id;
+            const path = 'displayboard/' + layout.id + '?type=wl';
             // const path = projectConstants.PATH + 'displayboard/' + layout.id + '?type=wl';
-            //  window.open(path, '_blank');
-            // const path = 'displayboard/' + layout.id + '?type=wl';
-            console.log("Route", 'displayboard/' + layout.id + '?type=wl')
-            this.router.navigate(['displayboard/'+layout.id],navigationExtras);
-
-            // this.router.navigate(['provider', 'settings', 'q-manager',
-            // 'displayboards', `${this.id}`]);
-            // this.router.navigate([path + `?${this.type='wl'}`]);
-        }
-
-        else {
+            window.open(path, '_blank');
+        } else {
             const navigationExtras: NavigationExtras = {
                 queryParams: { id: layout.id }
             };
