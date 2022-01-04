@@ -1,12 +1,12 @@
 <div class="lbl qset-detail">
     <div class="col-md-12 no-padding">
         <ul class="nav jd-custom-nav stat-brd-qset">
-            <!-- <li class="dropdown notifications-menu pull-left">
-                <div class="title">QBoard query</div>
-            </li> -->
             <li class="dropdown notifications-menu pull-left">
+                <div class="title">QBoard query</div>
+            </li>
+            <li class="dropdown notifications-menu pull-right">
                 <a class="bk-ctrl link">
-                    <span class="bold pointer-cursor mx-2" (click)="goBack()"><i class="bold fa fa-angle-left"></i><span
+                    <span class="bold pointer-cursor" (click)="goBack()"><i class="bold fa fa-angle-left"></i><span
                             class="backicon">QBoard</span></span>
                 </a>
             </li>
@@ -37,7 +37,7 @@
     <div class="clearfix"></div>
 
     <div class="ynw-common-form-nm" *ngIf="!api_loading && actionparam !== 'view'">
-        <!-- <div class="qwizard">
+        <div class="qwizard">
             <ul class="nav nav-tabs" id="myTab">
                 <div class="liner"></div>
                 <li>
@@ -66,590 +66,11 @@
                     </a>
                 </li>
             </ul>
-        </div> -->
+        </div>
         <div class="clearfix"></div>
 
         <div class="step1 mgn-up-20" *ngIf="step ===1">
-
-            <div class="card">
-                <div class="card-header bg-white">
-                    <span class="editbt" (click)="editStatusBoardById(displayBoardData.id)" style="float: right;"
-                        *ngIf="actionparam === 'view'"></span>
-
-                    <p class="col-md-12 col-lg-12 col-sm-12 col-xs-12 page-header mx-2 text-info">
-                        <!-- fa fa-arrow-left (click)="redirecToQmanager()" (click)="redirecToHelp()" style="border-bottom:solid lightgray; border-width: 1px;"-->
-                        <i class="fa fa-arrow-left text-info" (click)="goBack()"></i>
-
-                        <span class=" pointer-cursor "></span>&nbsp;&nbsp;
-                        QBoard Wizard
-
-                        <i class="fa fa-question-circle-o fa-lg text-secondary"></i>
-                    </p>
-                </div>
-
-                <div class="card-body jumbotron">
-                    <div class="row" style="margin-left: 2px; margin-right: 2px;">
-
-
-                        <div class="col-md-12 col-sm-12 col-lg-12 col-12 col-xs-12">
-
-                            <div class="text-center py-2">
-                                <!-- <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#myModal">
-                                    Show Preview
-                                </button> -->
-                                <!-- <p class="text-info text-center">
-                                    PREVIEW
-                                </p> -->
-                            </div>
-                            <!-- <div class="text-center">
-                                <button class="btn btn-outline-primary">Show Preview</button>
-                            </div> -->
-                            <div class="row mx-2 my-3">
-                                <!-- <p class="mx-4 text-primary">
-                                        QBOARD QUERY1
-                                    </p> -->
-
-                               
-                                    <table class="table table-bordered table-responsive bg-white roundered ">
-                                        <!-- *ngFor="let row of createRange(boardRows)" *ngFor="let col of createRange(boardCols)"  class="col-md-{{12/boardCols}}   col-sm-{{12/boardCols}} col-xs-{{12/boardCols}} text-center" -->
-
-                                        <thead >
-                                            <tr>
-                                                <th colspan="3" class="text-center text-secondary">
-                                                    {{layoutData.displayName | capitalizeFirst}}
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th *ngFor="let field of selectedData, let i=index">
-                                                    <span>{{i}}</span>&nbsp;
-                                                    <span class="text-center">
-                                                        {{field.displayName}}
-                                                    </span>
-                                                </th>
-
-                                            </tr>
-
-                                        </thead>
-                                        <tbody>
-
-                                            <!-- <tr *ngFor="let row of createRange(boardRows)">
-                                        <td *ngFor="let col of createRange(boardCols)"
-                                            class="col-md-{{12/boardCols}}   col-sm-{{12/boardCols}} col-xs-{{12/boardCols}} text-center">
-                                           
-                                    <tr>
-                                        <td *ngFor="let field of selectedData, let i=index">
-
-                                            <div class="d-flex flex-column justify-content-around bg-secondary">
-                                                <div
-                                                    class="p-2 bg-info d-flex flex-row flex-fill justify-content-around">
-                                                    <span> {{field.displayName}}</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </td>
-
-                                    </tr> -->
-
-                                            <!-- <tr class="text-center" *ngFor="let fields of selectedBoardData" >
-                                        <td style="margin: 2px; padding: 2px;"> {{fields.displayName}}</td>
-                                         <td style="margin: 2px; padding: 2px;">SERVICE</td>
-                                        <td style="margin: 2px; padding: 2px;">LABLE</td> 
-
-                                    </tr> -->
-
-
-
-
-
-                                        </tbody>
-                                    </table>
-                               
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-                <div class="row mx-2 my-3">
-                    <!-- <span class="editbt pull-right mx-2 my-2" (click)="editlayout(displayBoardData.id)"
-                        *ngIf="actionparam !=='add'"></span> -->
-                </div>
-
-                <div class="row mx-2 my-3">
-                    <div class="col-12 col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                        <form class="mx-2">
-                            <div class="row mx-2">
-                                <div class="col-12 col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    <p class="text-secondary" style="font-size: medium;">Display name for Query</p>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="inputEmail3"
-                                            [(ngModel)]="boardDisplayname" [ngModelOptions]="{standalone: true}"
-                                            placeholder="Name the QBoard query *">
-                                    </div>
-                                    <!-- <p class="text-secondary" style="font-size: medium;">Display name for QBoard</p>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Display Name for QBoard"
-                                            [(ngModel)]="displayName" autocomplete="off" id="inputEmail3"
-                                            [ngModelOptions]="{standalone: true}">
-                                    </div> -->
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    <p class="text-secondary" style="font-size: medium;">Choose what to display on
-                                        QBoard
-                                    </p>
-                                    <mat-radio-group [(ngModel)]="selectedCategory">
-                                        <mat-radio-button class="mgright50" [value]="'DEPARTMENT'"
-                                            *ngIf="departments.length > 0 && filterByDept"
-                                            (change)="categorySelection('DEPARTMENT')" aria-checked="true">
-                                            {{department_cap}}s</mat-radio-button>
-                                        <mat-radio-button class="mgright50" [value]="'SERVICE'" aria-checked="true"
-                                            *ngIf="services_list.length > 0" (change)="categorySelection('SERVICE')" checked>
-                                            {{service_caption}}
-                                        </mat-radio-button>
-                                        <mat-radio-button class="mgright50" [value]="'QUEUE'"
-                                            *ngIf="display_schedule.length > 0" (change)="categorySelection('QUEUE')"
-                                            aria-checked="true">
-                                            {{queue_cap}}
-                                        </mat-radio-button>
-                                    </mat-radio-group>
-
-                                    <!-- <div class="form-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="gridRadios"
-                                                id="gridRadios1" value="option1" checked>
-                                            <label class="form-check-label" for="gridRadios1">&nbsp; Services Offered
-
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="gridRadios"
-                                                id="gridRadios2" value="option2">
-                                            <label class="form-check-label" for="gridRadios2">&nbsp; Queues
-
-                                            </label>
-                                        </div>
-
-
-                                    </div> -->
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="row mx-2 my-3"></div>
-
-
-                            <div class="row  my-3">
-                                <div class="col-12 col-md-6 col-lg-6 col-xs-12 col-sm-12">
-
-                                    <!-- <p class="text-secondary" style="font-size: medium;">Choose Queues to Display</p>
-                                    <div class="form-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="gridRadios"
-                                                id="check1" value="option1" checked>
-                                            <label class="form-check-label" for="check1">&nbsp; QueueName1
-
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="gridRadios"
-                                                id="check2" value="option2" checked>
-                                            <label class="form-check-label" for="check2">&nbsp; QueueName1
-
-                                            </label>
-                                        </div>
-
-
-                                    </div> -->
-
-                                    <!-- <section class="example-section">
-                                        <span class="example-list-section">
-                                          <mat-checkbox class="example-margin"
-                                                        [checked]="allComplete"
-                                                        [color]="task.color"
-                                                        [indeterminate]="someComplete()"
-                                                        (change)="setAll($event.checked)">
-                                            {{task.name}}
-                                          </mat-checkbox>
-                                        </span>
-                                        <span class="example-list-section">
-                                          <ul>
-                                            <li *ngFor="let subtask of task.subtasks">
-                                              <mat-checkbox [(ngModel)]="subtask.completed"
-                                                            [color]="subtask.color"
-                                                            (ngModelChange)="updateAllComplete()">
-                                                {{subtask.name}}
-                                              </mat-checkbox>
-                                            </li>
-                                          </ul>
-                                        </span>
-                                      </section> -->
-
-
-
-
-
-
-
-
-
-                                    <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12"
-                                        *ngIf="selectedCategory !== 'QUEUE' ">
-                                        <!-- <label class="col-form-label mgn-bt-10 text-secondary" style="font-size: medium;">Choose
-                                            Services :</label> -->
-                                        <p class="text-secondary" style="font-size: medium;">Choose Services :</p>
-
-                                        <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                            <mat-form-field *ngIf="services_list.length > 0">
-                                                <mat-select [(ngModel)]="servMultiCtrl"
-                                                    [ngModelOptions]="{standalone: true}" placeholder="Services"
-                                                    [multiple]="true">
-                                                    <ngx-mat-select-search [formControl]="serviceMultiFilterCtrl"
-                                                        placeholderLabel="Search services"
-                                                        noEntriesFoundLabel="No matching service found">
-                                                    </ngx-mat-select-search>
-                                                    <mat-option *ngFor="let service of servicesList" [value]="service"
-                                                        (click)="setServiceIds(service.id)">
-                                                        {{service.name | capitalizeFirst}}
-                                                    </mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                            <div class="mgn-lt-5 disabled-text" *ngIf="services_list.length === 0">
-                                                No services
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12"
-                                            *ngIf="servMultiCtrl.length > 0">
-                                            <p>
-                                                Selected Services:
-                                            </p>
-                                            <ul *ngFor="let service of servMultiCtrl">
-                                                <li>{{service.name | capitalizeFirst}}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-
-                                <div class="col-12 col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    <p class="text-secondary" style="font-size: medium;">Select Waitlist Status</p>
-                                    <div class="form-group d-flex flex-row">
-                                        <mat-checkbox class="example-margin" *ngFor="let status of waitlistStatuses"
-                                            style="margin-left: 30px" [value]="status.value"
-                                            (change)="waitlistSelection(status.value)"
-                                            [checked]="selectedWtlstList.indexOf(status.value) !==-1">
-                                            {{status.displayName}} <br>
-                                        </mat-checkbox><br>
-                                        <!-- <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="gridRadios"
-                                                id="check1" value="option1">
-                                            <label class="form-check-label" for="check1">&nbsp; Checked In
-
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="gridRadios"
-                                                id="check1" value="option1" checked>
-                                            <label class="form-check-label" for="check1">&nbsp; Arrived
-
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="gridRadios"
-                                                id="check1" value="option1" checked>
-                                            <label class="form-check-label" for="check1">&nbsp; Started
-
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="gridRadios"
-                                                id="check2" value="option2">
-                                            <label class="form-check-label" for="check2">&nbsp; Completed
-
-                                            </label>
-                                        </div> -->
-
-
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-                            <div class="clearfix"></div>
-
-                            <div class="row mx-2 my-3">
-                                <div class="col-12 col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    <div class="form-group col-lg-12 col-xs-12 col-sm-12">
-                                        <!-- <label class="col-form-label mgn-bt-10 text-secondary" style="font-size: medium;">Choose
-                                            Queues :</label> -->
-                                        <p class="text-secondary" style="font-size: medium;">Choose Queues :</p>
-
-                                        <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                            <mat-form-field
-                                                *ngIf="display_schedule.length > 0 && serviceScheduleCount !== 0">
-                                                <mat-select [(ngModel)]="qMultiCtrl"
-                                                    [ngModelOptions]="{standalone: true}" placeholder="Queues"
-                                                    [multiple]="true">
-                                                    <ngx-mat-select-search [formControl]="qMultiFilterCtrl"
-                                                        placeholderLabel="Search queues"
-                                                        noEntriesFoundLabel="No matching queue found">
-                                                    </ngx-mat-select-search>
-                                                    <mat-option *ngFor="let schedule of display_scheduleList"
-                                                        [value]="schedule"
-                                                        (click)="queueSelection(schedule.id, 'QUEUE')">
-                                                        {{schedule.name}}
-                                                        [{{schedule.displayQ.dstr | capitalizeFirst}} -
-                                                        {{schedule.displayQ.time}}]
-                                                    </mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                            <div class="mgn-lt-5 disabled-text"
-                                                *ngIf="display_schedule.length === 0 || serviceScheduleCount === 0">
-                                                No queues
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-md-6 col-xs-12 col-sm-6"
-                                            *ngIf="qMultiCtrl.length > 0">
-                                            <p>
-                                                Selected Queues:
-                                            </p>
-                                            <ul *ngFor="let schedule of qMultiCtrl">
-                                                <li>
-                                                    {{schedule.name}}
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    <p class="text-secondary" style="font-size: medium;">Select Lable :</p>
-                                    <div class="form-group">
-                                        <!-- <label for="sel1"></label>
-                                        <select class="form-control" id="sel1">
-                                            <option selected>VIP</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                        </select> -->
-
-                                        <mat-form-field>
-                                            <mat-select [(ngModel)]="labelMultiCtrl"
-                                                [ngModelOptions]="{standalone: true}" placeholder="Labels"
-                                                [multiple]="true">
-                                                <ngx-mat-select-search [formControl]="labelMultiFilterCtrl"
-                                                    placeholderLabel="Search labels"
-                                                    noEntriesFoundLabel="No matching label found">
-                                                </ngx-mat-select-search>
-                                                <!-- <mat-option *ngFor="let label of providerLabelsList" [value]="label"
-                                                    (click)="labelClick(label)">
-                                                    {{label.displayName}}
-                                                </mat-option> -->
-                                                <mat-option [value]="'all'" (click)="providerLabelSelection()">
-                                                    -- Select Label --
-                                                </mat-option>
-                                                <mat-option *ngFor="let label of providerLabelsList" [value]="label"
-                                                    (click)="providerLabelSelection(label)">
-                                                    {{label.displayName}}
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                                <!-- <div class="col-12 col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    <div class="form-group col-md-12 col-sm-12 col-xs-12"
-                                        *ngIf="selectedCategory !== 'QUEUE' && selectedCategory !== 'SERVICE' && 'deptMultiCtrl.length > 0'">
-                                        <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
-                                            Department</label>
-                                        <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-6">
-                                            <mat-form-field>
-                                                <mat-select [(ngModel)]="deptMultiCtrl" placeholder="Departments"
-                                                    [multiple]="true">
-                                                    <ngx-mat-select-search [formControl]="deptMultiFilterCtrl"
-                                                        placeholderLabel="Search departments"
-                                                        noEntriesFoundLabel="No matching department found">
-                                                    </ngx-mat-select-search>
-                                                    <mat-option *ngFor="let department of departmentList"
-                                                        [value]="department"
-                                                        (click)="setDeptIds(department.departmentId)">
-                                                        {{department.departmentName | capitalizeFirst}}
-                                                    </mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="form-group col-md-6 col-xs-12 col-sm-6"
-                                            *ngIf="deptMultiCtrl.length > 0">
-                                            <p>
-                                                Selected Departments:
-                                            </p>
-                                            <ul *ngFor="let department of deptMultiCtrl">
-                                                <li>
-                                                    {{department.departmentName}}
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                </div> -->
-                                <!-- <div class="col-12 col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    <div class="form-group col-md-12 col-sm-12 col-xs-12"
-                                        *ngIf="selectedCategory !== 'QUEUE' && selectedCategory !== 'SERVICE' ">
-                                        <label class="col-form-label" style="margin-left: 20px">Choose
-                                            {{provider_label | capitalizeFirst}}s</label>
-                                        <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-6">
-                                            <mat-form-field *ngIf="users.length > 0">
-                                                <mat-select [(ngModel)]="userMultiCtrl"
-                                                    placeholder="{{provider_label | capitalizeFirst}}s"
-                                                    [multiple]="true">
-                                                    <ngx-mat-select-search [formControl]="userMultiFilterCtrl"
-                                                        placeholderLabel="Search {{provider_label}}s"
-                                                        noEntriesFoundLabel="No matching {{provider_label}} found">
-                                                    </ngx-mat-select-search>
-                                                    <mat-option *ngFor="let user of userList" [value]="user"
-                                                        (click)="setUsersIds(user.id)">
-                                                        {{(user.businessName) ? user.businessName : user.firstName + ' '
-                                                        + user.lastName}}
-                                                    </mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                            <div class="mgn-lt-5 disabled-text" *ngIf="users.length === 0">
-                                                No {{provider_label}}s
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-md-6 col-xs-12 col-sm-6"
-                                            *ngIf="userMultiCtrl.length > 0">
-                                            <p>
-                                                Selected {{provider_label}}s:
-                                            </p>
-                                            <ul *ngFor="let user of userMultiCtrl">
-                                                <li>
-                                                    {{(user.businessName) ? user.businessName : user.firstName + ' ' +
-                                                    user.lastName}}
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div> -->
-                            </div>
-                            <div class="clearfix"></div>
-
-
-                            <div class="row mx-2 my-3">
-
-
-
-
-                                <div class="col-12 col-md-8 col-lg-8 col-xs-12 col-sm-12">
-
-                                    <p class="text-secondary" style="font-size: medium;">Choose Queues to
-                                        Display</p>
-                                    <div class="form-group">
-                                        <!-- <label class="col-form-label">QBoard field to
-                                                        display</label> -->
-                                        <div class="disply-field" *ngFor="let label of defaultLabels; let i = index">
-                                            <mat-checkbox class="example-margin" style="margin-left: 20px"
-                                                (change)="labelSelection(i,$event,label.name)"
-                                                [checked]="defaultLabels[i].checked">
-                                                {{label.displayname}}
-                                            </mat-checkbox>
-                                            <div class="form-group col-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 row otp_scr fieldval"
-                                                *ngIf="showLabelEdit[i] && label.name !== 'calling'">
-                                                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                                    <mat-form-field>
-                                                        <input matInput type="text" class="form-control" id="fieldName"
-                                                            placeholder="Enter Displayname" autocomplete="off"
-                                                            (blur)="getLabelName(labelDisplayname[i], label)"
-                                                            [(ngModel)]="labelDisplayname[i]">
-                                                    </mat-form-field>
-                                                </div>
-                                                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12"
-                                                    *ngIf="label.label">
-                                                    <mat-form-field>
-                                                        <input matInput type="text" class="form-control"
-                                                            id="labelDisplayname" placeholder="Enter Defaultvalue"
-                                                            (blur)="getLabelvalue(labelDefaultvalue[i], label)"
-                                                            autocomplete="off" [(ngModel)]="labelDefaultvalue[i]">
-                                                    </mat-form-field>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-12 col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    <!-- <p class="text-secondary" style="font-size: medium;">Select Lable :</p>
-                                                <div class="form-group">
-                                                    <label for="sel1"></label>
-                                                    <select class="form-control" id="sel1">
-                                                        <option selected>VIP</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                    </select>
-                                                </div> -->
-
-
-                                    <label class="col-form-label mgn-lt-20">
-                                        Select order of QBoard fields</label>
-                                    <ul class="info-lst serviceadd-info mgn-lt-20 mgn-bt-30">
-                                        <li>To change the QBoard fields order, drag and drop.
-                                        </li>
-                                    </ul>
-                                    <div class="field-list mgn-lt-20 mgn-rt-20 col-md-5 no-padding"
-                                        *ngIf="labelsList.length > 0" cdkDropList (cdkDropListDropped)="drop($event)">
-                                        <div class="example-box QBfield-box" cdkDragBoundary=".field-list"
-                                            *ngFor="let field of labelsList; let i = index" cdkDrag>
-                                            <div class="red col-md-1 no-padding">
-                                                <i class="fa fa-minus-circle" aria-hidden="true"
-                                                    (click)="removeFIeldFromArray(field.name, i)"></i>
-                                            </div>&nbsp;&nbsp;
-                                            <div class="col-md-10 no-padding"> {{field.displayName}} </div>
-                                            &nbsp;
-                                            <div class="col-md-1 no-padding" cdkDragHandle
-                                                style="color: #ccc;cursor: move;">
-                                                <i class="fa fa-arrows" aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-
-                                <!-- <button type="submit" class="pull-right btn btn-primary mx-2">NEXT
-                                        </button>&nbsp; &nbsp; <span></span>
-                                        <button type="submit" class="pull-right btn btn-primary mx-2">DISCARD</button>
-                                        &nbsp; -->
-
-
-                            </div>
-                            <div class="clearfix"></div>
-
-                            <!-- <button type="submit" class="pull-right btn btn-primary mx-2">NEXT
-                            </button>&nbsp; &nbsp; <span></span>
-                            <button type="submit" class="pull-right btn btn-primary mx-2">DISCARD</button>
-                            &nbsp; -->
-
-                        </form>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-
-
-            </div>
-
-            <!-- <div class="col-md-12  col-12 control mgn-bt-20 mgn-lt-20 mgn-up-20 pull-right">
-                <button mat-button type="button" (click)="showStep(2)" class="cs-btn bt1">Next</button>
-            </div> -->
-            <div class="control mgn-bt-20 mgn-lt-20 mgn-up-20 pull-right mx-2 py-2">
-                <!-- <button mat-button type="button" (click)="showStep(1)" class="cs-btn bt1">Back</button>&nbsp; -->
-                <button mat-button type="button" (click)="onSubmit()" class="cs-btn bt1">Save</button>
-            </div>
-
-
-
-            <!-- <div class="form-group col-md-6">
+            <div class="form-group col-md-6">
                 <div class="col-md-12">
                     <mat-form-field>
                         <input matInput type="text" class="form-control" id="bName" autocomplete="off"
@@ -689,163 +110,134 @@
             </div>
             <div class="col-md-6 col-12 control mgn-bt-20 mgn-lt-20 mgn-up-20">
                 <button mat-button type="button" (click)="showStep(2)" class="cs-btn bt1">Next</button>
-            </div> -->
+            </div>
         </div>
         <div class="clearfix"></div>
 
         <div class="step2 mgn-up-20" *ngIf="step ===2">
-
-            <div class="card">
-                <div class="card-header bg-white">
-                    <p class="col-md-12 page-header mx-2 text-info">
-                        <!-- fa fa-arrow-left (click)="redirecToQmanager()" (click)="redirecToHelp()" style="border-bottom:solid lightgray; border-width: 1px;"-->
-                        <span class=" pointer-cursor "></span>&nbsp;&nbsp;
-                        QBoard Wizard
-
-                        <i class="fa fa-question-circle-o fa-lg text-secondary"></i>
+            <div class="form-group col-md-12 col-sm-12 col-xs-12"
+                *ngIf="selectedCategory !== 'QUEUE' && selectedCategory !== 'SERVICE'">
+                <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
+                    Department</label>
+                <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="deptMultiCtrl" placeholder="Departments" [multiple]="true">
+                            <ngx-mat-select-search [formControl]="deptMultiFilterCtrl"
+                                placeholderLabel="Search departments"
+                                noEntriesFoundLabel="No matching department found"></ngx-mat-select-search>
+                            <mat-option *ngFor="let department of departmentList" [value]="department"
+                                (click)="setDeptIds(department.departmentId)">
+                                {{department.departmentName | capitalizeFirst}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="deptMultiCtrl.length > 0">
+                    <p>
+                        Selected Departments:
                     </p>
+                    <ul *ngFor="let department of deptMultiCtrl">
+                        <li>
+                            {{department.departmentName}}
+                        </li>
+                    </ul>
                 </div>
-
-                <div class="card-body jumbotron">
-                    <div class="row roundered" style="margin-left: 2px; margin-right: 2px;">
-
-
-                        <div class="col-12 col-md-12 col-lg-12 col-xs-12">
-                            <!-- <p class="text-info text-center">
-                                PREVIEW
-                            </p> -->
-                            <div class="row">
-                                <!-- <p class="mx-4 text-primary">
-                                        QBOARD QUERY1
-                                    </p> -->
-                            </div>
-                            <table class="table table-bordered bg-white roundered" style="box-shadow: 2px;">
-
-                                <thead>
-                                    <tr class="text-center">
-                                        <th colspan="3" class="text-center text-secondary">QBOARD QUERY1</th>
-                                    </tr>
-
-                                </thead>
-                                <tbody>
-                                    <tr class="text-center">
-                                        <td style="margin: 2px; padding: 2px;">TOKEN</td>
-                                        <td style="margin: 2px; padding: 2px;">SERVICE</td>
-                                        <td style="margin: 2px; padding: 2px;">LABLE</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-
-
-
-
-                                </tbody>
-                            </table>
-                        </div>
-
-
-                    </div>
-                </div>
-
-                <div class="row mx-2 my-3">
-                    <div class="col-12 col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                        <form class="mx-2">
-
-
-                            <div class="row mx-2 my-3">
-                                <div class="col-12 col-md-8 col-lg-8 col-xs-12 col-sm-12">
-
-                                    <p class="text-secondary" style="font-size: medium;">Choose Queues to Display</p>
-                                    <div class="form-group">
-                                        <label class="col-form-label">QBoard field to
-                                            display</label>
-                                        <div class="disply-field" *ngFor="let label of defaultLabels; let i = index">
-                                            <mat-checkbox class="example-margin" style="margin-left: 20px"
-                                                (change)="labelSelection(i,$event,label.name)"
-                                                [checked]="defaultLabels[i].checked">
-                                                {{label.displayname}}
-                                            </mat-checkbox>
-                                            <div class="form-group col-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 row otp_scr fieldval"
-                                                *ngIf="showLabelEdit[i] && label.name !== 'calling'">
-                                                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                                    <mat-form-field>
-                                                        <input matInput type="text" class="form-control" id="fieldName"
-                                                            placeholder="Enter Displayname" autocomplete="off"
-                                                            (blur)="getLabelName(labelDisplayname[i], label)"
-                                                            [(ngModel)]="labelDisplayname[i]">
-                                                    </mat-form-field>
-                                                </div>
-                                                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12"
-                                                    *ngIf="label.label">
-                                                    <mat-form-field>
-                                                        <input matInput type="text" class="form-control"
-                                                            id="labelDisplayname" placeholder="Enter Defaultvalue"
-                                                            (blur)="getLabelvalue(labelDefaultvalue[i], label)"
-                                                            autocomplete="off" [(ngModel)]="labelDefaultvalue[i]">
-                                                    </mat-form-field>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-12 col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    <!-- <p class="text-secondary" style="font-size: medium;">Select Lable :</p>
-                                    <div class="form-group">
-                                        <label for="sel1"></label>
-                                        <select class="form-control" id="sel1">
-                                            <option selected>VIP</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                        </select>
-                                    </div> -->
-
-
-                                    <label class="col-form-label mgn-lt-20">
-                                        Select order of QBoard fields</label>
-                                    <ul class="info-lst serviceadd-info mgn-lt-20 mgn-bt-30">
-                                        <li>To change the QBoard fields order, drag and drop.
-                                        </li>
-                                    </ul>
-                                    <div class="field-list mgn-lt-20 mgn-rt-20 col-md-5 no-padding"
-                                        *ngIf="labelsList.length > 0" cdkDropList (cdkDropListDropped)="drop($event)">
-                                        <div class="example-box QBfield-box" cdkDragBoundary=".field-list"
-                                            *ngFor="let field of labelsList; let i = index" cdkDrag>
-                                            <div class="red col-md-1 no-padding">
-                                                <i class="fa fa-minus-circle" aria-hidden="true"
-                                                    (click)="removeFIeldFromArray(field.name, i)"></i>
-                                            </div>&nbsp;&nbsp;
-                                            <div class="col-md-10 no-padding"> {{field.displayName}} </div> &nbsp;
-                                            <div class="col-md-1 no-padding" cdkDragHandle
-                                                style="color: #ccc;cursor: move;">
-                                                <i class="fa fa-arrows" aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <!-- <button type="submit" class="pull-right btn btn-primary mx-2">NEXT
-                            </button>&nbsp; &nbsp; <span></span>
-                            <button type="submit" class="pull-right btn btn-primary mx-2">DISCARD</button>
-                            &nbsp; -->
-
-                        </form>
-                    </div>
-                </div>
-
             </div>
-
-            <div class="control mgn-bt-20 mgn-lt-20 mgn-up-20 pull-right">
+            <div class="form-group col-md-12 col-sm-12 col-xs-12"
+                *ngIf="selectedCategory !== 'QUEUE' && selectedCategory !== 'SERVICE'">
+                <label class="col-form-label" style="margin-left: 20px">Choose
+                    {{provider_label | capitalizeFirst}}s</label>
+                <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                    <mat-form-field *ngIf="users.length > 0">
+                        <mat-select [(ngModel)]="userMultiCtrl" placeholder="{{provider_label | capitalizeFirst}}s"
+                            [multiple]="true">
+                            <ngx-mat-select-search [formControl]="userMultiFilterCtrl"
+                                placeholderLabel="Search {{provider_label}}s"
+                                noEntriesFoundLabel="No matching {{provider_label}} found"></ngx-mat-select-search>
+                            <mat-option *ngFor="let user of userList" [value]="user" (click)="setUsersIds(user.id)">
+                                <!-- {{user.firstName}} {{user.lastName}} -->
+                                {{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div class="mgn-lt-5 disabled-text" *ngIf="users.length === 0">
+                        No {{provider_label}}s
+                    </div>
+                </div>
+                <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="userMultiCtrl.length > 0">
+                    <p>
+                        Selected {{provider_label}}s:
+                    </p>
+                    <ul *ngFor="let user of userMultiCtrl">
+                        <li>
+                            <!-- {{user.firstName}} {{user.lastName}} -->
+                            {{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group col-md-12 col-sm-12 col-xs-12" *ngIf="selectedCategory !== 'QUEUE'">
+                <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
+                    Services</label>
+                <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                    <mat-form-field *ngIf="services_list.length > 0">
+                        <mat-select [(ngModel)]="servMultiCtrl" placeholder="Services" [multiple]="true">
+                            <ngx-mat-select-search [formControl]="serviceMultiFilterCtrl"
+                                placeholderLabel="Search services" noEntriesFoundLabel="No matching service found">
+                            </ngx-mat-select-search>
+                            <mat-option *ngFor="let service of servicesList" [value]="service"
+                                (click)="setServiceIds(service.id)">
+                                {{service.name | capitalizeFirst}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div class="mgn-lt-5 disabled-text" *ngIf="services_list.length === 0">
+                        No services
+                    </div>
+                </div>
+                <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="servMultiCtrl.length > 0">
+                    <p>
+                        Selected Services:
+                    </p>
+                    <ul *ngFor="let service of servMultiCtrl">
+                        <li>{{service.name | capitalizeFirst}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                <label class="col-form-label mgn-bt-10" style="margin-left: 20px">Choose
+                    Queues</label>
+                <div class="form-group col-md-6 col-xs-12 col-sm-6">
+                    <mat-form-field *ngIf="display_schedule.length > 0 && serviceScheduleCount !== 0">
+                        <mat-select [(ngModel)]="qMultiCtrl" placeholder="Queues" [multiple]="true">
+                            <ngx-mat-select-search [formControl]="qMultiFilterCtrl" placeholderLabel="Search queues"
+                                noEntriesFoundLabel="No matching queue found"></ngx-mat-select-search>
+                            <mat-option *ngFor="let schedule of display_scheduleList" [value]="schedule"
+                                (click)="queueSelection(schedule.id, 'QUEUE')">
+                                {{schedule.name}}
+                                [{{schedule.displayQ.dstr | capitalizeFirst}} - {{schedule.displayQ.time}}]
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div class="mgn-lt-5 disabled-text"
+                        *ngIf="display_schedule.length === 0 || serviceScheduleCount === 0">
+                        No queues
+                    </div>
+                </div>
+                <div class="form-group col-md-6 col-xs-12 col-sm-6" *ngIf="qMultiCtrl.length > 0">
+                    <p>
+                        Selected Queues:
+                    </p>
+                    <ul *ngFor="let schedule of qMultiCtrl">
+                        <li>
+                            {{schedule.name}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="control mgn-bt-20 mgn-lt-20 mgn-up-20">
                 <button mat-button type="button" (click)="showStep(1)" class="cs-btn bt1">Back</button>&nbsp;
-                <button mat-button type="button" (click)="onSubmit()" class="cs-btn bt1">Next</button>
+                <button mat-button type="button" (click)="showStep(3)" class="cs-btn bt1">Next</button>
             </div>
         </div>
         <div class="clearfix"></div>
@@ -872,24 +264,24 @@
                     Select Label
                 </label>
                 <mat-form-field>
-                    <mat-select [(ngModel)]="labelMultiCtrl" [ngModelOptions]="{standalone: true}" placeholder="Labels"
-                        [multiple]="true">
+                    <mat-select [(ngModel)]="labelMultiCtrl" placeholder="Labels" [multiple]="true">
                         <ngx-mat-select-search [formControl]="labelMultiFilterCtrl" placeholderLabel="Search labels"
                             noEntriesFoundLabel="No matching label found"></ngx-mat-select-search>
                         <!-- <mat-option *ngFor="let label of providerLabelsList" [value]="label"
                             (click)="labelClick(label)">
                             {{label.displayName}}
                         </mat-option> -->
-                        <mat-option [value]="'all'" (click)="providerLabelSelection()">
-                            -- Select Label --
-                        </mat-option>
+                        <mat-option [value]="'all'"
+                        (click)="providerLabelSelection()">
+                        -- Select Label --
+                    </mat-option>
                         <mat-option *ngFor="let label of providerLabelsList" [value]="label"
                             (click)="providerLabelSelection(label)">
                             {{label.displayName}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-
+               
             </div>
             <!-- <div class="sort-label col-md-12">
                 <label class="col-form-label mgn-bt-10">
@@ -974,175 +366,4 @@
         <div class="clearfix"></div>
     </div>
     <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
-</div>
-
-
-
-<!-- The Modal -->
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog modal-dialog-centered  modal-xl">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">QBoard Query</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <div class="display-content">
-                    <!-- <div class="mgn-up-5 mgn-bt-5 brd-bt" *ngIf="isContainer">
-                        <div class="branch-sp">
-                            <div class="col-md-12 no-padding">
-                                <div *ngIf="glogo!=''" class="logo col-md-2 col-sm-2 col-xs-3 no-padding-small"
-                                    [ngClass]="gPosition=='RIGHT'?'pull-right':'pull-left'">
-                                    <img [src]="glogo" width="{{gLogoWidth}}" height="{{gLogoHeight}}" alt="Image"
-                                        [ngClass]="position=='RIGHT'?'pull-right':'pull-left'" />
-                                </div>
-                                <div class=""
-                                    [ngClass]="{'col-md-12 col-sm-12 col-xs-12 no-padding': glogo=='','col-md-10 col-sm-10 col-xs-9 no-padding': glogo!='' } "
-                                    [innerHTML]="qBoardGroupTitle">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div> -->
-                    <!-- <div class="mgn-up-5 mgn-bt-5">
-                        <div class="branch-sp">
-                            <div class="col-md-12 no-padding">
-                                <div *ngIf="blogo!=''" class="logo col-md-2 col-sm-2 col-xs-3 no-padding-small"
-                                    [ngClass]="position=='RIGHT'?'pull-right':'pull-left'">
-                                    <img [src]="blogo" width="{{bLogoWidth}}" height="{{bLogoHeight}}" alt="Image"
-                                        [ngClass]="position=='RIGHT'?'pull-right':'pull-left'" />
-                                </div>
-                                <div class=""
-                                    [ngClass]="{'col-md-12 col-sm-12 col-xs-12 no-padding': blogo=='','col-md-10 col-sm-10 col-xs-9 no-padding': blogo!=''}"
-                                    [innerHTML]="qBoardTitle">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div> -->
-                    <div class="content-lst col-md-12 no-padding" [ngStyle]="{'height.px': fullHeight}">
-                        <div class="form-group">
-                            <div class="tab-lst">
-
-                                <!--<div class="col-md-12 col-lg-12 col-12 no-padding board-box"> *ngFor="let row of createRange(boardRows)" *ngFor="let col of createRange(boardCols)"  [ngStyle]="{'height.px': boardHeight,'max-height.px': boardHeight,'min-height.px': boardHeight}" {{12/boardCols}} col-sm-{{12/boardCols}} col-xs-{{12/boardCols}}-->
-
-                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                    <!--*ngIf="selectedDisplayboards[row + '_' + col]" <div class="qset-name" *ngIf="selectedDisplayboards[row + '_' + col]['board']">
-                                                {{selectedDisplayboards[row + '_' + col]['board'].displayName}}
-                                            </div> -->
-                                    <table class="table table-bordered table-responsive bg-white roundered "
-                                        style="box-shadow: 2px;">
-
-                                        <thead>
-                                            <tr class="text-center">
-                                                <th colspan="3" class="text-center text-secondary">
-                                                    {{displayName | capitalizeFirst}}
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th *ngFor="let field of selectedData, let i=index">
-                                                    <span>{{i}}</span>&nbsp;
-                                                    <span class="text-center">
-                                                        {{field.displayName}}
-                                                    </span>
-                                                </th>
-
-                                            </tr>
-
-                                        </thead>
-                                        <tbody>
-
-
-                                            <!-- <tr class="text-center" *ngFor="let fields of selectedBoardData" >
-                                                    <td style="margin: 2px; padding: 2px;"> {{fields.displayName}}</td>
-                                                     <td style="margin: 2px; padding: 2px;">SERVICE</td>
-                                                    <td style="margin: 2px; padding: 2px;">LABLE</td> 
-            
-                                                </tr> -->
-
-
-
-
-
-                                        </tbody>
-                                    </table>
-
-                                    <!-- <table class="table table-striped responsive-table"
-                                                *ngIf="selectedDisplayboards[row + '_' + col]['board']">
-                                                <thead>
-                                                    <tr *ngIf="selectedDisplayboards[row + '_' + col]['board']">
-                                                        <th class="qset-name"
-                                                            [attr.colspan]="(selectedDisplayboards[row + '_' + col]['board']).fieldList.length">
-                                                            {{displayboardDetails.displayName}}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="qset-name"
-                                                            *ngFor="let field of selectedData[row + '_' + col]['board'].fieldList">
-                                                            <span *ngIf="field.name !== 'calling'"> {{field.displayName}}</span></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody style="overflow: scroll;">
-                                                    <tr class="txt-align-center" *ngFor="let checkin of selectedDisplayboards[row + '_' + col]['checkins']"
-                                                        [class.startWaitlist]="checkin.callingStatus">
-                                                        <td
-                                                            *ngFor="let field of selectedDisplayboards[row + '_' + col]['board'].fieldList">
-                                                            {{getFieldValue(field, checkin)}}
-                                                            <span class="blinking"
-                                                                *ngIf="field.name === 'calling' && checkin.callingStatus">
-                                                                Calling .....</span>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table> -->
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="clearfix"></div>
-                    <!-- <div class="mgn-up-5 mgn-bt-5" *ngIf="!isContainer">
-                        <div class="branch-sp">
-                            <div class="col-md-12 no-padding">
-                                <div class="col-md-12 col-sm-12 col-xs-12 no-padding" [innerHTML]="qBoardFooter">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div> -->
-                    <!-- <div class="mgn-up-5 mgn-bt-5 brd-bt" *ngIf="isContainer">
-                        <div class="branch-sp">
-                            <div class="col-md-12 no-padding">
-                                <div class="col-md-12 col-sm-12 col-xs-12 no-padding" [innerHTML]="qBoardGroupFooter">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div> -->
-
-                    <div class="clearfix"></div>
-                    <!-- <footer class="main-footer">
-                        <div class="pull-right hidden-xs footer_info">
-                            <b>Version</b> 1.1.5
-                        </div>
-
-                        <span class="footer_info">Copyright &copy; 2021 Jaldee Inc.</span> &nbsp; <span
-                            class="footer_info">All rights
-                            reserved.</span>
-                    </footer> -->
-                </div>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-
-        </div>
-    </div>
 </div>
