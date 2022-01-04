@@ -8,17 +8,13 @@ export class GlobalErrorHandler implements ErrorHandler {
     }
 
     handleError(error: any): void {
-    
         const mailError = {};
-     
-       
-      
-        mailError['source']='viswasampada-app';
+        mailError['source']='Shanthidham';
         mailError['errorName']=error.name;
         mailError['errorMessage']=error.message;
         mailError['errorStack'] = error.stack;
         console.log('inside global error');
-       
+       console.log(error);
         const chunkFailedMessage = /Loading chunk [\d]+ failed/;
         if (chunkFailedMessage.test(error.message)) {
             window.location.reload();

@@ -5,7 +5,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule, MatOptionModule, MatRippleModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -49,6 +49,7 @@ import { CdkTableModule } from '@angular/cdk/table';
         MatInputModule,
         MatListModule,
         MatMenuModule,
+        MatOptionModule,
         MatNativeDateModule,
         MatPaginatorModule,
         MatProgressBarModule,
@@ -100,6 +101,7 @@ import { CdkTableModule } from '@angular/cdk/table';
         MatTabsModule,
         MatToolbarModule,
         MatTooltipModule,
+        MatOptionModule,
         CdkTableModule
     ],
     schemas: [

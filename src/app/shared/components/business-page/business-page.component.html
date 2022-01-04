@@ -31,11 +31,11 @@
                          <div class="name-dept" style="text-align: center;">
                              <div class="bname dept">{{businessjson.businessName | capitalizeFirst}}</div>
                              <div class="bname">{{businessjson.businessUserName | capitalizeFirst}}</div>
-                             <div *ngIf="businessjson.businessDesc.length>1" class="subhead">About us</div>
-                             <div *ngIf="businessjson.businessDesc.length>1" class="bname dept">{{businessjson.businessDesc | capitalizeFirst}}</div>
+                             <div *ngIf="businessjson.businessDesc && businessjson.businessDesc.length>1" class="subhead">About us</div>
+                             <div *ngIf="businessjson.businessDesc && businessjson.businessDesc.length>1" class="bname dept">{{businessjson.businessDesc | capitalizeFirst}}</div>
                              
-                             <div *ngIf="businessjson.specialization.length>0" class="subhead">Specialization</div>
-                             <div *ngIf="businessjson.specialization.length>0" class="bname">{{businessjson.specialization[0] | capitalizeFirst}}</div>
+                             <div *ngIf="businessjson.specialization && businessjson.specialization.length>0" class="subhead">Specialization</div>
+                             <div *ngIf="businessjson.specialization && businessjson.specialization.length>0" class="bname">{{businessjson.specialization[0] | capitalizeFirst}}</div>
                              <div  class="subhead" *ngIf="mobileNo || email">Contact Us</div>
                              <div class="bname" *ngIf="mobileNo">+{{countryCode}} {{mobileNo}}</div>
                              <div class="bname">{{email}}</div>

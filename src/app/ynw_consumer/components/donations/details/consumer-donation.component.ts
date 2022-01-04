@@ -1,8 +1,8 @@
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, Location } from '@angular/common';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
@@ -219,6 +219,12 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     private subs = new SubSink();
     donorFirstName = '';
     donorLastName = '';
+    bookStep = 'donation';
+    questionnaireList: any = [];
+    questionAnswers: any;
+    @ViewChild('closebutton') closebutton;
+    isClickedOnce = false;
+    loading = true;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -236,7 +242,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         public razorpayService: RazorpayService,
         public prefillmodel: RazorpayprefillModel,
         public winRef: WindowRefService,
-        private s3Processor: S3UrlProcessor) {
+        private s3Processor: S3UrlProcessor,
+        private location: Location) {
         this.subs.sink = this.route.queryParams.subscribe(
             params => {
                 // tslint:disable-next-line:radix
@@ -244,6 +251,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 this.account_id = params.account_id;
                 this.provider_id = params.unique_id;
                 this.sel_ser = JSON.parse(params.service_id);
+                this.getConsumerQuestionnaire();
                 // this.action = params.action;
             });
     }
@@ -466,10 +474,12 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
 
     // }
     payuPayment() {
+        this.isClickedOnce = true;
         this.resetApi();
         if (this.sel_ser) {
 
         } else {
+            this.isClickedOnce = false;
             this.snackbarService.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
             return;
         }
@@ -478,10 +488,12 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.donate(paymentWay);
     }
     paytmPayment() {
+        this.isClickedOnce = true;
         this.resetApi();
         if (this.sel_ser) {
 
         } else {
+            this.isClickedOnce = false;
             this.snackbarService.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
             return;
         }
@@ -531,46 +543,65 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addCustomerDonation(post_Data, this.account_id)
             .subscribe(data => {
                 this.uid = data['uid'];
-                const payInfo = {
-                    'amount': post_Data.donationAmount,
-                    'custId': this.customer_data.id,
-                    'paymentMode': paymentWay,
-                    'uuid': data['uid'],
-                    'accountId': this.account_id,
-                    'source': 'Desktop',
-                    'purpose': 'donation'
-                };
-                this.lStorageService.setitemonLocalStorage('uuid', data['uid']);
-                this.lStorageService.setitemonLocalStorage('acid', this.account_id);
-                this.lStorageService.setitemonLocalStorage('p_src', 'c_d');
-                this.subs.sink = this.shared_services.consumerPayment(payInfo)
-                    .subscribe((pData: any) => {
-                        this.checkIn_type = 'donations';
-                        this.origin = 'consumer';
-                        this.pGateway = pData.paymentGateway;
-                        if (this.pGateway === 'RAZORPAY') {
-                            this.paywithRazorpay(pData);
-                        } else {
-                            if (pData['response']) {
-                                this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                                setTimeout(() => {
-                                    if (paymentWay === 'DC') {
-                                        this.document.getElementById('payuform').submit();
-                                    } else {
-                                        this.document.getElementById('paytmform').submit();
-                                    }
-                                }, 2000);
-                            } else {
-                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
-                            }
-                        }
-                    },
-                        error => {
-                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        });
+
+                // if (this.customId) {
+                //     console.log("businessid" + this.account_id);
+                //     this.shared_services.addProvidertoFavourite(this.account_id)
+                //         .subscribe(() => {
+                //         });
+                // }
+
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    this.submitQuestionnaire(this.uid, post_Data, paymentWay);
+                } else {
+                    this.consumerPayment(data['uid'], post_Data, paymentWay );
+                    
+                }
             },
                 error => {
+                    this.isClickedOnce = false;
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+    }
+    consumerPayment(uid, post_Data, paymentWay) {
+        const payInfo = {
+            'amount': post_Data.donationAmount,
+            'custId': this.customer_data.id,
+            'paymentMode': paymentWay,
+            'uuid': uid,
+            'accountId': this.account_id,
+            'source': 'Desktop',
+            'purpose': 'donation'
+        };
+        this.lStorageService.setitemonLocalStorage('uuid', uid);
+        this.lStorageService.setitemonLocalStorage('acid', this.account_id);
+        this.lStorageService.setitemonLocalStorage('p_src', 'c_d');
+        this.subs.sink = this.shared_services.consumerPayment(payInfo)
+            .subscribe((pData: any) => {
+                this.checkIn_type = 'donations';
+                this.origin = 'consumer';
+                this.pGateway = pData.paymentGateway;
+                if (this.pGateway === 'RAZORPAY') {
+                    this.paywithRazorpay(pData);
+                } else {
+                    if (pData['response']) {
+                        this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                        setTimeout(() => {
+                            if (paymentWay === 'DC') {
+                                this.document.getElementById('payuform').submit();
+                            } else {
+                                this.document.getElementById('paytmform').submit();
+                            }
+                        }, 2000);
+                    } else {
+                        this.isClickedOnce = false;
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+                    }
+                }
+            },
+                error => {
+                    this.isClickedOnce = false;
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
     }
@@ -584,6 +615,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
+        this.isClickedOnce = false;
         this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uid);
     }
     addEmail() {
@@ -630,13 +662,13 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             }
         }
     }
-    goBack() {
-        if (this.action === '') {
-            this.router.navigate(['/']);
-        } else {
-            this.action = '';
-        }
-    }
+    // goBack() {
+    //     if (this.action === '') {
+    //         this.router.navigate(['/']);
+    //     } else {
+    //         this.action = '';
+    //     }
+    // }
     handleGoBack(cstep) {
         this.resetApi();
         switch (cstep) {
@@ -893,13 +925,13 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
             null, accountS3List).subscribe(
                 (accountS3s) => {
-                    if(accountS3s['settings']) {
+                    if (accountS3s['settings']) {
                         this.processS3s('settings', accountS3s['settings']);
                     }
-                    if(accountS3s['terminologies']) {
+                    if (accountS3s['terminologies']) {
                         this.processS3s('terminologies', accountS3s['terminologies']);
                     }
-                    if(accountS3s['businessProfile']) {
+                    if (accountS3s['businessProfile']) {
                         this.processS3s('businessProfile', accountS3s['businessProfile']);
                     }
                     this.api_loading1 = false;
@@ -1053,5 +1085,87 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     }
     changeService() {
         this.action = 'service';
+    }
+    goToStep(type) {
+        if (this.bookStep === 'qnr') {
+            this.validateQuestionnaire();
+        } else {
+            this.bookStep = type;
+        }
+    }
+    validateQuestionnaire() {
+        if (!this.questionAnswers) {
+            this.questionAnswers = {
+                answers: {
+                    answerLine: [],
+                    questionnaireId: this.questionnaireList.id
+                }
+            }
+        }
+        if (this.questionAnswers.answers) {
+            this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
+                if (data.length === 0) {
+                    this.bookStep = 'donation';
+                }
+                this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
+            }, error => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
+        }
+    }
+    goBack(type?) {
+        // if (type) {
+            if (this.bookStep === 'qnr') {
+                this.location.back();
+            } else {
+                if (this.action == '') {
+                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                        this.bookStep = 'qnr';
+                    } else {
+                        this.location.back();
+                    }
+                } else {
+                    setTimeout(() => {
+                        this.action = '';
+                    }, 500);
+                    if (this.closebutton) {
+                        this.closebutton.nativeElement.click();
+                    }                    
+                }
+                // else {
+                //     console.log("else");
+                //     this.location.back();
+                // }
+            }
+        // }
+    }
+    getConsumerQuestionnaire() {
+        this.subs.sink = this.shared_services.getDonationQuestionnaire(this.sel_ser, this.account_id).subscribe(data => {
+            this.questionnaireList = data;
+            if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                this.bookStep = 'qnr';
+            }
+            this.loading = false;
+        });
+    }
+    getQuestionAnswers(event) {
+        this.questionAnswers = event;
+    }
+    submitQuestionnaire(uuid, post_Data, paymentWay) {
+        const dataToSend: FormData = new FormData();
+        if (this.questionAnswers.files) {
+            for (const pic of this.questionAnswers.files) {
+                dataToSend.append('files', pic, pic['name']);
+            }
+        }
+        const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+        dataToSend.append('question', blobpost_Data);
+        this.shared_services.submitDonationQuestionnaire(uuid, dataToSend, this.account_id).subscribe(data => {
+            this.consumerPayment(this.uid, post_Data, paymentWay);
+        },
+            error => {
+                this.isClickedOnce = false;
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
     }
 }
