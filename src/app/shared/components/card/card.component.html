@@ -10,21 +10,38 @@
     <div class="col-lg-12">
         <div class="card  col-lg-6 col-md-6" style="margin:2%;">
             <div class="row" >
-                <div class="col-lg-8 col-xs-10 col-md-8" style="padding: 2%;border-radius: 5%;font-size: 12px;">
+                <a class="col-lg-12 col-sm-12  col-xs-12 col-md-12" style="cursor: pointer;font-weight: 800;display:flex; justify-content: flex-end;margin-right: 20px !important;" (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)">
+                    <b>Details</b>
+                </a>
+                <div class="col-lg-8 col-xs-10 col-sm-10 col-md-8" style="padding: 2%;border-radius: 5%;font-size: 12px;">
                     <div class="row">
                         <div class="col-lg-2 col-xs-0"></div>
                         <div class="col-lg-10 col-xs-12 col-md-8"></div>
+                        
                     </div>
                     
                 </div>
-                <div class="col-lg-2 col-sm-0 col-md-0" style="padding: 2%;"></div>
-                <div class="col-lg-2  col-xs-2 col-md-2" style="cursor: pointer;font-weight: 800;" (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)">
-                   <b>...</b>
-                </div>
+                <!-- <div class="col-lg-2 col-sm-0 col-md-0" style="padding: 2%;"></div> -->
+                
             </div>
 
-            <div class="row text-xs-center" >
-                <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4" >
+            <div class="row upperpart " >
+               
+                <div class="col-lg-8  col-sm-8 col-xs-8 col-md-8" >
+                        <h4 class="font-xs-size mgn-lt-10"  [ngClass]="{'no-padding':service.serviceType && service.serviceType == 'virtualService'}">{{service.name | capitalizeFirst}}</h4>
+                        <!-- <p style="padding-top:8px;" *ngIf="service.name=='Consultation'"></p> -->
+                        <p class="card-text donationAmount no-padding mgn-lt-10" *ngIf="item.type=='donation'">
+                            <span class="rupee-font bold">Donate <i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>
+                            <span class="rupee-font bold" *ngIf="service.maxDonationAmount != service.minDonationAmount"> or more</span>
+                        </p>
+                        <div  class="no-padding mgn-lt-10" style="font-size: 10px;" *ngIf="personsAheadText">{{personsAheadText}}</div>
+                        <div class="display-sm-none"><br></div>
+                       
+                        <div class="no-padding mgn-lt-10" style=" color: #B6B1B1" *ngIf="timings">{{timingCaption}}</div>
+                        <h6 class="no-padding mgn-lt-10" style="padding: 0px !important;" *ngIf="timings">{{timings}}</h6>
+
+                </div>
+                <div class="col-lg-4 col-sm-4 col-xs-4 col-md-4 mgn-bt-20" >
                     <div class="img-circle service-image" 
                     *ngIf="service.serviceType && service.serviceType == 'virtualService'">
                     <i class="fa phon-icon img-circle"
@@ -40,54 +57,45 @@
                     <i class="fa jaldeevideo-icon img-circle"
                     *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
                     </div>
-                    <div class="img-circle"
-                        *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'donationService'">
-                                <img class=" img-responsive img-circle " src="assets/images/donation.png" alt="Donation Image" >
-                    </div>
                     <div class="img-circle "
+                        *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'donationService'">
+                                <img class=" img-responsive up  " src="assets/images/donation.png" alt="Donation Image" >
+                    </div>
+                    <div class="img-circle"
                         *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain != 'religiousPriests'"
                             >
-                                <img class="img-responsive img-circle " src="assets/images/meeting_Artboard.png"
+                                <img class="img-responsive  artboardimage up" src="assets/images/meeting_Artboard.png"
                                     alt="Physical Service Image" >
                     </div>
                     <div class="img-circle "
                                 *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain == 'religiousPriests'"
                                    >
-                                                 <img class=" img-responsive img-circle " src="assets/images/hindu-temple-clipart.jpg"
+                                                 <img class=" img-responsive up" src="assets/images/hindu-temple-clipart.jpg"
                                     alt="Physical Service Image">
                     </div>
                 <!-- <img class="img-circle text-xs-center" src="assets/images/donation.png">  -->
-                </div>
-                <div class="col-lg-6  col-sm-6 col-xs-6 col-md-6" style="margin-top: 2%;">
-                        <h4 class="font-xs-size"  [ngClass]="{'no-padding':service.serviceType && service.serviceType == 'virtualService'}">{{service.name | capitalizeFirst}}</h4>
-                        <!-- <p style="padding-top:8px;" *ngIf="service.name=='Consultation'"></p> -->
-                        <p class="card-text donationAmount no-padding" *ngIf="item.type=='donation'">
-                            <span class="rupee-font bold">Donate <i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>
-                            <span class="rupee-font bold" *ngIf="service.maxDonationAmount != service.minDonationAmount"> or more</span>
-                        </p>
-                        <div  class="no-padding" style="font-size: 10px;" *ngIf="personsAheadText">{{personsAheadText}}</div>
-                       
-                        <h6 class="no-padding" style=" color: #766C6C;" *ngIf="timings">{{timingCaption}}</h6>
-                        <h6 class="no-padding" style="color:#F95757;font-size: 12px;padding: 0px !important;" *ngIf="timings">{{timings}}</h6>
-
                 </div>
 
             </div>
             <div class="row">
             <!-- <div  *ngIf="service.serviceType && service.serviceType == 'virtualService'" style="margin-bottom: 18px;"></div> -->
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
-                <div class="{{buttonCaption !='Donate' ? 'col-lg-8 col-md-8 col-xs-8 col-sm-8'  : 'col-lg-8 col-md-8 col-xs-8 col-sm-8'  }}"  >
+                <!-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div> -->
+                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 display-sm-none no-padding" >
+                    
+                    <button class="checkavailabilitybutton "   *ngIf="buttonCaption !='Donate'" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)" ><span class="checkavailabilitytext"><img src="../../../../assets/images/calendar 1.png" style="width: 15px !important;height: 15px !important;">&nbsp;&nbsp;Check availability</span>  </button>
+                   
+                </div>
+                <div class="{{buttonCaption !='Donate' ? 'col-lg-6 col-md-6 col-xs-12 col-sm-12 no-padding getclass '  : 'col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding getclass text-center'  }}"  >
 
                 <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event)"  class="getappointmentbutton " >{{buttonCaption}}</button>
                 </div>
-                <br>
-                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mgn-up-10" >
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></div>
-                    
-                    <div  class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-xs-center"  *ngIf="buttonCaption !='Donate'" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)" style="color: #fcd76a;cursor: pointer;"  >Check availability &nbsp;<b>></b>
-                    </div>
+                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 text-xs-center">
+            
+                    <a class="display-lg-none mgn-up-5" style="font-size: 12px !important;"   *ngIf="buttonCaption !='Donate'" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)" >Check availability</a>
                    
                 </div>
+
+               
             </div>
 
             <!-- ****Modal Code**** -->
@@ -311,36 +319,38 @@
                 </div> -->
             </div>
 
-            <div class="row text-xs-center" >
-                <div class="col-lg-4 col-xs-1 col-md-1 display-sm-none">
+            <div class="row upperpart1" >
+                
 
-                    <div class="img-circle  text-xs-center">
-                                <img class="card-img img-responsive" [src]="getPic(user)" alt="Profile Pic">
-                    </div>
-                </div>
-
-                <div class="col-lg-6 col-xs-12 col-md-12" >
-                        <h4 *ngIf="user.businessName">{{user.businessName}}</h4>
-                        <div *ngIf="user.qualifications && user.qualifications.length === 1" >{{user.qualifications[0]}}</div>
-                        <div *ngIf="user.qualifications && user.qualifications.length > 1">{{user.qualifications[0]}}...</div>
+                <div class="col-lg-8 col-xs-12 col-md-12" >
+                        <h4 class="mgn-lt-10" *ngIf="user.businessName">{{user.businessName}}</h4>
+                        <div class="mgn-lt-10" *ngIf="user.qualifications && user.qualifications.length === 1" >{{user.qualifications[0]}}</div>
+                        <div class="mgn-lt-10"  *ngIf="user.qualifications && user.qualifications.length > 1">{{user.qualifications[0]}}...</div>
                       
-                        <div *ngIf="user.businessUserName"><b>{{user.businessUserName}}</b></div>
+                        <div class="mgn-lt-10 mgn-bt-10 mgn-up-10" *ngIf="user.businessUserName"><b>{{user.businessUserName}}</b></div>
                         <!-- <div *ngIf="!user.businessUserName" style="visibility: hidden;"><b>Nothing</b></div> -->
                         <!-- <label *ngIf="!user.businessUserName" style="padding: 2px 3px; margin:0 !important;"></label> -->
                         <!-- <p > -->
                             <ng-container *ngIf="user.apptTime && user.apptTime.caption && user.apptTime.availableSchedule.availableDate === todayDate">
-                            <div>{{user.apptTime.caption}}</div>
-                            <div >{{user.apptTime.date}}</div>
+                            <div class="mgn-lt-10">{{user.apptTime.caption}}</div>
+                            <div class="mgn-lt-10">{{user.apptTime.date}}</div>
                             </ng-container>
-                            <ng-container
+                            <ng-container 
                             *ngIf="(!user.apptTime || (user.apptTime && (!user.apptTime.caption || user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && user.waitingTime.caption">
-                            {{user.waitingTime.caption}}<br />{{user.waitingTime.date}}
+                            <span class="mgn-lt-10"> {{user.waitingTime.caption}} </span> <br /> <span class="mgn-lt-10">{{user.waitingTime.date}}</span>
                             </ng-container>
-                            <ng-container
+                            <ng-container 
                             *ngIf="(!user.apptTime || ((user.apptTime.caption && user.apptTime.availableSchedule && user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && !user.waitingTime.caption">
-                            {{user.apptTime.caption}}<br />{{user.apptTime.date}}
+                            
+                            <div class="mgn-lt-10" style=" color: #B6B1B1">  {{user.apptTime.caption}}12222 </div>   <h6 class="mgn-lt-10">{{user.apptTime.date}}</h6>
                             </ng-container>
                         <!-- </p> -->
+                </div>
+                <div class="col-lg-4 col-xs-1 col-md-1 display-sm-none">
+
+                    <div class="img-circle">
+                                <img class="img-responsive" [src]="getPic(user)" alt="Profile Pic">
+                    </div>
                 </div>
             </div>
                 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">

@@ -101,7 +101,7 @@
         </div>
         <app-common-innerloading-spinner *ngIf="queuejson.length==0 && actionObj['service']['bType']=='Waitlist' && queueloader "></app-common-innerloading-spinner>
     
-        <div *ngIf="queuejson.length==0 && (actionObj['service']['bType']=='Waitlist' || !actionObj['service']['bType'])  " style="color: red;text-align: center;">No Available queues</div>
+        <div *ngIf="queuejson.length==0 && (actionObj['service']['bType']=='Waitlist' || !actionObj['service']['bType']) && !queueloader " style="color: red;text-align: center;">No Available queues</div>
 
         <div class="pad-lg-20 slots" *ngIf="queuejson && queuejson.length>0">
             

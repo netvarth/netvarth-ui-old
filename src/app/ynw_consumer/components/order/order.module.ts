@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { OrderComponent } from './order.component';
+
 const routes: Routes = [
     { path: '', component: OrderComponent },
     { path: 'item-details', loadChildren: () => import('./item-details/item-details.module').then(m => m.ItemDetailsModule) },
@@ -14,7 +15,8 @@ const routes: Routes = [
        OrderComponent
     ],
     imports: [
-        [RouterModule.forChild(routes)]
+        [RouterModule.forChild(routes)],
+      
     ],
     exports: [
         OrderComponent
