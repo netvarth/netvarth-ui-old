@@ -17,6 +17,7 @@ export class CustTemplate4Component implements OnInit {
   terminologiesjson: any;
   apptSettings: any;
   businessProfile: any;
+  donationServices: any;
 
 
   // @Input() templateJson;
@@ -33,6 +34,7 @@ export class CustTemplate4Component implements OnInit {
 
   ngOnInit(): void {
     this.templateJson = this.customappService.getTemplateJson();
+    this.donationServices = this.s3Processor.getJson(this.customappService.getDonationServices());
     this.locationjson = this.s3Processor.getJson(this.customappService.getLocations());
     this.showDepartments = this.s3Processor.getJson(this.customappService.getAccountSettings()).filterByDept;
     console.log("Template Json:", this.showDepartments);
