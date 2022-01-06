@@ -299,8 +299,9 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   }
   keyPressed() {
     this.labelSelection();
+    console.log(this.filter.orderMode,'orderMode............',this.orderStatuses,this.orderStatuses.length)
     if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.patientId ||
-      this.filter.payment_status !== 'all' || this.filter.orderNumber || this.orderStatuses.length > 0 || this.filter.orderMode !== 'all' || this.paymentStatuses.length > 0 || this.labelFilterData !== '') {
+      this.filter.payment_status !== 'all' || this.filter.orderNumber || this.orderStatuses.length > 0 || this.orderModes.length > 0 || this.filter.orderMode !== 'all' || this.paymentStatuses.length > 0 || this.labelFilterData !== '') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -349,6 +350,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
         } else {
           this.orderModes.splice(indx, 1);
         }
+
       }
       if (this.orderModes.length === this.ordertypeModes.length) {
         this.filter['orderMode'] = 'all';
