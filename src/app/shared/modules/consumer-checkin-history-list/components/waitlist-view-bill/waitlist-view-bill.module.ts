@@ -5,6 +5,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { JcCouponNoteModule } from "../../../jc-coupon-note/jc-coupon-note.module";
+import { PaymentModesModule } from "../../../payment-modes/payment-modes.module";
 import { ViewConsumerWaitlistCheckInBillComponent } from "./waitlist-view-bill.component";
 
 @NgModule({
@@ -14,7 +15,8 @@ import { ViewConsumerWaitlistCheckInBillComponent } from "./waitlist-view-bill.c
         MatFormFieldModule,
         MatInputModule,
         FormsModule,
-        JcCouponNoteModule
+        JcCouponNoteModule,
+        PaymentModesModule
     ],
     exports: [
         ViewConsumerWaitlistCheckInBillComponent

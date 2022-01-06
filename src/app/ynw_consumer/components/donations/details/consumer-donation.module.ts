@@ -13,6 +13,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
 import { MatRadioModule } from "@angular/material/radio";
+import { PaymentModesModule } from "../../../../shared/modules/payment-modes/payment-modes.module";
 const routes: Routes = [
     {path: '', component: ConsumerDonationComponent}
 ]
@@ -32,6 +33,7 @@ const routes: Routes = [
         CapitalizeFirstPipeModule,
         QuestionnaireModule,
         MatRadioModule,
+        PaymentModesModule,
         [RouterModule.forChild(routes)]
     ]
 })

@@ -63,6 +63,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     partysizejson: any = [];
     sel_loc;
 
+
+    modeSelected = false;
+
     prepaymentAmount = 0;
     checkindisablemsg = '';
     pass_loc;

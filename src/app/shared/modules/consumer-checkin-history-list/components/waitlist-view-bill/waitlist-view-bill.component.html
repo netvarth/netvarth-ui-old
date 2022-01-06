@@ -13,17 +13,19 @@
                 </button>
             </div>
             <div id="receipt" class="receipt">
-                <div class="bill-header" style="padding-top: 40px;"  *ngIf="!showPaidlist">
-                    <div class="section-one" >
+                <div class="bill-header" style="padding-top: 40px;" *ngIf="!showPaidlist">
+                    <div class="section-one">
                         <h3>{{bname | capitalizeFirst}}</h3>
                         <div class="details">
-                         <span class="columns" *ngIf="type == 'checkin'">  <span  *ngFor="let user of checkin.waitlistingFor">
-                                {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
-                            </span></span> 
-                            <span class="columns" *ngIf="type == 'appointment'"><span  *ngFor="let user of checkin.appmtFor">
-                                {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
-                            </span></span>
-                             <span class="columns rightalign"><span class="dynamic">{{billdate}}
+                            <span class="columns" *ngIf="type == 'checkin'"> <span
+                                    *ngFor="let user of checkin.waitlistingFor">
+                                    {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
+                                </span></span>
+                            <span class="columns" *ngIf="type == 'appointment'"><span
+                                    *ngFor="let user of checkin.appmtFor">
+                                    {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
+                                </span></span>
+                            <span class="columns rightalign"><span class="dynamic">{{billdate}}
                                     {{billtime}}</span>
                             </span> <span class="columns" *ngIf="billnumber"> <span class="title">{{bill_no_cap}}</span>
                                 <span class="dynamic">{{billnumber}}</span>
@@ -41,10 +43,9 @@
                                 <div class="list-content">
                                     <div class="c-row one">
                                         <div class="name">
-                                            {{service.serviceName | capitalizeFirst}} 
+                                            {{service.serviceName | capitalizeFirst}}
                                             <span class="rupee-font">{{service.price | currency:'&#8377; '}}</span>
-                                              <span
-                                                [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
+                                            <span [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
                                                 *ngIf="service.GSTpercentage > 0"><sup>Tax</sup></span>
                                         </div>
                                         <div class="quantity">{{qnty_cap}}
@@ -55,10 +56,11 @@
                                     <div class="c-row two section-two">
                                         <div class="discount-row two-col" *ngFor="let discount of service.discount">
                                             <div class="name">{{discount.name}}</div>
-                                            <div class="price rupee-font" style="flex-basis: 30% !important">(-){{discount.discountValue |
+                                            <div class="price rupee-font" style="flex-basis: 30% !important">
+                                                (-){{discount.discountValue |
                                                 currency:'&#8377; '}}</div>
                                         </div>
-                                    </div>                                    
+                                    </div>
                                     <div class="c-row one three two-col"
                                         *ngIf="service.discount &&service.discount.length > 0">
                                         <div class="name">
@@ -73,13 +75,12 @@
                                 <div class="list-content">
                                     <div class="c-row one">
                                         <div class="name">
-                                            {{item.itemName | capitalizeFirst}} - 
+                                            {{item.itemName | capitalizeFirst}} -
                                             <span class="rupee-font">
                                                 {{item.price |
-                                                    currency:'&#8377; '}}
+                                                currency:'&#8377; '}}
                                             </span>
-                                             <span
-                                                [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
+                                            <span [matTooltipClass]="tooltipcls" [matTooltip]="'Taxable'"
                                                 *ngIf="item.GSTpercentage > 0"><sup>Tax</sup></span>
                                         </div>
                                         <div class="quantity">{{qnty_cap}}
@@ -113,18 +114,21 @@
                                         <div class="price rupee-font">{{bill_data.netTotal | currency:'&#8377; '}}</div>
                                     </div>
                                     <div class="c-row two section-two">
-                                        <div class="discount-row two-col" *ngIf="bill_data.jdn && bill_data.jdn.discount">
+                                        <div class="discount-row two-col"
+                                            *ngIf="bill_data.jdn && bill_data.jdn.discount">
                                             <div class="name">JDN</div>
-                                            <div class="price rupee-font" style="flex-basis:30% !important">(-){{bill_data.jdn.discount |
+                                            <div class="price rupee-font" style="flex-basis:30% !important">
+                                                (-){{bill_data.jdn.discount |
                                                 currency:'&#8377; '}}</div>
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div class="c-row two section-two" *ngFor="let discount of bill_data.discount">
-                                        <div class="discount-row two-col" >
+                                        <div class="discount-row two-col">
                                             <div class="name">
                                                 {{discount.name}}
                                             </div>
-                                            <div class="price rupee-font" style="flex-basis: 30% !important">(-){{discount.discValue |
+                                            <div class="price rupee-font" style="flex-basis: 30% !important">
+                                                (-){{discount.discValue |
                                                 currency:'&#8377; '}}</div>
                                         </div>
                                     </div>
@@ -133,7 +137,8 @@
                                             <div class="name">
                                                 {{coupon.name}}
                                             </div>
-                                            <div class="price rupee-font" style="flex-basis: 30% !important">(-){{coupon.couponValue |
+                                            <div class="price rupee-font" style="flex-basis: 30% !important">
+                                                (-){{coupon.couponValue |
                                                 currency:'&#8377; '}}</div>
                                         </div>
                                     </div>
@@ -146,8 +151,9 @@
                                             <div class="price rupee-font" style="flex-basis: 30% !important">
                                                 <span>(-)</span>
                                                 <span (click)="showJCCouponNote(jcoupon)"
-                                                    [class.couponAmt]="jcoupon.value.value === '0.0'">{{jcoupon.value.value |
-																		currency:'&#8377; '}}</span>
+                                                    [class.couponAmt]="jcoupon.value.value === '0.0'">{{jcoupon.value.value
+                                                    |
+                                                    currency:'&#8377; '}}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -155,13 +161,12 @@
                                         <div class="discount-row two-col">
                                             <div class="name">
                                                 <span class="tax-top">Tax
-                                                    {{bill_data.taxPercentage}}% of 
+                                                    {{bill_data.taxPercentage}}% of
                                                     <span class="rupee-font">
                                                         {{bill_data.taxableTotal |
-                                                            currency:'&#8377; '}}
+                                                        currency:'&#8377; '}}
                                                     </span>
-                                                    </span><br /><span
-                                                    class="txn">(CGST-{{bill_data.taxPercentage/2}}%,
+                                                </span><br /><span class="txn">(CGST-{{bill_data.taxPercentage/2}}%,
                                                     SGST-{{bill_data.taxPercentage/2}}%)</span>
                                             </div>
                                             <div class="price rupee-font">(+){{bill_data.totalTaxAmount |
@@ -176,12 +181,13 @@
                                         <div class="price rupee-font">{{bill_data.netRate |
                                             currency:'&#8377; '}}</div>
                                     </div>
-                                    <div class="c-row two section-two"   *ngIf="bill_data.totalAmountPaid > 0">
-                                        <div class="discount-row two-col" >
+                                    <div class="c-row two section-two" *ngIf="bill_data.totalAmountPaid > 0">
+                                        <div class="discount-row two-col">
                                             <div class="name">
                                                 Amount Paid
                                             </div>
-                                            <div class="price rupee-font" style="flex-basis: 30% !important">{{bill_data.totalAmountPaid |
+                                            <div class="price rupee-font" style="flex-basis: 30% !important">
+                                                {{bill_data.totalAmountPaid |
                                                 currency:'&#8377; '}}</div>
                                         </div>
                                     </div>
@@ -196,7 +202,7 @@
                                     <div class="c-row one two-col" *ngIf="bill_data.amountDue < 0">
                                         <div class="name">Refundable Amount</div>
                                         <div class="price rupee-font">{{refund_value |
-											currency:'&#8377; '}}</div>
+                                            currency:'&#8377; '}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -251,59 +257,29 @@
                     </div>
                     <div class="col-md-12 col-sm-12 col-xs-12 cc-dc-nb" style="display: flex">
                         <ng-container *ngIf="!shownonIndianModes">
-                            <div *ngFor="let modes of indian_payment_modes">
-                                <div class="col-xs-12  col-sm-6 col-lg-3  ">
+                            <app-payment-modes [paymentModes]="indian_payment_modes"
+                                (modeSelected)="indian_payment_mode_onchange($event)"></app-payment-modes>
+                        </ng-container>
+                        <ng-container *ngIf="shownonIndianModes">
+                            <app-payment-modes [paymentModes]="non_indian_modes"
+                                (modeSelected)="non_indian_modes_onchange($event)"></app-payment-modes>
+                        </ng-container>
+                        <div class="clearfix"></div>
+                        <div class="txt-align-center pad_link">
+                            <span [class.disabled]="isClickedOnce" (click)="togglepaymentMode()"
+                                class="pointer-cursor"><a class="refund_policy">
+                                    <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment
+                                        ? Click
+                                        here</span>
+                                    <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
+                                        here</span>
+                                </a></span>
 
-                                        <div class="paymentmode card text-primary" >
-                                              
-                                          <mat-radio-group name="paymentMode" (change)="indian_payment_mode_onchange($event)" labelPosition="before">
-                                            <mat-radio-button style="float:right" [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
-
-                            
-                                          </mat-radio-group>
-                                          <img class="ordericon pickup" height="50px" width="100px" [src]="getImageSrc(modes.mode)">
-                                          
-                                        </div>
-                                        </div>
 
                         </div>
-                    </ng-container>
-                    <ng-container *ngIf="shownonIndianModes">
-                        
-                        <div *ngFor="let modes of non_indian_modes">
-                            <div class="col-xs-12  col-sm-6 col-lg-3  ">
-
-                                    <div class="paymentmode card text-primary" >
-                                          
-                                      <mat-radio-group name="paymentMode" (change)="non_indian_modes_onchange($event)">
-                                        <mat-radio-button [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
-                                      
-                                      </mat-radio-group>
-                                      <img class="ordericon pickup" height="50px" width="100px" [src]="getImageSrc(modes.mode)">
-                        
-                                    </div>
-                                    </div>
-
-                    </div>
-                </ng-container>
-                    <div class="clearfix"></div>
-                    <div class="txt-align-center pad_link"
-                        >
-                        <span [class.disabled]="isClickedOnce"
-                            (click)="togglepaymentMode()"
-                            class="pointer-cursor"><a
-                                class="refund_policy">
-                                <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
-                                here</span>
-                                <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
-                                    here</span>
-                            </a></span>
-
-
-                    </div>
                         <!-- <button class="cs-btn bt1" (click)="payuPayment()">CC/DC/Net Banking/UPI</button> -->
                         <button class="cs-btn bt1" *ngIf="paytmEnabled" (click)="makePayment()">Make Payment</button>
-                        <button class="cs-btn bt1" (click)="cashPayment()">Cash</button> 
+                        <button class="cs-btn bt1" (click)="cashPayment()">Cash</button>
                     </div>
                 </div>
             </div>

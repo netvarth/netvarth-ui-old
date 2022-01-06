@@ -11,6 +11,7 @@ import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner
 import { OrderBillComponent } from "./order-bill.component";
 import { HeaderModule } from "../../../../shared/modules/header/header.module";
 import { MatRadioModule } from "@angular/material/radio";
+import { PaymentModesModule } from "../../../../shared/modules/payment-modes/payment-modes.module";
 const routes: Routes= [
     {path: '', component: OrderBillComponent}
 ]
@@ -26,6 +27,7 @@ const routes: Routes= [
         LoadingSpinnerModule,
         CapitalizeFirstPipeModule,
         MatRadioModule,
+        PaymentModesModule,
         [RouterModule.forChild(routes)]
     ],
     exports: [OrderBillComponent],

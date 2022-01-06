@@ -21,6 +21,7 @@ import { CheckoutComponent } from "./checkout.component";
 import { JcCouponNoteModule } from "../../jc-coupon-note/jc-coupon-note.module";
 import { RouterModule, Routes } from "@angular/router";
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { PaymentModesModule } from "../../payment-modes/payment-modes.module";
 const routes: Routes = [
     {path: '', component: CheckoutComponent}
 ]
@@ -46,6 +47,7 @@ const routes: Routes = [
         LoadingSpinnerModule,
         FormMessageDisplayModule,
         ReactiveFormsModule,
+        PaymentModesModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         [RouterModule.forChild(routes)]
     ],

@@ -216,11 +216,9 @@ display: grid !important;
 ::ng-deep .mat-radio-button {
     font-size: 0.8rem !important;
 }
-::ng-deep .mat-radio-outer-circle {
-    // width: 15px !important;
-    // height: 15px !important;
-    border-radius: 0% !important;
-}
+// ::ng-deep .mat-radio-outer-circle {
+//     border-radius: 0% !important;
+// }
 ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
     border-color: #183e7a !important;
 }
@@ -540,29 +538,6 @@ box-shadow: 4px 4px 5px gainsboro;
     font-weight: 600;
     color: #3c8dbc;
     font-size: 14px;
-  }
-
-
-  .paymentmode{
-    font-size:16px!important;
-    padding:0px !important;
-    box-shadow: 0px 0px 8px 8px rgb(231, 226, 226) !important;
-  }
-  .paymentmode > .mat-radio-button.mat-radio-checked { 
-    border-color: blue !important;
-    box-shadow: 0 0 3px 3px blue!important 
-  }
-
-  ::ng-deep .payment-mode-card-styles .mat-radio-button .mat-radio-container {
-    display: none!important;
-  }
- ::ng-deep .payment-mode-card-styles .mat-radio-container .mat-radio-outer-circle,
- ::ng-deep .payment-mode-card-styles .mat-radio-container .mat-radio-inner-circle{
-    
-    display: none!important;
-  }
-  ::ng-deep .payment-mode-card-styles .mat-radio-container .mat-radio-label{
-    display: inline;
   }
   @media  (max-width: 750px)  {
     .pic_size{
