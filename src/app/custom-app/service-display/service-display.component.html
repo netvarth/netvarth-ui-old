@@ -22,20 +22,20 @@
             </div>
         </div>
         <div class="clearfix"></div>
-        <div class="col-md-12"
+        <!-- <div class="col-md-12"
             *ngIf="filteredCheckinServices && filteredCheckinServices.length===0 && filteredApptServices && filteredApptServices.length===0">
             No services found
-        </div>
+        </div> -->
     </ng-container>
     <div class="clearfix"></div>
-    <ng-container *ngIf="templateJson['appointments']">
+    <ng-container *ngIf="templateJson['appointments']  && !loading">
         <app-appointment-services [locationjson]="locationjson" [showDepartments]="showDepartments"
             [terminologiesjson]="terminologiesjson" [templateJson]="templateJson" [apptSettings]="apptSettings"
             [businessProfile]="businessProfile" [filteredServices]="filteredApptServices"
             [selectedLocation]="selectedLocation"></app-appointment-services>
     </ng-container>
 
-    <ng-container *ngIf="templateJson['checkins']">
+    <ng-container *ngIf="templateJson['checkins'] && !loading">
         <app-checkin-services [locationjson]="locationjson" [showDepartments]="showDepartments"
             [terminologiesjson]="terminologiesjson" [templateJson]="templateJson" [apptSettings]="apptSettings"
             [businessProfile]="businessProfile" [filteredServices]="filteredCheckinServices"
@@ -53,6 +53,6 @@
         [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
         [businessProfile]="businessProfile" [selectedLocation]="selectedLocation"></app-orders>
     </ng-container>
-    <!-- <div class="clearfix"></div> -->
+    <div class="clearfix"></div>
     
 </div>

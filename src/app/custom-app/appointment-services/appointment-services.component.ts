@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationExtras, Router } from '@angular/router';
 import { AuthService } from '../../shared/services/auth-service';
@@ -14,7 +14,7 @@ import { ConsumerJoinComponent } from '../../ynw_consumer/components/consumer-jo
   styleUrls: ['./appointment-services.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class AppointmentServicesComponent implements OnInit {
+export class AppointmentServicesComponent implements OnInit, OnChanges {
 
   @Input() selectedLocation;
   @Input() terminologiesjson;
@@ -22,6 +22,8 @@ export class AppointmentServicesComponent implements OnInit {
   @Input() apptSettings;
   @Input() businessProfile;
   @Input() filteredServices;
+
+  services;
 
   availabilityDialogref: any;
   serverDate: any;
@@ -35,7 +37,13 @@ export class AppointmentServicesComponent implements OnInit {
 
   ngOnInit(): void {
     this.serverDate = this.lStorageService.getitemfromLocalStorage('sysdate');
+    this.services = this.filteredServices;
   }
+
+  ngOnChanges(): void {
+    this.services = this.filteredServices;
+  }
+
   checkAvailableSlots(actionObj) {
     this.availabilityDialogref = this.dialog.open(CheckavailabilityComponent, {
       width: '100%',

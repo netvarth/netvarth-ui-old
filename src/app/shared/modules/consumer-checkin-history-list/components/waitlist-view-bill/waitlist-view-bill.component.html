@@ -274,10 +274,7 @@
                                     <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
                                         here</span>
                                 </a></span>
-
-
                         </div>
-                        <!-- <button class="cs-btn bt1" (click)="payuPayment()">CC/DC/Net Banking/UPI</button> -->
                         <button class="cs-btn bt1" *ngIf="paytmEnabled" (click)="makePayment()">Make Payment</button>
                         <button class="cs-btn bt1" (click)="cashPayment()">Cash</button>
                     </div>
