@@ -39,6 +39,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     
 
     projectConstants = this.globalService.getGlobalConstants();
+    if(projectConstants){
+      return false;
+    }
     const cVersion = version.desktop;
     const pVersion = this.lStorageService.getitemfromLocalStorage('version');
     if (pVersion && pVersion !== cVersion) {

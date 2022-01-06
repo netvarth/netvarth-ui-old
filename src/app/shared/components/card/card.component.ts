@@ -37,6 +37,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     buttonCaption = Messages.GET_TOKEN;
     waitinglineCap = Messages.WAITINGLINE;
     personsAheadText = '';
+    personsAheadCaption = '';
     itemQty = 0;
     actions: string;
     todayDate;
@@ -99,7 +100,9 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             case 'waitlist':
                 this.service = this.item.item;
                 if (this.service.serviceAvailability['personAhead'] >= 0) {
-                    this.personsAheadText = 'People in line : ' + this.service.serviceAvailability['personAhead']; 
+                    this.personsAheadCaption = "People in line";
+                    this.personsAheadText = this.service.serviceAvailability['personAhead'];
+                    // this.personsAheadText = 'People in line : ' + this.service.serviceAvailability['personAhead']; 
                 }
                 if (this.service.serviceAvailability['showToken']) {
                 } else {
