@@ -12,21 +12,24 @@
             <div class="w-dta">
                 <div class="row">
                     <div class="copy one col-xs-12 col-sm-12 no-padding">
-                        <div class="pay-section card">
+                        <div class="pay-section card pad-10-sm">
                             <div *ngIf="paidStatus == 'false'">
                                 <div style="padding-bottom: 10px; font-size: large;">Amount to pay : <b
                                         class="rupee-font">{{prepayAmount| currency:'&#8377;'}}</b></div>
                                 <div style="padding-bottom: 10px; font-size: large;">Choose the Payment Option
-                                    <ng-container *ngIf="!shownonIndianModes">
-                                        <app-payment-modes [paymentModes]="indian_payment_modes"
-                                            (modeSelected)="indian_payment_mode_onchange($event)"></app-payment-modes>
-                                    </ng-container>
-                                    <ng-container *ngIf="shownonIndianModes">
-                                        <app-payment-modes [paymentModes]="non_indian_modes"
-                                            (modeSelected)="non_indian_modes_onchange($event)"></app-payment-modes>
-                                    </ng-container>
-                                    <div class="clearfix"></div>
-                                    <div class="txt-align-center pad_link">
+                                    <div class="mgn-up-10">
+                                        <ng-container *ngIf="!shownonIndianModes">
+                                            <app-payment-modes [paymentModes]="indian_payment_modes"
+                                                (modeSelected)="indian_payment_mode_onchange($event)">
+                                            </app-payment-modes>
+                                        </ng-container>
+                                        <ng-container *ngIf="shownonIndianModes">
+                                            <app-payment-modes [paymentModes]="non_indian_modes"
+                                                (modeSelected)="non_indian_modes_onchange($event)"></app-payment-modes>
+                                        </ng-container>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="txt-align-center pad_link mgn-up-5">
                                         <span [class.disabled]="isClickedOnce" (click)="togglepaymentMode()"
                                             class="pointer-cursor"><a class="refund_policy">
                                                 <span *ngIf="!shownonIndianModes && paymentmodes.internationalPay">Non

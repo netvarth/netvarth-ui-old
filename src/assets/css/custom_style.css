@@ -14443,3 +14443,13 @@ pointer-events: none !important;
     right: 5px;
     float: right;
   }
+
+  @media screen and (max-width: 768px) { 
+    .pad-sm-10 {
+      padding:10px !important;
+    }
+    .comn-cls .w-dta .copy .pay-section {
+      padding-right: 10px !important;
+    }
+   
+ }
