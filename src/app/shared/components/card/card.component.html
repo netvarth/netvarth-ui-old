@@ -4,7 +4,7 @@
 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" [ngClass]="theme?theme:''"
     *ngIf="(service && service.serviceAvailability) || item.type=='donation'">
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding card-outer-cont">
-        <div class="col-md-9 col-xs-9 col-sm-9 col-lg-9 ">
+        <div class="col-md-9 col-xs-9 col-sm-9 col-lg-9 pointer-cursor"  (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)">
             <h5 class="line-clamp-ln2 mgn-bt-5"
                 [ngClass]="{'no-padding':service.serviceType && service.serviceType == 'virtualService'}">{{service.name
                 |

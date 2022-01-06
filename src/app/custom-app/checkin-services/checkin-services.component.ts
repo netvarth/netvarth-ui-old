@@ -39,7 +39,8 @@ export class CheckinServicesComponent implements OnInit {
   
   checkAvailableSlots(actionObj) {
     this.availabilityDialogref = this.dialog.open(CheckavailabilityComponent, {
-      width: '90%',
+      width: '100%',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'availability-container', this.templateJson['theme']],
       height: 'auto',
       data: {
         alldetails: actionObj,

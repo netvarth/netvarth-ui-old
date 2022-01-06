@@ -1316,7 +1316,6 @@ color: red;
     display: -webkit-box !important;
     -webkit-line-clamp: 3 !important;
     -webkit-box-orient: vertical !important;
-    word-break: break-all;
     overflow: hidden;
 }
 .card-outer-cont p.card-service-desc {
@@ -1342,7 +1341,7 @@ color: red;
     height:50px;
 }
 .card-timings-cont h6 {
-    font-size: 1rem !important;
+    font-size: 0.98rem !important;
 }
 .bord-left {
     border-left:1px solid #ddd;
