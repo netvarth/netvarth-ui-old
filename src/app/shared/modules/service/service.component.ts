@@ -171,6 +171,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
     paymentSubscription: any;
     paymentProfiles:any=[];
     selected=false;
+    selectedPaymentProfile: any;
+    show_internationalmode=false;
     
     constructor(private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
@@ -198,9 +200,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             });
             this.paymentSubscription=this.provider_services.getPaymentProfiles()
             .subscribe( (data:any)=>{
-             console.log('payment profile'+JSON.stringify(data));
                this.paymentProfiles=data;
-               console.log(this.paymentProfiles);
             }
             , error=>{
                 this.paymentProfiles=[];
@@ -225,6 +225,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     } else {
             
                         this.service_data = this.service;
+                        if(this.service_data.paymentProfileId){
+                            this.getPaymentProfileDetails(this.service_data.paymentProfileId)
+                        }
                         if (this.action === 'show' && this.active_user.accountType === 'BRANCH') {
                             this.getDepartments(this.service.department);
                         }
@@ -299,7 +302,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             
 
                                         });
-                                    console.log(this.service_data['paymentProfileId']);
+                   
                                       
                                     }
                                     if (this.service_data.serviceType === 'virtualService') {
@@ -361,7 +364,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                            
                                         });
                                        
-                                        console.log(this.serviceForm.controls.paymentProfileId.value);
+                               
                                         if (this.service_data.serviceType === 'virtualService') {
                                             this.tool_name = this.service_data.virtualCallingModes[0].callingMode;
                                             this.tool_id = this.service_data.virtualCallingModes[0].value;
@@ -398,10 +401,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         } else if (this.screenWidth < 375) {
             divider = divident / 1;
         }
-        console.log(divident);
-        console.log(divider);
-        this.no_of_grids = Math.round(divident / divider);
-        console.log(this.no_of_grids);
+        this.no_of_grids = Math.round(divident / divider);     
     }
     @Input() donationservice;
     setDescFocus() {
@@ -439,9 +439,17 @@ export class ServiceComponent implements OnInit, OnDestroy {
             this.advanced = false;
         }
     }
+    togglepaymentMode(){
+        this.show_internationalmode=!this.show_internationalmode;
+    }
+    getPaymentProfileDetails(profileId){
+       this.selectedPaymentProfile= this.paymentProfiles.filter(profile=>profile.profileId===profileId);
+
+    }
     getImageSrc(mode){
     
-        return 'assets/images/payment-modes/'+mode+'.png';
+         return 'assets/images/payment-modes/'+mode+'.png';
+        
       }
       radioChanage(event) {
         this.selected = true;
@@ -558,7 +566,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
    
     }
     isDefaultProfile(profile){
-        console.log(profile.profileId);
+        
         if(profile.profileId=='spDefaultBillProfile'){
 
             return true;
@@ -677,7 +685,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             if (form_data.serviceType === 'virtualService') {
                 form_data['virtualCallingModes'] = [this.teleCallingModes];
             }
-            console.log(this.selectedUser);
+           
             if (this.selectedUser && this.userspecific) {
                 this.provider = {
                     'id': this.selectedUser
@@ -705,18 +713,24 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 }
             } 
             else {
-                //console.log(serviceActionModel);
+       
                 this.servicesService.actionPerformed(serviceActionModel);
             }
         }
     }
-    getRazorModes(indiamodes) {
-       return  indiamodes.filter(mode=>mode.gateway==='RAZORPAY');
-
+   
+    getPayTMmodesByGroup(indiamodes){
+        console.log(indiamodes)
+     
+       const groupedGateway  = indiamodes.reduce(function (r, a) {
+        r[a.gateway] = r[a.gateway] || [];
+        r[a.gateway].push(a);
+        return r;
+    },{});
+    
+      return groupedGateway;
     }
-    getpaytmmodes(indiamodes){
-        return  indiamodes.filter(mode=>mode.gateway==='PAYTM');
-    }
+ 
     onCancel() {
         let source;
         if (this.action === 'add') {
@@ -1045,7 +1059,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.router.navigate(['provider', 'settings', 'general', 'questionnaire', id]);
     }
     getProviderName(users) {
-        console.log(users);
+   
         let userlst = '';
         if (users[0] === 'All') {
             return 'All Users'
@@ -1081,33 +1095,32 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     getOwnership(ownerShipData, isTruncate) {
         this.userNamelist = '';
-        if (ownerShipData.users && ownerShipData.users.length > 0) {
+        if (ownerShipData && ownerShipData.users && ownerShipData.users.length > 0) {
 
             ownerShipData.users.forEach(element => {
                 const userObject = this.users_list.filter(user => user.id === parseInt(element));
-                console.log(userObject);
                 this.userNamelist = this.userNamelist + userObject[0].firstName + ' ' + userObject[0].lastName + ','
             });
             if (isTruncate) {
                 this.truncateInst(this.userNamelist.replace(/,\s*$/, ''));
             } else {
                 this.userNamelist = this.userNamelist.replace(/,\s*$/, '')
-                console.log(this.userNamelist.length);
             }
 
         }
-        if (ownerShipData.teams && ownerShipData.teams.length > 0) {
-
+        if ( ownerShipData && ownerShipData.teams && ownerShipData.teams.length > 0) {
             ownerShipData.teams.forEach(element => {
                 const userObject = this.team.filter(team => team.id === parseInt(element));
-                console.log(userObject);
-                this.userNamelist = this.userNamelist + userObject[0].name + ','
+                if(userObject.length !==0){
+                    this.userNamelist = this.userNamelist + userObject[0].name + ','
+                }
+               
             });
             if (isTruncate) {
                 this.truncateInst(this.userNamelist.replace(/,\s*$/, ''));
             } else {
                 this.userNamelist = this.userNamelist.replace(/,\s*$/, '')
-                console.log(this.userNamelist.length);
+               
             }
 
         }

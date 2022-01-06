@@ -409,18 +409,19 @@
                           [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm('paytm')"
                           id="stepThreeConfirmButton">
                         </span> -->
-                  
-                      <ng-container *ngIf="!shownonIndianModes && ((checkJcash && jcashamount < cartDetails.advanceAmount))">
+                  <div   *ngIf=" ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
+                      <ng-container *ngIf="!shownonIndianModes ">
                           <div *ngFor="let modes of indian_payment_modes">
                               <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 
-                                      <div class="text-primary" >
+                                      <div class="text-primary payment-mode-card-styles" >
                                             
                                         <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="indian_payment_mode_onchange($event)" labelPosition="before">
                                           <mat-radio-button [value]="modes.mode"  >
                                             <div class="d-flex justify-content-sm-around">
-                                              <div class="col-sm-8 col-md-8 col-xs-1 col-lg-3 my-auto"><span class="mode-display-name text-uppercase">{{modes.modeDisplayName}}</span></div>
-                                              <div class="col-sm-4 col-md-4 col-xs-11 col-lg-9 my-auto ml-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
+                                              <div class="col-md-6 col-lg-6 my-auto" ><span style="font-size: 10px;">{{modes.modeDisplayName}}</span></div>
+                                              <div class="col-md-6 col-lg-6 my-auto"><img class="ordericon pickup pic_size" [src]="getImageSrc(modes.mode)"></div>    
+                                           
                                           </div>
                                           </mat-radio-button>
                                         </mat-radio-group>
@@ -430,18 +431,19 @@
 
                       </div>
                 </ng-container>
-                <ng-container *ngIf="shownonIndianModes && ((checkJcash && jcashamount < cartDetails.advanceAmount))">
+                <ng-container *ngIf="shownonIndianModes">
                     
                     <div *ngFor="let modes of non_indian_modes">
                         <div class="col-xs-12 col-sm-6 col-md-12 col-lg-12">
 
-                                <div class="text-primary" >
+                                <div class="text-primary payment-mode-card-styles" >
                                       
                                   <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="non_indian_modes_onchange($event)">
                                     <mat-radio-button [value]="modes.mode"  >
                                       <div class="d-flex justify-content-around">
-                                        <div class="col-md-8 col-lg-8 my-auto mt-5"><span class="m-5">{{modes.modeDisplayName}}</span></div>
-                                        <div class="col-md-4 col-lg-4 my-auto ml-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
+                                        <div class="col-md-6 col-lg-6 my-auto"><span style="font-size: 10px;">{{modes.modeDisplayName}}</span></div>
+                                        <div class="col-md-6 col-lg-6 my-auto"><img class="ordericon pickup pic_size" [src]="getImageSrc(modes.mode)"></div>    
+                                       
                                     </div>
                                     </mat-radio-button>
                                   
@@ -452,6 +454,8 @@
 
                 </div>
             </ng-container>
+                  </div>
+
             </div>
             
             <div class="clearfix"></div>
@@ -585,39 +589,52 @@
                       id="stepThreeConfirmButton">
                     </span> -->
                   </div>
-                  <ng-container *ngIf="!shownonIndianModes && ((checkJcash && jcashamount < cartDetails.advanceAmount))">
-                    <div *ngFor="let modes of indian_payment_modes">
-                        <div class="col-xs-12  col-sm-6 col-lg-3  ">
+                <div class="clearfix"></div>
+                    <ng-container *ngIf="!shownonIndianModes && ((checkJcash && jcashamount < cartDetails.advanceAmount)) ">
+                        <div *ngFor="let modes of indian_payment_modes">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 
-                                <div class="paymentmode card text-primary" >
-                                  <mat-radio-group name="paymentMode" (change)="indian_payment_mode_onchange($event)">
-                                    <mat-radio-button [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
+                                    <div class="text-primary payment-mode-card-styles" >
+                                          
+                                      <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="indian_payment_mode_onchange($event)" labelPosition="before">
+                                        <mat-radio-button [value]="modes.mode"  >
+                                          <div class="d-flex justify-content-sm-around">
+                                            <div class="col-md-6 col-lg-6 my-auto"><span style="font-size: 10px;">{{modes.modeDisplayName}}</span></div>
+                                            <div class="col-md-6 col-lg-6 my-auto"><img class="ordericon pickup pic_size"[src]="getImageSrc(modes.mode)"></div>    
+                                           
+                                        </div>
+                                        </mat-radio-button>
+                                      </mat-radio-group>
+                                      
+                                    </div>
+                                    </div>
 
-                    
-                                  </mat-radio-group>
-                                  
-                                </div>
-                                </div>
+                    </div>
+              </ng-container>
+              <ng-container *ngIf="shownonIndianModes&& ((checkJcash && jcashamount < cartDetails.advanceAmount))">
+                  
+                  <div *ngFor="let modes of non_indian_modes">
+                      <div class="col-xs-12 col-sm-6 col-md-12 col-lg-12">
 
-                </div>
-            </ng-container>
-            <ng-container *ngIf="shownonIndianModes && ((checkJcash && jcashamount < cartDetails.advanceAmount))">
-                
-                <div *ngFor="let modes of non_indian_modes">
-                    <div class="col-xs-12  col-sm-6 col-lg-3  ">
+                              <div class="text-primary payment-mode-card-styles" >
+                                    
+                                <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="non_indian_modes_onchange($event)">
+                                  <mat-radio-button [value]="modes.mode"  >
+                                    <div class="d-flex justify-content-around">
+                                      <div class="col-md-6 col-lg-6 my-auto" ><span style="font-size: 10px;">{{modes.modeDisplayName}}</span></div>
+                                      <div class="col-md-6 col-lg-6 my-auto"><img class="ordericon pickup pic_size" [src]="getImageSrc(modes.mode)"></div>    
+                                      
+                                  </div>
+                                  </mat-radio-button>
+                                
+                                </mat-radio-group>
+                  
+                              </div>
+                              </div>
 
-                            <div class="paymentmode card text-primary" >
-                              <mat-radio-group name="paymentMode" (change)="non_indian_modes_onchange($event)">
-                                <mat-radio-button [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
-
-                
-                              </mat-radio-group>
-                              
-                            </div>
-                            </div>
-
-            </div>
-        </ng-container>
+              </div>
+          </ng-container>
+             
         <div class="clearfix"></div>
         <div class="txt-align-center "
         *ngIf="paymentmodes.internationalPay  && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">

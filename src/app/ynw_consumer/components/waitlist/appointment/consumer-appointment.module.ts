@@ -22,7 +22,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 const routes: Routes = [
     { path: '', component: ConsumerAppointmentComponent},
-    { path: 'payment/:id',loadChildren: ()=>import('./payment/payment.module').then(m=>m.ConsumerApptPaymentModule) },
+    // { path: 'payment/:id',loadChildren: ()=>import('./payment/payment.module').then(m=>m.ConsumerApptPaymentModule) },
     { path: 'track/:id', loadChildren:()=> import('./livetrack/livetrack.module').then(m=>m.ConsumerApptLiveTrackModule) },
     { path: 'history', loadChildren:()=> import('./history/appointment-history.module').then(m=>m.AppointmentHistoryModule) },
     { path: 'bill', loadChildren:()=>import('./appointment-bill/appointment-bill.module').then(m=>m.ConsumerApptBillModule) },

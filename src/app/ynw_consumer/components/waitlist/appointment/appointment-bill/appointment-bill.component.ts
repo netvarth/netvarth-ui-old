@@ -23,6 +23,7 @@ import { LocalStorageService } from '../../../../../../app/shared/services/local
 import { CheckInHistoryServices } from '../../../../../shared/modules/consumer-checkin-history-list/components/checkin-history-list/checkin-history-list.service';
 import { JcCouponNoteComponent } from '../../../../../shared/modules/jc-coupon-note/jc-coupon-note.component';
 
+
 @Component({
     selector: 'app-consumer-appointment-bill',
     templateUrl: './appointment-bill.component.html',
@@ -488,6 +489,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
      */
     payuPayment(paymentType?) {
         this.isClickedOnce=true;
+
         if (this.jcashamount > 0 && this.checkJcash) {
             this.sharedServices.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.bill_data.amountDue)
                 .subscribe(data => {
@@ -519,6 +521,9 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
                     } else if (this.remainingadvanceamount > 0 && this.checkJcash) {
+                        if(this.selected_payment_mode &&this.selected_payment_mode.toLowerCase()==='cash'){
+                            this.cashPayment();
+                        }else{
                         const postData = {
                             'amountToPay': this.bill_data.amountDue,
                             'accountId': this.accountId,
@@ -593,6 +598,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                                 });
 
                     }
+                }
                 },
                 error => {
                     this.isClickedOnce=false;
@@ -601,15 +607,16 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                 });
         }
         else {
+            if(this.selected_payment_mode &&this.selected_payment_mode.toLowerCase()==='cash'){
+                this.cashPayment();
+            }else{
             this.pay_data.uuid = this.uuid;
             this.pay_data.amount = this.bill_data.amountDue;
-            this.pay_data.paymentMode =null;
             this.pay_data.accountId = this.accountId;
             this.pay_data.purpose = 'billPayment';
           this.pay_data.serviceId=0;
           this.pay_data.isInternational=this.isInternatonal;
           this.pay_data.paymentMode = this.selected_payment_mode;
-           
             this.resetApiError();
             if (this.pay_data.uuid != null &&
                 this.pay_data.paymentMode != null &&
@@ -639,8 +646,12 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         }
                     );
+            }else if(!this.selected_payment_mode && this.bill_data.amountDue>0){
+                this.snackbarService.openSnackBar('Please Choose Payment Option', { 'panelClass': 'snackbarerror' });  
+                this.isClickedOnce=false;
             }
         }
+    }
     }
     getImageSrc(mode){
     
@@ -715,11 +726,15 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
     }
     paytmPayment() {
         this.isClickedOnce=true;
+        
+ 
         this.pay_data.uuid = this.uuid;
         this.pay_data.amount = this.bill_data.amountDue;
-        this.pay_data.paymentMode = 'PPI';
+        this.pay_data.paymentMode = this.selected_payment_mode;
         this.pay_data.accountId = this.accountId;
         this.pay_data.purpose = 'billPayment';
+        this.pay_data.isInternational=this.isInternatonal;
+        this.pay_data.serviceId=0;
         this.resetApiError();
         if (this.pay_data.uuid != null &&
             this.pay_data.paymentMode != null &&
@@ -742,6 +757,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                     }
                 );
         }
+    
     }
     paywithRazorpay(data: any) {
         this.prefillmodel.name = data.consumerName;
@@ -1046,6 +1062,11 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
      */
     cashPayment() {
         this.snackbarService.openSnackBar('Visit ' + this.getTerminologyTerm('provider') + ' to pay by cash');
+        setTimeout(()=>{
+            this.ngZone.run(() => this.router.navigate(['consumer'] ));
+            console.log('redirect to consumer');
+    
+           },1000);
     }
     // getCouponList() {
     //     const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();

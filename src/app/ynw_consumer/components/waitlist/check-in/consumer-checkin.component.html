@@ -1350,19 +1350,22 @@
                                                             Pay by CC/DC/UPI
                                                         </button>
                                                     </div> -->
-                                                    <!-- <div class="clearfix"></div> -->
+                                                 <div class="clearfix"></div> 
+                                                    <div *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
                                                     <ng-container *ngIf="!shownonIndianModes">
                                                         <div *ngFor="let modes of indian_payment_modes">
                                                             <div class="col-xs-12 col-md-6 col-sm-12 col-lg-6">
 
-                                                                    <div class="text-primary" >
+                                                                    <div class="text-primary payment-mode-card-styles" >
                                                                         
                                                                     <mat-radio-group class="paymentmode card shadow" name="paymentMode" (change)="indian_payment_mode_onchange($event)" labelPosition="before">
                                                                         <mat-radio-button disableRipple="true" [value]="modes.mode">
                                                                             <div class="d-flex justify-content-around">
                                                                                 <div class="col-md-8  my-auto mt-5"><span class="m-5">{{modes.modeDisplayName}}</span></div>
                                                                                 <div class="col-md-4  my-auto ml-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
-                                                                            </div>
+                                                                            
+                                                                               
+                                                                                </div>
                                                                         </mat-radio-button>
                                                                     </mat-radio-group>
                                                                     <!-- <img class="ordericon pickup" height="50px" width="100px"[src]="getImageSrc(modes.mode)"> -->
@@ -1377,14 +1380,16 @@
                                                 <div *ngFor="let modes of non_indian_modes">
                                                     <div class="col-xs-12 col-md-6 col-sm-12 col-lg-6">
 
-                                                            <div class="text-primary" >
+                                                            <div class="text-primary payment-mode-card-styles" >
                                                                    
                                                               <mat-radio-group class="paymentmode card shadow" name="paymentMode" (change)="non_indian_modes_onchange($event)">
                                                                 <mat-radio-button [value]="modes.mode">
                                                                     <div class="d-flex justify-content-around">
                                                                         <div class="col-md-8  my-auto"><span class="m-5">{{modes.modeDisplayName}}</span></div>
                                                                         <div class="col-md-4  my-auto ml-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
-                                                                    </div>
+                                                                    
+                                                                       
+                                                                        </div>
                                                                     </mat-radio-button>
                                                                
                                                 
@@ -1395,6 +1400,9 @@
 
                                             </div>
                                         </ng-container>
+
+                                    </div>
+                                    <div class="clearfix"></div> 
                                         <div class="card-payment-button">
                                                 <div class="col-md-12">
 
@@ -1429,7 +1437,7 @@
                                                             (click)="!isClickedOnce && saveCheckin('checkin')">
                                                            MaKe Payment
                                                         </button>
-                                                        <!-- <button type="button" [class.disabled]="isClickedOnce"
+                 <!-- <button type="button" [class.disabled]="isClickedOnce"
                                                         (click)="!isClickedOnce && saveCheckin('checkin')"
                                                         id="stepThreeConfirmButton"
                                                         class="next-button btn btn-primary font-weight-bold  px-12 py-4"
@@ -1439,7 +1447,7 @@
                                                   ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
                                                             Confirm {{settingsjson.showTokenId?'Token ':'Checkin'}}
                                                         </ng-container>
-                                                        </button> -->
+                                                        </button>  -->
                                                     </div>
                                                 </div>
                                                     <!-- <div class=""

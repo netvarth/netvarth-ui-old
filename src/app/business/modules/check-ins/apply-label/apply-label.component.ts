@@ -28,7 +28,7 @@ export class ApplyLabelComponent implements OnInit {
         private wordProcessor: WordProcessor,
         public shared_functions: SharedFunctions,
         @Inject(MAT_DIALOG_DATA) public checkin: any,
-        public dialogRef: MatDialogRef<ApplyLabelComponent>,) {
+        public dialogRef: MatDialogRef<ApplyLabelComponent>) {
         this.source = checkin.source;
         this.checkin = checkin.checkin;
         this.label = checkin.label;

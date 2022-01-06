@@ -116,10 +116,19 @@
 
       <span class="setings" *ngIf="service.status=='ACTIVE'">Share link</span>
       <p *ngIf="service.status=='ACTIVE'">
+        <span *ngIf="service && service.provider && service.provider.id">
+          <span class='assured'
+          *ngIf="bprofile.accEncUid">{{wndw_path}}{{bprofile.accEncUid}}/{{service.provider.id}}/service/{{service.id}}</span>
         <span class='assured'
-          *ngIf="service && service.provider && service.provider.id">{{wndw_path}}{{bprofile.accEncUid}}/{{service.provider.id}}/service/{{service.id}}</span>
+          *ngIf="bprofile.customId">{{wndw_path}}{{bprofile.customId}}/{{service.provider.id}}/service/{{service.id}}</span>
+        </span>
+      
+        <span *ngIf="service && !service.provider">
+          <span class='assured'
+          *ngIf="bprofile.accEncUid && bprofile.customId">{{wndw_path}}{{bprofile.customId}}/service/{{service.id}}</span>
         <span class='assured'
-          *ngIf="service && !service.provider">{{wndw_path}}{{bprofile.accEncUid}}/service/{{service.id}}</span>
+          *ngIf="bprofile.accEncUid && !bprofile.customId">{{wndw_path}}{{bprofile.accEncUid}}/service/{{service.id}}</span>
+        </span>
       </p>
       <p>
         <span class="custid">
@@ -135,6 +144,76 @@
             [matTooltip]="'Share link'"></i>
         </span>
       </p>
+      <div *ngIf="service.paymentProfileId && action==='show'">
+       <span>Payment Profile Selected for this service is:</span>
+
+          <div class="row" >
+            <mat-radio-group  name="paymentprofile" class="mt-4">
+              <mat-radio-button [value]="selectedPaymentProfile.profileId" readonly checked>
+                <span class="font-weight-bold">{{selectedPaymentProfile[0].displayName}}</span>
+              </mat-radio-button>
+            </mat-radio-group>
+            <div>
+                <div class="col-lg-12" *ngIf="selectedPaymentProfile[0].indiaPay">  
+                  <ng-container *ngFor="let gateway of getPayTMmodesByGroup(selectedPaymentProfile[0].indianPaymodes)|keyvalue">            
+                    <div class="col-md-5 col-sm-12 d-flex justify-content-around shadow my-4" >
+                    
+                      <div class="d-flex justify-content-around">
+                        <img [src]="getImageSrc(gateway.key)" height="25px" width="50px" alt="gateway.key">
+                      </div>
+                      
+                    <div class="d-flex justify-content-between">
+                      <ng-container *ngFor="let modes of gateway.value">
+                        <div class="d-flex justify-content-between">
+                          <img class="ordericon pickup" height="25px" width="35px" [src]="getImageSrc(modes.mode)">
+                        </div>
+                      </ng-container>
+                    </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                  </ng-container>   
+                </div>
+  
+           <ng-container *ngIf="selectedPaymentProfile[0].internationalPay">
+                  <div>
+                 <span (click)="togglepaymentMode();"><b style="color:green">&#10004;</b>  <a>International Payment</a></span>
+                </div>
+                <div class="col-lg-12" *ngIf="selectedPaymentProfile[0].internationalPay && show_internationalmode">  
+                  <ng-container *ngFor="let gateway of getPayTMmodesByGroup(selectedPaymentProfile[0].internationalPaymodes)|keyvalue">            
+                    <div class="col-md-5 col-sm-12 d-flex justify-content-around shadow my-4" >
+                    
+                      <div class="d-flex justify-content-around">
+                        <img [src]="getImageSrc(gateway.key)" height="25px" width="50px" alt="gateway.key">
+                      </div>
+                      
+                    <div class="d-flex justify-content-between">
+                      <ng-container *ngFor="let modes of gateway.value">
+                        <div class="d-flex justify-content-between">
+                          <img class="ordericon pickup" height="25px" width="35px" [src]="getImageSrc(modes.mode)">
+                        </div>
+                      </ng-container>
+                    </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                  </ng-container>   
+                </div>
+  
+                </ng-container> 
+               
+               
+                
+                
+             
+  
+            
+              
+            
+           
+            </div>
+          </div>
+      
+
+      </div>
       <!-- </div> -->
       <div class="btm-ctrl">
         <div class="ctrl enable-disable">
@@ -353,8 +432,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </div>
       </div> -->
 
-      <div class="row mgn-lt-5 mgn-up-20" *ngIf="!is_donation">
-        <section class="mgn-bt-30">
+      <div class="row mgn-lt-5 mgn-up-20" *ngIf="showResources">
+        <section class="mgn-bt-30" *ngIf="!is_donation">
           <label style="margin-bottom: 0 !important" class="col-form-label">Number of resources</label>
           <div class="settings_info">
             No. of resources that need to be used for this service.</div>
@@ -514,86 +593,71 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
 
         </section>
       </div>
+
       <ng-container *ngIf="paymentProfiles.length>0">
-        Choose Payment Profile for this Service.
+        Choose Payment Profile for this Service.<br><br>
         <div class="row" *ngFor="let profile of paymentProfiles; let i=index">
-          <div class="col-md-5">
-
-          <!-- <div class=" payment_profile card" >
-            <mat-radio-group formControlName="paymentProfileId" name="paymentprofile">
-              <mat-radio-button [value]="profile.profileId"  >{{profile.displayName}}  </mat-radio-button>
-              <ng-container >
-                <div class="col-md-6"  *ngIf="profile.internationalPay">
-                  <strong style="color:blue">RAZORPAY</strong>
-                  <ng-container *ngFor="let modes of getRazorModes(profile.indianPaymodes)">
-                    <div>
-
-                      <span>{{modes.mode}}</span>&nbsp;
-                    </div>
-                  </ng-container>
-                </div>
-                <div   class="col-md-6" style="float:left" *ngIf="profile.indiaPay">
-                  <strong style="color:blue">PAYTM</strong>
-                  <ng-container *ngFor="let modes of getpaytmmodes(profile.indianPaymodes)">
-                    <div>
-
-                      <span>{{modes.mode}}</span>
-                    </div>
-                  </ng-container>
-
-                </div>
-              </ng-container>
-
-              <ng-container *ngIf="profile.internationalPay">
-                <div>
-                <input type="checkbox" checked="true" readonly="true" onclick="return false;"> International Payment
-              </div>
-
-              </ng-container>
-          
-
-            </mat-radio-group>
-            
-          </div> -->
-
-          <div class=" payment_profile card" [ngClass]="{'card-selected': selected} "  >
-            <mat-radio-group formControlName="paymentProfileId" name="paymentprofile">
-              <mat-radio-button [value]="profile.profileId"  >{{profile.displayName}}  </mat-radio-button>
-              <br>
-              <div class="col-md-12"  >
-                  <div class="float-left"  *ngIf="profile.indiaPay">
-                      <img src="assets/images/payment-modes/paytm.png"height="25px" width="50px" alt="payTM">
-                    </div>
-                <div class="float-right"  *ngIf="profile.internationalPay">
-                  <img src="assets/images/payment-modes/razorpay.png" height="25px" width="100px" alt="razorpay">
-                </div>
-              </div>
-              <br>
-                
+          <mat-radio-group formControlName="paymentProfileId" name="paymentprofile" class="mt-4">
+            <mat-radio-button [value]="profile.profileId"  >
+              <span class="font-weight-bold">{{profile.displayName}}</span>
+            </mat-radio-button>
+          </mat-radio-group>
+          <div>
+              <div class="col-lg-12" *ngIf="profile.indiaPay">  
+                <ng-container *ngFor="let gateway of getPayTMmodesByGroup(profile.indianPaymodes)|keyvalue">            
+                  <div class="col-md-5 col-sm-12 d-flex justify-content-around shadow my-4" >
                   
-                <div   class="container" style="margin-top:5px;"  >
-                 
-                 
-                   
-<span *ngFor="let modes of getUniqueModes(profile)">
-                      <img class="ordericon pickup" height="25px" width="35px" [src]="getImageSrc(modes)">
+                    <div class="d-flex justify-content-around">
+                      <img [src]="getImageSrc(gateway.key)" height="25px" width="50px" alt="gateway.key">
+                    </div>
                     
-                    </span>
-
-                </div>
-
-
-              <ng-container *ngIf="profile.internationalPay">
-                <div>
-                <input type="checkbox" checked="true" readonly="true" onclick="return false;"> International Payment
+                  <div class="d-flex justify-content-between">
+                    <ng-container *ngFor="let modes of gateway.value">
+                      <div class="d-flex justify-content-between">
+                        <img class="ordericon pickup" height="25px" width="35px" [src]="getImageSrc(modes.mode)">
+                      </div>
+                    </ng-container>
+                  </div>
+                  </div>
+                  <div class="col-md-2"></div>
+                </ng-container>   
               </div>
 
-              </ng-container>
-          
+         <ng-container *ngIf="profile.internationalPay">
+                <div>
+               <span (click)="togglepaymentMode();"><b style="color:green">&#10004;</b>  <a>International Payment</a></span>
+              </div>
+              <div class="col-lg-12" *ngIf="profile.internationalPay && show_internationalmode">  
+                <ng-container *ngFor="let gateway of getPayTMmodesByGroup(profile.internationalPaymodes)|keyvalue">            
+                  <div class="col-md-5 col-sm-12 d-flex justify-content-around shadow my-4" >
+                  
+                    <div class="d-flex justify-content-around">
+                      <img [src]="getImageSrc(gateway.key)" height="25px" width="50px" alt="gateway.key">
+                    </div>
+                    
+                  <div class="d-flex justify-content-between">
+                    <ng-container *ngFor="let modes of gateway.value">
+                      <div class="d-flex justify-content-between">
+                        <img class="ordericon pickup" height="25px" width="35px" [src]="getImageSrc(modes.mode)">
+                      </div>
+                    </ng-container>
+                  </div>
+                  </div>
+                  <div class="col-md-2"></div>
+                </ng-container>   
+              </div>
 
-            </mat-radio-group>
+              </ng-container> 
+             
+             
+              
+              
+           
+
+          
             
-          </div> 
+          
+         
           </div>
         </div>
       </ng-container>

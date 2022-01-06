@@ -9,15 +9,15 @@
     box-shadow: 0 0 3px 3px blue!important 
   }
 
-::ng-deep .mat-radio-button .mat-radio-container {
+  ::ng-deep .payment-mode-card-styles .mat-radio-button .mat-radio-container {
     display: none!important;
   }
-  ::ng-deep .mat-radio-container .mat-radio-outer-circle,
-  ::ng-deep .mat-radio-container .mat-radio-inner-circle{
+ ::ng-deep .payment-mode-card-styles .mat-radio-container .mat-radio-outer-circle,
+ ::ng-deep .payment-mode-card-styles .mat-radio-container .mat-radio-inner-circle{
     
     display: none!important;
   }
-  ::ng-deep .mat-radio-container .mat-radio-label{
+  ::ng-deep .payment-mode-card-styles .mat-radio-container .mat-radio-label{
     display: inline;
   }
 </style>
@@ -42,7 +42,7 @@
                                 <div style="padding-bottom: 10px; font-size: large;">Choose the Payment Option
                                  
                                     <ng-container *ngIf="!shownonIndianModes">
-                                        <div *ngFor="let modes of indian_payment_modes" class="mt-4">
+                                        <div *ngFor="let modes of indian_payment_modes" class="mt-4 payment-mode-card-styles">
                                             <div class="col-xs-12 col-sm-6 col-lg-3">
 
                                                     <div class="text-primary" >
@@ -51,7 +51,10 @@
                                                         <mat-radio-button [value]="modes.mode"  >
                                                             <div class="d-flex justify-content-around">
                                                                 <div class="col-md-8 col-lg-7 my-auto"><span>{{modes.modeDisplayName}}</span></div>
-                                                                <div class="col-md-4 col-lg-5 my-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
+                                                                <div class="col-md-4 col-lg-5 my-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>  
+                                                               
+                                                                
+                                                               
                                                             </div>  
                                                         </mat-radio-button>
 
@@ -66,7 +69,7 @@
                                 </ng-container>
                                 <ng-container *ngIf="shownonIndianModes">
                                     
-                                    <div *ngFor="let modes of non_indian_modes" class="mt-4">
+                                    <div *ngFor="let modes of non_indian_modes" class="mt-4 payment-mode-card-styles" >
                                         <div class="col-xs-12 col-sm-6 col-lg-3">
 
                                                 <div class="text-primary" >
@@ -75,7 +78,8 @@
                                                     <mat-radio-button [value]="modes.mode"  >
                                                         <div class="d-flex justify-content-around">
                                                             <div class="col-md-8 col-lg-7 my-auto"><span>{{modes.modeDisplayName}}</span></div>
-                                                            <div class="col-md-4 col-lg-5 my-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
+                                                            <div class="col-md-4 col-lg-5 my-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>    
+                                                        
                                                         </div>    
                                                     </mat-radio-button>
                                                   

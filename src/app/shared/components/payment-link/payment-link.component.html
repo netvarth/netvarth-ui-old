@@ -16,7 +16,7 @@
                                     <div class="box-footer no-padding">
                                         <ul class="nav nav-stacked">
                                             <span class="lnk setings">
-                                                <p style="text-align:left;"> Dear {{(firstname.trim()!=="" && firstname.trim()!=="null null" ) ? firstname : customer}},</p>
+                                                <p style="text-align:left;"> Dear {{(firstname!=="" && firstname!==null && firstname!== undefined ) ? firstname : customer}},</p>
                                             </span>
                                             <span class="lnk setings">
                                                 <p style="text-align:left;">Welcome to Jaldee PAY. <br> Your contactless
@@ -34,16 +34,23 @@
                                                 <h2 class="textcenter rupee-font"
                                                     style="font-size: -webkit-xxx-large; font-weight: 400;">
                                                     {{this.amountDue | currency:'&#8377; '}}
-                                                </h2><br>                                                
-                                                <ng-container *ngIf="!shownonIndianModes&&paymentmodes.length>0">
+                                                </h2><br>   
+                                                <div class="clearfix"></div>                                              
+                                                <ng-container *ngIf="!shownonIndianModes">
                                                     <div  *ngFor="let modes of indian_payment_modes">
                                                         <div class="col-xs-12">
     
                                                                 <div class="paymentmode card text-primary" >
                                                                   <mat-radio-group name="paymentMode" (change)="indian_payment_mode_onchange($event)">
-                                                                    <mat-radio-button [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
-    
-                                                    
+                                                                    <mat-radio-button [value]="modes.mode"  >
+                                                                        <div class="d-flex justify-content-around">
+                                                                            <div class="col-md-8 col-lg-7 my-auto"><span>{{modes.modeDisplayName}}</span></div>
+                                                                            <div class="col-md-4 col-lg-5 my-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>    
+                                                                           
+                                                                        </div>  
+                                                                    </mat-radio-button>
+                                                                    
+                                                                      
                                                                   </mat-radio-group>
                                                                   
                                                                 </div>
@@ -51,15 +58,23 @@
     
                                                 </div>
                                             </ng-container>
-                                            <ng-container *ngIf="shownonIndianModes&&paymentmodes.length>0">
+                                            <ng-container *ngIf="shownonIndianModes">
                                                 
                                                 <div  *ngFor="let modes of non_indian_modes">
                                                     <div class="col-xs-12 ">
     
                                                             <div class="paymentmode card text-primary" >
                                                               <mat-radio-group name="paymentMode" (change)="non_indian_modes_onchange($event)">
-                                                                <mat-radio-button [value]="modes.mode"  >{{modes.modeDisplayName}}  </mat-radio-button>
-
+                                                               
+                                                               
+                                                                <mat-radio-button [value]="modes.mode"  >
+                                                                    <div class="d-flex justify-content-around">
+                                                                        <div class="col-md-8 col-lg-7 my-auto"><span>{{modes.modeDisplayName}}</span></div>
+                                                                        <div class="col-md-4 col-lg-5 my-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>    
+                                                                       
+                                                                    </div>  
+                                                                </mat-radio-button>
+                                                               
                                                 
                                                               </mat-radio-group>
                                                               
@@ -76,9 +91,9 @@
                                                             (click)="togglepaymentMode()"
                                                             class="pointer-cursor"><a
                                                                 class="refund_policy">
-                                                                <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
+                                                                <span *ngIf="!shownonIndianModes&&paymentmodes&&paymentmodes.internationalPay">Non Indian Payment ? Click
                                                                 here</span>
-                                                                <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
+                                                                <span *ngIf="shownonIndianModes &&paymentmodes&& paymentmodes.indiaPay">Indian Payment ? Click
                                                                     here</span>
                                                             </a></span>
     

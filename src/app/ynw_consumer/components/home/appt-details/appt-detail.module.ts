@@ -11,10 +11,11 @@ import { MatExpansionModule } from "@angular/material/expansion";
 // import { InboxListModule } from "../../../../business/modules/inbox-list/inbox-list.module";
 import { MatTabsModule } from "@angular/material/tabs";
 import { NgxQRCodeModule } from "ngx-qrcode2";
-import { AddInboxMessagesModule } from "../../../../shared/components/add-inbox-messages/add-inbox-messages.module";
 import { MeetingDetailsModule } from "../../meeting-details/meeting-details.module";
 import { ActionPopupModule } from "../action-popup/action-popup.module";
 import { GalleryModule } from "../../../../shared/modules/gallery/gallery.module";
+import { AddInboxMessagesModule } from "../../../../../../src/app/shared/components/add-inbox-messages/add-inbox-messages.module";
+import { InboxListModule } from "../../../../../../src/app/shared/modules/inbox/inbox-list/inbox-list.module";
 const routes: Routes = [
     { path: '', component: ApptDetailComponent }
 ];
@@ -28,7 +29,7 @@ const routes: Routes = [
         CapitalizeFirstPipeModule,
         QuestionnaireModule,
         MatExpansionModule,
-        // InboxListModule,
+        InboxListModule,
         MatTabsModule,
         NgxQRCodeModule,
         AddInboxMessagesModule,

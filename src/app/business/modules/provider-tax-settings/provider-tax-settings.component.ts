@@ -23,6 +23,7 @@ export class ProvidertaxSettingsComponent implements OnInit {
     showError: any = [];
     gstnumber;
     gstname;
+    address;
     taxDetails: any = [];
     tax_st_cap = Messages.FRM_LEVEL_TAX_SETTINGS_MSG;
     tax_percentage_cap = Messages.PAY_SET_TAX_PER_CAP;
@@ -61,7 +62,12 @@ export class ProvidertaxSettingsComponent implements OnInit {
                     console.log(this.taxDetails);
                     this.taxpercentage = this.taxDetails.taxPercentage;
                     this.gstnumber = this.taxDetails.gstNumber || '';
-                    this.gstname=this.taxDetails.nameAsInGst;
+                    if (this.taxDetails && this.taxDetails.address) {
+                        this.address=this.taxDetails.address;
+                    }
+                    if (this.taxDetails && this.taxDetails.nameAsInGst) {
+                        this.gstname=this.taxDetails.nameAsInGst;
+                    } 
                     if (this.taxDetails.taxPercentage && this.taxDetails.gstNumber) {
                         this.allFieldsExists = true;
                     }
@@ -108,7 +114,9 @@ export class ProvidertaxSettingsComponent implements OnInit {
             const postData = {
                 'taxPercentage': this.taxpercentage,
                 'gstNumber': this.gstnumber || '',
-                'nameAsInGst': this.gstname
+                'nameAsInGst': this.gstname,
+                'address': this.address,
+                
             };
             this.provider_services.setTaxpercentage(postData)
                 .subscribe(() => {

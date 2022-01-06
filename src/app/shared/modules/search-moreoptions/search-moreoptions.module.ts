@@ -8,15 +8,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
+import { CommonModule } from "@angular/common";
 @NgModule({
     imports: [
       MatDialogModule,
+      CommonModule,
       MatSlideToggleModule,
       MatButtonModule,
       MatProgressSpinnerModule,
       MatCheckboxModule,
       RatingStarModule,
-      ClickOutsideModule
+      ClickOutsideModule,
     ],
     declarations: [SearchMoreOptionsComponent],
     exports: [SearchMoreOptionsComponent],
