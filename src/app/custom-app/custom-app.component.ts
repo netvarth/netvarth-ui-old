@@ -69,6 +69,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     const _this = this;
+    _this.lStorageService.setitemonLocalStorage('reqFrom', 'cuA');
     if (!this.lStorageService.getitemfromLocalStorage('sysdate')) {
       this.customappService.getSystemDate().subscribe(
         (date) => {
@@ -126,7 +127,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
   getBusinessProfile(uniqueId) {
     const _this = this;
     return new Promise(function (resolve, reject) {
-      let accountS3List = 'businessProfile,settings,appointmentsettings,terminologies,location';
+      let accountS3List = 'businessProfile,settings,appointmentsettings,terminologies,location,donationServices';
       _this.subscriptions.sink = _this.s3Processor.getJsonsbyTypes(uniqueId,
         null, accountS3List).subscribe(
           (accountS3s: any) => {

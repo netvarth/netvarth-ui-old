@@ -414,7 +414,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
             _this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
             _this.getQueuesbyLocationandServiceIdavailability(_this.sel_loc, _this.selectedServiceId, _this.account_id);
-            _this.initCommunications(this.parentCustomer);
+            _this.initCommunications(_this.parentCustomer);
         });
     }
 
@@ -2375,10 +2375,16 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             if (customer.userProfile && customer.userProfile.whatsAppNum && customer.userProfile.whatsAppNum.number) {
                 this.virtualForm.patchValue({ whatsappnumber: customer.userProfile.whatsAppNum.number });
                 this.virtualForm.patchValue({ countryCode_whtsap: customer.userProfile.whatsAppNum.countryCode });
+            } else {
+                this.virtualForm.patchValue({ whatsappnumber: customer.userProfile.primaryMobileNo });
+                this.virtualForm.patchValue({ countryCode_whtsap: customer.userProfile.countryCode });
             }
             if (customer.userProfile && customer.userProfile.telegramNum && customer.userProfile.telegramNum.number) {
                 this.virtualForm.patchValue({ telegramnumber: customer.userProfile.telegramNum.number });
                 this.virtualForm.patchValue({ countryCode_telegram: customer.userProfile.telegramNum.countryCode });
+            } else {
+                this.virtualForm.patchValue({ telegramnumber: customer.userProfile.primaryMobileNo });
+                this.virtualForm.patchValue({ countryCode_telegram: customer.userProfile.countryCode });
             }
         }
         if (customer.userProfile && customer.userProfile.age) {

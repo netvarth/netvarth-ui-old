@@ -53,6 +53,10 @@ export class CustomappService {
     return this.accountEncId;
   }
 
+  getDonationServices() {
+    return this.businessJsons['donationServices'];
+  }
+
   getSystemDate() {
     return this.servicemeta.httpGet('provider/server/date');
   }

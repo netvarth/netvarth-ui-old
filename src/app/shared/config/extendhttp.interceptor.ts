@@ -8,11 +8,11 @@ import { Messages } from '../constants/project-messages';
 import { SharedServices } from '../services/shared-services';
 import { ForceDialogComponent } from '../components/force-dialog/force-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MaintenanceMsgComponent } from '../components/maintenance-msg/maintenance-msg.component';
 import { SnackbarService } from '../services/snackbar.service';
 import { SessionStorageService } from '../services/session-storage.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { AuthService } from '../services/auth-service';
+import { Router } from '@angular/router';
 // import { version } from '../constants/version' ;
 
 @Injectable()
@@ -50,6 +50,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   constructor(private shared_functions: SharedFunctions,
     public shared_services: SharedServices, private dialog: MatDialog,
     private snackbarService: SnackbarService,
+    public router: Router,
     private sessionStorageService: SessionStorageService,
     private lStorageService: LocalStorageService,
     private authService: AuthService) { }
@@ -224,18 +225,19 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
             } else if (this._checkMaintanance(error)) {
               return this._ifMaintenanceOn().pipe(
                 switchMap(() => {
-                  const dialogRef = this.dialog.open(MaintenanceMsgComponent, {
-                    width: '40%',
-                    panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-                    disableClose: true,
-                    data: {
-                      'message': error.error
-                    }
-                  });
-                  dialogRef.afterClosed().subscribe(result => {
-                    window.location.reload();
-                    // this.router.navigate(['/']);
-                  });
+                  this.router.navigate(['/maintenance']);
+                  // const dialogRef = this.dialog.open(MaintenanceMsgComponent, {
+                  //   width: '40%',
+                  //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+                  //   disableClose: true,
+                  //   data: {
+                  //     'message': error.error
+                  //   }
+                  // });
+                  // dialogRef.afterClosed().subscribe(result => {
+                  //   window.location.reload();
+                  //   // this.router.navigate(['/']);
+                  // });
                   return EMPTY;
                 })
               );
