@@ -564,11 +564,11 @@
 
                   <div class="clearfix"></div>
                   <div class="txt-align-center "
-                    *ngIf="paymentmodes.internationalPay  && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
+                    *ngIf="paymentmodes && paymentmodes.internationalPay  && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
                     <span (click)="togglepaymentMode()" class="pointer-cursor"><a class="refund_policy">
-                        <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
+                        <span *ngIf="!shownonIndianModes && paymentmodes && paymentmodes.internationalPay">Non Indian Payment ? Click
                           here</span>
-                        <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
+                        <span *ngIf="shownonIndianModes && paymentmodes && paymentmodes.indiaPay">Indian Payment ? Click
                           here</span>
                       </a></span>
 

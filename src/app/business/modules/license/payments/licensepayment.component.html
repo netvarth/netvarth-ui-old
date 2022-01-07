@@ -32,10 +32,10 @@
                                     <div class="txt-align-center pad_link mgn-up-5">
                                         <span [class.disabled]="isClickedOnce" (click)="togglepaymentMode()"
                                             class="pointer-cursor"><a class="refund_policy">
-                                                <span *ngIf="!shownonIndianModes && paymentmodes.internationalPay">Non
+                                                <span *ngIf="!shownonIndianModes && paymentmodes && paymentmodes.internationalPay">Non
                                                     Indian Payment ? Click
                                                     here</span>
-                                                <span *ngIf="shownonIndianModes && paymentmodes.indiaPay">Indian Payment
+                                                <span *ngIf="shownonIndianModes && paymentmodes && paymentmodes.indiaPay">Indian Payment
                                                     ? Click
                                                     here</span>
                                             </a></span>
