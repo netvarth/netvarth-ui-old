@@ -585,8 +585,18 @@
   .customersList .row .card {
     padding: 0 !important;
     display: inline-block;
+    
   }
 } 
+@media screen and (max-width: 360px){
+.table-card{
+  width: 100%;
+  display: inline-block;
+  margin: 0 !important;
+  padding: 0 !important;
+
+}
+}
 
 .img-section img {
   width: 100px;
