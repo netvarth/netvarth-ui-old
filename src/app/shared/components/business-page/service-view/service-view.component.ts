@@ -21,6 +21,7 @@ import { ConsumerJoinComponent } from '../../../../ynw_consumer/components/consu
 import { SignUpComponent } from '../../signup/signup.component';
 import { MatSidenav } from '@angular/material/sidenav';
 import { AuthService } from '../../../../shared/services/auth-service';
+import { CheckavailabilityComponent } from '../../checkavailability/checkavailability.component';
 
 @Component({
   selector: 'app-service-view',
@@ -143,6 +144,7 @@ export class ServiceViewComponent implements OnInit {
   source: any;
   showpreinfo = false;
   showpostinfo = false;
+  checkavailabilitydialogref: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public shared_services: SharedServices,
@@ -966,14 +968,51 @@ export class ServiceViewComponent implements OnInit {
       return this.wordProcessor.firstToUpper((term === term_only) ? term_only : term);
     }
   }
-  bttonClick(item) {
-    if (item.type == 'waitlist') {
+  bttonClick(item, type?) {
+
+    if(type=='checkavailability') {
+      item['location']=this.selectedLocation;
+      item['service'] = item['item']
+      console.log("item..",item)
+      this.opencheckavail(item)
+      
+    }
+    else if (item.type == 'waitlist') {
       this.checkinClicked(this.selectedLocation, item.item)
     } else if (item.type == 'appt') {
       this.appointmentClicked(this.selectedLocation, item.item);
     } else if (item.type == 'donation') {
       this.payClicked(this.selectedLocation.id, this.selectedLocation.place, new Date(), item.item);
     }
+  }
+  opencheckavail(actionObj) {
+      this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
+        width: '90%',
+        height: 'auto',
+        data: {
+        alldetails:actionObj,
+        apptSettingsJson:this.apptSettingsJson,
+        }
+      });
+
+    this.checkavailabilitydialogref.afterClosed().subscribe(result => {
+     
+      if(result!='undefined') { 
+        actionObj['location']['time']=result[0];
+        actionObj['location']['date']=result[1];
+        if(actionObj['service']['bType']=='Appointment') {
+          this.appointmentClicked(actionObj['location'], actionObj['service']);
+        } if(actionObj['service']['bType']=='Waitlist' || !actionObj['service']['bType']) {
+          console.log("***Waitlist***");
+          this.checkinClicked(actionObj['location'], actionObj['service']);
+        }
+
+
+      }
+   
+
+    });
+  
   }
   checkinClicked(location, service) {
     const current_provider = {
@@ -983,6 +1022,12 @@ export class ServiceViewComponent implements OnInit {
       'cdate': service.serviceAvailability.availableDate,
       'service': service
     };
+    if(location.time) {
+      current_provider['ctime']=location.time
+    }    if(location.date) {
+      service.serviceAvailability.availableDate=location.date
+    }
+
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
@@ -1014,7 +1059,7 @@ export class ServiceViewComponent implements OnInit {
           console.log("logged In");
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           if (_this.userType === 'consumer') {
-              _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer');
+              _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer',current_provider['ctime']);
           }
         } else {
           const passParam = { callback: '', current_provider: current_provider };
@@ -1032,6 +1077,11 @@ export class ServiceViewComponent implements OnInit {
       'cdate': service.serviceAvailability.nextAvailableDate,
       'service': service
     };
+    if(location.time) {
+      current_provider['ctime']=location.time
+    }    if(location.date) {
+      service.serviceAvailability.nextAvailableDate=location.date
+    }
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
@@ -1064,7 +1114,7 @@ export class ServiceViewComponent implements OnInit {
         if (status) {
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           if (_this.userType === 'consumer') {
-              _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+              _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer', current_provider['ctime']);
           }
         } else {
           const passParam = { callback: 'appointment', current_provider: current_provider };
@@ -1119,7 +1169,7 @@ export class ServiceViewComponent implements OnInit {
       }
     });
   }
-  showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?) {
+  showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?,ctime?, virtualinfo?) {
     console.log("Service Appt: ");
     console.log(service);
     let queryParam = {
@@ -1133,7 +1183,8 @@ export class ServiceViewComponent implements OnInit {
       futureAppt: this.futureAllowed,
       service_id: service.id,
       sel_date: curdate,
-      virtual_info: JSON.stringify(virtualinfo)
+      virtual_info: JSON.stringify(virtualinfo),
+      ctime:ctime
     };
     if (service['serviceType']==='virtualService') {
       queryParam['tel_serv_stat'] = true;
@@ -1150,7 +1201,7 @@ export class ServiceViewComponent implements OnInit {
     };
     this.routerobj.navigate(['consumer', 'appointment'], navigationExtras);
   }
-  showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?) {
+  showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?,ctime?) {
     console.log("Service Checkin ");
     console.log(service);
     let queryParam = {
@@ -1163,7 +1214,8 @@ export class ServiceViewComponent implements OnInit {
       account_id: this.provider_bussiness_id,
       user: this.userId,
       service_id: service.id,
-      virtual_info: JSON.stringify(virtualinfo)
+      virtual_info: JSON.stringify(virtualinfo),
+      ctime:ctime
     };
     if (service['serviceType']==='virtualService') {
       queryParam['tel_serv_stat'] = true;

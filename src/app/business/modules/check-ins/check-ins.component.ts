@@ -2381,6 +2381,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   addProviderNote() {
     const _this = this;
     let checkin;
+    console.log("dialog box opened")
     Object.keys(_this.appointmentsChecked).forEach(apptIndex => {
       checkin = _this.appointmentsChecked[apptIndex];
       _this.addnotedialogRef = _this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {

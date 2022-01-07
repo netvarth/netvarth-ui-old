@@ -65,22 +65,14 @@
             <button class="checkavailabilitybutton " *ngIf="buttonCaption !='Donate'"
                 (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)"><span
                     class="checkavailabilitytext">
-                    <!-- <img src="../../../../assets/images/calendar 1.png"
-                        style="width: 15px !important;height: 15px !important;">&nbsp;&nbsp; -->
                         <i class="fa fa-calendar black"></i>&nbsp;Check availability</span>
             </button>
-            <button class="checkavailabilitybutton " *ngIf="buttonCaption =='Donate'">&nbsp;</button>
         </div>
         <div
-            class="col-lg-6 col-md-6 col-xs-6 col-sm-6 no-padding getclass ">
+            class="{{buttonCaption =='Donate' ? 'col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding getclass': 'col-lg-6 col-md-6 col-xs-6 col-sm-6 no-padding getclass' }} ">
             <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event)"
                 class="getappointmentbutton ">{{buttonCaption}}</button>
         </div>
-        <!-- <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 text-xs-center no-padding">
-            <a class="display-lg-none mgn-up-5" style="font-size: 12px !important;" *ngIf="buttonCaption !='Donate'"
-                (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)">Check
-                availability</a>
-        </div> -->
     </div>
 </div>
 

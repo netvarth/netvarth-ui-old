@@ -1692,7 +1692,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     if(location.time) {
       current_provider['ctime']=location.time
     }    if(location.date) {
-      console.log('differnt dates....',service.serviceAvailability.nextAvailableDate,location.date)
       service.serviceAvailability.nextAvailableDate=location.date
     }
     console.log('current provider...',current_provider)

@@ -6,16 +6,23 @@
     /* font-weight: 600; */
 
 }
+.text-center {
+    text-align: center;
+}
 .service-image {
     width: 30px;
     height: 30px;
     margin-right: 2px;
 }
-.service-image i.wtsapaud-icon,
+/* .service-image i.wtsapaud-icon, */
 .service-image i.wtsapvid-icon,
 .service-image i.zoom-icon {
    width: 100% !important;
 
+}
+.wtsapaud-icon {
+    width: 40px !important;
+    height: 40px !important
 }
 .service-image i.phon-icon,
 .service-image i.meet-icon {
@@ -35,13 +42,23 @@
     font-size: 15px;
 }
 .skyblue{
-    padding: 10px;
+    padding: 15px 10px 10px 10px ;
     border-radius:5px;
    background-color: #F1EFFB;
    color: #2653B7;
     margin-right: 5px;
-    text-align: center;
+   /* text-align: center; */
+    text-align: center !important;
 }
+.disable {
+    padding: 15px 10px 10px 10px ;
+    border-radius:5px;
+   background-color: rgb(131, 130, 130);
+   color: black;
+    margin-right: 5px;
+   /* text-align: center; */
+   opacity:0.5;
+    text-align: center !important; }
 .slotdiv {
     max-height: 100vh !important;
     overflow: auto;
@@ -63,7 +80,7 @@
         padding: 2px !important;
     }
     .skyblue {
-        padding: 10px;
+        padding: 15px 10px 10px 10px;
         border-radius:5px;
        background-color: #F1EFFB;
        color: #2653B7;

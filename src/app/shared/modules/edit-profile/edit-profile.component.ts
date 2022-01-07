@@ -343,6 +343,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   enableTelegram(event) {
+    console.log("Event..........",event)
     const stat = (event.checked) ? 'ENABLED' : 'DISABLED';
     this.shared_services.consumertelegramChat(this.removePlus(this.countryCode), this.phonenoHolder).subscribe(data => {
       this.chatId = data;
@@ -380,6 +381,7 @@ export class EditProfileComponent implements OnInit {
           console.log(data);
           this.status = data.status;
           this.waitlist_statusstr = this.status ? 'On' : 'Off';
+          console.log(this.waitlist_statusstr,data.status,"waitlist")
           if (data.botUrl) {
             this.boturl = data.botUrl;
           }
