@@ -453,7 +453,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
             _this.getServicebyLocationId(_this.sel_loc, _this.sel_checkindate);
             _this.getSchedulesbyLocationandServiceIdavailability(_this.sel_loc, _this.selectedServiceId, _this.account_id);
-            _this.initCommunications(this.parentCustomer);
+            _this.initCommunications(_this.parentCustomer);
         });
     }
     getBookStep() {

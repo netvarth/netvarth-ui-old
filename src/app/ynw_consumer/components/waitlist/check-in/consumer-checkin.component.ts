@@ -414,7 +414,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
             _this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
             _this.getQueuesbyLocationandServiceIdavailability(_this.sel_loc, _this.selectedServiceId, _this.account_id);
-            _this.initCommunications(this.parentCustomer);
+            _this.initCommunications(_this.parentCustomer);
         });
     }
 
