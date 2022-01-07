@@ -924,9 +924,9 @@ export class QuestionnaireComponent implements OnInit {
         let type = this.uploadedImages[indx].type.split('/');
         if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc') {
           path = 'assets/images/pdf.png';
-        } else if (this.uploadedImages[indx].status === 'COMPLETE' && type === 'video') {
+        } else if (this.uploadedImages[indx].status === 'COMPLETE' && type[0] === 'video') {
           path = 'assets/images/video.png';
-        } else if (this.uploadedImages[indx].status === 'COMPLETE' && type === 'audio') {
+        } else if (this.uploadedImages[indx].status === 'COMPLETE' && type[0] === 'audio') {
           path = 'assets/images/audio.png';
         } else {
           path = this.uploadedImages[indx].s3path;
@@ -974,8 +974,6 @@ export class QuestionnaireComponent implements OnInit {
     if (event.button.type === ButtonType.DOWNLOAD) {
     }
   }
-
-
   openAttachmentGallery(question, document) {
     this.image_list_popup = [];
     let count = 0;
