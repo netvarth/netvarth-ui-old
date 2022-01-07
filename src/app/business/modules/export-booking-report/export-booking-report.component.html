@@ -2,6 +2,9 @@
 <mat-dialog-content>
     <button class="btn btn-primary" (click)="exportToExcel()">Export to Excel</button> &nbsp;
     <button class="btn btn-primary" (click)="closeDialog()">Go Back</button>
+
+    <h3 class="mgn-up-10 mgn-bt-10">{{this.criteriaText}}</h3>
+
     <div #source class="mgn-up-10">
         <table class="table responsive" cellpadding=10>
             <tr *ngIf="headerColumns">

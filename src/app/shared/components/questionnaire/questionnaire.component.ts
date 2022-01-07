@@ -436,7 +436,7 @@ export class QuestionnaireComponent implements OnInit {
               let type = this.filestoUpload[key][key1].type.split('/');
               type = type[0];
               if (type === 'application' || type === 'image') {
-                this.answers[key].push({ index: indx, caption: key1, action: status, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1] });
+                this.answers[key].push({caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1] });
               } else {
                 this.answers[key].push({ caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1] });
               }
@@ -665,15 +665,15 @@ export class QuestionnaireComponent implements OnInit {
   }
   submitQuestionnaire(passData) {
     const dataToSend: FormData = new FormData();
-    if (passData.files && passData.files.length > 0) {
-      for (let pic of passData.files) {
-        let type = pic.type.split('/');
-        type = type[0];
-        if (type === 'application' || type === 'image') {
-          dataToSend.append('files', pic);
-        }
-      }
-    }
+    // if (passData.files && passData.files.length > 0) {
+    //   for (let pic of passData.files) {
+    //     let type = pic.type.split('/');
+    //     type = type[0];
+    //     if (type === 'application' || type === 'image') {
+    //       dataToSend.append('files', pic['name']);
+    //     }
+    //   }
+    // }
     const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
     this.buttonDisable = true;
@@ -922,12 +922,11 @@ export class QuestionnaireComponent implements OnInit {
       if (indx !== -1) {
         let path;
         let type = this.uploadedImages[indx].type.split('/');
-        type = type[0];
-        if (this.uploadedImages[indx].type === '.pdf' || this.uploadedImages[indx].type === '.docx' || this.uploadedImages[indx].type === '.txt' || this.uploadedImages[indx].type === '.doc') {
+        if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc') {
           path = 'assets/images/pdf.png';
-        } else if (this.uploadedImages[indx].status === 'COMPLETE' && type === 'video') {
+        } else if (this.uploadedImages[indx].status === 'COMPLETE' && type[0] === 'video') {
           path = 'assets/images/video.png';
-        } else if (this.uploadedImages[indx].status === 'COMPLETE' && type === 'audio') {
+        } else if (this.uploadedImages[indx].status === 'COMPLETE' && type[0] === 'audio') {
           path = 'assets/images/audio.png';
         } else {
           path = this.uploadedImages[indx].s3path;
@@ -988,7 +987,7 @@ export class QuestionnaireComponent implements OnInit {
       } else {
         const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
         if (indx !== -1) {
-          if (type[1] === '.pdf' || type[1] === '.docx' || type[1] === '.txt' || type[1] === '.doc') {
+          if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc') {
             window.open(this.selectedMessage[indx].path, '_blank');
           } else {
             imagePath = this.uploadedImages[indx].path;
@@ -999,11 +998,12 @@ export class QuestionnaireComponent implements OnInit {
     } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
       const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
       let type = this.uploadedFiles[question.labelName][document].type.split('/');
+      let ext = type[1];
       type = type[0];
       if (indx !== -1) {
         if (type === 'video' || type === 'audio') {
           this.showAudioVideoFile(this.uploadedImages[indx]);
-        } else if (type === '.pdf' || type === '.docx' || type === '.txt' || type === '.doc') {
+        } else if (ext === 'pdf' || ext === 'docx' || ext === 'txt' || ext === 'doc') {
           window.open(this.uploadedFiles[question.labelName][document].s3path, '_blank');
         } else {
           imagePath = this.uploadedImages[indx].s3path;

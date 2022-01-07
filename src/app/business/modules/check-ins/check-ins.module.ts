@@ -28,6 +28,7 @@ import { FormsModule } from '@angular/forms';
 import { ApplyLabelModule } from './apply-label/apply-label.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgbCarouselModule} from '@ng-bootstrap/ng-bootstrap';
+import { BookingHistoryModule } from '../../shared/booking-history/booking-history.module';
 // import {NgbCarousel} from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -78,6 +79,7 @@ const routes: Routes = [
         PagerModule,
         CapitalizeFirstPipeModule,
         OwlModule,
+        BookingHistoryModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         [RouterModule.forChild(routes)]
     ],
