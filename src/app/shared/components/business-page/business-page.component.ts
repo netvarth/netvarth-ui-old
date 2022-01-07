@@ -2342,16 +2342,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   cardClicked(actionObj) {
     console.log('entering into business page');
-
+    console.log(actionObj);
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
       } else {
         this.checkinClicked(actionObj['location'], actionObj['service']);
       }
-
     } else if (actionObj['type'] == 'checkavailability') {
-
       this.opencheckavail(actionObj);
     } else if (actionObj['type'] === 'appt') {
       if (actionObj['action'] === 'view') {

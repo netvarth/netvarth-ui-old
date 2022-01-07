@@ -12,12 +12,12 @@
                 </div>
             </div>
             <app-common-innerloading-spinner *ngIf="loadingPaytm"></app-common-innerloading-spinner>
-            <div class="pad-10 d-flex flex-column-fluid">
+            <div class="d-flex flex-column-fluid no-padding-small">
                 <div class="card card-custom cardwidth">
                     <div class="card-body p-0">
                         <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
                             data-wizard-clickable="false">
-                            <div class="row justify-content-center">
+                            <div class="row justify-content-center removeflex">
                                 <div class="loading-hgt" *ngIf="!questionnaireLoaded">
                                     <app-common-innerloading-spinner></app-common-innerloading-spinner>
                                 </div>

@@ -98,9 +98,13 @@ export class AppointmentServicesComponent implements OnInit, OnChanges {
       } else {
         this.appointmentClicked(actionObj['location'], actionObj['service']);
       }
+    } else {
+      this.providerDetClicked(actionObj['userId']);
     }
   }
-
+  providerDetClicked(userId) {
+    this.router.navigate([this.businessProfile.accencUid, userId]);
+  }
   appointmentClicked(location, service: any) {
     const _this = this;
     const current_provider = {
