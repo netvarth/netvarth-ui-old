@@ -1065,7 +1065,8 @@ export class NewReportComponent implements OnInit {
       panelClass: ['export-class', 'popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        bookingList: list
+        bookingList: list,
+        criteria: this.waitlist_timePeriod
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -1158,9 +1159,16 @@ export class NewReportComponent implements OnInit {
             () => { });
         } else {
           this.provider_services.getHistoryWaitlist(filter).subscribe(
-            data => {
-              const list = data;
-              this.loadBookingQuestionaaireReport(list);
+            (data:any) => {   
+              this.provider_services.getTodayWaitlist(filter).subscribe(
+                (tdata:any) => {
+                  const list = [...data,...tdata];
+                 this.loadBookingQuestionaaireReport(list);
+                },
+                () => { },
+                () => { });
+
+              // this.loadBookingQuestionaaireReport(list);
             },
             () => { this.loading = false; },
             () => { this.loading = false; });
