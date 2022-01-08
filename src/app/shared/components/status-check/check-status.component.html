@@ -91,7 +91,8 @@
                     <td width="2%">&nbsp;:&nbsp;</td>
                     <td>
                       <span class="forwhom" *ngFor="let user of statusInfo.appmtFor">
-                        {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
+                        <span *ngIf="user.firstName.length>0 || user.lastName.length>0">{{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}</span>
+                        <span *ngIf="user.firstName.length==0 && user.lastName.length==0" >{{user.memberJaldeeId}}</span>
                       </span>
                     </td>
                   </tr>

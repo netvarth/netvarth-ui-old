@@ -249,6 +249,7 @@ export class CheckYourStatusComponent implements OnInit, OnDestroy {
         (data: any) => {
           const wlInfo = data;
           this.statusInfo = data;
+          console.log('status info',this.statusInfo)
           this.provider_id = this.statusInfo.providerAccount.uniqueId;
           // this.gets3curl();
           if (this.statusInfo.ynwUuid.startsWith('h_')) {
@@ -322,6 +323,7 @@ export class CheckYourStatusComponent implements OnInit, OnDestroy {
       .subscribe(
         (data: any) => {
           this.statusInfo = data;
+          console.log('status info',this.statusInfo)
           this.provider_id = this.statusInfo.providerAccount.uniqueId;
           // this.gets3curl();
           this.foundDetails = true;
@@ -375,6 +377,7 @@ export class CheckYourStatusComponent implements OnInit, OnDestroy {
           wlInfo.cancelled_time = retval.cancelled_time;
           this.api_loading = false;
           this.statusInfo = wlInfo;
+          console.log('status info',this.statusInfo)
           this.provider_id = this.statusInfo.providerAccount.uniqueId;
           // this.gets3curl();
           this.api_loading = false;
