@@ -30,12 +30,12 @@
                 <h4 class="mgn-up-15">{{actionObj.service.name}}</h4>
             </div>
         </div>
-        <div class="col-lg-12 col-sm-12 col-md-8 col-xs-12"  > 
-                <h3 *ngIf="actionObj.service.description">&nbsp;&nbsp;&nbsp;Price</h3>
-                <p *ngIf="actionObj.service.description" style="color: lightgrey;">&nbsp;&nbsp;&nbsp;{{actionObj.service.description}}</p>
+        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 mgn-up-5"  > 
+                <h3 *ngIf="actionObj.service.description">Price</h3>
+                <p class="col-lg-12 col-sm-12 col-md-12 col-xs-12 no-padding" *ngIf="actionObj.service.description" style="color: lightgrey;">{{actionObj.service.description}}</p>
             <!-- </div> -->
-            <h6  style="color:  #2653B7;margin-top: 2px;" *ngIf="actionObj.service.totalAmount">&nbsp;&nbsp;&nbsp;Service Price:{{actionObj.service.totalAmount}}</h6>
-            <h6  style="color:  #2653B7;margin-top: 2px;" *ngIf="actionObj.service.minPrePaymentAmount">&nbsp;&nbsp;&nbsp;Advance Payment: {{actionObj.service.minPrePaymentAmount}}</h6>
+            <h6  style="color:  #2653B7;margin-top: 5px;" *ngIf="actionObj.service.totalAmount">Service Price:{{actionObj.service.totalAmount}}</h6>
+            <h6  style="color:  #2653B7;margin-top: 5px;" *ngIf="actionObj.service.minPrePaymentAmount">Advance Payment: {{actionObj.service.minPrePaymentAmount}}</h6>
         </div>
         
     </div>
@@ -45,10 +45,10 @@
          
             
         </div>
-        <h6 class="col-lg-2 col-sm-3 col-xs-5 col-md-3" style="color: #1EB000;
+        <!-- <h6 class="col-lg-2 col-sm-3 col-xs-5 col-md-3" style="color: #1EB000;
         line-height: 1.5rem;
         font-size: 15px;" >🟢AVAILABLE</h6>
-        <h6 class="col-lg-2 col-sm-3 col-xs-3  col-md-2 red">🔴BOOKED</h6>
+        <h6 class="col-lg-2 col-sm-3 col-xs-3  col-md-2 red">🔴BOOKED</h6> -->
         <br>
         <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12  mgn-up-10 mgn-bt-10" style="border-radius: 5px; border: 2px solid lightskyblue;" >
             
@@ -93,7 +93,7 @@
             <div class="col-lg-3 col-md-3 col-xs-5 col-sm-5"  *ngFor="let slot of freeSlots;let i = index" >
 
                 <h6   (click)="timeSelected(slot,sel_checkindate);" class="green greenline mgn-up-5" *ngIf="slot.active">{{slot.displayTime}}</h6>
-                <h6 style="border:2px solid red;text-align: center;padding: 5px;"  class="mgn-up-5"   *ngIf="!slot.active"><del style="color: red;">{{slot.displayTime}}</del></h6>
+                <h6 style="border:2px solid red;text-align: center;padding: 5px;"  class="mgn-up-5 padding-xs-small"   *ngIf="!slot.active"><del style="color: red;">{{slot.displayTime}}</del></h6>
     
     
             </div>
@@ -104,7 +104,7 @@
 
         <div class="pad-lg-20 slots" *ngIf="queuejson && queuejson.length>0">
             
-            <div class="col-lg-3 col-xs-5 col-sm-5"  *ngFor="let queue of queuejson, let i= index" >
+            <div class="col-lg-3 col-xs-10 col-sm-10 padding-xs-small"  *ngFor="let queue of queuejson, let i= index" >
 
                 <h6   (click)="handleQueueSelection(queue, sel_checkindate)" class="green greenline mgn-up-5">  {{queue.queueSchedule.timeSlots[0]['sTime']
                     + ' - '

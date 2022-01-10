@@ -10,11 +10,11 @@
     text-align: center;
 }
 .service-image {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     margin-right: 2px;
 }
-/* .service-image i.wtsapaud-icon, */
+/* .service-image i.jaldeevideo-icon, */
 .service-image i.wtsapvid-icon,
 .service-image i.zoom-icon {
    width: 100% !important;
@@ -23,6 +23,10 @@
 .wtsapaud-icon {
     width: 40px !important;
     height: 40px !important
+}
+.jaldeevideo-icon  {
+    width: 50px !important;
+    height: 50px !important;
 }
 .service-image i.phon-icon,
 .service-image i.meet-icon {
@@ -50,15 +54,7 @@
    /* text-align: center; */
     text-align: center !important;
 }
-.disable {
-    padding: 15px 10px 10px 10px ;
-    border-radius:5px;
-   background-color: rgb(131, 130, 130);
-   color: black;
-    margin-right: 5px;
-   /* text-align: center; */
-   opacity:0.5;
-    text-align: center !important; }
+
 .slotdiv {
     max-height: 100vh !important;
     overflow: auto;
