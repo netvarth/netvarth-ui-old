@@ -8,14 +8,15 @@
       {{foldername}} Files
 
     </h5>
-    <p *ngIf="foldertype === 'shared' || foldertype === 'public' && !isHealthCare" class="text-secondary mx-5 no-padding">
-      Manage the files uploaded by the {{foldername=='Provider' ? 'provider' : 'consumer'}} lable!</p>
-      
+    <p *ngIf="foldertype === 'shared' || foldertype === 'public' && !isHealthCare"
+      class="text-secondary mx-5 no-padding">
+      Manage the files uploaded by the {{foldername=='Provider' ? 'provider' : 'consumer'}} label!</p>
+
     <p *ngIf="foldertype === 'public' && provider_label && isHealthCare" class="text-secondary mx-5 no-padding">
       Manage the files uploaded by the {{provider_label}} lable!</p>
-      <p *ngIf="foldertype === 'shared'&& customer_label && isHealthCare" class="text-secondary mx-5 no-padding">
-        Manage the files uploaded by the {{customer_label}} lable!</p>
-      
+    <p *ngIf="foldertype === 'shared'&& customer_label && isHealthCare" class="text-secondary mx-5 no-padding">
+      Manage the files uploaded by the {{customer_label}} lable!</p>
+
     <p *ngIf="foldertype === 'Private'" class="text-secondary mx-5 no-padding">Manage your own files!
     </p>
   </div>
@@ -229,10 +230,14 @@
                               [disabled]="showText(customer)">
                           </span>
                         </div> {{getCustomer(customer)}}-->
-                      <span class="text-dark-75 text-hover-primary mb-1 cust-name" >
+                      <span class="text-dark-75 text-hover-primary mb-1 cust-name">
 
-                        <i class="fa fa-file-pdf-o" aria-hidden="true" *ngIf="customer.fileType === 'pdf'" style="color:red;"></i> <i class="fa fa-file-image-o" aria-hidden="true" *ngIf="customer.fileType === 'png' || customer.fileType === 'jpg' || customer.fileType === 'jpeg' || customer.fileType === 'bmp' || customer.fileType === 'webp' "></i> {{customer.fileName.length>10 ? customer.fileName.slice(0, 10)+'...' : customer.fileName}}
+                        <i class="fa fa-file-pdf-o" aria-hidden="true" *ngIf="customer.fileType === 'pdf'"
+                          style="color:red;"></i> <i class="fa fa-file-image-o" aria-hidden="true"
+                          *ngIf="customer.fileType === 'png' ||customer.fileType === 'mp4' || customer.fileType === 'jpg' || customer.fileType === 'jpeg' || customer.fileType === 'bmp' || customer.fileType === 'webp' "></i>
+                        {{customer.fileName?.length>10 ? customer.fileName.slice(0, 10)+'...' : customer.fileName}}
                       </span>
+                      <!-- {{customer.fileName.length>10 ? customer.fileName.slice(0, 10)+'...' : customer.fileName}} -->
                       <!-- <span class="text-dark-75 text-hover-primary mb-1 cust-name"
                         *ngIf="getFileType(customer.fileType) === 'pdf'">
 
@@ -249,6 +254,11 @@
 
 
                       <!-- <div class="customer-added" *ngIf="showText(customer)">Already added to this group</div> -->
+                    </td>
+                    <td *ngIf="foldertype === 'shared' && customer.fileName === undefined">
+                      <span class="text-dark-75 d-block ">
+                        -
+                      </span>
                     </td>
                     <td *ngIf="foldertype === 'shared' && customer.ownerName !==''">
                       <span class="text-dark-75 d-block ">
@@ -304,9 +314,9 @@
                   <tr *ngIf="customers.length === 0" class="my-2 py-2">
                     <td class="text-center my-2 py-2" colspan="4">No files found.</td>
                   </tr>
-                  <tr *ngIf="dataLoading" >
+                  <tr *ngIf="dataLoading">
                     <td class="text-center" colspan="4">
-                      <mat-spinner *ngIf="dataLoading" ></mat-spinner>
+                      <mat-spinner *ngIf="dataLoading"></mat-spinner>
                     </td>
                   </tr>
                 </tbody>
@@ -492,13 +502,13 @@
                 <div class="card-body">
                   <div class="filterTextinput filter-text-input">
                     <li class="filterli filter-li">
-                      <input type="text" id="fileSize" [(ngModel)]="filter.fileSize"   #fileSize (keyup)="doSearch()"
-                        maxlength="20" class="filterTextbox filter-textbox" placeholder="Enter file size" >
+                      <input type="text" id="fileSize" [(ngModel)]="filter.fileSize" #fileSize (keyup)="doSearch()"
+                        maxlength="20" class="filterTextbox filter-textbox" placeholder="Enter file size">
                     </li>
                   </div>
                   <div class="filter-checkbox-input">
                     <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                      <mat-checkbox class="filter-checkbox" [checked]="lessMb" 
+                      <mat-checkbox class="filter-checkbox" [checked]="lessMb"
                         (change)="setFilterDataCheckbox('fileSize', 'lessMb')">
                         Less than 1MB</mat-checkbox>
                       <!--  (change)="setFilterDataCheckbox('fileSize', 'false')"  [checked]="grateMB" -->
