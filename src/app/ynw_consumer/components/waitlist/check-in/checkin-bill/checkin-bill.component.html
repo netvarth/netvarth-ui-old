@@ -452,15 +452,15 @@
                                                                 <div class="clearfix"></div>
                                                                 <div
                                                                     *ngIf=" ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))">                                                                    
-                                                                    <ng-container *ngIf="!shownonIndianModes">                                                                        
-                                                                        <app-payment-modes [paymentModes]="indian_payment_modes" [cashPay]="true" (modeSelected)="indian_payment_mode_onchange($event)"></app-payment-modes> 
+                                                                    <ng-container *ngIf="!shownonIndianModes">                                                                    
+                                                                     <app-payment-modes [paymentModes]="indian_payment_modes" [cashPay]="true" (modeSelected)="indian_payment_mode_onchange($event)"></app-payment-modes> 
                                                                     </ng-container>
                                                                     <ng-container *ngIf="shownonIndianModes">
-                                                                        <app-payment-modes [paymentModes]="non_indian_modes" [cashPay]="true" (modeSelected)="non_indian_modes_onchange($event)"></app-payment-modes> 
+                                                                       <app-payment-modes [paymentModes]="non_indian_modes" [cashPay]="true" (modeSelected)="non_indian_modes_onchange($event)"></app-payment-modes> 
                                                                     </ng-container>
                                                                 </div>
                                                                 <div class="clearfix"></div>
-                                                                <div class="txt-align-center pad_link"
+                                                                <div class="txt-align-center pad_link mgn-up-10"
                                                                     *ngIf=" ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))">
                                                                     <span [class.disabled]="isClickedOnce"
                                                                         (click)="togglepaymentMode()"

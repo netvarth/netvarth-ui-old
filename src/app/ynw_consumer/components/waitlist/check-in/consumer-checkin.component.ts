@@ -402,20 +402,24 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.gets3curl(); // Collecting informations from s3 businessProfile, settings etc.
         this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
+
         this.customerService.getCustomerInfo(this.activeUser.id).then(data => {
             _this.parentCustomer = data;
-            if (_this.tele_srv_stat === 'true') {
-                _this.createVirtualForm();
+            if (!this.rescheduleUserId) {
+                if (_this.tele_srv_stat === 'true') {
+                    _this.createVirtualForm();
+                }
+                _this.waitlist_for.push({ id: _this.parentCustomer.id, firstName: _this.parentCustomer.userProfile.firstName, lastName: _this.parentCustomer.userProfile.lastName });
+                _this.setConsumerFamilyMembers(_this.parentCustomer.id); // Load Family Members
+                if (_this.tele_srv_stat === 'true') {
+                    _this.onServiceForChange(_this.parentCustomer.id);
+                }
+                _this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                _this.getQueuesbyLocationandServiceIdavailability(_this.sel_loc, _this.selectedServiceId, _this.account_id);
             }
-            _this.waitlist_for.push({ id: _this.parentCustomer.id, firstName: _this.parentCustomer.userProfile.firstName, lastName: _this.parentCustomer.userProfile.lastName });
-            _this.setConsumerFamilyMembers(_this.parentCustomer.id); // Load Family Members
-            if (_this.tele_srv_stat === 'true') {
-                _this.onServiceForChange(_this.parentCustomer.id);
-            }
-            _this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
-            _this.getQueuesbyLocationandServiceIdavailability(_this.sel_loc, _this.selectedServiceId, _this.account_id);
             _this.initCommunications(_this.parentCustomer);
         });
+
     }
 
     goToEdit() {
@@ -487,7 +491,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         this.virtualForm.patchValue({ location: locations[0]['PostOffice'][0] });
                     } else {
                         this.locations = [];
-
                     }
 
                 }, error => {
@@ -786,10 +789,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         this.sel_queue_personaahead = 0;
                     }
                     if (type) {
-                        if(this.selectedTime) {
+                        if (this.selectedTime) {
                             this.selectedQTime = this.selectedTime
                         } else {
-                        this.selectedQTime = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
+                            this.selectedQTime = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
 
                         }
                         this.personsAhead = this.sel_queue_personaahead;
@@ -2398,7 +2401,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         this.virtualForm.patchValue({ firstName: customer.userProfile.firstName });
         this.virtualForm.patchValue({ lastName: customer.userProfile.lastName })
-        
+
     }
 
     /**
@@ -2866,7 +2869,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         _this.commObj['communicationPhNo'] = _this.parentCustomer.userProfile.primaryMobileNo;
         _this.commObj['communicationPhCountryCode'] = _this.parentCustomer.userProfile.countryCode;
     }
-    
+
     /**
      * Method to check privacy policy
      * @param status true/false

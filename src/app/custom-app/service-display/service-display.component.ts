@@ -90,20 +90,21 @@ export class ServiceDisplayComponent implements OnInit {
   }
 
   getCheckinServices(locationId) {
+    const self = this;
     const checkinServiceList = [];
-    this.bookingService.getCheckinServices(locationId).then(
+    self.bookingService.getCheckinServices(locationId).then(
       (checkinServices: any) => {
         console.log("CheckinServices:", checkinServices);
         for (let wlIndex = 0; wlIndex < checkinServices.length; wlIndex++) {
           checkinServiceList.push({ 'type': 'waitlist', 'item': checkinServices[wlIndex] });
         }
-        this.filteredCheckinServices = checkinServiceList;
-        this.checkinServices = checkinServiceList;
-        this.loading = false;
+        self.filteredCheckinServices = checkinServiceList;
+        self.checkinServices = checkinServiceList;
+        self.loading = false;
       },  (error)=> {
-        this.filteredCheckinServices = checkinServiceList;
-        this.checkinServices = checkinServiceList;
-        this.loading = false;
+        self.filteredCheckinServices = checkinServiceList;
+        self.checkinServices = checkinServiceList;
+        self.loading = false;
       }
     );
   }
