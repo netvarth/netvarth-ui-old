@@ -882,10 +882,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
     saveCheckin(type?, paymenttype?) {
         if (type === 'appt') {
-
             this.isClickedOnce = true;
-
-
         }
         if (this.selectedService.serviceType === 'virtualService' && type === 'next') {
             if (this.waitlist_for.length !== 0) {
@@ -2295,6 +2292,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     togglepaymentMode() {
         this.shownonIndianModes = !this.shownonIndianModes;
+        this.selected_payment_mode = null;
     }
 
     /**

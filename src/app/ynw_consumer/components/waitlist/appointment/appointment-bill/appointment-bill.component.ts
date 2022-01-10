@@ -459,6 +459,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
     }
     togglepaymentMode(){
         this.shownonIndianModes=!this.shownonIndianModes;
+        this.selected_payment_mode = null;
     }
     getPaymentModes() {
 
@@ -521,6 +522,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
                     } else if (this.remainingadvanceamount > 0 && this.checkJcash) {
+                    console.log("selectedMode:" + this.selected_payment_mode);
                         if(this.selected_payment_mode &&this.selected_payment_mode.toLowerCase()==='cash'){
                             this.cashPayment();
                         }else{
@@ -607,6 +609,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
                 });
         }
         else {
+            console.log("HERE:" + this.selected_payment_mode);
             if(this.selected_payment_mode &&this.selected_payment_mode.toLowerCase()==='cash'){
                 this.cashPayment();
             }else{
