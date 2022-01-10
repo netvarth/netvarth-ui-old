@@ -45,11 +45,13 @@ export class AttachmentPopupComponent implements OnInit {
         if (attachment.type) {
           fileType = attachment.type.split("/");
           // console.log(type[0]);
-          if (fileType[0] == 'video' || fileType[0] == 'audio' || fileType[0] == 'image') {
+          if (fileType[0] == 'video' || fileType[0] == 'audio' || fileType[0] == 'image' || fileType[0] == 'jpg') {
             this.mediafiles.push(attachment);
+            console.log(this.mediafiles + 'this.mediafiles')
           }
           else {
             this.docfiles.push(attachment);
+            console.log(this.docfiles + 'this.docfiles')
           }
         } else {
           this.docfiles.push(attachment);

@@ -83,7 +83,6 @@ export class PaymentComponent implements OnInit {
     this.getPaymentModes();
   }
   getPaymentModes() {
-
     this.provider_services.getPaymentModes()
         .subscribe(
             data => {
@@ -94,45 +93,33 @@ export class PaymentComponent implements OnInit {
                 }
                  if (this.paymentmodes.internationalPay) {
                     this.non_indian_modes = this.paymentmodes.internationalBankInfo;
-
                 }
                 if(!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
                     this.shownonIndianModes=true;
                 }else{
                     this.shownonIndianModes=false;  
                 }
-
             },
             error => {
                 this.isPayment = false;
                 console.log(this.isPayment);
             }
-
-
         );
 }
 indian_payment_mode_onchange(event) {
     this.selected_payment_mode = event.value;
     this.isInternatonal = false;
-
-
-
 }
 non_indian_modes_onchange(event) {
     this.selected_payment_mode = event.value;
     this.isInternatonal = true;
-
-
-
 }
-getImageSrc(mode){
-    
+getImageSrc(mode){  
   return 'assets/images/payment-modes/'+mode+'.png';
 }
 togglepaymentMode(){
     this.shownonIndianModes=!this.shownonIndianModes;
 }
-
   makeFailedPayment() {
 this.waitlistDetails.isInternational=this.isInternatonal;
 this.waitlistDetails.paymentMode=this.selected_payment_mode;

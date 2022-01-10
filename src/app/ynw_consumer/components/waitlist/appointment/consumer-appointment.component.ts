@@ -2181,9 +2181,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             postData.serviceId=this.sel_ser;
             this.shared_services.PayByJaldeewallet(postData)
                 .subscribe((pData: any) => {
-
+                   console.log(JSON.stringify(pData))
                     if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
-                        if (pData.paymentGateway == 'PAYTM') {
+                        if (pData.response.paymentGateway == 'PAYTM') {
                             this.payWithPayTM(pData.response,this.account_id);
                         } else {
                             this.paywithRazorpay(pData.response);
