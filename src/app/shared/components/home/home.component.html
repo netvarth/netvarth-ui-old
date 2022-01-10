@@ -47,10 +47,8 @@
 							<ng-container>
 								<app-search [showopennow]="0" [searchfields]="searchfields"
 									[domainlistpassed]="domainlist_data" [includedfrom]="'home'"></app-search>
-									<br>
-									<br>
-									<br>
-									<h5 class="mgn-up-10" style="text-align: center;">Jaldee offered in</h5>
+									
+									<h5 class="mgn-up-40" style="text-align: center;">Jaldee offered in</h5>
 									<div class="col-lg-12 col-xs-12 col-md-12 col-sm-12" style="display:flex;justify-content: center;">
 
 										<div  style="display: flex;cursor:pointer" *ngFor="let lang of languages"  (click)="changeLocale(lang.value,lang.viewValue)">
