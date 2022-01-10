@@ -994,7 +994,7 @@ ul.details.badges li {
 
 .bus-item-N {
   border-radius: 20px !important;
-  width: 32%;
+  width: 45%;
   float: left !important;
   margin-bottom: 20px !important;
   margin-right: 7px !important;
@@ -1008,20 +1008,20 @@ ul.details.badges li {
 
 @media(max-width: 1200px) {
   .bus-item-N {
-    width: 49%;
+    width: 45%;
   }
 }
 
 @media(max-width: 991px) {
   .bus-item-N {
-    width: 49%;
+    width: 100%;
     float: left !important;
   }
 }
 
 @media(max-width: 767px) {
   .bus-item-N {
-    width: 47.8%;
+    width: 100%;
   }
 }
 

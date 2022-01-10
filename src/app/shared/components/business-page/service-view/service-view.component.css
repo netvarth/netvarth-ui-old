@@ -11,6 +11,46 @@
   letter-spacing: normal;
 
 }
+.checkavailabilitybutton:hover{
+
+
+  background-color:rgba(30, 64, 121, 0.2);
+
+  color:#4E4D53 ;
+ 
+
+}
+.checkavailabilitytext {
+  box-shadow: 0px, 4px  rgba(0, 0, 0, 0.25);
+}
+.checkavailabilitybutton{
+  width: 100%;
+  margin-top: 1%;
+  /* margin-left: 5% !important; */
+  /* border-radius: 5px; */
+  background-color: rgba(30, 64, 121, 0.2);
+  border: 1px solid  rgba(30, 64, 121, 0.2);
+  color:#4E4D53;
+ word-wrap: break-word;
+  font-weight: 600;
+  font-family: "Poppins";
+  /* font-style: Montserrat; */
+  display: inline-block;
+  margin-bottom: 0;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  /* background-image: none; */
+  /* border: 1px solid transparent; */
+  padding: 6px 0 6px 0px;
+  font-size: 12px;
+  line-height: 1.42857143;
+  border-bottom-left-radius: 10px;
+  /* float: left !important; */
+  /* border-radius: 4px; */
+}
 .imgsection {
 width: 50px;height: 50px;
 }

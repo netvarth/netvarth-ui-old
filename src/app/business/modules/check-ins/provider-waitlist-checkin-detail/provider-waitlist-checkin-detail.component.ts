@@ -247,7 +247,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           if (this.today.valueOf() > waitlist_date.valueOf()) {
             this.waitlist_data.history = true;
           }
-          // this.getWaitlistNotes();
+          this.getWaitlistNotes(this.waitlist_data.ynwUuid);
           if (this.waitlist_data.waitlistStatus !== 'blocked') {
             this.getWaitlistNotes(this.waitlist_data.ynwUuid);
           }
@@ -334,6 +334,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       .subscribe(
         data => {
           this.waitlist_notes = data;
+          console.log(this.waitlist_notes,';;;;;;;;;;;;')
         },
         () => {
           //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
@@ -390,6 +391,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   }
 
   addProviderNote(checkin) {
+    console.log("dialog box opened")
     this.notedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -400,8 +402,10 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     });
 
     this.notedialogRef.afterClosed().subscribe(result => {
+      console.log("result ..",result)
       if (result === 'reloadlist') {
         // this.getWaitlistNotes();
+        console.log("dialog box losed")
         this.getWaitlistNotes(this.waitlist_data.ynwUuid);
 
       }
@@ -641,6 +645,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.view_more = !this.view_more;
   }
   gotoActions(checkin?) {
+    console.log("opend")
     let waitlist = [];
     if (checkin) {
       waitlist = checkin;
@@ -657,6 +662,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
+      // console.log("data....",data);
       this.getProviderSettings();
     });
   }

@@ -339,6 +339,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   }
 
   addProviderNote(checkin) {
+    console.log("dialog box opened")
     this.notedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
