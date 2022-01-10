@@ -14428,3 +14428,32 @@ pointer-events: none !important;
     max-width: 100vw !important;
     height:100% !important;
   }
+  .pay-rad  .mat-radio-outer-circle, .pay-rad  .mat-radio-inner-circle {
+    height:15px !important;
+    width: 15px !important;
+  }
+
+  .pay-rad .mat-radio-label {
+    display: block !important;
+  }
+
+  .pay-rad .mat-radio-container {
+    display: block !important;
+    top: 5px !important;
+    right: 5px;
+    float: right;
+  }
+
+  @media screen and (max-width: 768px) { 
+    .pad-sm-10 {
+      padding:10px !important;
+    }
+    .comn-cls .w-dta .copy .pay-section {
+      padding-right: 10px !important;
+    }
+   
+ }
+
+ .removeflex {
+  display: block !important;
+}

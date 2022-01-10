@@ -215,6 +215,7 @@ export class ConsumerPaymentComponent implements OnInit,OnDestroy {
     }
     togglepaymentMode(){
         this.shownonIndianModes=!this.shownonIndianModes;
+        this.selected_payment_mode = null;
     }
     
 

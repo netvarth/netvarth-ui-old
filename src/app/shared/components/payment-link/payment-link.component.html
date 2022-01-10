@@ -1,5 +1,5 @@
 <header #consumer_paylink>
-        <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
+    <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
     <div class="content comn-cls" *ngIf="bill_data && bill_data.amountDue > 0">
         <div *ngIf="paidStatus == 'false'">
             <app-common-innerloading-spinner *ngIf="loadingPaytm"></app-common-innerloading-spinner>
@@ -16,7 +16,8 @@
                                     <div class="box-footer no-padding">
                                         <ul class="nav nav-stacked">
                                             <span class="lnk setings">
-                                                <p style="text-align:left;"> Dear {{(firstname!=="" && firstname!==null && firstname!== undefined ) ? firstname : customer}},</p>
+                                                <p style="text-align:left;"> Dear {{(firstname!=="" && firstname!==null
+                                                    && firstname!== undefined ) ? firstname : customer}},</p>
                                             </span>
                                             <span class="lnk setings">
                                                 <p style="text-align:left;">Welcome to Jaldee PAY. <br> Your contactless
@@ -26,94 +27,53 @@
                                             <li>
                                                 <p class="textcenter">Pay To</p>
                                             </li>
-
                                             <li>
                                                 <p class="textcenter"><span>{{this.businessname}}</span><br><span>
-                                                        {{this.location}}</span><br>{{billtime}}, {{billdate | date : 'mediumDate'}}</p>
+                                                        {{this.location}}</span><br>{{billtime}}, {{billdate | date :
+                                                    'mediumDate'}}</p>
                                                 <br><br>
                                                 <h2 class="textcenter rupee-font"
                                                     style="font-size: -webkit-xxx-large; font-weight: 400;">
                                                     {{this.amountDue | currency:'&#8377; '}}
-                                                </h2><br>   
-                                                <div class="clearfix"></div>                                              
+                                                </h2><br>
+                                                <div class="clearfix"></div>
                                                 <ng-container *ngIf="!shownonIndianModes">
-                                                    <div  *ngFor="let modes of indian_payment_modes">
-                                                        <div class="col-xs-12">
-    
-                                                                <div class="paymentmode card text-primary" >
-                                                                  <mat-radio-group name="paymentMode" (change)="indian_payment_mode_onchange($event)">
-                                                                    <mat-radio-button [value]="modes.mode"  >
-                                                                        <div class="d-flex justify-content-around">
-                                                                            <div class="col-md-8 col-lg-7 my-auto"><span>{{modes.modeDisplayName}}</span></div>
-                                                                            <div class="col-md-4 col-lg-5 my-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>    
-                                                                           
-                                                                        </div>  
-                                                                    </mat-radio-button>
-                                                                    
-                                                                      
-                                                                  </mat-radio-group>
-                                                                  
-                                                                </div>
-                                                                </div>
-    
-                                                </div>
-                                            </ng-container>
-                                            <ng-container *ngIf="shownonIndianModes">
-                                                
-                                                <div  *ngFor="let modes of non_indian_modes">
-                                                    <div class="col-xs-12 ">
-    
-                                                            <div class="paymentmode card text-primary" >
-                                                              <mat-radio-group name="paymentMode" (change)="non_indian_modes_onchange($event)">
-                                                               
-                                                               
-                                                                <mat-radio-button [value]="modes.mode"  >
-                                                                    <div class="d-flex justify-content-around">
-                                                                        <div class="col-md-8 col-lg-7 my-auto"><span>{{modes.modeDisplayName}}</span></div>
-                                                                        <div class="col-md-4 col-lg-5 my-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>    
-                                                                       
-                                                                    </div>  
-                                                                </mat-radio-button>
-                                                               
-                                                
-                                                              </mat-radio-group>
-                                                              
-                                                            </div>
-                                                            </div>
-    
-                                            </div>
-                                        </ng-container>
-                                                    <div class="clearfix"></div>
-    
-                                                    <div class="txt-align-center pad_link"
-                                                        >
-                                                        <span [class.disabled]="isClickedOnce"
-                                                            (click)="togglepaymentMode()"
-                                                            class="pointer-cursor"><a
-                                                                class="refund_policy">
-                                                                <span *ngIf="!shownonIndianModes&&paymentmodes&&paymentmodes.internationalPay">Non Indian Payment ? Click
+                                                    <app-payment-modes [paymentModes]="indian_payment_modes"
+                                                        (modeSelected)="indian_payment_mode_onchange($event)">
+                                                    </app-payment-modes>
+                                                </ng-container>
+                                                <ng-container *ngIf="shownonIndianModes">
+                                                    <app-payment-modes [paymentModes]="non_indian_modes"
+                                                        (modeSelected)="non_indian_modes_onchange($event)">
+                                                    </app-payment-modes>
+                                                </ng-container>
+                                                <div class="clearfix"></div>
+                                                <div class="txt-align-center pad_link">
+                                                    <span [class.disabled]="isClickedOnce" (click)="togglepaymentMode()"
+                                                        class="pointer-cursor"><a class="refund_policy">
+                                                            <span
+                                                                *ngIf="!shownonIndianModes && paymentmodes && paymentmodes.internationalPay">Non
+                                                                Indian Payment ? Click
                                                                 here</span>
-                                                                <span *ngIf="shownonIndianModes &&paymentmodes&& paymentmodes.indiaPay">Indian Payment ? Click
-                                                                    here</span>
-                                                            </a></span>
-    
-    
-                                                    </div>
-                                              
-                                                    <div class="txt-align-center">
-                                                        <button type="button"
-                                                                class=" next-button btn btn-primary font-weight-bold text-uppercase "
-                                                                [class.disabled]="isClickedOnce"
-                                                        
-                                                                (click)="!isClickedOnce && goToGateway()">
-                                                               MaKe Payment
-                                                            </button>
-                                             
-                                                    </div> 
+                                                            <span
+                                                                *ngIf="shownonIndianModes && paymentmodes && paymentmodes.indiaPay">Indian
+                                                                Payment ? Click
+                                                                here</span>
+                                                        </a></span>
+                                                </div>
+                                                <div class="txt-align-center">
+                                                    <button type="button"
+                                                        class=" next-button btn btn-primary font-weight-bold text-uppercase "
+                                                        [class.disabled]="isClickedOnce"
+                                                        (click)="!isClickedOnce && goToGateway()">
+                                                        MaKe Payment
+                                                    </button>
+                                                </div>
                                             </li>
                                             <li>
                                                 <a class="learnmore-pointer" (click)="billview()">
-                                                    <p class="textcenter" style="color: navy;"> {{(!showbill) ? 'View' : 'Hide'}} bill</p>
+                                                    <p class="textcenter" style="color: navy;"> {{(!showbill) ? 'View' :
+                                                        'Hide'}} bill</p>
                                                 </a>
                                             </li>
                                         </ul>
@@ -133,7 +93,8 @@
                                                                                     {{this.firstname}}
                                                                                 </span> <span
                                                                                     class="columns rightalign"><span
-                                                                                        class="dynamic">{{billdate | date : 'mediumDate'}}
+                                                                                        class="dynamic">{{billdate |
+                                                                                        date : 'mediumDate'}}
                                                                                         {{billtime}}</span>
                                                                                 </span> <span class="columns"
                                                                                     *ngIf="billnumber"> <span
@@ -155,7 +116,6 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                   
                                                                     <div class="bill-content">
                                                                         <div class="section-three bill-responsive">
                                                                             <div class="bill-breakup">
@@ -201,7 +161,6 @@
                                                                                                     '}}</div>
                                                                                             </div>
                                                                                         </div>
-
                                                                                         <div class="c-row one three two-col"
                                                                                             *ngIf="service.discount &&service.discount.length > 0">
                                                                                             <div class="name">
@@ -316,39 +275,25 @@
                                                                                                     '}}</div>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <!-- <div class="c-row two section-two"
-                                                                                            *ngFor="let coupon of bill_data.providerCoupon">
+                                                                                        <div class="c-row two section-two"
+                                                                                            *ngFor="let coupon of bill_data.providerCoupon  | keyvalue">
                                                                                             <div
                                                                                                 class="discount-row two-col">
                                                                                                 <div class="name">
-                                                                                                    {{coupon.name}}
+                                                                                                    {{coupon.key}}
+                                                                                                    (Coupon)
                                                                                                 </div>
-                                                                                                <div class="price rupee-font"
-                                                                                                    style="flex-basis: 30% !important">
-                                                                                                    (-){{coupon.couponValue
-                                                                                                    |
-                                                                                                    currency:'&#8377;
-                                                                                                    '}}</div>
-                                                                                            </div>
-                                                                                        </div> -->
-
-                                                                                        <div class="c-row two section-two"
-                                                                                        *ngFor="let coupon of bill_data.providerCoupon  | keyvalue">
-                                                                                        <div class="discount-row two-col">
-                                                                                            <div class="name">
-                                                                                                {{coupon.key}} (Coupon)
-                                                                                            </div>
-                                                                                            <div class="price rupee-font">
+                                                                                                <div
+                                                                                                    class="price rupee-font">
                                                                                                     <span>(-)</span>
                                                                                                     <span
-                                                                                            
                                                                                                         [class.couponAmt]="coupon.value.value === '0.0'">{{coupon.value.value
                                                                                                         |
                                                                                                         currency:'&#8377;
                                                                                                         '}}</span>
                                                                                                 </div>
-                                                                                    </div>
-                                                                                    </div>
+                                                                                            </div>
+                                                                                        </div>
                                                                                         <div class="c-row two section-two"
                                                                                             *ngFor="let jcoupon of bill_data.jCoupon | keyvalue">
                                                                                             <div
@@ -392,18 +337,22 @@
                                                                                                     currency:'&#8377;
                                                                                                     '}}</div>
                                                                                             </div>
-
                                                                                         </div>
                                                                                         <div class="c-row two section-two"
-                                                                                        *ngIf="bill_data.deliveryCharges > 0">
-                                                                                        <div class="discount-row two-col">
-                                                                                            <div class="name">
-                                                                                                Delivery Charge
+                                                                                            *ngIf="bill_data.deliveryCharges > 0">
+                                                                                            <div
+                                                                                                class="discount-row two-col">
+                                                                                                <div class="name">
+                                                                                                    Delivery Charge
+                                                                                                </div>
+                                                                                                <div class="price rupee-font"
+                                                                                                    style="flex-basis: 30% !important">
+                                                                                                    (+){{bill_data.deliveryCharges
+                                                                                                    |
+                                                                                                    currency:'&#8377;'}}
+                                                                                                </div>
                                                                                             </div>
-                                                                                            <div class="price rupee-font" style="flex-basis: 30% !important"> (+){{bill_data.deliveryCharges |
-                                                                                                currency:'&#8377;'}} </div>
                                                                                         </div>
-                                                                                    </div>
                                                                                         <div class="c-row two section-two"
                                                                                             *ngIf="bill_data.netRate > 0">
                                                                                             <div
@@ -419,7 +368,6 @@
                                                                                                     currency:'&#8377;
                                                                                                     '}}</div>
                                                                                             </div>
-
                                                                                         </div>
                                                                                         <div class="c-row two section-two"
                                                                                             *ngIf="bill_data.totalAmountPaid > 0">
@@ -437,63 +385,62 @@
                                                                                                     '}}</div>
                                                                                             </div>
                                                                                         </div>
-                                                                                       
-
                                                                                         <div class="c-row two section-two"
-                                                                                        *ngIf="bill_data.refundedAmount > 0">
-                                                                                        <div
-                                                                                            class="discount-row two-col">
+                                                                                            *ngIf="bill_data.refundedAmount > 0">
                                                                                             <div
-                                                                                                class="name st paymentlink-color">
-                                                                                                Amount Refunded
+                                                                                                class="discount-row two-col">
+                                                                                                <div
+                                                                                                    class="name st paymentlink-color">
+                                                                                                    Amount Refunded
+                                                                                                </div>
+                                                                                                <div class="price paymentlink-color rupee-font"
+                                                                                                    style="flex-basis:30% !important">
+                                                                                                    {{bill_data.refundedAmount
+                                                                                                    |
+                                                                                                    currency:'&#8377;
+                                                                                                    '}}</div>
                                                                                             </div>
-                                                                                            <div class="price paymentlink-color rupee-font"
-                                                                                                style="flex-basis:30% !important">
-                                                                                                {{bill_data.refundedAmount
+                                                                                        </div>
+                                                                                        <div class="c-row two section-two"
+                                                                                            *ngIf="bill_data.amountDue >= 0">
+                                                                                            <div
+                                                                                                class="discount-row two-col">
+                                                                                                <div
+                                                                                                    class="name st paymentlink-color">
+                                                                                                    Amount Due
+                                                                                                </div>
+                                                                                                <div class="price paymentlink-color rupee-font"
+                                                                                                    style="flex-basis:30% !important">
+                                                                                                    {{bill_data.amountDue
+                                                                                                    |
+                                                                                                    currency:'&#8377;
+                                                                                                    '}}</div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="amountSaved"
+                                                                                            *ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus != 'FullyPaid'">
+                                                                                            <div
+                                                                                                class="price rupee-font">
+                                                                                                You
+                                                                                                will save
+                                                                                                {{bill_data.totalAmountSaved
                                                                                                 |
-                                                                                                currency:'&#8377;
-                                                                                                '}}</div>
+                                                                                                currency:'&#8377;'}}
+                                                                                            </div>
                                                                                         </div>
-                                                                                       
-                                                                                    
-                                                                                    </div>
-
-                                                                                    <div class="c-row two section-two"
-                                                                                    *ngIf="bill_data.amountDue >= 0">
-                                                                                    <div
-                                                                                        class="discount-row two-col">
-                                                                                        <div
-                                                                                            class="name st paymentlink-color">
-                                                                                            Amount Due
+                                                                                        <div class="amountSaved"
+                                                                                            *ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus == 'FullyPaid'">
+                                                                                            <div
+                                                                                                class="price rupee-font">
+                                                                                                You
+                                                                                                have saved
+                                                                                                {{bill_data.totalAmountSaved
+                                                                                                |
+                                                                                                currency:'&#8377;'}}
+                                                                                            </div>
                                                                                         </div>
-                                                                                        <div class="price paymentlink-color rupee-font"
-                                                                                            style="flex-basis:30% !important">
-                                                                                            {{bill_data.amountDue
-                                                                                            |
-                                                                                            currency:'&#8377;
-                                                                                            '}}</div>
                                                                                     </div>
                                                                                 </div>
-                                                                                
-                                                                                    <div class="amountSaved"
-                                                                                    *ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus != 'FullyPaid'">
-                                                                                    <div class="price rupee-font"> You
-                                                                                        will save
-                                                                                        {{bill_data.totalAmountSaved |
-                                                                                        currency:'&#8377;'}}
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="amountSaved"
-                                                                                    *ngIf="bill_data.totalAmountSaved > 0 && bill_data.billPaymentStatus == 'FullyPaid'">
-                                                                                    <div class="price rupee-font"> You
-                                                                                        have saved
-                                                                                        {{bill_data.totalAmountSaved |
-                                                                                        currency:'&#8377;'}}
-                                                                                    </div>
-                                                                                </div>
-                                                                                    </div>
-                                                                                </div>
-
                                                                             </div>
                                                                         </div>
                                                                         <div class="section-three"

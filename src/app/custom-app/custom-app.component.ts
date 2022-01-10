@@ -69,6 +69,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     const _this = this;
+    _this.lStorageService.setitemonLocalStorage('reqFrom', 'cuA');
     if (!this.lStorageService.getitemfromLocalStorage('sysdate')) {
       this.customappService.getSystemDate().subscribe(
         (date) => {

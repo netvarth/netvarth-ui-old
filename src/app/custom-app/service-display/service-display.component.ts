@@ -34,6 +34,7 @@ export class ServiceDisplayComponent implements OnInit {
   apptSettingsJson: any;
   serviceDialogRef: any;
   donationServices: any = [];
+  loading = false;
 
   constructor(
     private bookingService: BookingService
@@ -41,6 +42,7 @@ export class ServiceDisplayComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.businessProfile);
+    this.loading = true;
     this.getDonationServices();
     this.changeLocation(this.locationjson[0]);
   }
@@ -50,29 +52,59 @@ export class ServiceDisplayComponent implements OnInit {
    * @param loc
    */
   changeLocation(loc) {
+    // this.filteredUsers = [];
+    this.loading = true;
+    console.log("ChangeLocation:", loc);
     this.selectedLocation = loc;
-    this.getAppointmentServices(this.selectedLocation.id);
-    this.getCheckinServices(this.selectedLocation.id);
-  }
-
-  getAppointmentServices(locationId) {
-    this.bookingService.getAppointmentServices(locationId).then(
-      (appointmentServices: any) => {
-        for (let aptIndex = 0; aptIndex < appointmentServices.length; aptIndex++) {
-          this.apptServices.push({ 'type': 'appt', 'item': appointmentServices[aptIndex] });
+    this.getAppointmentServices(this.selectedLocation.id).then(
+      (status) => {
+        if (status) {
+          this.getCheckinServices(this.selectedLocation.id);
+        } else {
+          this.filteredApptServices = [];
+          this.checkinServices = [];
+          this.loading = false;
         }
-        this.filteredApptServices = this.apptServices;
       }
     );
   }
 
-  getCheckinServices(locationId) {
-    this.bookingService.getCheckinServices(locationId).then(
-      (checkinServices: any) => {
-        for (let wlIndex = 0; wlIndex < checkinServices.length; wlIndex++) {
-          this.checkinServices.push({ 'type': 'waitlist', 'item': checkinServices[wlIndex] });
+  getAppointmentServices(locationId) {
+    const _this = this;
+    const apptServiceList = [];
+    return new Promise(function(resolve, reject) {
+      _this.bookingService.getAppointmentServices(locationId).then(
+        (appointmentServices: any) => {
+          for (let aptIndex = 0; aptIndex < appointmentServices.length; aptIndex++) {
+            apptServiceList.push({ 'type': 'appt', 'item': appointmentServices[aptIndex] });
+          }
+          _this.apptServices = apptServiceList;
+          _this.filteredApptServices = apptServiceList;
+          resolve(true);
+        }, (error) => {
+          _this.apptServices = apptServiceList;
+          resolve(false);
         }
-        this.filteredCheckinServices = this.checkinServices;
+      );
+    })
+  }
+
+  getCheckinServices(locationId) {
+    const self = this;
+    const checkinServiceList = [];
+    self.bookingService.getCheckinServices(locationId).then(
+      (checkinServices: any) => {
+        console.log("CheckinServices:", checkinServices);
+        for (let wlIndex = 0; wlIndex < checkinServices.length; wlIndex++) {
+          checkinServiceList.push({ 'type': 'waitlist', 'item': checkinServices[wlIndex] });
+        }
+        self.filteredCheckinServices = checkinServiceList;
+        self.checkinServices = checkinServiceList;
+        self.loading = false;
+      },  (error)=> {
+        self.filteredCheckinServices = checkinServiceList;
+        self.checkinServices = checkinServiceList;
+        self.loading = false;
       }
     );
   }

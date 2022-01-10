@@ -11,6 +11,7 @@ import { LoadingSpinnerModule } from "../../../../../shared/modules/loading-spin
 import { CapitalizeFirstPipeModule } from "../../../../../shared/pipes/capitalize.module";
 import { ConsumerAppointmentBillComponent } from "./appointment-bill.component";
 import { MatRadioModule } from '@angular/material/radio';
+import { PaymentModesModule } from "../../../../../shared/modules/payment-modes/payment-modes.module";
 const routes: Routes = [
     { path: '', component: ConsumerAppointmentBillComponent }
 ];
@@ -26,6 +27,7 @@ const routes: Routes = [
         FormsModule,
         JcCouponNoteModule,
         CapitalizeFirstPipeModule,
+        PaymentModesModule,
         MatRadioModule
     ],
     exports:[ConsumerAppointmentBillComponent],

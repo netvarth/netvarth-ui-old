@@ -20,6 +20,7 @@ import { PrivacyModule } from '../../../modules/privacy/privacy.module';
 import { CustomerService } from '../../../../shared/services/customer.service';
 import { MembersModule } from '../../../modules/members/members.module';
 import { CommunicationsModule } from '../../../modules/communications/communications.module';
+import { PaymentModesModule } from '../../../../shared/modules/payment-modes/payment-modes.module';
 const routes: Routes = [
     { path: '', component: ConsumerCheckinComponent},
     // { path: 'payment/:id', loadChildren: ()=> import('./payment/payment.module').then(m=>m.ConsumerCheckinPaymentModule) },
@@ -52,6 +53,7 @@ const routes: Routes = [
         QuestionnaireModule,
         ReactiveFormsModule,
         LoadingSpinnerModule,
+        PaymentModesModule,
         [RouterModule.forChild(routes)]
     ],
     schemas: [

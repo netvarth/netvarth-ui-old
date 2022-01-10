@@ -595,9 +595,9 @@ button.fxmenu1{
 .getappointmentbutton{
     width:100%;
     margin-top: 1%;
-    border: 1px solid #337ab7;
+    border: 1px solid #1e4079;
     /* border-radius: 25px; */
-    background-color:#337ab7;
+    background-color:#1e4079;
     
     color: white;
     font-weight: 600;
@@ -807,22 +807,8 @@ button[disabled]{
 }
 
 .service-image {
-  /* display: flex; */
-/* align-items: center;
-justify-content: center;
-flex-direction: column; */
 height: 150px;
 width: 150px;
-  /* margin: 4px; */
-  /* padding: 50px; */
-/* font-size: 80px;
-box-shadow: #00000029 -3pt 22pt 6pt !important;
-border: 5px solid white !important; */
-}
-.service-image  .border1 {
-  /* background: orange !important;
-  padding: 30% !important;
-  position: relative !important; */
 }
 .booking-card.card.service .card-body .service-image {
     display: flex;

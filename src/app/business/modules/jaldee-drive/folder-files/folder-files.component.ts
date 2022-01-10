@@ -156,7 +156,7 @@ export class FolderFilesComponent implements OnInit {
       this.foldername = this.foldertype;
     });
     this.config = {
-      itemsPerPage: 5,
+      itemsPerPage: 10,
       currentPage: 1,
       totalItems: this.customers.length
 

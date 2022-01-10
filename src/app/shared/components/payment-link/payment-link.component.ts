@@ -324,6 +324,7 @@ non_indian_modes_onchange(event) {
 }
 togglepaymentMode(){
     this.shownonIndianModes=!this.shownonIndianModes;
+    this.selected_payment_mode = null;
 }
   goToGateway(paytype?) {
     this.isClickedOnce = true;

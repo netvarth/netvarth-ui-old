@@ -25,6 +25,7 @@ import { RefundpolicyModule } from '../../../../ynw_consumer/modules/refundpolic
 import { MembersModule } from '../../../../ynw_consumer/modules/members/members.module';
 import { CustomerService } from '../../../../shared/services/customer.service';
 import { CommunicationsModule } from '../../../../ynw_consumer/modules/communications/communications.module';
+import { PaymentModesModule } from '../../../../shared/modules/payment-modes/payment-modes.module';
 const routes: Routes = [
     { path: '', component: ConsumerAppointmentComponent},
     // { path: 'payment/:id',loadChildren: ()=>import('./payment/payment.module').then(m=>m.ConsumerApptPaymentModule) },
@@ -62,6 +63,7 @@ const routes: Routes = [
         RefundpolicyModule,
         MembersModule,
         CommunicationsModule,
+        PaymentModesModule,
         [RouterModule.forChild(routes)]
     ],
     schemas: [

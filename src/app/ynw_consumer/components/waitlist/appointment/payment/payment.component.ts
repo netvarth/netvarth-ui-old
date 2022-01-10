@@ -173,6 +173,7 @@ export class ConsumerAppointmentPaymentComponent implements OnInit,OnDestroy {
     }
     togglepaymentMode(){
         this.shownonIndianModes=!this.shownonIndianModes;
+        this.selected_payment_mode = null;
     }
     getImageSrc(mode){
     

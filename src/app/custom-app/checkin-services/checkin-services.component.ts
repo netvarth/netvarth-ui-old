@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationExtras, Router } from '@angular/router';
 import { ServiceDetailComponent } from '../../shared/components/service-detail/service-detail.component';
@@ -14,7 +14,7 @@ import { CheckavailabilityComponent } from '../../shared/components/checkavailab
   styleUrls: ['./checkin-services.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class CheckinServicesComponent implements OnInit {
+export class CheckinServicesComponent implements OnInit, OnChanges {
 
   @Input() selectedLocation;
   @Input() terminologiesjson;
@@ -27,6 +27,8 @@ export class CheckinServicesComponent implements OnInit {
   serviceDialogRef: any;
   serverDate: any;
 
+  services;
+
   constructor(private dialog: MatDialog,
     private dateTimeProcessor: DateTimeProcessor,
     private authService: AuthService,
@@ -35,6 +37,10 @@ export class CheckinServicesComponent implements OnInit {
 
   ngOnInit(): void {
     this.serverDate = this.lStorageService.getitemfromLocalStorage('sysdate');
+  }
+
+  ngOnChanges(): void {
+    this.services = this.filteredServices;
   }
   
   checkAvailableSlots(actionObj) {
@@ -60,16 +66,19 @@ export class CheckinServicesComponent implements OnInit {
     console.log(actionObj);
     if (actionObj['type'] == 'checkavailability') {
       this.checkAvailableSlots(actionObj);
-    } else 
-    if (actionObj['type'] === 'waitlist') {
+    } else if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessProfile.businessName);
       } else {
         this.checkinClicked(actionObj['location'], actionObj['service']);
       }
+    } else {
+      this.providerDetClicked(actionObj['userId']);
     }
   }
-
+  providerDetClicked(userId) {
+    this.router.navigate([this.businessProfile.accencUid, userId]);
+  }
   showServiceDetail(serv, busname) {
     let servData = {
       bname: busname,

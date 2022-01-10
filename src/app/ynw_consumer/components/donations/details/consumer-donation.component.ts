@@ -434,6 +434,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     }
     togglepaymentMode(){
         this.shownonIndianModes=!this.shownonIndianModes;
+        this.selected_payment_mode = null;
     }
     
     createForm() {
