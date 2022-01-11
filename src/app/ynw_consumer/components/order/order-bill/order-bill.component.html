@@ -29,9 +29,9 @@
                                     <div class="copy one">
                                         <div
                                             class="col-a pl0 col-md-12 col-lg-12 col-xl-12 col-sm-12 col-xs-12 no-padding">
-                                            <div class="card bill-section">
+                                            <div class="card bill-section no-padding-small">
                                                 <div class="bill-section-content">
-                                                    <div class="col-md-12 col-sm-12 col-lg-12 bill-wrapper viewBill"
+                                                    <div class="col-md-12 col-sm-12 col-lg-12 bill-wrapper viewBill no-padding-small"
                                                         *ngIf="bill_data">
                                                         <div class="global-icons col-md-12 col-sm-12 col-lg-12">
                                                             <button (click)="printMe()" [matTooltipClass]="tooltipcls"
@@ -435,8 +435,8 @@
                                                                     class="title-sec col-md-12 col-sm-12 col-xs-12 no-padding">
                                                                 </div>
                                                                 <div class="col-md-12 col-sm-12 col-xs-12 cc-dc-nb no-padding"
-                                                                    style="display: flex">
-                                                                    <div class="clearfix"></div>
+                                                                    >
+                                                                    <!-- <div class="clearfix"></div> -->
                                                                     <div
                                                                         *ngIf=" ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))">
                                                                         <ng-container *ngIf="!shownonIndianModes">
