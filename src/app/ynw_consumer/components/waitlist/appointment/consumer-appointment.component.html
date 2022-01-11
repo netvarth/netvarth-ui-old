@@ -1341,6 +1341,30 @@
 
                                                 </div>
                                                 <div class="disp-flex">
+                                                    <span class="billing-head"
+                                                        style="display: flex !important; align-items: center !important;margin-bottom: 5px;">Service</span>
+                                                    <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
+                                                    <span class="billing-value disp-flex align-items-center">
+                                                        <span class="service-icon"
+                                                            style="display: inline-block !important;"
+                                                            *ngIf="selectedService.serviceType == 'virtualService'">
+                                                            <i class="fa phon-icon"
+                                                                *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                            <i class="fa meet-icon"
+                                                                *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                            <i class="fa zoom-icon"
+                                                                *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                            <i class="fa jvideo-icon jvideo-icon-m jvideo-icon-mg5"
+                                                                *ngIf="selectedService.virtualCallingModes  && selectedService.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                                                            <i class="fa wtsapaud-icon"
+                                                                *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' && selectedService.virtualServiceType ==='audioService'"></i>
+                                                            <i class="fa wtsapvid-icon"
+                                                                *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' && selectedService.virtualServiceType ==='videoService'"></i>
+                                                        </span>
+                                                        <span class="mgn-bt-5">{{selectedService.name}}</span>
+                                                    </span>
+                                                </div>
+                                                <div class="disp-flex">
                                                     <span class="billing-head">Booking for</span>
                                                     <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
                                                     <span class="billing-value"
