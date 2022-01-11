@@ -853,8 +853,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
             }
             if (this.commObj['communicationEmail'] !== '') {
-                this.waitlist_for[0]['email'] = this.commObj['communicationEmail'] !== '';
+                this.waitlist_for[0]['email'] = this.commObj['communicationEmail'];
             }
+            console.log( this.waitlist_for);
             post_Data['appmtFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
             if (this.jcashamount > 0 && this.checkJcash) {
                 post_Data['useCredit'] = this.checkJcredit

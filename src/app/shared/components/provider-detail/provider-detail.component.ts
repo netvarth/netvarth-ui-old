@@ -2365,7 +2365,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     //   this.doLogin('consumer', passParam);
     // }else {
       this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
-        width: '90%',
+        width: '100%',
+        panelClass: ['commonpopupmainclass', 'popup-class', 'availability-container'],
         height: 'auto',
         data: {
         alldetails:actionObj,

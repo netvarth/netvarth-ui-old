@@ -2312,7 +2312,8 @@ console.log("fgf"+JSON.stringify(loc));
     //   this.doLogin('consumer', passParam);
     // }else {
       this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
-        width: '90%',
+        width: '100%',
+        panelClass: ['commonpopupmainclass', 'popup-class', 'availability-container', this.theme],
         height: 'auto',
         data: {
         alldetails:actionObj,

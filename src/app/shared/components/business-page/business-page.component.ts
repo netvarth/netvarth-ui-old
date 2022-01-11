@@ -2317,7 +2317,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   opencheckavail(actionObj) {
     this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
-      width: '90%',
+      width: '100%',
+      panelClass: ['commonpopupmainclass', 'popup-class', 'availability-container', this.theme],
       height: 'auto',
       data: {
         alldetails: actionObj,
