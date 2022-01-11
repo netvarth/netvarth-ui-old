@@ -616,7 +616,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     return physical_item_present;
   }
   checkVirtualOrPhysical() {
-    console.log('checkvirtualorphysical');
+    // console.log('checkvirtualorphysical');
     let showCatalogItems = false;
     if (this.activeCatalog.nextAvailableDeliveryDetails || this.activeCatalog.nextAvailablePickUpDetails) {
       showCatalogItems = true;

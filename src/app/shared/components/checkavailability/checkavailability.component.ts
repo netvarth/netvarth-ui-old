@@ -65,7 +65,7 @@ export class CheckavailabilityComponent implements OnInit {
     ) {
 
         this.actionObj=data.alldetails,
-        // console.log('actionobj.............',this.actionObj,this.typeofcard)
+        
         this.apptSettings=data.apptSettingsJson
   
             this.account_id=String(this.apptSettings['account']['id']);
@@ -76,6 +76,7 @@ export class CheckavailabilityComponent implements OnInit {
            if(this.actionObj['service']) {
             this.sel_ser=this.actionObj['service']['id'];
             this.typeofcard=this.actionObj['service']['bType'];
+            console.log('actionobj.............',this.actionObj,this.typeofcard)
             if(this.actionObj['service']['serviceAvailability']['nextAvailableDate']) {
                 this.sel_checkindate=this.hold_sel_checkindate=this.selectedDate=this.actionObj['service']['serviceAvailability']['nextAvailableDate'];
             } else {
@@ -103,11 +104,15 @@ export class CheckavailabilityComponent implements OnInit {
         this.dialogRef.close(queues)
      }
      getQueuesbyLocationandServiceId(locid, servid, pdate, accountid, type?) {
+         console.log('entered',locid,servid)
         // this.queueQryExecuted = false;
         if (locid && servid) {
+            console.log('123')
             this.subs.sink = this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
+                    console.log('data',data)
                     this.queuejson = data;
+                    console.log(this.queuejson,';;;;;;;;;;;;;')
                     this.queueloader=false
                 })
                 }
@@ -170,9 +175,11 @@ export class CheckavailabilityComponent implements OnInit {
         }
     }
     getAvailableSlotByLocationandService(locid, servid, pdate, accountid, type?) {
+        console.log('entered....')
         this.subs.sink = this.shared_services.getSlotsByLocationServiceandDate(locid, servid, pdate, accountid)
             .subscribe(data => {
                 this.slots = data;
+                console.log('data..',data)
                 this.freeSlots = [];
                 for (const scheduleSlots of this.slots) {
                     this.availableSlots = scheduleSlots.availableSlots;
@@ -181,7 +188,7 @@ export class CheckavailabilityComponent implements OnInit {
                             freslot['scheduleId'] = scheduleSlots['scheduleId'];
                             freslot['displayTime'] = this.getSingleTime(freslot.time);
                             this.freeSlots.push(freslot);
-                            console.log(this.freeSlots,'freeslots')
+                            // console.log(this.freeSlots,'freeslots')
                             this.api_loading1 = false;
                         }
                     }
