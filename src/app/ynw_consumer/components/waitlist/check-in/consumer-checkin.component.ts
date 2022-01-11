@@ -859,7 +859,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     confirmcheckin(type?, paymenttype?) {
-        if (type === 'checkin' && this.selectedService.isPrePayment && this.commObj['communicationEmail'] === '') {
+        // type === 'checkin' && 
+        if (this.selectedService.isPrePayment  && (!this.commObj['communicationEmail'] || this.commObj['communicationEmail']=== '')) {
             this.paymentBtnDisabled = true;
             const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
                 width: '40%',
@@ -872,6 +873,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 } else {
                     this.isClickedOnce = false;
                     this.paymentBtnDisabled = false;
+                    this.goBack('backy');
                 }
             });
         } else {
@@ -982,19 +984,19 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.paymentBtnDisabled = false;
             }
         }
-        if (this.selectedService.serviceType === 'virtualService' && type === 'next') {
-            if (this.waitlist_for.length !== 0) {
-                for (const list of this.waitlist_for) {
-                    if (list['id'] !== this.parentCustomer.id) {
-                        this.confirmcheckin(type, paymenttype);
-                    } else {
-                        this.confirmcheckin(type, paymenttype);
-                    }
-                }
-            }
-        } else {
+        // if (this.selectedService.serviceType === 'virtualService' && type === 'next') {
+        //     if (this.waitlist_for.length !== 0) {
+        //         for (const list of this.waitlist_for) {
+        //             if (list['id'] !== this.parentCustomer.id) {
+        //                 this.confirmcheckin(type, paymenttype);
+        //             } else {
+        //                 this.confirmcheckin(type, paymenttype);
+        //             }
+        //         }
+        //     }
+        // } else {
             this.confirmcheckin(type, paymenttype);
-        }
+        // }
     }
     addCheckInConsumer(postData, paymentmodetype?) {
         let paymenttype = this.selected_payment_mode;

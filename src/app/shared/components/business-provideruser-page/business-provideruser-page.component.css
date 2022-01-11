@@ -1008,13 +1008,13 @@ ul.details.badges li {
 
 @media(max-width: 1200px) {
   .bus-item-N {
-    width: 49%;
+    width: 48.5%;
   }
 }
 
 @media(max-width: 991px) {
   .bus-item-N {
-    width: 49%;
+    width: 48%;
     float: left !important;
   }
 }
