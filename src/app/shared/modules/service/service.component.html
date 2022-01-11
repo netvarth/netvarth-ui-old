@@ -1,4 +1,4 @@
-<div class="col-md-12" *ngIf="showService">
+<div class="col-md-12 no-padding-small" *ngIf="showService">
   <div class="cl1" *ngIf="action=='show'">
     <span class="editbt" [class.serv-disabled-icn]="!is_virtual_enable && service.serviceType === 'virtualService'"
       (click)="(is_virtual_enable || service.serviceType !== 'virtualService') && editService()"
@@ -154,52 +154,39 @@
             </mat-radio-button>
           </mat-radio-group>
           <div>
-            <div class="col-lg-12" *ngIf="selectedPaymentProfile[0].indiaPay">
-              <ng-container
+            <div class="col-lg-12 no-padding-small" *ngIf="selectedPaymentProfile[0].indiaPay">
+              <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 shadow my-4"
                 *ngFor="let gateway of getPayTMmodesByGroup(selectedPaymentProfile[0].indianPaymodes)|keyvalue">
-                <div class="col-md-5 col-sm-12 d-flex justify-content-around shadow my-4">
-
-                  <div class="d-flex justify-content-around">
-                    <img [src]="getImageSrc(gateway.key)" height="25px" width="50px" alt="gateway.key">
-                  </div>
-
-                  <div class="d-flex justify-content-between">
-                    <ng-container *ngFor="let modes of gateway.value">
-                      <div class="d-flex justify-content-between">
-                        <img class="ordericon pickup" height="25px" width="35px" [src]="getImageSrc(modes.mode)">
-                      </div>
-                    </ng-container>
+                <div class="col-xs-3 no-padding">
+                  <img [src]="getImageSrc(gateway.key)" class="gateway-img" alt="{{gateway.key}}">
+                </div>
+                <div class="col-xs-9 no-padding">
+                  <div class="pull-right" *ngFor="let modes of gateway.value">
+                    <img class="modes-img" [src]="getImageSrc(modes.mode)">
                   </div>
                 </div>
-                <div class="col-md-2"></div>
-              </ng-container>
+              </div>
             </div>
-
             <ng-container
               *ngIf="selectedPaymentProfile && selectedPaymentProfile[0] && selectedPaymentProfile[0].internationalPay">
-              <div>
+              <div class="col-lg-12 no-padding-small">
                 <span (click)="togglepaymentMode();"><b style="color:green">&#10004;</b> <a>International
                     Payment</a></span>
               </div>
-              <div class="col-lg-12" *ngIf="selectedPaymentProfile[0].internationalPay && show_internationalmode">
-                <ng-container
+              <div class="col-lg-12 no-padding-small"
+                *ngIf="selectedPaymentProfile[0].internationalPay && show_internationalmode">
+                <div class="col-xs-12 shadow my-4"
                   *ngFor="let gateway of getPayTMmodesByGroup(selectedPaymentProfile[0].internationalPaymodes)|keyvalue">
-                  <div class="col-md-5 col-sm-12 d-flex justify-content-around shadow my-4">
+                  <div class="col-xs-3 no-padding">
+                    <img [src]="getImageSrc(gateway.key)" class="gateway-img" alt="{{gateway.key}}">
+                  </div>
 
-                    <div class="d-flex justify-content-around">
-                      <img [src]="getImageSrc(gateway.key)" height="25px" width="50px" alt="gateway.key">
-                    </div>
-
-                    <div class="d-flex justify-content-between">
-                      <ng-container *ngFor="let modes of gateway.value">
-                        <div class="d-flex justify-content-between">
-                          <img class="ordericon pickup" height="25px" width="35px" [src]="getImageSrc(modes.mode)">
-                        </div>
-                      </ng-container>
+                  <div class="col-xs-9 no-padding">
+                    <div class="pull-right" *ngFor="let modes of gateway.value">
+                      <img class="modes-img" [src]="getImageSrc(modes.mode)">
                     </div>
                   </div>
-                  <div class="col-md-2"></div>
-                </ng-container>
+                </div>
               </div>
             </ng-container>
           </div>
@@ -594,48 +581,43 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </mat-radio-button>
           </mat-radio-group>
           <div>
-            <div class="col-lg-12" *ngIf="profile.indiaPay">
-              <ng-container *ngFor="let gateway of getPayTMmodesByGroup(profile.indianPaymodes)|keyvalue">
-                <div class="col-md-5 col-sm-12 d-flex justify-content-around shadow my-4">
+            <div class="col-lg-12 no-padding-small" *ngIf="profile.indiaPay">
+              <div class="col-xs-12 shadow my-4"
+                *ngFor="let gateway of getPayTMmodesByGroup(profile.indianPaymodes)|keyvalue">
 
-                  <div class="d-flex justify-content-around">
-                    <img [src]="getImageSrc(gateway.key)" height="25px" width="50px" alt="gateway.key">
-                  </div>
+                <div class="col-xs-3 no-padding">
+                  <img [src]="getImageSrc(gateway.key)" class="gateway-img" alt="{{gateway.key}}">
+                </div>
 
-                  <div class="d-flex justify-content-between">
-                    <ng-container *ngFor="let modes of gateway.value">
-                      <div class="d-flex justify-content-between">
-                        <img class="ordericon pickup" height="25px" width="35px" [src]="getImageSrc(modes.mode)">
-                      </div>
-                    </ng-container>
+                <div class="col-xs-9 no-padding">
+                  <div class="pull-right" *ngFor="let modes of gateway.value">
+                    <img class="modes-img" [src]="getImageSrc(modes.mode)">
                   </div>
                 </div>
-                <div class="col-md-2"></div>
-              </ng-container>
+              </div>
             </div>
 
             <ng-container *ngIf="profile.internationalPay">
-              <div>
+              <div class="col-lg-12 no-padding-small">
                 <span (click)="togglepaymentMode();"><b style="color:green">&#10004;</b> <a>International
                     Payment</a></span>
               </div>
-              <div class="col-lg-12" *ngIf="profile.internationalPay && show_internationalmode">
+              <div class="col-lg-12 no-padding-small" *ngIf="profile.internationalPay && show_internationalmode">
                 <ng-container *ngFor="let gateway of getPayTMmodesByGroup(profile.internationalPaymodes)|keyvalue">
-                  <div class="col-md-5 col-sm-12 d-flex justify-content-around shadow my-4">
+                  <div class="col-xs-12 shadow my-4">
 
-                    <div class="d-flex justify-content-around">
-                      <img [src]="getImageSrc(gateway.key)" height="25px" width="50px" alt="gateway.key">
+                    <div class="col-xs-3 no-padding">
+                      <img [src]="getImageSrc(gateway.key)" class="gateway-img" alt="{{gateway.key}}">
                     </div>
 
-                    <div class="d-flex justify-content-between">
+                    <div class="col-xs-9 no-padding">
                       <ng-container *ngFor="let modes of gateway.value">
-                        <div class="d-flex justify-content-between">
-                          <img class="ordericon pickup" height="25px" width="35px" [src]="getImageSrc(modes.mode)">
+                        <div class="pull-right">
+                          <img class="modes-img" [src]="getImageSrc(modes.mode)">
                         </div>
                       </ng-container>
                     </div>
                   </div>
-                  <div class="col-md-2"></div>
                 </ng-container>
               </div>
 
