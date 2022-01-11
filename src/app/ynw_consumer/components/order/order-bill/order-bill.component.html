@@ -575,10 +575,12 @@
                                                                                 (click)="!isClickedOnce && payuPayment()">
                                                                                MaKe Payment
                                                                             </button>
+                                                                           
                                                                             <button  class=" next-button btn btn-primary font-weight-bold text-uppercase mt-3" (click)="payuPayment()"
                                                                             *ngIf="((checkJcash && jcashamount > bill_data.amountDue) || ( checkJcash && jcashamount == bill_data.amountDue))">
                                                                             Confirm</button>
                                                                         <br> <br>
+                                                                       
                                                                         <!-- <div
                                                                             *ngIf="interNatioanalPaid && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))">
                                                                             <span [class.disabled]="isClickedOnce"
