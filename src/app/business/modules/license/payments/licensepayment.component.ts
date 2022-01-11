@@ -182,29 +182,28 @@ this.waitlistDetails.serviceId=0;
     this.isClickedOnce = false;
   }
   transactionCompleted(response, payload, accountId) {
+    const self = this;
     if (response.STATUS == 'TXN_SUCCESS') {
-      this.paytmService.updatePaytmPayForProvider(payload)
+      self.paytmService.updatePaytmPayForProvider(payload)
         .then((data) => {
           if (data) {
-            this.paidStatus = 'true';
-            this.order_id = response.ORDERID;
-            this.payment_id = response.TXNID;
-            this.cdRef.detectChanges();
-            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-            this.ngZone.run(() => console.log('Transaction success'));
+            self.paidStatus = 'true';
+            self.order_id = response.ORDERID;
+            self.payment_id = response.TXNID;
+            self.cdRef.detectChanges();
+            self.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+            self.ngZone.run(() => console.log('Transaction success'));
           }
         },
         error=>{
-          this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' }); 
+          self.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' }); 
         })
-
-
     } else if (response.STATUS == 'TXN_FAILURE') {
-      this.isClickedOnce = false;
-      this.paidStatus = 'false';
-      this.cdRef.detectChanges();
-      this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-      this.ngZone.run(() => console.log('Transaction failed'));
+      self.isClickedOnce = false;
+      self.paidStatus = 'false';
+      self.cdRef.detectChanges();
+      self.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+      self.ngZone.run(() => console.log('Transaction failed'));
     }
   }
   closeloading() {

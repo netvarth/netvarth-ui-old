@@ -358,24 +358,25 @@ togglepaymentMode(){
         });
   }
   paywithRazorpay(data: any) {
-    this.prefillmodel.name = data.consumerName;
-    this.prefillmodel.email = data.ConsumerEmail;
-    this.prefillmodel.contact = data.consumerPhoneumber;
-    this.razorModel = new Razorpaymodel(this.prefillmodel);
-    this.razorModel.key = data.razorpayId;
-    this.razorModel.amount = data.amount;
-    this.razorModel.order_id = data.orderId;
-    this.razorModel.name = data.providerName;
-    this.razorModel.description = data.description;
-    this.razorModel.mode=this.selected_payment_mode;
-    this.isClickedOnce = false;
-    this.razorpayService.payBillWithoutCredentials(this.razorModel).then(
+    const self = this;
+    self.prefillmodel.name = data.consumerName;
+    self.prefillmodel.email = data.ConsumerEmail;
+    self.prefillmodel.contact = data.consumerPhoneumber;
+    self.razorModel = new Razorpaymodel(self.prefillmodel);
+    self.razorModel.key = data.razorpayId;
+    self.razorModel.amount = data.amount;
+    self.razorModel.order_id = data.orderId;
+    self.razorModel.name = data.providerName;
+    self.razorModel.description = data.description;
+    self.razorModel.mode=self.selected_payment_mode;
+    self.isClickedOnce = false;
+    self.razorpayService.payBillWithoutCredentials(self.razorModel).then(
       (response: any) => {
         if (response !== 'failure') {
-          this.paidStatus = 'true';
+          self.paidStatus = 'true';
 
-          this.order_id = response.razorpay_order_id;
-          this.payment_id = response.razorpay_payment_id;
+          self.order_id = response.razorpay_order_id;
+          self.payment_id = response.razorpay_payment_id;
           // this.razorpay_signature = response.razorpay_signature;
           const razorpay_payload={
         
@@ -384,12 +385,12 @@ togglepaymentMode(){
             "signature":response.razorpay_signature
           
         };
-        this.razorpayService.updateRazorPay(razorpay_payload,this.accountId,'consumer').then((data)=>{
+        self.razorpayService.updateRazorPay(razorpay_payload,self.accountId,'consumer').then((data)=>{
           console.log('successs');
 
           });
         } else {
-          this.paidStatus = 'false';
+          self.paidStatus = 'false';
         }
       }
     );
