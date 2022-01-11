@@ -634,8 +634,26 @@ color: #073B4C !important;
 background-color: #FFC734 !important;
 border-color: #D39E00;
 color: #fff;
-font-weight: 500;
+
 width: 100%;
+margin-top: 1%;
+word-wrap: break-word;
+font-weight: 600;
+font-family: "Poppins";
+/* font-style: Montserrat; */
+display: inline-block;
+margin-bottom: 0;
+text-align: center;
+white-space: nowrap;
+vertical-align: middle;
+touch-action: manipulation;
+cursor: pointer;
+/* background-image: none; */
+/* border: 1px solid transparent; */
+padding: 6px 0 6px 0px;
+font-size: 12px;
+line-height: 1.42857143;
+/* border-bottom-left-radius: 10px; */
 /* min-width: 150px !important; */
 }
 .mgncla{

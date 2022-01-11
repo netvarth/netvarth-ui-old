@@ -451,6 +451,8 @@ export class ServiceViewComponent implements OnInit {
     this.lStorageService.setitemonLocalStorage('accountId', res['id']);
     if (!this.userId) {
       this.businessjson = res;
+      console.log("business",this.businessjson)
+
       this.sector = this.businessjson.serviceSector.domain;
       this.businessId = this.accEncUid;
       this.accountId = this.businessjson.id;
