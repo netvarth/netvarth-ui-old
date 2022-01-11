@@ -573,6 +573,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscriptions.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
       null, accountS3List).subscribe(
         (accountS3s: any) => {
+          this.accountId = accountS3s.businessProfile.id;
           if (accountS3s.businessProfile.customId) {
             this.providercustomId = accountS3s.businessProfile.customId;
           }
