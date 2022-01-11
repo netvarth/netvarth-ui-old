@@ -406,14 +406,14 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                     
                     this.paymentmodes = data[0];
                     this.isPayment = true;
-                    if (this.paymentmodes.indiaPay) {
+                    if (this.paymentmodes && this.paymentmodes.indiaPay) {
                         this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
                     }
-                     if (this.paymentmodes.internationalPay) {
+                     if (this.paymentmodes && this.paymentmodes.internationalPay) {
                         this.non_indian_modes = this.paymentmodes.internationalBankInfo;
  
                     }
-                    if(!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
+                    if(this.paymentmodes && !this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
                         this.shownonIndianModes=true;
                     }else{
                         this.shownonIndianModes=false;  
@@ -459,7 +459,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
                     } else if (this.remainingadvanceamount > 0 && this.checkJcash) {
-                        if(this.selected_payment_mode.toLowerCase()==='cash'){
+                        if(this.selected_payment_mode && this.selected_payment_mode.toLowerCase()==='cash'){
                             this.cashPayment();
                         }else{
                         const postData = {
@@ -536,7 +536,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                     });
         }
         else {
-            if(this.selected_payment_mode.toLowerCase()==='cash'){
+            if(this.selected_payment_mode && this.selected_payment_mode.toLowerCase()==='cash'){
                 this.cashPayment();
             }else{
             this.pay_data.uuid = this.uuid;

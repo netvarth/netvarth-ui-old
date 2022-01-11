@@ -458,14 +458,14 @@ getPaymentModes() {
                 
                 this.paymentmodes = data[0];
                 this.isPayment = true;
-                if (this.paymentmodes.indiaPay) {
+                if (this.paymentmodes && this.paymentmodes.indiaPay) {
                     this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
                 }
-                 if (this.paymentmodes.internationalPay) {
+                 if (this.paymentmodes && this.paymentmodes.internationalPay) {
                     this.non_indian_modes = this.paymentmodes.internationalBankInfo;
 
                 }
-                if(!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
+                if(this.paymentmodes && !this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
                     this.shownonIndianModes=true;
                 }else{
                     this.shownonIndianModes=false;  
@@ -1771,14 +1771,13 @@ getPaymentModes() {
 
       this.shared_services.PayByJaldeewallet(postData)
         .subscribe((pData: any) => {
-
           if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
-            if (paymentMode == 'PPI') {
-              this.payWithPayTM(pData.response, this.account_id);
+            if (pData.response.paymentGateway == 'PAYTM') {
+                this.payWithPayTM(pData.response, this.account_id);
             } else {
-              this.paywithRazorpay(pData.response);
+                this.paywithRazorpay(pData.response);
             }
-          }
+        }
         },
           error => {
             this.isClickedOnce = false;
@@ -1792,7 +1791,7 @@ getPaymentModes() {
         .subscribe((pData: any) => {
           this.pGateway = pData.paymentGateway;
           if (this.pGateway === 'RAZORPAY') {
-            this.paywithRazorpay(pData);
+            // this.paywithRazorpay(pData);
           } else {
             if (pData['response']) {
               this.payWithPayTM(pData, this.account_id);
@@ -1909,7 +1908,7 @@ getPaymentModes() {
     this.isClickedOnce = false;
     this.loadingPaytm = false;
     this.cdRef.detectChanges();
-    this.ngZone.run(() => this.router.navigate(['consumer']));
+    // this.ngZone.run(() => this.router.navigate(['consumer']));
     this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
   }
 }

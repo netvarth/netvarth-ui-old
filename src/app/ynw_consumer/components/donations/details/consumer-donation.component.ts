@@ -857,27 +857,31 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         }
     }
     goBack(type?) {
-        if (type) {
-            if (this.bookStep === 'qnr') {
-                this.location.back();
-            } else {
-                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                    this.bookStep = 'qnr';
-                }
-                // else {
-                //     console.log("else");
-                //     this.location.back();
-                // }
-            }
-        }
-        if (this.action == '') {
+        console.log(this.bookStep);
+        console.log(this.action);
+        if (this.bookStep === 'qnr') {
             this.location.back();
         } else {
-            setTimeout(() => {
-                this.action = '';
-            }, 500);
-            this.closebutton.nativeElement.click();
+            if (this.action == '') {
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    this.bookStep = 'qnr';
+                } else {
+                    this.location.back();
+                }
+            } else {
+                setTimeout(() => {
+                    this.action = '';
+                }, 500);
+                if (this.closebutton) {
+                    this.closebutton.nativeElement.click();
+                }                    
+            }
+            // else {
+            //     console.log("else");
+            //     this.location.back();
+            // }
         }
+        
     }
     handleGoBack(cstep) {
         this.resetApi();

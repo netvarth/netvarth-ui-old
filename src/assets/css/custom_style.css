@@ -14457,3 +14457,6 @@ pointer-events: none !important;
  .removeflex {
   display: block !important;
 }
+ .qnrsec .mat-select {
+    padding: 10px !important;
+  }

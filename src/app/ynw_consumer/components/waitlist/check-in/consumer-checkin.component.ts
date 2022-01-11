@@ -515,13 +515,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 data => {
                     this.paymentmodes = data[0];
                     this.isPayment = true;
-                    if (this.paymentmodes.indiaPay) {
+                    if (this.paymentmodes && this.paymentmodes.indiaPay) {
                         this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
                     }
-                    if (this.paymentmodes.internationalPay) {
+                    if (this.paymentmodes && this.paymentmodes.internationalPay) {
                         this.non_indian_modes = this.paymentmodes.internationalBankInfo;
                     }
-                    if (!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay) {
+                    if (this.paymentmodes && !this.paymentmodes.indiaPay && this.paymentmodes.internationalPay) {
                         this.shownonIndianModes = true;
                     } else {
                         this.shownonIndianModes = false;
@@ -2063,7 +2063,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.shared_services.PayByJaldeewallet(postData)
                 .subscribe((pData: any) => {
                     if (pData.isGateWayPaymentNeeded && pData.isJCashPaymentSucess) {
-                        if (pData.paymentGateway == 'PAYTM') {
+                        if (pData.response.paymentGateway == 'PAYTM') {
                             this.payWithPayTM(pData.response, this.account_id);
                         } else {
                             this.paywithRazorpay(pData.response);
@@ -2688,6 +2688,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 _this.customerService.updateProfile(customerInfo, 'consumer').subscribe(
                     (data) => {
                         _this.setWaitlistFor(customerInfo, isParent);
+                        _this.commObj['communicationEmail'] = formdata.email;
+                        _this.commObj['comWhatsappNo'] = whatsup["number"];
+                        _this.commObj['comWhatsappCountryCode'] = whatsup["countryCode"];
                         resolve(data);
                     }, (error) => {
                         _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

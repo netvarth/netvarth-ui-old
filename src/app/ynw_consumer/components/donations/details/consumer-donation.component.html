@@ -123,15 +123,9 @@
                                                                             </span>
                                                                         </div>
                                                                     </div>
-                                                                    <div style="font-size: 0.8rem !important;margin-top:10px !important"
-                                                                        class="col-md-12 col-xs-12 col-sm-12 lnk  donation_label">
-                                                                        Provide donor details for
-                                                                        sending donation acknowledgement
-                                                                        and related communications.<br>
-                                                                    </div>
                                                                 </div>
                                                                 <div
-                                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp check-new-group">
+                                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp check-new-group no-padding">
                                                                     <div
                                                                         class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                                         <div
@@ -146,6 +140,87 @@
                                                                                 </a>
                                                                             </div> -->
                                                                             <div class="clearfix"></div>
+                                                                            
+                                                                            <div class="mobile-donor-details">
+                                                                                <div class="col-md-12 col-xs-12 col-sm-12 lnk pad-10 donation_label">
+                                                                                    Provide donor details for
+                                                                                    sending donation acknowledgement
+                                                                                    and related communications.<br>
+                                                                                </div>
+                                                                                <div class="clearfix"></div>
+                                                                                <div class="mgn-bt-10">
+                                                                                    <div
+                                                                                        style="color:#7a7a7a;">
+                                                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name
+                                                                                    </div>
+                                                                                    <div class="mobile-edit-icon">
+
+                                                                                        <span
+                                                                                            class="mgn-lt-5 phonevallabel boldmobiletext"
+                                                                                            *ngFor="let member of waitlist_for ">
+                                                                                            <i
+                                                                                                class="fa fa-user"></i>&nbsp;
+                                                                                            {{donorName}}</span>
+                                                                                        <a
+                                                                                            class="mgn-lt-5  lnk pointer-cursor"><i
+                                                                                                class="fa fa-pencil"
+                                                                                                (click)="editDonor()"
+                                                                                                data-toggle="modal"
+                                                                                                data-target="#exampleModalCenter"></i></a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="mgn-bt-10">
+                                                                                    <div
+                                                                                        style="color:#7a7a7a;">
+                                                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone
+                                                                                    </div>
+
+                                                                                    <div class="mobile-edit-icon">
+                                                                                        <span
+                                                                                            class="mgn-lt-10 phonevallabel boldmobiletext"
+                                                                                            *ngIf="userPhone"><i
+                                                                                                class="fa fa-mobile "></i>&nbsp;{{dialCode}}
+                                                                                            {{userPhone}}</span>
+                                                                                        <a
+                                                                                            class="mgn-lt-5 lnk pointer-cursor"><i
+                                                                                                class="fa fa-pencil"
+                                                                                                (click)="editPhone()"
+                                                                                                data-toggle="modal"
+                                                                                                data-target="#exampleModalCenter"></i></a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="" *ngIf="userEmail">
+                                                                                    <div
+                                                                                        style="color:#7a7a7a;">
+                                                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email
+                                                                                    </div>
+
+                                                                                    <div class="mobile-edit-icon">
+
+                                                                                        <span
+                                                                                            class="mgn-lt-5 emailvallabel boldmobiletext">
+                                                                                            <i
+                                                                                                class="fa fa-envelope-o "></i>&nbsp;{{userEmail}}</span>
+                                                                                        <a
+                                                                                            class="mgn-lt-5 lnk pointer-cursor"><i
+                                                                                                class="fa fa-pencil"
+                                                                                                (click)="handleEmail(userEmail)"
+                                                                                                data-toggle="modal"
+                                                                                                data-target="#exampleModalCenter"></i></a>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                            <div class="" *ngIf="!userEmail">
+                                                                                <i class="fa fa-envelope-o mr-2"></i>
+
+                                                                                <a class="mgn-lt-5 lnk pointer-"><i
+                                                                                        class="fa fa-plus fa-1x"
+                                                                                        style="color: blue;"
+                                                                                        data-toggle="modal"
+                                                                                        data-target="#exampleModalCenter">Add
+                                                                                        Email</i></a>
+                                                                            </div>
                                                                             <div
                                                                                 class="col-sm-12 col-xs-12 col-md-12 no-padding">
                                                                                 <!-- <h6 class="card-title service"
@@ -212,82 +287,6 @@
                                                                                 </div>
                                                                                 <div class="clearfix"></div>
                                                                                 <!-- <div class="clearfix"></div> -->
-
-                                                                                <div class="mobile-donor-details">
-                                                                                    <div class="">
-                                                                                        <div
-                                                                                            style="color:#7a7a7a;font-size: 1rem;">
-                                                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name
-                                                                                        </div>
-                                                                                        <div class="mobile-edit-icon">
-
-                                                                                            <span
-                                                                                                class="mgn-lt-10 phonevallabel boldmobiletext"
-                                                                                                *ngFor="let member of waitlist_for ">
-                                                                                                <i
-                                                                                                    class="fa fa-user"></i>&nbsp;
-                                                                                                {{donorName}}</span>
-                                                                                            <a
-                                                                                                class="mgn-lt-5  lnk pointer-cursor"><i
-                                                                                                    class="fa fa-pencil"
-                                                                                                    (click)="editDonor()"
-                                                                                                    data-toggle="modal"
-                                                                                                    data-target="#exampleModalCenter"></i></a>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="">
-                                                                                        <div
-                                                                                            style="color:#7a7a7a;font-size: 1rem;">
-                                                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone
-                                                                                        </div>
-
-                                                                                        <div class="mobile-edit-icon">
-                                                                                            <span
-                                                                                                class="mgn-lt-10 phonevallabel boldmobiletext"
-                                                                                                *ngIf="userPhone"><i
-                                                                                                    class="fa fa-mobile "></i>&nbsp;{{dialCode}}
-                                                                                                {{userPhone}}</span>
-                                                                                            <a
-                                                                                                class="mgn-lt-5 lnk pointer-cursor"><i
-                                                                                                    class="fa fa-pencil"
-                                                                                                    (click)="editPhone()"
-                                                                                                    data-toggle="modal"
-                                                                                                    data-target="#exampleModalCenter"></i></a>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="" *ngIf="userEmail">
-                                                                                        <div
-                                                                                            style="color:#7a7a7a;font-size: 1rem;">
-                                                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email
-                                                                                        </div>
-
-                                                                                        <div class="mobile-edit-icon">
-
-                                                                                            <span
-                                                                                                class="mgn-lt-5 emailvallabel boldmobiletext">
-                                                                                                <i
-                                                                                                    class="fa fa-envelope-o "></i>&nbsp;{{userEmail}}</span>
-                                                                                            <a
-                                                                                                class="mgn-lt-5 lnk pointer-cursor"><i
-                                                                                                    class="fa fa-pencil"
-                                                                                                    (click)="handleEmail(userEmail)"
-                                                                                                    data-toggle="modal"
-                                                                                                    data-target="#exampleModalCenter"></i></a>
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                </div>
-                                                                                <div class="" *ngIf="!userEmail">
-                                                                                    <i
-                                                                                        class="fa fa-envelope-o mr-2"></i>
-
-                                                                                    <a class="mgn-lt-5 lnk pointer-"><i
-                                                                                            class="fa fa-plus fa-1x"
-                                                                                            style="color: blue;"
-                                                                                            data-toggle="modal"
-                                                                                            data-target="#exampleModalCenter">Add
-                                                                                            Email</i></a>
-                                                                                </div>
                                                                             </div>
                                                                             <div
                                                                                 class="col-sm-12 col-xs-12 chk-btns-div col-md-12 mgn-up-10 no-padding">
@@ -576,14 +575,14 @@
                                         </div>
                                         <div
                                             class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 hf-double-btn-container">
-                                            <div class="mr-2"
+                                            <!-- <div class="mr-2"
                                                 *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
                                                 <button type="button"
                                                     class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
                                                     (click)="goToStep('qnr')">
                                                     Go Back
                                                 </button>
-                                            </div>
+                                            </div> -->
                                             <div class="clearfix"></div>
                                             <div class="col-xs-12">
                                                 <ng-container *ngIf="!shownonIndianModes">
@@ -597,7 +596,7 @@
                                                     </app-payment-modes>
                                                 </ng-container>
                                                 <div class="clearfix"></div>
-                                                <div class="txt-align-center pad_link">
+                                                <div class="txt-align-center pad_link mgn-up-20">
                                                     <span [class.disabled]="isClickedOnce" (click)="togglepaymentMode()"
                                                         class="pointer-cursor"><a class="refund_policy"
                                                             *ngIf="paymentmodes">
@@ -611,12 +610,12 @@
                                                                 here</span>
                                                         </a></span>
                                                 </div>
-                                                <div class="txt-align-center">
+                                                <div class="txt-align-center mgn-up-10">
                                                     <button type="button"
                                                         class=" next-button btn btn-primary mobile-button-color font-weight-bold text-uppercase "
                                                         [class.disabled]="isClickedOnce"
                                                         (click)="!isClickedOnce && goToGateway()">
-                                                        MaKe Payment
+                                                        Make Payment
                                                     </button>
                                                 </div>
                                             </div>

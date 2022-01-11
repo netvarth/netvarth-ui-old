@@ -68,7 +68,7 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
         data => {
           this.payment_options = data;
           this.payModesQueried = true;
-          if (this.payment_options.length <= 2) { // **** This is a condition added as per suggestion from Manikandan to avoid showing modes such as Cash, wallet etc in consumer area
+          if (this.payment_options && this.payment_options.length <= 2) { // **** This is a condition added as per suggestion from Manikandan to avoid showing modes such as Cash, wallet etc in consumer area
             this.payModesExists = false;
           } else {
             this.payModesExists = true;

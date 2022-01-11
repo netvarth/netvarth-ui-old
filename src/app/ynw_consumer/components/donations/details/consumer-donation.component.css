@@ -258,19 +258,26 @@
   min-height: 650px;
   border-left: 1px solid #EBEDF3 !important;
 }
-@media (max-width: 767.98px) {
-  .wizard.wizard-1 .wizard-nav .wizard-steps {
-      flex-direction: unset !important;
-  }
-  .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-title, .booking-img {
-    display: none !important;
-  }
-  .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step {
-    width: auto !important;
+@media (max-width: 767.98px) { 
+  .right-part {
+  border-left: none !important;
   }
   .displ-none {
     display: none !important;
   }
+  .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-title, .booking-img {
+    display: none !important;
+  }
+}
+/* @media (max-width: 767.98px) { */
+  .wizard.wizard-1 .wizard-nav .wizard-steps {
+      flex-direction: unset !important;
+  }
+
+  .wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step {
+    width: auto !important;
+  }
+
   .mobile-donation-for-styling {
     /* background-color: #fae5af; */
     font-size: 1.0rem !important;
@@ -330,18 +337,12 @@
     border-radius: 5px;
     border: 1px solid #dadcdf;
   }
-  .chk-btns-div mat-chip {
+  /* .chk-btns-div mat-chip {
     width: 100%;
     font-size: 1rem !important;
-    /* color: black !important; */
-  }
-
-
-
-
-  
-}
-@media (min-width: 768px) {
+  } */
+/* } */
+ @media (min-width: 768px) {
   .wizard.wizard-1 .wizard-nav .wizard-steps {
     display: block !important;
   }
@@ -489,8 +490,11 @@ a, .fa-file-text-o {
     background: white;
   }
   .razorpay-icon {
-    content: url(../../../../../assets/images/razorpay.png);
+    content: url(../../../../../assets/images/RAZORPAY.png);
     width: 150px;
     padding: 10px;
     background: white;
+  }
+  .qnrsec .mat-select {
+    padding: 10px !important;
   }
