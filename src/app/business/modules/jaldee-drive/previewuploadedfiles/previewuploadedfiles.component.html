@@ -1,13 +1,13 @@
 <!-- <p>previewuploadedfiles works!</p> {{title}}-->
 <!-- {{details.fileName?.length>10 ? details.fileName.slice(0, 10)+'...' : details.fileName}} -->
-<h1 class="mat-dialog-title">   {{details.fileName}} View
+<h1 class="mat-dialog-title">   {{details.fileName}} <br> {{details.caption}}
     <button #locte mat-dialog-close class="modal_close" tabindex="-1">
       <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
   </h1>
   <div class="pad-20 image-scroll" *ngIf="details.fileType && details.fileType != 'pdf'" >
     <img style="width:100%;margin-top: -20px;" [src]="details.filePath"
-      *ngIf="details.fileType && details.fileType == 'bmp'|| details.fileType =='png' || details.fileType == 'gif' || details.fileType == 'jpg' ||details.fileType =='jpeg'||details.fileType == 'webp'"/>
+      *ngIf="details.fileType && details.fileType == 'bmp'|| details.fileType =='png' || details.fileType == 'gif' || details.fileType == 'jpg' ||details.fileType =='jpeg'||details.fileType == 'webp' || details.fileType =='jfif'"/>
  </div>
   <div *ngIf="details.fileType && details.fileType == 'pdf'">
    

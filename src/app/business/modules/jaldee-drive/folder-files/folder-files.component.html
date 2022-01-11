@@ -17,7 +17,7 @@
     <p *ngIf="foldertype === 'shared'&& customer_label && isHealthCare" class="text-secondary mx-5 no-padding">
       Manage the files uploaded by the {{customer_label}} lable!</p>
 
-    <p *ngIf="foldertype === 'Private'" class="text-secondary mx-5 no-padding">Manage your own files!
+    <p *ngIf="foldertype === 'private'" class="text-secondary mx-5 no-padding">Manage your own files!
     </p>
   </div>
 </section>
@@ -126,7 +126,7 @@
     </div>
   </div> -->
 
-  <div class="row p-3">
+  <div class="row p-3 no-padding-small">
     <!-- <h5 class="mx-2">
       
       <span class="text-bold">
@@ -136,7 +136,7 @@
 
     <div class="card  card-custom card-stretch gutter-b no-padding col-md-12  col-sm-12  col-xs-12">
 
-      <div class="mx-2" *ngIf="foldertype === 'Private'">
+      <div class="mx-2" *ngIf="foldertype === 'private'">
         <button type="button" class="pull-left p-button-rounded p-ripple p-button p-component mx-2 my-3 p-1">
           <a style="color: white !important;" #modal data-toggle="modal" data-target="#exampleModalCenter">
           </a>
@@ -173,7 +173,7 @@
       </div>
 
 
-      <div class="row p-3">
+      <div class="row p-3 no-padding-small">
         <div class="card-body tble pt-0 pb-3 col-12 col-sm-12 col-xs-12">
           <div class="tab-content">
             <div class="table-responsive1">
@@ -332,7 +332,7 @@
 
 
                 <!-- <pagination-controls  (pageChange)="pageChanged($event)" directionLinks="false" autoHide="true" previous-text="" next-text=""></pagination-controls> -->
-                <pagination-template #p="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event">
+                <pagination-template *ngIf="customers.length>10" #p="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event">
                   <div
                     class="custom-pagination d-flex justify-content-between align-items-center flex-wrap pull-right mb-0">
                     <div class="pagination-previous mx-2" [class.disabled]="p.isFirstPage()" data-bs-toggle="tooltip"
