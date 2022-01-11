@@ -598,6 +598,8 @@
 }
 }
 
+
+
 .img-section img {
   width: 100px;
   height: 80px;
@@ -1165,3 +1167,9 @@ table{
 }
 
 }
+
+@media only screen and (max-width: 575px){
+  .no-padding-small {
+      padding: 0 !important;
+  }
+  }
