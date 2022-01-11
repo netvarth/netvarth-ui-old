@@ -2688,6 +2688,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 _this.customerService.updateProfile(customerInfo, 'consumer').subscribe(
                     (data) => {
                         _this.setWaitlistFor(customerInfo, isParent);
+                        _this.commObj['communicationEmail'] = formdata.email;
+                        _this.commObj['comWhatsappNo'] = whatsup["number"];
+                        _this.commObj['comWhatsappCountryCode'] = whatsup["countryCode"];
                         resolve(data);
                     }, (error) => {
                         _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

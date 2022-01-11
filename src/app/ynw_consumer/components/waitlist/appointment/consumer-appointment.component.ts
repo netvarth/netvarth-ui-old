@@ -2516,7 +2516,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         } else {
             _this.commObj['communicationEmail'] = _this.parentCustomer.userProfile.email;
         }
-        if (parentCustomer.userProfile.whatsAppNum) {
+        if (parentCustomer.userProfile.whatsAppNum && parentCustomer.userProfile.whatsAppNum!='') {
             _this.commObj['comWhatsappNo'] = parentCustomer.userProfile.whatsAppNum.number;
             _this.commObj['comWhatsappCountryCode'] = parentCustomer.userProfile.whatsAppNum.countryCode;
         } else {
@@ -2691,6 +2691,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 _this.customerService.updateProfile(customerInfo, 'consumer').subscribe(
                     (data) => {
                         _this.setWaitlistFor(customerInfo, isParent);
+                        _this.commObj['communicationEmail'] = formdata.email;
+                        _this.commObj['comWhatsappNo'] = whatsup["number"];
+                        _this.commObj['comWhatsappCountryCode'] = whatsup["countryCode"];
                         resolve(data);
                     }, (error) => {
                         _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -2758,6 +2761,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
      * @returns 
      */
     submitVirtualForm(formdata) {
+        console.log("submitVirtualForm");
         const _this = this;
         this.submitbtndisabled = true;
         formdata['phoneno'] = this.parentCustomer.userProfile.primaryMobileNo;
@@ -2770,7 +2774,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 type = 'new';
             }
             this.updateCustomer(formdata, this.is_parent, type).then(
-                (result) => {
+                (result) => { 
                     if (result !== false) {
                         _this.setConsumerFamilyMembers(this.parentCustomer.id).then(
                             (members) => {

@@ -994,7 +994,7 @@ ul.details.badges li {
 
 .bus-item-N {
   border-radius: 20px !important;
-  width: 45%;
+  width: 32%;
   float: left !important;
   margin-bottom: 20px !important;
   margin-right: 7px !important;
@@ -1004,38 +1004,33 @@ ul.details.badges li {
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
   /* margin-top: 10px !important; */
-} 
+}
 
 @media(max-width: 1200px) {
   .bus-item-N {
-    width: 45%;
+    width: 49%;
   }
 }
 
 @media(max-width: 991px) {
   .bus-item-N {
-    width: 100%;
+    width: 49%;
     float: left !important;
   }
 }
 
 @media(max-width: 767px) {
   .bus-item-N {
-    width: 100%;
+    width: 47.8%;
   }
 }
 
-@media(max-width: 650px) {
+@media(max-width: 700px) {
   .bus-item-N {
     width: 100%;
   }
 }
 
-@media(max-width: 450px) {
-  .bus-item-N {
-    width: 100%;
-  }
-}
 
 .bus-item-I {
   width: 20%;
