@@ -26,7 +26,7 @@
                                         <div class="col-a pl0 col-md-12 col-lg-12 col-xl-12 col-sm-12 col-xs-12">
                                             <div class="card bill-section">
                                                 <div class="bill-section-content">
-                                                    <div class="col-md-12 col-sm-12 col-lg-12 bill-wrapper viewBill"
+                                                    <div class="col-md-12 col-sm-12 col-lg-12 bill-wrapper viewBill no-padding-small"
                                                         *ngIf="bill_data">
                                                         <div class="global-icons col-md-12 col-sm-12 col-lg-12">
                                                             <button (click)="printMe()" [matTooltipClass]="tooltipcls"
@@ -98,7 +98,7 @@
                                                             <app-common-innerloading-spinner *ngIf="loadingPaytm">
                                                             </app-common-innerloading-spinner>
                                                             <div class="bill-content">
-                                                                <div class="section-three bill-responsive">
+                                                                <div class="section-three bill-responsive no-padding-small">
                                                                     <div class="bill-breakup">
                                                                         <div class="list"
                                                                             *ngFor="let service of bill_data.service; let i = index">
@@ -361,7 +361,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="section-three"
+                                                                <div class="section-three no-padding-small"
                                                                     *ngIf="bill_data && billNoteExists">
                                                                     <a class="learnmore-pointer" id="customer-help"
                                                                         (click)="billNotesClicked()">Bill notes</a>
@@ -385,7 +385,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="section-three other-section"
+                                                        <div class="section-three other-section no-padding-small"
                                                             *ngIf="bill_data.billStatus !== 'Cancel' && bill_data.billStatus !== 'Settled' && (bill_data.amountDue > 0)">
                                                             <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
                                                                 *ngIf="this.couponList.JC.length > 0 ||this.couponList.OWN.length >0 && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && paymode && (bill_data.amountDue > 0)">

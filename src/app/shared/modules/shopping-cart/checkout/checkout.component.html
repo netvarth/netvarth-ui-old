@@ -397,7 +397,7 @@
                         *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
                         <p class="jaldeecredit">
                           To pay Rs {{checkJcash ? totalamountPay : cartDetails.advanceAmount}} please select any
-                          payment options
+                          payment options ccccc
                         </p>
                         <div *ngIf=" ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
                           class="payment-mode-card-styles">
@@ -417,9 +417,9 @@
                       <div class="txt-align-center mgn-up-10"
                         *ngIf="paymentmodes.internationalPay  && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
                         <span (click)="togglepaymentMode()" class="pointer-cursor"><a class="refund_policy">
-                            <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
+                            <span *ngIf="!shownonIndianModes && paymentmodes.internationalPay">Non Indian Payment ? Click
                               here</span>
-                            <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
+                            <span *ngIf="shownonIndianModes && paymentmodes.indiaPay">Indian Payment ? Click
                               here</span>
                           </a></span>
                       </div>
@@ -478,7 +478,7 @@
                     <textarea placeholder="Any notes? Write here..." class="txtArea"
                       [(ngModel)]="orderlistNote"></textarea>
                   </div>
-                  <div class="order-label" *ngIf="(s3CouponsList.JC.length > 0 ||s3CouponsList.OWN.length > 0)"><a
+                  <div class="order-label mgn-up-10 mgn-bt-10" *ngIf="(s3CouponsList.JC.length > 0 ||s3CouponsList.OWN.length > 0)"><a
                       (click)="applyPromocode()" *ngIf="selected_coupons.length === 0">Apply Promo Code</a>
                     <a *ngIf="selected_coupons.length > 0" (click)="applyPromocode()">
                       Promo code {{selected_coupons.toString()}} added,will be applicable in the final bill. <br>
@@ -513,8 +513,18 @@
                   </div>
                   <div class="clearfix"></div>
                   <ng-container
-                    *ngIf="!shownonIndianModes && ((checkJcash && jcashamount < cartDetails.advanceAmount)) ">
-                    <div *ngFor="let modes of indian_payment_modes">
+                    *ngIf="!shownonIndianModes && ((checkJcash && jcashamount < cartDetails.advanceAmount)) ">                  
+                      <app-payment-modes [paymentModes]="indian_payment_modes"
+                          (modeSelected)="indian_payment_mode_onchange($event)">
+                      </app-payment-modes>
+                  </ng-container>
+                  <ng-container *ngIf="shownonIndianModes && ((checkJcash && jcashamount < cartDetails.advanceAmount))">
+                      <app-payment-modes [paymentModes]="non_indian_modes"
+                          (modeSelected)="non_indian_modes_onchange($event)">
+                      </app-payment-modes>
+                  </ng-container>
+                    
+                    <!-- <div *ngFor="let modes of indian_payment_modes">
                       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <div class="text-primary payment-mode-card-styles">
                           <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode"
@@ -525,23 +535,17 @@
                                     style="font-size: 10px;">{{modes.modeDisplayName}}</span></div>
                                 <div class="col-md-6 col-lg-6 my-auto"><img class="ordericon pickup pic_size"
                                     [src]="getImageSrc(modes.mode)"></div>
-
                               </div>
                             </mat-radio-button>
                           </mat-radio-group>
-
                         </div>
                       </div>
-
-                    </div>
-                  </ng-container>
-                  <ng-container *ngIf="shownonIndianModes&& ((checkJcash && jcashamount < cartDetails.advanceAmount))">
-
+                    </div> -->
+                  
+                  <!-- <ng-container >
                     <div *ngFor="let modes of non_indian_modes">
                       <div class="col-xs-12 col-sm-6 col-md-12 col-lg-12">
-
                         <div class="text-primary payment-mode-card-styles">
-
                           <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode"
                             (change)="non_indian_modes_onchange($event)">
                             <mat-radio-button [value]="modes.mode">
@@ -550,20 +554,15 @@
                                     style="font-size: 10px;">{{modes.modeDisplayName}}</span></div>
                                 <div class="col-md-6 col-lg-6 my-auto"><img class="ordericon pickup pic_size"
                                     [src]="getImageSrc(modes.mode)"></div>
-
                               </div>
                             </mat-radio-button>
-
                           </mat-radio-group>
-
                         </div>
                       </div>
-
                     </div>
-                  </ng-container>
-
+                  </ng-container> -->
                   <div class="clearfix"></div>
-                  <div class="txt-align-center "
+                  <div class="txt-align-center mgn-up-20"
                     *ngIf="paymentmodes && paymentmodes.internationalPay  && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
                     <span (click)="togglepaymentMode()" class="pointer-cursor"><a class="refund_policy">
                         <span *ngIf="!shownonIndianModes && paymentmodes && paymentmodes.internationalPay">Non Indian Payment ? Click
@@ -571,10 +570,8 @@
                         <span *ngIf="shownonIndianModes && paymentmodes && paymentmodes.indiaPay">Indian Payment ? Click
                           here</span>
                       </a></span>
-
-
                   </div>
-                  <div class="txt-align-center">                    
+                  <div class="txt-align-center mgn-up-10">                    
                     <button type="button" class=" next-button btn btn-primary font-weight-bold text-uppercase "
                       [class.disabled]="isClickedOnce"
                       *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"

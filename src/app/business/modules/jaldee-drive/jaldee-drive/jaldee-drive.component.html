@@ -292,13 +292,13 @@
                   </div> -->
                   <!-- <img src="../../../assets/images/Group 818.jpg" class=" fa fa-folder pull-left text-light "
                   style="width: 22px !important; margin-top: 2px !important;"> -->
-                  <div (click)="publicfolder('Private')" *ngIf="!sharedFolder"
+                  <div (click)="publicfolder('private')" *ngIf="!sharedFolder"
                     class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                     id="folder2">
 
                     <i class="fa fa-folder" aria-hidden="true">
 
-                      <p (click)="publicfolder('Private')">My Files</p>
+                      <p (click)="publicfolder('private')">My Files</p>
                     </i>
                     <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
                   style="width: 22px !important; margin-top: 2px !important;"> -->
@@ -890,11 +890,11 @@
                         <p (click)="publicfolder('Public')"> Public Files</p>
                       </i>
                     </div> -->
-                    <div (click)="publicfolder('Private')"
+                    <div (click)="publicfolder('private')"
                       class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                       id="folder2">
                       <i class="fa fa-folder" aria-hidden="true">
-                        <p (click)="publicfolder('Private')"> My Files</p>
+                        <p (click)="publicfolder('private')"> My Files</p>
                       </i>
                     </div>
                     <div (click)="onClicked('Shared')"

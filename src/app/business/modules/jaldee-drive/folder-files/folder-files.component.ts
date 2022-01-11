@@ -49,7 +49,7 @@ export class FolderFilesComponent implements OnInit {
   tooltipcls = '';
   fileTypeDisplayName = projectConstants.FilE_TYPES;
   apiloading = false;
-  dataLoading=false
+  dataLoading = false
   foldertype: any;
   foldername: any;
   fileviewdialogRef: any;
@@ -130,8 +130,8 @@ export class FolderFilesComponent implements OnInit {
   availabileSelected: boolean;
   notAvailabileSelected: boolean;
   tooltipcl = projectConstants.TOOLTIP_CLS;
-  customer_label='';
-  provider_label='';
+  customer_label = '';
+  provider_label = '';
   isHealthCare = false;
 
   constructor(
@@ -141,7 +141,7 @@ export class FolderFilesComponent implements OnInit {
     public dialog: MatDialog,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
-     private wordProcessor: WordProcessor,
+    private wordProcessor: WordProcessor,
 
     //private router: Router,
 
@@ -332,6 +332,12 @@ export class FolderFilesComponent implements OnInit {
     this.resetFilter();
     this.filterapplied = false;
     this.getfiles();
+    this.png = false;
+    this.jpeg = false;
+    this.jpg = false;
+    this.pdf = false;
+    this.lessMb = false;
+    this.grateMB = false;
   }
   resetFilter() {
     this.filters = {
@@ -421,7 +427,7 @@ export class FolderFilesComponent implements OnInit {
         this.filter.fileType = 'png';
 
       }
-     else if (value === 'jpeg') {
+      else if (value === 'jpeg') {
         this.png = false;
         this.jpeg = true;
         this.jpg = false;
@@ -429,7 +435,7 @@ export class FolderFilesComponent implements OnInit {
         this.filter.fileType = 'jpeg';
 
       }
-     else if (value === 'jpg') {
+      else if (value === 'jpg') {
         this.png = false;
         this.jpeg = false;
         this.jpg = true;
@@ -437,7 +443,7 @@ export class FolderFilesComponent implements OnInit {
         this.filter.fileType = 'jpg';
 
       }
-     else if (value === 'pdf') {
+      else if (value === 'pdf') {
         this.png = false;
         this.jpeg = false;
         this.jpg = false;
@@ -445,32 +451,32 @@ export class FolderFilesComponent implements OnInit {
         this.filter.fileType = 'pdf';
 
       }
-      else{
+      else {
         this.png = false;
         this.jpeg = false;
         this.jpg = false;
         this.pdf = false;
-        this.filter.fileType = ''; 
+        this.filter.fileType = '';
       }
     }
 
     if (type === 'fileSize') {
-      console.log("Checked",type,value)
+      console.log("Checked", type, value)
       if (value === 'lessMb') {
         this.lessMb = true;
         this.grateMB = false;
         this.filter.fileSize = '1';
-        
+
         // this.filter.ownerType = 'jaldeeconsumer'
       }
-     else if(value === 'grateMB') {
+      else if (value === 'grateMB') {
         this.lessMb = false;
         this.grateMB = true;
         this.filter.fileSize = '1';
         // this.filter.ownerType = 'jaldeeconsumer'
 
       }
-      else{
+      else {
         this.lessMb = false;
         this.grateMB = false;
         this.filter.fileSize = '';
@@ -526,8 +532,8 @@ export class FolderFilesComponent implements OnInit {
     this.dataLoading = true;
     const filter = {};
     console.log("Folder Type :", this.foldertype);
-    if (this.foldertype === 'Private') {
-      filter['folderName-eq'] = 'Private';
+    if (this.foldertype === 'private') {
+      filter['folderName-eq'] = 'private';
       this.foldername = 'My'
     }
     else if (this.foldertype === 'public') {
@@ -554,7 +560,7 @@ export class FolderFilesComponent implements OnInit {
         console.log(data);
         // this.Allfiles = data;
         this.customers = data
-        this.dataLoading=false;
+        this.dataLoading = false;
         //this.paginator = this.customers
         // this.customers.map((x) => {
         //   this.fileSizeFilter = Math.ceil(x.fileSize)
@@ -657,7 +663,7 @@ export class FolderFilesComponent implements OnInit {
           },
           error => {
             this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-            this.apiloading= false;
+            this.apiloading = false;
           }
         );
 

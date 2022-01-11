@@ -78,9 +78,41 @@
                     </div>
                     <br>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding">
-                        <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 serviceheading no-margin"
+                        <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 card-outer-cont no-margin"
                             style="background-color: #1e4079;">
-                            <div class="mgn-rt-5"
+                                <div class="col-md-2 col-xs-3 col-sm-3 col-lg-1 no-padding card-inner-img-cont">
+                                    <div class="img-circle"
+                                        *ngIf="servicedetails && servicedetails.serviceType == 'virtualService'">
+                                        <i class="fa phon-icon "
+                                            *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                        <i class="fa meet-icon"
+                                            *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                        <i class="fa zoom-icon"
+                                            *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                        <i class="fa wtsapaud-icon"
+                                            *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'audioService'"></i>
+                                        <i class="fa wtsapvid-icon"
+                                            *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'videoService'"></i>
+                                        <i class="fa jaldeevideo-icon"
+                                            *ngIf="servicedetails.virtualCallingModes  && servicedetails.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                                    </div>
+                                    <!-- <div class="img-circle "
+                                        *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'donationService'">
+                                        <img class=" img-responsive" src="assets/images/donation.png" alt="Donation Image">
+                                    </div> -->
+                                </div>
+                                <div class="col-md-10 col-xs-9 col-sm-9 col-lg-11 pointer-cursor service-head-cont">
+                                    <h5 class="line-clamp-ln2 mgn-bt-5">
+                                        <!-- [ngClass]="{'no-padding':service.serviceType && service.serviceType == 'virtualService'}" -->
+                                        {{servicename | capitalizeFirst}}
+                                    </h5>
+                                    <!-- <p class="line-clamp-ln3 no-margin card-service-desc" *ngIf="service.description">
+                                        {{service.description}}
+                                    </p> -->
+                                </div>
+
+
+                            <!-- <div class="mgn-rt-5"
                                 *ngIf="servicedetails && servicedetails.serviceType == 'virtualService'">
                                 <i class="fa phon-icon"
                                     *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -97,7 +129,7 @@
                             </div>
                             <h3 class="mgn-lt-5" style="color: #ffff; padding: 10px 0 10px 0px;" *ngIf="servicename">
                                 {{servicename |
-                                capitalizeFirst}}</h3>
+                                capitalizeFirst}}</h3> -->
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10">
                             <ul class="service-ul flex" *ngIf="servicedetails">
@@ -149,8 +181,24 @@
                                         {{timingsapt}} <br /><span>&nbsp;</span> </p>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                                
                                 <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6  no-padding">
+                                    <button class="checkavailabilitybutton"
+                                        (click)="bttonClick(sp,'checkavailability')"><span
+                                            class="checkavailabilitytext">                                            
+                                            <i class="fa fa-calendar black"></i>&nbsp;Check availability
+                                        </span>
+                                    </button>
+                                </div>
+                                <div
+                                    class="col-lg-6 col-md-6 col-xs-6 col-sm-6 no-padding getclass">
+                                    <button (click)="bttonClick(sp)"
+                                        class="getappointmentbutton ">{{buttonCaption}}</button>
+                                </div>
+
+
+                                <!-- <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6  no-padding">
                                     <button class="checkavailabilitybutton " *ngIf="getButtontype(sp)!='Donate'"
                                     (click)="bttonClick(sp,'checkavailability')" ><span
                                             class="checkavailabilitytext">
@@ -162,15 +210,8 @@
                                     <button
                                     class=" actionbtn  col-lg-6 col-md-6 col-sm-6 col-xs-6"
                                     type="button" (click)="bttonClick(sp)">{{getButtontype(sp)}}</button>
-                                </div>
+                                </div> -->
                             </div>
-                            <!-- <div class="service-buttons" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <button
-                                    class="btn actionbtn btn-outline-warning col-lg-6 col-md-6 col-sm-6 col-xs-6"
-                                    type="button" (click)="bttonClick(sp)">{{getButtontype(sp)}}</button>
-                                   
-
-                            </div> -->
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 marginalignmentincards"

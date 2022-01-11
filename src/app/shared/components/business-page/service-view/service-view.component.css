@@ -1278,3 +1278,64 @@ ul.service-ul li {
     .card-text.availability {
       min-height: 100px;
     }
+    .getappointmentbutton{
+      width:100%;
+      margin-top: 1%;
+      border: 1px solid #1e4079;
+      /* border-radius: 25px; */
+      background-color:#1e4079;
+      
+      color: white;
+      font-weight: 600;
+      font-family: "Poppins";
+      /* font-style: Montserrat;  */
+      display: inline-block;
+      margin-bottom: 0;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      touch-action: manipulation;
+      cursor: pointer;
+      /* background-image: none; */
+      /* border: 1px solid transparent; */
+      padding: 6px 0 6px 0px;
+      font-size: 12px;
+      line-height: 1.42857143;
+      /* border-top-right-radius: 20px; */
+      border-bottom-right-radius: 10px;
+      /* border-radius: 4px; */
+  }
+  .getappointmentbutton:hover{
+      
+  
+      background-color:white;
+      
+      color: #1E4079;
+      
+  }
+  .card-inner-img-cont i  {
+    height: 80px !important;
+    width: 80px !important;
+    /* vertical-align: middle; */
+    box-shadow: 0 4px 8px rgb(0 0 0 / 20%), 0 6px 20px rgb(0 0 0 / 19%);
+    padding: 5px;
+    border-radius: 50%;
+    background: white;
+}
+.card-inner-img-cont {
+    height: 100%;
+}
+.card-outer-cont {
+  height: 85px !important;
+  display: table;
+}
+.service-head-cont,.card-inner-img-cont {
+  height: 100%;
+  display: table;
+}
+.service-head-cont h5, .card-inner-img-cont i {
+  color: #fff;
+  display: table-cell;
+  vertical-align: middle;
+
+}
