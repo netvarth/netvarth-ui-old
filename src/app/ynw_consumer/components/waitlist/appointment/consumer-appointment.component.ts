@@ -2254,14 +2254,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 data => {
                     this.paymentmodes = data[0];
                     this.isPayment = true;
-                    if (this.paymentmodes.indiaPay) {
+                    if (this.paymentmodes && this.paymentmodes.indiaPay) {
                         this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
                     }
-                    if (this.paymentmodes.internationalPay) {
+                    if (this.paymentmodes && this.paymentmodes.internationalPay) {
                         this.non_indian_modes = this.paymentmodes.internationalBankInfo;
 
                     }
-                    if (!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay) {
+                    if (this.paymentmodes && !this.paymentmodes.indiaPay && this.paymentmodes.internationalPay) {
                         this.shownonIndianModes = true;
                     } else {
                         this.shownonIndianModes = false;
