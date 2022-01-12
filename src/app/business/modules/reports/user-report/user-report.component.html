@@ -14,7 +14,8 @@
           <hr width="100%">
           <h5 style="text-align:center">User Report</h5>
           <hr width="100%">
-          <ng-container *ngIf="showReport">
+          <!-- *ngIf="showReport" -->
+          <ng-container  *ngIf="userData.length!=0" >
             <div class="row clearfix">
               <div class="col col-md-6 col-sm-6 col-lg-6  col-xs-12 clearfix divlftrt mgn-lt-20">
                 <label class="col-md-10 col-form-label lablresponssive " *ngIf="daterange">Report Time Period :
@@ -49,7 +50,7 @@
             </div>
             <div class="box" *ngIf="!user_data_loading">
               <div class="box-body table-container table-responsive mat-elevation-z8">
-                <table mat-table [dataSource]="user_dataSource">
+                <table mat-table [dataSource]="user_dataSource" >
                   .
                   <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef> Id</th>

@@ -58,6 +58,7 @@ export class UserReportComponent implements OnInit {
     this.provider_services.generateUserInfoReport(this.params.filter)
       .subscribe((data: any) => {
         this.user_dataSource = data;
+        // console.log(data)
         this.userData = data;
         this.user_data_loading = false;
       },
