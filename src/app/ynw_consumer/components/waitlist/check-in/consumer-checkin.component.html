@@ -1,9 +1,9 @@
-<section class="c-checkin-new container no-padding">
+<section #consumer_checkin class="c-checkin-new container no-padding" [ngClass]="theme?theme:''">
     <div class="content p0 loc-list ynw-common-form-nm">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">&nbsp;
-                    <!-- <a class="pull-left back-btn mgn-up-5" (click)="goBack('back')"><i class="fa fa-arrow-left"></i></a> -->
+                    <a class="pull-left back-btn mgn-up-5" (click)="goBack('back')"><i class="fa fa-arrow-left"></i></a>
                 </div>
                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
                     <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'checkin'"></app-header>
@@ -1280,31 +1280,239 @@
                                                     currency:'&#8377;'}}
                                                 </span>
                                             </div>
-                                            <div class=""
+                                            <!-- <div class=""
                                                 *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                 <div class="select-pay"> Payment option</div>
                                                 <div class="">
                                                     <span class="razorpay-icon selected-payment"></span>
-                                                    <!-- <span class="paytm-icon"></span> -->
+                                                  
                                                 </div>
                                                 <div
                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                     <a data-toggle="modal" data-target="#exampleModal"
                                                         class="refund_policy">Cancellation Policy</a>
                                                 </div>
+                                            </div> -->
+                                            <div class="containerpayment "
+                                            *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0 && paymentDetails.amountRequiredNow > 0">
+                                            <div class="jaldeecredit" *ngIf="jcashamount>0">
+                                                <mat-checkbox [(ngModel)]="checkJcash"
+                                                    (change)="changeJcashUse($event)"></mat-checkbox>
+                                                Use Jaldee cash balance : <span
+                                                    class="rupee-font">{{jcashamount|
+                                                    currency:'&#8377;'}}</span>
                                             </div>
+                                            <div class="creditleft"
+                                                *ngIf="jcashamount>0  && (checkJcash && jcashamount < paymentDetails.amountRequiredNow)">
+                                                Balance amount can be paid by other payment methods
+                                            </div>
+                                            <!-- <div class="prepayment"> -->
+                                            <div class="prepayment"
+                                                *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
+                                              ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
+                                                <!-- Payment required now : &nbsp;
+                                        <span *ngIf="!checkJcash"class="rupee-font">{{paymentDetails.amountRequiredNow |
+                                            currency:'&#8377;'}}
+                                        </span>
+                                        <span *ngIf="checkJcash" class="rupee-font">{{payAmount |
+                                            currency:'&#8377;'}}
+                                        </span> -->
+                                                <button type="button" [class.disabled]="isClickedOnce"
+                                                    (click)="!isClickedOnce && saveCheckin('checkin')"
+                                                    id="stepThreeConfirmButton"
+                                                    class="next-button btn btn-primary font-weight-bold  px-12 py-4"
+                                                    [disabled]="!checkPolicy && heartfulnessAccount||paymentBtnDisabled">
+                                                    <ng-container
+                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
+                                              ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
+                                                        Confirm {{settingsjson.showTokenId?'Token ':'Checkin'}}
+                                                    </ng-container>
+                                                    <!-- <ng-container
+                                             *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                             Proceed to pay <span >Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}}</span></ng-container> -->
+                                                </button>
+                                                <!-- <button type="button" appPreventDoubleClick (click)="saveCheckin('checkin')" id="stepThreeConfirmButton" [disabled]="paymentBtnDisabled" class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
+                                        <ng-container
+                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                         Proceed to pay <span >Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}}</span></ng-container>
+                                    </button>
+                                    <button type="button" appPreventDoubleClick (click)="saveCheckin('checkin','paytm')" id="stepThreeConfirmButton" [disabled]="paymentBtnDisabled" class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
+                                        <ng-container
+                                         *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                         Proceed to pay <span >Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}}</span>(payTm)</ng-container>
+                                    </button> -->
+
+
+                                            </div>
+                                            <!-- <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12"
+                                                *ngIf="razorpayEnabled && paytmEnabled">
+                                                <div class="txt-align-center"
+                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                    <p class="jaldeecredit">
+                                                        To pay Rs {{checkJcash ? payAmount :
+                                                        paymentDetails.amountRequiredNow}} please select any
+                                                        payment options
+                                                    </p>
+                                                    <span type="button" class="razorpay-icon paymenticons"
+                                                        [class.disabled]="isClickedOnce"
+                                                        *ngIf="razorpayEnabled  && paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
+                                                        [class.disabled]="isClickedOnce"
+                                                        (click)="!isClickedOnce && saveCheckin('checkin')">
+                                                    </span>&nbsp;&nbsp;
+                                                    <span type="button" class="paytm-icon paymenticons"
+                                                        [class.disabled]="isClickedOnce"
+                                                        *ngIf="paytmEnabled && razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
+                                                        (click)="!isClickedOnce && saveCheckin('checkin','paytm')">
+
+                                                    </span>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="txt-align-center">
+                                                <button type="button"
+                                                    class=" next-button btn btn-primary font-weight-bold text-uppercase "
+                                                    [class.disabled]="paymentBtnDisabled"
+                                                    *ngIf="razorpayEnabled  && !paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
+                                                    (click)="!isClickedOnce && saveCheckin('checkin')">
+                                                    Pay by CC/DC/UPI
+                                                </button>
+                                                          <button type="button"
+                                                    class="  next-button btn btn-primary font-weight-bold text-uppercase "
+                                                    [class.disabled]="isClickedOnce"
+                                                    *ngIf="paytmEnabled && !razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
+                                                    (click)="!isClickedOnce && saveCheckin('checkin','paytm')">
+                                                    Pay by CC/DC/UPI
+                                                </button>
+                                            </div> -->
+                                         <div class="clearfix"></div> 
+                                         <div
+                                         *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                         <ng-container *ngIf="!shownonIndianModes">
+                                             <app-payment-modes [paymentModes]="indian_payment_modes"
+                                                 (modeSelected)="indian_payment_mode_onchange($event)">
+                                             </app-payment-modes>
+                                         </ng-container>
+                                         <ng-container *ngIf="shownonIndianModes">
+                                             <app-payment-modes [paymentModes]="non_indian_modes"
+                                                 (modeSelected)="non_indian_modes_onchange($event)">
+                                             </app-payment-modes>
+                                         </ng-container>
+                                     </div>
+                            <div class="clearfix"></div> 
+                                <div class="card-payment-button">
+                                        <div class="col-md-12">
+
+                                            <div class="txt-align-center pad_link"
+                                                *ngIf="paymentmodes.internationalPay && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                <span [class.disabled]="paymentBtnDisabled"
+                                                    (click)="togglepaymentMode()"
+                                                    class="pointer-cursor"><a
+                                                        class="refund_policy">
+                                                        <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
+                                                        here</span>
+                                                        <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
+                                                            here</span>
+                                                    </a></span>
+
+                                            </div>
+                       
+                                            <div class="col-md-12 txt-align-center pad_link"
+                                            *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                            <span
+                                                *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                <a data-toggle="modal" data-target="#exampleModal"
+                                                    class="refund_policy">Cancellation Policy</a></span>
+
+
+                                        </div>
+                                           
+                                               <div class="txt-align-center">
+                                                <button type="button"
+                                                    class=" next-button btn btn-primary font-weight-bold text-uppercase "
+                                                    [class.disabled]="paymentBtnDisabled"
+                                                    *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
+                                                    (click)="!isClickedOnce && saveCheckin('checkin')">
+                                                   MaKe Payment
+                                                </button>
+         <!-- <button type="button" [class.disabled]="isClickedOnce"
+                                                (click)="!isClickedOnce && saveCheckin('checkin')"
+                                                id="stepThreeConfirmButton"
+                                                class="next-button btn btn-primary font-weight-bold  px-12 py-4"
+                                                [disabled]="!checkPolicy && heartfulnessAccount||paymentBtnDisabled">
+                                                <ng-container
+                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
+                                          ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
+                                                    Confirm {{settingsjson.showTokenId?'Token ':'Checkin'}}
+                                                </ng-container>
+                                                </button>  -->
+                                            </div>
+                                        </div>
+                                            <!-- <div class=""
+                                        *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                        <div class="select-pay"> Payment option</div>
+                                        <div class="">
+                                            <span class="razorpay-icon selected-payment"></span>
+                                            <span class="paytm-icon"></span>
+                                        </div>
+                                        <div
+                                            *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                            <a data-toggle="modal" data-target="#exampleModal"
+                                                class="refund_policy">Cancellation Policy</a>
+                                        </div>
+                                    </div> -->
 
                                             <!-- modalbox -->
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                role="dialog" aria-labelledby="exampleModalLabel"
+                                                aria-hidden="true">
                                                 <div class="modal-dialog refundpol" role="document">
                                                     <div class="modal-content">
                                                         <!-- <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <i aria-hidden="true" class="ki ki-close"></i>
-                                                            </button>
-                                                        </div> -->
+                                                    <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <i aria-hidden="true" class="ki ki-close"></i>
+                                                    </button>
+                                                </div> -->
+                                                        <div class="modal-body pt-8 pb-0 refund_size">
+                                                            <span>Note:</span> Jaldee is not responsible for the
+                                                            transactions between Consumer and Provider.
+                                                            <ul>
+                                                                <li>Consumers can cancel the booking anytime
+                                                                </li>
+                                                                <li>If the consumer cancels the booking, 3% will
+                                                                    be
+                                                                    deducted from the amount(which includes
+                                                                    Jaldee
+                                                                    service charges and Online Gateway fees).
+                                                                </li>
+                                                                <li>Refund will be received directly to the
+                                                                    consumer’s
+                                                                    bank account after he/she cancels the future
+                                                                    bookings.</li>
+                                                                <li>If the booking is cancelled on the date of
+                                                                    booking,
+                                                                    refund will not be processed
+                                                                    automatically(i.e
+                                                                    Consumer must inform the provider to
+                                                                    initiate the
+                                                                    refund)</li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button"
+                                                                class="btn btn-light-primary font-weight-bold"
+                                                                data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                            <!-- modalbox -->
+                                            <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog refundpol" role="document">
+                                                    <div class="modal-content">
+                                                      
                                                         <div class="modal-body pt-8 pb-0 refund_size">
                                                             <span>Note:</span> Jaldee is not responsible for the
                                                             transactions between Consumer and Provider.
@@ -1329,7 +1537,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <!-- <div>
                                             <div class="t-and-c">
@@ -1495,7 +1703,7 @@
                                             </div>
                                         </div> -->
                                         <!-- </div> -->
-                                        <div
+                                        <!-- <div
                                             class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 pl-0 width-100">
                                             <div class="mr-2">
                                                 <button type="button" style="color: white !important;"
@@ -1507,10 +1715,7 @@
                                                 </button>
                                             </div>
                                             <div>
-                                                <!-- <button *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0" class="btn btn-success font-weight-bold text-uppercase px-2 mr-5 py-2">
-                                                    Cancellation Policy
-                                                </button> -->
-                                                <!-- !checkPolicy ||  -->
+                                              
                                                 <button type="button" (click)="saveCheckin('checkin')"
                                                     id="stepThreeConfirmButton" [class.spinner]="disablebutton"
                                                     [class.spinner-darker-success]="disablebutton"
@@ -1529,7 +1734,7 @@
                                                     </ng-container>
                                                 </button>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>

@@ -73,13 +73,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit, OnDestr
   gateway_redirection = false;
   payModesExists = false;
   payModesQueried = false;
-  pay_data = {
-    'uuid': null,
-    'paymentMode': null,
-    'amount': 0,
-    'accountId': null,
-    'purpose': null
-  };
+  pay_data :any;
   payment_popup = null;
   showPaidlist = false;
   showJCouponSection = false;
@@ -92,6 +86,15 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit, OnDestr
   paytmEnabled = false;
   type;
   private subs = new SubSink();
+  paymentmodes: any;
+  isPayment: boolean;
+  indian_payment_modes: any=[];
+  non_indian_modes: any=[];
+  shownonIndianModes: boolean;
+  selected_payment_mode: any;
+  isInternatonal: boolean;
+  pGateway: any;
+  isClickedOnce: boolean;
   constructor(
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<ViewConsumerWaitlistCheckInBillComponent>,
@@ -226,30 +229,49 @@ ngOnDestroy() {
    */
   getPaymentModes() {
     this.paytmEnabled = false;
-    this.sharedServices.getPaymentModesofProvider(this.checkin.providerAccount.id)
+    this.sharedServices.getPaymentModesofProvider(this.checkin.providerAccount.id,this.checkin.service.id)
       .subscribe(
         data => {
-          this.payment_options = data;
-          this.payment_options.forEach(element => {
-            if (element.name === 'PPI') {
-              this.paytmEnabled = true;
-              return false;
+         
+            this.paymentmodes = data[0];
+            this.isPayment = true;
+            if (this.paymentmodes.indiaPay) {
+                this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
             }
-          });
-          this.payModesQueried = true;
-          if (this.payment_options.length <= 2) { // **** This is a condition added as per suggestion from Manikandan to avoid showing modes such as Cash, wallet etc in consumer area
-            this.payModesExists = false;
-          } else {
-            this.payModesExists = true;
-            // this.pay_data.paymentMode = 'DC'; // deleberately giving this value as per request from Manikandan.
-          }
+             if (this.paymentmodes.internationalPay) {
+                this.non_indian_modes = this.paymentmodes.internationalBankInfo;
+
+            }
+            if(!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
+                this.shownonIndianModes=true;
+            }else{
+                this.shownonIndianModes=false;  
+            }
+
         },
-        () => {
-          this.payModesQueried = true;
-          // this.snackbarService.openSnackBar(error, {'panelClass': 'snackbarerror'});
+        error => {
+            this.isPayment = false;
+            console.log(this.isPayment);
         }
       );
   }
+  indian_payment_mode_onchange(event) {
+    this.selected_payment_mode = event.value;
+    this.isInternatonal = false;
+
+
+
+}
+non_indian_modes_onchange(event) {
+    this.selected_payment_mode = event.value;
+    this.isInternatonal = true;
+
+
+
+}
+togglepaymentMode(){
+    this.shownonIndianModes=!this.shownonIndianModes;
+}
   /**
    * Perform PayU Payment
    */
@@ -309,6 +331,50 @@ ngOnDestroy() {
         );
     }
   }
+  makePayment(){
+    this.pay_data.uuid = this.uuid;
+    this.pay_data.amount = this.bill_data.amountDue;
+    this.pay_data.paymentMode = this.selected_payment_mode
+    this.pay_data.accountId = this.checkin.providerAccount.id;
+    this.pay_data.purpose = 'billPayment';
+    this.pay_data.serviceId=0;
+    this.pay_data.isInternatonal=this.isInternatonal;
+    this.resetApiError();
+    if (this.pay_data.uuid != null &&
+      this.pay_data.paymentMode != null &&
+      this.pay_data.amount !== 0) {
+      this.api_success = Messages.PAYMENT_REDIRECT;
+      this.gateway_redirection = true;
+    this.sharedServices.consumerPayment(this.pay_data)
+    .subscribe(
+      (pData:any) => {
+    this.pGateway = pData.paymentGateway;
+    if (this.pGateway === 'RAZORPAY') {
+      this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+      setTimeout(() => {
+        this.document.getElementById('payuform').submit();
+      }, 2000);
+    } else {
+        if (pData['response']) {
+            
+            this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+            setTimeout(() => {
+               
+                    this.document.getElementById('paytmform').submit();
+                },
+             2000);
+        } else {
+            this.isClickedOnce = false;
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
+        }
+    }
+  }
+    )
+}
+}
+
   resetApiError() {
     this.api_success = null;
   }
@@ -627,7 +693,6 @@ ngOnDestroy() {
   }
   showJCCouponNote(coupon) {
     if (coupon.value.systemNote.length === 1 && coupon.value.systemNote.includes('COUPON_APPLIED')) {
-      // alert('in if');
     } else {
       if (coupon.value.value === '0.0') {
         this.dialog.open(JcCouponNoteComponent, {
@@ -641,5 +706,9 @@ ngOnDestroy() {
       }
     }
   }
+  getImageSrc(mode){
+       
+    return 'assets/images/payment-modes/'+mode+'.png';
+}
 }
 

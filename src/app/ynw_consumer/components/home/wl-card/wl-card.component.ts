@@ -115,6 +115,10 @@ export class WlCardComponent implements OnInit, OnChanges {
     if (this.booking.amountDue > 0 && (this.booking.billViewStatus == 'Show') && this.booking.waitlistStatus != 'cancelled' && this.booking.billStatus != 'Settled') {
       this.showPayBtn = true;
     }
+    if(this.booking.amountDue>0 && (this.booking.billViewStatus=='Show') && this.booking.apptStatus != 'Cancelled' 
+    && this.booking.apptStatus != 'Rejected' && this.booking.billStatus!='Settled'){
+      this.showPayBtn = true
+    }
     if (this.booking.billViewStatus == 'Show' && ((!(this.booking.amountDue > 0) && this.booking.waitlistStatus != 'cancelled') || (this.booking.waitlistStatus === 'cancelled' && this.booking.paymentStatus !== 'NotPaid'))) {
       this.showReceiptBtn = true;
     }

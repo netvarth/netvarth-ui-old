@@ -778,7 +778,7 @@ ul.bus-actions li a.lnk {
   text-align: left !important;
   /* font: normal normal medium 25px/30px Roboto !important; */
   letter-spacing: 0px !important;
-  color: #e27b47ee !important;
+  color: #16254b !important;
 }
 .c-checkin-new .phonenum {
   height:33px !important;
@@ -796,7 +796,7 @@ ul.bus-actions li a.lnk {
   text-align: left !important;
   /* font: normal normal bold 25px/30px Roboto !important; */
   letter-spacing: 0px !important;
-  color: #e27b47ee !important;
+  color: #16254b !important;
 }
 
 .pre-check-title {
@@ -864,8 +864,8 @@ ul.bus-actions li a.lnk {
 
 }
 .c-checkin-new .slotdiv mat-chip.mat-chip-selected {
-  border-color: #ec8a59ee !important;
-  color:#ec8a59ee !important;
+  border-color: #16254b !important;
+  color:#16254b !important;
   border: 2px solid !important;
 }
 .c-checkin-new .slotdiv .mat-chip {
@@ -910,7 +910,7 @@ ul.bus-actions li a.lnk {
   transition: all .3s ease;
   cursor: pointer;
   padding: 7px !important;
-  background: #ec8a59ee !important;
+  background: #16254b !important;
   border-radius: 20px !important;
   font-size: 1.2rem !important;
   font-weight: 500;
@@ -1294,11 +1294,11 @@ ngx-intl-tel-input input {
   /* font-size: 1.5rem;
   font-weight: bold; */
   margin-bottom: 20px;
-  color: #f17f46ee;
+  color: #16254b;
   text-align: left;
   /* font: normal normal bold 18px/22px Roboto; */
   letter-spacing: 0px;
-  color: #f17f46ee;
+  color: #354364;
   opacity: 1;
 }
 .bookdetails {
@@ -1547,13 +1547,13 @@ body.modal-open {
   text-align: left !important;
   /* font: normal normal medium 15px/18px Roboto !important; */
   letter-spacing: 0px !important;
-  color: #ec8a59ee !important;
+  color: #16254b !important;
   opacity: 1 !important;
 }
 
 .c-checkin-new .card-container-custom .chk-btns-div mat-chip.notes-and-file-chip {
   background-color: #f6f6f6 !important;
-  border: 1px solid #FD7029 !important;
+  border: 1px solid #16254b !important;
   border-radius: 32px !important;
   opacity: 1 !important;
 }
@@ -1561,12 +1561,12 @@ body.modal-open {
  
 .c-checkin-new .card-container-custom .chk-btns-div .btns mat-chip.notes-and-file-chip a.lnk.action {
   /* color: #787878 !important; */
-  color: #ec8a59ee !important;
+  color: #16254b !important;
 }
 
 .c-checkin-new .card-container-custom .chk-btns-div .btns mat-chip.notes-and-file-chip a.lnk.action i{
   /* color: #958793 !important; */
-  color: #ec8a59ee !important;
+  color: #16254b !important;
 }
 
 .user-data-card.card-body {
@@ -1591,7 +1591,7 @@ body.modal-open {
 }
 
 .prenotes .preinfo-title {
-  color: #fd7029dc !important;
+  color: #16254b !important;
   font-size: 1rem !important;
   font-weight: 600 !important;
 }
@@ -1611,7 +1611,7 @@ button.next-button {
   border-radius: 30px !important;
   height: 50px !important;
   padding: 10px 30px !important;
-  background: #FD7029 0% 0% no-repeat padding-box !important;
+  background: #16254b 0% 0% no-repeat padding-box !important;
   /* background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box;
   box-shadow: 15px 15px 40px #DBA8C4; */
   opacity: 1;
@@ -1628,7 +1628,7 @@ button.next-button {
   /* font: normal normal bold 18px/25px Roboto !important; */
   letter-spacing: 0px !important;
   /* color: #59345D !important; */
-  color: #FD7029 !important;
+  color: #16254b !important;
   opacity: 1 !important;
 }
 
@@ -1663,7 +1663,7 @@ button.next-button {
   text-align: left !important;
   /* font: normal normal bold 15px/18px Roboto !important; */
   letter-spacing: 0px !important;
-  color: #ec8a59ee !important;
+  color: #16254b !important;
 }
 
 .billing-value {
@@ -1687,7 +1687,7 @@ button.next-button {
   text-align: center !important;
   /* font: normal normal medium 18px/22px Roboto !important; */
   letter-spacing: 0px !important;
-  color: #FD7029 !important;
+  color: #16254b !important;
   /* color: #59345D !important; */
   opacity: 1 !important;
   margin-top: 0 !important;
@@ -1697,7 +1697,7 @@ button.next-button {
   text-align: center !important;
   /* font: normal normal normal 15px/18px Roboto !important; */
   letter-spacing: 0px !important;
-  color: #FD7029 !important;
+  color: #16254b !important;
   opacity: 1 !important;
 }
 
@@ -1713,7 +1713,7 @@ button.next-button {
   /* font: normal normal medium 18px/22px Roboto; */
   letter-spacing: 0px;
   /* color: #59345D; */
-  color: #FD7029;
+  color: #16254b;
   opacity: 1;
 }
 
