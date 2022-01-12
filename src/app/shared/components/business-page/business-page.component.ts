@@ -1752,7 +1752,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           _this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          _this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          if (current_provider['service']['serviceType'] === 'virtualService') {
+            _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+              _this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
+            });
+          } else {
+            _this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          }
+        
         } else {
           if (current_provider['service']['serviceType'] === 'virtualService') {
             _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {

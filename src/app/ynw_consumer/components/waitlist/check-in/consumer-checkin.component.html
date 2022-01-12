@@ -1148,6 +1148,8 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    
                                     <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding"
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 3">
@@ -1485,7 +1487,7 @@
                                                                     service charges and Online Gateway fees).
                                                                 </li>
                                                                 <li>Refund will be received directly to the
-                                                                    consumer’s
+                                                                    consumerâ€™s
                                                                     bank account after he/she cancels the future
                                                                     bookings.</li>
                                                                 <li>If the booking is cancelled on the date of
@@ -1521,7 +1523,7 @@
                                                                 <li>If the consumer cancels the appointment, 3% will be
                                                                     deducted from the amount(which includes Jaldee
                                                                     service charges and Online Gateway fees).</li>
-                                                                <li>Refund will be received directly to the consumer’s
+                                                                <li>Refund will be received directly to the consumerâ€™s
                                                                     bank account after he/she cancels the future
                                                                     bookings.</li>
                                                                 <li>If the booking is cancelled on the date of booking,
@@ -1539,6 +1541,18 @@
                                                 </div>
                                             </div> -->
                                         </div>
+                                        <div class="col-md-12 txt-align-center"
+                                                    *ngIf="paymentLength==0|| (paymentDetails && paymentDetails.amountRequiredNow == 0)">
+                                                    <div class="prepayment-confirm">
+                                                        <button type="button" [class.disabled]="isClickedOnce"
+                                                            (click)="!isClickedOnce && saveCheckin('checkin')"
+                                                            id="stepThreeConfirmButton"
+                                                            class="next-button btn btn-primary font-weight-bold  px-12 py-4"
+                                                            [disabled]="!checkPolicy && heartfulnessAccount">
+                                                            Confirm {{settingsjson.showTokenId?'Token
+                                                            ':'Checkin'}}</button>
+                                                    </div>
+                                                </div>
                                         <!-- <div>
                                             <div class="t-and-c">
                                                 <div class="checkbox">

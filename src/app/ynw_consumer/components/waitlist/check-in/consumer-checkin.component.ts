@@ -29,7 +29,7 @@ import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-servi
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { SubSink } from '../../../../../../node_modules/subsink';
 import { JcCouponNoteComponent } from '../../../../shared/components/jc-Coupon-note/jc-Coupon-note.component';
-import { VirtualFieldsComponent } from '../../virtualfields/virtualfields.component';
+// import { VirtualFieldsComponent } from '../../virtualfields/virtualfields.component';
 import { PaytmService } from '../../../../../../src/app/shared/services/paytm.service';
 @Component({
     selector: 'app-consumer-checkin',
@@ -848,28 +848,28 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
         }
     }
-    confirmVirtualServiceinfo(memberObject, type?) {
-        const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
-            width: '50%',
-            minHeight: '100vh',
-            minWidth: '100vw',
-            panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
-            disableClose: true,
-            data: memberObject[0]
+    // confirmVirtualServiceinfo(memberObject, type?) {
+    //     const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
+    //         width: '50%',
+    //         minHeight: '100vh',
+    //         minWidth: '100vw',
+    //         panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
+    //         disableClose: true,
+    //         data: memberObject[0]
 
-        });
-        virtualdialogRef.afterClosed().subscribe(result => {
+    //     });
+    //     virtualdialogRef.afterClosed().subscribe(result => {
 
-            if (result !== '') {
-                this.virtualInfo = result;
-                this.confirmcheckin(type);
+    //         if (result !== '') {
+    //             this.virtualInfo = result;
+    //             this.confirmcheckin(type);
 
-            } else {
-                this.goToStep('prev');
-            }
+    //         } else {
+    //             this.goToStep('prev');
+    //         }
 
-        });
-    }
+    //     });
+    // }
     saveCheckin(type?) {
         console.log('insaide');
         if (this.sel_ser_det.serviceType === 'virtualService' && type === 'next') {
@@ -892,26 +892,26 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
 
     }
-    virtualModal() {
-        const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
-            width: '50%',
-            minHeight: '100vh',
-            minWidth: '100vw',
-            panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
-            disableClose: true,
-            data: { 'id': this.virtualInfo.serviceFor }
+    // virtualModal() {
+    //     const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
+    //         width: '50%',
+    //         minHeight: '100vh',
+    //         minWidth: '100vw',
+    //         panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
+    //         disableClose: true,
+    //         data: { 'id': this.virtualInfo.serviceFor }
 
-        });
-        virtualdialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.virtualInfo = result;
-                this.setVirtualTeleserviceCustomer();
-            }
+    //     });
+    //     virtualdialogRef.afterClosed().subscribe(result => {
+    //         if (result) {
+    //             this.virtualInfo = result;
+    //             this.setVirtualTeleserviceCustomer();
+    //         }
 
 
-        });
+    //     });
 
-    }
+    // }
     addCheckInConsumer(postData, paymentmodetype?) {
         let paymenttype=this.selected_payment_mode;
         this.subs.sink = this.shared_services.addCheckin(this.account_id, postData)

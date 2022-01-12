@@ -1646,6 +1646,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
         } else if (passParam['callback'] === 'donation') {
           _this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
+          alert('2')
           if (current_provider['service']['serviceType'] === 'virtualService') {
             _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
               _this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
