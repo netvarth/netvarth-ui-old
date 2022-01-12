@@ -57,7 +57,7 @@ export class ShareRxComponent implements OnInit {
   showToken = false;
   pushnotify = false;
   telegram = false;
-  disableButton;
+  disableButton = false;
   sharewith;
   showcustomId = false;
   iconClass: string;

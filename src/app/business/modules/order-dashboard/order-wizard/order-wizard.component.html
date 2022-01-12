@@ -398,12 +398,17 @@
                                                 <div class="row justify-content-center bg-gray-100 py-2 px-2 py-md-4 px-md-0 mx-0"
                                                     *ngIf="isPhysicalItemsPresent()">
                                                     <div class="col-md-10 ln-ht-2">
-                                                        <div class="text-muted">DELIVERY TYPE &nbsp;&nbsp; <img
+                                                        
+                                                        <div class="text-muted pull-left">DELIVERY TYPE &nbsp;&nbsp; <img
                                                                 src="assets/images/Store-pick-up.png" alt="..."
                                                                 *ngIf="storeChecked" style="width: 60px;height:50px">
                                                             <img src="assets/images/Homedelivery.png" alt="..."
                                                                 *ngIf="!storeChecked" style="width: 60px;height:50px">
-                                                        </div>
+                                                             
+                                                        
+                                                            </div>
+                                                          
+                        
                                                         <ng-container *ngIf="home_delivery && store_pickup">
                                                             <mat-radio-group [(ngModel)]="choose_type"
                                                                 (change)="changeType($event)" name="choose_type">
@@ -579,7 +584,61 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                  
                                                 </div>
+                                                <!-- <div class="text-muted pull-right">ITEM &nbsp;&nbsp;
+                                                    <div 
+                                                    *ngIf="image_list_popup && image_list_popup.length > 0">
+                                                    <ul class="shoppinglist-gal pull-right">
+                                                        <ng-container
+                                                            *ngFor="let file of image_list_popup;let i = index">
+                                                            <li *ngIf="i<2" class="shoppinglist-li">
+                                                                <div class="shoppinglistbx">                                                                             
+                                                                    <div class="shoppinglistimg-h"
+                                                                        (click)="openImageModalRow(file)">
+                                                                        <div class="shoppinglistoverlay-y">
+                                                                           
+                                                                        </div><img class="shoppinglistimg"
+                                                                            [src]="file.modal.img"
+                                                                            *ngIf="file.modal.img" />
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ng-container>
+                                                        <li *ngIf="image_list_popup.length>2"
+                                                            class="shoppinglist-li">
+                                                            <div class="shoppinglistbx">
+                                                                <span class="shoppinglistmre"
+                                                                    (click)="openImageModalRow(image_list_popup[2])"
+                                                                    *ngIf="(image_list_popup.length-3)>0">+{{(image_list_popup.length-3)}}</span>
+                                                                <div class="shoppinglistimg-h"
+                                                                    *ngIf="(image_list_popup.length-3)>0">
+                                                                    ITEM &nbsp;&nbsp; <img class="shoppinglistimg"
+                                                                        *ngIf="image_list_popup[2].modal.img"
+                                                                        [src]="image_list_popup[2].modal.img" />
+                                                                </div>                                                                          
+                                                                <div class="shoppinglistimg-h"
+                                                                    (click)="openImageModalRow(image_list_popup[2])"
+                                                                    *ngIf="(image_list_popup.length-3)==0">
+                                                                    <div class="shoppinglistoverlay-y">
+                                                                    </div> ITEM &nbsp;&nbsp;<img class="shoppinglistimg"
+                                                                        *ngIf="image_list_popup[2].modal.img"
+                                                                        [src]="image_list_popup[2].modal.img" />
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <a class="pointerlist"
+                                                        (click)="editshoppinglist()">Update</a>
+                                                    <ks-modal-gallery [id]="0"
+                                                        [modalImages]="image_list_popup"
+                                                        [plainGalleryConfig]="customPlainGalleryRowConfig"
+                                                        [buttonsConfig]="customButtonsFontAwesomeConfig"
+                                                        (buttonBeforeHook)="onButtonBeforeHook($event)"
+                                                        (buttonAfterHook)="onButtonAfterHook()">
+                                                    </ks-modal-gallery>
+                                                </div>
+                                                </div> -->
                                                 <div class="d-flex flex-column mb-10 mb-md-0 mt-5"
                                                     *ngIf="orderType !== 'SHOPPINGLIST'">
                                                     <div class="font-weight-bolder font-size-lg mb-3">SUMMARY</div>

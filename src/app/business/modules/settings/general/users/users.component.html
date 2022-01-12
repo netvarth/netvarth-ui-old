@@ -429,8 +429,9 @@
                                                       </td> -->
                                                       <td class="display-min-none" *ngIf="domain !== 'finance'">
                                                           <span *ngIf="user.specialization   && domain !== 'finance'">
-                                                            {{user.specialization}}
-                                                              <!-- {{getSpecialization(user.specialization)}} -->
+                                                            <!-- {{user.specialization}} -->
+                                                            
+                                                              {{getSpecialization(user.specialization)}}
                                                             </span>
                                                       </td>
 

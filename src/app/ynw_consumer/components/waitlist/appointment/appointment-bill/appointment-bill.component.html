@@ -40,56 +40,67 @@
                                                                 <div class="section-one" *ngIf="splocation">
                                                                     <h3>{{bname | capitalizeFirst}}</h3>
                                                                     <span class="align-margin">{{splocation}}
-                                                                            <span class="icon-location"></span>
+                                                                        <span class="icon-location"></span>
                                                                     </span>
                                                                     <br><br><br>
-                                                                        <div class="line-h">
-                                                                            <span class="columns"><span
+                                                                    <div class="line-h mb-0">
+                                                                        <span class="columns"><span
                                                                                 *ngFor="let user of checkin.appmtFor">
                                                                                 {{user.firstName | capitalizeFirst}}
                                                                                 {{user.lastName | capitalizeFirst}}
-                                                                            </span></span>
-                                                                            <div  *ngIf="billnumber">
-                                                                          
-                                                                                <span >{{bill_no_cap}}
-                                                                                </span>
-                                                                                <span >{{billnumber}}</span>
-                                                                          
-                                                                            </div>
-                                                                        
-                                                                            </div>
-                                                                            <div>
-                                                                                    <span class="align-column1" *ngIf="gstnumber">{{gstin_cap}} : {{gstnumber
-                                                                                        |
-                                                                                        capitalizeFirst}}</span>
-                                                                                
-                                                                               </div>
-                                                                               <br>
-                                                                    <div><span class="align-column1"><span class="align-column1">{{billdate
-                                                                            | date:newDateFormat_date}}
-                                                                            {{billtime}} &nbsp;</span>
-                                                                         </span>
-                                                                        </div>  
-                                                                            
-                                                                            <span class="columns mgn-up-10" *ngIf="checkin.provider">
-                                                                                <span class="dynamic">{{getTerminologyTerm('provider')
-                                                                                    |
-                                                                                    capitalizeFirst}}: </span>
-                                                                                <span class="dynamic">
-                                                                                    <!-- {{checkin.provider.businessName}} -->
-                                                                                    {{(checkin.provider.businessName) ?
-                                                                                    checkin.provider.businessName :
-                                                                                    checkin.provider.firstName
-                                                                                    + ' ' + checkin.provider.lastName}}</span>
-                                                                            </span>
+                                                                            </span></span><br>
+                                                                        <div *ngIf="billnumber">
 
-                                                                            <div class="col-md-12 col-sm-12 col-lg-12 no-padding red"
-                                                                                *ngIf="bill_data.billStatus == 'Cancel'">
-                                                                                Cancel</div>
-                                                                        
-                                                                    
+                                                                            <span>{{bill_no_cap}}
+                                                                            </span>
+                                                                            <span>{{billnumber}}</span>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="line-h mb-0">
+                                                                        <span class="align-column1"
+                                                                            *ngIf="gstnumber">{{gstin_cap}} :
+                                                                            {{gstnumber
+                                                                            |
+                                                                            capitalizeFirst}}</span> <br>
+                                                                            <span class="align-column1 mt-1"><span
+                                                                                class="align-column1">{{billdate
+                                                                                | date:newDateFormat_date}}
+                                                                                {{billtime}} &nbsp;</span>
+                                                                        </span>
+                                                                    </div>
+                                                                    <br>
+                                                                  
+                                                                    <div>
+                                                                    </div>
+
+                                                                    <span class="columns mgn-up-10"
+                                                                        *ngIf="checkin.provider">
+                                                                        <span
+                                                                            class="dynamic">{{getTerminologyTerm('provider')
+                                                                            |
+                                                                            capitalizeFirst}}: </span>
+                                                                        <span class="dynamic">
+                                                                            <!-- {{checkin.provider.businessName}} -->
+                                                                            {{(checkin.provider.businessName) ?
+                                                                            checkin.provider.businessName :
+                                                                            checkin.provider.firstName
+                                                                            + ' ' + checkin.provider.lastName}}
+                                                                        </span>
+                                                                    </span>
+
+                                                                    <div class="col-md-12 col-sm-12 col-lg-12 no-padding red"
+                                                                        *ngIf="bill_data.billStatus == 'Cancel'">
+                                                                        Cancel</div>
+
+
                                                                 </div>
                                                             </div>
+
+
+
+
                                                             <app-common-innerloading-spinner *ngIf="loadingPaytm"></app-common-innerloading-spinner>
                                                             <div class="bill-content">
                                                                 <div class="section-three bill-responsive">
@@ -428,7 +439,7 @@
             
                                                                         <div class="text-primary" >
                                                                           <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="indian_payment_mode_onchange($event)">
-                                                                            <mat-radio-button value="cash"  >
+                                                                            <mat-radio-button value="cash" class="m-1" >
                                                                                 <div class="d-flex justify-content-around">
                                                                                     <div class="col-md-8 col-lg-7 my-auto "><span>Pay by Cash</span></div>
                                                                                     <div class="col-md-4 col-lg-5 my-auto "><img class="ordericon pickup" height="75px" width="75px" [src]="getImageSrc('CASH')"></div>
@@ -444,7 +455,7 @@
             
                                                                             <div class="text-primary" >
                                                                               <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="indian_payment_mode_onchange($event)">
-                                                                                <mat-radio-button [value]="modes.mode"  >
+                                                                                <mat-radio-button [value]="modes.mode" class="m-1"   >
                                                                                     <div class="d-flex justify-content-around">
                                                                                         <div class="col-md-8 col-lg-7 my-auto "><span>{{modes.modeDisplayName}}</span></div>
                                                                                         <div class="col-md-4 col-lg-5 my-auto "><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
@@ -463,7 +474,7 @@
             
                                                                 <div class="text-primary payment-mode-card-styles" >
                                                                   <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="non_indian_modes_onchange($event)">
-                                                                    <mat-radio-button value="cash"  >
+                                                                    <mat-radio-button value="cash" class="m-1"   >
                                                                         <div class="d-flex justify-content-around">
                                                                             <div class="col-md-8 col-lg-7 my-auto "><span>Pay by Cash</span></div>
                                                                             <div class="col-md-4 col-lg-5 my-auto "><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc('CASH')"></div>
@@ -479,7 +490,7 @@
             
                                                                         <div class="text-primary">
                                                                           <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="non_indian_modes_onchange($event)">
-                                                                            <mat-radio-button [value]="modes.mode">
+                                                                            <mat-radio-button [value]="modes.mode" class="m-1" >
                                                                                 <div class="d-flex justify-content-around">
                                                                                     <div class="col-md-4 col-lg-6 my-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
                                                                                     <div class="col-md-8 col-lg-6 my-auto"><span>{{modes.modeDisplayName}}</span></div>

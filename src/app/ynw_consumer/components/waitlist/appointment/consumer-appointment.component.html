@@ -160,10 +160,13 @@
                                                                         *ngIf="sel_ser_det && sel_ser_det.description && !showmoreSpec"
                                                                         (click)="showSpec()">
                                                                         {{sel_ser_det.description}}
-                                                                        </p>
-                                                                    <p class="more" (click)="showSpec()" *ngIf="sel_ser_det && sel_ser_det.description && sel_ser_det.description.length > 200 && !showmoreSpec">Read more</p>
-                                                                   
-                                                                    <p *ngIf="sel_ser_det && sel_ser_det.description && showmoreSpec" (click)="showSpec()">
+                                                                    </p>
+                                                                    <p class="more" (click)="showSpec()"
+                                                                        *ngIf="sel_ser_det && sel_ser_det.description && sel_ser_det.description.length > 200 && !showmoreSpec">
+                                                                        Read more</p>
+
+                                                                    <p *ngIf="sel_ser_det && sel_ser_det.description && showmoreSpec"
+                                                                        (click)="showSpec()">
                                                                         {{sel_ser_det.description}}</p>
                                                                 </div>
                                                                 <div class="">
@@ -207,9 +210,9 @@
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-bt-5 mgn-up-10">
                                                             Appointment Time
                                                             <span><a class="pointer-cursor changeitem mgn-lt-10 mgn-rt-20 pull-right"
-                                                                (click)="changeSlot()" data-toggle="modal"
-                                                                data-target="#exampleModalCenter">Change Time
-                                                            </a></span>
+                                                                    (click)="changeSlot()" data-toggle="modal"
+                                                                    data-target="#exampleModalCenter">Change Time
+                                                                </a></span>
                                                         </div>
                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                                                             *ngIf="freeSlots && freeSlots.length != 0 && !api_loading1">
@@ -222,7 +225,7 @@
                                                                     newDateFormat}}</span><span
                                                                     *ngIf="isFuturedate">{{getSingleTime(selectedApptTime['time'])}}</span>
                                                             </h6>
-                                                           
+
                                                         </div>
                                                         <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red"
                                                             *ngIf="freeSlots && freeSlots.length == 0 && !api_loading1">
@@ -448,7 +451,8 @@
                                                               </div> -->
                                                             <div class="changeprice" *ngIf="amountdifference > 0">
                                                                 The balance amount for the rescheduled booking will be
-                                                                ₹{{amountdifference}}. Contact your provider directly for
+                                                                ₹{{amountdifference}}. Contact your provider directly
+                                                                for
                                                                 payment adjustments.
                                                             </div>
                                                             <div class="changeprice" *ngIf="amountdifference < 0">
@@ -638,7 +642,10 @@
                                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
                                                             {{sel_ser_det.consumerNoteTitle}}
                                                             <div class="form-level-settings">
-                                                                Add any other notes to the provider
+
+                                                                Add any other notes to the {{businessjson.businessName ?
+                                                                businessjson.businessName : sel_ser_det.name }}
+                                                                <!-- Add any other notes to the provider -->
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -1117,10 +1124,10 @@
                                                 <div class="disp-flex">
                                                     <span class="billing-head">Location </span>
                                                     <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                                    <span class="billing-value"> {{locationName}}                                                        
+                                                    <span class="billing-value"> {{locationName}}
                                                     </span>
 
-                                                </div>      
+                                                </div>
                                                 <div class="disp-flex">
                                                     <span class="billing-head"
                                                         style="display: flex !important; align-items: center !important;margin-bottom: 5px;">Service</span>
@@ -1144,7 +1151,7 @@
                                                         </span>
                                                         <span class="mgn-bt-5">{{sel_ser_det.name}}</span>
                                                     </span>
-                                                </div>                                                                         
+                                                </div>
                                                 <div class="disp-flex">
                                                     <span class="billing-head">Booking for</span>
                                                     <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
@@ -1221,7 +1228,8 @@
                                             <div class="disply">
                                                 <!-- <div class="textcenter"
                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"> -->
-                                                    <div class="textcenter" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                <div class="textcenter"
+                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                     <span class="ser_price no-mgn-bt bold">Service Price : <span
                                                             class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
                                                             | currency:'&#8377;'}}</span></span><br>
@@ -1249,7 +1257,7 @@
                                                 </div>
                                                 <div class="prepayment"
                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
-                                                ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">                                                   
+                                                ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
                                                     <button type="button" [class.disabled]="isClickedOnce"
                                                         (click)="!isClickedOnce && saveCheckin('appt')"
                                                         id="stepThreeConfirmButton"
@@ -1258,7 +1266,7 @@
                                                         <ng-container
                                                             *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
                                                       ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
-                                                            Confirm Appointment</ng-container>                                                       
+                                                            Confirm Appointment</ng-container>
                                                     </button>
                                                 </div>
                                                 <!-- <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 "
@@ -1285,90 +1293,112 @@
 
                                                     </div>
                                                 </div> -->
-                                                <div class="clearfix"></div> 
-                                                <div *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"  class="payment-mode-card-styles">
-                                                <ng-container *ngIf="!shownonIndianModes">
+                                                <div class="clearfix"></div>
+                                                <div *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
+                                                    class="payment-mode-card-styles">
+                                                    <ng-container *ngIf="!shownonIndianModes">
                                                         <div *ngFor="let modes of indian_payment_modes">
                                                             <div class="col-xs-12 col-md-6 col-sm-12 col-lg-6">
-    
-                                                                    <div class="text-primary payment-mode-card-styles" >
-                                                                          
-                                                                      <mat-radio-group class="paymentmode card shadow" name="paymentMode" (change)="indian_payment_mode_onchange($event)" labelPosition="before">
-                                                                        <mat-radio-button [value]="modes.mode"  >
+
+                                                                <div class="text-primary payment-mode-card-styles">
+
+                                                                    <mat-radio-group class="paymentmode card shadow"
+                                                                        name="paymentMode"
+                                                                        (change)="indian_payment_mode_onchange($event)"
+                                                                        labelPosition="before">
+                                                                        <mat-radio-button [value]="modes.mode">
                                                                             <div class="d-flex justify-content-around">
-                                                                                <div class="col-md-8 col-lg-6 my-auto"><span>{{modes.modeDisplayName}}</span></div>
-                                                                                <div class="col-md-4 col-lg-6 my-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
-                                                                              
-                                                                                
-                                                                            </div>    
+                                                                                <div class="col-md-8 col-lg-6 my-auto">
+                                                                                    <span>{{modes.modeDisplayName}}</span>
+                                                                                </div>
+                                                                                <div class="col-md-4 col-lg-6 my-auto">
+                                                                                    <img class="ordericon pickup"
+                                                                                        height="75px" width="75px"
+                                                                                        [src]="getImageSrc(modes.mode)">
+                                                                                </div>
+
+
+                                                                            </div>
                                                                         </mat-radio-button>
-    
-                                                        
-                                                                      </mat-radio-group>
-                                                                      
-                                                                    </div>
-                                                                    </div>
-    
-                                                    </div>
-                                                </ng-container>
-                                                <ng-container *ngIf="shownonIndianModes">
-                                                    
-                                                    <div *ngFor="let modes of non_indian_modes" class="payment-mode-card-styles">
-                                                        <div class="col-xs-12 col-md-6 col-sm-12 col-lg-6">
-    
+
+
+                                                                    </mat-radio-group>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="shownonIndianModes">
+
+                                                        <div *ngFor="let modes of non_indian_modes"
+                                                            class="payment-mode-card-styles">
+                                                            <div class="col-xs-12 col-md-6 col-sm-12 col-lg-6">
+
                                                                 <div class="text-primary">
-                                                                      
-                                                                  <mat-radio-group class="paymentmode card shadow" name="paymentMode" (change)="non_indian_modes_onchange($event)">
-                                                                    <mat-radio-button [value]="modes.mode"  >
-                                                                        <div class="d-flex justify-content-around">
-                                                                            <div class="col-md-4 col-lg-6 my-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
-                                                                            <div class="col-md-8 col-lg-6 my-auto"><span>{{modes.modeDisplayName}}</span></div>
-                                                                            
-                                                                        </div>
-                                                                    </mat-radio-button>
-                                                                  
-                                                                  </mat-radio-group>
-                                                    
+
+                                                                    <mat-radio-group class="paymentmode card shadow"
+                                                                        name="paymentMode"
+                                                                        (change)="non_indian_modes_onchange($event)">
+                                                                        <mat-radio-button [value]="modes.mode">
+                                                                            <div class="d-flex justify-content-around">
+                                                                                <div class="col-md-4 col-lg-6 my-auto">
+                                                                                    <img class="ordericon pickup"
+                                                                                        height="75px" width="75px"
+                                                                                        [src]="getImageSrc(modes.mode)">
+                                                                                </div>
+                                                                                <div class="col-md-8 col-lg-6 my-auto">
+                                                                                    <span>{{modes.modeDisplayName}}</span>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </mat-radio-button>
+
+                                                                    </mat-radio-group>
+
                                                                 </div>
-                                                                </div>
-    
+                                                            </div>
+
+                                                        </div>
+                                                    </ng-container>
                                                 </div>
-                                            </ng-container>
-                                            </div>
-                                            <div class="clearfix"></div> 
+                                                <div class="clearfix"></div>
                                                 <div>
 
-                                                <div class="col-md-12 txt-align-center pad_link"
-                                                    *ngIf="paymentmodes.internationalPay && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                    <span [class.disabled]="paymentBtnDisabled"
-                                                        (click)="togglepaymentMode()"
-                                                        class="pointer-cursor"><a
-                                                            class="refund_policy">
-                                                            <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
-                                                            here</span>
-                                                            <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
-                                                                here</span>
-                                                        </a></span>
+                                                    <div class="col-md-12 txt-align-center pad_link"
+                                                        *ngIf="paymentmodes.internationalPay && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                        <span [class.disabled]="paymentBtnDisabled"
+                                                            (click)="togglepaymentMode()" class="pointer-cursor"><a
+                                                                class="refund_policy">
+                                                                <span
+                                                                    *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non
+                                                                    Indian Payment ? Click
+                                                                    here</span>
+                                                                <span
+                                                                    *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian
+                                                                    Payment ? Click
+                                                                    here</span>
+                                                            </a></span>
 
 
-                                                </div>
-                                                <div class="col-md-12 cancelpolicy  mgn-rt-5"
-                                                    *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                    <div class="pad_policy"
-                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                        <a data-toggle="modal" data-target="#exampleModal"
-                                                            class="refund_policy">Cancellation Policy</a>
                                                     </div>
-                                                </div> 
-                                                <div class="col-md-12 txt-align-center">
-                                                    <button type="button"
+                                                    <div class="col-md-12 cancelpolicy  mgn-rt-5"
+                                                        *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                        <div class="pad_policy"
+                                                            *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                            <a data-toggle="modal" data-target="#exampleModal"
+                                                                class="refund_policy">Cancellation Policy</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 txt-align-center">
+                                                        <button type="button"
                                                             class=" next-button btn btn-primary font-weight-bold text-uppercase "
                                                             [class.disabled]="paymentBtnDisabled"
                                                             *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
                                                             (click)="!isClickedOnce && saveCheckin('appt')">
-                                                           MaKe Payment
+                                                            MaKe Payment
                                                         </button>
-                                                    <!-- <button
+                                                        <!-- <button
                                                         class=" next-button btn btn-primary font-weight-bold text-uppercase "
                                                         *ngIf="razorpayEnabled && !paytmEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
                                                         [class.disabled]="paymentBtnDisabled"
@@ -1381,13 +1411,13 @@
                                                         (click)="!isClickedOnce && saveCheckin('appt','paytm')">
                                                         Pay by CC/DC/UPI
                                                     </button> -->
-                                                </div>  
-                                            </div>                                          
+                                                    </div>
+                                                </div>
                                                 <!-- modalbox -->
                                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog refundpol" role="document">
-                                                        <div class="modal-content">                                                           
+                                                        <div class="modal-content">
                                                             <div class="modal-body pt-8 pb-0 refund_size">
                                                                 <span>Note:</span> Jaldee is not responsible for the
                                                                 transactions between Consumer and Provider.
@@ -1434,7 +1464,7 @@
 
 
                                                 </div>
-                                            </div> 
+                                            </div>
 
 
                                             <div class="pad-10" *ngIf="heartfulnessAccount">
