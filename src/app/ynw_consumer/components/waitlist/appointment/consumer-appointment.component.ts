@@ -28,7 +28,6 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { JcCouponNoteComponent } from '../../../../shared/components/jc-Coupon-note/jc-Coupon-note.component';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { DomSanitizer } from '../../../../../../node_modules/@angular/platform-browser';
-import { VirtualFieldsComponent } from '../../virtualfields/virtualfields.component';
 import { PaytmService } from '../../../../../../src/app/shared/services/paytm.service';
 
 @Component({
@@ -689,24 +688,24 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
         }
     }
-    confirmVirtualServiceinfo(memberObject,type?){
-        const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
-            width: '40%',
-            panelClass: ['loginmainclass', 'popup-class'],
-            disableClose: true,
-            data: memberObject[0]
+    // confirmVirtualServiceinfo(memberObject,type?){
+    //     const virtualdialogRef = this.dialog.open(VirtualFieldsComponent, {
+    //         width: '40%',
+    //         panelClass: ['loginmainclass', 'popup-class'],
+    //         disableClose: true,
+    //         data: memberObject[0]
             
-          });
-          virtualdialogRef.afterClosed().subscribe(result => {
-            if (result!=='') {
-                this.virtualInfo=result;
-                this.confirmcheckin(type);
+    //       });
+    //       virtualdialogRef.afterClosed().subscribe(result => {
+    //         if (result!=='') {
+    //             this.virtualInfo=result;
+    //             this.confirmcheckin(type);
                
-               }else{
-                   this.goToStep('prev');
-               }
-          });
-    }
+    //            }else{
+    //                this.goToStep('prev');
+    //            }
+    //       });
+    // }
     saveCheckin(type?, paymenttype?) {
         if (type === 'appt') {
           
