@@ -1,9 +1,10 @@
 import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatOptionModule } from "@angular/material/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
+import { MatRadioModule } from "@angular/material/radio";
 import { MatSelectModule } from "@angular/material/select";
 import { RouterModule, Routes } from "@angular/router";
 import { CapitalizeFirstPipeModule } from "../../../../../../shared/pipes/capitalize.module";
@@ -25,11 +26,16 @@ const routes: Routes = [
         MatInputModule,
         MatSelectModule,
         MatOptionModule,
+        MatRadioModule,
         DisplayboardQSetModule,
         DisplayboardQSetDetailModule,
         CapitalizeFirstPipeModule,
         GlobalSettingsModule,
         [RouterModule.forChild(routes)]
-    ]
+    ],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
+      ],
 })
 export class DisplayboardDetailModule{}

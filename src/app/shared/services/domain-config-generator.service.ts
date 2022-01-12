@@ -73,4 +73,12 @@ export class DomainConfigGenerator {
         const path = projectConstantsLocal.UIS3PATH + account + '/account_config.json';
         return this.servicemeta.httpGet(path);
     }
+    
+    /**
+     * 
+     */
+     getHometemplate(accountUniqueId) {
+        const path = projectConstantsLocal.UIS3PATH + accountUniqueId + '/template.json?t='+new Date();
+        return this.servicemeta.httpGet(path);
+    }
 }

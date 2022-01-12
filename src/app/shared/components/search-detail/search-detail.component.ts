@@ -2199,6 +2199,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     }
   }
   bookServiceClicked(searchData) {
+    console.log(searchData);
     if (searchData.fields.waitlist && !searchData.fields.apptAllowed
       && searchData.fields.donation_status === '0') {
       if (searchData.fields['estimatedtime_det']['onlineCheckIn'] && searchData.fields['estimatedtime_det']['availableToday'] &&

@@ -518,6 +518,7 @@ export class CheckinActionsComponent implements OnInit {
             );
     }
     addProviderNote() {
+        console.log("dialog box opened111111111111")
         this.dialogRef.close();
         const addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
             width: '50%',

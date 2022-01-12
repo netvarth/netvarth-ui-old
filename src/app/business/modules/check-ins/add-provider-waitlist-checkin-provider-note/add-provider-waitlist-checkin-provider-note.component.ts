@@ -95,7 +95,9 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
         .subscribe(
           () => {
             this.api_success = this.wordProcessor.getProjectMesssages('PROVIDER_NOTE_ADD');
-            setTimeout(() => {
+            setTimeout(() => 
+            {
+              console.log("entered")
               this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
           },
@@ -111,6 +113,7 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
           () => {
             this.api_success = this.wordProcessor.getProjectMesssages('PROVIDER_NOTE_ADD');
             setTimeout(() => {
+              console.log("enter123")
               this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
           },

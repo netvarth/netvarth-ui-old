@@ -8,7 +8,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-
+import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { projectConstants } from '../../../app.component';
+export function homeHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, projectConstants.PATH+'assets/i18n/home/', '.json');
+}
 @NgModule({
     imports: [
         CommonModule,
@@ -18,7 +24,15 @@ import { MatButtonModule } from '@angular/material/button';
         MatDialogModule,
         MatFormFieldModule,
         MatInputModule,
-        MatButtonModule
+        MatButtonModule,
+        HttpClientModule,
+        TranslateModule.forChild({
+          loader: {
+              provide: TranslateLoader,
+              useFactory: homeHttpLoaderFactory,
+              deps: [HttpClient]
+          },
+      })
     ],
     declarations: [
         SetPasswordFormComponent

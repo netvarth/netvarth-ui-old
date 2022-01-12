@@ -180,6 +180,7 @@ export class TeleServiceShareComponent implements OnInit {
       if (this.data.app === 'VideoCall') {
         // this.videocall_msg = ' , your ' + mode + ' will begin. You will be alerted once more when the call starts.\n\nFollow these instructions to join the video call:\n1. You will receive an alert that the ' + mode + ' call has started.\n2. When it is your turn, click on the following link- ' + this.meetingLink;
         this.videocall_msg = ', your ' + mode + ' will begin. You will be alerted once more when the call starts.You can then join the call, by clicking on the following link-' + this.meetingLink + '.Wait for the video call to start';
+        this.is_noSMS = true;
       } else {
         this.videocall_msg = ' , your ' + mode + ' video call will begin. You will be alerted once more when the call starts.\n\nFollow these instructions to join the video call:\n1. You will receive an alert that the ' + mode + ' call has started.\n2. When it is your turn, click on the following link- ' + this.meetingLink;
       }
@@ -190,6 +191,7 @@ export class TeleServiceShareComponent implements OnInit {
         case 'WhatsApp':
           if (this.data.serviceDetail.virtualServiceType === 'videoService') {
             this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a WhatsApp video call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+            this.is_noSMS = true;
           } else {
             this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a WhatsApp audio call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
           }
@@ -199,12 +201,17 @@ export class TeleServiceShareComponent implements OnInit {
           break;
         case 'Zoom':
           this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.instalZoom + this.zoomWaitFor;
+          this.is_noSMS = true;
+
           break;
         case 'GoogleMeet':
           this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.signinGoogle + this.gooleWaitFor;
+          this.is_noSMS = true;
+
           break;
         case 'VideoCall':
           this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg;
+          this.is_noSMS = true;
           break;
       }
     }
@@ -222,6 +229,7 @@ export class TeleServiceShareComponent implements OnInit {
     switch (this.data.app) {
       case 'WhatsApp':
         if (this.data.serviceDetail.virtualServiceType === 'videoService') {
+          this.is_noSMS= true;
           this.msg_to_user = 'When it is time for your video call, you will receive a WhatsApp video call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
           this.msg_to_me = 'Follow these instructions to start the video call: \n1. Open the following link on your phone/tablet browser- ' + this.meetingLink + '\n(Your phone/tablet should have WhatsApp installed)\n2. Start the video call';
         } else {
@@ -244,6 +252,7 @@ export class TeleServiceShareComponent implements OnInit {
       case 'VideoCall':
         this.msg_to_user = this.videocall_msg + this.waitFor;
         this.msg_to_me = this.provider_msgJV;
+        this.is_noSMS = true;
         break;
     }
   }

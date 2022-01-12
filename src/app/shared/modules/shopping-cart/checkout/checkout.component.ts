@@ -172,7 +172,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   remainingadvanceamount;
   amounttopay: any;
   wallet: any;
-  orderDetails: { 'amount': number; 'paymentMode': any; 'uuid': any; 'accountId': any; 'purpose': string; };
+  orderDetails:any;
   pGateway: any;
   payment_popup = null;
   razorModel: Razorpaymodel;
@@ -192,6 +192,12 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   from: string;
   isEditable = true;
   stepperIndex: string;
+  selected_payment_mode: any;
+  isInternatonal: boolean;
+  shownonIndianModes: boolean;
+  isPayment: boolean;
+  indian_payment_modes: any=[];
+  non_indian_modes: any=[];
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -429,47 +435,45 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     return physical_item_present;
   }
-  getPaymentModes() {
-    this.paytmEnabled = false;
-    this.razorpayEnabled = false;
-    this.interNatioanalPaid = false;
-    this.shared_services.getPaymentModesofProvider(this.account_id, 'prePayment')
-      .subscribe(
-        data => {
-          this.paymentmodes = data;
-          if (this.paymentmodes[0].isJaldeeBank) {
-            if (this.customer_countrycode == '+91') {
-              this.paytmEnabled = true;
-              this.interNatioanalPaid = true;
-            }
-            else {
-              this.razorpayEnabled = true;
-            }
-          }
-          else {
-            if (this.customer_countrycode == '+91') {
-              for (let modes of this.paymentmodes) {
-                for (let gateway of modes.payGateways) {
-                  if (gateway == 'PAYTM') {
-                    this.paytmEnabled = true;
-                  }
-                  if (gateway == 'RAZORPAY') {
-                    this.razorpayEnabled = true;
-                  }
+  indian_payment_mode_onchange(event) {
+    this.selected_payment_mode = event.value;
+    this.isInternatonal = false;
+}
+non_indian_modes_onchange(event) {
+    this.selected_payment_mode = event.value;
+    this.isInternatonal = true;
+}
+togglepaymentMode(){
+    this.shownonIndianModes=!this.shownonIndianModes;
+    this.selected_payment_mode = null;
+}
+getImageSrc(mode){
+    
+  return 'assets/images/payment-modes/'+mode+'.png';
+}
+getPaymentModes() {
+    this.shared_services.getPaymentModesofProvider(this.account_id,0, 'billPayment')
+        .subscribe(
+            data => {
+                
+                this.paymentmodes = data[0];
+                this.isPayment = true;
+                if (this.paymentmodes && this.paymentmodes.indiaPay) {
+                    this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
                 }
-              }
-            }
-            else {
-              this.razorpayEnabled = true;
-            }
-          }
-          console.log("paymode" + this.paymentmodes.payGateways);
+                 if (this.paymentmodes && this.paymentmodes.internationalPay) {
+                    this.non_indian_modes = this.paymentmodes.internationalBankInfo;
 
-
-        },
-
-      );
-  }
+                }
+                if(this.paymentmodes && !this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
+                    this.shownonIndianModes=true;
+                }else{
+                    this.shownonIndianModes=false;  
+                }
+        
+}
+        );
+}
   ngAfterViewInit() {
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
@@ -508,7 +512,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.shared_services.getCartdetails(this.account_id, passdata)
       .subscribe(
         data => {
-          console.log(data);
+          console.log('cartData'+data);
           this.cartDetails = data;
           if (this.cartDetails.eligibleJcashAmt) {
             this.checkJcash = true
@@ -1660,11 +1664,11 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   payuPayment(paymenttype?) {
     let paymentWay;
-    if (paymenttype == 'paytm') {
-      paymentWay = 'PPI';
-    } else {
-      paymentWay = 'DC';
-    }
+    // if (paymenttype == 'paytm') {
+    //   paymentWay = 'PPI';
+    // } else {
+    //   paymentWay = 'DC';
+    // }
     this.makeFailedPayment(paymentWay);
   }
   makeFailedPayment(paymentMode) {
@@ -1687,12 +1691,14 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.orderDetails = {
       // 'amount': this.amounttopay,
       'amount': this.prepayAmount,
-      'paymentMode': null,
+      'paymentMode': this.selected_payment_mode,
       'uuid': this.trackUuid,
       'accountId': this.account_id,
-      'purpose': 'prePayment'
+      'purpose': 'prePayment',
+      'serviceId':0,
+      'isInternational':this.isInternatonal
+     
     };
-    this.orderDetails.paymentMode = paymentMode;
     this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
     this.lStorageService.setitemonLocalStorage('acid', this.account_id);
     this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
@@ -1705,9 +1711,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         'paymentPurpose': 'prePayment',
         'isJcashUsed': true,
         'isreditUsed': false,
-        'isRazorPayPayment': false,
-        'isPayTmPayment': false,
-        'paymentMode': 'JCASH'
+        'paymentMode': 'JCASH',
+        'serviceId':0,
+        'isinternational':this.isInternatonal,
+     
       };
       this.shared_services.PayByJaldeewallet(postData)
         .subscribe(data => {
@@ -1748,30 +1755,29 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         'paymentPurpose': 'prePayment',
         'isJcashUsed': true,
         'isreditUsed': false,
-        'isRazorPayPayment': false,
-        'isPayTmPayment': false,
-        'paymentMode': null
+        'serviceId':0,
+        'isinternational':this.isInternatonal,
+        'paymentMode': this.selected_payment_mode
       };
-      if (paymentMode == 'PPI') {
-        postData.isPayTmPayment = true;
-        postData.isRazorPayPayment = false;
-        postData.paymentMode = "PPI";
-      } else {
-        postData.isPayTmPayment = false;
-        postData.isRazorPayPayment = true;
-        postData.paymentMode = "DC";
-      }
+      // if (paymentMode == 'PPI') {
+      //   postData.isPayTmPayment = true;
+      //   postData.isRazorPayPayment = false;
+      //   postData.paymentMode = "PPI";
+      // } else {
+      //   postData.isPayTmPayment = false;
+      //   postData.isRazorPayPayment = true;
+      //   postData.paymentMode = "DC";
+      // }
 
       this.shared_services.PayByJaldeewallet(postData)
         .subscribe((pData: any) => {
-
           if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
-            if (paymentMode == 'PPI') {
-              this.payWithPayTM(pData.response, this.account_id);
+            if (pData.response.paymentGateway == 'PAYTM') {
+                this.payWithPayTM(pData.response, this.account_id);
             } else {
-              this.paywithRazorpay(pData.response);
+                this.paywithRazorpay(pData.response);
             }
-          }
+        }
         },
           error => {
             this.isClickedOnce = false;
@@ -1785,7 +1791,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe((pData: any) => {
           this.pGateway = pData.paymentGateway;
           if (this.pGateway === 'RAZORPAY') {
-            this.paywithRazorpay(pData);
+            // this.paywithRazorpay(pData);
           } else {
             if (pData['response']) {
               this.payWithPayTM(pData, this.account_id);
@@ -1820,6 +1826,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.razorModel.amount = pData.amount;
     this.razorModel.order_id = pData.orderId;
     this.razorModel.name = pData.providerName;
+    this.razorModel.mode=this.selected_payment_mode;
     this.isClickedOnce = false;
     this.razorModel.description = pData.description;
     this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'order_prepayment', this.trackUuid, this.livetrack, this.account_id, this.cartDetails.advanceAmount, this.customId);
@@ -1828,6 +1835,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   payWithPayTM(pData: any, accountId: any) {
     this.loadingPaytm = true;
+    pData.paymentMode=this.selected_payment_mode;
     this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
   }
   transactionCompleted(response, payload, accountId) {
@@ -1900,7 +1908,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isClickedOnce = false;
     this.loadingPaytm = false;
     this.cdRef.detectChanges();
-    this.ngZone.run(() => this.router.navigate(['consumer']));
+    // this.ngZone.run(() => this.router.navigate(['consumer']));
     this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
   }
 }

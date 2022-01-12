@@ -1,0 +1,135 @@
+<div class="mat-dialog-title slotdiv" >
+    <!-- checkavailability dialog box -->
+    <div class="col-lg-12">
+        <div class="col-lg-11"></div>
+        <div class="col-lg-1">
+            
+        </div>
+    </div>
+    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12" style="display: flex;justify-content: flex-end;">
+            <img (click)="dismissModal()" src="../../../../assets/images/cross.png" style="width: 30px;height: 30px;">
+    
+    </div>
+    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 padding-xs-small">
+        <div class="col-lg-12 col-md-4 col-sm-12 col-xs-12">
+            <div style="display: flex;align-items: center;">
+                <!-- <div class="img-circle "    *ngIf="actionObj.service.serviceType && actionObj.service.serviceType == 'virtualService'" > -->
+                    <i class="fa phon-icon service-image" *ngIf="actionObj.service.virtualCallingModes && actionObj.service.virtualCallingModes.length > 0 && actionObj.service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                    <i class="fa meet-icon service-image"
+                    *ngIf="actionObj.service.virtualCallingModes && actionObj.service.virtualCallingModes.length > 0 && actionObj.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                    <i class="fa zoom-icon service-image"
+                    *ngIf="actionObj.service.virtualCallingModes && actionObj.service.virtualCallingModes.length > 0 && actionObj.service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                    <i class="fa wtsapaud-icon"
+                    *ngIf="actionObj.service.virtualCallingModes && actionObj.service.virtualCallingModes.length > 0 && actionObj.service.virtualCallingModes[0].callingMode === 'WhatsApp' && actionObj.service.virtualServiceType ==='audioService'"></i>
+                    <i class="fa wtsapvid-icon service-image"  *ngIf="actionObj.service.virtualCallingModes && actionObj.service.virtualCallingModes.length > 0 && actionObj.service.virtualCallingModes[0].callingMode === 'WhatsApp' && actionObj.service.virtualServiceType ==='videoService'"
+                   ></i>
+                    <i class="fa jaldeevideo-icon service-image"
+                    *ngIf="actionObj.service.virtualCallingModes && actionObj.service.virtualCallingModes.length > 0 && actionObj.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                    <!-- </div> -->
+                   
+                <h4 class="mgn-up-15">{{actionObj.service.name}}</h4>
+            </div>
+        </div>
+        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 mgn-up-5"  > 
+                <h3 *ngIf="actionObj.service.totalAmount || actionObj.service.minPrePaymentAmount ">Price</h3>
+                <p class="col-lg-12 col-sm-12 col-md-12 col-xs-12 no-padding" *ngIf="actionObj.service.description" style="color: lightgrey;">{{actionObj.service.description}}</p>
+            <!-- </div> -->
+            <h6  style="color:  #2653B7;margin-top: 5px;" *ngIf="actionObj.service.totalAmount">Service Price:{{actionObj.service.totalAmount}}</h6>
+            <h6  style="color:  #2653B7;margin-top: 5px;" *ngIf="actionObj.service.minPrePaymentAmount">Advance Payment: {{actionObj.service.minPrePaymentAmount}}</h6>
+        </div>
+        
+    </div>
+
+    <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 mgn-up-10">
+        <div class="col-lg-8 col-sm-6 col-xs-4 col-md-7">
+         
+            
+        </div>
+        <!-- <h6 class="col-lg-2 col-sm-3 col-xs-5 col-md-3" style="color: #1EB000;
+        line-height: 1.5rem;
+        font-size: 15px;" >🟢AVAILABLE</h6>
+        <h6 class="col-lg-2 col-sm-3 col-xs-3  col-md-2 red">🔴BOOKED</h6> -->
+        <br>
+        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12  mgn-up-10 mgn-bt-10" style="border-radius: 5px; border: 2px solid lightskyblue;" >
+            
+            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 padding-xs-small" >
+            <div class="col-lg-6 col-xs-12 col-sm-12 col-md-12 padding-xs-small mgn-up-10" >
+                <!-- {{checkFutureorToday()}} -->
+                <h4 class="mgn-up-10"><b>&nbsp;&nbsp;Available Timings</b></h4>
+                <h4 class="today" *ngIf="!checkFutureorToday()">Today</h4>
+                <h4 class="today " *ngIf="checkFutureorToday()">{{sel_checkindate | date: newDateFormat}}</h4>
+
+                <div  class="skyblue col-lg-1 col-md-1 col-sm-1 col-xs-1" style="cursor: pointer;"
+                    [class.disable]="disableMinus()"
+                    *ngIf="apptSettings.futureAppt && checkFutureorToday()"
+                    (click)="calculateDate(-1)" ><h4><</h4>
+                </div>
+                <!-- {{appointmentSettings.futureAppt}} -->
+                <div class="col-lg-5 col-md-5 col-xs-8 col-sm-8 skyblue"><h4>{{sel_checkindate | date: dateFormat}}</h4></div>
+                <div class="skyblue col-lg-1 col-md-1 col-sm-1 col-xs-1"
+                    *ngIf="apptSettings.futureAppt" style="cursor: pointer;"
+                    (click)="calculateDate(1)"><h4>></h4>
+                 </div>
+                    <div class=" col-lg-1 col-md-1 col-sm-1 col-xs-1 padding-xs-small" 
+                    *ngIf="apptSettings.futureAppt">
+                    <!-- {{dateClass.bind(this)}} -->
+                    <mat-datepicker-toggle matSuffix [for]="picker">
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #picker 
+                        [dateClass]="dateClass.bind(this)">
+                    </mat-datepicker>
+                    <input class="" style="visibility:hidden; width:1px;"
+                        type="text" [matDatepicker]="picker" [min]="minDate"
+                        [max]="maxDate" [value]="ddate"
+                        (dateChange)="handleFutureDateChange($event)">
+                </div>
+            </div>
+            <br>
+        </div>
+            <app-common-innerloading-spinner *ngIf="freeSlots.length==0 && showApptTime!='novalue' && actionObj['service']['bType']=='Appointment'  "></app-common-innerloading-spinner>
+            <div *ngIf="showApptTime=='novalue' && actionObj['service']['bType']=='Appointment'  " style="color: red;text-align: center;">No Available Slots</div>
+        <div class="pad-lg-20 slots" *ngIf="freeSlots.length>0 && actionObj['service']['bType']=='Appointment'">
+            
+            <div class="col-lg-3 col-md-3 col-xs-5 col-sm-5"  *ngFor="let slot of freeSlots;let i = index" >
+
+                <h6   (click)="timeSelected(slot,sel_checkindate);" class="green greenline mgn-up-5" *ngIf="slot.active">{{slot.displayTime}}</h6>
+                <h6 style="border:2px solid red;text-align: center;padding: 5px;"  class="mgn-up-5 padding-xs-small"   *ngIf="!slot.active"><del style="color: red;">{{slot.displayTime}}</del></h6>
+    
+    
+            </div>
+        </div>
+        <app-common-innerloading-spinner *ngIf="queuejson.length==0 && actionObj['service']['bType']=='Waitlist' && queueloader "></app-common-innerloading-spinner>
+    
+        <div *ngIf="queuejson.length==0 && (actionObj['service']['bType']=='Waitlist' || !actionObj['service']['bType']) && !queueloader " style="color: red;text-align: center;">No Available queues</div>
+
+        <div class="pad-lg-20 slots" *ngIf="queuejson && queuejson.length>0">
+            
+            <div class="col-lg-3 col-xs-10 col-sm-10 padding-xs-small"  *ngFor="let queue of queuejson, let i= index" >
+
+                <h6   (click)="handleQueueSelection(queue, sel_checkindate)" class="green greenline mgn-up-5">  {{queue.queueSchedule.timeSlots[0]['sTime']
+                    + ' - '
+                    +
+                    queue.queueSchedule.timeSlots[0]['eTime']}}</h6>
+                <!-- <h6 style="border:2px solid red;text-align: center;padding: 5px;"    *ngIf="!slot.active"><del style="color: red;">{{slot.displayTime}}</del></h6> -->
+    
+    
+            </div>
+        </div>
+   
+
+        </div>
+       
+        <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10" *ngIf="actionObj.service.description">
+            <h3>Price</h3>
+            <p class="col-lg-12" style="color: lightgrey;">{{actionObj.service.description}}</p>
+        </div>
+        <h6 class="col-lg-12" style="color:  #2653B7;" *ngIf="actionObj.service.totalAmount">Service Price:{{actionObj.service.totalAmount}}</h6>
+        <h6 class="col-lg-12" style="color:  #2653B7" *ngIf="actionObj.service.minPrePaymentAmount">Advance Payment: {{actionObj.service.minPrePaymentAmount}}</h6>
+        <div class="col-lg-12 mgn-up-10 mgn-bt-10" style="text-align: center;">
+        
+        <button (click)="actionCompleted()" class="btn" style="width:30%;background-color:  #2653B7;color: white;">Okay</button>
+        <br>
+        </div> -->
+    </div>
+
+ </div>

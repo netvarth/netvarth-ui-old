@@ -307,7 +307,12 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
   getPaymentSettings() {
-    const url = 'provider/payment/settings/';
+    //const url = 'provider/payment/settings/';
+    const url='provider/account/settings';
+    return this.servicemeta.httpGet(url);
+  }
+  getBankPaymentSettings(){
+    const url='provider/payment/settings/bankInfo';
     return this.servicemeta.httpGet(url);
   }
   setPaymentSettings(data) {
@@ -317,6 +322,10 @@ export class ProviderServices {
   setPaymentAccountSettings(status) {
     const url = 'provider/payment/settings/jaldee/' + status;
     return this.servicemeta.httpPost(url);
+  }
+  setPaymentAccountSettingsForProvider(data) {
+    const url = 'provider/account/settings/updateDestBank';
+    return this.servicemeta.httpPut(url,data);
   }
   getProviderLocations() {
     return this.servicemeta.httpGet('provider/locations');
@@ -2160,9 +2169,6 @@ export class ProviderServices {
   videoaudioS3Upload(file, url) {
     return this.servicemeta.httpPut(url, file);
   }
-  imageFileS3Upload(file, url) {
-    return this.servicemeta.httpPut(url, file);
-  }
   videoaudioUploadconfirm(id, data) {
     const url = 'provider/mr/upload/url/' + id;
     return this.servicemeta.httpPut(url, data);
@@ -2280,11 +2286,44 @@ export class ProviderServices {
     const url = 'provider/settings/waitlistMgr/personsAhead/' +status;
     return this.servicemeta.httpPut(url);
   }
-  changestatustoComplete(idlist,status){
+  getPaymentProfiles(){
+    const url='provider/payment/paymentProfiles'
+    return this.servicemeta.httpGet(url);
+  }
+  // getPaymentGateWay(data) {
+  //   const url='consumer/payment'
+  //   return this.servicemeta.httpPost(url,data);  
+  // }
+  // getWalletPaymentGateWay(data){
+  //   const url='consumer/payment/wallet'
+  //   return this.servicemeta.httpPost(url,data);  
+  // }
+    changestatustoComplete(idlist,status){
     const url = 'provider/appointment/multiStatusChange/' +status;
     return this.servicemeta.httpPut(url,idlist);
   }
-  changestatustowaitlistComplete(idlist,status){
+  getAllFilterAttachments(filter?) {
+    const url = 'provider/fileShare';
+    return this.servicemeta.httpGet(url,null,filter);
+  }
+  uploadAttachments(folder_name, account_id ,body) {
+    const url = 'provider/fileShare/upload/'+ folder_name + '/' + account_id;
+    return this.servicemeta.httpPost(url, body);
+  }
+  // uploadAttachmentFiles(account_id ,body) {
+  //   const url = 'provider/fileShare/upload/'+ account_id;
+  //   return this.servicemeta.httpPost(url, body);
+  // }
+  getFileStorage(){
+    return this.servicemeta.httpGet('provider/fileShare/storage');
+  }
+  getTotalFileShareCount(id) {
+    return this.servicemeta.httpGet('provider/fileShare/count/'+ id);
+  }
+  getAllFileAttachments() {
+    return this.servicemeta.httpGet('provider/fileShare/');
+  }
+   changestatustowaitlistComplete(idlist,status){
     const url = 'provider/waitlist/multiStatusChange/' +status;
     return this.servicemeta.httpPut(url,idlist);
   }

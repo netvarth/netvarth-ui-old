@@ -9,6 +9,13 @@ import { MatButtonModule } from '@angular/material/button';
 const routes: Routes = [
     { path: '', component: ChangePasswordComponent }
 ];
+import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { projectConstants } from '../../../app.component';
+export function homeHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, projectConstants.PATH+'assets/i18n/home/', '.json');
+}
 @NgModule({
     imports: [
         CommonModule,
@@ -16,7 +23,15 @@ const routes: Routes = [
         ReactiveFormsModule,
         FormMessageDisplayModule,
         HeaderModule,
-        MatButtonModule
+        MatButtonModule,
+        HttpClientModule,
+        TranslateModule.forChild({
+          loader: {
+              provide: TranslateLoader,
+              useFactory: homeHttpLoaderFactory,
+              deps: [HttpClient]
+          },
+      })
     ],
     declarations: [
         ChangePasswordComponent

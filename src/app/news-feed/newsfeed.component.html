@@ -1,0 +1,85 @@
+<h1 style="text-align: center;">NEWSFEED</h1>
+<div style="text-align: center;">
+        <button class="btn btn-primary" (click)="openDialog()">Add News</button>
+</div>
+
+<!-- ***FORM CODE*** -->
+<!-- <div class="container" *ngIf="!disableform && !newsfeeddisplay">
+    <form  [formGroup]="newsfeedform">
+        <div class="row "  formArrayName="newsarray">
+          <div  class="col-lg-4" *ngFor="let news of getnewsform(newsfeedform);let i=index">
+            <div class="card" [formGroupName]="i" style="text-align: center;margin-bottom: 2%;">
+                <div class="coverpage">
+                  <img class="img-circle"  src="{{newsfeedform.value['newsarray'][i].newsfeedImage}}"  style="width: 200px;height: 200px;">
+                  <br>
+                  <div  class="btn btn-primary">
+                    <input type="file" id="{{i}}" (change)="selectFile($event,i)"><label for="{{i}}"
+                        style="cursor: pointer;">Upload</label>
+                </div>
+                </div>
+                <mat-form-field appearance="outline">
+                    <mat-label class="text">Title</mat-label>
+                    <input   matInput formControlName="newsfeedTitle">
+                   
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput formControlName="newsfeedDescription" placeholder="Placeholder"></textarea>
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Link</mat-label>
+                    <input matInput formControlName="newsfeedLink">
+                  </mat-form-field>
+            </div>
+
+        </div>
+        </div>
+        <div style="text-align: center;">
+          <button class="btn btn-primary" [disabled]="!newsfeedform.valid" (click)="submit()">Submit</button>
+          <button class="btn btn-primary" (click)="addnewsform()">ADD</button>
+        </div>
+    </form>
+    
+
+</div> -->
+
+
+
+
+<div class="row container" *ngIf="newsfeeddisplay">
+  <div class="col-lg-5 col-xs-12 col-md-12" *ngFor="let news of newsfeedform.value.newsarray;let i=index" >
+    
+    <div class="col-lg-5 col-xs-12 col-md-12 card newsfeedcards" style="margin:2%;">
+      <!-- <div style=""> -->
+        <div class="card-image row">
+          <div class="col-lg-11 col-xs-10 col-md-11">
+          <img [src]="news.newsfeedImage" style="width: 100%;height: 300px;">
+          </div>
+          <div class="col-lg-1 col-xs-2 col-md-1">
+            <span><img style="cursor: pointer;" [matMenuTriggerFor]="menu"  src="../../assets/templateimages/more_vert_black_24dp.svg"></span>
+            <mat-menu #menu="matMenu">
+              <div  mat-menu-item (click)="deletefromnewsfeed(i)">Delete<img src="../../assets/templateimages/delete_black_24dp.svg"></div>
+              <!-- <button mat-menu-item></button> -->
+            </mat-menu>
+          </div>          
+        </div>
+        <a href="{{news.newsfeedLink}}">
+          <div class="card-body row" style="text-align: center;">
+            <h4 class="col-lg-12 col-xs-12 col-md-12">{{news.newsfeedTitle}}</h4>
+            <h4 class="col-lg-12 col-xs-12 col-md-12">{{news.category}}</h4>
+            <p class="col-lg-12 col-xs-12 col-md-12">{{news.newsfeedDescription}}</p>
+          </div>
+        </a>
+       
+      <!-- </div> -->
+    </div>
+  
+  </div>
+  <br>
+  <div class="row col-lg-12" style="text-align: center;">
+  <!-- <button class="btn btn-primary ">Add News</button> -->
+
+  </div>
+</div>

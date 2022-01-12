@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormMessageDisplayService } from '../../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../../services/provider-services.service';
 import { Messages } from '../../../../../../../shared/constants/project-messages';
@@ -16,22 +16,60 @@ import { GroupStorageService } from '../../../../../../../shared/services/group-
 import { WordProcessor } from '../../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../../shared/services/snackbar.service';
 import { JaldeeTimeService } from '../../../../../../../shared/services/jaldee-time-service';
+import { DateTimeProcessor } from '../../../../../../../shared/services/datetime-processor.service';
+
 
 @Component({
     selector: 'app-displayboard-qset-detail',
-    templateUrl: './displayboard-qset-detail.component.html'
+    templateUrl: './displayboard-qset-detail.component.html',
+    // styleUrls: ['./displayboards.component.css']
+
 })
 export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
+    layout_id;
+    boardLayouts = [
+        { displayName: '1x1', value: '1_1', row: 1, col: 1 },
+        { displayName: '1x2', value: '1_2', row: 1, col: 2 },
+        { displayName: '2x1', value: '2_1', row: 2, col: 1 },
+        { displayName: '2x2', value: '2_2', row: 2, col: 2 }
+    ];
+    boardRows: any;
+    boardCols: any;
+    isContainer = false;
+    qBoardFooter;
+    qBoardGroupFooter: any;
+    selectedDisplayboards: any = {};
+    boardHeight;
+    fullHeight;
+    type;
+    qBoardTitle: any;
+    qBoardGroupTitle: any;
+    bLogoWidth = '';
+    bLogoHeight = '';
+    gLogoWidth = '';
+    gLogoHeight = '';
+    glogo = '';
+    gPosition;
+    customer_label = '';
+    displayboardDetails: any;
+    position: any;
+    selectedData: any = [];
+
     cancel_btn = Messages.CANCEL_BTN;
     service_caption = Messages.SERVICES_CAP;
     department_cap = Messages.DEPARTMENT_CAP;
     queue_cap = Messages.WORKING_HRS_CAP;
     category = Messages.AUDIT_CATEGORY_CAP;
     sboard_id;
+    boardData: any;
+    selectedBoardData: any = [];
+    layoutData: any = [];
     deptObj;
     @Input() action;
     @Input() qsetId;
     @Input() source;
+    @Input() selectedQueryData: any = [];
+
     @Output() idSelected = new EventEmitter<any>();
     departments: any = [];
     departmentList: any = [];
@@ -93,7 +131,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     userIds: any = [];
     serviceScheduleCount;
     provider_label = '';
-    customer_label = '';
+    blogo = '';
+    displayName;
+
     accountType;
     constructor(
         public fed_service: FormMessageDisplayService,
@@ -105,12 +145,235 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         private wordProcessor: WordProcessor,
         private groupService: GroupStorageService,
         private lStorageService: LocalStorageService,
-        private jaldeeTimeService: JaldeeTimeService
+        private jaldeeTimeService: JaldeeTimeService,
+        private activated_route: ActivatedRoute,
+        private dateTimeProcessor: DateTimeProcessor
+
+
+
     ) {
+        this.activated_route.queryParams.subscribe(qparams => {
+            if (qparams.value === 'view') {
+                this.actionparam = qparams.value;
+                this.layout_id = qparams.id
+                if (this.layout_id) {
+                    console.log("DisplayBoard details  Layout :", this.layout_id);
+                    this.editLayoutbyId(this.layout_id);
+                }
+            }
+        });
+        // this.activated_route.queryParams.subscribe(qparams => {
+
+        //         this.layout_id = qparams.id
+        //         console.log("DisplayBoard Value Layout Id :", this.layout_id);
+        // });
+        // this.activated_route.params.subscribe(
+        //     qparams => {
+        //         this.layout_id = qparams.id;
+        //         console.log("DisplayBoard Qset Layout :", this.layout_id);
+
+
+
+
+        //     });
+        // this.activated_route.queryParams.subscribe(
+        //     queryparams => {
+        //         if (queryparams.type === 'wl') {
+        //             this.type = 'waitlist';
+        //             console.log("DisplayBoard :", this.type)
+        //         } else {
+        //             this.type = 'appointment';
+        //         }
+        //     });
+
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.accountType = user.accountType;
+    }
+    getSingleTime(slot) {
+        const slots = slot.split('-');
+        return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
+    }
+    createRange(number) {
+        const items = [];
+        for (let i = 0; i < number; i++) {
+            items.push(i);
+        }
+        return items;
+    }
+
+
+    
+    getFieldValue(field, checkin) {
+        let fieldValue = '';
+        if (field.name === 'waitlistingFor' || field.name === 'appmtFor') {
+            let lastname = '';
+            if (checkin[field.name][0].firstName && checkin[field.name][0].lastName) {
+                const lastName = checkin[field.name][0].lastName;
+                const nameLength = lastName.length;
+                const encryptedName = [];
+                for (let i = 0; i < nameLength; i++) {
+                    encryptedName[i] = lastName[i].replace(/./g, '*');
+                }
+                for (let i = 0; i < nameLength; i++) {
+                    lastname += encryptedName[i];
+                }
+            }
+            if (!checkin[field.name][0].firstName && checkin[field.name][0].lastName) {
+                lastname = checkin[field.name][0].lastName;
+            }
+            fieldValue = (checkin[field.name][0].firstName) ? checkin[field.name][0].firstName : '' + ' ' + lastname;
+            if (!checkin[field.name][0].firstName && lastname === '') {
+                if (this.type === 'waitlist') {
+                    fieldValue = this.wordProcessor.firstToUpper(this.customer_label) + ' id: ' + checkin.consumer.jaldeeId;
+                } else {
+                    fieldValue = this.wordProcessor.firstToUpper(this.customer_label) + ' id: ' + checkin.providerConsumer.jaldeeId;
+                }
+            }
+        } else if (field.name === 'appxWaitingTime') {
+            return this.dateTimeProcessor.providerConvertMinutesToHourMinute(checkin[field.name]);
+        } else if (field.name === 'appointmentTime') {
+            fieldValue = this.getSingleTime(checkin.appmtTime);
+        } else if (field.name === 'service') {
+            fieldValue = checkin[field.name].name;
+        } else if (field.name === 'queue') {
+            fieldValue = checkin[field.name].queueStartTime + ' - ' + checkin[field.name].queueEndTime;
+        } else if (field.name === 'schedule') {
+            fieldValue = checkin[field.name].apptSchedule.timeSlots[0].sTime + ' - ' + checkin[field.name].apptSchedule.timeSlots[0].eTime;
+        } else if (field.label === true) {
+            if (checkin.label[field.name]) {
+                fieldValue = checkin.label[field.name];
+            } else {
+                fieldValue = field.defaultValue;
+            }
+        } else if (field.name === 'primaryMobileNo') {
+            let full_phone = '';
+            if (this.type === 'waitlist') {
+                if (checkin['waitlistingFor'][0]['phoneNo'] && checkin['waitlistingFor'][0]['phoneNo'] !== 'null') {
+                    full_phone = checkin['waitlistingFor'][0]['phoneNo'];
+                }
+            } else {
+                if (checkin.phoneNumber) {
+                    full_phone = checkin.phoneNumber;
+                }
+            }
+            if (full_phone) {
+                const phLength = full_phone.length;
+                const tele = [];
+                if (phLength === 10) {
+                    for (let i = 0; i < phLength; i++) {
+                        if (i < 6) {
+                            tele[i] = full_phone[i].replace(/^\d+$/, '*');
+                        } else {
+                            tele[i] = full_phone[i];
+                        }
+                    }
+                    for (let i = 0; i < phLength; i++) {
+                        fieldValue += tele[i];
+                    }
+                }
+            }
+        } else if (field.name === 'label') {
+            const labels = [];
+            Object.keys(checkin.label).forEach(key => {
+                labels.push(key);
+            });
+            fieldValue = labels.toString();
+        } else {
+            fieldValue = checkin[field.name];
+        }
+        return fieldValue;
+    }
+
+    editlayout(id) {
+        this.actionparam = 'edit';
+        //this.qBoardscaption = 'Edit QBoard';
+        // this.qsetAction = id.action;
+        // this.qsetId = id.id;
+        // this.source = id.source;
+        // this.showMode = 'QSET';
+        // this.source = 'DBOARD';
+        // this.showMode = 'QSET';
+        this.editLayoutbyId(id);
+    }
+    editLayoutbyId(id) {
+        this.provider_services.getDisplayboardWaitlist(id).subscribe(data => {
+            this.layoutData = data;
+            this.displayName = this.layoutData.displayName;
+
+            console.log("DisplayBoard Edit LayoutById :", this.layoutData);
+            for (var i = 0; i < this.layoutData.metric.length; i++) {
+
+                this.boardData = this.layoutData.metric[i];
+                for (var j = 0; j < this.boardData['queueSet']['fieldList'].length; j++) {
+                    // this.colLength = this.boardData['queueSet']['fieldList'].length
+                    this.selectedBoardData[j] = this.boardData['queueSet']['fieldList'][j];
+                    // console.log("selectedBoardData ", this.selectedBoardData);
+                    console.log("Board Data", this.selectedBoardData[j]);
+
+                }
+
+            }
+
+            // this.layout = this.getLayout(this.layoutData.layout);
+            // this.displayBoardData = data;
+
+            // const breadcrumbs = [];
+            // this.breadcrumbs_init.map((e) => {
+            //     breadcrumbs.push(e);
+            // });
+            // breadcrumbs.push({
+            //     title: this.layoutData.displayName
+            // });
+            // this.breadcrumbs = breadcrumbs;
+            // this.name = this.layoutData.name;
+            this.layoutData.displayName;
+            // this.serviceRoom = this.layoutData.serviceRoom;
+            // this.id = this.layoutData.id;
+            // const layoutPosition = this.layoutData.layout.split('_');
+            // this.boardRows = layoutPosition[0];
+            // this.boardCols = layoutPosition[1];
+            // if (this.layoutData.metric) {
+            //     this.layoutData.metric.forEach(element => {
+            //         this.boardSelectedItems[element.position] = element.sbId;
+
+            //         this.metricSelected[element.position] = element.sbId;
+
+            //     });
+            //     console.log("BoardSelectedItems :", this.layoutData.metric);
+            //     // console.log("Selected :", this.layoutData.metric[layoutPosition]);
+
+
+            // }
+
+            for (var i = 0; i < this.layoutData.metric.length; i++) {
+
+                this.boardData = this.layoutData.metric[i];
+                for (var j = 0; j < this.boardData['queueSet']['fieldList'].length; j++) {
+                    this.selectedBoardData[j] = this.boardData['queueSet']['fieldList'][j];
+                    // console.log("selectedBoardData ", this.selectedBoardData);
+                    console.log("Board Data", this.selectedBoardData[j]);
+
+                }
+
+            }
+            for (let i = 0; i < this.layoutData.metric.fieldList.length; i++) {
+                console.log("DisplayBoard fieldList  : ", this.layoutData.metric.fieldList)
+                for (let j = 0; j < this.defaultLabels.length; j++) {
+                    if (this.displayBoardData.fieldList[i].name === this.defaultLabels[j].name) {
+                        this.labelDisplayname[j] = this.displayBoardData.fieldList[i].displayName;
+                        this.labelOrder[j] = this.displayBoardData.fieldList[i].order;
+                        if (this.displayBoardData.fieldList[i].defaultValue) {
+                            this.labelDefaultvalue[j] = this.displayBoardData.fieldList[i].defaultValue;
+                        }
+                        this.defaultLabels[j].checked = true;
+                        this.labelSelection(j, 'edit');
+                    }
+                }
+            }
+
+        });
     }
     ngOnInit() {
         this.getBussinessProfile();
@@ -150,6 +413,9 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         }
     }
     ngOnChanges() {
+        this.selectedData = this.selectedQueryData;
+
+        console.log("Query Data : ", this.selectedData)
         this.api_loading = true;
         this.id = this.qsetId;
         this.actionparam = this.action;
@@ -159,6 +425,10 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.getProviderQueues();
         this.getLabels();
         setTimeout(() => {
+            if (this.layout_id) {
+                this.getDisplaydashboardDetailsById(this.layout_id);
+                this.submit_btn = Messages.UPDATE_BTN;
+            }
             if (this.id) {
                 this.getDisplaydashboardbyId(this.id);
                 this.submit_btn = Messages.UPDATE_BTN;
@@ -250,6 +520,74 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.serviceIds = [];
         this.qIds = [];
     }
+    getDisplaydashboardDetailsById(id) {
+        this.provider_services.getDisplayboardQSetbyId(this.layout_id).subscribe(data => {
+            this.displayBoardData = data;
+            console.log("DisplayBoard Details By Id :", this.displayBoardData, data);
+            this.boardName = this.displayBoardData.name;
+            this.boardDisplayname = this.displayBoardData.displayName;
+            this.selectedWtlstList = this.displayBoardData.qBoardConditions.wlStatus;
+            this.selectedCategory = this.displayBoardData.queueSetFor[0].type;
+            console.log(Object.keys(this.displayBoardData.qBoardConditions.labels).length);
+            if (Object.keys(this.displayBoardData.qBoardConditions.labels).length > 0) {
+                Object.keys(this.displayBoardData.qBoardConditions.labels).forEach(key => {
+                    for (let i = 0; i < this.providerLabels.length; i++) {
+                        if (this.providerLabels[i].label === key) {
+                            this.providerLabels[i]['selectedValue'] = this.displayBoardData.qBoardConditions.labels[key];
+                            this.labelMultiCtrl.push(this.providerLabels[i]);
+                            this.labelList[this.providerLabels[i].label] = this.displayBoardData.qBoardConditions.labels[key];
+                            //console.log("selected"+this.labelMultiCtrl);
+                        }
+                    }
+                });
+            } else {
+                this.labelMultiCtrl = 'all';
+            }
+            if (this.displayBoardData.qBoardConditions.departments && this.displayBoardData.qBoardConditions.departments.length > 0) {
+                for (let j = 0; j < this.displayBoardData.qBoardConditions.departments.length; j++) {
+                    for (let i = 0; i < this.departments.length; i++) {
+                        if (this.displayBoardData.qBoardConditions.departments[j].departmentId === this.departments[i].departmentId) {
+                            if (this.deptMultiCtrl.indexOf(this.departments[i]) === -1) {
+                                this.deptMultiCtrl.push(this.departments[i]);
+                            }
+                            if (this.deptIds.indexOf(this.displayBoardData.qBoardConditions.departments[j].departmentId) === -1) {
+                                this.deptIds.push(this.displayBoardData.qBoardConditions.departments[j].departmentId);
+                            }
+                        }
+                    }
+                    if (j < this.displayBoardData.qBoardConditions.departments.length) {
+                        this.getUsers();
+                        if (this.displayBoardData.qBoardConditions.providers && this.displayBoardData.qBoardConditions.providers.length > 0) {
+                            this.getProviderServices();
+                        }
+                        setTimeout(() => {
+                            this.departmentSelection();
+                        }, 500);
+                    }
+                }
+            } else {
+                this.departmentSelection();
+            }
+            Object.keys(this.displayBoardData.sortBy).forEach(key => {
+                this.selectedSortField = key;
+                this.sortByField(key);
+            });
+            for (let i = 0; i < this.displayBoardData.fieldList.length; i++) {
+                for (let j = 0; j < this.defaultLabels.length; j++) {
+                    if (this.displayBoardData.fieldList[i].name === this.defaultLabels[j].name) {
+                        this.labelDisplayname[j] = this.displayBoardData.fieldList[i].displayName;
+                        this.labelOrder[j] = this.displayBoardData.fieldList[i].order;
+                        if (this.displayBoardData.fieldList[i].defaultValue) {
+                            this.labelDefaultvalue[j] = this.displayBoardData.fieldList[i].defaultValue;
+                        }
+                        this.defaultLabels[j].checked = true;
+                        this.labelSelection(j, 'edit');
+                    }
+                }
+            }
+        });
+    }
+
     getDisplaydashboardbyId(id) {
         this.provider_services.getDisplayboardQSetbyId(id).subscribe(data => {
             this.displayBoardData = data;
@@ -259,19 +597,19 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
             this.selectedCategory = this.displayBoardData.queueSetFor[0].type;
             console.log(Object.keys(this.displayBoardData.qBoardConditions.labels).length);
             if (Object.keys(this.displayBoardData.qBoardConditions.labels).length > 0) {
-            Object.keys(this.displayBoardData.qBoardConditions.labels).forEach(key => {
-                for (let i = 0; i < this.providerLabels.length; i++) {
-                    if (this.providerLabels[i].label === key) {
-                        this.providerLabels[i]['selectedValue'] = this.displayBoardData.qBoardConditions.labels[key];
-                        this.labelMultiCtrl.push(this.providerLabels[i]);
-                        this.labelList[this.providerLabels[i].label] = this.displayBoardData.qBoardConditions.labels[key];
-                        //console.log("selected"+this.labelMultiCtrl);
+                Object.keys(this.displayBoardData.qBoardConditions.labels).forEach(key => {
+                    for (let i = 0; i < this.providerLabels.length; i++) {
+                        if (this.providerLabels[i].label === key) {
+                            this.providerLabels[i]['selectedValue'] = this.displayBoardData.qBoardConditions.labels[key];
+                            this.labelMultiCtrl.push(this.providerLabels[i]);
+                            this.labelList[this.providerLabels[i].label] = this.displayBoardData.qBoardConditions.labels[key];
+                            //console.log("selected"+this.labelMultiCtrl);
+                        }
                     }
-                }
-            });
-        } else {
-            this.labelMultiCtrl = 'all';
-        }
+                });
+            } else {
+                this.labelMultiCtrl = 'all';
+            }
             if (this.displayBoardData.qBoardConditions.departments && this.displayBoardData.qBoardConditions.departments.length > 0) {
                 for (let j = 0; j < this.displayBoardData.qBoardConditions.departments.length; j++) {
                     for (let i = 0; i < this.departments.length; i++) {
@@ -321,12 +659,29 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
         this.actionparam = 'edit';
         this.getDisplaydashboardbyId(id);
     }
+    editStatusBoardById(id) {
+        //this.source = 'DBOARD';
+        // this.showMode = 'QSET';
+        // this.source = 'QLIST';
+        this.actionparam = 'edit';
+        this.getDisplaydashboardDetailsById(id);
+    }
     goBack() {
         const actionObj = {
             source: 'DBOARD'
         };
         this.idSelected.emit(actionObj);
     }
+
+    editDisplayboardQSet(board) {
+        // const actionObj = {
+        //     action: 'edit',
+        //     id: board.id,
+        //     source: 'QLIST'
+        // };
+        // this.idSelected.emit(actionObj);
+    }
+
     setStatusboardValue() {
         if (this.selectedCategory === 'SERVICE') {
             this.statusBoardfor = [{
@@ -820,19 +1175,22 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
                 }
             });
     }
-    
+
     showStep(step) {
         if (step === 5 && this.labelsList.length === 0) {
             this.snackbarService.openSnackBar('Select atleast one field from the list', { 'panelClass': 'snackbarerror' });
-        } else if(step === 3 && this.deptIds.length === 0 && this.userIds.length === 0 && this.serviceIds.length === 0 && this.qIds.length === 0){
+        } else if (step === 3 && this.deptIds.length === 0 && this.userIds.length === 0 && this.serviceIds.length === 0 && this.qIds.length === 0) {
             this.snackbarService.openSnackBar('Select atleast one field from the list', { 'panelClass': 'snackbarerror' });
-        } else if(step === 4 && this.selectedWtlstList.length === 0){
+        } else if (step === 4 && this.selectedWtlstList.length === 0) {
             this.snackbarService.openSnackBar('Select atleast one field from the list', { 'panelClass': 'snackbarerror' });
-        } else if (this.boardDisplayname === '') {
-            this.snackbarService.openSnackBar('Please enter the name', { 'panelClass': 'snackbarerror' });
-        } else {
+        }
+        // else if (this.boardDisplayname === '') {
+        //     this.snackbarService.openSnackBar('Please enter the name', { 'panelClass': 'snackbarerror' });
+        // } 
+        else {
             this.step = step;
         }
+
     }
     waitlistSelection(status) {
         const indx = this.selectedWtlstList.indexOf(status);

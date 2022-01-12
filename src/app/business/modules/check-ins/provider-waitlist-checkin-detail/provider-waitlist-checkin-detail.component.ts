@@ -17,7 +17,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
 import { CommunicationService } from '../../../../business/services/communication-service';
-import { BookingHistoryComponent } from '../../../../../../src/app/business/shared/booking-history/booking-history.component';
+import { BookingHistoryComponent } from '../../appointments/booking-history/booking-history.component';
 
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
@@ -191,6 +191,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       .subscribe(
         data => {
           this.waitlist_data = data;
+          console.log('waitlist dtata',this.waitlist_data)
           if (this.waitlist_data.questionnaires && this.waitlist_data.questionnaires.length > 0) {
             this.questionnaires = this.waitlist_data.questionnaires;
           }
@@ -246,12 +247,13 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           if (this.today.valueOf() > waitlist_date.valueOf()) {
             this.waitlist_data.history = true;
           }
-          // this.getWaitlistNotes();
+          this.getWaitlistNotes(this.waitlist_data.ynwUuid);
           if (this.waitlist_data.waitlistStatus !== 'blocked') {
             this.getWaitlistNotes(this.waitlist_data.ynwUuid);
           }
           this.getCheckInHistory(this.waitlist_data.ynwUuid).then(data => {
             this.waitlist_history = data;
+            console.log('waitlisthistory',this.waitlist_history)
             this.getInternalStatusLog(this.waitlist_data.ynwUuid).then((status: any) => {
               this.internalStatuslog = status;
               // for(let stat of status){
@@ -309,6 +311,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     });
 
   }
+
   openbookinghistory() {
     this.bookinghistorydialogref = this.dialog.open(BookingHistoryComponent, {
       width: '60%',
@@ -331,6 +334,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       .subscribe(
         data => {
           this.waitlist_notes = data;
+          console.log(this.waitlist_notes,';;;;;;;;;;;;')
         },
         () => {
           //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
@@ -387,6 +391,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   }
 
   addProviderNote(checkin) {
+    console.log("dialog box opened")
     this.notedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -397,8 +402,10 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     });
 
     this.notedialogRef.afterClosed().subscribe(result => {
+      console.log("result ..",result)
       if (result === 'reloadlist') {
         // this.getWaitlistNotes();
+        console.log("dialog box losed")
         this.getWaitlistNotes(this.waitlist_data.ynwUuid);
 
       }
@@ -638,6 +645,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.view_more = !this.view_more;
   }
   gotoActions(checkin?) {
+    console.log("opend")
     let waitlist = [];
     if (checkin) {
       waitlist = checkin;
@@ -654,6 +662,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
+      // console.log("data....",data);
       this.getProviderSettings();
     });
   }
@@ -714,4 +723,5 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       return userObject[0].name;
     }
   }
+
 }

@@ -1,0 +1,27 @@
+*{
+    /* width: 500px; */
+	padding: 0%;
+	margin: 0%;
+	height: auto;
+	/* padding: 2%; */
+	/* height: auto; */
+	
+}
+input[type='file'] {
+	opacity:0;
+	display: none;
+}
+.input {
+	width: 40%;
+	margin-right: 1%;
+}
+.text-lg-center {
+   text-align: center;
+}
+.dialogbox {
+	/* overflow-y:auto !important; */
+}
+/* .dialogbox {
+	overflow-x: auto;
+	overflow-x:scroll;
+	/* background-color:pink; */

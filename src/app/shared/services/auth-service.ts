@@ -126,6 +126,7 @@ export class AuthService {
             const isProvider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
             console.log("isProvider:" + isProvider);
             const customId = this.lStorageService.getitemfromLocalStorage('customId');
+            const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
             if (isProvider === 'true') {
                 this.providerLogout().then(
                     () => {
@@ -137,7 +138,11 @@ export class AuthService {
                 this.consumerLogout().then(
                     () => {
                         if (customId) {
-                            this.router.navigate([customId]);
+                            if (reqFrom === 'cuA') {
+                                this.router.navigate(['customapp', customId]);
+                            } else {
+                                this.router.navigate([customId]);
+                            }
                         } else {
                             this.router.navigate(['/']);
                         }
@@ -312,5 +317,20 @@ export class AuthService {
     }
     getMessage(): Observable<any> {
         return this.subject.asObservable();
+    }
+
+    /**
+     * To check whether user logged in or not
+     * @returns true/false
+     */
+    goThroughLogin() {
+        const _this = this;
+        return new Promise((resolve) => {
+            if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')) {
+                resolve(true);
+            } else {
+                resolve(false);
+            }
+        });
     }
 }

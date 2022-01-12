@@ -2,7 +2,16 @@
 table{
   width: 100%;
  }
-
+ .mat-cell {
+/* background-color: blue; */
+text-align: justify;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    padding-left: 2px;
+    border-bottom-left-radius: 10px;
+    /* display: inline-block; */
+ }
  td {
   word-wrap: break-word;
   margin:auto;

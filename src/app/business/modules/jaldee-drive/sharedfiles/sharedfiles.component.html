@@ -1,0 +1,69 @@
+<section class="display-min-none">
+    <div class="card title-gb">
+        <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
+          
+                <span class="fa fa-arrow-left pointer-cursor" style="font-size: 20px;" (click)="onCancel()">
+          
+                </span>&nbsp; &nbsp;
+               <span class="mx-2">Shared Files</span> 
+                <p class="text-secondary mx-5" *ngIf="!isHealthCare"> Manage the files uploaded by the providers or consumers!</p>
+                <p class="text-secondary mx-5" *ngIf="isHealthCare">Manage the files uploaded by the doctors or patients!</p>
+             
+                <!-- {{provider_label | capitalizeFirst}}
+                {{provider_label | capitalizeFirst}} -->
+
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="content w-manager settings comn-cls lic-page " style="width: 100%;">
+        <div class="col-md-12 no-padding-small bgcolor">
+            <div class="w-dta bgcolor">
+                <div class="row bgcolor">
+                    <div class="col-xs-12 col-sm-12 col-12 col-md-12  col-lg-12 no-padding bgcolor">
+                        <div class="card no-padding-small bgcolor">
+
+                            <div class="mx-2">
+                                <!-- <h5 class="mgn-up-10">
+                                   &nbsp;&nbsp;&nbsp;
+                                    {{sharedFolder}} File
+
+                                </h5> -->
+                                <div class=" row cust-name d-flex">
+
+                                    <div (click)="publicfolder('public')"
+                                        class="pointer-cursor top-droppable folder tooltiper tooltiper-up"
+                                        data-tooltip="0 file" id="folder2" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" title="From Provider">
+
+                                        <i class="fa fa-folder" aria-hidden="true">
+
+                                            <p (click)="publicfolder('public')">From Provider</p>
+                                        </i>
+
+                                    </div> &nbsp; &nbsp; &nbsp;
+                                    <div (click)="publicfolder('shared')"
+                                        class="pointer-cursor top-droppable folder tooltiper tooltiper-up"
+                                        data-tooltip="0 file" id="folder2" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" title="From Consumer">
+
+                                        <i class="fa fa-folder" aria-hidden="true">
+
+                                            <p (click)="publicfolder('shared')">From Consumer</p>
+                                        </i>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>

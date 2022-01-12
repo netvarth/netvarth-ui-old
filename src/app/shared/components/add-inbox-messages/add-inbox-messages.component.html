@@ -20,7 +20,8 @@
         <div class="mgtop40 form-group" *ngIf="!api_loading && (typeOfMsg === 'multiple' || source ==='provider-waitlist' || source === 'customer-list' || source === 'donation-list' || source === 'provider-sendAll')">
             Send message via
             <div class="coupon-outer">
-                <mat-checkbox [disabled]="((source === 'customer-list' || source === 'donation-list') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list') && ((!phone && !phone_history )|| phone === 'null' || phone === '' ) || is_noSMS || countryCode !='+91'))"   class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
+                <!-- countryCode !='+91' -->
+                <mat-checkbox [disabled]="((source === 'customer-list' || source === 'donation-list') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list') && ((!phone && !phone_history )|| phone === 'null' || phone === '' || countryCode !='+91' ) || is_noSMS))"   class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
                     SMS
                 </mat-checkbox>
                 <mat-checkbox [disabled]="((source === 'customer-list' || source === 'donation-list') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list') && !email_id))" class="mgright50 example-margin" [(ngModel)]="email"
@@ -38,7 +39,7 @@
             <div class="sms_credit_warn mgn-up-10" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
         </div>
         <div style="color: red;" *ngIf = "typeOfMsg === 'single' && source ==='provider-waitlist' && !email_id && ((!phone && !phone_history ) || phone === 'null')">{{SEND_MESSAGE}}</div>
-        <div *ngIf = "!api_loading &&  (source === 'customer-list' || source === 'donation-list' || source ==='provider-waitlist') && selectedMessage.files.length !== 0"><i class="fa fa-bell-o"></i>&nbsp;Messages with upload files will be send to Jaldee inbox.</div>
+        <div *ngIf = "!api_loading &&  (source === 'customer-list' || source === 'donation-list' || source ==='provider-waitlist') && selectedMessage.files.length !== 0"><i class="fa fa-bell-o"></i>&nbsp;Message with uploaded files will be sent to email and jaldee inbox.</div>
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     </mat-dialog-content>
     <mat-dialog-actions class="mat-scrool">

@@ -53,13 +53,7 @@ export class StatementsComponent implements OnInit {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
 
-  pay_data = {
-    amount: 0,
-    //  paymentMode: 'DC', // 'null', changes as per request from Manikandan
-    uuid: null,
-    refno: null,
-    purpose: null
-  };
+  pay_data :any={};
   invoices: any = [];
   payment_popup = null;
   source = 'payment-history';
@@ -93,6 +87,15 @@ export class StatementsComponent implements OnInit {
   temp1;
   mergestatement: any;
   licensecaption = 'Statements';
+  invoiceJson: any;
+  isPayment: boolean;
+  indian_payment_modes: any;
+  non_indian_modes: any;
+  shownonIndianModes: boolean;
+  selected_payment_mode: any;
+  isInternatonal: boolean;
+  isClickedOnce=false;
+  paymentmodes: any=[];
 
   constructor(
     public dialogRef: MatDialogRef<StatementsComponent>,
@@ -121,15 +124,15 @@ export class StatementsComponent implements OnInit {
     } else {
     }
     this.invoice = this.data.invoice || null;
-    const invoiceJson = JSON.parse(this.invoice);
+    this.invoiceJson = JSON.parse(this.invoice);
     this.source = this.data.source || 'payment-history';
     this.payMentShow = this.data.payMent;
-    this.pay_data.uuid = invoiceJson.ynwUuid;
-    this.pay_data.refno = invoiceJson.invoiceRefNumber;
-    if(invoiceJson.cGstAmt > 0){
-      this.pay_data.amount = invoiceJson.totAmtIncludeTax;
+    this.pay_data.uuid = this.invoiceJson.ynwUuid;
+    this.pay_data.refno = this.invoiceJson.invoiceRefNumber;
+    if(this.invoiceJson.cGstAmt > 0){
+      this.pay_data.amount = this.invoiceJson.totAmtIncludeTax;
     } else {  
-      this.pay_data.amount = invoiceJson.amount;
+      this.pay_data.amount = this.invoiceJson.amount;
     }
   }
 
@@ -140,12 +143,13 @@ export class StatementsComponent implements OnInit {
     }
     this.getTaxpercentage();
     this.loading = true;
-    this.payment_status = this.invoice.licensePaymentStatus || null;
+    this.payment_status = this.invoiceJson.licensePaymentStatus|| null;
     this.getgst();
     this.invoiceDetail();
+
     if (this.payment_status === 'NotPaid' && this.source !== 'payment-history') {
       this.payment_loading = true;
-      this.getPaymentModes();
+    
     } else if (this.payment_status === 'Paid') {
       this.getPaymentDetails();
     } else if (this.source === 'payment-history') {
@@ -238,18 +242,8 @@ export class StatementsComponent implements OnInit {
     }
 
   }
-  getPaymentModes() {
-    this.provider_services.getPaymentModes()
-      .subscribe(
-        data => {
-          this.payment_modes = data;
-          this.payment_loading = false;
-        },
-        error => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
-      );
-  }
+ 
+ 
   getTaxpercentage() {
     this.provider_services.getTaxpercentage()
       .subscribe(data => {
@@ -283,6 +277,8 @@ export class StatementsComponent implements OnInit {
   makePayment() {
     this.disablebutton = true;
     this.pay_data.purpose = 'subscriptionLicenseInvoicePayment';
+    this.pay_data.isInternational=this.isInternatonal;
+    this.pay_data.paymentMode=this.selected_payment_mode;
     if (this.pay_data.uuid && this.pay_data.amount &&
       this.pay_data.amount !== 0) {
       this.payment_loading = true;
@@ -304,6 +300,10 @@ export class StatementsComponent implements OnInit {
         }
       );
   }
+  getImageSrc(mode){
+    
+    return 'assets/images/payment-modes/'+mode+'.png';
+}
   redirecToLicenseInvoice() {
     if (this.data.data1 === 'invo-statement NotPaid') {
       this.router.navigate(['provider', 'license', 'invoicestatus']);

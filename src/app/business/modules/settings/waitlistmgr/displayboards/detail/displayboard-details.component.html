@@ -1,8 +1,14 @@
+<!-- <section>
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section> -->
 <section class="">
     <div class="card title-gb">
         <h5 class="mgn-up-10"> 
             <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToQmanager()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{qBoardscaption}}
+          <!-- <button type="button" style="float: right;" class="btn default profile-back" (click)= "redirecToHelp()">
+               Help
+          </button>  -->
           <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
         </h5>     
     </div>
@@ -44,7 +50,22 @@
                                                 [ngModelOptions]="{standalone: true}" autocomplete="off">
                                         </mat-form-field>
                                     </div>
+                                    <!-- <div class="lbl col-md-12">
+                                            <mat-checkbox class="terms-margin" (change)="nestedQboardSelected($event)"
+                                                [value]=true></mat-checkbox>
+                                            <span class="nested-qboard">Nested QBoard
+                                            </span>
+                                        </div> -->
                                 </ng-container>
+                                <!-- <div *ngIf="qboardSelected" class="form-group col-md-6">
+                                        <mat-form-field>
+                                            <input matInput type="text" class="form-control" id="refreshInterval1"
+                                                placeholder="Enter refresh interval in seconds *"
+                                                [(ngModel)]="refreshInterval" [ngModelOptions]="{standalone: true}"
+                                                autocomplete="off">
+                                        </mat-form-field>
+                                    </div> -->
+                                <!-- qboard adding -->
                                 <div *ngIf="!qboardSelected">
                                     <div class="form-group col-md-6 col-xs-12 col-sm-6">
                                         <mat-form-field>
@@ -84,6 +105,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- qbord adding ends -->
                             </form>
                             <div class="cl1" *ngIf="actionparam === 'view'">
                                 <span class="editbt" *ngIf="!layoutData.isContainer" (click)="editlayout(layoutData.id)"></span>
@@ -127,6 +149,7 @@
                                 </form>
                             </div>
                         </div>
+                        <!--Q Selection criteria starts here-->
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="showMode == 'QSETS'">
                             <app-displayboard-qset (idSelected)="qSetSelected($event)" [source]="source">
                             </app-displayboard-qset>
@@ -140,7 +163,10 @@
                     </div>
                 </div>
             </div>
+
+
         </div>
+        <!-- Header and Footer Settings  -->
         <div *ngIf="!headerSetting && !footerSetting" class="content w-manager settings comn-cls lic-page no-padding">
             <div class="col-md-12 no-padding" (click)="headerClick()">
                 <div *ngIf="actionparam === 'view'">

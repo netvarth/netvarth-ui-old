@@ -1,0 +1,1170 @@
+<section class="display-min-none">
+  <div class="card title-gb">
+    <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
+      Jaldee Drive
+      <p class="text-secondary">Manage the files uploaded by the providers or consumers or you!</p>
+      <!-- {{customer_label | capitalizeFirst}} -->
+
+    </div>
+  </div>
+</section>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="close-btn">
+        <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <ng-container>
+        <div class="modal-body">
+          <!-- <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12">
+            <mat-chip-list class="btns">
+              <mat-chip><a class="lnk action pointer-cursor" (click)="imagefile.click()"><input #imagefile type="file"
+                    accept="/*;capture=camera" style="display:none;" multiple (change)="filesSelected($event)"><i
+                    class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i>Upload
+                  File</a></mat-chip>
+            </mat-chip-list>
+          </div> -->
+          <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 bold pad-top-10 mgn-up-10 mgn-bt-10 border-tp"
+            *ngIf="(selectedMessage.files && selectedMessage.files.length > 0)">
+            Uploaded Files
+          </div>
+          <div class="img-section mgn-up-20" *ngIf="(selectedMessage.files && selectedMessage.files.length > 0)">
+            <ul class="galul">
+              <ng-container *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+                <li *ngFor="let file of selectedMessage.files;let i = index ">
+                  <div class="galimg_outer">
+                    <div class="gal_img">
+                      <img [src]="getImage(selectedMessage.base64[i], file)" *ngIf="selectedMessage.base64[i]">
+                    </div>
+                    <div class="gal-input">
+                      <input type="text" placeholder="Caption" [(ngModel)]="imgCaptions[i]">
+                    </div>
+                    <div class="gal_action" (click)="deleteTempImage(i)">
+                      <i class="fa fa-times-circle" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+          <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 bold pad-top-10 mgn-up-10 mgn-bt-10 border-tp">
+            <div>
+              <!-- *ngIf="defaultFolder === 'yes'" -->
+              <p>Choose folder to upload</p>
+              <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)">
+                <!-- <mat-radio-button [value]="'shared'" class="mx-2">
+                  Shared folder
+                </mat-radio-button> -->
+                <!-- <mat-radio-button [value]="'Public'">
+                  Public Files
+                </mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+
+                <mat-radio-button [value]="'My'" checked>
+                  My Files
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <div class="modal-footer">
+        <button type="button" class="disp-none btn btn-light-primary font-weight-bold" data-dismiss="modal"
+          #closebutton>Cancel</button>
+        <button type="button" class="btn btn-primary font-weight-bold hf-btn" data-dismiss="modal" #closebutton
+          (click)="actionCompleted()" [disabled]="!choose_type">Ok</button>
+        <!-- [disabled]="!choose_type" -->
+      </div>
+      <div class="error-section" *ngIf="apiError !== ''">
+        {{apiError}}
+      </div>
+      <div class="error-section success-section" *ngIf="apiSuccess !== ''">
+        {{apiSuccess}}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<section class="lic_revamp display-min-none ">
+  <div class="content w-manager settings comn-cls lic-page " style="width: 100%;">
+    <div class="col-md-12 no-padding-small bgcolor">
+      <div class="w-dta bgcolor">
+        <div class="row bgcolor">
+          <div class="col-xs-12 col-sm-12 col-12 col-md-12  col-lg-12 no-padding bgcolor">
+            <div class="card no-padding-small bgcolor">
+              <!-- <div>
+              
+                <button type="button" class="pull-left p-button-rounded p-ripple p-button p-component mx-2 my-3 p-1">
+                  <a style="color: white !important;" #modal data-toggle="modal" data-target="#exampleModalCenter">
+                  </a>
+                  <a style="color: white !important;" class="pointer-cursor mr-1 p-2"
+                    (click)="imagefile1.click();"><input #imagefile1 type="file" accept="/*;capture=camera"
+                      style="display:none;" multiple (change)="filesSelected($event, 'close')"><i
+                      style="color: white !important;" class="fa fa-plus mgn-rt-5" aria-hidden="true"></i> Upload New
+                    File </a>
+                
+                </button>
+              </div> -->
+              <!-- <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head mx-2">
+                  Jaldee Drive.
+                </div> -->
+              <!-- <i style="color: white !important;"
+                      class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i> -->
+              <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 no-padding-small">
+                <div class="anual_side">
+                </div>
+                <div style="display: flex!important;">
+                  <div class="p-d-flex" style="    margin-right: 1rem!important;">
+                    <i class="fa fa-gears"></i>
+                    <div class="p-mr-2">Images</div>
+                    <span class="pull-right count bg-blue">20</span>
+                  </div>
+                  <div class="p-d-flex" style="    margin-right: 1rem!important;">
+                    <i class="fa fa-gears"></i>
+                    <div class="p-mr-2">Videos </div>
+                    <span class="pull-right count bg-blue">15</span>
+                  </div>
+                  <div class="p-d-flex" style="    margin-right: 1rem!important;">
+                    <i class="fa fa-gears"></i> &nbsp;
+                    <div class="p-mr-2">Audio Files </div>
+                    <span class="pull-right count bg-blue">15</span>
+                  </div>
+                  <div class="p-d-flex">
+                    <i class="fa fa-gears"></i> &nbsp;
+                    <div class="p-mr-2">Docs </div>
+                    <span class="pull-right count bg-blue">1055</span>
+                  </div>
+                </div>
+              </div> -->
+              <!-- <div class="card">
+                <div class="card-header">
+                  Featured
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Special title treatment</h5>
+                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div> -->
+              <div class="mx-2 mt-4" *ngIf="!sharedFolder">
+                <h4>Statistics</h4>
+              </div>
+              <div class="mx-2" *ngIf="!sharedFolder">
+                <div class="row">
+
+                  <div class="col-sm-12 col-md-4 col-lg-4  col-xs-12 col-12 disp-flex">
+
+                    <div class="card color" style="word-wrap: normal !important;">
+
+
+                      <div align="center" class="my-2">
+
+                        <span class="pull-left">
+                          Available Space
+
+                        </span>
+
+
+                        <span class="pull-right">{{remainingStorage}} GB left</span>
+
+
+
+                      </div>
+
+                      <div class="progress mb-1" style="height:6px">
+                        <!-- style="width:'{{storageleft.remainingStorage}}' !important;" -->
+                        <div class="progress-bar bg-primary" style="width: 50%;"></div>
+                      </div>
+
+                    </div>
+                    <!-- <div class="card color" style="word-wrap: normal !important;">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
+                      <div class="col-md-4">Available Space</div>
+                      <div>
+
+                        <div class="col-md-4">
+                          <span>{{storageleft.remainingStorage}}</span>
+                        </div>
+                      </div>
+                      <div class="col-md-4">GB left</div>
+                      <div class="progress">
+                        <div class="progress-bar bg-primary" style="width:50%"></div>
+                      </div>
+                    </div>
+                  </div> -->
+                  </div>
+                  <!-- <div class="col-sm-12 col-md-4 col-lg-4  col-xs-12 col-12 disp-flex">
+                    <div class="card color" style="word-wrap: normal !important;">
+
+                      <div align="center" class="my-2">
+
+                        <span class="pull-left">
+                          Storage
+
+                        </span>
+
+
+                        <span class="pull-right">{{storageleft.usedStorage}} Used</span>
+
+
+
+                      </div>
+
+                      <div class="progress mb-1" style="height:6px">
+                        <div class="progress-bar bg-primary" style="width:50%"></div>
+                      </div>
+
+                    </div>
+                   
+                  </div>
+                  <div class="col-sm-12 col-md-4 col-lg-4  col-xs-12 col-12 disp-flex">
+                    <div class="card color" style="word-wrap: normal !important;">
+
+                      <div align="center" class="my-2">
+
+                        <span class="pull-left">
+                          Shared Files
+
+                        </span>
+
+
+                        <span class="pull-right">{{totalcount}} Today</span>
+
+
+
+                      </div>
+
+                      <div class="progress mb-1" style="height:6px">
+                        <div class="progress-bar bg-primary" style="width:50%"></div>
+                      </div>
+
+                    </div>
+                  </div> -->
+                </div>
+              </div>
+              <div class="mx-2" *ngIf="onSharedClicked">
+                <h5 class="mgn-up-10">
+                  <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
+
+                  </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  {{sharedFolder}} File
+
+                </h5>
+                <div class=" row cust-name d-flex">
+
+                  <div (click)="publicfolder('Shared')"
+                    class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                    id="folder2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="From Provider">
+
+                    <i class="fa fa-folder" aria-hidden="true">
+
+                      <p (click)="publicfolder('Shared')">From Provider</p>
+                    </i>
+
+                  </div> &nbsp; &nbsp; &nbsp;
+                  <div (click)="publicfolder('Shared')"
+                    class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                    id="folder2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="From Consumer">
+
+                    <i class="fa fa-folder" aria-hidden="true">
+
+                      <p (click)="publicfolder('Shared')">From Consumer</p>
+                    </i>
+
+                  </div>
+                </div>
+              </div>
+              <div class="mx-2">
+                <div class=" row cust-name">
+                  <!-- <h4>Your folders</h4> -->
+                  <!-- <div (click)="publicfolder('Public')"
+                    class="mx-2 pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                    id="folder2">
+
+                    <i class="fa fa-folder" aria-hidden="true">
+
+                      <p (click)="publicfolder('Public')"> Public Files</p>
+                    </i>
+                   
+                  </div> -->
+                  <!-- <img src="../../../assets/images/Group 818.jpg" class=" fa fa-folder pull-left text-light "
+                  style="width: 22px !important; margin-top: 2px !important;"> -->
+                  <div (click)="publicfolder('private')" *ngIf="!sharedFolder"
+                    class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                    id="folder2">
+
+                    <i class="fa fa-folder" aria-hidden="true">
+
+                      <p (click)="publicfolder('private')">My Files</p>
+                    </i>
+                    <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
+                  style="width: 22px !important; margin-top: 2px !important;"> -->
+                  </div>
+                  <div (click)="onClicked('Shared')" *ngIf="!sharedFolder"
+                    class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                    id="folder2">
+
+                    <i class="fa fa-folder" aria-hidden="true">
+
+                      <p (click)="onClicked('Shared')">Shared Files</p>
+                    </i>
+                    <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
+                style="width: 22px !important; margin-top: 2px !important;"> -->
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="cust-name">
+                <h4>patients folders
+                  <span> <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right">
+                      <img src="../../../assets/images/provider-filter-icon.png"
+                        style="width: 22px !important; margin-top: -6px !important;">
+                    </a></span>
+                </h4>
+              </div> -->
+              <div class="pdflex">
+                <!-- <span class="p-input-icon-left p-ml-auto">
+                  <i class="pi pi-search"></i>
+                  <input class="search" pInputText type="text" placeholder="Search keyword" />
+                </span> -->
+              </div>
+
+
+              <!-- <button type="button" class="btn btn-white p-button-rounded p-ripple dropdown-toggle" style="width: 250px;" >
+                  <img src="../../../assets/images/Group 822.jpg" class="pull-left text-light"
+                  style="width: 22px !important; margin-top: 2px !important;"> <span class="mx-2 pull-left text-info">Filter</span>
+                  <img src="../../../assets/images/Group 820.jpg" class="pull-right text-light"
+                  style="width: 22px !important; margin-top: 2px !important;" (click)="showFilterSidebar()">
+                </button> -->
+              <!-- <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#">Link 1</a>
+                  <a class="dropdown-item" href="#">Link 2</a>
+                  <a class="dropdown-item" href="#">Link 3</a>
+                </div> -->
+
+              <!-- <div class="mx-2 cust-name">
+                <div class="mx-2">
+                  <h4>Patients Files</h4>
+
+                </div>
+               
+                <button type="button" class="my-3 btn btn-white p-button-rounded p-ripple dropdown-toggle"
+                  (click)="showFilterSidebar()"
+                  style="width: 250px; background-color: white !important; border: 1px solid gray;">
+                  <img src="../../../assets/images/Group 822.jpg" class="pull-left text-light"
+                    style="width: 22px !important; margin-top: 2px !important;">
+                  <span class="mx-2 pull-left text-info">Filter</span>
+                  <img src="../../../assets/images/Group 820.jpg" class="pull-right text-light"
+                    style="width: 22px !important; margin-top: 2px !important;">
+                </button>
+                <div class="form-group pull-right my-3 mx-4">
+                  <input type="text" class="form-control inp p-button-rounded" placeholder="Search" [(ngModel)]="searchTerm">
+                </div>
+              </div> -->
+              <!-- <div class="mx-2 container">
+
+
+                <table class="table table-hover">
+
+                  <thead>
+                    <tr>
+                     
+                      <th>File Name</th>
+                      <th>Date</th>
+                      <th>File Type</th>
+                      <th>File Size</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="cursor: pointer;" *ngFor="let customer of customers | filter:searchTerm | paginate: config;   let i= index" (click)="preview(customer)">
+                     
+                     
+                      <td>
+                        {{customer.fileName}}
+                      </td>
+                      <td>
+                     {{customer.uploadedDate}}
+                      </td>
+                      <td>
+                      {{customer.fileType}}
+                      </td>
+                      <td>
+                       {{customer.fileSize}}
+                      </td>
+                    </tr>
+                    <tr *ngIf="customers.length === 0">
+                     <div class="text-center" *ngIf="filter.fileName === '' || filter.fileSize === '' || filter.fileType === '' || filter.folderName === '' "><strong>No Files Found</strong> </div>
+                    </tr>
+                  </tbody>
+
+                </table>
+                <div class="d-block ml-auto my-3 pull-right">
+
+                  <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+              </div>
+                <p-table [value]="customers" responsiveLayout="scroll">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th class="th">File Name</th>
+                      <th class="th">Date</th>
+                      <th class="th">File Type</th>
+                      <th class="th">File Size</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-customer>
+                    <tr style="cursor: pointer;" (click)="preview(customer)">
+                      <td class="td">
+                        <span class="image-text">{{customer.fileName}}</span>
+                      </td>
+                      <td class="td">
+                        <span class="image-text">{{customer.uploadedDate}}</span>
+                      </td>
+                      <td class="td">
+                        <span>{{customer.fileType}}</span>
+                      </td>
+                      <td class="td">
+                        <span>{{customer.fileSize}}</span>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table> 
+              </div> -->
+              <div style="text-align: center;" class="my-3">
+                <div class="prov-name-txt my-2" style="text-transform:none !important;">
+                  Unlock More Space!
+                </div>
+                <!-- <div class="prov-loc my-2">
+                  Upgrade to Jaldee Drive Plus
+                </div> -->
+                <button (click)="gotoSmsAddon()" class="btn btn-warning text-dark p-button-rounded"> Upgrade Now
+                </button>
+                <!-- provider/license/addons -->
+
+
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<aside class="filterSidebar filter-sidebar user-filter" *ngIf="filter_sidebar">
+  <section class="sidebar filter-container" id="filterContainer" style="overflow:auto"
+    [ngStyle]="{'height.vh': 90, 'margin-top.px': filterapplied === true ? 95 : 44}">
+    <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+      <span class="filter-head-title">Filters</span>
+      <i class="icon-filter-one-op ng-star-inserted closeFilter" (click)="hideFilterSidebar()"
+        [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter sidebar'"></i>
+    </div>
+    <ul class="sidebar-menu accordion" id="accordion1">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLocation1"
+              aria-expanded="false">
+              <div>
+                <div style="display: inline-block !important;">
+                </div>
+                File name
+              </div>
+              <i class="fa fa-angle-down"></i>
+            </button>
+          </h2>
+        </div>
+        <div id="collapseLocation1" class="collapse in" data-parent="#accordion1">
+          <div class="card-body">
+            <div class="filterTextinput filter-text-input">
+              <li class="filterli filter-li">
+                <input type="text" id="city" [(ngModel)]="filter.fileName" #city (keyup)="doSearch()" maxlength="20"
+                  class="filterTextbox filter-textbox" placeholder="Enter file name">
+              </li>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePin1"
+              aria-expanded="false">
+              <div>
+                <div style="display: inline-block !important;">
+                </div>
+                file type
+              </div>
+              <i class="fa fa-angle-down"></i>
+            </button>
+          </h2>
+        </div>
+        <div id="collapsePin1" class="collapse in" data-parent="#accordion1">
+          <div class="card-body">
+            <div class="filterTextinput filter-text-input">
+              <li class="filterli filter-li">
+                <input type="text" id="fileType" [(ngModel)]="filter.fileType" #fileType (keyup)="doSearch()"
+                  maxlength="10" class="filterTextbox filter-textbox" placeholder="Enter fileType">
+              </li>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName1"
+              aria-expanded="false">
+              <div>
+                <div style="display: inline-block !important;">
+                </div>
+                File size
+              </div>
+              <i class="fa fa-angle-down"></i>
+            </button>
+          </h2>
+        </div>
+        <div id="collapseName1" class="collapse in" data-parent="#accordion1">
+          <div class="card-body">
+            <div class="filterTextinput filter-text-input">
+              <li class="filterli filter-li">
+                <input type="text" id="fileSize" [(ngModel)]="filter.fileSize" #fileSize (keyup)="doSearch()"
+                  maxlength="20" class="filterTextbox filter-textbox" placeholder="Enter File size">
+              </li>
+            </div>
+            <div class="filter-checkbox-input">
+              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                <mat-checkbox class="filter-checkbox" [checked]="lessMb"
+                  (change)="setFilterDataCheckbox('fileSize', 'true')">
+                  Less than 1MB</mat-checkbox>
+              </li>
+              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                <mat-checkbox class="filter-checkbox" [checked]="grateMB"
+                  (change)="setFilterDataCheckbox('fileSize', 'false')">
+                  Greater than 1MB</mat-checkbox>
+              </li>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseAvailable1"
+              aria-expanded="false">
+              <div>
+                <div style="display: inline-block !important;">
+                </div>
+                Folders
+              </div>
+              <i class="fa fa-angle-down"></i>
+            </button>
+          </h2>
+        </div>
+        <div id="collapseAvailable1" class="collapse in" data-parent="#accordion1">
+          <div class="card-body">
+            <div class="filterTextinput filter-checkbox-input">
+              <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+              </li>
+              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                <mat-checkbox class="filter-checkbox" [checked]="availabileSelected"
+                  (change)="setFilterDataCheckbox('folder', 'true')">
+                  Public folder</mat-checkbox>
+              </li>
+              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                <mat-checkbox class="filter-checkbox" [checked]="notAvailabileSelected"
+                  (change)="setFilterDataCheckbox('folder', 'false')">
+                  Private folder </mat-checkbox>
+              </li>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </ul>
+  </section>
+  <div class="filter-footer" *ngIf="filterapplied === true">
+    <button class="btn reset-btn" (click)="clearFilter()">
+      <i class="fa fa-undo"></i>Reset
+    </button>
+    <button class="btn apply-btn" (click)="getUsers()">
+      <i class="fa fa-check"></i>Apply
+    </button>
+  </div>
+</aside>
+
+
+<section class="waitlist-box-check">
+  <div class="title-gb no-padding">
+    <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
+      Jaldee Drive
+      <!-- <i class="fa fa-question-circle-o fa-lg fl-right" ></i> -->
+      <!-- <button type="button" class="pull-right p-button-rounded p-ripple p-button p-component">
+        <span class="p-button-label">Upload New File</span>
+      </button> -->
+
+
+      <!-- <button type="button" class="pull-right p-button-rounded p-ripple p-button p-component">
+        <a style="color: white !important;" #modal data-toggle="modal" data-target="#exampleModalCenter">
+        </a>
+        <a style="color: white !important;" class="pointer-cursor mr-1 p-2" (click)="imagefile1.click();"><input
+            #imagefile1 type="file" accept="/*;capture=camera" style="display:none;" multiple
+            (change)="filesSelected($event, 'close')"><i style="color: white !important;"
+            class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i>Upload
+          File
+        </a>
+      </button> -->
+    </div>
+  </div>
+  <div class="mx-3 my-3">
+    <p class="text-secondary">Manage the files uploaded by the providers or consumers or you!</p>
+  </div>
+</section>
+
+<section class="waitlist-box-check">
+  <div class="content w-manager settings comn-cls lic-page" style="width: 100%;">
+    <div class="col-md-12 no-padding-small">
+      <div class="w-dta">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-12 col-md-8  col-lg-8 no-padding">
+            <div class="card no-mgn-bt card_addon txt_centr">
+              <!-- <div class="txt_adon">Bill Due</div>
+          <div>Amount - <span class="clr_pitch_blu rupee-font">
+            </span></div> -->
+
+              <!-- <span>
+                <div class="mgn-up-10"><span class="btn_pay custId-cursor">{{storageleft.usedStorage}}GB Used</span>
+                </div>
+              </span>
+              <span>
+
+                <div class="progress bar-wdth  mt-2 no-padding" style="height:16px;">
+                  <div class="progress-bar progress-bar-animated active" role="progressbar"
+                    [style.width.%]="weightageValue" aria-valuenow="weightageValue" aria-valuemin="0"
+                    aria-valuemax="100" data-toggle="popover"></div>
+                </div>
+                <span>
+                  <div class="mgn-up-10"><span class="btn_pay custId-cursor">{{storageleft.totalStorage}}GB total
+                      storage</span>
+                  </div>
+                </span>
+              </span> -->
+
+              <div>
+                <!-- <div class="card">
+                  <div class="card-header" style="background-color: darkgray;">
+                    Featured
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                  </div>
+                </div> -->
+                <div class="mx-2 mt-4" *ngIf="!sharedFolder">
+                  <h4>Statistics</h4>
+                </div>
+                <div class="mx-2" *ngIf="!sharedFolder">
+                  <div class="row">
+
+                    <div class="col-sm-12 col-md-4 col-lg-4  col-xs-12 col-12 disp-flex">
+
+                      <div class="card color" style="word-wrap: normal !important;">
+
+                        <div align="center" class="my-2">
+
+                          <span class="pull-left">
+                            Available Space
+
+                          </span>
+
+
+                          <span class="pull-right">{{remainingStorage}} GB left</span>
+
+
+
+                        </div>
+
+                        <div class="progress mb-1" style="height:6px">
+                          <div class="progress-bar bg-primary"  style="width:50%"></div>
+                        </div>
+                        <!-- value="weightageValue" min='0' max='remainingStorage' <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+ -->
+                      </div>
+                      <!-- <div class="card color" style="word-wrap: normal !important;">
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
+                        <div class="col-md-4">Available Space</div>
+                        <div>
+  
+                          <div class="col-md-4">
+                            <span>{{storageleft.remainingStorage}}</span>
+                          </div>
+                        </div>
+                        <div class="col-md-4">GB left</div>
+                        <div class="progress">
+                          <div class="progress-bar bg-primary" style="width:50%"></div>
+                        </div>
+                      </div>
+                    </div> -->
+                    </div>
+                    <!-- <div class="col-sm-12 col-md-4 col-lg-4  col-xs-12 col-12 disp-flex">
+                      <div class="card color" style="word-wrap: normal !important;">
+
+                        <div align="center" class="my-2">
+
+                          <span class="pull-left">
+                            Storage
+
+                          </span>
+
+
+                          <span class="pull-right">{{storageleft.usedStorage}} Used</span>
+
+
+
+                        </div>
+
+                        <div class="progress mb-1" style="height:6px">
+                          <div class="progress-bar bg-primary" style="width:50%"></div>
+                        </div>
+
+                      </div>
+                     
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4  col-xs-12 col-12 disp-flex">
+                      <div class="card color" style="word-wrap: normal !important;">
+
+                        <div align="center" class="my-2">
+
+                          <span class="pull-left">
+                            Shared Files
+
+                          </span>
+
+
+                          <span class="pull-right">{{totalcount}} Today</span>
+
+
+
+                        </div>
+
+                        <div class="progress mb-1" style="height:6px">
+                          <div class="progress-bar bg-primary" style="width:50%"></div>
+                        </div>
+
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="card color" style="word-wrap: normal !important;">
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
+                        <div class="col-md-4">Storage</div>
+                        <div>
+  
+                          <div class="col-md-4">
+                            <span>{{storageleft.usedStorage}}</span>
+                          </div>
+                        </div>
+                        <div class="col-md-4">Used</div>
+                        <div class="progress">
+                          <div class="progress-bar bg-primary" style="width:50%"></div>
+                        </div>
+                      </div>
+                    </div> -->
+
+              <!-- <div class="content w-manager settings comn-cls lic-page" style="width: 100%;"> -->
+              <!-- <div class="col-md-12    "> -->
+              <!-- <div class="w-dta">
+        <div class="row"> -->
+              <!-- <div>
+    <div class="no-padding-small">
+      <div class="pdflex">
+        <span class="p-input-icon-left p-ml-auto">
+          <i class="pi pi-search"></i>
+          <input class="search" pInputText type="text" placeholder="Search keyword" />
+        </span>
+      </div>
+    </div>
+  </div> -->
+
+              <!-- <div>
+
+    <header class="main-header dash chkin" id="locHeader" [class.index-zero]="filter_sidebar">
+      <nav class="navbar navbar-static-top jd-custom-nav" role="navigation"
+        style="background: transparent !important;">
+        <div class="navbar-custom-menu width100pc">
+          <ul class="nav navbar-nav width100pc"
+            style="display: flex !important; justify-content: flex-start !important; align-items: flex-end !important; flex-wrap: wrap !important;">
+            <li class="dropdown notifications-menu">
+              <a 
+                class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
+                data-toggle="dropdown">            
+                <span>&nbsp; Videos</span>
+              </a>
+            </li>
+            <li class="dropdown notifications-menu">
+              <a 
+                class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
+                data-toggle="dropdown">
+               Images
+              </a>
+            </li>
+            <li class="dropdown notifications-menu">
+              <a 
+                class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
+                data-toggle="dropdown">
+                Audios
+              </a>
+            </li>
+            <li class="dropdown notifications-menu">
+              <a 
+                class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
+                data-toggle="dropdown">
+                Docs
+              </a>
+            </li>
+        
+   
+</ul>
+</div>
+</nav>
+</header>
+  </div> -->
+
+              <!-- <div class="card color" style="word-wrap: normal !important;">
+    <div class="col-md-12 disp-flex">
+      <div class="col-md-4">Available Space</div>
+      <div>
+        <div align="center">
+
+        </div>
+      </div>
+      <div style="margin-top:5%;" class="col-md-4">GB left</div>
+    </div>
+  </div> -->
+              <div class="mx-2" *ngIf="onSharedClicked">
+                <h5 class="mgn-up-10">
+                  <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
+
+                  </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  {{sharedFolder}} Files
+
+                </h5>
+                <div class=" row cust-name d-flex">
+
+                  <div (click)="publicfolder('Shared')"
+                    class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                    id="folder2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="From Provider">
+
+                    <i class="fa fa-folder" aria-hidden="true">
+
+                      <p (click)="publicfolder('Shared')">From Provider</p>
+                    </i>
+
+                  </div> &nbsp; &nbsp; &nbsp;
+                  <div (click)="publicfolder('Shared')"
+                    class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                    id="folder2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="From Consumer">
+
+                    <i class="fa fa-folder" aria-hidden="true">
+
+                      <p (click)="publicfolder('Shared')">From Consumer</p>
+                    </i>
+
+                  </div>
+                </div>
+              </div>
+              <div class="mx-2">
+                <div class="cust-name">
+                  <!-- <h4>Your folders</h4> -->
+
+                  <div class="col-md-12 row" style="display: flex;">
+                    <!-- <div (click)="publicfolder('Public')"
+                      class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                      id="folder2">
+                      <i class="fa fa-folder" aria-hidden="true">
+                        <p (click)="publicfolder('Public')"> Public Files</p>
+                      </i>
+                    </div> -->
+                    <div (click)="publicfolder('private')"
+                      class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                      id="folder2">
+                      <i class="fa fa-folder" aria-hidden="true">
+                        <p (click)="publicfolder('private')"> My Files</p>
+                      </i>
+                    </div>
+                    <div (click)="onClicked('Shared')"
+                      class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
+                      id="folder2">
+
+                      <i class="fa fa-folder" aria-hidden="true">
+
+                        <p (click)="onClicked('Shared')">Shared Files</p>
+                      </i>
+                      <!-- <img src="../../../assets/images/Group 816.jpg" class=" fa fa-folderpull-left text-light "
+                  style="width: 22px !important; margin-top: 2px !important;"> -->
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <!-- <h4>
+                  <span> Patients Files</span>
+                  <span> <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-left">
+                      <img src="../../../assets/images/provider-filter-icon.png"
+                        style="width: 22px !important; margin-top: -6px !important;">
+                    </a></span>
+                </h4> -->
+              <!-- <div class="mx-2 cust-name">
+                <div class="mx-2">
+                  <h4>Patients Files</h4>
+
+                </div>
+              
+                <button type="button" class="my-3 btn btn-white p-button-rounded p-ripple dropdown-toggle"
+                  (click)="showFilterSidebar()"
+                  style="width: 250px; background-color: white !important; border: 1px solid gray;">
+                  <img src="../../../assets/images/Group 822.jpg" class="pull-left text-light"
+                    style="width: 22px !important; margin-top: 2px !important;">
+                  <span class="mx-2 pull-left text-info">Filter</span>
+                  <img src="../../../assets/images/Group 820.jpg" class="pull-right text-light"
+                    style="width: 22px !important; margin-top: 2px !important;">
+                </button>
+                <div class="form-group pull-right">
+                  <input type="text" class="form-control rounded" placeholder="Search" [(ngModel)]="searchTerm">
+                </div>
+              </div> -->
+              <!-- <div class="mx-2 container">
+
+
+                <table class="table table-hover">
+
+                  <thead>
+                    <tr>
+                     
+                      <th>File Name</th>
+                      <th>Date</th>
+                      <th>File Type</th>
+                      <th>File Size</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="cursor: pointer;" *ngFor="let customer of customers | filter:searchTerm | paginate: config;   let i= index" (click)="preview(customer)">
+                     
+                     
+                      <td>
+                        {{customer.fileName}}
+                      </td>
+                      <td>
+                     {{customer.uploadedDate}}
+                      </td>
+                      <td>
+                      {{customer.fileType}}
+                      </td>
+                      <td>
+                       {{customer.fileSize}}
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+                <div class="d-block ml-auto">
+
+                  <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+              </div>
+                 <p-table [value]="customers" responsiveLayout="scroll">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th class="th">File Name</th>
+                      <th class="th">Date</th>
+                      <th class="th">File Type</th>
+                      <th class="th">File Size</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-customer>
+                    <tr style="cursor: pointer;" (click)="preview(customer)">
+                      <td class="td">
+                        <span class="image-text">{{customer.fileName}}</span>
+                      </td>
+                      <td class="td">
+                        <span class="image-text">{{customer.uploadedDate}}</span>
+                      </td>
+                      <td class="td">
+                        <span>{{customer.fileType}}</span>
+                      </td>
+                      <td class="td">
+                        <span>{{customer.fileSize}}</span>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table> 
+              </div> -->
+              <div style="text-align: center;">
+                <div class="prov-name-txt" style="text-transform:none !important;">
+                  Unlock More Space!
+                </div>
+                <!-- <div class="prov-loc">
+                  Upgrade to Jaldee Drive Plus
+                </div> -->
+                <button (click)="gotoSmsAddon()" class="btn btn-warning p-button-rounded text-dark"> Upgrade Now
+                </button>
+
+
+
+
+              </div>
+
+              <!-- <div class="cust-name">
+                <h4>patients folders
+                  <span> <a style="height: 15px !important;" (click)="showFilterSidebar()"
+                      class="btn mb-2 action-button mgn-lt-5 pull-right">
+                      <img src="../../../assets/images/provider-filter-icon.png"
+                        style="width: 22px !important; margin-top: -6px !important;">
+
+                    </a></span>
+                </h4>
+              </div>
+              <div>
+                <p-table [value]="customers" responsiveLayout="scroll">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th class="th">File Name</th>
+                      <th class="th">Date</th>
+                      <th class="th">File Type</th>
+                      <th class="th">File Size</th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-customer>
+                    <tr>
+                      <td class="td">
+                        <span (click)="preview(customer)" class="image-text">{{customer.fileName}}</span>
+                      </td>
+                      <td class="td">
+                        <span class="image-text m-0 p-0">{{customer.uploadedDate}}</span>
+                      </td>
+                      <td class="td">
+                        <span>{{customer.fileType}}</span>
+                      </td>
+                      <td class="td">
+                        <span>{{customer.fileSize}}</span>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div> -->
+            </div>
+          </div>
+          <!-- <i class="fa fa-home store_ico"></i>&nbsp; -->
+          <!-- <div align="center">
+                <circle-progress [percent]="10" [title]="2.2" [space]="-10" [radius]="25" [outerStrokeWidth]="3"
+                  [innerStrokeWidth]="0" [outerStrokeColor]="'#152d56'" [innerStrokeColor]="'#152d56'"
+                  [animation]="true" [animationDuration]="1000"></circle-progress>
+              </div> -->
+          <!-- <div  style="margin-top:5%;" class="col-md-4">GB left</div> -->
+          <!-- <div align="center">
+                <circle-progress [percent]="22" [title]="22" [space]="-10" [radius]="25" [outerStrokeWidth]="3"
+                  [innerStrokeWidth]="0" [outerStrokeColor]="'#4882c2'" [innerStrokeColor]="'#e7e8ea'"
+                  [animation]="true" [animationDuration]="1000"></circle-progress>
+              </div> -->
+          <!-- <div style="margin-top:5%;" class="col-md-4">Used</div> -->
+          <!-- <circle-progress [percent]="totalcount" [title]="totalcount" [space]="-10" [radius]="25"
+                  [outerStrokeWidth]="3" [innerStrokeWidth]="0" [outerStrokeColor]="'#4882c2'"
+                  [innerStrokeColor]="'#e7e8ea'" [animation]="true" [animationDuration]="1000">
+                </circle-progress> -->
+          <!-- <div style="margin-top:5%;" class="col-md-4">Files</div> -->
+
+
+          <!-- 
+         <div class="col-xs-12 col-sm-12 col-12 col-md-4 col-lg-4 no-padding">
+            <div class="card">
+               <div>
+                <div class="card color">
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
+                    <div class="prov-dp" [ngStyle]="{ 'background-image': 'url(' + blogo + ')'}"></div>
+                    <div class="prov-name">
+                      <div class="prov-name-txt">
+                        {{bdetails.bn}}
+                      </div>
+                      <div class="prov-loc">
+                        {{bdetails.bs}}
+                      </div>
+                      <div class="prov-loc store-cntct">
+                        <i (click)="gotoSettings()" class="fa fa-gears"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+               <div style="padding-left: 15px;">
+                <h4>Statistic</h4>
+              </div>
+              <div>
+                <div class="card color" style="word-wrap: normal !important;">
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
+                    <div class="col-md-4">Available Space</div>
+                    <div>
+
+                      <div class="col-md-4">
+                        <span>{{storageleft.remainingStorage}}</span>
+                      </div>
+                    </div>
+                    <div class="col-md-4">GB left</div>
+
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="card color" style="word-wrap: normal !important;">
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
+                    <div class="col-md-4">Storage</div>
+                    <div>
+
+                      <div class="col-md-4">
+                        <span>{{storageleft.usedStorage}}</span>
+                      </div>
+                    </div>
+                    <div class="col-md-4">Used</div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="card color" style="word-wrap: normal !important;">
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 disp-flex">
+                    <div class="col-md-4">Total Shared</div>
+                    <div>
+                      <div align="center">
+
+                        <div class="col-md-4">
+                          <span>{{totalcount}}</span>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="col-md-4">Files</div>
+                  </div>
+                </div>
+              </div> 
+              <div style="text-align: center;"> 
+                <div class="prov-name-txt" style="text-transform:none !important;">
+                  Unlock More Space!
+                </div>
+                <div class="prov-loc">
+                  Upgrade to Jaldee Drive Plus
+                </div>
+                <button (click)="gotoSmsAddon()" class="btn btn-warning p-button-rounded text-dark"> Upgrade Now </button>
+
+
+
+
+              </div>
+            </div>
+          </div>  -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

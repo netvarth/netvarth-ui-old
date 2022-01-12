@@ -25,12 +25,12 @@
       <ng-container matColumnDef="serviceName">
         <mat-header-cell *matHeaderCellDef class="visit-sr-cl"> <b>Service Name</b></mat-header-cell>
         <mat-cell *matCellDef="let visit">
-          {{getServiceName(visit)}}</mat-cell>
+          {{getServiceName(visit)}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="userName">
         <mat-header-cell *matHeaderCellDef class="visit-dr-cl"> <b>Doctor</b></mat-header-cell>
         <mat-cell *matCellDef="let visit">
-          &nbsp;&nbsp;{{ getProviderName(visit) }}
+          &nbsp;&nbsp;{{getProviderName(visit)}}
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="mr">

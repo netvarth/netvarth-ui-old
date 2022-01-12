@@ -1,13 +1,21 @@
+<!-- <section>
+    <app-breadcrumb (performAction)="performActions($event)" [breadcrumbs]="breadcrumbs"
+        [moreOptions]="breadcrumb_moreoptions"></app-breadcrumb>
+</section> -->
 <section class="">
     <div class="card title-gb">
-        <h5 class="mgn-up-10">
-            <span class="fa fa-arrow-left pointer-cursor"
-                (click)="redirecToQmanager()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <h5 class="mgn-up-10"> 
+         <!-- <button type="button" class="btn default profile-back" (click)="redirecToQmanager()">
+            <span class="fa fa-chevron-left">&nbsp;Back</span> </button>&nbsp;&nbsp;&nbsp; -->
+            <span class="fa fa-arrow-left pointer-cursor"(click)="redirecToQmanager()" ></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{qBoardscaption}}
-            <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
-        </h5>
+          <!-- <button type="button" style="float: right;" class="btn default profile-back" (click)= "redirecToHelp()">
+               Help
+          </button>  -->
+          <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
+        </h5>     
     </div>
-</section>
+</section> 
 <section>
     <div class="content displayboard loc-list">
         <div class="col-md-12 no-padding-small">
@@ -56,21 +64,35 @@
                                 <div class="col-md-12 no-padding" *ngIf="layout_list.length!==0">
                                     <div class="table-responsive">
                                         <table class="table tbl-qboard">
+                                            <!-- <thead class="qBoardselected-table">
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Refresh Interval</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead> -->
                                             <tbody>
                                                 <tr *ngFor="let layout of layout_list, let i=index"
                                                     [class.selected-qboard]="!layout.isContainer && qBoardsSelectedIndex[i]">
+                                                    <!-- <td class="centeralign">
+                                                        
+                                                        <mat-checkbox class="pt10" >
+                                                        </mat-checkbox> 
+                                                    </td> -->
                                                     <td>
                                                         <input type="checkbox" class="ckbx pull-left"
                                                             [disabled]="layout.isContainer"
                                                             [checked]="qBoardsSelectedIndex[i]"
                                                             (click)="!layout.isContainer && qBoardClicked(i)"
-                                                            [value]="layout.id" *ngIf="layout_list.length > 1" />
+                                                            [value]="layout.id" *ngIf="layout_list.length > 1"/>
                                                         <div (click)="goDisplayboardLayoutDetails(layout, 'layout')"
                                                             class="pull-left mgn-lt-10">
                                                             <h3 class="pointer-cursor">
                                                                 <i *ngIf="layout.isContainer"
-                                                                    class="fa fa-object-group"></i>&nbsp;{{layout.displayName
-                                                                | capitalizeFirst}}
+                                                                    class="fa fa-object-group"></i>&nbsp;{{layout.displayName | capitalizeFirst}}
+                                                                <!-- <span
+                                                                    *ngIf="!layout.container" class="layout_name"> (Id -
+                                                                    {{layout.id}})</span> -->
                                                             </h3>
                                                         </div>
                                                     </td>
@@ -87,6 +109,11 @@
                                                                     class="fa fa-eye" aria-hidden="true"></i>
                                                                 View
                                                             </button>
+                                                            <!-- <button mat-menu-item
+                                                                (click)="editDisplayboardLayout(layout)">
+                                                                <i class="icon-edit"></i>
+                                                                Edit
+                                                            </button> -->
                                                             <button mat-menu-item
                                                                 (click)="deleteDisplayboardLayout(layout)">
                                                                 <i class="icon-delete"></i>
@@ -105,6 +132,23 @@
                                             </tbody>
                                         </table>
                                     </div>
+
+
+                                    <!-- <div class="col-md-12 mt5 pt5 pb5 dboard"
+                                        *ngFor="let layout of layout_list, let i=index" [class.selected-qboard]="!layout.isContainer && qBoardsSelectedIndex[i]"
+                                        >
+                                        <div class="copy">
+                                            <div class="col-md-1 col-xs-1 col-sm-1">
+                                               
+                                            </div>
+                                            <div class="col-md-9 col-xs-9 col-sm-9 no-padding">
+                                                
+                                            </div>
+                                            <div class="col-md-2 col-xs-2 col-sm-2 no-padding pull-right">
+                                                
+                                            </div>
+                                        </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <!-- For Adding QBoards to a Group -->
@@ -148,6 +192,7 @@
                                                                     autocomplete="off">
                                                             </td>
                                                             <td class="action">
+                                                                <!-- <i class="icon-edit" (click)></i> &nbsp; -->
                                                                 <i class="icon-delete"
                                                                     (click)="removeFromGroup(qboard)"></i>
                                                             </td>
@@ -161,6 +206,7 @@
                                                                             {{add_circle_outline}}</mat-icon>
                                                                     </button>
                                                                 </mat-panel-description>
+                                                                <!-- <i class="fa fa-plus-circle blue pointer-cursor" (click)="enableAddToGroup()"></i> -->
                                                             </td>
                                                         </tr>
                                                         <tr *ngIf="enableAddGroup">
@@ -184,8 +230,7 @@
                                                                     type="button"
                                                                     class="cs-btn bt3 mt3 ml5">Add</button>
                                                                 <button (click)="cancelAddToQBoardGroup()" type="button"
-                                                                    class="cs-btn bt3 mt3 ml5">Cancel</button>
-                                                            </td>
+                                                                    class="cs-btn bt3 mt3 ml5">Cancel</button></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

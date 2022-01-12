@@ -1,0 +1,69 @@
+.hlp{
+    border-bottom: solid lightgray ; 
+    border-width: 1px; 
+    margin-right: 5px;
+}
+.rgt{
+     border-right:solid lightgray;
+     border-width: 1px; 
+     border-spacing: 2px;
+     margin-top: 0%;
+    
+}
+.txt{
+    font-size: small;
+}
+
+table{
+    height: 300px;
+   margin: 0;
+   padding: 0;
+  
+  table-layout: auto;
+  border: lightgray;
+  overflow: scroll;
+  z-index: 1;
+  overflow-y: scroll;
+  overflow-x: scroll;
+
+
+  
+
+}
+.listBoard{
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+.frmCtrl{
+    
+    border: hidden;
+    border-bottom: hidden;
+    border-left: hidden;
+    border-right: hidden;
+    border-style: hidden;
+    border-bottom-color: white;
+    
+
+}
+
+.tr-row{
+    border: hidden;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.userGroup .mat-radio-button {
+    display:flex !important;
+    flex-direction: column;
+    padding:2px 0px 2px 0px !important;
+}
+
+.tbl1{
+    overflow-x: scroll;
+   
+    overflow-y: scroll;
+    overflow: scroll;
+}
+

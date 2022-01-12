@@ -1,0 +1,18 @@
+
+  .pay-rad{
+    width: 95px;
+    height: 95px;
+    float: left;
+    border:1px solid #ddd;
+    border-radius: 20px;
+    margin:5px;
+    font-size: 10px;
+  }
+  .pay-icons {
+    width: 50%;
+    height: 50px;
+  }
+
+.pay-rad.mat-radio-button.mat-radio-checked { 
+  box-shadow: 0 0 2px 2px rgb(70, 70, 233) !important;
+}

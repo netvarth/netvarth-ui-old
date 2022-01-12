@@ -1,0 +1,605 @@
+<!-- <p>folder-files works!</p> -->
+<section class="">
+  <div class="card title-gb rounded-0">
+    <h5 class="mgn-up-10">
+      <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
+
+      </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {{foldername}} Files
+
+    </h5>
+    <p *ngIf="foldertype === 'shared' || foldertype === 'public' && !isHealthCare"
+      class="text-secondary mx-5 no-padding">
+      Manage the files uploaded by the {{foldername=='Provider' ? 'provider' : 'consumer'}} label!</p>
+
+    <p *ngIf="foldertype === 'public' && provider_label && isHealthCare" class="text-secondary mx-5 no-padding">
+      Manage the files uploaded by the {{provider_label}} lable!</p>
+    <p *ngIf="foldertype === 'shared'&& customer_label && isHealthCare" class="text-secondary mx-5 no-padding">
+      Manage the files uploaded by the {{customer_label}} lable!</p>
+
+    <p *ngIf="foldertype === 'private'" class="text-secondary mx-5 no-padding">Manage your own files!
+    </p>
+  </div>
+</section>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="close-btn">
+        <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <ng-container>
+        <div class="modal-body">
+          <!-- <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12">
+            <mat-chip-list class="btns">
+              <mat-chip><a class="lnk action pointer-cursor" (click)="imagefile.click()"><input #imagefile type="file"
+                    accept="/*;capture=camera" style="display:none;" multiple (change)="filesSelected($event)"><i
+                    class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i>Upload
+                  File</a></mat-chip>
+            </mat-chip-list>
+          </div> -->
+          <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 bold pad-top-10 mgn-up-10 mgn-bt-10 border-tp"
+            *ngIf="(selectedMessage.files && selectedMessage.files.length > 0)">
+            Uploaded Files
+          </div>
+          <div class="img-section mgn-up-20" *ngIf="(selectedMessage.files && selectedMessage.files.length > 0)">
+            <ul class="galul">
+              <ng-container *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+                <li *ngFor="let file of selectedMessage.files;let i = index ">
+                  <div class="galimg_outer">
+                    <div class="gal_img">
+                      <img [src]="getImage(selectedMessage.base64[i], file)" *ngIf="selectedMessage.base64[i]">
+                    </div>
+                    <div class="gal-input">
+                      <input type="text" placeholder="Caption" [(ngModel)]="imgCaptions[i]">
+                    </div>
+                    <div class="gal_action" (click)="deleteTempImage(i)">
+                      <i class="fa fa-times-circle" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+          <!-- <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 bold pad-top-10 mgn-up-10 mgn-bt-10 border-tp">
+            <div >
+             
+              <p>Choose folder to upload</p>
+              <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)" >
+               
+                <mat-radio-button [value]="'public'" >
+                 
+                  Public folder
+                </mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <mat-radio-button [value]="'private'" checked>
+                  Private folder
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div> -->
+        </div>
+      </ng-container>
+      <div class="modal-footer">
+        <button type="button" class="disp-none btn btn-light-primary font-weight-bold" data-dismiss="modal"
+          #closebutton>Cancel</button>
+        <button type="button" class="btn btn-primary font-weight-bold hf-btn pull-right" data-dismiss="modal"
+          #closebutton (click)="actionCompleted()">Ok</button>
+        <!-- [disabled]="!choose_type" -->
+      </div>
+      <div class="error-section" *ngIf="apiError !== ''">
+        {{apiError}}
+      </div>
+      <div class="error-section success-section" *ngIf="apiSuccess !== ''">
+        {{apiSuccess}}
+      </div>
+    </div>
+  </div>
+</div>
+<section class="customersList mt-2 p-3 table-card">
+  <!-- <div class="mx-4" *ngIf="foldertype === 'Shared'">
+    <div class=" row cust-name d-flex">
+
+      <div (click)="sharedfolder('Provider')" *ngIf="!onClickedProvider"
+        class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file" id="folder2"
+        data-bs-toggle="tooltip" data-bs-placement="bottom" title="From Provider">
+
+        <i class="fa fa-folder" aria-hidden="true">
+
+          <p (click)="sharedfolder('Provider')">From Provider</p>
+        </i>
+
+      </div> &nbsp; &nbsp; &nbsp;
+      <div (click)="sharedfolder('Consumer')" *ngIf="!onClickedConsumer"
+        class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file" id="folder2"
+        data-bs-toggle="tooltip" data-bs-placement="bottom" title="From Consumer">
+
+        <i class="fa fa-folder" aria-hidden="true">
+
+          <p (click)="sharedfolder('Consumer')">From Consumer</p>
+        </i>
+
+      </div>
+    </div>
+  </div> -->
+
+  <div class="row p-3 no-padding-small">
+    <!-- <h5 class="mx-2">
+      
+      <span class="text-bold">
+        {{sharedFolderName}} Files
+      </span>
+    </h5> -->
+
+    <div class="card  card-custom card-stretch gutter-b no-padding col-md-12  col-sm-12  col-xs-12">
+
+      <div class="mx-2" *ngIf="foldertype === 'private'">
+        <button type="button" class="pull-left p-button-rounded p-ripple p-button p-component mx-2 my-3 p-1">
+          <a style="color: white !important;" #modal data-toggle="modal" data-target="#exampleModalCenter">
+          </a>
+          <a style="color: white !important;" class="pointer-cursor mr-1 p-2" (click)="imagefile1.click();"><input
+              #imagefile1 type="file" accept="/*;capture=camera" style="display:none;" multiple
+              (change)="filesSelected($event, 'close')"><i style="color: white !important;" class="fa fa-plus mgn-rt-5"
+              aria-hidden="true"></i> Upload File </a>
+          <!-- <i style="color: white !important;"
+            class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i> -->
+        </button>
+      </div>
+      <div class="p-3">
+
+        <h3 class="align-items-start flex-column">
+          <!-- <span class="fa fa-arrow-left pointer-cursor mgn-rt-10" *ngIf="hideGroups"
+              (click)="hideGroups = false"></span>
+            <span class="card-label font-1 font-weight-bolder text-dark"
+              *ngIf="selectedGroup == 'all' && groups.length > 0">All
+              {{customer_label | capitalizeFirst}}s</span>
+            <span class="card-label font-1 font-weight-bolder text-dark"
+              *ngIf="selectedGroup !== 'all'">{{selectedGroup.groupName}}</span> -->
+          <a (click)="showFilterSidebar()" class=" mb-2 mgn-lt-5 pull-right" data-bs-toggle="tooltip"
+            data-bs-placement="top" title="filter" *ngIf="filterapplied || (customers.length > 0 && !filterapplied)">
+            <img src="assets/images/provider-filter-icon.png"
+              style="width: 22px !important; margin-top: -4px !important;">
+
+          </a>
+          <!-- <a class="icon-action pointer-cursor icon-size1 mgn-lt-10" data-toggle="control-sidebar">
+           
+            <img src="../../../assets/images/provider-filter-icon.png" (click)="showFilterSidebar()" 
+               style="width: 22px !important; margin-top: -6px !important;">
+          </a> -->
+        </h3>
+      </div>
+
+
+      <div class="row p-3 no-padding-small">
+        <div class="card-body tble pt-0 pb-3 col-12 col-sm-12 col-xs-12">
+          <div class="tab-content">
+            <div class="table-responsive1">
+              <div class="align-items-center">
+                <mat-spinner *ngIf="apiloading" class="align-items-center" style="font-size: 20px;"></mat-spinner>
+              </div>
+              <!-- <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner> -->
+              <table
+                class="table  table-responsive table-hover table-head-custom table-head-bg table-borderless table-vertical-center">
+                <thead>
+                  <tr class="text-left text-uppercase mx-2 " style="background-color: #f3f6f9; height: 60px;">
+
+                    <th style="min-width: 140px">
+
+                      <!--class="" [class.pad-bt-0]="selectedcustomersformsg.length > 0" <input type="checkbox" (change)="selectAllcustomers($event)"
+                          [checked]="isAllCustomerSelected()"> -->
+                      Name
+
+                      <!-- <div class="customer-selected" *ngIf="selectedcustomersformsg.length > 0">
+                        {{selectedcustomersformsg.length}} {{(selectedcustomersformsg.length === 1) ? customer_label
+                        : customer_label + 's'}} selected </div>
+                       style="min-width: 150px"
+                      style="min-width: 50px"
+                      style="min-width: 100px"
+                      style="min-width: 100px"
+                    -->
+                    </th>
+                    <th style="min-width: 80px" *ngIf="foldertype === 'shared'">
+                      Owner
+                    </th>
+                    <th style="min-width: 65px">Date</th>
+                    <th style="min-width: 45px">Type</th>
+                    <th style="min-width: 55px">Size</th>
+                    <!-- <th *ngIf="foldertype === 'Shared'">
+                      Shared With
+                    </th> -->
+
+                    <!-- <th style="min-width: 50px"></th> -->
+                  </tr>
+                </thead>
+
+                <!-- [class.pointer-cursor]="!showCustomers"  (click)="selectedRow(customer)"-->
+                <tbody>
+                  <tr style="cursor: pointer;" class="py-4"
+                    *ngFor="let customer of customers | filter:searchTerm | paginate: config;   let i= index"
+                    (click)="preview(customer)">
+
+                    <td>
+
+                      <!-- <div class="pr-3">
+                          <span class="symbol-label">
+                            <input type="checkbox" name="Checkboxes4" [checked]="checkSelection(customer)"
+                              (click)="stopprop($event)" (change)="selectcustomers(customer)"
+                              [disabled]="showText(customer)">
+                          </span>
+                        </div> {{getCustomer(customer)}}-->
+                      <span class="text-dark-75 text-hover-primary mb-1 cust-name">
+
+                        <i class="fa fa-file-pdf-o" aria-hidden="true" *ngIf="customer.fileType === 'pdf'"
+                          style="color:red;"></i> <i class="fa fa-file-image-o" aria-hidden="true"
+                          *ngIf="customer.fileType === 'png' ||customer.fileType === 'mp4' || customer.fileType === 'jpg' || customer.fileType === 'jpeg' || customer.fileType === 'bmp' || customer.fileType === 'webp' "></i>
+                        {{customer.fileName?.length>10 ? customer.fileName.slice(0, 10)+'...' : customer.fileName}}
+                      </span>
+                      <!-- {{customer.fileName.length>10 ? customer.fileName.slice(0, 10)+'...' : customer.fileName}} -->
+                      <!-- <span class="text-dark-75 text-hover-primary mb-1 cust-name"
+                        *ngIf="getFileType(customer.fileType) === 'pdf'">
+
+                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> {{getFileName(customer.fileName)}} </span> -->
+                      <!-- <span class="text-dark-75 text-hover-primary mb-1 cust-name"
+                        *ngIf="getFileType(customer.fileType) === 'png' || getFileType(customer.fileType) === 'jpg' || getFileType(customer.fileType) === 'jpeg' || getFileType(customer.fileType) === 'bmp' || getFileType(customer.fileType) === 'webp'">
+
+                        <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                        {{getFileName(customer.fileName)}} </span> -->
+                      <!-- {{getFileName(customer.fileName)}}<div>
+                            <span *ngFor="let label of customer.label | keyvalue"
+                              [class.appliedLabel]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
+                          </div> -->
+
+
+                      <!-- <div class="customer-added" *ngIf="showText(customer)">Already added to this group</div> -->
+                    </td>
+                    <td *ngIf="foldertype === 'shared' && customer.fileName === undefined">
+                      <span class="text-dark-75 d-block ">
+                        -
+                      </span>
+                    </td>
+                    <td *ngIf="foldertype === 'shared' && customer.ownerName !==''">
+                      <span class="text-dark-75 d-block ">
+                        {{customer.ownerName}}
+                      </span>
+                    </td>
+                    <td *ngIf="foldertype === 'shared' && customer.ownerName === ''">
+                      <span class="text-dark-75 d-block ">
+                        -
+                      </span>
+                    </td>
+                    <td>
+                      <span class="text-dark-75 d-block ">
+                        {{customer.uploadedDate | date:"dd/MM/yy" }}
+                      </span>
+                    </td>
+                    <td>
+                      <!-- {{fileTypeName}} {{getFileType(customer.fileType)}}-->
+                      <span class="text-dark-75 d-block">
+                        {{customer.fileType}}
+
+                      </span>
+                      <!-- <span class="text-dark-75 d-block"
+                        *ngIf="getFileType(customer.fileType) === 'png' || getFileType(customer.fileType) === 'jpg' || getFileType(customer.fileType) === 'jpeg' || getFileType(customer.fileType) === 'bmp' || getFileType(customer.fileType) === 'webp'">
+
+                        <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                        {{getFileType(customer.fileType)}}
+                      </span> -->
+                    </td>
+                    <td>
+                      <span class="text-dark-75 d-block" *ngIf="customer.fileSize >=1">
+                        {{getFileSize(customer.fileSize)}}MB
+                      </span>
+                      <span class="text-dark-75 d-block" *ngIf="customer.fileSize <1">
+                        {{getFileSize(customer.fileSize*1024)}}KB
+                      </span>
+                    </td>
+                    <!-- <td *ngIf="foldertype === 'Shared' && customer.providerConsumer !==''">
+                      <span class="text-dark-75 d-block ">
+                        {{customer.providerConsumer}}
+                      </span>
+                    </td>
+                    <td *ngIf="foldertype === 'Shared' && customer.providerConsumer === ''">
+                      <span class="text-dark-75 d-block ">
+                        -
+                      </span>
+                    </td> -->
+                    <!-- <td *ngIf="!showCustomers" class="text-right">
+                      <button mat-flat-button class="prof_btn"
+                        (click)="stopprop($event); showCustomerAction(customer)">Actions</button>
+                    </td> -->
+                  </tr>
+                  <tr *ngIf="customers.length === 0" class="my-2 py-2">
+                    <td class="text-center my-2 py-2" colspan="4">No files found.</td>
+                  </tr>
+                  <tr *ngIf="dataLoading">
+                    <td class="text-center" colspan="4">
+                      <mat-spinner *ngIf="dataLoading"></mat-spinner>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- <div *ngIf="!apiloading && customers.length === 0 && filterapplied">
+                No files found.
+              </div> -->
+              <!-- <ngb-pagination [collectionSize]="customers.length" (pageChange)="pageChanged($event)" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination> -->
+
+              <div class="d-flex justify-content-between align-items-center flex-wrap pull-right mb-0 pageControls"
+                *ngIf="!apiloading && customers.length > 0">
+
+
+                <!-- <pagination-controls  (pageChange)="pageChanged($event)" directionLinks="false" autoHide="true" previous-text="" next-text=""></pagination-controls> -->
+                <pagination-template *ngIf="customers.length>10" #p="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event">
+                  <div
+                    class="custom-pagination d-flex justify-content-between align-items-center flex-wrap pull-right mb-0">
+                    <div class="pagination-previous mx-2" [class.disabled]="p.isFirstPage()" data-bs-toggle="tooltip"
+                      data-bs-placement="bottom" title="previous">
+                      <a *ngIf="!p.isFirstPage()" (click)="p.previous()">
+                        < </a>
+                    </div>
+                    <div *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+                      <a (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
+                        <span class="mx-2">{{ page.label }}</span>
+                      </a>
+                      <div *ngIf="p.getCurrent() === page.value">
+                        <span>{{ page.label }}</span>
+                      </div>
+                    </div>
+                    <div class="pagination-next mx-2" [class.disabled]="p.isLastPage()" data-bs-toggle="tooltip"
+                      data-bs-placement="top" title="next">
+                      <a *ngIf="!p.isLastPage()" (click)="p.next()"> > </a>
+                    </div>
+                  </div>
+                </pagination-template>
+
+              </div>
+              <!-- <div class="row">
+              
+              </div> -->
+              <!-- <div class="d-flex justify-content-between align-items-center flex-wrap pull-right mb-0 pageControls"
+                *ngIf="!apiloading && customers.length > 0">
+                <mat-paginator [length]="customers.length"  showFirstLastButtons   [pageSize]="5" [pageSizeOptions]="[10,50,100]"
+                  aria-label="Select page">
+                </mat-paginator>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+  <!-- <div class="align-items-center">
+  <mat-spinner *ngIf="apiloading"></mat-spinner>
+</div> -->
+
+
+  <div class="row displayblock">
+
+    <div class="col-sm-6 col-12 col-lg-4 col-xs-12 col-md-6 filter">
+      <aside class="filterSidebar filter-sidebar user-filter" *ngIf="filter_sidebar">
+        <section class="sidebar filter-container" id="filterContainer" style="overflow:auto"
+          [ngStyle]="{'height.vh': 90, 'margin-top.px': filterapplied === true ? 95 : 44}">
+          <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+            <span class="filter-head-title">Filters</span>
+            <i class="icon-filter-one-op ng-star-inserted closeFilter" (click)="hideFilterSidebar()"
+              [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter sidebar'"></i>
+          </div>
+          <ul class="sidebar-menu side accordion" id="accordion1">
+            <div class="card side">
+              <div class="card-header">
+                <h2 class="mb-0">
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLocation1"
+                    aria-expanded="false">
+                    <div>
+                      <div style="display: inline-block !important;">
+                        <!-- <i class="fa fa-map-marker"></i> -->
+                      </div>
+                      File name
+                    </div>
+                    <i class="fa fa-angle-down"></i>
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseLocation1" class="collapse in" data-parent="#accordion1">
+                <div class="card-body">
+                  <div class="filterTextinput filter-text-input">
+                    <li class="filterli filter-li">
+                      <input type="text" id="city" [(ngModel)]="filter.fileName" #city (keyup)="doSearch()"
+                        maxlength="20" class="filterTextbox filter-textbox" placeholder="Enter file name">
+                    </li>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="card side">
+              <div class="card-header">
+                <h2 class="mb-0">
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePin1"
+                    aria-expanded="false">
+                    <div>
+                      <div style="display: inline-block !important;">
+                        <!-- <i class="fa fa-location-arrow"></i> -->
+                      </div>
+                      File type
+                    </div>
+                    <i class="fa fa-angle-down"></i>
+                  </button>
+                </h2>
+              </div>
+              <div id="collapsePin1" class="collapse in" data-parent="#accordion1">
+                <div class="card-body">
+                  <div class="filterTextinput filter-text-input">
+                    <li class="filterli filter-li">
+                      <!-- maxlength="10" -->
+                      <input type="text" id="fileType" [(ngModel)]="filter.fileType" #fileType (keyup)="doSearch()"
+                        class="filterTextbox filter-textbox" placeholder="Enter file type">
+                    </li>
+                  </div>
+                  <div class="filter-checkbox-input  justify-content-between">
+                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                      <mat-checkbox class="filter-checkbox" [checked]="jpg"
+                        (change)="setFilterDataCheckbox('fileType', 'jpg')">
+                        JPG</mat-checkbox>
+                    </li>
+                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                      <mat-checkbox class="filter-checkbox" (change)="setFilterDataCheckbox('fileType', 'png')"
+                        [checked]="png">
+                        PNG</mat-checkbox>
+                    </li>
+                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                      <mat-checkbox class="filter-checkbox" [checked]="jpeg"
+                        (change)="setFilterDataCheckbox('fileType', 'jpeg')">
+                        JPEG</mat-checkbox>
+                    </li>
+                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                      <mat-checkbox class="filter-checkbox" (change)="setFilterDataCheckbox('fileType', 'pdf')"
+                        [checked]="pdf">
+                        PDF</mat-checkbox>
+                    </li>
+
+                    <!-- <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                      <mat-checkbox class="filter-checkbox" [checked]="allFileTypesSelected"
+                        (change)="setFilterFileTypeCheckbox('fileType', 'all', $event)">
+                        All</mat-checkbox>
+                    </li>
+                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                      <mat-checkbox class="filter-checkbox" *ngFor="let fileType of fileTypes"
+                        [checked]="filterFileType.indexOf(fileType.id) !== -1"
+                        (change)="setFilterFileTypeCheckbox('fileType', fileType.id, $event)">
+                        <span class="service-name">{{fileType.name}}</span>
+
+                      </mat-checkbox>
+                    </li> -->
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="card side">
+              <div class="card-header">
+                <h2 class="mb-0">
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName1"
+                    aria-expanded="false">
+                    <div>
+                      <div style="display: inline-block !important;">
+                        <!-- <i class="fa fa-user"></i> -->
+                      </div>
+                      File size
+                    </div>
+                    <i class="fa fa-angle-down"></i>
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseName1" class="collapse in" data-parent="#accordion1">
+                <div class="card-body">
+                  <div class="filterTextinput filter-text-input">
+                    <li class="filterli filter-li">
+                      <input type="text" id="fileSize" [(ngModel)]="filter.fileSize" #fileSize (keyup)="doSearch()"
+                        maxlength="20" class="filterTextbox filter-textbox" placeholder="Enter file size">
+                    </li>
+                  </div>
+                  <div class="filter-checkbox-input">
+                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                      <mat-checkbox class="filter-checkbox" [checked]="lessMb"
+                        (change)="setFilterDataCheckbox('fileSize', 'lessMb')">
+                        Less than 1MB</mat-checkbox>
+                      <!--  (change)="setFilterDataCheckbox('fileSize', 'false')"  [checked]="grateMB" -->
+                    </li>
+                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                      <mat-checkbox class="filter-checkbox" (change)="setFilterDataCheckbox('fileSize', 'grateMB')"
+                        [checked]="grateMB">
+                        Greater than 1MB</mat-checkbox>
+                    </li>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="card side">
+              <div class="card-header">
+                <h2 class="mb-0">
+                  <button class="btn btn-link" type="button" data-toggle="collapse"
+                    data-target="#collapseAvailable1" aria-expanded="false">
+                    <div>
+                      <div style="display: inline-block !important;">
+                      </div>
+                      Folders
+                    </div>
+                    <i class="fa fa-angle-down"></i>
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseAvailable1" class="collapse in" data-parent="#accordion1">
+                <div class="card-body">
+                  <div class="filterTextinput filter-checkbox-input">
+                    <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                    </li>
+                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                      <mat-checkbox class="filter-checkbox" [checked]="availabileSelected"
+                        (change)="setFilterDataCheckbox('folder', 'true')">
+                        Public folder</mat-checkbox>
+                    </li>
+                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                      <mat-checkbox class="filter-checkbox" [checked]="notAvailabileSelected"
+                        (change)="setFilterDataCheckbox('folder', 'false')">
+                        Private folder </mat-checkbox>
+                    </li>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+            <!-- <i class="fa fa-bookmark"></i> -->
+            <div class="card side">
+              <div class="card-header">
+                <h2 class="mb-0">
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseBNo1"
+                    aria-expanded="false">
+                    <div>
+                      <div style="display: inline-block !important;">
+
+                      </div>
+                      <span>&nbsp;Booking ID</span>
+                    </div>
+                    <i class="fa fa-angle-down"></i>
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseBNo1" class="collapse in" data-parent="#accordion1">
+                <div class="card-body">
+                  <div class="filterTextinput filter-text-input">
+                    <li class="filterli filter-li">
+                      <!-- contextId -->
+                      <input type="text" id="txt_mobile" [(ngModel)]="filter.contextId"
+                        [ngModelOptions]="{standalone: true}" class="filterTextbox filter-textbox"
+                        placeholder="Enter Booking ID">
+                      <!-- <input type="text" id="txt_mobile" [(ngModel)]="filter.checkinEncId"
+                          [ngModelOptions]="{standalone: true}" class="filterTextbox filter-textbox"
+                          placeholder="Enter Booking ID"> -->
+                    </li>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ul>
+        </section>
+        <div class="filter-footer" *ngIf="filterapplied === true">
+          <!-- *ngIf="filterapplied === true" -->
+          <button class="btn reset-btn" (click)="clearFilter()">
+            <i class="fa fa-undo"></i>Reset
+          </button>
+          <button class="btn apply-btn" (click)="getUsers()">
+            <i class="fa fa-check"></i>Apply
+          </button>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+</section>

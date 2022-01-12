@@ -1,4 +1,4 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
 import { LocalStorageService } from '../../services/local-storage.service';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
     'templateUrl': './card.component.html',
     'styleUrls': ['./card.component.css']
 })
-export class CardComponent implements OnInit, AfterViewChecked {
+export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() item;
     @Input() terminology;
     @Input() loc;
@@ -37,6 +37,7 @@ export class CardComponent implements OnInit, AfterViewChecked {
     buttonCaption = Messages.GET_TOKEN;
     waitinglineCap = Messages.WAITINGLINE;
     personsAheadText = '';
+    personsAheadCaption = '';
     itemQty = 0;
     actions: string;
     todayDate;
@@ -47,6 +48,7 @@ export class CardComponent implements OnInit, AfterViewChecked {
     selectedUser;
     selQIds: any = [];
     qualification;
+    disablecheckavailabilitybutton=false;
     constructor(
         private lStorageService: LocalStorageService,
         private wordProcessor: WordProcessor,
@@ -59,12 +61,12 @@ export class CardComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
-        console.log(this.item)
-        console.log(this.type)
-        console.log(this.teams);
+        // console.log(this.item)
+        // console.log(this.type)
+        // console.log(this.teams);
         if (this.type == 'appointment-dashboard') {
             this.appointment = this.item;
-            console.log(this.appointment)
+            // console.log(this.appointment)
         }
         if (this.type) {
             this.item.type = this.type;
@@ -98,7 +100,9 @@ export class CardComponent implements OnInit, AfterViewChecked {
             case 'waitlist':
                 this.service = this.item.item;
                 if (this.service.serviceAvailability['personAhead'] >= 0) {
-                    this.personsAheadText = 'People in line : ' + this.service.serviceAvailability['personAhead']; 
+                    this.personsAheadCaption = "People in line";
+                    this.personsAheadText = this.service.serviceAvailability['personAhead'];
+                    // this.personsAheadText = 'People in line : ' + this.service.serviceAvailability['personAhead']; 
                 }
                 if (this.service.serviceAvailability['showToken']) {
                 } else {
@@ -150,6 +154,20 @@ export class CardComponent implements OnInit, AfterViewChecked {
                 break;
         }
     }
+    getServiceName(serviceName) {
+        let name = '';
+        if (serviceName.length > 12) {
+          name = serviceName.substring(0, 12) + '...';
+        } else {
+          name = serviceName;
+        }
+        return name;
+      }
+    ngOnChanges() {
+        // this.itemQty = this.quantity;
+        // this.cdref.detectChanges();
+        // console.log(this.extras);
+    }
     ngAfterViewChecked() {
         this.cdref.detectChanges();
     }
@@ -166,20 +184,53 @@ export class CardComponent implements OnInit, AfterViewChecked {
         event.stopPropagation();
     }
     cardActionPerformed(type, action, service, location, userId, event) {
-        event.stopPropagation();
-        const actionObj = {};
-        actionObj['type'] = type;
-        actionObj['action'] = action;
-        if (service) {
-            actionObj['service'] = service;
-        }
-        if (location) {
-            actionObj['location'] = location;
-        }
-        if (userId) {
-            actionObj['userId'] = userId;
-        }
-        this.actionPerformed.emit(actionObj);
+        // console.log('action...',action);
+        // if(type=='checkavailability'){
+        //     if(service['serviceAvailability']['nextAvailableDate']) {
+        //         event.stopPropagation();
+        //         const actionObj = {};
+        //         actionObj['type'] = type;
+        //         actionObj['action'] = action;
+        //         if (service) {
+        //             actionObj['service'] = service;
+        //         }
+              
+        //         if (location) {
+        //             actionObj['location'] = location;
+        //         }
+               
+        //         if (userId) {
+        //             actionObj['userId'] = userId;
+        //         }
+                
+        //         this.actionPerformed.emit(actionObj);
+        //     } 
+        //     else {
+        //         this.disablecheckavailabilitybutton = true
+        //     }
+        // } 
+        // else {
+            event.stopPropagation();
+        
+            const actionObj = {};
+            actionObj['type'] = type;
+            actionObj['action'] = action;
+            if (service) {
+                actionObj['service'] = service;
+            }
+          
+            if (location) {
+                actionObj['location'] = location;
+            }
+           
+            if (userId) {
+                actionObj['userId'] = userId;
+            }
+            
+            this.actionPerformed.emit(actionObj);
+        // }
+
+    
     }
     showConsumerNote(item) {
         this.noteClicked.emit(item);
@@ -340,8 +391,12 @@ export class CardComponent implements OnInit, AfterViewChecked {
         age = age.split(',');
         return age[0];
     }
-    getUsersList(teamid) {
-        const userObject = this.teams.filter(user => parseInt(user.id) === teamid);
-        return userObject[0].name;
+    getScheduleIndex(id) {
+        // const filterSchedule = this.activeSchedules.filter(sch => sch.id === id);
+        // return this.activeSchedules.indexOf(filterSchedule[0]);
+    }
+    getUsersList(teamid){
+       const userObject =  this.teams.filter(user => parseInt(user.id) === teamid); 
+       return userObject[0].name;
     }
 }

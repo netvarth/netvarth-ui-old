@@ -4,14 +4,18 @@ import { SharedServices } from './shared-services';
 
 @Injectable()
 export class PaytmService {
-
+    paymentModes=[
+         'NB','CC','DC','UPI','PPI','CARD'
+      ];
     constructor(
         private sharedServices: SharedServices
     ) { }
     initializePayment(pData: any, paytmUrl, accountId, referrer) {
-        console.log('resppDataonse' + JSON.stringify(pData));
         let response = JSON.parse(pData.response);
-
+        if(pData.paymentMode==='CC'||pData.paymentMode==='DC'){
+            pData.paymentMode='CARD';
+        }
+        const paymentModesHidden=this.paymentModes.filter(obj=>obj!==pData.paymentMode);
         const paytm_payload = {
 
             "paymentId": pData.orderId,
@@ -28,11 +32,19 @@ export class PaytmService {
                     "orderId": pData.orderId, /* update order id */
                     "token": response.body.txnToken, /* update token value */
                     "tokenType": "TXN_TOKEN",
-                    "amount": pData.amount /* update amount */
+                    "amount": pData.amount
+                  
+                    
                 },
+                
                 "merchant": {
                     "mid": pData.merchantId,
                     "redirect": false
+                },
+                "payMode":{
+                    "filter":{
+                        'exclude':paymentModesHidden
+                    }
                 },
                 "handler": {
                     "notifyMerchant": function (eventName, data) {
@@ -98,6 +110,21 @@ export class PaytmService {
         return new Promise((resolve, reject) => {
 
             this.sharedServices.updatePaytmPay(payload, account_id)
+                .subscribe(result => {
+                    console.log('result' + result);
+                    resolve(result);
+                }, error => {
+                    reject(false);
+                })
+
+        })
+
+
+    }
+    updatePaytmPayForProvider(payload, ) {
+        return new Promise((resolve, reject) => {
+
+            this.sharedServices.updatePaytmPayProvider(payload)
                 .subscribe(result => {
                     console.log('result' + result);
                     resolve(result);

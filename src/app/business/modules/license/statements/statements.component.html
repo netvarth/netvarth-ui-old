@@ -211,11 +211,11 @@
                                                         <span>{{gateway_cap}} : <span class="result">
                                                                 <b>{{payment.paymentGateway}}</b></span></span>
                                                     </div>
-                                                    <div class="pay-det-row">
+                                                    <!-- <div class="pay-det-row">
                                                         <span>{{payment_cap}} {{mode_cap}} :
                                                             <span class="result">
                                                                 <b>{{payment.paymentMode}}</b></span></span>
-                                                    </div>
+                                                    </div> -->
                                                     <div class="pay-det-row">
                                                         <span>{{amount_cap}} :
                                                             <span class="result rupee-font">
@@ -244,6 +244,7 @@
                                     </div>
                                 </div>
                                 <hr>
+                   
                                 <div *ngIf="source !== 'payment-history'">
                                     <button type="button" class="btn btn-primary font-weight-bold mk-pay"
                                         (click)="makePayment()" style="font-size: 1.1rem;">Make Payment</button>

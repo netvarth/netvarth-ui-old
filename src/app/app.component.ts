@@ -7,6 +7,7 @@ import { Platform } from '@ionic/angular';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { AuthService } from './shared/services/auth-service';
+import { TranslateService } from '@ngx-translate/core';
 export let projectConstants: any = {};
 @Component({
   selector: 'app-root',
@@ -33,7 +34,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     private firebaseX: FirebaseX,
     private device: Device,
     private platform: Platform,
-    private localNotifications: LocalNotifications
+    private localNotifications: LocalNotifications,
+    public translate: TranslateService
   ) { }
 
   /**
@@ -106,6 +108,9 @@ export class AppComponent implements OnInit, AfterViewInit {
           console.log(`Got a new token ${token}`);
         });
       projectConstants = this.globalService.getGlobalConstants();
+          if(projectConstants){
+      return false;
+    }
       const cVersion = version.desktop;
       const pVersion = this.lStorageService.getitemfromLocalStorage('version');
       if ((pVersion && pVersion !== cVersion) || !pVersion) {
@@ -140,5 +145,24 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngAfterViewInit () {
     document.getElementById('globalLoading').remove();
   }
+  
+  // languages = [
+  //   {value: 'en', viewValue: 'English'},
+  //   {value: 'hd', viewValue: 'Hindi'},
+  //   {value: 'kan', viewValue: 'Kannada'},
+  //   {value: 'tel',viewValue:'Telugu'},
+  //   {value: 'mal',viewValue:'Malayalam'},
+  //   {value: 'tam',viewValue:'Tamil'}
+  // ];
+  //  langselected='English';
+  //  changeLocale(locale: string,languagename) {
+  //   this.langselected=languagename;
+  //   console.log('lang',this.langselected)
+ 
+  //    this.translate.use(locale); 
+  
+  //     this.i18nService.changeLocale(locale);
+        
+  //  }
 }
 
