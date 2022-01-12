@@ -53,10 +53,11 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
         }
         if (params.customId) {
           this.customId = params.customId;
-        }
-        if(params.account_id){
           this.accountId = params.account_id;
         }
+        // if(params.account_id){
+          
+        // }
         if(params.theme){
           this.theme=params.theme;
         }
