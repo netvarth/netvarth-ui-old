@@ -1332,3 +1332,6 @@ color: red;
 .bord-left {
     border-left:1px solid #ddd;
 }
+.nohand {
+    cursor: unset !important;
+}

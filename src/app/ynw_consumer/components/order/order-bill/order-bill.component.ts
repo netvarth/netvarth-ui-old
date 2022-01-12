@@ -599,7 +599,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
         this.isClickedOnce = false;
         //    this.razorModel.image = data.jaldeeLogo;
         // this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type);
-        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uuid, this.accountId);
+        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uuid, null, this.accountId);
 
     }
     payWithPayTM(pData: any, accountId: any) {

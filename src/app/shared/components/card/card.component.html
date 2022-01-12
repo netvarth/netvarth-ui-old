@@ -70,7 +70,7 @@
                     <i class="fa fa-calendar black"></i>&nbsp;Check availability
                 </span>
             </button>
-            <button class="checkavailabilitybutton " *ngIf="buttonCaption =='Donate'">&nbsp;</button>
+            <button class="checkavailabilitybutton nohand" *ngIf="buttonCaption =='Donate'">&nbsp;</button>
         </div>
         <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6 no-padding getclass ">
             <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event)"
