@@ -318,6 +318,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
                 if (params.service_id) {
                     this.selectedService = parseInt(params.service_id);
+                   
                 }
                 if (params.theme) {
                     this.theme = params.theme;

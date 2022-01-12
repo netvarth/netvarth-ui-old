@@ -1539,6 +1539,18 @@
                                                 </div>
                                             </div> -->
                                         </div>
+                                        <div class="col-md-12 txt-align-center"
+                                                    *ngIf="paymentLength==0|| (paymentDetails && paymentDetails.amountRequiredNow == 0)">
+                                                    <div class="prepayment-confirm">
+                                                        <button type="button" [class.disabled]="isClickedOnce"
+                                                            (click)="!isClickedOnce && saveCheckin('checkin')"
+                                                            id="stepThreeConfirmButton"
+                                                            class="next-button btn btn-primary font-weight-bold  px-12 py-4"
+                                                            [disabled]="!checkPolicy && heartfulnessAccount">
+                                                            Confirm {{settingsjson.showTokenId?'Token
+                                                            ':'Checkin'}}</button>
+                                                    </div>
+                                                </div>
                                         <!-- <div>
                                             <div class="t-and-c">
                                                 <div class="checkbox">

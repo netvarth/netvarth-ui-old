@@ -538,7 +538,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
             if(this.selected_payment_mode.toLowerCase()==='cash'){
                 this.cashPayment();
             }else{
-                alert('1')
+               
                 console.log(this.pay_data)
             this.pay_data.uuid = this.uuid;
             this.pay_data.amount = this.bill_data.amountDue;

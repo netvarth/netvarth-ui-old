@@ -1064,12 +1064,9 @@
                                                         [class.disabled]="isClickedOnce"
                                                         *ngIf="paytmEnabled && razorpayEnabled && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
                                                         (click)="!isClickedOnce && saveCheckin('appt','paytm')">
-
                                                     </span>
-
                                                 </div>
                                             </div> -->
-
                                                 <div *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
                                                     class="payment-mode-card-styles">
                                                     <ng-container *ngIf="!shownonIndianModes">
@@ -1086,9 +1083,8 @@
                                                 </div>
                                                 <div class="clearfix"></div>
                                                 <div>
-
                                                     <div class="col-md-12 txt-align-center pad_link"
-                                                    *ngIf="paymentmodes && paymentmodes.internationalPay && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                        *ngIf="paymentmodes && paymentmodes.internationalPay && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
                                                         <span [class.disabled]="paymentBtnDisabled"
                                                             (click)="togglepaymentMode()" class="pointer-cursor"><a
                                                                 class="refund_policy">
@@ -1101,8 +1097,6 @@
                                                                     Payment ? Click
                                                                     here</span>
                                                             </a></span>
-
-
                                                     </div>
                                                     <div class="col-md-12 txt-align-center pad_link"
                                                         *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
@@ -1110,10 +1104,7 @@
                                                             *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                             <a data-toggle="modal" data-target="#exampleModal"
                                                                 class="refund_policy">Cancellation Policy</a></span>
-
-
                                                     </div>
-                                                  
                                                     <div class="col-md-12 txt-align-center">
                                                         <button type="button"
                                                             class=" next-button btn btn-primary font-weight-bold text-uppercase "
@@ -1171,8 +1162,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-
                                             </div>
                                             <!-- <div class=""
                                                 *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
@@ -1187,7 +1176,6 @@
                                                         class="refund_policy">Cancellation Policy</a>
                                                 </div>
                                             </div> -->
-
                                             <!-- modalbox -->
                                             <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1219,8 +1207,15 @@
                                                     </div>
                                                 </div>
                                             </div> -->
-
-
+                                        </div>
+                                        <div class="col-md-12 txt-align-center">
+                                            <button type="button"
+                                                class=" next-button btn btn-primary font-weight-bold text-uppercase "
+                                                [class.disabled]="isClickedOnce"
+                                                *ngIf="paymentLength==0|| (paymentDetails && paymentDetails.amountRequiredNow == 0)"
+                                                (click)="!isClickedOnce && saveCheckin('appt')">
+                                                Confirm Appointment
+                                            </button>
                                         </div>
                                         <!-- <div
                                             class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10">
