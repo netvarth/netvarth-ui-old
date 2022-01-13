@@ -397,7 +397,7 @@
                         *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
                         <p class="jaldeecredit">
                           To pay Rs {{checkJcash ? totalamountPay : cartDetails.advanceAmount}} please select any
-                          payment options ccccc
+                          payment options
                         </p>
                         <div *ngIf=" ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
                           class="payment-mode-card-styles">
@@ -428,7 +428,7 @@
                           [class.disabled]="isClickedOnce"
                           *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
                           (click)="!isClickedOnce && confirm()">
-                          MaKe Payment
+                          Make Payment
                         </button>
                       </div>
                       <br>

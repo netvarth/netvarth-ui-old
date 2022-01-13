@@ -775,7 +775,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
         this.razorModel.mode=this.selected_payment_mode;
         this.isClickedOnce=false;
         // this.razorModel.image = data.jaldeeLogo;
-        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type , this.uuid , this.accountId);
+        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type , this.uuid , null, this.accountId);
 
     }
 

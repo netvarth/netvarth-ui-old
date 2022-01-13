@@ -770,7 +770,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
     }
     confirmcheckin(type?, paymenttype?) {
-        if (type === 'appt' && this.selectedService.isPrePayment && this.commObj['communicationEmail'] === '') {
+        console.log("Type:", type);
+        console.log("is Prepayment:", this.selectedService.isPrePayment);
+        console.log("Email:", this.commObj['communicationEmail']);
+        // type === 'appt' && 
+        if (this.selectedService.isPrePayment && (!this.commObj['communicationEmail'] || this.commObj['communicationEmail']=== '')) {
             const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
                 width: '40%',
                 panelClass: ['loginmainclass', 'popup-class'],
@@ -781,6 +785,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.confirmcheckin(type, paymenttype);
                 } else {
                     this.isClickedOnce = false;
+                    this.goBack('backy');
                 }
             });
         } else {
@@ -848,8 +853,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
             }
             if (this.commObj['communicationEmail'] !== '') {
-                this.waitlist_for[0]['email'] = this.commObj['communicationEmail'] !== '';
+                this.waitlist_for[0]['email'] = this.commObj['communicationEmail'];
             }
+            console.log( this.waitlist_for);
             post_Data['appmtFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
             if (this.jcashamount > 0 && this.checkJcash) {
                 post_Data['useCredit'] = this.checkJcredit
@@ -884,19 +890,19 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         if (type === 'appt') {
             this.isClickedOnce = true;
         }
-        if (this.selectedService.serviceType === 'virtualService' && type === 'next') {
-            if (this.waitlist_for.length !== 0) {
-                for (const list of this.waitlist_for) {
-                    if (list['id'] !== this.parentCustomer.id) {
-                        this.confirmcheckin(type, paymenttype);
-                    } else {
-                        this.confirmcheckin(type, paymenttype);
-                    }
-                }
-            }
-        } else {
+        // if (this.selectedService.serviceType === 'virtualService' && type === 'next') {
+        //     if (this.waitlist_for.length !== 0) {
+        //         for (const list of this.waitlist_for) {
+        //             if (list['id'] !== this.parentCustomer.id) {
+        //                 this.confirmcheckin(type, paymenttype);
+        //             } else {
+        //                 this.confirmcheckin(type, paymenttype);
+        //             }
+        //         }
+        //     }
+        // } else {
             this.confirmcheckin(type, paymenttype);
-        }
+        // }
 
     }
     rescheduleAppointment() {
