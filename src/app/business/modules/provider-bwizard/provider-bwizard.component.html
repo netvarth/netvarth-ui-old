@@ -1,7 +1,7 @@
 <section>
     <div class="col-md-12 no-padding-small">
         <!-- Step 0 -->
-        <div *ngIf="active_step==0 && !loading_active && bProfile && !subDomainLinks[bProfile.serviceSubSector.subDomain]"
+        <!-- <div *ngIf="active_step==0 && !loading_active && bProfile && !subDomainLinks[bProfile.serviceSubSector.subDomain]"
             class="is-bx step0 col-12 col-sm-12 col-lg-12 ml-auto mr-auto">
             <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
             <div class="pt-top" style="padding-top: 50px;padding-bottom: 80px;">
@@ -13,11 +13,11 @@
                 <span class="cs-btn lg-btn" (click)="skipMe()">{{get_start_cap}} <i class="icon icon-angle-right"></i>
                 </span>
             </div>
-        </div>
-        <div *ngIf="active_step==0 && !loading_active && !expressSignupClicked && bProfile && subDomainLinks[bProfile.serviceSubSector.subDomain]"
+        </div> -->
+        <!-- <div *ngIf="active_step==0 && !loading_active && !expressSignupClicked && bProfile && subDomainLinks[bProfile.serviceSubSector.subDomain]"
             class="express-signup step0 col-12 col-sm-12 col-lg-12 ml-auto mr-auto no-padding">
             <div></div>
-            <!-- <h2 style="margin: 0px !important;">Welcome to Jaldee Business</h2> -->
+           
             <div class="col-md-12">
                 <div id="hero-area" class="hero-area-bg">
                     <div class="container">
@@ -95,8 +95,8 @@
                 </div>
             </div>
             <div class="clearfix"></div>
-        </div>
-        <div *ngIf="active_step==0 && !loading_active && expressSignupClicked && bProfile && subDomainLinks[bProfile.serviceSubSector.subDomain]"
+        </div> -->
+        <!-- <div *ngIf="active_step==0 && !loading_active && expressSignupClicked && bProfile && subDomainLinks[bProfile.serviceSubSector.subDomain]"
             class="express-signup step0 col-12 col-sm-12 col-lg-12 ml-auto mr-auto no-padding">
             <h2 class="mgn-up-20">THANK YOU</h2>
             <div class="col-12 col-sm-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 no-padding">
@@ -110,9 +110,9 @@
                 </div>
             </div>
             <div class="clearfix"></div>
-        </div>
+        </div> -->
         <!-- Step 1 -->
-        <div *ngIf="active_step==1" class="is-bx step1 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
+        <!-- <div *ngIf="active_step==1" class="is-bx step1 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
             <form action="">
                 <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
                 <div class="header">
@@ -155,9 +155,9 @@
                     </div>
                 </div>
             </form>
-        </div>
+        </div> -->
         <!-- Step 2 -->
-        <div *ngIf="active_step==2" class="is-bx step2 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
+        <!-- <div *ngIf="active_step==2" class="is-bx step2 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
             <form action="">
                 <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
                 <div class="header">
@@ -248,9 +248,9 @@
                     </div>
                 </div>
             </form>
-        </div>
+        </div> -->
         <!-- Step 3 -->
-        <div *ngIf="active_step==3" class="is-bx step3 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
+        <!-- <div *ngIf="active_step==3" class="is-bx step3 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
             <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
             <div class="header">
                 <h1>{{working_hr_cap}}</h1>
@@ -300,9 +300,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Step 4 -->
-        <div *ngIf="active_step==4"
+        <!-- <div *ngIf="active_step==4"
             class="is-bx step2 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto wiz-service">
             <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
             <div class="header">
@@ -412,9 +412,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Step 5 -->
-        <div *ngIf="active_step==5" class="is-bx step4 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
+        <!-- <div *ngIf="active_step==5" class="is-bx step4 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
             <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
             <div class="header">
                 <h1>Additional info</h1>
@@ -425,7 +425,7 @@
                         profile visibility to every one.
                     </p>
                     <div class="form-group">
-                        <!-- Specilaizations -->
+                       
                         <div style="margin-bottom: 20px">
                             <div style="display: flex">
                                 <div style="margin-bottom: 10px; margin-top: 5px">
@@ -472,7 +472,7 @@
                                 </app-common-innerloading-spinner>
                             </div>
                         </div>
-                        <!-- Virtual fields -->
+                      
                         <div class="acc-cont" *ngFor="let fields of subdomain_fields">
                             <div *ngIf="fields.mandatory">
                                 <div style="display: flex">
@@ -693,9 +693,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Step 6 -->
-        <div *ngIf="active_step==6" class="is-bx step4 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
+        <!-- <div *ngIf="active_step==6" class="is-bx step4 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
             <span (click)="checkClose()" class="close-btn" data-icon="i"></span>
             <div class="header">
                 <h1>{{public_search_cap}}</h1>
@@ -750,9 +750,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Step 7 -->
-        <div *ngIf="active_step==7" class="is-bx step4 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
+        <!-- <div *ngIf="active_step==7" class="is-bx step4 col-12 col-sm-12 col-lg-12 col-xl-12 ml-auto mr-auto">
             <form action="">
                 <span (click)="redirecttoProfile()" class="close-btn" data-icon="i"></span>
                 <div class="header">
@@ -788,6 +788,85 @@
                     </div>
                 </div>
             </form>
+        </div> -->
+
+ <!--logo start-->
+ <div>
+    <img class="img-fluid" src="assets/images/jaldee-logo.png" />
+</div>
+<!----logo end-->
+<!---jaldee business logo start-->
+<div class="container">
+    <div>
+        <div>
+            <img class="img-fluid" src="../../../../assets/images/welcome.svg" />
         </div>
+        <div class="centered1">
+            <div style="color: #fff;" >Welcome to</div>
+            <h4 style="color: #fcde98;">JALDEE </h4>
+            <h4 style="color: #fcde98;">BUSINESS</h4>
+        
+        </div>
+        
+    </div>
+    <div class="centered2">
+        <button  type="submit" style="padding: 1rem 2rem 0.9rem;
+        margin: 0.5rem;
+        border-radius: 2rem;
+        border: 1px solid #e0e0e0;
+        background-color: #e0e0e0;
+color: #2e2e2e;;cursor: pointer;"  >
+   Take me to assissted account setup
+     </button>
+    
+    </div>
+    <div class="centered3">
+        <ul class="underline" style="color: #fff;">I will explore myself</ul>
+    </div>
+    
+    
+    
+</div>
+<!---jaldee business logo end-->
+<div style="background-color: #fff7ce;margin-top: 100px;" class="container">
+   <div style="display: flex;padding: 3rem;" class="imageText"  >
+       <div>
+       <div  >
+        <div style="font-size: 25px;color: blue;font-weight: bold;">Save Your Time </div>
+        <div style="font-size: 25px;color: blue;font-weight: bold;">And just relax</div>
+       </div>
+        
+        <div style="color: #f9c250;font-size: 15px;">Jaldee team create your profile and make your account live for free.Jaldee team offers you free Jaldee support and consultation</div>
+        <!-- <div> </div>
+        <div></div> -->
+       </div>
+       <div class="imageDetails">
+           <img style="height: auto;width:100%;" class="img-fluid"src="../../../../assets/images/W2.svg" />
+          
+           <div class="btn">
+            <button  type="submit" style="padding: 1rem 2rem 0.9rem;
+            margin: 0.5rem;
+            border-radius: 2rem;
+            border: 1px solid #162182;
+            background-color: #162182;
+color: #fff;cursor: pointer;">
+       Why Jaldee Business
+         </button>
+           </div>
+         
+       </div>
+       
+       
+   </div>
+</div>
+
+
+
+
+
+
+
+
+
     </div>
 </section>
