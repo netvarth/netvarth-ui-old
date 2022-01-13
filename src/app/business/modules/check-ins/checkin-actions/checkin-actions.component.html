@@ -138,11 +138,11 @@
                     *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp' && checkin.service.virtualServiceType === 'videoService'"></span>
                 <div class="icon-text"
                     *ngIf="checkin.service.virtualCallingModes[0].callingMode !== 'Phone' && checkin.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
-                    {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call'}} Service
+                   123 {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call'}} Service
                 </div>
                 <div class="icon-text"
                     *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                    {{checkin.waitlistStatus == 'started' ? 'Resume Service' : 'Call +' +
+                    {{checkin.waitlistStatus == 'started' ? 'Resume Service' : 'Call ' +
                     checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
                 </div>
             </div>
