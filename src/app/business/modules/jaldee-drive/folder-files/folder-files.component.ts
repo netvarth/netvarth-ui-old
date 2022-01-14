@@ -412,13 +412,16 @@ export class FolderFilesComponent implements OnInit {
       }
     }
     if (type === 'fileType') {
-      // if(value === ''){
-      //   this.png = false;
-      //   this.jpeg = false;
-      //   this.jpg = false;
-      //   this.pdf = false;
-      //   this.filter.fileType = ''; 
-      // }
+      if (value === false) {
+        this.png = false;
+        this.jpeg = false;
+        this.jpg = false;
+        this.pdf = false;
+        this.filter.fileType = ' ';
+        console.log("Type :", type, "Value Null :", value, "Filter", this.filter.fileType)
+
+      }
+
       if (value === 'png') {
         this.png = true;
         this.jpeg = false;
@@ -462,6 +465,10 @@ export class FolderFilesComponent implements OnInit {
 
     if (type === 'fileSize') {
       console.log("Checked", type, value)
+      if (value === true) {
+        this.filter.fileSize = '';
+        console.log("File Size : ", this.filter.fileSize)
+      }
       if (value === 'lessMb') {
         this.lessMb = true;
         this.grateMB = false;
@@ -638,7 +645,7 @@ export class FolderFilesComponent implements OnInit {
         captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
         i++;
         // }
-        console.log("Uploaded Image : ", this.imgCaptions[i]);
+        console.log("Uploaded Image : ", captions[i]);
       }
       // this.selectedMessage = {
       //   files: [],
@@ -695,36 +702,76 @@ export class FolderFilesComponent implements OnInit {
   filesSelected(event, type?) {
     const input = event.target.files;
     console.log("File Selected :", input);
+     let i = 0;
     if (input) {
       for (const file of input) {
-        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-          return;
-        } else if (file.size > projectConstants.FILE_MAX_SIZE) {
+        // if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+        //   this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+        //   return;
+        // }else
+        if (file.size > projectConstants.FILE_MAX_SIZE) {
           this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
           return;
-        } else {
+        }
+        else {
           this.selectedMessage.files.push(file);
           // this.selectedMessage.files = '';
           const reader = new FileReader();
           reader.onload = (e) => {
             this.selectedMessage.base64.push(e.target['result']);
+            this.imgCaptions[i] = '';
+            console.log("Caption: ", this.imgCaptions[i])
+
           };
           reader.readAsDataURL(file);
           this.action = 'attachment';
+          // this.imgCaptions[i] = '';
+          //  console.log("Caption Two: ",this.imgCaptions[i])
+          // this.imgCaptions = '';
+          // this.imgCaptions ? this.imgCaptions == '' : this.imgCaptions;
+
         }
       }
       if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0 && input.length > 0) {
         this.modal.nativeElement.click();
+        // this.imgCaptions[i] = '';
       }
+    }
+    //this.imgCaptions = ''
+  }
+  getCaption(caption) {
+    const captions = {};
+    let i = 0;
+    if (caption) {
+      captions[i] = (this.imgCaptions[i]) ? '' : this.imgCaptions[i];
+      //this.imgCaptions[i] = captions[i];
+      // }
+      console.log("Uploaded Image : ", captions[i]);
+      return captions[i];
+    }
+    else {
+      return this.imgCaptions[i]
     }
   }
 
-
   getImage(url, file) {
+    //   if(this.imgCaptions !== ''){
+    //     this.imgCaptions = ''
+    //   }
+    //  if(this.imgCaptions === ''){
+    //     this.imgCaptions;
+    //   }
+    //  this.imgCaptions ? this.imgCaptions == '' : this.imgCaptions;
+    // const captions = {};
+    // let i = 0;
+    // captions[i] = (this.imgCaptions[i]) ? '' : this.imgCaptions[i];
+    // this.imgCaptions[i] = captions[i];
+    // // }
+    // console.log("Uploaded Image : ", captions[i]);
     if (file.type == 'application/pdf') {
       return '../../../../../assets/images/pdf.png';
     } else {
+
       return url;
     }
   }
