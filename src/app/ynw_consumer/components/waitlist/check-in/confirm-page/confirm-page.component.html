@@ -37,7 +37,7 @@
                                             <span class="billing-value">{{wtlst.provider.businessName}},
                                                 {{wtlst.providerAccount?.businessName}}</span>
                                         </div>
-                                        <div class="disp-flex" style="margin-bottom: 5px !important;">
+                                        <div class="disp-flex"  *ngIf="wtlst.queue?.location?.place" style="margin-bottom: 5px !important;">
                                             <span class="billing-head">Location </span>
                                             <span style="line-height: normal !important;">:&nbsp;</span>
                                             <span class="billing-value"> {{wtlst.queue?.location.place}}

@@ -177,8 +177,8 @@ div {
     }
     
     .mobile-button-color {
-      background-color:  #f0b51b !important;
-      border:1px solid #f0b51b !important;
+      background-color:  #f2f5fa !important;
+      border:1px solid #f2f5fa !important;
       border-radius: 5px;
     }
     .boldmobiletext {
@@ -269,7 +269,7 @@ div {
     color: white;
     cursor: pointer;
     padding: 10px !important;
-    background:  #f0b51b !important;
+    background:  #f2f5fa !important;
   }
   .c-checkin-new .lnk a {
     color: #1572a8 !important;
@@ -355,9 +355,9 @@ div {
   border-radius: 30px !important;
   height: 50px !important;
   padding: 10px 30px !important;
-  box-shadow: 15px 15px 40px #f3b495ee !important;
+  box-shadow: 15px 15px 40px #c6d4f7 !important;
   opacity: 1 !important;
-  background: linear-gradient(45deg, #eb9a71ee(224,152,208,1) 0%, #eb9a71ee(180,76,154,1) 100%) !important;
+  background: linear-gradient(45deg, #c6d4f7(224,152,208,1) 0%, #c6d4f7(180,76,154,1) 100%) !important;
   border-color: unset !important;
   margin: 20px auto 10px !important;
   font-size: 16px !important;

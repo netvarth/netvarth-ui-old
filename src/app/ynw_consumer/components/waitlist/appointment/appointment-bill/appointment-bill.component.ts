@@ -814,7 +814,7 @@ export class ConsumerAppointmentBillComponent implements OnInit,OnDestroy {
     /**
      * To Print Receipt
      */
-    printMe() {
+     printMe() {
         const params = [
             'height=' + screen.height,
             'width=' + screen.width,

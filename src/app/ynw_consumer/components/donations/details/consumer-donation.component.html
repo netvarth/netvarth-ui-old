@@ -181,7 +181,6 @@
                                                                                                 data-toggle="modal"
                                                                                                 data-target="#exampleModalCenter"></i></a>
                                                                                     </div>
-
                                                                                 </div>
                                                                                 <div class="mgn-bt-5"
                                                                                     *ngIf="userData && userData.userProfile && userData.userProfile.email">
@@ -203,15 +202,10 @@
                                                                                                 data-toggle="modal"
                                                                                                 data-target="#exampleModalCenter"></i></a>
                                                                                     </div>
-
-
                                                                                 </div>
-
                                                                             </div>
                                                                         </div>
                                                                     </div>
-
-
                                                                     <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12 mgn-up-10 no-padding"
                                                                         style="font-size: 1rem !important;">
                                                                         <mat-chip-list class="btns">
@@ -261,6 +255,87 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div [innerHTML]="payment_popup" #div [style.display]="'none'">
+                                                    </div>
+                                                    <div
+                                                        class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 hf-double-btn-container">
+                                                        <!-- <div class="mr-2"
+                                                        *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
+                                                        <button type="button"
+                                                            class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                                                            (click)="goToStep('qnr')">
+                                                            Go Back
+                                                        </button>
+                                                    </div> -->
+                                                        <div class="clearfix"></div>
+                                                        <div class="col-xs-12" *ngIf="action==''">
+                                                            <!-- <div class="txt-align-center" *ngIf="razorpayEnabled && paytmEnabled">
+                                                            <span type="button" class="razorpay-icon paymenticons"
+                                                                [class.disabled]="isClickedOnce"
+                                                                *ngIf="razorpayEnabled && paytmEnabled"
+                                                                (click)="!isClickedOnce && payuPayment()">
+                                                            </span>&nbsp;&nbsp;
+                                                            <span type="button" class="paytm-icon paymenticons"
+                                                                [class.disabled]="isClickedOnce"
+                                                                *ngIf="razorpayEnabled && paytmEnabled"
+                                                                (click)="!isClickedOnce && paytmPayment()">
+                                                            </span>
+                                                        </div>
+                                                        <button type="button" *ngIf="razorpayEnabled && !paytmEnabled"
+                                                            [class.disabled]="isClickedOnce"
+                                                            (click)="!isClickedOnce && payuPayment()"
+                                                            class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4">
+                                                            Pay by CC/DC/UPI
+                                                        </button>
+                                                        <button type="button" *ngIf="paytmEnabled && !razorpayEnabled"
+                                                            [class.disabled]="isClickedOnce"
+                                                            (click)="!isClickedOnce && paytmPayment()"
+                                                            class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4 mgn-lt-5">
+                                                            Pay by CC/DC/UPI
+                                                        </button> -->
+                                                            <ng-container *ngIf="!shownonIndianModes">
+                                                                <app-payment-modes [paymentModes]="indian_payment_modes"
+                                                                    (modeSelected)="indian_payment_mode_onchange($event)">
+                                                                </app-payment-modes>
+                                                            </ng-container>
+                                                            <ng-container *ngIf="shownonIndianModes">
+                                                                <app-payment-modes [paymentModes]="non_indian_modes"
+                                                                    (modeSelected)="non_indian_modes_onchange($event)">
+                                                                </app-payment-modes>
+                                                            </ng-container>
+                                                            <div class="clearfix"></div>
+                                                            <div class="txt-align-center pad_link">
+                                                                <span [class.disabled]="isClickedOnce"
+                                                                    (click)="togglepaymentMode()"
+                                                                    class="pointer-cursor"><a class="refund_policy">
+                                                                        <span
+                                                                            *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non
+                                                                            Indian Payment ? Click
+                                                                            here</span>
+                                                                        <span
+                                                                            *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian
+                                                                            Payment ? Click
+                                                                            here</span>
+                                                                    </a></span>
+                                                            </div>
+                                                            <!-- <div class="txt-align-center cancelpolicy  mgn-rt-5"
+                                                           >
+                                                            <div class="pad_policy"
+                                                               >
+                                                                <a data-toggle="modal" data-target="#exampleModal"
+                                                                    class="refund_policy">Cancellation Policy</a>
+                                                            </div>
+                                                        </div>  -->
+                                                            <div class="txt-align-center">
+                                                                <button type="button"
+                                                                    class=" next-button btn btn-primary font-weight-bold text-uppercase "
+                                                                    [class.disabled]="isClickedOnce"
+                                                                    (click)="!isClickedOnce && goToGateway()">
+                                                                    MaKe Payment
+                                                            </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="addnote lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
                                                     *ngIf="action=='note'">
@@ -302,7 +377,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes"
                                                     *ngIf="action=='phone'">
                                                     <div class="mgn-up-5 input-group mobile-error c-checkin-new">
@@ -388,100 +462,13 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
-
-                <div
-                class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 hf-double-btn-container">
-                <div class="mr-2"
-                    *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
-                    <button type="button"
-                        class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
-                        (click)="goToStep('qnr')">
-                        Go Back
-                    </button>
-                </div>
-                <div class="clearfix"></div> 
-                <div class="col-xs-12" *ngIf="action==''"> 
-                    <!-- <div class="txt-align-center" *ngIf="razorpayEnabled && paytmEnabled">
-                        <span type="button" class="razorpay-icon paymenticons"
-                            [class.disabled]="isClickedOnce"
-                            *ngIf="razorpayEnabled && paytmEnabled"
-                            (click)="!isClickedOnce && payuPayment()">
-                        </span>&nbsp;&nbsp;
-                        <span type="button" class="paytm-icon paymenticons"
-                            [class.disabled]="isClickedOnce"
-                            *ngIf="razorpayEnabled && paytmEnabled"
-                            (click)="!isClickedOnce && paytmPayment()">
-                        </span>
-                    </div>
-                    <button type="button" *ngIf="razorpayEnabled && !paytmEnabled"
-                        [class.disabled]="isClickedOnce"
-                        (click)="!isClickedOnce && payuPayment()"
-                        class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4">
-                        Pay by CC/DC/UPI
-                    </button>
-                    <button type="button" *ngIf="paytmEnabled && !razorpayEnabled"
-                        [class.disabled]="isClickedOnce"
-                        (click)="!isClickedOnce && paytmPayment()"
-                        class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4 mgn-lt-5">
-                        Pay by CC/DC/UPI
-                    </button> -->
-
-                   
-                    <ng-container *ngIf="!shownonIndianModes">
-                        <app-payment-modes [paymentModes]="indian_payment_modes"
-                            (modeSelected)="indian_payment_mode_onchange($event)">
-                        </app-payment-modes>
-                    </ng-container>
-                    <ng-container *ngIf="shownonIndianModes">
-                        <app-payment-modes [paymentModes]="non_indian_modes"
-                            (modeSelected)="non_indian_modes_onchange($event)">
-                        </app-payment-modes>
-                    </ng-container>
-                    <div class="clearfix"></div>
-                    <div class="txt-align-center pad_link"
-                        >
-                        <span [class.disabled]="isClickedOnce" 
-                            (click)="togglepaymentMode()"
-                            class="pointer-cursor"><a
-                                class="refund_policy">
-                                <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
-                                here</span>
-                                <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
-                                    here</span>
-                            </a></span>
-
-
-                    </div>
-                    <!-- <div class="txt-align-center cancelpolicy  mgn-rt-5"
-                       >
-                        <div class="pad_policy"
-                           >
-                            <a data-toggle="modal" data-target="#exampleModal"
-                                class="refund_policy">Cancellation Policy</a>
-                        </div>
-                    </div>  -->
-                    <div class="txt-align-center">
-                        <button type="button"
-                                class=" next-button btn btn-primary font-weight-bold text-uppercase "
-                                [class.disabled]="isClickedOnce"
-                        
-                                (click)="!isClickedOnce && goToGateway()">
-                               MaKe Payment
-                            </button>
-             
-                    </div> 
-                </div>
-            </div>
             </div>
         </div>
     </div>

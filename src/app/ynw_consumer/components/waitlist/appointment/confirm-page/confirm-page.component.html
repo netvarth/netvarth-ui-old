@@ -20,7 +20,27 @@
                                 <!-- <table class="book-details-sub chkntoknappt-details">
                                     <tbody> -->
                                     <div class="bookdetails">
-                                    
+                                        <div class="disp-flex" *ngIf="!appointment.provider" style="margin-bottom: 5px !important;">
+                                            <span class="billing-head">Priest</span>
+                                            <span style="line-height: normal !important;">:&nbsp;</span>
+                                            <span class="billing-value">{{appointment.providerAccount?.businessName}}</span>
+                                        </div>
+                                        <div class="disp-flex" *ngIf="appointment.provider" style="margin-bottom: 5px !important;">
+                                            <span class="billing-head">Priest</span>
+                                            <span style="line-height: normal !important;">:&nbsp;</span>
+                                            <span class="billing-value">{{appointment.provider.businessName}},
+                                                {{appointment.providerAccount?.businessName}}</span>
+                                        </div>
+                                        <div class="disp-flex" *ngIf="appointment.location?.place" style="margin-bottom: 5px !important;">
+                                            <span class="billing-head">Location </span>
+                                            <span style="line-height: normal !important;">:&nbsp;</span>
+                                            <span class="billing-value"> {{appointment.location?.place}}
+                                                <!-- <a
+                                                    [href]="wtlst.queue.location.googleMapUrl" target="_blank"
+                                                    class="icon-location" matTooltip="Click to navigate">
+                                                </a> -->
+                                            </span>
+                                        </div>
                                         <!-- <tr *ngIf="!appointment.provider">
                                             <td width="48%" align="right">
                                                 Provider</td>
