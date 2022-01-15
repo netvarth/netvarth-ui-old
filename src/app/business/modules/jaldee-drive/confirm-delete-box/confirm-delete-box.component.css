@@ -1,0 +1,11 @@
+.mat-dialog-actions.paddingtop button{
+    padding:10px 25px 10px 25px !important;
+}
+.displ{
+    font-size: medium;
+}
+.modalShow{
+    display: block;
+    text-align: center;
+    justify-content: center;
+}

@@ -13,6 +13,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter'; // import ng2search pipe module
 import { Routes, RouterModule } from '@angular/router';
 import { SharedfilesComponent } from './sharedfiles/sharedfiles.component';
+import { ConfirmDeleteBoxComponent } from './confirm-delete-box/confirm-delete-box.component';
 //import { CapitalizeFirstPipeModule } from 'src/app/shared/pipes/capitalize.module';
 //import {} from '../'
 
@@ -35,6 +36,7 @@ const routes: Routes = [
     FolderFilesComponent,
     PreviewuploadedfilesComponent,
     SharedfilesComponent,
+    ConfirmDeleteBoxComponent,
 
   ],
   imports: [

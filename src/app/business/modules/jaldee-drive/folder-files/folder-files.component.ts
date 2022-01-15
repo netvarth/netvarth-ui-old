@@ -14,6 +14,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { projectConstants } from '../../../../app.component';
+import { ConfirmDeleteBoxComponent } from '../confirm-delete-box/confirm-delete-box.component';
 
 
 
@@ -508,6 +509,51 @@ export class FolderFilesComponent implements OnInit {
       }
     });
   }
+
+
+
+
+  deletepreview(id, fileName) {
+    console.log("ID : ", id)
+    this.fileviewdialogRef = this.dialog.open(ConfirmDeleteBoxComponent, {
+      width: '30%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        id: id,
+        fileName: fileName,
+        message:'Do you really want to delete this file.'
+      }
+    });
+    this.fileviewdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getfiles();
+      }
+    });
+
+
+    // if (confirm("Are you sure to delete " + fileName)) {
+    //   console.log("Implement delete functionality here");
+    //   this.provider_servicesobj.deleteAttachment(id).subscribe(
+    //     (data: any) => {
+    //       console.log("Deleted Attachment :", data);
+    //       this.getfiles();
+    //       // this.Allfiles = data;
+    //       // this.customers = data
+    //       this.dataLoading = false;
+    //       //this.paginator = this.customers
+    //       // this.customers.map((x) => {
+    //       //   this.fileSizeFilter = Math.ceil(x.fileSize)
+    //       //   // console.log("File Size", this.fileSizeFilter)
+    //       // })
+
+    //       //console.log("Uploaded Files : ", this.customers);
+    //     }
+    //   );
+
+    // }
+
+  }
   sharedfolder(foldername) {
     console.log("Access!!!")
     //this.onClickedFolder= true;
@@ -702,7 +748,7 @@ export class FolderFilesComponent implements OnInit {
   filesSelected(event, type?) {
     const input = event.target.files;
     console.log("File Selected :", input);
-     let i = 0;
+    let i = 0;
     if (input) {
       for (const file of input) {
         // if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
