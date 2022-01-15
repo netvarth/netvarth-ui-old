@@ -18,6 +18,7 @@ export class CustTemplate4Component implements OnInit {
   apptSettings: any;
   businessProfile: any;
   donationServices: any;
+  selectedLocation: any;
 
 
   // @Input() templateJson;
@@ -36,6 +37,7 @@ export class CustTemplate4Component implements OnInit {
     this.templateJson = this.customappService.getTemplateJson();
     this.donationServices = this.s3Processor.getJson(this.customappService.getDonationServices());
     this.locationjson = this.s3Processor.getJson(this.customappService.getLocations());
+    this.selectedLocation = this.locationjson[0];
     this.showDepartments = this.s3Processor.getJson(this.customappService.getAccountSettings()).filterByDept;
     console.log("Template Json:", this.showDepartments);
     this.terminologiesjson = this.s3Processor.getJson(this.customappService.getTerminologies());

@@ -31,6 +31,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() statusAction;
     service: any;
     user: any;
+    department: any;
     timingCaption: string;
     timings: string;
     server_date;
@@ -61,12 +62,8 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     }
 
     ngOnInit() {
-        // console.log(this.item)
-        // console.log(this.type)
-        // console.log(this.teams);
         if (this.type == 'appointment-dashboard') {
             this.appointment = this.item;
-            // console.log(this.appointment)
         }
         if (this.type) {
             this.item.type = this.type;
@@ -148,6 +145,9 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 break;
             case 'appt-dashboard':
                 this.waitlist = this.item;
+                break;
+            case 'department':
+                this.department = this.item.item;
                 break;
             default:
                 this.user = this.item.item;

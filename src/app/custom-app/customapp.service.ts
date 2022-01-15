@@ -97,6 +97,10 @@ export class CustomappService {
     return this.businessJsons['terminologies'];
   }
 
+  getDepartments() {
+    return this.businessJsons['departmentProviders'];
+  }
+
   getBusinessProfile() {
     console.log(this.businessJsons);
     return this.businessJsons['businessProfile'];

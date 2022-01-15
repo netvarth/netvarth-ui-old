@@ -81,6 +81,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
     this.activatedRoute.paramMap
       .subscribe(params => {
         this.accountEncId = params.get('id');
+        this.lStorageService.setitemonLocalStorage('customId', this.accountEncId);
         this.customappService.setAccountEncId(this.accountEncId );
 
         this.getAccountIdFromEncId(this.accountEncId).then(
@@ -127,7 +128,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
   getBusinessProfile(uniqueId) {
     const _this = this;
     return new Promise(function (resolve, reject) {
-      let accountS3List = 'businessProfile,settings,appointmentsettings,terminologies,location,donationServices';
+      let accountS3List = 'businessProfile,settings,appointmentsettings,terminologies,location,donationServices,departmentProviders';
       _this.subscriptions.sink = _this.s3Processor.getJsonsbyTypes(uniqueId,
         null, accountS3List).subscribe(
           (accountS3s: any) => {

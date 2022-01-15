@@ -8,7 +8,8 @@ import { PaymentModesComponent } from './payment-modes.component';
   exports: [PaymentModesComponent],
   imports: [
     CommonModule,
-    MatRadioModule
+    MatRadioModule,
+    
   ]
 })
 export class PaymentModesModule { }

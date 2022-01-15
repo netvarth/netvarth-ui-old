@@ -41,13 +41,13 @@
             [businessProfile]="businessProfile" [filteredServices]="filteredCheckinServices"
             [selectedLocation]="selectedLocation"></app-checkin-services>
     </ng-container>
-    <ng-container *ngIf="templateJson['donations']">      
+    <!-- <ng-container *ngIf="templateJson['donations']">      
         <div class="col-md-12 no-padding">
             <app-donation-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
                 [businessProfile]="businessProfile" [donationServices]="donationServices"
                 [selectedLocation]="selectedLocation"></app-donation-services>
         </div>
-    </ng-container>
+    </ng-container> -->
     <ng-container *ngIf="templateJson['orders']">
         <app-orders [locationjson]="locationjson"
         [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"

@@ -1822,8 +1822,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         this.isClickedOnce = false;
                         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     });
-        }
-        else if (this.remainingadvanceamount > 0 && this.checkJcash) {
+        } else if (this.remainingadvanceamount > 0 && this.checkJcash) {
             const postData: any = {
                 'amountToPay': this.paymentDetails.amountRequiredNow,
                 'accountId': this.account_id,
@@ -1854,8 +1853,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
 
                     });
-        }
-        else {
+        } else {
             console.log('waitlistDetails' + JSON.stringify(this.waitlistDetails));
             this.subs.sink = this.shared_services.consumerPayment(this.waitlistDetails)
                 .subscribe((pData: any) => {
