@@ -1,10 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
-
 import { ActivatedRoute } from '@angular/router';
-//import { Router } from '@angular/router';
-//import { MatPaginator } from '@angular/material/paginator';
-
 import { MatDialog } from '@angular/material/dialog';
 import { PreviewuploadedfilesComponent } from '../previewuploadedfiles/previewuploadedfiles.component';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
@@ -14,13 +10,8 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { projectConstants } from '../../../../app.component';
-import { ConfirmDeleteBoxComponent } from '../confirm-delete-box/confirm-delete-box.component';
-
-
-
-//export let projectConstants: any = {};
-
-
+import { ConfirmBoxComponent } from '../../../../business/shared/confirm-box/confirm-box.component';
+// import { ConfirmDeleteBoxComponent } from '../confirm-delete-box/confirm-delete-box.component';
 
 @Component({
   selector: 'app-folder-files',
@@ -80,20 +71,14 @@ export class FolderFilesComponent implements OnInit {
   imgCaptions: any = [];
   @ViewChild('closebutton') closebutton;
   @ViewChild('locclosebutton') locclosebutton;
-  // @ViewChild(MatPaginator) paginator: MatPaginator[];
-
   filter = {
     fileSize: '',
     fileName: '',
     fileType: '',
-    // checkinEncId: '',
     contextId: '',
     folderName: '',
     page_count: projectConstants.PERPAGING_LIMIT,
-    page: 1,
-    // providerconsumer: 'providerconsumer',
-    // jaldeeconsumer: 'jaldeeconsumer'
-
+    page: 1
   };
   filtericonTooltip = '';
 
@@ -113,8 +98,6 @@ export class FolderFilesComponent implements OnInit {
   onClickedFolder = false;
   searchTerm: any;
   p: number = 1;
-  // itemsPerPage:any;
-  // currentPage:any;
   config: any;
   count: number = 0;
   selectedLanguages: any = [];
@@ -134,7 +117,6 @@ export class FolderFilesComponent implements OnInit {
   customer_label = '';
   provider_label = '';
   isHealthCare = false;
-
   constructor(
     private _location: Location,
     private provider_servicesobj: ProviderServices,
@@ -143,17 +125,12 @@ export class FolderFilesComponent implements OnInit {
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
-
-    //private router: Router,
-
     private groupService: GroupStorageService,
-
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.activated_route.queryParams.subscribe(params => {
       this.foldertype = params.foldername;
-      // this.foldertype + ' ' + 'folder';
       this.foldername = this.foldertype;
     });
     this.config = {
@@ -162,25 +139,18 @@ export class FolderFilesComponent implements OnInit {
       totalItems: this.customers.length
 
     };
-    //this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
-
   }
   pageChanged(event) {
     this.config.currentPage = event;
   }
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
-    // this.groupService.setitemToGroupStorage('customerPage', pg);
     this.filter.page = pg;
-    // this.doSearch('pageclick');
   }
   ngOnInit() {
     this.getfiles();
-
-    //this.getBusinessdetFromLocalstorage()
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log(this.active_user);
-
   }
   doSearch() {
     this.lStorageService.removeitemfromLocalStorage('userfilter');
@@ -195,7 +165,6 @@ export class FolderFilesComponent implements OnInit {
   }
   getUsers(from_oninit = false) {
     this.loading = true;
-
     let filter = this.setFilterForApi();
     if (filter) {
       console.log(filter);
@@ -203,17 +172,12 @@ export class FolderFilesComponent implements OnInit {
       this.provider_servicesobj.getAllFilterAttachments(filter).subscribe(
         (data: any) => {
           console.log(data);
-          // this.Allfiles = data;
           this.customers = data
           this.api_loading = false;
         }
       );
     }
-    // else {
-    //   this.getfiles();
-    // }
   }
-
   setFilterForApi() {
     let api_filter = {};
     const filter = this.lStorageService.getitemfromLocalStorage('userfilter');
@@ -221,71 +185,30 @@ export class FolderFilesComponent implements OnInit {
       api_filter = filter;
       this.initFilters(filter);
     }
-    // if (this.filter.fileSize !== '') {
-    //   if (this.grateMB) {
-    //     api_filter['fileSize-gt'] = this.filter.fileSize;
-    //   } else {
-    //     api_filter['fileSize-lt'] = this.filter.fileSize;
-    //   }
-    // }
-
-
     if (this.filter.fileSize !== '') {
-
       if (this.grateMB) {
         api_filter['fileSize-gt'] = this.filter.fileSize;
         api_filter['folderName-eq'] = this.foldertype;
-        // api_filter['ownerType-eq'] = 'jaldeeconsumer' || api_filter['ownerType-eq'] == 'providerconsumer'
-        // console.log("Consumer Filter :",this.filter.jaldeeconsumer || this.filter.providerconsumer)
-
       } else {
         api_filter['fileSize-lt'] = this.filter.fileSize;
         api_filter['folderName-eq'] = this.foldertype;
-        // api_filter['ownerType-eq'] = this.filter.jaldeeconsumer || this.filter.providerconsumer;
-
       }
-
-
     }
-    //  else{
-    //   if (this.grateMB) {
-    //     api_filter['fileSize-gt'] = this.filter.fileSize;
-    //     // api_filter['ownerType-eq'] = this.filter.jaldeeconsumer || this.filter.providerconsumer;
-    //     // console.log("Consumer Filter :",this.filter.jaldeeconsumer || this.filter.providerconsumer)
-
-    //   } else {
-    //     api_filter['fileSize-lt'] = this.filter.fileSize;
-    //     // api_filter['ownerType-eq'] = this.filter.jaldeeconsumer || this.filter.providerconsumer;
-
-    //   }
-    // }
-
-
-
     if (this.filter.fileName !== '') {
       api_filter['fileName-like'] = this.filter.fileName;
       api_filter['folderName-eq'] = this.foldertype;
-
     }
     if (this.filter.fileType !== '') {
       api_filter['fileType-eq'] = this.filter.fileType;
       api_filter['folderName-eq'] = this.foldertype;
-
     }
-
     if (this.filter.folderName !== '') {
       api_filter['folderName-eq'] = this.filter.folderName;
-
     }
-
     if (this.filter.contextId !== '') {
       api_filter['contextId-eq'] = this.filter.contextId;
       api_filter['folderName-eq'] = this.foldertype;
-
     }
-    // if (this.filter.contextId !== '') {
-    //   api_filter['bookingId-eq'] = this.filter.contextId;
-    // }
     if (this.selectedLanguages.length > 0) {
       api_filter['spokenlangs-eq'] = this.selectedLanguages.toString();
     }
@@ -357,14 +280,10 @@ export class FolderFilesComponent implements OnInit {
       fileSize: '',
       fileName: '',
       fileType: '',
-      // checkinEncId: '',
       contextId: '',
       folderName: '',
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 1,
-      // providerconsumer: 'providerconsumer',
-      // jaldeeconsumer: 'jaldeeconsumer'
-
     };
     this.selectedSpecialization = [];
     this.selectedLanguages = [];
@@ -420,9 +339,7 @@ export class FolderFilesComponent implements OnInit {
         this.pdf = false;
         this.filter.fileType = ' ';
         console.log("Type :", type, "Value Null :", value, "Filter", this.filter.fileType)
-
       }
-
       if (value === 'png') {
         this.png = true;
         this.jpeg = false;
@@ -463,7 +380,6 @@ export class FolderFilesComponent implements OnInit {
         this.filter.fileType = '';
       }
     }
-
     if (type === 'fileSize') {
       console.log("Checked", type, value)
       if (value === true) {
@@ -474,15 +390,11 @@ export class FolderFilesComponent implements OnInit {
         this.lessMb = true;
         this.grateMB = false;
         this.filter.fileSize = '1';
-
-        // this.filter.ownerType = 'jaldeeconsumer'
       }
       else if (value === 'grateMB') {
         this.lessMb = false;
         this.grateMB = true;
         this.filter.fileSize = '1';
-        // this.filter.ownerType = 'jaldeeconsumer'
-
       }
       else {
         this.lessMb = false;
@@ -505,59 +417,32 @@ export class FolderFilesComponent implements OnInit {
     });
     this.fileviewdialogRef.afterClosed().subscribe(result => {
       if (result) {
-
       }
     });
   }
-
-
-
-
   deletepreview(id, fileName) {
     console.log("ID : ", id)
-    this.fileviewdialogRef = this.dialog.open(ConfirmDeleteBoxComponent, {
+    this.fileviewdialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '30%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        id: id,
-        fileName: fileName,
-        message:'Do you really want to delete this file.'
+        message: 'Do you really want to delete ' + fileName + ' ?'
       }
     });
     this.fileviewdialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.getfiles();
+        if (result === 1) {
+          this.provider_servicesobj.deleteAttachment(id).subscribe(
+            (data: any) => {
+              this.getfiles();
+            });
+        }
       }
     });
-
-
-    // if (confirm("Are you sure to delete " + fileName)) {
-    //   console.log("Implement delete functionality here");
-    //   this.provider_servicesobj.deleteAttachment(id).subscribe(
-    //     (data: any) => {
-    //       console.log("Deleted Attachment :", data);
-    //       this.getfiles();
-    //       // this.Allfiles = data;
-    //       // this.customers = data
-    //       this.dataLoading = false;
-    //       //this.paginator = this.customers
-    //       // this.customers.map((x) => {
-    //       //   this.fileSizeFilter = Math.ceil(x.fileSize)
-    //       //   // console.log("File Size", this.fileSizeFilter)
-    //       // })
-
-    //       //console.log("Uploaded Files : ", this.customers);
-    //     }
-    //   );
-
-    // }
-
   }
   sharedfolder(foldername) {
     console.log("Access!!!")
-    //this.onClickedFolder= true;
-
     if (foldername === 'Provider') {
       this.onClickedProvider = true;
       this.onClickedConsumer = false;
@@ -572,14 +457,6 @@ export class FolderFilesComponent implements OnInit {
       this.sharedFolderName = foldername;
       this.getfiles();
     }
-
-    // const navigationExtras: NavigationExtras = {
-    //   queryParams: {
-    //     foldername: foldername,
-    //   }
-    // };
-    // this.router.navigate(['provider', 'drive', 'folderfiles'], navigationExtras);
-
   }
   getfiles() {
     this.dataLoading = true;
@@ -592,43 +469,22 @@ export class FolderFilesComponent implements OnInit {
     else if (this.foldertype === 'public') {
       filter['folderName-eq'] = 'public';
       this.foldername = 'Provider'
-
-
     }
     else {
       filter['folderName-eq'] = 'shared';
       this.foldername = 'Consumer'
-      // filter['ownerType-eq'] = 'JaldeeConsumer,ProviderConsumer' 
-      // , filter['ownerType-eq'] == 'ProviderConsumer'
-
-
-
     }
-
-
     console.log(filter);
     console.log("Types :", this.fileTypeDisplayName)
     this.provider_servicesobj.getAllFilterAttachments(filter).subscribe(
       (data: any) => {
         console.log(data);
-        // this.Allfiles = data;
         this.customers = data
         this.dataLoading = false;
-        //this.paginator = this.customers
-        // this.customers.map((x) => {
-        //   this.fileSizeFilter = Math.ceil(x.fileSize)
-        //   // console.log("File Size", this.fileSizeFilter)
-        // })
-
-        //console.log("Uploaded Files : ", this.customers);
       }
     );
-
-
   }
   getFileType(fileType) {
-    //console.log("Type: ", fileType)
-
     let fileTypeName = ''
     if (fileType.indexOf('image')) {
       fileTypeName = fileType.split('/')[1];
@@ -636,33 +492,22 @@ export class FolderFilesComponent implements OnInit {
     if (fileType.indexOf('pdf')) {
       fileTypeName = fileType.split('/')[1];
     }
-    // console.log("Files Type  Name: ", fileTypeName)
     return fileTypeName;
   }
   getFileName(fileName) {
     let filename = ''
-    //  console.log("Name :",fileName)
     if (fileName.indexOf('fileName')) {
       if (fileName.length > 10) {
-        //  console.log("Length :",fileName.length)
         filename = fileName.slice(0, 10) + '...'
       }
       if (fileName.length <= 10) {
         filename = fileName;
       }
-      // split([' '])[0];
     }
     return filename;
   }
   getFileSize(fileSize) {
-    // console.log("Size : ", fileSize)
-
     return Math.round(fileSize)
-    // console.log("Sizes greater ",this.fileSizeFilter)
-
-    // this.fileSizeFilter = Math.round(fileSize)
-    // console.log("Sizes less ",this.fileSizeFilter)
-
   }
   actionCompleted() {
     console.log(this.action);
@@ -672,36 +517,15 @@ export class FolderFilesComponent implements OnInit {
       const dataToSend: FormData = new FormData();
       const captions = {};
       let i = 0;
-
-
-
       for (const pic of this.selectedMessage.files) {
         console.log("Selected File Is : ", this.selectedMessage.files, pic['name'], pic)
-        //   if(this.selectedMessage.files.indexOf(i) !== -1){
-        //     alert(`File ${pic['name']} is Already Existed...`)
-        // } 
-        //const value = 1;
-        //const isInArray = this.selectedMessage.files.includes(pic);
-        // if (pic['name'] === this.selectedMessage.files['name']) {
-        //   alert(`File ${pic['name']} is Already Existed...`)
-        //   // this.snackbarService.openSnackBar(Error.apply('name'), { 'panelClass': 'snackbarerror' });
-        // }
-        // else {
         dataToSend.append('attachments', pic, pic['name']);
         captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
         i++;
-        // }
         console.log("Uploaded Image : ", captions[i]);
       }
-      // this.selectedMessage = {
-      //   files: [],
-      //   base64: [],
-      //   caption: []
-      // }
-
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
-
       this.provider_servicesobj.uploadAttachments(this.foldertype, this.active_user.id, dataToSend)
         .subscribe(
           () => {
@@ -719,19 +543,10 @@ export class FolderFilesComponent implements OnInit {
             this.apiloading = false;
           }
         );
-
-      // this.selectedMessage = {
-      //   files: [],
-      //   base64: [],
-      //   caption: []
-      // }
-
     }
     else {
       alert('Please attach atleast one file.');
-
     }
-
     this.getfiles();
     console.log("All Files : ", this.getfiles());
   }
@@ -751,47 +566,32 @@ export class FolderFilesComponent implements OnInit {
     let i = 0;
     if (input) {
       for (const file of input) {
-        // if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-        //   this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-        //   return;
-        // }else
         if (file.size > projectConstants.FILE_MAX_SIZE) {
           this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
           return;
         }
         else {
           this.selectedMessage.files.push(file);
-          // this.selectedMessage.files = '';
           const reader = new FileReader();
           reader.onload = (e) => {
             this.selectedMessage.base64.push(e.target['result']);
             this.imgCaptions[i] = '';
             console.log("Caption: ", this.imgCaptions[i])
-
           };
           reader.readAsDataURL(file);
           this.action = 'attachment';
-          // this.imgCaptions[i] = '';
-          //  console.log("Caption Two: ",this.imgCaptions[i])
-          // this.imgCaptions = '';
-          // this.imgCaptions ? this.imgCaptions == '' : this.imgCaptions;
-
         }
       }
       if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0 && input.length > 0) {
         this.modal.nativeElement.click();
-        // this.imgCaptions[i] = '';
       }
     }
-    //this.imgCaptions = ''
   }
   getCaption(caption) {
     const captions = {};
     let i = 0;
     if (caption) {
       captions[i] = (this.imgCaptions[i]) ? '' : this.imgCaptions[i];
-      //this.imgCaptions[i] = captions[i];
-      // }
       console.log("Uploaded Image : ", captions[i]);
       return captions[i];
     }
@@ -799,77 +599,24 @@ export class FolderFilesComponent implements OnInit {
       return this.imgCaptions[i]
     }
   }
-
   getImage(url, file) {
-    //   if(this.imgCaptions !== ''){
-    //     this.imgCaptions = ''
-    //   }
-    //  if(this.imgCaptions === ''){
-    //     this.imgCaptions;
-    //   }
-    //  this.imgCaptions ? this.imgCaptions == '' : this.imgCaptions;
-    // const captions = {};
-    // let i = 0;
-    // captions[i] = (this.imgCaptions[i]) ? '' : this.imgCaptions[i];
-    // this.imgCaptions[i] = captions[i];
-    // // }
-    // console.log("Uploaded Image : ", captions[i]);
     if (file.type == 'application/pdf') {
       return '../../../../../assets/images/pdf.png';
     } else {
-
       return url;
     }
   }
-
   onBack() {
-    //  const navigationExtras: NavigationExtras = {
-    //     queryParams: {
-    //       foldername: foldername,
-    //     }
-    //   };
-    // this.router.navigate(['provider', 'drive', 'folderfiles']);
   }
   onCancel() {
-
     this._location.back();
-
   }
   popupClosed() {
   }
-
   deleteTempImage(i) {
     this.selectedMessage.files.splice(i, 1);
     this.selectedMessage.base64.splice(i, 1);
     this.selectedMessage.caption.splice(i, 1);
     this.imgCaptions[i] = '';
   }
-
-  // getBusinessdetFromLocalstorage() {
-  //   this.bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
-  //   console.log(this.bdetails);
-  //   if (this.bdetails) {
-  //     this.bsector = this.bdetails.bs || '';
-  //     this.bsubsector = this.bdetails.bss || '';
-  //     if (this.userData.accountType === 'BRANCH' && this.userData.userType !== 2) {
-  //       this.branchName = this.bdetails.bn || 'User';
-  //       this.bname = this.userData.userName || 'User';
-  //       if (this.userDetails.profilePicture) {
-  //         this.blogo = this.userDetails.profilePicture;
-  //       } else if (this.bdetails.logo) {
-  //         this.blogo = this.bdetails.logo;
-  //       } else {
-  //         this.blogo = '../../../assets/images/img-null.svg';
-  //       }
-  //     } else {
-  //       this.bname = this.bdetails.bn || 'User';
-  //       this.blogo = this.bdetails.logo || '../../../assets/images/img-null.svg';
-  //     }
-  //   }
-  // }
-
 }
-
-
-
-

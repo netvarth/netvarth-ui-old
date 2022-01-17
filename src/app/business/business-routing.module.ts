@@ -47,7 +47,7 @@ const routes: Routes = [
       { path: 'sportsAndEntertainement', loadChildren: () => import('./modules/learnmore/sports/sports.module').then(m => m.SportsModule) },
       { path: 'license', loadChildren: () => import('../business/modules/license/license.module').then(m => m.LicenseModule) },
       { path: 'reports', loadChildren: () => import('../business/modules/reports/reports.module').then(m => m.ReportsModule) },
-      { path: 'drive', loadChildren: () => import('../business/modules/jaldee-drive/jaldee-drive.module').then(m => m.JaldeeDriveModule) },
+      { path: 'drive', loadChildren: () => import('./modules/jaldee-drive/jaldee-drive/jaldee-drive.module').then(m => m.JaldeeDriveModule) },
       { path: 'auditlog', loadChildren: () => import('../business/modules/provider-system-auditlogs/provider-system-auditlogs.module').then(m => m.ProviderSystemAuditLogsModule) },
       { path: 'alerts', loadChildren: () => import('../business/modules/provider-system-alerts/provider-system-alerts.module').then(m => m.ProviderSystemAlertsModule) },
       { path: 'check-ins', loadChildren: () => import('../business/modules/check-ins/check-ins.module').then(m => m.CheckinsModule) },
