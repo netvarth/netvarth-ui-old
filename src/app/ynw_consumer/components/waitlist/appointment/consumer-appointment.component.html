@@ -232,13 +232,28 @@
                                                             <div
                                                                 class="appointment-custom-heading col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding">
                                                                 Booking
-                                                                For <a *ngIf="type !== 'reschedule'"
+                                                                For 
+                                                                <a *ngIf="type !== 'reschedule'"
                                                                     class="change-button pointer-cursor changeitem mgn-lt-10 pull-right mgn-rt-20"
                                                                     (click)="handleSideScreen('members')"
                                                                     data-toggle="modal"
                                                                     data-target="#exampleModalCenter">Change
                                                                 </a>
                                                             </div>
+                                                            <div
+                                                            class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
+                                                            Contact Information
+                                                            <!-- <a *ngIf="type !== 'reschedule'"
+                                                                    class="change-button pointer-cursor changeitem mgn-lt-10 pull-right mgn-rt-20"
+                                                                    (click)="handleSideScreen('members')"
+                                                                    data-toggle="modal"
+                                                                    data-target="#exampleModalCenter">Change
+                                                                </a> -->
+                                                            <div class="mode-hint mgn-bt-5">
+                                                                The priest will contact you in this
+                                                                number
+                                                            </div>
+                                                        </div>
                                                             <div class="clearfix"></div>
                                                             <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
                                                                 <div class="user-data-card card-body no-padding">
@@ -829,7 +844,6 @@
                                                         </div>
                                                     </div>
                                                 </ng-container>
-                                                
                                                 <div class="modal-footer">
                                                     <button type="button"
                                                         class="disp-none btn btn-light-primary font-weight-bold"
@@ -843,6 +857,7 @@
                                                 <div class="error-section success-section" *ngIf="apiSuccess !== ''">
                                                     {{apiSuccess}}
                                                 </div>
+                                               
                                             </div>
                                         </div>
                                     </div>
@@ -1154,6 +1169,11 @@
                                          <div class="clearfix"></div> 
                                          <div
                                          *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                         <div
+                                                                    class="title-sec col-md-12 col-sm-12 col-xs-12 no-padding">
+                                                                    <span class="head_pay">Choose any Payment Option</span>
+                                                                </div>
+                                         
                                          <ng-container *ngIf="!shownonIndianModes">
                                              <app-payment-modes [paymentModes]="indian_payment_modes"
                                                  (modeSelected)="indian_payment_mode_onchange($event)">

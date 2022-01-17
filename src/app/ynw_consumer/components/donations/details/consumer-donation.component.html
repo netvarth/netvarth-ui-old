@@ -293,6 +293,10 @@
                                                             class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4 mgn-lt-5">
                                                             Pay by CC/DC/UPI
                                                         </button> -->
+                                                        <div
+                                                                    class="title-sec col-md-12 col-sm-12 col-xs-12 no-padding">
+                                                                    <span class="">Choose any Payment Option</span>
+                                                                </div>
                                                             <ng-container *ngIf="!shownonIndianModes">
                                                                 <app-payment-modes [paymentModes]="indian_payment_modes"
                                                                     (modeSelected)="indian_payment_mode_onchange($event)">
@@ -303,7 +307,7 @@
                                                                     (modeSelected)="non_indian_modes_onchange($event)">
                                                                 </app-payment-modes>
                                                             </ng-container>
-                                                            <div class="clearfix"></div>
+                                                            <div class="clearfix"></div><br>
                                                             <div class="txt-align-center pad_link">
                                                                 <span [class.disabled]="isClickedOnce"
                                                                     (click)="togglepaymentMode()"
@@ -325,7 +329,7 @@
                                                                 <a data-toggle="modal" data-target="#exampleModal"
                                                                     class="refund_policy">Cancellation Policy</a>
                                                             </div>
-                                                        </div>  -->
+                                                        </div>  --><br>
                                                             <div class="txt-align-center">
                                                                 <button type="button"
                                                                     class=" next-button btn btn-primary font-weight-bold text-uppercase "

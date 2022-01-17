@@ -624,6 +624,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (this.api_error === null && this.donationAmount) {
             this.addDonationConsumer(post_Data, paymentWay);
         } else {
+            this.isClickedOnce = false;
             this.snackbarService.openSnackBar('Please enter valid donation amount', { 'panelClass': 'snackbarerror' });
         }
     }

@@ -2461,27 +2461,40 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
         }
     }
+    // closeloading() {
+    //     this.loadingPaytm = false;
+    //     this.cdRef.detectChanges();
+      
+    //     if (this.from) {
+    //         this.ngZone.run(() => this.router.navigate(['consumer']));
+    //     } else {
+    //         let queryParams = {
+    //             account_id: this.account_id,
+    //             uuid: this.uuidList,
+    //             theme: this.theme
+    //         }
+    //         if (this.businessId) {
+    //             queryParams['customId'] = this.customId;
+    //         }
+
+    //         // let navigationExtras: NavigationExtras = {
+    //         //     queryParams: queryParams
+    //         // };
+    //         // this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+    //     }
+    //     this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+    // }
     closeloading() {
+        this.isClickedOnce = false;
         this.loadingPaytm = false;
         this.cdRef.detectChanges();
-        this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
-        if (this.from) {
-            this.ngZone.run(() => this.router.navigate(['consumer']));
-        } else {
-            let queryParams = {
-                account_id: this.account_id,
-                uuid: this.uuidList,
-                theme: this.theme
-            }
-            if (this.businessId) {
-                queryParams['customId'] = this.customId;
-            }
+        this.ngZone.run(() => {
+            const snackBar = this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+            snackBar.onAction().subscribe(() => {
+                snackBar.dismiss();
+            })
+        });
 
-            let navigationExtras: NavigationExtras = {
-                queryParams: queryParams
-            };
-            this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
-        }
     }
     indian_payment_mode_onchange(event) {
         this.selected_payment_mode = event.value;

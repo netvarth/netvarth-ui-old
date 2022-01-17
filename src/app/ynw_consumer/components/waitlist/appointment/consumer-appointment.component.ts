@@ -2166,27 +2166,39 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
            
         }
     }
+    // closeloading() {
+    //     this.loadingPaytm = false;
+    //     this.cdRef.detectChanges();
+    //     this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+    //     if(this.from){
+    //         this.ngZone.run(() => this.router.navigate(['consumer']));
+    //       } else{
+    //         let queryParams = {
+    //             account_id: this.account_id,
+    //             uuid: this.trackUuid,
+    //             theme: this.theme
+    //         }
+    //         if (this.businessId) {
+    //             queryParams['customId'] = this.customId;
+    //         }
+            
+    //         let navigationExtras: NavigationExtras = {
+    //             queryParams: queryParams
+    //         };  
+    //         this.ngZone.run(() => this.router.navigate(['consumer'],navigationExtras));
+    //       }
+    // }
     closeloading() {
+        this.isClickedOnce = false;
         this.loadingPaytm = false;
         this.cdRef.detectChanges();
-        this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
-        if(this.from){
-            this.ngZone.run(() => this.router.navigate(['consumer']));
-          } else{
-            let queryParams = {
-                account_id: this.account_id,
-                uuid: this.trackUuid,
-                theme: this.theme
-            }
-            if (this.businessId) {
-                queryParams['customId'] = this.customId;
-            }
-            
-            let navigationExtras: NavigationExtras = {
-                queryParams: queryParams
-            };  
-            this.ngZone.run(() => this.router.navigate(['consumer'],navigationExtras));
-          }
+        this.ngZone.run(() => {
+            const snackBar = this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+            snackBar.onAction().subscribe(() => {
+                snackBar.dismiss();
+            })
+        });
+
     }
     getConsumerQuestionnaire() {
         const consumerid = (this.waitlist_for[0].id === this.customer_data.id) ? 0 : this.waitlist_for[0].id;
