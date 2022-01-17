@@ -1,0 +1,206 @@
+<div class="card no-padding" [ngClass]="templateJson.theme?templateJson.theme: ''">
+    <div [style.background-image]="'url(' + templateJson['coverPicture'] + ')'" class="cvr-ht">
+    </div>
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 cvr-dp-mgn">
+        <img alt="Profile Image" [src]="templateJson['logo']" id="profile-image1"
+            class="img-circle img-responsive cvr-dp pointer-cursor cvr-dp-bdr ">
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="section">
+        <div id="pageheader" class="col-xs-12" [innerHtml]="templateJson.headerTitle | safeHtml">
+        </div>
+        <div class="col-xs-12" [innerHtml]="templateJson.headerDescription | safeHtml">
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="section">
+        <div class="col-xs-12">
+            <div class="btn-location pull-right">
+                <mat-select class="selecttype" [(ngModel)]="selectedLocation">
+                    <mat-option [value]="loc" *ngFor="let loc of locationjson" (click)="changeLocation(loc)">
+                        {{loc.place}}
+                    </mat-option>
+                </mat-select>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="section">
+        <mat-tab-group dynamicHeight mat-stretch-tabs>
+            <mat-tab label="{{templateJson.section1.title}}">
+                <div class="card">
+                    <div class="col-xs-12 no-padding" *ngIf="templateJson.section1.generalDescription !=''"
+                        [innerHtml]="templateJson.section1.generalDescription | safeHtml">
+                    </div>
+                    <div class="col-xs-12 mgn-up-10  no-padding" *ngIf="templateJson.section1.appointments">
+                        <div class="col-xs-12" *ngIf="templateJson.section1.appointmentsDescription"
+                            [innerHtml]="templateJson.section1.appointmentsDescripton | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding" *ngIf="templateJson.section1.appointmentsDescription"
+                            [innerHtml]="templateJson.section1.appointmentsDescription | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding" *ngIf="loaded_appointments">
+                            <app-appointment-services [terminologiesjson]="terminologiesjson"
+                                [templateJson]="templateJson" [apptSettings]="apptSettings"
+                                [businessProfile]="businessProfile" [filteredServices]="filteredApptServices"
+                                [selectedLocation]="selectedLocation"></app-appointment-services>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section1.checkins">
+                        <div class="col-xs-12 no-padding" *ngIf="templateJson.section1.checkinsDescription"
+                            [innerHtml]="templateJson.section1.checkinsDescription | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding" *ngIf="loaded_checkins">
+                            <app-checkin-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                                [apptSettings]="apptSettings" [businessProfile]="businessProfile"
+                                [filteredServices]="filteredCheckinServices" [selectedLocation]="selectedLocation">
+                            </app-checkin-services>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section1.donations">
+                        <div class="col-xs-12 no-padding" *ngIf="templateJson.section1.donationsDescription"
+                            [innerHtml]="templateJson.section1.donationsDescripton | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding" *ngIf="loaded_donations">
+                            <app-donation-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                                [businessProfile]="businessProfile" [donationServices]="donationServices"
+                                [selectedLocation]="selectedLocation">
+                            </app-donation-services>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section1.orders">
+                        <div class="col-xs-12 no-padding" *ngIf="templateJson.section1.ordersDescripton"
+                            [innerHtml]="templateJson.section1.ordersDescripton | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding">
+                            <app-orders [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                                [businessProfile]="businessProfile" [selectedLocation]="selectedLocation">
+                            </app-orders>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="showDepartments && templateJson.section1.departments">
+                        <div class="col-xs-12 no-padding" *ngIf="templateJson.section1.departmentsDescription"
+                            [innerHtml]="templateJson.section1.departmentsDescription | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding" >
+                            <app-cons-departments [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                                [businessProfile]="businessProfile" 
+                                [selectedLocation]="selectedLocation" [departments]="departments">
+                            </app-cons-departments>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="{{templateJson.section2.title}}">
+                <div class="card">
+                    <div class="col-xs-12 no-padding" *ngIf="templateJson.section2.generalDescription !=''"
+                        [innerHtml]="templateJson.section2.generalDescription | safeHtml">
+                    </div>
+                    <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section2.appointments">
+                        <div class="col-xs-12 no-padding" *ngIf="templateJson.section2.appointmentsDescription"
+                            [innerHtml]="templateJson.section2.appointmentsDescription | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding" *ngIf="loaded_appointments">
+                            <app-appointment-services [terminologiesjson]="terminologiesjson"
+                                [templateJson]="templateJson" [apptSettings]="apptSettings"
+                                [businessProfile]="businessProfile" [filteredServices]="filteredApptServices"
+                                [selectedLocation]="selectedLocation"></app-appointment-services>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section2.checkins">
+                        <div class="col-xs-12 no-padding" *ngIf="templateJson.section2.checkinsDescripton"
+                            [innerHtml]="templateJson.section2.checkinsDescripton | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding" *ngIf="loaded_checkins">
+                            <app-checkin-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                                [apptSettings]="apptSettings" [businessProfile]="businessProfile"
+                                [filteredServices]="filteredCheckinServices" [selectedLocation]="selectedLocation">
+                            </app-checkin-services>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section2.donations">
+                        <div class="col-xs-12" *ngIf="templateJson.section2.donationsDescripton"
+                            [innerHtml]="templateJson.section2.donationsDescripton | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding" *ngIf="loaded_donations">
+                            <app-donation-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                                [businessProfile]="businessProfile" [donationServices]="donationServices"
+                                [selectedLocation]="selectedLocation">
+                            </app-donation-services>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section2.orders">
+                        <div class="col-xs-12" *ngIf="templateJson.section2.ordersDescripton"
+                            [innerHtml]="templateJson.section2.ordersDescripton | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding">
+                            <app-orders [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                                [businessProfile]="businessProfile" [selectedLocation]="selectedLocation"></app-orders>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="{{templateJson.section3.title}}">
+                <div class="card">
+                    <div class="col-xs-12 no-padding" *ngIf="templateJson.section3.generalDescription !=''"
+                        [innerHtml]="templateJson.section3.generalDescription | safeHtml">
+                    </div>
+
+                    <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section3.appointments">
+                        <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section3.appointmentsDescription"
+                            [innerHtml]="templateJson.section3.appointmentsDescription | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding" *ngIf="loaded_appointments && filteredApptServices && filteredApptServices.length > 0">
+                            <app-appointment-services [terminologiesjson]="terminologiesjson"
+                                [templateJson]="templateJson" [apptSettings]="apptSettings"
+                                [businessProfile]="businessProfile" [filteredServices]="filteredApptServices"
+                                [selectedLocation]="selectedLocation"></app-appointment-services>
+                        </div>
+                        <div class="col-xs-12 no-padding no-padding" *ngIf="loaded_appointments && filteredApptServices && filteredApptServices.length === 0">
+                            No Appointment Services found for {{this.selectedLocation.place}}.
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr/>
+                    </div>
+                    <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section3.checkins">
+                        <div class="col-xs-12 no-padding mgn-bt-20" *ngIf="templateJson.section3.checkinsDescription"
+                            [innerHtml]="templateJson.section3.checkinsDescription | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding" *ngIf="loaded_checkins && filteredCheckinServices && filteredCheckinServices.length > 0">
+                            <app-checkin-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                                [apptSettings]="apptSettings" [businessProfile]="businessProfile"
+                                [filteredServices]="filteredCheckinServices" [selectedLocation]="selectedLocation">
+                            </app-checkin-services>
+                        </div>
+                        <div class="col-xs-12 no-padding" *ngIf="loaded_checkins && filteredCheckinServices && filteredCheckinServices.length === 0">
+                            No Appointment Services found for {{this.selectedLocation.place}}.
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr/>
+                    </div>
+                    <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section3.donations">
+                        <div class="col-xs-12 no-padding mgn-bt-20" *ngIf="templateJson.section3.donationsDescription"
+                            [innerHtml]="templateJson.section3.donationsDescription | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding" *ngIf="loaded_donations">
+                            <app-donation-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                                [businessProfile]="businessProfile" [donationServices]="donationServices"
+                                [selectedLocation]="selectedLocation">
+                            </app-donation-services>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 mgn-up-10  no-padding" *ngIf="templateJson.section3.orders">
+                        <div class="col-xs-12" *ngIf="templateJson.section3.ordersDescription"
+                            [innerHtml]="templateJson.section3.ordersDescription | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding">
+                            <app-orders [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                                [businessProfile]="businessProfile" [selectedLocation]="selectedLocation"></app-orders>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

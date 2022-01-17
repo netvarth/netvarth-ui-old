@@ -266,6 +266,7 @@ export class TeleServiceShareComponent implements OnInit {
   }
   // Mass communication
   sendMessage() {
+    const dataToSend: FormData = new FormData();
     this.api_error = '';
     this.disableButton = true;
     if (!this.msg_to_user) {
@@ -285,7 +286,9 @@ export class TeleServiceShareComponent implements OnInit {
         uuid: [this.data.waitingId]
       };
       if (this.data.waitingType === 'checkin') {
-        this.shared_services.consumerMassCommunication(post_data).
+        const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+            dataToSend.append('communication', blobpost_Data);
+        this.shared_services.consumerMassCommunication(dataToSend).
           subscribe(() => {
             this.api_success = this.wordProcessor.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
             this.disableButton = false;
@@ -295,7 +298,9 @@ export class TeleServiceShareComponent implements OnInit {
           }
           );
       } else {
-        this.shared_services.consumerMassCommunicationAppt(post_data).
+        const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+            dataToSend.append('communication', blobpost_Data);
+        this.shared_services.consumerMassCommunicationAppt(dataToSend).
           subscribe(() => {
             this.api_success = this.wordProcessor.getProjectMesssages('PROVIDERTOCONSUMER_NOTE_ADD');
             this.disableButton = false;

@@ -2306,6 +2306,11 @@ export class ProviderServices {
     const url = 'provider/fileShare';
     return this.servicemeta.httpGet(url,null,filter);
   }
+  deleteAttachment(id) {
+    const url = `provider/fileShare/${id}`;
+    console.log("Delete Service Called :",url);
+    return this.servicemeta.httpDelete(url);
+  }
   uploadAttachments(folder_name, account_id ,body) {
     const url = 'provider/fileShare/upload/'+ folder_name + '/' + account_id;
     return this.servicemeta.httpPost(url, body);

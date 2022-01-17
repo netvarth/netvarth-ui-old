@@ -1,0 +1,58 @@
+<div class="dynamic mgn-up-20">
+    <!--  Appointments & Checkins Show Filter Section -->
+    <div class="clearfix"></div>
+    <ng-container *ngIf="templateJson['appointments'] || templateJson['checkins']">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-20 mgn-bt-20 brd-bt" *ngIf="true">
+            <div class="col-md-4 col-sm-6 mgn-bt-20" *ngIf="locationjson && locationjson.length>1">
+                <mat-select placeholder="Choose Location" [(ngModel)]="selectedLocation"
+                    (selectionChange)="changeLocation(selectedLocation)">
+                    <mat-option *ngFor="let location of locationjson" [value]="location">
+                        {{ location.place | capitalizeFirst }}
+                    </mat-option>
+                </mat-select>
+            </div>
+            <div class="col-md-4 col-sm-6 mgn-bt-20" *ngIf="showDepartments && templateJson['branchFilterService']">
+                <mat-select placeholder="Choose Branch" [(ngModel)]="selectedServicesBranch"
+                    (selectionChange)="changeBranch(selectedServicesBranch, 'services')">
+                    <mat-option value="">All</mat-option>
+                    <mat-option *ngFor="let branch of branches" [value]="branch">
+                        {{ branch.departmentName | capitalizeFirst }}
+                    </mat-option>
+                </mat-select>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <!-- <div class="col-md-12"
+            *ngIf="filteredCheckinServices && filteredCheckinServices.length===0 && filteredApptServices && filteredApptServices.length===0">
+            No services found
+        </div> -->
+    </ng-container>
+    <div class="clearfix"></div>
+    <ng-container *ngIf="templateJson['appointments']  && !loading">
+        <app-appointment-services [locationjson]="locationjson" [showDepartments]="showDepartments"
+            [terminologiesjson]="terminologiesjson" [templateJson]="templateJson" [apptSettings]="apptSettings"
+            [businessProfile]="businessProfile" [filteredServices]="filteredApptServices"
+            [selectedLocation]="selectedLocation"></app-appointment-services>
+    </ng-container>
+
+    <ng-container *ngIf="templateJson['checkins'] && !loading">
+        <app-checkin-services [locationjson]="locationjson" [showDepartments]="showDepartments"
+            [terminologiesjson]="terminologiesjson" [templateJson]="templateJson" [apptSettings]="apptSettings"
+            [businessProfile]="businessProfile" [filteredServices]="filteredCheckinServices"
+            [selectedLocation]="selectedLocation"></app-checkin-services>
+    </ng-container>
+    <!-- <ng-container *ngIf="templateJson['donations']">      
+        <div class="col-md-12 no-padding">
+            <app-donation-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                [businessProfile]="businessProfile" [donationServices]="donationServices"
+                [selectedLocation]="selectedLocation"></app-donation-services>
+        </div>
+    </ng-container> -->
+    <ng-container *ngIf="templateJson['orders']">
+        <app-orders [locationjson]="locationjson"
+        [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+        [businessProfile]="businessProfile" [selectedLocation]="selectedLocation"></app-orders>
+    </ng-container>
+    <div class="clearfix"></div>
+    
+</div>

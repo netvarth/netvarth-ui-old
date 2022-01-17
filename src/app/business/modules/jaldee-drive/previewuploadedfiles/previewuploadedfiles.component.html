@@ -1,29 +1,19 @@
-<!-- <p>previewuploadedfiles works!</p> {{title}}-->
-<!-- {{details.fileName?.length>10 ? details.fileName.slice(0, 10)+'...' : details.fileName}} -->
-<h1 class="mat-dialog-title">   {{details.fileName}} <br> {{details.caption}}
-    <button #locte mat-dialog-close class="modal_close" tabindex="-1">
-      <i class="fa fa-window-close" aria-hidden="true"></i>
-    </button>
-  </h1>
-  <div class="pad-20 image-scroll" *ngIf="details.fileType && details.fileType != 'pdf'" >
-    <img style="width:100%;margin-top: -20px;" [src]="details.filePath"
-      *ngIf="details.fileType && details.fileType == 'bmp'|| details.fileType =='png' || details.fileType == 'gif' || details.fileType == 'jpg' ||details.fileType =='jpeg'||details.fileType == 'webp' || details.fileType =='jfif'"/>
- </div>
-  <div *ngIf="details.fileType && details.fileType == 'pdf'">
-   
-        <div class="mx-3 py-2 px-2"> 
-            <i class="fa fa-file-pdf-o" aria-hidden="true" style="color:red;">&nbsp;
-        <a [href]="details.filePath" target="_blank" download>
-            {{details.caption ? details.caption:'document'}}-{{details.fileType ? details.fileType:'file' }} 
-          </a>
-        </i>
-        </div>
-
- 
+<h1 class="mat-dialog-title"> {{details.fileName}} <br> {{details.caption}}
+  <button #locte mat-dialog-close class="modal_close" tabindex="-1">
+    <i class="fa fa-window-close" aria-hidden="true"></i>
+  </button>
+</h1>
+<div class="pad-20 image-scroll" *ngIf="details.fileType && details.fileType != 'pdf'">
+  <img style="width:100%;margin-top: -20px;" [src]="details.filePath"
+    *ngIf="details.fileType && details.fileType == 'bmp'|| details.fileType =='png' || details.fileType == 'gif' || details.fileType == 'jpg' ||details.fileType =='jpeg' || details.fileType =='jfif' ||details.fileType == 'webp'" />
 </div>
- <!-- <span>  -->
-        <!-- <a [href]="details.filePath" target="_blank" download>         
-        </a> -->
-  <!-- <mat-dialog-actions>
-      <button type="button" class="cs-btn bt1 small-btn" (click)="closeDialog()">Close</button>
-    </mat-dialog-actions> -->
+<div *ngIf="details.fileType && details.fileType == 'pdf' || details.fileType == 'mp3' || details.fileType == 'mp4'">
+  <div class="mx-3 py-2 px-2">
+    <i class="fa fa-file-video-o" aria-hidden="true" *ngIf="details.fileType == 'mp4'" style="color:red;"></i>
+    <i class="fa fa-file-audio-o" aria-hidden="true" *ngIf="details.fileType == 'mp3'" style="color:red;"></i>
+    <i class="fa fa-file-pdf-o" aria-hidden="true" *ngIf="details.fileType == 'pdf'" style="color:red;"></i>
+    <a [href]="details.filePath" target="_blank" download>
+      {{details.caption ? details.caption:'document'}}-{{details.fileType ? details.fileType:'file' }}
+    </a>
+  </div>
+</div>

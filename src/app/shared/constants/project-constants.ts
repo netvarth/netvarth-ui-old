@@ -729,7 +729,13 @@ export const projectConstantsLocal = {
     'image/jpg',
     'image/png',
     'image/jpeg',
-    'application/pdf'
+    'application/pdf',
+    'application/jfif',
+    'video/mp4',
+    'video/mpeg',
+    'audio/mpeg',
+    'audio/mp3',
+    'audio/ogg'
   ],
   MRFILETYPES_UPLOAD: [
     'image/jpg',

@@ -145,54 +145,17 @@
         </span>
       </p>
       <div *ngIf="service.paymentProfileId && action==='show'">
-        <span>Payment Profile Selected for this service is:</span>
-
-        <div class="row">
-          <mat-radio-group name="paymentprofile" class="mt-4">
-            <mat-radio-button [value]="selectedPaymentProfile.profileId" readonly checked>
-              <span class="font-weight-bold">{{selectedPaymentProfile[0].displayName}}</span>
-            </mat-radio-button>
-          </mat-radio-group>
-          <div>
-            <div class="col-lg-12 no-padding-small" *ngIf="selectedPaymentProfile[0].indiaPay">
-              <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 shadow my-4"
-                *ngFor="let gateway of getPayTMmodesByGroup(selectedPaymentProfile[0].indianPaymodes)|keyvalue">
-                <div class="col-xs-3 no-padding">
-                  <img [src]="getImageSrc(gateway.key)" class="gateway-img" alt="{{gateway.key}}">
-                </div>
-                <div class="col-xs-9 no-padding">
-                  <div class="pull-right" *ngFor="let modes of gateway.value">
-                    <img class="modes-img" [src]="getImageSrc(modes.mode)">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <ng-container
-              *ngIf="selectedPaymentProfile && selectedPaymentProfile[0] && selectedPaymentProfile[0].internationalPay">
-              <div class="col-lg-12 no-padding-small">
-                <span (click)="togglepaymentMode();"><b style="color:green">&#10004;</b> <a>International
-                    Payment</a></span>
-              </div>
-              <div class="col-lg-12 no-padding-small"
-                *ngIf="selectedPaymentProfile[0].internationalPay && show_internationalmode">
-                <div class="col-xs-12 shadow my-4"
-                  *ngFor="let gateway of getPayTMmodesByGroup(selectedPaymentProfile[0].internationalPaymodes)|keyvalue">
-                  <div class="col-xs-3 no-padding">
-                    <img [src]="getImageSrc(gateway.key)" class="gateway-img" alt="{{gateway.key}}">
-                  </div>
-
-                  <div class="col-xs-9 no-padding">
-                    <div class="pull-right" *ngFor="let modes of gateway.value">
-                      <img class="modes-img" [src]="getImageSrc(modes.mode)">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </ng-container>
-          </div>
+        <div  class="col-xs-12 col-md-12 col-sm-12 col-lg-12 mgn-bt-10 no-padding ">Payment Profile Selected for this service is: <b>{{selectedPaymentProfile[0].displayName}}</b></div>
+        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 no-padding "> 
+          <!-- <mat-radio-group name="paymentprofile"  class="mt-4">
+            <mat-radio-button [value]="selectedPaymentProfile.profileId" readonly checked> -->
+                <!-- <span class="font-weight-bold"></span> -->
+            <!-- </mat-radio-button> -->
+            <app-payment-mode [paymentProfile]="selectedPaymentProfile[0]"></app-payment-mode>
+          <!-- </mat-radio-group> -->
+          
         </div>
       </div>
-      <!-- </div> -->
       <div class="btm-ctrl">
         <div class="ctrl enable-disable">
           <span *ngIf="!is_donation" class="ttle">{{serv_status}}</span>
@@ -573,16 +536,23 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
       </div>
 
       <ng-container *ngIf="paymentProfiles.length>0">
-        Choose Payment Profile for this Service.<br><br>
-        <div class="row" *ngFor="let profile of paymentProfiles; let i=index">
-          <mat-radio-group formControlName="paymentProfileId" name="paymentprofile" class="mt-4">
+        <div class="col-xs-12 col-sm-12 col-lg-12 col-xs-12 no-padding mgn-bt-10 bold">Select Payment Profile for Service</div>
+        <div class="col-xs-12 col-sm-12 col-lg-12 col-xs-12 mgn-bt-20" *ngFor="let profile of paymentProfiles; let i=index">
+          <mat-radio-group name="paymentprofile" formControlName="paymentProfileId"  class="mt-4">
+            <mat-radio-button [value]="profile.profileId" readonly [checked]="profile.profileId === service.paymentProfileId">
+                <span class="font-weight-bold">{{profile.displayName}}</span>
+            </mat-radio-button>
+          <app-payment-mode [paymentProfile]="profile"></app-payment-mode>
+          </mat-radio-group>
+
+          <!-- <mat-radio-group formControlName="paymentProfileId" name="paymentprofile" class="mt-4">
             <mat-radio-button [value]="profile.profileId">
               <span class="font-weight-bold">{{profile.displayName}}</span>
             </mat-radio-button>
           </mat-radio-group>
           <div>
             <div class="col-lg-12 no-padding-small" *ngIf="profile.indiaPay">
-              <div class="col-xs-12 shadow my-4"
+              <div class="col-xs-12 mgn-bt-20"
                 *ngFor="let gateway of getPayTMmodesByGroup(profile.indianPaymodes)|keyvalue">
 
                 <div class="col-xs-3 no-padding">
@@ -604,12 +574,10 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
               </div>
               <div class="col-lg-12 no-padding-small" *ngIf="profile.internationalPay && show_internationalmode">
                 <ng-container *ngFor="let gateway of getPayTMmodesByGroup(profile.internationalPaymodes)|keyvalue">
-                  <div class="col-xs-12 shadow my-4">
-
+                  <div class="col-xs-12 mgn-bt-20">
                     <div class="col-xs-3 no-padding">
                       <img [src]="getImageSrc(gateway.key)" class="gateway-img" alt="{{gateway.key}}">
                     </div>
-
                     <div class="col-xs-9 no-padding">
                       <ng-container *ngFor="let modes of gateway.value">
                         <div class="pull-right">
@@ -620,22 +588,10 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                   </div>
                 </ng-container>
               </div>
-
             </ng-container>
-
-
-
-
-
-
-
-
-
-
-          </div>
+          </div> -->
         </div>
       </ng-container>
-
       <div class="mgn-bt-20">
         <a class="no-padding underline pointer-cursor" (click)="advancedClick()" style="font-size: 1.1rem;">
           Customization</a>

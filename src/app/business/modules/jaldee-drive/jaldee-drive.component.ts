@@ -1,17 +1,15 @@
 import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
-import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
 
-import { projectConstants } from '../../../../app.component';
-import { SnackbarService } from '../../../../shared/services/snackbar.service';
-import { Messages } from '../../../../shared/constants/project-messages';
+import { projectConstants } from '../../../app.component';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { Messages } from '../../../shared/constants/project-messages';
 import { Router, NavigationExtras } from '@angular/router';
-import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { Location } from '@angular/common';
-// import { AddproviderAddonComponent } from '../../../../ynw_provider/components/add-provider-addons/add-provider-addons.component';
 import { MatDialog } from '@angular/material/dialog';
-import { PreviewuploadedfilesComponent } from '../previewuploadedfiles/previewuploadedfiles.component';
-import { ProviderServices } from '../../../../business/services/provider-services.service';
-// import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { ProviderServices } from '../../../business/services/provider-services.service';
+import { PreviewuploadedfilesComponent } from './previewuploadedfiles/previewuploadedfiles.component';
 
 
 @Component({
@@ -173,7 +171,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   totalcount: any;
   storageleft: any;
   remainingStorage: any;
-  totalStorage:any;
+  totalStorage: any;
   weightageValue = 0;
   addondialogRef: any;
   fileviewdialogRef: any;
@@ -182,7 +180,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   // currentPage:any;
   config: any;
   count: number = 0;
-  customer_label='';
+  customer_label = '';
 
   constructor(
     private groupService: GroupStorageService,
@@ -193,10 +191,10 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     public location: Location,
     public dialog: MatDialog,
     private _location: Location,
-   // private wordProcessor:WordProcessor
+    // private wordProcessor:WordProcessor
 
   ) {
-   // this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    // this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
 
     this.config = {
       itemsPerPage: 5,
@@ -221,13 +219,6 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log(this.active_user);
     this.getBusinessdetFromLocalstorage();
-
-    // this.cols = [
-    //   { field: 'code', header: 'Code' },
-    //   { field: 'name', header: 'Name' },
-    //   { field: 'category', header: 'Category' },
-    //   { field: 'quantity', header: 'Quantity' }
-    // ];
     this.getTotalFileShareCount();
     this.getFileStorage();
   }
@@ -235,10 +226,6 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.getfiles();
   }
-
-
-
-
   getFileStorage() {
     this.provider_servicesobj.getFileStorage().subscribe(
       (data: any) => {
@@ -314,61 +301,10 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
       const dataToSend: FormData = new FormData();
       const captions = {};
       let i = 0;
-
-      // for ( i = 0; i < this.selectedMessage.files.length; i++) 
-      // {
-      //     for (let j = i+1; j < this.selectedMessage.files.length; j++) 
-      //     {
-      //         if (i != j) 
-      //         {
-      //             if (this.selectedMessage.files[i]['name'] == this.selectedMessage.files[j]['name']) 
-      //             {
-      //               alert(`File ${this.selectedMessage.files[i]['name']} is Already Existed...`)
-
-      //                 //return true; // means there are duplicate values
-      //             }
-      //             else{
-      //               dataToSend.append('attachments',  j['name']);
-      //               captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
-      //               i++;
-      //              // return false; // means there are no duplicate values.
-
-      //             }
-      //         }
-      //     }
-
-      // }
-
-      // var valueArr = this.selectedMessage.files.map(function (item) { return item.name });
-      // var isDuplicate = valueArr.some(function (item, idx) {
-      //   return valueArr.indexOf(item) != idx
-      // });
-      // console.log(isDuplicate);
-      //   let array, j,item;
-      //   for(i=0; i<this.selectedMessage.files.length; ++i) {
-      //       array = this.selectedMessage.files[i];
-      //       for(j=0; j<array.length; ++j) {
-      //           if(array[j] === item) {
-      //             alert(`File ${item['name']} is Already Existed...`)
-      //               return true;
-      //           }
-      //           else{
-      //             return false;
-      //           }
-      //       }
-      //   }
-
-
       for (const pic of this.selectedMessage.files) {
         console.log("Selected File Is : ", this.selectedMessage.files, pic['name'], pic)
-        //   if(this.selectedMessage.files.indexOf(i) !== -1){
-        //     alert(`File ${pic['name']} is Already Existed...`)
-        // } 
-        //const value = 1;
-        //const isInArray = this.selectedMessage.files.includes(pic);
         if (pic['name'] === this.selectedMessage.files['name']) {
           alert(`File ${pic['name']} is Already Existed...`)
-          // this.snackbarService.openSnackBar(Error.apply('name'), { 'panelClass': 'snackbarerror' });
         }
         else {
           dataToSend.append('attachments', pic, pic['name']);
@@ -432,7 +368,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   }
   filesSelected(event, type?) {
     const input = event.target.files;
-    console.log("Selected File :",input);
+    console.log("Selected File :", input);
     if (input) {
       for (const file of input) {
         if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
@@ -443,7 +379,6 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
           return;
         } else {
           this.selectedMessage.files.push(file);
-          // this.selectedMessage.files = '';
           const reader = new FileReader();
           reader.onload = (e) => {
             this.selectedMessage.base64.push(e.target['result']);
@@ -461,21 +396,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
 
   }
   changeType(event) {
-
-
     this.choose_type = event.value;
-
-    // //this.choose_type = event.value;
-    // if (event) {
-    //    this.selectedFolder = event.value
-    //   // this.virtualForm.get('preferredLanguage').setValue(['English']);
-    //   this.choose_type = this.selectedFolder;
-
-    // }
-    // else {
-    //   this.choose_type = event.value;
-    // }
-
     console.log("File Type : ", this.choose_type);
   }
   publicfolder(foldername) {
@@ -519,15 +440,11 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
       this.provider_servicesobj.getAllFilterAttachments(filter).subscribe(
         (data: any) => {
           console.log(data);
-          // this.Allfiles = data;
           this.customers = data
           this.api_loading = false;
         }
       );
     }
-    // else {
-    //   this.getfiles();
-    // }
   }
   clearFilter() {
     this.lStorageService.removeitemfromLocalStorage('userfilter');
@@ -672,35 +589,12 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     this.doSearch();
   }
   gotoSettings() {
-    // const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
-    // const userid = loggedUser.id
-    // if(this.account_type == 'BRANCH' && this.userData.userType == 1){
-    //   this.routerobj.navigate(['provider', 'settings', 'general', 'users', userid, 'settings']);
-    // }else{
     this.router.navigate(['provider', 'settings']);
-    // }
   }
   gotoSmsAddon() {
-    // if (this.corpSettings && this.corpSettings.isCentralised) {
-    //   this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
-    // } else {
-    // this.addondialogRef = this.dialog.open(AddproviderAddonComponent, {
-    //   width: '50%',
-    //   data: {
-    //     type: 'addons'
-    //   },
-    //   panelClass: ['popup-class', 'commonpopupmainclass'],
-    //   disableClose: true
-    // });
-    // this.addondialogRef.afterClosed().subscribe(result => {
-    //   if (result) {
-    //   }
-    // });
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        disp_name: 'Cloud Storage',
-        //disp_name:'CloudStorage'
-        //addon-detail
+        disp_name: 'Cloud Storage'
       }
     };
     this.router.navigate(['provider', 'license', 'addon-detail'], navigationExtras);

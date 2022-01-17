@@ -430,7 +430,24 @@
                           (click)="!isClickedOnce && confirm()">
                           Make Payment
                         </button>
+                        <!-- <div>hh</div> -->
+                        
                       </div>
+                      <div class="cancelpolicy mgn-rt-5 txt-align-center mgn-up-10" >
+                        <!-- *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0" -->
+                      <div class="pad_policy">
+                        <!-- *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0" -->
+                          <a data-toggle="modal" data-target="#exampleModal"
+                              class="refund_policy">Cancellation Policy</a>
+                      </div>
+                  </div>
+                  <!-- modalbox -->
+                  <div class="modal fade" id="exampleModal" tabindex="-1"
+                  role="dialog" aria-labelledby="exampleModalLabel"
+                  aria-hidden="true">
+                  <app-refundpolicy></app-refundpolicy>
+              </div>
+                     
                       <br>
                       <div
                         *ngIf="cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount > cartDetails.advanceAmount) || (checkJcash && jcashamount == cartDetails.advanceAmount))">
@@ -578,6 +595,7 @@
                       (click)="!isClickedOnce && confirm()">
                       MaKe Payment
                     </button>
+                  
                   </div>
                   <br>
                   <div
