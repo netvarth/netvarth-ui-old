@@ -79,7 +79,7 @@ export class RazorpayService {
   }
 
   payWithRazor(razorModel, usertype, checkin_type?, uuid?, livetrack?, account_id?, prepayment?, uuids?, from?, isfrom?) {
-    // let razorInterval;
+    let razorInterval;
     razorModel.retry = false;
     let selectedmode = razorModel.mode;
     console.log(selectedmode);
@@ -106,6 +106,7 @@ export class RazorpayService {
 
     var successCallback = (response) => {
       console.log(response);
+      clearTimeout(razorInterval);
       // alert('payment_id: ' + payment_id);
       // console.log(order_id);
       console.log(response);
@@ -143,6 +144,7 @@ export class RazorpayService {
     };
 
     var cancelCallback = (error) => {
+      clearTimeout(razorInterval);
       console.log(error.description + ' (Error ' + error.code + ')');
 
       if (usertype === 'consumer') {
