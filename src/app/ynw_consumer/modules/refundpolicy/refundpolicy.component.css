@@ -42,7 +42,7 @@ body.modal-open {
 }
 
 .modal-dialog .modal-content .modal-header button i {
-  color: #522E5A !important;
+  color: #3c8dbc !important;
 }
 
  .modal-dialog .modal-content .modal-body h6 {
@@ -61,8 +61,8 @@ body.modal-open {
   border-radius: 30px !important;
   height: 50px !important;
   padding: 10px 30px !important;
-  background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box !important;
-  box-shadow: 15px 15px 40px #dba8c4 !important;
+  background: transparent radial-gradient(closest-side at 6% 0%, #3c8dbc 0%, #3c8dbc 100%) 0% 0% no-repeat padding-box !important;
+  box-shadow: 15px 15px 40px #c3deee !important;
   opacity: 1 !important;
   color: white !important;
   margin: 8px 10px !important;
