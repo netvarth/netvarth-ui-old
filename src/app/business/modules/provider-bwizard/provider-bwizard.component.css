@@ -2012,7 +2012,7 @@ textarea {
   width: 50px;
 }
 .underline{
-  color: #3c8dbc !important;
+  color: #fff ;
   text-decoration: underline !important;
   cursor: pointer !important;
 }
@@ -2030,13 +2030,18 @@ textarea {
   /* text-align: center; */
   /* color: red; */
 }
-@media only screen and (max-width: 500px){
+@media only screen and (max-width: 400px){
   .centered2 {
     position: absolute;
-    top: 93% !important;
-    left: 12% !important;
+    top: 85% !important;
+    left: 9% !important;
       /* transform: translate(-50%, -50%) */
    
+  }
+  .underline{
+    color: #162182 !important ;
+    text-decoration: underline !important;
+    cursor: pointer !important;
   }
 }
 
@@ -2055,14 +2060,14 @@ textarea {
   }
   .centered2 {
     position: absolute;
-    top: 93%;
-    left: 20%;
+    top: 87%;
+    left: 12%;
       /* transform: translate(-50%, -50%) */
    
   }
   .centered3 {
     position: absolute;
-    top: 120%;
+    top: 118%;
     left: 50%;
       transform: translate(-50%, -50%)
   }
@@ -2071,6 +2076,11 @@ textarea {
     top: 16%;
     left: 6%;
       /* transform: translate(50%, 50%); */
+  }
+  .underline{
+    color: #162182 !important ;
+    text-decoration: underline !important;
+    cursor: pointer !important;
   }
 }
 
@@ -2095,7 +2105,7 @@ textarea {
   }
   .centered3 {
     position: absolute;
-    top: 112%;
+    top: 115%;
     left: 47%;
       transform: translate(-50%, -50%)
   }
@@ -2104,6 +2114,11 @@ textarea {
     top: 17%;
     left: 0%;
       transform: translate(50%, 50%);
+  }
+  .underline{
+    color: #162182 !important ;
+    text-decoration: underline !important;
+    cursor: pointer !important;
   }
 
 }
@@ -2131,7 +2146,7 @@ textarea {
   }
   .centered3 {
     position: absolute;
-    top: 111%;
+    top: 115%;
     left: 47%;
       transform: translate(-50%, -50%)
   }
@@ -2140,6 +2155,11 @@ textarea {
     top: 26%;
     left: 0%;
       transform: translate(50%, 50%);
+  }
+  .underline{
+    color: #162182 !important ;
+    text-decoration: underline !important;
+    cursor: pointer !important;
   }
 }
 
