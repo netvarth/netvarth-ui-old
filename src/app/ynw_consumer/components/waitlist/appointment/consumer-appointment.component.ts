@@ -707,6 +707,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     //       });
     // }
     saveCheckin(type?, paymenttype?) {
+        console.log(paymenttype)
         if (type === 'appt') {
           
             this.isClickedOnce = true;   
@@ -834,17 +835,20 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                }
                         });
                 }
+                else if(!this.sel_ser_det.isPrePayment){
+                     this.addCheckInConsumer(post_Data, paymenttype);
+                }
                 else {
-                    //this.isClickedOnce=false;
-                    //this.disablebutton = true;
-                    // if(!this.selected_payment_mode){
-                    //     this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
-                    //     this.isClickedOnce=false;
+                    this.isClickedOnce=false;
+                    this.disablebutton = true;
+                    if(!this.selected_payment_mode){
+                        this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
+                        this.isClickedOnce=false;
             
-                    //    }else{
-                    // this.addCheckInConsumer(post_Data, paymenttype);
-                    //    }
-                         this.addCheckInConsumer(post_Data, paymenttype);
+                       }else{
+                    this.addCheckInConsumer(post_Data, paymenttype);
+                       }
+                        //  this.addCheckInConsumer(post_Data, paymenttype);
                 }
             } else if (this.sel_ser_det.isPrePayment) {
                 this.addApptAdvancePayment(post_Data);
@@ -904,13 +908,15 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     parentUid = retData['parent_uuid'];
                 });
                 if (this.selectedMessage.files.length > 0) {
-                    this.consumerNoteAndFileSave(this.uuidList, paymenttype);
+                    // this.consumerNoteAndFileSave(this.uuidList, paymenttype);
+                    this.consumerNoteAndFileSave(this.uuidList, parentUid, paymenttype);
                 }
                 else {
                     if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                         this.submitQuestionnaire(parentUid, paymenttype);
                     } else {
                         this.paymentOperation(paymenttype);
+                        
                     }
                 }
 
@@ -1212,7 +1218,29 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.imgCaptions[index] = '';
         this.fileInput.nativeElement.value = '';
     }
-    consumerNoteAndFileSave(uuid, paymenttype?) {
+    // consumerNoteAndFileSave(uuid, paymenttype?) {
+    //     const dataToSend: FormData = new FormData();
+    //     const captions = {};
+    //     let i = 0;
+    //     if (this.selectedMessage) {
+    //         for (const pic of this.selectedMessage.files) {
+    //             dataToSend.append('attachments', pic, pic['name']);
+    //             captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
+    //             i++;
+    //         }
+    //     }
+    //     const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
+    //     dataToSend.append('captions', blobPropdata);
+    //     this.subs.sink = this.shared_services.addConsumerAppointmentAttachment(this.account_id, uuid, dataToSend)
+    //         .subscribe(
+    //             () => {
+    //             },
+    //             error => {
+    //                 this.wordProcessor.apiErrorAutoHide(this, error);
+    //             }
+    //         );
+    // }
+    consumerNoteAndFileSave(uuids, parentUid?, paymenttype?) {
         const dataToSend: FormData = new FormData();
         const captions = {};
         let i = 0;
@@ -1225,14 +1253,47 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
         const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
         dataToSend.append('captions', blobPropdata);
-        this.subs.sink = this.shared_services.addConsumerAppointmentAttachment(this.account_id, uuid, dataToSend)
-            .subscribe(
-                () => {
-                },
-                error => {
-                    this.wordProcessor.apiErrorAutoHide(this, error);
-                }
-            );
+        let count = 0;
+        for (const uuid of uuids) {
+            this.subs.sink = this.shared_services.addConsumerAppointmentAttachment(this.account_id, uuid, dataToSend)
+                .subscribe(
+                    () => {
+                        if (this.type !== 'reschedule') {
+                            count++;
+                            if (count === uuids.length) {
+                                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                                    this.submitQuestionnaire(parentUid, paymenttype);
+                                } else {
+                                    this.paymentOperation(paymenttype);
+                                }
+                            }
+                        } else {
+                            let queryParams = {
+                                account_id: this.account_id,
+                                uuid: this.rescheduleUserId,
+                                type: 'reschedule',
+                                theme: this.theme
+                            }
+                            if (this.businessId) {
+                                queryParams['customId'] = this.customId;
+                            }
+                            let navigationExtras: NavigationExtras = {
+                                queryParams: queryParams
+                            };
+                            this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras);
+                        }
+                    },
+                    error => {
+                        this.isClickedOnce = false;
+                        this.wordProcessor.apiErrorAutoHide(this, error);
+                        this.disablebutton = false;
+                    }
+                );
+        }
+    }
+    viewAttachments(){
+        this.action = 'attachment';
+        this.modal.nativeElement.click();
     }
     timeSelected(slot) {
         this.apptTime = slot;
@@ -1857,6 +1918,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.makeFailedPayment(paymenttype);
     }
     makeFailedPayment(paymentMode) {
+        this.isClickedOnce=true;
         this.waitlistDetails = {
             'amount': this.paymentDetails.amountRequiredNow,
             'paymentMode': null,
@@ -2096,6 +2158,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             });
     }
     paymentOperation(paymenttype?) {
+        this.paymentBtnDisabled = true;
         if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
             this.payuPayment(paymenttype);
         } else {
@@ -2166,39 +2229,27 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
            
         }
     }
-    // closeloading() {
-    //     this.loadingPaytm = false;
-    //     this.cdRef.detectChanges();
-    //     this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
-    //     if(this.from){
-    //         this.ngZone.run(() => this.router.navigate(['consumer']));
-    //       } else{
-    //         let queryParams = {
-    //             account_id: this.account_id,
-    //             uuid: this.trackUuid,
-    //             theme: this.theme
-    //         }
-    //         if (this.businessId) {
-    //             queryParams['customId'] = this.customId;
-    //         }
-            
-    //         let navigationExtras: NavigationExtras = {
-    //             queryParams: queryParams
-    //         };  
-    //         this.ngZone.run(() => this.router.navigate(['consumer'],navigationExtras));
-    //       }
-    // }
     closeloading() {
-        this.isClickedOnce = false;
         this.loadingPaytm = false;
         this.cdRef.detectChanges();
-        this.ngZone.run(() => {
-            const snackBar = this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
-            snackBar.onAction().subscribe(() => {
-                snackBar.dismiss();
-            })
-        });
-
+        this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+        if(this.from){
+            this.ngZone.run(() => this.router.navigate(['consumer']));
+          } else{
+            let queryParams = {
+                account_id: this.account_id,
+                uuid: this.trackUuid,
+                theme: this.theme
+            }
+            if (this.businessId) {
+                queryParams['customId'] = this.customId;
+            }
+            
+            let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+            };  
+            this.ngZone.run(() => this.router.navigate(['consumer'],navigationExtras));
+          }
     }
     getConsumerQuestionnaire() {
         const consumerid = (this.waitlist_for[0].id === this.customer_data.id) ? 0 : this.waitlist_for[0].id;

@@ -240,6 +240,18 @@
                                                                     data-target="#exampleModalCenter">Change
                                                                 </a>
                                                             </div>
+                                                            <div class="col-md-12 col-xs-12 col-sm-12 lnk no-padding">
+                                                                <div>
+                                                                    <h6 class="card-title service mgn-bt-10"
+                                                                        style="font-size: 14px !important; color: #363636 !important;">
+                                                                        {{waitlist_for[0].firstName |
+                                                                        capitalizeFirst}}
+                                                                        {{waitlist_for[0].lastName |
+                                                                        capitalizeFirst}}
+                                                                    </h6>
+                                                                </div>
+                                                               
+                                                            </div>
                                                             <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
                                                             Contact Information
@@ -257,13 +269,13 @@
                                                             <div class="clearfix"></div>
                                                             <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
                                                                 <div class="user-data-card card-body no-padding">
-                                                                    <h6 class="card-title service mgn-bt-10"
+                                                                    <!-- <h6 class="card-title service mgn-bt-10"
                                                                         style="font-size: 14px !important; color: #363636 !important;">
                                                                         {{waitlist_for[0].firstName |
                                                                         capitalizeFirst}}
                                                                         {{waitlist_for[0].lastName |
                                                                         capitalizeFirst}}
-                                                                    </h6>
+                                                                    </h6> -->
                                                                     <div class="contact-section contact">
                                                                         <i class="fa fa-mobile "></i>
                                                                         <ng-container
@@ -308,6 +320,7 @@
                                                                     <div class="email-section"
                                                                         *ngIf="userData && userData.userProfile && userData.userProfile.email">
                                                                         <!-- <i class="fa fa-envelope-o "></i> -->
+                                                                        <i class="fa fa-envelope-o "></i> &nbsp;
                                                                         <span
                                                                             class="emailvallabel">{{userData.userProfile.email}}</span>
                                                                         <a class="mgn-lt-5 lnk pointer-cursor">
@@ -413,7 +426,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div *ngIf="!questionnaireList.labels"
+                                            <!-- <div *ngIf="!questionnaireList.labels"
                                             class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding"
                                             style="padding: 0 12.5px !important">
                                             <a #modal data-toggle="modal"
@@ -442,7 +455,51 @@
                                                             *ngIf="getAttachLength() > 0">&nbsp;({{getAttachLength()}})</span>
                                                     </a></mat-chip>
                                             </mat-chip-list>
-                                        </div>
+                                        </div> -->
+                                        <div *ngIf="!questionnaireList.labels"
+                                        class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding pad_btns"
+                                        style="padding: 10px 12.5px !important">
+                                        <a #modal data-toggle="modal"
+                                            data-target="#exampleModalCenter">
+                                        </a>
+                                        <div style="color: #9B9B9B;font-weight: 500;font-size: 10px;padding-top: 5px;">Attach files and notes if any,</div>
+                                        <mat-chip-list class="btns">
+                                            <mat-chip class="notes-and-file-chip"
+                                                [class.mandatoryChip]="sel_ser_det.consumerNoteMandatory && type != 'reschedule'"
+                                                (click)="handleSideScreen('note');modal.click();">
+                                                <a class="lnk action pointer-cursor"><i
+                                                        class="fa fa-file-text-o mgn-rt-5"
+                                                        aria-hidden="true"></i>
+                                                        {{sel_ser_det.consumerNoteTitle}}
+                                                    <span
+                                                    *ngIf="sel_ser_det.consumerNoteMandatory && type != 'reschedule'">*</span></a>
+                                            </mat-chip>
+                                            <span>
+                                                <mat-chip class="notes-and-file-chip"
+                                                    [ngClass]="{'br-top-right-0 br-bottom-right-0 margin-right-0': getAttachLength() > 0}">
+                                                    <a class="lnk action pointer-cursor"
+                                                        (click)="imagefile1.click();"><input
+                                                            #imagefile1 type="file"
+                                                            accept="/*;capture=camera"
+                                                            style="display:none;" multiple
+                                                            (change)="filesSelected($event, 'close')"><i
+                                                            class="fa fa-paperclip mgn-rt-5"
+                                                            aria-hidden="true"></i>Upload
+                                                        File
+                                                        <!-- <span
+                                                        *ngIf="getAttachLength() > 0">&nbsp;({{getAttachLength()}})</span> -->
+                                                    </a>
+                                                </mat-chip>
+                                                <mat-chip *ngIf="getAttachLength() > 0"
+                                                    class="notes-and-file-chip br-top-left-0 br-bottom-left-0 margin-left-0">
+                                                    <a class="lnk action pointer-cursor"
+                                                        (click)="viewAttachments()">
+                                                        View (<span>{{getAttachLength()}}</span>)
+                                                    </a>
+                                                </mat-chip>
+                                            </span>
+                                        </mat-chip-list>
+                                    </div>
                                             <div *ngIf="type != 'reschedule'"
                                                 class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between pt-4 mgn-lt-10">
                                                 <button type="button"
@@ -996,10 +1053,9 @@
                                                 </span>
                                             </div>
                                             <div class="disp-flex">
-                                                <span class="billing-head" *ngIf="settingsjson.showTokenId">
-                                                    Token for</span>
-                                                <span class="billing-head" *ngIf="!settingsjson.showTokenId">
-                                                    Check-in for</span>
+                                                <span class="billing-head">
+                                                    Appointment for</span>
+                                                
                                                 <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
                                                 <span class="billing-value">
                                                     <span *ngFor="let customer of waitlist_for; let i = index;">
@@ -1273,7 +1329,7 @@
                                                                     service charges and Online Gateway fees).
                                                                 </li>
                                                                 <li>Refund will be received directly to the
-                                                                    consumerâ€™s
+                                                                    consumer’s
                                                                     bank account after he/she cancels the future
                                                                     bookings.</li>
                                                                 <li>If the booking is cancelled on the date of

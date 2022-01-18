@@ -828,19 +828,53 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 post_Data['useCredit'] = this.checkJcredit
                 post_Data['useJcash'] = this.checkJcash
             }
+            // if (!this.is_wtsap_empty) {
+            //     if (type === 'checkin') {
+            //         if (this.jcashamount > 0 && this.checkJcash) {
+            //             this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.paymentDetails.amountRequiredNow)
+            //                 .subscribe(data => {
+            //                     this.remainingadvanceamount = data;
+            //                     this.addCheckInConsumer(post_Data, paymenttype);
+            //                 });
+            //         }
+            //         else {
+            //             // this.isClickedOnce=false;
+            //             //this.disablebutton = true;
+            //             this.addCheckInConsumer(post_Data, paymenttype);
+            //         }
+            //     } else if (this.sel_ser_det.isPrePayment) {
+            //         this.addWaitlistAdvancePayment(post_Data);
+            //     }
+            // }
             if (!this.is_wtsap_empty) {
                 if (type === 'checkin') {
                     if (this.jcashamount > 0 && this.checkJcash) {
                         this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.paymentDetails.amountRequiredNow)
                             .subscribe(data => {
                                 this.remainingadvanceamount = data;
+                                if(!this.selected_payment_mode){
+                                    this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
+                                    this.isClickedOnce=false;
+                        
+                                   }else{
                                 this.addCheckInConsumer(post_Data, paymenttype);
+                                   }
                             });
                     }
-                    else {
-                        // this.isClickedOnce=false;
-                        //this.disablebutton = true;
+                    else if(!this.sel_ser_det.isPrePayment){
                         this.addCheckInConsumer(post_Data, paymenttype);
+                    }
+                    else {
+                        this.isClickedOnce=false;
+                        this.disablebutton = true;
+                        if(!this.selected_payment_mode){
+                            this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
+                            this.isClickedOnce=false;
+                
+                           }else{
+                        this.addCheckInConsumer(post_Data, paymenttype);
+                           }
+                            //  this.addCheckInConsumer(post_Data, paymenttype);
                     }
                 } else if (this.sel_ser_det.isPrePayment) {
                     this.addWaitlistAdvancePayment(post_Data);
@@ -2177,8 +2211,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     if (pData.isGateWayPaymentNeeded && pData.isJCashPaymentSucess) {
                         if (pData.paymentGateway == 'PAYTM') {
                             this.payWithPayTM(pData.response, this.account_id);
+                            this.isClickedOnce = true;
                         } else {
                             this.paywithRazorpay(pData.response);
+                            this.isClickedOnce = true;
                         }
                     }
                 },
@@ -2193,9 +2229,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.pGateway = pData.paymentGateway;
                     if (this.pGateway === 'RAZORPAY') {
                         this.paywithRazorpay(pData);
+                        this.isClickedOnce = true;
                     } else {
                         if (pData['response']) {
                             this.payWithPayTM(pData, this.account_id);
+                            this.isClickedOnce = true;
                         } else {
                             this.isClickedOnce = false;
                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
@@ -2377,6 +2415,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             );
     }
     paymentOperation(paymenttype?) {
+        this.paymentBtnDisabled = true;
         if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
             this.payuPayment(paymenttype);
         } else {
@@ -2461,40 +2500,27 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
         }
     }
-    // closeloading() {
-    //     this.loadingPaytm = false;
-    //     this.cdRef.detectChanges();
-      
-    //     if (this.from) {
-    //         this.ngZone.run(() => this.router.navigate(['consumer']));
-    //     } else {
-    //         let queryParams = {
-    //             account_id: this.account_id,
-    //             uuid: this.uuidList,
-    //             theme: this.theme
-    //         }
-    //         if (this.businessId) {
-    //             queryParams['customId'] = this.customId;
-    //         }
-
-    //         // let navigationExtras: NavigationExtras = {
-    //         //     queryParams: queryParams
-    //         // };
-    //         // this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
-    //     }
-    //     this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
-    // }
     closeloading() {
-        this.isClickedOnce = false;
         this.loadingPaytm = false;
         this.cdRef.detectChanges();
-        this.ngZone.run(() => {
-            const snackBar = this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
-            snackBar.onAction().subscribe(() => {
-                snackBar.dismiss();
-            })
-        });
+        this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+        if (this.from) {
+            this.ngZone.run(() => this.router.navigate(['consumer']));
+        } else {
+            let queryParams = {
+                account_id: this.account_id,
+                uuid: this.uuidList,
+                theme: this.theme
+            }
+            if (this.businessId) {
+                queryParams['customId'] = this.customId;
+            }
 
+            let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+            };
+            this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+        }
     }
     indian_payment_mode_onchange(event) {
         this.selected_payment_mode = event.value;
