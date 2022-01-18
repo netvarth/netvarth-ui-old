@@ -774,7 +774,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         console.log("is Prepayment:", this.selectedService.isPrePayment);
         console.log("Email:", this.commObj['communicationEmail']);
         // type === 'appt' && 
-        if (this.selectedService.isPrePayment && (!this.commObj['communicationEmail'] || this.commObj['communicationEmail']=== '')) {
+        if (this.selectedService.isPrePayment && (!this.commObj['communicationEmail'] || this.commObj['communicationEmail'] === '')) {
             const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
                 width: '40%',
                 panelClass: ['loginmainclass', 'popup-class'],
@@ -855,7 +855,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             if (this.commObj['communicationEmail'] !== '') {
                 this.waitlist_for[0]['email'] = this.commObj['communicationEmail'];
             }
-            console.log( this.waitlist_for);
+            console.log(this.waitlist_for);
             post_Data['appmtFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
             if (this.jcashamount > 0 && this.checkJcash) {
                 post_Data['useCredit'] = this.checkJcredit
@@ -867,16 +867,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.paymentDetails.amountRequiredNow)
                             .subscribe(data => {
                                 this.remainingadvanceamount = data;
-                                if (!this.selected_payment_mode) {
-                                    this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
-                                    this.isClickedOnce = false;
-
-                                } else {
-                                    this.addCheckInConsumer(post_Data, paymenttype);
-                                }
+                                this.addCheckInConsumer(post_Data, paymenttype);
                             });
-                    }
-                    else {
+                    } else {
                         this.addCheckInConsumer(post_Data, paymenttype);
                     }
                 } else if (this.selectedService.isPrePayment) {
@@ -901,7 +894,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         //         }
         //     }
         // } else {
-            this.confirmcheckin(type, paymenttype);
+        this.confirmcheckin(type, paymenttype);
         // }
 
     }
@@ -944,6 +937,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     addCheckInConsumer(post_Data, paymentmodetype?) {
         let paymenttype = this.selected_payment_mode;
+        if (this.selectedService.isPrePayment && !this.selected_payment_mode) {
+            this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
+            this.isClickedOnce = false;
+            return false;
+        }
         this.subs.sink = this.shared_services.addCustomerAppointment(this.account_id, post_Data)
             .subscribe(data => {
                 const retData = data;
@@ -2520,7 +2518,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         } else {
             _this.commObj['communicationEmail'] = _this.parentCustomer.userProfile.email;
         }
-        if (parentCustomer.userProfile.whatsAppNum && parentCustomer.userProfile.whatsAppNum!='') {
+        if (parentCustomer.userProfile.whatsAppNum && parentCustomer.userProfile.whatsAppNum != '') {
             _this.commObj['comWhatsappNo'] = parentCustomer.userProfile.whatsAppNum.number;
             _this.commObj['comWhatsappCountryCode'] = parentCustomer.userProfile.whatsAppNum.countryCode;
         } else {
@@ -2778,7 +2776,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 type = 'new';
             }
             this.updateCustomer(formdata, this.is_parent, type).then(
-                (result) => { 
+                (result) => {
                     if (result !== false) {
                         _this.setConsumerFamilyMembers(this.parentCustomer.id).then(
                             (members) => {

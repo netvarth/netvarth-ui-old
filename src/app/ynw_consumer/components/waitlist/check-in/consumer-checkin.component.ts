@@ -1000,6 +1000,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     addCheckInConsumer(postData, paymentmodetype?) {
         let paymenttype = this.selected_payment_mode;
+        if (this.selectedService.isPrePayment && !this.selected_payment_mode) {
+            this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
+            this.isClickedOnce = false;
+            return false;
+        }
         this.subs.sink = this.shared_services.addCheckin(this.account_id, postData)
             .subscribe(data => {
                 if (this.customId) {

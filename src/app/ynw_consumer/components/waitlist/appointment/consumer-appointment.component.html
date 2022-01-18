@@ -21,7 +21,7 @@
                                 <div class="loading-hgt" *ngIf="!questionnaireLoaded">
                                     <app-common-innerloading-spinner></app-common-innerloading-spinner>
                                 </div>
-                                <div class="col-xl-12 no-padding-small" *ngIf="questionnaireLoaded">
+                                <div class="col-xs-12 no-padding-small" *ngIf="questionnaireLoaded">
                                     <div
                                         class="lbl col-sm-12 col-md-5 col-lg-4 col-xs-12 col-sm-12 no-padding displ-none">
                                         <div class="wizard-nav" *ngIf="type != 'reschedule'">
@@ -1246,7 +1246,7 @@
                                             [questionAnswers]="questionAnswers" [accountId]="account_id"
                                             (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
                                         <div class="d-flex flex-column-fluid width-100">
-                                            <div class="col-xl-12 force_center note-pad">
+                                            <div class="col-xs-12 force_center note-pad">
                                                 <div class="form-group card mgn-0">
                                                     <label class="col-12 quest">Add any other notes to the provider or
                                                         upload any files for provider view

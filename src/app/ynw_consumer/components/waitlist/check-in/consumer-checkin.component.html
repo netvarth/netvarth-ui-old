@@ -13,7 +13,7 @@
             </div>
             <app-common-innerloading-spinner *ngIf="loadingPaytm"></app-common-innerloading-spinner>
             <div class="d-flex flex-column-fluid no-padding-small">
-                <div class="card card-custom cardwidth">
+                <div class="card card-custom">
                     <div class="card-body p-0">
                         <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
                             data-wizard-clickable="false">
@@ -21,7 +21,7 @@
                                 <div class="loading-hgt" *ngIf="!questionnaireLoaded">
                                     <app-common-innerloading-spinner></app-common-innerloading-spinner>
                                 </div>
-                                <div *ngIf="questionnaireLoaded">
+                                <div class="col-xs-12 no-padding-small" *ngIf="questionnaireLoaded">
                                     <div
                                         class="lbl col-sm-12 col-md-5 col-lg-4 col-xs-12 col-sm-12 no-padding displ-none">
                                         <div class="wizard-nav" *ngIf="type !='waitlistreschedule'">
@@ -129,6 +129,7 @@
                                             </div>
                                         </div>
                                         <div class="booking-img"></div>
+                                        <div class="clearfix"></div>
                                     </div>
                                     <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
                                         data-wizard-type="step-content" data-wizard-state="current"
@@ -603,6 +604,7 @@
                                                 Next
                                             </button> &nbsp;
                                         </div>
+                                        <div class="clearfix"></div>
                                     </div>
                                     <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
                                         data-wizard-type="step-content" data-wizard-state="current"
@@ -786,7 +788,6 @@
                                                                 *ngIf="selectedService.serviceType==='virtualService'">
                                                                 Booking For
                                                             </div>
-                                                            <div class="clearfix"></div>
                                                             <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
                                                                 <div class="">
                                                                     <div *ngIf="type !== 'waitlistreschedule'">
@@ -973,6 +974,7 @@
                                                 </button>
                                             </div>
                                         </div>
+                                        <div class="clearfix"></div>
                                     </div>
                                     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1207,7 +1209,8 @@
                                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
                                                             {{selectedService.consumerNoteTitle}}
                                                             <div class="form-level-settings">
-                                                                Add any other notes to the {{businessjson.businessName ? businessjson.businessName : selectedService.name}}
+                                                                Add any other notes to the {{businessjson.businessName ?
+                                                                businessjson.businessName : selectedService.name}}
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -1262,7 +1265,7 @@
                                             [accountId]="account_id" (returnAnswers)="getQuestionAnswers($event)">
                                         </app-questionnaire>
                                         <div class="d-flex flex-column-fluid width-100">
-                                            <div class="col-xl-12 force_center note-pad">
+                                            <div class="col-xs-12 force_center note-pad">
                                                 <div class="form-group card mgn-0">
                                                     <label class="col-12 quest">Add any other notes to the provider or
                                                         upload any files for provider view
@@ -1539,8 +1542,7 @@
                                                             </ng-container>
                                                         </button>
                                                     </div>
-                                                    <div class="clearfix"></div>
-                                                    <div
+                                                    <div class="col-md-12 col-xs-12 no-padding payment-mode-card-styles"
                                                         *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
                                                         <ng-container *ngIf="!shownonIndianModes">
                                                             <app-payment-modes [paymentModes]="indian_payment_modes"
@@ -1553,45 +1555,43 @@
                                                             </app-payment-modes>
                                                         </ng-container>
                                                     </div>
-                                                    <div class="clearfix"></div>
-                                                    <div class="card-payment-button">
-                                                        <div class="col-md-12">
-                                                            <div class="txt-align-center pad_link"
-                                                                *ngIf="paymentmodes.internationalPay && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                                <span [class.disabled]="paymentBtnDisabled"
-                                                                    (click)="togglepaymentMode()"
-                                                                    class="pointer-cursor"><a class="refund_policy">
-                                                                        <span
-                                                                            *ngIf="!shownonIndianModes && paymentmodes && paymentmodes.internationalPay">Non
-                                                                            Indian Payment ? Click
-                                                                            here</span>
-                                                                        <span
-                                                                            *ngIf="shownonIndianModes && paymentmodes && paymentmodes.indiaPay">Indian
-                                                                            Payment ? Click
-                                                                            here</span>
-                                                                    </a></span>
+                                                    <div class="mgn-up-20 col-md-12 col-xs-12 no-padding">
+                                                        <div class="col-md-12 txt-align-center pad_link"
+                                                            *ngIf="paymentmodes.internationalPay && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                            <span [class.disabled]="paymentBtnDisabled"
+                                                                (click)="togglepaymentMode()" class="pointer-cursor"><a
+                                                                    class="refund_policy">
+                                                                    <span
+                                                                        *ngIf="!shownonIndianModes && paymentmodes && paymentmodes.internationalPay">Non
+                                                                        Indian Payment ? Click
+                                                                        here</span>
+                                                                    <span
+                                                                        *ngIf="shownonIndianModes && paymentmodes && paymentmodes.indiaPay">Indian
+                                                                        Payment ? Click
+                                                                        here</span>
+                                                                </a></span>
 
-                                                            </div>
+                                                        </div>
 
 
-                                                            <div class="cancelpolicy mgn-rt-5"
-                                                                *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                                <div class="pad_policy"
-                                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                                    <a data-toggle="modal" data-target="#exampleModal"
-                                                                        class="refund_policy">Cancellation Policy</a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="txt-align-center">
-                                                                <button type="button"
-                                                                    class=" next-button btn btn-primary font-weight-bold text-uppercase "
-                                                                    [class.disabled]="paymentBtnDisabled"
-                                                                    *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                                    (click)="!isClickedOnce && saveCheckin('checkin')">
-                                                                    MaKe Payment
-                                                                </button>
+                                                        <div class="cancelpolicy mgn-rt-5"
+                                                            *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                            <div class="pad_policy"
+                                                                *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                                <a data-toggle="modal" data-target="#exampleModal"
+                                                                    class="refund_policy">Cancellation Policy</a>
                                                             </div>
                                                         </div>
+                                                        <div class="txt-align-center">
+                                                            <button type="button"
+                                                                class=" next-button btn btn-primary font-weight-bold text-uppercase "
+                                                                [class.disabled]="paymentBtnDisabled"
+                                                                *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
+                                                                (click)="!isClickedOnce && saveCheckin('checkin')">
+                                                                MaKe Payment
+                                                            </button>
+                                                        </div>
+
                                                         <!-- modalbox -->
                                                         <div class="modal fade" id="exampleModal" tabindex="-1"
                                                             role="dialog" aria-labelledby="exampleModalLabel"
@@ -1626,7 +1626,6 @@
                     </div>
                 </div>
             </div>
-            <div class="clearfix"></div>
         </div>
     </div>
 </section>
