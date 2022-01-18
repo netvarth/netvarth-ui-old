@@ -141,8 +141,6 @@ export class CustTemplate2Component implements OnInit {
   showEmailPhonediv = false;
   coupondialogRef;
   jdndialogRef;
-  femaleTooltip = projectConstants.TOOLTIP_FEMALE;
-  maleTooltip = projectConstants.TOOLTIP_MALE;
   virtualsectionHeader = 'Click here to View More Details';
   isPlaceisSame = false;
   jdnDiscountType;

@@ -1126,7 +1126,7 @@ export class SharedServices {
     const url = 'provider/payment/razorpay/update?account='+id;
     return this.servicemeta.httpPost(url,data);
   }
-  updateRazorPayForPtovider(data){
+  updateRazorPayForProvider(data){
     const url = 'provider/payment/razorpay/update';
     return this.servicemeta.httpPost(url,data);
   }
