@@ -2012,7 +2012,7 @@ textarea {
   width: 50px;
 }
 .underline{
-  color: #fff ;
+  color: #162182 !important;
   text-decoration: underline !important;
   cursor: pointer !important;
 }
@@ -2078,7 +2078,8 @@ textarea {
       /* transform: translate(50%, 50%); */
   }
   .underline{
-    color: #162182 !important ;
+    /* color: #162182 !important; */
+    color: #162182 !important;
     text-decoration: underline !important;
     cursor: pointer !important;
   }
@@ -2193,8 +2194,14 @@ textarea {
     left: 0%;
       transform: translate(50%, 50%);
   }
-
+  .underline{
+    color: #fff !important;
+    text-decoration: underline !important;
+    cursor: pointer !important;
+  }
 }
+
+
 @media only screen and (min-width: 1200px) {
   .imageText{
     flex-wrap: nowrap !important;
@@ -2227,6 +2234,11 @@ textarea {
     top: 16%;
     left: 4%;
       transform: translate(50%, 50%);
+  }
+  .underline{
+    color: #fff !important;
+    text-decoration: underline !important;
+    cursor: pointer !important;
   }
   
 
