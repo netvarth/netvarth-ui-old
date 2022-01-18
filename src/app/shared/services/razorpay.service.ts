@@ -332,7 +332,6 @@ updateRazorPay(payload,account_id,usertype){
   const self = this;
   if(usertype==='consumer'){
   return new Promise((resolve,reject)=>{
-
     self.sharedServices.updateRazorPay(payload,account_id)
     .subscribe(result=>{
       console.log('result'+result);
@@ -340,12 +339,11 @@ updateRazorPay(payload,account_id,usertype){
     },error=>{
       reject(false);
     })
-
   })
 }else{
   return new Promise((resolve,reject)=>{
 
-    self.sharedServices.updateRazorPayForPtovider(payload)
+    self.sharedServices.updateRazorPayForProvider(payload)
     .subscribe(result=>{
       console.log('result'+result);
       resolve(result);

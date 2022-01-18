@@ -1,5 +1,5 @@
-<section>
-    <div class="col-md-12 no-padding-small">
+<section >
+    <div class="col-md-12 no-padding-small bg-white">
         <!-- Step 0 -->
         <!-- <div *ngIf="active_step==0 && !loading_active && bProfile && !subDomainLinks[bProfile.serviceSubSector.subDomain]"
             class="is-bx step0 col-12 col-sm-12 col-lg-12 ml-auto mr-auto">
@@ -792,14 +792,14 @@
 
  <!--logo start-->
  <div>
-    <img class="img-fluid" src="assets/images/jaldee-logo.png" />
+    <img class="img-fluid" src="/assets/images/jaldee-logo.png" />
 </div>
 <!----logo end-->
 <!---jaldee business logo start-->
 <div class="container">
     <div>
         <div>
-            <img class="img-fluid" src="../../../../assets/images/welcome.svg" />
+            <img class="img-fluid" src="/assets/images/welcome.svg" />
         </div>
         <div class="centered1">
             <div style="color: #fff;" >Welcome to</div>
@@ -810,25 +810,29 @@
         
     </div>
     <div class="centered2">
-        <button  type="submit" style="padding: 1rem 2rem 0.9rem;
+        <button  type="submit" 
+        style="padding: 1rem 2rem 0.9rem;
         margin: 0.5rem;
         border-radius: 2rem;
         border: 1px solid #e0e0e0;
-        background-color: #e0e0e0;
-color: #2e2e2e;;cursor: pointer;"  >
+        background-color: #fff;
+        color: #162182;
+        cursor: pointer;
+        font-weight: bold;
+        box-shadow: 0px 5px 10px rgb(0 0 0 / 30%);" (click)="expressSignup()" >
    Take me to assissted account setup
      </button>
     
     </div>
     <div class="centered3">
-        <ul class="underline" style="color: #fff;">I will explore myself</ul>
+        <ul class="underline" style="color: #fff;" (click)="skipMe()">I'll explore myself</ul>
     </div>
     
     
     
 </div>
 <!---jaldee business logo end-->
-<div style="background-color: #fff7ce;margin-top: 100px;" class="container">
+<div style="background-color: #fff7ce;margin-top: 100px;margin-bottom:4rem" class="container">
    <div style="display: flex;padding: 3rem;" class="imageText"  >
        <div>
        <div  >

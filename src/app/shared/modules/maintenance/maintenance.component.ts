@@ -54,5 +54,6 @@ export class MaintenanceComponent implements OnInit {
   }
   goHome() {
     this.location.back();
+    window.location.reload();
   }
 }
