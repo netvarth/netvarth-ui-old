@@ -5,7 +5,8 @@
 </h1>
 <div class="pad-20 image-scroll" >
   <img style="width:100%;margin-top: -20px;" [src]="details.url||details.s3path"
-    *ngIf="details.type && details.type == 'image/bmp'|| details.type =='image/png'|| details.type == 'image/gif' || details.type == 'image/jpg' ||details.type =='image/jpeg'||details.type == 'image/webp'" />
+  *ngIf="details.type && details.type == 'image/bmp'|| details.type =='image/png'|| details.type == 'image/gif' || details.type == 'image/jpg' ||details.type =='image/jpeg'||details.type == 'image/webp'
+  ||details.type == 'bmp' ||details.type == 'png' ||details.type == 'gif' ||details.type == 'jpg' ||details.type == 'jpeg' ||details.type == 'webp'" />
   <video style="width:100%;height: 75vh;" controls [class.mgn-up-minus-20]="data.source === 'mr'"
     *ngIf="(data.source === 'qnr' && type === 'video') || (data.source === 'mr' && details.type && details.type == 'video/mp4' || details.type == 'video/mpeg'||details.type == 'video/quicktime')">
     <source [src]="details.url" />

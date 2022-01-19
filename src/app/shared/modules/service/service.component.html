@@ -544,7 +544,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         <div class="col-xs-12 col-sm-12 col-lg-12 col-xs-12 no-padding mgn-bt-10 bold">Select Payment Profile for Service</div>
         <div class="col-xs-12 col-sm-12 col-lg-12 col-xs-12 mgn-bt-20" *ngFor="let profile of paymentProfiles; let i=index">
           <mat-radio-group name="paymentprofile" formControlName="paymentProfileId"  class="mt-4">
-            <mat-radio-button [value]="profile.profileId" readonly [checked]="profile.profileId === service.paymentProfileId">
+            <mat-radio-button [value]="profile.profileId" readonly [checked]="service && profile.profileId === service.paymentProfileId">
                 <span class="font-weight-bold">{{profile.displayName}}</span>
             </mat-radio-button>
           <app-payment-mode [paymentProfile]="profile"></app-payment-mode>

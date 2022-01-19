@@ -2012,7 +2012,7 @@ textarea {
   width: 50px;
 }
 .underline{
-  color: #fff ;
+  color: #162182 !important;
   text-decoration: underline !important;
   cursor: pointer !important;
 }
@@ -2025,16 +2025,27 @@ textarea {
 .img-fluid{
   padding-bottom: 50px!important;
 }
-.container {
+.containers {
   position: relative;
   /* text-align: center; */
   /* color: red; */
 }
-@media only screen and (max-width: 400px){
+
+@media only screen and (max-width: 360px){
   .centered2 {
     position: absolute;
     top: 85% !important;
-    left: 9% !important;
+    left: 5% !important;
+      /* transform: translate(-50%, -50%) */
+   
+  }
+
+}
+@media only screen and (max-width: 400px){
+  .centered2 {
+   position: absolute;
+    top: 85% !important;
+    left: 5% !important;
       /* transform: translate(-50%, -50%) */
    
   }
@@ -2042,6 +2053,13 @@ textarea {
     color: #162182 !important ;
     text-decoration: underline !important;
     cursor: pointer !important;
+  }
+  .jaldeeBusiness{
+    position:relative;
+    margin-top: 100px ;
+  }
+  h2{
+    font-size: 1.5rem;
   }
 }
 
@@ -2061,7 +2079,8 @@ textarea {
   .centered2 {
     position: absolute;
     top: 87%;
-    left: 12%;
+    left: 13%;
+    /* transform: translateX(20px); */
       /* transform: translate(-50%, -50%) */
    
   }
@@ -2078,9 +2097,14 @@ textarea {
       /* transform: translate(50%, 50%); */
   }
   .underline{
-    color: #162182 !important ;
+    /* color: #162182 !important; */
+    color: #162182 !important;
     text-decoration: underline !important;
     cursor: pointer !important;
+  }
+  .jaldeeBusiness{
+    position:relative;
+    margin-top: 100px ;
   }
 }
 
@@ -2119,6 +2143,10 @@ textarea {
     color: #162182 !important ;
     text-decoration: underline !important;
     cursor: pointer !important;
+  }
+  .jaldeeBusiness{
+    position:relative;
+    margin-top: 100px ;
   }
 
 }
@@ -2161,6 +2189,10 @@ textarea {
     text-decoration: underline !important;
     cursor: pointer !important;
   }
+  .jaldeeBusiness{
+    position:relative;
+    margin-top: 100px ;
+  }
 }
 
 @media only screen and (min-width: 992px) {
@@ -2193,8 +2225,18 @@ textarea {
     left: 0%;
       transform: translate(50%, 50%);
   }
-
+  .underline{
+    color: #fff !important;
+    text-decoration: underline !important;
+    cursor: pointer !important;
+  }
+  .jaldeeBusiness{
+    position:relative;
+    margin-top: 0px !important;
+  }
 }
+
+
 @media only screen and (min-width: 1200px) {
   .imageText{
     flex-wrap: nowrap !important;
@@ -2211,7 +2253,7 @@ textarea {
   }
   .centered2 {
     position: absolute;
-    top: 42%;
+    top: 43%;
       left: 21%;
       transform: translate(-50%, -50%)
    
@@ -2227,6 +2269,15 @@ textarea {
     top: 16%;
     left: 4%;
       transform: translate(50%, 50%);
+  }
+  .underline{
+    color: #fff !important;
+    text-decoration: underline !important;
+    cursor: pointer !important;
+  }
+  .jaldeeBusiness{
+    position:relative;
+    margin-top: 0px !important;
   }
   
 
