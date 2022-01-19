@@ -1744,6 +1744,7 @@ console.log("fgf"+JSON.stringify(loc));
     if(location.time) {
       current_provider['ctime']=location.time
     }    if(location.date) {
+      current_provider['cdate']=location.date
       service.serviceAvailability.availableDate=location.date
     }
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -1799,7 +1800,7 @@ console.log("fgf"+JSON.stringify(loc));
       current_provider['ctime']=location.time
     }
     if(location.date) {
-      console.log('differnt dates....',service.serviceAvailability.nextAvailableDate,location.date)
+      current_provider['cdate']=location.date
       service.serviceAvailability.nextAvailableDate=location.date
     }
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -1882,7 +1883,7 @@ console.log("fgf"+JSON.stringify(loc));
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer',current_provider['ctime']);
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1890,7 +1891,7 @@ console.log("fgf"+JSON.stringify(loc));
             this.checkout();
           }
         } else {
-            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer',current_provider['ctime']);
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);

@@ -1791,6 +1791,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if(location.time) {
       current_provider['ctime']=location.time
     }    if(location.date) {
+      current_provider['cdate']=location.date
       service.serviceAvailability.availableDate=location.date
     }
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -1846,7 +1847,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       current_provider['ctime'] = location.time
     }
     if (location.date) {
-      console.log('differnt dates....', service.serviceAvailability.nextAvailableDate, location.date)
+      current_provider['cdate'] = location.date
+      // console.log('differnt dates....', service.serviceAvailability.nextAvailableDate, location.date)
       service.serviceAvailability.nextAvailableDate = location.date
     }
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -1934,7 +1936,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log('end of login section')
         }
         else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer',current_provider['ctime']);
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1942,7 +1944,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.checkout();
           }
         } else {
-          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer',current_provider['ctime']);
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);

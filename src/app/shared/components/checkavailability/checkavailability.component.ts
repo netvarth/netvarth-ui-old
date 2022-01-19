@@ -175,11 +175,11 @@ export class CheckavailabilityComponent implements OnInit {
         }
     }
     getAvailableSlotByLocationandService(locid, servid, pdate, accountid, type?) {
-        console.log('entered....')
+        console.log('entered....',pdate)
         this.subs.sink = this.shared_services.getSlotsByLocationServiceandDate(locid, servid, pdate, accountid)
             .subscribe(data => {
                 this.slots = data;
-                console.log('data..',data)
+                console.log('data..',data,this.appointment.appmtTime)
                 this.freeSlots = [];
                 for (const scheduleSlots of this.slots) {
                     this.availableSlots = scheduleSlots.availableSlots;
@@ -289,13 +289,20 @@ calculateDate(days):any {
     const strtDt1 = this.todaydate + ' 00:00:00';
     const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
     const nDt = new Date(ndate);
-    if (nDt.getTime() >= strtDt.getTime() && this.typeofcard=='Appointment') {
-        this.sel_checkindate = ndate;
-        this.getAvailableSlotByLocationandService(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
-    } if(nDt.getTime() >= strtDt.getTime() && this.typeofcard=='Waitlist' || !this.typeofcard) {
+    console.log(nDt.getTime(),strtDt.getTime(),this.typeofcard)
+    const obtmonth = (nDt.getMonth() + 1);
+    let cmonth = '' + obtmonth;
+    if (obtmonth < 10) {
+        cmonth = '0' + obtmonth;
+    }
+    if (this.typeofcard=='Appointment') {
+        this.sel_checkindate =  ndate;
+      
+        this.getAvailableSlotByLocationandService(this.sel_loc, this.sel_ser, nDt.getFullYear() + '-' + cmonth + '-' + nDt.getDate(), this.account_id);
+    } if(this.typeofcard=='Waitlist') {
         console.log('waitlist')
         this.sel_checkindate = ndate;
-        this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+        this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, nDt.getFullYear() + '-' + cmonth + '-' + nDt.getDate(), this.account_id);
     
     }
     const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
