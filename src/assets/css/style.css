@@ -43,7 +43,7 @@
 
 .p-checkin .mainouter .date-outer {
     font-size: .875rem;
-    border-bottom: 1px dashed #dbdbdb;
+    /* border-bottom: 1px dashed #dbdbdb; */
     padding-bottom: 15px;
     display: flex;
     align-items: center;

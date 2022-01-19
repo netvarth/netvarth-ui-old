@@ -1,54 +1,110 @@
-<section class="">
-  <div class="card title-gb">
-    <h5 class="mgn-up-10">
-      <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      {{heading}}
-    </h5>
-  </div>
+<section >
+  <div class="mgn-up-20 mgn-lt-10"  style="width: 280px !important;display: flex;background-color: #1E4079;color: white;align-items: center;padding: 10px;">
+       <div><span class="fa fa-arrow-alt-circle-left pointer-cursor fa-lg" (click)="goBack()"></span></div>
+       <div class="mgn-lt-10 mgn-up-5"><h5>{{heading}}</h5> </div>
+</div>
+  
 </section>
 <section>
   <div class="content loc-list p-checkin ynw-common-form-nm">
     <div class="col-md-12 no-padding-small">
-      <div class="card p0" *ngIf="!showCheckin && !showQuestionnaire">
+      <div class="card no-padding" *ngIf="!showCheckin && !showQuestionnaire">
         <div class="copy locd">
-          <div class="lbl col-sm-12 col-md-12 col-lg-12">
+          <div class="lbl col-sm-12 col-md-12 col-lg-12 no-padding mgn-lt-20 ">
             <h5 class="mgn-up-10" *ngIf="source !== 'waitlist-block'"><b>Find an existing {{customer_label}} and
                 create {{(showtoken? 'token' :
                 'check-in')}}</b></h5>
             <h5 class="mgn-up-10" *ngIf="source === 'waitlist-block'"> <b>Find an existing {{customer_label}}</b></h5>
-            <div class="input-group mob-container mgn-up-20">
-              <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox" [preferredCountries]="preferredCountries"
-                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
-                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
-                [maxLength]="15" [phoneValidation]="true" [selectedCountryISO]="selectedCountry"
-                [separateDialCode]="separateDialCode"  name="phone"
-                [(ngModel)]="phone" (keyup)="resetApiErrors()">
-                <!-- [numberFormat]="PhoneNumberFormat.National" -->
-              </ngx-intl-tel-input>
-              <button class="findcolor" (click)="serchCustomers(phone)"><i class="fa fa-search" aria-hidden="true"></i>
-              </button>
-            </div>
-            <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()" class="mgn-up-20">
-              <div class="or-style">OR</div>
-              <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding  mgn-up-20 sc-frm">
-                <div class="input-group mob-container">
-                  <input autocomplete="off" placeholder="{{customer_label | capitalizeFirst}} Name or ID or Email"
-                    type="text" class="form-control" formControlName="search_input"
-                    (keypress)="findCustomer(searchForm.value, $event)">
-                  <button class="findcolor" (click)="searchCustomer(searchForm.value)"><i class="fa fa-search p0"
-                      aria-hidden="true"></i>
-                  </button>                
-                </div>
-                <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
-                  <span *ngIf="emptyFielderror" class="sts-msg error">Please enter the
-                    {{customer_label | capitalizeFirst}} ID or Email</span>
-                  <app-field-error-display style="color: #f24949 !important;" [displayError]="true" *ngIf="create_new"
-                    errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
-                          Please create {{customer_label}} to take appointment">
-                  </app-field-error-display>
-                </div>
+
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding ">
+              
+              <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9 no-padding mgn-up-10 mgn-rt-10"  (click)="createNew()" *ngIf="!showBlockHint" >
+              
+                <img src="../../../../../assets/images/add patient.svg" style="width: 50px;height: 50px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Create New Patient</b>
               </div>
-            </form>
+  
+              <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9 no-padding mgn-up-10"  (click)="openthirdpopup(domain,showOther,customer_label)" *ngIf="source !== 'waitlist-block'" >
+            
+                  <img src="../../../../../assets/images/third party.svg" style="width: 50px;height: 50px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Third party options</b>
+       
+               
+               
+              </div>
+
+            </div>
+
+            <div class="disp-flex" *ngIf="showOther">
+              <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
+                <mat-form-field>
+                  <input matInput placeholder="Enter your third party listing site *" [(ngModel)]="otherThirdParty"
+                    type="text" class="form-control" (keypress)="resetError()" autocomplete="off">
+                </mat-form-field>
+                <app-field-error-display style="color: #f24949 !important;" [displayError]="true"
+                  *ngIf="thirdparty_error" errorMsg="{{thirdparty_error}}">
+                </app-field-error-display>
+              </div>
+              <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
+                <button class="create_new_button cs-btn bt3" (click)="showOtherSection(true)">Ok</button>
+              </div>
+            </div>
+
+
+
+
+            <div class="row no-padding display-xs-small" style="all: revert;" >
+             
+              <div *ngIf="categoryvalue=='Search with PhoneNumber'" class="col-lg-4 col-md-6 col-xs-6 col-sm-6 mgn-up-18  mgn-bt-10 padding-0 " style="background-color: indianred;" >
+
+                <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox padding-0 numberstyle " [preferredCountries]="preferredCountries"
+                  [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                  [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
+                  [maxLength]="15" [phoneValidation]="true" [selectedCountryISO]="selectedCountry"
+                  [separateDialCode]="separateDialCode"  name="phone"
+                  [(ngModel)]="phone" (keyup)="resetApiErrors()">
+                  <!-- [numberFormat]="PhoneNumberFormat.National" -->
+                </ngx-intl-tel-input>
+                
+              </div>
+              <form *ngIf="categoryvalue!='Search with PhoneNumber'" [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()" class="col-lg-4 col-md-4 col-xs-6 col-sm-6  mgn-up-18 padding-0" >
+                <div class="form-group">
+                  <div class="input-group mob-container">
+                    <input  autocomplete="off" placeholder="{{customer_label | capitalizeFirst}} Name or ID or Email"
+                      type="text" class="inputstyling" formControlName="search_input"
+                      (keypress)="findCustomer(searchForm.value, $event)">
+                                    
+                  </div>
+                  <div  *ngIf="emptyFielderror" class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding">
+                    <span class="sts-msg error">Please enter the
+                      {{customer_label | capitalizeFirst}} ID or Email</span>
+                    <app-field-error-display style="color: #f24949 !important;" [displayError]="true" *ngIf="create_new"
+                      errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
+                            Please create {{customer_label}} to take appointment">
+                    </app-field-error-display>
+                  </div>
+                </div>
+              </form>
+              <div class="col-lg-4 col-sm-1  col-md-4 col-xs-1 no-padding " style="background-color: indigo;">
+                <mat-form-field >
+                  <mat-label class="display-lg-show" *ngIf="!categoryvalue" style="color: black;background-color: #f6f6f6">Category</mat-label>
+                  <mat-label class="display-sm-show"><img src="../../../../../assets/images/Group 1512.png" width="70px" height="70px"></mat-label>
+                  <mat-select  class="categoryfield" [(ngModel)]="categoryvalue">
+                    <mat-option  *ngFor="let category of categoryForSearchingarray"  [value]="category">{{category}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+               </div>
+              <div class="col-lg-1 col-md-1 col-xs-1 col-sm-1  mgn-up-18 padding-0"  style="background-color: lawngreen;">
+                
+                <button *ngIf="categoryvalue!='Search with PhoneNumber'" class="findcolor" (click)="searchCustomer(searchForm.value)"><i class="fa fa-search p0"
+                  aria-hidden="true"></i>
+                </button>
+                <button *ngIf="categoryvalue=='Search with PhoneNumber'" class="findcolor" (click)="serchCustomers(phone)"><i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+              </div>
+             
+              
+            </div>
+
+
             <div class="clearfix"></div>
             <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding" *ngIf="showBlockHint">
               <table class="table table-head-custom table-head-bg table-borderless table-vertical-center bold">
@@ -95,45 +151,24 @@
                 </tbody>
               </table>
             </div>
-            <div class="create_new mgn-bt-20 font-9" *ngIf="!showBlockHint">
-              <div class="or-style">OR</div>
-              <a class="underline coloroflabels" (click)="createNew()" *ngIf="source !== 'waitlist-block'"> Create a new
-                {{customer_label}} and get {{(showtoken) ? 'token' : 'check-in'}} </a>
-              <a class="underline coloroflabels" (click)="createNew()" *ngIf="source === 'waitlist-block'"> Create a new
-                {{customer_label}} </a>
-            </div>
-            <div class="create_new mgn-bt-20 font-9" *ngIf="source !== 'waitlist-block'">
-              <div class="or-style">OR</div>
-              <span class="coloroflabels">
-                Choose the third party listing site/app through which the {{customer_label}} came.
-              </span>
-              <div class="mgn-up-10">
-                <button *ngIf="domain === 'healthCare'" class="create_new_button cs-btn bt3 mgn-rt-10 mgn-bt-10"
-                  (click)="initCheckIn('practo')">Practo</button>
-                <button class="create_new_button cs-btn bt3 mgn-rt-10 mgn-bt-10" (click)="initCheckIn('justdial')">Just
-                  dial</button>
-                <button class="create_new_button cs-btn bt3 mgn-rt-10 mgn-bt-10"
-                  (click)="initCheckIn('google')">Google</button>
-                <button class="create_new_button cs-btn bt3 mgn-rt-10 mgn-bt-10" *ngIf="domain === 'healthCare'"
-                  (click)="initCheckIn('mfine')">MFine</button>
-                <button class="create_new_button cs-btn bt3 mgn-bt-10" [class.btn-selected]="showOther"
-                  (click)="showOtherSection()">Other</button>
-              </div>
-              <div class="disp-flex" *ngIf="showOther">
-                <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
-                  <mat-form-field>
-                    <input matInput placeholder="Enter your third party listing site *" [(ngModel)]="otherThirdParty"
-                      type="text" class="form-control" (keypress)="resetError()" autocomplete="off">
-                  </mat-form-field>
-                  <app-field-error-display style="color: #f24949 !important;" [displayError]="true"
-                    *ngIf="thirdparty_error" errorMsg="{{thirdparty_error}}">
-                  </app-field-error-display>
-                </div>
-                <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
-                  <button class="create_new_button cs-btn bt3" (click)="showOtherSection(true)">Ok</button>
-                </div>
-              </div>
-            </div>
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           </div>
         </div>
         <!-- </div> -->
@@ -162,8 +197,8 @@
                   </div>
                   <div class="date-outer" *ngIf="partySizeRequired">
                     <div class="form-group party-size">
-                      <label class="col-form-label">{{enter_party_size_cap}}</label>
-                      <input class="partysize-input" type="text" matInput #partysize [(ngModel)]="enterd_partySize"
+                      <label class="col-form-label">{{enter_party_size_cap}}1233</label>
+                      <input class="inputbox"  class="partysize-input" type="text"  #partysize [(ngModel)]="enterd_partySize"
                         (focus)="clearerrorParty()" (blur)="checkPartySize(partysize.value)" maxlength="5" />
                       <div class="error" *ngIf="partyapi_error">{{partyapi_error}}</div>
                     </div>
@@ -172,11 +207,12 @@
                 <div class="service-outer" *ngIf="filterDepart">
                   <ng-container>
                     <mat-form-field *ngIf="deptLength == 1">
-                      <input matInput *ngFor="let dept of departments" [readonly]="true" placeholder="Department"
+                      <input class="inputbox"  *ngFor="let dept of departments" [readonly]="true" placeholder="Department"
                         value="{{dept.departmentName | capitalizeFirst}}">
                     </mat-form-field>
                     <mat-form-field *ngIf="deptLength > 1">
-                      <mat-select placeholder="{{select_deptment_cap}}" [ngModel]="selected_dept" #deptsel
+                      <h6 style="color: black;">{{select_deptment_cap}}</h6>
+                      <mat-select class="inputbox" [ngModel]="selected_dept" #deptsel
                         (selectionChange)="handleDeptSelction(deptsel.value)">
                         <mat-option *ngFor="let dept of departments" [value]="dept.departmentId">
                           {{dept.departmentName | capitalizeFirst}}
@@ -188,12 +224,13 @@
                 <div class="service-outer" *ngIf="users.length > 0 && accountType === 'BRANCH'">
                   <ng-container>
                     <mat-form-field *ngIf="users.length == 1">
-                      <input matInput *ngFor="let user of users" [readonly]="true"
-                        placeholder="{{provider_label | capitalizeFirst}}"
+                      <input class="inputbox"  *ngFor="let user of users" [readonly]="true"
+                        placeholder="{{provider_label | capitalizeFirst}}222222222"
                         value="{{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}">
                     </mat-form-field>
                     <mat-form-field *ngIf="users.length > 1">
-                      <mat-select placeholder="Select {{provider_label | capitalizeFirst}}" [ngModel]="selected_user"
+                      <div style="color: black;">Select {{provider_label | capitalizeFirst}}</div>
+                      <mat-select  class="inputbox" [ngModel]="selected_user"
                         #usersel (selectionChange)="handleUserSelection(usersel.value)">
                         <mat-option *ngFor="let user of users" [value]="user">
                           {{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}
@@ -210,8 +247,8 @@
                 </div> 
                 <div class="service-outer" *ngIf="servicesjson.length > 0">
                   <ng-container>
-                    <span *ngIf="servicesjson.length == 1">
-                      <div class="one-service">Service</div>
+                    <span class="one-service" *ngIf="servicesjson.length == 1" style="display: flex;align-items: center;flex-wrap: row wrap;">
+                      <div >Service : </div>
                       <ng-container *ngFor="let serv of servicesjson">
                         <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType==='audioService'"
                           class="fa wtsapaud-icon"></i>
@@ -231,7 +268,8 @@
                       </ng-container>
                     </span>
                     <mat-form-field *ngIf="servicesjson.length > 1">
-                      <mat-select placeholder="{{select_service_cap}}" [ngModel]="sel_ser" #servsel
+                      <div style="color: black;">{{select_service_cap}}</div>
+                      <mat-select class="inputbox"  [ngModel]="sel_ser" #servsel
                         (selectionChange)="handleServiceSel(servsel.value)">
                         <mat-option *ngFor="let serv of servicesjson" [value]="serv.id">
                           <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType === 'audioService'"
@@ -269,7 +307,7 @@
                             <i *ngIf="mode.callingMode === 'WhatsApp'" class="fa wtsapaud-icon wtsap-cal"></i>
                             <i *ngIf="mode.callingMode === 'Phone'" class="fa phon-icon ph-cal" aria-hidden="true"></i>
                           </span>
-                          <input *ngIf="!showInputSection" (keypress)="isNumeric($event)"
+                          <input class="inputbox"  *ngIf="!showInputSection" (keypress)="isNumeric($event)"
                             class="form-control change emailPrepay call-mode-ip " style="width:50px!important;"
                             placeholder="+91" [(ngModel)]="cuntryCode" autocomplete="off" maxlength="10" type="tel"
                             min="0"> &nbsp;<input *ngIf="!showInputSection" (keypress)="isNumeric($event)"
@@ -290,94 +328,42 @@
                   </div>
                 </div>
                 
+               <!-- <div style="display:flex !important;flex-direction:row;flex-flow: row wrap;"> -->
                 <div class="date-outer">
                   <div class="date-head" *ngIf="!settingsjson['showTokenId']">{{checkinLabel}} {{date_cap}}</div>
-                  <div class="date-head" *ngIf="settingsjson['showTokenId']"> Token {{date_cap}}</div>
-                  <div class="date-body">
+                  <div class="date-head" *ngIf="settingsjson['showTokenId']">Select Token {{date_cap}}</div>
+                  <div class="date-body" style="background-color: #f6f6f6 !important;border: 1px solid #f6f6f6 !important;">
                     <span class="selected-date">
-                      <span class="icon-minus" [class.disable]="disableMinus()"
-                        (click)="calculateDate(-1)"></span>{{sel_checkindate | date: dateFormat}}
-                      <span class="icon-add" (click)="calculateDate(1)"></span>
+                      <!-- <span class="icon-minus" [class.disable]="disableMinus()"
+                        (click)="calculateDate(-1)"></span>{{sel_checkindate | date: dateFormat}} -->
+                      <!-- <span class="icon-add" (click)="calculateDate(1)"></span> -->
+                      {{sel_checkindate | date: dateFormat}}
                     </span>
-                    <div class="form-group dt">
+                    <div class="form-group dt" >
                       <div class="pickerouter">
                         <mat-datepicker-toggle matSuffix [for]="picker">
                         </mat-datepicker-toggle>
                         <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
-                        <input class="form-control" type="text" matInput [matDatepicker]="picker" [min]="minDate"
+                        <input class="form-control" type="text"  [matDatepicker]="picker" [min]="minDate"
                           [max]="maxDate" [value]="ddate" (dateChange)="handleFutureDateChange($event)">
                       </div>
                     </div>
                   </div>
+                  
                 </div>
+               
+              <!-- </div> -->
                 <div class="col-md-12 no-padding ">
-                  <div class="col-md-12 mgn-bt-10 btborder" *ngIf="queuejson.length > 0">
-                    <mat-chip-list class="pcheckin-owl">
-                      <owl-carousel [options]="carouselOne" class="carouselList" [carouselClasses]="['owl-theme']">
-                        <mat-chip class="item" *ngFor="let queue of queuejson, let i= index"
-                          [selected]="queue.id === queuejson[this.sel_queue_indx].id"
-                          (click)="handleQueueSelection(queue, i);">
-                          <span>{{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
-                            queue.queueSchedule.timeSlots[0]['eTime']}}
-                          </span>
-                        </mat-chip>
-                      </owl-carousel>
-                      <div class="owl-theme">
-                        <div class="owl-controls">
-                          <div class="checkin-nav owl-nav"></div>
-                        </div>
-                      </div>
-                    </mat-chip-list>
+                  <div  *ngIf="queuejson.length > 0" style="display: flex !important;align-items: center;">
+                    Select Token Time : &nbsp;
+                    <mat-form-field class="padding-0">
+                      <mat-select  class="inputbox1" [(ngModel)]="queuejson[0].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].queueSchedule.timeSlots[0]['eTime']">
+                        <mat-option (click)="handleQueueSelection(queue, i);"  *ngFor="let queue of queuejson, let i= index" [value]="queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']" >{{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
+                        queue.queueSchedule.timeSlots[0]['eTime']}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
                   </div>
-                  <div class="col-md-12" *ngIf="queuejson.length > 0 && servicesjson.length > 0">
-                    <div class="waitlist-button-outer">
-                      <div class="showDetOuter" *ngIf="queuejson.length > 0">
-                        <div class="showDetService">
-                          <span *ngIf="calc_mode=='NoCalc'">
-                            <span *ngIf="!isFuturedate">
-                              <strong>Today
-                              </strong>
-                            </span>
-                            <span *ngIf="isFuturedate">
-                              <strong>{{sel_checkindate | date: newDateFormat}}</strong>
-                            </span>
-                          </span>
-                        </div>
-                        <div class="queue-waitingdiv">
-                          <div class="queue-head"
-                            *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
-                            <strong>{{today_cap}} {{estimateCaption}}: </strong>
-                            <span class="queue-avail-date">{{sel_queue_waitingmins}}</span>
-                          </div>
-                          <div class="queue-head"
-                            *ngIf="settingsjson['calculationMode']!='NoCalc' || (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
-                            <strong>{{persons_ahead_cap}}</strong>&nbsp;
-                            <span class="queue-avail-date">{{sel_queue_personaahead}}</span>
-                          </div>
-                        </div>
-                        <div class="queue-waitingdiv"
-                          *ngIf="sel_queue_servicetime!='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
-                          <div class="queue-head">
-                            <ng-container *ngIf="isFuturedate">
-                              <span class="checkin-footer-date">
-                                <strong>{{nextavailableCaption}}:
-                                  <span class="queue-avail-date">{{sel_checkindate | date: newDateFormat}},
-                                    {{sel_queue_servicetime}}
-                                  </span>
-                                </strong>
-                              </span>
-                            </ng-container>
-                            <ng-container *ngIf="!isFuturedate">
-                              <strong>{{today_cap}} </strong>
-                              <strong>{{checkinsCaption}}:
-                              </strong>
-                              <span class="queue-avail-date">{{sel_queue_servicetime}}</span>
-                            </ng-container>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                 
                 </div>
                 <div>
                   <ng-container *ngIf="queuejson.length == 0 && queueQryExecuted">
@@ -525,7 +511,7 @@
                 <ng-container *ngIf="action=='note'">
                   <div class="col-md-12 mgn-bt-20">
                     <mat-form-field>
-                      <textarea matInput class="form-control" [(ngModel)]="consumerNote" #consumernote
+                      <textarea  class="form-control" [(ngModel)]="consumerNote" #consumernote
                         (change)="handleConsumerNote(consumernote.value)" maxlength="1000"
                         placeholder="{{note_placeholder}}"></textarea>
                     </mat-form-field>
@@ -540,7 +526,58 @@
                 </ng-container>
               </aside>
             </div>
-            <div class="col-md-12  mgn-up-20 " *ngIf="!showAction">
+            <div class="col-md-12  mgn-up-20  orangebox" *ngIf="!showAction && queuejson.length > 0">
+
+              <div class="col-md-12 no-padding" *ngIf="queuejson.length > 0 && servicesjson.length > 0">
+                <div class="waitlist-button-outer no-padding">
+                  <div class="showDetOuter" *ngIf="queuejson.length > 0">
+                    <div class="showDetService">
+                      <span *ngIf="calc_mode=='NoCalc'">
+                        <span *ngIf="!isFuturedate">
+                          <strong>Today
+                          </strong>
+                        </span>
+                        <span *ngIf="isFuturedate">
+                          <strong>{{sel_checkindate | date: newDateFormat}}</strong>
+                        </span>
+                      </span>
+                    </div>
+                    <div class="queue-waitingdiv">
+                      <div class="queue-head"
+                        *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
+                        <strong>{{today_cap}} {{estimateCaption}}: </strong>
+                        <span class="queue-avail-date">{{sel_queue_waitingmins}}</span>
+                      </div>
+                      <div class="queue-head"
+                        *ngIf="settingsjson['calculationMode']!='NoCalc' || (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
+                        <strong>{{persons_ahead_cap}}</strong>&nbsp;
+                        <span class="queue-avail-date">{{sel_queue_personaahead}}</span>
+                      </div>
+                    </div>
+                    <div class="queue-waitingdiv"
+                      *ngIf="sel_queue_servicetime!='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
+                      <div class="queue-head">
+                        <ng-container *ngIf="isFuturedate">
+                          <span class="checkin-footer-date">
+                            <strong>{{nextavailableCaption}}:
+                              <span class="queue-avail-date">{{sel_checkindate | date: newDateFormat}},
+                                {{sel_queue_servicetime}}
+                              </span>
+                            </strong>
+                          </span>
+                        </ng-container>
+                        <ng-container *ngIf="!isFuturedate">
+                          <strong>{{today_cap}} </strong>
+                          <strong>{{checkinsCaption}}:
+                          </strong>
+                          <span class="queue-avail-date">{{sel_queue_servicetime}}</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
                 <mat-chip class="pro-action" (click)="handleSideScreen('members')"><a>Add /
                     Change
@@ -563,8 +600,8 @@
           </div>
         </div>
       </div>
-      <div class="card">
-        <div class="card" *ngIf="api_loading_video">
+      <div class="card"  *ngIf="api_loading_video">
+        <div class="card">
           <div *ngIf="api_loading_video" class="incomplete-msg">
             <div style="padding: 0 30px;">
               Files are Uploading...

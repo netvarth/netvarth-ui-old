@@ -110,9 +110,9 @@ export class CheckavailabilityComponent implements OnInit {
             console.log('123')
             this.subs.sink = this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
-                    console.log('data',data)
+                    // console.log('data',data)
                     this.queuejson = data;
-                    console.log(this.queuejson,';;;;;;;;;;;;;')
+                    // console.log(this.queuejson,';;;;;;;;;;;;;')
                     this.queueloader=false
                 })
                 }

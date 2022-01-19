@@ -1,0 +1,27 @@
+
+.thirdparycard {
+    background-color: rgba(30, 64, 121, 0.2);
+    border: 1px solid  rgba(30, 64, 121, 0.2);
+    color:#4E4D53;
+   /* word-wrap: break-word; */
+    font-weight: 600;
+    font-family: "Poppins";
+    /* font-style: Montserrat; */
+    /* display: inline-block; */
+    margin-bottom: 2px;
+    text-align: left;
+    /* white-space: nowrap; */
+    /* vertical-align: middle; */
+    touch-action: manipulation;
+    cursor: pointer;
+    /* background-image: none; */
+    /* border: 1px solid transparent; */
+    padding: 8px;
+    font-size: 12px;
+    line-height: 1.42857143;
+    border-radius: 5px;
+}
+.mgn-lt-2 {
+    margin-left: 2px !important;
+    margin-bottom: 5px !important;
+}

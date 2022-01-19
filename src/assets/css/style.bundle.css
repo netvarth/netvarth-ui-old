@@ -5386,7 +5386,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 .card-footer {
   padding: 2rem 2.25rem;
   background-color: #ffffff;
-  border-top: 1px solid #EBEDF3;
+  /* border-top: 1px solid #EBEDF3; */
 }
 
 .card-footer:last-child {

@@ -1,5 +1,119 @@
 .mob-container {
-    max-width: 320px !important;
+    /* max-width: 100% !important; */
+  
+    /* wh1ite-space: nowrap; */
+    /* background-color: #f6f6f6; */
+}
+.display-lg-show {
+  display: block;
+}
+.display-sm-show {
+  display: none;
+}
+.input1 {
+  border:1px solid #f6f6f6;
+  background-color: #f6f6f6;
+  padding: 50px;
+}
+.tokenstylings {
+width: 320px !important;
+background-color: #1E4079 !important;
+color: white !important;
+display: flex !important;
+align-items: center;
+}
+.arrowstylings {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 15px !important;
+  background-color: white !important;
+  color: black !important;
+  text-align: center;
+}
+@media(max-width: 768px) { 
+  .no-margin {
+    margin: 0px !important;
+  }
+  .display-xs-small {
+    /* display: inline-block !important; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .text-xs-center {
+    text-align: center !important;
+  }
+  .display-lg-show {
+    display: none;
+  }
+  .display-sm-show {
+    margin: 0px !important;
+    display: block;
+    
+  }
+  .categoryfield {
+    visibility: hidden !important;
+    width:0px !important;
+    height: 0px;
+    margin: 0px !important;
+    padding: 0px !important;
+    /* display: none !important; */
+  }
+
+}
+.card1 {
+  /* width: 90% !important; */
+  max-width: 320px;
+  /* height: 30% !important; */
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+
+  padding: 15px 0 15px 0px;
+  
+  vertical-align: middle !important;
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+}
+.padding-0{
+  padding-right:0;
+  padding-left:0;
+}
+.mgn-up-18 {
+  margin-top: 17px;
+}
+.tokenoptionsection {
+  border-radius:5px;
+  border:1px solid skyblue;
+}
+.addbutton {
+  width: 30% !important;
+  /* margin-top: 1%; */
+  /* margin-left: 5% !important; */
+  /* border-radius: 5px; */
+  background-color: #f6f6f6;
+  border: 1px solid  #f6f6f6;
+  color:#4E4D53;
+ word-wrap: break-word;
+  font-weight: 600;
+  font-family: "Poppins";
+  /* font-style: Montserrat; */
+  display: inline-block;
+  margin-bottom: 2px;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  /* background-image: none; */
+  /* border: 1px solid transparent; */
+  padding: 6px 0 6px 0px;
+  font-size: 12px;
+  line-height: 1.42857143;
+  border-radius: 5px;
 }
 .carouselList{
   /* width: auto; */
@@ -31,14 +145,73 @@
     color: green !important;
     right: 0px !important;
   }
-  .internumbox{
-    width: 270px;
+  .categoryfield {
+    border: 1px solid #f6f6f6;
+    height: 59px !important;
+    background-color: #f6f6f6 !important; 
+    /* max-width: 320px !important; */
+    /* width: 100%; */
+    color: black;
+    border-radius: 4px;
+  }
+  
+  .inputbox {
+      border: 1px solid #f6f6f6;
+      height: 50px !important;
+      background-color: #f6f6f6 !important; 
+      /* width: 100%; */
+      color: black;
+      /* border-radius: 4px; */
+  }
+  .orangebox {
+    background-color:#fff9d8;
+    padding: 10px;
+  }
+  .pro-action {
+    background-color: #ffc737 !important;
+  }
+  .inputbox1 {
+    background-color: #f6f6f6 !important; 
+    width: 100%;
+    color: black;
+    font-weight:600 !important;
+    /* text-align: center !important; */
+    /* align-items:center !important; */
+    /* border-radius: 4px; */
+}
+   .internumbox{
+    /* max-width: 100; */
+    width: 100%;
     float: left;
   }
+  .inputstyling {
+    border: 1px solid #f6f6f6;
+    height: 60px !important;
+    background-color: #f6f6f6 !important; 
+    /* max-width: 320px !important; */
+    width: 100% !important;
+    color: black;
+    border-radius: 4px !important;
+  }
+  .inputstyling:focus {
+    border: 1px solid #f6f6f6;
+    height: 60px !important;
+    background-color: #f6f6f6 !important; 
+    /* max-width: 320px !important; */
+    color: black;
+    border-radius: 4px !important;
+  }
+
+
+ 
   .findcolor{
-    background-color: #1e4079;
+    background-color: #1E4079;
     border-radius: 5px;
-    width: 50px;
+    width: 60px;
+    height: 60px;
+    padding-left: 10px !important;
+    align-items: center;
+    text-align: center;
   }
   .coloroflabels{
     color: #0F52BA !important;

@@ -3077,7 +3077,7 @@
     z-index: 6;
 }
 
-.consumerpopupmainclass .mat-dialog-content .mainouter .main-head, .consumerpopupmainclass .mat-dialog-content .mainouter .date-outer, .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer {
+.consumerpopupmainclass .mat-dialog-content .mainouter .main-head, .consumerpopupmainclass .mat-dialog-content .mainouter , .consumerpopupmainclass .mat-dialog-content .mainouter .service-outer, .consumerpopupmainclass .mat-dialog-content .mainouter .queue-outer, .consumerpopupmainclass .mat-dialog-content .mainouter .prepay-outer {
     margin-bottom: 15px;
     color: #666;
     font-size: 1rem;
