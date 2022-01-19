@@ -36,6 +36,7 @@ const routes: Routes = [
     { path: 'order/item-details', loadChildren: () => import('./shared/components/item-details/item-details.module').then(m => m.ItemDetailsModule) },
     { path: 'questionnaire/:uid/:id/:accountId', loadChildren: () => import('./shared/components/questionnaire-link/questionnaire-link.module').then(m => m.QuestionnaireLinkModule) },
     { path: ':id', loadChildren: () => import('./shared/components/business-page/business-page.module').then(m => m.BusinessPageModule) },
+    { path: ':id/department/:deptId', loadChildren: () => import('./shared/components/department-service-page/department-service-page.module').then(m => m.DepartmentServicePageModule) },
     { path: 'provideruser/:id', loadChildren: () => import('./shared/components/business-provideruser-page/business-provideruser-page.module').then(m => m.BusinessprovideruserPageModule) }
 ];
 

@@ -1,0 +1,41 @@
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="col-sm-12 no-padding" *ngIf="paymentProfile.indiaPay">
+            <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 no-padding"
+                *ngFor="let gateway of getPayTMmodesByGroup(paymentProfile.indianPaymodes)|keyvalue">
+                <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 mode-head">
+                    <!-- <img [src]="getImageSrc(gateway.key)" class="gateway-img" alt="{{gateway.key}}" />  -->
+                    <b>{{gateway.key}}</b> Modes available for national payments
+                </div>
+                <div class="pay-rad" *ngFor="let modes of gateway.value">
+                    <div class="col-xs-12 no-padding pay-mode">
+                        <div class="col-xs-12 no-padding text-center">
+                            <img class="pay-icons" [src]="getImageSrc(modes.mode)">
+                        </div>
+                        <div class="col-xs-12 mgn-up-5 no-padding text-center">
+                            {{modes.modeDisplayName}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 no-padding brd-tp mgn-up-10 "
+            *ngIf="paymentProfile.internationalPay">
+            <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 no-padding"
+                *ngFor="let gateway of getPayTMmodesByGroup(paymentProfile.internationalPaymodes)|keyvalue">
+                <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 mgn-up-10  mode-head">
+                    <!-- <img [src]="getImageSrc(gateway.key)" class="gateway-img" alt="{{gateway.key}}" />  -->
+                    <b>{{gateway.key}}</b> Modes available for international payments
+                </div>
+                <div class="pay-rad" *ngFor="let modes of gateway.value">
+                    <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 no-padding pay-mode">
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 no-padding text-center">
+                            <img class="pay-icons" [src]="getImageSrc(modes.mode)">
+                        </div>
+                        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 no-padding mgn-up-5 text-center">
+                            {{modes.modeDisplayName}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

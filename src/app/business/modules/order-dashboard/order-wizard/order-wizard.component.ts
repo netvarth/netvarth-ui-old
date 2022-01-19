@@ -1381,6 +1381,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
                   img: this.selectedImagelist.base64[i],
                   description: this.selectedImagelist.caption[i] || ''
                 }, this.selectedImagelist.files[i].name);
+                console.log("Uploaded Image :",imgobj)
               this.image_list_popup.push(imgobj);
             }
           }

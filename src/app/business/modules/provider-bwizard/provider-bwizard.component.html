@@ -1,5 +1,5 @@
-<section>
-    <div class="col-md-12 no-padding-small">
+<section >
+    <div class="col-md-12 no-padding-small ">
         <!-- Step 0 -->
         <!-- <div *ngIf="active_step==0 && !loading_active && bProfile && !subDomainLinks[bProfile.serviceSubSector.subDomain]"
             class="is-bx step0 col-12 col-sm-12 col-lg-12 ml-auto mr-auto">
@@ -792,48 +792,52 @@
 
  <!--logo start-->
  <div>
-    <img class="img-fluid" src="assets/images/jaldee-logo.png" />
+    <img class="img-fluid" src="/assets/images/jaldee-logo.png" />
 </div>
 <!----logo end-->
 <!---jaldee business logo start-->
-<div class="container">
+<div class="containers">
     <div>
         <div>
-            <img class="img-fluid" src="../../../../assets/images/welcome.svg" />
+            <img class="img-fluid" src="/assets/images/welcome.svg" />
         </div>
         <div class="centered1">
-            <div style="color: #fff;" >Welcome to</div>
-            <h4 style="color: #fcde98;">JALDEE </h4>
-            <h4 style="color: #fcde98;">BUSINESS</h4>
+            <h5 style="color: #fff;" >Welcome to</h5>
+            <h2 style="color: #fcde98;">JALDEE </h2>
+            <h2 style="color: #fcde98;">BUSINESS</h2>
         
         </div>
         
     </div>
     <div class="centered2">
-        <button  type="submit" style="padding: 1rem 2rem 0.9rem;
+        <button  type="submit" 
+        style="padding: 1rem 2rem 0.9rem;
         margin: 0.5rem;
         border-radius: 2rem;
         border: 1px solid #e0e0e0;
-        background-color: #e0e0e0;
-color: #2e2e2e;;cursor: pointer;"  >
+        background-color: #fff;
+        color: #162182;
+        cursor: pointer;
+        font-weight: bold;
+        box-shadow: 0px 5px 10px rgb(0 0 0 / 30%);" (click)="expressSignup()" >
    Take me to assissted account setup
      </button>
     
     </div>
     <div class="centered3">
-        <ul class="underline" style="color: #fff;">I will explore myself</ul>
+        <ul class="underline"  (click)="skipMe()">I'll explore myself</ul>
     </div>
     
     
     
 </div>
 <!---jaldee business logo end-->
-<div style="background-color: #fff7ce;margin-top: 100px;" class="container">
-   <div style="display: flex;padding: 3rem;" class="imageText"  >
+<div style="background-color: #fff7ce;margin-bottom:4rem" class="jaldeeBusiness">
+   <div style="display: flex;padding: 3rem;" class="imageText">
        <div>
        <div  >
-        <div style="font-size: 25px;color: blue;font-weight: bold;">Save Your Time </div>
-        <div style="font-size: 25px;color: blue;font-weight: bold;">And just relax</div>
+        <div style="font-size: 25px; color: #162182;font-weight: bold;">Save Your Time </div>
+        <div style="font-size: 25px; color: #162182;font-weight: bold;">And just relax</div>
        </div>
         
         <div style="color: #f9c250;font-size: 15px;">Jaldee team create your profile and make your account live for free.Jaldee team offers you free Jaldee support and consultation</div>
@@ -841,7 +845,7 @@ color: #2e2e2e;;cursor: pointer;"  >
         <div></div> -->
        </div>
        <div class="imageDetails">
-           <img style="height: auto;width:100%;" class="img-fluid"src="../../../../assets/images/W2.svg" />
+           <img style="height: auto;width:100%;" class="img-fluid"src="/assets/images/W2.svg" />
           
            <div class="btn">
             <button  type="submit" style="padding: 1rem 2rem 0.9rem;
@@ -849,7 +853,7 @@ color: #2e2e2e;;cursor: pointer;"  >
             border-radius: 2rem;
             border: 1px solid #162182;
             background-color: #162182;
-color: #fff;cursor: pointer;">
+color: #fff;cursor: pointer;"  (click)="showSection('why-jaldee')">
        Why Jaldee Business
          </button>
            </div>

@@ -10,6 +10,7 @@ const routes: Routes = [
     children: [
         { path: 'template1', loadChildren:() => import('./templates/cust-template1/cust-template1.module').then(m => m.CustTemplate1Module), outlet: 'template'},
         { path: 'template2', loadChildren:() => import('./templates/cust-template2/cust-template2.module').then(m => m.CustTemplate2Module), outlet: 'template'},
+        { path: 'template3', loadChildren:() => import('./templates/cust-template3/cust-template3.module').then(m => m.CustTemplate3Module), outlet: 'template'},
         { path: 'template4', loadChildren:() => import('./templates/cust-template4/cust-template4.module').then(m => m.CustTemplate4Module), outlet: 'template'}
     ]}
 ];

@@ -153,32 +153,4 @@ export class ServiceDisplayComponent implements OnInit {
     this.filteredUsers = filteredUsers;
 
   }
-
-//   cardClicked(actionObj) {
-//     console.log(actionObj);
-//     //   } else if (actionObj['type'] === 'appt') {
-//     //     if (actionObj['action'] === 'view') {
-//     //       this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
-//     //     } else {
-//     //       this.appointmentClicked(actionObj['location'], actionObj['service']);
-//     //     }
-//     //   } else if (actionObj['type'] === 'donation') {
-//     //     if (actionObj['action'] === 'view') {
-//     //       this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
-//     //     } else {
-//     //       this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
-//     //     }
-//     //   } else if (actionObj['type'] === 'item') {
-//     //     if (actionObj['action'] === 'view') {
-//     //       this.itemDetails(actionObj['service']);
-//     //     } else if (actionObj['action'] === 'add') {
-//     //       this.increment(actionObj['service']);
-//     //     } else if (actionObj['action'] === 'remove') {
-//     //       this.decrement(actionObj['service']);
-//     //     }
-//     //   } else {
-//     //     this.providerDetClicked(actionObj['userId']);
-//     //   }
-//   }
-// }
 }

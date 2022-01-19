@@ -105,15 +105,21 @@ export class OrderDetailsComponent implements OnInit {
         }
       }
       if (this.orderDetails && this.orderDetails.shoppingList) {
+        this.imagelist = {
+          files: [],
+          base64: [],
+          caption: []
+        };
         this.imagelist = this.orderDetails.shoppingList;
         for (let i = 0; i < this.imagelist.length; i++) {
           const imgobj = new Image(
             i,
             { // modal
-              img: this.imagelist[i].s3path,
+              img: this.imagelist[i].thumbPath,
               description: this.imagelist[i].caption || ''
-            });
+            },this.imagelist[i].originalName);
           this.image_list_popup.push(imgobj);
+          
         }
       }
       this.loading = false;

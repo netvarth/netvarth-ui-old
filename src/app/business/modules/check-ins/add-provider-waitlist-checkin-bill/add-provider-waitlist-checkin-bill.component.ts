@@ -301,6 +301,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       .then(
         () => {
           this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+          console.log(  this.customer_label )
         }
       );
     this.bill_load_complete = 1;
