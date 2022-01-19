@@ -3,9 +3,11 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CheckInHistoryServices } from '../../../../../shared/modules/consumer-checkin-history-list/consumer-checkin-history-list.service';
 import { projectConstants } from '../../../../../app.component';
-import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { ActivatedRoute , NavigationExtras, Router} from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
+import { JcCouponNoteComponent } from '../../../../../shared/components/jc-Coupon-note/jc-Coupon-note.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConsumerServices } from '../../../../../ynw_consumer/services/consumer-services.service';
 import { RazorpayprefillModel } from '../../../../../shared/components/razorpay/razorpayprefill.model';
@@ -17,17 +19,13 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { S3UrlProcessor } from '../../../../../shared/services/s3-url-processor.service';
 import { SubSink } from '../../../../../../../node_modules/subsink';
-import { DateFormatPipe } from '../../../../../shared/pipes/date-format/date-format.pipe';
-import { PaytmService } from '../../../../../../app/shared/services/paytm.service';
-import { LocalStorageService } from '../../../../../../app/shared/services/local-storage.service';
-import { CheckInHistoryServices } from '../../../../../shared/modules/consumer-checkin-history-list/components/checkin-history-list/checkin-history-list.service';
-import { JcCouponNoteComponent } from '../../../../../shared/modules/jc-coupon-note/jc-coupon-note.component';
-
+import { DateFormatPipe } from '../../../../../../../src/app/shared/pipes/date-format/date-format.pipe';
+import { PaytmService } from '../../../../../../../src/app/shared/services/paytm.service';
+import { LocalStorageService } from '../../../../../../../src/app/shared/services/local-storage.service';
 
 @Component({
     selector: 'app-consumer-checkin-bill',
-    templateUrl: './checkin-bill.component.html',
-    styleUrls: ['./checkin-bill.component.css']
+    templateUrl: './checkin-bill.component.html'
 })
 export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
     @ViewChild('itemservicesearch') item_service_search;
@@ -455,7 +453,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
                     } else if (this.remainingadvanceamount > 0 && this.checkJcash) {
-                        if(this.selected_payment_mode==='cash'){
+                        if(this.selected_payment_mode.toLowerCase()==='cash'){
                             this.cashPayment();
                         }else{
                         const postData = {
@@ -497,7 +495,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                     });
         }
         else {
-            if(this.selected_payment_mode==='cash'){
+            if(this.selected_payment_mode.toLowerCase()==='cash'){
                 this.cashPayment();
             }else{
             this.pay_data.uuid = this.uuid;
@@ -532,6 +530,9 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                         }
                     );
 
+            }else if(!this.selected_payment_mode && this.bill_data.amountDue>0){
+                this.snackbarService.openSnackBar('Please Choose Payment Option', { 'panelClass': 'snackbarerror' });  
+                this.isClickedOnce=false;
             }
         }
         }

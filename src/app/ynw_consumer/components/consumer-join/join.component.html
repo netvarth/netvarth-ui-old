@@ -40,7 +40,7 @@
                                     autocomplete="off" (keyup)="handlekeyup($event)">
                                 <!-- </mat-form-field> -->
                                 <div style="display: flex; justify-content: space-between;">
-                                    <app-field-error-display
+                                    <app-field-error-display 
                                         [displayError]="fed_service.isFieldValid(loginForm,'password') && showError"
                                         errorMsg="Password is required">
                                     </app-field-error-display>
@@ -48,17 +48,17 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button class="cust-logpg-submt mgn-up-20 continue-button" *ngIf="!phoneExists"
-                                    type="submit" mat-button [disabled]="api_loading" (click)="checkAccountExists()"
+                                <button class="cust-logpg-submt mgn-up-20 continue-button"  *ngIf="!phoneExists"
+                                    type="submit"  [disabled]="api_loading" (click)="checkAccountExists()"
                                     (keyup)="clearPhoneExists()">
-                                    <span *ngIf="!api_loading">Continue</span>
+                                    <span *ngIf="!api_loading" style="color: white;">Continue</span>
                                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}"
                                         *ngIf="api_loading">
                                     </app-common-innerloading-spinner>
                                 </button>
                                 <button class="cust-logpg-submt login-button" *ngIf="phoneExists" type="button"
-                                    mat-button [disabled]="api_loading" (click)="onSubmit(loginForm.value)">
-                                    <span *ngIf="!api_loading">Next</span>
+                                     [disabled]="api_loading" (click)="onSubmit(loginForm.value)">
+                                    <span *ngIf="!api_loading" style="color: white;">Next</span>
                                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}"
                                         *ngIf="api_loading">
                                     </app-common-innerloading-spinner>
@@ -82,7 +82,7 @@
                                 <mat-label for="password">First Name *</mat-label>
                                 <input type="text" class="form-control" id="first_name" formControlName="first_name"
                                     (keypress)="resetApiErrors()" autocomplete="off" (blur)="onFieldBlur('first_name')">
-                                <app-field-error-display
+                                <app-field-error-display 
                                     [displayError]="fed_service.isFieldValid(loginForm,'first_name')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'first_name',
                                             {
                                             'required' : 'First name is required',
@@ -94,7 +94,7 @@
                                 <mat-label for="password">Last Name *</mat-label>
                                 <input type="text" class="form-control" id="last_name" formControlName="last_name"
                                     autocomplete="off" (keypress)="resetApiErrors()" (blur)="onFieldBlur('last_name')">
-                                <app-field-error-display
+                                <app-field-error-display 
                                     [displayError]="fed_service.isFieldValid(loginForm,'last_name')" [errorMsgs]="fed_service.getErrorMessage(loginForm,'last_name',
                                         {
                                             'required' : 'Last name is required',
@@ -109,10 +109,10 @@
                                     autocomplete="off" (keypress)="resetApiErrors()" (blur)="onFieldBlur('emailId')">
                             </div>
                             <div class="mgn-up-20" style="display: flex !important; justify-content: space-between !important;">
-                                <button (click)="cancelForgotPassword()" mat-button class="back-button"
+                                <button (click)="cancelForgotPassword()"  class="back-button"
                                 ><i class="fa fa-chevron-left pointer-cursor"></i>
                                 Back</button>
-                                <button class="ok-button" type="submit" mat-button
+                                <button class="ok-button" type="submit" 
                                     [disabled]="api_loading" (click)="otpSend()">
                                     <span *ngIf="!api_loading">Next</span>
                                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}"

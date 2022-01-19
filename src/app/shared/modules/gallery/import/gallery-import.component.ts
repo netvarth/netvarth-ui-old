@@ -12,7 +12,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 })
 
 export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
-    header_caption = 'Add images';
+    header_caption = 'Add attachments';
     select_image_cap = Messages.SELECT_IMAGE_CAP;
     delete_btn = Messages.DELETE_BTN;
     cancel_btn = Messages.CANCEL_BTN;

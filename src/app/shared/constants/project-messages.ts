@@ -788,7 +788,7 @@ export const Messages = {
   'PUSH_MESSAGE_CAP': 'App Notification',
   'SERVICE_EMAIL_CAP': 'Email',
   'GALLERY_CAP': 'Gallery',
-  'SELECT_IMAGE_CAP': 'Click here to select the image files',
+  'SELECT_IMAGE_CAP': 'Click here to select the  files',
   'GO_TO_SERVICE_CAP': 'Add the new service to working hours',
 
   // App-ynw_provider-components-add-provider-service-gallery
@@ -1574,7 +1574,7 @@ export const Messages = {
 
   // Store details
   'CONTACT_INFO_UPDATED': 'Contact Info updated successfully',
-  'DOCTORS_SPECIALIZATION_HINT': 'Select a department and the doctor with whom you would like to consult.',
+  'DOCTORS_SPECIALIZATION_HINT': 'Select a department and the priest with whom you would like to consult.',
   //attachment send
   'ATTACHMENT_SEND':'Attachment sent successfully',
   'QUESTIONNAIRE_CONSUMER_HEADING': 'More info'

@@ -4,7 +4,11 @@ import { SharedServices } from '../../../../shared/services/shared-services';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { DomSanitizer } from '@angular/platform-browser';
 import { projectConstants } from '../../../../app.component';
+<<<<<<< HEAD
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+=======
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+>>>>>>> refs/remotes/origin/clone-viswasambhadha
 import { DOCUMENT, Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 // import { ConsumerServices } from '../../../../ynw_consumer/services/consumer-services.service';
@@ -17,10 +21,15 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { SubSink } from '../../../../../../node_modules/subsink';
+<<<<<<< HEAD
 import { PaytmService } from '../../../../../app/shared/services/paytm.service';
 import { LocalStorageService } from '../../../../../app/shared/services/local-storage.service';
 import { CheckInHistoryServices } from '../../../../shared/modules/consumer-checkin-history-list/components/checkin-history-list/checkin-history-list.service';
 import { JcCouponNoteComponent } from '../../../../shared/modules/jc-coupon-note/jc-coupon-note.component';
+=======
+import { PaytmService } from '../../../../../../src/app/shared/services/paytm.service';
+import { LocalStorageService } from '../../../../../../src/app/shared/services/local-storage.service';
+>>>>>>> refs/remotes/origin/clone-viswasambhadha
 
 @Component({
     selector: 'app-order-bill',
@@ -86,7 +95,11 @@ export class OrderBillComponent implements OnInit, OnDestroy {
     gateway_redirection = false;
     payModesExists = false;
     payModesQueried = false;
+<<<<<<< HEAD
     pay_data :any;
+=======
+    pay_data :any={};
+>>>>>>> refs/remotes/origin/clone-viswasambhadha
     payment_popup = null;
     showPaidlist = false;
     showJCouponSection = false;
@@ -256,7 +269,11 @@ export class OrderBillComponent implements OnInit, OnDestroy {
         }
     }
     getImageSrc(mode){
+<<<<<<< HEAD
     
+=======
+       
+>>>>>>> refs/remotes/origin/clone-viswasambhadha
         return 'assets/images/payment-modes/'+mode+'.png';
     }
     gets3curl() {
@@ -458,7 +475,11 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                                 });
                     } else if (this.remainingadvanceamount > 0 && this.checkJcash) {
+<<<<<<< HEAD
                         if(this.selected_payment_mode==='cash'){
+=======
+                        if(this.selected_payment_mode.toLowerCase()==='cash'){
+>>>>>>> refs/remotes/origin/clone-viswasambhadha
                             this.cashPayment();
                         }else{
                         const postData = {
@@ -535,6 +556,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                     });
         }
         else {
+<<<<<<< HEAD
             if(this.selected_payment_mode==='cash'){
                 this.cashPayment();
             }else{
@@ -577,6 +599,54 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                         }
                     );
+=======
+            if(this.selected_payment_mode.toLowerCase()==='cash'){
+                this.cashPayment();
+            }else{
+               
+                console.log(this.pay_data)
+            this.pay_data.uuid = this.uuid;
+            this.pay_data.amount = this.bill_data.amountDue;
+            this.pay_data.paymentMode = this.selected_payment_mode;;
+            this.pay_data.accountId = this.accountId;
+            this.pay_data.purpose = 'billPayment';
+            this.pay_data.isinternational = this.isInternatonal;
+            this.pay_data.serviceId = 0;
+            this.resetApiError();
+          
+            if (this.pay_data.uuid != null &&
+                this.pay_data.paymentMode != null &&
+                this.pay_data.amount !== 0) {
+                this.api_success = Messages.PAYMENT_REDIRECT;
+                this.gateway_redirection = true;
+
+                this.subs.sink = this.sharedServices.consumerPayment(this.pay_data)
+                    .subscribe(
+                        (data: any) => {
+                            this.origin = 'consumer';
+                            this.pGateway = data.paymentGateway;
+                            if (this.pGateway === 'RAZORPAY') {
+                                this.paywithRazorpay(data);
+                            } else {
+                                this.payWithPayTM(data, this.accountId);
+                                // this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
+                                // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+                                // setTimeout(() => {
+                                //     this.document.getElementById('payuform').submit();
+                                // }, 2000);
+                            }
+                        },
+                        error => {
+                            this.isClickedOnce = false;
+                            this.resetApiError();
+                            this.loadingPaytm = false;
+                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        }
+                    );
+            }else if(!this.selected_payment_mode && this.bill_data.amountDue>0){
+                this.snackbarService.openSnackBar('Please Choose Payment Option', { 'panelClass': 'snackbarerror' });  
+                this.isClickedOnce=false;
+>>>>>>> refs/remotes/origin/clone-viswasambhadha
             }
         }
     }

@@ -1,23 +1,25 @@
+<!-- <section class="container">
+    <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
+</section> -->
 <section #consumer_appointmentbill class="container no-padding confirm-aptckn no-padding-small">
-    <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
-        <div class="content p0 comn-cls cons-check-bill" >
+    <div class="content p0 comn-cls cons-check-bill">
         <div class="col-md-12 no-padding">
             <div class="w-dta">
                 <div class="row">
                     <div class="panel panel-default">
                         <div class="panel-heading top-row ">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                                <app-header *ngIf="sharedfunctionObj.checkLogin()" [showHeaderAction]="true"></app-header>
+                                <app-header *ngIf="sharedfunctionObj.checkLogin()"></app-header>
                             </div>
                         </div>
-                        <div class="panel-body no-padding"  *ngIf="bill_data">
+                        <div class="panel-body no-padding">
                             <div class="c-outer m0">
                                 <div class="c-body">
                                     <div class="card title-gb">
-                                        <h5 *ngIf="(bill_data && bill_data.amountDue != 0)" class="mgn-up-10">Bill <a
+                                        <h5 *ngIf="(bill_data.amountDue != 0)" class="mgn-up-10">Bill <a
                                                 class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i
                                                     class="fa fa-arrow-left"></i></a></h5>
-                                        <h5 *ngIf="(bill_data && bill_data.amountDue == 0)" class="mgn-up-10">Receipt<a
+                                        <h5 *ngIf="(bill_data.amountDue == 0)" class="mgn-up-10">Receipt<a
                                                 class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i
                                                     class="fa fa-arrow-left"></i></a></h5>
                                     </div>
@@ -35,62 +37,43 @@
                                                             </button>
                                                         </div>
                                                         <div id="receipt" class="receipt">
-                                                                
                                                             <div class="bill-header mgn-up-50" *ngIf="!showPaidlist">
-                                                                <div class="section-one" *ngIf="splocation">
+                                                                <div class="section-one">
                                                                     <h3>{{bname | capitalizeFirst}}</h3>
-                                                                    <span class="align-margin">{{splocation}}
-                                                                            <span class="icon-location"></span>
-                                                                    </span>
-                                                                    <br><br><br>
-                                                                        <div class="line-h">
-                                                                            <span class="columns"><span
+                                                                    <div class="details">
+                                                                        <span class="columns"><span
                                                                                 *ngFor="let user of checkin.appmtFor">
                                                                                 {{user.firstName | capitalizeFirst}}
                                                                                 {{user.lastName | capitalizeFirst}}
                                                                             </span></span>
-                                                                            <div  *ngIf="billnumber">
-                                                                          
-                                                                                <span >{{bill_no_cap}}
-                                                                                </span>
-                                                                                <span >{{billnumber}}</span>
-                                                                          
-                                                                            </div>
-                                                                        
-                                                                            </div>
-                                                                            <div>
-                                                                                    <span class="align-column1" *ngIf="gstnumber">{{gstin_cap}} : {{gstnumber
-                                                                                        |
-                                                                                        capitalizeFirst}}</span>
-                                                                                
-                                                                               </div>
-                                                                               <br>
-                                                                    <div><span class="align-column1"><span class="align-column1">{{billdate
-                                                                            | date:newDateFormat_date}}
-                                                                            {{billtime}} &nbsp;</span>
-                                                                         </span>
-                                                                        </div>  
-                                                                            
-                                                                            <span class="columns mgn-up-10" *ngIf="checkin.provider">
-                                                                                <span class="dynamic">{{getTerminologyTerm('provider')
-                                                                                    |
-                                                                                    capitalizeFirst}}: </span>
-                                                                                <span class="dynamic">
-                                                                                    <!-- {{checkin.provider.businessName}} -->
-                                                                                    {{(checkin.provider.businessName) ?
-                                                                                    checkin.provider.businessName :
-                                                                                    checkin.provider.firstName
-                                                                                    + ' ' + checkin.provider.lastName}}</span>
-                                                                            </span>
-
-                                                                            <div class="col-md-12 col-sm-12 col-lg-12 no-padding red"
-                                                                                *ngIf="bill_data.billStatus == 'Cancel'">
-                                                                                Cancel</div>
-                                                                        
-                                                                    
+                                                                        <span class="columns rightalign"><span
+                                                                                class="dynamic">{{billdate |
+                                                                                date:newDateFormat_date}}
+                                                                                {{billtime}}</span>
+                                                                        </span>
+                                                                        <span class="columns" *ngIf="billnumber"> <span
+                                                                                class="title">{{bill_no_cap}}</span>
+                                                                            <span class="dynamic">{{billnumber}}</span>
+                                                                        </span> <span class="columns rightalign">
+                                                                            <span class="title"
+                                                                                *ngIf="gstnumber">{{gstin_cap}}</span>
+                                                                            <span class="dynamic"
+                                                                                *ngIf="gstnumber">{{gstnumber |
+                                                                                capitalizeFirst}}</span>
+                                                                        </span>
+                                                                        <span class="columns mgn-up-10"
+                                                                            *ngIf="checkin.provider">
+                                                                            <span class="dynamic">{{provider_label |
+                                                                                capitalizeFirst}}: </span>
+                                                                            <span
+                                                                                class="dynamic">{{checkin.provider.businessName}}</span>
+                                                                        </span>
+                                                                        <div class="col-md-12 col-sm-12 col-lg-12 no-padding red"
+                                                                            *ngIf="bill_data.billStatus == 'Cancel'">
+                                                                            Cancelled</div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                            <app-common-innerloading-spinner *ngIf="loadingPaytm"></app-common-innerloading-spinner>
                                                             <div class="bill-content">
                                                                 <div class="section-three bill-responsive">
                                                                     <div class="bill-breakup">
@@ -101,7 +84,8 @@
                                                                                     <div class="name">
                                                                                         {{service.serviceName |
                                                                                         capitalizeFirst}}
-                                                                                        <span class="rupee-font">{{service.price
+                                                                                        <span
+                                                                                            class="rupee-font">{{service.price
                                                                                             | currency:'&#8377;
                                                                                             '}}</span>
                                                                                         <span
@@ -281,18 +265,6 @@
                                                                                         currency:'&#8377; '}}</div>
                                                                                 </div>
                                                                                 <div class="c-row two section-two"
-                                                                                *ngIf="bill_data.customerPaidCharges > 0">
-                                                                                <div class="discount-row two-col">
-                                                                                    <div class="name">
-                                                                                       Processing Fee
-                                                                                    </div>
-                                                                                    <div class="price rupee-font">
-                                                                                        {{bill_data.customerPaidCharges
-                                                                                        |
-                                                                                        currency:'&#8377; '}}</div>
-                                                                                </div>
-                                                                            </div>
-                                                                                <div class="c-row two section-two"
                                                                                     *ngIf="bill_data.totalAmountPaid > 0">
                                                                                     <div class="discount-row two-col">
                                                                                         <div class="name">
@@ -310,9 +282,8 @@
                                                                                         Amount Due
                                                                                     </div>
                                                                                     <div class="price rupee-font">
-                                                                                        {{checkJcash ? ((bill_data.amountDue - jcashamount) | currency:'&#8377;' ): (bill_data.amountDue  | currency:'&#8377;') }}
-                                                                                        <!-- {{bill_data.amountDue | currency:'&#8377; '}} -->
-                                                                                    </div>
+                                                                                        {{bill_data.amountDue |
+                                                                                        currency:'&#8377; '}}</div>
                                                                                 </div>
                                                                                 <div class="c-row one two-col"
                                                                                     *ngIf="bill_data.amountDue < 0">
@@ -377,7 +348,7 @@
                                                         <div class="section-three other-section"
                                                             *ngIf="bill_data.billStatus !== 'Cancel' && bill_data.billStatus !== 'Settled' && (bill_data.amountDue > 0)">
                                                             <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
-                                                                *ngIf="this.couponList.JC.length > 0 ||this.couponList.OWN.length >0 && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && paymode && (bill_data.amountDue > 0)">
+                                                                *ngIf="this.couponList.JC.length > 0 ||this.couponList.OWN.length >0 && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0) && (bill_data.amountDue > 0)">
                                                                 <div
                                                                     class="title-sec col-md-12 col-sm-12 col-xs-12 no-padding">
                                                                     <span class="">Coupon</span>
@@ -408,10 +379,13 @@
                                                             </div>
                                                             <div>
                                                                 <div *ngIf="jcashamount>0" style="font-size: medium;">
-                                                                    <mat-checkbox [(ngModel)]="checkJcash" (change)="changeJcashUse($event)"></mat-checkbox>
+                                                                    <mat-checkbox [(ngModel)]="checkJcash"
+                                                                        (change)="changeJcashUse($event)">
+                                                                    </mat-checkbox>
                                                                     Use Jaldee cash balance : Rs{{jcashamount}}
                                                                 </div>
-                                                                <div *ngIf="jcashamount>0 && (checkJcash && jcashamount < bill_data.amountDue)" style="font-size: small;">
+                                                                <div *ngIf="jcashamount>0 && (checkJcash && jcashamount < bill_data.amountDue)"
+                                                                    style="font-size: small;">
                                                                     Balance amount can be paid by other payment methods
                                                                 </div>
                                                             </div>
@@ -419,114 +393,60 @@
                                                                 *ngIf=" paidStatus == 'false' && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled'  && (bill_data.amountDue > 0)">
                                                                 <div
                                                                     class="title-sec col-md-12 col-sm-12 col-xs-12 no-padding">
-                                                                   <span class="">Choose any  Payment Option</span> 
+                                                                    <span class="">Choose any Payment Option</span>
                                                                 </div>
                                                                 <div class="clearfix"></div>
-                                                                <div  *ngIf=" ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))">
-                                                                <ng-container *ngIf="!shownonIndianModes ">
-                                                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mt-4">
-            
-                                                                        <div class="text-primary" >
-                                                                          <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="indian_payment_mode_onchange($event)">
-                                                                            <mat-radio-button value="cash"  >
-                                                                                <div class="d-flex justify-content-around">
-                                                                                    <div class="col-md-8 col-lg-7 my-auto "><span>Pay by Cash</span></div>
-                                                                                    <div class="col-md-4 col-lg-5 my-auto "><img class="ordericon pickup" height="75px" width="75px" [src]="getImageSrc('cash')"></div>
-                                                                                </div>
-                                                                            </mat-radio-button>
-                                                                          </mat-radio-group>
-                                                                          
-                                                                          
-                                                                        </div>
-                                                                        </div>
-                                                                <div *ngFor="let modes of indian_payment_modes" class="mt-4">
-                                                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-            
-                                                                            <div class="text-primary" >
-                                                                              <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="indian_payment_mode_onchange($event)">
-                                                                                <mat-radio-button [value]="modes.mode"  >
-                                                                                    <div class="d-flex justify-content-around">
-                                                                                        <div class="col-md-8 col-lg-7 my-auto "><span>{{modes.modeDisplayName}}</span></div>
-                                                                                        <div class="col-md-4 col-lg-5 my-auto "><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
-                                                                                    </div>
-                                                                                </mat-radio-button>
-                                                                              </mat-radio-group>
-                                                                              
-                                                                              
-                                                                            </div>
-                                                                            </div>
-            
+                                                                <div
+                                                                *ngIf=" ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))">
+                                                                <ng-container *ngIf="!shownonIndianModes">
+                                                                    <app-payment-modes [paymentModes]="indian_payment_modes"
+                                                                        [cashPay]="true"
+                                                                        (modeSelected)="indian_payment_mode_onchange($event)">
+                                                                    </app-payment-modes>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="shownonIndianModes">
+                                                                    <app-payment-modes [paymentModes]="non_indian_modes" [cashPay]="true"
+                                                                        (modeSelected)="non_indian_modes_onchange($event)">
+                                                                    </app-payment-modes>
+                                                                </ng-container>
                                                             </div>
-                                                        </ng-container>
-                                                        <ng-container *ngIf="shownonIndianModes ">
-                                                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mt-4">
-            
-                                                                <div class="text-primary payment-mode-card-styles" >
-                                                                  <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="non_indian_modes_onchange($event)">
-                                                                    <mat-radio-button value="cash"  >
-                                                                        <div class="d-flex justify-content-around">
-                                                                            <div class="col-md-8 col-lg-7 my-auto "><span>Pay by Cash</span></div>
-                                                                            <div class="col-md-4 col-lg-5 my-auto "><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc('cash')"></div>
-                                                                        </div>
-                                                                    </mat-radio-button>
-                                                                  </mat-radio-group>
-                                                                  
-                                                                  
-                                                                </div>
-                                                                </div>
-                                                            <div *ngFor="let modes of non_indian_modes" class="mt-4 payment-mode-card-styles">
-                                                                <div class="col-xs-12 col-sm-6 col-lg-3">
-            
-                                                                        <div class="text-primary">
-                                                                          <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode" (change)="non_indian_modes_onchange($event)">
-                                                                            <mat-radio-button [value]="modes.mode">
-                                                                                <div class="d-flex justify-content-around">
-                                                                                    <div class="col-md-8 col-lg-6 my-auto"><span>{{modes.modeDisplayName}}</span></div>
-                                                                                    <div class="col-md-4 col-lg-6 my-auto"><img class="ordericon pickup" height="75px" width="75px"[src]="getImageSrc(modes.mode)"></div>
-                                                                                </div>
-                                                                            </mat-radio-button>
-            
-                                                            
-                                                                        </mat-radio-group> 
-                                                                          
-                                                                          
-                                                                        </div>
-                                                                        </div>
-            
-                                                        </div>
-                                                    </ng-container>
-                                                </div>
-                                                    <br><br>
-</div>
-                                                    <div>
+                                                                <br><br>
+                                                            </div>
                                                             <div class="clearfix"></div>
-            
+                                                            <div>
+
+
                                                                 <div class="txt-align-center pad_link"
                                                                     *ngIf=" ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))">
                                                                     <span [class.disabled]="isClickedOnce"
                                                                         (click)="togglepaymentMode()"
-                                                                        class="pointer-cursor"><a
-                                                                            class="refund_policy">
-                                                                            <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
-                                                                            here</span>
-                                                                            <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
+                                                                        class="pointer-cursor"><a class="refund_policy">
+                                                                            <span
+                                                                                *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non
+                                                                                Indian Payment ? Click
+                                                                                here</span>
+                                                                            <span
+                                                                                *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian
+                                                                                Payment ? Click
                                                                                 here</span>
                                                                         </a></span>
-            
-            
+
+
                                                                 </div>
-                                                                <div class="col-md-12 col-sm-12 col-xs-12 cc-dc-nb no-padding text-center mr-auto mt-3"
-                                                                    >
+                                                                <div
+                                                                class="txt-align-center pad_link">
                                                                     <button type="button"
-                                                                    class=" next-button btn btn-primary font-weight-bold text-uppercase "
-                                                                    [class.disabled]="isClickedOnce"
-                                                                    *ngIf=" ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
-                                                                    (click)="!isClickedOnce && payuPayment()">
-                                                                   MaKe Payment
-                                                                </button> &nbsp;&nbsp;
-                                                                <button class="next-button btn btn-primary font-weight-bold text-uppercase" (click)="payuPayment()"
-                                                                    *ngIf="((checkJcash && jcashamount > bill_data.amountDue) || ( checkJcash && jcashamount == bill_data.amountDue))">
-                                                                    Confirm</button>&nbsp;&nbsp;
+                                                                        class=" next-button btn btn-primary font-weight-bold text-uppercase "
+                                                                        [class.disabled]="isClickedOnce"
+                                                                        *ngIf=" ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
+                                                                        (click)="!isClickedOnce && payuPayment()">
+                                                                        MaKe Payment
+                                                                    </button> &nbsp;&nbsp;
+                                                                    <button
+                                                                        class="next-button btn btn-primary font-weight-bold text-uppercase"
+                                                                        (click)="payuPayment()"
+                                                                        *ngIf="((checkJcash && jcashamount > bill_data.amountDue) || ( checkJcash && jcashamount == bill_data.amountDue))">
+                                                                        Confirm</button>&nbsp;&nbsp;
                                                                     <!-- <button class="cs-btn bt1"   (click)="payuPayment()"
                                                                     *ngIf="((checkJcash && jcashamount > bill_data.amountDue) || ( checkJcash && jcashamount == bill_data.amountDue))">
                                                                      Confirm</button>
@@ -546,9 +466,6 @@
                                                                 <br> <br>
                                                                 <!-- <div *ngIf="interNatioanalPaid && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"><span [class.disabled]="isClickedOnce"  (click)="!isClickedOnce && payuPayment()" class="pointer-cursor"><a>International Payment ? Click here</a></span></div> -->
                                                             </div>
-                                                            <!-- <div *ngIf="!paymode">
-                                                              <p>Online payment option is disabled. Contact your service provider for further assistance.</p>
-                                                            </div> -->
                                                         </div>
                                                     </div>
 
@@ -584,6 +501,6 @@
                 </div>
             </div>
         </div>
-</div>
+    </div>
 </section>
 <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>

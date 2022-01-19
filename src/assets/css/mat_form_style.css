@@ -126,11 +126,19 @@
 }
 
 .mat-button:hover {
+<<<<<<< HEAD
     background: #1873f2 !important;
+=======
+    background: #16254b !important;
+>>>>>>> refs/remotes/origin/clone-viswasambhadha
 }
 
 .mat-button.confirmbtn {
+<<<<<<< HEAD
     background: #1873f2 !important;
+=======
+    background: #16254b !important;
+>>>>>>> refs/remotes/origin/clone-viswasambhadha
     font-weight: 600;
 }
 

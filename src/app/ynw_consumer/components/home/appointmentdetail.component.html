@@ -160,11 +160,11 @@
                                                     [fromsource]="'consumer-waitlist'"
                                                     (reloadApi)="getCommunicationHistory()"></app-inbox-list>
                                             </mat-tab>
-                                            <mat-tab label="Patient Note">
+                                            <mat-tab label="Devotee Note">
                                                 <span
                                                     *ngIf="appt && appt.consumerNote &&  appt.consumerNote !== ''">{{appt.consumerNote}}</span>
                                                 <span
-                                                    *ngIf="appt && (appt.consumerNote == '' || !appt.consumerNote)">No patient note found</span>
+                                                    *ngIf="appt && (appt.consumerNote == '' || !appt.consumerNote)">No devotee note found</span>
                                             </mat-tab>
 
                                             <!-- <mat-tab label="Appointment History">

@@ -59,7 +59,7 @@
   border: 1px solid;
   padding: 10px 50px;
   border-radius: 20px;
-  background: #fd7029ee !important;
+  background: #16254b !important;
   color: #fff!important;
   font-weight: bold;
 }
@@ -177,7 +177,7 @@
   /* font: normal normal bold 18px/22px Roboto; */
 
   margin-bottom: 20px;
-  color: #ec8a59ee;
+  color: #16254b;
   text-align: center;
   letter-spacing: 0px;
   opacity: 1;
@@ -192,19 +192,32 @@
   line-height: 2;
 }
 
+/* .billing-head {
+  text-align: left !important;
+
+  letter-spacing: 0px !important;
+  color: #16254b !important;
+} */
 .billing-head {
   text-align: left !important;
-  /* font: normal normal bold 15px/18px Roboto !important; */
+  font: normal normal bold 15px/18px Roboto !important;
   letter-spacing: 0px !important;
-  color: #fd7029ee !important;
+  color: #16254b !important;
+  width: 35% !important;
+  display: inline-block !important;
 }
-
 .billing-value {
   text-align: left;
-  /* font: normal normal normal 15px/18px Roboto; */
+  font: normal normal normal 15px/18px Roboto;
   letter-spacing: 0px;
   color: #363636;
+  width: 65%;
 }
+/* .billing-value {
+  text-align: left;
+  letter-spacing: 0px;
+  color: #363636;
+} */
 
 .contact-section .wtsapaud-icon{
   width: 25px !important;
@@ -256,4 +269,49 @@
 }
 .service-icon .fa-phone{
   color: #7a7a7a !important
+}
+.containerAppt {
+  font-size: 1.7rem;
+  margin: auto;
+  color: darkblue !important;
+  font-weight: bold;
+  margin-bottom: 20px;
+  border: 1px solid #00008b26;
+  box-shadow: 0px 0px 2px 2px #cac8c880;
+}
+@media (min-width: 768px) {
+  .containerAppt {
+    width: 80%;
+  }
+}
+
+.containerAppt {
+  background: #FFFFFF 0% 0% no-repeat padding-box !important;
+  box-shadow: 0px 34px 55px #28282814 !important;
+  border-radius: 21px !important;
+  opacity: 1 !important;
+  border: 0 !important;
+  padding-top: 10px !important;
+}
+
+.containerAppt > div:nth-child(1),
+.containerAppt > div:nth-child(2) {
+  text-align: center !important;
+  /* font: normal medium 18px/22px Roboto !important; */
+  letter-spacing: 0px !important;
+  color: #16254b !important;
+  opacity: 1 !important;
+  margin-top: 0 !important;
+}
+
+.containerAppt > div:nth-child(2) {
+  text-transform: capitalize !important;
+}
+
+.containerAppt > div:nth-child(3) {
+  text-align: center !important;
+  /* font: normal normal normal 15px/18px Roboto !important; */
+  letter-spacing: 0px !important;
+  color: #16254b !important;
+  opacity: 1 !important;
 }

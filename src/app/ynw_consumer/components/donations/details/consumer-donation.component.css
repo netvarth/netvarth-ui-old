@@ -1,4 +1,6 @@
-
+div {
+  font-size: 1rem;
+}
 .bus-item-medium .card.card-item-n {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
     transition: 0.3s;
@@ -121,6 +123,104 @@
     .bus-item-medium .card.card-item-n h6 {
       font-size: 1rem!important;
     }
+    .mobile-donation-for-styling {
+      /* background-color: #fae5af; */
+      width: 93.5%;
+      font-size: 1.0rem !important;
+      line-height:normal !important;
+      font-weight: bold;
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+      border-radius: 10px;
+      -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19) !important;
+      box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19) !important;
+      /* display: flex !important; */
+  
+    }
+    .c-checkin-new .card-title.service {
+      /* all: initial; */
+      font-size: 1.0rem !important;
+      color: black !important;
+    }
+    .amount-section-mobile {
+      /* margin: 10px; */
+      /* width: 105%; */
+      text-align:center !important;
+      /* border: 1px solid darkblue; */
+      background-color: #f2f5fa;
+      border-radius: 10px;
+      padding: 5px;
+      -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19) !important;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19) !important;
+    }
+    .mobile-input input{
+      border-radius: 5px;
+      /* border: 1px solid black; */
+      padding: 20px;
+      height:50px !important;
+      /* font-size: 1.5rem; */
+    }
+    .fa-pencil{
+      font-size: 16px !important;
+      /* background-color: hotpink; */
+    }
+    .fa-file-text-o{
+      font-size: 13px !important;
+    }
+    
+    .form-level-settings {
+      color: black !important;
+      font-size: 1rem !important;
+    }
+    .mobile-xs-center {
+      text-align: center;
+    }
+    
+    .mobile-button-color {
+      background-color:  #f2f5fa !important;
+      border:1px solid #f2f5fa !important;
+      border-radius: 5px;
+    }
+    .boldmobiletext {
+      font-weight: bold;
+      
+    }
+    ::-webkit-input-placeholder {
+      
+      font-size: 18px !important;
+    }
+    ::-moz-placeholder {
+      
+      font-size: 18px !important;
+    }
+    :-ms-input-placeholder {
+      
+      font-size: 18px !important;
+    }
+    ::placeholder {
+      
+      font-size: 18px !important;
+    }
+    .mobile-edit-icon {
+      display: flex;
+      justify-content: space-between;
+      /* background-color: chartreuse; */
+    }
+    .mobile-visibility {
+      display:none !important
+    }
+    .mobile-donor-details {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #dadcdf;
+    }
+    .chk-btns-div mat-chip {
+      width: 100%;
+      font-size: 1.5rem !important;
+      /* color: black !important; */
+    }
+  
   }
   
   .bus-item-medium.div-selected-outline  .card.card-item-n{
@@ -165,11 +265,11 @@
   }
   .donate-btn-bp {
     text-align: center;
-    height: 40px;
+    /* height: 40px; */
     color: white;
     cursor: pointer;
     padding: 10px !important;
-    background: #334b99 !important;
+    background:  #f2f5fa !important;
   }
   .c-checkin-new .lnk a {
     color: #1572a8 !important;
@@ -190,7 +290,7 @@
     display: block !important;
   }
   .amount {
-    font-size: 1rem !important;
+    font-size: 1.2rem !important;
     font-weight: 700;
   }
   .donate-by {
@@ -255,9 +355,9 @@
   border-radius: 30px !important;
   height: 50px !important;
   padding: 10px 30px !important;
-  box-shadow: 15px 15px 40px #f3b495ee !important;
+  box-shadow: 15px 15px 40px #c6d4f7 !important;
   opacity: 1 !important;
-  background: linear-gradient(45deg, #eb9a71ee(224,152,208,1) 0%, #eb9a71ee(180,76,154,1) 100%) !important;
+  background: linear-gradient(45deg, #c6d4f7(224,152,208,1) 0%, #c6d4f7(180,76,154,1) 100%) !important;
   border-color: unset !important;
   margin: 20px auto 10px !important;
   font-size: 16px !important;

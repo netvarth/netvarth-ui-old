@@ -1,53 +1,59 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { ConsumerCheckinComponent } from './consumer-checkin.component';
+import { FormMessageDisplayModule } from '../../../../shared/modules/form-message-display/form-message-display.module';
 import { CommonModule } from '@angular/common';
-import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { RouterModule, Routes } from '@angular/router';
-import { ServiceDetailModule } from '../../../../shared/components/service-detail/service-detail.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from '../../../../shared/modules/common/material.module';
+import { ConsumerCheckinRoutingModule } from './consumer-checkin.routing.module';
 import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
-import { JcCouponNoteModule } from '../../../../shared/modules/jc-coupon-note/jc-coupon-note.module';
-import { MatChipsModule } from '@angular/material/chips';
-import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
-import { MatRadioModule } from '@angular/material/radio';
 import { CheckinAddMemberModule } from '../../../../shared/modules/checkin-add-member/checkin-add-member.module';
-const routes: Routes = [
-    { path: '', component: ConsumerCheckinComponent},
-    // { path: 'payment/:id', loadChildren: ()=> import('./payment/payment.module').then(m=>m.ConsumerCheckinPaymentModule) },
-    { path: 'track/:id', loadChildren: ()=> import('./livetrack/livetrack.module').then(m=>m.ConsumerLiveTrackModule) },
-    { path: 'bill', loadChildren: ()=> import('./checkin-bill/checkin-bill.module').then(m=>m.ConsumerCheckinBillModule) },
-    { path: 'confirm', loadChildren: ()=> import('./confirm-page/confirm-page.module').then(m=>m.ConsumerCheckinConfirmModule)}
-];
+import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
+import { Nl2BrPipeModule } from 'nl2br-pipe';
+import { OwlModule } from 'ngx-owl-carousel';
+import { ConsumerPaymentComponent } from './payment/payment.component';
+import { ConsumerLiveTrackComponent } from './livetrack/livetrack.component';
+import { ConsumerCheckinHistoryComponent } from './history/checkin-history.component';
+import { PagerModule } from '../../../../shared/modules/pager/pager.module';
+import { ConsumerCheckinBillComponent } from './checkin-bill/checkin-bill.component';
+import { HeaderModule } from '../../../../shared/modules/header/header.module';
+import { ConfirmPageComponent } from './confirm-page/confirm-page.component';
+import { CheckinConfirmPopupComponent } from './checkin-confirm-popup/checkin-confirm-popup.component';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
+import { VirtualFieldsModule } from '../../virtualfields/virtualfields.module';
+import { PaymentModesModule } from '../../../../../../src/app/shared/modules/payment-modes/payment-modes.module';
+
 @NgModule({
     declarations: [
-        ConsumerCheckinComponent
+        ConsumerCheckinComponent,
+        ConsumerPaymentComponent,
+        ConsumerLiveTrackComponent,
+        ConsumerCheckinHistoryComponent,
+        ConsumerCheckinBillComponent,
+        ConfirmPageComponent,
+        CheckinConfirmPopupComponent
     ],
     imports: [
+        FormMessageDisplayModule,
         CommonModule,
-        CapitalizeFirstPipeModule,
-        MatFormFieldModule,
-        MatDatepickerModule,
-        MatTooltipModule,
-        MatCheckboxModule,
-        MatRadioModule,
-        ServiceDetailModule,
-        JcCouponNoteModule,
-        CheckinAddMemberModule ,
-        MatFormFieldModule,
-        MatChipsModule,
         FormsModule,
-        QuestionnaireModule,
         ReactiveFormsModule,
+        MaterialModule,
+        CheckinAddMemberModule,
+        ConsumerCheckinRoutingModule,
         LoadingSpinnerModule,
-        [RouterModule.forChild(routes)]
+        CapitalizeFirstPipeModule,
+        Nl2BrPipeModule,
+        OwlModule,
+        PagerModule,
+        HeaderModule,
+        NgxIntlTelInputModule,
+        QuestionnaireModule,
+        VirtualFieldsModule,
+        PaymentModesModule
     ],
-    schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-        NO_ERRORS_SCHEMA
+    entryComponents: [
+        CheckinConfirmPopupComponent
     ],
     exports: [ConsumerCheckinComponent]
 })

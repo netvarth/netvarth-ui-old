@@ -48,9 +48,11 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     if (this.device.uuid) {
       console.log(this.device.uuid);
-      this.lStorageService.setitemonLocalStorage('authToken', this.device.uuid);
       // this.lStorageService.setitemonLocalStorage('authToken', 'abcd'.toString());
+      this.lStorageService.setitemonLocalStorage('authToken', this.device.uuid);
+    
     }
+  
     let token = this.lStorageService.getitemfromLocalStorage('authToken');
     if (token) {
       let regexToReplace = /\-/gi;
@@ -104,7 +106,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.getAppVersion(projectConstantsLocal.S3UNIQUE_ID).then(
       (versionInfo) => {
         if (versionInfo) {
-          if (version.android_version !== versionInfo['playstore']['version']) {
+          if (version.android_version !== versionInfo['playstore']['version'] && !versionInfo['playstore']['playstore_review']) {
             this._forceUpdate(versionInfo);
           }
         }
