@@ -833,6 +833,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             };
             if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
                 post_Data['provider'] = { 'id': this.selectedUser.id };
+            } else if (this.selectedService.provider) {
+                post_Data['provider'] = { 'id': this.selectedService.provider.id };
             }
             if (!this.waitlist_for[0]['apptTime']) {
                 this.waitlist_for[0]['apptTime'] = this.selectedApptTime['time'];
@@ -2167,6 +2169,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         };
         if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
             post_Data['provider'] = { 'id': this.selectedUser.id };
+        } else if (this.selectedService.provider) {
+            post_Data['provider'] = { 'id': this.selectedService.provider.id };
         }
         if (this.selectedService.serviceType === 'virtualService') {
             for (const i in this.virtualServiceArray) {

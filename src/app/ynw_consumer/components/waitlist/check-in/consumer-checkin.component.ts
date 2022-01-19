@@ -859,6 +859,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     confirmcheckin(type?, paymenttype?) {
+        alert('confirm');
         // type === 'checkin' && 
         if (this.selectedService.isPrePayment  && (!this.commObj['communicationEmail'] || this.commObj['communicationEmail']=== '')) {
             this.paymentBtnDisabled = true;
@@ -941,8 +942,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             if (this.apptTime) {
                 post_Data['appointmentTime'] = this.apptTime;
             }
-            if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
+            console.log("Mani:",this.selectedService);
+            if ((this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP)) {
                 post_Data['provider'] = { 'id': this.selectedUser.id };
+            } else if (this.selectedService.provider) {
+                post_Data['provider'] = { 'id': this.selectedService.provider.id };
             }
             if (this.partySizeRequired) {
                 this.holdenterd_partySize = this.enterd_partySize;
@@ -1766,6 +1770,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
             post_Data['provider'] = { 'id': this.selectedUser.id };
+        } else if (this.selectedService.provider) {
+            post_Data['provider'] = { 'id': this.selectedService.provider.id };
         }
         if (this.partySizeRequired) {
             this.holdenterd_partySize = this.enterd_partySize;
