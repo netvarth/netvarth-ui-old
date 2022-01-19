@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "mediExpat": {
+    "Shantidham": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -134,18 +134,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mediExpat:build"
+            "browserTarget": "Shantidham:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "mediExpat:build:production"
+              "browserTarget": "Shantidham:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mediExpat:build"
+            "browserTarget": "Shantidham:build"
           }
         },
         "test": {
@@ -194,30 +194,30 @@
         "ionic-cordova-serve": {
           "builder": "@ionic/angular-toolkit:cordova-serve",
           "options": {
-            "cordovaBuildTarget": "mediExpat:ionic-cordova-build",
-            "devServerTarget": "mediExpat:serve"
+            "cordovaBuildTarget": "Shantidham:ionic-cordova-build",
+            "devServerTarget": "Shantidham:serve"
           },
           "configurations": {
             "production": {
-              "cordovaBuildTarget": "mediExpat:ionic-cordova-build:production",
-              "devServerTarget": "mediExpat:serve:production"
+              "cordovaBuildTarget": "Shantidham:ionic-cordova-build:production",
+              "devServerTarget": "Shantidham:serve:production"
             }
           }
         },
         "ionic-cordova-build": {
           "builder": "@ionic/angular-toolkit:cordova-build",
           "options": {
-            "browserTarget": "mediExpat:build"
+            "browserTarget": "Shantidham:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "mediExpat:build:production"
+              "browserTarget": "Shantidham:build:production"
             }
           }
         }
       }
     },
-    "mediExpat-e2e": {
+    "Shantidham-e2e": {
       "root": "e2e",
       "sourceRoot": "e2e",
       "projectType": "application",
@@ -226,7 +226,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "mediExpat:serve"
+            "devServerTarget": "Shantidham:serve"
           }
         },
         "lint": {
@@ -243,7 +243,7 @@
       }
     }
   },
-  "defaultProject": "mediExpat",
+  "defaultProject": "Shantidham",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

@@ -655,7 +655,7 @@ ul.bus-actions li a.lnk {
 } */
 
 .top-row {
-  background: #f1b51c;
+  background: #16254b;
 }
 
 .bus-title-content h6 a {
@@ -678,6 +678,7 @@ ul.bus-actions li a.lnk {
   width: 100%;
   font-size: 0.75rem;
   height: 40px;
+  background-color: #16254b;
   /* font-family: poppins !important; */
 }
 
@@ -776,7 +777,7 @@ ul.bus-actions li a.lnk {
   text-align: left !important;
   font: normal normal medium 25px/30px Roboto !important;
   letter-spacing: 0px !important;
-  color: #eba684ee !important;
+  color: #16254b !important;
 }
 .c-checkin-new .phonenum {
   height:33px !important;
@@ -796,7 +797,7 @@ ul.bus-actions li a.lnk {
   text-align: left !important;
   font: normal normal bold 25px/30px Roboto !important;
   letter-spacing: 0px !important;
-  color: #eba684ee !important;
+  color: #16254b !important;
 }
 
 .pre-check-title {
@@ -911,7 +912,7 @@ ul.bus-actions li a.lnk {
   transition: all .3s ease;
   cursor: pointer;
   padding: 7px !important;
-  background: #ec8a59ee !important;
+  background: #16254b !important;
   border-radius: 20px !important;
   font-size: 1.2rem !important;
   font-weight: 500;
@@ -1540,7 +1541,14 @@ body.modal-open {
   padding: 20px !important;
   background-color: #f6f6f6 !important;
 }
-
+.attachfile {
+  text-transform: uppercase !important;
+  text-align: left !important;
+  font: normal normal bold 12px/14px Roboto !important;
+  letter-spacing: 0px !important;
+  color: #9B9B9B !important;
+  opacity: 1 !important;
+}
 .card-container-custom .appointment-custom-heading {
   text-transform: uppercase !important;
   text-align: left !important;
@@ -1555,13 +1563,13 @@ body.modal-open {
   text-align: left !important;
   font: normal normal medium 15px/18px Roboto !important;
   letter-spacing: 0px !important;
-  color: #FD7029 !important;
+  color: #16254b !important;
   opacity: 1 !important;
 }
 
 .c-checkin-new .card-container-custom .chk-btns-div mat-chip.notes-and-file-chip {
   background-color: #f6f6f6 !important;
-  border: 1px solid #fd7029dc !important;
+  border: 1px solid #16254b !important;
   border-radius: 32px !important;
   opacity: 1 !important;
 }
@@ -1569,12 +1577,12 @@ body.modal-open {
  
 .c-checkin-new .card-container-custom .chk-btns-div .btns mat-chip.notes-and-file-chip a.lnk.action {
   /* color: #787878 !important; */
-  color: #fd7029dc !important;
+  color: #16254b !important;
 }
 
 .c-checkin-new .card-container-custom .chk-btns-div .btns mat-chip.notes-and-file-chip a.lnk.action i{
   /* color: #958793 !important; */
-  color: #fd7029dc !important;
+  color: #16254b !important;
 }
 
 .user-data-card.card-body {
@@ -1599,7 +1607,7 @@ body.modal-open {
 }
 
 .prenotes .preinfo-title {
-  color: #fd7029dc !important;
+  color: #16254b !important;
   font-size: 1rem !important;
   font-weight: 600 !important;
 }
@@ -1619,7 +1627,7 @@ button.next-button {
   border-radius: 30px !important;
   height: 50px !important;
   padding: 10px 30px !important;
-background: #FD7029 0% 0% no-repeat padding-box !important;
+background: #16254b 0% 0% no-repeat padding-box !important;
   /* background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box;
   box-shadow: 15px 15px 40px #DBA8C4; */
   opacity: 1;
@@ -1640,7 +1648,7 @@ background: #FD7029 0% 0% no-repeat padding-box !important;
   text-align: left !important;
   font: normal normal bold 18px/25px Roboto !important;
   letter-spacing: 0px !important;
-  color: #FD7029 !important;
+  color: #16254b !important;
   /* color: #59345D !important; */
   opacity: 1 !important;
 }
@@ -1676,7 +1684,7 @@ background: #FD7029 0% 0% no-repeat padding-box !important;
   text-align: left !important;
   font: normal normal bold 15px/18px Roboto !important;
   letter-spacing: 0px !important;
-  color: #ec8a59ee !important;
+  color: #16254b !important;
   width: 30% !important;
   display: inline-block !important;
 }
@@ -1704,7 +1712,7 @@ background: #FD7029 0% 0% no-repeat padding-box !important;
   font: normal medium 18px/22px Roboto !important;
   letter-spacing: 0px !important;
   /* color: #59345D !important; */
-  color: #FD7029 !important;
+  color: #16254b !important;
   opacity: 1 !important;
   margin-top: 0 !important;
 }
@@ -1717,7 +1725,7 @@ background: #FD7029 0% 0% no-repeat padding-box !important;
   text-align: center !important;
   font: normal normal normal 15px/18px Roboto !important;
   letter-spacing: 0px !important;
-  color: #fd7029dc !important;
+  color: #16254b !important;
   opacity: 1 !important;
 }
 
@@ -1732,7 +1740,7 @@ background: #FD7029 0% 0% no-repeat padding-box !important;
   text-align: left;
   font: normal normal medium 18px/22px Roboto;
   letter-spacing: 0px;
-  color: #FD7029 !important;
+  color: #16254b !important;
   /* color: #59345D; */
   opacity: 1;
 }
@@ -1817,7 +1825,7 @@ background: #FD7029 0% 0% no-repeat padding-box !important;
 }
 
 #tcModal .modal-dialog .modal-content .modal-header button i {
-  color: #FD7029 !important;
+  color: #16254b !important;
   /* color: #522E5A !important; */
 }
 
@@ -1842,7 +1850,7 @@ background: #FD7029 0% 0% no-repeat padding-box !important;
   border-radius: 30px !important;
   height: 50px !important;
   padding: 10px 30px !important;
-  background: #FD7029 !important;
+  background: #16254b !important;
   /* background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box !important;
   box-shadow: 15px 15px 40px #dba8c4 !important; */
   opacity: 1 !important;
@@ -1857,7 +1865,7 @@ background: #FD7029 0% 0% no-repeat padding-box !important;
 }
 
 .t-and-c .checkbox label a {
-  color: #ec8a59ee !important;
+  color: #16254b !important;
   font-weight: 700 !important;
 }
 
@@ -2179,7 +2187,7 @@ background: #FD7029 0% 0% no-repeat padding-box !important;
   margin-right: 10px !important;
 }
 .modal-header.service-detail-header {
-  background: #FD7029 0% 0% no-repeat padding-box !important;
+  background: #16254b 0% 0% no-repeat padding-box !important;
   /* background: #522e5a 0% 0% no-repeat padding-box !important; */
   padding: 5px 15px 5px 10px !important;
 }
@@ -2201,7 +2209,7 @@ background: #FD7029 0% 0% no-repeat padding-box !important;
   width: 49% !important;
   color: white !important;
   margin: 0 !important;
-  background-color: #FD7029 !important;
+  background-color: #16254b !important;
   border-radius: 4px !important;
   vertical-align: baseline !important;
   padding: 10px 10px !important;
@@ -2237,4 +2245,11 @@ background: #FD7029 0% 0% no-repeat padding-box !important;
 
 .c-checkin-new .card-container-custom .chk-btns-div mat-chip.notes-and-file-chip.margin-right-0{
   margin-right: 0 !important;
+}
+.pad_btns{
+  border: 1px solid #EBEDF3!important;
+  padding-top: 12px !important;
+}
+.head_pay{
+  font-size: 1rem !important;
 }

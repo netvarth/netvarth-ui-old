@@ -57,6 +57,10 @@
  .mat-grid-tile-footer {
     padding: 0 14px !important;
 }
+mat-grid-tile-footer .mat-flat-button {
+    padding:5px !important;
+    background-color: #16254b;
+}
 app-appt-card, app-wl-card {
     height: 100%;
     overflow: auto;

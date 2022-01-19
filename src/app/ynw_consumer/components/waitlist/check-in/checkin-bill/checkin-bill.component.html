@@ -1,7 +1,7 @@
 <!-- <section class="container" *ngIf="source != 'provider_history'">
     <app-breadcrumb [breadcrumbs]="breadcrumbs"></app-breadcrumb>
 </section> -->
-<section class="container p0 confirm-aptckn no-padding-small">
+<section #consumer_checkinbill class="container p0 confirm-aptckn no-padding-small">
     <div class="content p0 comn-cls cons-check-bill">
         <div class="c-outer" style="margin-bottom: 0px !important;" *ngIf="source == 'provider_history'">
             <div class="c-body">
@@ -390,23 +390,104 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
-                                                                *ngIf=" paidStatus == 'false' && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled' && (payment_options.length>0) && (bill_data.amountDue > 0)">
-                                                                <div
-                                                                    class="title-sec col-md-12 col-sm-12 col-xs-12 no-padding">
-                                                                    <span class="">Payment Options</span>
+                                                            <div>
+                                                                <div *ngIf="jcashamount>0" style="font-size: medium;">
+                                                                    <mat-checkbox [(ngModel)]="checkJcash"
+                                                                        (change)="changeJcashUse($event)">
+                                                                    </mat-checkbox>
+                                                                    Use Jaldee cash balance : Rs{{jcashamount}}
                                                                 </div>
-                                                                <div class="col-md-12 col-sm-12 col-xs-12 cc-dc-nb no-padding"
-                                                                    style="display: flex">
-                                                                    <button class="cs-btn bt1"
-                                                                        (click)="payuPayment()">CC/DC/Net
-                                                                        Banking/UPI</button>
-                                                                    <!-- <button class="cs-btn bt1" *ngIf="paytmEnabled"
-                                                                        (click)="paytmPayment()">Paytm</button> -->
-                                                                    <button class="cs-btn bt1"
-                                                                        (click)="cashPayment()">Cash</button>
+                                                                <div *ngIf="jcashamount>0 && (checkJcash && jcashamount < bill_data.amountDue)"
+                                                                    style="font-size: small;">
+                                                                    Balance amount can be paid by other payment methods
                                                                 </div>
                                                             </div>
+                                                            <div class="col-md-12 col-sm-12 col-xs-12 no-padding"
+                                                            *ngIf=" paidStatus == 'false' && bill_data && bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus != 'Settled'  && (bill_data.amountDue > 0)">
+                                                            <div
+                                                                class="title-sec col-md-12 col-sm-12 col-xs-12 mb-4 no-padding">
+                                                                <span class="">Choose any Payment Option</span>
+                                                            </div>
+                                                            <!-- <div class="col-md-12 col-sm-12 col-xs-12 cc-dc-nb no-padding"
+                                                                style="display: flex">
+                                                                <button class="cs-btn bt1" (click)="payuPayment()"
+                                                                    *ngIf="((checkJcash && jcashamount > bill_data.amountDue) || ( checkJcash && jcashamount == bill_data.amountDue))">
+                                                                    Confirm</button>
+                                                                <button class="cs-btn bt1"
+                                                                    *ngIf="razorpayEnabled && paytmEnabled && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
+                                                                    [class.disabled]="isClickedOnce"
+                                                                    (click)="!isClickedOnce && payuPayment()">CC/DC/UPI</button>
+                                                                <button class="cs-btn bt1"
+                                                                    *ngIf="paytmEnabled  && razorpayEnabled && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
+                                                                    [class.disabled]="isClickedOnce"
+                                                                    (click)="!isClickedOnce && payuPayment('paytm')">Paytm</button>
+
+                                                                <button class="cs-btn bt1"
+                                                                    *ngIf="razorpayEnabled && !paytmEnabled && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
+                                                                    [class.disabled]="isClickedOnce"
+                                                                    (click)="!isClickedOnce && payuPayment()">Pay by
+                                                                    CC/DC/UPI</button>
+                                                                <button class="cs-btn bt1"
+                                                                    *ngIf="paytmEnabled && !razorpayEnabled && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
+                                                                    [class.disabled]="isClickedOnce"
+                                                                    (click)="!isClickedOnce && payuPayment('paytm')">Pay
+                                                                    by CC/DC/UPI</button>
+
+                                                                <button class="cs-btn bt1"
+                                                                    (click)="cashPayment()">Cash</button>
+                                                            </div> -->
+
+                                                            <div class="clearfix"></div>
+                                                            <div
+                                                            *ngIf=" ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))">                                                                    
+                                                            <ng-container *ngIf="!shownonIndianModes">                                                                    
+                                                             <app-payment-modes [paymentModes]="indian_payment_modes" [cashPay]="true" (modeSelected)="indian_payment_mode_onchange($event)"></app-payment-modes> 
+                                                            </ng-container>
+                                                            <ng-container *ngIf="shownonIndianModes">
+                                                               <app-payment-modes [paymentModes]="non_indian_modes" [cashPay]="true" (modeSelected)="non_indian_modes_onchange($event)"></app-payment-modes> 
+                                                            </ng-container>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+        
+                                                            <div class="txt-align-center pad_link"
+                                                                *ngIf=" ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))">
+                                                                <span [class.disabled]="isClickedOnce"
+                                                                    (click)="togglepaymentMode()"
+                                                                    class="pointer-cursor"><a
+                                                                        class="refund_policy">
+                                                                        <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
+                                                                        here</span>
+                                                                        <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
+                                                                            here</span>
+                                                                    </a></span>
+        
+        
+                                                            </div>
+                                       
+                                               
+                                                               <div class="txt-align-center pad_link">
+                                                                <button type="button"
+                                                                    class="mx-auto mt-3 text-center next-button btn btn-primary font-weight-bold text-uppercase "
+                                                                    [class.disabled]="isClickedOnce"
+                                                                    *ngIf=" ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
+                                                                    (click)="!isClickedOnce && payuPayment()">
+                                                                   MaKe Payment
+                                                                </button> &nbsp;&nbsp;
+                                                                <button class="next-button btn btn-primary font-weight-bold text-uppercase" (click)="payuPayment()"
+                                                                *ngIf="((checkJcash && jcashamount > bill_data.amountDue) || ( checkJcash && jcashamount == bill_data.amountDue))">
+                                                                Confirm</button>
+                                                                <!-- <button class=" next-button btn btn-primary font-weight-bold text-uppercase"
+                                                                    (click)="cashPayment()">Cash</button> -->
+                                                            <br> <br>
+                                                            <!-- <div
+                                                                *ngIf="interNatioanalPaid && ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))">
+                                                                <span [class.disabled]="isClickedOnce"
+                                                                    (click)="!isClickedOnce && payuPayment()"
+                                                                    class="pointer-cursor"><a>International Payment
+                                                                        ? Click here</a></span></div> -->
+                                                        </div>
+                                                        </div>
+
                                                         </div>
                                                     </div>
                                                     <div *ngIf="paidStatus == 'true'">

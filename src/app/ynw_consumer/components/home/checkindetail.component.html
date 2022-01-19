@@ -1,8 +1,9 @@
+
 <section class="container no-padding-small cust-book-details">
     <div class="content p0 comn-cls checkin-details">
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading top-row ">
+                <div class="panel-heading">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <app-header *ngIf="shared_functions.checkLogin()"></app-header>
                     </div>
@@ -50,7 +51,7 @@
                                                 {{waitlist.queue.location.place | capitalizeFirst}}
                                             </a>
                                             <div *ngIf="waitlist.provider" class="mgn-up-10 usr-name">
-                                                <span>Provider : </span>
+                                                <span>Priest : </span>
                                                 <span>
                                                     {{waitlist.provider.businessName | capitalizeFirst}}
                                                     <!-- {{waitlist.provider.firstName | capitalizeFirst}}
@@ -206,11 +207,11 @@
                                                     [fromsource]="'consumer-waitlist'"
                                                     (reloadApi)="getCommunicationHistory()"></app-inbox-list>
                                             </mat-tab>
-                                            <mat-tab label="Patient Note">
+                                            <mat-tab label="Devotee Note">
                                                 <div class="pad-10"
                                                     *ngIf="waitlist && waitlist.consumerNote && waitlist.consumerNote !== ''">{{waitlist.consumerNote}}</div>
                                                     <div class="pad-10"
-                                                    *ngIf="waitlist && (waitlist.consumerNote === '' || !waitlist.consumerNote)">No patient note found</div>
+                                                    *ngIf="waitlist && (waitlist.consumerNote === '' || !waitlist.consumerNote)">No devotee note found</div>
                                             </mat-tab>
 
                                             <!-- <mat-tab label="{{titlename}} History">

@@ -1,8 +1,9 @@
 <section class="content bus-page" style="padding-bottom: 0 !important;">
-    <div class="container background-img" style="min-height: 100vh !important;">
+
+    <div class="{{userId ? 'container background-imgs' : 'container background-img' }}" style="min-height: 100vh !important;">
         <div class="row pad-bt-10 bus-page-header">
             <div class="panel panel-default">
-                <div class="panel-heading top-row">
+                <div class="panel-heading" >
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <a class="pull-left mgn-up-15" (click)="goBack()" *ngIf="userId"><i
                                 class="fa fa-arrow-left"></i></a>
@@ -12,24 +13,49 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="text-center mgn-bt-40" [class.mgn-up-30]="userId">
-                        <img src="assets/images/heartfulness/logo.png">
+                    <div class="mgn-up-30 mgn-bt-20 name-dept"  *ngIf="!userId" style="text-align: center;">
+                        <!-- <div class="bname dept"><h2>{{businessjson.businessName | capitalizeFirst}}</h2></div>
+
+                        <img class=""  >
+                        <div *ngIf="businessjson.businessDesc.length>1" class="subhead">About us</div>
+                            <div *ngIf="businessjson.businessDesc.length>1" class="bname dept">{{businessjson.businessDesc | capitalizeFirst}}</div>
+                             -->
                     </div>
-                    <div class="text-center mgn-bt-20" *ngIf="!userId">
+                    <!-- <div class="text-center mgn-bt-20" *ngIf="!userId">
                         <img src="assets/images/heartfulness/heartfulness-doctor.png">
-                    </div>
+                    </div> -->
+                    <div style="text-align: center;" >
+                        <div >
+                         <img class="img img-responsive" alt="Profile Image" src="{{bLogo}}">
+                        </div>
+                         <div class="name-dept" style="text-align: center;">
+                             <div class="bname dept">{{businessjson.businessName | capitalizeFirst}}</div>
+                             <div class="bname">{{businessjson.businessUserName | capitalizeFirst}}</div>
+                             <div *ngIf="businessjson.businessDesc && businessjson.businessDesc.length>1" class="subhead">About us</div>
+                             <div *ngIf="businessjson.businessDesc && businessjson.businessDesc.length>1" class="bname dept">{{businessjson.businessDesc | capitalizeFirst}}</div>
+                             
+                             <div *ngIf="businessjson.specialization && businessjson.specialization.length>0" class="subhead">Specialization</div>
+                             <div *ngIf="businessjson.specialization && businessjson.specialization.length>0" class="bname">{{businessjson.specialization[0] | capitalizeFirst}}</div>
+                             <div  class="subhead" *ngIf="mobileNo || email">Contact Us</div>
+                             <div class="bname" *ngIf="mobileNo">+{{countryCode}} {{mobileNo}}</div>
+                             <div class="bname">{{email}}</div>
+                             <div class="bname dept" *ngIf="apptServices && apptServices[0]"> {{apptServices[0].deptName}}</div>
+                             <div class="bname dept" *ngIf="(apptServices && !apptServices[0]) && (wlServices && wlServices[0])">
+                                 {{wlServices[0].deptName}}</div>
+                         </div>
+                     </div>
                     <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9 mgn-bt-10 no-padding bus-title-content"
                         *ngIf="!userId">
                         <div
                             class="col-xs-12 col-sm-12 no-padding mgn-bt-10 visible-xs visible-sm bus-actions-small-devices">
-                            <ul class="bus-actions no-padding mgn-up-10 width-100"
+                            <ul class=" no-padding mgn-up-10 width-100"
                                 *ngIf="settings_exists && business_exists">
-                                <li class="small-devices-message centeralign mgn-rt-10">
-                                    <a class="like-btn action-btns" (click)="communicateHandler()">
-                                        <span *ngIf="provider_bussiness_id">
+                                <li class="centeralign mgn-rt-10" >
+                                    <a class="like-btn action-btns" (click)="communicateHandler()" >
+                                        <span *ngIf="provider_bussiness_id" >
                                             <i class="msg-icon" aria-hidden="true"></i>
                                             <span class="display-text" style="margin-left: 3px !important;">&nbsp;Send
-                                                Message</span>
+                                                Enquiry</span>
                                         </span>
                                     </a>
                                 </li>
@@ -52,20 +78,13 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="bSection" *ngIf="userId">
-                        <img alt="Profile Image" src="{{bLogo}}">
-                        <div class="name-dept">
-                            <div class="bname">{{businessjson.businessName | capitalizeFirst}}</div>
-                            <div class="bname dept" *ngIf="apptServices && apptServices[0]"> {{apptServices[0].deptName}}</div>
-                            <div class="bname dept" *ngIf="(apptServices && !apptServices[0]) && (wlServices && wlServices[0])">
-                                {{wlServices[0].deptName}}</div>
-                        </div>
-                    </div>
+                  
                 </div>
             </div>
         </div>
         <app-common-innerloading-spinner *ngIf="loading_direct"></app-common-innerloading-spinner>
         <!-- Locations -->
+  
         <div class="row info-bar locations" *ngIf="locationjson.length > 1 && !api_loading && !loading && !loading_direct">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad-top-20 pad-bt-10 bg-col">
                 <div class="col-md-7 col-xs-8 no-padding">
@@ -94,6 +113,7 @@
                 </div>
             </div>
         </div>
+  
         <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading && !loading_direct">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                 <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12">
@@ -113,24 +133,38 @@
                             </div>
                         </ng-container>
                     </ng-container>
-
+               
                     <ng-container *ngIf="!showDepartments || (showDepartments && this.userId)">
-                        <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
-                            <app-card [item]="sp" [domain]="businessjson?.serviceSector?.domain"
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" style="margin-bottom: 10px;" *ngFor="let sp of servicesAndProviders">
+                         <app-card [item]="sp" [domain]="businessjson?.serviceSector?.domain"
                                 [terminology]='terminologiesjson' [loc]="selectedLocation"
                                 (actionPerformed)="cardClicked($event)"></app-card>
                         </div>
                     </ng-container>
                     <ng-container *ngIf="donationServices && donationServices.length >0">
-                        <div class="mgn-bt-15 " *ngFor="let sp of donationServices">
-                            <div class="dept-card" (click)="gotoDonation(sp.item)">
+                        <div class="mgn-bt-15 row" *ngFor="let sp of donationServices">
+                            <!-- <div class="dept-card" (click)="gotoDonation(sp.item)">
                                 <div class="dept-img">
                                     <img src="assets/images/donation.png">
                                 </div>
                                 <div class="dept-name">
                                     {{sp.item.name}}</div>
+                                    
                                 <div class="service-buttons">
                                     <button type="button" class="book-btn">Donate</button>
+                                </div>
+                            </div> -->
+                            <div (click)="gotoDonation(sp.item)" class="col-md-12 col-sm-12 col-xs-12" style="background-color: white;padding: 10px;box-shadow: 0px 34px 55px #28282814 !important;border-radius: 10px;text-align: center;">
+                                <div class="col-sm-12 col-xs-12 col-md-12" >
+                                    <img  src="assets/images/moneybag.png" style="width: 50px !important;height: 50px !important; " >
+                                </div>
+                                <div class="col-sm-12 col-xs-12 col-md-12 dept-name " style="text-align: center !important">
+                                    {{sp.item.name}}
+                                    <br>
+                                </div>
+                                <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-10">
+                                    <button type="button" class="book-btn btn">Donate</button>
+                                    
                                 </div>
                             </div>
                         </div>

@@ -41,10 +41,14 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     ngOnInit() {
         this.todayDate = this.datePipe.transformTofilterDate(new Date());
         console.log(this.todayDate);
+    
         switch (this.item.type) {
             case 'waitlist':
                 this.service = this.item.item;
+                console.log('service'+ JSON.stringify(this.service));
+                if(this.service.serviceAvailability['personAhead']){
                 this.personsAheadText = 'People in line : ' + this.service.serviceAvailability['personAhead'];
+                }
                 if (this.service.serviceAvailability['showToken']) {
                 } else {
                     this.buttonCaption = 'Get ' + this.getTerminologyTerm('waitlist');
@@ -86,10 +90,17 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 break;
             default:
                 this.user = this.item.item;
-                console.log(this.user);
+                
                 break;
         }
     }
+    getfoundationname(Name) {
+        let name=Name;
+        if(name.length>15){
+          name=name.substr(0,15)+'...';
+        }
+        return name;
+      }
     ngOnChanges() {
         // this.itemQty = this.quantity;
         // this.cdref.detectChanges();
@@ -207,6 +218,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         return slotAvailable;
     }
     getPic(user) {
+        console.log('user....',user);
         if (user.profilePicture) {
             // alert(JSON.parse(user.profilePicture)['url']);
             return user.profilePicture['url'];

@@ -90,7 +90,7 @@
                         *ngIf="getQuestion(question).fieldDataType === 'list' && getQuestion(question).listPropertie.maxAnswers === 1">
                         <div class="radio-list">
                             <label class="radio" *ngFor="let value of getQuestion(question).labelValues">
-                                <input type="radio" name="radio1" [disabled]="disableInput()"
+                                <input type="radio" name="{{getQuestion(question).labelName}}" [disabled]="disableInput()"
                                     [checked]="isChecked(value, getQuestion(question))"
                                     (change)="listChange($event, value, getQuestion(question))">
                                 <span></span>
@@ -116,7 +116,7 @@
                     </div>
                     <!-- for Text -->
                     <div class="col-12" style="padding-left: 0 !important;" *ngIf="getQuestion(question).fieldDataType === 'plainText'">
-                        <input placeholder="Enter your answer here" [(ngModel)]="answers[getQuestion(question).labelName]"
+                        <input placeholder="Enter {{getQuestion(question).label}}" [(ngModel)]="answers[getQuestion(question).labelName]"
                             (input)="onSubmit('inputChange');" [disabled]="disableInput()"
                             [minlength]="getQuestion(question).plainTextPropertie.minNoOfLetter"
                             [maxlength]="getQuestion(question).plainTextPropertie.maxNoOfLetter"
@@ -126,7 +126,7 @@
                     </div>
                     <!-- for Number -->
                     <div class="col-12" style="padding-left: 0 !important;" *ngIf="getQuestion(question).fieldDataType === 'number'">
-                        <input placeholder="Enter your answer here" [(ngModel)]="answers[getQuestion(question).labelName]"
+                        <input placeholder="Enter {{getQuestion(question).label}}" [(ngModel)]="answers[getQuestion(question).labelName]"
                             (input)="onSubmit('inputChange');" [min]="getQuestion(question).numberPropertie.start"
                             [max]="getQuestion(question).numberPropertie.end" [disabled]="disableInput()"
                             class="form-control1 text-field form-control-solid" type="number">

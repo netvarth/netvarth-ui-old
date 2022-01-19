@@ -4,6 +4,7 @@
     align-items: stretch;
     padding: 10px !important;
     background: transparent!important;
+    
     color: #222223!important;
     font-size: 1rem !important;
     font-weight: 600;
@@ -15,6 +16,7 @@
 .modal-title.service-detail-title .name {
     display: flex;
     align-items: stretch;
+    /* background-color: #16254b; */
 }
 
 .modal-title.service-detail-title .name .dispvalue {
@@ -22,6 +24,7 @@
     align-items: stretch;
     font-size: 1.4rem;
     color: #fff;
+    /* background-color: #16254b; */
 }
 
 .modal-title.service-detail-title .name .dispvalue span {
@@ -70,6 +73,7 @@
     width: 24px!important;
     color: black !important;
     /* position: absolute; */
+    /* background-color: #16254b; */
     background: none;
     border: none;
     padding: 0;
@@ -314,7 +318,7 @@
     margin-right: 10px !important;
 }
 .modal-header.service-detail-header {
-    background:  #FD7029 0% 0% no-repeat padding-box !important;
+    background:  #16254b 0% 0% no-repeat padding-box !important;
     padding: 5px 15px 5px 10px !important;
 }
 .service-detail-content.service-popup-content textarea {
@@ -323,12 +327,13 @@
 
 .service-detail-content.service-popup-content .sts-msg.error {
     text-align: left !important;
+    color: red;
 }
 
 .service-detail-content.service-popup-content .ok-button{
   width: 35% !important;
   color: white !important;
-  /* background-color: #ccc !important; */
+  background-color: #16254b !important;
   border-radius: 4px !important;
   vertical-align: baseline !important;
   padding: 10px 10px !important;

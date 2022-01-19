@@ -1,6 +1,9 @@
 .content {
     padding-top: 0px !important
   }
+  .background-img {
+    background-image: url('../../../../assets/images/space.jpg');
+  }
   
   ul.details.contact {
     font-size: 0.9rem !important;
@@ -592,7 +595,7 @@
   }
   
   .donate-btn-bp {
-    background: #ffa313 !important;
+    background: #16254b !important;
     /* height: 25px;
     max-width: 100%; */
     /* text-transform: uppercase; */
@@ -788,7 +791,7 @@
   } */
   
   .top-row {
-    background: #f1b51c;
+    background: #16254b;
   }
   
   .bus-title-content h6 a {
@@ -811,6 +814,8 @@
     width: 100%;
     font-size: 0.75rem;
     height: 40px;
+    background: #16254b;
+
     /* font-family: poppins !important; */
   }
   
@@ -1246,7 +1251,7 @@
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #f5c84d !important;
+    background-color: #16254b !important;
     color: black;
     font-weight:bold;
     text-align: center;
@@ -2218,7 +2223,7 @@
     }
   }
   .action-btns {
-    background: linear-gradient(45deg, #FD7029(224,152,208,1) 0%, #FD7029(180,76,154,1) 100%) !important;
+    background: linear-gradient(45deg, #16254b(224,152,208,1) 0%, #16254b(180,76,154,1) 100%) !important;
     opacity: 1;
     /* background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
     opacity: 1; */

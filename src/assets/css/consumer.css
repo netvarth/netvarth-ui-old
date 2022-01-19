@@ -572,8 +572,8 @@
 
 .consumer-dash .card.favourites .outer .list .detail .location .bt-l .wt-tme .wt-msg {
   padding: 4px 10px;
-  border: 1px dashed #fda60d;
-  color: #fda60d;
+  border: 1px dashed#16254b;
+  color: #16254b;
   font-weight: 500;
   display: table;
 }
@@ -743,11 +743,11 @@
 }
 
 .consumer-dash .card.history .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .history-tbl .table tbody tr td.td4 .cancelled {
-  color: #f24949;
+  color: #16254b;
 }
 
 .consumer-dash .card.history .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .history-tbl .table tbody tr td.td4 .cancelled:before {
-  background: #f24949;
+  background: #16254b;
 }
 
 .consumer-dash .card.history .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .history-tbl .table tbody tr td.td4 .checkedIn {
@@ -861,7 +861,7 @@
 
 .consumer-dash .card.history .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .history-tbl .table tbody tr td.td5 .controls li span.rate-service.rated:before {
   content: "\3c";
-  color: #fda60d;
+  color: #16254b;
 }
 
 .consumer-dash .card.history .mat-accordion .mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body .history-tbl .table tbody tr td.td5 .controls li span.pay-bill:before {
@@ -1058,11 +1058,11 @@
 }
 
 .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .cancelled {
-  color: #f24949;
+  color: #16254b;
 }
 
 .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .cancelled:before {
-  background: #f24949;
+  background: #16254b;
 }
 
 .consumer-dash .card.history.one .history-tbl .table tbody tr td.td4 .checkedIn {
@@ -1176,7 +1176,7 @@
 
 .consumer-dash .card.history.one .history-tbl .table tbody tr td.td5 .controls li span.rate-service.rated:before {
   content: "\3c";
-  color: #fda60d;
+  color: #16254b;
 }
 
 .consumer-dash .card.history.one .history-tbl .table tbody tr td.td5 .controls li span.pay-bill:before {
@@ -1477,8 +1477,8 @@
   align-items: center;
   justify-content: center;
   font-size: .65rem;
-  background: #f9a8a8;
-  color: #f24949;
+  background: #698fee;
+  color: #16254b;
   -webkit-border-radius: 50px;
   border-radius: 50px;
   background-clip: padding-box;
@@ -2093,7 +2093,7 @@
 .content .c-outer .c-body .srlst .top-sect .tp-r .claim-business {
   position: relative;
   text-align: right;
-  color: #fda60d;
+  color: #16254b;
   padding-left: 20px;
   display: table;
   margin-left: auto;
@@ -2321,8 +2321,8 @@
 
 .content .c-outer .c-body .srlst .bottom-sect .bt-l .wt-tme .wt-msg {
   padding: 14px;
-  border: 2px dashed #fda60d;
-  color: #fda60d;
+  border: 2px dashed #16254b;
+  color: #16254b;
   font-weight: 600;
   display: table;
 }
@@ -2703,7 +2703,7 @@
 }
 
 .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class^="icon-"].icon-favourite-filled:before, .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li span[class*=" icon-"].icon-favourite-filled:before {
-  color: #f24949;
+  color: #16254b;
 }
 
 .content .c-outer .c-body .srlst.details .top-sect .tp-r .side-menu li:last-child {
@@ -3098,7 +3098,7 @@
 .content .c-outer .c-body .location .top-sect .tp-r .claim-business {
   position: relative;
   text-align: right;
-  color: #fda60d;
+  color: #16254b;
   padding-left: 20px;
   display: table;
   margin-left: auto;
@@ -3355,8 +3355,8 @@
 
 .content .c-outer .c-body .location .bottom-sect .bt-l .wt-tme .wt-msg {
   padding: 14px;
-  border: 2px dashed #fda60d;
-  color: #fda60d;
+  border: 2px dashed #16254b;
+  color: #16254b;
   font-weight: 600;
   display: table;
 }
@@ -3766,7 +3766,7 @@
   justify-content: center;
   font-size: .65rem;
   background: #f9a8a8;
-  color: #f24949;
+  color: #16254b;
   -webkit-border-radius: 50px;
   border-radius: 50px;
   background-clip: padding-box;
@@ -4141,13 +4141,13 @@
   /* stops bg color from leaking outside the border: */
   color: #fff;
   font-weight: 700;
-  background: #f24949;
+  background: #16254b;
   min-width: 200px;
   margin-bottom: 1.125em;
 }
 
 .prv .tfp1 .jn1:before {
-  background: #f57979;
+  background: #16254b;
 }
 
 .prv .tfp1 .jn1:hover:before, .prv .tfp1 .jn1:active:before {
@@ -4291,7 +4291,7 @@
   background-clip: padding-box;
   /* stops bg color from leaking outside the border: */
   position: relative;
-  color: #f24949;
+  color: #16254b;
   margin-left: 4px;
   display: table;
 }
@@ -4306,7 +4306,7 @@
   position: absolute;
   width: 6px;
   height: 6px;
-  background: #f24949;
+  background: #16254b;
   content: "";
   left: 0;
   top: 50%;
@@ -4351,7 +4351,7 @@
 }
 
 .consumer-dash .card.c-checkins .outer.banner owl-carousel .owl-stage-outer  .owl-item .item .header .rt .favourite .icon-favourite-filled:before {
-  color: #f24949;
+  color: #16254b;
   width: 20px;
   height: 20px;
   display: flex;
@@ -4587,12 +4587,12 @@
 
 .consumer-dash .card.c-checkins .outer.banner owl-carousel .owl-stage-outer  .owl-item .item .details .rt .controls li span.rate-service:hover:before {
   content: "\3c";
-  color: #fda60d;
+  color: #16254b;
 }
 
 .consumer-dash .card.c-checkins .outer.banner owl-carousel .owl-stage-outer  .owl-item .item .details .rt .controls li span.rate-service.rated:before {
   content: "\3c";
-  color: #fda60d;
+  color: #16254b;
 }
 
 .consumer-dash .card.c-checkins .outer.banner owl-carousel .owl-stage-outer  .owl-item .item .details .rt .controls li span.add-fav:before {
@@ -4601,7 +4601,7 @@
 
 .consumer-dash .card.c-checkins .outer.banner owl-carousel .owl-stage-outer  .owl-item .item .details .rt .controls li span.add-fav:hover:before {
   content: "\27" !important;
-  color: #f24949 !important;
+  color: #16254b !important;
 }
 
 .consumer-dash .card.c-checkins .outer.banner owl-carousel .owl-stage-outer  .owl-item .item .details .rt .controls li span.cancel {
@@ -4829,7 +4829,7 @@
 
 .history-tbl .table tbody tr td.td5 .controls li span.rate-service.rated:before {
   content: "\3c";
-  color: #fda60d;
+  color: #16254b;
 }
 
 .history-tbl .table tbody tr td.td5 .controls li span.pay-bill:before {
@@ -4910,7 +4910,7 @@
   background-clip: padding-box;
   /* stops bg color from leaking outside the border: */
   position: relative;
-  color: #f24949;
+  color: #16254b;
   margin-left: 4px;
   display: table;
 }
@@ -4930,7 +4930,7 @@
   position: absolute;
   width: 6px;
   height: 6px;
-  background: #f24949;
+  background: #16254b;
   content: "";
   left: 0;
   top: 50%;
@@ -5205,12 +5205,12 @@
 
 .checkin-details.consumer-dash .card.c-checkins .outer.banner .item .details .rt .controls li span.rate-service:hover:before {
   content: "\3c";
-  color: #fda60d;
+  color: #16254b;
 }
 
 .checkin-details.consumer-dash .card.c-checkins .outer.banner .item .details .rt .controls li span.rate-service.rated:before {
   content: "\3c";
-  color: #fda60d;
+  color: #16254b;
 }
 
 .checkin-details.consumer-dash .card.c-checkins .outer.banner .item .details .rt .controls li span.add-fav:before {
@@ -5219,7 +5219,7 @@
 
 .checkin-details.consumer-dash .card.c-checkins .outer.banner .item .details .rt .controls li span.add-fav:hover:before {
   content: "\27" !important;
-  color: #f24949 !important;
+  color: #16254b !important;
 }
 
 .checkin-details.consumer-dash .card.c-checkins .outer.banner .item .details .rt .controls li span.cancel {
@@ -5277,7 +5277,7 @@
 }
 .consumer-dash .c-checkins .ng-tns-c16-8 .find-sp-btn {
   border-radius: 20px;
-  background: #FD7029 0% 0% no-repeat padding-box !important;
+  background: #16254b 0% 0% no-repeat padding-box !important;
   /* background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important; */
   color: rgb(255 255 255);
   padding-left: 30px;
@@ -5358,7 +5358,7 @@
   /* border: 1px solid rgb(4 62 121); */
   border-radius: 50px;
   /* color: rgb(255 255 255); */
-  background: #FD7029 0% 0% no-repeat padding-box !important;
+  background: #16254b 0% 0% no-repeat padding-box !important;
   /* background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important; */
   /* min-width: 0px !important; */
   display: none;
@@ -5498,7 +5498,8 @@
   color: blue;
 }
 .cust-book-details .mat-tab-labels {
-  background: #eb9a71ee !important;
+  background: #16254b !important;
+  color: white;
 }
 .checkin-details .histry-font {
   font-size: 0.9rem;
@@ -5507,7 +5508,7 @@
 .cust-book-details .joinMeeting {
   padding: 6px;
   font-size: 0.8rem;
-  background: linear-gradient(45deg, #eb9a71ee(224,152,208,1) 0%, #eb9a71ee(180,76,154,1) 100%) !important;
+  background: linear-gradient(45deg, #16254b(224,152,208,1) 0%, #16254b(180,76,154,1) 100%) !important;
   border-radius: 50px;
   margin-left: 10px;
   color: white;
@@ -5603,8 +5604,8 @@
   font-weight: 600;
   /* margin-top: 10px;
   margin-left: 20px; */
-  color: rgb(24 62 121);
-  background: #e79f7aee !important;
+  color: white;
+  background: #16254b !important;
   padding: 15px;
 }
 .consumer-dash .card_ico {
@@ -5639,7 +5640,7 @@
   font-weight: 600;
 }
 .consumer-dash .grid-card .btns {
-  background: linear-gradient(45deg, #eb9a71ee(224,152,208,1) 0%, #eb9a71ee(180,76,154,1) 100%) !important;
+  background: linear-gradient(45deg, #16254b(224,152,208,1) 0%, #16254b(180,76,154,1) 100%) !important;
   color: white;
 }
 .consumer-dash .grid-card .mat-flat-button {
@@ -5758,7 +5759,7 @@
 .consumer-dash .grid-card .ribbon:after{
   right: -1em;
   border-width: 0.99em 1em 1em 3em;
-  border-color: #ec8a59ee transparent #ec8a59ee #ec8a59ee;
+  border-color: #16254b transparent #16254b #16254b;
   z-index: -1;
   box-shadow: 0 8px 6px -6px #00000085;
 }
@@ -5779,4 +5780,36 @@ font-weight: 600;
   color: red!important;
   font-size: 0.9rem;
 font-weight: 600;
+}
+.pay-rad  .mat-radio-outer-circle, .pay-rad  .mat-radio-inner-circle {
+  height:15px !important;
+  width: 15px !important;
+}
+
+.pay-rad .mat-radio-label {
+  display: block !important;
+}
+
+.pay-rad .mat-radio-container {
+  display: block !important;
+  top: 5px !important;
+  right: 5px;
+  float: right;
+}
+
+@media screen and (max-width: 768px) { 
+  .pad-sm-10 {
+    padding:10px !important;
+  }
+  .comn-cls .w-dta .copy .pay-section {
+    padding-right: 10px !important;
+  }
+ 
+}
+
+.removeflex {
+display: block !important;
+}
+.qnrsec .mat-select {
+  padding: 10px !important;
 }

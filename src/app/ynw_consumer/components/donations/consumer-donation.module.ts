@@ -14,6 +14,8 @@ import { ConsumerDonationComponent } from './details/consumer-donation.component
 import { HeaderModule } from '../../../shared/modules/header/header.module';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { ConfirmPageComponent } from './details/confirm-page/confirm-page.component';
+import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
+import { PaymentModesModule } from '../../../../../src/app/shared/modules/payment-modes/payment-modes.module';
 
 @NgModule({
     declarations: [
@@ -34,8 +36,9 @@ import { ConfirmPageComponent } from './details/confirm-page/confirm-page.compon
         Nl2BrPipeModule,
         OwlModule,
         HeaderModule,
-        NgxIntlTelInputModule
-
+        NgxIntlTelInputModule,
+        QuestionnaireModule,
+        PaymentModesModule,
     ],
     exports: [ConsumerDonationsComponent]
 })

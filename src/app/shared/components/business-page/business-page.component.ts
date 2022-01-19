@@ -285,6 +285,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   apptServices;
   private subscriptions = new SubSink();
   consumerVirtualinfo: any;
+  private subs = new SubSink();
+  email;
+  mobileNo;
+  countryCode;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -293,6 +297,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     private dialog: MatDialog,
     private searchdetailserviceobj: SearchDetailServices,
     public router: Router,
+    public route: ActivatedRoute,
     private locationobj: Location,
     private titleService: Title,
     private metaService: Meta,
@@ -321,6 +326,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loc_details = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
     this.jdnTooltip = this.wordProcessor.getProjectMesssages('JDN_TOOPTIP');
     console.log("Before checking mobile tpye");
+    // console.log("business json",this.businessjson.length)
     const isMobile = {
       Android: function () {
         return navigator.userAgent.match(/Android/i);
@@ -356,6 +362,20 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA_CONSUMER;
     // this.getInboxUnreadCnt();
+    this.subs.sink = this.route.queryParams.subscribe(
+      params => {
+        if (params.email) {
+          this.email = params.email;
+        }
+        if (params.mobileNo) {
+          this.mobileNo = params.mobileNo;
+        }
+        if (params.countryCode) {
+          this.countryCode = params.countryCode;
+        }
+      });
+
+
     this.activaterouterobj.queryParams.subscribe(qparams => {
       if (qparams.src) {
         this.pSource = qparams.src;
@@ -387,13 +407,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(params => {
         this.accountEncId = params.get('id');
         // alert(this.accountEncId);
-        console.log("My Id is : " + this.accountEncId);
+        console.log("My Id is : " + this.accountEncId, params.get('userEncId'));
         if (params.get('userEncId')) {
           this.userEncId = params.get('userEncId');
           this.userId = this.userEncId;
         } else {
           this.userId = null;
         }
+        console.log('/.............llllllllllllllllllllll', this.userId)
         this.domainConfigService.getDomainList().then(
           (domainConfig) => {
             this.domainList = domainConfig;
@@ -685,6 +706,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.pageFound = true;
       this.socialMedialist = [];
       this.businessjson = res;
+      // console.log("bussinesss json...",this.businessjson)
       if (this.businessjson.serviceSector.name !== 'healthCare') {
         this.service_cap = 'Services';
       }
@@ -701,10 +723,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
         if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
           this.bLogo = this.businessjson.logo.url;
+          console.log("business json", this.businessjson)
         }
       } else {
         // this.bLogo = '';
         this.bLogo = '../../../assets/images/img-null.svg';
+        console.log("business json", this.businessjson)
+
       }
       this.specializationslist = [];
       this.specializationslist_more = [];
@@ -724,9 +749,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       if (this.businessjson.emails) {
         this.emaillist = this.businessjson.emails;
+        console.log("***email**", this.emaillist);
       }
       if (this.businessjson.phoneNumbers) {
         this.phonelist = this.businessjson.phoneNumbers;
+        console.log("***phone***", this.phonelist);
       }
       // this.getbusinessprofiledetails_json('gallery', true);
       const holdbName = this.businessjson.businessDesc || '';
@@ -759,6 +786,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       // this.getbusinessprofiledetails_json('location', true);
     }
+  }
+  getfoundationname(Name) {
+    let name = Name;
+    if (name.length > 15) {
+      name = name.substr(0, 15) + '...';
+    }
+    return name;
   }
   setAccountSettings(res) {
     this.settingsjson = res;
@@ -914,11 +948,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
       if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
         this.bLogo = this.businessjson.logo.url;
+        console.log("business json", this.businessjson)
         // this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
       }
     } else {
       // this.bLogo = '';
       this.bLogo = '../../../assets/images/img-null.svg';
+
+
     }
     if (this.businessjson.specialization) {
       this.specializationslist = this.businessjson.specialization;
@@ -928,9 +965,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     if (this.businessjson.emails) {
       this.emaillist = this.businessjson.emails;
+      console.log("**email**", this.emaillist)
     }
     if (this.businessjson.phoneNumbers) {
       this.phonelist = this.businessjson.phoneNumbers;
+      console.log("**phone**", this.phonelist);
     }
     const holdbName = this.businessjson.businessDesc || '';
     const maxCnt = 120;
@@ -1421,7 +1460,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     const _this = this;
     console.log("Entered to goThroughLogin Method");
     return new Promise((resolve) => {
-      if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')){
+      if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')) {
         resolve(true);
       } else {
         resolve(false);
@@ -1527,14 +1566,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       (status) => {
         console.log("Current Login status:" + status);
         if (status) {
-            if (service.serviceType === 'virtualService') {
-              _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-                _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.availableDate, 'checkin', service, consumerdata);
-              });
-            }
-            else {
-              _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer');
-            }
+          if (service.serviceType === 'virtualService') {
+            _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+              _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.availableDate, 'checkin', service, consumerdata);
+            });
+          }
+          else {
+            _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer');
+          }
         } else {
           const passParam = { callback: '', current_provider: current_provider };
           _this.doLogin('consumer', passParam);
@@ -1581,19 +1620,19 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
-              _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+          _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
         } else {
           const passParam = { callback: 'appointment', current_provider: current_provider };
           _this.doLogin('consumer', passParam);
         }
       });
   }
-   collectRequiredinfo(id, place, location, date, type, service?, consumerdata?) {
+  collectRequiredinfo(id, place, location, date, type, service?, consumerdata?) {
     console.log("Collect Required Info");
     const _this = this;
     let virtualFields = {};
-    if(this.checkallvirtualFilledByConsumer(consumerdata)){
-      if(consumerdata.parent){
+    if (this.checkallvirtualFilledByConsumer(consumerdata)) {
+      if (consumerdata.parent) {
         virtualFields['dob'] = consumerdata.userProfile.dob;
         virtualFields['gender'] = consumerdata.userProfile.gender;
         let locationObj = {};
@@ -1605,7 +1644,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         if (virtualFields['preferredLanguage'][0] === 'English') {
           virtualFields['islanguage'] = 'yes';
         }
-      }else{
+      } else {
         virtualFields['dob'] = consumerdata.userProfile.dob;
         virtualFields['gender'] = consumerdata.userProfile.gender;
         let locationObj = {};
@@ -1617,21 +1656,21 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         virtualFields['preferredLanguage'] = this.s3Processor.getJson(consumerdata.userProfile.preferredLanguages);
         if (virtualFields['preferredLanguage'][0] === 'English') {
           virtualFields['islanguage'] = 'yes';
-        } 
+        }
       }
       if (type === 'appt') {
         _this.showAppointment(id, place, location, date, service, 'consumer', virtualFields);
       } else {
         _this.showCheckin(id, place, location, date, service, 'consumer', virtualFields);
-      } 
-    }else{
+      }
+    } else {
       const virtualdialogRef = _this.dialog.open(VirtualFieldsComponent, {
         width: '50%',
         minHeight: '100vh',
         minWidth: '100vw',
         panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-border-radius-0'],
         disableClose: true,
-        data: { consumer: consumerdata,service:service,businessDetails:this.businessjson }
+        data: { consumer: consumerdata, service: service, businessDetails: this.businessjson }
       });
       virtualdialogRef.afterClosed().subscribe(result => {
         _this.loading_direct = true;
@@ -1642,25 +1681,25 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             _this.showAppointment(id, place, location, date, service, 'consumer', result);
           } else {
             _this.showCheckin(id, place, location, date, service, 'consumer', result);
-          } 
+          }
         } else {
           _this.loading_direct = false;
         }
       });
     }
   }
-  checkallvirtualFilledByConsumer(consumerdata){
-    let allrequiredFieldsFilled=false;
-    if(consumerdata.parent){
-    if(consumerdata.userProfile.dob &&consumerdata.userProfile.dob!==''&&consumerdata.userProfile.gender && consumerdata.preferredLanguages&&consumerdata.preferredLanguages!==null&& consumerdata.bookingLocation && consumerdata.bookingLocation.pincode&&consumerdata.bookingLocation.pincode.trim()!==''){
-      allrequiredFieldsFilled=true;
-    }
+  checkallvirtualFilledByConsumer(consumerdata) {
+    let allrequiredFieldsFilled = false;
+    if (consumerdata.parent) {
+      if (consumerdata.userProfile.dob && consumerdata.userProfile.dob !== '' && consumerdata.userProfile.gender && consumerdata.preferredLanguages && consumerdata.preferredLanguages !== null && consumerdata.bookingLocation && consumerdata.bookingLocation.pincode && consumerdata.bookingLocation.pincode.trim() !== '') {
+        allrequiredFieldsFilled = true;
+      }
 
-  }else if(consumerdata.userProfile.dob &&consumerdata.userProfile.dob!==''&&consumerdata.userProfile.gender && consumerdata.userProfile.preferredLanguages&&consumerdata.userProfile.preferredLanguages!==null&& consumerdata.bookingLocation && consumerdata.userProfile.pinCode&&consumerdata.userProfile.pinCode.trim()!==''){
-    allrequiredFieldsFilled=true;
+    } else if (consumerdata.userProfile.dob && consumerdata.userProfile.dob !== '' && consumerdata.userProfile.gender && consumerdata.userProfile.preferredLanguages && consumerdata.userProfile.preferredLanguages !== null && consumerdata.bookingLocation && consumerdata.userProfile.pinCode && consumerdata.userProfile.pinCode.trim() !== '') {
+      allrequiredFieldsFilled = true;
+    }
+    return allrequiredFieldsFilled;
   }
-  return allrequiredFieldsFilled;
-}
 
   checkVirtualRequiredFieldsEntered() {
     const _this = this;
@@ -1682,7 +1721,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   doLogin(origin?, passParam?) {
     console.log("In doLogin Method");
-    const _this=this;
+    const _this = this;
     const current_provider = passParam['current_provider'];
     const is_test_account = true;
     const dialogRef = this.dialog.open(ConsumerJoinComponent, {
@@ -1713,7 +1752,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           _this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
+          if (current_provider['service']['serviceType'] === 'virtualService') {
+            _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+              _this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
+            });
+          } else {
             _this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          }
+        
         } else {
           if (current_provider['service']['serviceType'] === 'virtualService') {
             _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
@@ -1900,9 +1946,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
-            this.showDonation(locid, cdate, service);
+          this.showDonation(locid, cdate, service);
         } else {
-          const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, service:service, consumer: 'consumer' };
+          const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, service: service, consumer: 'consumer' };
           this.doLogin('consumer', passParam);
         }
       });
@@ -2009,16 +2055,24 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   providerDetClicked(userId) {
-    // const navigationExtras: NavigationExtras = {
-    //   queryParams: {
-    //     src: 'bp'
-    //   }
-    // };
-    this.routerobj.navigate([this.accountEncId, userId]);
+    if (this.deptUsers[0].email || this.deptUsers[0].mobileNo || this.deptUsers[0].countryCode) {
+      const queryParam = {
+        email: this.deptUsers[0].email,
+        mobileNo: this.deptUsers[0].mobileNo,
+        countryCode: this.deptUsers[0].countryCode,
+      };
+      const navigationExtras: NavigationExtras = {
+        queryParams: queryParam
+      };
+      this.routerobj.navigate([this.accountEncId, userId], navigationExtras);
+    }
+    else {
+      this.routerobj.navigate([this.accountEncId, userId]);
+    }
   }
 
   cardClicked(actionObj) {
-
+    console.log("actionObj['type']", actionObj['type'])
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.name);
@@ -2124,16 +2178,21 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.userCount = 0;
     if (this.showDepartments) {
       if (this.userId) {
-        for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
-          if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === JSON.parse(this.userId) && this.apptServices[aptIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
-            this.serviceCount++;
+        if (this.apptServices) {
+          for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+            if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === JSON.parse(this.userId) && this.apptServices[aptIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+
+              this.serviceCount++;
+            }
           }
         }
-        for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
-          if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === JSON.parse(this.userId) && this.wlServices[wlIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
-            this.serviceCount++;
+        if (this.wlServices) {
+          for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+            if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === JSON.parse(this.userId) && this.wlServices[wlIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+              this.serviceCount++;
+            }
           }
         }
       } else {
@@ -2143,26 +2202,32 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           deptItem['departmentCode'] = this.deptUsers[dIndex]['departmentCode'];
           deptItem['departmentId'] = this.deptUsers[dIndex]['departmentId'];
           deptItem['departmentItems'] = [];
-          for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
-            if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability && deptItem['departmentId'] === this.apptServices[aptIndex].department) {
-              deptItem['departmentItems'].push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
-              this.serviceCount++;
+          if (this.apptServices) {
+            for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+              if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability && deptItem['departmentId'] === this.apptServices[aptIndex].department) {
+                deptItem['departmentItems'].push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+                this.serviceCount++;
+              }
             }
           }
-          for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
-            if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability && deptItem['departmentId'] === this.wlServices[wlIndex].department) {
-              deptItem['departmentItems'].push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
-              this.serviceCount++;
+          if (this.wlServices) {
+            for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+              if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability && deptItem['departmentId'] === this.wlServices[wlIndex].department) {
+                deptItem['departmentItems'].push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+                this.serviceCount++;
+              }
             }
           }
           if (!this.userId) {
-            for (let pIndex = 0; pIndex < this.deptUsers[dIndex]['users'].length; pIndex++) {
-              const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
-              const userApptTime = this.appttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
-              this.deptUsers[dIndex]['users'][pIndex]['waitingTime'] = userWaitTime[0];
-              this.deptUsers[dIndex]['users'][pIndex]['apptTime'] = userApptTime[0];
-              deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex]['users'][pIndex] });
-              this.userCount++;
+            if (this.deptUsers) {
+              for (let pIndex = 0; pIndex < this.deptUsers[dIndex]['users'].length; pIndex++) {
+                const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
+                const userApptTime = this.appttime_arr.filter(time => time.provider.id === this.deptUsers[dIndex]['users'][pIndex].id);
+                this.deptUsers[dIndex]['users'][pIndex]['waitingTime'] = userWaitTime[0];
+                this.deptUsers[dIndex]['users'][pIndex]['apptTime'] = userApptTime[0];
+                deptItem['departmentItems'].push({ 'type': 'provider', 'item': this.deptUsers[dIndex]['users'][pIndex] });
+                this.userCount++;
+              }
             }
           }
           servicesAndProviders.push(deptItem);
@@ -2174,36 +2239,46 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       // tslint:disable-next-line:no-shadowed-variable
       const servicesAndProviders = [];
       if (this.userId) {
-        for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
-          if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === JSON.parse(this.userId) && this.apptServices[aptIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
-            this.serviceCount++;
+        if (this.apptServices) {
+          for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+            if (this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex]['provider']['id'] === JSON.parse(this.userId) && this.apptServices[aptIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+              this.serviceCount++;
+            }
           }
         }
-        for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
-          if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === JSON.parse(this.userId) && this.wlServices[wlIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
-            this.serviceCount++;
+        if (this.wlServices) {
+          for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+            if (this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex]['provider']['id'] === JSON.parse(this.userId) && this.wlServices[wlIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+              this.serviceCount++;
+            }
           }
         }
       } else {
-        for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
-          if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
-            this.serviceCount++;
+        if (this.apptServices) {
+          for (let aptIndex = 0; aptIndex < this.apptServices.length; aptIndex++) {
+            if (!this.apptServices[aptIndex]['provider'] && this.apptServices[aptIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'appt', 'item': this.apptServices[aptIndex] });
+              this.serviceCount++;
+            }
           }
         }
-        for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
-          if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability) {
-            servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
-            this.serviceCount++;
+        if (this.wlServices) {
+          for (let wlIndex = 0; wlIndex < this.wlServices.length; wlIndex++) {
+            if (!this.wlServices[wlIndex]['provider'] && this.wlServices[wlIndex].serviceAvailability) {
+              servicesAndProviders.push({ 'type': 'waitlist', 'item': this.wlServices[wlIndex] });
+              this.serviceCount++;
+            }
           }
         }
-        for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
-          this.deptUsers[dIndex]['waitingTime'] = this.waitlisttime_arr[dIndex];
-          this.deptUsers[dIndex]['apptTime'] = this.appttime_arr[dIndex];
-          servicesAndProviders.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
-          this.userCount++;
+        if (this.deptUsers) {
+          for (let dIndex = 0; dIndex < this.deptUsers.length; dIndex++) {
+            this.deptUsers[dIndex]['waitingTime'] = this.waitlisttime_arr[dIndex];
+            this.deptUsers[dIndex]['apptTime'] = this.appttime_arr[dIndex];
+            servicesAndProviders.push({ 'type': 'provider', 'item': this.deptUsers[dIndex] });
+            this.userCount++;
+          }
         }
       }
       this.servicesAndProviders = servicesAndProviders;
@@ -2214,6 +2289,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         this.serviceCount++;
       }
     }
+    console.log("********", servicesAndProviders)
   }
 
   reset() {

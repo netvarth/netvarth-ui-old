@@ -1,9 +1,14 @@
 .modal-header.service-detail-header {
-    background: #FD7029 0% 0% no-repeat padding-box !important;
+    background: #16254b 0% 0% no-repeat padding-box !important;
     /* background: #522e5a 0% 0% no-repeat padding-box !important; */
     padding: 5px 15px 5px 10px !important;
 }
-
+.cust-logpg-submt {
+    background-color:#16254b ;
+}
+.error {
+    color: red;
+}
 .modal-title.service-detail-title {
     display: flex;
     align-items: stretch;
@@ -338,7 +343,7 @@ form.login-form.custom-login-form.consumer-join-component .example-container.cus
     width: 49% !important;
     color: white;
     margin: 0 !important;
-    background-color: #ccc;
+    background-color: #16254b;
     border-radius: 4px !important;
     vertical-align: baseline !important;
     padding: 10px 10px !important;

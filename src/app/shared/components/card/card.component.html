@@ -178,40 +178,63 @@
     <!-- <div class="outstock" *ngIf="!service.isStockAvailable && item.type=='item'">
         Out of stock</div> -->
 </div>
-<div class="card booking-card booking-card-user pointer-cursor user" *ngIf="item.type=='provider'"
-    (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)">
+
+
+
+<div class="row ">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding ">
+        <div class="card booking-card booking-card-user pointer-cursor user" *ngIf="item.type=='provider'"
+    (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)" >
+    <div>
+        <img  class="img-circle img-responsive" [src]="getPic(user)" alt="Profile Pic" style="width: 50px;height: 50px;">
+    </div>
+        <div class="card-item-content" style="display: flex;flex-direction: row;">
+
+            <div class="specialization-parent" *ngIf="user.businessName" >
+                <label class="specialization" >{{user.businessName}}</label>
+            </div>
+            <button type="button" class="book-btn" >BOOK NOW</button>
+        </div>
+    
+    </div>
+    
+    </div>
+</div>
+
+<!-- <div class="card booking-card booking-card-user pointer-cursor user" *ngIf="item.type=='provider'"
+    (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)" style="display: flex;" >
     <div class="card-item-head">
         <img class="card-img img-circle img-responsive" [src]="getPic(user)" alt="Profile Pic">
     </div>
-    <div class="card-item-content" style="display: block !important;">
-        <h4 class="user-name card-title font-weight-bold module line-clamp">
-            <a *ngIf="user.businessName">{{user.businessName}}</a>
-            <!-- <a *ngIf="!user.businessName && user.firstName && user.firstName!='undefined'">{{user.firstName |
+    <div class="card-item-content" >
+        <h5 class="user-name card-title font-weight-bold module line-clamp">
+            <a *ngIf="user.businessName" style="font-size: 12px;" >{{user.businessName}}</a>
+            <a *ngIf="!user.businessName && user.firstName && user.firstName!='undefined'">{{user.firstName |
                 capitalizeFirst | limitTo: [14, '...']}}</a>
             <a *ngIf="!user.businessName && user.lastName && user.lastName!='undefined'">&nbsp;{{user.lastName |
-                capitalizeFirst | limitTo: [14, '...']}}</a> -->
-        </h4>
-        <h6 class="qualification font-normal" *ngIf="user.qualifications && user.qualifications.length>0">
+                capitalizeFirst | limitTo: [14, '...']}}</a>
+        </h5>
+        <h6 class="qualification font-normal" *ngIf="user.qualifications && user.qualifications.length>0" >
             {{user.qualifications[0] | limitTo: [20, '...']}}
         </h6>
-        <h6 class="qualification" *ngIf="!user.qualifications || (user.qualifications && user.qualifications.length==0)"
+        <h6 class="qualification"  *ngIf="!user.qualifications || (user.qualifications && user.qualifications.length==0)"
             style="height:17px;"></h6>
-        <div class="specialization-parent" *ngIf="user.businessUserName">
+        <div class="specialization-parent" *ngIf="user.businessUserName" >
             <label class="specialization" *ngIf="user.businessUserName">{{user.businessUserName}}</label>
         </div>
         <label *ngIf="!user.businessUserName" style="padding: 2px 6px; margin:0 !important;">&nbsp;</label>
-        <p class="availability user-available">
-            <ng-container *ngIf="user.apptTime && user.apptTime.caption && user.apptTime.availableSchedule.availableDate === todayDate">
+        <p  *ngIf="user.apptTime && user.apptTime.caption && user.apptTime.availableSchedule.availableDate === todayDate" class="availability user-available" style="background-color: aqua;">
+            <ng-container >
                 {{user.apptTime.caption}}<br />{{user.apptTime.date}}
             </ng-container>
             <ng-container
                 *ngIf="(!user.apptTime || (user.apptTime && (!user.apptTime.caption || user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && user.waitingTime.caption">
-                {{user.waitingTime.caption}}<br />{{user.waitingTime.date}}
+              {{user.waitingTime.caption}}<br />{{user.waitingTime.date}}
             </ng-container>
         </p>
-        <button type="button" class="btn btn-outline-warning">BOOK NOW</button>
+        <button type="button" class="book-btn">BOOK NOW</button>
     </div>
-</div>
+</div> -->
 <div class="card booking-card pointer-cursor order head" *ngIf="item.type==='item-head'"
     (click)="cardActionPerformed(item.type, 'add', null, null, null, $event)">
     <div class="card-item-head">
