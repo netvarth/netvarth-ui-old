@@ -406,15 +406,28 @@ getOrderDetails(uid) {
       }
       if (this.orderDetails && this.orderDetails.shoppingList) {
         this.image_list_popup = [];
+        
+
         this.imagelist = this.orderDetails.shoppingList;
+        console.log("List Image : ",this.imagelist)
         for (let i = 0; i < this.imagelist.length; i++) {
           const imgobj = new Image(
             i,
             { // modal
-              img: this.imagelist[i].s3path,
+              img: this.imagelist[i].thumbPath,
               description: this.imagelist[i].caption || ''
-            });
+              
+            },this.imagelist[i].originalName);
+            console.log("Image Uploaded :",imgobj)
+
           this.image_list_popup.push(imgobj);
+          // const imgobj = new Image(i,
+          //   {
+          //     img: this.imagelist.base64[i],
+          //     description: this.imagelist.caption[i] || ''
+          //   }, this.imagelist.files[i].originalName);
+          //   console.log("Uploaded Image :",imgobj)
+          // this.image_list_popup.push(imgobj);
         }
       }
 
