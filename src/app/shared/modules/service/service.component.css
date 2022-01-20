@@ -1,0 +1,34 @@
+.payment_profile .card{
+    box-shadow: 0 0 5px 5px grey!important;
+    border: 5px solid black;
+}
+.payment_profile .card-selected {
+  border: 2px solid #283593;
+  padding: 20px;
+}
+
+  .payment_profile{
+    font-size:12px!important;
+  }
+  .payment_profile > .mat-radio-button.mat-radio-checked { 
+    border-color: blue !important;
+    box-shadow: 0 0 5px 5px blue!important;
+    padding: 20px;
+  }
+ .shadow{
+  box-shadow: 0 5px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  padding: 20px 0!important;
+ }
+
+ .gateway-img {
+    width: 80px;
+    height: 35px;
+ }
+ .modes-img {
+  width: 35px;
+  height: 35px;
+  border:1px solid #ddd;
+  border-radius: 5px;
+  margin: 2px;
+  padding: 5px;;
+ }

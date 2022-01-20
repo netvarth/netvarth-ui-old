@@ -128,7 +128,6 @@ export class AddDrugComponent implements OnInit {
   }
 
   onSubmit(form_data) {
-    console.log(form_data);
     this.api_error = '';
     if(form_data.medicine_name === '' && form_data.frequency === ''&& form_data.dosage === ''&& form_data.instructions === ''&& form_data.duration === ''){
       this.api_error = 'Atleast one field required';

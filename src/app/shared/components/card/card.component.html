@@ -1,14 +1,21 @@
 <!-- Card -->
-<div class="card booking-card pointer-cursor service" [ngClass]="theme?theme:''"
-    *ngIf="(service && service.serviceAvailability) || item.type=='donation'"
-    (click)="cardActionPerformed(item.type, null, service, loc, null, $event)">
-    <!-- Card content -->
-    <div class="card-body">
-        <!-- Title -->
-        <div style="height:100px;">
-            <div class="text-center service-image"
-                *ngIf="service.serviceType && service.serviceType == 'virtualService'">
-                <i class="fa phon-icon"
+<!-- ***START OF NEW CARD*** -->
+
+<div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" [ngClass]="theme?theme:''"
+    *ngIf="(service && service.serviceAvailability) || item.type=='donation'">
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding card-outer-cont">
+        <div class="col-md-9 col-xs-9 col-sm-9 col-lg-9 pointer-cursor"
+            (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)">
+            <h5 class="line-clamp-ln2 mgn-bt-5"
+                [ngClass]="{'no-padding':service.serviceType && service.serviceType == 'virtualService'}">{{service.name
+                |
+                capitalizeFirst}}</h5>
+            <p class="line-clamp-ln3 no-margin card-service-desc" *ngIf="service.description">{{service.description}}
+            </p>
+        </div>
+        <div class="col-md-3 col-xs-3 col-sm-3 col-lg-3 no-padding card-inner-img-cont">
+            <div class="img-circle" *ngIf="service.serviceType && service.serviceType == 'virtualService'">
+                <i class="fa phon-icon "
                     *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                 <i class="fa meet-icon"
                     *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
@@ -21,49 +28,56 @@
                 <i class="fa jaldeevideo-icon"
                     *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
             </div>
-            <div class="text-center service-image"
+            <div class="img-circle "
                 *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'donationService'">
-                <img class="card-img img-responsive" src="assets/images/donation.png" alt="Donation Image">
+                <img class=" img-responsive" src="assets/images/donation.png" alt="Donation Image">
             </div>
-            <div class="text-center service-image"
-                *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain != 'religiousPriests'"
-                style="width: 140px !important;">
-                <img class="card-img img-responsive" src="assets/images/meeting_Artboard.png"
-                    alt="Physical Service Image">
+            <div class="img-circle"
+                *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain != 'religiousPriests'">
+                <img class="img-responsive" src="assets/images/meeting_Artboard.png" alt="Physical Service Image">
             </div>
-            <div class="text-center service-image"
-                *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain == 'religiousPriests'"
-                style="width: 140px !important;">
-                <img class="card-img img-responsive" src="assets/images/hindu-temple-clipart.jpg"
-                    alt="Physical Service Image">
+            <div class="img-circle "
+                *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain == 'religiousPriests'">
+                <img class=" img-responsive" src="assets/images/hindu-temple-clipart.jpg" alt="Physical Service Image">
             </div>
         </div>
-        <div class="service-details">
-            <div class="module line-clamp m-0"
-                [ngClass]="{'no-padding':service.serviceType && service.serviceType == 'virtualService'}">
-                <h4 class="card-title font-weight-bold service-title">
-                    <a>{{service.name | capitalizeFirst}}</a>
-                </h4>
-            </div>
-            <p class="card-text donationAmount" *ngIf="item.type=='donation'">
+    </div>
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 card-timings-cont">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="item.type=='donation'">
+            <p class="card-text donationAmount no-padding mgn-lt-10">
                 <span class="rupee-font bold">Donate <i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>
                 <span class="rupee-font bold" *ngIf="service.maxDonationAmount != service.minDonationAmount"> or
                     more</span>
             </p>
-            <p class="card-text peopleAhead font-normal" *ngIf="personsAheadText">{{personsAheadText}}</p>
-            <p class="card-text emptySpace" *ngIf="item.type!='donation' && !personsAheadText"></p>
-            <p class="card-text availability" *ngIf="timings">{{timingCaption}}
-                <br /><b>{{timings}}</b>
-            </p>
-            <p class="card-text availability" *ngIf="!timings"></p>
-            <div class="service-buttons">
-                <button type="button" class="hf-btn btn btn-outline-warning bookingButton">{{buttonCaption}}</button>
-                <button type="button" (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)"
-                    class="btn pointer-cursor btn-warning moreDetails">. . .</button>
-            </div>
+        </div>
+        <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding text-center">
+            <div class="no-padding card-head-grey" *ngIf="timings">{{timingCaption}}</div>
+            <h6 class="no-padding " *ngIf="timings">{{timings}}</h6>
+        </div>
+        <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding text-center" [ngClass]="timings?'bord-left':''">
+            <div class="no-padding card-head-grey" *ngIf="personsAheadText">{{personsAheadCaption}}</div>
+            <h6 class="no-padding" *ngIf="personsAheadText">{{personsAheadText}}</h6>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+        <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6  no-padding">
+            <button class="checkavailabilitybutton " *ngIf="buttonCaption !='Donate'"
+                (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)"><span
+                    class="checkavailabilitytext">
+                    <i class="fa fa-calendar black"></i>&nbsp;Check availability
+                </span>
+            </button>
+            <button class="checkavailabilitybutton nohand" *ngIf="buttonCaption =='Donate'">&nbsp;</button>
+        </div>
+        <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6 no-padding getclass ">
+            <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event)"
+                class="getappointmentbutton ">{{buttonCaption}}</button>
         </div>
     </div>
 </div>
+
+
 <div *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'">
     <div [id]="'item-' + service.itemId" class="card booking-card pointer-cursor order items height-301"
         [class.disabled]="service['status'] && service['status']=='INACTIVE' || (!service.isStockAvailable && item.type=='item')"
@@ -139,49 +153,95 @@
         </div>
     </div>
 </div>
-<div class="card booking-card booking-card-user pointer-cursor user" *ngIf="item.type=='provider'"
-    (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)">
-    <div class="card-item-head">
-        <img class="card-img img-circle img-responsive" [src]="getPic(user)" alt="Profile Pic">
-    </div>
-    <div class="card-item-content" style="display: block !important;">
-        <h4 class="user-name card-title font-weight-bold module line-clamp">
-            <a *ngIf="user.businessName">{{user.businessName}}</a>
-        </h4>
-        <h6 class="qualification font-normal" *ngIf="user.qualifications && user.qualifications.length === 1">
-            {{user.qualifications[0]}}
-        </h6>
-        <h6 class="qualification font-normal" *ngIf="user.qualifications && user.qualifications.length > 1">
-            {{user.qualifications[0]}}...
-        </h6>
-        <h6 class="qualification" *ngIf="!user.qualifications || (user.qualifications && user.qualifications.length==0)"
-            style="height:8px;"></h6>
-        <div class="specialization-parent" *ngIf="user.businessUserName">
-            <label class="specialization" *ngIf="user.businessUserName">{{user.businessUserName}}</label>
+
+<div *ngIf="item.type=='provider'">
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" [ngClass]="theme?theme:''">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding card-outer-cont">
+            <div class="col-md-9 col-xs-9 col-sm-9 col-lg-9 pointer-cursor"
+            (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)">
+                <h5 class="line-clamp-ln2 mgn-bt-5" *ngIf="user.businessName">{{user.businessName}}</h5>
+                <h6 class="line-clamp-ln2 mgn-bt-5" *ngIf="user.businessUserName">{{user.businessUserName}}</h6>               
+                <p class="line-clamp-ln3 no-margin card-service-desc" *ngIf="user.qualifications && user.qualifications.length === 1">
+                    {{user.qualifications[0]}}
+                </p>
+                <p class="line-clamp-ln3 no-margin card-service-desc" *ngIf="user.qualifications && user.qualifications.length > 1">
+                    {{user.qualifications[0]}}...
+                </p>
+            </div>
+            <div class="col-md-3 col-xs-3 col-sm-3 col-lg-3 no-padding card-inner-img-cont">
+                <div class="img-circle">
+                    <img class="img-responsive" [src]="getPic(user)" alt="Profile Pic">
+                </div>
+            </div>
         </div>
-        <p class="availability user-available">
-            <ng-container
-                *ngIf="user.apptTime && user.apptTime.caption && user.apptTime.availableSchedule.availableDate === todayDate">
-                {{user.apptTime.caption}}<br />{{user.apptTime.date}}
-            </ng-container>
-            <ng-container
-                *ngIf="(!user.apptTime || (user.apptTime && (!user.apptTime.caption || user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && user.waitingTime.caption">
-                {{user.waitingTime.caption}}<br />{{user.waitingTime.date}}
-            </ng-container>
-            <ng-container
-                *ngIf="(!user.apptTime || ((user.apptTime.caption && user.apptTime.availableSchedule && user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && !user.waitingTime.caption">
-                {{user.apptTime.caption}}<br />{{user.apptTime.date}}
-            </ng-container>
-        </p>
-        <div class="mt-0">
-            <button type="button" class="btn btn-outline-warning">Book Now</button>
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 card-timings-cont">
+            <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding text-center" *ngIf="user.apptTime && user.apptTime.caption && user.apptTime.availableSchedule.availableDate === todayDate">
+                <div class="no-padding card-head-grey">{{user.apptTime.caption}}</div>
+                <h6 class="no-padding">{{user.apptTime.date}}</h6>
+            </div>       
+            <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding text-center" *ngIf="(!user.apptTime || (user.apptTime && (!user.apptTime.caption || user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && user.waitingTime.caption">
+                <div class="no-padding card-head-grey" >{{user.waitingTime.caption}}</div>
+                <h6 class="no-padding">{{user.waitingTime.date}}</h6>
+            </div>
+            <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding text-center"  *ngIf="(!user.apptTime || ((user.apptTime.caption && user.apptTime.availableSchedule && user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && !user.waitingTime.caption">
+                <div class="no-padding card-head-grey">{{user.apptTime.caption}}</div>
+                <h6 class="no-padding">{{user.apptTime.date}}</h6>
+            </div>
         </div>
-        
-        <!-- <div class="mrgn">
-            <button type="button" class="mb-0 btn btn-outline-warning">Book Now</button>
-        </div> -->
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+            <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6  no-padding">
+                <button class="checkavailabilitybutton">&nbsp;</button>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6 no-padding getclass ">
+                <button (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)"
+                    class="getappointmentbutton">Book Now</button>
+            </div>
+        </div>
     </div>
 </div>
+<!-- {{item | json}} -->
+<div *ngIf="item.type=='department'">
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" [ngClass]="theme?theme:''">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding card-outer-cont">
+            <div class="col-md-9 col-xs-9 col-sm-9 col-lg-9 pointer-cursor"
+            (click)="cardActionPerformed(item.type, null, null, null, department.departmentId, $event)">
+                <h5 class="line-clamp-ln2 mgn-bt-5" *ngIf="department.departmentName">{{department.departmentName}}</h5>
+                <p class="line-clamp-ln3 no-margin card-service-desc" *ngIf="department.departmentDescription">
+                    {{department.departmentDescription}}
+                </p> 
+            </div>
+            <div class="col-md-3 col-xs-3 col-sm-3 col-lg-3 no-padding card-inner-img-cont">
+                <div class="img-circle">
+                    <img class="img-responsive" src="assets/images/hindu-temple-clipart.jpg" alt="Profile Pic">
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 card-timings-cont">
+            <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding text-center" *ngIf="user.apptTime && user.apptTime.caption && user.apptTime.availableSchedule.availableDate === todayDate">
+                <div class="no-padding card-head-grey">{{user.apptTime.caption}}</div>
+                <h6 class="no-padding">{{user.apptTime.date}}</h6>
+            </div>       
+            <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding text-center" *ngIf="(!user.apptTime || (user.apptTime && (!user.apptTime.caption || user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && user.waitingTime.caption">
+                <div class="no-padding card-head-grey" >{{user.waitingTime.caption}}</div>
+                <h6 class="no-padding">{{user.waitingTime.date}}</h6>
+            </div>
+            <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding text-center"  *ngIf="(!user.apptTime || ((user.apptTime.caption && user.apptTime.availableSchedule && user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && !user.waitingTime.caption">
+                <div class="no-padding card-head-grey">{{user.apptTime.caption}}</div>
+                <h6 class="no-padding">{{user.apptTime.date}}</h6>
+            </div>
+        </div> -->
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+            <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6  no-padding">
+                <button class="checkavailabilitybutton">&nbsp;</button>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6 no-padding getclass ">
+                <button (click)="cardActionPerformed(item.type, null, null, null, department.departmentId, $event)"
+                    class="getappointmentbutton">Book Now</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="card booking-card pointer-cursor order head" *ngIf="item.type==='item-head'"
     (click)="cardActionPerformed(item.type, 'add', null, null, null, $event)">
     <div class="card-item-head">
@@ -193,6 +253,7 @@
         </h4>
     </div>
 </div>
+
 <div class="card booking-card order" *ngIf="item.type=='order-details-item'">
     <div class="card-item-head">
         <img class="card-img img-responsive" [src]="getItemImg(service)" alt="Profile Pic" />
@@ -211,6 +272,7 @@
         </div>
     </div>
 </div>
+
 <ng-container *ngIf="item.type=='checkin-dashboard' || item.type=='appt-dashboard'">
     <div class="col-xs-12 col-sm-12 no-padding" (click)="gotoDetails()" [class.history]="time_type==3">
         <div class="main-sec">
@@ -265,7 +327,8 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 no-padding view-details"
                     *ngIf="waitlist.waitlistingFor[0].age || waitlist.waitlistingFor[0].gender">
-                    <span *ngIf="waitlist.waitlistingFor[0].age">{{getAge(waitlist.waitlistingFor[0].age)}} yrs</span>
+                    <span *ngIf="waitlist.waitlistingFor[0].age">{{getAge(waitlist.waitlistingFor[0].age)}}
+                        yrs</span>
                     <span *ngIf="waitlist.waitlistingFor[0].age && waitlist.waitlistingFor[0].gender">&nbsp;,</span>
                     <span *ngIf="waitlist.waitlistingFor[0].gender">{{waitlist.waitlistingFor[0].gender |
                         capitalizeFirst}}</span>
@@ -299,7 +362,6 @@
                         <span class="b1">Label : </span> <span class="b2"> {{getLabels(waitlist)}}</span>
                     </div>
                 </div>
-
             </div>
             <div class="box4">
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-lt-5">
@@ -322,7 +384,6 @@
         </div>
     </div>
 </ng-container>
-
 <ng-container *ngIf="type=='appointment-dashboard'">
     <div class="col-xs-12 col-sm-12 no-padding mgn-lt-5" (click)="gotoDetails()" [class.history]="time_type==3">
         <div class="main-sec">
@@ -402,7 +463,6 @@
                         <span class="b1">Label : </span> <span class="b2"> {{getLabels(appointment)}}</span>
                     </div>
                 </div>
-
             </div>
             <div class="box4">
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-lt-5">

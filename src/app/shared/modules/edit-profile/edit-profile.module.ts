@@ -16,6 +16,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 const routes: Routes = [
     { path: '', component: EditProfileComponent }
 ];
+import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { projectConstants } from '../../../app.component';
+export function homeHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, projectConstants.PATH+'assets/i18n/home/', '.json');
+}
 @NgModule({
     imports: [
         CommonModule,
@@ -31,7 +38,17 @@ const routes: Routes = [
         MatDatepickerModule,
         MatButtonModule,
         MatSlideToggleModule,
-        MatDialogModule
+        MatDialogModule,
+        HttpClientModule,
+        TranslateModule.forChild({
+          loader: {
+              provide: TranslateLoader,
+              useFactory: homeHttpLoaderFactory,
+              deps: [HttpClient]
+          },
+          isolate: false,
+          extend: true
+      })
     ],
     declarations: [
         EditProfileComponent

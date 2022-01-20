@@ -1,7 +1,7 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, APP_INITIALIZER, ErrorHandler, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, Injector } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServiceMeta } from './shared/services/service-meta';
 import { ExtendHttpInterceptor } from './shared/config/extendhttp.interceptor';
 import {  MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -51,7 +51,6 @@ import { ProviderServices } from './business/services/provider-services.service'
 import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
-import { MaintenanceMsgModule } from './shared/components/maintenance-msg/maintenance-msg.module';
 import { ForceDialogModule } from './shared/components/force-dialog/force-dialog.module';
 // import { IonicModule } from '@ionic/angular';
 // import { FirebaseX } from '@ionic-native/firebase-x/ngx';
@@ -60,6 +59,12 @@ import { ForceDialogModule } from './shared/components/force-dialog/force-dialog
 import { ChunkErrorHandler } from './shared/modules/error-handler/chunk-error-handler';
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
+}
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, projectConstants.PATH + 'assets/i18n/home/', '.json');
 }
 
 @NgModule({
@@ -76,8 +81,15 @@ export function init_app(globalService: GlobalService) {
     AppRoutingModule,
     DateFormatPipeModule,
     MatSnackBarModule,
-    MaintenanceMsgModule,
     ForceDialogModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      },
+      // isolate: true,
+    }),
     ScrollToModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     // IonicModule.forRoot()
@@ -97,6 +109,7 @@ export function init_app(globalService: GlobalService) {
     ServiceMeta,
     Razorpaymodel,
     RazorpayprefillModel,
+    
     WindowRefService,
     PaytmService,
     RazorpayService,

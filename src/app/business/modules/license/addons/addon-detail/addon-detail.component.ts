@@ -19,6 +19,7 @@ export class AddonDetailComponent implements OnInit {
   screenWidth: number;
   no_of_grids: number;
   final_list: any;
+  drive = true ;
   adwords_exceed = Messages.ADWORD_EXCEED_LIMIT;
 
   constructor(
@@ -30,7 +31,12 @@ export class AddonDetailComponent implements OnInit {
   ) {
     this.activaterouterobj.queryParams.subscribe(qparams => {
       this.disp_name = qparams.disp_name;
+      console.log("Display Name : ",this.disp_name)
      });
+     this.activaterouterobj.queryParams.subscribe(params => {
+      this.drive = params.disp_name;
+     // this.disp_name = params.disp_name
+    });
     this.onResize();
    }
    @HostListener('window:resize', ['$event'])

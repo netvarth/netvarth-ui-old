@@ -20,7 +20,6 @@
     background-color:grey ;
     box-sizing: border-box;
     text-align: center;
-   
   }
   .col{
     display: inline-flex !important;

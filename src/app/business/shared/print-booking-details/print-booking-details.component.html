@@ -73,10 +73,10 @@
                                         {{customerName}} </td>
 
                                 </tr>
-                                <tr *ngIf="customer.phoneNo">
+                                <tr *ngIf="phoneNumber">
                                     <td colspan="2" align="center"  *ngIf="customer.phoneNo === 'null'">{{customer_label| capitalizeFirst}} Ph #: NIL</td>
                                     <td colspan="2" align="center" *ngIf="customer.phoneNo !== 'null'"> {{customer_label| capitalizeFirst}} Ph #:
-                                      {{bookingDetails.countryCode}} {{customer.phoneNo}} </td>
+                                      {{bookingDetails.countryCode}} {{phoneNumber}} </td>
 
                                 </tr>
                            
@@ -108,6 +108,12 @@
                                     <td colspan="2" align="center"> Schedule : {{this.bookingDetails.schedule.name}} [
                                         {{ this.bookingDetails.schedule.apptSchedule.timeSlots[0].sTime }} -
                                         {{this.bookingDetails.schedule.apptSchedule.timeSlots[0].eTime}}] </td>
+
+                                </tr>
+                                <tr *ngIf="bookingDetails.queue">
+                                    <td colspan="2" align="center"> Schedule : {{this.bookingDetails.queue.name}} [
+                                        {{ this.bookingDetails.queue.queueStartTime }} -
+                                        {{this.bookingDetails.queue.queueEndTime}}] </td>
 
                                 </tr>
 

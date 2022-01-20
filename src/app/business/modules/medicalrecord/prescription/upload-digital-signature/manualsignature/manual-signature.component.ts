@@ -85,6 +85,7 @@ export class ManualSignatureComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
+    console.log('window widht',window.innerWidth)
     if (this.screenWidth <= 780) {
       this.small_device_display = true;
     } else {
@@ -100,6 +101,7 @@ export class ManualSignatureComponent implements OnInit {
     // this.signaturePad is now available
     this.signaturePad.set('minWidth', 5); // set signature_pad options at runtime
     this.signaturePad.clear(); // invoke functions from signature_pad API
+   
   }
 
   drawComplete() {

@@ -48,6 +48,7 @@ const routes: Routes = [
         CapitalizeFirstPipeModule,
         PagerModule,
         OwlModule,
+        FormsModule,
         LoadingSpinnerModule,
         ProviderWaitlistCheckInConsumerNoteModule,
         ProviderWaitlistCheckInCancelModule,

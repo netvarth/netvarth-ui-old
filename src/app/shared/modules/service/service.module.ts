@@ -15,6 +15,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserlistpopupModule } from './userlist/userlistpopup.module';
 import { ServiceqrcodegeneratorModule } from './serviceqrcodegenerator/serviceqrcodegeneratordetail.module';
+import { MatRadioModule } from '@angular/material/radio';
+import { PaymentModeModule } from '../payment-mode/payment-mode.module';
 
 @NgModule({
     imports: [
@@ -28,13 +30,14 @@ import { ServiceqrcodegeneratorModule } from './serviceqrcodegenerator/serviceqr
         MatFormFieldModule,
         MatInputModule,
         MatSelectModule,
+        MatRadioModule,
         MatOptionModule,
         MatCheckboxModule,
         MatButtonModule,
         NgbTimepickerModule,
         UserlistpopupModule,
-        ServiceqrcodegeneratorModule
-
+        ServiceqrcodegeneratorModule,
+        PaymentModeModule
     ],
     declarations: [
         ServiceComponent

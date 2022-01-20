@@ -11,7 +11,7 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { AddproviderAddonComponent } from '../../add-provider-addons/add-provider-addons.component';
-
+//import { ActivatedRoute } from '@angular/router';
 @Component({
     selector: 'app-addons',
     templateUrl: './addons.component.html',
@@ -39,6 +39,8 @@ export class AddonsComponent implements OnInit, OnDestroy {
     addonDescription = '';
     corpSettings: any;
     addon_metric: any;
+    drive:any;
+    disName:any;
     addonIconClasses = projectConstantsLocal.ADDON_ICON_CLASS;
     constructor(
         private dialog: MatDialog,
@@ -48,7 +50,14 @@ export class AddonsComponent implements OnInit, OnDestroy {
         private groupService: GroupStorageService,
         private routerobj: Router,
         private location: Location,
-    ) { }
+      //  private activated_route: ActivatedRoute
+
+    ) { 
+        // this.activated_route.queryParams.subscribe(params => {
+        //     this.drive = params.data;
+        //    // this.disName = params.disp_name
+        //   });
+    }
 
     ngOnInit() {
         this.getLicenseCorpSettings();

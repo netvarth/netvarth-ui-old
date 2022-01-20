@@ -11,6 +11,8 @@ import { ProviderAppointmentDetailComponent } from "./provider-appointment-detai
 import { Nl2BrPipeModule } from "nl2br-pipe";
 import { InboxListModule } from "../../../../shared/modules/inbox/inbox-list/inbox-list.module";
 import { CommunicationService } from "../../../../business/services/communication-service";
+import { BookingHistoryModule } from "../booking-history/booking-history.module";
+
 const routes: Routes= [
     { path: '', component: ProviderAppointmentDetailComponent }
 ]
@@ -26,6 +28,7 @@ const routes: Routes= [
         MatTabsModule,
         LoadingSpinnerModule,
         Nl2BrPipeModule,
+        BookingHistoryModule,
         InboxListModule,
         [RouterModule.forChild(routes)]
     ],

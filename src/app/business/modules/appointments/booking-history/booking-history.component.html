@@ -20,10 +20,12 @@
                   </tr>
                   <tr *ngFor="let data of bookinghistorydetails">
                     <td *ngIf="type != 'Token History' ">{{data.appointmentStatus}}</td>
-                    <td *ngIf="type == 'Token History' ">{{data.waitlistStatus}}</td>
-                    <td>{{appointmentby}} <span *ngIf="appointmentbyname">({{appointmentbyname}})</span> </td>
+                    <td *ngIf="type == 'Token History' ">{{check_in_statuses[data.waitlistStatus | capitalizeFirst]}}</td>
+                    <td>{{appointmentby | capitalizeFirst}} <span *ngIf="appointmentbyname">({{appointmentbyname}})</span> </td>
                     <td>{{how}}</td>
-                    <td>{{data.date}} {{data.time}}</td>
+                    <td *ngIf="type != 'Token History' ">{{data.date | date: newDateFormat}} {{data.time}}</td>
+                    <td *ngIf="type == 'Token History' ">{{getformatedTime(data.time)| date: newTimeDateFormat }}</td>
+  
                   </tr>
               </table>
               </div>

@@ -29,7 +29,7 @@
                   <!-- <span>{{waitlist_data.provider.businessName | capitalizeFirst}}
                       </span><br> -->
                   <span>{{provider_label | capitalizeFirst}} : </span>
-                  <span>{{spName}}</span>
+                  <span>{{spName}}123</span>
                 </div>
                 <div *ngIf="waitlist_data.teamId !== 0" class="mgn-up-5 sub-user-name">
                   <span>Team : </span>
@@ -262,16 +262,21 @@
           </div>
           <!-- Questionnaire end-->
         </div>
+        
         <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
           <div class="card">
             <h2>{{checkin_label |capitalizeFirst}} History</h2>
+           
             <div class="appthistory">
+            
+              
               <ul class="c-history">
                 <li *ngFor="let history of waitlist_history" class="{{history.appointmentStatus}}">
                   <div class="time">{{history.date | date: newDateFormat }} {{history.time}}</div>
                   <div class="action">{{check_in_statuses[history.appointmentStatus | capitalizeFirst]}}</div>
                 </li>
               </ul>
+
               <p class="no-result" *ngIf="waitlist_history.length == 0">{{no_history_found}}</p>
             </div>
             <button class="mgn-bt-10" (click)="openbookinghistory()">Booking History</button>

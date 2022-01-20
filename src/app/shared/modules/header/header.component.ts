@@ -497,7 +497,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       const navigationExtras1: NavigationExtras = {
         queryParams: qParams
       };
-      this.router.navigate([this.customId], navigationExtras1);
+      if (this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA') {
+        this.router.navigate(['customapp',this.customId]);
+      } else {
+        this.router.navigate([this.customId], navigationExtras1);
+      }
     } else {
       if (this.consumer_loggedin) {
         this.router.navigate(['/consumer']);

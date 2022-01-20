@@ -26,6 +26,9 @@ export class GlobalService {
                             }
                         }
                     );
+                },
+                (error) => {
+                    resolve(false)
                 }
             );
         });

@@ -729,7 +729,13 @@ export const projectConstantsLocal = {
     'image/jpg',
     'image/png',
     'image/jpeg',
-    'application/pdf'
+    'application/pdf',
+    'application/jfif',
+    'video/mp4',
+    'video/mpeg',
+    'audio/mpeg',
+    'audio/mp3',
+    'audio/ogg'
   ],
   MRFILETYPES_UPLOAD: [
     'image/jpg',
@@ -800,7 +806,7 @@ export const projectConstantsLocal = {
     { displayName: 'Arrived', value: 'Arrived' },
     { displayName: 'Started', value: 'Started' },
     { displayName: 'Cancelled', value: 'Cancelled' },
-    { displayName: 'Rejected', value: 'Rejected' },
+    // { displayName: 'Rejected', value: 'Rejected' },
     // {displayName: 'Failed', value: 'failed'},
     // {displayName: 'Calling', value: 'calling'},
     { displayName: 'Completed', value: 'Completed' },
@@ -1046,6 +1052,7 @@ export const projectConstantsLocal = {
   PAYTMLOCAL_URL: 'https://securegw-stage.paytm.in',
   PAYTM_URL: 'https://securegw.paytm.in',
   // UIS3PATH: "https://jaldeeuiscale.s3.ap-south-1.amazonaws.com/"
+  // UIS3PATH: "https://jaldeeuitest.s3.ap-south-1.amazonaws.com/"
   UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/"
 
 };

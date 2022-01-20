@@ -825,6 +825,12 @@
 									<div class="price rupee-font"> (+){{bill_data.totalTaxAmount | currency:'&#8377;'}}
 									</div>
 								</div>
+								<div class="hr_content" *ngIf="bill_data.customerPaidCharges > 0">
+									
+									<!-- <div class="flx_1">{{customer_label }} Paid Charges</div> -->
+									<div class="flx_1">Processing Fee</div>
+									<div class="rupee-font">(+){{bill_data.customerPaidCharges | currency:'&#8377;'}}</div>
+								</div>
 								<div class="hr_content" *ngIf="bill_data.deliveryCharges > 0">
 									<div class="flx_1">Delivery Charge</div>
 									<div class="rupee-font">(+){{bill_data.deliveryCharges | currency:'&#8377;'}}</div>

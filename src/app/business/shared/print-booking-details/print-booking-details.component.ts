@@ -39,6 +39,7 @@ export class PrintBookingDetailsComponent implements OnInit {
   customer: any;
   isJaldeeId: boolean = false;
   spName: any;
+  phoneNumber: any;
 
 
   constructor(private activated_route: ActivatedRoute,
@@ -55,7 +56,9 @@ export class PrintBookingDetailsComponent implements OnInit {
         if (this.bookingType === 'appt') {
           this.getApptBookingDetails(this.bookingId).then((data) => {
             this.bookingDetails = data;
+            console.log("booking details:",this.bookingDetails);
             this.customerDetails = this.bookingDetails.appmtFor[0];
+            this.phoneNumber = this.bookingDetails.phoneNumber
             console.log("this.customerDetails" + this.customerDetails);
             if (this.bookingDetails.questionnaire) {
               this.questionnaires = this.bookingDetails.questionnaire;
@@ -73,7 +76,9 @@ export class PrintBookingDetailsComponent implements OnInit {
         if (this.bookingType === 'checkin') {
           this.getWaitlistBookingDetails(this.bookingId).then((data) => {
             this.bookingDetails = data;
+            console.log('booking details',this.bookingDetails)
             this.customerDetails = this.bookingDetails.waitlistingFor[0];
+            this.phoneNumber = this.bookingDetails.waitlistPhoneNumber;
             if (this.bookingDetails.questionnaire) {
               this.questionnaires = this.bookingDetails.questionnaire;
               this.questionanswers = this.questionnaires.questionAnswers;
@@ -166,6 +171,7 @@ export class PrintBookingDetailsComponent implements OnInit {
     this.bname = bprof.bn;
     if (this.bookingType === 'appt') {
       this.customer = this.bookingDetails.appmtFor[0];
+      console.log('cutomer',this.customer)
       const fname = (this.bookingDetails.appmtFor[0].firstName) ? this.bookingDetails.appmtFor[0].firstName : '';
       const lname = (this.bookingDetails.appmtFor[0].lastName) ? this.bookingDetails.appmtFor[0].lastName : '';
       if (fname !== '' || lname !== '') {
@@ -182,6 +188,7 @@ export class PrintBookingDetailsComponent implements OnInit {
 
     } else {
       this.customer = this.bookingDetails.waitlistingFor[0];
+      console.log('cutomer',this.customer)
       const fname = (this.bookingDetails.waitlistingFor[0].firstName) ? this.bookingDetails.waitlistingFor[0].firstName : '';
       const lname = (this.bookingDetails.waitlistingFor[0].lastName) ? this.bookingDetails.waitlistingFor[0].lastName : '';
       if (fname !== '' || lname !== '') {

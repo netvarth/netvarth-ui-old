@@ -80,7 +80,7 @@
               <div class="mgn-up-10 stats-item"
                 *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
                 <span class="itemHead">WhatsApp #</span>
-                <span class="itemVal">+
+                <span class="itemVal">
                   {{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistingFor[0].email">
@@ -278,6 +278,8 @@
                   <div class="action">{{check_in_statuses[history.waitlistStatus | capitalizeFirst]}}</div>
                 </li>
               </ul>
+            
+
               <p class="no-result" *ngIf="waitlist_history && waitlist_history.length == 0">{{no_history_found}}</p>
             </div>
             <button class="mgn-bt-10" (click)="openbookinghistory()">Booking History</button>

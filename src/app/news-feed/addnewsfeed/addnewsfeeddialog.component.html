@@ -1,0 +1,59 @@
+
+<section  >
+  <div class="dialogbox" class="text-lg-center">
+      <h1>Add News Feed</h1>
+      <form  [formGroup]="newsfeedform" class="row">
+          <div  >
+              <div class="coverpage" style="text-align: center;">
+                <img class="img-circle"  src="{{newsfeedform.value.newsfeedImage}}"  style="width: 200px;height: 200px;">
+                <br>
+                <div  class="btn btn-primary input">
+                  <input type="file" id="unique" (change)="selectFile($event)"><label for="unique"
+                      style="cursor: pointer;">Upload</label>
+              </div>
+              </div>
+              <mat-form-field class="input" appearance="outline">
+                  <mat-label class="text">Title</mat-label>
+                  <input   matInput formControlName="newsfeedTitle">
+                  <mat-error *ngIf="!newsfeedform.get('newsfeedTitle').valid">{{NewsfeedTitlerrormessage()}}</mat-error>
+                </mat-form-field>
+                
+
+                
+                <mat-form-field class="input" appearance="outline">
+                  <mat-label>Categoery</mat-label>
+                  <input  matInput formControlName="category">
+                  <mat-error *ngIf="!newsfeedform.get('category').valid">{{Newsfeedcategoryerrormessage()}}</mat-error>
+
+                </mat-form-field>
+                
+                <mat-form-field  appearance="outline" style="width:70%;">
+                  <mat-label>Link</mat-label>
+                  <input  matInput formControlName="newsfeedLink">
+                  <mat-error *ngIf="!newsfeedform.get('category').valid">{{Newsfeedlinkerrormessage()}}</mat-error>
+
+                </mat-form-field>
+                <mat-form-field  appearance="outline" style="width:70%;">
+                  <mat-label>Description</mat-label>
+                  <textarea  matInput formControlName="newsfeedDescription" placeholder="Placeholder"></textarea>
+                  <mat-error *ngIf="!newsfeedform.get('newsfeedDescription').valid">{{NewsfeedDescriptionerrormessage()}}</mat-error>
+
+                </mat-form-field>
+                <br>
+                <div class="row">
+                <div class="col-lg-2"></div>
+                <button class="btn btn-primary col-lg-4" (click)="submit()" style="margin: 1%;">Submit</button>
+                <button class="btn btn-primary col-lg-4" (click)="cancel()" style="margin: 1%;">Cancel</button>
+                <div class="col-lg-2"></div>
+
+      
+                </div>
+                <br>
+                <br>
+                
+                
+      
+          </div>
+      </form>
+  </div>
+</section>

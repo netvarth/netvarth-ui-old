@@ -10,7 +10,13 @@ import { LoadingSpinnerModule } from "../../modules/loading-spinner/loading-spin
 import { ForgotPasswordModule } from "../forgot-password/forgot-password.module";
 import { SignupModule } from "../signup/signup.module";
 import { LoginComponent } from "./login.component";
-
+import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { projectConstants } from "../../../app.component";
+export function homeHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, projectConstants.PATH+'assets/i18n/home/', '.json');
+}
 @NgModule({
     imports: [
         CommonModule,
@@ -22,7 +28,15 @@ import { LoginComponent } from "./login.component";
         FormMessageDisplayModule,
         LoadingSpinnerModule,
         ForgotPasswordModule,
-        SignupModule
+        SignupModule,
+        HttpClientModule,
+        TranslateModule.forChild({
+          loader: {
+              provide: TranslateLoader,
+              useFactory: homeHttpLoaderFactory,
+              deps: [HttpClient]
+          },
+      })
     ],
     exports: [LoginComponent],
     declarations: [LoginComponent]

@@ -106,6 +106,9 @@ export class AppComponent implements OnInit, AfterViewInit {
       //     console.log(`Got a new token ${token}`);
       //   });
       projectConstants = this.globalService.getGlobalConstants();
+          if(projectConstants){
+      return false;
+    }
       const cVersion = version.desktop;
       const pVersion = this.lStorageService.getitemfromLocalStorage('version');
       if ((pVersion && pVersion !== cVersion) || !pVersion) {

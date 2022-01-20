@@ -2012,7 +2012,7 @@ textarea {
   width: 50px;
 }
 .underline{
-  color: #3c8dbc !important;
+  color: #162182 !important;
   text-decoration: underline !important;
   cursor: pointer !important;
 }
@@ -2024,4 +2024,262 @@ textarea {
 }
 .img-fluid{
   padding-bottom: 50px!important;
+}
+.containers {
+  position: relative;
+  /* text-align: center; */
+  /* color: red; */
+}
+
+@media only screen and (max-width: 360px){
+  .centered2 {
+    position: absolute;
+    top: 85% !important;
+    left: 5% !important;
+      /* transform: translate(-50%, -50%) */
+   
+  }
+
+}
+@media only screen and (max-width: 400px){
+  .centered2 {
+   position: absolute;
+    top: 85% !important;
+    left: 5% !important;
+      /* transform: translate(-50%, -50%) */
+   
+  }
+  .underline{
+    color: #162182 !important ;
+    text-decoration: underline !important;
+    cursor: pointer !important;
+  }
+  .jaldeeBusiness{
+    position:relative;
+    margin-top: 100px ;
+  }
+  h2{
+    font-size: 1.5rem;
+  }
+}
+
+
+@media only screen and (max-width: 600px) {
+  .imageText{
+    flex-wrap: wrap;
+    text-align:center;
+
+  }
+  .imageDetails{
+    margin-top:15px;
+  }
+  .btn{
+    margin-top:-110px !important
+  }
+  .centered2 {
+    position: absolute;
+    top: 87%;
+    left: 13%;
+    /* transform: translateX(20px); */
+      /* transform: translate(-50%, -50%) */
+   
+  }
+  .centered3 {
+    position: absolute;
+    top: 118%;
+    left: 50%;
+      transform: translate(-50%, -50%)
+  }
+  .centered1 {
+    position: absolute;
+    top: 16%;
+    left: 6%;
+      /* transform: translate(50%, 50%); */
+  }
+  .underline{
+    /* color: #162182 !important; */
+    color: #162182 !important;
+    text-decoration: underline !important;
+    cursor: pointer !important;
+  }
+  .jaldeeBusiness{
+    position:relative;
+    margin-top: 100px ;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .imageText{
+    flex-wrap: wrap;
+    text-align:center;
+
+  }
+  .imageDetails{
+    margin-top:15px;
+  }
+  .btn{
+    margin-top:-150px !important
+  }
+  .centered2 {
+    position: absolute;
+    top: 85%;
+    left: 15%;
+      /* transform: translate(-50%, -50%) */
+   
+  }
+  .centered3 {
+    position: absolute;
+    top: 115%;
+    left: 47%;
+      transform: translate(-50%, -50%)
+  }
+  .centered1 {
+    position: absolute;
+    top: 17%;
+    left: 0%;
+      transform: translate(50%, 50%);
+  }
+  .underline{
+    color: #162182 !important ;
+    text-decoration: underline !important;
+    cursor: pointer !important;
+  }
+  .jaldeeBusiness{
+    position:relative;
+    margin-top: 100px ;
+  }
+
+}
+
+
+@media only screen and (min-width: 768px) {
+  .imageText{
+    flex-wrap: wrap !important;
+    text-align:center !important;
+
+  }
+  .imageDetails{
+    margin-top:15px;
+    text-align:center
+  }
+  .btn{
+    margin-top:-160px !important
+  }
+  .centered2 {
+    position: absolute;
+    top: 100%;
+    left: 48%;
+      transform: translate(-50%, -50%)
+   
+  }
+  .centered3 {
+    position: absolute;
+    top: 115%;
+    left: 47%;
+      transform: translate(-50%, -50%)
+  }
+  .centered1 {
+    position: absolute;
+    top: 26%;
+    left: 0%;
+      transform: translate(50%, 50%);
+  }
+  .underline{
+    color: #162182 !important ;
+    text-decoration: underline !important;
+    cursor: pointer !important;
+  }
+  .jaldeeBusiness{
+    position:relative;
+    margin-top: 100px ;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .imageText{
+    flex-wrap: nowrap !important;
+    text-align:left !important;
+    align-items:baseline !important
+
+  }
+  .btn{
+    margin-top:-140px !important
+  }
+  .centered2 {
+    position: absolute;
+    top: 46%;
+    left: 21%;
+     
+      transform: translate(-50%, -50%)
+   
+  }
+  .centered3 {
+    position: absolute;
+    top: 58%;
+      left: 20%;
+      transform: translate(-50%, -50%)
+  }
+  .centered1 {
+    position: absolute;
+    top: 15%;
+    left: 0%;
+      transform: translate(50%, 50%);
+  }
+  .underline{
+    color: #fff !important;
+    text-decoration: underline !important;
+    cursor: pointer !important;
+  }
+  .jaldeeBusiness{
+    position:relative;
+    margin-top: 0px !important;
+  }
+}
+
+
+@media only screen and (min-width: 1200px) {
+  .imageText{
+    flex-wrap: nowrap !important;
+    text-align:left !important;
+    align-items:center !important
+
+  }
+  .btn{
+    margin-top:-160px !important
+  }
+  .imageDetails{
+    margin-top:15px;
+    text-align:center
+  }
+  .centered2 {
+    position: absolute;
+    top: 43%;
+      left: 21%;
+      transform: translate(-50%, -50%)
+   
+  }
+  .centered3 {
+    position: absolute;
+    top: 51%;
+    left: 20%;
+      transform: translate(-50%, -50%)
+  }
+  .centered1 {
+    position: absolute;
+    top: 16%;
+    left: 4%;
+      transform: translate(50%, 50%);
+  }
+  .underline{
+    color: #fff !important;
+    text-decoration: underline !important;
+    cursor: pointer !important;
+  }
+  .jaldeeBusiness{
+    position:relative;
+    margin-top: 0px !important;
+  }
+  
+
+  
 }

@@ -6,30 +6,46 @@
         </h5>
     </div>
 </section>
-<section #license_paylink> 
+<section #license_paylink>
     <div class="content w-manager settings comn-cls lic-page" style="width: 100%;">
         <div class="col-md-12 no-padding-small">
             <div class="w-dta">
                 <div class="row">
                     <div class="copy one col-xs-12 col-sm-12 no-padding">
-                        <div class="pay-section card">
+                        <div class="pay-section card pad-10-sm">
                             <div *ngIf="paidStatus == 'false'">
                                 <div style="padding-bottom: 10px; font-size: large;">Amount to pay : <b
                                         class="rupee-font">{{prepayAmount| currency:'&#8377;'}}</b></div>
-                                <div style="padding-bottom: 10px; font-size: large;">Payment Option
-                                    <!-- <div>
-                                        <p class="settings_info" style="display: inline;">Choose your payment options
-                                            from here</p>
-                                    </div> -->
+                                <div style="padding-bottom: 10px; font-size: large;">Choose the Payment Option
+                                    <div class="mgn-up-10">
+                                        <ng-container *ngIf="!shownonIndianModes">
+                                            <app-payment-modes [paymentModes]="indian_payment_modes"
+                                                (modeSelected)="indian_payment_mode_onchange($event)">
+                                            </app-payment-modes>
+                                        </ng-container>
+                                        <ng-container *ngIf="shownonIndianModes">
+                                            <app-payment-modes [paymentModes]="non_indian_modes"
+                                                (modeSelected)="non_indian_modes_onchange($event)"></app-payment-modes>
+                                        </ng-container>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="txt-align-center pad_link mgn-up-5">
+                                        <span [class.disabled]="isClickedOnce" (click)="togglepaymentMode()"
+                                            class="pointer-cursor"><a class="refund_policy">
+                                                <span *ngIf="!shownonIndianModes && paymentmodes && paymentmodes.internationalPay">Non
+                                                    Indian Payment ? Click
+                                                    here</span>
+                                                <span *ngIf="shownonIndianModes && paymentmodes && paymentmodes.indiaPay">Indian Payment
+                                                    ? Click
+                                                    here</span>
+                                            </a></span>
+                                    </div>
                                 </div>
-                                <div class="cc-dc-nb-change">
-                                    <!-- <button class="cs-btn bt1" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()">CC/DC/Net Banking/UPI</button> -->
-                                    <button class="cs-btn bt1" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && paytmPayment()">CC/DC/UPI</button>
-                                    <!-- <button class="cs-btn bt1" [class.disabled]="isClickedOnce" (click)="!isClickedOnce && payuPayment()">CC/DC/Net Banking/UPI</button> -->
-                                    <!-- <button class="cs-btn bt1" (click)="paytmPayment()">Paytm</button> -->
+                                <div class="txt-align-center">
+                                    <button class="btn btn-primary" [class.disabled]="isClickedOnce"
+                                        (click)="!isClickedOnce && makeFailedPayment()">Make Payment</button>
                                 </div>
                             </div>
-
                             <div *ngIf="paidStatus == 'true'">
                                 <div style="padding-bottom: 10px"><b class="rupee-font">&#8377; {{prepayAmount}}</b>
                                 </div>
@@ -46,7 +62,6 @@
                                         <span><b> Transaction Id:</b>&nbsp; <span>{{payment_id}}</span></span>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>

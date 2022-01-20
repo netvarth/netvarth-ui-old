@@ -17,6 +17,24 @@ export class RazorpayService {
   status_check: any;
   private paidStatus = new BehaviorSubject<string>('false');
   currentStatus = this.paidStatus.asObservable();
+  paymentModes=[
+    {
+      method: "netbanking"
+      },
+      {
+        method: "paylater"
+      },
+      {
+        method: "card"
+      },
+      {
+        method: "upi"
+      },
+      {
+        method: "wallet"
+      }
+     
+  ];
 
 
   constructor(
@@ -38,6 +56,17 @@ export class RazorpayService {
   payBillWithoutCredentials(razorModel) {
     const self = this;
     razorModel.retry = false;
+    let selectedmode=razorModel.mode;
+    if(selectedmode==='DC'||selectedmode==='CC'){
+      selectedmode='CARD';
+    }
+    
+      const hiddenObject = this.paymentModes.filter((mode) => mode.method !== selectedmode.toLowerCase());
+      razorModel.config = {
+        display: {
+          hide: hiddenObject
+      }
+    }
     return new Promise(function (resolve) {
       const options = razorModel;
       options.handler = ((response, error) => {
@@ -51,14 +80,32 @@ export class RazorpayService {
   payWithRazor(razorModel, usertype, checkin_type?, uuid?, livetrack?, account_id?, prepayment?, uuids?, from?,isfrom?) {
     let razorInterval;
     razorModel.retry = false;
+  let selectedmode=razorModel.mode;
+  console.log(selectedmode  );
+  if(selectedmode==='DC'||selectedmode==='CC'){
+    selectedmode='CARD';
+  }
+  if(selectedmode==='NB'){
+    selectedmode='NETBANKING';
+  }
     //   theme: {
     //     color: '#F37254'
     //   }
     // };
+ console.log(selectedmode);
+    const hiddenObject = this.paymentModes.filter((mode) => mode.method !== selectedmode.toLowerCase());
+    console.log('hideenobject'+JSON.stringify(hiddenObject));
+    razorModel.config = {
+      display: {
+        hide: hiddenObject
+    }
+  }
+ 
     razorModel.retry = false;
     razorModel.modal = {
       escape: false
     };
+    console.log('hoooiii'+JSON.stringify(razorModel.config));
     const options = razorModel;
     options.handler = ((response, error) => {
       options.response = response;
@@ -70,7 +117,7 @@ export class RazorpayService {
           "signature":response.razorpay_signature
         
       };
-  
+      
       clearTimeout(razorInterval);
       let queryParams = {
         'details': JSON.stringify(options.response),
@@ -88,7 +135,7 @@ export class RazorpayService {
         queryParams: queryParams
       };
 
-      this.updateRazorPay(razorpay_payload,account_id).then((data)=>{
+      this.updateRazorPay(razorpay_payload,account_id,usertype).then((data)=>{
      
         if(data){
         if (usertype === 'consumer') {
@@ -281,10 +328,22 @@ export class RazorpayService {
    window.location.reload();
 
 }
-updateRazorPay(payload,account_id){
+updateRazorPay(payload,account_id,usertype){
+  const self = this;
+  if(usertype==='consumer'){
+  return new Promise((resolve,reject)=>{
+    self.sharedServices.updateRazorPay(payload,account_id)
+    .subscribe(result=>{
+      console.log('result'+result);
+      resolve(result);
+    },error=>{
+      reject(false);
+    })
+  })
+}else{
   return new Promise((resolve,reject)=>{
 
-    this.sharedServices.updateRazorPay(payload,account_id)
+    self.sharedServices.updateRazorPayForProvider(payload)
     .subscribe(result=>{
       console.log('result'+result);
       resolve(result);
@@ -293,6 +352,7 @@ updateRazorPay(payload,account_id){
     })
 
   })
+}
 
   
 }

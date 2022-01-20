@@ -16,7 +16,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { CommunicationService } from '../../../../business/services/communication-service';
-import { BookingHistoryComponent } from '../../../shared/booking-history/booking-history.component';
+import { BookingHistoryComponent } from '../booking-history/booking-history.component';
 
 @Component({
   selector: 'app-provider-appointment-detail',
@@ -236,6 +236,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
           }
           this.getCheckInHistory(this.waitlist_data.uid).then(data => {
             this.waitlist_history = data;
+            console.log('waitlist data..',this.waitlist_history,this.waitlist_data,this.check_in_statuses)
             this.getInternalStatusLog(this.waitlist_data.uid).then(status => {
               this.internalStatuslog = status;
               // this.statusLog.push(this.waitlist_history);
@@ -338,6 +339,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   }
 
   addProviderNote(checkin) {
+    console.log("dialog box opened")
     this.notedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -366,6 +368,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
         }
       );
   }
+
 
   addConsumerInboxMessage() {
     const waitlist = [];
@@ -613,6 +616,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     currentmode=this.appointmentModes.filter(obj=>obj.mode===mode);
     return currentmode[0].value;
   }
+
 openbookinghistory() {
   this.bookinghistorydialogref = this.dialog.open(BookingHistoryComponent, {
     width: '60%',
