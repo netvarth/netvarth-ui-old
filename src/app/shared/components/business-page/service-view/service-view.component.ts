@@ -1028,6 +1028,7 @@ export class ServiceViewComponent implements OnInit {
     if(location.time) {
       current_provider['ctime']=location.time
     }    if(location.date) {
+      current_provider['cdate']=location.date
       service.serviceAvailability.availableDate=location.date
     }
 
@@ -1083,6 +1084,7 @@ export class ServiceViewComponent implements OnInit {
     if(location.time) {
       current_provider['ctime']=location.time
     }    if(location.date) {
+      current_provider['cdate']=location.date
       service.serviceAvailability.nextAvailableDate=location.date
     }
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
@@ -1261,9 +1263,9 @@ export class ServiceViewComponent implements OnInit {
         if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer',current_provider['ctime']);
         } else {
-            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer',current_provider['ctime']);
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);

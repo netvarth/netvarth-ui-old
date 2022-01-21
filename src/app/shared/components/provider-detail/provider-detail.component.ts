@@ -294,6 +294,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   private subscriptions = new SubSink();
   // consumerVirtualinfo: any;
   checkavailabilitydialogref: any;
+  locationdate: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -1642,6 +1643,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     if(location.time) {
       current_provider['ctime']=location.time
     }    if(location.date) {
+      current_provider['cdate']=location.date
       service.serviceAvailability.availableDate=location.date
     }
 
@@ -1684,15 +1686,22 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       'place': location.place,
       'location': location,
       'service': service,
-      'cdate': service.serviceAvailability.nextAvailableDate
+      'cdate': location.date
     };
 
     if(location.time) {
       current_provider['ctime']=location.time
-    }    if(location.date) {
-      service.serviceAvailability.nextAvailableDate=location.date
+    }  
+    // console.log(service.serviceAvailability.nextAvailableDate)
+    
+    if(location.date) {
+      this.locationdate=location.date
+      // service.serviceAvailability.nextAvailableDate=location.date
+     
+    } else {
+      this.locationdate=service.serviceAvailability.nextAvailableDate
     }
-    console.log('current provider...',current_provider)
+    console.log('current provider...',this.locationdate)
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
@@ -1711,7 +1720,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       cmon = '' + mm;
     }
     const dtoday = yyyy + '-' + cmon + '-' + cday;
-    if (dtoday === service.serviceAvailability.nextAvailableDate) {
+    if (dtoday === this.locationdate) {
       this.changedate_req = false;
     } else {
       this.changedate_req = true;
@@ -1719,10 +1728,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     if (!location.futureAppt) {
       this.futureAllowed = false;
     }
+    console.log(this.changedate_req,'lllllllllllll')
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     console.log(this.userType);
     if (this.userType === 'consumer') {
-        this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer',current_provider['ctime']);
+        this.showAppointment(location.id, location.place, location.googleMapUrl, this.locationdate, service, 'consumer',current_provider['ctime']);
     } else if (this.userType === '') {
       const passParam = { callback: 'appointment', current_provider: current_provider, serviceType: service.serviceType };
       this.doLogin('consumer', passParam);
@@ -1767,7 +1777,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'consumer',current_provider['ctime']);
+          this.showAppointment(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'],'', 'consumer',current_provider['ctime']);
         }else if (passParam['callback'] === 'checkavailability') {
           this.opencheckavail(passParam['actionObjtype'])
          }
@@ -1780,7 +1790,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
         } else {
           this.getFavProviders();
-            this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'waitlist', current_provider['service']);
+          // location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer',current_provider['ctime']
+            this.showCheckin(current_provider['id'], current_provider['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'waitlist', current_provider['service'],current_provider['ctime']);
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
@@ -1863,6 +1874,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     // if (this.servicesjson[0] && this.servicesjson[0].department) {
     //   deptId = this.servicesjson[0].department;
     // }
+    console.log('currrdate123333',curdate,this.changedate_req)
     const queryParam = {
       loc_id: locid,
       locname: locname,
@@ -2350,18 +2362,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
   }
   opencheckavail(actionObj) {
-    // this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    // const current_provider = {
-    //   'id': actionObj['location']['id'],
-    //   'place':actionObj['location']['place'],
-    //   'location': actionObj['location'],
-    //   'service': actionObj['service'],
-    //   'cdate': actionObj['service'].serviceAvailability.nextAvailableDate
-    // };
-    // if(this.userType === '') {
-    //   const passParam = { callback: 'checkavailability', current_provider: current_provider, serviceType:  actionObj['service'].serviceType,actionObjtype:actionObj };
-    //   this.doLogin('consumer', passParam);
-    // }else {
+   
       this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
         width: '100%',
         panelClass: ['commonpopupmainclass', 'popup-class', 'availability-container'],
@@ -2371,7 +2372,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         apptSettingsJson:this.apptSettingsJson,
         }
       });
-    // }
 
     this.checkavailabilitydialogref.afterClosed().subscribe(result => {
      
@@ -2538,7 +2538,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     let physical_item_present = true;
     if(this.activeCatalog&& this.activeCatalog.catalogItem){
     const virtualItems=this.activeCatalog.catalogItem.filter(catalogItem => catalogItem.item.itemType==='VIRTUAL')
-    console.log(virtualItems.length);
+    // console.log(virtualItems.length);
     if(virtualItems.length>0 && this.activeCatalog.catalogItem.length===virtualItems.length){
       physical_item_present=false;
       this.onlyVirtualItems=true;
@@ -2554,7 +2554,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     if(!this.isPhysicalItemsPresent()){
        showCatalogItems=true;
      }
-     console.log(showCatalogItems);
+    //  console.log(showCatalogItems);
     return showCatalogItems;
   }
 
