@@ -1,6 +1,16 @@
 <section class="">
   <div class="card title-gb rounded-0">
-    <h5 class="mgn-up-10">
+    <h5 class="mgn-up-10" *ngIf="foldertype === 'shared'">
+      <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
+      </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {{customer_label | capitalizeFirst}} Files
+    </h5>
+    <h5 class="mgn-up-10" *ngIf="foldertype === 'public'">
+      <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
+      </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {{provider_label | capitalizeFirst}} Files
+    </h5>
+    <h5 class="mgn-up-10" *ngIf="foldertype === 'private'">
       <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
       </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       {{foldername}} Files
@@ -18,8 +28,6 @@
       <!-- && provider_label && isHealthCare -->
       Manage the files uploaded by the {{provider_label | capitalizeFirst}}s lable!
     </p>
-    <!-- <p *ngIf="foldertype === 'shared'&& customer_label && isHealthCare" class="text-secondary mx-5 no-padding">
-      Manage the files uploaded by the {{customer_label}} lable!</p> -->
     <p *ngIf="foldertype === 'private'" class="text-secondary mx-5 no-padding">Manage your own files!
     </p>
   </div>
