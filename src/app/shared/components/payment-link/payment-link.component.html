@@ -92,10 +92,11 @@
                                                                                 <span class="columns">
                                                                                     {{this.firstname}}
                                                                                 </span> <span
-                                                                                    class="columns rightalign"><span
-                                                                                        class="dynamic">{{billdate |
-                                                                                        date : 'mediumDate'}}
-                                                                                        {{billtime}}</span>
+                                                                                    class="columns rightalign">
+                                                                                    <span class="dynamic">
+                                                                                        {{billdate |date : 'mediumDate'}}
+                                                                                        {{billtime}}
+                                                                                    </span>
                                                                                 </span> <span class="columns"
                                                                                     *ngIf="billnumber"> <span
                                                                                         class="title">{{bill_no_cap}}</span>
