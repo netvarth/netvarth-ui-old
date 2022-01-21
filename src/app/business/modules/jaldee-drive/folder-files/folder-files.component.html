@@ -5,13 +5,21 @@
       </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       {{foldername}} Files
     </h5>
-    <p *ngIf="foldertype === 'shared' || foldertype === 'public' && !isHealthCare"
+    <!-- <p class="text-secondary mx-5 no-padding">
+      Manage the files uploaded by the {{customer_label ? customer_label : provider_label}}s !
+    </p> -->
+    <p *ngIf="foldertype === 'shared'"
       class="text-secondary mx-5 no-padding">
-      Manage the files uploaded by the {{foldername=='Provider' ? 'provider' : 'consumer'}} label!</p>
-    <p *ngIf="foldertype === 'public' && provider_label && isHealthCare" class="text-secondary mx-5 no-padding">
-      Manage the files uploaded by the {{provider_label}} lable!</p>
-    <p *ngIf="foldertype === 'shared'&& customer_label && isHealthCare" class="text-secondary mx-5 no-padding">
-      Manage the files uploaded by the {{customer_label}} lable!</p>
+      <!-- && !isHealthCare -->
+      <!-- Manage the files uploaded by the {{foldername=='Provider' ? 'provider' : 'consumer'}} label! -->
+      Manage the files uploaded by the {{customer_label | capitalizeFirst}}s lable!
+    </p>
+    <p *ngIf="foldertype === 'public'" class="text-secondary mx-5 no-padding">
+      <!-- && provider_label && isHealthCare -->
+      Manage the files uploaded by the {{provider_label | capitalizeFirst}}s lable!
+    </p>
+    <!-- <p *ngIf="foldertype === 'shared'&& customer_label && isHealthCare" class="text-secondary mx-5 no-padding">
+      Manage the files uploaded by the {{customer_label}} lable!</p> -->
     <p *ngIf="foldertype === 'private'" class="text-secondary mx-5 no-padding">Manage your own files!
     </p>
   </div>
