@@ -420,7 +420,7 @@ export class FolderFilesComponent implements OnInit {
       }
     });
   }
-  deletepreview(id, fileName) {
+  deleteFile(id, fileName) {
     console.log("ID : ", id)
     this.fileviewdialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '30%',
@@ -435,6 +435,7 @@ export class FolderFilesComponent implements OnInit {
         if (result === 1) {
           this.provider_servicesobj.deleteAttachment(id).subscribe(
             (data: any) => {
+              this.snackbarService.openSnackBar('Deleted Successfully');
               this.getfiles();
             });
         }
