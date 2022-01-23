@@ -10,7 +10,10 @@
 				</div>
 				<div class="col-md-8 col-lg-8 site-header--links d-flex flex-wrap ">
 					<div class="account-links ">
-						<a (click)="providerLinkClicked()" class="pointer-cursor"><span class="bus-page-rdbtn">{{'Home' | translate}}</span></a>
+						<!-- <a (click)="providerLinkClicked()" class="pointer-cursor"><span class="bus-page-rdbtn">{{'Home' | translate}}</span></a> -->
+						<a href="https://business.jaldee.com"
+									target="_blank" class="pointer-cursor">
+								<span class="bus-page-rdbtn">{{'Home' | translate}}</span></a>	
 						<a class="pointer-cursor" class="login-link"><span class="cons_btn_login_top"
 								(click)="doLogin('consumer')">{{'Log_in' | translate}}</span> <span class="cons_btn_join_top"
 								(click)="doSignup('consumer')">{{'Sign_up' | translate}}</span></a>
@@ -29,8 +32,11 @@
 								<span class="cons_btn_join_top" (click)="doSignup('consumer')">{{'Sign_up' | translate}}</span></a>
 						</div>
 						<div class="col-xs-12 col-sm-12 no-padding mgn-up-20">
-							<a (click)="providerLinkClicked()" class="pointer-cursor d-block pull-right">
-								<span class="bus-page-rdbtn">{{'Home' | translate}}</span></a>							
+							<!-- <a (click)="providerLinkClicked()" class="pointer-cursor d-block pull-right">
+								<span class="bus-page-rdbtn">{{'Home' | translate}}</span></a>							 -->
+									<a href="https://business.jaldee.com"
+									target="_blank" class="pointer-cursor d-block pull-right">
+								<span class="bus-page-rdbtn">{{'Home' | translate}}</span></a>				
 						</div>
 					</div>
 				</div>
