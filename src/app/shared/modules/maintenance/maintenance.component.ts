@@ -27,7 +27,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 @Component({
   selector: 'app-maintenance',
@@ -43,6 +43,7 @@ export class MaintenanceComponent implements OnInit {
     private activaterouterobj: ActivatedRoute,
     public shared_services: SharedServices,
     public location: Location,
+    private router: Router,
     public shared_functions: SharedFunctions) { }
   ngOnInit() {
     console.log('maintaince')
@@ -53,7 +54,8 @@ export class MaintenanceComponent implements OnInit {
       });
   }
   goHome() {
-    this.location.back();
-    window.location.reload();
+    this.router.navigate(['/home']);
+    // this.location.back();
+    // window.location.reload();
   }
 }
