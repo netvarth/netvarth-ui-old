@@ -1327,7 +1327,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
         dataToSend.append('question', blobpost_Data);
         this.shared_services.submitDonationQuestionnaire(uuid, dataToSend, this.account_id).subscribe((data: any) => {
-            this.api_loading_video = true;
+            
             let postData = {
                 urls: []
             };
@@ -1341,6 +1341,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                             if (data.urls.length === postData['urls'].length) {
                                 this.shared_services.consumerDonationQnrUploadStatusUpdate(uuid, this.account_id, postData)
                                     .subscribe((data) => {
+                                        this.api_loading_video = true;
                                         // this.paymentOperation(paymenttype);
                                         this.consumerPayment(this.uid, post_Data, paymentWay);
                                         this.api_loading_video = false;
