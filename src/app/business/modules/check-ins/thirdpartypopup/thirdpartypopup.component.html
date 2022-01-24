@@ -1,51 +1,52 @@
-<div  style="padding: 40px;">
-    <div style="padding-bottom: 20px;" class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-        <h3 style="color: navy;text-align: center;">Choose Third Party Options </h3>
+<div  >
+    <div style="padding-bottom: 5px;padding-top: 20px;" class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+        <h3 style="color: navy;text-align: center;" class="font-size">Choose Third Party Options </h3>
     </div>
-    <div style="margin-bottom : 40px" class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 no-padding">
-        <button *ngIf="domain === 'healthCare'" class="thirdparycard mgn-lt-10 mgn-bt-10"
-        (click)="buttonclicked('practo')">Practo
-            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">
+    <div style="margin-bottom : 20px; " class="col-lg-12 col-md-12 col-xs-12 col-sm-12  padding-0">
+        <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0 no-padding padding-0"></div>
+    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 no-padding padding-0">
+        <button *ngIf="domain === 'healthCare'" class="thirdparycard  mgn-bt-10"
+        (click)="buttonclicked('practo')"><img src="../../../../../assets/images/caduceus-vector-icon-PADJ6J-removebg-preview.png" width="15px" height="15px">&nbsp;&nbsp;Practo
+            <!-- <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">
                     Choose the third party listing site/app through which the {{customer_label}} came.
-            </div>
+            </div> -->
         </button>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 no-padding">
-        <button class="thirdparycard mgn-lt-10 mgn-bt-10" (click)="buttonclicked('justdial')">Just
+    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 no-padding padding-0">
+        <button class="thirdparycard  mgn-bt-10" (click)="buttonclicked('justdial')"><span class="fa fa-phone pointer-cursor fa-lg" ></span>&nbsp;&nbsp; Just
             dial
-            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">
+            <!-- <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">
                 Choose the third party listing site/app through which the {{customer_label}} came.
-            </div>
+            </div> -->
         </button>
             
 
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 no-padding">
-        <button class="thirdparycard mgn-lt-10 mgn-bt-10"
-      (click)="buttonclicked('google')">Google
-      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">
+    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 no-padding padding-0">
+        <button class="thirdparycard  mgn-bt-10"
+      (click)="buttonclicked('google')"><img src="../../../../../assets/images/home/signup/Google.png" width="15px" height="15px">&nbsp;&nbsp;Google
+      <!-- <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">
         Choose the third party listing site/app through which the {{customer_label}} came.
-    </div>
+    </div> -->
     </button>
 
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 no-padding">
-        <button class="thirdparycard mgn-lt-10 mgn-bt-10" *ngIf="domain === 'healthCare'"
-        (click)="buttonclicked('mfine')">MFine
-        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">
+    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 no-padding padding-0">
+        <button class="thirdparycard  mgn-bt-10" *ngIf="domain === 'healthCare'"
+        (click)="buttonclicked('mfine')"><img src="../../../../../assets/images/support-min.png" style="background-color: black;" width="15px" height="15px">&nbsp;&nbsp;MFine
+        <!-- <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">
             Choose the third party listing site/app through which the {{customer_label}} came.
-        </div>
+        </div> -->
          </button>
 
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 no-padding">
+    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12 no-padding padding-0">
         
-    <button class="thirdparycard mgn-lt-10 mgn-bt-10" [class.btn-selected]="showOther"
-    (click)="buttonclicked('other')">Other
-    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">
+    <button class="thirdparycard  mgn-bt-10" [class.btn-selected]="showOther"
+    (click)="buttonclicked('other')"><img src="../../../../../assets/images/others-icon-22.jpg" width="15px" height="15px">&nbsp;&nbsp;Other
+    <!-- <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">
         Choose the third party listing site/app through which the {{customer_label}} came.
-    </div>
+    </div> -->
     </button>
 
     </div>

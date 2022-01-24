@@ -1,7 +1,8 @@
 <section >
+
   <div class="mgn-up-20 mgn-lt-10"  style="width: 280px !important;display: flex;background-color: #1E4079;color: white;align-items: center;padding: 10px;">
-       <div><span class="fa fa-arrow-alt-circle-left pointer-cursor fa-lg" (click)="goBack()"></span></div>
-       <div class="mgn-lt-10 mgn-up-5"><h5>{{heading}}</h5> </div>
+    <div><img src="../../../../../assets/images/icons8-go-back-24 (1).png" (click)="goBack()"></div>
+       <div class="mgn-lt-10 mgn-up-10"><h5>{{heading}}</h5> </div>
 </div>
   
 </section>
@@ -10,20 +11,21 @@
     <div class="col-md-12 no-padding-small">
       <div class="card no-padding" *ngIf="!showCheckin && !showQuestionnaire">
         <div class="copy locd">
-          <div class="lbl col-sm-12 col-md-12 col-lg-12 no-padding mgn-lt-20 ">
-            <h5 class="mgn-up-10" *ngIf="source !== 'waitlist-block'"><b>Find an existing {{customer_label}} and
+          <div class="lbl col-sm-12 col-md-12 col-lg-12  mgn-lt-20 no-padding">
+            <h5 class="mgn-up-10 mgn-bt-20" *ngIf="source !== 'waitlist-block'"><b>Find an existing {{customer_label}} and
                 create {{(showtoken? 'token' :
-                'check-in')}}</b></h5>
-            <h5 class="mgn-up-10" *ngIf="source === 'waitlist-block'"> <b>Find an existing {{customer_label}}</b></h5>
+                'check-in')}}</b><br> </h5>
+            <h5 class="mgn-up-10 mgn-bt-20" *ngIf="source === 'waitlist-block'"> <b>Find an existing {{customer_label}}</b> <br></h5>
 
             <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding ">
               
-              <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9 no-padding mgn-up-10 mgn-rt-10"  (click)="createNew()" *ngIf="!showBlockHint" >
+              <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 " style="margin-right: 40px;"  (click)="createNew()" *ngIf="!showBlockHint" >
               
                 <img src="../../../../../assets/images/add patient.svg" style="width: 50px;height: 50px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Create New Patient</b>
               </div>
+              <!-- <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0"></div> -->
   
-              <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9 no-padding mgn-up-10"  (click)="openthirdpopup(domain,showOther,customer_label)" *ngIf="source !== 'waitlist-block'" >
+              <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 "  (click)="openthirdpopup(domain,showOther,customer_label)" *ngIf="source !== 'waitlist-block'" >
             
                   <img src="../../../../../assets/images/third party.svg" style="width: 50px;height: 50px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Third party options</b>
        
@@ -50,10 +52,10 @@
 
 
 
-
-            <div class="row no-padding display-xs-small" style="all: revert;" >
+            <div class="col-lg-12 col-md-12 col-xs-0 col-sm-0 mgn-up-20" ></div>
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding display-xs-small" >
              
-              <div *ngIf="categoryvalue=='Search with PhoneNumber'" class="col-lg-4 col-md-6 col-xs-6 col-sm-6 mgn-up-18  mgn-bt-10 padding-0 " style="background-color: indianred;" >
+              <div *ngIf="categoryvalue=='Search with PhoneNumber'" class="col-lg-4 col-md-4 col-xs-3 col-sm-3 mgn-up-18  mgn-bt-10 padding-0 "  >
 
                 <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox padding-0 numberstyle " [preferredCountries]="preferredCountries"
                   [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
@@ -65,7 +67,7 @@
                 </ngx-intl-tel-input>
                 
               </div>
-              <form *ngIf="categoryvalue!='Search with PhoneNumber'" [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()" class="col-lg-4 col-md-4 col-xs-6 col-sm-6  mgn-up-18 padding-0" >
+              <form *ngIf="categoryvalue!='Search with PhoneNumber'" [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()" class="col-lg-4 col-md-4 col-xs-3 col-sm-3  mgn-up-18 padding-0" >
                 <div class="form-group">
                   <div class="input-group mob-container">
                     <input  autocomplete="off" placeholder="{{customer_label | capitalizeFirst}} Name or ID or Email"
@@ -74,7 +76,7 @@
                                     
                   </div>
                   <div  *ngIf="emptyFielderror" class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding">
-                    <span class="sts-msg error">Please enter the
+                    <span class="sts-msg error" >Please enter the
                       {{customer_label | capitalizeFirst}} ID or Email</span>
                     <app-field-error-display style="color: #f24949 !important;" [displayError]="true" *ngIf="create_new"
                       errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
@@ -83,23 +85,31 @@
                   </div>
                 </div>
               </form>
-              <div class="col-lg-4 col-sm-1  col-md-4 col-xs-1 no-padding " style="background-color: indigo;">
+              <div class="col-lg-2 col-sm-1  col-md-2 col-xs-1 no-padding display-lg-show">
                 <mat-form-field >
-                  <mat-label class="display-lg-show" *ngIf="!categoryvalue" style="color: black;background-color: #f6f6f6">Category</mat-label>
-                  <mat-label class="display-sm-show"><img src="../../../../../assets/images/Group 1512.png" width="70px" height="70px"></mat-label>
-                  <mat-select  class="categoryfield" [(ngModel)]="categoryvalue">
+                  <mat-label class="categoryfield"  *ngIf="!categoryvalue" style="color: black;background-color: #f6f6f6;padding-left: 30px;">Category&nbsp;&nbsp;&nbsp;<span class="fa fa-angle-down"></span></mat-label>
+                  <!-- <mat-label class="display-sm-show"><img src="../../../../../assets/images/Group 1512.png" width="70px" height="70px"></mat-label> -->
+                  <mat-select   [(ngModel)]="categoryvalue">
                     <mat-option  *ngFor="let category of categoryForSearchingarray"  [value]="category">{{category}}</mat-option>
                   </mat-select>
                 </mat-form-field>
                </div>
-              <div class="col-lg-1 col-md-1 col-xs-1 col-sm-1  mgn-up-18 padding-0"  style="background-color: lawngreen;">
+              <div class=" mgn-up-18 padding-0 no-padding"  >
                 
-                <button *ngIf="categoryvalue!='Search with PhoneNumber'" class="findcolor" (click)="searchCustomer(searchForm.value)"><i class="fa fa-search p0"
+                <button *ngIf="categoryvalue!='Search with PhoneNumber'" class="findcolor" (click)="searchCustomer(searchForm.value)"><i class="fa fa-search padding-0"
                   aria-hidden="true"></i>
                 </button>
-                <button *ngIf="categoryvalue=='Search with PhoneNumber'" class="findcolor" (click)="serchCustomers(phone)"><i class="fa fa-search" aria-hidden="true"></i>
+                <button *ngIf="categoryvalue=='Search with PhoneNumber'" class="findcolor" (click)="serchCustomers(phone)"><i class="fa fa-search padding-0" aria-hidden="true"></i>
                 </button>
               </div>
+              <div class="col-lg-0 col-sm-1  col-md-0 col-xs-1 no-padding display-sm-show">
+                <mat-form-field >
+                  <mat-label class="categoryfield"><img src="../../../../../assets/images/Group 1512.png" width="70px" height="70px"></mat-label>
+                  <mat-select [(ngModel)]="categoryvalue">
+                    <mat-option  *ngFor="let category of categoryForSearchingarray"  [value]="category">{{category}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+               </div>
              
               
             </div>
