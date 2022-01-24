@@ -22,11 +22,11 @@
       class="text-secondary mx-5 no-padding">
       <!-- && !isHealthCare -->
       <!-- Manage the files uploaded by the {{foldername=='Provider' ? 'provider' : 'consumer'}} label! -->
-      Manage the files uploaded by the {{customer_label | capitalizeFirst}}s lable!
+      Manage the files uploaded by the {{customer_label | capitalizeFirst}}s label!
     </p>
     <p *ngIf="foldertype === 'public'" class="text-secondary mx-5 no-padding">
       <!-- && provider_label && isHealthCare -->
-      Manage the files uploaded by the {{provider_label | capitalizeFirst}}s lable!
+      Manage the files uploaded by the {{provider_label | capitalizeFirst}}s label!
     </p>
     <p *ngIf="foldertype === 'private'" class="text-secondary mx-5 no-padding">Manage your own files!
     </p>

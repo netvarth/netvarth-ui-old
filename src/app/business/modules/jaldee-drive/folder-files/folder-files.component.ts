@@ -567,7 +567,11 @@ export class FolderFilesComponent implements OnInit {
     let i = 0;
     if (input) {
       for (const file of input) {
-        if (file.size > projectConstants.FILE_MAX_SIZE) {
+        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+          return;
+        } 
+        else if (file.size > projectConstants.FILE_MAX_SIZE) {
           this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
           return;
         }
@@ -586,6 +590,8 @@ export class FolderFilesComponent implements OnInit {
       if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0 && input.length > 0) {
         this.modal.nativeElement.click();
       }
+    
+     
     }
   }
   getCaption(caption) {
