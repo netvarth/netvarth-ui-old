@@ -109,6 +109,8 @@ export class FolderFilesComponent implements OnInit {
   png: boolean;
   jpeg: boolean;
   jpg: boolean;
+  mp3:boolean;
+  mp4:boolean;
   selectrow = false;
   user_count_filterApplied: any;
   availabileSelected: boolean;
@@ -372,11 +374,33 @@ export class FolderFilesComponent implements OnInit {
         this.filter.fileType = 'pdf';
 
       }
+      else if (value === 'mp3') {
+        this.mp3 = true;
+        this.png = false;
+        this.jpeg = false;
+        this.jpg = false;
+        this.pdf = false;
+        this.mp4 = false;
+        this.filter.fileType = 'mp3';
+
+      }
+      else if (value === 'mp4') {
+        this.mp4 =  true;
+        this.png = false;
+        this.jpeg = false;
+        this.jpg = false;
+        this.pdf = false;
+        this.mp3 = false;
+        this.filter.fileType = 'mp4';
+
+      }
       else {
         this.png = false;
         this.jpeg = false;
         this.jpg = false;
         this.pdf = false;
+        this.mp3 = false;
+        this.mp4 = false;
         this.filter.fileType = '';
       }
     }

@@ -307,6 +307,16 @@
                         [checked]="pdf">
                         PDF</mat-checkbox>
                     </li>
+                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                      <mat-checkbox class="filter-checkbox" (change)="setFilterDataCheckbox('fileType', 'mp4')"
+                        [checked]="mp4">
+                        MP4</mat-checkbox>
+                    </li>
+                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                      <mat-checkbox class="filter-checkbox" (change)="setFilterDataCheckbox('fileType', 'mp3')"
+                        [checked]="mp3">
+                        MP3</mat-checkbox>
+                    </li>
                   </div>
                 </div>
               </div>
