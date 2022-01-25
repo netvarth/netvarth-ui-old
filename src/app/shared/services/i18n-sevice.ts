@@ -10,7 +10,7 @@ export class I18nService {
   localeEvent = new Subject<string>();
 
   constructor(private translate: TranslateService) {
-    if (localStorage.getItem('translatevariable') !== 'undefined') {
+    if (localStorage.getItem('translatevariable') == 'undefined' || localStorage.getItem('translatevariable') == null || localStorage.getItem('translatevariable') == undefined) {
       const jsonData = JSON.stringify('en');
       localStorage.setItem('translatevariable', jsonData);
       }

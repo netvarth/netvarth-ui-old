@@ -107,6 +107,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         
    }
   ngOnInit() {
+    this.i18nService.changeLocale('en');
     const a = document.getElementById("fb-root");
     if (a) {
       a.classList.add('visible_chat');
