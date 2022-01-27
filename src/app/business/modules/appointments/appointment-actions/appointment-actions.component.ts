@@ -802,7 +802,7 @@ export class AppointmentActionsComponent implements OnInit {
     getAppointmentSlots() {
         this.freeSlots = [];
         this.loading = true;
-        this.provider_services.getSlotsByLocationServiceandDate(this.locId, this.servId, this.sel_checkindate).subscribe(data => {
+        this.provider_services.getSlotsByLocationServiceandDate(this.locId, this.servId, this.sel_checkindate,this.accountid).subscribe(data => {
             this.schedules = data;
             this.loading = false;
             for (const scheduleSlots of this.schedules) {
