@@ -177,8 +177,8 @@
         </div>
     </ng-container>
 </header>
-<header class="consumer" *ngIf="ctype!='provider' && includedfrom!='home' && includedfrom!='phome'">
-    <div class="container no-padding">
+<header class="consumer" *ngIf="ctype!='provider' && includedfrom!='home' && includedfrom!='phome'" >
+    <div class="container no-padding" [ngClass]="theme">
         <div class="col-md-22 col-xs-12 col-sm-12 no-padding">
             <div class="tp-1">
                 <div class="tp-l" *ngIf="includedfrom!='checkin' && includedfrom!='appt' &&

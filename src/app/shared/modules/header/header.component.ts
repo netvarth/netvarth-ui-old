@@ -111,6 +111,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   account_type;
   licenseMetrics: any = [];
   selectedpkgMetrics: any = [];
+  theme: any;
   constructor(
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
@@ -181,6 +182,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isprovider = this.shared_functions.isBusinessOwner();
     this.ctype = this.shared_functions.isBusinessOwner('returntyp');
     this.inboxCntFetched = false;
+
+    if(this.lStorageService.getitemfromLocalStorage('theme')) {
+      this.theme = this.lStorageService.getitemfromLocalStorage('theme');
+    }
     // Section which handles the periodic reload
     if ((this.ctype === 'consumer' || this.ctype === 'provider') && !this.customId) {
       this.cronHandle = observableInterval(this.refreshTime * 1000).subscribe(() => {
@@ -380,6 +385,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
           pqueryParams['accountId'] = this.accountId;
           pqueryParams['customId'] = this.customId;
         }
+        if(this.lStorageService.getitemfromLocalStorage('theme')) {
+          pqueryParams['theme'] = this.lStorageService.getitemfromLocalStorage('theme');
+        }
         const pnavigationExtras: NavigationExtras = {
           queryParams: pqueryParams
         };
@@ -406,6 +414,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
           qParams['accountId'] = this.accountId;
           qParams['customId'] = this.customId;
         }
+        if(this.lStorageService.getitemfromLocalStorage('theme')) {
+          qParams['theme'] = this.lStorageService.getitemfromLocalStorage('theme');
+        }
         const navigationExtras1: NavigationExtras = {
           queryParams: qParams
         };
@@ -419,6 +430,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         if (this.customId) {
           queryParams['accountId'] = this.accountId;
           queryParams['customId'] = this.customId;
+        }
+        if(this.lStorageService.getitemfromLocalStorage('theme')) {
+          queryParams['theme'] = this.lStorageService.getitemfromLocalStorage('theme');
         }
         const navigationExtras: NavigationExtras = {
           queryParams: queryParams
@@ -494,6 +508,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       let qParams = {};
       qParams['accountId'] = this.accountId;
       qParams['customId'] = this.customId;
+      if(this.lStorageService.getitemfromLocalStorage('theme')) {
+        qParams['theme'] = this.lStorageService.getitemfromLocalStorage('theme');
+      }
       const navigationExtras1: NavigationExtras = {
         queryParams: qParams
       };

@@ -91,6 +91,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
             _this.domainConfigService.getHometemplate(_this.provider_id).subscribe(
               (templateJson: any) => {
                 this.theme = templateJson.theme;
+                this.lStorageService.setitemonLocalStorage('theme',this.theme);
                 this.customappService.setTemplateJson(templateJson);
                 console.log(templateJson);
                 _this.getBusinessProfile(_this.provider_id).then(
@@ -128,7 +129,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
   getBusinessProfile(uniqueId) {
     const _this = this;
     return new Promise(function (resolve, reject) {
-      let accountS3List = 'businessProfile,settings,appointmentsettings,terminologies,location,donationServices,departmentProviders';
+      let accountS3List = 'businessProfile,settings,appointmentsettings,terminologies,location,donationServices,departmentProviders,gallery';
       _this.subscriptions.sink = _this.s3Processor.getJsonsbyTypes(uniqueId,
         null, accountS3List).subscribe(
           (accountS3s: any) => {

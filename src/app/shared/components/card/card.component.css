@@ -616,7 +616,7 @@ button.fxmenu1{
     font-size: 12px;
     line-height: 1.42857143;
     /* border-top-right-radius: 20px; */
-    border-bottom-right-radius: 10px;
+    border-radius: 10px;
     /* border-radius: 4px; */
 }
 .getappointmentbutton:hover{

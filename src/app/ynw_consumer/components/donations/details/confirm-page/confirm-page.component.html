@@ -1,5 +1,5 @@
-<section class="container no-padding confirm-aptckn no-padding-small">
-    <div class="content p0 loc-list">
+<section class="container no-padding confirm-aptckn no-padding-small" >
+    <div class="content p0 loc-list" [ngClass]="theme">
         <div class="panel panel-default">
             <div class="panel-heading top-row ">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
@@ -60,7 +60,7 @@
                                     </div>
                                 </div>
                                 <div class="ok-btn">
-                                    <span class="pointer-cursor" (click)="okClick()">
+                                    <span class="pointer-cursor hf-btn" (click)="okClick()">
                                         <strong>OK</strong></span>
                                 </div>
                             </div>

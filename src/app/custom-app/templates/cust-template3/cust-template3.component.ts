@@ -33,6 +33,7 @@ export class CustTemplate3Component implements OnInit {
   filteredApptServices: any;
   filteredCheckinServices: any;
   departments: any;
+  galleryJson: any;
   // @Input() templateJson;
   // userId;
   // pSource;
@@ -56,6 +57,11 @@ export class CustTemplate3Component implements OnInit {
     this.terminologiesjson = this.s3Processor.getJson(this.customappService.getTerminologies());
     this.apptSettings = this.s3Processor.getJson(this.customappService.getApptSettings());
     this.businessProfile = this.s3Processor.getJson(this.customappService.getBusinessProfile());
+    this.galleryJson = this.s3Processor.getJson(this.customappService.getGallery());
+
+    // if(this.templateJson.section1.gallery || this.templateJson.section2.gallery || this.templateJson.section3.gallery) {
+      
+    // }
 
     if (this.templateJson.section1.donations || this.templateJson.section2.donations || this.templateJson.section3.donations) {
       this.getDonationServices();

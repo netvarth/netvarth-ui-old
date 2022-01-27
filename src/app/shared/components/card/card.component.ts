@@ -27,6 +27,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() checkins;
     @Input() theme;
     @Input() teams;
+    @Input() source;
     // @Input() pos;
     @Input() statusAction;
     service: any;
@@ -316,7 +317,8 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         if (user.profilePicture) {
             return user.profilePicture['url'];
         }
-        return 'assets/images/img-null.svg';
+        return null;
+        // return 'assets/images/img-null.svg';
     }
     getItemImg(item) {
         if (item.itemImages) {

@@ -245,6 +245,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     selected_payment_mode: any;
     isInternatonal: boolean;
     isPayment: boolean;
+    theme: any;
     api_loading_video = false;
     disablebutton = false;
     constructor(public fed_service: FormMessageDisplayService,
@@ -284,7 +285,9 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 if (params.customId) {
                     this.customId = params.customId;
                 }
-
+                if(params.theme) {
+                    this.theme =params.theme;
+                }
                 // this.action = params.action;
             });
     }
@@ -789,6 +792,9 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                         };
                         if (this.customId) {
                             queryParams['customId'] = this.customId;
+                            if (this.lStorageService.getitemfromLocalStorage('theme')) {
+                                queryParams['theme']=this.lStorageService.getitemfromLocalStorage('theme');
+                            }
                         }
                         if (this.from) {
                             queryParams['isFrom'] = this.from;

@@ -123,7 +123,7 @@ export class ServiceViewComponent implements OnInit {
   showmoreDesc = false;
   server_date;
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
-  buttonCaption = Messages.GET_TOKEN;
+  buttonCaption = '';
   changedate_req = false;
   userType: any;
   activeUser: any;
@@ -198,7 +198,7 @@ export class ServiceViewComponent implements OnInit {
 }
   ngOnInit() {
 
-   // console.log("Image Galley :",this.galleryenabledArr)
+    console.log("Image Galley :",this.galleryenabledArr)
 
     const _this = this;
     _this.accountIdExists = false;
@@ -583,9 +583,9 @@ export class ServiceViewComponent implements OnInit {
                   _this.deptname = _this.apptServices[aptIndex]['deptName'];
                 }
               }
-             // console.log("Service Images :",_this.apptServices[aptIndex]['servicegallery']);
+              console.log("Service Images :",_this.apptServices[aptIndex]['servicegallery']);
               this.images  = _this.apptServices[aptIndex]['servicegallery'];
-             // console.log("List Images : ",this.images)
+              console.log("List Images : ",this.images)
 
             }
             console.log("",_this.apptServices);
@@ -654,7 +654,7 @@ export class ServiceViewComponent implements OnInit {
     this.galleryenabledArr = []; // For showing gallery
     this.image_list_popup = [];
     this.tempgalleryjson = res;
-  //  console.log("Image Length : ",this.tempgalleryjson);
+    console.log("Image Length : ",this.tempgalleryjson);
     if (this.tempgalleryjson.length > 5) {
       this.extra_img_count = this.tempgalleryjson.length - 5;
     }
@@ -949,7 +949,7 @@ export class ServiceViewComponent implements OnInit {
         });
   }
   getButtontype(item) {
-    console.log("Button Type :",item.type);
+    console.log("getButtontype:",item);
     if (item.type == 'waitlist') {
       if (item.item.serviceAvailability['showToken']) {
         this.buttonCaption = Messages.GET_TOKEN;
@@ -1411,6 +1411,31 @@ export class ServiceViewComponent implements OnInit {
       this.showpostinfo = false;
     } else {
       this.showpostinfo = true;
+    }
+  }
+  cardClicked(actionObj) {
+    console.log('entering into Service page');
+    console.log(actionObj);
+    if (actionObj['type'] === 'waitlist') {
+      if (actionObj['action'] === 'view') {
+        // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
+      } else {
+        this.checkinClicked(actionObj['location'], actionObj['service']);
+      }
+    } else if (actionObj['type'] == 'checkavailability') {
+      this.opencheckavail(actionObj);
+    } else if (actionObj['type'] === 'appt') {
+      if (actionObj['action'] === 'view') {
+        // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
+      } else {
+        this.appointmentClicked(actionObj['location'], actionObj['service']);
+      }
+    } else if (actionObj['type'] === 'donation') {
+      if (actionObj['action'] === 'view') {
+        // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
+      } else {
+        this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
+      }
     }
   }
 }

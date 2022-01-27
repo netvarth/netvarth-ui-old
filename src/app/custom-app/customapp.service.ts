@@ -6,13 +6,13 @@ import { ServiceMeta } from '../shared/services/service-meta';
   providedIn: 'root'
 })
 export class CustomappService {
-  
+
   templateJson;
   accountEncId: any;
   custId;
   businessJsons: any;
 
-  constructor(private lStorageService: LocalStorageService, private servicemeta: ServiceMeta) { } 
+  constructor(private lStorageService: LocalStorageService, private servicemeta: ServiceMeta) { }
 
   /**
    * 
@@ -29,7 +29,7 @@ export class CustomappService {
   getTemplateJson() {
     return this.templateJson;
   }
-  
+
   /**
    * 
    */
@@ -82,7 +82,13 @@ export class CustomappService {
     const login = (this.lStorageService.getitemfromLocalStorage('ynw-credentials')) ? true : false;
     return login;
   }
-
+  getGallery() {
+    if(this.businessJsons['gallery']){
+      return this.businessJsons['gallery'];
+    } else {
+      return [];
+    }  
+  }
   getLocations() {
     return this.businessJsons['location'];
   }
@@ -106,24 +112,24 @@ export class CustomappService {
     return this.businessJsons['businessProfile'];
   }
 
-//   showCommunicate(provid) {
-//     this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
-//       width: '50%',
-//       panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-//       disableClose: true,
-//       data: {
-//         caption: 'Enquiry',
-//         user_id: provid,
-//         userId: this.userId,
-//         source: 'consumer-common',
-//         type: 'send',
-//         terminologies: this.terminologiesjson,
-//         name: this.businessjson.businessName,
-//         typeOfMsg: 'single'
-//       }
-//     });
-//     this.commdialogRef.afterClosed().subscribe(() => {
-//     });
-//   }
+  //   showCommunicate(provid) {
+  //     this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
+  //       width: '50%',
+  //       panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+  //       disableClose: true,
+  //       data: {
+  //         caption: 'Enquiry',
+  //         user_id: provid,
+  //         userId: this.userId,
+  //         source: 'consumer-common',
+  //         type: 'send',
+  //         terminologies: this.terminologiesjson,
+  //         name: this.businessjson.businessName,
+  //         typeOfMsg: 'single'
+  //       }
+  //     });
+  //     this.commdialogRef.afterClosed().subscribe(() => {
+  //     });
+  //   }
 
 }
