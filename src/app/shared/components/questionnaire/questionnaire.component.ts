@@ -971,12 +971,12 @@ export class QuestionnaireComponent implements OnInit {
   disableInput() {
     if (this.uuid) {
       if (this.source === 'consCheckin' || this.source === 'proCheckin') {
-        if (this.waitlistStatus !== 'checkedIn' && this.waitlistStatus !== 'arrived') {
+        if (this.waitlistStatus !== 'checkedIn' && this.waitlistStatus !== 'arrived' && this.waitlistStatus !== 'done' && this.waitlistStatus !== 'started' && this.waitlistStatus !== 'cancelled') {
           return true;
         }
       }
       if (this.source === 'consAppt' || this.source === 'proAppt') {
-        if (this.waitlistStatus !== 'Confirmed' && this.waitlistStatus !== 'Arrived') {
+        if (this.waitlistStatus !== 'Confirmed' && this.waitlistStatus !== 'Arrived' && this.waitlistStatus !== 'Started' && this.waitlistStatus !== 'Completed' && this.waitlistStatus !== 'Cancelled') {
           return true;
         }
       }
