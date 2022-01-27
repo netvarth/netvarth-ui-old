@@ -198,7 +198,7 @@ export class ServiceViewComponent implements OnInit {
 }
   ngOnInit() {
 
-    console.log("Image Galley :",this.galleryenabledArr)
+   // console.log("Image Galley :",this.galleryenabledArr)
 
     const _this = this;
     _this.accountIdExists = false;
@@ -583,9 +583,9 @@ export class ServiceViewComponent implements OnInit {
                   _this.deptname = _this.apptServices[aptIndex]['deptName'];
                 }
               }
-              console.log("Service Images :",_this.apptServices[aptIndex]['servicegallery']);
+             // console.log("Service Images :",_this.apptServices[aptIndex]['servicegallery']);
               this.images  = _this.apptServices[aptIndex]['servicegallery'];
-              console.log("List Images : ",this.images)
+             // console.log("List Images : ",this.images)
 
             }
             console.log("",_this.apptServices);
@@ -654,7 +654,7 @@ export class ServiceViewComponent implements OnInit {
     this.galleryenabledArr = []; // For showing gallery
     this.image_list_popup = [];
     this.tempgalleryjson = res;
-    console.log("Image Length : ",this.tempgalleryjson);
+  //  console.log("Image Length : ",this.tempgalleryjson);
     if (this.tempgalleryjson.length > 5) {
       this.extra_img_count = this.tempgalleryjson.length - 5;
     }
@@ -949,6 +949,7 @@ export class ServiceViewComponent implements OnInit {
         });
   }
   getButtontype(item) {
+    console.log("Button Type :",item.type);
     if (item.type == 'waitlist') {
       if (item.item.serviceAvailability['showToken']) {
         this.buttonCaption = Messages.GET_TOKEN;
