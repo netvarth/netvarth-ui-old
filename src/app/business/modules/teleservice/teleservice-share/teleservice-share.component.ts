@@ -190,10 +190,10 @@ export class TeleServiceShareComponent implements OnInit {
       switch (this.data.app) {
         case 'WhatsApp':
           if (this.data.serviceDetail.virtualServiceType === 'videoService') {
-            this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a WhatsApp video call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+            this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a WhatsApp video call on ' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
             this.is_noSMS = true;
           } else {
-            this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a WhatsApp audio call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+            this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a WhatsApp audio call on ' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
           }
           break;
         case 'Phone':
@@ -230,15 +230,15 @@ export class TeleServiceShareComponent implements OnInit {
       case 'WhatsApp':
         if (this.data.serviceDetail.virtualServiceType === 'videoService') {
           this.is_noSMS= true;
-          this.msg_to_user = 'When it is time for your video call, you will receive a WhatsApp video call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+          this.msg_to_user = 'When it is time for your video call, you will receive a WhatsApp video call on ' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
           this.msg_to_me = 'Follow these instructions to start the video call: \n1. Open the following link on your phone/tablet browser- ' + this.meetingLink + '\n(Your phone/tablet should have WhatsApp installed)\n2. Start the video call';
         } else {
-          this.msg_to_user = 'When it is time for your audio call, you will receive a WhatsApp audio call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+          this.msg_to_user = 'When it is time for your audio call, you will receive a WhatsApp audio call on ' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
           this.msg_to_me = 'Follow these instructions to start the audio call: \n1. Open the following link on your phone/tablet browser- ' + this.meetingLink + '\n(Your phone/tablet should have WhatsApp installed)\n2. Start the audio call';
         }
         break;
       case 'Phone':
-        this.msg_to_user = 'When it is time for your phone call, you will receive a call on +' + this.meetingLink;
+        this.msg_to_user = 'When it is time for your phone call, you will receive a call on ' + this.meetingLink;
         this.msg_to_me = 'Follow these instructions to start the phone call:\n1. Call ' + this.customer_label + ' on the phone no +' + this.meetingLink;
         break;
       case 'Zoom':

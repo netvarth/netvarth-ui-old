@@ -740,7 +740,7 @@
                     </span>
                     <span
                       *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                      {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
+                      {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
                       checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
                     </span>
                   </a>
@@ -1003,7 +1003,7 @@
                     </span>
                     <span
                       *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                      {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
+                      {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
                       checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
                     </span>
                   </a>
@@ -1612,7 +1612,7 @@
                   </span>
                   <span
                     *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                    {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
+                    {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
                     checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
                   </span>
                 </a>
@@ -2350,7 +2350,7 @@
                   </span>
                   <span
                     *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                    {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
+                    {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
                     checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
                   </span>
                 </a>
