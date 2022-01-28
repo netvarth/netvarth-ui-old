@@ -931,7 +931,7 @@ ul.bus-actions li a.lnk {
   width: 120px;
   font-size: 0.9rem !important;
 }
-.c-checkin-new .phonevallabel, .c-checkin-new .emailvallabel {
+.c-checkin-new .phonevallabel, .c-checkin-new{
   font-size:0.85rem !important;
 }
 .c-checkin-new .card-title.serv-time {
@@ -954,9 +954,7 @@ ul.bus-actions li a.lnk {
   border-bottom: 1px solid #EBEDF3 !important;
 }
 
-.border-rt {
-  border-right: 1px solid #EBEDF3 !important;
-}
+
 
 .c-checkin-new .icon-minus {
   margin-top: 3px !important;
@@ -989,7 +987,11 @@ ul.bus-actions li a.lnk {
 .c-checkin-new .caldiv {
   margin-left: 10px;
 }
-
+.mat-chip-list.mat-chip
+{
+  background-color: #fff !important;
+  border: 1px solid #ccc !important;
+}
 .c-checkin-new .slotdiv mat-chip {
   font-weight: 600;
   font-size: 1rem !important;
@@ -1650,7 +1652,7 @@ body.modal-open {
   }
   .right-part {
     min-height: 650px;
-    border-left: 1px solid #EBEDF3 !important;
+    /* border-left: 1px solid #EBEDF3 !important; */
   }
   .containerAppt {
     width: 80%;
@@ -2072,6 +2074,11 @@ body.modal-open {
     box-shadow: 0 0 3px 3px blue!important 
   }
 
+  .time_range > .mat-radio-button.mat-radio-checked { 
+    border: blue !important;
+    box-shadow: 0 0 2px 2px blue!important;
+  }
+
   ::ng-deep .mat-radio-button .mat-radio-container {
     display: none!important;
   }
@@ -2083,3 +2090,42 @@ body.modal-open {
   ::ng-deep .mat-radio-container .mat-radio-label{
     display: inline;
   }
+
+.fa{
+color: black!important;
+font-size: 20px!important;
+}
+
+.fa-arrow-circle-left
+{
+  font-size: 35px!important;
+}
+.fa-arrow-right{
+  font-size: 35px!important;
+  color: white!important;
+}
+.back-btn-text{
+  font-size: 30px!important;
+  font-weight: 700;
+}
+.provider-details{
+  font-size: 40px!important;
+}
+
+.appointment-details-heading{
+  background-color: #13238f!important;
+  color: white;
+  border-radius: 10px;
+}
+
+.mat-chip.mat-standard-chip.mat-primary
+{
+  color: blue!important;
+  background-color: white!important;
+  border: 1px solid blue;
+}
+.mat-chip-selected{
+  color: green!important;
+}
+
+

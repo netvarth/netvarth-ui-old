@@ -943,9 +943,9 @@ ul.bus-actions li a.lnk {
   color: #bbb !important;
 }
 
-.border-tp {
-  /* border-top: 1px solid #EBEDF3 !important; */
-}
+/* .border-tp {
+   border-top: 1px solid #EBEDF3 !important;
+} */
 
 .border-bt {
   border-bottom: 1px solid #EBEDF3 !important;
@@ -1371,9 +1371,7 @@ height: 150px !important;
     width: 25px !important;
     top: 4px !important;
    }
-   .changephemail {
-     /* width: 65px !important; */
-   }
+
   .changephemail .wtsapaud-icon {
     top: 5px !important;
 }
@@ -2044,8 +2042,21 @@ box-shadow: 4px 4px 5px gainsboro;
   .paymentmode > .mat-radio-button.mat-radio-checked { 
     border-color: blue !important;
     box-shadow: 0 0 5px 5px blue!important;
-    padding: 10px!important;
   }
+
+
+  .time_range > .mat-radio-button.mat-radio-checked { 
+    border-bottom: blue !important;
+    box-shadow: 0 0 2px 2px blue!important;
+  }
+
+  
+  div.freeslots {
+    overflow: scroll!important;
+    width: 100%!important;
+    height: 250px!important;
+  }
+
   ::ng-deep .mat-radio-button .mat-radio-container {
     display: none!important;
   }
@@ -2057,3 +2068,85 @@ box-shadow: 4px 4px 5px gainsboro;
   ::ng-deep .mat-radio-container .mat-radio-label{
     display: inline;
   }
+
+
+
+  
+.fa{
+  color: black!important;
+  font-size: 20px!important;
+  }
+  
+  .fa-arrow-circle-left
+  {
+    font-size: 35px!important;
+  }
+  .fa-arrow-right{
+    font-size: 35px!important;
+    color: white!important;
+  }
+  .back-btn-text{
+    font-size: 30px!important;
+    font-weight: 700;
+  }
+  .provider-details{
+    font-size: 40px!important;
+  }
+  
+  .appointment-details-heading{
+    background-color: #13238f!important;
+    color: white;
+    border-radius: 10px;
+  }
+  
+
+  
+@media (min-width:320px)  {
+  /* smartphones, iPhone, portrait 480x320 phones */ 
+  .pad-10.d-flex.flex-column-fluid.hf-panel-body {
+   padding-bottom: 150px!important;
+}
+ }
+@media (min-width:481px)  { 
+ /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ 
+ .pad-10.d-flex.flex-column-fluid.hf-panel-body {
+   padding-bottom: 0px!important;
+}
+}
+@media (min-width:641px)  { 
+ /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+ .pad-10.d-flex.flex-column-fluid.hf-panel-body {
+   padding-bottom: 0px!important;
+}
+}
+@media (min-width:961px)  { 
+ /* tablet, landscape iPad, lo-res laptops ands desktops */
+ .pad-10.d-flex.flex-column-fluid.hf-panel-body {
+   padding-bottom: 0px!important;
+}
+
+}
+@media (min-width:1025px) { 
+ /* big landscape tablets, laptops, and desktops */
+ .pad-10.d-flex.flex-column-fluid.hf-panel-body {
+   padding-bottom: 0px!important;
+}
+}
+@media (min-width:1281px) { 
+ /* hi-res laptops and desktops */
+ .pad-10.d-flex.flex-column-fluid.hf-panel-body {
+   padding-bottom: 0px!important;
+}
+}
+
+
+
+.mat-chip.mat-standard-chip.mat-primary
+{
+  color: blue!important;
+  background-color: white!important;
+  border: 1px solid blue;
+}
+.mat-chip-selected{
+  color: green!important;
+}

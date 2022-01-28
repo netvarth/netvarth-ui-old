@@ -33,7 +33,7 @@ import { ConsumerEmailComponent } from '../../../shared/component/consumer-email
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PaytmService } from '../../../../../app/shared/services/paytm.service';
 import { JcCouponNoteComponent } from '../../../../shared/modules/jc-coupon-note/jc-coupon-note.component';
-
+// import { DatePaginationComponent } from './date-pagination/date-pagination.component';
 
 @Component({
     selector: 'app-consumer-checkin',
@@ -41,6 +41,8 @@ import { JcCouponNoteComponent } from '../../../../shared/modules/jc-coupon-note
     styleUrls: ['./consumer-checkin.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css'],
 })
 export class ConsumerCheckinComponent implements OnInit, OnDestroy {
+    time_range = ['09:00 AM - 12:00 PM','12:00 PM - 03:00 PM','03:00 PM - 06:00 PM','06:00 PM - 09:00 PM'];
+    time_range_selection:any = this.time_range[0];
     paymentBtnDisabled = false;
     isClickedOnce = false;
     shownonIndianModes = false;
@@ -300,6 +302,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     gateway: any;
     isPayment: boolean;
     pGateway: any;
+    sel_checkindate1: any;
+    date_pagination_date: any;
     constructor(public fed_service: FormMessageDisplayService,
         @Inject(MAT_DIALOG_DATA) public dialogData: any,
         private fb: FormBuilder,
@@ -398,6 +402,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.getFamilyMember();
         });
     }
+    GetChildData(data: any){  
+        this.sel_checkindate1 = data;
+     } 
 
     OnNewMember(event) {
         // if (this.chosen_person = 'new_member') {
@@ -544,7 +551,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
         );
     }
-
 
 
 
@@ -1637,6 +1643,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     handleConsumerNote(vale) {
         this.consumerNote = vale;
     }
+    changed_date_value(data)
+    {
+        this.date_pagination_date = data;
+    }
     handleFutureDateChange(e) {
         const tdate = e.targetElement.value;
         const newdate = tdate.split('/').reverse().join('-');
@@ -1648,6 +1658,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
         this.sel_checkindate = seldate;
+        this.selectedDate = this.sel_checkindate;
+        console.log(this.selectedDate);
         this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     }
     checkFutureorToday() {
@@ -2722,6 +2734,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
             case 'businessProfile': {
                 this.businessjson = result;
+                console.log(this.businessjson)
                 if (this.businessjson.uniqueId === 128007) {
                     this.heartfulnessAccount = true;
                 }
@@ -3384,12 +3397,16 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         return length;
     }
+    
+
+
+
     actionCompleted() {
-        if (this.action === 'timeChange') {
+        if (this.action !== 'members' && this.action !== 'addmember' && this.action !== 'note' && this.action !== 'slotChange' && this.action !== 'attachment' && this.action !== 'coupons') {
             if (this.queuejson[this.sel_queue_indx]) {
                 this.selectedQTime = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
             }
-            this.selectedDate = this.sel_checkindate;
+            this.selectedDate = this.date_pagination_date;
             this.checkFutureorToday();
             this.personsAhead = this.sel_queue_personaahead;
             this.waitingTime = this.sel_queue_waitingmins;
@@ -3495,4 +3512,36 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.checkJcash = false;
         }
     }
+    
+
+    handle_time_range_change(x)
+    {
+        this.time_range_selection = x;
+    }
+
+    is_in_time_range(time)
+    {
+        const hour_time_range = this.time_range_selection.split(' - ');
+        const hour_start_range = hour_time_range[0].slice(0,8);
+        const hour_end_range = hour_time_range[1].slice(0,8);
+        var converted_selected_time = moment(time, 'hh:mm A').format('HH');
+        var converted_hour_start_range = moment(hour_start_range, 'hh:mm A').format('HH');
+        var converted_hour_end_range = moment(hour_end_range, 'hh:mm A').format('HH');
+        if (parseInt(converted_selected_time) >= parseInt(converted_hour_start_range) && 
+            parseInt(converted_selected_time) <= parseInt(converted_hour_end_range))
+            {
+                return true;
+            }
+
+    }
+
+
 }
+
+
+  
+
+
+
+
+

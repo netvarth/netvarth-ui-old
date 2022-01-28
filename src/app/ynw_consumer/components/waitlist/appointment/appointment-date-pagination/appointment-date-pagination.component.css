@@ -1,0 +1,60 @@
+
+  /* Date Pagination Styles of Consumer Checkin and Consumer Appointment Component */
+
+
+  .date-carousel {
+    box-sizing: border-box;
+    display: flex;
+    height: auto;
+    margin: auto;
+    position: relative;
+  }
+  
+  .date-carousel-next,
+  .date-carousel-prev,
+  .date-carousel-input {
+    box-sizing: border-box;
+    position:relative;
+    border: none;
+  }
+  
+  .date-carousel-next,
+  .date-carousel-prev {
+    background-color: transparent;
+    cursor: pointer;
+    font-size: larger;
+    font-weight: bold;
+  }
+  
+  .date-carousel-input {
+    background-color: transparent;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-width:0px!important;
+    border: none!important;
+  }
+
+
+
+.shadow
+{
+    box-shadow: 3px 5px 4px #e2dede;
+}
+.default-value
+{
+  background-color:#13238F!important;
+  color: white!important; 
+}
+
+
+@media only screen and (max-width: 600px) {
+  .desktop-only
+{
+  display: none!important;
+} 
+.card
+{
+  font-size: 10px;
+}
+}

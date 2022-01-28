@@ -21,7 +21,7 @@ import { CheckInHistoryServices } from '../shared/modules/consumer-checkin-histo
     ScrollToModule.forRoot()
   ],
   declarations: [
-    ConsumerComponent
+    ConsumerComponent,
   ],
   exports: [MatBadgeModule],
   schemas: [

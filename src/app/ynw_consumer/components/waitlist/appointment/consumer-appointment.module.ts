@@ -20,6 +20,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { AppointmentDatePaginationComponent } from './appointment-date-pagination/appointment-date-pagination.component';
 const routes: Routes = [
     { path: '', component: ConsumerAppointmentComponent},
     // { path: 'payment/:id',loadChildren: ()=>import('./payment/payment.module').then(m=>m.ConsumerApptPaymentModule) },
@@ -30,7 +31,8 @@ const routes: Routes = [
 ];
 @NgModule({
     declarations: [
-        ConsumerAppointmentComponent
+        ConsumerAppointmentComponent,
+        AppointmentDatePaginationComponent,
     ],
     imports: [
         FormMessageDisplayModule,

@@ -40,6 +40,8 @@ import { JcCouponNoteComponent } from '../../../../shared/modules/jc-coupon-note
     styleUrls: ['./consumer-appointment.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
+    time_range = ['09:00 AM - 12:00 PM','12:00 PM - 03:00 PM','03:00 PM - 06:00 PM','06:00 PM - 09:00 PM'];
+    time_range_selection:any = this.time_range[0];
     paymentBtnDisabled = false;
     isClickedOnce = false;
     tooltipcls = '';
@@ -60,7 +62,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     queuejson: any = [];
     businessjson: any = [];
     checkPolicy = true;
-
     familymembers: any = [];
     partysizejson: any = [];
     sel_loc;
@@ -328,6 +329,7 @@ selectedTime: any;
     languageSelected: any = [];
     iseditLanguage = false;
     bgColor: string;
+    date_pagination_date: any;
 
 
 
@@ -1724,6 +1726,10 @@ selectedTime: any;
     handleConsumerNote(vale) {
         this.consumerNote = vale;
     }
+    changed_date_value(data)
+    {
+        this.date_pagination_date = data;
+    }
     handleFutureDateChange(e) {
         const tdate = e.targetElement.value;
         const newdate = tdate.split('/').reverse().join('-');
@@ -1735,6 +1741,9 @@ selectedTime: any;
         }
         const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
         this.sel_checkindate = seldate;
+        console.log(this.sel_checkindate)
+        this.sel_checkindate = this.date_pagination_date;
+        console.log(this.sel_checkindate)
         this.getAvailableSlotByLocationandService(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     }
     checkFutureorToday() {
@@ -3262,8 +3271,8 @@ selectedTime: any;
         return length;
     }
     actionCompleted() {
-        if (this.action === 'slotChange') {
-            this.selectedDate = this.sel_checkindate;
+        if (this.action !== 'members' && this.action !== 'addmember' && this.action !== 'note' && this.action !== 'slotChange' && this.action !== 'attachment' && this.action !== 'coupons') {
+            this.selectedDate = this.date_pagination_date;
             this.checkFutureorToday();
             this.selectedApptTime = this.apptTime;
             this.waitlist_for[0].apptTime = this.apptTime['time'];
@@ -3640,4 +3649,26 @@ selectedTime: any;
     togglepaymentMode() {
         this.shownonIndianModes = !this.shownonIndianModes;
     }
+
+    handle_time_range_change(x)
+    {
+        this.time_range_selection = x;
+    }
+
+    is_in_time_range(time)
+    {
+        const hour_time_range = this.time_range_selection.split(' - ');
+        const hour_start_range = hour_time_range[0].slice(0,8);
+        const hour_end_range = hour_time_range[1].slice(0,8);
+        var converted_selected_time = moment(time, 'hh:mm A').format('HH');
+        var converted_hour_start_range = moment(hour_start_range, 'hh:mm A').format('HH');
+        var converted_hour_end_range = moment(hour_end_range, 'hh:mm A').format('HH');
+        if (parseInt(converted_selected_time) >= parseInt(converted_hour_start_range) && 
+            parseInt(converted_selected_time) <= parseInt(converted_hour_end_range))
+            {
+                return true;
+            }
+
+    }
+    
 }

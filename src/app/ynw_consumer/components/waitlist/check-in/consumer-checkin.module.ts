@@ -15,6 +15,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
 import { MatRadioModule } from '@angular/material/radio';
 import { CheckinAddMemberModule } from '../../../../shared/modules/checkin-add-member/checkin-add-member.module';
+import { DatePaginationComponent } from './date-pagination/date-pagination.component';
 const routes: Routes = [
     { path: '', component: ConsumerCheckinComponent},
     // { path: 'payment/:id', loadChildren: ()=> import('./payment/payment.module').then(m=>m.ConsumerCheckinPaymentModule) },
@@ -24,7 +25,8 @@ const routes: Routes = [
 ];
 @NgModule({
     declarations: [
-        ConsumerCheckinComponent
+        ConsumerCheckinComponent,
+        DatePaginationComponent
     ],
     imports: [
         CommonModule,
