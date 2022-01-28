@@ -176,8 +176,16 @@
                                         </div>
                                     </div>
                                     <div class="mgn-up-20 call-inst" *ngIf="callingModes === 'WhatsApp'">
-                                        You can call the {{customer_label}} directly at
-                                        {{data.virtualService['WhatsApp']}}
+                                        <!-- You can call the {{customer_label}} directly at
+                                        +{{data.virtualService['WhatsApp']}} -->
+                                        <div  *ngIf=" data.virtualService[data.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                                            You can call the {{customer_label}} directly at
+                                            {{data.virtualService['WhatsApp']}}
+                                        </div>
+                                        <div  *ngIf="! data.virtualService[data.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                                            You can call the {{customer_label}} directly at
+                                            +{{data.virtualService['WhatsApp']}}
+                                        </div>
                                     </div>
                                     <div class="mgn-up-20 call-inst" *ngIf="callingModes === 'Phone'">
                                         You can call the {{customer_label}} directly at

@@ -11,13 +11,13 @@ import { Messages } from '../../../shared/constants/project-messages';
 
 
 export class ConfirmBoxComponent {
-  ok_btn_cap = 'OK';
+  yes_btn_cap = 'YES';
   cancel_btn_cap = 'NO';
 
   constructor(public dialogRef: MatDialogRef<ConfirmBoxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (this.data.type) {
-      this.ok_btn_cap = Messages.YES_BTN;
+      this.yes_btn_cap = Messages.YES_BTN;
       this.cancel_btn_cap = Messages.NO_BTN;
     }
   }
