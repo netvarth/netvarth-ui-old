@@ -187,17 +187,51 @@ export class TeleServiceShareComponent implements OnInit {
       this.waitFor = '\n3. Wait for the video call to start';
       this.gooleWaitFor = '\n3. Wait for the video call to start';
       this.zoomWaitFor = '\n2. Wait for the video call to start';
+    //  console.log(this.data.serviceDetail.virtualCallingModes[0])
+    //  console.log(this.meetingLink.slice(14, 29).startsWith('+'))
       switch (this.data.app) {
         case 'WhatsApp':
           if (this.data.serviceDetail.virtualServiceType === 'videoService') {
-            this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a WhatsApp video call on + ' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+            if(this.meetingLink.slice(14, 29).startsWith('+')){
+              this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a WhatsApp video call on  ' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
             this.is_noSMS = true;
+
+            }
+            else{
+              this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a WhatsApp video call on + ' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+            this.is_noSMS = true;
+            }
+            // this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a WhatsApp video call on + ' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+            // this.is_noSMS = true;
           } else {
-            this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a WhatsApp audio call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+            if(this.meetingLink.slice(14, 29).startsWith('+')){
+              this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a WhatsApp audio call on ' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+
+            }
+            else{
+              this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a WhatsApp audio call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+            }
+            // this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a WhatsApp audio call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
           }
           break;
+         
         case 'Phone':
-          this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a phone call on ' + this.meetingLink + '.';
+          console.log(this.meetingLink)
+          if(this.meetingLink.startsWith('++')){
+            // console.log('++')
+            this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a phone call on ' + this.meetingLink.slice(1) + '.';
+
+          }
+          else if(this.meetingLink.startsWith('+')){
+            // console.log('+')
+            this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a phone call on ' + this.meetingLink + '.';
+
+          }
+          else{
+            this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a phone call on +' + this.meetingLink + '.';
+            
+          }
+          // this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a phone call on ' + this.meetingLink + '.';
           break;
         case 'Zoom':
           this.msg_to_user = 'In ' + this.selectedTime + this.videocall_msg + this.instalZoom + this.zoomWaitFor;
@@ -229,17 +263,57 @@ export class TeleServiceShareComponent implements OnInit {
     switch (this.data.app) {
       case 'WhatsApp':
         if (this.data.serviceDetail.virtualServiceType === 'videoService') {
-          this.is_noSMS= true;
-          this.msg_to_user = 'When it is time for your video call, you will receive a WhatsApp video call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+          // this.is_noSMS= true;
+          // this.msg_to_user = 'When it is time for your video call, you will receive a WhatsApp video call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+          // this.msg_to_me = 'Follow these instructions to start the video call: \n1. Open the following link on your phone/tablet browser- ' + this.meetingLink + '\n(Your phone/tablet should have WhatsApp installed)\n2. Start the video call';
+          if(this.meetingLink.slice(14, 29).startsWith('+')){
+            // this.msg_to_user = 'In ' + this.selectedTime + ', you will receive a WhatsApp video call on  ' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+          this.is_noSMS = true;
+          this.msg_to_user = 'When it is time for your video call, you will receive a WhatsApp video call on ' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
           this.msg_to_me = 'Follow these instructions to start the video call: \n1. Open the following link on your phone/tablet browser- ' + this.meetingLink + '\n(Your phone/tablet should have WhatsApp installed)\n2. Start the video call';
+
+          }
+          else{
+            this.is_noSMS = true;
+            this.msg_to_user = 'When it is time for your video call, you will receive a WhatsApp video call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+            this.msg_to_me = 'Follow these instructions to start the video call: \n1. Open the following link on your phone/tablet browser- ' + this.meetingLink + '\n(Your phone/tablet should have WhatsApp installed)\n2. Start the video call';
+          }
         } else {
-          this.msg_to_user = 'When it is time for your audio call, you will receive a WhatsApp audio call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+          // this.msg_to_user = 'When it is time for your audio call, you will receive a WhatsApp audio call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+          // this.msg_to_me = 'Follow these instructions to start the audio call: \n1. Open the following link on your phone/tablet browser- ' + this.meetingLink + '\n(Your phone/tablet should have WhatsApp installed)\n2. Start the audio call';
+          if(this.meetingLink.slice(14, 29).startsWith('+')){
+           this.msg_to_user = 'When it is time for your audio call, you will receive a WhatsApp audio call on ' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
           this.msg_to_me = 'Follow these instructions to start the audio call: \n1. Open the following link on your phone/tablet browser- ' + this.meetingLink + '\n(Your phone/tablet should have WhatsApp installed)\n2. Start the audio call';
+
+          }
+          else{
+            this.msg_to_user = 'When it is time for your audio call, you will receive a WhatsApp audio call on +' + this.meetingLink.slice(14, 29) + '.\n' + this.internt_cap;
+            this.msg_to_me = 'Follow these instructions to start the audio call: \n1. Open the following link on your phone/tablet browser- ' + this.meetingLink + '\n(Your phone/tablet should have WhatsApp installed)\n2. Start the audio call';
+          }
+
         }
         break;
       case 'Phone':
-        this.msg_to_user = 'When it is time for your phone call, you will receive a call on ' + this.meetingLink;
-        this.msg_to_me = 'Follow these instructions to start the phone call:\n1. Call ' + this.customer_label + ' on the phone no +' + this.meetingLink;
+        // this.msg_to_user = 'When it is time for your phone call, you will receive a call on ' + this.meetingLink;
+        // this.msg_to_me = 'Follow these instructions to start the phone call:\n1. Call ' + this.customer_label + ' on the phone no ' + this.meetingLink;
+
+        if(this.meetingLink.startsWith('++')){
+          // console.log('++')
+          this.msg_to_user = 'When it is time for your phone call, you will receive a call on ' + this.meetingLink.slice(1);
+          this.msg_to_me = 'Follow these instructions to start the phone call:\n1. Call ' + this.customer_label + ' on the phone no ' + this.meetingLink.slice(1);
+
+        }
+        else if(this.meetingLink.startsWith('+')){
+          // console.log('+')
+          this.msg_to_user = 'When it is time for your phone call, you will receive a call on ' + this.meetingLink;
+          this.msg_to_me = 'Follow these instructions to start the phone call:\n1. Call ' + this.customer_label + ' on the phone no ' + this.meetingLink;
+
+        }
+        else{
+          // console.log('-')
+          this.msg_to_user = 'When it is time for your phone call, you will receive a call on +' + this.meetingLink;
+          this.msg_to_me = 'Follow these instructions to start the phone call:\n1. Call ' + this.customer_label + ' on the phone no ' + this.meetingLink;
+        }
         break;
       case 'Zoom':
         this.msg_to_user = this.videocall_msg + this.instalZoom + this.waitFor;
