@@ -3702,7 +3702,8 @@
 
 .specialclass .mat-dialog-container {
     overflow: auto;
-    display: table;
+    /* display: table; */
+    width:100%;
 }
 
 .specialclass .mat-dialog-container .mat-dialog-title:after {
