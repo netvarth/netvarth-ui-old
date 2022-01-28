@@ -53,7 +53,10 @@
         <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding text-center">
             <div class="no-padding card-head-grey" *ngIf="timings">{{timingCaption}}</div>
             <h6 class="no-padding " *ngIf="timings">{{timings}}&nbsp;
-                <i class="fa fa-calendar poin" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)"></i>
+                <i class="fa fa-calendar pointer-cursor" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)"></i>
+            </h6>
+            <h6 class="no-padding " *ngIf="!timings && item.type!=='donation'">Check Timings
+                <i class="fa fa-calendar pointer-cursor" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)"></i>
             </h6>
         </div>
         <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding text-center" [ngClass]="timings?'bord-left':''">
