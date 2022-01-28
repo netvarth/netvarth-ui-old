@@ -308,6 +308,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   providercustomId: any;
   provideraccEncUid: any;
   checkavailabilitydialogref: any;
+  searchEnabled;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -544,7 +545,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                         _this.theme = _this.accountProperties['theme'];
                       }
                       const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
-                      if (!appPopupDisplayed && _this.profileSettings['showJaldeePopup']) {
+                      if (!appPopupDisplayed && _this.profileSettings['showJaldeePopup'] && this.searchEnabled) {
                         _this.popUp.nativeElement.style.display = 'block';
                       }
                       _this.gets3curl();
@@ -571,6 +572,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscriptions.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
       null, accountS3List).subscribe(
         (accountS3s: any) => {
+          this.searchEnabled = accountS3s.businessProfile.enableSearch;
           this.accountId = accountS3s.businessProfile.id;
           if (accountS3s.businessProfile.customId) {
             this.providercustomId = accountS3s.businessProfile.customId;

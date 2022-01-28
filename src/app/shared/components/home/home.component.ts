@@ -12,7 +12,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { TranslateService } from '@ngx-translate/core';
-import {I18nService} from '../../services/i18n-sevice';
+import { I18nService } from '../../services/i18n-sevice';
 
 @Component({
   selector: 'app-home',
@@ -35,14 +35,14 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     jaldee_home: 'assets/images/home/02.png'
   };
   languages = [
-    {value: 'en', viewValue: 'English'},
-    {value: 'hd', viewValue: 'Hindi'},
-    {value: 'kan', viewValue: 'Kannada'},
-    {value: 'tel',viewValue:'Telugu'},
-    {value: 'mal',viewValue:'Malayalam'},
-    {value: 'tam',viewValue:'Tamil'}
+    { value: 'en', viewValue: 'English' },
+    { value: 'hd', viewValue: 'Hindi' },
+    { value: 'kan', viewValue: 'Kannada' },
+    { value: 'tel', viewValue: 'Telugu' },
+    { value: 'mal', viewValue: 'Malayalam' },
+    { value: 'tam', viewValue: 'Tamil' }
   ];
-   langselected='English';
+  langselected = 'English';
   public domainlist_data: any = [];
   sector_info: any = [];
   special_info: any = [];
@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   carouselPackages: any;
   evnt;
   loading = false;
-  appliedDate:string='31st January 2022.'
+  appliedDate: string = '31st January 2022.'
   constructor(
     private shared_service: SharedServices,
     public shared_functions: SharedFunctions,
@@ -89,24 +89,25 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngAfterViewInit() {
-    this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
-    for(let i=0;i<this.languages.length;i++) {
-      if(this.languages[i].value==JSON.parse(localStorage.getItem('translatevariable'))) {
-        this.langselected=this.languages[i].viewValue;
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable')))
+    for (let i = 0; i < this.languages.length; i++) {
+      if (this.languages[i].value == JSON.parse(localStorage.getItem('translatevariable'))) {
+        this.langselected = this.languages[i].viewValue;
         break;
       }
     }
   }
-  changeLocale(locale: string,languagename) {
-    this.langselected=languagename;
-    console.log('lang',this.langselected)
- 
-     this.translate.use(locale); 
-  
-      this.i18nService.changeLocale(locale);
-        
-   }
+  changeLocale(locale: string, languagename) {
+    this.langselected = languagename;
+    console.log('lang', this.langselected)
+
+    this.translate.use(locale);
+
+    this.i18nService.changeLocale(locale);
+
+  }
   ngOnInit() {
+    // this.loading = true;
     const a = document.getElementById("fb-root");
     if (a) {
       a.classList.add('visible_chat');
@@ -115,67 +116,72 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.metaService.addTags([
       { name: 'description', content: 'www.jaldee.com is a web portal connecting service providers with customers. Jaldee is an all India platform listing thousands of doctors/professionals/technicians and all service areas including healthcare, homecare, personal care and legal/financial care. The motto of Jaldee is \"seamless connectivity of service providers/business enterprises with potential customers.\" Elimination of queues, wiping out unproductive & boring waiting times, is the motivation & aim of Jaldee.' }
     ]);
-    this.setSystemDate();
-    // calling the method to get the list of domains
-    this.getDomainList();
-    // callling method to set the captions for sectors / subdomains or specializations in the home page
-    this.setRequiredCaptions();
-    this.carouselPackages = {
-      dots: false,
-      autoplay: true,
-      autoplayTimeout: 6000,
-      autoplaySpeed: 1000,
-      autoplayHoverPause: true,
-      mouseDrag: true,
-      touchDrag: true,
-      pullDrag: true,
-      loop: true,
-      responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 3 }, 1200: { items: 3 } }
-    };
+    this.setSystemDate().then(
+      () => {
+        // this.loading = false;
+        // calling the method to get the list of domains
+        this.getDomainList();
+        // callling method to set the captions for sectors / subdomains or specializations in the home page
+        this.setRequiredCaptions();
+        this.carouselPackages = {
+          dots: false,
+          autoplay: true,
+          autoplayTimeout: 6000,
+          autoplaySpeed: 1000,
+          autoplayHoverPause: true,
+          mouseDrag: true,
+          touchDrag: true,
+          pullDrag: true,
+          loop: true,
+          responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 3 }, 1200: { items: 3 } }
+        };
 
-    this.customOptions = {
-      loop: true,
-      mouseDrag: true,
-      touchDrag: true,
-      pullDrag: true,
-      dots: false,
-      autoplay: true,
-      navSpeed: 700,
-      navText: ['', ''],
-      responsive: {
-        0: {
-          items: 1
-        },
-        400: {
-          items: 1
-        },
-        740: {
-          items: 1
-        },
-        940: {
-          items: 1
-        }
-      },
-      nav: true
-    };
-    this.carouselOne = {
-      dots: true,
-      loop: true,
-      autoplay: true,
-      responsiveClass: true,
-      responsive: {
-        0: {
-          items: 1
-        },
-        992: {
-          items: 3,
-          center: true,
-        }
+        this.customOptions = {
+          loop: true,
+          mouseDrag: true,
+          touchDrag: true,
+          pullDrag: true,
+          dots: false,
+          autoplay: true,
+          navSpeed: 700,
+          navText: ['', ''],
+          responsive: {
+            0: {
+              items: 1
+            },
+            400: {
+              items: 1
+            },
+            740: {
+              items: 1
+            },
+            940: {
+              items: 1
+            }
+          },
+          nav: true
+        };
+        this.carouselOne = {
+          dots: true,
+          loop: true,
+          autoplay: true,
+          responsiveClass: true,
+          responsive: {
+            0: {
+              items: 1
+            },
+            992: {
+              items: 3,
+              center: true,
+            }
+          }
+        };
+        setTimeout(() => {
+          this.handleScroll('home');
+        }, 500);
       }
-    };
-    setTimeout(() => {
-      this.handleScroll('home');
-    }, 500);
+    );
+
   }
   handleScroll(target) {
     this.triggerScrollTo(target);
@@ -234,11 +240,18 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     document.getElementById('video-box').innerHTML = '<iframe width="100%"  src="https://www.youtube-nocookie.com/embed/qF4gLhQW2CE?controls=1&rel=0&autoplay=1" height= "514px" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
   }
   setSystemDate() {
-    this.shared_service.getSystemDate()
-      .subscribe(
-        res => {
-          this.lStorageService.setitemonLocalStorage('sysdate', res);
-        });
+    const self = this;
+    return new Promise(function (resolve, reject) {
+      self.shared_service.getSystemDate()
+        .subscribe(
+          res => {
+            console.log("Here");
+            self.lStorageService.setitemonLocalStorage('sysdate', res);
+            resolve(true);
+          },
+        );
+    })
+
   }
   getDomainList() {
     const bconfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
@@ -354,9 +367,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   providerLinkClicked() {
     this.routerobj.navigate(['/business/healthcare']);
   }
-  openVivoCampPage(){
+  openVivoCampPage() {
     // console.log('Click')
     window.open('https://vivocampaign.jaldee.com/')
-   
+
   }
 }

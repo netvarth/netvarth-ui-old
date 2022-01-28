@@ -1,34 +1,7 @@
-// import { Component, OnInit } from '@angular/core';
-// import { SharedServices } from '../../services/shared-services';
-// import { SharedFunctions } from '../../functions/shared-functions';
-// import { ActivatedRoute } from '@angular/router';
-// @Component({
-//   selector: 'app-maintenance',
-//   templateUrl: './maintenance.component.html'
-// })
-// export class MaintenanceComponent implements OnInit {
-
-//   kwdet: any = [];
-//   api_error = null;
-//   domain;
-// showheaderandfooter = false;
-//   constructor(
-//     private activaterouterobj: ActivatedRoute,
-//     public shared_services: SharedServices,
-//     public shared_functions: SharedFunctions
-//   ) { }
-//   ngOnInit() {
-//     this.activaterouterobj.paramMap
-//       .subscribe(params => {
-//           this.showheaderandfooter = true;
-//       });
-//   }
-// }
 import { Component, OnInit } from '@angular/core';
 import { SharedServices } from '../../services/shared-services';
-import { SharedFunctions } from '../../functions/shared-functions';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
+// import { projectConstants } from '../../../app.component';
 @Component({
   selector: 'app-maintenance',
   templateUrl: './maintenance.component.html'
@@ -42,9 +15,8 @@ export class MaintenanceComponent implements OnInit {
   constructor(
     private activaterouterobj: ActivatedRoute,
     public shared_services: SharedServices,
-    public location: Location,
     private router: Router,
-    public shared_functions: SharedFunctions) { }
+  ) { }
   ngOnInit() {
     console.log('maintaince')
     this.activaterouterobj.paramMap
@@ -54,8 +26,13 @@ export class MaintenanceComponent implements OnInit {
       });
   }
   goHome() {
-    this.router.navigate(['/']);
-    // this.location.back();
-    // window.location.reload();
+
+    this.shared_services.getSystemDate().subscribe(
+      ()=>{
+        this.router.navigate(['/']).then(() => {
+          window.location.reload();
+        });
+      }
+    )
   }
 }

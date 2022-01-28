@@ -15,11 +15,13 @@ import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { projectConstants } from "../../../app.component";
 export function homeHttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http,projectConstants.PATH+ 'assets/i18n/home/', '.json');
-  }
+    if (projectConstants) {
+        return new TranslateHttpLoader(http, projectConstants.PATH + 'assets/i18n/home/', '.json');
+    }
+}
 const routes: Routes = [
-    {path: '', component: HomeComponent}
-  ];
+    { path: '', component: HomeComponent }
+];
 @NgModule({
     imports: [
         [RouterModule.forChild(routes)],
@@ -32,7 +34,7 @@ const routes: Routes = [
         SearchModule,
         LoginModule,
         LazyModule,
-        HttpClientModule ,
+        HttpClientModule,
         TranslateModule.forChild({
             loader: {
                 provide: TranslateLoader,
@@ -46,4 +48,4 @@ const routes: Routes = [
     exports: [HomeComponent],
     declarations: [HomeComponent]
 })
-export class HomeModule {}
+export class HomeModule { }
