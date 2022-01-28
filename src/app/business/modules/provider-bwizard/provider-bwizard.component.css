@@ -18,6 +18,9 @@ body {
   backface-visibility: hidden;
   overflow-x: auto;
 }
+.body-color{
+  background-color: white !important;
+}
 
 h1, h2, h3, h4 {
   font-size: 38px;
@@ -2022,17 +2025,17 @@ textarea {
   font-size: 1.8rem !important;
   font-weight: 400;
 }
-.img-fluid{
+/* .img-fluid{
   padding-bottom: 50px!important;
   
-}
+} */
 
 .img-fluids{
   position:relative;
   width: 100% !important;
   height: auto !important;
   display: block;
-  padding-bottom: 50px !important;
+  /* padding-bottom: 50px !important; */
   padding-left: 0px !important;
   padding-right: 0px !important;
   margin-left: 0px !important;
@@ -2069,7 +2072,7 @@ textarea {
   }
   .jaldeeBusiness{
     position:relative;
-    margin-top: 100px ;
+    /* margin-top: 100px ; */
   }
   h2{
     font-size: 1.5rem;
