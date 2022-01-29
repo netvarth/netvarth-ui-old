@@ -85,11 +85,23 @@
                   </div>
                 </div>
               </form>
-              <div class="col-lg-2 col-sm-1  col-md-2 col-xs-1 no-padding display-lg-show">
+              <div class="col-lg-0 col-sm-1  col-md-0 col-xs-1 no-padding display-sm-show">
                 <mat-form-field >
-                  <mat-label class="categoryfield"  *ngIf="!categoryvalue" style="color: black;background-color: #f6f6f6;padding-left: 30px;">Category&nbsp;&nbsp;&nbsp;<span class="fa fa-angle-down"></span></mat-label>
+                  <!-- <mat-label > -->
+                    
+                    <img style="margin-top:2px" src="../../../../../assets/images/Group 1512.png" width="50px" height="70px" >
+                  
+                  <!-- </mat-label> -->
+                  <mat-select class="displaysmall" [(ngModel)]="categoryvalue">
+                    <mat-option  *ngFor="let category of categoryForSearchingarray"  [value]="category">{{category}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+               </div>
+              <div class="col-lg-2 col-sm-1 display-lg-show col-md-2 col-xs-1 no-padding ">
+                <mat-form-field  >
+                  <mat-label class=" "  *ngIf="!categoryvalue" style="color: black;background-color: #f6f6f6;padding-left: 30px;">Category&nbsp;&nbsp;&nbsp;<span class="fa fa-angle-down"></span></mat-label>
                   <!-- <mat-label class="display-sm-show"><img src="../../../../../assets/images/Group 1512.png" width="70px" height="70px"></mat-label> -->
-                  <mat-select   [(ngModel)]="categoryvalue">
+                  <mat-select  class="categoryfield"  [(ngModel)]="categoryvalue">
                     <mat-option  *ngFor="let category of categoryForSearchingarray"  [value]="category">{{category}}</mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -102,14 +114,7 @@
                 <button *ngIf="categoryvalue=='Search with PhoneNumber'" class="findcolor" (click)="serchCustomers(phone)"><i class="fa fa-search padding-0" aria-hidden="true"></i>
                 </button>
               </div>
-              <div class="col-lg-0 col-sm-1  col-md-0 col-xs-1 no-padding display-sm-show">
-                <mat-form-field >
-                  <mat-label class="categoryfield"><img src="../../../../../assets/images/Group 1512.png" width="70px" height="70px"></mat-label>
-                  <mat-select [(ngModel)]="categoryvalue">
-                    <mat-option  *ngFor="let category of categoryForSearchingarray"  [value]="category">{{category}}</mat-option>
-                  </mat-select>
-                </mat-form-field>
-               </div>
+             
              
               
             </div>
@@ -375,7 +380,9 @@
                   </div>
                  
                 </div>
+                
                 <div>
+                 
                   <ng-container *ngIf="queuejson.length == 0 && queueQryExecuted">
                     <span class='no-queue-available'
                       *ngIf="checkinLabel==='Check-In'">Check-in{{not_accepted_for_this_date}}</span>
@@ -425,7 +432,81 @@
               </div>
 
           </div>
-      
+          <div class="col-md-12 display-sm-show  mgn-up-20  orangebox"  *ngIf="!showAction && queuejson.length > 0">
+            <div class="" style="  background-color:#fff9d8 !important;  
+            padding: 10px !important;margin-top:5px;font-family: 'Poppins', sans-serif !important"> 
+              <div class="col-md-12 no-padding" *ngIf="queuejson.length > 0 && servicesjson.length > 0">
+                <div class="waitlist-button-outer no-padding">
+                  <div class="showDetOuter" *ngIf="queuejson.length > 0">
+                    <div class="showDetService">
+                      <span *ngIf="calc_mode=='NoCalc'">
+                        <span *ngIf="!isFuturedate">
+                          <strong>Today
+                          </strong>
+                        </span>
+                        <span *ngIf="isFuturedate">
+                          <strong>{{sel_checkindate | date: newDateFormat}}</strong>
+                        </span>
+                      </span>
+                    </div>
+                    <div class="queue-waitingdiv">
+                      <div class="queue-head"
+                        *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
+                        <strong>{{today_cap}} {{estimateCaption}}: </strong>
+                        <span class="queue-avail-date">{{sel_queue_waitingmins}}</span>
+                      </div>
+                      <div class="queue-head"
+                        *ngIf="settingsjson['calculationMode']!='NoCalc' || (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
+                        <strong>{{persons_ahead_cap}}</strong>&nbsp;
+                        <span class="queue-avail-date">{{sel_queue_personaahead}}</span>
+                      </div>
+                    </div>
+                    <div class="queue-waitingdiv"
+                      *ngIf="sel_queue_servicetime!='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
+                      <div class="queue-head">
+                        <ng-container *ngIf="isFuturedate">
+                          <span class="checkin-footer-date">
+                            <strong>{{nextavailableCaption}}:
+                              <span class="queue-avail-date">{{sel_checkindate | date: newDateFormat}},
+                                {{sel_queue_servicetime}}
+                              </span>
+                            </strong>
+                          </span>
+                        </ng-container>
+                        <ng-container *ngIf="!isFuturedate">
+                          <strong>{{today_cap}} </strong>
+                          <strong>{{checkinsCaption}}:
+                          </strong>
+                          <span class="queue-avail-date">{{sel_queue_servicetime}}</span>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
+                <mat-chip class="pro-action" (click)="handleSideScreen('members')"><a>Add /
+                    Change
+                    Member </a>
+                </mat-chip>
+                <mat-chip class="pro-action" (click)="handleSideScreen('note')">
+                  <a>{{(sel_ser_det.consumerNoteTitle) ? sel_ser_det.consumerNoteTitle : 'Notes'}}
+                    <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span> </a>
+                </mat-chip>
+                <mat-chip class="pro-action" (click)="imagefile.click()"><a>
+                    <input #imagefile type="file" accept="/*;capture=camera" style="display:none;" multiple
+                      (change)="filesSelected($event)">
+                    <span> Upload
+                      File</span>
+                    <span
+                      *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span></a>
+                </mat-chip>
+              </mat-chip-list>
+
+            </div>
+           
+          </div>
             <div class="col-md-12 btborder1 mgn-bt-20">&nbsp;</div>
             <ng-container *ngIf="checkinLabel && queuejson.length > 0 && servicesjson.length > 0">
               <div class="waitlist-action mgn-bt-20 mgn-up-10">
@@ -536,7 +617,8 @@
                 </ng-container>
               </aside>
             </div>
-            <div class="col-md-12  mgn-up-20  orangebox" *ngIf="!showAction && queuejson.length > 0">
+            <div class="col-md-12 display-lg-show  mgn-up-20" style="background-color:#fff9d8;
+            padding: 10px;" *ngIf="!showAction && queuejson.length > 0">
 
               <div class="col-md-12 no-padding" *ngIf="queuejson.length > 0 && servicesjson.length > 0">
                 <div class="waitlist-button-outer no-padding">
