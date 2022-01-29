@@ -1,7 +1,9 @@
 .green{
-    color: #1EB000;
+    color: #2000b0;
     line-height: 1.5rem;
     font-size: 15px;
+    text-align: center !important;
+    padding: 5px !important;
    
     /* font-weight: 600; */
 
@@ -34,10 +36,14 @@
  
 }
 .greenline {
-    border:2px solid #b4f3a7;text-align: center;padding: 5px;cursor: pointer;
+    border:2px solid #d6d6db;text-align: center;padding: 5px;cursor: pointer;
+    color: white;
+    background-color: white;
+   
+ 
 }
 .green:hover {
-  background-color: #1EB000;
+  background-color: #000cb0;
   color: white;
 }
 .red{

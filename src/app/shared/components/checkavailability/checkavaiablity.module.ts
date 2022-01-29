@@ -6,6 +6,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatDialogModule } from "@angular/material/dialog";
 import { LoadingSpinnerModule } from "../../modules/loading-spinner/loading-spinner.module";
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatChipsModule } from '@angular/material/chips';
+
 
 @NgModule({
     imports: [
@@ -14,6 +16,7 @@ import { MatNativeDateModule } from '@angular/material/core';
         MatDatepickerModule,
         MatNativeDateModule,
         MatDialogModule,
+        MatChipsModule,
         LoadingSpinnerModule
     ],
     exports: [ CheckavailabilityComponent ],
