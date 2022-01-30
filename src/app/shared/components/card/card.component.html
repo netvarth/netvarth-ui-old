@@ -14,7 +14,7 @@
             </p>
         </div>
         <div class="col-md-3 col-xs-3 col-sm-3 col-lg-3 no-padding card-inner-img-cont">
-            <div class="img-circle" *ngIf="service.serviceType && service.serviceType == 'virtualService'">
+            <div class="img-circle" *ngIf="!service.servicegallery &&  service.serviceType && service.serviceType == 'virtualService'">
                 <i class="fa phon-icon "
                     *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
                 <i class="fa meet-icon"
@@ -29,15 +29,19 @@
                     *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
             </div>
             <div class="img-circle "
-                *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'donationService'">
+                *ngIf="service.servicegallery && service.servicegallery.length > 0">
+                <img class=" img-responsive" [src]="service.servicegallery[0].thumbUrl" alt=" Service Image">
+            </div>
+            <div class="img-circle "
+                *ngIf="!service.servicegallery && service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'donationService'">
                 <img class=" img-responsive" src="assets/images/donation.png" alt="Donation Image">
             </div>
             <div class="img-circle"
-                *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain != 'religiousPriests'">
+                *ngIf="!service.servicegallery && service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain != 'religiousPriests'">
                 <img class="img-responsive" src="assets/images/meeting_Artboard.png" alt="Physical Service Image">
             </div>
             <div class="img-circle "
-                *ngIf="service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain == 'religiousPriests'">
+                *ngIf="!service.servicegallery && service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain == 'religiousPriests'">
                 <img class=" img-responsive" src="assets/images/hindu-temple-clipart.jpg" alt="Physical Service Image">
             </div>
         </div>

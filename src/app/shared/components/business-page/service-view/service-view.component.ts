@@ -65,6 +65,7 @@ export class ServiceViewComponent implements OnInit {
     ]
   };
   image_list_popup: any = [];
+  serviceGalleryPopup: any = [];
   busname: any;
   serviceid: string;
   accountEncId: string;
@@ -145,6 +146,7 @@ export class ServiceViewComponent implements OnInit {
   showpreinfo = false;
   showpostinfo = false;
   checkavailabilitydialogref: any;
+  extra_service_img_count: number;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public shared_services: SharedServices,
@@ -413,6 +415,8 @@ export class ServiceViewComponent implements OnInit {
             this.is_donation_serv =true;
             this.servicename = this.donationServicesjson[dIndex]['name'];
             this.servicedetails = this.donationServicesjson[dIndex];
+            console.log("Donation:");
+            this.setServiceGallery(this.servicedetails);
           }
         }
         break;
@@ -434,6 +438,24 @@ export class ServiceViewComponent implements OnInit {
         break;
       }
     }
+  }
+  setServiceGallery(servicedetails: any) {
+    console.log(servicedetails);
+    this.serviceGalleryPopup = [];
+    if (servicedetails.servicegallery && servicedetails.servicegallery.length > 0) {
+      if (servicedetails.servicegallery.length > 5) {
+        this.extra_service_img_count = servicedetails.servicegallery.length - 5;
+      }
+        for (let i = 0; i < servicedetails.servicegallery.length; i++) {
+          const imgobj = new Image(
+            i,
+            { // modal
+              img: servicedetails.servicegallery[i].url,
+              description: servicedetails.servicegallery.caption || ''
+            });
+          this.serviceGalleryPopup.push(imgobj);
+        }
+      }
   }
   showDesc() {
     if (this.showmoreDesc) {
@@ -545,6 +567,8 @@ export class ServiceViewComponent implements OnInit {
           if (_this.wlServices[aptIndex]['id'] == _this.serviceid && _this.wlServices[aptIndex].serviceAvailability) {
             _this.servicename = _this.wlServices[aptIndex]['name'];
             _this.servicedetails = _this.wlServices[aptIndex];
+            console.log("Waitlist:");
+            _this.setServiceGallery(_this.servicedetails);
             console.log("detailswait" + JSON.stringify(_this.servicedetails));
            if (_this.servicedetails.serviceAvailability['personAhead'] >= 0) {
             _this.personsAheadText = 'People in line : ' + _this.servicedetails.serviceAvailability['personAhead'];
@@ -573,7 +597,8 @@ export class ServiceViewComponent implements OnInit {
                 _this.servicename = _this.apptServices[aptIndex]['name'];
                 _this.servicedetails = _this.apptServices[aptIndex];
                 console.log("details" + JSON.stringify(_this.servicedetails));
-
+                console.log("Appt:");
+                _this.setServiceGallery(_this.servicedetails);
                 _this.getduration(_this.servicedetails);
                 if (_this.servicedetails.serviceAvailability['nextAvailable']) {
                   _this.timingCaptionapt = 'Next Available Time';
@@ -583,9 +608,9 @@ export class ServiceViewComponent implements OnInit {
                   _this.deptname = _this.apptServices[aptIndex]['deptName'];
                 }
               }
-              console.log("Service Images :",_this.apptServices[aptIndex]['servicegallery']);
-              this.images  = _this.apptServices[aptIndex]['servicegallery'];
-              console.log("List Images : ",this.images)
+              // console.log("Service Images :",_this.apptServices[aptIndex]['servicegallery']);
+              // this.images  = _this.apptServices[aptIndex]['servicegallery'];
+              // console.log("List Images : ",this.images)
 
             }
             console.log("",_this.apptServices);
@@ -774,13 +799,14 @@ export class ServiceViewComponent implements OnInit {
       this.showDepartments = true;
     }
   }
-  openImageModalRow(image: Image) {
-    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+  openImageModalRow(image: Image, gallery, index) {
+    console.log("openImageModalRow", gallery);
+    // const index: number = this.getCurrentIndexCustomLayout(image, gallery);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
-  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
-    return image ? images.indexOf(image) : -1;
-  }
+  // private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+  //   return image ? images.indexOf(image) : -1;
+  // }
   onButtonBeforeHook() {
   }
   onButtonAfterHook() { }
