@@ -70,18 +70,19 @@
                         Price  : {{actionObj.service.totalAmount}} <i class="fa fa-inr" aria-hidden="true"></i></h6>
                     <h6 style="color:  #2653B7;margin-top: 5px;" *ngIf="actionObj.service.minPrePaymentAmount" class="mt-1 mb-1">
                         Payment Required Now : {{actionObj.service.minPrePaymentAmount}} <i class="fa fa-inr" aria-hidden="true"></i></h6><br>
-                    <h4 class="mgn-up-10"><b>&nbsp;&nbsp;Available Timings</b></h4>
+                    <h4 class="mgn-up-10"><b>&nbsp;&nbsp;Please Select Date/Time</b></h4>
                     <h4 class="today" *ngIf="!checkFutureorToday()">Today</h4>
                     <h4 class="today " *ngIf="checkFutureorToday()">{{sel_checkindate | date: newDateFormat}}</h4>
 
                     <div class="skyblue col-lg-1 col-md-1 col-sm-1 col-xs-1" style="cursor: pointer;"
                         [class.disable]="disableMinus()" *ngIf="apptSettings.futureAppt && checkFutureorToday()"
                         (click)="calculateDate(-1)">
-
+                        <h4><</h4>
                     </div>
                     <!-- {{appointmentSettings.futureAppt}} -->
                     <div class="col-lg-5 col-md-5 col-xs-8 col-sm-8 skyblue">
                         <h4>{{sel_checkindate | date: dateFormat}}</h4>
+                       
                     </div>
                     <div class="skyblue col-lg-1 col-md-1 col-sm-1 col-xs-1" *ngIf="apptSettings.futureAppt"
                         style="cursor: pointer;" (click)="calculateDate(1)">
