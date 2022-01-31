@@ -67,9 +67,9 @@
                         {{actionObj.service.description}}</p><br>
 
                     <h6 style="color:  #2653B7;margin-top: 5px;" *ngIf="actionObj.service.totalAmount" class="mb-1 mt-1">Service
-                        Price  : <i class="fa fa-inr" aria-hidden="true"></i>{{actionObj.service.totalAmount}}</h6>
+                        Price  : <i class="fa fa-inr" aria-hidden="true"></i> {{actionObj.service.totalAmount}}</h6>
                     <h6 style="color:  #2653B7;margin-top: 5px;" *ngIf="actionObj.service.minPrePaymentAmount" class="mt-1 mb-1">
-                        Payment Required Now : <i class="fa fa-inr" aria-hidden="true"></i>{{actionObj.service.minPrePaymentAmount}}</h6><br>
+                        Payment Required Now : <i class="fa fa-inr" aria-hidden="true"></i> {{actionObj.service.minPrePaymentAmount}}</h6><br>
                     <h4 class="mgn-up-10"><b>&nbsp;&nbsp;Please Select Date/Time</b></h4>
                     <h4 class="today" *ngIf="!checkFutureorToday()">Today</h4>
                     <h4 class="today " *ngIf="checkFutureorToday()">{{sel_checkindate | date: newDateFormat}}</h4>
