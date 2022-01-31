@@ -80,7 +80,7 @@
 }
 @media (min-width:320px) and (max-width:760px) {
     *{
-        font-size: 12px;
+        font-size: 15px;
     }
     .greenline {
         padding: 2px !important;
