@@ -246,6 +246,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   onlyVirtualItemsPresent=false;
   @ViewChild('popupforApp') popUp:ElementRef;
   showattachmentDialogRef: MatDialogRef<unknown, any>;
+  theme: any;
+  fromApp = false;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public translate: TranslateService,
@@ -270,6 +272,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
       if (qparams && qparams.source) {
         this.showOrder = true;
+      }
+      if (qparams && qparams.theme) {
+        this.theme = qparams.theme;
       }
       if (qparams && qparams.accountId) {
         this.accountId = qparams.accountId;
@@ -311,6 +316,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    if (this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA') {
+      this.fromApp = true;
+    }
     this.translate.use(JSON.parse(localStorage.getItem('translatevariable')))  
 
     // console.log(this.bookingStatusClasses);
@@ -1309,7 +1317,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     // console.log('order');
     // event.stopPropagation();
     if (this.customId) {
-      this.router.navigate([this.customId]);
+      if (this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA') {
+        this.router.navigate(['customapp',this.customId]);
+      } else{
+        this.router.navigate([this.customId]);
+      }
     } else {
       this.router.navigate(['searchdetail', provider.uniqueId]);
     }

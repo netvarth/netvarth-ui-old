@@ -5,6 +5,7 @@ import { HeaderModule } from "../shared/modules/header/header.module";
 import { ConsumerJoinModule } from "../ynw_consumer/components/consumer-join/join.component.module";
 import { CustomAppComponent } from "./custom-app.component";
 import { CustomappService } from "./customapp.service";
+import { LoginModule } from "./login/login.module";
 const routes: Routes = [
     { path: '', component: CustomAppComponent,
     children: [
@@ -22,6 +23,7 @@ const routes: Routes = [
         CommonModule,
         ConsumerJoinModule,
         HeaderModule,
+        LoginModule,
         [RouterModule.forChild(routes)]
     ],
     exports: [CustomAppComponent],

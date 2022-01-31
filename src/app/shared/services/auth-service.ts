@@ -225,6 +225,41 @@ export class AuthService {
         });
         return promise;
     }
+    consumerAppLogin(post_data) {
+        post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
+        this.sendMessage({ ttype: 'main_loading', action: true });
+        const promise = new Promise((resolve, reject) => {
+            this.shared_services.ConsumerLogin(post_data)
+                .subscribe(
+                    data => {
+                        resolve(data);
+                        this.setLoginData(data, post_data, 'consumer');
+                        // if (moreParams === undefined) {
+                        //     this.router.navigate(['/consumer']);
+                        // } else {
+                        //     if (moreParams['bypassDefaultredirection'] === 1) {
+                        //         // const mtemp = '1';
+                        //     } else {
+                        //         this.router.navigate(['/consumer']);
+                        //     }
+                        // }
+                    },
+                    error => {
+                        this.sendMessage({ ttype: 'main_loading', action: false });
+                        if (error.status === 401) {
+                            // Not registred consumer or session alredy exists
+                            reject(error);
+                            // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
+                        } else {
+                            if (error.error && typeof (error.error) === 'object') {
+                                error.error = this.API_ERROR;
+                            }
+                            reject(error);
+                        }
+                    });
+        });
+        return promise;
+    }
 
     businessLogin(post_data) {
         this.sendMessage({ ttype: 'main_loading', action: true });

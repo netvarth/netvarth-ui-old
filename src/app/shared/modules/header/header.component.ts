@@ -112,6 +112,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   licenseMetrics: any = [];
   selectedpkgMetrics: any = [];
   theme: any;
+  appLogo = false;
   constructor(
     private dialog: MatDialog,
     public shared_functions: SharedFunctions,
@@ -173,6 +174,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.scrollhideclass.emit(false);
   }
   ngOnInit() {
+    if (this.lStorageService.getitemfromLocalStorage('reqFrom')=== 'cuA') {
+      this.appLogo = true;
+    }
     this.pageSource = this.includedfrom;
     this.inboxiconTooltip = this.wordProcessor.getProjectMesssages('INBOXICON_TOOPTIP');
     this.custsignTooltip = this.wordProcessor.getProjectMesssages('CUSTSIGN_TOOPTIP');

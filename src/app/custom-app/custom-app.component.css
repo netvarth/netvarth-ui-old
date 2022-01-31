@@ -1,3 +1,18 @@
 .pad-bt-50 {
     padding-bottom: 50px !important;
 }
+.login-container {
+    max-width: 500px;
+    margin: auto;
+}
+.login-container-outer {
+    height: 100vh;
+}
+.panel-default>.panel-heading {
+    background: transparent !important;
+    border: none !important;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    margin-bottom: 10px;
+}

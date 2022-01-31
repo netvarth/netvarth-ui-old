@@ -1,5 +1,5 @@
 <section>
-   <div>
+   <div *ngIf="!loading">
       <div style="padding: 10px;height: 100vh;background-color:#fff; margin: 5px;">
          <div>
             <!----logo start-->
@@ -36,5 +36,8 @@
             </div>
          </div>
       </div>
+   </div>
+   <div *ngIf="loading">
+      <app-common-innerloading-spinner></app-common-innerloading-spinner>
    </div>
 </section>

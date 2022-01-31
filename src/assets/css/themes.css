@@ -1,8 +1,9 @@
-.heartfulness_theme1 .panel, 
+.heartfulness_theme1 .panel,.heartfulness_theme1 .panel-default,
 .heartfulness_theme1 .serv-head.service-serv-head,
 .heartfulness_theme1 mat-toolbar  {
     background: #522e5a 0% 0% no-repeat padding-box !important; 
     background-color: transparent !important; 
+    border-color: transparent !important; 
 }
 .heartfulness_theme1 mat-sidenav {
   background: #522e5a 0% 0% no-repeat padding-box !important; 
@@ -22,7 +23,8 @@
     background-size: 100% 100%  !important;
     /* color: #fff !important; */
   }
-  .heartfulness_theme1 .bus-item-N{ 
+  .heartfulness_theme1 .bus-item-N, .heartfulness_theme1 h3, .heartfulness_theme1 mat-label,
+  .heartfulness_theme1 .right-menu-header, .heartfulness_theme1 .back-btn i{ 
     color: #fff !important;
   }
   .heartfulness_theme1 .serv-head.service-serv-head, .heartfulness_theme1 .mat-tab-label,
@@ -107,7 +109,10 @@
 .heartfulness_theme1 .tab-selected .step-icon {
   background:#522e5a !important;
 }
-
+.heartfulness_theme1 .title-gb {
+  background:#522e5a !important;
+  color: #fff !important;
+}
 .heartfulness_theme1.custom-login-form {
   background-image: none !important;
 }

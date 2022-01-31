@@ -16,6 +16,7 @@ import { TelegramInfoComponent } from '../../../ynw_consumer/components/telegram
 import { SharedServices } from '../../services/shared-services';
 import { SubSink } from 'subsink';
 import { TranslateService } from '@ngx-translate/core';
+import { LocalStorageService } from '../../services/local-storage.service';
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
@@ -70,6 +71,8 @@ export class EditProfileComponent implements OnInit {
   waitlist_statusstr: string;
   accountId: any;
   customId: any;
+  theme;
+  fromApp = false;
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -83,6 +86,7 @@ export class EditProfileComponent implements OnInit {
     private snackbarService: SnackbarService,
     private activated_route: ActivatedRoute,
     public translate: TranslateService,
+    private lStorageService: LocalStorageService
   ) {
     this.subs.sink = this.activated_route.queryParams.subscribe(qparams => {
       if (qparams && qparams.accountId) {
@@ -91,12 +95,18 @@ export class EditProfileComponent implements OnInit {
       if (qparams && qparams.customId) {
         this.customId = qparams.customId;
       }
+      if (qparams && qparams.theme) {
+        this.theme = qparams.theme;
+      }
     });
   }
   goBack() {
     this.location.back();
   }
   ngOnInit() {
+    if (this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA'){
+      this.fromApp = true;
+    }
     this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
     this.translate.stream('UPDATE_BTN').subscribe(v => {this.update_btn=v});
     this.translate.stream('RELATED_LINKS').subscribe(v => {this.related_links_cap = v});

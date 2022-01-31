@@ -25,11 +25,13 @@ export class CustomAppComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean;
   accountExists: boolean;
   accountId: any;
+  templateJson;
   
   private subscriptions = new SubSink();
   loading: boolean = true;
   theme: any;
   activeUser: any;
+  loginRequired: boolean;
   
 
   constructor(
@@ -94,18 +96,21 @@ export class CustomAppComponent implements OnInit, OnDestroy {
                 this.lStorageService.setitemonLocalStorage('theme',this.theme);
                 this.customappService.setTemplateJson(templateJson);
                 console.log(templateJson);
+                this.templateJson = templateJson;
                 _this.getBusinessProfile(_this.provider_id).then(
                   (businessJsons: any) => {
                     console.log(businessJsons);
                     _this.customappService.setBusinessJsons(businessJsons);
                     // const businessProfile = this.s3Processor.getJson(businessJsons['businessProfile']);                
-                    _this.accountId = _this.customappService.getAccountId();
-                    this.loading = false;
-                    _this.router.navigate(['customapp',_this.accountEncId, { outlets : {template: [templateJson.template]}}]);
+                    _this.accountId = _this.customappService.getAccountId();                    
+                    _this.loading = false;
+                    if (this.isLoggedIn) {                      
+                      _this.router.navigate(['customapp',_this.accountEncId, { outlets : {template: [templateJson.template]}}]);
+                    } else if(templateJson.loginRequired){
+                      _this.loginRequired = true;
+                    }  
                   }
                 )
-              
-
               });
 
           }, (error) => {
@@ -115,6 +120,12 @@ export class CustomAppComponent implements OnInit, OnDestroy {
       });
   }
 
+  loginPerformed(status) {
+    if (status) {
+      this.router.navigate(['customapp',this.accountEncId, { outlets : {template: [this.templateJson.template]}}]);
+      this.loginRequired = false;
+    }
+  }
   /**
    * Unsubscribe all subscriptions
    */

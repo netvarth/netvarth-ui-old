@@ -515,3 +515,8 @@ a, .fa-file-text-o {
     color: green !important;
     right: 0px !important;
   } 
+  @media (max-width: 500px) {
+    .panel-body {
+      padding: 5px !important;
+    }
+  }

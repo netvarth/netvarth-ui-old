@@ -8,6 +8,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 })
 
 export class MaintenanceComponent implements OnInit {
+  loading = false;
   constructor(
     public shared_services: SharedServices,
     // private router: Router,
@@ -17,8 +18,10 @@ export class MaintenanceComponent implements OnInit {
     console.log('maintainance');
   }
   goHome() {
+    this.loading = true;
     this.shared_services.getSystemDate().subscribe(
       ()=>{
+        this.loading = false;
         this.lStorageService.setitemonLocalStorage('maintainance',true);
         // this.router.navigate(['/']).then(
         //   ()=> {
