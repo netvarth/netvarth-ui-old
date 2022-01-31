@@ -11,6 +11,11 @@
 .text-center {
     text-align: center;
 }
+.datePicker{
+    width: 70px !important;
+    height: 80px !important;
+}
+
 .service-image {
     width: 40px;
     height: 40px;
@@ -37,8 +42,7 @@
 }
 .greenline {
     border:2px solid #d6d6db;text-align: center;padding: 5px;cursor: pointer;
-    color: white;
-    background-color: white;
+    box-shadow: 5px 10px #ddd8d8;
    
  
 }
