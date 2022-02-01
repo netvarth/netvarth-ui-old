@@ -58,7 +58,7 @@ export class ServiceQRCodeGeneratordetailComponent implements OnInit, OnDestroy 
     setTimeout(() => {
       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
       this.angular_meta.addTags([
-        { property: 'og:title', content: this.data.businessName },
+        { property: 'og:title', content: this.data.businessName ? this.data.businessName : '' },
         { property: 'og:image', content: this.imageUrl },
         { property: 'og:type', content: 'link' },
         { property: 'og:description', content: this.description },
