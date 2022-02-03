@@ -217,13 +217,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.showResources = this.subdomainsettings.serviceSharing;
                     this.userId = serviceParams.userId;
                     this.departmentId = serviceParams.deptId;
-
-
                     if (this.action === 'add') {
                         this.service = null;
                         this.createForm();
                     } else {
-
                         this.service_data = this.service;
                         if (this.service_data.paymentProfileId) {
                             this.getPaymentProfileDetails(this.service_data.paymentProfileId)
@@ -238,7 +235,6 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                 this.servstatus = false;
                             }
                             if (this.action === 'edit') {
-
                                 this.createForm();
                                 if (this.service_data.serviceType === 'virtualService') {
                                     this.is_virtual_serv = true;
@@ -253,7 +249,6 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                 this.preInfoText = this.service_data.preInfoText || '';
                                 this.postInfoTitle = this.service_data.postInfoTitle || '';
                                 this.postInfoText = this.service_data.postInfoText || '';
-
                                 if (this.service_data.paymentProfileId) {
                                     this.serviceForm.patchValue({
                                         'paymentProfileId': this.service_data['paymentProfileId'] || ''
@@ -285,10 +280,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'taxable': this.service_data['taxable'] || this.serviceForm.get('taxable').value,
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
-
                                         });
                                     } else {
-
                                         this.serviceForm.patchValue({
                                             'name': this.service_data['name'] || this.serviceForm.get('name').value,
                                             'description': this.service_data['description'] || this.serviceForm.get('description').value,
@@ -299,11 +292,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'virtualServiceType': this.service_data['virtualServiceType'] || this.serviceForm.get('virtualServiceType').value,
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
-
-
                                         });
-
-
                                     }
                                     if (this.service_data.serviceType === 'virtualService') {
                                         this.tool_name = this.service_data.virtualCallingModes[0].callingMode;
@@ -313,10 +302,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             this.tool_code = this.service_data.virtualCallingModes[0].countryCode;
                                         }
                                     }
-
                                 } else {
                                     if (this.service_data.serviceType === 'donationService') {
-
                                         this.serviceForm.patchValue({
                                             'name': this.service_data['name'] || this.serviceForm.get('name').value,
                                             'description': this.service_data['description'] || this.serviceForm.get('description').value,
@@ -337,11 +324,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'paymentDescription': this.service_data['paymentDescription'] || this.serviceForm.get('paymentDescription').value,
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value
-
                                         });
-
                                     } else {
-
                                         this.serviceForm.patchValue({
                                             'name': this.service_data['name'] || this.serviceForm.get('name').value,
                                             'description': this.service_data['description'] || this.serviceForm.get('description').value,
@@ -361,10 +345,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
                                             'priceDynamic': this.service_data['priceDynamic'] ? true : false,
                                             'paymentDescription': this.service_data['paymentDescription'] || this.serviceForm.get('paymentDescription').value,
-
                                         });
-
-
                                         if (this.service_data.serviceType === 'virtualService') {
                                             this.tool_name = this.service_data.virtualCallingModes[0].callingMode;
                                             this.tool_id = this.service_data.virtualCallingModes[0].value;
@@ -821,10 +802,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.serviceForm.get('serviceType').setValue('physicalService');
                 }
             }
-        } else {
-            if (this.paymentProfiles.length !== 0) {
-                this.serviceForm.controls['paymentProfileId'].setValue('spDefaultBillProfile');
-            }
+        } else {            
             if (this.is_donation === true) {
                 this.serviceForm = this.fb.group({
                     name: ['', Validators.compose([Validators.required, Validators.maxLength(100)])],
@@ -861,6 +839,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 });
                 this.serviceForm.get('resoucesRequired').setValue('1');
                 this.serviceForm.get('maxBookingsAllowed').setValue('1');
+            }
+            if (this.paymentProfiles.length !== 0) {
+                this.serviceForm.controls['paymentProfileId'].setValue('spDefaultBillProfile');
             }
         }
         if (this.action === 'add') {
