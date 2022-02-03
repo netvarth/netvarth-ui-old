@@ -109,7 +109,7 @@
                     placeholder="Enter First Name">
                 </li>
                 <li class="filterli" style="padding-top: 10px;">
-                  <input type="text" #Llname (blur)="doSearch()" class="filterTextbox" [(ngModel)]="filter.last_name"
+                  <input type="text" #Llname (blur)="doSearch()" class="filterTextbox"  [(ngModel)]="filter.last_name"
                     placeholder="Enter Last Name">
                 </li>
               </div>
@@ -119,7 +119,13 @@
                     placeholder="Last Name">
                 </li>
               </div> -->
-              <div class="filterTextinput">
+              <div style="padding: 10px;">
+                <div style="display: inline-block !important;">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <span style="font-weight: bold;">&nbsp;Filter by Date</span>
+              </div>
+              <div class="filterTextinput" style="margin-top: -22px;">
                 <li class="filterli filterDatepicker">
                   <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday" [matDatepicker]="picker"
                     #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="Date"
