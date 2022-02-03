@@ -20,6 +20,7 @@ import { AppointmentConfirmPopupComponent } from './appointment-confirm-popup/ap
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { QuestionnaireModule } from '../../../../shared/components/questionnaire/questionnaire.module';
 import { VirtualFieldsModule } from '../../virtualfields/virtualfields.module';
+import { PaymentModesModule } from '../../../../../../src/app/shared/modules/payment-modes/payment-modes.module';
 
 @NgModule({
     declarations: [
@@ -46,7 +47,8 @@ import { VirtualFieldsModule } from '../../virtualfields/virtualfields.module';
         HeaderModule,
         NgxIntlTelInputModule,
         QuestionnaireModule,
-        VirtualFieldsModule
+        VirtualFieldsModule,
+        PaymentModesModule
     ],
     entryComponents: [
         AppointmentConfirmPopupComponent

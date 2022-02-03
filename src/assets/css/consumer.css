@@ -5781,3 +5781,35 @@ font-weight: 600;
   font-size: 0.9rem;
 font-weight: 600;
 }
+.pay-rad  .mat-radio-outer-circle, .pay-rad  .mat-radio-inner-circle {
+  height:15px !important;
+  width: 15px !important;
+}
+
+.pay-rad .mat-radio-label {
+  display: block !important;
+}
+
+.pay-rad .mat-radio-container {
+  display: block !important;
+  top: 5px !important;
+  right: 5px;
+  float: right;
+}
+
+@media screen and (max-width: 768px) { 
+  .pad-sm-10 {
+    padding:10px !important;
+  }
+  .comn-cls .w-dta .copy .pay-section {
+    padding-right: 10px !important;
+  }
+ 
+}
+
+.removeflex {
+display: block !important;
+}
+.qnrsec .mat-select {
+  padding: 10px !important;
+}

@@ -52,7 +52,7 @@ export class AttachmentPopupComponent implements OnInit {
       if(attachment.type){
       fileType = attachment.type.split("/");
      // console.log(type[0]);
-      if(fileType[0] == 'video' || fileType[0] =='audio'|| fileType[0] =='image'){
+      if(fileType[0] == 'video' || fileType[0] =='audio'|| fileType[0] =='image' || fileType[0] == 'jpg' || fileType[0] == 'png' || fileType[0] == 'jpeg' || fileType[0] == 'gif'){
         this.mediafiles.push(attachment);
       }
       else {
@@ -66,21 +66,18 @@ export class AttachmentPopupComponent implements OnInit {
   }
 
   }
-  showFile(file){
-  
-
+  showFile(file) {
     this.fileviewdialogRef = this.dialog.open(ShowuploadfileComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'uploadfilecomponentclass'],
       disableClose: true,
       data: {
-        file: file,
-        
+        file: file
       }
     });
     this.fileviewdialogRef.afterClosed().subscribe(result => {
       if (result) {
-  
+
       }
     });
   }

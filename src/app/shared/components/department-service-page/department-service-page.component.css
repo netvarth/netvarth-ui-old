@@ -2223,7 +2223,7 @@
     }
   }
   .action-btns {
-    background: linear-gradient(45deg, #FD7029(224,152,208,1) 0%, #FD7029(180,76,154,1) 100%) !important;
+    background: linear-gradient(45deg, #16254b(224,152,208,1) 0%, #16254b(180,76,154,1) 100%) !important;
     opacity: 1;
     /* background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
     opacity: 1; */

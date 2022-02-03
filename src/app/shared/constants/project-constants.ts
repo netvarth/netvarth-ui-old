@@ -1046,15 +1046,17 @@ export const projectConstantsLocal = {
   },
   PAYTMLOCAL_URL: 'https://securegw-stage.paytm.in',
   PAYTM_URL: 'https://securegw.paytm.in',
-  // UIS3PATH: "https://jaldeeuiscale.s3.ap-south-1.amazonaws.com/",
-  UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/",
+  UIS3PATH: "https://jaldeeuiscale.s3.ap-south-1.amazonaws.com/",
+  // UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/",
   /** Production viswasamadha test*/
   // PROVIDER_ACCOUNT_ID: 103847,
   // ACCOUNTENC_ID: '12r45b0',
   // S3UNIQUE_ID: '128495'
   /** Production Temple Real*/
-  PROVIDER_ACCOUNT_ID: 104333,
-  ACCOUNTENC_ID: '22r7iv3',
-  S3UNIQUE_ID: '128983'
-
+  // PROVIDER_ACCOUNT_ID: 104333,
+  // ACCOUNTENC_ID: '22r7iv3',
+  // S3UNIQUE_ID: '128983'
+ PROVIDER_ACCOUNT_ID: 127051,
+  ACCOUNTENC_ID: '53a89x1',
+  S3UNIQUE_ID: '153285'
 };

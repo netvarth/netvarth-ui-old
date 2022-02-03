@@ -15,6 +15,7 @@ import { HeaderModule } from '../../../shared/modules/header/header.module';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { ConfirmPageComponent } from './details/confirm-page/confirm-page.component';
 import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
+import { PaymentModesModule } from '../../../../../src/app/shared/modules/payment-modes/payment-modes.module';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import { QuestionnaireModule } from '../../../shared/components/questionnaire/qu
         OwlModule,
         HeaderModule,
         NgxIntlTelInputModule,
-        QuestionnaireModule
+        QuestionnaireModule,
+        PaymentModesModule,
     ],
     exports: [ConsumerDonationsComponent]
 })

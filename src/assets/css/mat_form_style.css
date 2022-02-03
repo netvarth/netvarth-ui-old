@@ -131,11 +131,11 @@
 }
 
 .mat-button:hover {
-    background: #fd7029 !important;
+    background: #16254b !important;
 }
 
 .mat-button.confirmbtn {
-    background: #fd7029 !important;
+    background: #16254b !important;
     font-weight: 600;
 }
 

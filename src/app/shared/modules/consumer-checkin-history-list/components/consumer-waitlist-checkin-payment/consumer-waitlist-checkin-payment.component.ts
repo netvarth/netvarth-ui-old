@@ -72,18 +72,12 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
 
   ngOnInit() {
   }
-
   getPaymentModes() {
-    this.shared_services.getPaymentModesofProvider(this.checkin.provider.id)
+    this.shared_services.getPaymentModesofProvider(this.checkin.provider.id,this.checkin.service.id)
       .subscribe(
         data => {
           this.payment_options = data;
           this.payModesQueried = true;
-          /*
-          if (this.payment_options.length > 0) {
-            this.pay_data.paymentMode = this.payment_options[0].name;
-          }*/
-
           if (this.payment_options.length <= 2) { // **** This is a condition added as per suggestion from Manikandan to avoid showing modes such as Cash, wallet etc in consumer area
             this.payModesExists = false;
           } else {
@@ -97,7 +91,6 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
         }
       );
   }
-
   makePayment() {
     this.resetApiError();
     this.pay_data.accountId = this.checkin.provider.id;
@@ -105,9 +98,7 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
     if (this.pay_data.uuid != null &&
       this.pay_data.paymentMode != null &&
       this.pay_data.amount !== 0) {
-
       this.api_success = Messages.PAYMENT_REDIRECT;
-
       this.gateway_redirection = true;
       this.shared_services.consumerPayment(this.pay_data)
         .subscribe(
@@ -133,6 +124,4 @@ export class ConsumerWaitlistCheckInPaymentComponent implements OnInit {
   resetApiError() {
     this.api_success = null;
   }
-
-
 }
