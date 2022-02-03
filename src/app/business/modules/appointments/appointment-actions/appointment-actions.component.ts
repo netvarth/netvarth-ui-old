@@ -127,6 +127,8 @@ export class AppointmentActionsComponent implements OnInit {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
     ngOnInit() {
+        this.provider_services.getProviderAppointmentNotes(this.appt.uid)
+        this.provider_services.getAppointmentById(this.appt.uid);
         this.setMinMaxDate();
         this.getLabel();
         this.apiloading = true;
@@ -373,7 +375,12 @@ export class AppointmentActionsComponent implements OnInit {
         });
         addnotedialogRef.afterClosed().subscribe(result => {
             this.dialogRef.close();
-            if (result === 'reloadlist') { }
+            if (result === 'reloadlist') { 
+                // this.provider_services.getAppointmentById(this.appt.uid)
+                // this.provider_services.getProviderAppointmentNotes(this.appt.uid)
+                // this.provider_services.getAppointmentById(this.appt.uid);
+
+            }
         });
     }
     changeWaitlistStatus(action) {

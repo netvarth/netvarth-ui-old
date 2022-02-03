@@ -65,6 +65,7 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
     });
   }
   onSubmit(form_data) {
+    console.log("Submitting Data :",form_data)
     this.disableButton = true;
     // const post_data = form_data.message.trim() || '';
     if (form_data.message === '') {
@@ -95,6 +96,10 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
         .subscribe(
           () => {
             this.api_success = this.wordProcessor.getProjectMesssages('PROVIDER_NOTE_ADD');
+            this.provider_services.getAppointmentById(this.checkin_id)
+            this.provider_services.getProviderAppointmentNotes(this.checkin_id)
+
+
             setTimeout(() => 
             {
               console.log("entered")
@@ -112,6 +117,9 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
         .subscribe(
           () => {
             this.api_success = this.wordProcessor.getProjectMesssages('PROVIDER_NOTE_ADD');
+           // this.provider_services.getAppointmentById(this.checkin_id)
+          //  this.provider_services.getProviderAppointmentNotes(this.checkin_id)
+
             setTimeout(() => {
               console.log("enter123")
               this.dialogRef.close('reloadlist');

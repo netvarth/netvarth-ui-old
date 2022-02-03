@@ -87,13 +87,13 @@
                                     *ngIf="servicedetails && !servicedetails.servicegallery && servicedetails.serviceType == 'virtualService'">
                                     <i class="fa phon-icon "
                                         *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                    <i class="fa meet-icon"
+                                    <i class="fa meet-icon" style="margin: auto; margin-bottom: auto;"
                                         *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                    <i class="fa zoom-icon"
+                                    <i class="fa zoom-icon" style="margin: auto; margin-bottom: auto;"
                                         *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                    <i class="fa wtsapaud-icon"
+                                    <i class="fa wtsapaud-icon" style="margin-top: auto; margin-bottom: auto;"
                                         *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'audioService'"></i>
-                                    <i class="fa wtsapvid-icon"
+                                    <i class="fa wtsapvid-icon" style="margin-top: auto; margin-bottom: auto;"
                                         *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'videoService'"></i>
                                     <i class="fa jaldeevideo-icon"
                                         *ngIf="servicedetails.virtualCallingModes  && servicedetails.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
