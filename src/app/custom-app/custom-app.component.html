@@ -2,7 +2,7 @@
     <section id="section1 " class="bus-page">
         <div class="row card no-padding" [ngClass]="theme">
             <div class="bus-page-header" *ngIf="!loginRequired">
-                <div class="panel panel-default no-padding" *ngIf="accountExists && isLoggedIn && accountId">
+                <div class="panel panel-default no-padding" *ngIf="accountExists && accountId">
                     <div class="panel-heading col-xs-12">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                             <app-header *ngIf="accountExists && isLoggedIn && accountId" [includedfrom]="'pdetails'"
