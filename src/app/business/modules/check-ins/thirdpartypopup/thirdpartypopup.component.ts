@@ -25,6 +25,9 @@ export class ThirdpartypopupComponent implements OnInit {
         this.dialogRef.close(res)
 
     }
+    closetab(){
+        this.dialogRef.close('')
+    }
 
 
 }

@@ -1,9 +1,11 @@
 <section >
 
-  <div class="mgn-up-20 mgn-lt-10"  style="width: 280px !important;display: flex;background-color: #1E4079;color: white;align-items: center;padding: 10px;">
-    <div><img src="../../../../../assets/images/icons8-go-back-24 (1).png" (click)="goBack()"></div>
-       <div class="mgn-lt-10 mgn-up-10"><h5>{{heading}}</h5> </div>
-</div>
+  <div class="card title-gb">
+    <h5 class="mgn-up-10">
+      <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {{heading}}
+    </h5>
+  </div>
   
 </section>
 <section>
@@ -23,7 +25,6 @@
               
                 <img src="../../../../../assets/images/add patient.svg" style="width: 50px;height: 50px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Create New Patient</b>
               </div>
-              <!-- <div class="col-lg-1 col-md-1 col-sm-0 col-xs-0"></div> -->
   
               <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 "  (click)="openthirdpopup(domain,showOther,customer_label)" *ngIf="source !== 'waitlist-block'" >
             
@@ -222,7 +223,7 @@
                 <div class="service-outer" *ngIf="filterDepart">
                   <ng-container>
                     <mat-form-field *ngIf="deptLength == 1">
-                      <input class="inputbox"  *ngFor="let dept of departments" [readonly]="true" placeholder="Department"
+                      <input matInput class="inputbox"  *ngFor="let dept of departments" [readonly]="true" placeholder="Department"
                         value="{{dept.departmentName | capitalizeFirst}}">
                     </mat-form-field>
                     <mat-form-field *ngIf="deptLength > 1">
@@ -239,8 +240,8 @@
                 <div class="service-outer" *ngIf="users.length > 0 && accountType === 'BRANCH'">
                   <ng-container>
                     <mat-form-field *ngIf="users.length == 1">
-                      <input class="inputbox"  *ngFor="let user of users" [readonly]="true"
-                        placeholder="{{provider_label | capitalizeFirst}}222222222"
+                      <input matInput class="inputbox"  *ngFor="let user of users" [readonly]="true"
+                        placeholder="{{provider_label | capitalizeFirst}}"
                         value="{{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}">
                     </mat-form-field>
                     <mat-form-field *ngIf="users.length > 1">
@@ -602,7 +603,7 @@
                 <ng-container *ngIf="action=='note'">
                   <div class="col-md-12 mgn-bt-20">
                     <mat-form-field>
-                      <textarea  class="form-control" [(ngModel)]="consumerNote" #consumernote
+                      <textarea matInput class="form-control" [(ngModel)]="consumerNote" #consumernote
                         (change)="handleConsumerNote(consumernote.value)" maxlength="1000"
                         placeholder="{{note_placeholder}}"></textarea>
                     </mat-form-field>

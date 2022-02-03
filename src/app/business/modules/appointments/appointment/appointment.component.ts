@@ -19,6 +19,7 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
+import { ThirdpartypopupComponent } from '../../check-ins/thirdpartypopup/thirdpartypopup.component';
 
 @Component({
     selector: 'app-appointment-checkin',
@@ -233,6 +234,8 @@ export class AppointmentComponent implements OnInit {
     channel;
     questionAnswers;
     bookingMode;
+    categoryForSearchingarray=['Search with PhoneNumber','Search with Email ID','Search with Patient ID']
+    categoryvalue='Search with PhoneNumber';
     api_loading_video;
     separateDialCode = true;
     SearchCountryField = SearchCountryField;
@@ -243,6 +246,7 @@ export class AppointmentComponent implements OnInit {
     cuntryCode: any;
     selfAssign;
     assignmyself;
+    thirdpartyoptions: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -349,6 +353,32 @@ export class AppointmentComponent implements OnInit {
             if (qparams.type && qparams.type === 'fill') {
                 this.initAppointment(this.thirdParty);
             }
+        });
+    }
+    openthirdpopup(domain,showOther,customer_label) {
+        this.thirdpartyoptions = this.dialog.open(ThirdpartypopupComponent, {
+            width: '40%',
+            panelClass: ['popup-class', 'confirmationmainclass'],
+            data : {
+                'domain':domain,
+                'showOther':showOther,
+                'customer_label':customer_label
+            }
+           
+        })
+        this.thirdpartyoptions.afterClosed().subscribe(result => {
+            if(result=='practo') {
+                this.initAppointment('practo')
+            } else if(result=='justdial') {
+                this.initAppointment('justdial')
+            } else if(result=='google') {
+                this.initAppointment('google')
+            } else if(result == 'mfine') {
+                this.initAppointment('mfine')
+            } else if(result=='other') {
+                this.showOtherSection()
+            }
+
         });
     }
     ngOnInit() {

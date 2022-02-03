@@ -35,12 +35,18 @@
 </section>
 <section class="" 
     *ngIf="source ==='token' || source ==='checkin' || source ==='appointment' || source === 'appt-block' || source === 'waitlist-block' || source === 'clist'">
-    <div class="mgn-up-10 mgn-lt-10" style="width: 280px !important;display: flex;background-color: #1E4079;color: white;align-items: center;padding: 10px;">
-        <!-- <div style=""> -->
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {{heading}}
+        </h5>
+    </div>
+    <!-- s
+       
            <div><img src="../../../../../assets/images/icons8-go-back-24 (1).png"   (click)="onCancel()"></div>
            <div class="mgn-lt-10 mgn-up-5"><h5>{{heading}}</h5> </div>
-        <!-- </div> -->
-    </div>
+        
+    </div> -->
 </section>
 <div class="card mgn-up-10" >
     <section class="createCustomer" style="margin: 20px;padding: 4px;">

@@ -231,7 +231,7 @@ align-items: center;
     border-radius: 4px !important;
   }
 
-  ::ng-deep .mat-select-arrow { opacity: 0; }
+  /* ::ng-deep .mat-select-arrow { opacity: 0; } */
 
  
   .findcolor{

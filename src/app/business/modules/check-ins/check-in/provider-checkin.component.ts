@@ -247,7 +247,7 @@ export class ProviderCheckinComponent implements OnInit {
     selfAssign;
     assignmyself;
     categoryForSearchingarray=['Search with PhoneNumber','Search with Email ID','Search with Patient ID']
-    categoryvalue;
+    categoryvalue='Search with PhoneNumber';
     thirdpartyoptions: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
