@@ -31,7 +31,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
   loading: boolean = true;
   theme: any;
   activeUser: any;
-  loginRequired: boolean;
+  loginRequired = false;
   
 
   constructor(
@@ -95,7 +95,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
                 this.theme = templateJson.theme;
                 this.lStorageService.setitemonLocalStorage('theme',this.theme);
                 this.customappService.setTemplateJson(templateJson);
-                console.log(templateJson);
+                console.log("TemplateJson:",templateJson);
                 this.templateJson = templateJson;
                 _this.getBusinessProfile(_this.provider_id).then(
                   (businessJsons: any) => {
@@ -104,11 +104,11 @@ export class CustomAppComponent implements OnInit, OnDestroy {
                     // const businessProfile = this.s3Processor.getJson(businessJsons['businessProfile']);                
                     _this.accountId = _this.customappService.getAccountId();                    
                     _this.loading = false;
-                    if (this.isLoggedIn) {                      
+                    if (this.isLoggedIn || !templateJson.loginRequired) {                      
                       _this.router.navigate(['customapp',_this.accountEncId, { outlets : {template: [templateJson.template]}}]);
-                    } else if(templateJson.loginRequired){
+                    } else {
                       _this.loginRequired = true;
-                    }  
+                    } 
                   }
                 )
               });

@@ -49,18 +49,34 @@ export class CustTemplate3Component implements OnInit {
 
   ngOnInit(): void {
     this.templateJson = this.customappService.getTemplateJson();
-    this.donationServicesJson = this.s3Processor.getJson(this.customappService.getDonationServices());
-    this.locationjson = this.s3Processor.getJson(this.customappService.getLocations());
-    this.showDepartments = this.s3Processor.getJson(this.customappService.getAccountSettings()).filterByDept;
-    this.selectedLocation = this.locationjson[0];
+    console.log(this.templateJson);
+    if (this.customappService.getDonationServices()) {
+      this.donationServicesJson = this.s3Processor.getJson(this.customappService.getDonationServices());
+    }
+    console.log("Here");
+    console.log("Locations:", this.customappService.getLocations());
+    if (this.customappService.getLocations()) {
+      this.locationjson = this.s3Processor.getJson(this.customappService.getLocations());
+      this.selectedLocation = this.locationjson[0];
+    }
+    if (this.customappService.getAccountSettings()) {
+      this.showDepartments = this.s3Processor.getJson(this.customappService.getAccountSettings()).filterByDept;
+    }
     console.log("Template Json:", this.showDepartments);
-    this.terminologiesjson = this.s3Processor.getJson(this.customappService.getTerminologies());
-    this.apptSettings = this.s3Processor.getJson(this.customappService.getApptSettings());
-    this.businessProfile = this.s3Processor.getJson(this.customappService.getBusinessProfile());
-    this.galleryJson = this.s3Processor.getJson(this.customappService.getGallery());
-
+    if (this.customappService.getTerminologies()) {
+      this.terminologiesjson = this.s3Processor.getJson(this.customappService.getTerminologies());
+    }
+    if (this.customappService.getApptSettings()) {
+      this.apptSettings = this.s3Processor.getJson(this.customappService.getApptSettings());
+    }
+    if (this.customappService.getBusinessProfile()) {
+      this.businessProfile = this.s3Processor.getJson(this.customappService.getBusinessProfile());
+    }
+    if (this.customappService.getGallery()) {
+      this.galleryJson = this.s3Processor.getJson(this.customappService.getGallery());
+    }
     // if(this.templateJson.section1.gallery || this.templateJson.section2.gallery || this.templateJson.section3.gallery) {
-      
+
     // }
 
     if (this.templateJson.section1.donations || this.templateJson.section2.donations || this.templateJson.section3.donations) {
@@ -73,7 +89,7 @@ export class CustTemplate3Component implements OnInit {
       for (let dIndex = 0; dIndex < depts.length; dIndex++) {
         departmentsS3.push({ 'type': 'department', 'item': depts[dIndex] })
       }
-      this.departments =departmentsS3;
+      this.departments = departmentsS3;
     }
 
     this.changeLocation(this.selectedLocation);
@@ -107,7 +123,7 @@ export class CustTemplate3Component implements OnInit {
       }
     );
   }
-  
+
   getCheckinServices(locationId) {
     const self = this;
     const checkinServiceList = [];
@@ -120,7 +136,7 @@ export class CustTemplate3Component implements OnInit {
         self.filteredCheckinServices = checkinServiceList;
         self.checkinServices = checkinServiceList;
         self.loaded_checkins = true;
-      },  (error)=> {
+      }, (error) => {
         self.filteredCheckinServices = checkinServiceList;
         self.checkinServices = checkinServiceList;
         self.loaded_checkins = true;
