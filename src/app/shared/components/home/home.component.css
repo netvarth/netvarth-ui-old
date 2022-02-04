@@ -15,6 +15,9 @@
     border-color: #1e4079;
     font-weight: 600;
 }
+.mgn-up-50 {
+    margin-top:50px;
+}
 .book_telgrm_btn:hover{
     background-color: white !important;
 }
