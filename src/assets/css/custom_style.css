@@ -14251,6 +14251,7 @@ font-weight: 700 !important;
    float:left !important;
    display:table-column !important;
    width:33.33% !important;
+   overflow: hidden !important;
 }
 
 .main-box{

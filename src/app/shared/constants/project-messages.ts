@@ -161,7 +161,7 @@ export const Messages = {
   'ADD_PROVIDER_CUSTOMER_WAITLIST': 'Wailist added successfully',
   'WAITLIST_STATUS_CHANGE': '[waitlist] status changed to [status]',
   'WAITLISTTOKEN_STATUS_CHANGE': 'Token status changed to [status]',
-  'PROVIDER_NOTE_ADD': 'Note added successfully',
+  'PROVIDER_NOTE_ADD': 'Private note added successfully',
   'CONSUMERTOPROVIDER_NOTE_ADD': 'Message has been successfully sent',
   'PROVIDERTOCONSUMER_NOTE_ADD': 'Message has been successfully sent',
   'TELESERVICE_SHARE_LINK': 'Notification has been sent to you and your [customer]',
