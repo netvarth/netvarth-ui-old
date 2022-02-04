@@ -127,12 +127,11 @@ export class AppointmentActionsComponent implements OnInit {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
     ngOnInit() {
-        this.provider_services.getProviderAppointmentNotes(this.appt.uid)
-        this.provider_services.getAppointmentById(this.appt.uid);
         this.setMinMaxDate();
         this.getLabel();
         this.apiloading = true;
         this.appt = this.data.checkinData;
+        console.log("Appointment Actions :",this.appt)
           this.status_booking=this.data.status
         if (!this.data.multiSelection) {
             this.getPos();
