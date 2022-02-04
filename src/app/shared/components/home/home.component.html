@@ -11,6 +11,8 @@
 				<div class="col-md-8 col-lg-8 site-header--links d-flex flex-wrap ">
 					<div class="account-links ">
 						<a (click)="providerLinkClicked()" class="pointer-cursor"><span class="bus-page-rdbtn">{{'Home' | translate}}</span></a>
+						<!-- <a href="https://business.jaldee.com/" class="pointer-cursor"><span class="bus-page-rdbtn">{{'Home' | translate}}</span></a> -->
+						
 						<a class="pointer-cursor" class="login-link"><span class="cons_btn_login_top"
 								(click)="doLogin('consumer')">{{'Log_in' | translate}}</span> <span class="cons_btn_join_top"
 								(click)="doSignup('consumer')">{{'Sign_up' | translate}}</span></a>
@@ -30,7 +32,9 @@
 						</div>
 						<div class="col-xs-12 col-sm-12 no-padding mgn-up-20">
 							<a (click)="providerLinkClicked()" class="pointer-cursor d-block pull-right">
-								<span class="bus-page-rdbtn">{{'Home' | translate}}</span></a>							
+								<span class="bus-page-rdbtn">{{'Home' | translate}}</span></a>
+								<!-- <a href="https://business.jaldee.com/" class="pointer-cursor d-block pull-right">
+									<span class="bus-page-rdbtn">{{'Home' | translate}}</span></a>							 -->
 						</div>
 					</div>
 				</div>
@@ -67,9 +71,9 @@
 				<div class="row no-gutters align-items-end">
 					<div class="col-lg-12 text-block">					
 						<div class="col-md-12">
-							<div style="text-align: center;margin-bottom: 20px;">
+							<!-- <div style="text-align: center;margin-bottom: 20px;">
 								<a href="https://t.me/JaldeeBot" target="_blank" class="book_telgrm_btn"><span class="svg-icon"><i class="fa fa-telegram"></i></span>{{'Book_telegram' | translate}}</a>
-							</div>
+							</div> -->
 							<div class="section-header text-center">
 								<img src="assets/images/home/logo-blue.png" alt="Jaldee" />								
 							</div>
@@ -387,14 +391,16 @@
 						class="img-fluid cta-image">
 					<div class="cta-content">
 						<h2 class="cta-title">{{'Are you a' | translate}} <br>{{'Service Provider?' | translate}}</h2>
-						<a routerLink="/business" class="btn cta-btn">{{'Learn More' | translate}}</a>
+						<!-- <a routerLink="/business" class="btn cta-btn">{{'Learn More' | translate}}</a> -->
+						<a href="https://business.jaldee.com/" class="btn cta-btn">{{'Learn More' | translate}}</a>
 					</div>
 				</div>
 				<div class="cta col-lg-6">
 					<img src="assets/images/home/business.jpg" alt="Business Owner" class="img-fluid cta-image">
 					<div class="cta-content">
 						<h2 class="cta-title">{{'Are you a' | translate}} <br> {{'Business Owner?' | translate}}</h2>
-						<a routerLink="/business" class="btn cta-btn">{{'Learn More' | translate}}</a>
+						<!-- <a routerLink="/business" class="btn cta-btn">{{'Learn More' | translate}}</a> -->
+						<a href="https://business.jaldee.com/" class="btn cta-btn">{{'Learn More' | translate}}</a>
 					</div>
 				</div>
 			</div>
@@ -410,14 +416,14 @@
 							<ul class="menu">
 								<li><a class="pointer-cursor" href="https://contact.jaldee.com"
 										target="_blank">{{'Contact' | translate}}</a></li>
-								<li><a class="pointer-cursor" [routerLink]="['/terms']" target="_blank">{{'Terms' | translate}}</a></li>
+								<!-- <li><a class="pointer-cursor" [routerLink]="['/terms']" target="_blank">{{'Terms' | translate}}</a></li> -->
 							</ul>
 						</div>
 					</div>
 					<div class="col-lg-3 footer-col footer-col-2">
 						<div>
 							<h4>{{'Solutions' | translate}}</h4>
-							<ul class="menu">
+							<!-- <ul class="menu">
 								<li><a routerLink="/business">{{'Healthcare' | translate}}</a></li>
 								<li><a routerLink="/business">{{'Personal Care' | translate}}</a></li>
 								<li><a routerLink="/business">{{'Banks/Finance' | translate}}</a></li>
@@ -425,6 +431,15 @@
 								<li><a routerLink="/business">{{'Supermarkets/Retail' | translate}}</a></li>
 								<li><a routerLink="/business">{{'Professionals' | translate}}</a></li>
 								<li><a routerLink="/business">{{'Restaurants' | translate}}</a></li>
+							</ul> -->
+							<ul class="menu">
+								<li><a href="https://business.jaldee.com/">{{'Healthcare' | translate}}</a></li>
+								<li><a href="https://business.jaldee.com/">{{'Personal Care' | translate}}</a></li>
+								<li><a href="https://business.jaldee.com/">{{'Banks/Finance' | translate}}</a></li>
+								<li><a href="https://business.jaldee.com/">{{'Corporates' | translate}}</a></li>
+								<li><a href="https://business.jaldee.com/">{{'Supermarkets/Retail' | translate}}</a></li>
+								<li><a href="https://business.jaldee.com/">{{'Professionals' | translate}}</a></li>
+								<li><a href="https://business.jaldee.com/">{{'Restaurants' | translate}}</a></li>
 							</ul>
 						</div>
 					</div>
@@ -432,11 +447,14 @@
 						<div>
 							<h4>{{'Jaldify Now' | translate}}</h4>
 							<ul class="menu">
-								<li><a routerLink="/business">{{'List your business' | translate}}</a></li>
-								<li><a routerLink="/business">{{'Become Jaldee Partner' | translate}}</a></li>
-								<li><a routerLink="/business/pricing">{{'Pricing' | translate}}</a></li>
-								<li><a href="https://demo.jaldee.com/">{{'Ask for a demo' | translate}}</a></li>
-								<li><a [routerLink]="['/home/contact']" target="_blank">{{'Support' | translate}}</a></li>
+								<!-- <li><a routerLink="/business">{{'List your business' | translate}}</a></li> -->
+								<li><a href="https://business.jaldee.com/">{{'List your business' | translate}}</a></li>
+								<!-- <li><a routerLink="/business">{{'Become Jaldee Partner' | translate}}</a></li> -->
+								<!-- <li><a routerLink="/business/pricing">{{'Pricing' | translate}}</a></li> -->
+								<li><a href="https://business.jaldee.com/pricing/">{{'Pricing' | translate}}</a></li>
+								<!-- <li><a href="https://demo.jaldee.com/">{{'Ask for a demo' | translate}}</a></li> -->
+								<li><a href="https://business.jaldee.com/demo/">{{'Ask for a demo' | translate}}</a></li>
+								<!-- <li><a [routerLink]="['/home/contact']" target="_blank">{{'Support' | translate}}</a></li> -->
 							</ul>
 						</div>
 					</div>
@@ -444,7 +462,8 @@
 						<div>
 							<h4>{{'Resources' | translate}}</h4>
 							<ul class="menu">
-								<li><a href="https://www.youtube.com/channel/UCZD8V1OapzlaS5eNET9x3mg">{{'Videos' | translate}}</a></li>
+								<!-- <li><a href="https://www.youtube.com/channel/UCZD8V1OapzlaS5eNET9x3mg">{{'Videos' | translate}}</a></li> -->
+								<li><a  href="https://business.jaldee.com/blog/">{{'Blog' | translate}}</a></li>
 							</ul>
 						</div>
 					</div>

@@ -2,7 +2,7 @@
     <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
     <div class="content p0 loc-list ynw-common-form-nm">
         <div class="panel panel-default">
-            <div class="panel-heading top-row ">
+            <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row ">
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <a class="pull-left back-btn mgn-up-5" (click)="goBack('back')"><i class="fa fa-arrow-left"></i></a>
                 </div>
@@ -12,7 +12,7 @@
                 </div>
             </div>
             <app-common-innerloading-spinner *ngIf="loadingPaytm"></app-common-innerloading-spinner>
-            <div class="d-flex flex-column-fluid no-padding-small">
+            <div class="panel-body d-flex flex-column-fluid no-padding-small">
                 <div class="card card-custom">
                     <div class="card-body p-0">
                         <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
@@ -1209,8 +1209,7 @@
                                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
                                                             {{selectedService.consumerNoteTitle}}
                                                             <div class="form-level-settings">
-                                                                Add any other notes to the {{businessjson.businessName ?
-                                                                businessjson.businessName : selectedService.name}}
+                                                                Add any other notes to  {{waitlist_for[0].firstName}}{{waitlist_for[0].lastName}}
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 col-sm-12 col-xs-12">

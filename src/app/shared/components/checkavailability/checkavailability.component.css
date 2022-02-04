@@ -1,7 +1,9 @@
 .green{
-    color: #1EB000;
+    color: #2000b0;
     line-height: 1.5rem;
     font-size: 15px;
+    text-align: center !important;
+    padding: 5px !important;
    
     /* font-weight: 600; */
 
@@ -9,6 +11,11 @@
 .text-center {
     text-align: center;
 }
+.datePicker{
+    width: 70px !important;
+    height: 80px !important;
+}
+
 .service-image {
     width: 40px;
     height: 40px;
@@ -34,10 +41,13 @@
  
 }
 .greenline {
-    border:2px solid #b4f3a7;text-align: center;padding: 5px;cursor: pointer;
+    border:2px solid #d6d6db;text-align: center;padding: 5px;cursor: pointer;
+    box-shadow: 5px 10px #ddd8d8;
+   
+ 
 }
 .green:hover {
-  background-color: #1EB000;
+  background-color: #000cb0;
   color: white;
 }
 .red{
@@ -70,7 +80,7 @@
 }
 @media (min-width:320px) and (max-width:760px) {
     *{
-        font-size: 12px;
+        font-size: 15px;
     }
     .greenline {
         padding: 2px !important;

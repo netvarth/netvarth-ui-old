@@ -1,10 +1,10 @@
 
 
-<section *ngIf="curtype=='consumer'" class="container no-padding myaccount no-padding-small consumer-profile">
+<section *ngIf="curtype=='consumer'" class="container no-padding myaccount no-padding-small consumer-profile" [ngClass]="theme">
     <div class="content p0 see-pages cons-members">
 
         <div class="panel panel-default">
-            <div class="panel-heading top-row ">
+            <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row ">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                     <app-header *ngIf="shared_functions.checkLogin()" [customId]="customId" [accountId]="accountId" [showHeaderAction]="true"></app-header>
                 </div>
@@ -15,8 +15,6 @@
                         <a class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
                     </h5>
                 </div>
-
-
                 <div class="related-links">
                     <div class="outer-card">
                         <div class="card">
@@ -139,7 +137,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class=" col-xs-12 no-padding optional">
+                                            <div class=" col-xs-12 no-padding optional" *ngIf="!fromApp">
                                                 <label><i class="fa fa-telegram" style="color:#29b6f6;"></i> Telegram #</label>
                                                 <div class="disp-flex">
                                                     <div class="form-group no-margin">
@@ -167,7 +165,7 @@
                         <div class="right-menu">
                             <div class="right-menu-header">{{related_links_cap}}</div>
                             <ul class="related-link">
-                                <li (click)="shared_functions.redirectto('change-password')" class="icon-password">
+                                <li (click)="shared_functions.redirectto('change-password')" class="icon-password" *ngIf="!fromApp">
                                     {{change_password_cap}}</li>
                                 <li (click)="shared_functions.redirectto('change-mobile')" class="icon-mobile">
                                     {{change_mobile_cap}}</li>
@@ -178,7 +176,7 @@
                     </div>
                 </div>
             </div>
-            <div class="panel-body no-padding web">
+            <div class="panel-body no-padding web" *ngIf="!fromApp">
                     <div class="card component-card_1 mgn-up-10 mgn-lt-10">
                             <div class="card-body">
                                     <span><img class="image" src="./assets/images/Asset2@300x(1).png" alt="Basic Plus"></span>
@@ -188,7 +186,7 @@
                             </div>
                         </div>
             </div>
-            <div class="panel-body no-padding disply">
+            <div class="panel-body no-padding disply" *ngIf="!fromApp">
                     <div class="card component-card_1 mgn-up-10 mgn-lt-10">
                             <div class="card-body">
                                     <span><img class="image" src="./assets/images/Asset2@300x(1).png" alt="Basic Plus"></span>

@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../../business/services/provider-services.service';
 import { PreviewuploadedfilesComponent } from './previewuploadedfiles/previewuploadedfiles.component';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 
 @Component({
@@ -191,11 +192,11 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     public location: Location,
     public dialog: MatDialog,
     private _location: Location,
-    // private wordProcessor:WordProcessor
+     private wordProcessor:WordProcessor
 
   ) {
-    // this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-
+     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.config = {
       itemsPerPage: 5,
       currentPage: 1,

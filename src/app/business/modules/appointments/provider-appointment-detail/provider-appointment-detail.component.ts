@@ -619,7 +619,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
 
 openbookinghistory() {
   this.bookinghistorydialogref = this.dialog.open(BookingHistoryComponent, {
-    width: '60%',
+    width: '100%',
     height: 'auto',
     data: {
       type:'Appointment History',

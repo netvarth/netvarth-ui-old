@@ -272,6 +272,7 @@ export class PaymentLinkComponent implements OnInit {
       // this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
       this.billtime = datearr[1] + ' ' + datearr[2];
       this.billdate = billdatearr[0] + '-' + billdatearr[1] + '-' + billdatearr[2];
+     
 
     }
     if (this.bill_data.hasOwnProperty('gstNumber')) {

@@ -27,7 +27,7 @@
                                                     <span>
                                                         <i class="icon-filter-one" (click)="showFilterSidebar()"
                                                             [matTooltipClass]="tooltipcls"
-                                                            [matTooltip]="filtericonTooltip"></i>
+                                                            [matTooltip]="filtericonTooltip" style="cursor: pointer;"></i>
                                                     </span>
                                                 </td>
                                             </tr>
@@ -39,7 +39,7 @@
                                 <tr>
                                     <aside class="filterSidebar" *ngIf="filter_sidebar">
                                         <section class="sidebar sidebar-bottom" style="overflow:auto;height:568px">
-                                            <div class="filterClosebtn">
+                                            <!-- <div class="filterClosebtn">
                                                 <i class="icon-filter-one-op ng-star-inserted pointer-cursor "
                                                     (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
                                                     [matTooltip]="'Close filter window'"></i>
@@ -47,9 +47,21 @@
                                                     (click)="clearFilter()" [matTooltipClass]="tooltipcls"
                                                     [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear
                                                     All</span>
-                                            </div>
+                                            </div> -->
+                                            <div style="display: flex;background-color: #E3E9ED;height: 44px;text-transform: uppercase;padding: 15px;justify-content: space-between;">
+                                                <div>Filters</div>
+                                                <div>
+                                                    <i  class="icon-filter-one-op ng-star-inserted pointer-cursor "
+                                                    (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                                    [matTooltip]="'Close filter window'"></i>
+                                                <span *ngIf="filterapplied === true" class="clearFilter"
+                                                    (click)="clearFilter()" [matTooltipClass]="tooltipcls"
+                                                    [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear
+                                                    All</span>
+                                                </div>
+                                              </div>
                                             <ul class="sidebar-menu">
-                                                <li>
+                                                <!-- <li>
                                                     <div>
                                                         <label class="filterHeaders">Filter By Date</label>
                                                 <li class="filterli filterDatepicker">
@@ -62,7 +74,25 @@
                                                     <mat-datepicker #picker></mat-datepicker>
                                                 </li>
                     </div>
-                    </li>
+                    </li> -->
+
+                    <div style="padding: 10px;">
+                        <div style="display: inline-block !important;">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <span style="font-weight: bold;">&nbsp;Filter by Date</span>
+                      </div>
+                      <div class="filterTextinput" style="margin-top: -22px;">
+                        <li class="filterli filterDatepicker">
+                            <input class="filterTextbox" type="text" [(ngModel)]="logSeldate"
+                            [min]="minday" [max]="tday" [matDatepicker]="picker" #Fdate
+                            (dateChange)="do_search(false)" (blur)="do_search(false)"
+                            placeholder="Date" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        </li>
+                      </div>
                     </ul>
 </section>
 </aside>

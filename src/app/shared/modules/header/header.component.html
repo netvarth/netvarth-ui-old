@@ -177,8 +177,8 @@
         </div>
     </ng-container>
 </header>
-<header class="consumer" *ngIf="ctype!='provider' && includedfrom!='home' && includedfrom!='phome'">
-    <div class="container no-padding">
+<header class="consumer" *ngIf="ctype!='provider' && includedfrom!='home' && includedfrom!='phome'" >
+    <div class="container no-padding" [ngClass]="theme">
         <div class="col-md-22 col-xs-12 col-sm-12 no-padding">
             <div class="tp-1">
                 <div class="tp-l" *ngIf="includedfrom!='checkin' && includedfrom!='appt' &&
@@ -186,9 +186,16 @@
                 && includedfrom!='confirm' && includedfrom!='donation'">
                     <a (click)="gotoActiveHome()" class="logo pointer-cursor">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
-                    <span class="logo-mini visible-xs"><img src="assets/images/home/logo-icon.png" alt="Jaldee"></span>
+                    <span class="logo-mini visible-xs" *ngIf="!appLogo">
+                        <img src="assets/images/home/logo-icon.png" alt="Jaldee">
+                    </span>
+                    <span class="logo-custom" *ngIf="appLogo">
+                        <img class="img-circle" src="assets/images/home.png" alt="Home">
+                    </span>
                     <!-- logo for regular state and mobile devices -->
-                    <span class="logo-lg hidden-xs"><img src="assets/images/jaldee-logo.png" alt="Jaldee"></span>
+                    <span class="logo-lg hidden-xs" *ngIf="!appLogo">
+                        <img src="assets/images/jaldee-logo.png" alt="Jaldee">
+                    </span>
                     </a>
                 </div>
                 <div class="tp-r">

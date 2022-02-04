@@ -1044,12 +1044,20 @@ export class SharedServices {
     const url = 'consumer/appointment/questionnaire/' + uuid + '?account=' + accountId;
     return this.servicemeta.httpPost(url, body);
   }
+  submitConsumerDonationQuestionnaire(body, uuid, accountId) {
+    const url = 'consumer/donation/questionnaire/' + uuid + '?account=' + accountId;
+    return this.servicemeta.httpPost(url, body);
+  }
   resubmitConsumerWaitlistQuestionnaire(body, uuid, accountId) {
     const url = 'consumer/waitlist/questionnaire/resubmit/' + uuid + '?account=' + accountId;
     return this.servicemeta.httpPost(url, body);
   }
   resubmitConsumerApptQuestionnaire(body, uuid, accountId) {
     const url = 'consumer/appointment/questionnaire/resubmit/' + uuid + '?account=' + accountId;
+    return this.servicemeta.httpPost(url, body);
+  }
+  resubmitConsumerDonationQuestionnaire(body, uuid, accountId) {
+    const url = 'consumer/donation/questionnaire/resubmit/' + uuid + '?account=' + accountId;
     return this.servicemeta.httpPost(url, body);
   }
   validateConsumerQuestionnaire(body, accountId) {
@@ -1090,6 +1098,10 @@ export class SharedServices {
   }
   consumerApptQnrUploadStatusUpdate(uid, account, data) {
     const url = 'consumer/appointment/questionnaire/upload/status/' + uid + '?account=' + account;
+    return this.servicemeta.httpPut(url, data);
+  }
+  consumerDonationQnrUploadStatusUpdate(uid, account, data) {
+    const url = 'consumer/donation/questionnaire/upload/status/' + uid + '?account=' + account;
     return this.servicemeta.httpPut(url, data);
   }
   consumertelegramChat(countryCode, loginId) {

@@ -145,15 +145,10 @@
         </span>
       </p>
       <div *ngIf="service.paymentProfileId && action==='show'">
-        <div  class="col-xs-12 col-md-12 col-sm-12 col-lg-12 mgn-bt-10 no-padding ">Payment Profile Selected for this service is: <b>{{selectedPaymentProfile[0].displayName}}</b></div>
-        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 no-padding "> 
-          <!-- <mat-radio-group name="paymentprofile"  class="mt-4">
-            <mat-radio-button [value]="selectedPaymentProfile.profileId" readonly checked> -->
-                <!-- <span class="font-weight-bold"></span> -->
-            <!-- </mat-radio-button> -->
-            <app-payment-mode [paymentProfile]="selectedPaymentProfile[0]"></app-payment-mode>
-          <!-- </mat-radio-group> -->
-          
+        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 mgn-bt-10 no-padding ">Payment Profile Selected for this
+          service is: <b>{{selectedPaymentProfile[0].displayName}}</b></div>
+        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 no-padding ">
+          <app-payment-mode [paymentProfile]="selectedPaymentProfile[0]"></app-payment-mode>
         </div>
       </div>
       <div class="btm-ctrl">
@@ -168,12 +163,8 @@
           <span class='disabled' *ngIf="service_data.status=='INACTIVE' || !service_data.status">{{disbale_cap}}</span>
         </div>
       </div>
-
-
-
     </div>
   </div>
-
   <div class="cop-r" *ngIf="action=='show' && !is_donation" style="margin-bottom: 10px;margin-top: 10px;">
     <ul class="info-lst serviceadd-info">
       <li *ngIf="source === 'appt'">Please add this service to the relevant
@@ -235,10 +226,6 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </app-field-error-display>
         <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
       </div>
-
-
-
-
       <div class="form-group" *ngIf="filterDepart && !this.departmentId && !is_donation">
         <mat-form-field>
           <mat-select #deptlist (selectionChange)="selectDeptHandler(deptlist.value)" formControlName="department"
@@ -319,8 +306,6 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
           </div>
         </div>
-
-
       </div>
       <div class="form-group"
         *ngIf="bprofile.accountType === 'BRANCH' && !serviceFrom && action === 'add' && !is_donation && users_list && users_list.length >= 1">
@@ -348,31 +333,6 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           Show service duration
         </mat-checkbox>
       </div>
-      <!-- <div class="col-md-6" >
-        <div class="form-group" *ngIf="!is_donation">
-          <label style="margin-bottom: 0 !important" class="col-form-label">Number of resources</label>
-          <div class="settings_info">
-            No. of resources that need to be used for this service.</div>
-          <mat-form-field>
-            <input matInput type="text" class="form-control" id="resources" (keypress)="isNumeric($event)"
-              placeholder="Number of resources" formControlName="resoucesRequired" autocomplete="off">
-          </mat-form-field>
-
-        </div>
-      </div>
-      <div class="col-md-6" >
-        <div class="form-group" *ngIf="!is_donation">
-          <label style="margin-bottom: 0 !important" class="col-form-label">Maximum bookings allowed</label>
-          <div class="settings_info">
-            Maximum no. of bookings allowed for a customer for the same service, same schedule and same day.</div>
-          <mat-form-field>
-            <input matInput type="text" class="form-control" id="bookings" (keypress)="isNumeric($event)"
-              placeholder="Maximum bookings allowed" formControlName="maxBookingsAllowed" autocomplete="off">
-          </mat-form-field>
-
-        </div>
-      </div> -->
-
       <div class="row mgn-lt-5 mgn-up-20" *ngIf="showResources">
         <section class="mgn-bt-30" *ngIf="!is_donation">
           <label style="margin-bottom: 0 !important" class="col-form-label">Number of resources</label>
@@ -457,8 +417,6 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </div>
       </div>
       <div *ngIf="bprofile.serviceSector.domain != 'finance'" class="mgn-bt-20">
-        <!-- <a class="no-padding underline pointer-cursor" (click)="billingInfoClicked()" *ngIf="!is_donation"
-          style="font-size: 1.1rem;"> -->
         <a class="no-padding underline pointer-cursor" *ngIf="!is_donation" style="font-size: 1.1rem;">
           Payment Info</a>
         <div class="settings_info" *ngIf="!is_donation">
@@ -477,19 +435,19 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 autocomplete="off">
             </mat-form-field>
             <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'totalAmount')" [errorMsgs]="fed_service.getErrorMessage(serviceForm,'totalAmount',
- {'required' : 'Please enter price',
- 'pattern' : 'Enter a valid price',
- 'maxlength' : 'Only 10 digits are allowed'})">
+              {'required' : 'Please enter price',
+              'pattern' : 'Enter a valid price',
+              'maxlength' : 'Only 10 digits are allowed'})">
             </app-field-error-display>
           </div>
-          <div class="form-group">
+          <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
             <label style="margin-bottom: 0 !important;">Show Price Description
               <mat-slide-toggle class="example-margin" formControlName="priceDynamic">
               </mat-slide-toggle>
               <!-- <div class="form-level-settings">{{frm_enable_prepayment_cap}}</div> -->
             </label>
           </div>
-          <div class="form-group" *ngIf="serviceForm.get('priceDynamic').value === true">
+          <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation && serviceForm.get('priceDynamic').value === true">
             <mat-form-field>
               <textarea matInput class="form-control" id="paymentDescription"
                 placeholder="{{'Any disclaimer note for price *'}}" formControlName="paymentDescription" maxlength="500"
@@ -514,87 +472,39 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 </mat-form-field>
                 <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'minPrePaymentAmount')"
                   [errorMsgs]="fed_service.getErrorMessage(serviceForm,'minPrePaymentAmount',
- {'required' : 'Please enter prepayment amount',
- 'pattern' : 'Enter a valid amount'})">
+                  {'required' : 'Please enter prepayment amount',
+                  'pattern' : 'Enter a valid amount'})">
                 </app-field-error-display>
-
-
               </div>
             </ng-container>
           </div>
-
-
-
           <div class="form-group inline" *ngIf="subdomainsettings.serviceBillable">
             <label class="col-form-label">{{tax_applicable_cap}}</label>
             <mat-slide-toggle class="example-margin" formControlName="taxable" (change)="taxapplicableChange()">
             </mat-slide-toggle>
           </div>
-
-
         </section>
       </div>
       <ng-container *ngIf="paymentProfiles.length===1">
-        <div  class="col-xs-12 col-md-12 col-sm-12 col-lg-12 mgn-bt-10 no-padding ">Payment Profile Selected for this service is: <b>{{paymentProfiles[0].displayName}}.</b> Contact our support team to change payment profile for this service.</div>
-        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 no-padding "> 
-            <app-payment-mode [paymentProfile]="paymentProfiles[0]"></app-payment-mode>
+        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 mgn-bt-10 no-padding ">Payment Profile Selected for this
+          service is: <b>{{paymentProfiles[0].displayName}}.</b> Contact our support team to change payment profile for
+          this service.</div>
+        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 no-padding ">
+          <app-payment-mode [paymentProfile]="paymentProfiles[0]"></app-payment-mode>
         </div>
       </ng-container>
       <ng-container *ngIf="paymentProfiles.length>1">
-        <div class="col-xs-12 col-sm-12 col-lg-12 col-xs-12 no-padding mgn-bt-10 bold">Select Payment Profile for Service</div>
-        <div class="col-xs-12 col-sm-12 col-lg-12 col-xs-12 mgn-bt-20" *ngFor="let profile of paymentProfiles; let i=index">
-          <mat-radio-group name="paymentprofile" formControlName="paymentProfileId"  class="mt-4">
-            <mat-radio-button [value]="profile.profileId" readonly [checked]="service && profile.profileId === service.paymentProfileId">
-                <span class="font-weight-bold">{{profile.displayName}}</span>
-            </mat-radio-button>
-          <app-payment-mode [paymentProfile]="profile"></app-payment-mode>
-          </mat-radio-group>
-
-          <!-- <mat-radio-group formControlName="paymentProfileId" name="paymentprofile" class="mt-4">
-            <mat-radio-button [value]="profile.profileId">
+        <div class="col-xs-12 col-sm-12 col-lg-12 col-xs-12 no-padding mgn-bt-10 bold">Select Payment Profile for
+          Service</div>
+        <div class="col-xs-12 col-sm-12 col-lg-12 col-xs-12 mgn-bt-20"
+          *ngFor="let profile of paymentProfiles; let i=index">
+          <mat-radio-group name="paymentprofile" formControlName="paymentProfileId" class="mt-4">
+            <mat-radio-button [value]="profile.profileId" readonly
+              [checked]="service && profile.profileId === service.paymentProfileId">
               <span class="font-weight-bold">{{profile.displayName}}</span>
             </mat-radio-button>
+            <app-payment-mode [paymentProfile]="profile"></app-payment-mode>
           </mat-radio-group>
-          <div>
-            <div class="col-lg-12 no-padding-small" *ngIf="profile.indiaPay">
-              <div class="col-xs-12 mgn-bt-20"
-                *ngFor="let gateway of getPayTMmodesByGroup(profile.indianPaymodes)|keyvalue">
-
-                <div class="col-xs-3 no-padding">
-                  <img [src]="getImageSrc(gateway.key)" class="gateway-img" alt="{{gateway.key}}">
-                </div>
-
-                <div class="col-xs-9 no-padding">
-                  <div class="pull-right" *ngFor="let modes of gateway.value">
-                    <img class="modes-img" [src]="getImageSrc(modes.mode)">
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <ng-container *ngIf="profile.internationalPay">
-              <div class="col-lg-12 no-padding-small">
-                <span (click)="togglepaymentMode();"><b style="color:green">&#10004;</b> <a>International
-                    Payment</a></span>
-              </div>
-              <div class="col-lg-12 no-padding-small" *ngIf="profile.internationalPay && show_internationalmode">
-                <ng-container *ngFor="let gateway of getPayTMmodesByGroup(profile.internationalPaymodes)|keyvalue">
-                  <div class="col-xs-12 mgn-bt-20">
-                    <div class="col-xs-3 no-padding">
-                      <img [src]="getImageSrc(gateway.key)" class="gateway-img" alt="{{gateway.key}}">
-                    </div>
-                    <div class="col-xs-9 no-padding">
-                      <ng-container *ngFor="let modes of gateway.value">
-                        <div class="pull-right">
-                          <img class="modes-img" [src]="getImageSrc(modes.mode)">
-                        </div>
-                      </ng-container>
-                    </div>
-                  </div>
-                </ng-container>
-              </div>
-            </ng-container>
-          </div> -->
         </div>
       </ng-container>
       <div class="mgn-bt-20">
@@ -678,7 +588,6 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             Enable live track feature to know the arrival time of your {{customer_label}}</div>
         </div>
       </div>
-
       <div class="actiondiv" style="margin-top: 20px;">
         <div style="margin-bottom:30px;display: inline-flex;">
           <button (click)="onCancel()" type="button" class="cs-btn bt2">{{cancel_btn}}</button> &nbsp;
@@ -759,3 +668,4 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
       <button mat-button class="cs-btn bt1 savemember" (click)="showInfoSection()">Save</button>
     </div>
   </div>
+</div>

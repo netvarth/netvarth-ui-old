@@ -1,8 +1,8 @@
-<section #consumer_donation class="container no-padding cons-donate no-padding-small">
+<section #consumer_donation class="container no-padding cons-donate no-padding-small" [ngClass]="theme">
     <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
     <div class="content p0 loc-list p-checkin ynw-common-form-nm">
         <div class="panel panel-default">
-            <div class="panel-heading top-row ">
+            <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row ">
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <a class="pull-left back-btn mgn-up-5" (click)="goBack('backyy')"><i
                             class="fa fa-arrow-left"></i></a>
@@ -13,7 +13,7 @@
                 </div>
             </div>
             <app-common-innerloading-spinner *ngIf="loadingPaytm"></app-common-innerloading-spinner>
-            <div class="flex-column-fluid hf-panel-body">
+            <div class="panel-body flex-column-fluid hf-panel-body">
                 <div class="card card-custom no-margin">
                     <div class="card-body p-0">
                         <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
@@ -99,9 +99,21 @@
                                             </button>
                                         </div>
                                     </div>
+                                    <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding"
+                                    data-wizard-type="step-content" data-wizard-state="current"
+                                    >
+                                    <div *ngIf="api_loading_video" class="incomplete-msg">
+                                        <div style="padding: 0 30px;">
+                                            Files are Uploading...
+                                        </div>
+                                    </div>
+                                    <app-common-innerloading-spinner *ngIf="api_loading_video">
+                                    </app-common-innerloading-spinner>
+                                </div>
+
                                     <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding-small right-part"
                                         data-wizard-type="step-content" data-wizard-state="current"
-                                        *ngIf="bookStep === 'donation'">
+                                        *ngIf="bookStep === 'donation'" [ngClass]="{'highlight': api_loading_video}">
                                         <div class="panel-body no-padding">
                                             <div class="c-outer m0">
                                                 <div class="c-body">
@@ -619,9 +631,11 @@
                                                     </button>
                                                    
                                                 </div>
+                                                
                                             </div>
                                         </div>
                                     </div>
+                                   
                                 </div>
                             </div>
                         </div>

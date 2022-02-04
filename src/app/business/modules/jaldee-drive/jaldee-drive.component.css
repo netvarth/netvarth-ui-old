@@ -807,6 +807,11 @@ width: 200px;
     margin-bottom: .5rem;
 }
 }
+@media screen and (min-width: 360px) {
+  .small_text{
+    margin-left: 13px !important;
+  }
+}
 
 .count { 
 /* border-radius: 10px;

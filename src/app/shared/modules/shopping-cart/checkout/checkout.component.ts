@@ -452,7 +452,7 @@ getImageSrc(mode){
   return 'assets/images/payment-modes/'+mode+'.png';
 }
 getPaymentModes() {
-    this.shared_services.getPaymentModesofProvider(this.account_id,0, 'billPayment')
+    this.shared_services.getPaymentModesofProvider(this.account_id,0, 'prePayment')
         .subscribe(
             data => {
                 
@@ -1791,7 +1791,7 @@ getPaymentModes() {
         .subscribe((pData: any) => {
           this.pGateway = pData.paymentGateway;
           if (this.pGateway === 'RAZORPAY') {
-            // this.paywithRazorpay(pData);
+            this.paywithRazorpay(pData);
           } else {
             if (pData['response']) {
               this.payWithPayTM(pData, this.account_id);

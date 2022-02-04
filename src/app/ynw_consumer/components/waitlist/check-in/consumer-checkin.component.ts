@@ -859,7 +859,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     confirmcheckin(type?, paymenttype?) {
-        alert('confirm');
         // type === 'checkin' && 
         if (this.selectedService.isPrePayment  && (!this.commObj['communicationEmail'] || this.commObj['communicationEmail']=== '')) {
             this.paymentBtnDisabled = true;

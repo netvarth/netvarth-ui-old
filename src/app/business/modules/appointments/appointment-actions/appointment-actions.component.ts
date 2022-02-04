@@ -131,6 +131,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.getLabel();
         this.apiloading = true;
         this.appt = this.data.checkinData;
+        console.log("Appointment Actions :",this.appt)
           this.status_booking=this.data.status
         if (!this.data.multiSelection) {
             this.getPos();
@@ -373,7 +374,12 @@ export class AppointmentActionsComponent implements OnInit {
         });
         addnotedialogRef.afterClosed().subscribe(result => {
             this.dialogRef.close();
-            if (result === 'reloadlist') { }
+            if (result === 'reloadlist') { 
+                // this.provider_services.getAppointmentById(this.appt.uid)
+                // this.provider_services.getProviderAppointmentNotes(this.appt.uid)
+                // this.provider_services.getAppointmentById(this.appt.uid);
+
+            }
         });
     }
     changeWaitlistStatus(action) {
@@ -802,7 +808,7 @@ export class AppointmentActionsComponent implements OnInit {
     getAppointmentSlots() {
         this.freeSlots = [];
         this.loading = true;
-        this.provider_services.getSlotsByLocationServiceandDate(this.locId, this.servId, this.sel_checkindate).subscribe(data => {
+        this.provider_services.getSlotsByLocationServiceandDate(this.locId, this.servId, this.sel_checkindate,this.accountid).subscribe(data => {
             this.schedules = data;
             this.loading = false;
             for (const scheduleSlots of this.schedules) {

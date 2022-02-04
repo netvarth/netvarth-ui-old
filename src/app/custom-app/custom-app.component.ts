@@ -25,11 +25,13 @@ export class CustomAppComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean;
   accountExists: boolean;
   accountId: any;
+  templateJson;
   
   private subscriptions = new SubSink();
   loading: boolean = true;
   theme: any;
   activeUser: any;
+  loginRequired = false;
   
 
   constructor(
@@ -91,20 +93,24 @@ export class CustomAppComponent implements OnInit, OnDestroy {
             _this.domainConfigService.getHometemplate(_this.provider_id).subscribe(
               (templateJson: any) => {
                 this.theme = templateJson.theme;
+                this.lStorageService.setitemonLocalStorage('theme',this.theme);
                 this.customappService.setTemplateJson(templateJson);
-                console.log(templateJson);
+                console.log("TemplateJson:",templateJson);
+                this.templateJson = templateJson;
                 _this.getBusinessProfile(_this.provider_id).then(
                   (businessJsons: any) => {
                     console.log(businessJsons);
                     _this.customappService.setBusinessJsons(businessJsons);
                     // const businessProfile = this.s3Processor.getJson(businessJsons['businessProfile']);                
-                    _this.accountId = _this.customappService.getAccountId();
-                    this.loading = false;
-                    _this.router.navigate(['customapp',_this.accountEncId, { outlets : {template: [templateJson.template]}}]);
+                    _this.accountId = _this.customappService.getAccountId();                    
+                    _this.loading = false;
+                    if (this.isLoggedIn || !templateJson.loginRequired) {                      
+                      _this.router.navigate(['customapp',_this.accountEncId, { outlets : {template: [templateJson.template]}}]);
+                    } else {
+                      _this.loginRequired = true;
+                    } 
                   }
                 )
-              
-
               });
 
           }, (error) => {
@@ -114,6 +120,12 @@ export class CustomAppComponent implements OnInit, OnDestroy {
       });
   }
 
+  loginPerformed(status) {
+    if (status) {
+      this.router.navigate(['customapp',this.accountEncId, { outlets : {template: [this.templateJson.template]}}]);
+      this.loginRequired = false;
+    }
+  }
   /**
    * Unsubscribe all subscriptions
    */
@@ -128,7 +140,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
   getBusinessProfile(uniqueId) {
     const _this = this;
     return new Promise(function (resolve, reject) {
-      let accountS3List = 'businessProfile,settings,appointmentsettings,terminologies,location,donationServices,departmentProviders';
+      let accountS3List = 'businessProfile,settings,appointmentsettings,terminologies,location,donationServices,departmentProviders,gallery';
       _this.subscriptions.sink = _this.s3Processor.getJsonsbyTypes(uniqueId,
         null, accountS3List).subscribe(
           (accountS3s: any) => {

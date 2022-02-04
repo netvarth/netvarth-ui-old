@@ -65,6 +65,7 @@ export class CheckavailabilityComponent implements OnInit {
     ) {
 
         this.actionObj=data.alldetails,
+        console.log("Details :",this.actionObj)
         
         this.apptSettings=data.apptSettingsJson
   
@@ -76,6 +77,9 @@ export class CheckavailabilityComponent implements OnInit {
            if(this.actionObj['service']) {
             this.sel_ser=this.actionObj['service']['id'];
             this.typeofcard=this.actionObj['service']['bType'];
+            this.typeofcard=this.actionObj['service']['serviceType'];
+
+            
             console.log('actionobj.............',this.actionObj,this.typeofcard)
             if(this.actionObj['service']['serviceAvailability']['nextAvailableDate']) {
                 this.sel_checkindate=this.hold_sel_checkindate=this.selectedDate=this.actionObj['service']['serviceAvailability']['nextAvailableDate'];

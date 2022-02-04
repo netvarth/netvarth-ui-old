@@ -1,59 +1,42 @@
-// import { Component, OnInit } from '@angular/core';
-// import { SharedServices } from '../../services/shared-services';
-// import { SharedFunctions } from '../../functions/shared-functions';
-// import { ActivatedRoute } from '@angular/router';
-// @Component({
-//   selector: 'app-maintenance',
-//   templateUrl: './maintenance.component.html'
-// })
-// export class MaintenanceComponent implements OnInit {
-
-//   kwdet: any = [];
-//   api_error = null;
-//   domain;
-// showheaderandfooter = false;
-//   constructor(
-//     private activaterouterobj: ActivatedRoute,
-//     public shared_services: SharedServices,
-//     public shared_functions: SharedFunctions
-//   ) { }
-//   ngOnInit() {
-//     this.activaterouterobj.paramMap
-//       .subscribe(params => {
-//           this.showheaderandfooter = true;
-//       });
-//   }
-// }
 import { Component, OnInit } from '@angular/core';
 import { SharedServices } from '../../services/shared-services';
-import { SharedFunctions } from '../../functions/shared-functions';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+// import { Router } from '@angular/router';
+import { LocalStorageService } from '../../services/local-storage.service';
 @Component({
   selector: 'app-maintenance',
   templateUrl: './maintenance.component.html'
 })
 
 export class MaintenanceComponent implements OnInit {
-  kwdet: any = [];
-  api_error = null;
-  domain;
-  showheaderandfooter = false;
+  loading = false;
   constructor(
-    private activaterouterobj: ActivatedRoute,
     public shared_services: SharedServices,
-    public location: Location,
-    public shared_functions: SharedFunctions) { }
+    // private router: Router,
+    private lStorageService: LocalStorageService
+  ) { }
   ngOnInit() {
-    console.log('maintaince')
-    this.activaterouterobj.paramMap
-      .subscribe(params => {
-        console.log(params)
-        this.showheaderandfooter = true;
-      });
+    console.log('maintainance');
   }
   goHome() {
-    this.location.back();
-    window.location.reload();
+    this.loading = true;
+    this.shared_services.getSystemDate().subscribe(
+      ()=>{
+        this.loading = false;
+        this.lStorageService.setitemonLocalStorage('maintainance',true);
+        // this.router.navigate(['/']).then(
+        //   ()=> {
+            if (this.lStorageService.getitemfromLocalStorage('customId')) {
+              if(this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA') {
+                window.location.href = 'customapp/' + this.lStorageService.getitemfromLocalStorage('customId') + '?at=' +  this.lStorageService.getitemfromLocalStorage('authToken');
+              } else {
+                window.location.href = this.lStorageService.getitemfromLocalStorage('customId');
+              }
+            } else {
+              window.location.href = '';
+            }
+          }
+        // );
+      // }
+    )
   }
 }

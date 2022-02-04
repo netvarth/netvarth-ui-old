@@ -79,26 +79,53 @@
         </div>
         <aside class="filterSidebar" *ngIf="filter_sidebar">
           <section class="sidebar sidebar-bottom">
-            <div class="filterClosebtn">
+            <!-- <div class="filterClosebtn">
+              <span class="filter-head-title">Filters</span>
               <i class="icon-filter-one-op ng-star-inserted pointer-cursor " (click)="hideFilterSidebar()"
                 [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
               <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
                 [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
+            </div> -->
+            <div style="display: flex;background-color: #E3E9ED;height: 44px;text-transform: uppercase;padding: 15px;justify-content: space-between;">
+              <div>Filters</div>
+              <div>
+                <i class="icon-filter-one-op ng-star-inserted pointer-cursor " (click)="hideFilterSidebar()"
+                [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+              <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
+                [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
+              </div>
             </div>
-            <ul class="sidebar-menu">
-              <div class="filterTextinput">
-                <li class="filterli">
+            <!-- <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div> -->
+            <div style="padding: 10px;">
+              <div style="display: inline-block !important;">
+                <i class="fa fa-user"></i>
+              </div>
+              <span style="font-weight: bold;">&nbsp;Name</span>
+            </div>
+            <ul class="sidebar-menu " id="accordion2">
+              <div style="padding-bottom: 15px;border-bottom: solid 1px #c4b7b7;">
+                <li class="filterli" >
                   <input type="text" #Ffname (blur)="doSearch()" class="filterTextbox" [(ngModel)]="filter.first_name"
-                    placeholder="First Name">
+                    placeholder="Enter First Name">
+                </li>
+                <li class="filterli" style="padding-top: 10px;">
+                  <input type="text" #Llname (blur)="doSearch()" class="filterTextbox"  [(ngModel)]="filter.last_name"
+                    placeholder="Enter Last Name">
                 </li>
               </div>
-              <div class="filterTextinput">
+              <!-- <div class="filterTextinput">
                 <li class="filterli">
                   <input type="text" #Llname (blur)="doSearch()" class="filterTextbox" [(ngModel)]="filter.last_name"
                     placeholder="Last Name">
                 </li>
+              </div> -->
+              <div style="padding: 10px;">
+                <div style="display: inline-block !important;">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <span style="font-weight: bold;">&nbsp;Filter by Date</span>
               </div>
-              <div class="filterTextinput">
+              <div class="filterTextinput" style="margin-top: -22px;">
                 <li class="filterli filterDatepicker">
                   <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday" [matDatepicker]="picker"
                     #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="Date"

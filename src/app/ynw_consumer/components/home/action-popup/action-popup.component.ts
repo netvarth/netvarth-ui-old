@@ -41,11 +41,13 @@ export class ActionPopupComponent implements OnInit {
     private snackbarService: SnackbarService,
     private galleryService: GalleryService,  
     private shared_services: SharedServices,
-    public dialogRef: MatDialogRef<ActionPopupComponent>) { }
+    public dialogRef: MatDialogRef<ActionPopupComponent>) { 
+     
+    }
 
   ngOnInit() {
     this.bookingDetails = this.data.booking;
-    console.log(this.bookingDetails);
+    console.log("Consumer Note :",this.bookingDetails);
     if (this.bookingDetails.quantity) {
       this.fromOrderDetails = true;
     } else {

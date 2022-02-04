@@ -1,7 +1,7 @@
-<section class="container no-padding confirm-aptckn no-padding-small">
-    <div class="content p0 loc-list">
+<section class="container no-padding confirm-aptckn no-padding-small" [ngClass]="theme">
+    <div class="content p0 loc-list" >
         <div class="panel panel-default">
-            <div class="panel-heading top-row ">
+            <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row ">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                     <app-header *ngIf="shared_functions.checkLogin()" [includedfrom]="'confirm'" [accountId]="accountId" [customId]="customId"></app-header>
                 </div>
@@ -60,7 +60,7 @@
                                     </div>
                                 </div>
                                 <div class="ok-btn">
-                                    <span class="pointer-cursor" (click)="okClick()">
+                                    <span class="pointer-cursor hf-btn" (click)="okClick()">
                                         <strong>OK</strong></span>
                                 </div>
                             </div>

@@ -177,7 +177,15 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       return next.handle(this.updateHeader(req, url)).pipe(
         catchError((error, caught) => {
           if (error instanceof HttpErrorResponse) {
-            if (error.status === 301) {
+            if (this._checkMaintanance(error)) {
+              return this._ifMaintenanceOn().pipe(
+                switchMap(() => {
+                  this.router.navigate(['/maintenance']);
+                  console.log("Maintainance Interceptor1");
+                  return throwError(error);
+                })
+              );
+            } else if (error.status === 301) {
               if (!this.forceUpdateCalled) {
                 this._forceUpdate();
                 return EMPTY;
@@ -200,6 +208,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         catchError((error, caught) => {
           this._handleErrors(error);
           if (error instanceof HttpErrorResponse) {
+            console.log('HttpErrorResponse:',error);
             if (this._checkSessionExpiryErr(error)) {
               if (!this.sessionExpired) {
                 // this.shared_services.callHealth(JSON.stringify(this.loggedUrls)).subscribe();
@@ -223,21 +232,10 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
               // return EMPTY;
               // return throwError(error);
             } else if (this._checkMaintanance(error)) {
+              console.log("Maintainance Interceptor Check");
+              this.router.navigate(['/maintenance']);
               return this._ifMaintenanceOn().pipe(
                 switchMap(() => {
-                  this.router.navigate(['/maintenance']);
-                  // const dialogRef = this.dialog.open(MaintenanceMsgComponent, {
-                  //   width: '40%',
-                  //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-                  //   disableClose: true,
-                  //   data: {
-                  //     'message': error.error
-                  //   }
-                  // });
-                  // dialogRef.afterClosed().subscribe(result => {
-                  //   window.location.reload();
-                  //   // this.router.navigate(['/']);
-                  // });
                   return EMPTY;
                 })
               );

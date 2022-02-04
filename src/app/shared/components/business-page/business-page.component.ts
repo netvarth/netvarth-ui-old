@@ -308,6 +308,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   providercustomId: any;
   provideraccEncUid: any;
   checkavailabilitydialogref: any;
+  searchEnabled;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -483,79 +484,82 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                   _this.customId = _this.accountEncId;
                   _this.accEncUid = _this.accountEncId;
                   _this.accountIdExists = true;
-                  _this.getproviderBprofileDetails();
-                  _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
-                    (uiconfig: any) => {
-                      if (uiconfig['pwaEnabled']) {
-                        this.pwaEnabled = true;
-                      }
-                      if (uiconfig['pixelId']) {
-                        this.addScript('1424568804585712');
-                      }
-                      if (uiconfig['iosApp']) {
-                        this.iosConfig = true;
-                        if (uiconfig['iosApp']['icon-180']) {
-                          document.getElementById('apple_touch_icon').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['icon-180']['src']);
+                  _this.getproviderBprofileDetails().then(
+                    () => {
+                      _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
+                        (uiconfig: any) => {
+                          if (uiconfig['pwaEnabled']) {
+                            _this.pwaEnabled = true;
+                          }
+                          if (uiconfig['pixelId']) {
+                            _this.addScript('1424568804585712');
+                          }
+                          if (uiconfig['iosApp']) {
+                            _this.iosConfig = true;
+                            if (uiconfig['iosApp']['icon-180']) {
+                              document.getElementById('apple_touch_icon').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['icon-180']['src']);
+                            }
+                            if (uiconfig['iosApp']['screen-1242x2208']) {
+                              document.getElementById('screen_1242x2208').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-1242x2208']['src']);
+                            }
+                            if (uiconfig['iosApp']['screen-1242x2688']) {
+                              document.getElementById('screen_1242x2688').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-1242x2688']['src']);
+                            }
+                            if (uiconfig['iosApp']['screen-828x1792']) {
+                              document.getElementById('screen_828x1792').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-828x1792']['src']);
+                            }
+                            if (uiconfig['iosApp']['screen-1125x2436']) {
+                              document.getElementById('screen_1125x2436').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-1125x2436']['src']);
+                            }
+                            if (uiconfig['iosApp']['screen-750x1334']) {
+                              document.getElementById('screen_750x1334').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-750x1334']['src']);
+                            }
+                            if (uiconfig['iosApp']['screen-640x1136']) {
+                              document.getElementById('screen_640x1136').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-640x1136']['src']);
+                            }
+                            if (uiconfig['iosApp']['screen-1668x2388']) {
+                              document.getElementById('screen_1668x2388').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-1668x2388']['src']);
+                            }
+                            if (uiconfig['iosApp']['screen-2048x2732']) {
+                              document.getElementById('screen_2048x2732').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-2048x2732']['src']);
+                            }
+                            if (uiconfig['iosApp']['screen-1668x2224']) {
+                              document.getElementById('screen_1668x2224').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-1668x2224']['src']);
+                            }
+                            if (uiconfig['iosApp']['screen-1536x2048']) {
+                              document.getElementById('screen_1536x2048').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-1536x2048']['src']);
+                            }
+                          }
+                          if (uiconfig['terms']) {
+                            _this.terms = true;
+                          }
+                          if (uiconfig['privacy']) {
+                            _this.privacy = true;
+                          }
+                          _this.accountProperties = uiconfig;
+                          if (_this.small_device_display) {
+                            _this.profileSettings = _this.accountProperties['smallDevices'];
+                          } else {
+                            _this.profileSettings = _this.accountProperties['normalDevices'];
+                          }
+                          if (_this.accountProperties['theme']) {
+                            _this.theme = _this.accountProperties['theme'];
+                          }
+                          const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
+                          if (!appPopupDisplayed && _this.profileSettings['showJaldeePopup']) {
+                            _this.popUp.nativeElement.style.display = 'block';
+                          }
+                          _this.gets3curl();
+                        }, (error: any) => {
+                          const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
+                          if (!appPopupDisplayed && _this.searchEnabled) {
+                            _this.popUp.nativeElement.style.display = 'block';
+                          }
+                          _this.gets3curl();
                         }
-                        if (uiconfig['iosApp']['screen-1242x2208']) {
-                          document.getElementById('screen_1242x2208').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-1242x2208']['src']);
-                        }
-                        if (uiconfig['iosApp']['screen-1242x2688']) {
-                          document.getElementById('screen_1242x2688').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-1242x2688']['src']);
-                        }
-                        if (uiconfig['iosApp']['screen-828x1792']) {
-                          document.getElementById('screen_828x1792').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-828x1792']['src']);
-                        }
-                        if (uiconfig['iosApp']['screen-1125x2436']) {
-                          document.getElementById('screen_1125x2436').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-1125x2436']['src']);
-                        }
-                        if (uiconfig['iosApp']['screen-750x1334']) {
-                          document.getElementById('screen_750x1334').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-750x1334']['src']);
-                        }
-                        if (uiconfig['iosApp']['screen-640x1136']) {
-                          document.getElementById('screen_640x1136').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-640x1136']['src']);
-                        }
-                        if (uiconfig['iosApp']['screen-1668x2388']) {
-                          document.getElementById('screen_1668x2388').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-1668x2388']['src']);
-                        }
-                        if (uiconfig['iosApp']['screen-2048x2732']) {
-                          document.getElementById('screen_2048x2732').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-2048x2732']['src']);
-                        }
-                        if (uiconfig['iosApp']['screen-1668x2224']) {
-                          document.getElementById('screen_1668x2224').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-1668x2224']['src']);
-                        }
-                        if (uiconfig['iosApp']['screen-1536x2048']) {
-                          document.getElementById('screen_1536x2048').setAttribute('href', projectConstantsLocal.UIS3PATH + this.provider_id + '/' + uiconfig['iosApp']['screen-1536x2048']['src']);
-                        }
-                      }
-                      if (uiconfig['terms']) {
-                        this.terms = true;
-                      }
-                      if (uiconfig['privacy']) {
-                        this.privacy = true;
-                      }
-                      _this.accountProperties = uiconfig;
-                      if (_this.small_device_display) {
-                        _this.profileSettings = _this.accountProperties['smallDevices'];
-                      } else {
-                        _this.profileSettings = _this.accountProperties['normalDevices'];
-                      }
-                      if (_this.accountProperties['theme']) {
-                        _this.theme = _this.accountProperties['theme'];
-                      }
-                      const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
-                      if (!appPopupDisplayed && _this.profileSettings['showJaldeePopup']) {
-                        _this.popUp.nativeElement.style.display = 'block';
-                      }
-                      _this.gets3curl();
-                    }, (error: any) => {
-                      const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
-                      if (!appPopupDisplayed) {
-                        _this.popUp.nativeElement.style.display = 'block';
-                      }
-                      _this.gets3curl();
+                      )
                     }
-                  )
+                  );
                 }, (error) => {
                   console.log(error);
                   // _this.gets3curl();
@@ -567,22 +571,28 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
   getproviderBprofileDetails() {
-    let accountS3List = 'businessProfile';
-    this.subscriptions.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
-      null, accountS3List).subscribe(
-        (accountS3s: any) => {
-          this.accountId = accountS3s.businessProfile.id;
-          if (accountS3s.businessProfile.customId) {
-            this.providercustomId = accountS3s.businessProfile.customId;
-          }
-          this.provideraccEncUid = accountS3s.businessProfile.accEncUid;
-          if (this.providercustomId) {
-          this.lStorageService.setitemonLocalStorage('customId', this.providercustomId);
-        } else {
-          this.lStorageService.setitemonLocalStorage('customId', this.provideraccEncUid);
-        }
-        this.lStorageService.setitemonLocalStorage('accountId',  accountS3s.businessProfile.id);
-        });
+    const self = this;
+    return new Promise(function (resolve, reject) {
+      let accountS3List = 'businessProfile';
+      self.subscriptions.sink = self.s3Processor.getJsonsbyTypes(self.provider_id,
+        null, accountS3List).subscribe(
+          (accountS3s: any) => {
+            self.searchEnabled = accountS3s.businessProfile.enableSearch;
+            self.accountId = accountS3s.businessProfile.id;
+            if (accountS3s.businessProfile.customId) {
+              self.providercustomId = accountS3s.businessProfile.customId;
+            }
+            self.provideraccEncUid = accountS3s.businessProfile.accEncUid;
+            if (self.providercustomId) {
+              self.lStorageService.setitemonLocalStorage('customId', self.providercustomId);
+            } else {
+              self.lStorageService.setitemonLocalStorage('customId', self.provideraccEncUid);
+            }
+            self.lStorageService.setitemonLocalStorage('accountId', accountS3s.businessProfile.id);
+            resolve(true);
+          });
+    })
+
   }
   /**
    * 
@@ -1786,11 +1796,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       'cdate': service.serviceAvailability.availableDate,
       'service': service
     };
-    if(location.time) {
-      current_provider['ctime']=location.time
-    }    if(location.date) {
-      current_provider['cdate']=location.date
-      service.serviceAvailability.availableDate=location.date
+    if (location.time) {
+      current_provider['ctime'] = location.time
+    } if (location.date) {
+      current_provider['cdate'] = location.date
+      service.serviceAvailability.availableDate = location.date
     }
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
     const today = new Date(todaydt);
@@ -1823,7 +1833,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           //console.log("logged In");
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           if (_this.userType === 'consumer') {
-            _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer',current_provider['ctime']);
+            _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer', current_provider['ctime']);
           }
         } else {
           const passParam = { callback: '', current_provider: current_provider };
@@ -1934,7 +1944,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log('end of login section')
         }
         else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer',current_provider['ctime']);
+          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer', current_provider['ctime']);
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1942,7 +1952,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.checkout();
           }
         } else {
-          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer',current_provider['ctime']);
+          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer', current_provider['ctime']);
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
@@ -1990,7 +2000,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
   }
-  showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?,ctime?) {
+  showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?, ctime?) {
     let queryParam = {
       loc_id: locid,
       locname: locname,
@@ -2002,7 +2012,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       user: this.userId,
       service_id: service.id,
       virtual_info: JSON.stringify(virtualinfo),
-      ctime:ctime
+      ctime: ctime
     };
     if (service['serviceType'] === 'virtualService') {
       queryParam['tel_serv_stat'] = true;
@@ -2331,10 +2341,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         actionObj['location']['time'] = result[0];
         actionObj['location']['date'] = result[1];
         // console.log('action..........',actionObj);
-        if(actionObj['service']['bType']=='Appointment') {
-        this.appointmentClicked(actionObj['location'], actionObj['service']);
+        if (actionObj['service']['bType'] == 'Appointment') {
+          this.appointmentClicked(actionObj['location'], actionObj['service']);
         }
-        if(actionObj['service']['bType']=='Waitlist' || !actionObj['service']['bType']) {
+        if (actionObj['service']['bType'] == 'Waitlist' || !actionObj['service']['bType']) {
           console.log("***Waitlist***");
           this.checkinClicked(actionObj['location'], actionObj['service']);
         }

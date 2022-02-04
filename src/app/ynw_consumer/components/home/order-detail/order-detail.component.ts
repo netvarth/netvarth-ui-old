@@ -302,7 +302,7 @@ buttons: [
     this.view_more = !this.view_more;
   }
   gotoActions(booking) {
-    console.log(booking);
+    console.log("Notes : ",booking);
     this.actiondialogRef = this.dialog.open(ActionPopupComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],

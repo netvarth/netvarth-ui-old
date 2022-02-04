@@ -677,7 +677,7 @@ export class QuestionnaireComponent implements OnInit {
     const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
     this.buttonDisable = true;
-    if (this.source === 'consCheckin' || this.source === 'consAppt') {
+    if (this.source === 'consCheckin' || this.source === 'consAppt' || this.source === 'consDonationDetails') {
       this.validateConsumerQuestionnaireResubmit(passData.answers, dataToSend);
     } else {
       this.validateProviderQuestionnaireResubmit(passData.answers, dataToSend);
@@ -704,6 +704,22 @@ export class QuestionnaireComponent implements OnInit {
   submitConsumerWaitlistQuestionnaire(body) {
     this.sharedService.submitConsumerWaitlistQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
       this.uploadAudioVideo(data, 'consCheckin');
+    }, error => {
+      this.buttonDisable = false;
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
+  submitConsumerDonationQuestionnaire(body) {
+    this.sharedService.submitConsumerWaitlistQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
+      this.uploadAudioVideo(data, 'consDonationDetails');
+    }, error => {
+      this.buttonDisable = false;
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
+  resubmitConsumerDonationQuestionnaire(body) {
+    this.sharedService.resubmitConsumerDonationQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
+      this.uploadAudioVideo(data, 'consDonationDetails');
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -804,6 +820,16 @@ export class QuestionnaireComponent implements OnInit {
                       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                       this.buttonDisable = false;
                     });
+              } 
+              else if (type === 'consDonationDetails') {
+                this.sharedService.consumerDonationQnrUploadStatusUpdate(this.uuid, this.accountId, postData)
+                  .subscribe((data) => {
+                    this.successGoback();
+                  },
+                    error => {
+                      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                      this.buttonDisable = false;
+                    });
               } else if (type === 'proCheckin') {
                 this.providerService.providerWaitlistQnrUploadStatusUpdate(this.uuid, postData)
                   .subscribe((data) => {
@@ -881,11 +907,18 @@ export class QuestionnaireComponent implements OnInit {
           } else {
             this.submitConsumerWaitlistQuestionnaire(dataToSend);
           }
-        } else {
+        } else if(this.source === 'consAppt') {
           if (this.qnrStatus === 'submitted') {
             this.resubmitConsumerApptQuestionnaire(dataToSend);
           } else {
             this.submitConsumerApptQuestionnaire(dataToSend);
+          }
+        }
+        else{
+          if (this.qnrStatus === 'submitted') {
+            this.resubmitConsumerDonationQuestionnaire(dataToSend);
+          } else {
+            this.submitConsumerDonationQuestionnaire(dataToSend);
           }
         }
       }
@@ -938,12 +971,12 @@ export class QuestionnaireComponent implements OnInit {
   disableInput() {
     if (this.uuid) {
       if (this.source === 'consCheckin' || this.source === 'proCheckin') {
-        if (this.waitlistStatus !== 'checkedIn' && this.waitlistStatus !== 'arrived') {
+        if (this.waitlistStatus !== 'checkedIn' && this.waitlistStatus !== 'arrived' && this.waitlistStatus !== 'done' && this.waitlistStatus !== 'started' && this.waitlistStatus !== 'cancelled') {
           return true;
         }
       }
       if (this.source === 'consAppt' || this.source === 'proAppt') {
-        if (this.waitlistStatus !== 'Confirmed' && this.waitlistStatus !== 'Arrived') {
+        if (this.waitlistStatus !== 'Confirmed' && this.waitlistStatus !== 'Arrived' && this.waitlistStatus !== 'Started' && this.waitlistStatus !== 'Completed' && this.waitlistStatus !== 'Cancelled') {
           return true;
         }
       }
@@ -963,6 +996,9 @@ export class QuestionnaireComponent implements OnInit {
         if (this.waitlistStatus !== 'Confirmed' && this.waitlistStatus !== 'Arrived') {
           return false;
         }
+      }
+      if (this.source === 'consDonationDetails' || this.source === 'qnrDetails' || this.source === 'qnrView' || (this.type && this.type !== 'qnr-link' && !this.editQuestionnaire)) {
+        return false;
       }
       return true;
     }
@@ -1169,3 +1205,4 @@ export class QuestionnaireComponent implements OnInit {
     return s.split("-").reverse().join("-");
 }
 }
+

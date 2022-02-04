@@ -1,4 +1,4 @@
-<div class="card no-padding" [ngClass]="templateJson.theme?templateJson.theme: ''">
+<div class="col-xs-12 no-padding" [ngClass]="templateJson.theme?templateJson.theme: ''">
     <div [style.background-image]="'url(' + templateJson['coverPicture'] + ')'" class="cvr-ht">
     </div>
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 cvr-dp-mgn">
@@ -14,7 +14,7 @@
         </div>
         <div class="clearfix"></div>
     </div>
-    <div class="section">
+    <div class="section" *ngIf="locationjson && locationjson.length > 1">
         <div class="col-xs-12">
             <div class="btn-location pull-right">
                 <mat-select class="selecttype" [(ngModel)]="selectedLocation">
@@ -29,7 +29,7 @@
     <div class="section">
         <mat-tab-group dynamicHeight mat-stretch-tabs>
             <mat-tab label="{{templateJson.section1.title}}">
-                <div class="card">
+                <div class="col-xs-12 mgn-up-10">
                     <div class="col-xs-12 no-padding" *ngIf="templateJson.section1.generalDescription !=''"
                         [innerHtml]="templateJson.section1.generalDescription | safeHtml">
                     </div>
@@ -90,10 +90,19 @@
                             </app-cons-departments>
                         </div>
                     </div>
+                    <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section1.gallery">
+                        <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section1.galleryDescription"
+                            [innerHtml]="templateJson.section1.galleryDescription | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding" *ngIf="galleryJson">
+                            <app-picture-gallery [galleryJson]="galleryJson"></app-picture-gallery>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </mat-tab>
             <mat-tab label="{{templateJson.section2.title}}">
-                <div class="card">
+                <div class="col-xs-12 mgn-up-10 ">
                     <div class="col-xs-12 no-padding" *ngIf="templateJson.section2.generalDescription !=''"
                         [innerHtml]="templateJson.section2.generalDescription | safeHtml">
                     </div>
@@ -139,14 +148,33 @@
                                 [businessProfile]="businessProfile" [selectedLocation]="selectedLocation"></app-orders>
                         </div>
                     </div>
+                    <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="showDepartments && templateJson.section2.departments">
+                        <div class="col-xs-12 no-padding" *ngIf="templateJson.section2.departmentsDescription"
+                            [innerHtml]="templateJson.section2.departmentsDescription | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding" >
+                            <app-cons-departments [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                                [businessProfile]="businessProfile" 
+                                [selectedLocation]="selectedLocation" [departments]="departments">
+                            </app-cons-departments>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section2.gallery">
+                        <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section2.galleryDescription"
+                            [innerHtml]="templateJson.section2.galleryDescription | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding" *ngIf="galleryJson">
+                            <app-picture-gallery [galleryJson]="galleryJson"></app-picture-gallery>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </mat-tab>
             <mat-tab label="{{templateJson.section3.title}}">
-                <div class="card">
+                <div class="col-xs-12 mgn-up-10">
                     <div class="col-xs-12 no-padding" *ngIf="templateJson.section3.generalDescription !=''"
                         [innerHtml]="templateJson.section3.generalDescription | safeHtml">
                     </div>
-
                     <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section3.appointments">
                         <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section3.appointmentsDescription"
                             [innerHtml]="templateJson.section3.appointmentsDescription | safeHtml">
@@ -198,6 +226,26 @@
                             <app-orders [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
                                 [businessProfile]="businessProfile" [selectedLocation]="selectedLocation"></app-orders>
                         </div>
+                    </div>
+                    <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="showDepartments && templateJson.section3.departments">
+                        <div class="col-xs-12 no-padding" *ngIf="templateJson.section3.departmentsDescription"
+                            [innerHtml]="templateJson.section3.departmentsDescription | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding" >
+                            <app-cons-departments [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                                [businessProfile]="businessProfile" 
+                                [selectedLocation]="selectedLocation" [departments]="departments">
+                            </app-cons-departments>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section3.gallery">
+                        <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section3.galleryDescription"
+                            [innerHtml]="templateJson.section3.galleryDescription | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding" *ngIf="galleryJson">
+                            <app-picture-gallery [galleryJson]="galleryJson"></app-picture-gallery>
+                        </div>
+                        <div class="clearfix"></div>
                     </div>
                 </div>
             </mat-tab>

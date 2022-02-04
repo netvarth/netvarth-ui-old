@@ -1326,8 +1326,8 @@ export class ProviderServices {
     const url = 'provider/appointment/schedule/nextAvailableTime/' + scheduleid;
     return this.servicemeta.httpGet(url);
   }
-  getSlotsByLocationServiceandDate(locid, servid, pdate) {
-    const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid;
+  getSlotsByLocationServiceandDate(locid, servid, pdate,accountid) {
+    const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
   getAppointmentSlotsByDate(scheduleid, date, serviceid) {

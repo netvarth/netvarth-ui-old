@@ -21,6 +21,7 @@ export class ConfirmPageComponent implements OnDestroy {
   private subs = new SubSink();
   customId: any;
   accountId: any;
+  theme: any;
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public shared_functions: SharedFunctions
@@ -35,6 +36,9 @@ export class ConfirmPageComponent implements OnDestroy {
         }
         if (params.uuid) {
           this.getDonations(params.uuid);
+        }
+        if (params.theme) {
+          this.theme = params.theme;
         }
       });
   }

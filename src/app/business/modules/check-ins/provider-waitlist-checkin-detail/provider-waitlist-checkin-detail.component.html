@@ -80,8 +80,12 @@
               <div class="mgn-up-10 stats-item"
                 *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
                 <span class="itemHead">WhatsApp #</span>
-                <span class="itemVal">
-                  {{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
+                <!-- <span class="itemVal">
+                  {{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span> -->
+                  <span class="itemVal" *ngIf=" waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                    {{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
+                    <span class="itemVal" *ngIf=" !waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                      +{{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistingFor[0].email">
                 <span class="itemHead">Email</span>

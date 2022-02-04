@@ -4,10 +4,10 @@
             <span class="fa fa-arrow-left pointer-cursor" style="font-size: 20px;" (click)="onCancel()">
             </span>&nbsp; &nbsp;
             <span class="mx-2">Shared Files</span>
-            <p class="text-secondary mx-5" *ngIf="!isHealthCare"> Manage the files uploaded by the providers or
-                consumers!</p>
-            <p class="text-secondary mx-5" *ngIf="isHealthCare">Manage the files uploaded by the doctors or patients!
-            </p>
+            <p class="text-secondary mx-5" > Manage the files uploaded by the {{provider_label | capitalizeFirst}}s or {{customer_label | capitalizeFirst}}s!
+                </p>
+            <!-- <p class="text-secondary mx-5" *ngIf="isHealthCare">Manage the files uploaded by the doctors or patients!
+            </p> -->
         </div>
     </div>
 </section>
@@ -26,7 +26,7 @@
                                         data-tooltip="0 file" id="folder2" data-bs-toggle="tooltip"
                                         data-bs-placement="bottom" title="From Provider">
                                         <i class="fa fa-folder" aria-hidden="true">
-                                            <p (click)="publicfolder('public')">From Provider</p>
+                                            <p (click)="publicfolder('public')">From {{provider_label | capitalizeFirst}}</p>
                                         </i>
                                     </div> &nbsp; &nbsp; &nbsp;
                                     <div (click)="publicfolder('shared')"
@@ -34,7 +34,7 @@
                                         data-tooltip="0 file" id="folder2" data-bs-toggle="tooltip"
                                         data-bs-placement="bottom" title="From Consumer">
                                         <i class="fa fa-folder" aria-hidden="true">
-                                            <p (click)="publicfolder('shared')">From Consumer</p>
+                                            <p (click)="publicfolder('shared')">From {{customer_label | capitalizeFirst}}</p>
                                         </i>
                                     </div>
                                 </div>

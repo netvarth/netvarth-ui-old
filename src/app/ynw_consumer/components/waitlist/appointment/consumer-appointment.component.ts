@@ -2864,7 +2864,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
      */
     cancelLanguageSelection() {
         if (this.virtualForm.get('preferredLanguage').value.length == 0) {
-            this.virtualForm.get('preferredLanguage').setValue(['English']);
+           // this.virtualForm.get('preferredLanguage').setValue(['English']);
             this.lngknown = 'yes';
             this.virtualForm.patchValue({ islanguage: 'yes' });
         } else {
