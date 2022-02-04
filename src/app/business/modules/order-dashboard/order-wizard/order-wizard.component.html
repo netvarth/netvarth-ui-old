@@ -158,7 +158,9 @@
                                                     <div class="bold font11"
                                                         *ngIf="customer_data.firstName || customer_data.lastName">
                                                         {{ customer_data.firstName }} {{ customer_data.lastName }}</div>
-                                                    <div *ngIf="jaldeeId">Id - {{ jaldeeId }}</div>
+                                                    <div *ngIf="jaldeeId">Id - {{ customer_data.jaldeeId }}</div>
+                                                    <!-- <div *ngIf="jaldeeId === customer_data.firstName">Id - {{ customer_data.jaldeeId }}</div> -->
+
                                                     <div *ngIf="customer_data.phoneNo.trim()!==''"> <i
                                                             class="fa fa-phone" aria-hidden="true"></i> {{countryCode}}
                                                         {{customer_data.phoneNo}}</div>
