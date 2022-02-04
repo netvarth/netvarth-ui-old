@@ -15,6 +15,7 @@ import { ConsumerServices } from '../../../services/consumer-services.service';
 import { CommunicationComponent } from '../../../../shared/components/communication/communication.component';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { SubSink } from '../../../../../../node_modules/subsink';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-order-detail',
@@ -37,7 +38,7 @@ export class OrderDetailComponent implements OnInit,OnDestroy {
   fav_providers;
   fav_providers_id_list: any[];
   qr_value: string;
-  path = projectConstants.PATH;
+  path = projectConstantsLocal.PATH;
   view_more = false;
   actiondialogRef: any;
   elementType = 'url';

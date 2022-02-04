@@ -38,7 +38,7 @@ export class AppointmentActionsComponent implements OnInit {
     appt;
     provider_label = '';
     qr_value;
-    path = projectConstants.PATH;
+    path = projectConstantsLocal.PATH;
     showQR = false;
     trackDetail: any = [];
     customerMsg;

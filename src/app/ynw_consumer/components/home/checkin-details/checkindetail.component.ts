@@ -61,7 +61,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
   provider_label;
   iconClass: string;
   view_more = false;
-  path = projectConstants.PATH;
+  path = projectConstantsLocal.PATH;
   qr_value: string;
   actiondialogRef: any;
   fav_providers: any;

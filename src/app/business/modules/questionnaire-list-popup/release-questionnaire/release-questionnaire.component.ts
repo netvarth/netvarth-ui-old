@@ -5,7 +5,6 @@ import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
-import { projectConstants } from '../../../../app.component';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
@@ -66,7 +65,7 @@ export class ReleaseQuestionnaireComponent implements OnInit {
       }
     }
     const uid = (this.data.source === 'appt') ? this.data.waitlist_data.uid : this.data.waitlist_data.ynwUuid;
-    this.qnrLink = projectConstants.PATH + 'questionnaire/' + uid + '/' + this.data.qnrId + '/' + this.data.waitlist_data.providerAccount.id;
+    this.qnrLink = projectConstantsLocal.PATH + 'questionnaire/' + uid + '/' + this.data.qnrId + '/' + this.data.waitlist_data.providerAccount.id;
     this.createForm();
   }
   createForm() {

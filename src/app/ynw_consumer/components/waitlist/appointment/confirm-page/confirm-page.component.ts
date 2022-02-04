@@ -17,7 +17,7 @@ import { LocalStorageService } from '../../../../../shared/services/local-storag
 export class ConfirmPageComponent implements OnInit,OnDestroy {
   infoParams;
   appointment: any = [];
-  path = projectConstants.PATH;
+  path = projectConstantsLocal.PATH;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   email;

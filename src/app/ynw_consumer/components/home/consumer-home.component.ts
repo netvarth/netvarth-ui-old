@@ -177,7 +177,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   future_waitlists: any = [];
   todayDate = new Date();
   tDate: any;
-  path = projectConstants.PATH;
+  path = projectConstantsLocal.PATH;
   locationholder: any;
   today_totalbookings: any = [];
   future_totalbookings: any = [];

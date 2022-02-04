@@ -13,7 +13,7 @@ import { SubSink } from 'subsink';
 })
 export class ConfirmPageComponent implements OnDestroy {
 
-  path = projectConstants.PATH;
+  path = projectConstantsLocal.PATH;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   apiloading = true;

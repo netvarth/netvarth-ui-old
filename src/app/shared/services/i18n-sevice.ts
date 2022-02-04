@@ -19,15 +19,7 @@ export class I18nService {
   public changeLocale(locale: string){
     const jsonData = JSON.stringify(locale);
     localStorage.setItem('translatevariable', jsonData);
-    console.log(jsonData,'testong')
      this.translate.use(locale);
     this.localeEvent.next(locale);
   }
-//   public getitemfromLocalStorage(itemname) {
-//         if (localStorage.getItem(itemname) !== 'undefined') {
-//             return JSON.parse(localStorage.getItem(itemname));
-//         }
-
-// }
-
 }
