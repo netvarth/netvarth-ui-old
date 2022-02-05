@@ -553,6 +553,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
+      console.log("Actions Appt :",data)
       this.getProviderSettings();
     });
   }

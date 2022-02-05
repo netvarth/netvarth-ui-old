@@ -375,6 +375,34 @@ export class SharedServices {
     const url = 'provider/alerts/count' + retparam;
     return this.servicemeta.httpGet(url);
   }
+  getAuditFilterlogs(ackStatus, sdate, edate, startfrom, limit) {
+    let retparam = this.buildAlertsParams(ackStatus, sdate, edate);
+    if (startfrom !== '') {
+      if (retparam !== '') {
+        retparam += '&';
+      }
+      retparam += 'from=' + startfrom;
+    }
+    if (limit !== '') {
+      if (retparam !== '') {
+        retparam += '&';
+      }
+      retparam += 'count=' + limit;
+    }
+    if (retparam !== '') {
+      retparam = '?' + retparam;
+    }
+    const url = 'provider/auditlogs' + retparam;
+    return this.servicemeta.httpGet(url);
+  }
+  getAuditFilterlogsTotalCnt(ackStatus, sdate, edate) {
+    let retparam = this.buildAlertsParams(ackStatus, sdate, edate);
+    if (retparam !== '') {
+      retparam = '?' + retparam;
+    }
+    const url = 'provider/auditlogs/count' + retparam;
+    return this.servicemeta.httpGet(url);
+  }
   buildAlertsParams(ackStatus, sdate, edate) {
     let param = '';
     if (ackStatus === 'true') {

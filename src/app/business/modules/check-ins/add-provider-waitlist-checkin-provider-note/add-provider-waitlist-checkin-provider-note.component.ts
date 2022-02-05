@@ -96,8 +96,8 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
         .subscribe(
           () => {
             this.api_success = this.wordProcessor.getProjectMesssages('PROVIDER_NOTE_ADD');
-            this.provider_services.getAppointmentById(this.checkin_id)
-            this.provider_services.getProviderAppointmentNotes(this.checkin_id)
+            // this.provider_services.getAppointmentById(this.checkin_id)
+            // this.provider_services.getProviderAppointmentNotes(this.checkin_id)
 
 
             setTimeout(() => 
