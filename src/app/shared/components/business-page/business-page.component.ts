@@ -2318,14 +2318,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   providerDetClicked(userId) {
-    // const navigationExtras: NavigationExtras = {
-    //   queryParams: {
-    //     src: 'bp'
-    //   }
-    // };
     this.routerobj.navigate([this.accountEncId, userId]);
   }
   opencheckavail(actionObj) {
+    console.log(actionObj);
     this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
       width: '100%',
       panelClass: ['commonpopupmainclass', 'popup-class', 'availability-container', this.theme],
