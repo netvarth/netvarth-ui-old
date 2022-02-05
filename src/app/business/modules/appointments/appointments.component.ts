@@ -260,7 +260,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   customerMsg = '';
   tooltipcls = projectConstants.TOOLTIP_CLS;
   qr_value;
-  path = projectConstants.PATH;
+  path = projectConstantsLocal.PATH;
   showQR = false;
   bname = '';
   gnr_link = 2;
