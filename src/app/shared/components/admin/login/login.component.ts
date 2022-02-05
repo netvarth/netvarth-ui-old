@@ -9,6 +9,7 @@ import { ProviderDataStorageService } from '../../../../business/services/provid
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { AuthService } from '../../../../shared/services/auth-service';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -69,7 +70,7 @@ export class AdminLoginComponent implements OnInit {
       .then(
         () => {
           this.lStorageService.removeitemfromLocalStorage('customId');
-          const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+          const encrypted = this.shared_services.set(data.password, projectConstantsLocal.KEY);
           this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
           this.provider_dataStorage.setWeightageArray([]);
           this.lStorageService.setitemonLocalStorage('popupShown', 'false');
