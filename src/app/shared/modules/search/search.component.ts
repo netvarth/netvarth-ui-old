@@ -17,6 +17,7 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { FileReaderService } from '../../services/file-reader.service';
 import { TranslateService } from '@ngx-translate/core';
+import { projectConstantsLocal } from '../../constants/project-constants';
 export class Locscls {
   constructor(public autoname: string, public name: string, public lat: string, public lon: string, public typ: string, public rank: number) { }
 }
@@ -219,10 +220,10 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.metrojson = this.fileReader.getMetros();
       this.loadLocationjsontoArray();
     } else {
-      this.fileReader.getLocationJson(projectConstants.PATH).subscribe((locations) => {
+      this.fileReader.getLocationJson(projectConstantsLocal.PATH).subscribe((locations) => {
         this.fileReader.setLocations(locations);
         this.locationjson = locations;
-        this.fileReader.getMetrosJson(projectConstants.PATH).subscribe((metros) => {
+        this.fileReader.getMetrosJson(projectConstantsLocal.PATH).subscribe((metros) => {
           this.metrojson = metros;
           this.fileReader.setMetros(metros);
           this.loadLocationjsontoArray();

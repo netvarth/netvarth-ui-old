@@ -164,7 +164,7 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
   itemQty: number;
   activeCatalog: any;
   qrdialogRef;
-  wndw_path = projectConstants.PATH;
+  wndw_path = projectConstantsLocal.PATH;
   apptSettingsJson: any = [];
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
@@ -883,7 +883,7 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
           this.customAppIOSPopup.nativeElement.style.display = 'block';
         }
       }
-      // const path = this.customAppSerice.getManifest(res, projectConstantsLocal.UIS3PATH + this.provider_id, projectConstants.PATH);
+      // const path = this.customAppSerice.getManifest(res, projectConstantsLocal.UIS3PATH + this.provider_id, projectConstantsLocal.PATH);
       if (this.pwaEnabled) {
         const path = projectConstantsLocal.UIS3PATH + this.provider_id + '/manifest.json';
         document.getElementById('dynamic_manifest_url').setAttribute('href', path);

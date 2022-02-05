@@ -39,7 +39,7 @@ export class CheckinActionsComponent implements OnInit {
     checkin;
     provider_label = '';
     qr_value;
-    path = projectConstants.PATH;
+    path = projectConstantsLocal.PATH;
     showQR = false;
     trackDetail: any = [];
     customerMsg;

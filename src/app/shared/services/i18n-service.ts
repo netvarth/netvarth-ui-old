@@ -9,20 +9,17 @@ export class I18nService {
 
   localeEvent = new Subject<string>();
 
-  constructor(private translate: TranslateService) { }
+  constructor(private translate: TranslateService) {
+    if (localStorage.getItem('translatevariable') == 'undefined' || localStorage.getItem('translatevariable') == null || localStorage.getItem('translatevariable') == undefined) {
+      const jsonData = JSON.stringify('en');
+      localStorage.setItem('translatevariable', jsonData);
+      }
+   }
 
   public changeLocale(locale: string){
     const jsonData = JSON.stringify(locale);
-    localStorage.setItem('myData', jsonData);
-    console.log(jsonData,'testong')
+    localStorage.setItem('translatevariable', jsonData);
      this.translate.use(locale);
     this.localeEvent.next(locale);
   }
-//   public getitemfromLocalStorage(itemname) {
-//         if (localStorage.getItem(itemname) !== 'undefined') {
-//             return JSON.parse(localStorage.getItem(itemname));
-//         }
-
-// }
-
 }

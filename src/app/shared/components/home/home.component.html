@@ -1,6 +1,6 @@
 <section id="cons_home_n">
 	<div *ngIf="loading" class="loading">
-		<app-common-innerloading-spinner ></app-common-innerloading-spinner>
+		<app-common-innerloading-spinner></app-common-innerloading-spinner>
 	</div>
 	<header class="site-header" *ngIf="!loading">
 		<div class="container">
@@ -10,12 +10,14 @@
 				</div>
 				<div class="col-md-8 col-lg-8 site-header--links d-flex flex-wrap ">
 					<div class="account-links ">
-						<a (click)="providerLinkClicked()" class="pointer-cursor"><span class="bus-page-rdbtn">{{'Home' | translate}}</span></a>
+						<a (click)="providerLinkClicked()" class="pointer-cursor"><span class="bus-page-rdbtn">{{'Home'
+								| translate}}</span></a>
 						<!-- <a href="https://business.jaldee.com/" class="pointer-cursor"><span class="bus-page-rdbtn">{{'Home' | translate}}</span></a> -->
-						
+
 						<a class="pointer-cursor" class="login-link"><span class="cons_btn_login_top"
-								(click)="doLogin('consumer')">{{'Log_in' | translate}}</span> <span class="cons_btn_join_top"
-								(click)="doSignup('consumer')">{{'Sign_up' | translate}}</span></a>
+								(click)="doLogin('consumer')">{{'Log_in' | translate}}</span> <span
+								class="cons_btn_join_top" (click)="doSignup('consumer')">{{'Sign_up' |
+								translate}}</span></a>
 					</div>
 				</div>
 			</div>
@@ -27,13 +29,15 @@
 					<div class="col-12 no-padding">
 						<div class="col-xs-12  col-sm-12 no-padding">
 							<a class="pointer-cursor" class="login-link d-block pull-right">
-								<span class="cons_btn_login_top" (click)="doLogin('consumer')">{{'Log_in' | translate}}</span>
-								<span class="cons_btn_join_top" (click)="doSignup('consumer')">{{'Sign_up' | translate}}</span></a>
+								<span class="cons_btn_login_top" (click)="doLogin('consumer')">{{'Log_in' |
+									translate}}</span>
+								<span class="cons_btn_join_top" (click)="doSignup('consumer')">{{'Sign_up' |
+									translate}}</span></a>
 						</div>
 						<div class="col-xs-12 col-sm-12 no-padding mgn-up-20">
 							<a (click)="providerLinkClicked()" class="pointer-cursor d-block pull-right">
 								<span class="bus-page-rdbtn">{{'Home' | translate}}</span></a>
-								<!-- <a href="https://business.jaldee.com/" class="pointer-cursor d-block pull-right">
+							<!-- <a href="https://business.jaldee.com/" class="pointer-cursor d-block pull-right">
 									<span class="bus-page-rdbtn">{{'Home' | translate}}</span></a>							 -->
 						</div>
 					</div>
@@ -49,44 +53,50 @@
 						<div class="account-links">
 							<h2>{{'Avoid_msg' | translate}}</h2>
 							<ng-container>
-								<app-search [showopennow]="0" [searchfields]="searchfields"
-									[domainlistpassed]="domainlist_data" [includedfrom]="'home'"></app-search>
-									
+								<div class="col-lg-12 col-xs-12 col-md-12 col-sm-12">
+									<app-search [showopennow]="0" [searchfields]="searchfields"
+										[domainlistpassed]="domainlist_data" [includedfrom]="'home'"></app-search>
+								</div>
+								<div class="col-lg-12 col-xs-12 col-md-12 col-sm-12">
 									<h5 class="mgn-up-50" style="text-align: center;">Jaldee offered in</h5>
-									<div class="col-lg-12 col-xs-12 col-md-12 col-sm-12" style="display:flex;justify-content: center;">
+									<div class="col-lg-12 col-xs-12 col-md-12 col-sm-12"
+										style="display:flex;justify-content: center;">
 
-										<div  style="display: flex;cursor:pointer" *ngFor="let lang of languages"  (click)="changeLocale(lang.value,lang.viewValue)">
-												<h6>  {{lang.viewValue}} <span *ngIf="lang.viewValue != 'Tamil'">|</span> </h6>
+										<div style="display: flex;cursor:pointer" *ngFor="let lang of languages"
+											(click)="changeLocale(lang.value,lang.viewValue)">
+											<h6> {{lang.viewValue}} <span *ngIf="lang.viewValue != 'Tamil'">|</span>
+											</h6>
 										</div>
-									
+
 									</div>
+								</div>
 							</ng-container>
 						</div>
 					</div>
-				</div>				
+				</div>
 			</div>
 		</div>
 		<section id="welcome" class="mgn-bt-30">
 			<div class="container">
 				<div class="row no-gutters align-items-end">
-					<div class="col-lg-12 text-block">					
+					<div class="col-lg-12 text-block">
 						<div class="col-md-12">
 							<!-- <div style="text-align: center;margin-bottom: 20px;">
 								<a href="https://t.me/JaldeeBot" target="_blank" class="book_telgrm_btn"><span class="svg-icon"><i class="fa fa-telegram"></i></span>{{'Book_telegram' | translate}}</a>
 							</div> -->
 							<div class="section-header text-center">
-								<img src="assets/images/home/logo-blue.png" alt="Jaldee" />								
+								<img src="assets/images/home/logo-blue.png" alt="Jaldee" />
 							</div>
-						</div>						
+						</div>
 					</div>
 				</div>
 			</div>
 		</section>
-				
-		<section >
+
+		<section>
 			<div class="">
 				<!------banner start-->
-			<!-- <div class="site-header container" >
+				<!-- <div class="site-header container" >
 				<div class="row" >
 					<div class="text-center col-lg-6 " >
 						<div style="font-size: 25px;">BOOK A DOCTOR'S APPOINTMENT</div>
@@ -157,9 +167,9 @@
 				
 
 			</div> -->
-			
 
-			<!--banner end-->
+
+				<!--banner end-->
 			</div>
 		</section>
 		<section id="working">
@@ -205,7 +215,7 @@
 						</ul>
 					</div>
 				</div>
-				<div class="d-flex flex-wrap video-wrapper">					
+				<div class="d-flex flex-wrap video-wrapper">
 					<div class="video-box mgn-up-50" id="video-box">
 						<img src="assets/images/home/video-poster.png" alt="Poster" class="img-fluid w-100" />
 						<span id="play-btn" (click)="playvideoClicked()"><img
@@ -218,7 +228,8 @@
 			<div class="container">
 				<div class="section-header text-center">
 					<h3>{{'Jaldee_msg' | translate}}</h3>
-					<h2 class="section-title">{{'Not anymore!' | translate}} <strong>{{'Jaldee Karo!' | translate}}</strong></h2>
+					<h2 class="section-title">{{'Not anymore!' | translate}} <strong>{{'Jaldee Karo!' |
+							translate}}</strong></h2>
 				</div>
 
 				<div id="services-list" class="row no-gutters">
@@ -233,10 +244,12 @@
 							<div class="servicelist-icon icon-3"></div>{{'Book an appointment' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-4"></div>{{'Check-in to a queue from anywhere' | translate}}
+							<div class="servicelist-icon icon-4"></div>{{'Check-in to a queue from anywhere' |
+							translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-5"></div>{{'Take a video call with your Doctor' | translate}}
+							<div class="servicelist-icon icon-5"></div>{{'Take a video call with your Doctor' |
+							translate}}
 						</li>
 						<li>
 							<div class="servicelist-icon icon-6"></div>{{'Book home services' | translate}}
@@ -247,22 +260,27 @@
 					</ul>
 					<ul class="col-md">
 						<li>
-							<div class="servicelist-icon icon-8"></div>{{'Check your waiting time and delay' | translate}}
+							<div class="servicelist-icon icon-8"></div>{{'Check your waiting time and delay' |
+							translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-9"></div>{{'Get traffic live alerts & know when to leave' | translate}}
+							<div class="servicelist-icon icon-9"></div>{{'Get traffic live alerts & know when to leave'
+							| translate}}
 						</li>
 						<li>
 							<div class="servicelist-icon icon-10"></div>{{'Auto share your arrival time' | translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-11"></div>{{'Do online enquiries before you visit' | translate}}
+							<div class="servicelist-icon icon-11"></div>{{'Do online enquiries before you visit' |
+							translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-12"></div>{{'Do it all while protecting your privacy' | translate}}
+							<div class="servicelist-icon icon-12"></div>{{'Do it all while protecting your privacy' |
+							translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-13"></div>{{'Pay for your services using your phone' | translate}}
+							<div class="servicelist-icon icon-13"></div>{{'Pay for your services using your phone' |
+							translate}}
 						</li>
 						<li>
 							<div class="servicelist-icon icon-14"></div>{{'Contactless receipts & billing' | translate}}
@@ -270,13 +288,16 @@
 					</ul>
 					<ul class="col-md">
 						<li>
-							<div class="servicelist-icon icon-15"></div>{{'No convenience charges, never pay here!!' | translate}}
+							<div class="servicelist-icon icon-15"></div>{{'No convenience charges, never pay here!!' |
+							translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-16"></div>{{'Use Jaldee Mobile Apps or browser UI' | translate}}
+							<div class="servicelist-icon icon-16"></div>{{'Use Jaldee Mobile Apps or browser UI' |
+							translate}}
 						</li>
 						<li>
-							<div class="servicelist-icon icon-17"></div>{{'Favorite your service providers' | translate}}
+							<div class="servicelist-icon icon-17"></div>{{'Favorite your service providers' |
+							translate}}
 						</li>
 						<li>
 							<div class="servicelist-icon icon-18"></div>{{'Get coupons and discounts' | translate}}
@@ -383,7 +404,7 @@
 					<img src="assets/images/iphone.png">
 				</div>
 			</div>
-		</section>		
+		</section>
 		<section id="split-ctas">
 			<div class="row no-gutters">
 				<div class="cta col-lg-6">
@@ -437,7 +458,8 @@
 								<li><a href="https://business.jaldee.com/">{{'Personal Care' | translate}}</a></li>
 								<li><a href="https://business.jaldee.com/">{{'Banks/Finance' | translate}}</a></li>
 								<li><a href="https://business.jaldee.com/">{{'Corporates' | translate}}</a></li>
-								<li><a href="https://business.jaldee.com/">{{'Supermarkets/Retail' | translate}}</a></li>
+								<li><a href="https://business.jaldee.com/">{{'Supermarkets/Retail' | translate}}</a>
+								</li>
 								<li><a href="https://business.jaldee.com/">{{'Professionals' | translate}}</a></li>
 								<li><a href="https://business.jaldee.com/">{{'Restaurants' | translate}}</a></li>
 							</ul>
@@ -453,7 +475,8 @@
 								<!-- <li><a routerLink="/business/pricing">{{'Pricing' | translate}}</a></li> -->
 								<li><a href="https://business.jaldee.com/pricing/">{{'Pricing' | translate}}</a></li>
 								<!-- <li><a href="https://demo.jaldee.com/">{{'Ask for a demo' | translate}}</a></li> -->
-								<li><a href="https://business.jaldee.com/demo/">{{'Ask for a demo' | translate}}</a></li>
+								<li><a href="https://business.jaldee.com/demo/">{{'Ask for a demo' | translate}}</a>
+								</li>
 								<!-- <li><a [routerLink]="['/home/contact']" target="_blank">{{'Support' | translate}}</a></li> -->
 							</ul>
 						</div>
@@ -463,7 +486,7 @@
 							<h4>{{'Resources' | translate}}</h4>
 							<ul class="menu">
 								<!-- <li><a href="https://www.youtube.com/channel/UCZD8V1OapzlaS5eNET9x3mg">{{'Videos' | translate}}</a></li> -->
-								<li><a  href="https://business.jaldee.com/blog/">{{'Blog' | translate}}</a></li>
+								<li><a href="https://business.jaldee.com/blog/">{{'Blog' | translate}}</a></li>
 							</ul>
 						</div>
 					</div>
@@ -472,7 +495,7 @@
 					<div class="col-lg-4 site-brand text-center mb-3">
 						<img src="assets/images/home/logo-white.png" alt="Jaldee" class="img-fluid" />
 					</div>
-					<div class="col-lg-4 social-menu text-center text-lg-right">						
+					<div class="col-lg-4 social-menu text-center text-lg-right">
 					</div>
 				</div>
 			</div>
@@ -494,7 +517,7 @@
 						<a class="social-icon fa fa-youtube-play"
 							href="https://www.youtube.com/channel/UCZD8V1OapzlaS5eNET9x3mg" target="_blank"
 							title="Subscribe our Youtube Channel" rel="noopener noreferrer">
-						</a>						
+						</a>
 					</div>
 				</div>
 			</div>

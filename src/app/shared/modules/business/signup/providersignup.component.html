@@ -212,7 +212,7 @@ onSubmit()" (keyup)="resetApiErrors()"> -->
                                     <!-- <button (click)="onOtpSubmit()" mat-button
                                                 class="cs-btn bt1">Next</button> -->
                                     <button (click)="onOtpSubmit()" mat-button
-                                        class="confirm-otp-button cs-btn bt1">Confirm OTP</button>
+                                        class="confirm-otp-button cs-btn bt1" [disabled]="actionstarted">Confirm OTP</button>
                                 </div>
                             </div>
                             <ng-container *ngIf="showOTPEmailContainer">

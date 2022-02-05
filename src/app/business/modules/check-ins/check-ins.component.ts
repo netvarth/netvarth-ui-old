@@ -207,7 +207,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   labelFilterData = '';
   labelsCount: any = [];
   qr_value;
-  path = projectConstants.PATH;
+  path = projectConstantsLocal.PATH;
   showQR = false;
   printContent;
   filterStatus = true;

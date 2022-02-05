@@ -164,7 +164,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   itemQty: number;
   activeCatalog: any;
   qrdialogRef;
-  wndw_path = projectConstants.PATH;
+  wndw_path = projectConstantsLocal.PATH;
   apptSettingsJson: any = [];
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
@@ -928,7 +928,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           this.customAppIOSPopup.nativeElement.style.display = 'block';
         }
       }
-      // const path = this.customAppSerice.getManifest(res, projectConstantsLocal.UIS3PATH + this.provider_id, projectConstants.PATH);
+      // const path = this.customAppSerice.getManifest(res, projectConstantsLocal.UIS3PATH + this.provider_id, projectConstantsLocal.PATH);
       if (this.pwaEnabled) {
         const path = projectConstantsLocal.UIS3PATH + this.provider_id + '/manifest.json';
         document.getElementById('dynamic_manifest_url').setAttribute('href', path);
@@ -2318,14 +2318,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   providerDetClicked(userId) {
-    // const navigationExtras: NavigationExtras = {
-    //   queryParams: {
-    //     src: 'bp'
-    //   }
-    // };
     this.routerobj.navigate([this.accountEncId, userId]);
   }
   opencheckavail(actionObj) {
+    console.log(actionObj);
     this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
       width: '100%',
       panelClass: ['commonpopupmainclass', 'popup-class', 'availability-container', this.theme],

@@ -283,7 +283,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   locId;
   // bsModalRef: BsModalRef;
   qrdialogRef: any;
-  wndw_path = projectConstants.PATH;
+  wndw_path = projectConstantsLocal.PATH;
   elementType: 'url' | 'canvas' | 'img' = 'url';
   checkinProviderList: any;
   activeUser: any;

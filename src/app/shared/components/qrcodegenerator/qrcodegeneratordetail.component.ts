@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { projectConstants } from '../../../app.component';
 import {  Meta, Title } from '@angular/platform-browser';
+import { projectConstantsLocal } from '../../constants/project-constants';
 
 @Component({
   selector: 'app-qrcodegenerator',
@@ -75,9 +75,9 @@ export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
   }
   qrCodegenerateOnlineID(valuetogenerate,userid?) {
     if(userid){
-      this.qr_value = projectConstants.PATH + valuetogenerate +'/'+ userid + "/" ;
+      this.qr_value = projectConstantsLocal.PATH + valuetogenerate +'/'+ userid + "/" ;
     } else{
-      this.qr_value = projectConstants.PATH + valuetogenerate + "/";
+      this.qr_value = projectConstantsLocal.PATH + valuetogenerate + "/";
     }
     this.qr_code_oId = true;
     this.changeDetectorRef.detectChanges();
@@ -97,7 +97,7 @@ export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
 
   }
   // qrCodegenerateCustID(valuetogenerate) {
-  //     this.qr_value = projectConstants.PATH + valuetogenerate;
+  //     this.qr_value = projectConstantsLocal.PATH + valuetogenerate;
   //     this.qr_code_cId = true;
   //     this.changeDetectorRef.detectChanges();
   //     setTimeout(() => {

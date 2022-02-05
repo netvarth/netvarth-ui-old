@@ -6,7 +6,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { Router } from '@angular/router';
 import { Messages } from '../../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../../app.component';
 import { QRCodeGeneratorComponent } from '../qrcodegenerator/qrcodegenerator.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
@@ -42,7 +41,7 @@ export class JaldeeOnlineComponent implements OnInit {
   licenseMetrics: any = [];
   is_customized = false;
   licence_warn = false;
-  wndw_path = projectConstants.PATH;
+  wndw_path = projectConstantsLocal.PATH;
   verified_level_change = Messages.VERIFIED_LEVEL_CHANGE;
   verified_level_basic = Messages.VERIFIED_LEVEL_BASIC;
   verified_level_basicplus = Messages.VERIFIED_LEVEL_BASICPLUS;
@@ -94,7 +93,7 @@ export class JaldeeOnlineComponent implements OnInit {
   }
 
   copyInputMessage(valuetocopy) {
-    const path = projectConstants.PATH + valuetocopy;
+    const path = projectConstantsLocal.PATH + valuetocopy;
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';

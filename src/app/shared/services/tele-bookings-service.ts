@@ -263,7 +263,6 @@ export class TeleBookingService {
                 }
             )
         });
-
     }
     getTeleBookingFromAppt(uid, source, accountId?) {
         return new Promise((resolve, reject) => {
@@ -323,6 +322,15 @@ export class TeleBookingService {
                 }
             );
         });
+    }
+    getTeleNumber(phNo) {
+        if (phNo.lastIndexOf('+')===0) {
+            return phNo;
+        } else if (phNo.lastIndexOf('+')===-1) {
+            return '+' + phNo;
+        } else {
+            return phNo.substr(phNo.lastIndexOf('+'), phNo.length);
+        }
     }
 }
 

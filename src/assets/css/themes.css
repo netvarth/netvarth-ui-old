@@ -8,6 +8,11 @@
 .heartfulness_theme1 mat-sidenav {
   background: #522e5a 0% 0% no-repeat padding-box !important; 
 }
+.heartfulness_theme1.consumer-dashhome  .c-checkins .ng-tns-c16-8 .find-sp-btn,
+.heartfulness_theme1.consumer-dashhome .consumer-dash .flat-icon-btn,
+.heartfulness_theme1.consumer-dashhome .consumer-dash .c-checkins .ng-tns-c16-8 .flat-btn, table .flat-btn {
+  background: #522e5a 0% 0% no-repeat padding-box !important; 
+}
 .heartfulness_theme1 .mat-button, .heartfulness_theme1 .getappointmentbutton {
     background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
     border:none !important;
@@ -59,6 +64,7 @@
   .heartfulness_theme1 .c-checkin-new  a.changeitem, .heartfulness_theme1.c-checkin-new .btns .lnk.action i {
     color:#522e5a !important
   }
+
   .heartfulness_theme1.c-checkin-new .btns .lnk.action{
     font-size: 0.8rem !important;
     color:#522e5a !important

@@ -57,7 +57,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
   appt;
   provider_label: any;
   qr_value: string;
-  path = projectConstants.PATH;
+  path = projectConstantsLocal.PATH;
   iconClass: string;
   view_more = false;
   actiondialogRef;
