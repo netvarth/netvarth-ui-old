@@ -142,7 +142,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
   itemQty: number;
   activeCatalog: any;
   qrdialogRef;
-  wndw_path = projectConstants.PATH;
+  wndw_path = projectConstantsLocal.PATH;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
     layout: new AdvancedLayout(-1, true)

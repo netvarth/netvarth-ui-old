@@ -12,13 +12,14 @@ import { AddInboxMessagesComponent } from '../../components/add-inbox-messages/a
 import { ConsumerAuthService } from '../../services/consumer-auth-service';
 import { findPhoneNumbersInText } from 'libphonenumber-js';
 import { SnackbarService } from '../../services/snackbar.service';
+import { projectConstantsLocal } from '../../constants/project-constants';
 @Component({
   selector: 'app-tele-home',
   templateUrl: './tele-home.component.html',
   styleUrls: ['./tele-home.component.css']
 })
 export class TeleHomeComponent implements OnInit {
-  path = projectConstants.PATH;
+  path = projectConstantsLocal.PATH;
   elementType = 'url';
   qr_value: string;
   load_complete = 0;

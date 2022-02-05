@@ -158,7 +158,7 @@ export class CustTemplate2Component implements OnInit {
   itemQty: number;
   activeCatalog: any;
   qrdialogRef;
-  wndw_path = projectConstants.PATH;
+  wndw_path = projectConstantsLocal.PATH;
   apptSettingsJson: any = [];
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,

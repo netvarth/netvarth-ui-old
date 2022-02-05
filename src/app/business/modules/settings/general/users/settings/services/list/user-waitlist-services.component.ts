@@ -51,7 +51,7 @@ export class UserWaitlistServicesComponent implements OnInit, OnDestroy {
     warningdialogRef: any;
     bprofile: any = [];
     qrdialogRef: any;
-    wndw_path = projectConstants.PATH;
+    wndw_path = projectConstantsLocal.PATH;
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         private activated_route: ActivatedRoute,

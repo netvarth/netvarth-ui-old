@@ -12,7 +12,8 @@ import { Meta, Title } from '@angular/platform-browser';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { TranslateService } from '@ngx-translate/core';
-import { I18nService } from '../../services/i18n-sevice';
+import { I18nService } from '../../services/i18n-service';
+import { projectConstantsLocal } from '../../constants/project-constants';
 
 @Component({
   selector: 'app-home',
@@ -34,14 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     jaldee_graph: 'assets/images/home/banner-01.svg',
     jaldee_home: 'assets/images/home/02.png'
   };
-  languages = [
-    { value: 'en', viewValue: 'English' },
-    { value: 'hd', viewValue: 'Hindi' },
-    { value: 'kan', viewValue: 'Kannada' },
-    { value: 'tel', viewValue: 'Telugu' },
-    { value: 'mal', viewValue: 'Malayalam' },
-    { value: 'tam', viewValue: 'Tamil' }
-  ];
+  languages = projectConstantsLocal.SUPPORTEDLANGUAGES;
   langselected = 'English';
   public domainlist_data: any = [];
   sector_info: any = [];
@@ -107,8 +101,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
   ngOnInit() {
-    // this.i18nService.changeLocale('en');
-    // this.loading = true;
+    this.i18nService.changeLocale('en');
     const a = document.getElementById("fb-root");
     if (a) {
       a.classList.add('visible_chat');

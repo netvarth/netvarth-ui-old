@@ -13,6 +13,7 @@ import { GroupStorageService } from '../../../../../../shared/services/group-sto
 import { DateTimeProcessor } from '../../../../../../shared/services/datetime-processor.service';
 import { ProviderDataStorageService } from '../../../../../services/provider-datastorage.service';
 import { ServiceQRCodeGeneratordetailComponent } from '../../../../../../shared/modules/service/serviceqrcodegenerator/serviceqrcodegeneratordetail.component';
+import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-waitlist-services',
@@ -52,7 +53,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     warningdialogRef: any;
     bprofile: any = [];
     qrdialogRef: any;
-    wndw_path = projectConstants.PATH;
+    wndw_path = projectConstantsLocal.PATH;
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         public provider_shared_functions: ProviderSharedFuctions,

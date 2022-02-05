@@ -163,7 +163,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     userNamelist: string;
     maxuserLength = 50;
     qrdialogRef: any;
-    wndw_path = projectConstants.PATH;
+    wndw_path = projectConstantsLocal.PATH;
     tool_code;
     showPrice;
     priceDescription = false;
@@ -1139,12 +1139,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
             pid = this.bprofile.customId;
         }
         if (this.service && this.service.provider && this.service.provider.id) {
-            path = projectConstants.PATH + pid + '/' + this.service.provider.id + '/service/' + this.service.id;
+            path = projectConstantsLocal.PATH + pid + '/' + this.service.provider.id + '/service/' + this.service.id;
         } else {
-            path = projectConstants.PATH + pid + '/service/' + this.service.id;
+            path = projectConstantsLocal.PATH + pid + '/service/' + this.service.id;
         }
         // this.wpath + this.accuid +'/'+ this.userId +'/service/'+ this.serviceId ;
-        //const path = projectConstants.PATH + valuetocopy;
+        //const path = projectConstantsLocal.PATH + valuetocopy;
         const selBox = document.createElement('textarea');
         selBox.style.position = 'fixed';
         selBox.style.left = '0';

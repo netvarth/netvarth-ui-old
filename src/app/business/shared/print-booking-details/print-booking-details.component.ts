@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { projectConstants } from '../../../../app/app.component';
 import { ActivatedRoute } from '@angular/router';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
@@ -7,6 +6,7 @@ import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pi
 import { ProviderServices } from '../../services/provider-services.service';
 import { Location } from '@angular/common';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 
 
@@ -21,7 +21,7 @@ export class PrintBookingDetailsComponent implements OnInit {
   bookingDetails: any;
   elementType = 'url';
   bookingId: any;
-  path = projectConstants.PATH;
+  path = projectConstantsLocal.PATH;
   groupedQnr: any;
   qr_value: string;
   showQR = false;
