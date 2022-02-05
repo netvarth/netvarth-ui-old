@@ -286,6 +286,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     if (blankvalidate.test(form_data.message)) {
       this.api_error = this.wordProcessor.getProjectMesssages('MSG_ERROR');
     } else {
+      this.disableButton = true;
       if (this.typeOfMsg === 'multiple') {
         if (this.data.source === 'customer-list') {
           if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
