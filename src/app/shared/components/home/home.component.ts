@@ -12,7 +12,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { TranslateService } from '@ngx-translate/core';
-import { I18nService } from '../../services/i18n-sevice';
+import { I18nService } from '../../services/i18n-service';
 import { projectConstantsLocal } from '../../constants/project-constants';
 
 @Component({

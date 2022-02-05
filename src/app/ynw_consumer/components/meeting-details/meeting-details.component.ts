@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SubSink } from 'subsink';
+import { TeleBookingService } from '../../../shared/services/tele-bookings-service';
 
 @Component({
   selector: 'app-meeting-details',
@@ -11,8 +12,10 @@ export class MeetingDetailsComponent implements OnInit,OnDestroy {
 
   iconClass: string;
   showJaldeeVideo = false;
+  callingNumber: any;
 
   constructor(private shared_services: SharedServices,
+    private teleBookingService: TeleBookingService,
     public dialogRef: MatDialogRef<MeetingDetailsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
   meetingDetails: any = [];
@@ -38,10 +41,12 @@ export class MeetingDetailsComponent implements OnInit,OnDestroy {
           } else {
             this.iconClass = 'fa wtsapvid-icon';
           }
+          this.callingNumber = this.teleBookingService.getTeleNumber(this.data.details.virtualService['WhatsApp']);
           break;
         }
         case 'Phone': {
           this.iconClass = 'fa phon-icon';
+          this.callingNumber = this.teleBookingService.getTeleNumber(this.data.details.virtualService['Phone']);
           break;
         }
       }
