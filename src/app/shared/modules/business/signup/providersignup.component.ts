@@ -477,7 +477,6 @@ export class ProvidersignupComponent implements OnInit {
         this.shared_services.OtpSignUpProviderValidate(this.otp)
           .subscribe(
             () => {
-              this.actionstarted = false;
               this.isValidOtp = true;
               this.hideOtpSection = false;
               resolve();
