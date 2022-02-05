@@ -107,7 +107,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
   ngOnInit() {
-    this.i18nService.changeLocale('en');
+    // this.i18nService.changeLocale('en');
     // this.loading = true;
     const a = document.getElementById("fb-root");
     if (a) {
