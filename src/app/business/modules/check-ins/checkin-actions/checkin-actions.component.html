@@ -142,8 +142,7 @@
                 </div>
                 <div class="icon-text"
                     *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                    {{checkin.waitlistStatus == 'started' ? 'Resume Service' : 'Call ' +
-                    checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
+                    {{checkin.waitlistStatus == 'started' ? 'Resume Service' : 'Call ' + callingNumber }}
                 </div>
             </div>
         </div>

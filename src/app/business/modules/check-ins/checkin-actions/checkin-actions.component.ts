@@ -27,6 +27,7 @@ import { ListRecordingsDialogComponent } from '../../../../shared/components/lis
 import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.component';
 import { VoiceConfirmComponent } from '../../customers/voice-confirm/voice-confirm.component';
 import { CommunicationService } from '../../../../business/services/communication-service';
+import { TeleBookingService } from '../../../../shared/services/tele-bookings-service';
 
 @Component({
     selector: 'app-checkin-actions',
@@ -121,6 +122,7 @@ export class CheckinActionsComponent implements OnInit {
     users: any = [];
     location: any;
     statusBooking: any;
+    callingNumber: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -134,7 +136,8 @@ export class CheckinActionsComponent implements OnInit {
         private galleryService: GalleryService,
         private dateTimeProcessor: DateTimeProcessor,
         public dialogRef: MatDialogRef<CheckinActionsComponent>,
-        private communicationService: CommunicationService) {
+        private communicationService: CommunicationService,
+        private teleService: TeleBookingService) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
     ngOnInit() {
@@ -155,6 +158,11 @@ export class CheckinActionsComponent implements OnInit {
             }
             this.accountid = this.checkin.providerAccount.id;
             this.showToken = this.checkin.showToken;
+            if (this.checkin.service.virtualCallingModes && this.checkin.service.virtualCallingModes[0].callingMode && this.checkin.virtualService[this.checkin.service.virtualCallingModes[0].callingMode]) {
+                this.callingNumber = this.teleService.getTeleNumber(this.checkin.virtualService[this.checkin.service.virtualCallingModes[0].callingMode]);
+            }
+            
+
             this.getPos();
             this.getInternStatus();
         } else {
