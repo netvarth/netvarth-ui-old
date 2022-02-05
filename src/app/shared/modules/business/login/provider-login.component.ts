@@ -7,7 +7,6 @@ import { LoginComponent } from '../../../../shared/components/login/login.compon
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { FormMessageDisplayService } from '../../form-message-display/form-message-display.service';
-import { projectConstants } from '../../../../app.component';
 import { SignUpComponent } from '../../../../shared/components/signup/signup.component';
 import { ForgotPasswordComponent } from '../../../../shared/components/forgot-password/forgot-password.component';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
@@ -185,7 +184,7 @@ export class ProviderLoginComponent implements OnInit {
     this.authService.businessLogin(post_data)
       .then(
         () => {
-          const encrypted = this.shared_services.set(this.password, projectConstants.KEY);
+          const encrypted = this.shared_services.set(this.password, projectConstantsLocal.KEY);
           this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
           this.lStorageService.setitemonLocalStorage('bpwd', data.password);
           if (this.qParams && this.qParams['src']) {

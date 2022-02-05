@@ -414,7 +414,7 @@ export class SignUpComponent implements OnInit {
           this.authService.consumerLogin(login_data, this.moreParams)
             .then(
               () => {
-                const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
+                const encrypted = this.shared_services.set(post_data.password, projectConstantsLocal.KEY);
                 this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
                 this.lStorageService.setitemonLocalStorage('qrp', post_data.password);
                 this.dialogRef.close('success');

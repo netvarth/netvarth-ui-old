@@ -5,12 +5,12 @@ import { FormMessageDisplayService } from '../../modules/form-message-display/fo
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Messages } from '../../constants/project-messages';
-import { projectConstants } from '../../../app.component';
 import { Location } from '@angular/common';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { SubSink } from 'subsink';
 import { TranslateService } from '@ngx-translate/core';
+import { projectConstantsLocal } from '../../constants/project-constants';
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
@@ -103,7 +103,7 @@ export class ChangePasswordComponent implements OnInit {
           () => {
             // this.api_success = Messages.PASSWORD_CHANGED;
             const ynw = this.lStorageService.getitemfromLocalStorage('ynw-credentials'); // get the credentials from local storage variable
-            const encrypted = this.shared_services.set(sub_data.new_password, projectConstants.KEY);
+            const encrypted = this.shared_services.set(sub_data.new_password, projectConstantsLocal.KEY);
             this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
             // ynw.password = sub_data.new_password; // change the password to the new one in the local storage variable
             this.lStorageService.setitemonLocalStorage('ynw-credentials', ynw); // saving the updation to the local storage variable

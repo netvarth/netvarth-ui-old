@@ -181,7 +181,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
       this.authService.providerLogin(post_data)
         .then(
           () => {
-            const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+            const encrypted = this.shared_services.set(data.password, projectConstantsLocal.KEY);
             this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
             // this.dialogRef.close();
             setTimeout(() => {
@@ -210,7 +210,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
         this.authService.consumerLogin(post_data, this.moreParams)
           .then(
             () => {
-              const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+              const encrypted = this.shared_services.set(data.password, projectConstantsLocal.KEY);
               this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
               this.lStorageService.setitemonLocalStorage('qrp', data.password);
               let pre_header = dialCode.split('+')[1] + "-" + loginId;
@@ -228,7 +228,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
                     ()=> {
                       this.authService.consumerLogin(post_data, this.moreParams).then(
                         () => {
-                          const encrypted = this.shared_services.set(data.password, projectConstants.KEY);
+                          const encrypted = this.shared_services.set(data.password, projectConstantsLocal.KEY);
                           this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
                           this.lStorageService.setitemonLocalStorage('qrp', data.password);
                           this.dialogRef.close('success');
@@ -403,7 +403,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
                     this.authService.setLoginData(login_info, login_data, 'consumer');
                     const pdata = { 'ttype': 'updateuserdetails' };
                     this.authService.sendMessage(pdata);
-                    const encrypted = this.shared_services.set(post_data.password, projectConstants.KEY);
+                    const encrypted = this.shared_services.set(post_data.password, projectConstantsLocal.KEY);
                     this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
                     this.lStorageService.setitemonLocalStorage('qrp', post_data.password);
                     this.dialogRef.close('success');
