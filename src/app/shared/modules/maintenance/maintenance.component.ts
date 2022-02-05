@@ -34,6 +34,8 @@ export class MaintenanceComponent implements OnInit {
             } else {
               window.location.href = '';
             }
+          }, (error)=> {
+            this.loading = false;
           }
         // );
       // }
