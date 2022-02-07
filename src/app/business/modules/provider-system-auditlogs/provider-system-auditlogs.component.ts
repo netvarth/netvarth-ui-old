@@ -116,7 +116,7 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     this.holdauditSelAck = this.auditSelAck.join(',');
     this.holdauditStartdate = this.auditStartdate;
     this.holdauditEnddate = this.auditEnddate;
-    this.getAuditListTotalCnt('false', '', '');
+    this.getAuditListTotalCnt('', '');
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
   }
   // getAuditListTotalCnt(cat, subcat, action, sdate) {
@@ -256,8 +256,8 @@ redirecToHelp() {
       this.filterapplied = false;
     }
   }
-  getAuditListTotalCnt(ackStatus, sdate, edate) {
-    this.shared_services.getAuditFilterlogsTotalCnt(ackStatus, sdate, edate)
+  getAuditListTotalCnt( sdate, edate) {
+    this.shared_services.getAuditFilterlogsTotalCnt(sdate, edate)
       .subscribe(data => {
         this.totalCnt = data;
         this.sharedfunctionObj.sendMessage({ 'ttype': 'alertCount', alertCnt: this.totalCnt });
@@ -282,7 +282,7 @@ redirecToHelp() {
       pageval = 0;
     }
     this.auditlog_details = [];
-    this.shared_services.getAuditFilterlogs(ackStatus, sdate, edate, Number(pageval), this.perPage)
+    this.shared_services.getAuditFilterlogs( sdate, edate, Number(pageval), this.perPage)
       .subscribe(data => {
         this.auditlog_details = data;
         if (this.auditlog_details.length > 0) {
@@ -301,7 +301,7 @@ redirecToHelp() {
     this.provider_servicesobj.acknowledgeAlert(obj.id)
       .subscribe(() => {
         this.snackbarService.openSnackBar(Messages.PROVIDER_ALERT_ACK_SUCC);
-        this.getAuditListTotalCnt('false', this.holdauditStartdate, this.holdauditEnddate);
+        this.getAuditListTotalCnt( this.holdauditStartdate, this.holdauditEnddate);
       },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
