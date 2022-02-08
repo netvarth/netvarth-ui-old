@@ -1,169 +1,55 @@
-<section #consumer_checkin class="c-checkin-new container no-padding" [ngClass]="theme?theme:''">
+<div class="card shadow">
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+        <a class="pull-left back-btn" (click)="goBack('back')"><i class="fa fa-arrow-circle-left"></i>&emsp;<span class="ml-3 back-btn-text">Appointment</span></a>
+    </div>
+    <!-- <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
+        <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'checkin'"
+            [accountId]="businessId" [customId]="customId"></app-header>
+    </div> -->
+</div>
+<section #consumer_checkin class="container-fluid" [ngClass]="theme?theme:''">
     <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
-    <div class="content p0 loc-list ynw-common-form-nm">
-        <div class="panel panel-default">
-            <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row ">
-                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <a class="pull-left back-btn mgn-up-5" (click)="goBack('back')"><i class="fa fa-arrow-left"></i></a>
+    <div class="loading-hgt my-5" *ngIf="!questionnaireLoaded">
+        <app-common-innerloading-spinner></app-common-innerloading-spinner>
+    </div>
+    <div class="row my-5" *ngIf="questionnaireLoaded">
+        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch">  
+            <div class="card shadow">
+                <div class="provider-profile-image text-center m-5">
+                    <img src="{{businessjson.logo.url}}" width="120px" height="120px" alt="Provider Profile Image" class="rounded-circle shadow-sm">
                 </div>
-                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
-                    <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'checkin'"
-                        [accountId]="businessId" [customId]="customId"></app-header>
+                <div class="provider-details m-5 text-dark text-center" *ngIf="!selectedService.provider">
+                    <h3><b>{{businessjson.businessName}}</b></h3>
+                    <h6><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</h6>
+                    <h6 *ngIf="businessjson.phoneNumbers[0]" ><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;<span>{{businessjson.phoneNumbers[0].instance}}</span></h6>
+                    <h6 *ngIf="businessjson.emails[0]"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;<span>{{businessjson.emails[0].instance}}</span></h6>   
                 </div>
+                <div class="booking-img"></div>
+                <div class="clearfix"></div>
             </div>
-            <app-common-innerloading-spinner *ngIf="loadingPaytm"></app-common-innerloading-spinner>
-            <div class="panel-body d-flex flex-column-fluid no-padding-small">
-                <div class="card card-custom">
-                    <div class="card-body p-0">
+        </div>
+        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch">
+            <div class="card shadow">
+                <div class="">
+                    <div class="p-0">
                         <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
                             data-wizard-clickable="false">
-                            <div class="row justify-content-center removeflex">
-                                <div class="loading-hgt" *ngIf="!questionnaireLoaded">
-                                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
-                                </div>
-                                <div class="col-xs-12 no-padding-small" *ngIf="questionnaireLoaded">
-                                    <div
-                                        class="lbl col-sm-12 col-md-5 col-lg-4 col-xs-12 col-sm-12 no-padding displ-none">
-                                        <div class="wizard-nav" *ngIf="type !='waitlistreschedule'">
-                                            <div class="wizard-steps p-8 p-lg-10">
-                                                <div class="wizard-step tab-selected wizard-mgn-30"
-                                                    data-wizard-type="step" *ngIf="tele_srv_stat === 'true'">
-                                                    <div class="wizard-label">
-                                                        <div class="step-icon">1</div>
-                                                        <h3 class="wizard-title mgn-lt-15 no-padding no-margin">Personal
-                                                            Information</h3>
-                                                    </div>
-                                                    <span class="svg-icon svg-icon-xl wizard-arrow">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                                                            height="24px" viewBox="0 0 24 24" version="1.1">
-                                                            <g stroke="none" stroke-width="1" fill="none"
-                                                                fill-rule="evenodd">
-                                                                <polygon points="0 0 24 0 24 24 0 24" />
-                                                                <rect fill="#000000" opacity="0.3"
-                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
-                                                                    x="11" y="5" width="2" height="14" rx="1" />
-                                                                <path
-                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                    fill="#000000" fill-rule="nonzero"
-                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
-                                                            </g>
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                                <div class="wizard-step tab-selected wizard-mgn-30"
-                                                    data-wizard-type="step" [class.tab-selected]="bookStep>=1">
-                                                    <div class="wizard-label">
-                                                        <div class="step-icon"> {{tele_srv_stat === 'true'?'2':'1'}}
-                                                        </div>
-                                                        <h3 class="wizard-title mgn-lt-15">Booking Window</h3>
-                                                    </div>
-                                                    <span class="svg-icon svg-icon-xl wizard-arrow">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                                                            height="24px" viewBox="0 0 24 24" version="1.1">
-                                                            <g stroke="none" stroke-width="1" fill="none"
-                                                                fill-rule="evenodd">
-                                                                <polygon points="0 0 24 0 24 24 0 24" />
-                                                                <rect fill="#000000" opacity="0.3"
-                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
-                                                                    x="11" y="5" width="2" height="14" rx="1" />
-                                                                <path
-                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                    fill="#000000" fill-rule="nonzero"
-                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
-                                                            </g>
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                                <div class="wizard-step tab-selected wizard-mgn-30"
-                                                    data-wizard-type="step" [class.tab-selected]="bookStep>=2"
-                                                    *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
-                                                    <div class="wizard-label">
-                                                        <div class="step-icon">{{tele_srv_stat === 'true'?'3':'2'}}
-                                                        </div>
-                                                        <h3 class="wizard-title mgn-lt-15">More Info</h3>
-                                                    </div>
-                                                    <span class="svg-icon svg-icon-xl wizard-arrow">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                                                            height="24px" viewBox="0 0 24 24" version="1.1">
-                                                            <g stroke="none" stroke-width="1" fill="none"
-                                                                fill-rule="evenodd">
-                                                                <polygon points="0 0 24 0 24 24 0 24" />
-                                                                <rect fill="#000000" opacity="0.3"
-                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
-                                                                    x="11" y="5" width="2" height="14" rx="1" />
-                                                                <path
-                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                    fill="#000000" fill-rule="nonzero"
-                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
-                                                            </g>
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                                <div class="wizard-step" data-wizard-type="step"
-                                                    [class.tab-selected]="bookStep>=3">
-                                                    <div class="wizard-label">
-                                                        <div class="step-icon">{{getBookStep()}}</div>
-                                                        <h3 class="wizard-title mgn-lt-15">Confirm</h3>
-                                                    </div>
-                                                    <span class="svg-icon svg-icon-xl wizard-arrow last">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                                                            height="24px" viewBox="0 0 24 24" version="1.1">
-                                                            <g stroke="none" stroke-width="1" fill="none"
-                                                                fill-rule="evenodd">
-                                                                <polygon points="0 0 24 0 24 24 0 24" />
-                                                                <rect fill="#000000" opacity="0.3"
-                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
-                                                                    x="11" y="5" width="2" height="14" rx="1" />
-                                                                <path
-                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                    fill="#000000" fill-rule="nonzero"
-                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
-                                                            </g>
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="booking-img"></div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
+                            <div class="">
+                                <div class="" *ngIf="questionnaireLoaded">
+                                    <div class=""
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 0">
-                                        <div
-                                            class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding pull-right border-left">
-                                            <div
-                                                class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt">
-                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding border-bt"
-                                                    *ngIf="this.selectedUserParam && selectedUser">
-                                                    <div class="col-sm-2 col-xs-3 col-md-4 ">
-                                                        <img class="card-img" [src]="getPic(selectedUser)"
-                                                            alt="Profile Pic">
-                                                    </div>
-                                                    <div class="col-sm-10 col-xs-9 col-md-8 no-padding">
-                                                        <div class="">
-                                                            <h6 class="card-title mgn-up-5">
-                                                                <span
-                                                                    *ngIf="selectedUser.businessName">{{selectedUser.businessName}}</span>
-                                                                <span
-                                                                    *ngIf="!selectedUser.businessName">{{selectedUser.businessName}}</span>
-                                                            </h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                                            <div class="">
                                                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10"
                                                     *ngIf="hideTokenFor">
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">
-                                                        {{showCheckinButtonCaption()}} For
+                                                    <div class="appointment-details-heading col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 p-3 pb-2 text-capitalize">
+                                                        <h5><b>{{showCheckinButtonCaption()}} Details</b></h5>
                                                     </div>
-                                                    <div class="col-sm-12 col-xs-12 col-md-12">
-                                                        <div class=""
+                                                    <div class="mt-5 text-capitalize">
+                                                        <div class="m-auto"
                                                             *ngIf="selectedServiceId || type == 'waitlistreschedule'">
-                                                            <div class="service-icon pull-left"
+                                                            <!-- <div class="service-icon pull-left"
                                                                 *ngIf="selectedService.serviceType == 'virtualService'">
                                                                 <i class="fa phon-icon"
                                                                     *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -177,10 +63,11 @@
                                                                     *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' && selectedService.virtualServiceType === 'audioService'"></i>
                                                                 <i class="fa wtsapvid-icon"
                                                                     *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' && selectedService.virtualServiceType === 'videoService'"></i>
-                                                            </div>
-                                                            <h6 class="card-title service mgn-bt-10">
-                                                                {{selectedService.name}}
-                                                            </h6>
+        
+                                                            </div> -->
+                                                            <h5 class="text-center text-success text-capitalize service">
+                                                                    <b>{{selectedService.name}}</b>
+                                                            </h5>
                                                             <div class="" style="font-size: 1rem"
                                                                 *ngIf="selectedService.price && type != 'reschedule'">
                                                                 <p class="module-nomargin line-clamp no-margin"
@@ -223,41 +110,42 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div
-                                                class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp border-rt check-new-group pad-rt-0">
+                                            
+                                            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12" style="overflow: auto!important;">
                                                 <form [formGroup]="virtualForm"
                                                     class="login-form custom-login-form consumer-join-component virtual-fields"
                                                     [ngClass]="theme?theme:''" novalidate>
                                                     <div class="cust-loginpge-color">
-                                                        <div class="mat-dialog-content"
-                                                            style="overflow: auto !important;">
-
+                                                        <div class="mat-dialog-content">
                                                             <div *ngIf="hideLanguages">
-                                                                <div class="mgn-up-10 ">
-                                                                    <label class="col-form-label"
+                                                                <div class="mgn-up-10">
+                                                                    <label class="col-form-label text-capitalize"
                                                                         for="name">Consultation For</label>
                                                                     <br />
                                                                     <div class="form-group form-inline">
                                                                         <mat-radio-group formControlName="serviceFor"
                                                                             class="mgn-up-5 userGroup m-0 p-2"
                                                                             (change)="onServiceForChange($event.value)">
-                                                                            <mat-radio-button
+                                                                            <mat-radio-button class="shadow-sm m-2 col-md-3 col-lg-3 col-sm-12 col-xs-12"
                                                                                 [value]="parentCustomer.id">
                                                                                 {{parentCustomer.userProfile.firstName}}
                                                                                 {{parentCustomer.userProfile.lastName}}
                                                                             </mat-radio-button>
-
-                                                                            <mat-radio-button class="flx"
+        
+                                                                            <mat-radio-button class="shadow-sm m-2 flx col-md-3 col-lg-3 col-sm-12 col-xs-12"
                                                                                 [value]="member.user"
                                                                                 *ngFor="let member of familyMembers">
                                                                                 {{member.userProfile.firstName}}
                                                                                 &nbsp;
                                                                                 {{member.userProfile.lastName}}
                                                                             </mat-radio-button>
-                                                                            <mat-radio-button value="new_member">
-                                                                                Someone
-                                                                                else</mat-radio-button>
+                                                                            <mat-radio-button value="new_member" class="shadow-sm m-2 col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                                                                                Someone else
+                                                                            </mat-radio-button>
                                                                         </mat-radio-group>
+        
+        
+                                                                        
                                                                     </div>
                                                                 </div>
                                                                 <fieldset>
@@ -268,40 +156,43 @@
                                                                         <span
                                                                             style="margin-right: 5px;padding-right: 5px;">{{consumer_label}}</span>
                                                                     </div>
-                                                                    <div class="form-group"
+                                                                    <div class="row">
+                                                                        <div class="form-group"
                                                                         *ngIf="virtualForm.get('serviceFor').value==='new_member'">
                                                                         <label class="col-form-label"
-                                                                            for="firstName">First
-                                                                            Name <span class="red">*</span></label>
+                                                                            for="firstName">First Name <span class="red">*</span></label>
                                                                         <input placeholder="Enter your first name"
                                                                             class="form-control" style="width:50%"
                                                                             formControlName="firstName"
                                                                             [ngStyle]="{'background-color': bgColor}">
+                                                                        </div>
+                                                                        <div class="form-group"
+                                                                            *ngIf="virtualForm.get('serviceFor').value==='new_member'">
+                                                                            <label class="col-form-label"
+                                                                                for="lastName">Last
+                                                                                Name <span class="red">*</span></label>
+                                                                            <input placeholder="Enter your last name"
+                                                                                class="form-control" style="width:50%"
+                                                                                formControlName="lastName"
+                                                                                [ngStyle]="{'background-color': bgColor}">
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="form-group"
-                                                                        *ngIf="virtualForm.get('serviceFor').value==='new_member'">
-                                                                        <label class="col-form-label"
-                                                                            for="lastName">Last
-                                                                            Name <span class="red">*</span></label>
-                                                                        <input placeholder="Enter your last name"
-                                                                            class="form-control" style="width:50%"
-                                                                            formControlName="lastName"
-                                                                            [ngStyle]="{'background-color': bgColor}">
-                                                                    </div>
-                                                                    <div class="form-group">
+        
+        
+                                                                    <div class="form-group tele_service_gender_select">
                                                                         <label class="col-form-label"
                                                                             for="gender">{{gender_cap}} <span
                                                                                 class="red">*</span></label>
                                                                         <br />
                                                                         <mat-radio-group formControlName="gender"
-                                                                            class=" m-0 p-2">
-                                                                            <mat-radio-button value="male" class="mx-2">
+                                                                            class="m-0 p-2">
+                                                                            <mat-radio-button value="male" class="mr-1 shadow-sm">
                                                                                 Male
                                                                             </mat-radio-button>
                                                                             <mat-radio-button value="female"
-                                                                                class="mx-2">Female
+                                                                                class="mx-3 shadow-sm">Female
                                                                             </mat-radio-button>
-                                                                            <mat-radio-button value="other">Other
+                                                                            <mat-radio-button value="other" class="shadow-sm">Other
                                                                             </mat-radio-button>
                                                                         </mat-radio-group>
                                                                         <app-field-error-display
@@ -309,66 +200,67 @@
                                                                             errorMsg="Please select the gender.">
                                                                         </app-field-error-display>
                                                                     </div>
-                                                                    <div class="form-group ">
-                                                                        <label class="col-form-label"
-                                                                            for="lastName">Age(in years)<span
-                                                                                class="red">*</span></label><br>
-                                                                        <input type="text" min="1" max="150"
-                                                                            class="form-control vt_dt no-padding mgn-up-5"
-                                                                            formControlName="age" style="width:100px"
-                                                                            (keypress)=isNumeric($event)
-                                                                            [ngStyle]="{'color': bgColor}">
-                                                                        <div
-                                                                            style="display: flex; justify-content: space-between;">
-                                                                            <app-field-error-display
-                                                                                [displayError]="fed_service.isFieldValid(virtualForm,'age') "
-                                                                                [errorMsgs]="fed_service.getErrorMessage(virtualForm,'age',
-                                                                                {
-                                                                                    'required' : 'Age is required',
-                                                                                    'min' : 'Minimum age required is 0',
-                                                                                    'max' : 'Maximum age is 150'
-                                                                                
-                                                                                })">
-                                                                            </app-field-error-display>
+                                                                    <!-- <div class="row"> -->
+                                                                        <div class="form-group">
+                                                                            <label class="col-form-label"
+                                                                                for="lastName">Age(in years)<span
+                                                                                    class="red">*</span></label><br>
+                                                                            <input type="text" min="1" max="150"
+                                                                                class="form-control vt_dt no-padding mgn-up-5"
+                                                                                formControlName="age" style="width:100px!important"
+                                                                                (keypress)=isNumeric($event)
+                                                                                [ngStyle]="{'color': bgColor}">
+                                                                            <div
+                                                                                style="display: flex; justify-content: space-between;">
+                                                                                <app-field-error-display
+                                                                                    [displayError]="fed_service.isFieldValid(virtualForm,'age') "
+                                                                                    [errorMsgs]="fed_service.getErrorMessage(virtualForm,'age',
+                                                                                    {
+                                                                                        'required' : 'Age is required',
+                                                                                        'min' : 'Minimum age required is 0',
+                                                                                        'max' : 'Maximum age is 150'
+                                                                                    
+                                                                                    })">
+                                                                                </app-field-error-display>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="form-group pwd"
-                                                                        *ngIf="parentCustomer.userProfile.countryCode=='+91'">
-                                                                        <label for="pincode"
-                                                                            class="col-form-label">Residing Pincode in
-                                                                            India <span class="red">*</span></label>
-                                                                        <input type="text" placeholder="xxxxxx"
-                                                                            class="form-control vt_dt no-padding mgn-up-5"
-                                                                            id="location" formControlName="pincode"
-                                                                            (keypress)="isNumeric($event)"
-                                                                            (keyup)="showLocations($event)"
-                                                                            style="width:50%"
-                                                                            [ngStyle]="{'background-color': bgColor}">
-                                                                        <div
-                                                                            style="display: flex; justify-content: space-between;">
-                                                                            <app-field-error-display
-                                                                                [displayError]="fed_service.isFieldValid(virtualForm,'pincode')"
-                                                                                errorMsg="Pincode is required">
-                                                                            </app-field-error-display>
+                                                                        <div class="form-group"
+                                                                            *ngIf="parentCustomer.userProfile.countryCode=='+91'">
+                                                                            <label for="pincode"
+                                                                                class="col-form-label">Residing Pincode in India 
+                                                                                <span class="red">*</span></label>
+                                                                            <input type="text" placeholder="xxxxxx"
+                                                                                class="form-control vt_dt no-padding mgn-up-5" style="width:50%!important"
+                                                                                id="location" formControlName="pincode"
+                                                                                (keypress)="isNumeric($event)"
+                                                                                (keyup)="showLocations($event)"
+                                                                                [ngStyle]="{'background-color': bgColor}">
+                                                                            <div
+                                                                                style="display: flex; justify-content: space-between;">
+                                                                                <app-field-error-display
+                                                                                    [displayError]="fed_service.isFieldValid(virtualForm,'pincode')"
+                                                                                    errorMsg="Pincode is required">
+                                                                                </app-field-error-display>
+                                                                            </div>
+                                                                            <app-common-innerloading-spinner
+                                                                                *ngIf="loading">
+                                                                            </app-common-innerloading-spinner>
+                                                                            <div *ngIf="!loading && locations"
+                                                                                class="mgn-up-10">
+                                                                                <mat-radio-group
+                                                                                    aria-label="Select your location"
+                                                                                    class="mgn-up-5"
+                                                                                    formControlName='location'>
+                                                                                    <mat-radio-button
+                                                                                        *ngFor="let location of locations.PostOffice"
+                                                                                        [value]="location">
+                                                                                        {{location.Name}},
+                                                                                        {{location.State}}
+                                                                                    </mat-radio-button>
+                                                                                </mat-radio-group>
+                                                                            </div>
                                                                         </div>
-                                                                        <app-common-innerloading-spinner
-                                                                            *ngIf="loading">
-                                                                        </app-common-innerloading-spinner>
-                                                                        <div *ngIf="!loading && locations"
-                                                                            class="mgn-up-10">
-                                                                            <mat-radio-group
-                                                                                aria-label="Select your location"
-                                                                                class="mgn-up-5"
-                                                                                formControlName='location'>
-                                                                                <mat-radio-button
-                                                                                    *ngFor="let location of locations.PostOffice"
-                                                                                    [value]="location">
-                                                                                    {{location.Name}},
-                                                                                    {{location.State}}
-                                                                                </mat-radio-button>
-                                                                            </mat-radio-group>
-                                                                        </div>
-                                                                    </div>
+                                                                    <!-- </div> -->
                                                                     <div class="form-group"
                                                                         *ngIf="parentCustomer.userProfile.countryCode !=='+91'">
                                                                         <label class="col-form-label"
@@ -414,27 +306,7 @@
                                                                     </div>
                                                                 </fieldset>
                                                             </div>
-                                                            <div
-                                                                *ngIf="hideLanguages && virtualForm.get('preferredLanguage').value.length >0 && lngknown==='no'">
-                                                                <label class="col-form-label"
-                                                                    for="preferredLanguage">{{virtualForm.get('preferredLanguage').value.length
-                                                                    >1?'Your preferred languages': 'Your preferred
-                                                                    language'}}
-                                                                </label><br />
-                                                                <fieldset>
-                                                                    <div class="col-form-label edtlang">
-                                                                        <span
-                                                                            style="word-wrap: break-word; padding-right: 5px;margin-right: 5px;">{{virtualForm.get('preferredLanguage').value}}</span>
-                                                                        <span (click)="editLanguage()"
-                                                                            style="color:rgb(255, 255, 255)"><i
-                                                                                class="fa fa-edit fa-1x"
-                                                                                style="font-size: large;"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="right"
-                                                                                title="Edit"></i></span>
-                                                                    </div>
-                                                                </fieldset>
-                                                            </div>
+                                                            
                                                             <div *ngIf="!hideLanguages" class="form-group">
                                                                 <div class="form-group" id="plng"
                                                                     *ngIf="iseditLanguage">
@@ -498,27 +370,47 @@
                                                             </div>
                                                             <fieldset>
                                                                 <ng-container *ngIf="hideLanguages">
-                                                                    <label class="col-form-label" for="name">Contact
+                                                                    <!-- <label class="col-form-label" for="name">Contact
                                                                         Information </label>
                                                                     <div class="form-level-settings smallfont">
                                                                         Provide your contact info for alerts,status
                                                                         updates and for any other booking related
                                                                         communications
-                                                                    </div>
-                                                                    <div class="mgn-up-10 mgn-bt-10">
-                                                                        <label class="col-form-label" for="phone">Phone
-                                                                            # </label>
-                                                                        <br />
-                                                                        {{parentCustomer.userProfile.countryCode}}
-                                                                        {{parentCustomer.userProfile.primaryMobileNo}}
-                                                                    </div>
-                                                                    <div class="col-xs-12 no-padding optional">
-                                                                        <label><i class="fa fa-whatsapp"
-                                                                                style="color:green"></i> Whatsapp
-                                                                            #</label>
-                                                                        <div class="disp-flex">
-                                                                            <div class="form-group no-margin">
-                                                                                <input type="text"
+                                                                    </div> -->
+                                                                    <!-- <div class="row"> -->
+                                                                        <div class="">
+                                                                            <label class="col-form-label" for="phone">Phone
+                                                                                # </label>
+                                                                            <br />
+                                                                            {{parentCustomer.userProfile.countryCode}}
+                                                                            {{parentCustomer.userProfile.primaryMobileNo}}
+                                                                        </div><br>
+                                                                        <div class=" form-group optional col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                            <label for="email"
+                                                                                class="col-form-label">Email</label>
+                                                                            <input type="email" class="form-control"
+                                                                                formControlName="email"
+                                                                                [ngStyle]="{'background-color': bgColor}" />
+                                                                            <mat-checkbox class="updateemail"
+                                                                                formControlName="updateEmail">Update Email
+                                                                                to 'My Account'</mat-checkbox>
+                                                                            <app-field-error-display
+                                                                                [displayError]="fed_service.isFieldValid(virtualForm,'email')"
+                                                                                [errorMsgs]="fed_service.getErrorMessage(virtualForm,'email',
+                                                                                {
+                                                                                    'pattern' : 'Please enter valid email'
+                                                                                })">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                    <!-- </div> -->
+                                                                    <!-- <div class="row"> -->
+                                                                        
+                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 optional">
+                                                                            <label><i class="fa fa-whatsapp"
+                                                                                style="color:green"></i> Whatsapp#</label>
+                                                                            <div class="disp-flex">
+                                                                                <div class="form-group no-margin">
+                                                                                    <input type="text"
                                                                                     (keypress)="isNumericSign($event)"
                                                                                     matInput
                                                                                     class="form-control input-group-text"
@@ -526,68 +418,69 @@
                                                                                     placeholder=""
                                                                                     formControlName="countryCode_whtsap"
                                                                                     autocomplete="off" maxlength="5"
-                                                                                    style="width:60px"
+                                                                                    style="width:60px!important"
                                                                                     [ngStyle]="{'background-color': bgColor}">
-                                                                            </div>
-                                                                            <div class="form-group width-100">
-                                                                                <input type="text"
-                                                                                    (keypress)="isNumeric($event)"
-                                                                                    matInput
-                                                                                    class="form-control text-width"
-                                                                                    id="whatsappnumber"
-                                                                                    formControlName="whatsappnumber"
-                                                                                    autocomplete="off" style="width:50%"
-                                                                                    [ngStyle]="{'background-color': bgColor}">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class=" col-xs-12 no-padding optional">
-                                                                        <label><i class="fa fa-telegram"
-                                                                                style="color:#29b6f6;"></i> Telegram
-                                                                            #</label>
-                                                                        <div class="disp-flex">
-
-                                                                            <div class="form-group no-margin">
-                                                                                <input type="text"
-                                                                                    (keypress)="isNumericSign($event)"
-                                                                                    matInput
-                                                                                    class="form-control input-group-text"
-                                                                                    id="countryCode_telegram"
-                                                                                    placeholder=""
-                                                                                    formControlName="countryCode_telegram"
-                                                                                    autocomplete="off" maxlength="5"
-                                                                                    style="width:60px"
-                                                                                    [ngStyle]="{'background-color': bgColor}">
-                                                                            </div>
-                                                                            <div class="form-group width-100">
-                                                                                <input type="text"
-                                                                                    (keypress)="isNumeric($event)"
-                                                                                    matInput
-                                                                                    class="form-control text-width"
-                                                                                    id="telegramnumber"
-                                                                                    formControlName="telegramnumber"
-                                                                                    autocomplete="off" style="width:50%"
-                                                                                    [ngStyle]="{'background-color': bgColor}">
+                                                                                </div>
+                                                                                <div class="form-group width-100">
+                                                                                    <input type="text"
+                                                                                        (keypress)="isNumeric($event)"
+                                                                                        matInput
+                                                                                        class="form-control text-width col-lg-3 col-md-3 col-sm-12 col-xs-12"
+                                                                                        id="whatsappnumber"
+                                                                                        formControlName="whatsappnumber"
+                                                                                        autocomplete="off"
+                                                                                        [ngStyle]="{'background-color': bgColor}">
+                                                                                </div>
                                                                             </div>
                                                                         </div>
+                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 optional">
+                                                                            <label><i class="fa fa-telegram"
+                                                                                    style="color:#29b6f6;"></i> Telegram
+                                                                                #</label>
+                                                                            <div class="disp-flex">
+                                                                                <div class="form-group no-margin">
+                                                                                    <input type="text"
+                                                                                        (keypress)="isNumericSign($event)"
+                                                                                        matInput
+                                                                                        class="form-control input-group-text"
+                                                                                        id="countryCode_telegram"
+                                                                                        placeholder=""
+                                                                                        formControlName="countryCode_telegram"
+                                                                                        autocomplete="off" maxlength="5"
+                                                                                        style="width:60px!important"
+                                                                                        [ngStyle]="{'background-color': bgColor}">
+                                                                                </div>
+                                                                                <div class="form-group width-100">
+                                                                                    <input type="text"
+                                                                                        (keypress)="isNumeric($event)"
+                                                                                        matInput
+                                                                                        class="form-control text-width col-lg-3 col-md-3 col-sm-12 col-xs-12"
+                                                                                        id="telegramnumber"
+                                                                                        formControlName="telegramnumber"
+                                                                                        autocomplete="off"
+                                                                                        [ngStyle]="{'background-color': bgColor}">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    <!-- </div> -->
+                                                                    <div *ngIf="hideLanguages && virtualForm.get('preferredLanguage').value.length >0 && lngknown==='no'" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                        <label class="col-form-label text-capitalize" for="preferredLanguage">{{virtualForm.get('preferredLanguage').value.length
+                                                                            >1?'Your preferred languages': 'Your preferred language'}}
+                                                                        </label><br/>
+                                                                        <fieldset>
+                                                                            <div class="col-form-label edtlang">
+                                                                                <span style="word-wrap: break-word; padding-right: 5px;margin-right: 5px;">{{virtualForm.get('preferredLanguage').value}}</span>
+                                                                                <span (click)="editLanguage()"
+                                                                                    style="color:rgb(255, 255, 255)"><i
+                                                                                        class="fa fa-edit fa-1x"
+                                                                                        style="font-size: large;"
+                                                                                        data-bs-toggle="tooltip"
+                                                                                        data-bs-placement="right"
+                                                                                        title="Edit"></i></span>
+                                                                            </div>
+                                                                        </fieldset>
                                                                     </div>
-                                                                    <div class="form-group optional">
-                                                                        <label for="email"
-                                                                            class="col-form-label">Email</label>
-                                                                        <input type="email" class="form-control"
-                                                                            formControlName="email" style="width:55%"
-                                                                            [ngStyle]="{'background-color': bgColor}" />
-                                                                        <mat-checkbox class="updateemail"
-                                                                            formControlName="updateEmail">Update Email
-                                                                            to 'My Account'</mat-checkbox>
-                                                                        <app-field-error-display
-                                                                            [displayError]="fed_service.isFieldValid(virtualForm,'email')"
-                                                                            [errorMsgs]="fed_service.getErrorMessage(virtualForm,'email',
-                                                                            {
-                                                                                'pattern' : 'Please enter valid email'
-                                                                            })">
-                                                                        </app-field-error-display>
-                                                                    </div>
+                                                                    
                                                                 </ng-container>
                                                             </fieldset>
                                                             <div class="">&nbsp;</div>
@@ -596,50 +489,31 @@
                                                 </form>
                                             </div>
                                         </div>
+                                        <div class="clearfix"></div><hr>
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
+                                            class="text-center col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between pt-10 width-100 mgn-lt-10 hf-single-btn-container">
                                             <button type="button"
-                                                class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                class="mx-auto next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
                                                 (click)="goToStep('next')" *ngIf="hideLanguages">
                                                 Next
                                             </button> &nbsp;
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
-                                    <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
-                                        data-wizard-type="step-content" data-wizard-state="current"
+
+
+                                    <div class="" data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 1">
-                                        <div class="panel-body no-padding">
-                                            <div
-                                                class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding pull-right border-left">
-                                                <div
-                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt">
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding border-bt"
-                                                        *ngIf="this.selectedUserParam && selectedUser">
-                                                        <div class="col-sm-2 col-xs-3 col-md-4 ">
-                                                            <img class="card-img" [src]="getPic(selectedUser)"
-                                                                alt="Profile Pic">
-                                                        </div>
-                                                        <div class="col-sm-10 col-xs-9 col-md-8 no-padding">
-                                                            <div class="">
-                                                                <h6 class="card-title mgn-up-5">
-                                                                    <span
-                                                                        *ngIf="selectedUser.businessName">{{selectedUser.businessName}}</span>
-                                                                    <span
-                                                                        *ngIf="!selectedUser.businessName">{{selectedUser.businessName}}</span>
-                                                                </h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                        <div class="">
+                                            <div class="">
+                                                <div class=""> 
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
-                                                        <div
-                                                            class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">
-                                                            {{showCheckinButtonCaption()}} For
+                                                        <div class="appointment-details-heading col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-5 p-3 pb-2 text-capitalize">
+                                                            <h5><b>{{showCheckinButtonCaption()}} Details</b></h5>
                                                         </div>
-                                                        <div class="col-sm-12 col-xs-12 col-md-12">
-                                                            <div class=""
-                                                                *ngIf="selectedServiceId || type == 'waitlistreschedule'">
-                                                                <div class="service-icon pull-left"
+                                                        <div class="mt-5">
+                                                            <div class="" *ngIf="selectedServiceId || type == 'waitlistreschedule'">
+                                                                <!-- <div class="service-icon pull-left"
                                                                     *ngIf="selectedService.serviceType == 'virtualService'">
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Phone'"></i>
@@ -653,10 +527,10 @@
                                                                         *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' && selectedService.virtualServiceType === 'audioService'"></i>
                                                                     <i class="fa wtsapvid-icon"
                                                                         *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' && selectedService.virtualServiceType === 'videoService'"></i>
-                                                                </div>
-                                                                <h6 class="card-title service mgn-bt-10">
-                                                                    {{selectedService.name}}
-                                                                </h6>
+                                                                </div> -->
+                                                                <h5 class="text-success text-center text-capitalize service mgn-bt-10">
+                                                                    <b>{{selectedService.name}}</b>
+                                                                </h5>
                                                                 <div class="" style="font-size: 1rem"
                                                                     *ngIf="selectedService && selectedService.description">
                                                                     <p class="module-nomargin line-clamp no-margin"
@@ -704,34 +578,215 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div
-                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp border-rt check-new-group pad-rt-0">
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
-                                                        *ngIf="queuejson && queuejson.length != 0 && !api_loading1">
-                                                        <div
-                                                            class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
-                                                            Date/Time
-                                                            <span><a class="changeitem  pointer-cursor  mgn-rt-20 mgn-bt-10 pull-right"
-                                                                    (click)="changeTime()" data-toggle="modal"
-                                                                    data-target="#exampleModalCenter">Change Date/Time
-                                                                </a></span>
+                                                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="queuejson && queuejson.length != 0 && !api_loading1">
+                                                        <div class="">
+                                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
+                                                                    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
+                                                                        *ngIf="selectedService.serviceType!=='virtualService'">
+                                                                        <h4 class="text-dark"><b>Booking For</b></h4>
+                                                                        
+                                                                    </div>
+                                                                    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
+                                                                        *ngIf="selectedService.serviceType==='virtualService'">
+                                                                        <h4 class="text-dark"><b>Booking For</b></h4>
+                                                                    </div>
+                                                                    <div class="">
+                                                                        <div class="">
+                                                                            <div class="row my-2">
+                                                                                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                                                                                    <h3 class="text-warning service"
+                                                                                        *ngIf="waitlist_for && waitlist_for[0]">
+                                                                                        {{waitlist_for[0].firstName |
+                                                                                        capitalizeFirst}}
+                                                                                        {{waitlist_for[0].lastName |
+                                                                                        capitalizeFirst}}
+                                                                                    </h3>
+                                                                                </div>
+                                                                                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                                                                                    <a *ngIf="type !== 'reschedule'"
+                                                                                        class="pointer-cursor changeitem btn btn-primary font-weight-bold text-capitalize px-2 py-1"
+                                                                                        (click)="handleSideScreen('members')"
+                                                                                        data-toggle="modal"
+                                                                                        data-target="#exampleModalCenter">Change Member
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                        
+                                                                            <div
+                                                                                class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
+                                                                                <b>Contact Information</b>
+                                                                            </div>
+                                                                            
+                                                                            <div class="contact-section">
+                                                                                <i class="fa fa-mobile "></i>
+                                                                                <i class="fa phon-icon mgn-lt-10"
+                                                                                    *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                                <span class="mgn-lt-10 phonevallabel">&nbsp;{{commObj['communicationPhCountryCode']}}
+                                                                                    {{commObj['communicationPhNo']}}</span><a
+                                                                                    class="mgn-lt-5 lnk pointer-cursor">
+                                                                                </a>
+                                                                                <div class="mode-hint mgn-bt-5"
+                                                                                    *ngIf="selectedService && selectedService.virtualCallingModes && (selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' || selectedService.virtualCallingModes[0].callingMode === 'Phone')">
+                                                                                    The provider will contact
+                                                                                    you in this number
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="contact-section"
+                                                                                *ngIf="selectedService && selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                                                <i class="fa wtsapaud-icon wtsap-cal"
+                                                                                    *ngIf="selectedService.virtualServiceType === 'audioService'"></i>
+                                                                                <i class="fa wtsapvid-icon" style="width: 20px;"
+                                                                                    *ngIf="selectedService.virtualServiceType === 'videoService'"></i>
+                                                                                <span class="mgn-lt-10 phonevallabel">{{commObj['comWhatsappCountryCode']}}
+                                                                                    {{commObj['comWhatsappNo']}}</span><a
+                                                                                    class="mgn-lt-5 lnk pointer-cursor">
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="contact-section">
+                                                                                    <div class="float-left"><i class="fa fa-envelope-o"></i></div>
+                                                                                    <span class="mgn-lt-10 emailvallabel">{{commObj['communicationEmail']}}</span>
+                                                                                    
+                                                                                <a class="mgn-lt-5 lnk pointer-cursor"></a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div *ngIf="!questionnaireList.labels"
+                                                                    class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding">
+                                                                    <a #modal data-toggle="modal"
+                                                                        data-target="#exampleModalCenter">
+                                                                    </a><br>
+                                                                    <span class="text-capitalize text-primary"><b>Please upload Notes/Files related to your service</b></span>
+                                                                    <mat-chip-list class="btns">
+                                                                        <mat-chip
+                                                                            [class.mandatoryChip]="selectedService.consumerNoteMandatory && type != 'reschedule'"
+                                                                            (click)="handleSideScreen('note');modal.click();">
+                                                                            <a class="lnk action pointer-cursor"><i
+                                                                                    class="fa fa-file-text-o mgn-rt-5"
+                                                                                    aria-hidden="true"></i>{{selectedService.consumerNoteTitle}}
+                                                                                <span
+                                                                                    *ngIf="selectedService.consumerNoteMandatory && type != 'reschedule'">*</span></a>
+                                                                        </mat-chip>
+                                                                        <span>
+                                                                            <mat-chip
+                                                                                [ngClass]="{'br-top-right-0 br-bottom-right-0 margin-right-0': getAttachLength() > 0}">
+                                                                                <a class="lnk action pointer-cursor"
+                                                                                    (click)="imagefile1.click();"><input
+                                                                                        #imagefile1 type="file"
+                                                                                        accept="/*;capture=camera"
+                                                                                        style="display:none;" multiple
+                                                                                        (change)="filesSelected($event, 'close')"><i
+                                                                                        class="fa fa-paperclip mgn-rt-5"
+                                                                                        aria-hidden="true"></i>Upload
+                                                                                    File
+                                                                                </a>
+                                                                            </mat-chip>
+                                                                            <mat-chip *ngIf="getAttachLength() > 0"
+                                                                                class="br-top-left-0 br-bottom-left-0 margin-left-0">
+                                                                                <a class="lnk action pointer-cursor"
+                                                                                    (click)="viewAttachments()">
+                                                                                    View (<span>{{getAttachLength()}}</span>)
+                                                                                </a>
+                                                                            </mat-chip>
+                                                                        </span>
+                                                                    </mat-chip-list>
+                                                                </div>
+                                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                                                    <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-5 no-padding"
+                                                                        *ngIf="(s3CouponsList.JC.length > 0) && type != 'waitlistreschedule' || (s3CouponsList.OWN.length > 0) && type != 'waitlistreschedule'">
+                                                                        <a class="lnk pointer-cursor action"
+                                                                            *ngIf="selected_coupons.length === 0"
+                                                                            (click)="applyPromocode()" data-toggle="modal"
+                                                                            data-target="#exampleModalCenter">Apply
+                                                                            Coupon Code</a>
+                                                                        <a class="lnk pointer-cursor action"
+                                                                            *ngIf="selected_coupons.length > 0"
+                                                                            (click)="applyPromocode()" data-toggle="modal"
+                                                                            data-target="#exampleModalCenter">
+                                                                            Coupon code added</a>
+                                                                        {{selected_coupons.toString()}}
+                                                                    </div>
+                                                                    <div *ngFor="let coupon of paymentDetails.jCouponList | keyvalue"
+                                                                        style="text-align: initial;">
+                                                                        <small class="black rupee-font"
+                                                                            *ngIf="coupon.value.value !== '0.0'">You saved
+                                                                            {{coupon.value.value | currency:'&#8377;'}} on
+                                                                            {{coupon.key}}
+                                                                        </small>
+                                                                        <small class="black"
+                                                                            *ngIf="coupon.value.value === '0.0'">{{coupon.key}}
+                                                                            will be honored if all the rules are met
+                                                                            &nbsp;<small *ngIf="coupon.value.value === '0.0'"
+                                                                                class="blue custId-cursor"
+                                                                                (click)="showJCCouponNote(coupon)"
+                                                                                aria-hidden="true">Know more</small></small>
+                                                                    </div>
+                                                                    <div
+                                                                        *ngFor="let coupon of paymentDetails.proCouponList | keyvalue">
+                                                                        <small class="black rupee-font"
+                                                                            *ngIf="coupon.value.value !== '0.0'">You saved
+                                                                            {{coupon.value.value | currency:'&#8377;'}} on
+                                                                            {{coupon.key}}
+                                                                        </small>
+                                                                        <small class="black"
+                                                                            *ngIf="coupon.value.value === '0.0'">{{coupon.key}}
+                                                                            will be honored if all the rules are met
+                                                                            &nbsp;<small *ngIf="coupon.value.value === '0.0'"
+                                                                                class="blue custId-cursor"
+                                                                                (click)="showJCCouponNote(coupon)"
+                                                                                aria-hidden="true">Know more</small></small>
+                                                                    </div>
+                                                                    <div
+                                                                        class="col-md-12 col-xs-12 col-sm-12">
+                                                                        <div
+                                                                            class="col-md-12 col-xs-12 col-sm-12">
+                                                                            <div class="checkin-btn-bp pointer-cursor"
+                                                                                *ngIf="type == 'waitlistreschedule'"
+                                                                                [class.disableActn]="(queuejson && queuejson.length == 0 && !api_loading1) || callingModes === '' || disableButn()"
+                                                                                (click)="rescheduleWaitlist()">
+                                                                                Reschedule
+                                                                                <i class="fa fa-long-arrow-right mgn-lt-5"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                                            <h6 class="card-title serv-time border-style">
-                                                                <span *ngIf="!isFuturedate">Today, </span>
-                                                                <span *ngIf="isFuturedate">{{selectedDate | date:
-                                                                    newDateFormat}},
-                                                                </span>
-                                                                <span>
-                                                                    {{selectedQTime}}
-                                                                </span>
-                                                            </h6>
+                                                        <div class="clearfix"></div>
+                                                        <hr>
+                                                        <div class="pb-0 px-auto my-3 font-weight-bold text-center">
+                                                            <h5 class="text-capitalize text-primary"><b>Select Appointment Date </b></h5>
+                                                        </div>
+                                                        
+                                                        <app-date-pagination (date_change_event)=changed_date_value($event)></app-date-pagination>
 
+                                                        <div class="pb-0 px-auto mb-2 font-weight-bold text-center">
+                                                            <h5 class="text-capitalize text-primary"><b>Select Appointment Time </b></h5>
                                                         </div>
 
-                                                        <div *ngIf="wt_personaahead"
-                                                            class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20">
-                                                            Waiting in Line
+                                                        
+                                                        <div  *ngIf="queuejson && queuejson.length > 0" class="freeslots m-1 my-3">
+                                                            <mat-chip-list *ngIf="queuejson && queuejson.length > 0">
+                                                                <mat-chip *ngFor="let queue of queuejson, let i= index" class="text-center mx-auto"
+                                                                    [selected]="queue.id === queuejson[this.sel_queue_indx].id"
+                                                                    (click)="handleQueueSelection(queue, i)">
+                                                                    <span class="mx-2">{{queue.queueSchedule.timeSlots[0]['sTime']
+                                                                        + ' - '
+                                                                        +
+                                                                        queue.queueSchedule.timeSlots[0]['eTime']}}</span>
+                                                                </mat-chip>
+                                                            </mat-chip-list>
+                                                            <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mt-3 text-center" *ngIf="queuejson && queuejson.length == 0 && !api_loading1">
+                                                                <b>No slots available on selected date.Please choose other date.</b>
+                                                            </div>
+                                                        </div>
+                                                        
+
+
+                                                        <div *ngIf="wt_personaahead" class="text-primary col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20">
+                                                            <h4><b>Waiting in Line</b></h4>
                                                         </div>
                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                                                             *ngIf="wt_personaahead">
@@ -770,205 +825,32 @@
                                                             </a></span>
                                                     </div>
                                                 </div>
-                                                <div
-                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp check-new-group">
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                                        <div
-                                                            class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
-                                                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
-                                                                *ngIf="selectedService.serviceType!=='virtualService'">
-                                                                Booking For <a *ngIf="type !== 'waitlistreschedule'"
-                                                                    class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
-                                                                    data-toggle="modal"
-                                                                    data-target="#exampleModalCenter"
-                                                                    (click)="handleSideScreen('members')">Change
-                                                                </a>
-                                                            </div>
-                                                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
-                                                                *ngIf="selectedService.serviceType==='virtualService'">
-                                                                Booking For
-                                                            </div>
-                                                            <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
-                                                                <div class="">
-                                                                    <div *ngIf="type !== 'waitlistreschedule'">
-                                                                        <h6 class="card-title service mgn-bt-10"
-                                                                            *ngFor="let member of waitlist_for">
-                                                                            {{member.firstName | capitalizeFirst}}
-                                                                            {{member.lastName | capitalizeFirst}}
-                                                                        </h6>
-                                                                    </div>
-                                                                    <h6 class="card-title service mgn-bt-10"
-                                                                        *ngIf="type === 'waitlistreschedule'">
-                                                                        {{wtlst_for_fname | capitalizeFirst}}
-                                                                        {{wtlst_for_lname | capitalizeFirst}}
-                                                                    </h6>
-                                                                    <div
-                                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
-                                                                        Contact Information
-                                                                        <a *ngIf="type !== 'waitlistreschedule'&& selectedService.serviceType==='virtualService'"
-                                                                            class="change-button changeitem pointer-cursor mgn-lt-5 pull-right"
-                                                                            data-toggle="modal"
-                                                                            data-target="#exampleModalCenter"
-                                                                            (click)="handleSideScreen('members')">Change
-                                                                        </a>
-                                                                        <div class="mode-hint mgn-bt-5">
-                                                                            The provider will contact you in this
-                                                                            number
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="contact-section">
-                                                                        <i class="fa fa-mobile "></i>
-                                                                        <i class="fa phon-icon mgn-lt-10"
-                                                                            *ngIf="selectedService  && selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                                        <span
-                                                                            class="phonevallabel">&nbsp;{{commObj['communicationPhCountryCode']}}
-                                                                            {{commObj['communicationPhNo']}}</span>
-                                                                    </div>
-                                                                    <div class="contact-section"
-                                                                        *ngIf="selectedService && selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                                                                        <i class="fa wtsapaud-icon wtsap-cal"
-                                                                            *ngIf="selectedService.virtualServiceType === 'audioService'"></i>
-                                                                        <i class="fa wtsapvid-icon" style="width: 20px;"
-                                                                            *ngIf="selectedService.virtualServiceType === 'videoService'"></i>
-                                                                        <span
-                                                                            class="phonevallabel">&nbsp;{{commObj['comWhatsappCountryCode']}}
-                                                                            {{commObj['comWhatsappNo']}}</span>
-                                                                        <a class="mgn-lt-5 lnk pointer-cursor"></a>
-                                                                    </div>
-                                                                    <div class="">
-                                                                        <i class="fa fa-envelope-o "></i>
-                                                                        <span
-                                                                            class="mgn-lt-5 emailvallabel">{{commObj['communicationEmail']}}</span>
-                                                                        <a class="mgn-lt-5 lnk pointer-cursor">
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div *ngIf="!questionnaireList.labels"
-                                                            class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding">
-                                                            <a #modal data-toggle="modal"
-                                                                data-target="#exampleModalCenter">
-                                                            </a>
-                                                            <mat-chip-list class="btns">
-                                                                <mat-chip
-                                                                    [class.mandatoryChip]="selectedService.consumerNoteMandatory && type != 'waitlistreschedule'"
-                                                                    (click)="handleSideScreen('note');modal.click();">
-                                                                    <a class="lnk action pointer-cursor"><i
-                                                                            class="fa fa-file-text-o mgn-rt-5"
-                                                                            aria-hidden="true"></i>
-                                                                        {{selectedService.consumerNoteTitle}}
-                                                                        <span
-                                                                            *ngIf="selectedService.consumerNoteMandatory">*</span></a>
-                                                                </mat-chip>
-                                                                <span>
-                                                                    <mat-chip
-                                                                        [ngClass]="{'br-top-right-0 br-bottom-right-0 margin-right-0': getAttachLength() > 0}">
-                                                                        <a class="lnk action pointer-cursor"
-                                                                            (click)="imagefile1.click();"><input
-                                                                                #imagefile1 type="file"
-                                                                                accept="/*;capture=camera"
-                                                                                style="display:none;" multiple
-                                                                                (change)="filesSelected($event, 'close')"><i
-                                                                                class="fa fa-paperclip mgn-rt-5"
-                                                                                aria-hidden="true"></i>Upload File
-                                                                        </a>
-                                                                    </mat-chip>
-                                                                    <mat-chip *ngIf="getAttachLength() > 0"
-                                                                        class="br-top-left-0 br-bottom-left-0 margin-left-0">
-                                                                        <a class="lnk action pointer-cursor"
-                                                                            (click)="viewAttachments()">
-                                                                            View (<span>{{getAttachLength()}}</span>)
-                                                                        </a>
-                                                                    </mat-chip>
-                                                                </span>
-                                                            </mat-chip-list>
-                                                        </div>
-                                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-5 no-padding"
-                                                                *ngIf="(s3CouponsList.JC.length > 0) && type != 'waitlistreschedule' || (s3CouponsList.OWN.length > 0) && type != 'waitlistreschedule'">
-                                                                <a class="lnk pointer-cursor action"
-                                                                    *ngIf="selected_coupons.length === 0"
-                                                                    (click)="applyPromocode()" data-toggle="modal"
-                                                                    data-target="#exampleModalCenter">Apply
-                                                                    Coupon Code</a>
-                                                                <a class="lnk pointer-cursor action"
-                                                                    *ngIf="selected_coupons.length > 0"
-                                                                    (click)="applyPromocode()" data-toggle="modal"
-                                                                    data-target="#exampleModalCenter">
-                                                                    Coupon code added</a>
-                                                                {{selected_coupons.toString()}}
-                                                            </div>
-                                                            <div *ngFor="let coupon of paymentDetails.jCouponList | keyvalue"
-                                                                style="text-align: initial;">
-                                                                <small class="black rupee-font"
-                                                                    *ngIf="coupon.value.value !== '0.0'">You saved
-                                                                    {{coupon.value.value | currency:'&#8377;'}} on
-                                                                    {{coupon.key}}
-                                                                </small>
-                                                                <small class="black"
-                                                                    *ngIf="coupon.value.value === '0.0'">{{coupon.key}}
-                                                                    will be honored if all the rules are met
-                                                                    &nbsp;<small *ngIf="coupon.value.value === '0.0'"
-                                                                        class="blue custId-cursor"
-                                                                        (click)="showJCCouponNote(coupon)"
-                                                                        aria-hidden="true">Know more</small></small>
-                                                            </div>
-                                                            <div
-                                                                *ngFor="let coupon of paymentDetails.proCouponList | keyvalue">
-                                                                <small class="black rupee-font"
-                                                                    *ngIf="coupon.value.value !== '0.0'">You saved
-                                                                    {{coupon.value.value | currency:'&#8377;'}} on
-                                                                    {{coupon.key}}
-                                                                </small>
-                                                                <small class="black"
-                                                                    *ngIf="coupon.value.value === '0.0'">{{coupon.key}}
-                                                                    will be honored if all the rules are met
-                                                                    &nbsp;<small *ngIf="coupon.value.value === '0.0'"
-                                                                        class="blue custId-cursor"
-                                                                        (click)="showJCCouponNote(coupon)"
-                                                                        aria-hidden="true">Know more</small></small>
-                                                            </div>
-                                                            <div
-                                                                class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-20">
-                                                                <div
-                                                                    class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
-                                                                    <div class="checkin-btn-bp pointer-cursor"
-                                                                        *ngIf="type == 'waitlistreschedule'"
-                                                                        [class.disableActn]="(queuejson && queuejson.length == 0 && !api_loading1) || callingModes === '' || disableButn()"
-                                                                        (click)="rescheduleWaitlist()">
-                                                                        Reschedule
-                                                                        <i class="fa fa-long-arrow-right mgn-lt-5"></i>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
+                                            <div class="clearfix"></div>
+                                            <hr>
                                             <div *ngIf="type != 'waitlistreschedule' && !selectedService.isPrePayment"
-                                                class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
+                                                class="text-center col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 mx-auto">
                                                 <button type="button"
-                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
-                                                    (click)="goToStep('next')"
+                                                    class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
+                                                    (click)="goToStep('next');actionCompleted()"
                                                     [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1) || waitlist_for.length == 0">
                                                     Next
                                                 </button>
                                             </div>
                                             <div *ngIf="type != 'waitlistreschedule' && selectedService.isPrePayment && questionnaireList.labels && questionnaireList.labels.length > 0"
-                                                class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
+                                                class="text-center col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 mx-auto">
                                                 <button type="button"
-                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
-                                                    (click)="goToStep('next')"
+                                                    class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
+                                                    (click)="goToStep('next');actionCompleted()"
                                                     [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1) || waitlist_for.length == 0">
                                                     Next
                                                 </button>
                                             </div>
                                             <div *ngIf="type != 'waitlistreschedule' && selectedService.isPrePayment && !questionnaireList.labels"
-                                                class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
+                                                class="text-center col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 mx-auto">
                                                 <button type="button"
-                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
-                                                    (click)="goToStep('next')"
+                                                    class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
+                                                    (click)="goToStep('next');actionCompleted()"
                                                     [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1) || waitlist_for.length == 0">
                                                     Proceed to Payment
                                                 </button>
@@ -976,6 +858,11 @@
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
+
+
+
+
+                                    
                                     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
@@ -1025,7 +912,7 @@
                                                                         File</a></mat-chip>
                                                             </mat-chip-list>
                                                         </div>
-                                                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 bold pad-top-10 mgn-up-10 mgn-bt-10 border-tp"
+                                                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 bold pad-top-10 mgn-up-10 mgn-bt-10"
                                                             *ngIf="(selectedMessage.files && selectedMessage.files.length > 0) || (type=='waitlistreschedule' && waitlist.attchment && waitlist.attchment.length > 0)">
                                                             Uploaded Files
                                                         </div>
@@ -1160,7 +1047,7 @@
 
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-12 col-sm-12 col-lg-12 col-12 mgn-up-20 mgn-bt-30 border-tp pad-up-10"
+                                                            <div class="col-md-12 col-sm-12 col-lg-12 col-12 mgn-up-20 mgn-bt-30 pad-up-10"
                                                                 *ngIf="couponsList && couponsList.length>0">
                                                                 <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
                                                                     *ngFor="let coupon of couponsList let i=index">
@@ -1170,7 +1057,7 @@
                                                                             class="col-md-5 col-sm-7 col-xs-7 col-lg-4 no-padding">
                                                                             {{coupon.couponCode}} </div>
                                                                         <div
-                                                                            class="col-md-7 col-sm-5 col-xs-5 col-lg-8 delteTC">
+                                                                            class="col-md-12 col-sm-5 col-xs-5 col-lg-8 delteTC">
                                                                             <span><a *ngIf="coupon.instructions"
                                                                                     (click)="toggleterms(i)"
                                                                                     class="pointer-cursor lnk read-more-checkin">Read
@@ -1209,7 +1096,8 @@
                                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
                                                             {{selectedService.consumerNoteTitle}}
                                                             <div class="form-level-settings">
-                                                                Add any other notes to  {{waitlist_for[0].firstName}}{{waitlist_for[0].lastName}}
+                                                                Add any other notes to the {{businessjson.businessName ?
+                                                                businessjson.businessName : selectedService.name}}
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -1253,7 +1141,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
+                                    <div class="lbl col-sm-12 col-md-12 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 2">
                                         <div class="pad-20 quest-head">
@@ -1309,32 +1197,32 @@
                                             </div>
                                         </div>
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 hf-double-btn-container">
+                                            class=" text-center col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between pt-10 width-100 hf-double-btn-container">
                                             <div class="mr-2">
                                                 <button type="button"
-                                                    class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    class="next-button btn btn-light-primary font-weight-bold text-capitalize px-9 py-4"
                                                     (click)="goToStep('prev')">
                                                     Go Back
                                                 </button>
                                             </div>
                                             <div *ngIf="!selectedService.isPrePayment">
                                                 <button type="button"
-                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
-                                                    (click)="goToStep('next')">
+                                                    class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
+                                                    (click)="goToStep('next');actionCompleted()">
                                                     Next
                                                 </button>
                                             </div>
                                             <div *ngIf="selectedService.isPrePayment">
                                                 <button type="button"
-                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
-                                                    (click)="goToStep('next')">
+                                                    class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
+                                                    (click)="goToStep('next');actionCompleted()">
                                                     Proceed to Payment
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding"
+                                        <div class="lbl col-sm-12 col-md-12 col-lg-8 col-xs-12 col-sm-12 no-padding"
                                             data-wizard-type="step-content" data-wizard-state="current"
                                             *ngIf="bookStep === 3">
                                             <div *ngIf="api_loading_video" class="incomplete-msg">
@@ -1345,176 +1233,262 @@
                                             <app-common-innerloading-spinner *ngIf="api_loading_video">
                                             </app-common-innerloading-spinner>
                                         </div>
-                                        <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
+                                        <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding right-part"
                                             data-wizard-type="step-content" data-wizard-state="current"
                                             *ngIf="bookStep === 3" [ngClass]="{'highlight': api_loading_video}">
-                                            <div class="confirm-head mgn-up-20">Review & Confirm</div>
-                                            <div class="bookdetails">
-                                                <div class="disp-flex" *ngIf="!selectedService.provider">
-                                                    <span class="billing-head">Provider</span>
-                                                    <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                                    <span
-                                                        class="billing-value name-line-ht">{{businessjson.businessName}}</span>
+                                            <div class="appointment-details-heading col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 p-3 pb-2 text-capitalize">
+                                                <h5><b>{{showCheckinButtonCaption()}} Summary</b></h5>
+                                            </div>
+                                            
+                                            <div class="">
+                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mx-3">
+                                                    <div
+                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
+                                                        <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
+                                                            *ngIf="selectedService.serviceType!=='virtualService'">
+                                                            <h4 class="text-dark"><b>Booking For</b></h4>
+                                                            
+                                                        </div>
+                                                        <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
+                                                            *ngIf="selectedService.serviceType==='virtualService'">
+                                                            <h4 class="text-dark"><b>Booking For</b></h4>
+                                                        </div>
+                                                        <div class="">
+                                                            <div class="">
+                                                                <div class="row">
+                                                                    <div class="col-md-12" *ngIf="type !== 'waitlistreschedule'">
+                                                                        <h3 class="card-title service mgn-bt-10 text-warning"
+                                                                            *ngFor="let member of waitlist_for">
+                                                                            {{member.firstName | capitalizeFirst}}
+                                                                            {{member.lastName | capitalizeFirst}}
+                                                                        </h3>
+                                                                        <h3 class="card-title service mgn-bt-10 text-warning"
+                                                                            *ngIf="type === 'waitlistreschedule'">
+                                                                            {{wtlst_for_fname | capitalizeFirst}}
+                                                                            {{wtlst_for_lname | capitalizeFirst}}
+                                                                        </h3>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                            
+                                                                <div
+                                                                    class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
+                                                                    <b>Contact Information</b>
+                                                                </div>
+                                                                <div class="contact-section">
+                                                                    <i class="fa fa-mobile "></i>
+                                                                    <i class="fa phon-icon mgn-lt-10"
+                                                                        *ngIf="selectedService  && selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                    <span
+                                                                        class="phonevallabel">&nbsp;{{commObj['communicationPhCountryCode']}}
+                                                                        {{commObj['communicationPhNo']}}</span>
+                                                                </div>
+                                                                <div class="contact-section"
+                                                                    *ngIf="selectedService && selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                                    <i class="fa wtsapaud-icon wtsap-cal"
+                                                                        *ngIf="selectedService.virtualServiceType === 'audioService'"></i>
+                                                                    <i class="fa wtsapvid-icon" style="width: 20px;"
+                                                                        *ngIf="selectedService.virtualServiceType === 'videoService'"></i>
+                                                                    <span
+                                                                        class="phonevallabel">&nbsp;{{commObj['comWhatsappCountryCode']}}
+                                                                        {{commObj['comWhatsappNo']}}</span>
+                                                                    <a class="mgn-lt-5 lnk pointer-cursor"></a>
+                                                                </div>
+                                                                <div class="contact-section">
+                                                                    <div class="float-left"><i class="fa fa-envelope-o"></i></div>
+                                                                    <span class="mgn-lt-10 emailvallabel">{{commObj['communicationEmail']}}</span>
+                                                                    
+                                                                    <a class="mgn-lt-5 lnk pointer-cursor"></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                   
+                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                                        <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-5 no-padding"
+                                                            *ngIf="(s3CouponsList.JC.length > 0) && type != 'waitlistreschedule' || (s3CouponsList.OWN.length > 0) && type != 'waitlistreschedule'">
+                                                            <a class="lnk pointer-cursor action"
+                                                                *ngIf="selected_coupons.length === 0"
+                                                                (click)="applyPromocode()" data-toggle="modal"
+                                                                data-target="#exampleModalCenter">Apply
+                                                                Coupon Code</a>
+                                                            <a class="lnk pointer-cursor action"
+                                                                *ngIf="selected_coupons.length > 0"
+                                                                (click)="applyPromocode()" data-toggle="modal"
+                                                                data-target="#exampleModalCenter">
+                                                                Coupon code added</a>
+                                                            {{selected_coupons.toString()}}
+                                                        </div>
+                                                        <div *ngFor="let coupon of paymentDetails.jCouponList | keyvalue"
+                                                            style="text-align: initial;">
+                                                            <small class="black rupee-font"
+                                                                *ngIf="coupon.value.value !== '0.0'">You saved
+                                                                {{coupon.value.value | currency:'&#8377;'}} on
+                                                                {{coupon.key}}
+                                                            </small>
+                                                            <small class="black"
+                                                                *ngIf="coupon.value.value === '0.0'">{{coupon.key}}
+                                                                will be honored if all the rules are met
+                                                                &nbsp;<small *ngIf="coupon.value.value === '0.0'"
+                                                                    class="blue custId-cursor"
+                                                                    (click)="showJCCouponNote(coupon)"
+                                                                    aria-hidden="true">Know more</small></small>
+                                                        </div>
+                                                        <div
+                                                            *ngFor="let coupon of paymentDetails.proCouponList | keyvalue">
+                                                            <small class="black rupee-font"
+                                                                *ngIf="coupon.value.value !== '0.0'">You saved
+                                                                {{coupon.value.value | currency:'&#8377;'}} on
+                                                                {{coupon.key}}
+                                                            </small>
+                                                            <small class="black"
+                                                                *ngIf="coupon.value.value === '0.0'">{{coupon.key}}
+                                                                will be honored if all the rules are met
+                                                                &nbsp;<small *ngIf="coupon.value.value === '0.0'"
+                                                                    class="blue custId-cursor"
+                                                                    (click)="showJCCouponNote(coupon)"
+                                                                    aria-hidden="true">Know more</small></small>
+                                                        </div>
+                                                        <div
+                                                            class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                                            <div
+                                                                class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
+                                                                <div class="checkin-btn-bp pointer-cursor"
+                                                                    *ngIf="type == 'waitlistreschedule'"
+                                                                    [class.disableActn]="(queuejson && queuejson.length == 0 && !api_loading1) || callingModes === '' || disableButn()"
+                                                                    (click)="rescheduleWaitlist()">
+                                                                    Reschedule
+                                                                    <i class="fa fa-long-arrow-right mgn-lt-5"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="disp-flex" *ngIf="selectedService.provider">
-                                                    <span class="billing-head">Provider</span>
-                                                    <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                                    <span
-                                                        class="billing-value name-line-ht">{{getUserName(selectedService.provider.id)}},
-                                                        {{businessjson.businessName}}</span>
-                                                </div>
-                                                <div class="disp-flex">
-                                                    <span class="billing-head">Location</span>
-                                                    <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                                    <span class="billing-value"> {{locationName}}</span>
-                                                </div>
-                                                <div class="disp-flex">
-                                                    <span class="billing-head"
-                                                        style="display: flex !important; align-items: center !important;margin-bottom: 5px;">Service</span>
-                                                    <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                                    <span class="billing-value disp-flex align-items-center">
-                                                        <span class="service-icon"
-                                                            style="display: inline-block !important;"
+                                            </div>
+
+                                            <div class="card shadow-lg appointment-details-card">
+                                                <div class="text-capitalize">
+                                                    <div class="m-auto"
+                                                        *ngIf="selectedServiceId || type == 'waitlistreschedule'">
+                                                        <!-- <div class="service-icon pull-left"
                                                             *ngIf="selectedService.serviceType == 'virtualService'">
                                                             <i class="fa phon-icon"
                                                                 *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                             <i class="fa meet-icon"
                                                                 *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                            <i class="fa zoom-icon"
+                                                            <i class="fa zoom-icon zoom1"
                                                                 *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Zoom'"></i>
                                                             <i class="fa jvideo-icon jvideo-icon-m jvideo-icon-mg5"
                                                                 *ngIf="selectedService.virtualCallingModes  && selectedService.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
                                                             <i class="fa wtsapaud-icon"
-                                                                *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' && selectedService.virtualServiceType ==='audioService'"></i>
+                                                                *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' && selectedService.virtualServiceType === 'audioService'"></i>
                                                             <i class="fa wtsapvid-icon"
-                                                                *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' && selectedService.virtualServiceType ==='videoService'"></i>
-                                                        </span>
-                                                        <span class="mgn-bt-5">{{selectedService.name}}</span>
-                                                    </span>
-                                                </div>
-                                                <div class="disp-flex">
-                                                    <span class="billing-head" *ngIf="settingsjson.showTokenId">Token
-                                                        for</span>
-                                                    <span class="billing-head"
-                                                        *ngIf="!settingsjson.showTokenId">Check-in
-                                                        for</span>
-                                                    <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                                    <span class="billing-value">
-                                                        <span *ngFor="let customer of waitlist_for; let i = index;">
-                                                            {{customer.firstName}}
-                                                            {{customer.lastName}}{{i < waitlist_for.length-1 ? ", " : ""
-                                                                }} </span>
-                                                        </span>
-                                                </div>
-                                                <div class="disp-flex">
-                                                    <span class="billing-head">Contact #</span>
-                                                    <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                                    <span
-                                                        class="billing-value">{{commObj['communicationPhCountryCode']}}
-                                                        {{commObj['communicationPhNo']}} </span>
-                                                </div>
-                                                <div class="disp-flex"
-                                                    *ngIf="selectedService && selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                                                    <span class="billing-head">WhatsApp #</span>
-                                                    <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                                    <span
-                                                        class="billing-value">{{this.commObj['comWhatsappCountryCode']}}
-                                                        {{this.commObj['comWhatsappNo']}} </span>
-                                                </div>
-                                                <div class="disp-flex">
-                                                    <span class="billing-head">Email</span>
-                                                    <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
-                                                    <span class="billing-value"
-                                                        style="word-break: break-all;">{{this.commObj['communicationEmail']}}</span>
-                                                </div>
-                                            </div>
-                                            <div class="containerAppt textcenter"
-                                                *ngIf="!theme || theme != 'heartfulness_theme1'">
-                                                <div class="mgn-up-10 no-mgn-bt bold">
-                                                    <span>{{settingsjson.showTokenId?'Token For':'Checkin For'}}
-                                                        :&nbsp;</span>
-                                                    <span>
-                                                        <span class="service-icon"
-                                                            style="display: inline-block !important;"
-                                                            *ngIf="selectedService.serviceType == 'virtualService'">
-                                                            <i class="fa phon-icon"
-                                                                *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                            <i class="fa meet-icon"
-                                                                *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                            <i class="fa zoom-icon"
-                                                                *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                            <i class="fa jvideo-icon jvideo-icon-m jvideo-icon-mg5"
-                                                                *ngIf="selectedService.virtualCallingModes  && selectedService.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
-                                                            <i class="fa wtsapaud-icon"
-                                                                *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' && selectedService.virtualServiceType ==='audioService'"></i>
-                                                            <i class="fa wtsapvid-icon"
-                                                                *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' && selectedService.virtualServiceType ==='videoService'"></i>
-                                                        </span>
-                                                        <span>{{selectedService.name}}</span>
-                                                    </span>
-                                                </div>
-                                                <div class="mgn-bt-5">
-                                                    <span *ngIf="!isFuturedate">Today, </span>
-                                                    <span *ngIf="isFuturedate">{{selectedDate | date:
-                                                        newDateFormat}},
-                                                    </span>
-                                                    <span>
-                                                        {{selectedQTime}}
-                                                    </span>
-                                                </div>
-                                                <div class="no-mgn-bt bold" *ngIf="wt_personaahead"> Waiting in line
-                                                </div>
-                                                <div class="mgn-bt-10 pad-bt-10" *ngIf="wt_personaahead">
-                                                    <span *ngIf="personsAhead <= 0">0 People</span>
-                                                    <span *ngIf="personsAhead == 1">1<span>
-                                                            Person</span></span>
-                                                    <span *ngIf="personsAhead > 1">{{personsAhead}}<span>
-                                                            People</span>
-                                                    </span>
-                                                    <span *ngIf="serviceTime=='' && calc_mode!='NoCalc'">
-                                                        <span class="color-grey">\</span>
-                                                        <span>{{waitingTime}}</span>
-                                                    </span>
-                                                    <span *ngIf="serviceTime!='' && calc_mode!='NoCalc'">
-                                                        <ng-container *ngIf="!isFuturedate">
-                                                            <span><span class="color-grey"> \
-                                                                </span>{{serviceTime}}</span>
-                                                        </ng-container>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="web">
-                                                    <div class="textcenter"
-                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                        <span class="ser_price no-mgn-bt bold">Service Price : <span
-                                                                class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
-                                                                | currency:'&#8377;'}}</span></span>
-                                                        <span class="ser_price no-mgn-bt bold"
-                                                            style="padding: 20px !important;">Payment required now :
-                                                            <span
-                                                                class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
-                                                                ? payAmount : paymentDetails.amountRequiredNow)|
-                                                                currency:'&#8377;'}}</span></span>
+                                                                *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' && selectedService.virtualServiceType === 'videoService'"></i>
+
+                                                        </div> -->
+                                                        <h5 class="text-center text-success text-capitalize service">
+                                                                <b>{{selectedService.name}}</b>
+                                                        </h5>
+                                                        <div class="" style="font-size: 1rem"
+                                                            *ngIf="selectedService.price && type != 'reschedule'">
+                                                            <p class="module-nomargin line-clamp no-margin"
+                                                                *ngIf="selectedService.description && !showmoreSpec"
+                                                                (click)="showSpec()">
+                                                                {{selectedService.description}}</p>
+                                                            <p *ngIf="showmoreSpec" (click)="showSpec()">
+                                                                {{selectedService.description}}</p>
+                                                        </div>
+                                                        <div class="">
+                                                            <div class="callingmode mgn-lt-10"
+                                                                *ngIf="selectedService && selectedService.serviceType==='virtualService' && type !== 'waitlistreschedule'">
+                                                                <div class="mgn-bt-10 mgn-up-5">
+                                                                    <div class=""
+                                                                        *ngFor="let mode of selectedService.virtualCallingModes;let i = index">
+                                                                        <div style="visibility: hidden;">
+                                                                            {{callingModesDisplayName[mode.callingMode]}}
+                                                                        </div>
+                                                                        <div class="cal-mod-instrct pre-check-title color-grey"
+                                                                            *ngIf="mode.callingMode">
+                                                                            {{mode.instructions}}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="prenotes mgn-bt-10"
+                                                                *ngIf="selectedService.preInfoEnabled">
+                                                                <div class="preinfo-title">
+                                                                    {{selectedService.preInfoTitle}}</div>
+                                                                <div>{{(readMore) ? selectedService.preInfoText :
+                                                                    selectedService.preInfoText | slice:0:200}}
+                                                                    <a class="changeitem pointer-cursor mgn-lt-5 mgn-rt-20 pull-right"
+                                                                        (click)="showText()"
+                                                                        *ngIf="selectedService.preInfoText.length > 200">
+                                                                        {{(readMore) ? 'less': 'more'}}</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="disply">
-                                                    <div class="textcenter"
-                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                        <span class="ser_price no-mgn-bt bold">Service Price : <span
-                                                                class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
-                                                                | currency:'&#8377;'}}</span></span><br>
-                                                        <span class="ser_price no-mgn-bt bold"
-                                                            style="padding: 20px !important;">Payment required now :
-                                                            <span
-                                                                class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
-                                                                ? payAmount : paymentDetails.amountRequiredNow)|
-                                                                currency:'&#8377;'}}</span></span>
+                                                <div class="p-0 font-weight-bold">
+                                                    <h6 class="text-capitalize"><b>Your Appointment Date </b></h6>
+                                                </div>
+                                                <div class="" *ngIf="queuejson && queuejson.length != 0 && !api_loading1">
+                                                    <div class="">
+                                                        <h2 class="font-weight-bold text-primary serv-time border-style">
+                                                            <span *ngIf="!isFuturedate"><b>Today, </b></span>
+                                                            <span *ngIf="isFuturedate">{{selectedDate | date:
+                                                                newDateFormat}},
+                                                            </span>
+                                                            <span>
+                                                                <b>{{selectedQTime}}</b>
+                                                            </span>
+                                                        </h2>
                                                     </div>
                                                 </div>
-                                                <br>
-                                                <div class="containerpayment "
-                                                    *ngIf="selectedService && selectedService.isPrePayment && paymentLength>0 && paymentDetails.amountRequiredNow > 0">
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="appointment-details-heading mt-5 px-5 py-3 font-weight-bold" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                <h4 class="text-capitalize">Payment Details</h4>
+                                            </div>
+
+
+
+                                                <div  *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">                                        
+                                                    <div class="web my-5">
+                                                        <!--<div class="textcenter" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">-->
+                                                        <div class="textcenter"
+                                                            *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                            
+                                                            <span class="ser_price no-mgn-bt bold">Service Price : <span
+                                                                    class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
+                                                                    | currency:'&#8377;'}}</span></span>
+                                                            <span class="ser_price no-mgn-bt bold"
+                                                                style="padding: 20px !important;">Payment required now :
+                                                                <span
+                                                                    class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
+                                                                    ? payAmount : paymentDetails.amountRequiredNow)|
+                                                                    currency:'&#8377;'}}</span></span>
+                                                        </div>
+                                                    </div>
+                
+                                                    <div class="disply my-5">
+                                                        <div class="textcenter"
+                                                            *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                            <span class="ser_price no-mgn-bt bold">Service Price : <span
+                                                                    class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
+                                                                    | currency:'&#8377;'}}</span></span><br>
+                                                            <span class="ser_price no-mgn-bt bold"
+                                                                style="padding: 20px !important;">Payment required now :
+                                                                <span
+                                                                    class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
+                                                                    ? payAmount : paymentDetails.amountRequiredNow)|
+                                                                    currency:'&#8377;'}}</span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="" *ngIf="selectedService && selectedService.isPrePayment && paymentLength>0 && paymentDetails.amountRequiredNow > 0">
                                                     <div class="jaldeecredit" *ngIf="jcashamount>0">
                                                         <mat-checkbox [(ngModel)]="checkJcash"
                                                             (change)="changeJcashUse($event)"></mat-checkbox>
@@ -1526,9 +1500,9 @@
                                                         *ngIf="jcashamount>0  && (checkJcash && jcashamount < paymentDetails.amountRequiredNow)">
                                                         Balance amount can be paid by other payment methods
                                                     </div>
-                                                    <div class="prepayment"
-                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
-                                                      ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
+                                                    <div class="prepayment" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
+                                                        ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
+                                                        
                                                         <button type="button" [class.disabled]="isClickedOnce"
                                                             (click)="!isClickedOnce && saveCheckin('checkin')"
                                                             id="stepThreeConfirmButton"
@@ -1536,86 +1510,86 @@
                                                             [disabled]="!checkPolicy && heartfulnessAccount||paymentBtnDisabled">
                                                             <ng-container
                                                                 *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
-                                                      ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
+                                                            ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
                                                                 Confirm {{settingsjson.showTokenId?'Token ':'Checkin'}}
                                                             </ng-container>
+                                                            
                                                         </button>
                                                     </div>
-                                                    <div class="col-md-12 col-xs-12 no-padding payment-mode-card-styles"
-                                                        *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                        <ng-container *ngIf="!shownonIndianModes">
+                                                    
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                     
+                                                    <div class="text-center mx-auto"  *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                        <ng-container *ngIf="!shownonIndianModes" class="text-center mx-auto">
                                                             <app-payment-modes [paymentModes]="indian_payment_modes"
                                                                 (modeSelected)="indian_payment_mode_onchange($event)">
                                                             </app-payment-modes>
                                                         </ng-container>
-                                                        <ng-container *ngIf="shownonIndianModes">
+                                                        <ng-container *ngIf="shownonIndianModes" class="text-center mx-auto">
                                                             <app-payment-modes [paymentModes]="non_indian_modes"
                                                                 (modeSelected)="non_indian_modes_onchange($event)">
                                                             </app-payment-modes>
                                                         </ng-container>
                                                     </div>
-                                                    <div class="mgn-up-20 col-md-12 col-xs-12 no-padding">
-                                                        <div class="col-md-12 txt-align-center pad_link"
-                                                            *ngIf="paymentmodes.internationalPay && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                            <span [class.disabled]="paymentBtnDisabled"
-                                                                (click)="togglepaymentMode()" class="pointer-cursor"><a
-                                                                    class="refund_policy">
-                                                                    <span
-                                                                        *ngIf="!shownonIndianModes && paymentmodes && paymentmodes.internationalPay">Non
-                                                                        Indian Payment ? Click
+                                                    <div class="clearfix"></div>
+                                                    <div class="card-payment-button">
+                                                        <div class="col-md-12">
+                
+                                                            <div class="txt-align-center pad_link"
+                                                                *ngIf="paymentmodes.internationalPay && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                                <span [class.disabled]="paymentBtnDisabled"
+                                                                    (click)="togglepaymentMode()"
+                                                                    class="pointer-cursor"><a
+                                                                        class="refund_policy">
+                                                                        <span *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non Indian Payment ? Click
                                                                         here</span>
-                                                                    <span
-                                                                        *ngIf="shownonIndianModes && paymentmodes && paymentmodes.indiaPay">Indian
-                                                                        Payment ? Click
-                                                                        here</span>
-                                                                </a></span>
-
-                                                        </div>
-
-
-                                                        <div class="cancelpolicy mgn-rt-5"
-                                                            *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                            <div class="pad_policy"
-                                                                *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                                <a data-toggle="modal" data-target="#exampleModal"
-                                                                    class="refund_policy">Cancellation Policy</a>
+                                                                        <span *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian Payment ? Click
+                                                                            here</span>
+                                                                    </a></span>
+                
+                                                            </div>
+                                    
+                                                    
+                                                            <div class="cancelpolicy mgn-rt-5"
+                                                                *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                                <div class="pad_policy"
+                                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                                    <a data-toggle="modal" data-target="#exampleModal"
+                                                                        class="refund_policy">Cancellation Policy</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="txt-align-center">
+                                                                <button type="button"
+                                                                    class=" next-button btn btn-primary font-weight-bold text-capitalize "
+                                                                    [class.disabled]="paymentBtnDisabled"
+                                                                    *ngIf="paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
+                                                                    (click)="!isClickedOnce && saveCheckin('checkin')">
+                                                                MaKe Payment
+                                                                </button>
                                                             </div>
                                                         </div>
-                                                        <div class="txt-align-center">
-                                                            <button type="button"
-                                                                class=" next-button btn btn-primary font-weight-bold text-uppercase "
-                                                                [class.disabled]="paymentBtnDisabled"
-                                                                *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                                (click)="!isClickedOnce && saveCheckin('checkin')">
-                                                                MaKe Payment
-                                                            </button>
-                                                        </div>
-
-                                                        <!-- modalbox -->
-                                                        <div class="modal fade" id="exampleModal" tabindex="-1"
-                                                            role="dialog" aria-labelledby="exampleModalLabel"
-                                                            aria-hidden="true">
-                                                            <app-refundpolicy></app-refundpolicy>
+                                                    </div>
+                
+                
+                                                    <div class="clearfix"></div>
+                                                    <div class="containerpayment" style="margin:20px;"
+                                                        *ngIf="selectedService && selectedService.isPrePayment==false && paymentLength==0|| (paymentDetails && paymentDetails.amountRequiredNow == 0)">
+                                                        <div class="prepayment-confirm">
+                                                            <button type="button" [class.disabled]="isClickedOnce"
+                                                                (click)="!isClickedOnce && saveCheckin('checkin')"
+                                                                id="stepThreeConfirmButton"
+                                                                class="next-button btn btn-primary font-weight-bold btn-1 px-12 py-4"
+                                                                [disabled]="!checkPolicy && heartfulnessAccount">
+            
+                                                                Confirm <span>{{settingsjson.showTokenId?'Token
+                                                                    ':'Checkin'}} </span></button>
+                
+                
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="containerpayment" style="margin:20px;"
-                                                    *ngIf="selectedService && selectedService.isPrePayment==false && paymentLength==0|| (paymentDetails && paymentDetails.amountRequiredNow == 0)">
-                                                    <div class="prepayment-confirm">
-                                                        <button type="button" [class.disabled]="isClickedOnce"
-                                                            (click)="!isClickedOnce && saveCheckin('checkin')"
-                                                            id="stepThreeConfirmButton"
-                                                            class="next-button btn btn-primary font-weight-bold  px-12 py-4"
-                                                            [disabled]="!checkPolicy && heartfulnessAccount">
-                                                            Confirm {{settingsjson.showTokenId?'Token
-                                                            ':'Checkin'}}</button>
-                                                    </div>
-                                                </div>
-                                                <!-- modalbox -->
-                                                <ng-container *ngIf="heartfulnessAccount">
-                                                    <app-privacy (approvePolicy)="policyApproved($event)">
-                                                    </app-privacy>
-                                                </ng-container>
                                             </div>
                                         </div>
                                     </div>
@@ -1625,6 +1599,41 @@
                     </div>
                 </div>
             </div>
+</section>
+
+<!-- Cancellation Policy Modal-->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog refundpol" role="document">
+        <div class="modal-content">
+            
+            <div class="modal-body pt-8 pb-0 refund_size">
+                <span>Note:</span> Jaldee is not responsible for the
+                transactions between Consumer and Provider.
+                <ul>
+                    <li>Consumers can cancel the booking anytime</li>
+                    <li>If the consumer cancels the appointment, 3% will
+                        be
+                        deducted from the amount(which includes Jaldee
+                        service charges and Online Gateway fees).</li>
+                    <li>Refund will be received directly to the
+                        consumer’s
+                        bank account after he/she cancels the future
+                        bookings.</li>
+                    <li>If the booking is cancelled on the date of
+                        booking,
+                        refund will not be processed automatically(i.e
+                        Consumer must inform the provider to initiate
+                        the
+                        refund)</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                    class="btn btn-light-primary font-weight-bold"
+                    data-dismiss="modal">Close</button>
+            </div>
         </div>
     </div>
-</section>
+</div>

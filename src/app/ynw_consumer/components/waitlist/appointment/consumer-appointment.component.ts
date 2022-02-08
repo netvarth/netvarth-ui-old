@@ -42,6 +42,8 @@ import { CustomerService } from '../../../../shared/services/customer.service';
 export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     paymentBtnDisabled = false;
     isClickedOnce = false;
+    showMoreAvailableSlots = false;
+    isClickedOnce = false;
     tooltipcls = '';
     add_member_cap = Messages.ADD_MEMBER_CAP;
     cancel_btn = Messages.CANCEL_BTN;
@@ -321,6 +323,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     commObj = {}
     waitlistForPrev: any = [];
     multipleMembers_allowed = false; // No multiple selection
+    date_pagination_date: any;
 
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -679,6 +682,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
+    showMoreTimeSlots()
+    {
+        this.showMoreAvailableSlots = !this.showMoreAvailableSlots;
+    }
+
     getAvailableSlotByLocationandService(locid, servid, pdate, accountid, type?) {
         this.subs.sink = this.shared_services.getSlotsByLocationServiceandDate(locid, servid, pdate, accountid)
             .subscribe(data => {
@@ -900,6 +908,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         // }
 
     }
+
+
+    changed_date_value(data)
+    {
+        this.date_pagination_date = data;
+        this.getAvailableSlotByLocationandService(this.sel_loc, this.selectedServiceId, this.date_pagination_date, this.account_id);
+    }
+
     rescheduleAppointment() {
         this.apptdisable = true;
         const post_Data = {
@@ -1925,8 +1941,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         return length;
     }
     actionCompleted() {
-        if (this.action === 'slotChange') {
-            this.selectedDate = this.sel_checkindate;
+        
+        if (this.action !== 'members' && this.action !== 'addmember' && this.action !== 'note' && this.action !== 'slotChange' && this.action !== 'attachment' && this.action !== 'coupons') {
+            this.selectedDate = this.date_pagination_date;
             this.checkFutureorToday();
             this.selectedApptTime = this.apptTime;
             this.waitlist_for[0].apptTime = this.apptTime['time'];

@@ -276,6 +276,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     commObj = {}
     waitlistForPrev: any = [];
     selectedTime: any;
+    date_pagination_date: any;
 
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -440,7 +441,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         return this.sharedFunctionobj.isNumericSign(evt);
     }
 
+    changed_date_value(data)
+    {
+        this.date_pagination_date = data;
+        this.getQueuesbyLocationandServiceId(this.sel_loc, this.selectedService, this.date_pagination_date, this.account_id);
 
+    }
 
     langSel(sel) {
         if (this.languageSelected.length > 0) {
@@ -2152,11 +2158,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         return length;
     }
     actionCompleted() {
-        if (this.action === 'timeChange') {
+        if (this.action !== 'members' && this.action !== 'addmember' && this.action !== 'note' && this.action !== 'slotChange' && this.action !== 'attachment' && this.action !== 'coupons') {
             if (this.queuejson[this.sel_queue_indx]) {
                 this.selectedQTime = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
             }
-            this.selectedDate = this.sel_checkindate;
+            this.selectedDate = this.date_pagination_date;
             this.checkFutureorToday();
             this.personsAhead = this.sel_queue_personaahead;
             this.waitingTime = this.sel_queue_waitingmins;

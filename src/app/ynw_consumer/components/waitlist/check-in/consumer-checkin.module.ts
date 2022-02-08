@@ -21,6 +21,7 @@ import { CustomerService } from '../../../../shared/services/customer.service';
 import { MembersModule } from '../../../modules/members/members.module';
 import { CommunicationsModule } from '../../../modules/communications/communications.module';
 import { PaymentModesModule } from '../../../../shared/modules/payment-modes/payment-modes.module';
+import { DatePaginationComponent } from './date-pagination/date-pagination.component';
 const routes: Routes = [
     { path: '', component: ConsumerCheckinComponent},
     { path: 'track/:id', loadChildren: ()=> import('./livetrack/livetrack.module').then(m=>m.ConsumerLiveTrackModule) },
@@ -29,7 +30,8 @@ const routes: Routes = [
 ];
 @NgModule({
     declarations: [
-        ConsumerCheckinComponent
+        ConsumerCheckinComponent,
+        DatePaginationComponent
     ],
     imports: [
         CommonModule,
