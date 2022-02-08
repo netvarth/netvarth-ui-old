@@ -141,7 +141,7 @@ export class CheckYourStatusComponent implements OnInit, OnDestroy {
           appx_ret.time = waitlist.serviceTime;
         }
         const waitlist_date = new Date(waitlist.date);
-        const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const today = new Date(todaydt);
         today.setHours(0, 0, 0, 0);
         waitlist_date.setHours(0, 0, 0, 0);
@@ -187,7 +187,7 @@ export class CheckYourStatusComponent implements OnInit, OnDestroy {
     if (waitlist.apptStatus !== 'Cancelled' && waitlist.apptStatus !== 'Rejected') {
       appx_ret.caption = 'Appointment for'; // 'Check-In Time';
       const waitlist_date = new Date(waitlist.appmtDate);
-      const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+      const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
       const today = new Date(todaydt);
       today.setHours(0, 0, 0, 0);
       waitlist_date.setHours(0, 0, 0, 0);
@@ -258,7 +258,7 @@ export class CheckYourStatusComponent implements OnInit, OnDestroy {
           this.foundDetails = true;
           this.type = 'wl';
           this.api_loading = false;
-          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
           const today = new Date(todaydt);
           const waitlist_date = new Date(wlInfo.date);
           today.setHours(0, 0, 0, 0);
@@ -346,7 +346,7 @@ export class CheckYourStatusComponent implements OnInit, OnDestroy {
           this.api_loading = false;
           this.type = 'appt';
           const wlInfo = data;
-          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
           const today = new Date(todaydt);
           const waitlist_date = new Date(wlInfo.date);
           today.setHours(0, 0, 0, 0);

@@ -71,6 +71,7 @@ export class FolderFilesComponent implements OnInit {
   imgCaptions: any = [];
   @ViewChild('closebutton') closebutton;
   @ViewChild('locclosebutton') locclosebutton;
+  @ViewChild('imagefile1') flUploadInput:HTMLInputElement;
   filter = {
     fileSize: '',
     fileName: '',
@@ -435,8 +436,7 @@ export class FolderFilesComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'uploadfilecomponentclass'],
       disableClose: true,
       data: {
-        file: file,
-
+        file: file
       }
     });
     this.fileviewdialogRef.afterClosed().subscribe(result => {
@@ -451,7 +451,7 @@ export class FolderFilesComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
-        message: 'Do you really want to delete ' + fileName + ' ?'
+        message: 'Do you really want to delete this file?'
       }
     });
     this.fileviewdialogRef.afterClosed().subscribe(result => {
@@ -460,6 +460,9 @@ export class FolderFilesComponent implements OnInit {
           this.provider_servicesobj.deleteAttachment(id).subscribe(
             (data: any) => {
               this.snackbarService.openSnackBar('Deleted Successfully');
+              this.selectedMessage.files = [];
+              this.selectedMessage.base64 = [];
+              this.selectedMessage.caption = [];
               this.getfiles();
             });
         }
@@ -560,6 +563,7 @@ export class FolderFilesComponent implements OnInit {
               base64: [],
               caption: []
             }
+            this.flUploadInput.value = '';
             this.getfiles();
             this.apiloading = false;
           },
@@ -603,10 +607,11 @@ export class FolderFilesComponent implements OnInit {
             this.imgCaptions[i] = '';
             console.log("Caption: ", this.imgCaptions[i])
           };
-          reader.readAsDataURL(file);
+          reader.readAsDataURL(file);          
           this.action = 'attachment';
         }
       }
+      this.flUploadInput.value = '';
       // if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0 && input.length > 0) {
         this.modal.nativeElement.click();
      // }
@@ -645,5 +650,10 @@ export class FolderFilesComponent implements OnInit {
     this.selectedMessage.base64.splice(i, 1);
     this.selectedMessage.caption.splice(i, 1);
     this.imgCaptions[i] = '';
+  }
+
+  inputfileClicked() {
+    this.flUploadInput.value = '';
+    this.flUploadInput.click();
   }
 }

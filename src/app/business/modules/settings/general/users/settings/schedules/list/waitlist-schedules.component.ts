@@ -17,6 +17,7 @@ import { WordProcessor } from '../../../../../../../../shared/services/word-proc
 import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../../../../../../../shared/services/local-storage.service';
 import { JaldeeTimeService } from '../../../../../../../../shared/services/jaldee-time-service';
+import { DateTimeProcessor } from '../../../../../../../../shared/services/datetime-processor.service';
 
 @Component({
     selector: 'app-userwaitlist-schedules',
@@ -111,6 +112,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
         private activatedRoot: ActivatedRoute,
         private dialog: MatDialog,
         private jaldeeTimeService: JaldeeTimeService,
+        private dateTimeProcessor: DateTimeProcessor,
         private fb: FormBuilder) {
         this.activatedRoot.params.subscribe(params => {
             this.userId = params.id;
@@ -141,7 +143,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
         if (this.action !== 'edit') {
             if (this.fromDateCaption === 'Now') {
                 const server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-                const today = server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+                const today = server_date.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
                 curtime['hour'] = parseInt(moment(new Date(today), ['hh:mm A']).format('HH'), 10);
                 curtime['minutes'] = parseInt(moment(new Date(today), ['hh:mm A']).format('mm'), 10);
             } else {
@@ -288,7 +290,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
                         const activeQs = [];
                         allQs = data;
                         const server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-                        const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+                        const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
                         const today = new Date(todaydt);
                         const dd = today.getDate();
                         const mm = today.getMonth() + 1;
@@ -522,7 +524,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
      */
     onSubmit(instantQ) {
         const server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-        const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const today = new Date(todaydt);
         const dd = today.getDate();
         const mm = today.getMonth() + 1; // January is 0!
@@ -530,7 +532,7 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
         let sTime = instantQ.dstart_time;
         if (isNaN(instantQ.dstart_time.hour)) {
             const curtime = {};
-            // const todaydt1 = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+            // const todaydt1 = new Date(server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
             const toda = new Date(todaydt);
             const today1 = moment(toda).format();
             curtime['hour'] = parseInt(moment(new Date(today1), ['hh:mm A']).format('HH'), 10);
@@ -903,10 +905,10 @@ export class WaitlistuserSchedulesComponent implements OnInit, OnDestroy {
             this.todayQLoading[index] = true;
         }
         const server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-       // const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+       // const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         // const today = new Date(todaydt);
       //  const today = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-      const server = server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+      const server = server_date.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
       const serverdate = moment(server).format();
       const servdate = new Date(serverdate);
       const today = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
