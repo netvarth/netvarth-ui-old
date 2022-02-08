@@ -43,7 +43,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     paymentBtnDisabled = false;
     isClickedOnce = false;
     showMoreAvailableSlots = false;
-    isClickedOnce = false;
     tooltipcls = '';
     add_member_cap = Messages.ADD_MEMBER_CAP;
     cancel_btn = Messages.CANCEL_BTN;
