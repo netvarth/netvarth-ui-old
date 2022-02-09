@@ -46,11 +46,12 @@ export class CheckinServicesComponent implements OnInit, OnChanges {
   checkAvailableSlots(actionObj) {
     this.availabilityDialogref = this.dialog.open(CheckavailabilityComponent, {
       width: '100%',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'availability-container', this.templateJson['theme']],
+      panelClass: ['loginmainclass', 'popup-class', this.templateJson['theme']],
       height: 'auto',
       data: {
         alldetails: actionObj,
-        apptSettingsJson: this.apptSettings
+        apptSettingsJson: this.apptSettings,
+        domain: this.businessProfile.serviceSector.domain
       }
     });
     this.availabilityDialogref.afterClosed().subscribe(result => {

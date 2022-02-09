@@ -1947,11 +1947,12 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
   opencheckavail(actionObj) {
     this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
       width: '100%',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'availability-container', ''],
+      panelClass: ['loginmainclass', 'popup-class'],
       height: 'auto',
       data: {
         alldetails: actionObj,
         apptSettingsJson: this.apptSettingsJson,
+        domain: this.businessjson.serviceSector.domain
       }
     });
     this.checkavailabilitydialogref.afterClosed().subscribe(result => {
