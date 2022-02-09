@@ -26,6 +26,7 @@ import { MembersModule } from '../../../../ynw_consumer/modules/members/members.
 import { CustomerService } from '../../../../shared/services/customer.service';
 import { CommunicationsModule } from '../../../../ynw_consumer/modules/communications/communications.module';
 import { PaymentModesModule } from '../../../../shared/modules/payment-modes/payment-modes.module';
+import { AppointmentDatePaginationComponent } from './appointment-date-pagination/appointment-date-pagination.component';
 const routes: Routes = [
     { path: '', component: ConsumerAppointmentComponent},
     { path: 'track/:id', loadChildren:()=> import('./livetrack/livetrack.module').then(m=>m.ConsumerApptLiveTrackModule) },
@@ -35,7 +36,8 @@ const routes: Routes = [
 ];
 @NgModule({
     declarations: [
-        ConsumerAppointmentComponent
+        ConsumerAppointmentComponent,
+        AppointmentDatePaginationComponent
     ],
     imports: [
         FormMessageDisplayModule,

@@ -19,9 +19,11 @@ export class MaintenanceComponent implements OnInit {
   }
   goHome() {
     this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+    }, 500);
     this.shared_services.getSystemDate().subscribe(
       ()=>{
-        this.loading = false;
         this.lStorageService.setitemonLocalStorage('maintainance',true);
         // this.router.navigate(['/']).then(
         //   ()=> {
@@ -35,10 +37,11 @@ export class MaintenanceComponent implements OnInit {
               window.location.href = '';
             }
           }, (error)=> {
-            this.loading = false;
+            console.log("Error:",error);
           }
         // );
       // }
     )
+
   }
 }

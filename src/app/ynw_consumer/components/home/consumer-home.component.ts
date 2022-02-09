@@ -657,7 +657,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             }
           }
 
-          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
           const today = new Date(todaydt);
           let i = 0;
           let retval;
@@ -729,7 +729,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           appx_ret.time = waitlist.serviceTime;
         }
         const waitlist_date = new Date(waitlist.date);
-        const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const today = new Date(todaydt);
         today.setHours(0, 0, 0, 0);
         waitlist_date.setHours(0, 0, 0, 0);
@@ -779,7 +779,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.appointments = data;
-          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
           const today = new Date(todaydt);
           let i = 0;
           let retval;
@@ -843,7 +843,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       appx_ret.caption = 'Appointment for'; // 'Check-In Time';
       appx_ret.time = appointment.appmtTime;
       const waitlist_date = new Date(appointment.appmtDate);
-      const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+      const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
       const today = new Date(todaydt);
       today.setHours(0, 0, 0, 0);
       waitlist_date.setHours(0, 0, 0, 0);
@@ -975,7 +975,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         .subscribe(data => {
           this.appttime_arr = data;
           let locindx;
-          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
           const today = new Date(todaydt);
           const dd = today.getDate();
           const mm = today.getMonth() + 1; // January is 0!
@@ -1028,7 +1028,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           if (waitlisttime_arr === '"Account doesn\'t exist"') {
             waitlisttime_arr = [];
           }
-          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
           const today = new Date(todaydt);
           const dd = today.getDate();
           const mm = today.getMonth() + 1; // January is 0!
@@ -2171,7 +2171,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.total_future_order = [];
     this.futureOrderslst = [];
     this.futureOrderslst_more = [];
-    // const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    // const server = this.server_date.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     // const serverdate = moment(server).format();
     // const servdate = new Date(serverdate);
     // this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));

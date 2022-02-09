@@ -15,7 +15,8 @@ import { CommunicationService } from '../../services/communication-service';
 
 @Component({
   'selector': 'app-donations',
-  'templateUrl': './donations.component.html'
+  templateUrl: './donations.component.html',
+  styleUrls: ['./donations.component.css']
 })
 export class DonationsComponent implements OnInit {
   filter_sidebar = false;

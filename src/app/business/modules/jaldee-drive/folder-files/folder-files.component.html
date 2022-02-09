@@ -90,7 +90,7 @@
         <button type="button" class="pull-left p-button-rounded p-ripple p-button p-component mx-2 my-3 p-1">
           <a style="color: white !important;" #modal data-toggle="modal" data-target="#exampleModalCenter">
           </a>
-          <a style="color: white !important;" class="pointer-cursor mr-1 p-2" (click)="imagefile1.click();"><input
+          <a style="color: white !important;" class="pointer-cursor mr-1 p-2" (click)="$event.target.value=null;imagefile1.click();"><input
               #imagefile1 type="file" accept="/*;capture=camera" style="display:none;" multiple
               (change)="filesSelected($event, 'close')"><i style="color: white !important;" class="fa fa-plus mgn-rt-5"
               aria-hidden="true"></i> Upload File </a>

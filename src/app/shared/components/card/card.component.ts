@@ -1,5 +1,4 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
@@ -248,7 +247,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         return this.dateTimeProcessor.convertMinutesToHourMinute(min);
     }
     getAvailibilityForCheckin(date, serviceTime) {
-        const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const today = new Date(todaydt);
         const dd = today.getDate();
         const mm = today.getMonth() + 1; // January is 0!
@@ -274,7 +273,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         }
     }
     getAvailabilityforAppt(date, time) {
-        const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const today = new Date(todaydt);
         const dd = today.getDate();
         const mm = today.getMonth() + 1; // January is 0!
