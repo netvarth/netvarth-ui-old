@@ -139,6 +139,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
     isPayment: boolean;
     indian_payment_modes: any;
     non_indian_modes: any;
+    provider_label = ''
     constructor(
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
@@ -161,6 +162,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
         private paytmService: PaytmService,
         private lStorageService: LocalStorageService,
     ) {
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.subs.sink = this.activated_route.queryParams.subscribe(
             params => {
                 console.log(params);
@@ -962,7 +964,9 @@ export class OrderBillComponent implements OnInit, OnDestroy {
      * Cash Button Pressed
      */
     cashPayment() {
-        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CASH_PAYMENT'));
+        // this.wordProcessor.getProjectMesssages('CASH_PAYMENT')
+        this.snackbarService.openSnackBar(`Visit ${this.provider_label} to ${this.selected_payment_mode}
+        `);
         setTimeout(()=>{
             this.ngZone.run(() => this.router.navigate(['consumer'] ));
             console.log('redirect to consumer');
