@@ -649,7 +649,7 @@ export class ProviderCheckinComponent implements OnInit {
         if (this.showtoken) {
             this.heading = 'New Token';
         } else {
-            this.heading = 'New Check-in';
+            this.heading = 'New Token';
         }
         const _this = this;
         this.showCheckin = true;

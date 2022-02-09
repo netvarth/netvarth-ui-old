@@ -849,6 +849,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     const imgLength = this.image_list_popup.length > 5 ? 5 : this.image_list_popup.length;
     for (let i = 0; i < imgLength; i++) {
       this.galleryenabledArr.push(i);
+      console.log("......",this.galleryenabledArr)
     }
   }
 
@@ -1441,6 +1442,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
   }
   openImageModalRow(image: Image) {
+    console.log("lllllll",image)
     const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }

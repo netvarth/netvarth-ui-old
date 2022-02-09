@@ -155,6 +155,7 @@ export class ProviderLoginComponent implements OnInit {
   }
 
   onSubmit(data) {
+    // console.log("onsubmit function")
     this.api_loading = true;
     const pN = data.emailId.trim();
     const pW = data.password;
@@ -191,9 +192,11 @@ export class ProviderLoginComponent implements OnInit {
             if (this.qParams['src'] && this.lStorageService.getitemfromLocalStorage(this.qParams['src'])) {
               this.router.navigateByUrl(this.lStorageService.getitemfromLocalStorage(this.qParams['src']));
             } else {
+              console.log("1 provider")
               this.router.navigate(['/provider']);
             }
           } else {
+            // console.log("2 provider")
             this.router.navigate(['/provider']);
           }
         },
