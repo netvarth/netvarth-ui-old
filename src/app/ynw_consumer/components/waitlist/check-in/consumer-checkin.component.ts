@@ -1825,9 +1825,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     goBack(type?) {
         if (type) {
+          
             if ((this.tele_srv_stat !== 'true' && this.bookStep === 1) || (this.tele_srv_stat === 'true' && this.bookStep === 0)) {
                 this.location.back();
             } else {
+                if(this.bookStep === 3){
+                    this.bookStep--;
+                }
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.bookStep--;
                 }
