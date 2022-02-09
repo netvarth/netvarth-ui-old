@@ -375,8 +375,8 @@ export class SharedServices {
     const url = 'provider/alerts/count' + retparam;
     return this.servicemeta.httpGet(url);
   }
-  getAuditFilterlogs(ackStatus, sdate, edate, startfrom, limit) {
-    let retparam = this.buildAlertsParams(ackStatus, sdate, edate);
+  getAuditFilterlogs( sdate, edate, startfrom, limit) {
+    let retparam = this.buildAuditsParams( sdate, edate);
     if (startfrom !== '') {
       if (retparam !== '') {
         retparam += '&';
@@ -395,15 +395,52 @@ export class SharedServices {
     const url = 'provider/auditlogs' + retparam;
     return this.servicemeta.httpGet(url);
   }
-  getAuditFilterlogsTotalCnt(ackStatus, sdate, edate) {
-    let retparam = this.buildAlertsParams(ackStatus, sdate, edate);
+  getAuditFilterlogsTotalCnt( sdate, edate) {
+    let retparam = this.buildAuditsParams(sdate, edate);
     if (retparam !== '') {
       retparam = '?' + retparam;
     }
     const url = 'provider/auditlogs/count' + retparam;
     return this.servicemeta.httpGet(url);
   }
-  buildAlertsParams(ackStatus, sdate, edate) {
+  buildAuditsParams(sdate, edate) {
+    let param = '';
+    // if (ackStatus === 'true') {
+    //   param += 'ackStatus-eq=true';
+    // } else if (ackStatus === 'false') {
+    //   if (ackStatus === 'false') {
+    //     param += 'ackStatus-eq=false';
+    //   }
+    // } else if (ackStatus === 'true,false') {
+    //   param += 'ackStatus-eq=false,true';
+    // }
+    /*if (subcat !== '') {
+      if (param !== '') {
+        param += '&';
+      }
+      param += 'subCategory-eq=' + subcat;
+    }
+    if (action !== '') {
+      if (param !== '') {
+        param += '&';
+      }
+      param += 'action-eq=' + action;
+    }*/
+    if (sdate && sdate !== '') {
+      if (param !== '') {
+        param += '&';
+      }
+      param += 'createdDate-ge=' + sdate;
+    }
+    if (edate && edate !== '') {
+      if (param !== '') {
+        param += '&';
+      }
+      param += 'createdDate-le=' + edate;
+    }
+    return param;
+  }
+  buildAlertsParams(ackStatus,sdate, edate) {
     let param = '';
     if (ackStatus === 'true') {
       param += 'ackStatus-eq=true';

@@ -108,6 +108,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
     this.subs.sink = this.sharedServices.getAppointmentByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
       (data) => {
         this.appt = data;
+        console.log("Deatils:",this.appt)
         if (this.appt.questionnaires && this.appt.questionnaires.length > 0) {
           this.questionnaires = this.appt.questionnaires;
         }

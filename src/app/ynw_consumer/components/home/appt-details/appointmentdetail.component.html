@@ -83,6 +83,11 @@
                                                 <span class="item-label-val">{{appt.countryCode}}
                                                     {{appt.phoneNumber}}</span>
                                             </div>
+                                            <div class="each-item">
+                                                <span class="item-head">Email</span>
+                                                <span class="item-label-val">{{appt.appmtFor[0].email}}
+                                                    </span>
+                                            </div>
                                             <div class="each-item"
                                                 *ngIf="appt.service.serviceType === 'virtualService'&&appt.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                 <span class="item-head">WhatsApp #</span>

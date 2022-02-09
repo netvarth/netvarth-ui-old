@@ -87,13 +87,13 @@
                                     *ngIf="servicedetails && !servicedetails.servicegallery && servicedetails.serviceType == 'virtualService'">
                                     <i class="fa phon-icon "
                                         *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                    <i class="fa meet-icon" style="margin: auto; margin-bottom: auto;"
+                                    <i class="fa meet-icon" style="background: #1E4079 !important;"
                                         *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                    <i class="fa zoom-icon" style="margin: auto; margin-bottom: auto;"
+                                    <i class="fa zoom-icon" 
                                         *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                    <i class="fa wtsapaud-icon" style="margin-top: auto; margin-bottom: auto;"
+                                    <i class="fa wtsapaud-icon" style="background: #1E4079 !important;"
                                         *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'audioService'"></i>
-                                    <i class="fa wtsapvid-icon" style="margin-top: auto; margin-bottom: auto;"
+                                    <i class="fa wtsapvid-icon" style="background: #1E4079 !important;"
                                         *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'videoService'"></i>
                                     <i class="fa jaldeevideo-icon"
                                         *ngIf="servicedetails.virtualCallingModes  && servicedetails.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
@@ -126,8 +126,13 @@
                                 <h5 class="line-clamp-ln2 mgn-bt-5">
                                     {{servicename | capitalizeFirst}}
                                 </h5>
-
+                                
                             </div>
+                            <!-- <div *ngIf="servicedetails.serviceType !== 'virtualService'" style="margin-left: 0px;" class="col-md-10 col-xs-9 col-sm-9 col-lg-11 pointer-cursor service-head-cont">
+                                <h5 class="line-clamp-ln2 mgn-bt-5">
+                                    {{servicename | capitalizeFirst}}
+                                </h5>
+                            </div> -->
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 description" *ngIf="servicedetails && servicedetails.description">
                                 {{servicedetails.description}}

@@ -1320,13 +1320,15 @@ ul.service-ul li {
     box-shadow: 0 4px 8px rgb(0 0 0 / 20%), 0 6px 20px rgb(0 0 0 / 19%);
     padding: 5px;
     border-radius: 50%;
-    background: white;
+    background: #ffff;
+    margin-top: auto !important;
+    margin-bottom: auto !important;
 }
 .card-inner-img-cont {
     height: 100%;
 }
 .card-outer-cont {
-  height: 85px !important;
+  height: 88px !important;
   display: table;
 }
 .service-head-cont,.card-inner-img-cont {
