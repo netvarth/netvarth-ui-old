@@ -7,9 +7,9 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ProviderServices } from '../../../services/provider-services.service';
-import { projectConstants } from '../../../../app.component';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 @Component({
     selector: 'app-instantQueue',
@@ -48,6 +48,7 @@ export class InstantQueueComponent implements OnInit {
         private provider_services: ProviderServices,
         private snackbarService: SnackbarService,
         public fed_service: FormMessageDisplayService,
+        private dateTimeProcessor: DateTimeProcessor
     ) {
         this.location = data.location;
         this.userId = data.userId;
@@ -107,7 +108,7 @@ export class InstantQueueComponent implements OnInit {
         const curtime = {};
         if (this.fromDateCaption === 'Now') {
             const server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-            // const today = server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+            // const today = server_date.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
             // curtime['hour'] = parseInt(moment(server_date, ['hh:mm A']).format('HH'));
             // curtime['minutes'] = parseInt(moment(server_date, ['hh:mm A']).format('mm'));
             curtime['hour'] = parseInt(moment(server_date).format('HH'));
@@ -167,7 +168,7 @@ export class InstantQueueComponent implements OnInit {
     onSubmit(instantQ) {
         this.resetApiErrors();
         const server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-        const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const todaydt = new Date(server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const today = new Date(todaydt);
         const dd = today.getDate();
         const mm = today.getMonth() + 1; // January is 0!

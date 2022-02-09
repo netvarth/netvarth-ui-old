@@ -25,6 +25,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { SubSink } from '../../../../../../node_modules/subsink';
 import { PaytmService } from '../../../../shared/services/paytm.service';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 @Component({
     selector: 'app-consumer-donation',
     templateUrl: './consumer-donation.component.html',
@@ -269,6 +270,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         private s3Processor: S3UrlProcessor,
         private paytmService: PaytmService,
         private cdRef: ChangeDetectorRef,
+        private dateTimeProcessor: DateTimeProcessor,
         private ngZone: NgZone) {
         this.subs.sink = this.route.queryParams.subscribe(
             params => {
@@ -322,7 +324,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.getProfile();
         this.gets3curl();
         this.getFamilyMembers();
-        this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         this.today = new Date(this.today);
         const dd = this.today.getDate();
         const mm = this.today.getMonth() + 1; // January is 0!
@@ -344,7 +346,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
         this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
         // this.minDate = this.todaydate;
-        // const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        // const day = new Date(this.sel_checkindate).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         // const ddd = new Date(day);
         // this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
         // this.hold_sel_checkindate = this.sel_checkindate;

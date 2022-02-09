@@ -57,7 +57,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
   queuejson: any = [];
   sel_ser;
   sel_ser_det: any = [];
-  // sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+  // sel_checkindate = moment(new Date().toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
   sel_checkindate;
   sortBy = 'sort_token';
   check_in_list: any = [];

@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { ConsumerServices } from '../../services/consumer-services.service';
-import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -220,7 +219,7 @@ export class MyfavouritesComponent implements OnInit, OnDestroy {
           if (waitlisttime_arr === '"Account doesn\'t exist"') {
             waitlisttime_arr = [];
           }
-          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
           const today = new Date(todaydt);
           const dd = today.getDate();
           const mm = today.getMonth() + 1; // January is 0!
@@ -317,7 +316,7 @@ export class MyfavouritesComponent implements OnInit, OnDestroy {
         .subscribe(data => {
           this.appttime_arr = data;
           let locindx;
-          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
           const today = new Date(todaydt);
           const dd = today.getDate();
           const mm = today.getMonth() + 1; // January is 0!
