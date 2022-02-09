@@ -334,7 +334,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       .subscribe(
         data => {
           this.waitlist_notes = data;
-          console.log(this.waitlist_notes,';;;;;;;;;;;;')
+          // console.log(this.waitlist_notes,';;;;;;;;;;;;')
         },
         () => {
           //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
@@ -404,8 +404,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.notedialogRef.afterClosed().subscribe(result => {
       console.log("result ..",result)
       if (result === 'reloadlist') {
-        // this.getWaitlistNotes();
-        console.log("dialog box losed")
+        console.log("dialog box losed",this.waitlist_data.ynwUuid)
         this.getWaitlistNotes(this.waitlist_data.ynwUuid);
 
       }
@@ -658,11 +657,15 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         checkinData: waitlist,
         multiSelection: this.multiSelection,
         timetype: this.timetype,
-        NoViewDetail: 'true'
+        NoViewDetail: 'true',
+        component:'fromproviderwaitlist'
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
       // console.log("data....",data);
+      if(data) {
+        this.addProviderNote(data)
+      }
       this.getProviderSettings();
     });
   }

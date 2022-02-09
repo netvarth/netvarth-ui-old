@@ -121,7 +121,8 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
           //  this.provider_services.getProviderAppointmentNotes(this.checkin_id)
 
             setTimeout(() => {
-              console.log("enter123")
+              // console.log("enter123")
+              
               this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
           },
