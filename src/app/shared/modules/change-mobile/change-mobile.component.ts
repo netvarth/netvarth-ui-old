@@ -47,6 +47,7 @@ export class ChangeMobileComponent implements OnInit {
   step = 1;
   curtype;
   usertype;
+  countrycodesymbol='+'
   submit_data: any = {};
   accountId: any;
   customId: any;
@@ -124,12 +125,20 @@ export class ChangeMobileComponent implements OnInit {
         error => { ob.api_error = this.wordProcessor.getProjectErrorMesssages(error); }
       );
   }
+  public bothnumberandcountrycode;
   onSubmit(submit_data) {
     console.log(submit_data.countryCode + submit_data.phonenumber);
+
     if (!submit_data.phonenumber) { return false; }
     if (!submit_data.countryCode) { return false; }
+    if(submit_data.countryCode[0]!='+') {
+      this.bothnumberandcountrycode='+'+submit_data.countryCode + submit_data.phonenumber;
+    }
+    else {
+      this.bothnumberandcountrycode=submit_data.countryCode + submit_data.phonenumber
+    }
     this.resetApiErrors();
-    if (isValidNumber(submit_data.countryCode + submit_data.phonenumber)) {
+    if (isValidNumber(this.bothnumberandcountrycode)) {
       this.shared_services.verifyNewPhone(submit_data.phonenumber, this.shared_functions.isBusinessOwner('returntyp'), submit_data.countryCode)
         .subscribe(
           () => {

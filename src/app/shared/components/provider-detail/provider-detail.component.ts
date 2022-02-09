@@ -822,6 +822,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.galleryenabledArr = []; // For showing gallery
     this.image_list_popup = [];
     this.tempgalleryjson = res;
+    console.log("tempgallery....",this.tempgalleryjson)
     if (this.tempgalleryjson.length > 5) {
       this.extra_img_count = this.tempgalleryjson.length - 5;
     }
@@ -836,6 +837,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     if (this.galleryjson.length > 0) {
       this.galleryExists = true;
       for (let i = 0; i < this.galleryjson.length; i++) {
+        console.log("galerryyyyyyyyyyyyyyy",this.galleryjson);
         const imgobj = new Image(
           i,
           { // modal
