@@ -13,7 +13,7 @@
         <app-common-innerloading-spinner></app-common-innerloading-spinner>
     </div>
     <div class="row my-5" *ngIf="questionnaireLoaded">
-        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch">  
+        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch desktop-only">  
             <div class="card shadow">
                 <div class="provider-profile-image text-center m-5">
                     <img src="{{businessjson.logo.url}}" width="120px" height="120px" alt="Provider Profile Image" class="rounded-circle shadow-sm">
@@ -43,9 +43,10 @@
                                             <div class="">
                                                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10"
                                                     *ngIf="hideTokenFor">
-                                                    <div class="appointment-details-heading col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 p-3 pb-2 text-capitalize">
+                                                    <div class="text-primary text-center m-auto text-capitalize col-md-12 col-xs-12 col-sm-12 pt-2">
                                                         <h5><b>{{showCheckinButtonCaption()}} Details</b></h5>
                                                     </div>
+                                                    <div class="clearfix"></div><hr>
                                                     <div class="mt-5 text-capitalize">
                                                         <div class="m-auto"
                                                             *ngIf="selectedServiceId || type == 'waitlistreschedule'">
@@ -111,7 +112,7 @@
                                                 </div>
                                             </div>
                                             
-                                            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12" style="overflow: auto!important;">
+                                            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding" style="overflow: auto!important;overflow-x: hidden!important;">
                                                 <form [formGroup]="virtualForm"
                                                     class="login-form custom-login-form consumer-join-component virtual-fields"
                                                     [ngClass]="theme?theme:''" novalidate>
@@ -126,20 +127,20 @@
                                                                         <mat-radio-group formControlName="serviceFor"
                                                                             class="mgn-up-5 userGroup m-0 p-2"
                                                                             (change)="onServiceForChange($event.value)">
-                                                                            <mat-radio-button class="shadow-sm m-2 col-md-3 col-lg-3 col-sm-12 col-xs-12"
+                                                                            <mat-radio-button class="col-md-3 col-lg-3 col-sm-12 col-xs-12"
                                                                                 [value]="parentCustomer.id">
                                                                                 {{parentCustomer.userProfile.firstName}}
                                                                                 {{parentCustomer.userProfile.lastName}}
                                                                             </mat-radio-button>
         
-                                                                            <mat-radio-button class="shadow-sm m-2 flx col-md-3 col-lg-3 col-sm-12 col-xs-12"
+                                                                            <mat-radio-button class="flx col-md-3 col-lg-3 col-sm-12 col-xs-12"
                                                                                 [value]="member.user"
                                                                                 *ngFor="let member of familyMembers">
                                                                                 {{member.userProfile.firstName}}
                                                                                 &nbsp;
                                                                                 {{member.userProfile.lastName}}
                                                                             </mat-radio-button>
-                                                                            <mat-radio-button value="new_member" class="shadow-sm m-2 col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                                                                            <mat-radio-button value="new_member" class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
                                                                                 Someone else
                                                                             </mat-radio-button>
                                                                         </mat-radio-group>
@@ -153,26 +154,25 @@
                                                                         style="font-size: 0.75rem !important; display: flex !important;justify-content: left;">
                                                                         Please provide basic information about the
                                                                         &nbsp;
-                                                                        <span
-                                                                            style="margin-right: 5px;padding-right: 5px;">{{consumer_label}}</span>
+                                                                        <span style="margin-right: 5px;padding-right: 5px;">{{consumer_label}}</span>
                                                                     </div>
                                                                     <div class="row">
-                                                                        <div class="form-group"
+                                                                        <div class="form-group col-md-6 col-lg-6 col-sm-12 col-xs-12"
                                                                         *ngIf="virtualForm.get('serviceFor').value==='new_member'">
                                                                         <label class="col-form-label"
                                                                             for="firstName">First Name <span class="red">*</span></label>
                                                                         <input placeholder="Enter your first name"
-                                                                            class="form-control" style="width:50%"
+                                                                            class="form-control"
                                                                             formControlName="firstName"
                                                                             [ngStyle]="{'background-color': bgColor}">
                                                                         </div>
-                                                                        <div class="form-group"
+                                                                        <div class="form-group col-md-6 col-lg-6 col-sm-12 col-xs-12"
                                                                             *ngIf="virtualForm.get('serviceFor').value==='new_member'">
                                                                             <label class="col-form-label"
                                                                                 for="lastName">Last
                                                                                 Name <span class="red">*</span></label>
                                                                             <input placeholder="Enter your last name"
-                                                                                class="form-control" style="width:50%"
+                                                                                class="form-control"
                                                                                 formControlName="lastName"
                                                                                 [ngStyle]="{'background-color': bgColor}">
                                                                         </div>
@@ -186,13 +186,13 @@
                                                                         <br />
                                                                         <mat-radio-group formControlName="gender"
                                                                             class="m-0 p-2">
-                                                                            <mat-radio-button value="male" class="mr-1 shadow-sm">
+                                                                            <mat-radio-button value="male" class="">
                                                                                 Male
                                                                             </mat-radio-button>
                                                                             <mat-radio-button value="female"
-                                                                                class="mx-3 shadow-sm">Female
+                                                                                class="mx-4">Female
                                                                             </mat-radio-button>
-                                                                            <mat-radio-button value="other" class="shadow-sm">Other
+                                                                            <mat-radio-button value="other" class="">Other
                                                                             </mat-radio-button>
                                                                         </mat-radio-group>
                                                                         <app-field-error-display
@@ -508,9 +508,10 @@
                                             <div class="">
                                                 <div class=""> 
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
-                                                        <div class="appointment-details-heading col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-5 p-3 pb-2 text-capitalize">
+                                                        <div class="text-primary text-center m-auto text-capitalize col-md-12 col-xs-12 col-sm-12 pt-2">
                                                             <h5><b>{{showCheckinButtonCaption()}} Details</b></h5>
                                                         </div>
+                                                        <div class="clearfix"></div><hr>
                                                         <div class="mt-5">
                                                             <div class="" *ngIf="selectedServiceId || type == 'waitlistreschedule'">
                                                                 <!-- <div class="service-icon pull-left"
@@ -616,7 +617,7 @@
                                                         
                                                                             <div
                                                                                 class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
-                                                                                <b>Contact Information</b>
+                                                                                <b>The provider will contact you in this number</b>
                                                                             </div>
                                                                             
                                                                             <div class="contact-section">
@@ -757,13 +758,13 @@
                                                         <div class="clearfix"></div>
                                                         <hr>
                                                         <div class="pb-0 px-auto my-3 font-weight-bold text-center">
-                                                            <h5 class="text-capitalize text-primary"><b>Select Appointment Date </b></h5>
+                                                            <h5 class="text-capitalize text-primary"><b>Choose Date </b></h5>
                                                         </div>
                                                         
                                                         <app-date-pagination (date_change_event)=changed_date_value($event)></app-date-pagination>
 
                                                         <div class="pb-0 px-auto mb-2 font-weight-bold text-center">
-                                                            <h5 class="text-capitalize text-primary"><b>Select Appointment Time </b></h5>
+                                                            <h5 class="text-capitalize text-primary"><b>Choose Time </b></h5>
                                                         </div>
 
                                                         
@@ -1236,14 +1237,15 @@
                                         <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding right-part"
                                             data-wizard-type="step-content" data-wizard-state="current"
                                             *ngIf="bookStep === 3" [ngClass]="{'highlight': api_loading_video}">
-                                            <div class="appointment-details-heading col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 p-3 pb-2 text-capitalize">
+                                            <div class="text-primary text-center m-auto text-capitalize col-md-12 col-xs-12 col-sm-12 pt-2">
                                                 <h5><b>{{showCheckinButtonCaption()}} Summary</b></h5>
                                             </div>
+                                            <div class="clearfix"></div><hr>
                                             
                                             <div class="">
                                                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mx-3">
                                                     <div
-                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
+                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding p-1">
                                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
                                                             *ngIf="selectedService.serviceType!=='virtualService'">
                                                             <h4 class="text-dark"><b>Booking For</b></h4>
@@ -1273,7 +1275,7 @@
                                             
                                                                 <div
                                                                     class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
-                                                                    <b>Contact Information</b>
+                                                                    <b>The provider will contact you in this number</b>
                                                                 </div>
                                                                 <div class="contact-section">
                                                                     <i class="fa fa-mobile "></i>
@@ -1386,7 +1388,7 @@
                                                                 *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' && selectedService.virtualServiceType === 'videoService'"></i>
 
                                                         </div> -->
-                                                        <h5 class="text-center text-success text-capitalize service">
+                                                        <h5 class="text-left text-success text-capitalize service">
                                                                 <b>{{selectedService.name}}</b>
                                                         </h5>
                                                         <div class="" style="font-size: 1rem"
