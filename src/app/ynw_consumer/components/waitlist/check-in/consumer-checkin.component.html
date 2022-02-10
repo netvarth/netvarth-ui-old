@@ -1,6 +1,9 @@
 <div class="card shadow">
     <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
-        <a class="pull-left back-btn" (click)="goBack('back')"><i class="fa fa-arrow-circle-left"></i>&emsp;<span class="ml-3 back-btn-text">Appointment</span></a>
+        <a class="pull-left back-btn" (click)="goBack('back')"><i class="fa fa-arrow-circle-left my-auto"></i>&emsp;
+            <span class="ml-3 my-auto back-btn-text desktop-only">Appointment</span>
+            <span class="ml-3 my-auto back-btn-text mobile-only">{{businessjson.businessName}} , {{locationName}}</span>
+        </a>
     </div>
     <!-- <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
         <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'checkin'"
@@ -21,8 +24,8 @@
                 <div class="provider-details m-5 text-dark text-center" *ngIf="!selectedService.provider">
                     <h3><b>{{businessjson.businessName}}</b></h3>
                     <h6><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</h6>
-                    <h6 *ngIf="businessjson.phoneNumbers[0]" ><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;<span>{{businessjson.phoneNumbers[0].instance}}</span></h6>
-                    <h6 *ngIf="businessjson.emails[0]"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;<span>{{businessjson.emails[0].instance}}</span></h6>   
+                    <!-- <h6 *ngIf="businessjson.phoneNumbers[0]" ><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;<span>{{businessjson.phoneNumbers[0].instance}}</span></h6> -->
+                    <!-- <h6 *ngIf="businessjson.emails[0]"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;<span>{{businessjson.emails[0].instance}}</span></h6>    -->
                 </div>
                 <div class="booking-img"></div>
                 <div class="clearfix"></div>
@@ -43,10 +46,6 @@
                                             <div class="">
                                                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10"
                                                     *ngIf="hideTokenFor">
-                                                    <div class="text-primary text-center m-auto text-capitalize col-md-12 col-xs-12 col-sm-12 pt-2">
-                                                        <h5><b>{{showCheckinButtonCaption()}} Details</b></h5>
-                                                    </div>
-                                                    <div class="clearfix"></div><hr>
                                                     <div class="mt-5 text-capitalize">
                                                         <div class="m-auto"
                                                             *ngIf="selectedServiceId || type == 'waitlistreschedule'">
@@ -66,8 +65,8 @@
                                                                     *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' && selectedService.virtualServiceType === 'videoService'"></i>
         
                                                             </div> -->
-                                                            <h5 class="text-center text-success text-capitalize service">
-                                                                    <b>{{selectedService.name}}</b>
+                                                            <h5 class="text-left text-success text-capitalize service">
+                                                                <b>{{selectedService.name}}</b>
                                                             </h5>
                                                             <div class="" style="font-size: 1rem"
                                                                 *ngIf="selectedService.price && type != 'reschedule'">
@@ -109,6 +108,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="clearfix"></div><hr>
+                                                    
                                                 </div>
                                             </div>
                                             
@@ -508,10 +509,6 @@
                                             <div class="">
                                                 <div class=""> 
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
-                                                        <div class="text-primary text-center m-auto text-capitalize col-md-12 col-xs-12 col-sm-12 pt-2">
-                                                            <h5><b>{{showCheckinButtonCaption()}} Details</b></h5>
-                                                        </div>
-                                                        <div class="clearfix"></div><hr>
                                                         <div class="mt-5">
                                                             <div class="" *ngIf="selectedServiceId || type == 'waitlistreschedule'">
                                                                 <!-- <div class="service-icon pull-left"
@@ -529,7 +526,7 @@
                                                                     <i class="fa wtsapvid-icon"
                                                                         *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' && selectedService.virtualServiceType === 'videoService'"></i>
                                                                 </div> -->
-                                                                <h5 class="text-success text-center text-capitalize service mgn-bt-10">
+                                                                <h5 class="text-left text-success text-capitalize service">
                                                                     <b>{{selectedService.name}}</b>
                                                                 </h5>
                                                                 <div class="" style="font-size: 1rem"
@@ -577,6 +574,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="clearfix"></div><hr>
+                                                        
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
@@ -617,7 +616,7 @@
                                                         
                                                                             <div
                                                                                 class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
-                                                                                <b>The provider will contact you in this number</b>
+                                                                                Status, alerts, communications will be sent to
                                                                             </div>
                                                                             
                                                                             <div class="contact-section">
@@ -757,13 +756,13 @@
                                                         </div>
                                                         <div class="clearfix"></div>
                                                         <hr>
-                                                        <div class="pb-0 px-auto my-3 font-weight-bold text-center">
+                                                        <div class="pb-0 px-auto my-3 font-weight-bold text-left">
                                                             <h5 class="text-capitalize text-primary"><b>Choose Date </b></h5>
                                                         </div>
                                                         
                                                         <app-date-pagination (date_change_event)=changed_date_value($event)></app-date-pagination>
 
-                                                        <div class="pb-0 px-auto mb-2 font-weight-bold text-center">
+                                                        <div class="pb-0 px-auto mb-2 font-weight-bold text-left">
                                                             <h5 class="text-capitalize text-primary"><b>Choose Time </b></h5>
                                                         </div>
 
@@ -1239,8 +1238,8 @@
                                         <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding right-part"
                                             data-wizard-type="step-content" data-wizard-state="current"
                                             *ngIf="bookStep === 3" [ngClass]="{'highlight': api_loading_video}">
-                                            <div class="text-primary text-center m-auto text-capitalize col-md-12 col-xs-12 col-sm-12 pt-2">
-                                                <h5><b>{{showCheckinButtonCaption()}} Summary</b></h5>
+                                            <div class="text-primary text-left m-auto text-capitalize col-md-12 col-xs-12 col-sm-12 pt-2">
+                                                <h5><b>Review and Confirm</b></h5>
                                             </div>
                                             <div class="clearfix"></div><hr>
                                             
@@ -1277,7 +1276,7 @@
                                             
                                                                 <div
                                                                     class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
-                                                                    <b>The provider will contact you in this number</b>
+                                                                    Status, alerts, communications will be sent to
                                                                 </div>
                                                                 <div class="contact-section">
                                                                     <i class="fa fa-mobile "></i>
@@ -1622,7 +1621,7 @@
                         deducted from the amount(which includes Jaldee
                         service charges and Online Gateway fees).</li>
                     <li>Refund will be received directly to the
-                        consumer’s
+                        consumerâ€™s
                         bank account after he/she cancels the future
                         bookings.</li>
                     <li>If the booking is cancelled on the date of

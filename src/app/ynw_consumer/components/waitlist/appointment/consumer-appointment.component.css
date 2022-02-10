@@ -2127,6 +2127,9 @@ box-shadow: 4px 4px 5px gainsboro;
   {
     padding: 0!important;
   }
+  body.sidebar-mini.modal-open {
+    overflow: hidden!important;
+}
 
 
 
@@ -2157,17 +2160,16 @@ box-shadow: 4px 4px 5px gainsboro;
       padding: 8px!important;
     }
     .back-btn-text{
-      font-size: 20px!important;
+      font-size: 15px!important;
       font-weight: 700;
     }
     .fa-arrow-circle-left
     {
-      font-size: 23px!important;
+      font-size: 18px!important;
     }
     .col-md-4.col-lg-4.col-sm-12.col-xs-12.mt-4.d-flex.align-items-stretch.desktop-only {
       display: none!important;
     }
-    
     
    }
 

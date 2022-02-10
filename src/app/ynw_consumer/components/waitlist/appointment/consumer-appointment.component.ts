@@ -707,7 +707,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         const appttime = this.freeSlots.filter(slot => slot.time === this.appointment.appmtTime);
                         this.apptTime = appttime[0];
                     } else {
-                        console.log(this.selectedTime)
+                        // console.log(this.selectedTime)
                         if (this.selectedTime) {
                             const appttime = this.freeSlots.filter(slot => slot.displayTime === this.selectedTime);
                             if (appttime) {
@@ -740,11 +740,16 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         const newdate = tdate.split('/').reverse().join('-');
         const futrDte = new Date(newdate);
         const obtmonth = (futrDte.getMonth() + 1);
+        const obtdate = futrDte.getDate()
         let cmonth = '' + obtmonth;
         if (obtmonth < 10) {
             cmonth = '0' + obtmonth;
         }
-        const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
+        let cdate = '' + obtdate
+        if (obtdate < 10) {
+            cdate = '0' + obtdate;
+        }
+        const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + cdate;
         this.sel_checkindate = seldate;
         this.getAvailableSlotByLocationandService(this.sel_loc, this.selectedServiceId, this.sel_checkindate, this.account_id);
     }
@@ -1616,20 +1621,16 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.bookStep--;
         }
         if (type) {
-           
             if ((this.tele_srv_stat !== 'true' && this.bookStep === 1) || (this.tele_srv_stat === 'true' && this.bookStep === 0)) {
                 this.location.back();
             } else {
                
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.bookStep--;
-                  
                 }
-               
                 if (this.bookStep === 1) {
                     this.bookStep--;
                 }
-                 
                 else {
                     this.bookStep = 1;
                 }
@@ -1639,7 +1640,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             //     this.bookStep = 1;
             // }
         }
-       
         if (this.action !== 'addmember') {
             this.closebutton.nativeElement.click();
         }

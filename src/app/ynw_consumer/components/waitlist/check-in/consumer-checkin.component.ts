@@ -831,10 +831,15 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         const futrDte = new Date(newdate);
         const obtmonth = (futrDte.getMonth() + 1);
         let cmonth = '' + obtmonth;
+        const obtdate = futrDte.getDate()
         if (obtmonth < 10) {
             cmonth = '0' + obtmonth;
         }
-        const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
+        let cdate = '' + obtdate
+        if (obtdate < 10) {
+            cdate = '0' + obtdate;
+        }
+        const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + cdate;
         this.sel_checkindate = seldate;
         this.getQueuesbyLocationandServiceId(this.sel_loc, this.selectedServiceId, this.sel_checkindate, this.account_id);
     }
@@ -1825,7 +1830,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     goBack(type?) {
         if (type) {
-          
             if ((this.tele_srv_stat !== 'true' && this.bookStep === 1) || (this.tele_srv_stat === 'true' && this.bookStep === 0)) {
                 this.location.back();
             } else {

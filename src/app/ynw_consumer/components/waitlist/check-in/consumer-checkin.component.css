@@ -2066,7 +2066,6 @@ body.modal-open {
 
 
 
-
   @media (min-width:320px)  {
     /* smartphones, iPhone, portrait 480x320 phones */ 
     .pad-10.d-flex.flex-column-fluid 
@@ -2083,12 +2082,12 @@ body.modal-open {
       padding: 8px!important;
     }
     .back-btn-text{
-      font-size: 20px!important;
+      font-size: 15px!important;
       font-weight: 700;
     }
     .fa-arrow-circle-left
     {
-      font-size: 23px!important;
+      font-size: 18px!important;
     }
     .col-md-4.col-lg-4.col-sm-12.col-xs-12.mt-4.d-flex.align-items-stretch.desktop-only {
       display: none!important;
