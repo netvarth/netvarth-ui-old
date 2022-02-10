@@ -47,7 +47,7 @@
 }
 
 /* order msg */
-.consumer-action textarea {
+.consumer-action textarea  {
     margin-top: 30px;
     width: 100%;
     border-color: #0a19313d !important;
@@ -56,6 +56,20 @@
     height: 153px !important;
     border: 1px solid #808080a8 !important;
     margin-bottom: 10px !important;
+}
+.textCard{
+    width: 100%;
+    background: #f9f9f9;
+    height: 153px !important;
+    margin-bottom: 8px;
+
+
+}
+.textCard span{
+   position:absolute;
+   top:50%;
+   left: 50%;
+   transform: translate(-50%,-50%);
 }
 .consumer-action .img-msg {
     width: 100%;

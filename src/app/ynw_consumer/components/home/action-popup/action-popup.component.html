@@ -107,11 +107,15 @@
         <img class="img-msg" src="assets/images/order/chat.svg" alt="messsage">
       </div>
       <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xs-8 mgn-bt-10">
-        <mat-form-field>
+          <div class="textCard">
+              <h4 class="mx-2 my-2 text-secondary">Notes :</h4>
+          <span>  {{bookingDetails.consumerNote}} </span>
+          </div>
+        <!-- <mat-form-field>
           <textarea matInput rows="6" readonly>
             {{bookingDetails.consumerNote}}
             </textarea>
-        </mat-form-field>
+        </mat-form-field> -->
         <div class="disp-flex">
           <button class="cancel-btn" mat-dialog-close>Close</button>
         </div>
