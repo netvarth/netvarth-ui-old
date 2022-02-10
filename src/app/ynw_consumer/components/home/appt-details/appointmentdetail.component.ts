@@ -16,6 +16,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { MeetingDetailsComponent } from '../../meeting-details/meeting-details.component';
+import { TeleBookingService } from '../../../../shared/services/tele-bookings-service';
 
 @Component({
   selector: 'app-appointmentdetail',
@@ -69,6 +70,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
   accountId: any;
   customId: any;
   questionnaires: any = [];
+  whatsAppNumber: any;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -80,7 +82,8 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
     private sharedServices: SharedServices,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
-    private dateTimeProcessor: DateTimeProcessor
+    private dateTimeProcessor: DateTimeProcessor,
+    private teleBookingService: TeleBookingService
   ) {
     this.activated_route.queryParams.subscribe(
       (qParams) => {
@@ -108,6 +111,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
     this.subs.sink = this.sharedServices.getAppointmentByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
       (data) => {
         this.appt = data;
+        this.whatsAppNumber = this.teleBookingService.getTeleNumber(this.appt.virtualService[this.appt.service.virtualCallingModes[0].callingMode]);
         console.log("Deatils:",this.appt)
         if (this.appt.questionnaires && this.appt.questionnaires.length > 0) {
           this.questionnaires = this.appt.questionnaires;

@@ -789,18 +789,10 @@
                             {{appt.apptStatus === 'Started'? 'Resume': 'Call +' +
                             appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }}
                           </span> -->
-                          <span *ngIf=" appt.virtualService[appt.service.virtualCallingModes[0].callingMode] && appt.virtualService[appt.service.virtualCallingModes[0].callingMode].startsWith('+'|| '++'||'+++')">
+                          <span *ngIf="appt.whatsApp_PhNumber">
                             {{appt.apptStatus === 'Started'? 'Resume': 'Call '+
-                            appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }}
-      
+                            appt.whatsApp_PhNumber}}
                           </span>
-                          <span *ngIf="appt.virtualService[appt.service.virtualCallingModes[0].callingMode] && ! appt.virtualService[appt.service.virtualCallingModes[0].callingMode].startsWith('+'|| '++'||'+++')">
-                            {{appt.apptStatus === 'Started'? 'Resume': 'Call +' +
-                            appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }}
-      
-                          </span>
-
-
                         </a>
                         <a class="statusText btn-play pointer-cursor done-btn"
                           (click)="stopprop($event);!statusChangeClicked && changeWaitlistStatus('started', 'Completed', appt)"
@@ -1356,15 +1348,9 @@
                             *ngIf="appt.service.virtualCallingModes[0].callingMode == 'Phone' || appt.service.virtualCallingModes[0].callingMode == 'WhatsApp'">
                             <!-- {{appt.apptStatus === 'Started'? 'Resume': 'Call +' +
                             appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }} -->
-                            <span *ngIf=" appt.virtualService[appt.service.virtualCallingModes[0].callingMode] && appt.virtualService[appt.service.virtualCallingModes[0].callingMode].startsWith('+' || '++' ||'+++')">
+                            <span *ngIf="appt.whatsApp_PhNumber">
                               {{appt.apptStatus === 'Started'? 'Resume': 'Call '+
-                              appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }}
-        
-                            </span>
-                            <span *ngIf="appt.virtualService[appt.service.virtualCallingModes[0].callingMode] && ! appt.virtualService[appt.service.virtualCallingModes[0].callingMode].startsWith('+' || '++' || '+++')">
-                              {{appt.apptStatus === 'Started'? 'Resume': 'Call +' +
-                              appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }}
-        
+                              appt.whatsApp_PhNumber}}
                             </span>
                           </span>
                         </a>
@@ -1935,16 +1921,11 @@
                           *ngIf="appt.service.virtualCallingModes[0].callingMode == 'Phone' || appt.service.virtualCallingModes[0].callingMode == 'WhatsApp'">
                           <!-- {{appt.apptStatus === 'Started'? 'Resume': 'Call +' +
                           appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }} -->
-                          <span *ngIf=" appt.virtualService[appt.service.virtualCallingModes[0].callingMode] && appt.virtualService[appt.service.virtualCallingModes[0].callingMode].startsWith('+' || '++' || '+++')">
+                          <span *ngIf="appt.whatsApp_PhNumber">
                             {{appt.apptStatus === 'Started'? 'Resume': 'Call '+
-                            appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }}
+                            appt.whatsApp_PhNumber}}
       
-                          </span>
-                          <span *ngIf="appt.virtualService[appt.service.virtualCallingModes[0].callingMode] && ! appt.virtualService[appt.service.virtualCallingModes[0].callingMode].startsWith('+' || '++' || '+++')">
-                            {{appt.apptStatus === 'Started'? 'Resume': 'Call +' +
-                            appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }}
-      
-                          </span>
+                          </span>                         
                         </span>
                       </a>
                       <a class="statusText btn-play pointer-cursor done-btn"
@@ -2584,16 +2565,10 @@
                           *ngIf="appt.service.virtualCallingModes[0].callingMode == 'Phone' || appt.service.virtualCallingModes[0].callingMode == 'WhatsApp'">
                           <!-- {{appt.apptStatus === 'Started'? 'Resume': 'Call +' +
                           appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }} -->
-                          <span *ngIf=" appt.virtualService[appt.service.virtualCallingModes[0].callingMode] && appt.virtualService[appt.service.virtualCallingModes[0].callingMode].startsWith('+'||'++'||'+++')">
+                          <span *ngIf="appt.whatsApp_PhNumber">
                             {{appt.apptStatus === 'Started'? 'Resume': 'Call '+
-                            appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }}
-      
-                          </span>
-                          <span *ngIf="appt.virtualService[appt.service.virtualCallingModes[0].callingMode] && ! appt.virtualService[appt.service.virtualCallingModes[0].callingMode].startsWith('+'||'++'||'+++')">
-                            {{appt.apptStatus === 'Started'? 'Resume': 'Call +' +
-                            appt.virtualService[appt.service.virtualCallingModes[0].callingMode] }}
-      
-                          </span>
+                            appt.whatsApp_PhNumber}}
+                          </span>                          
                         </span>
                       </a>
                       <a class="statusText btn-play pointer-cursor done-btn"

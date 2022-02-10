@@ -31,6 +31,7 @@ import { ConfirmBoxComponent } from '../../shared/confirm-box/confirm-box.compon
 import { AttachmentPopupComponent } from '../../../../app/shared/components/attachment-popup/attachment-popup.component';
 import { InstantQueueComponent } from './instant-q/instant-queue.component';
 import { CommunicationService } from '../../services/communication-service';
+import { TeleBookingService } from '../../../shared/services/tele-bookings-service';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html',
@@ -99,7 +100,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     first_name: '',
     last_name: '',
     phone_number: '',
-    countrycode:'',
+    countrycode: '',
     checkinEncId: '',
     patientId: '',
     queue: 'all',
@@ -377,6 +378,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor,
     private communicationService: CommunicationService,
+    private teleService: TeleBookingService,
     private titleService: Title) {
     this.onResize();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -480,7 +482,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
       this.activeUser = this.active_user.id;
     }
-    
+
     this.bussLocs = this.active_user.bussLocs;
     if (this.active_user.adminPrivilege || this.active_user.userType === 5) {
       this.admin = true;
@@ -527,12 +529,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.location_select = data;
         });
   }
-  getInternalStatus(){
+  getInternalStatus() {
     this.provider_services.getInternalStatus()
-    .subscribe(
-      (data: any) => {
-        this.internalStats = data;
-      });
+      .subscribe(
+        (data: any) => {
+          this.internalStats = data;
+        });
   }
   getDepartments() {
     this.provider_services.getDepartments().subscribe(
@@ -662,7 +664,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
 
-   
+
     if (type === 'payment_status') {
       if (value === 'all') {
         this.paymentStatuses = [];
@@ -1416,6 +1418,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               (data: any) => {
                 _this.appt_list = [];
                 _this.appt_list = data;
+                _this.appt_list.map(function (appt) {
+                  // checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode])
+                  if (appt.service.virtualCallingModes && (appt.service.virtualCallingModes[0].callingMode==='Phone' || appt.service.virtualCallingModes[0].callingMode==='WhatsApp') && appt.virtualService[appt.service.virtualCallingModes[0].callingMode]) {
+                    appt.whatsApp_PhNumber = _this.teleService.getTeleNumber(appt.virtualService[appt.service.virtualCallingModes[0].callingMode]);
+                  }
+                  return appt;
+                })
                 _this.todayAppointments = _this.shared_functions.groupBy(_this.appt_list, 'waitlistStatus');
                 if (_this.filterapplied === true) {
                   _this.noFilter = false;
@@ -1442,6 +1451,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   getFutureWL() {
+    const _this = this;
     this.resetCheckList();
     this.loading = true;
     this.futureAppointments = [];
@@ -1482,10 +1492,18 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       const promise = this.getFutureWLCount(Mfilter);
       promise.then(
         result => {
-          this.provider_services.getFutureWaitlist(Mfilter)
+          _this.provider_services.getFutureWaitlist(Mfilter)
             .subscribe(
-              data => {
-                this.futureAppointments = this.shared_functions.groupBy(data, 'waitlistStatus');
+              (data: any) => {
+                let appts = data;
+                appts.map(function (appt) {
+                  // checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode])
+                  if (appt.service.virtualCallingModes && (appt.service.virtualCallingModes[0].callingMode==='Phone' || appt.service.virtualCallingModes[0].callingMode==='WhatsApp') && appt.virtualService[appt.service.virtualCallingModes[0].callingMode]) {
+                    appt.whatsApp_PhNumber = _this.teleService.getTeleNumber(appt.virtualService[appt.service.virtualCallingModes[0].callingMode]);
+                  }
+                  return appt;
+                })
+                this.futureAppointments = this.shared_functions.groupBy(appts, 'waitlistStatus');
                 if (this.filterapplied === true) {
                   this.noFilter = false;
                 } else {
@@ -1514,45 +1532,55 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cancelled_count = this.getActiveAppointments(appointments, 'cancelled').length;
   }
   getHistoryWL() {
-    this.loading = true;
-    let Mfilter = this.setFilterForApi();
-    if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
-      if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
-        Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
+    const _this = this;
+    _this.loading = true;
+    let Mfilter = _this.setFilterForApi();
+    if (_this.active_user.accountType === 'BRANCH' && !_this.active_user.adminPrivilege && _this.active_user.userType !== 5) {
+      if (_this.active_user.userTeams && _this.active_user.userTeams.length > 0 && !_this.admin) {
+        Mfilter['or=team-eq'] = 'id::' + _this.active_user.userTeams + ',provider-eq=' + _this.active_user.id;
       } else {
-        Mfilter['provider-eq'] = this.active_user.id;
+        Mfilter['provider-eq'] = _this.active_user.id;
       }
     }
-    const promise = this.getHistoryWLCount(Mfilter);
+    const promise = _this.getHistoryWLCount(Mfilter);
     promise.then(
       result => {
-        this.pagination.totalCnt = result;
-        Mfilter = this.setPaginationFilter(Mfilter);
-        this.appointmentsChecked = {};
-        this.chkAppointments = {};
-        this.chkSelectAppointments = false;
-        this.setApptSelections();
-        this.provider_services.getHistoryWaitlist(Mfilter)
+        _this.pagination.totalCnt = result;
+        Mfilter = _this.setPaginationFilter(Mfilter);
+        _this.appointmentsChecked = {};
+        _this.chkAppointments = {};
+        _this.chkSelectAppointments = false;
+        _this.setApptSelections();
+        _this.provider_services.getHistoryWaitlist(Mfilter)
           .subscribe(
             data => {
-              this.appt_list = this.check_in_filtered_list = data;
-              this.loading = false;
-              if (this.filterapplied === true) {
-                this.noFilter = false;
+              _this.appt_list = data;
+              console.log("Checkin List:", _this.appt_list);
+              _this.appt_list.map(function (appt) {
+                // checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode])
+                if (appt.service.virtualCallingModes && (appt.service.virtualCallingModes[0].callingMode==='Phone' || appt.service.virtualCallingModes[0].callingMode==='WhatsApp') && appt.virtualService[appt.service.virtualCallingModes[0].callingMode]) {
+                  appt.whatsApp_PhNumber = _this.teleService.getTeleNumber(appt.virtualService[appt.service.virtualCallingModes[0].callingMode]);
+                }
+                return appt;
+              });
+              _this.check_in_filtered_list = _this.appt_list;
+              _this.loading = false;
+              if (_this.filterapplied === true) {
+                _this.noFilter = false;
               } else {
-                this.noFilter = true;
+                _this.noFilter = true;
               }
-              this.loading = false;
+              _this.loading = false;
             },
             () => {
-              this.loading = false;
+              _this.loading = false;
             },
             () => {
-              this.loading = false;
+              _this.loading = false;
             });
       },
       () => {
-        this.loading = false;
+        _this.loading = false;
       });
   }
   setApptSelections() {
@@ -1991,7 +2019,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.phone_number !== '') {
       api_filter['phoneNo-eq'] = this.filter.phone_number;
     }
-    if(this.filter.countrycode !== ''){
+    if (this.filter.countrycode !== '') {
       api_filter['countryCode-eq'] = this.filter.countrycode;
     }
     if (this.filter.checkinEncId !== '') {
@@ -2137,7 +2165,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       first_name: '',
       last_name: '',
       phone_number: '',
-      countrycode:'',
+      countrycode: '',
       checkinEncId: '',
       patientId: '',
       queue: 'all',
@@ -2584,14 +2612,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               for (let i = 0; i < this.historyCheckins.length; i++) {
                 const fname = (this.historyCheckins[i].waitlistingFor[0].firstName) ? this.historyCheckins[i].waitlistingFor[0].firstName : '';
                 const lname = (this.historyCheckins[i].waitlistingFor[0].lastName) ? this.historyCheckins[i].waitlistingFor[0].lastName : '';
-                let name='';
-                if(fname!== '' && lname!==''){
-                name=fname+''+ lname;
+                let name = '';
+                if (fname !== '' && lname !== '') {
+                  name = fname + '' + lname;
                 }
-                else{
-                name='Nil';
+                else {
+                  name = 'Nil';
                 }
-                
+
                 checkin_html += '<tr style="line-height:20px;padding:10px">';
                 checkin_html += '<td style="padding:10px">' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
                 checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].checkInTime + '</td>';
@@ -2775,7 +2803,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode||this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' || this.filter.location != 'all'
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' || this.filter.location != 'all'
       || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.internalStatus !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== ''
       || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
@@ -3069,7 +3097,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         status: status,
         labelFilterData: this.labelFilterData,
         labelsCount: this.labelsCount,
-        statusBooking :this.statusAction
+        statusBooking: this.statusAction
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
