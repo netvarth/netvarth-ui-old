@@ -742,12 +742,12 @@
                       *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
                       <!-- {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
                       checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }} -->
-                      <span *ngIf=" checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                      <span *ngIf=" checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode].startsWith('+' || '++'||'+++')">
                         {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
                         checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
   
                       </span>
-                      <span *ngIf="! checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                      <span *ngIf="! checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode].startsWith('+'||'++'||'+++')">
                         {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
                         checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
   
@@ -1015,12 +1015,12 @@
                       *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
                       <!-- {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
                       checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }} -->
-                      <span *ngIf=" checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                      <span *ngIf=" checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode].startsWith('+'||'++'||'+++')">
                         {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
                         checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
   
                       </span>
-                      <span *ngIf="! checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                      <span *ngIf="! checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode].startsWith('+'||'++'||'+++')">
                         {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
                         checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
   
@@ -1634,12 +1634,12 @@
                     *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
                     <!-- {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
                     checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }} -->
-                    <span *ngIf=" checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                    <span *ngIf=" checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode].startsWith('+'||'++'||'+++')">
                       {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
                       checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
 
                     </span>
-                    <span *ngIf="! checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                    <span *ngIf="! checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode].startsWith('+'||'++'||'+++')">
                       {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
                       checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
 
@@ -2383,12 +2383,12 @@
                   
                     <!-- {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
                     checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }} -->
-                    <span *ngIf=" checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                    <span *ngIf=" checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode].startsWith('+'||'++'||'+++')">
                       {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
                       checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
 
                     </span>
-                    <span *ngIf="! checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                    <span *ngIf="! checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode].startsWith('+'||'++'||'+++')">
                       {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
                       checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
 

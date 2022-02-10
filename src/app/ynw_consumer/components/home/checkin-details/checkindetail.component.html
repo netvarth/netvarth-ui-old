@@ -86,8 +86,16 @@
                                             <div class="each-item"
                                                 *ngIf="waitlist.service.serviceType === 'virtualService'&&waitlist.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                 <span class="item-head">WhatsApp #</span>
-                                                <span class="item-label-val">+{{
-                                                    waitlist.virtualService[waitlist.service.virtualCallingModes[0].callingMode]}}</span>
+                                                <span class="item-label-val" *ngIf=" waitlist.virtualService[waitlist.service.virtualCallingModes[0].callingMode] && waitlist.virtualService[waitlist.service.virtualCallingModes[0].callingMode].startsWith('+' || '++' || '+++')">
+                                                    {{
+                                                    waitlist.virtualService[waitlist.service.virtualCallingModes[0].callingMode]}}
+                                                </span>
+                                                <span class="item-label-val" *ngIf=" waitlist.virtualService[waitlist.service.virtualCallingModes[0].callingMode] && !waitlist.virtualService[waitlist.service.virtualCallingModes[0].callingMode].startsWith('+' || '++'|| '+++')">
+                                                    +{{
+                                                    waitlist.virtualService[waitlist.service.virtualCallingModes[0].callingMode]}}
+                                                </span>
+
+
                                             </div>
                                             <div class="each-item" *ngIf="waitlist.waitlistingFor[0].email">
                                                 <span class="item-head">Email</span>

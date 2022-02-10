@@ -18,7 +18,6 @@ import { ConsumerJoinModule } from "../../../ynw_consumer/components/consumer-jo
 import { ConfirmBoxModule } from "../confirm-box/confirm-box.module";
 import { QRCodeGeneratordetailModule } from "../qrcodegenerator/qrcodegeneratordetail.module";
 import { CheckavailabilityModule } from "../checkavailability/checkavaiablity.module";
-// import { CheckavailabilityComponent } from "../checkavailability/checkavailability.component";
 
 const routes: Routes = [
     { path: '', component: ProviderDetailComponent },
@@ -47,8 +46,7 @@ const routes: Routes = [
     exports: [ ProviderDetailComponent ],
     entryComponents:[CheckavailabilityModule,],
     declarations: [
-        ProviderDetailComponent,
-        // CheckavailabilityComponent
+        ProviderDetailComponent
     
     ]
 })

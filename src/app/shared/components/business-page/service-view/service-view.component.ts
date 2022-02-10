@@ -1016,11 +1016,12 @@ export class ServiceViewComponent implements OnInit {
   opencheckavail(actionObj) {
       this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
         width: '100%',
-        panelClass: ['commonpopupmainclass', 'popup-class', 'availability-container', this.theme],
+        panelClass: ['loginmainclass', 'popup-class', this.theme],
         height: 'auto',
         data: {
         alldetails:actionObj,
         apptSettingsJson:this.apptSettingsJson,
+        domain: this.businessjson.serviceSector.domain
         }
       });
 

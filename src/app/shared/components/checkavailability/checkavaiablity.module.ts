@@ -7,6 +7,8 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { LoadingSpinnerModule } from "../../modules/loading-spinner/loading-spinner.module";
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { CapitalizeFirstPipeModule } from "../../pipes/capitalize.module";
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { MatChipsModule } from '@angular/material/chips';
         MatNativeDateModule,
         MatDialogModule,
         MatChipsModule,
-        LoadingSpinnerModule
+        LoadingSpinnerModule,
+        MatTooltipModule,
+        CapitalizeFirstPipeModule
     ],
     exports: [ CheckavailabilityComponent ],
     declarations: [

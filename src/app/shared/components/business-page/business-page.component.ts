@@ -2320,14 +2320,15 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.routerobj.navigate([this.accountEncId, userId]);
   }
   opencheckavail(actionObj) {
-    console.log(actionObj);
+    console.log("ActionObj:",actionObj);
     this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
-      width: '100%',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'availability-container', this.theme],
+      width: '60%',
+      panelClass: ['loginmainclass', 'popup-class', this.theme],
       height: 'auto',
       data: {
         alldetails: actionObj,
         apptSettingsJson: this.apptSettingsJson,
+        domain: this.businessjson.serviceSector.domain
       }
     });
     this.checkavailabilitydialogref.afterClosed().subscribe(result => {
