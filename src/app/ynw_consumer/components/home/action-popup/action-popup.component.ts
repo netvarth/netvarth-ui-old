@@ -175,7 +175,7 @@ export class ActionPopupComponent implements OnInit {
     this.dialogRef.close();
     this.addnotedialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
+      panelClass: ['commonpopupmainclass', 'popup-class', 'loginmainclass', 'smallform'],
       disableClose: true,
       autoFocus: true,
       data: pass_ob

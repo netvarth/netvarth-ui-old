@@ -204,7 +204,7 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
   addNote(pass_ob) {
     this.notedialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
+      panelClass: ['popup-class', 'commonpopupmainclass', 'loginmainclass', 'smallform'],
       disableClose: true,
       autoFocus: true,
       data: pass_ob,

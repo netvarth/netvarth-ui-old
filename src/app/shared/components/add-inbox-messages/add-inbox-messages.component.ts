@@ -18,7 +18,8 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { AddproviderAddonComponent } from '../../../business/modules/add-provider-addons/add-provider-addons.component';
 @Component({
   selector: 'app-add-inbox-messages',
-  templateUrl: './add-inbox-messages.component.html'
+  templateUrl: './add-inbox-messages.component.html',
+  styleUrls: ['./add-inbox-messages.component.css']
 })
 export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   amForm: FormGroup;

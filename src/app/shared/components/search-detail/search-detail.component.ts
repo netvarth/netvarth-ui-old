@@ -1934,7 +1934,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     console.log(userId);
     this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
+      panelClass: ['commonpopupmainclass', 'popup-class', 'loginmainclass', 'smallform'],
       disableClose: true,
       data: {
         caption: 'Enquiry',
