@@ -407,7 +407,7 @@
                                                                 
                                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 optional">
                                                                     <label><i class="fa fa-whatsapp"
-                                                                        style="color:green"></i> Whatsapp#</label>
+                                                                        style="color:green!important"></i> Whatsapp#</label>
                                                                     <div class="disp-flex">
                                                                         <div class="form-group no-margin">
                                                                             <input type="text"
@@ -624,11 +624,17 @@
                                                                     </h3>
                                                                 </div>
                                                                 <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
-                                                                    <a *ngIf="type !== 'reschedule'"
+                                                                    <a *ngIf="type !== 'reschedule' && selectedService && selectedService.serviceType!=='virtualService'"
                                                                         class="pointer-cursor changeitem btn btn-primary font-weight-bold text-capitalize px-2 py-1"
                                                                         (click)="handleSideScreen('members')"
                                                                         data-toggle="modal"
                                                                         data-target="#exampleModalCenter">Change Member
+                                                                    </a>
+                                                                    <a *ngIf="type !== 'reschedule' && selectedService && selectedService.serviceType==='virtualService'"
+                                                                        class="pointer-cursor changeitem btn btn-primary font-weight-bold text-capitalize px-2 py-1"
+                                                                        (click)="handleSideScreen('members')"
+                                                                        data-toggle="modal"
+                                                                        data-target="#exampleModalCenter">Change Contact
                                                                     </a>
                                                                 </div>
                                                             </div>

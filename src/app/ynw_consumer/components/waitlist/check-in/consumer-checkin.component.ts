@@ -762,6 +762,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     getQueuesbyLocationandServiceId(locid, servid, pdate, accountid, type?) {
         this.queueQryExecuted = false;
+        console.log(pdate)
         if (locid && servid) {
             this.subs.sink = this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
@@ -798,9 +799,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     if (type) {
                         if (this.selectedTime) {
                             this.selectedQTime = this.selectedTime
+                            
                         } else {
                             this.selectedQTime = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
-
+                            console.log(this.selectedQTime)
                         }
                         this.personsAhead = this.sel_queue_personaahead;
                         this.waitingTime = this.sel_queue_waitingmins;
@@ -841,6 +843,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + cdate;
         this.sel_checkindate = seldate;
+        console.log(this.sel_checkindate)
         this.getQueuesbyLocationandServiceId(this.sel_loc, this.selectedServiceId, this.sel_checkindate, this.account_id);
     }
     checkFutureorToday() {

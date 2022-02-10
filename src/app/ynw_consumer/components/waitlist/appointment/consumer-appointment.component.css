@@ -2027,7 +2027,10 @@ box-shadow: 4px 4px 5px gainsboro;
 
 
   
-
+  .fa fa-whatsapp
+  {
+    color: green!important;
+  }
  
   .fa{
     color: black!important;
