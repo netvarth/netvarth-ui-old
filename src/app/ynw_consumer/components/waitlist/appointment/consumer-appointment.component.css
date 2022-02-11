@@ -2027,10 +2027,7 @@ box-shadow: 4px 4px 5px gainsboro;
 
 
   
-  .fa fa-whatsapp
-  {
-    color: green!important;
-  }
+  
  
   .fa{
     color: black!important;
@@ -2079,7 +2076,7 @@ box-shadow: 4px 4px 5px gainsboro;
       overflow: scroll!important;
       overflow-x: hidden!important;
       width: 100%!important;
-      height: 200px!important;
+      max-height: 200px!important;
     }
   
     
@@ -2130,10 +2127,22 @@ box-shadow: 4px 4px 5px gainsboro;
   {
     padding: 0!important;
   }
-  body.sidebar-mini.modal-open {
-    overflow: hidden!important;
-}
+ 
 
+
+  .header .fa-map-marker
+  {
+    font-size: 14px!important;
+  }
+  .consumer-name
+  {
+    font-size: 20px!important;
+    font-weight: bold!important;
+  }
+  .consumer-name .fa-pencil-square-o
+  {
+    font-size: 20px!important;
+  }
 
 
 

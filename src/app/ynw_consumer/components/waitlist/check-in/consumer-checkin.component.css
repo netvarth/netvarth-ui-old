@@ -2056,7 +2056,19 @@ body.modal-open {
 
 
 
-
+  .header .fa-map-marker
+  {
+    font-size: 14px!important;
+  }
+  .consumer-name
+  {
+    font-size: 20px!important;
+    font-weight: bold!important;
+  }
+  .consumer-name .fa-pencil-square-o
+  {
+    font-size: 20px!important;
+  }
 
 
 

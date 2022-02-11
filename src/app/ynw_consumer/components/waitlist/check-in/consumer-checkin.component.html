@@ -1,11 +1,13 @@
-<div class="card shadow">
-    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
-        <a class="pull-left back-btn" (click)="goBack('back')"><i class="fa fa-arrow-circle-left my-auto"></i>&emsp;
-            <span class="ml-3 my-auto back-btn-text desktop-only">Appointment</span>
-            <span class="ml-3 my-auto back-btn-text mobile-only">{{businessjson.businessName}} , {{locationName}}</span>
-        </a>
+<div class="card shadow d-flex flex-row header">
+    <div class="my-auto">
+        <a class="" (click)="goBack('back')"><i class="fa fa-arrow-left"></i>&emsp;</a>
     </div>
-    <!-- <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
+    <div class="text-center mx-auto">
+        <!-- <span class="ml-3 my-auto back-btn-text desktop-only">Appointment</span> -->
+        <span class="mobile-only"><b>{{businessjson.businessName}}</b></span><br>
+        <span class="mobile-only"><a href="{{googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</a></span>
+    </div>
+    <!-- <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
         <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'checkin'"
             [accountId]="businessId" [customId]="customId"></app-header>
     </div> -->
@@ -15,7 +17,7 @@
     <div class="loading-hgt my-5" *ngIf="!questionnaireLoaded">
         <app-common-innerloading-spinner></app-common-innerloading-spinner>
     </div>
-    <div class="row my-5" *ngIf="questionnaireLoaded">
+    <div class="row" *ngIf="questionnaireLoaded">
         <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch desktop-only">  
             <div class="card shadow">
                 <div class="provider-profile-image text-center m-5">
@@ -31,7 +33,7 @@
                 <div class="clearfix"></div>
             </div>
         </div>
-        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch">
+        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch p-1">
             <div class="card shadow">
                 <div class="">
                     <div class="p-0">
@@ -44,7 +46,7 @@
                                         *ngIf="bookStep === 0">
                                         <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12">
                                             <div class="">
-                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10"
+                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                                                     *ngIf="hideTokenFor">
                                                     <div class="mt-5 text-capitalize">
                                                         <div class="m-auto"
@@ -408,7 +410,7 @@
                                                                         
                                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 optional">
                                                                             <label><i class="fa fa-whatsapp"
-                                                                                style="color:green"></i> Whatsapp#</label>
+                                                                                style="color:green!important"></i> Whatsapp#</label>
                                                                             <div class="disp-flex">
                                                                                 <div class="form-group no-margin">
                                                                                     <input type="text"
@@ -436,7 +438,7 @@
                                                                         </div>
                                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 optional">
                                                                             <label><i class="fa fa-telegram"
-                                                                                    style="color:#29b6f6;"></i> Telegram
+                                                                                    style="color:#29b6f6!important;"></i> Telegram
                                                                                 #</label>
                                                                             <div class="disp-flex">
                                                                                 <div class="form-group no-margin">
@@ -508,7 +510,7 @@
                                         <div class="">
                                             <div class="">
                                                 <div class=""> 
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
+                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                         <div class="mt-5">
                                                             <div class="" *ngIf="selectedServiceId || type == 'waitlistreschedule'">
                                                                 <!-- <div class="service-icon pull-left"
@@ -578,66 +580,52 @@
                                                         
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 p-1">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="queuejson && queuejson.length != 0 && !api_loading1">
                                                         <div class="">
                                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
+                                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                                     <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
                                                                         *ngIf="selectedService.serviceType!=='virtualService'">
-                                                                        <h4 class="text-dark"><b>Booking For</b></h4>
+                                                                        <h6 class="text-dark">Booking For</h6>
                                                                         
                                                                     </div>
                                                                     <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
                                                                         *ngIf="selectedService.serviceType==='virtualService'">
-                                                                        <h4 class="text-dark"><b>Booking For</b></h4>
+                                                                        <h6 class="text-dark">Booking For</h6>
                                                                     </div>
                                                                     <div class="">
                                                                         <div class="">
-                                                                            <div class="row my-2">
-                                                                                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
-                                                                                    <h3 class="text-warning service"
-                                                                                        *ngIf="waitlist_for && waitlist_for[0]">
-                                                                                        {{waitlist_for[0].firstName |
-                                                                                        capitalizeFirst}}
-                                                                                        {{waitlist_for[0].lastName |
-                                                                                        capitalizeFirst}}
-                                                                                    </h3>
-                                                                                </div>
-                                                                                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
-                                                                                    <a *ngIf="type !== 'reschedule' && selectedService && selectedService.serviceType!=='virtualService'"
-                                                                                        class="pointer-cursor changeitem btn btn-primary font-weight-bold text-capitalize px-2 py-1"
-                                                                                        (click)="handleSideScreen('members')"
-                                                                                        data-toggle="modal"
-                                                                                        data-target="#exampleModalCenter">Change Member
-                                                                                    </a>
-                                                                                    <a *ngIf="type !== 'reschedule' && selectedService && selectedService.serviceType==='virtualService'"
-                                                                                        class="pointer-cursor changeitem btn btn-primary font-weight-bold text-capitalize px-2 py-1"
-                                                                                        (click)="handleSideScreen('members')"
-                                                                                        data-toggle="modal"
-                                                                                        data-target="#exampleModalCenter">Change Contact
-                                                                                    </a>
-                                                                                </div>
+                                                                            <div class="">
+                                                                                <span class="text-primary service consumer-name"
+                                                                                    *ngIf="waitlist_for && waitlist_for[0]">
+                                                                                    {{waitlist_for[0].firstName |
+                                                                                    capitalizeFirst}}
+                                                                                    {{waitlist_for[0].lastName |
+                                                                                    capitalizeFirst}}
+                                                                                </span>
+                                                                                <a *ngIf="type !== 'reschedule' && selectedService && selectedService.serviceType!=='virtualService'"
+                                                                                    class="pointer-cursor changeitem font-weight-bold text-capitalize px-2 py-1"
+                                                                                    (click)="handleSideScreen('members')"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#exampleModalCenter">
+                                                                                    <!-- <i class="fa fa-pencil-square-o desktop-only" data-toggle="tooltip" data-placement="right" title="Change Member" aria-hidden="true"></i> -->
+                                                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                                                </a>
                                                                             </div>
                                                         
-                                                                            <div
-                                                                                class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
+                                                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
                                                                                 Status, alerts, communications will be sent to
-                                                                            </div>
+                                                                            </div><div class="clearfix"></div><br>
                                                                             
                                                                             <div class="contact-section">
-                                                                                <i class="fa fa-mobile "></i>
+                                                                                <i class="fa fa-volume-control-phone"></i>
                                                                                 <i class="fa phon-icon mgn-lt-10"
                                                                                     *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                                 <span class="mgn-lt-10 phonevallabel">&nbsp;{{commObj['communicationPhCountryCode']}}
                                                                                     {{commObj['communicationPhNo']}}</span><a
                                                                                     class="mgn-lt-5 lnk pointer-cursor">
                                                                                 </a>
-                                                                                <div class="mode-hint mgn-bt-5"
-                                                                                    *ngIf="selectedService && selectedService.virtualCallingModes && (selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' || selectedService.virtualCallingModes[0].callingMode === 'Phone')">
-                                                                                    The provider will contact
-                                                                                    you in this number
-                                                                                </div>
                                                                             </div>
                                                                             <div class="contact-section"
                                                                                 *ngIf="selectedService && selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp'">
@@ -664,7 +652,7 @@
                                                                     <a #modal data-toggle="modal"
                                                                         data-target="#exampleModalCenter">
                                                                     </a><br>
-                                                                    <span class="text-capitalize text-primary"><b>Please upload Notes/Files related to your service</b></span>
+                                                                    <span class="text-dark">Add notes/upload files you may have</span>
                                                                     <mat-chip-list class="btns">
                                                                         <mat-chip
                                                                             [class.mandatoryChip]="selectedService.consumerNoteMandatory && type != 'reschedule'"
@@ -1103,7 +1091,7 @@
                                                             {{selectedService.consumerNoteTitle}}
                                                             <div class="form-level-settings">
                                                                 Add any other notes to the 
-                                                                {{waitlist_for[0].firstName}}{{waitlist_for[0].lastName}}
+                                                                {{waitlist_for[0].firstName + " " + waitlist_for[0].lastName}}
                                                                 <!-- {{businessjson.businessName ?
                                                                 businessjson.businessName : selectedService.name}} -->
                                                             </div>
@@ -1252,30 +1240,30 @@
                                             <div class="">
                                                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mx-3">
                                                     <div
-                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding p-1">
+                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding p-1">
                                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
                                                             *ngIf="selectedService.serviceType!=='virtualService'">
-                                                            <h4 class="text-dark"><b>Booking For</b></h4>
+                                                            <h6 class="text-dark"><b>Booking For</b></h6>
                                                             
                                                         </div>
                                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
                                                             *ngIf="selectedService.serviceType==='virtualService'">
-                                                            <h4 class="text-dark"><b>Booking For</b></h4>
+                                                            <h6 class="text-dark"><b>Booking For</b></h6>
                                                         </div>
                                                         <div class="">
                                                             <div class="">
-                                                                <div class="row">
-                                                                    <div class="col-md-12" *ngIf="type !== 'waitlistreschedule'">
-                                                                        <h3 class="card-title service mgn-bt-10 text-warning"
+                                                                <div class="">
+                                                                    <div class="" *ngIf="type !== 'waitlistreschedule'">
+                                                                        <span class="consumer-name service text-primary"
                                                                             *ngFor="let member of waitlist_for">
                                                                             {{member.firstName | capitalizeFirst}}
                                                                             {{member.lastName | capitalizeFirst}}
-                                                                        </h3>
-                                                                        <h3 class="card-title service mgn-bt-10 text-warning"
+                                                                        </span>
+                                                                        <span class="consumer-name service text-primary"
                                                                             *ngIf="type === 'waitlistreschedule'">
                                                                             {{wtlst_for_fname | capitalizeFirst}}
                                                                             {{wtlst_for_lname | capitalizeFirst}}
-                                                                        </h3>
+                                                                        </span>
                                                                     </div>
                                                                     
                                                                 </div>
@@ -1283,9 +1271,9 @@
                                                                 <div
                                                                     class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
                                                                     Status, alerts, communications will be sent to
-                                                                </div>
+                                                                </div><div class="clearfix"></div><br>
                                                                 <div class="contact-section">
-                                                                    <i class="fa fa-mobile "></i>
+                                                                    <i class="fa fa-volume-control-phone"></i>
                                                                     <i class="fa phon-icon mgn-lt-10"
                                                                         *ngIf="selectedService  && selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                     <span

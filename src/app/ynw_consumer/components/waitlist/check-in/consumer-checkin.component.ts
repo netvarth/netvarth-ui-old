@@ -444,6 +444,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     changed_date_value(data)
     {
         this.date_pagination_date = data;
+        this.date_pagination_date = this.date_pagination_date + "T00:00:00+05:30"
+        console.log(this.date_pagination_date)
         this.getQueuesbyLocationandServiceId(this.sel_loc, this.selectedService, this.date_pagination_date, this.account_id);
 
     }
@@ -762,7 +764,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     getQueuesbyLocationandServiceId(locid, servid, pdate, accountid, type?) {
         this.queueQryExecuted = false;
-        console.log(pdate)
+        console.log(pdate) 
+        // pdate = "2022-02-15T00:00:00+05:30"
+        // console.log(pdate)
         if (locid && servid) {
             this.subs.sink = this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
