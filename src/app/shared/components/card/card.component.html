@@ -55,8 +55,7 @@
         </div>
         <div [ngClass]="(timings&&personsAheadText)?'col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding':'col-sm-12 col-xs-12 col-md-12 col-lg-12 no-padding'">
             <div class="no-padding card-head-grey" *ngIf="timings">{{timingCaption}}</div>
-            <h6 class="no-padding " *ngIf="timings">{{timings}}
-                <i class="pointer-cursor seemore-link" *ngIf="item.type==='appt'" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)">see more...</i>
+            <h6 class="no-padding " *ngIf="timings">{{timings}}<i class="pointer-cursor seemore-link" *ngIf="item.type==='appt'" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)">, see more...</i>
                 <!-- <i class="fa fa-calendar pointer-cursor" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)"></i> -->
             </h6>
         </div>
@@ -81,10 +80,10 @@
                     more</span>
             </p>
         </div>
-        <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding">
+        <div [ngClass]="(timings&&personsAheadText)?'col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding':'col-sm-12 col-xs-12 col-md-12 col-lg-12 no-padding'">
             <div class="no-padding card-head-grey" *ngIf="timings">{{timingCaption}}</div>
-            <h6 class="no-padding " *ngIf="timings">{{timings}}&nbsp;
-                <i class="fa fa-calendar poin" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)"></i>
+            <h6 class="no-padding " *ngIf="timings">{{timings}}<i class="pointer-cursor seemore-link" *ngIf="item.type==='appt'" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)">, see more...</i>
+                <!-- <i class="fa fa-calendar poin" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)"></i> -->
             </h6>
         </div>
         <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding" [ngClass]="timings?'bord-left':''">
