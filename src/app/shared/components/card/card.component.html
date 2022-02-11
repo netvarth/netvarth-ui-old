@@ -60,7 +60,7 @@
                 <!-- <i class="fa fa-calendar pointer-cursor" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)"></i> -->
             </h6>
         </div>
-        <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding" [ngClass]="timings?'bord-left':''">
+        <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6" [ngClass]="timings?'bord-left':''">
             <div class="no-padding card-head-grey" *ngIf="personsAheadText">{{personsAheadCaption}}</div>
             <h6 class="no-padding" *ngIf="personsAheadText">{{personsAheadText}}</h6>
         </div>
