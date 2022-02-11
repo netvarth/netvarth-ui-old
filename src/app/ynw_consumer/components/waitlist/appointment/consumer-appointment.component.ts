@@ -2454,9 +2454,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             } else {
                 this.virtualForm.patchValue({ islanguage: 'yes' });
             }
-            if (customer.bookingLocation && customer.bookingLocation.pincode) {
-                this.virtualForm.patchValue({ pincode: customer.bookingLocation.pincode });
-            }
+            // if (customer.bookingLocation && customer.bookingLocation.pincode) {
+            //     this.virtualForm.patchValue({ pincode: customer.bookingLocation.pincode });
+            // }
             if (customer.bookingLocation && customer.bookingLocation.district) {
                 this.virtualForm.patchValue({ localarea: customer.bookingLocation.district });
             }
@@ -2489,9 +2489,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.virtualForm.patchValue({ islanguage: 'yes' });
                 }
             }
-            if (customer.userProfile && customer.userProfile.pinCode) {
-                this.virtualForm.patchValue({ pincode: customer.userProfile.pinCode });
-            }
+            // if (customer.userProfile && customer.userProfile.pinCode) {
+            //     this.virtualForm.patchValue({ pincode: customer.userProfile.pinCode });
+            // }
             if (customer.userProfile && customer.userProfile.city) {
                 this.virtualForm.patchValue({ localarea: customer.userProfile.city });
             }
@@ -2639,7 +2639,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             member['telegramNum'] = customerInfo['telegramNum'];
             member['preferredLanguages'] = customerInfo['preferredLanguages'];
             const bookingLocation = {};
-            bookingLocation['pincode'] = customerInfo['pinCode'];
+            // bookingLocation['pincode'] = customerInfo['pinCode'];
             bookingLocation['district'] = customerInfo['bookingLocation']['district'];
             bookingLocation['state'] = customerInfo['bookingLocation']['state'];
             member['bookingLocation'] = bookingLocation;
@@ -2693,7 +2693,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 customerInfo['lastName'] = _this.parentCustomer.userProfile.lastName;
                 customerInfo['whatsAppNum'] = whatsup;
                 customerInfo['telegramNum'] = telegram;
-                customerInfo['pinCode'] = formdata.pincode;
+                // customerInfo['pinCode'] = formdata.pincode;
                 if (formdata.email !== '' && formdata.updateEmail) {
                     customerInfo['email'] = formdata.email
                 }
@@ -2742,7 +2742,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     customerInfo['userProfile']['email'] = formdata.email;
                 }
                 customerInfo['bookingLocation'] = {};
-                customerInfo['bookingLocation']['pincode'] = formdata.pincode;
+                // customerInfo['bookingLocation']['pincode'] = formdata.pincode;
                 if (_this.parentCustomer.countryCode !== '+91' && formdata.localarea && formdata.localarea !== '') {
                     customerInfo['bookingLocation']['district'] = formdata.localarea;
                 }
@@ -2837,15 +2837,15 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     validateVirtualForm() {
         let isinvalid = false;
         if (this.parentCustomer.userProfile.countryCode === '+91') {
-            if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
-                isinvalid = true;
-            }
+            // if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
+            //     isinvalid = true;
+            // }
         }
-        if (this.parentCustomer.userProfile.countryCode !== '+91') {
+        // if (this.parentCustomer.userProfile.countryCode !== '+91') {
             if (this.virtualForm.get('localarea').value === '' || this.virtualForm.get('state').value === '') {
                 isinvalid = true;
             }
-        }
+        // }
         if (this.virtualForm.get('gender').value === '') { isinvalid = true; }
         if (this.virtualForm.get('age').value === '') { isinvalid = true; }
         if (this.virtualForm.get('islanguage').value === 'no') {

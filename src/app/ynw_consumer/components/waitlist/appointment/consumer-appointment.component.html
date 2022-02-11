@@ -225,7 +225,7 @@
                                                                         </app-field-error-display>
                                                                     </div>
                                                                 </div>
-                                                                <div class="form-group"
+                                                                <!-- <div class="form-group"
                                                                     *ngIf="parentCustomer.userProfile.countryCode=='+91'">
                                                                     <label for="pincode"
                                                                         class="col-form-label">Residing Pincode in India 
@@ -260,10 +260,11 @@
                                                                             </mat-radio-button>
                                                                         </mat-radio-group>
                                                                     </div>
-                                                                </div>
+                                                                </div> -->
                                                             <!-- </div> -->
+                                                            <!-- *ngIf="parentCustomer.userProfile.countryCode !=='+91'" -->
                                                             <div class="form-group"
-                                                                *ngIf="parentCustomer.userProfile.countryCode !=='+91'">
+                                                                >
                                                                 <label class="col-form-label"
                                                                     for="lastName">Location <span
                                                                         class="red">*</span></label>
@@ -272,8 +273,9 @@
                                                                     formControlName="localarea"
                                                                     [ngStyle]="{'background-color': bgColor}">
                                                             </div>
+                                                            <!-- *ngIf="parentCustomer.userProfile.countryCode !=='+91'" -->
                                                             <div class="form-group"
-                                                                *ngIf="parentCustomer.userProfile.countryCode !=='+91'">
+                                                                >
                                                                 <label class="col-form-label" for="state">
                                                                     Residing State<span
                                                                         class="red">*</span></label>
