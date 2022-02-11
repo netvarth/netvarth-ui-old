@@ -43,11 +43,11 @@
                             <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding"
                                 data-wizard-type="step-content" data-wizard-state="current"
                                 *ngIf="bookStep === 0">
-                                <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                                <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 p-1">
                                     <div class="">
-                                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding mgn-bt-10" *ngIf="hideTokenFor">
-                                            <div class="mt-5 text-capitalize">
-                                                <div class="m-auto"
+                                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding" *ngIf="hideTokenFor">
+                                            <div class="text-capitalize">
+                                                <div class=""
                                                     *ngIf="selectedServiceId || type == 'waitlistreschedule'">
                                                     <!-- <div class="service-icon pull-left"
                                                         *ngIf="selectedService.serviceType == 'virtualService'">
@@ -108,7 +108,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="clearfix"></div><hr>
+                                            <div class="clearfix"></div><hr class="m-0 p-0">
                                             
                                         </div>
                                     </div>
@@ -120,13 +120,13 @@
                                             <div class="cust-loginpge-color">
                                                 <div class="mat-dialog-content">
                                                     <div *ngIf="hideLanguages">
-                                                        <div class="mgn-up-10">
+                                                        <div class="">
                                                             <label class="col-form-label text-capitalize"
                                                                 for="name">Consultation For</label>
                                                             <br />
                                                             <div class="form-group form-inline">
                                                                 <mat-radio-group formControlName="serviceFor"
-                                                                    class="mgn-up-5 userGroup m-0 p-2"
+                                                                    class="userGroup m-0 p-2"
                                                                     (change)="onServiceForChange($event.value)">
                                                                     <mat-radio-button class="col-md-3 col-lg-3 col-sm-12 col-xs-12"
                                                                         [value]="parentCustomer.id">
@@ -140,8 +140,8 @@
                                                                         {{member.userProfile.firstName}}
                                                                         &nbsp;
                                                                         {{member.userProfile.lastName}}
-                                                                    </mat-radio-button>
-                                                                    <mat-radio-button value="new_member" class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                                                                    </mat-radio-button><br>
+                                                                    <mat-radio-button value="new_member" class="">
                                                                         Someone else
                                                                     </mat-radio-button>
                                                                 </mat-radio-group>
@@ -151,11 +151,11 @@
                                                             </div>
                                                         </div>
                                                         <fieldset>
-                                                            <div class="mgn-up-10 mgn-bt-10"
-                                                                style="font-size: 0.75rem !important; display: flex !important;justify-content: left;">
-                                                                Please provide basic information about the
+                                                            <div class=" mgn-bt-10 text-primary"
+                                                                style="font-size: 1rem !important; display: flex !important;justify-content: left;">
+                                                                We need some more information from you
                                                                 &nbsp;
-                                                                <span style="margin-right: 5px;padding-right: 5px;">{{consumer_label}}</span>
+                                                                <!-- <span style="margin-right: 5px;padding-right: 5px;">{{consumer_label}}</span> -->
                                                             </div>
                                                             <div class="row">
                                                                 <div class="form-group col-md-6 col-lg-6 col-sm-12 col-xs-12"
@@ -386,7 +386,7 @@
                                                                     {{parentCustomer.userProfile.countryCode}}
                                                                     {{parentCustomer.userProfile.primaryMobileNo}}
                                                                 </div><br>
-                                                                <div class=" form-group optional col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <div class=" form-group optional col-lg-6 col-md-6 col-sm-12 col-xs-12 pl-0">
                                                                     <label for="email"
                                                                         class="col-form-label">Email</label>
                                                                     <input type="email" class="form-control"
@@ -406,7 +406,7 @@
                                                             <!-- </div> -->
                                                             <!-- <div class="row"> -->
                                                                 
-                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 optional">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 optional pl-0">
                                                                     <label><i class="fa fa-whatsapp"
                                                                         style="color:green!important"></i> Whatsapp#</label>
                                                                     <div class="disp-flex">
@@ -434,7 +434,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 optional">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 optional pl-0">
                                                                     <label><i class="fa fa-telegram"
                                                                             style="color:#29b6f6!important;"></i> Telegram
                                                                         #</label>
@@ -491,9 +491,9 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div><hr>
-                                <div class="text-center mx-auto col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 pt-10 hf-single-btn-container">
+                                <div class="text-center mx-auto col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 hf-single-btn-container">
                                     <button type="button"
-                                        class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
+                                        class="next-button btn btn-primary font-weight-bold text-capitalize px-5 py-2"
                                         (click)="goToStep('next')" *ngIf="hideLanguages">
                                         Next
                                     </button> &nbsp;
@@ -526,9 +526,8 @@
                                                 </div>
                                             </div> -->
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                                <div class="clearfix"></div>
                                                 <div class="col-sm-12 col-xs-12 col-md-12">
-                                                    <div class="card-body no-padding"
+                                                    <div class="no-padding"
                                                         *ngIf="selectedServiceId || type == 'reschedule'">
                                                         <!-- <div class="service-icon pull-left"
                                                             *ngIf="selectedService.serviceType == 'virtualService'">
@@ -565,8 +564,7 @@
                                                             <div class="callingmode mgn-lt-10"
                                                                 *ngIf="selectedService && selectedService.serviceType==='virtualService' && type !== 'reschedule'">
                                                                 <div class="mgn-bt-10 mgn-up-5">
-                                                                    <div class=""
-                                                                        *ngFor="let mode of selectedService.virtualCallingModes;let i = index">
+                                                                    <div class="" *ngFor="let mode of selectedService.virtualCallingModes;let i = index">
                                                                         <div style="visibility: hidden;">
                                                                             {{callingModesDisplayName[mode.callingMode]}}
                                                                         </div>
@@ -594,7 +592,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="clearfix"></div><hr>
+                                                <div class="clearfix"></div><hr class="mt-0 pt-0">
                                                 
                                             </div>
                                         </div>
@@ -631,7 +629,7 @@
                                                                     </a>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk">
+                                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk pt-3 text-primary">
                                                                 Status, alerts, communications will be sent to
                                                             </div>
                                                             <div class="clearfix"></div><br>
@@ -673,7 +671,7 @@
                                                     <a #modal data-toggle="modal"
                                                         data-target="#exampleModalCenter">
                                                     </a><br>
-                                                    <span class="text-dark">Add notes/upload files you may have</span>
+                                                    <span class="text-primary">Add notes/upload files you may have</span>
                                                     <mat-chip-list class="btns">
                                                         <mat-chip
                                                             [class.mandatoryChip]="selectedService.consumerNoteMandatory && type != 'reschedule'"
@@ -775,7 +773,7 @@
                                         
                                         <app-appointment-date-pagination (date_change_event)=changed_date_value($event)></app-appointment-date-pagination>
 
-                                        <div class="pb-0 px-auto mb-2 mx-2 font-weight-bold text-left">
+                                        <div class="pb-0 px-auto mb-4 mx-2 font-weight-bold text-left">
                                             <h5 class="text-capitalize text-primary"><b>Select Appointment Time</b></h5>
                                         </div>
                                         <div *ngIf="freeSlots && freeSlots.length > 0" class="freeslots m-1 my-3">
@@ -1242,7 +1240,7 @@
                                                             </span>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk">
+                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk pt-3 text-primary">
                                                         Status, alerts, communications will be sent to
                                                     </div><div class="clearfix"></div><br>
                                                     <div class="contact-section">
@@ -1421,7 +1419,9 @@
                                             <ng-container
                                                 *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
                                                 ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
-                                                Confirm {{showCheckinButtonCaption()}}</ng-container>
+                                                Confirm 
+                                                <!-- {{showCheckinButtonCaption()}} -->
+                                            </ng-container>
                                         </button>
                                     </div>
                                     <!-- <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 "
@@ -1553,7 +1553,9 @@
                                             id="stepThreeConfirmButton"
                                             class="next-button btn btn-primary font-weight-bold  px-12 py-4"
                                             [disabled]="!checkPolicy && heartfulnessAccount">
-                                            Confirm {{showCheckinButtonCaption()}}</button>
+                                            Confirm 
+                                            <!-- {{showCheckinButtonCaption()}} -->
+                                        </button>
                                     </div>
                                 </div>
                                 <ng-container *ngIf="heartfulnessAccount">

@@ -44,12 +44,12 @@
                                     <div class=""
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 0">
-                                        <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                                        <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 p-1">
                                             <div class="">
                                                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                                                     *ngIf="hideTokenFor">
-                                                    <div class="mt-5 text-capitalize">
-                                                        <div class="m-auto"
+                                                    <div class="text-capitalize">
+                                                        <div class=""
                                                             *ngIf="selectedServiceId || type == 'waitlistreschedule'">
                                                             <!-- <div class="service-icon pull-left"
                                                                 *ngIf="selectedService.serviceType == 'virtualService'">
@@ -110,7 +110,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="clearfix"></div><hr>
+                                                    <div class="clearfix"></div><hr class="m-0 p-0">
                                                     
                                                 </div>
                                             </div>
@@ -122,7 +122,7 @@
                                                     <div class="cust-loginpge-color">
                                                         <div class="mat-dialog-content">
                                                             <div *ngIf="hideLanguages">
-                                                                <div class="mgn-up-10">
+                                                                <div class="">
                                                                     <label class="col-form-label text-capitalize"
                                                                         for="name">Consultation For</label>
                                                                     <br />
@@ -142,8 +142,8 @@
                                                                                 {{member.userProfile.firstName}}
                                                                                 &nbsp;
                                                                                 {{member.userProfile.lastName}}
-                                                                            </mat-radio-button>
-                                                                            <mat-radio-button value="new_member" class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                                                                            </mat-radio-button><br>
+                                                                            <mat-radio-button value="new_member" class="">
                                                                                 Someone else
                                                                             </mat-radio-button>
                                                                         </mat-radio-group>
@@ -153,11 +153,11 @@
                                                                     </div>
                                                                 </div>
                                                                 <fieldset>
-                                                                    <div class="mgn-up-10 mgn-bt-10"
-                                                                        style="font-size: 0.75rem !important; display: flex !important;justify-content: left;">
-                                                                        Please provide basic information about the
+                                                                    <div class="text-primary"
+                                                                        style="font-size: 1rem !important; display: flex !important;justify-content: left;">
+                                                                        We need some more information from you
                                                                         &nbsp;
-                                                                        <span style="margin-right: 5px;padding-right: 5px;">{{consumer_label}}</span>
+                                                                        <!-- <span style="margin-right: 5px;padding-right: 5px;">{{consumer_label}}</span> -->
                                                                     </div>
                                                                     <div class="row">
                                                                         <div class="form-group col-md-6 col-lg-6 col-sm-12 col-xs-12"
@@ -388,7 +388,7 @@
                                                                             {{parentCustomer.userProfile.countryCode}}
                                                                             {{parentCustomer.userProfile.primaryMobileNo}}
                                                                         </div><br>
-                                                                        <div class=" form-group optional col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                        <div class=" form-group optional col-lg-6 col-md-6 col-sm-12 col-xs-12 pl-0">
                                                                             <label for="email"
                                                                                 class="col-form-label">Email</label>
                                                                             <input type="email" class="form-control"
@@ -408,7 +408,7 @@
                                                                     <!-- </div> -->
                                                                     <!-- <div class="row"> -->
                                                                         
-                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 optional">
+                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 optional pl-0">
                                                                             <label><i class="fa fa-whatsapp"
                                                                                 style="color:green!important"></i> Whatsapp#</label>
                                                                             <div class="disp-flex">
@@ -436,7 +436,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 optional">
+                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 optional pl-0">
                                                                             <label><i class="fa fa-telegram"
                                                                                     style="color:#29b6f6!important;"></i> Telegram
                                                                                 #</label>
@@ -494,9 +494,9 @@
                                         </div>
                                         <div class="clearfix"></div><hr>
                                         <div
-                                            class="text-center col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between pt-10 width-100 mgn-lt-10 hf-single-btn-container">
+                                            class="text-center col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between width-100 mgn-lt-10 hf-single-btn-container">
                                             <button type="button"
-                                                class="mx-auto next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
+                                                class="mx-auto next-button btn btn-primary font-weight-bold text-capitalize px-5 py-2"
                                                 (click)="goToStep('next')" *ngIf="hideLanguages">
                                                 Next
                                             </button> &nbsp;
@@ -614,7 +614,7 @@
                                                                                 </a>
                                                                             </div>
                                                         
-                                                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
+                                                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10 pt-3 text-primary">
                                                                                 Status, alerts, communications will be sent to
                                                                             </div><div class="clearfix"></div><br>
                                                                             
@@ -652,7 +652,7 @@
                                                                     <a #modal data-toggle="modal"
                                                                         data-target="#exampleModalCenter">
                                                                     </a><br>
-                                                                    <span class="text-dark">Add notes/upload files you may have</span>
+                                                                    <span class="text-primary">Add notes/upload files you may have</span>
                                                                     <mat-chip-list class="btns">
                                                                         <mat-chip
                                                                             [class.mandatoryChip]="selectedService.consumerNoteMandatory && type != 'reschedule'"
@@ -732,19 +732,7 @@
                                                                                 (click)="showJCCouponNote(coupon)"
                                                                                 aria-hidden="true">Know more</small></small>
                                                                     </div>
-                                                                    <!-- <div
-                                                                        class="col-md-12 col-xs-12 col-sm-12">
-                                                                        <div
-                                                                            class="col-md-12 col-xs-12 col-sm-12">
-                                                                            <div class="checkin-btn-bp pointer-cursor"
-                                                                                *ngIf="type == 'waitlistreschedule'"
-                                                                                [class.disableActn]="(queuejson && queuejson.length == 0 && !api_loading1) || callingModes === '' || disableButn()"
-                                                                                (click)="rescheduleWaitlist()">
-                                                                                Reschedule
-                                                                                <i class="fa fa-long-arrow-right mgn-lt-5"></i>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div> -->
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -847,6 +835,18 @@
                                                     (click)="goToStep('next');actionCompleted()"
                                                     [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1) || waitlist_for.length == 0">
                                                     Proceed to Payment
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-xs-12 col-sm-12">
+                                            <div
+                                                class="col-md-12 col-xs-12 col-sm-12">
+                                                <button type = "button" class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
+                                                    *ngIf="type === 'waitlistreschedule'"
+                                                    [class.disableActn]="(queuejson && queuejson.length == 0 && !api_loading1) || callingModes === '' || disableButn()"
+                                                    (click)="rescheduleWaitlist()">
+                                                    Reschedule
+                                                    <i class="fa fa-long-arrow-right mgn-lt-5"></i>
                                                 </button>
                                             </div>
                                         </div>
@@ -1215,19 +1215,8 @@
                                                     Proceed to Payment
                                                 </button>
                                             </div>
-                                            <div class="col-md-12 col-xs-12 col-sm-12">
-                                                <div
-                                                    class="col-md-12 col-xs-12 col-sm-12">
-                                                    <div class="checkin-btn-bp pointer-cursor"
-                                                        *ngIf="type == 'waitlistreschedule'"
-                                                        [class.disableActn]="(queuejson && queuejson.length == 0 && !api_loading1) || callingModes === '' || disableButn()"
-                                                        (click)="rescheduleWaitlist()">
-                                                        Reschedule
-                                                        <i class="fa fa-long-arrow-right mgn-lt-5"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
+                                        
                                     </div>
                                     <div>
                                         <div class="lbl col-sm-12 col-md-12 col-lg-8 col-xs-12 col-sm-12 no-padding"
@@ -1281,7 +1270,7 @@
                                                                 </div>
                                             
                                                                 <div
-                                                                    class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
+                                                                    class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10 pt-3 text-primary">
                                                                     Status, alerts, communications will be sent to
                                                                 </div><div class="clearfix"></div><br>
                                                                 <div class="contact-section">
@@ -1358,19 +1347,7 @@
                                                                     (click)="showJCCouponNote(coupon)"
                                                                     aria-hidden="true">Know more</small></small>
                                                         </div>
-                                                        <div
-                                                            class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                                            <div
-                                                                class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
-                                                                <div class="checkin-btn-bp pointer-cursor"
-                                                                    *ngIf="type == 'waitlistreschedule'"
-                                                                    [class.disableActn]="(queuejson && queuejson.length == 0 && !api_loading1) || callingModes === '' || disableButn()"
-                                                                    (click)="rescheduleWaitlist()">
-                                                                    Reschedule
-                                                                    <i class="fa fa-long-arrow-right mgn-lt-5"></i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -1439,7 +1416,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="p-0 font-weight-bold">
-                                                    <h6 class="text-capitalize"><b>Your Appointment Date </b></h6>
+                                                    <h6 class="text-capitalize"><b>Your {{settingsjson.showTokenId?'Token
+                                                        ':'Checkin'}} date and time </b></h6>
                                                 </div>
                                                 <div class="" *ngIf="queuejson && queuejson.length != 0 && !api_loading1">
                                                     <div class="">
@@ -1520,7 +1498,8 @@
                                                             <ng-container
                                                                 *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
                                                             ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
-                                                                Confirm {{settingsjson.showTokenId?'Token ':'Checkin'}}
+                                                                Confirm 
+                                                                <!-- {{settingsjson.showTokenId?'Token ':'Checkin'}} -->
                                                             </ng-container>
                                                             
                                                         </button>
@@ -1591,8 +1570,10 @@
                                                                 class="next-button btn btn-primary font-weight-bold btn-1 px-12 py-4"
                                                                 [disabled]="!checkPolicy && heartfulnessAccount">
             
-                                                                Confirm <span>{{settingsjson.showTokenId?'Token
-                                                                    ':'Checkin'}} </span></button>
+                                                                Confirm 
+                                                                <!-- <span>{{settingsjson.showTokenId?'Token
+                                                                    ':'Checkin'}} </span> -->
+                                                            </button>
                 
                 
                                                             
