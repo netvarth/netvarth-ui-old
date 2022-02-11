@@ -623,7 +623,7 @@
                                                                         {{waitlist_for[0].lastName |
                                                                         capitalizeFirst}}
                                                                     </span>
-                                                                    <a *ngIf="type !== 'reschedule' && selectedService && selectedService.serviceType!=='virtualService'"
+                                                                    <a *ngIf="type !== 'reschedule'"
                                                                         class="pointer-cursor changeitem font-weight-bold text-capitalize px-2 py-1"
                                                                         (click)="handleSideScreen('members')"
                                                                         data-toggle="modal"
@@ -756,25 +756,14 @@
                                                     </div>
                                                     <div class="changeprice" *ngIf="amountdifference > 0">
                                                         The balance amount for the rescheduled booking will be
-                                                        â‚¹{{amountdifference}}. Contact your provider directly
+                                                        Ã¢â€šÂ¹{{amountdifference}}. Contact your provider directly
                                                         for
                                                         payment adjustments.
                                                     </div>
                                                     <div class="changeprice" *ngIf="amountdifference < 0">
                                                         Contact your provider directly for payment adjustments.
                                                     </div>
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                                        <div
-                                                            class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
-                                                            <div class="checkin-btn-bp pointer-cursor"
-                                                                *ngIf="type == 'reschedule'"
-                                                                [class.disableActn]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1) || callingModes === '' || disableButn()"
-                                                                (click)="rescheduleAppointment()">
-                                                                Reschedule
-                                                                <i class="fa fa-long-arrow-right mgn-lt-5"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -844,6 +833,15 @@
                                             (click)="goToStep('next');actionCompleted()"
                                             [class.disabled]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1)">
                                             Proceed to Payment
+                                        </button>
+                                    </div>
+                                    <div class="mx-auto text-center col-md-12 col-xs-12 col-sm-12 no-padding">
+                                        <button type="button" class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
+                                            *ngIf="type == 'reschedule'"
+                                            [class.disableActn]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1) || callingModes === '' || disableButn()"
+                                            (click)="rescheduleAppointment()">
+                                            Reschedule
+                                            <i class="fa fa-long-arrow-right mgn-lt-5"></i>
                                         </button>
                                     </div>
                                 </div>

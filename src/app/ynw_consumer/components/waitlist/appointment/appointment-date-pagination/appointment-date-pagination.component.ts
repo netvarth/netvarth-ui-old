@@ -25,6 +25,14 @@ export class AppointmentDatePaginationComponent extends ConsumerAppointmentCompo
   ngOnInit(): void {
     this.minDate = this.sel_checkindate;
     this.previous_date_handling_btn = false;
+    if(this.type == "reschedule")
+    {
+      console.log("reschedule")
+      this.minDate = new Date();
+      this.minDate.setDate(this.minDate.getDate() + 1)
+      this.minDate = moment(this.minDate).format("YYYY-MM-DD");
+      this.sel_checkindate = this.minDate
+    }
     let today_date1 = new Date(this.sel_checkindate);
     this.default_value =  this.week[today_date1.getDay()]+this.month[today_date1.getMonth()]+today_date1.getDate();
     today_date1.setDate(today_date1.getDate() + 1);
@@ -138,4 +146,6 @@ date_handling_btn()
       this.previous_date_handling_btn = true;
     }
   }
+  
+  
 }

@@ -732,7 +732,7 @@
                                                                                 (click)="showJCCouponNote(coupon)"
                                                                                 aria-hidden="true">Know more</small></small>
                                                                     </div>
-                                                                    <div
+                                                                    <!-- <div
                                                                         class="col-md-12 col-xs-12 col-sm-12">
                                                                         <div
                                                                             class="col-md-12 col-xs-12 col-sm-12">
@@ -744,7 +744,7 @@
                                                                                 <i class="fa fa-long-arrow-right mgn-lt-5"></i>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                    </div> -->
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1215,6 +1215,18 @@
                                                     Proceed to Payment
                                                 </button>
                                             </div>
+                                            <div class="col-md-12 col-xs-12 col-sm-12">
+                                                <div
+                                                    class="col-md-12 col-xs-12 col-sm-12">
+                                                    <div class="checkin-btn-bp pointer-cursor"
+                                                        *ngIf="type == 'waitlistreschedule'"
+                                                        [class.disableActn]="(queuejson && queuejson.length == 0 && !api_loading1) || callingModes === '' || disableButn()"
+                                                        (click)="rescheduleWaitlist()">
+                                                        Reschedule
+                                                        <i class="fa fa-long-arrow-right mgn-lt-5"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div>
@@ -1615,7 +1627,7 @@
                         deducted from the amount(which includes Jaldee
                         service charges and Online Gateway fees).</li>
                     <li>Refund will be received directly to the
-                        consumerâ€™s
+                        consumerÃ¢â‚¬â„¢s
                         bank account after he/she cancels the future
                         bookings.</li>
                     <li>If the booking is cancelled on the date of

@@ -925,7 +925,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         const post_Data = {
             'uid': this.rescheduleUserId,
             'time': this.selectedApptTime['time'],
-            'date': this.selectedDate,
+            'date': this.date_pagination_date,
             'schedule': this.selectedApptTime['scheduleId'],
             'consumerNote': this.consumerNote
         };
@@ -1714,7 +1714,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         });
     }
     disableButn() {
-        if (moment(this.sel_checkindate).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.selectedApptTime['time'] === this.holdselectedTime) {
+        if (moment(this.date_pagination_date).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.selectedApptTime['time'] === this.holdselectedTime) {
             return true;
         } else {
             return false;

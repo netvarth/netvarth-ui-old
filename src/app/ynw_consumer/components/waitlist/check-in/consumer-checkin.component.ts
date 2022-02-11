@@ -599,7 +599,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     rescheduleWaitlist() {
         const post_Data = {
             'ynwUuid': this.rescheduleUserId,
-            'date': this.selectedDate,
+            'date': this.date_pagination_date,
             'queue': this.queueId,
             'consumerNote': this.consumerNote
         };
