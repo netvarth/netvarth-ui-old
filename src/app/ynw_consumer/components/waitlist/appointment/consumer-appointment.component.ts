@@ -1617,28 +1617,20 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     goBack(type?) {
-        if(this.bookStep === 3){
-            this.bookStep--;
-        }
         if (type) {
             if ((this.tele_srv_stat !== 'true' && this.bookStep === 1) || (this.tele_srv_stat === 'true' && this.bookStep === 0)) {
                 this.location.back();
             } else {
-               
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.bookStep--;
-                }
-                if (this.bookStep === 1) {
-                    this.bookStep--;
-                }
-                else {
-                    this.bookStep = 1;
-                }
+                } else {
+                    if (this.bookStep === 3) {
+                        this.bookStep = 1;
+                    } else {
+                        this.bookStep--;
+                    }
+                } 
             }
-            // else
-            // {
-            //     this.bookStep = 1;
-            // }
         }
         if (this.action !== 'addmember') {
             this.closebutton.nativeElement.click();

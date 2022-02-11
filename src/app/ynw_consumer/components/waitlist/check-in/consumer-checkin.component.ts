@@ -1840,18 +1840,15 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             if ((this.tele_srv_stat !== 'true' && this.bookStep === 1) || (this.tele_srv_stat === 'true' && this.bookStep === 0)) {
                 this.location.back();
             } else {
-                if(this.bookStep === 3){
-                    this.bookStep--;
-                }
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.bookStep--;
-                }
-                if (this.bookStep === 1) {
-                    this.bookStep--;
-                }
-                else {
-                    this.bookStep = 1;
-                }
+                } else {
+                    if (this.bookStep === 3) {
+                        this.bookStep = 1;
+                    } else {
+                        this.bookStep--;
+                    }
+                } 
             }
         }
         if (this.action !== 'addmember') {
