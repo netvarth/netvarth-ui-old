@@ -91,6 +91,8 @@ export class BranchUserDetailComponent implements OnInit {
     provider_label = '';
     locationsjson:any;
     loc_list: any = [];
+    stateerror: string;
+    locerror: string;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -236,7 +238,9 @@ export class BranchUserDetailComponent implements OnInit {
             whatsappumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
             countryCode_telegram: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)])],
             telegramnumber: ['', Validators.compose([Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
-            postalCode: ['', Validators.compose([Validators.required, Validators.maxLength(6), Validators.minLength(6), Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+            // postalCode: ['', Validators.compose([Validators.required, Validators.maxLength(6), Validators.minLength(6), Validators.pattern(projectConstantsLocal.VALIDATOR_ONLYNUMBER)])],
+            city: [''],
+            state: [''],
             selectedDepartment: [],
             privileges: [''],
             bProfilePermitted: [''],
@@ -300,7 +304,9 @@ export class BranchUserDetailComponent implements OnInit {
             'selectedUserType': this.user_data.userType || null,
             'privileges': this.user_data.admin || false,
             'bProfilePermitted': this.user_data.bProfilePermitted || false,
-            'postalCode': this.user_data.pincode || null,
+            // 'postalCode': this.user_data.pincode || null,
+            'city':this.user_data.city || null,
+            'state':this.user_data.state || null,
             'countryCode_whatsapp': (this.user_data.whatsAppNum && this.user_data.whatsAppNum.countryCode) ? this.user_data.whatsAppNum.countryCode : '+91',
             'whatsappumber': (this.user_data.whatsAppNum && this.user_data.whatsAppNum.number) ? this.user_data.whatsAppNum.number : '',
             'countryCode_telegram': (this.user_data.telegramNum && this.user_data.telegramNum.countryCode) ? this.user_data.telegramNum.countryCode : '+91',
@@ -317,6 +323,9 @@ export class BranchUserDetailComponent implements OnInit {
         }
     }
     onSubmit(input) {
+        console.log("Input Value:", input);
+        this.locerror = null;
+        this.stateerror = null;
         let date_format = null;
         if (input.dob !== null && input.dob !== '') {
             const date = new Date(input.dob);
@@ -334,7 +343,13 @@ export class BranchUserDetailComponent implements OnInit {
         if (input.last_name.trim() === '') {
             this.lnameerror = 'Last name is required';
         }
-        if (this.fnameerror !== null || this.lnameerror !== null || this.emailerror !== null) {
+        if (!input.city || (input.city && input.city.trim() === '')) {
+            this.locerror = 'City is required';
+        }
+        if (!input.state || (input.state && input.state.trim() === '')) {
+            this.stateerror = 'State is required';
+        }
+        if (this.fnameerror !== null || this.lnameerror !== null || this.emailerror !== null || this.locerror !==null || this.stateerror !== null) {
             return;
         }
         const post_data1 = {
@@ -345,7 +360,7 @@ export class BranchUserDetailComponent implements OnInit {
             'employeeId': input.employeeId || null,
             'email': input.email || '',
             'userType': input.selectedUserType,
-            'pincode': input.postalCode,
+            // 'pincode': input.postalCode,
         };
         if (input.whatsappumber !== '') {
             if (input.countryCode_whatsapp.startsWith('+')) {
@@ -382,6 +397,9 @@ export class BranchUserDetailComponent implements OnInit {
         if (input.selectedUserType === 'PROVIDER') {
             post_data1['deptId'] = input.selectedDepartment;
             post_data1['bProfilePermitted'] = input.bProfilePermitted;
+
+            post_data1['city'] =input.city.trim() || null,
+            post_data1['state'] = input.state.trim() || null
             console.log(this.selectedsubDomain);
             // if (this.selectedsubDomain[0] && this.selectedsubDomain[0].id) {
             //    post_data1['subdomain'] = this.selectedsubDomain[0].id;
@@ -521,23 +539,24 @@ export class BranchUserDetailComponent implements OnInit {
         }
     }
     blurPincodeQty(val) {
-        this.locations = [];
+        // this.locations = [];
         if (val.length < 6) {
             this.snackbarService.openSnackBar('Please enter valid Pincode', { 'panelClass': 'snackbarerror' });
-        } else {
-            if (val.length == 6) {
-                this.provider_services.getlocationbypincode(val)
-                    .subscribe(
-                        data => {
-                            this.locationDetails = data;
-                            this.showloc = true;
-                            this.editloc = false;
-                        },
-                        error => {
-                            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        });
-            }
-        }
+        } 
+        // else {
+        //     if (val.length == 6) {
+        //         this.provider_services.getlocationbypincode(val)
+        //             .subscribe(
+        //                 data => {
+        //                     this.locationDetails = data;
+        //                     this.showloc = true;
+        //                     this.editloc = false;
+        //                 },
+        //                 error => {
+        //                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //                 });
+        //     }
+        // }
     }
     userAddConfirm() {
         const dialogref = this.dialog.open(UserConfirmBoxComponent, {
