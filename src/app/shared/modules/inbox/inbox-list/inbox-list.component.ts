@@ -116,7 +116,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
 
     this.msgdialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
+      panelClass: ['popup-class', 'commonpopupmainclass', 'loginmainclass', 'smallform'],
       disableClose: true,
       autoFocus: true,
       data: pass_ob,

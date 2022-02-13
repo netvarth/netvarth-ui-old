@@ -42,7 +42,7 @@
     height: 160px !important;
     padding-right: 50px !important;
     width: 160px !important;
-    padding-top: 5px !important;
+    padding-top: 5px !important; 
   }
 }
 @media (max-width: 750px) {
@@ -66,3 +66,6 @@
       display: none !important;
   }
 }
+/* .commonpopupmainclass{
+  height: 40% !important;
+} */

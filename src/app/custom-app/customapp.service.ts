@@ -115,7 +115,7 @@ export class CustomappService {
   //   showCommunicate(provid) {
   //     this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
   //       width: '50%',
-  //       panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+  //       panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'loginmainclass', 'smallform'],
   //       disableClose: true,
   //       data: {
   //         caption: 'Enquiry',

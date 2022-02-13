@@ -19,11 +19,17 @@
                                     {{customer[0].firstName | capitalizeFirst}} {{customer[0].lastName |
                                     capitalizeFirst}}
                                 </h5>
-                                <div class="jaldee-id" *ngIf="customer[0].jaldeeId">
+                                <!-- <div class="jaldee-id" *ngIf="customer[0].jaldeeId">
                                     <i class="fa fa-id-card-o icon"></i>
                                     <span class="sub-texts"> Id:
                                         {{customer[0].jaldeeId}}</span>
+                                </div> -->
+                                <div class="jaldee-id" *ngIf="customer[0].jaldeeId">
+                                    <i class="fa fa-id-card-o icon"></i>
+                                    <span class="sub-texts">{{customer_label | capitalizeFirst}} Id:
+                                        {{customer[0].jaldeeId}}</span>
                                 </div>
+                                
                                 <div class="mobile-no" *ngIf="customer[0].phoneNo">
                                     <i class="fa fa-mobile icon"></i>
                                     <span class="sub-texts">{{customer[0].countryCode}} {{customer[0].phoneNo}}</span>

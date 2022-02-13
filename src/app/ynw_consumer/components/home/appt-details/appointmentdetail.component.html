@@ -91,13 +91,8 @@
                                             <div class="each-item"
                                                 *ngIf="appt.service.serviceType === 'virtualService'&&appt.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
                                                 <span class="item-head">WhatsApp #</span>
-                                                <span class="item-label-val" *ngIf="appt.virtualService[appt.service.virtualCallingModes[0].callingMode].startsWith('+'||'++'||'+++')">
-                                                    {{
-                                                    appt.virtualService[appt.service.virtualCallingModes[0].callingMode]}}
-                                                </span>
-                                                <span class="item-label-val" *ngIf="!appt.virtualService[appt.service.virtualCallingModes[0].callingMode].startsWith('+'||'++'||'+++')">
-                                                    +{{
-                                                    appt.virtualService[appt.service.virtualCallingModes[0].callingMode]}}
+                                                <span class="item-label-val" *ngIf="whatsAppNumber">
+                                                    {{whatsAppNumber}}
                                                 </span>
                                             </div>
                                             <div class="each-item" *ngIf="appt.amountPaid">

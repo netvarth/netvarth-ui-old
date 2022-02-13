@@ -1443,7 +1443,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
       width: '50%',
       minHeight: '100vh',
       minWidth: '100vw',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0', 'loginmainclass', 'smallform'],
       disableClose: true,
       data: {
         caption: 'Send Message',

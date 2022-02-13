@@ -110,7 +110,7 @@ export class WaitlistComponent implements OnInit, OnDestroy {
   addNote(pass_ob) {
     const dialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
+      panelClass: ['popup-class', 'commonpopupmainclass', 'loginmainclass', 'smallform'],
       disableClose: true,
       autoFocus: true,
       data: pass_ob

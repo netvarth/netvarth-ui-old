@@ -707,7 +707,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         const appttime = this.freeSlots.filter(slot => slot.time === this.appointment.appmtTime);
                         this.apptTime = appttime[0];
                     } else {
-                        console.log(this.selectedTime)
+                        // console.log(this.selectedTime)
                         if (this.selectedTime) {
                             const appttime = this.freeSlots.filter(slot => slot.displayTime === this.selectedTime);
                             if (appttime) {
@@ -740,11 +740,16 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         const newdate = tdate.split('/').reverse().join('-');
         const futrDte = new Date(newdate);
         const obtmonth = (futrDte.getMonth() + 1);
+        const obtdate = futrDte.getDate()
         let cmonth = '' + obtmonth;
         if (obtmonth < 10) {
             cmonth = '0' + obtmonth;
         }
-        const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
+        let cdate = '' + obtdate
+        if (obtdate < 10) {
+            cdate = '0' + obtdate;
+        }
+        const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + cdate;
         this.sel_checkindate = seldate;
         this.getAvailableSlotByLocationandService(this.sel_loc, this.selectedServiceId, this.sel_checkindate, this.account_id);
     }
@@ -920,7 +925,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         const post_Data = {
             'uid': this.rescheduleUserId,
             'time': this.selectedApptTime['time'],
-            'date': this.selectedDate,
+            'date': this.date_pagination_date,
             'schedule': this.selectedApptTime['scheduleId'],
             'consumerNote': this.consumerNote
         };
@@ -1612,34 +1617,21 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     goBack(type?) {
-        if(this.bookStep === 3){
-            this.bookStep--;
-        }
         if (type) {
-           
             if ((this.tele_srv_stat !== 'true' && this.bookStep === 1) || (this.tele_srv_stat === 'true' && this.bookStep === 0)) {
                 this.location.back();
             } else {
-               
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.bookStep--;
-                  
-                }
-               
-                if (this.bookStep === 1) {
-                    this.bookStep--;
-                }
-                 
-                else {
-                    this.bookStep = 1;
-                }
+                } else {
+                    if (this.bookStep === 3) {
+                        this.bookStep = 1;
+                    } else {
+                        this.bookStep--;
+                    }
+                } 
             }
-            // else
-            // {
-            //     this.bookStep = 1;
-            // }
         }
-       
         if (this.action !== 'addmember') {
             this.closebutton.nativeElement.click();
         }
@@ -1722,7 +1714,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         });
     }
     disableButn() {
-        if (moment(this.sel_checkindate).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.selectedApptTime['time'] === this.holdselectedTime) {
+        if (moment(this.date_pagination_date).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.selectedApptTime['time'] === this.holdselectedTime) {
             return true;
         } else {
             return false;
@@ -2462,9 +2454,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             } else {
                 this.virtualForm.patchValue({ islanguage: 'yes' });
             }
-            if (customer.bookingLocation && customer.bookingLocation.pincode) {
-                this.virtualForm.patchValue({ pincode: customer.bookingLocation.pincode });
-            }
+            // if (customer.bookingLocation && customer.bookingLocation.pincode) {
+            //     this.virtualForm.patchValue({ pincode: customer.bookingLocation.pincode });
+            // }
             if (customer.bookingLocation && customer.bookingLocation.district) {
                 this.virtualForm.patchValue({ localarea: customer.bookingLocation.district });
             }
@@ -2497,9 +2489,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.virtualForm.patchValue({ islanguage: 'yes' });
                 }
             }
-            if (customer.userProfile && customer.userProfile.pinCode) {
-                this.virtualForm.patchValue({ pincode: customer.userProfile.pinCode });
-            }
+            // if (customer.userProfile && customer.userProfile.pinCode) {
+            //     this.virtualForm.patchValue({ pincode: customer.userProfile.pinCode });
+            // }
             if (customer.userProfile && customer.userProfile.city) {
                 this.virtualForm.patchValue({ localarea: customer.userProfile.city });
             }
@@ -2647,7 +2639,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             member['telegramNum'] = customerInfo['telegramNum'];
             member['preferredLanguages'] = customerInfo['preferredLanguages'];
             const bookingLocation = {};
-            bookingLocation['pincode'] = customerInfo['pinCode'];
+            // bookingLocation['pincode'] = customerInfo['pinCode'];
             bookingLocation['district'] = customerInfo['bookingLocation']['district'];
             bookingLocation['state'] = customerInfo['bookingLocation']['state'];
             member['bookingLocation'] = bookingLocation;
@@ -2701,7 +2693,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 customerInfo['lastName'] = _this.parentCustomer.userProfile.lastName;
                 customerInfo['whatsAppNum'] = whatsup;
                 customerInfo['telegramNum'] = telegram;
-                customerInfo['pinCode'] = formdata.pincode;
+                // customerInfo['pinCode'] = formdata.pincode;
                 if (formdata.email !== '' && formdata.updateEmail) {
                     customerInfo['email'] = formdata.email
                 }
@@ -2750,7 +2742,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     customerInfo['userProfile']['email'] = formdata.email;
                 }
                 customerInfo['bookingLocation'] = {};
-                customerInfo['bookingLocation']['pincode'] = formdata.pincode;
+                // customerInfo['bookingLocation']['pincode'] = formdata.pincode;
                 if (_this.parentCustomer.countryCode !== '+91' && formdata.localarea && formdata.localarea !== '') {
                     customerInfo['bookingLocation']['district'] = formdata.localarea;
                 }
@@ -2845,15 +2837,15 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     validateVirtualForm() {
         let isinvalid = false;
         if (this.parentCustomer.userProfile.countryCode === '+91') {
-            if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
-                isinvalid = true;
-            }
+            // if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
+            //     isinvalid = true;
+            // }
         }
-        if (this.parentCustomer.userProfile.countryCode !== '+91') {
+        // if (this.parentCustomer.userProfile.countryCode !== '+91') {
             if (this.virtualForm.get('localarea').value === '' || this.virtualForm.get('state').value === '') {
                 isinvalid = true;
             }
-        }
+        // }
         if (this.virtualForm.get('gender').value === '') { isinvalid = true; }
         if (this.virtualForm.get('age').value === '') { isinvalid = true; }
         if (this.virtualForm.get('islanguage').value === 'no') {

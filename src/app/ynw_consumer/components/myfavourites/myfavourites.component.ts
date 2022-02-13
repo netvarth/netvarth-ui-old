@@ -373,7 +373,7 @@ export class MyfavouritesComponent implements OnInit, OnDestroy {
   addNote(pass_ob) {
     this.addnotedialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
+      panelClass: ['commonpopupmainclass', 'popup-class', 'loginmainclass', 'smallform'],
       disableClose: true,
       autoFocus: true,
       data: pass_ob

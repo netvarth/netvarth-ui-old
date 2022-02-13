@@ -324,6 +324,7 @@ export class TeleBookingService {
         });
     }
     getTeleNumber(phNo) {
+        console.log("Input Phone:", phNo);
         if (phNo.lastIndexOf('+')===0) {
             return phNo;
         } else if (phNo.lastIndexOf('+')===-1) {

@@ -231,7 +231,23 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                     </div>
                                     <div class="clearfix"></div>
                                     <!-- close telegarm and whatsup  part  -->
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12"  *ngIf="showPrvdrFields">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                            <!-- <label class="form-control text-width"
+                                                for="lastName">Location <span
+                                                    class="red">*</span></label> -->
+                                            <input placeholder="Enter your city *"
+                                            class="form-control text-width"
+                                                formControlName="city" type="text" matInput
+                                                >
+                                            </mat-form-field>
+                                            <div class="sts-msg error" *ngIf="locerror">{{locerror}}</div>  
+                                            
+                                        </div>
+<!--                                         
+                                        
+                                        
                                         <div class="form-group">
                                             <mat-form-field>
                                                 <input matInput type="text" class="form-control" id="postalCode"
@@ -253,13 +269,27 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                                 *ngIf="!fed_service.isFieldValid(userForm,'postalCode')"
                                                 [errorMsg]="lnameerror">
                                             </app-field-error-display>
+                                        </div> -->
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12"  *ngIf="showPrvdrFields">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                            <!-- <label class="col-form-label"
+                                                for="lastName">Residing State<span
+                                                    class="red">*</span></label> -->
+                                            <input placeholder="Enter your state *" type="text" matInput
+                                            class="form-control text-width"
+                                                formControlName="state"
+                                            >
+                                            </mat-form-field>
+                                            <div class="sts-msg error" *ngIf="stateerror">{{stateerror}}</div>                                          
                                         </div>
                                     </div>
-                                    <div class="clearfix"></div>
+                                    <!-- <div class="clearfix"></div> -->
 
 
 
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <!-- <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div *ngIf="actionparam.type === 'edit' && editloc">
                                             <span *ngIf="user_data.city && user_data.state"> <i
                                                     class="fa fa-map-marker mgn-rt-5" aria-hidden="true"></i>
@@ -273,7 +303,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                                 </mat-radio-button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="clearfix"></div>
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 10px;"
                                         *ngIf="type != 'ADMIN'">
@@ -340,7 +370,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                             style="margin-top: 20px;position: relative; display: inline-flex;">
                                             <button (click)="onCancel()" type="button"
                                                 class="cs-btn bt2">{{cancel_btn}}</button>
-                                            &nbsp;
+                                            &nbsp; 
                                             <button type="submit" mat-button [disabled]="!userForm.valid"
                                                 class="cs-btn bt2">{{button_title}}</button>
                                         </div>

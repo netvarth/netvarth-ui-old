@@ -9,11 +9,11 @@
         <table class="table responsive" cellpadding=10>
             <tr *ngIf="headerColumns">
                 <th>SL No.</th>
-                <th>Cluster</th>
-                <th>Sales Officer</th>
+                <th>Location</th>
+                <th>{{provider_label | capitalizeFirst}}</th>
                 <th>Employee Code</th>
-                <th>Applicant Name</th>
-                <th>Product</th>
+                <th>{{customer_label | capitalizeFirst}}</th>
+                <th>Service</th>
                 <th *ngFor="let bL of headerColumns | keyvalue">
                     {{bL.value}}
                 </th>
@@ -24,28 +24,28 @@
                     <td>{{i+1}}</td>
                     <td *ngIf="bl.queue">{{bl.queue.location.place}}</td>
                     <td *ngIf="bl.schedule && bl.location">{{bl.location.place}}</td>
-                    <td><span *ngIf="bl.provider"> {{provider_label | capitalizeFirst}}
+                    <td><span *ngIf="bl.provider"> {{bl.providerName | capitalizeFirst}}
                         <!-- {{provider_label}} {{bl.providerName | capitalizeFirst}} -->
                     </span></td>
                     <td><span *ngIf="bl.provider && bl.provider.employeeId">{{bl.provider.employeeId}}</span></td>
                     <!-- <td *ngIf="bl.waitlistingFor[0].firstName === undefined && bl.waitlistingFor[0].lastName === undefined ">NIL
                     </td> -->
                     <td *ngIf="bl.waitlistingFor">
-                        <span>{{customer_label | capitalizeFirst}}
+                        <span>{{bl.customerName}}
                             <!-- {{bl.customerName}} -->
                         </span>
-                        <!-- <span
-                            *ngIf="bl.waitlistingFor[0].firstName === undefined && bl.waitlistingFor[0].lastName === undefined ">NIL</span> -->
+                        <span
+                            *ngIf="bl.waitlistingFor[0].firstName === undefined && bl.waitlistingFor[0].lastName === undefined ">NIL</span>
 
                     </td>
                     <!-- <td *ngIf="bl.appmtFor[0].firstName === undefined && bl.appmtFor[0].lastName === undefined ">NIL
                     </td> -->
                     <td *ngIf="bl.appmtFor">
-                        <span>{{customer_label | capitalizeFirst}}</span>
+                        <span>{{bl.customerName}}</span>
                                                     <!-- {{bl.customerName}} -->
 
-                        <!-- <span
-                            *ngIf="bl.appmtFor[0].firstName === undefined && bl.appmtFor[0].lastName === undefined ">NIL</span> -->
+                        <span
+                            *ngIf="bl.appmtFor[0].firstName === undefined && bl.appmtFor[0].lastName === undefined ">NIL</span>
                     </td>
 
                     <td>{{bl.service.name}}</td>

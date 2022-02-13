@@ -16,6 +16,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { MeetingDetailsComponent } from '../../meeting-details/meeting-details.component';
+import { TeleBookingService } from '../../../../shared/services/tele-bookings-service';
 
 @Component({
   selector: 'app-checkindetail',
@@ -72,6 +73,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
   accountId: any;
   customId: any;
   questionnaires: any = [];
+  whatsAppNumber: any;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -83,7 +85,8 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
     private sharedServices: SharedServices,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
-    private dateTimeProcessor: DateTimeProcessor
+    private dateTimeProcessor: DateTimeProcessor,
+    private teleBookingService: TeleBookingService
   ) {
     this.subs.sink = this.activated_route.queryParams.subscribe(
       (qParams) => {
@@ -111,6 +114,10 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
     this.subs.sink = this.sharedServices.getCheckinByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
       (data) => {
         this.waitlist = data;
+
+        this.whatsAppNumber = this.teleBookingService.getTeleNumber(this.waitlist.virtualService[this.waitlist.service.virtualCallingModes[0].callingMode]);
+
+
         console.log(this.waitlist);
         if (this.waitlist.questionnaires && this.waitlist.questionnaires.length > 0) {
           this.questionnaires = this.waitlist.questionnaires;
@@ -184,7 +191,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
   addNote(pass_ob) {
     this.addnotedialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class'],
+      panelClass: ['commonpopupmainclass', 'popup-class', 'loginmainclass', 'smallform'],
       disableClose: true,
       autoFocus: true,
       data: pass_ob

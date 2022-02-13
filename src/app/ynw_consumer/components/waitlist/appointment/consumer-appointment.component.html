@@ -1,33 +1,37 @@
-<div class="card shadow">
-    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
-        <a class="pull-left back-btn" (click)="goBack('back')"><i class="fa fa-arrow-circle-left my-auto"></i>&emsp;<span class="ml-3 my-auto back-btn-text">Appointment</span></a>
+<div class="card shadow d-flex flex-row header">
+    <div class="my-auto">
+        <a class="" (click)="goBack('back')"><i class="fa fa-arrow-left"></i>&emsp;</a>
+    </div>
+    <div class="text-center mx-auto">
+        <!-- <span class="ml-3 my-auto back-btn-text desktop-only">Appointment</span> -->
+        <span class="mobile-only"><b>{{businessjson.businessName}}</b></span><br>
+        <span class="mobile-only"><a href="{{googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</a></span>
     </div>
     <!-- <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
         <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'checkin'"
             [accountId]="businessId" [customId]="customId"></app-header>
     </div> -->
 </div>
-
 <section #consumer_appointment class="container-fluid" [ngClass]="theme?theme:''">
     <div class="loading-hgt my-5" *ngIf="!questionnaireLoaded">
         <app-common-innerloading-spinner></app-common-innerloading-spinner>
     </div>
-    <div class="row my-5" *ngIf="questionnaireLoaded">
-        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch desktop-only">            
+    <div class="row" *ngIf="questionnaireLoaded">
+        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch desktop-only p-1">            
             <div class="card shadow" >
-                <div class="provider-profile-image text-center m-5" >
+                <div class="provider-profile-image text-center m-5" *ngIf="businessjson && businessjson.logo">
                     <img src="{{businessjson.logo.url}}" width="120px" height="120px" alt="Provider Profile Image" class="rounded-circle shadow-sm">
                 </div>
                 <div class="provider-details m-5 text-dark text-center">
                     <h3><b>{{businessjson.businessName}}</b></h3>
                     <h6><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</h6>
-                    <h6 *ngIf="businessjson.phoneNumbers[0]" ><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;<span>{{businessjson.phoneNumbers[0].instance}}</span></h6>
-                    <h6 *ngIf="businessjson.emails[0]"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;<span>{{businessjson.emails[0].instance}}</span></h6>
+                    <!-- <h6 *ngIf="businessjson.phoneNumbers[0]" ><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;<span>{{businessjson.phoneNumbers[0].instance}}</span></h6> -->
+                    <!-- <h6 *ngIf="businessjson.emails[0]"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;<span>{{businessjson.emails[0].instance}}</span></h6> -->
                 </div>
                 <div class="booking-img"></div>
             </div>
         </div>
-        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch">
+        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch p-1">
             <div class="card shadow">
                 <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
                     data-wizard-clickable="false">
@@ -39,16 +43,11 @@
                             <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding"
                                 data-wizard-type="step-content" data-wizard-state="current"
                                 *ngIf="bookStep === 0">
-                                <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                                <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 p-1">
                                     <div class="">
-                                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding mgn-bt-10"
-                                            *ngIf="hideTokenFor">
-                                            <div class="text-primary text-center m-auto text-capitalize col-md-12 col-xs-12 col-sm-12 pt-2">
-                                                <h5><b>{{showCheckinButtonCaption()}} Details</b></h5>
-                                            </div>
-                                            <div class="clearfix"></div><hr>
-                                            <div class="mt-5 text-capitalize">
-                                                <div class="m-auto"
+                                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding" *ngIf="hideTokenFor">
+                                            <div class="text-capitalize">
+                                                <div class=""
                                                     *ngIf="selectedServiceId || type == 'waitlistreschedule'">
                                                     <!-- <div class="service-icon pull-left"
                                                         *ngIf="selectedService.serviceType == 'virtualService'">
@@ -66,7 +65,7 @@
                                                             *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' && selectedService.virtualServiceType === 'videoService'"></i>
 
                                                     </div> -->
-                                                    <h5 class="text-center text-success text-capitalize service">
+                                                    <h5 class="text-left text-success text-capitalize service">
                                                             <b>{{selectedService.name}}</b>
                                                     </h5>
                                                     <div class="" style="font-size: 1rem"
@@ -109,6 +108,8 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="clearfix"></div><hr class="m-0 p-0">
+                                            
                                         </div>
                                     </div>
                                     
@@ -119,13 +120,13 @@
                                             <div class="cust-loginpge-color">
                                                 <div class="mat-dialog-content">
                                                     <div *ngIf="hideLanguages">
-                                                        <div class="mgn-up-10">
+                                                        <div class="">
                                                             <label class="col-form-label text-capitalize"
                                                                 for="name">Consultation For</label>
                                                             <br />
                                                             <div class="form-group form-inline">
                                                                 <mat-radio-group formControlName="serviceFor"
-                                                                    class="mgn-up-5 userGroup m-0 p-2"
+                                                                    class="userGroup m-0 p-2"
                                                                     (change)="onServiceForChange($event.value)">
                                                                     <mat-radio-button class="col-md-3 col-lg-3 col-sm-12 col-xs-12"
                                                                         [value]="parentCustomer.id">
@@ -139,8 +140,8 @@
                                                                         {{member.userProfile.firstName}}
                                                                         &nbsp;
                                                                         {{member.userProfile.lastName}}
-                                                                    </mat-radio-button>
-                                                                    <mat-radio-button value="new_member" class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                                                                    </mat-radio-button><br>
+                                                                    <mat-radio-button value="new_member" class="">
                                                                         Someone else
                                                                     </mat-radio-button>
                                                                 </mat-radio-group>
@@ -150,11 +151,11 @@
                                                             </div>
                                                         </div>
                                                         <fieldset>
-                                                            <div class="mgn-up-10 mgn-bt-10"
-                                                                style="font-size: 0.75rem !important; display: flex !important;justify-content: left;">
-                                                                Please provide basic information about the
+                                                            <div class=" mgn-bt-10 text-primary"
+                                                                style="font-size: 1rem !important; display: flex !important;justify-content: left;">
+                                                                We need some more information from you
                                                                 &nbsp;
-                                                                <span style="margin-right: 5px;padding-right: 5px;">{{consumer_label}}</span>
+                                                                <!-- <span style="margin-right: 5px;padding-right: 5px;">{{consumer_label}}</span> -->
                                                             </div>
                                                             <div class="row">
                                                                 <div class="form-group col-md-6 col-lg-6 col-sm-12 col-xs-12"
@@ -224,7 +225,7 @@
                                                                         </app-field-error-display>
                                                                     </div>
                                                                 </div>
-                                                                <div class="form-group"
+                                                                <!-- <div class="form-group"
                                                                     *ngIf="parentCustomer.userProfile.countryCode=='+91'">
                                                                     <label for="pincode"
                                                                         class="col-form-label">Residing Pincode in India 
@@ -259,10 +260,11 @@
                                                                             </mat-radio-button>
                                                                         </mat-radio-group>
                                                                     </div>
-                                                                </div>
+                                                                </div> -->
                                                             <!-- </div> -->
+                                                            <!-- *ngIf="parentCustomer.userProfile.countryCode !=='+91'" -->
                                                             <div class="form-group"
-                                                                *ngIf="parentCustomer.userProfile.countryCode !=='+91'">
+                                                                >
                                                                 <label class="col-form-label"
                                                                     for="lastName">Location <span
                                                                         class="red">*</span></label>
@@ -271,8 +273,9 @@
                                                                     formControlName="localarea"
                                                                     [ngStyle]="{'background-color': bgColor}">
                                                             </div>
+                                                            <!-- *ngIf="parentCustomer.userProfile.countryCode !=='+91'" -->
                                                             <div class="form-group"
-                                                                *ngIf="parentCustomer.userProfile.countryCode !=='+91'">
+                                                                >
                                                                 <label class="col-form-label" for="state">
                                                                     Residing State<span
                                                                         class="red">*</span></label>
@@ -385,7 +388,7 @@
                                                                     {{parentCustomer.userProfile.countryCode}}
                                                                     {{parentCustomer.userProfile.primaryMobileNo}}
                                                                 </div><br>
-                                                                <div class=" form-group optional col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                                <div class=" form-group optional col-lg-6 col-md-6 col-sm-12 col-xs-12 pl-0">
                                                                     <label for="email"
                                                                         class="col-form-label">Email</label>
                                                                     <input type="email" class="form-control"
@@ -405,9 +408,9 @@
                                                             <!-- </div> -->
                                                             <!-- <div class="row"> -->
                                                                 
-                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 optional">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 optional pl-0">
                                                                     <label><i class="fa fa-whatsapp"
-                                                                        style="color:green"></i> Whatsapp#</label>
+                                                                        style="color:green!important"></i> Whatsapp#</label>
                                                                     <div class="disp-flex">
                                                                         <div class="form-group no-margin">
                                                                             <input type="text"
@@ -433,9 +436,9 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 optional">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 optional pl-0">
                                                                     <label><i class="fa fa-telegram"
-                                                                            style="color:#29b6f6;"></i> Telegram
+                                                                            style="color:#29b6f6!important;"></i> Telegram
                                                                         #</label>
                                                                     <div class="disp-flex">
                                                                         <div class="form-group no-margin">
@@ -490,9 +493,9 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div><hr>
-                                <div class="text-center mx-auto col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 pt-10 hf-single-btn-container">
+                                <div class="text-center mx-auto col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 hf-single-btn-container">
                                     <button type="button"
-                                        class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
+                                        class="next-button btn btn-primary font-weight-bold text-capitalize px-5 py-2"
                                         (click)="goToStep('next')" *ngIf="hideLanguages">
                                         Next
                                     </button> &nbsp;
@@ -524,14 +527,9 @@
                                                     </div>
                                                 </div>
                                             </div> -->
-                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
-                                                <div class="clearfix"></div>
-                                                <div class="text-primary text-center m-auto text-capitalize col-md-12 col-xs-12 col-sm-12 pt-2">
-                                                    <h5><b>Appointment Details</b></h5>
-                                                </div>
-                                                <div class="clearfix"></div><hr>
+                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                 <div class="col-sm-12 col-xs-12 col-md-12">
-                                                    <div class="card-body no-padding"
+                                                    <div class="no-padding"
                                                         *ngIf="selectedServiceId || type == 'reschedule'">
                                                         <!-- <div class="service-icon pull-left"
                                                             *ngIf="selectedService.serviceType == 'virtualService'">
@@ -548,7 +546,7 @@
                                                             <i class="fa wtsapvid-icon"
                                                                 *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' && selectedService.virtualServiceType === 'videoService'"></i>
                                                         </div> -->
-                                                        <h5 class="text-center text-success text-capitalize service">
+                                                        <h5 class="text-left text-success text-capitalize service">
                                                             <b>{{selectedService.name}}</b>
                                                         </h5>
                                                         <div class="" style="font-size: 1rem;">
@@ -568,8 +566,7 @@
                                                             <div class="callingmode mgn-lt-10"
                                                                 *ngIf="selectedService && selectedService.serviceType==='virtualService' && type !== 'reschedule'">
                                                                 <div class="mgn-bt-10 mgn-up-5">
-                                                                    <div class=""
-                                                                        *ngFor="let mode of selectedService.virtualCallingModes;let i = index">
+                                                                    <div class="" *ngFor="let mode of selectedService.virtualCallingModes;let i = index">
                                                                         <div style="visibility: hidden;">
                                                                             {{callingModesDisplayName[mode.callingMode]}}
                                                                         </div>
@@ -597,6 +594,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="clearfix"></div><hr class="mt-0 pt-0">
+                                                
                                             </div>
                                         </div>
 
@@ -606,40 +605,39 @@
                                                     class="">
                                                     <div class=""
                                                         *ngIf="selectedService.serviceType!=='virtualService'">
-                                                        <h4 class="text-dark"><b>Booking For</b></h4>
+                                                        <h6 class="text-dark"><b>Booking For</b></h6>
                                                         
                                                     </div>
                                                     <div class=""
                                                         *ngIf="selectedService.serviceType==='virtualService'">
-                                                        <h4 class="text-dark"><b>Booking For</b></h4>
+                                                        <h6 class="text-dark"><b>Booking For</b></h6>
                                                     </div>
                                                     <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
-                                                        <div class="card-body no-padding">
-                                                            <div class="row my-2">
-                                                                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
-                                                                    <h3 class="text-warning service"
+                                                        <div class="no-padding">
+                                                            <div class="">
+                                                                <div class="">
+                                                                    <span class="text-primary service consumer-name"
                                                                         *ngIf="waitlist_for && waitlist_for[0]">
                                                                         {{waitlist_for[0].firstName |
                                                                         capitalizeFirst}}
                                                                         {{waitlist_for[0].lastName |
                                                                         capitalizeFirst}}
-                                                                    </h3>
-                                                                </div>
-                                                                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                                                                    </span>
                                                                     <a *ngIf="type !== 'reschedule'"
-                                                                        class="pointer-cursor changeitem btn btn-primary font-weight-bold text-capitalize px-2 py-1"
+                                                                        class="pointer-cursor changeitem font-weight-bold text-capitalize px-2 py-1"
                                                                         (click)="handleSideScreen('members')"
                                                                         data-toggle="modal"
-                                                                        data-target="#exampleModalCenter">Change Member
+                                                                        data-target="#exampleModalCenter"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                                     </a>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk">
-                                                                <b>The provider will contact you in this number</b>
+                                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk pt-3 text-primary">
+                                                                Status, alerts, communications will be sent to
                                                             </div>
+                                                            <div class="clearfix"></div><br>
                                                             <div class="contact-section">
-                                                                <i class="fa fa-mobile "></i>
-                                                                <i class="fa phon-icon mgn-lt-10"
+                                                                <i class="fa fa-volume-control-phone"></i>
+                                                                <i class="fa phon-icon"
                                                                     *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                                 <span class="mgn-lt-10 phonevallabel">&nbsp;{{commObj['communicationPhCountryCode']}}
                                                                     {{commObj['communicationPhNo']}}</span><a
@@ -647,7 +645,7 @@
                                                                 </a>
                                                                 <!-- <div class="mode-hint mgn-bt-5"
                                                                     *ngIf="selectedService && selectedService.virtualCallingModes && (selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' || selectedService.virtualCallingModes[0].callingMode === 'Phone')">
-                                                                    <b>The provider will contact you in this number</b>
+                                                                    Status, alerts, communications will be sent to
                                                                 </div> -->
                                                             </div>
                                                             <div class="contact-section"
@@ -675,7 +673,7 @@
                                                     <a #modal data-toggle="modal"
                                                         data-target="#exampleModalCenter">
                                                     </a><br>
-                                                    <span class="text-capitalize text-primary"><b>Please upload Notes/Files related to your service</b></span>
+                                                    <span class="text-primary">Add notes/upload files you may have</span>
                                                     <mat-chip-list class="btns">
                                                         <mat-chip
                                                             [class.mandatoryChip]="selectedService.consumerNoteMandatory && type != 'reschedule'"
@@ -758,38 +756,27 @@
                                                     </div>
                                                     <div class="changeprice" *ngIf="amountdifference > 0">
                                                         The balance amount for the rescheduled booking will be
-                                                        ₹{{amountdifference}}. Contact your provider directly
+                                                        Ã¢â€šÂ¹{{amountdifference}}. Contact your provider directly
                                                         for
                                                         payment adjustments.
                                                     </div>
                                                     <div class="changeprice" *ngIf="amountdifference < 0">
                                                         Contact your provider directly for payment adjustments.
                                                     </div>
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                                        <div
-                                                            class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
-                                                            <div class="checkin-btn-bp pointer-cursor"
-                                                                *ngIf="type == 'reschedule'"
-                                                                [class.disableActn]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1) || callingModes === '' || disableButn()"
-                                                                (click)="rescheduleAppointment()">
-                                                                Reschedule
-                                                                <i class="fa fa-long-arrow-right mgn-lt-5"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="clearfix"></div>
                                         <hr>
-                                        <div class="pb-0 px-auto my-3 font-weight-bold text-center">
+                                        <div class="pb-0 px-auto my-3 mx-2 font-weight-bold text-left">
                                             <h5 class="text-capitalize text-primary"><b>Select Appointment Date </b></h5>
                                         </div>
                                         
                                         <app-appointment-date-pagination (date_change_event)=changed_date_value($event)></app-appointment-date-pagination>
 
-                                        <div class="pb-0 px-auto mb-2 font-weight-bold text-center">
-                                            <h5 class="text-capitalize text-primary"><b>Select Appointment Time </b></h5>
+                                        <div class="pb-0 px-auto mb-4 mx-2 font-weight-bold text-left">
+                                            <h5 class="text-capitalize text-primary"><b>Select Appointment Time</b></h5>
                                         </div>
                                         <div *ngIf="freeSlots && freeSlots.length > 0" class="freeslots m-1 my-3">
                                             <mat-chip-list>
@@ -808,7 +795,7 @@
                                                     </mat-chip>
                                                 </div>
                                             </mat-chip-list>
-                                            <div class="text-center mx-auto mb-2">
+                                            <div class="text-center mx-auto mb-2" *ngIf="freeSlots && freeSlots.length > 12">
                                                 <button type="button" class="btn btn-primary font-weight-bold text-capitalize px-2 py-1"
                                                     (click)="showMoreTimeSlots()">
                                                     Show <span *ngIf="!showMoreAvailableSlots">More</span>
@@ -846,6 +833,15 @@
                                             (click)="goToStep('next');actionCompleted()"
                                             [class.disabled]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1)">
                                             Proceed to Payment
+                                        </button>
+                                    </div>
+                                    <div class="mx-auto text-center col-md-12 col-xs-12 col-sm-12 no-padding">
+                                        <button type="button" class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
+                                            *ngIf="type == 'reschedule'"
+                                            [class.disableActn]="apptdisable || (freeSlots && freeSlots.length == 0 && !api_loading1) || callingModes === '' || disableButn()"
+                                            (click)="rescheduleAppointment()">
+                                            Reschedule
+                                            <i class="fa fa-long-arrow-right mgn-lt-5"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -990,7 +986,7 @@
                                                 <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
                                                     {{selectedService.consumerNoteTitle}}
                                                     <div class="form-level-settings">
-                                                        Add any other notes to the {{waitlist_for[0].firstName}}{{waitlist_for[0].lastName}}
+                                                        Add any other notes to the {{waitlist_for[0].firstName + " " + waitlist_for[0].lastName}}
                                                         <!-- {{businessjson.businessName ? businessjson.businessName : selectedService.name}} -->
                                                     </div>
                                                 </div>
@@ -1212,13 +1208,13 @@
                                 <app-common-innerloading-spinner *ngIf="api_loading_video">
                                 </app-common-innerloading-spinner>
                             </div>
-                            <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12"
+                            <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 p-1"
                                 data-wizard-type="step-content" data-wizard-state="current"
                                 *ngIf="bookStep === 3" [ngClass]="{'highlight': api_loading_video}">
                                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
                                     <div class="clearfix"></div>
-                                    <div class="text-primary text-center m-auto text-capitalize col-md-12 col-xs-12 col-sm-12 pt-2">
-                                        <h5><b>Appointment Summary</b></h5>
+                                    <div class="text-primary text-left text-capitalize col-md-12 col-xs-12 col-sm-12 pt-2">
+                                        <h5><b>Review and Confirm</b></h5>
                                     </div>
                                     <div class="clearfix"></div><hr>
                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
@@ -1226,32 +1222,32 @@
                                             class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
                                             <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
                                                 *ngIf="selectedService.serviceType!=='virtualService'">
-                                                <h4 class="text-dark"><b>Booking For</b></h4> 
+                                                <h6 class="text-dark"><b>Booking For</b></h6> 
                                                 
                                             </div>
                                             <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
                                                 *ngIf="selectedService.serviceType==='virtualService'">
-                                                <h4 class="text-dark"><b>Booking For</b></h4>
+                                                <h6 class="text-dark"><b>Booking For</b></h6>
                                             </div>
                                             <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
                                                 <div class="card-body no-padding">
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                                                            <h3 class="text-warning service mgn-bt-10"
+                                                            <span class="text-primary service consumer-name"
                                                                 *ngIf="waitlist_for && waitlist_for[0]">
                                                                 {{waitlist_for[0].firstName |
                                                                 capitalizeFirst}}
                                                                 {{waitlist_for[0].lastName |
                                                                 capitalizeFirst}}
-                                                            </h3>
+                                                            </span>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk">
-                                                        <b>The provider will contact you in this number</b>
-                                                    </div>
+                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk pt-3 text-primary">
+                                                        Status, alerts, communications will be sent to
+                                                    </div><div class="clearfix"></div><br>
                                                     <div class="contact-section">
-                                                        <i class="fa fa-mobile "></i>
-                                                        <i class="fa phon-icon mgn-lt-10"
+                                                        <i class="fa fa-volume-control-phone "></i>
+                                                        <i class="fa phon-icon"
                                                             *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Phone'"></i>
                                                         <span class="mgn-lt-10 phonevallabel">&nbsp;{{commObj['communicationPhCountryCode']}}
                                                             {{commObj['communicationPhNo']}}</span><a
@@ -1259,7 +1255,7 @@
                                                         </a>
                                                         <!-- <div class="mode-hint mgn-bt-5"
                                                             *ngIf="selectedService && selectedService.virtualCallingModes && (selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' || selectedService.virtualCallingModes[0].callingMode === 'Phone')">
-                                                            The provider will contact you in this number
+                                                            Status, alerts, communications will be sent to
                                                         </div> -->
                                                     </div>
                                                     <div class="contact-section"
@@ -1287,8 +1283,7 @@
                                     <hr>
                                     <div class="card shadow-lg appointment-details-card">
                                         <div class="text-capitalize">
-                                            <div class="m-auto"
-                                                *ngIf="selectedServiceId || type == 'waitlistreschedule'">
+                                            <div class="m-auto" *ngIf="selectedServiceId || type == 'waitlistreschedule'">
                                                 <!-- <div class="service-icon pull-left"
                                                     *ngIf="selectedService.serviceType == 'virtualService'">
                                                     <i class="fa phon-icon"
@@ -1349,7 +1344,7 @@
                                             </div>
                                         </div>
                                         <div class="p-0 font-weight-bold">
-                                            <h6 class="text-capitalize"><b>Your Appointment Date </b></h6>
+                                            <h6 class="text-capitalize"><b>Your {{showCheckinButtonCaption()}} Date </b></h6>
                                         </div>
                                         <div class="mgn-bt-10 pad-bt-10" *ngIf="selectedApptTime">
                                             <h1 class="text-primary"><b><span *ngIf="!isFuturedate">Today,
@@ -1426,7 +1421,9 @@
                                             <ng-container
                                                 *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
                                                 ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
-                                                Confirm Appointment</ng-container>
+                                                Confirm 
+                                                <!-- {{showCheckinButtonCaption()}} -->
+                                            </ng-container>
                                         </button>
                                     </div>
                                     <!-- <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 "
@@ -1453,7 +1450,7 @@
 
                                             </div>
                                         </div> -->
-                                    <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center mx-auto" *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                    <div class="text-center mx-auto no-padding" *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
                                         <ng-container *ngIf="!shownonIndianModes" class="text-center mx-auto">
                                             <app-payment-modes [paymentModes]="indian_payment_modes"
                                                 (modeSelected)="indian_payment_mode_onchange($event)">
@@ -1558,7 +1555,9 @@
                                             id="stepThreeConfirmButton"
                                             class="next-button btn btn-primary font-weight-bold  px-12 py-4"
                                             [disabled]="!checkPolicy && heartfulnessAccount">
-                                            Confirm Appointment</button>
+                                            Confirm 
+                                            <!-- {{showCheckinButtonCaption()}} -->
+                                        </button>
                                     </div>
                                 </div>
                                 <ng-container *ngIf="heartfulnessAccount">

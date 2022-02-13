@@ -1714,6 +1714,7 @@ sup {
   width: 400px !important;
 }
 
+
 .smallform .mat-dialog-container {
   width: 500px !important;
 }
@@ -10255,6 +10256,7 @@ a {
   position: relative;
   padding-right: 1px;
   width: 26px;
+  object-fit: cover;
 }
 
 .wtsapvid-icon {

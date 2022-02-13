@@ -414,7 +414,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         }
         _this.chatDialog = this.dialog.open(AddInboxMessagesComponent, {
             width: '50%',
-            panelClass: ['commonpopupmainclass', 'popup-class'],
+            panelClass: ['commonpopupmainclass', 'popup-class', 'loginmainclass', 'smallform'],
             disableClose: true,
             autoFocus: true,
             data: pass_ob

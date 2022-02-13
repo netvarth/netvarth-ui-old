@@ -83,6 +83,8 @@ export class VideoCallSharedComponent implements OnInit, OnDestroy {
   notSupported: any;
   videocredits: ArrayBuffer;
   phoneNumber;
+  customer_label = '';
+  provider_label = '';
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -96,6 +98,8 @@ export class VideoCallSharedComponent implements OnInit, OnDestroy {
     private wordProcessor: WordProcessor,
 
   ) {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.onResize();
     this.activated_route.queryParams.subscribe(qparams => {
       // console.log(qparams)

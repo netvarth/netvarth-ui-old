@@ -14,6 +14,7 @@ import { Nl2BrPipeModule } from "nl2br-pipe";
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
 import { ActionPopupModule } from "../action-popup/action-popup.module";
 import { CommunicationModule } from "../../../../shared/components/communication/communication.module";
+import { GalleryModule } from "../../../../shared/modules/gallery/gallery.module";
 
 const routes: Routes = [
     { path: '', component: OrderDetailComponent }
@@ -33,6 +34,7 @@ const routes: Routes = [
         CapitalizeFirstPipeModule,
         ActionPopupModule,
         CommunicationModule,
+        GalleryModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     ],
     declarations: [

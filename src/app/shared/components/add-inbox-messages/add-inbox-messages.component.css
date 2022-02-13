@@ -1,0 +1,21 @@
+textarea {
+    height: 150px !important;
+}
+.mgright25 {
+    margin-right: 25px;
+}
+.card-head-grey {
+    color: #B6B1B1;
+    font-size: 12px;
+  }
+  .coupon-outer {
+    padding-top: 5px !important;
+}
+.grey-b {
+    background: black !important;
+    opacity: .3;
+}
+
+.hint {
+    color: #1212b8;
+}
