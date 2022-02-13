@@ -46,6 +46,7 @@
         </div>
     </div>
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 card-timings-cont">
+        
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="item.type=='donation'">
             <p class="card-text donationAmount no-padding mgn-lt-10">
                 <span class="rupee-font bold">Donate <i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>
@@ -99,6 +100,9 @@
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
             <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event)"
                 class="getappointmentbutton ">{{buttonCaption}}</button>
+              
+
+
     </div>
 </div>
 
@@ -300,6 +304,7 @@
 
 <ng-container *ngIf="item.type=='checkin-dashboard' || item.type=='appt-dashboard'">
     <div class="col-xs-12 col-sm-12 no-padding" (click)="gotoDetails()" [class.history]="time_type==3">
+        
         <div class="main-sec">
             <div class="token" *ngIf="time_type!==3 && waitlist.token && !waitlist.provider">
                 {{waitlist.token}}
@@ -308,6 +313,7 @@
                 {{waitlist.token}}
             </div>
             <div class="box1 mgn-lt-5" [class.mgn-bt-minus]="waitlist.provider">
+                
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
                     *ngIf="item.type=='checkin-dashboard' && (waitlist.waitlistingFor[0].firstName || waitlist.waitlistingFor[0].lastName)">
                     {{waitlist.waitlistingFor[0].firstName}}
@@ -350,6 +356,10 @@
                     <span
                         *ngIf="waitlist.waitlistingFor[0].bookingLocation.state">{{waitlist.waitlistingFor[0].bookingLocation.state}}</span>
                 </div>
+                <!-- <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="!waitlist.waitlistingFor[0].age && !waitlist.waitlistingFor[0].gender">
+                    <span *ngIf="waitlist.consumer.gender">{{waitlist.consumer.gender | capitalizeFirst}} </span>
+
+                </div> -->
                 <div class="col-xs-12 col-sm-12 no-padding view-details"
                     *ngIf="waitlist.waitlistingFor[0].age || waitlist.waitlistingFor[0].gender">
                     <span *ngIf="waitlist.waitlistingFor[0].age">{{getAge(waitlist.waitlistingFor[0].age)}}
@@ -357,6 +367,7 @@
                     <span *ngIf="waitlist.waitlistingFor[0].age && waitlist.waitlistingFor[0].gender">&nbsp;,</span>
                     <span *ngIf="waitlist.waitlistingFor[0].gender">{{waitlist.waitlistingFor[0].gender |
                         capitalizeFirst}}</span>
+
                 </div>
                 <div class="col-xs-12 col-sm-12 no-padding view-details"
                     *ngIf="waitlist.waitlistingFor[0].preferredLanguage && waitlist.waitlistingFor[0].preferredLanguage.length > 0">

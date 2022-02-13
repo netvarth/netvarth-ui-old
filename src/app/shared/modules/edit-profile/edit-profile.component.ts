@@ -339,7 +339,7 @@ export class EditProfileComponent implements OnInit {
   telegramInfo() {
     this.telegramdialogRef = this.dialog.open(TelegramInfoComponent, {
       width: '70%',
-      height: '40%',
+      height: '60%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'full-screen-modal', 'telegramPopupClass'],
       disableClose: true,
     });
@@ -353,8 +353,9 @@ export class EditProfileComponent implements OnInit {
   }
 
   enableTelegram(event) {
-    console.log("Event..........",event)
-    const stat = (event.checked) ? 'ENABLED' : 'DISABLED';
+    // console.log("Event..........",event)
+    const stat = (event) ? 'ENABLED' : 'DISABLED';
+    console.log('stat',stat);
     this.shared_services.consumertelegramChat(this.removePlus(this.countryCode), this.phonenoHolder).subscribe(data => {
       this.chatId = data;
     })
@@ -364,6 +365,7 @@ export class EditProfileComponent implements OnInit {
         this.getTelegramstat();
       },
       error => {
+        console.log("helllo")
         this.telegramstat = false;
         if (!this.telegramstat || this.chatId === null) {
           this.telegramInfo();

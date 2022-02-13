@@ -1966,6 +1966,7 @@ export class ProviderCheckinComponent implements OnInit {
                     this.wordProcessor.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
                 } else {
                     this.selectedMessage.files.push(file);
+                    console.log("selected files...",this.selectedMessage)
                     const reader = new FileReader();
                     reader.onload = (e) => {
                         this.selectedMessage.base64.push(e.target['result']);
@@ -2064,10 +2065,13 @@ export class ProviderCheckinComponent implements OnInit {
         }
     }
     toggleAttachment() {
+        // console.log("entered...")
         this.attachments = !this.attachments;
+        // console.log("attachment variable...",this.attachments);
     }
     toggleNotes() {
         this.notes = !this.notes;
+        console.log("notes...",this.notes);
     }
     timeSelected(slot) {
         this.apptTime = slot;
@@ -2210,6 +2214,7 @@ export class ProviderCheckinComponent implements OnInit {
         }
         if (this.questionAnswers && this.questionAnswers.answers) {
             this.api_loading = true;
+            // console.log("questionarieeeeeeeee",post_Data,this.questionAnswers)
             this.provider_services.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
                 this.api_loading = false;
                 if (data.length === 0) {

@@ -549,10 +549,14 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
         checkinData: waitlist,
         multiSelection: this.apptMultiSelection,
         timetype: this.timetype,
-        NoViewDetail: 'true'
+        NoViewDetail: 'true',
+        component:'appointmentaction'
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
+      if(data) {
+        this.addProviderNote(data)
+      }
       console.log("Actions Appt :",data)
       this.getProviderSettings();
     });

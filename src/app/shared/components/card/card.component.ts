@@ -153,6 +153,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 this.user = this.item.item;
                 break;
         }
+        console.log('waitlist...',this.waitlist)
     }
     getServiceName(serviceName) {
         let name = '';
@@ -370,6 +371,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         } else {
             this.router.navigate(['provider', 'appointments', this.appointment.uid], { queryParams: { timetype: this.time_type } });
         }
+        // setTimeout(() => { this.gotoDetails() },2000)
     }
     showMoreorLess(waitlist, type) {
         for (let checkin of this.checkins) {
