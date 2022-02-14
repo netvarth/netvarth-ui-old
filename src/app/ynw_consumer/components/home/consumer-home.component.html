@@ -281,7 +281,7 @@
                                                 <span
                                                 *ngIf="oder.bill && oder.bill.amountPaid > 0"
                                                 class="amtPaid">{{'Paid' | translate}}
-                                                {{oder.bill.amountPaid | currency:'&#8377;'}}</span>
+                                                {{oder.bill.amountPaid | currency:'&#8377;'}} </span>
                                                 <span
                                                 *ngIf="!oder.bill && oder.advanceAmountPaid > 0"
                                                 class="amtPaid">{{'Paid' | translate}}
