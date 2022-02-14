@@ -366,4 +366,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     window.open('https://vivocampaign.jaldee.com/')
 
   }
+  knowmore() {
+    window.open('https://offer.jaldee.com')
+  }
 }

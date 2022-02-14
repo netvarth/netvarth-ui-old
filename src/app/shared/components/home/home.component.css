@@ -56,3 +56,93 @@ div.loading {
 .home-img{
     margin-top: -20% !important;
 }
+
+.img-fluideffect {
+  max-width: 100%;
+  height: auto;
+  position: absolute !important;
+  bottom: -140px !important;
+}
+.knowmorebutton {
+    width: 45%;
+    margin-top: 40px;
+    /* margin-top: 1%; */
+    background-color: #854ef2;
+    border: 1px solid  #854ef2;
+    color:white;
+   word-wrap: break-word;
+    font-weight: 600;
+    font-family: "Poppins";
+    /* font-style: Montserrat; */
+    display: inline-block;
+    /* margin-bottom: 0; */
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    padding: 6px 0 6px 0px;
+    border-radius: 20px ;
+    /* font-size: 12px; */
+    line-height: 1.42857143;
+    /* border-bottom-left-radius: 10px; */
+}
+.gap {
+    width: 100%;
+    height: 100px;
+    /* background-color: #f1b51b; */
+}
+.half-curveshape {
+    width:100%;
+    height:300px;
+    /* border-radius: 50px; */
+    background-color: #854ef2;
+    background-image: linear-gradient(to right, white,#854ef2);
+    border-bottom-left-radius: 300px;
+    /* border-top-left-radius: 100px; */
+    
+}
+.padding-0 {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+.smallbottomcurve {
+    width:100%;
+    height:150px;
+    background-color: #854ef2;
+    border-top-right-radius: 150px;
+    position: absolute;
+    bottom: -100px;
+}
+@media(max-width:760px){
+    .gap {
+        width: 100%;
+    height: 10px;
+    }
+    .templatemobile {
+        /* font-size: 12px !important; */
+        display: flex !important;
+        flex-direction: row !important;
+    }
+    .templatemobile h1,h3,h4,button{
+        font-size: 12px !important;
+    }
+    .knowmorebutton {
+        margin-top: 10px;
+        width: 80%;
+    }
+    .smallbottomcurve {
+       display: none;
+        
+    }
+    .half-curveshape {
+        width:100%;
+        height:200px;
+    }
+    .img-fluideffect {
+        max-width: 100%;
+        height: auto;
+        position: absolute !important;
+        bottom: -60px !important;
+      }
+}
