@@ -128,13 +128,13 @@
                                                                 <mat-radio-group formControlName="serviceFor"
                                                                     class="userGroup m-0 p-2"
                                                                     (change)="onServiceForChange($event.value)">
-                                                                    <mat-radio-button class="col-md-3 col-lg-3 col-sm-12 col-xs-12"
+                                                                    <mat-radio-button class="col-md-6 col-lg-6 col-sm-12 col-xs-12"
                                                                         [value]="parentCustomer.id">
                                                                         {{parentCustomer.userProfile.firstName}}
                                                                         {{parentCustomer.userProfile.lastName}}
                                                                     </mat-radio-button>
 
-                                                                    <mat-radio-button class="flx col-md-3 col-lg-3 col-sm-12 col-xs-12"
+                                                                    <mat-radio-button class="col-md-6 col-lg-6 col-sm-12 col-xs-12"
                                                                         [value]="member.user"
                                                                         *ngFor="let member of familyMembers">
                                                                         {{member.userProfile.firstName}}
@@ -756,7 +756,7 @@
                                                     </div>
                                                     <div class="changeprice" *ngIf="amountdifference > 0">
                                                         The balance amount for the rescheduled booking will be
-                                                        Ã¢â€šÂ¹{{amountdifference}}. Contact your provider directly
+                                                        ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¹{{amountdifference}}. Contact your provider directly
                                                         for
                                                         payment adjustments.
                                                     </div>
@@ -773,7 +773,7 @@
                                             <h5 class="text-capitalize text-primary"><b>Select Appointment Date </b></h5>
                                         </div>
                                         
-                                        <app-appointment-date-pagination (date_change_event)=changed_date_value($event)></app-appointment-date-pagination>
+                                        <app-appointment-date-pagination (date_change_event)=changed_date_value($event) [hold_checkindate]=hold_sel_checkindate></app-appointment-date-pagination>
 
                                         <div class="pb-0 px-auto mb-4 mx-2 font-weight-bold text-left">
                                             <h5 class="text-capitalize text-primary"><b>Select Appointment Time</b></h5>

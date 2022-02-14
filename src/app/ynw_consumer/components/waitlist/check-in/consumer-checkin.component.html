@@ -130,13 +130,13 @@
                                                                         <mat-radio-group formControlName="serviceFor"
                                                                             class="mgn-up-5 userGroup m-0 p-2"
                                                                             (change)="onServiceForChange($event.value)">
-                                                                            <mat-radio-button class="col-md-3 col-lg-3 col-sm-12 col-xs-12"
+                                                                            <mat-radio-button class="col-md-6 col-lg-6  col-sm-12 col-xs-12"
                                                                                 [value]="parentCustomer.id">
                                                                                 {{parentCustomer.userProfile.firstName}}
                                                                                 {{parentCustomer.userProfile.lastName}}
                                                                             </mat-radio-button>
         
-                                                                            <mat-radio-button class="flx col-md-3 col-lg-3 col-sm-12 col-xs-12"
+                                                                            <mat-radio-button class="col-md-6 col-lg-6  col-sm-12 col-xs-12"
                                                                                 [value]="member.user"
                                                                                 *ngFor="let member of familyMembers">
                                                                                 {{member.userProfile.firstName}}
@@ -275,7 +275,6 @@
                                                                             formControlName="localarea"
                                                                             [ngStyle]="{'background-color': bgColor}">
                                                                     </div>
-                                                                    <!-- *ngIf="parentCustomer.userProfile.countryCode !=='+91'" -->
                                                                     <div class="form-group"
                                                                         >
                                                                         <label class="col-form-label" for="state">
@@ -744,7 +743,7 @@
                                                             <h5 class="text-capitalize text-primary"><b>Choose Date </b></h5>
                                                         </div>
                                                         
-                                                        <app-date-pagination (date_change_event)=changed_date_value($event)></app-date-pagination>
+                                                        <app-date-pagination (date_change_event)=changed_date_value($event) [hold_checkindate]=hold_sel_checkindate></app-date-pagination>
 
                                                         <div class="pb-0 px-auto mb-2 font-weight-bold text-left">
                                                             <h5 class="text-capitalize text-primary"><b>Choose Time </b></h5>
@@ -1610,7 +1609,7 @@
                         deducted from the amount(which includes Jaldee
                         service charges and Online Gateway fees).</li>
                     <li>Refund will be received directly to the
-                        consumerÃ¢â‚¬â„¢s
+                        consumerÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s
                         bank account after he/she cancels the future
                         bookings.</li>
                     <li>If the booking is cancelled on the date of

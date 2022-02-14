@@ -1,4 +1,4 @@
-import { Component,EventEmitter,OnInit, Output} from '@angular/core';
+import { Component,EventEmitter,Input,OnInit, Output} from '@angular/core';
 import * as moment from 'moment';
 import { ConsumerCheckinComponent } from '../consumer-checkin.component';
 
@@ -11,6 +11,7 @@ import { ConsumerCheckinComponent } from '../consumer-checkin.component';
 export class DatePaginationComponent extends ConsumerCheckinComponent implements OnInit{
   
   @Output() date_change_event = new EventEmitter();
+  @Input() hold_checkindate: any;
   minDate:any;
   selected_date:any;
   default_value:String;
@@ -24,15 +25,12 @@ export class DatePaginationComponent extends ConsumerCheckinComponent implements
   prev_date_value_2: string;
   previous_date_handling_btn: boolean;
   ngOnInit(): void {
-    this.minDate = this.sel_checkindate;
+    this.minDate = new Date();
+    this.minDate = moment(this.minDate).format("YYYY-MM-DD");
     this.previous_date_handling_btn = false;
-
     if(this.type == "waitlistreschedule")
     {
-      this.minDate = new Date();
-      this.minDate.setDate(this.minDate.getDate() + 1)
-      this.minDate = moment(this.minDate).format("YYYY-MM-DD");
-      this.sel_checkindate = this.minDate
+      this.sel_checkindate = this.hold_checkindate
     }
 
     let today_date1 = new Date(this.sel_checkindate);
@@ -50,6 +48,7 @@ export class DatePaginationComponent extends ConsumerCheckinComponent implements
     today_date1.setDate(today_date1.getDate() - 1);
     this.prev_date_value_2 =  this.week[today_date1.getDay()]+this.month[today_date1.getMonth()]+today_date1.getDate();
     this.date_change_event.emit(this.sel_checkindate);
+    this.date_handling_btn()
   }
  
 next_date(n)
