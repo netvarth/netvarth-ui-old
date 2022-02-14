@@ -63,7 +63,7 @@
                 <input [checked]="selectAll" type="checkbox" class="ckbx pull-left" (change)="selectAllDonations($event)" />
                 &nbsp;&nbsp;Select all
               </a>
-              <div class="customer-selected mx-2" *ngIf="selectedDonations && selectedDonations.length > 0">
+              <div style="margin-left: 0.99rem !important;" class="customer-selected mx-2" *ngIf="selectedDonations && selectedDonations.length > 0">
                 {{selectedDonations.length}} {{(selectedDonations.length === 1) ? customer_label
                 : customer_label + 's'}} selected </div>
             </li>
