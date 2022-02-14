@@ -342,14 +342,8 @@ export class BranchUserDetailComponent implements OnInit {
         }
         if (input.last_name.trim() === '') {
             this.lnameerror = 'Last name is required';
-        }
-        if (!input.city || (input.city && input.city.trim() === '')) {
-            this.locerror = 'City is required';
-        }
-        if (!input.state || (input.state && input.state.trim() === '')) {
-            this.stateerror = 'State is required';
-        }
-        if (this.fnameerror !== null || this.lnameerror !== null || this.emailerror !== null || this.locerror !==null || this.stateerror !== null) {
+        }        
+        if (this.fnameerror !== null || this.lnameerror !== null || this.emailerror !== null) {
             return;
         }
         const post_data1 = {
@@ -395,6 +389,15 @@ export class BranchUserDetailComponent implements OnInit {
                 post_data1['mobileNo'] = input.phonenumber;
         }
         if (input.selectedUserType === 'PROVIDER') {
+            if (!input.city || (input.city && input.city.trim() === '')) {
+                this.locerror = 'City is required';
+            }
+            if (!input.state || (input.state && input.state.trim() === '')) {
+                this.stateerror = 'State is required';
+            }
+            if (this.locerror !==null || this.stateerror !== null) {
+                return;
+            }
             post_data1['deptId'] = input.selectedDepartment;
             post_data1['bProfilePermitted'] = input.bProfilePermitted;
 
