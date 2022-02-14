@@ -28,8 +28,9 @@ export class BookingHistoryComponent implements OnInit {
       private wordProcessor: WordProcessor,
       @Inject(MAT_DIALOG_DATA) public data: any,
     ) {
-      console.log(data)
+      //console.log(data)
       this.bookinghistorydetails=data.details;
+      console.log(this.bookinghistorydetails)
       this.booking_history_uuid = data.uuid
       this.appointmentby=data.appointmentby;
       console.log(this.appointmentby)
