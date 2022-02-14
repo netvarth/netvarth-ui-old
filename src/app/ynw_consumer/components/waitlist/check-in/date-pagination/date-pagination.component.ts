@@ -27,12 +27,17 @@ export class DatePaginationComponent extends ConsumerCheckinComponent implements
   ngOnInit(): void {
     this.minDate = new Date();
     this.minDate = moment(this.minDate).format("YYYY-MM-DD");
+    console.log(this.minDate)
     this.previous_date_handling_btn = false;
     if(this.type == "waitlistreschedule")
     {
       this.sel_checkindate = this.hold_checkindate
     }
-
+    else
+    {
+      this.minDate = this.sel_checkindate
+    }
+    console.log(this.sel_checkindate)
     let today_date1 = new Date(this.sel_checkindate);
     this.default_value =  this.week[today_date1.getDay()]+this.month[today_date1.getMonth()]+today_date1.getDate();
     today_date1.setDate(today_date1.getDate() + 1);

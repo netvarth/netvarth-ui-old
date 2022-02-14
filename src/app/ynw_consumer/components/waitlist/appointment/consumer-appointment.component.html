@@ -5,7 +5,8 @@
     <div class="text-center mx-auto">
         <!-- <span class="ml-3 my-auto back-btn-text desktop-only">Appointment</span> -->
         <span class="mobile-only"><b>{{businessjson.businessName}}</b></span><br>
-        <span class="mobile-only"><a href="{{googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</a></span>
+        <span class="mobile-only" *ngIf="type != 'reschedule'"><a href="{{googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</a></span>
+        <span class="mobile-only" *ngIf="type == 'reschedule'"><a href="{{appointment.location.googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{appointment.location.place}}</a></span>
     </div>
     <!-- <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
         <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'checkin'"
@@ -24,7 +25,8 @@
                 </div>
                 <div class="provider-details m-5 text-dark text-center">
                     <h3><b>{{businessjson.businessName}}</b></h3>
-                    <h6><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</h6>
+                    <h6 *ngIf="type != 'reschedule'"><a href="{{googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</a></h6>
+                    <h6 *ngIf="type == 'reschedule'"><a href="{{appointment.location.googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{appointment.location.place}}</a></h6>
                     <!-- <h6 *ngIf="businessjson.phoneNumbers[0]" ><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;<span>{{businessjson.phoneNumbers[0].instance}}</span></h6> -->
                     <!-- <h6 *ngIf="businessjson.emails[0]"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;<span>{{businessjson.emails[0].instance}}</span></h6> -->
                 </div>

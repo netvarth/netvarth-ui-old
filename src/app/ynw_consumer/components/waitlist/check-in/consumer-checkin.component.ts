@@ -766,6 +766,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     getQueuesbyLocationandServiceId(locid, servid, pdate, accountid, type?) {
         this.queueQryExecuted = false;
+        console.log(pdate)
         console.log("Date:",pdate) 
         // pdate = "2022-02-15T00:00:00+05:30"
         // console.log(pdate)
