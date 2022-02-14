@@ -46,7 +46,6 @@ export class BusinessComponent implements OnInit {
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
     private titleService: Title) {
-      
     this.titleService.setTitle('Jaldee Business');
     router.events.subscribe(
       (event: RouterEvent): void => {
@@ -59,10 +58,11 @@ export class BusinessComponent implements OnInit {
           this.shared_functions.getGlobalSettings()
             .then(
               (settings: any) => {
-                
+                console.log("Settings:",settings);
+                console.log("In Jaldee Business :", router.url);
                 if (router.url === '\/provider') {
                   setTimeout(() => {
-                    // console.log("constructor")
+                     console.log("constructor")
                     if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
                       if (settings.waitlist) {
                         router.navigate(['provider', 'check-ins']);
@@ -77,11 +77,6 @@ export class BusinessComponent implements OnInit {
                       router.navigate(['provider', 'settings']);
                     }
                   }, 500);
-
-                  // console.log("hello")
-                  this.getBusinessProfile();
-                  this.getLicenseMetaData();
-
                 }
               });
         }
@@ -156,7 +151,8 @@ export class BusinessComponent implements OnInit {
     } else {
       this.bodyHeight = screenHeight - 67;
     }
-  
+    this.getBusinessProfile();
+    this.getLicenseMetaData();
     this.activeSkin = this.lStorageService.getitemfromLocalStorage('activeSkin');
     if (!this.activeSkin) {
       this.activeSkin = 'skin-blue';
