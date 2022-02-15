@@ -14403,12 +14403,14 @@ pointer-events: none !important;
 }
 .txt-qr1{
   color:dodgerblue !important;
-  margin-left: 250px;
+  /* margin-left: 250px; */
+  display: flex;
+  justify-content: center;
 }
 @media(max-width: 750px){ 
   .txt-qr1{
       color:dodgerblue !important;
-      margin-left: 130px;
+      /* margin-left: 130px; */
     }
   }
   .userqrdwnld-icon {
