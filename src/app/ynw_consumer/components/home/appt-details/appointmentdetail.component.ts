@@ -111,7 +111,11 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
     this.subs.sink = this.sharedServices.getAppointmentByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
       (data) => {
         this.appt = data;
-        this.whatsAppNumber = this.teleBookingService.getTeleNumber(this.appt.virtualService[this.appt.service.virtualCallingModes[0].callingMode]);
+        console.log(this.appt )
+        if(this.appt && this.appt.service && this.appt.service.virtualCallingModes){
+          this.whatsAppNumber = this.teleBookingService.getTeleNumber(this.appt.virtualService[this.appt.service.virtualCallingModes[0].callingMode]);
+        }
+        
         console.log("Deatils:",this.appt)
         if (this.appt.questionnaires && this.appt.questionnaires.length > 0) {
           this.questionnaires = this.appt.questionnaires;
