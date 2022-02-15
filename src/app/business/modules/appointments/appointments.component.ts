@@ -2796,11 +2796,20 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     actiondialogRef.afterClosed().subscribe(data => {
       if (data === 'reload') {
-        this.chkSelectAppointments = false;
-        this.chkStartedSelectAppointments = false;
+        // this.chkSelectAppointments = false;
+        // this.chkStartedSelectAppointments = false;
+        // this.apptStartedMultiSelection = false;
+        // this.apptMultiSelection = false;
         this.getLabel();
         this.loadApiSwitch('');
       }
+      this.chkSelectAppointments = false;
+      this.chkStartedSelectAppointments = false;
+      this.apptStartedMultiSelection = false;
+      this.apptMultiSelection = false;
+      this.chkAppointments = false;
+      this.startedChkAppointments = false;
+      
     });
   }
   CreateVoiceCall(appt?) {
