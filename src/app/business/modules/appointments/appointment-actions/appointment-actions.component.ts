@@ -110,7 +110,6 @@ export class AppointmentActionsComponent implements OnInit {
     users: any = [];
     location: any;
     status_booking: any;
-    appointmentaction: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -133,7 +132,6 @@ export class AppointmentActionsComponent implements OnInit {
         this.apiloading = true;
         this.appt = this.data.checkinData;
         console.log("Appointment Actions :",this.appt)
-        this.appointmentaction=this.data.component
           this.status_booking=this.data.status
         if (!this.data.multiSelection) {
             this.getPos();
@@ -364,30 +362,25 @@ export class AppointmentActionsComponent implements OnInit {
             );
     }
     addProviderNote() {
-        if(this.appointmentaction){
-            this.dialogRef.close(this.appt)
-        } else {
+        this.dialogRef.close();
+        const addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                checkin_id: this.appt.uid,
+                source: 'appt'
+            }
+        });
+        addnotedialogRef.afterClosed().subscribe(result => {
             this.dialogRef.close();
-            const addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
-                width: '50%',
-                panelClass: ['popup-class', 'commonpopupmainclass'],
-                disableClose: true,
-                data: {
-                    checkin_id: this.appt.uid,
-                    source: 'appt'
-                }
-            });
-            addnotedialogRef.afterClosed().subscribe(result => {
-                this.dialogRef.close();
-                if (result === 'reloadlist') { 
-                    // this.provider_services.getAppointmentById(this.appt.uid)
-                    // this.provider_services.getProviderAppointmentNotes(this.appt.uid)
-                    // this.provider_services.getAppointmentById(this.appt.uid);
-    
-                }
-            });
-        }
-      
+            if (result === 'reloadlist') { 
+                // this.provider_services.getAppointmentById(this.appt.uid)
+                // this.provider_services.getProviderAppointmentNotes(this.appt.uid)
+                // this.provider_services.getAppointmentById(this.appt.uid);
+
+            }
+        });
     }
     changeWaitlistStatus(action) {
         if (action !== 'Rejected') {
