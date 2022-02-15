@@ -411,14 +411,28 @@ export class FolderFilesComponent implements OnInit {
         console.log("File Size : ", this.filter.fileSize)
       }
       if (value === 'lessMb') {
-        this.lessMb = true;
-        this.grateMB = false;
-        this.filter.fileSize = '1';
+        if(!this.lessMb) {
+          this.lessMb = true;
+          this.grateMB = false;
+          this.filter.fileSize = '1';
+        } else {
+          this.lessMb = false;
+          this.grateMB = false;
+          this.filter.fileSize = '';
+        }
+        
       }
       else if (value === 'grateMB') {
-        this.lessMb = false;
-        this.grateMB = true;
-        this.filter.fileSize = '1';
+        if(!this.grateMB) {
+          this.lessMb = false;
+          this.grateMB = true;
+          this.filter.fileSize = '1';
+        } else {
+          this.lessMb = false;
+          this.grateMB = false;
+          this.filter.fileSize = '';
+        }
+       
       }
       else {
         this.lessMb = false;

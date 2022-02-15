@@ -98,12 +98,35 @@ img.ordericon.home {
   pointer-events: none !important;
 }
 .btncheckout {
-  background-color:orange;
-  color:blue;
-  margin: 5%;
-  margin-right: 15%;
-  font-weight: bold;
-  border:1px solid blue;
+  width: 100%;
+  margin-top: 1%;
+  border-radius: 20px;
+  background-color: #183e7a;
+  border: 1px solid  #183e7a;
+  color:white;
+ word-wrap: break-word;
+  font-weight: 600;
+  font-family: "Poppins";
+  display: inline-block;
+  margin-bottom: 2%;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  padding: 7px 0 7px 0px;
+  /* font-size: 12px; */
+  line-height: 1.42857143;
+  /* border-bottom-left-radius: 10px; */
+
+}
+.btncheckout:hover{
+
+
+  background-color:white;
+
+  color:#183e7a;
+ 
 
 }
 

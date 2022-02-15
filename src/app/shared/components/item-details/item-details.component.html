@@ -89,10 +89,13 @@
                       <p class="m0 question-header">Maximum Qty</p>
                       <p>{{currentItemObject.maxqty}}</p>
                     </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 no-padding">
+                      <button class="btncheckout" (click)="checkout();" *ngIf="getItemQty()>0">
+                        Checkout</button>
+                    </div>
                   </div>
                   <div>
-                    <button class="btn pull-right btncheckout" (click)="checkout();" *ngIf="getItemQty()>0">
-                      Checkout</button>
+                    
                   </div>
                 </div>
               </div>
