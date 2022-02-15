@@ -123,7 +123,6 @@ export class CheckinActionsComponent implements OnInit {
     location: any;
     statusBooking: any;
     callingNumber: any;
-    componenttype: any;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -145,10 +144,6 @@ export class CheckinActionsComponent implements OnInit {
         this.apiloading = true;
         this.setMinMaxDate();
         this.getLabel();
-        if(this.data.component) {
-        this.componenttype=this.data.component;
-
-        }
         this.checkin = this.data.checkinData;
         this.statusBooking = this.data.statusBooking;
         if (!this.data.multiSelection) {
@@ -530,27 +525,21 @@ export class CheckinActionsComponent implements OnInit {
                 }
             );
     }
-    addProviderNote(checkin) {
-        // console.log("dialog box opened111111111111")
-        if(this.componenttype) {
-        this.dialogRef.close(checkin);
+    addProviderNote() {
+        console.log("dialog box opened111111111111")
+        this.dialogRef.close();
+        const addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                checkin_id: this.checkin.ynwUuid
+            }
 
-        } else {
-            this.dialogRef.close("")
-            const addnotedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
-                width: '50%',
-                panelClass: ['popup-class', 'commonpopupmainclass'],
-                disableClose: true,
-                data: {
-                    checkin_id: this.checkin.ynwUuid
-                }
-    
-            });
-            addnotedialogRef.afterClosed().subscribe(result => {
-                this.dialogRef.close('reload');
-            });
-        }
-       
+        });
+        addnotedialogRef.afterClosed().subscribe(result => {
+            this.dialogRef.close('reload');
+        });
     }
     changeWaitlistStatus(action) {
         if (action !== 'CANCEL') {
