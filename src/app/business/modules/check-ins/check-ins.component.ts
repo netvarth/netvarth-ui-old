@@ -3102,11 +3102,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     actiondialogRef.afterClosed().subscribe(data => {
       if (data === 'reload') {
-        this.chkSelectAppointments = false;
-        this.chkStartedSelectAppointments = false;
+     
         this.getLabel();
         this.loadApiSwitch('');
       }
+      this.chkSelectAppointments = false;
+      this.chkStartedSelectAppointments = false;
+      this.chkAppointments = false;
+      this.startedChkAppointments = false;
     });
   }
   statusClick(status) {
