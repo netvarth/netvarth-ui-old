@@ -6,7 +6,7 @@
         <!-- <span class="ml-3 my-auto back-btn-text desktop-only">Appointment</span> -->
         <span class="mobile-only"><b>{{businessjson.businessName}}</b></span><br>
         <span class="mobile-only" *ngIf="type != 'waitlistreschedule'"><a href="{{googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</a></span>
-        <span class="mobile-only" *ngIf="type == 'waitlistreschedule'"><a href="{{googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</a></span>
+        <span class="mobile-only" *ngIf="type == 'waitlistreschedule'"><a href="{{businessjson.baseLocation.googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{businessjson.baseLocation.place}}</a></span>
     </div>
     <!-- <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
         <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'checkin'"
@@ -27,7 +27,7 @@
                 <div class="provider-details m-5 text-dark text-center" >
                     <h3><b>{{businessjson.businessName}}</b></h3>
                     <h6 *ngIf="type != 'waitlistreschedule'"><a href="{{googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</a></h6>
-                    <h6 *ngIf="type == 'waitlistreschedule'"><a href="{{googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</a></h6>
+                    <h6 *ngIf="type == 'waitlistreschedule'"><a href="{{businessjson.baseLocation.googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{businessjson.baseLocation.place}}</a></h6>
                     <!-- <h6 *ngIf="businessjson.phoneNumbers[0]" ><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;<span>{{businessjson.phoneNumbers[0].instance}}</span></h6> -->
                     <!-- <h6 *ngIf="businessjson.emails[0]"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;<span>{{businessjson.emails[0].instance}}</span></h6>    -->
                 </div>
@@ -267,30 +267,29 @@
                                                                         </div> -->
                                                                     <!-- </div> -->
                                                                     <!-- *ngIf="parentCustomer.userProfile.countryCode !=='+91'" -->
-                                                                    <div class="form-group"
-                                                                        >
+                                                                    <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12 pl-0">
                                                                         <label class="col-form-label"
                                                                             for="lastName">Location <span
                                                                                 class="red">*</span></label>
-                                                                        <input  placeholder="Enter your location"
+                                                                        <input placeholder="Enter your location"
                                                                             class="form-control"
                                                                             formControlName="localarea"
                                                                             [ngStyle]="{'background-color': bgColor}">
                                                                     </div>
-                                                                    <div class="form-group"
-                                                                        >
+                                                                    <div class="clearfix"></div>
+                                                                    <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12 pl-0">
                                                                         <label class="col-form-label" for="state">
                                                                             Residing State<span
                                                                                 class="red">*</span></label>
-                                                                        <input  placeholder="Enter your state"
+                                                                        <input placeholder="Enter your state"
                                                                             class="form-control" formControlName="state"
                                                                             [ngStyle]="{'background-color': bgColor}">
                                                                     </div>
-                                                                   
+                                                                   <div class="clearfix"></div>
                                                                     <div style="padding-left: 0px !important;" *ngIf="hideLanguages && virtualForm.get('preferredLanguage').value.length >0 && lngknown==='no'" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                         <label class="col-form-label text-capitalize" for="preferredLanguage">{{virtualForm.get('preferredLanguage').value.length
                                                                             >1?'Your preferred languages': 'Your preferred language'}}
-                                                                        </label><br/>
+                                                                        </label>
                                                                         <fieldset>
                                                                             <div class="col-form-label edtlang">
                                                                                 <span style="word-wrap: break-word; padding-right: 5px;margin-right: 5px;">{{virtualForm.get('preferredLanguage').value}}</span>
@@ -1653,7 +1652,7 @@
                         deducted from the amount(which includes Jaldee
                         service charges and Online Gateway fees).</li>
                     <li>Refund will be received directly to the
-                        consumerÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢s
+                        consumerÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢s
                         bank account after he/she cancels the future
                         bookings.</li>
                     <li>If the booking is cancelled on the date of

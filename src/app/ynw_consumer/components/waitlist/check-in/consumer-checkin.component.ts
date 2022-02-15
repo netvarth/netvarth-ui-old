@@ -1591,6 +1591,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
             case 'businessProfile': {
                 this.businessjson = result;
+                console.log(this.businessjson)
                 if (this.businessjson.uniqueId === 128007) {
                     this.heartfulnessAccount = true;
                 }
