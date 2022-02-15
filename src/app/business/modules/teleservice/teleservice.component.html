@@ -52,7 +52,7 @@
                                     <i class="fa fa-language icon"></i>
                                     <span class="sub-texts">{{data.waitlistingFor[0].preferredLanguage}}</span>
                                 </div>
-                                <div class="location-place" *ngIf="data.waitlistingFor[0].bookingLocation">
+                                <div class="location-place" *ngIf="data.waitlistingFor[0].bookingLocation && (data.waitlistingFor[0].bookingLocation.localArea || data.waitlistingFor[0].bookingLocation.district)">
                                     <i class="fa fa-map-marker icon"></i>
                                     <span class="sub-texts">{{data.waitlistingFor[0].bookingLocation.localArea}},
                                         {{data.waitlistingFor[0].bookingLocation.district}}</span>
@@ -95,7 +95,7 @@
                                     <i class="fa fa-language icon"></i>
                                     <span class="sub-texts">{{data.appmtFor[0].preferredLanguage}}</span>
                                 </div>
-                                <div class="location-place" *ngIf="data.appmtFor[0].bookingLocation">
+                                <div class="location-place" *ngIf="data.appmtFor[0].bookingLocation && (data.appmtFor[0].bookingLocation.localArea || data.appmtFor[0].bookingLocation.district)">
                                     <i class="fa fa-map-marker icon"></i>
                                     <span class="sub-texts">{{data.appmtFor[0].bookingLocation.localArea}},
                                         {{data.appmtFor[0].bookingLocation.district}}</span>
