@@ -272,7 +272,7 @@
                                                                         <label class="col-form-label"
                                                                             for="lastName">Location <span
                                                                                 class="red">*</span></label>
-                                                                        <input style="width: 48% !important" placeholder="Enter your location"
+                                                                        <input  placeholder="Enter your location"
                                                                             class="form-control"
                                                                             formControlName="localarea"
                                                                             [ngStyle]="{'background-color': bgColor}">
@@ -282,7 +282,7 @@
                                                                         <label class="col-form-label" for="state">
                                                                             Residing State<span
                                                                                 class="red">*</span></label>
-                                                                        <input style="width: 48% !important" placeholder="Enter your state"
+                                                                        <input  placeholder="Enter your state"
                                                                             class="form-control" formControlName="state"
                                                                             [ngStyle]="{'background-color': bgColor}">
                                                                     </div>
@@ -295,7 +295,7 @@
                                                                             <div class="col-form-label edtlang">
                                                                                 <span style="word-wrap: break-word; padding-right: 5px;margin-right: 5px;">{{virtualForm.get('preferredLanguage').value}}</span>
                                                                                 <span (click)="editLanguage()"
-                                                                                    style="color:rgb(255, 255, 255)"><i
+                                                                                    style="color:rgb(255, 255, 255);cursor:pointer;"><i
                                                                                         class="fa fa-edit fa-1x"
                                                                                         style="font-size: large;"
                                                                                         data-bs-toggle="tooltip"
