@@ -8,7 +8,7 @@
 
 <div class="date-carousel container-fluid col-lg-12 col-md-12 my-3 p-0 text-center">
   <div class="my-auto mr-1">
-    <button (click)="previous_date_handling_btn ? prev_date(1):false;date_handling_btn()" class="date-carousel-prev my-auto" [class.not-allowed]="!previous_date_handling_btn">&lt;</button>
+    <button (click)="previous_date_handling_btn && prev_date(1);date_handling_btn();chekingDates()" class="date-carousel-prev my-auto" [class.not-allowed]="!previous_date_handling_btn">&lt;</button>
   </div>
   <div class="shadow text-center p-2 m-2 desktop-only" [class.shadow-not-allowed]="!previous_date_handling_btn" (click)="previous_date_handling_btn && navigateToDays(-3);chekingDates()">
     <div><b>{{prev_date_value_2.slice(0,3)}}</b><br><b>{{prev_date_value_2.slice(3,6)}}</b>&nbsp;<b>{{prev_date_value_2.slice(6)}}</b></div>

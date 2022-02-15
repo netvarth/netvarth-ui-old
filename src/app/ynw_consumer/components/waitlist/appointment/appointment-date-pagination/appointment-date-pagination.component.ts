@@ -98,7 +98,6 @@ prev_date(n)
     yesterday.setDate(yesterday.getDate() + 1);
     this.next_date_value_2 =  this.week[yesterday.getDay()]+this.month[yesterday.getMonth()]+yesterday.getDate();
     this.date_change_event.emit(this.sel_checkindate);
-    this.date_handling_btn()
 }
 
 date_value_changed()
