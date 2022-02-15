@@ -373,6 +373,23 @@
                                                     </div>
                                                     <fieldset>
                                                         <ng-container *ngIf="hideLanguages">
+                                                            <div *ngIf="hideLanguages && virtualForm.get('preferredLanguage').value.length >0 && lngknown==='no'" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                                                                <label class="col-form-label text-capitalize no-padding" for="preferredLanguage">{{virtualForm.get('preferredLanguage').value.length
+                                                                    >1?'Your preferred languages': 'Your preferred language'}}
+                                                                </label><br/>
+                                                                <fieldset>
+                                                                    <div class="col-form-label edtlang no-padding">
+                                                                        <span style="word-wrap: break-word; padding-right: 5px;margin-right: 5px;">{{virtualForm.get('preferredLanguage').value}}</span>
+                                                                        <span (click)="editLanguage()"
+                                                                            style="color:rgb(255, 255, 255)"><i
+                                                                                class="fa fa-edit fa-1x"
+                                                                                style="font-size: large;"
+                                                                                data-bs-toggle="tooltip"
+                                                                                data-bs-placement="right"
+                                                                                title="Edit"></i></span>
+                                                                    </div>
+                                                                </fieldset>
+                                                            </div>
                                                             <!-- <label class="col-form-label" for="name">Contact
                                                                 Information </label>
                                                             <div class="form-level-settings smallfont">
@@ -466,23 +483,7 @@
                                                                     </div>
                                                                 </div>
                                                             <!-- </div> -->
-                                                            <div *ngIf="hideLanguages && virtualForm.get('preferredLanguage').value.length >0 && lngknown==='no'" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                <label class="col-form-label text-capitalize" for="preferredLanguage">{{virtualForm.get('preferredLanguage').value.length
-                                                                    >1?'Your preferred languages': 'Your preferred language'}}
-                                                                </label><br/>
-                                                                <fieldset>
-                                                                    <div class="col-form-label edtlang">
-                                                                        <span style="word-wrap: break-word; padding-right: 5px;margin-right: 5px;">{{virtualForm.get('preferredLanguage').value}}</span>
-                                                                        <span (click)="editLanguage()"
-                                                                            style="color:rgb(255, 255, 255)"><i
-                                                                                class="fa fa-edit fa-1x"
-                                                                                style="font-size: large;"
-                                                                                data-bs-toggle="tooltip"
-                                                                                data-bs-placement="right"
-                                                                                title="Edit"></i></span>
-                                                                    </div>
-                                                                </fieldset>
-                                                            </div>
+                                                           
                                                             
                                                         </ng-container>
                                                     </fieldset>
