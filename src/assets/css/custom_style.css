@@ -14411,6 +14411,8 @@ pointer-events: none !important;
   .txt-qr1{
       color:dodgerblue !important;
       /* margin-left: 130px; */
+      display: flex;
+      justify-content: center;
     }
   }
   .userqrdwnld-icon {
