@@ -441,12 +441,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         return this.sharedFunctionobj.isNumericSign(evt);
     }
 
-    changed_date_value(data)
-    {
+    changed_date_value(data) {
+        console.log("ServiceId:", this.selectedServiceId);
         this.date_pagination_date = data;
         this.date_pagination_date = this.date_pagination_date + "T00:00:00+05:30"
-        console.log(this.date_pagination_date)
-        this.getQueuesbyLocationandServiceId(this.sel_loc, this.selectedService, this.date_pagination_date, this.account_id);
+        console.log("changed_date_value Date:",this.date_pagination_date)
+        this.getQueuesbyLocationandServiceId(this.sel_loc, this.selectedServiceId, this.date_pagination_date, this.account_id);
 
     }
 
@@ -590,7 +590,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.sel_loc = this.waitlist.queue.location.id;
                 this.selectedServiceId = this.waitlist.service.id;
                 this.sel_checkindate = this.selectedDate = this.hold_sel_checkindate = this.waitlist.date;
-                this.selectedServiceId = this.waitlist.service.id;
+                // this.selectedServiceId = this.waitlist.service.id;
                 this.getPaymentModes();
                 this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
                 this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.selectedServiceId, this.account_id);
@@ -748,6 +748,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
+        console.log("getQueuesbyLocationandServiceIdavailability");
+        console.log("Location:" + locid + ", Service Id:" + servid + ", AccountId:" + accountid);
         if (locid && servid && accountid) {
             _this.subs.sink = _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
                 .subscribe((data: any) => {
@@ -764,7 +766,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     getQueuesbyLocationandServiceId(locid, servid, pdate, accountid, type?) {
         this.queueQryExecuted = false;
-        console.log(pdate) 
+        console.log(pdate)
+        console.log("Date:",pdate) 
         // pdate = "2022-02-15T00:00:00+05:30"
         // console.log(pdate)
         if (locid && servid) {

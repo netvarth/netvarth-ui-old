@@ -286,12 +286,14 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     dataToSend.append('captions', blobPropdata);
     if (blankvalidate.test(form_data.message)) {
       this.api_error = this.wordProcessor.getProjectMesssages('MSG_ERROR');
+      this.disableButton = false;
     } else {
       this.disableButton = true;
       if (this.typeOfMsg === 'multiple') {
         if (this.data.source === 'customer-list') {
           if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
             this.api_error = 'share message via options are not selected';
+            this.disableButton = false;
             setTimeout(() => {
               this.api_error='';
              }, projectConstants.TIMEOUT_DELAY);
@@ -321,10 +323,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 }
               );
           }
-        } 
-        else if (this.data.source === 'donation-list'){
+        } else if (this.data.source === 'donation-list'){
           if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
             this.api_error = 'share message via options are not selected';
+            this.disableButton = false;
             setTimeout(() => {
               this.api_error='';
              }, projectConstants.TIMEOUT_DELAY);
@@ -354,10 +356,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               }
             );
           }
-        }
-        else if (this.source === 'provider-sendAll') {
+        } else if (this.source === 'provider-sendAll') {
           if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
             this.api_error = 'share message via options are not selected';
+            this.disableButton = false;
             setTimeout(() => {
              this.api_error='';
             }, projectConstants.TIMEOUT_DELAY);
@@ -387,10 +389,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 }
               );
           }
-        }
-        else {
+        } else {
           if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
             this.api_error = 'share message via options are not selected';
+            this.disableButton = false;
             setTimeout(() => {
               this.api_error='';
              }, projectConstants.TIMEOUT_DELAY);
@@ -436,8 +438,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                     this.disableButton = false;
                   }
                 );
-            } 
-            else if (this.type === 'wl') {
+            } else if (this.type === 'wl') {
               const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
               dataToSend.append('communication', blobpost_Data);
               this.shared_services.consumerMassCommunication(dataToSend).
@@ -455,11 +456,11 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
             }
           }
         }
-      }
-      else {
+      } else {
         if (this.data.source === 'customer-list') {
           if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
             this.api_error = 'share message via options are not selected';
+            this.disableButton = false;
             setTimeout(() => {
               this.api_error='';
              }, projectConstants.TIMEOUT_DELAY);
@@ -493,6 +494,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         } else if (this.source === 'donation-list') {
           if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
             this.api_error = 'share message via options are not selected';
+            this.disableButton = false;
             setTimeout(() => {
              this.api_error='';
             }, projectConstants.TIMEOUT_DELAY);
@@ -527,6 +529,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         else if (this.data.source === 'provider-waitlist' && this.type === 'appt') {
           if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
             this.api_error = 'share message via options are not selected';
+            this.disableButton = false;
             setTimeout(() => {
              this.api_error='';
             }, projectConstants.TIMEOUT_DELAY);
@@ -557,10 +560,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 }
               );
           }
-        }
-        else if (this.data.source === 'provider-waitlist' && this.type === 'wl') {
+        } else if (this.data.source === 'provider-waitlist' && this.type === 'wl') {
           if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
             this.api_error = 'share message via options are not selected';
+            this.disableButton = false;
             setTimeout(() => {
              this.api_error='';
             }, projectConstants.TIMEOUT_DELAY);
@@ -591,10 +594,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 }
               );
           }
-        }
-        else if (this.data.source === 'provider-waitlist' && this.type === 'orders') {
+        } else if (this.data.source === 'provider-waitlist' && this.type === 'orders') {
           if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
             this.api_error = 'share message via options are not selected';
+            this.disableButton = false;
             setTimeout(() => {
              this.api_error='';
             }, projectConstants.TIMEOUT_DELAY);
@@ -625,12 +628,12 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 }
               );
           }
-        }
-         else {
+        } else {
           // IsTelegramDisable && !this.telegram  && !this.telegram (IsTelegramDisable && !this.telegram)
           if (this.data.source === 'provider-waitlist') {
             if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
               this.api_error = 'share message via options are not selected';
+              this.disableButton = false;
               setTimeout(() => {
                 this.api_error='';
               }, projectConstants.TIMEOUT_DELAY);
