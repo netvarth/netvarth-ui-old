@@ -759,7 +759,7 @@
                                                     </div>
                                                     <div class="changeprice" *ngIf="amountdifference > 0">
                                                         The balance amount for the rescheduled booking will be
-                                                        ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¹{{amountdifference}}. Contact your provider directly
+                                                        ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¹{{amountdifference}}. Contact your provider directly
                                                         for
                                                         payment adjustments.
                                                     </div>
@@ -785,14 +785,15 @@
                                             <mat-chip-list>
                                                 <div *ngIf="!showMoreAvailableSlots" class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                     <mat-chip *ngFor="let slot of freeSlots | slice:0:12" class="text-center"
-                                                        [selected]="slot.time === apptTime['time']"
+                                                        [selected]="apptTime && slot.time === apptTime['time']"
                                                         (click)="timeSelected(slot);">
                                                         <span class="mx-auto">{{slot.displayTime}}</span>
                                                     </mat-chip>
                                                 </div>
+                                                
                                                 <div *ngIf="showMoreAvailableSlots" [class.internal-scroll] = "showMoreAvailableSlots">
                                                     <mat-chip *ngFor="let slot of freeSlots" class="text-center"
-                                                        [selected]="slot.time === apptTime['time']"
+                                                        [selected]="apptTime &&  slot.time === apptTime['time']"
                                                         (click)="timeSelected(slot);">
                                                         <span class="mx-auto">{{slot.displayTime}}</span>
                                                     </mat-chip>
@@ -860,7 +861,7 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <ng-container *ngIf="action=='slotChange'">
+                                        <!-- <ng-container *ngIf="action=='slotChange'">
                                             <div class="modal-body">
                                                 <div
                                                     class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10 lnk mgn-up-20">
@@ -913,7 +914,7 @@
                                                     No slots available.
                                                 </div>
                                             </div>
-                                        </ng-container>
+                                        </ng-container> -->
                                         <ng-container *ngIf="action=='coupons'">
                                             <div class="modal-body">
                                                 <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">

@@ -703,15 +703,22 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
                 if (this.freeSlots.length > 0) {
                     this.showApptTime = true;
-                    if (this.appointment && this.appointment.appmtTime && this.sel_checkindate === this.selectedDate) {
+                    const datePassed = moment(pdate, 'YYYY-MM-DD HH:mm').format();
+                    if (this.appointment && this.appointment.appmtTime && datePassed === this.selectedDate) {
                         const appttime = this.freeSlots.filter(slot => slot.time === this.appointment.appmtTime);
-                        this.apptTime = appttime[0];
+                        if (appttime) {
+                            this.apptTime = appttime[0];
+                        } else {
+                            this.apptTime = this.freeSlots[0];
+                        }                        
                     } else {
                         // console.log(this.selectedTime)
                         if (this.selectedTime) {
                             const appttime = this.freeSlots.filter(slot => slot.displayTime === this.selectedTime);
-                            if (appttime) {
+                            if (appttime && appttime.length > 0) {
                                 this.apptTime = appttime[0];
+                            } else {
+                                this.apptTime = this.freeSlots[0];
                             }
 
                             console.log("**********")
@@ -1979,10 +1986,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     popupClosed() {
-        this.sel_checkindate = this.selectedDate;
-        this.checkFutureorToday();
-        this.apptTime = this.selectedApptTime;
-        this.waitlist_for[0].apptTime = this.apptTime['time'];
+        // this.sel_checkindate = this.selectedDate;
+        // this.checkFutureorToday();
+        // this.apptTime = this.selectedApptTime;
+        // this.waitlist_for[0].apptTime = this.apptTime['time'];
     }
     getQuestionAnswers(event) {
         this.questionAnswers = event;
