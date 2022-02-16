@@ -6,7 +6,7 @@
         <!-- <span class="ml-3 my-auto back-btn-text desktop-only">Appointment</span> -->
         <span class="mobile-only"><b>{{businessjson.businessName}}</b></span><br>
         <span class="mobile-only" *ngIf="type != 'reschedule'"><a href="{{googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</a></span>
-        <span class="mobile-only" *ngIf="type == 'reschedule'"><a href="{{appointment.location.googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{appointment.location.place}}</a></span>
+        <span class="mobile-only" *ngIf="type == 'reschedule'"><a href="{{appointment.location?.googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{appointment.location?.place}}</a></span>
     </div>
     <!-- <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
         <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'checkin'"
@@ -26,7 +26,7 @@
                 <div class="provider-details m-5 text-dark text-center">
                     <h3><b>{{businessjson.businessName}}</b></h3>
                     <h6 *ngIf="type != 'reschedule'"><a href="{{googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</a></h6>
-                    <h6 *ngIf="type == 'reschedule'"><a href="{{appointment.location.googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{appointment.location.place}}</a></h6>
+                    <h6 *ngIf="type == 'reschedule'"><a href="{{appointment.location?.googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{appointment.location?.place}}</a></h6>
                     <!-- <h6 *ngIf="businessjson.phoneNumbers[0]" ><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;<span>{{businessjson.phoneNumbers[0].instance}}</span></h6> -->
                     <!-- <h6 *ngIf="businessjson.emails[0]"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;<span>{{businessjson.emails[0].instance}}</span></h6> -->
                 </div>
@@ -759,7 +759,7 @@
                                                     </div>
                                                     <div class="changeprice" *ngIf="amountdifference > 0">
                                                         The balance amount for the rescheduled booking will be
-                                                        ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¹{{amountdifference}}. Contact your provider directly
+                                                        ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¹{{amountdifference}}. Contact your provider directly
                                                         for
                                                         payment adjustments.
                                                     </div>
@@ -790,7 +790,6 @@
                                                         <span class="mx-auto">{{slot.displayTime}}</span>
                                                     </mat-chip>
                                                 </div>
-                                                
                                                 <div *ngIf="showMoreAvailableSlots" [class.internal-scroll] = "showMoreAvailableSlots">
                                                     <mat-chip *ngFor="let slot of freeSlots" class="text-center"
                                                         [selected]="apptTime &&  slot.time === apptTime['time']"
