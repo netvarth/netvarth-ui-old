@@ -1804,6 +1804,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       //   Mfilter = this.setFilterForApi();
       Mfilter = {};
     }
+    if (this.selected_location && this.selected_location.id) {
+      Mfilter['location-eq'] = this.selected_location.id;
+    }
     if (this.filter.waitlist_status === 'all') {
       Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     }
