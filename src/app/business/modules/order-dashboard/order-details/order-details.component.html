@@ -131,8 +131,23 @@
             </div>
         </div>
     </div>
-      <!-- Questionnaire starts-->
-      <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10 mgn-up-20 card">
+     
+    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4 mgn-up-10" *ngIf="!loading">
+        <div class="card">
+            <h5>Order History</h5>
+            <div class="c-history-outer">
+                <ul class="c-history">
+                    <li class="{{getRandomClass(history.orderStatus)}}" *ngFor="let history of orderlist_history">
+                        <div class="time">{{getformatedTime(history.time)| date: newTimeDateFormat }}</div>
+                        <div class="action">{{history.orderStatus | capitalizeFirst}}</div>
+                    </li>
+                </ul>
+                <p class="no-result" *ngIf="orderlist_history.length == 0">{{no_history_found}}</p>
+            </div>
+        </div>
+    </div>
+     <!-- Questionnaire starts-->
+     <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10 mgn-up-20 card">
         <div class="">
           <h3 class="">
             {{customerLabel | capitalizeFirst}} info
@@ -169,20 +184,6 @@
         </ng-container>
       </div>
       <!-- Questionnaire end-->
-    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4 mgn-up-10" *ngIf="!loading">
-        <div class="card">
-            <h5>Order History</h5>
-            <div class="c-history-outer">
-                <ul class="c-history">
-                    <li class="{{getRandomClass(history.orderStatus)}}" *ngFor="let history of orderlist_history">
-                        <div class="time">{{getformatedTime(history.time)| date: newTimeDateFormat }}</div>
-                        <div class="action">{{history.orderStatus | capitalizeFirst}}</div>
-                    </li>
-                </ul>
-                <p class="no-result" *ngIf="orderlist_history.length == 0">{{no_history_found}}</p>
-            </div>
-        </div>
-    </div>
 </section>
 <div class="clearfix"></div>
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
