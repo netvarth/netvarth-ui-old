@@ -600,9 +600,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         const post_Data = {
             'ynwUuid': this.rescheduleUserId,
             'date': this.date_pagination_date,
-            'queue': this.queueId,
+            'queue': this.sel_queue_id,
             'consumerNote': this.consumerNote
         };
+        console.log(post_Data)
         this.subs.sink = this.shared_services.rescheduleConsumerWaitlist(this.account_id, post_Data)
             .subscribe(
                 () => {

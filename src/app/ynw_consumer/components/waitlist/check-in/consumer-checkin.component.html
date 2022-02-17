@@ -51,8 +51,7 @@
                                                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
                                                     *ngIf="hideTokenFor">
                                                     <div class="text-capitalize">
-                                                        <div class=""
-                                                            *ngIf="selectedServiceId || type == 'waitlistreschedule'">
+                                                        <div class="" *ngIf="selectedServiceId || type == 'waitlistreschedule'">
                                                             <!-- <div class="service-icon pull-left"
                                                                 *ngIf="selectedService.serviceType == 'virtualService'">
                                                                 <i class="fa phon-icon"
@@ -625,7 +624,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 p-1">
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="queuejson && queuejson.length != 0 && !api_loading1">
+                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                         <div class="">
                                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
@@ -808,14 +807,19 @@
                                                                 <b>No slots available on selected date.Please choose other date.</b>
                                                             </div>
                                                         </div>
+                                                        <div  *ngIf="queuejson && queuejson.length <= 0">
+                                                            <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mt-3 text-center">
+                                                                <b>No slots available on selected date.Please choose other date.</b>
+                                                            </div>
+                                                        </div>
                                                         
 
 
-                                                        <div *ngIf="wt_personaahead" class="text-primary col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20">
+                                                        <div *ngIf="wt_personaahead && personsAhead>=0 && queuejson && queuejson.length > 0" class="text-primary col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20">
                                                             <h4><b>Waiting in Line</b></h4>
                                                         </div>
                                                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
-                                                            *ngIf="wt_personaahead">
+                                                            *ngIf="wt_personaahead && queuejson && queuejson.length > 0">
                                                             <h6 class="card-title serv-time">
                                                                 <span *ngIf="personsAhead <= 0">0
                                                                     People</span>
@@ -842,14 +846,7 @@
                                                             </h6>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-up-10"
-                                                        *ngIf="queuejson && queuejson.length == 0 && !api_loading1">
-                                                        No timings available.
-                                                        <span><a class="lnk pointer-cursor action mgn-lt-10"
-                                                                (click)="changeTime()" data-toggle="modal"
-                                                                data-target="#exampleModalCenter">Change Time
-                                                            </a></span>
-                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                             <div class="clearfix"></div>
@@ -1597,7 +1594,7 @@
                                                                     [class.disabled]="paymentBtnDisabled"
                                                                     *ngIf="paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
                                                                     (click)="!isClickedOnce && saveCheckin('checkin')">
-                                                                MaKe Payment
+                                                                Make Payment
                                                                 </button>
                                                             </div>
                                                         </div>

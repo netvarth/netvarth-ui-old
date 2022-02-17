@@ -545,7 +545,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
                 _this.currentScheduleId = _this.appointment.schedule.id;
                 _this.selectedServiceId = _this.appointment.service.id;
-                _this.holdselectedTime = _this.appointment.appmtTime;
+                _this.holdselectedTime = _this.apptTime;
                 console.log("getRescheduleApptDet:" + _this.sel_loc);
                 _this.getServicebyLocationId(_this.sel_loc, _this.sel_checkindate);
                 _this.getSchedulesbyLocationandServiceIdavailability(_this.sel_loc, _this.selectedServiceId, _this.account_id);
@@ -931,12 +931,13 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.apptdisable = true;
         const post_Data = {
             'uid': this.rescheduleUserId,
-            'time': this.selectedApptTime['time'],
+            'time': this.apptTime['time'],
             'date': this.date_pagination_date,
             'schedule': this.selectedApptTime['scheduleId'],
             'consumerNote': this.consumerNote
         };
-        //console.log(this.apptTime['time'])
+        console.log("post data of time : ",post_Data['time'])
+        console.log("appt selected time",this.apptTime)
         this.subs.sink = this.shared_services.rescheduleConsumerApptmnt(this.account_id, post_Data)
             .subscribe(
                 () => {

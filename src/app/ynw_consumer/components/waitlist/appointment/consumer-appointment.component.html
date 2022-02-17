@@ -13,7 +13,7 @@
             [accountId]="businessId" [customId]="customId"></app-header>
     </div> -->
 </div>
-<section #consumer_appointment class="container-fluid" [ngClass]="theme?theme:''">
+<section #consumer_appointment class="container-fluid" [ngClass]="theme?theme:''" >
     <div class="loading-hgt my-5" *ngIf="!questionnaireLoaded">
         <app-common-innerloading-spinner></app-common-innerloading-spinner>
     </div>
@@ -1540,7 +1540,7 @@
                                                 [class.disabled]="paymentBtnDisabled"
                                                 *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
                                                 (click)="!isClickedOnce && saveCheckin('appt')">
-                                                MaKe Payment
+                                                Make Payment
                                             </button>
                                         </div>
                                     </div>
