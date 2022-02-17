@@ -13,3 +13,7 @@
 .meetingdetail .btn-primary-n:before {
   box-shadow: none !important;
 }
+.grey-b {
+  background: black !important;
+  opacity: .3;
+}

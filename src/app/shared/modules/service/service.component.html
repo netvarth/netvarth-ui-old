@@ -424,8 +424,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
       </div>
       <div class="row mgn-lt-5 mgn-up-20" *ngIf="showBillingInfo && !is_donation">
         <section class="mgn-bt-30">
-          <label style="margin-bottom: 0 !important" class="col-form-label">Service Price</label>
-          <div class="settings_info">
+          <label style="margin-bottom: 0 !important" class="col-form-label" *ngIf="bprofile.serviceSector.domain != 'finance'">Service Price</label>
+          <div class="settings_info" *ngIf="bprofile.serviceSector.domain != 'finance'">
             {{frm_service_price}}</div>
           <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
             <mat-form-field class="rupee-font">

@@ -30,14 +30,16 @@
                                         {{customer[0].jaldeeId}}</span>
                                 </div>
                                 
-                                <div class="mobile-no" *ngIf="customer[0].phoneNo && phoneNum === 'undefined'">
+                                <div class="mobile-no" *ngIf="customer[0].phoneNo">
                                     <i class="fa fa-mobile icon"></i>
-                                    <span class="sub-texts">{{customer[0].countryCode}} {{customer[0].phoneNo}}</span>
+                                    <span class="sub-texts" *ngIf="customer[0].phoneNo">{{customer[0].countryCode}} {{customer[0].phoneNo}}</span>
+                                    <span class="sub-texts" *ngIf="phoneNum !== 'undefined' && customer[0].phoneNo === ''">{{phoneNum}}</span>
+
                                 </div>
-                                <div class="mobile-no">
-                                    <i class="fa fa-mobile icon" *ngIf="phoneNum !== 'undefined'"></i>
+                                <!-- <div class="mobile-no" *ngIf="phoneNum !== 'undefined'">
+                                    <i class="fa fa-mobile icon" ></i>
                                     <span class="sub-texts">{{phoneNum}}</span>
-                                </div>
+                                </div> -->
                                 <div class="e-mail" *ngIf="customer[0].email">
                                     <i class="fa fa-envelope icon"></i>
                                     <span class="sub-texts">{{customer[0].email}}</span>
