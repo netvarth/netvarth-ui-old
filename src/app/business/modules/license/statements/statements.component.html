@@ -127,6 +127,7 @@
                                                     <td>{{invoice.licensePkgDetails.licenseName}}</td>
                                                     <td class="invoice-head rupee-font">
                                                         {{invoice.licensePkgDetails.amount | currency:'&#8377;'}}</td>
+                                                        <td>{{invoice.licensePkgDetails | currency }}</td>
                                                 </tr>
                                                 <tr *ngFor="let addon of invoice.addonDetails">
                                                     <td>{{addon.addonName}}</td>
@@ -237,6 +238,11 @@
                                                         <span>{{status_cap}} :
                                                             <span class="result"><b>
                                                                     {{payment.status || 'FAILED'}}</b></span></span>
+                                                    </div>
+                                                    <div >
+                                                        <!-- *ngIf="payment.customerPaidCharges" -->
+                                                        <span>Processing fee :</span>
+                                                        <strong> {{payment.customerPaidCharges ? payment.customerPaidCharges : 'No Paid Charges'}}</strong>
                                                     </div>
                                                 </div>
                                             </div>

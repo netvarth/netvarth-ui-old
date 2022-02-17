@@ -30,9 +30,13 @@
                                         {{customer[0].jaldeeId}}</span>
                                 </div>
                                 
-                                <div class="mobile-no" *ngIf="customer[0].phoneNo">
+                                <div class="mobile-no" *ngIf="customer[0].phoneNo && phoneNum === 'undefined'">
                                     <i class="fa fa-mobile icon"></i>
                                     <span class="sub-texts">{{customer[0].countryCode}} {{customer[0].phoneNo}}</span>
+                                </div>
+                                <div class="mobile-no">
+                                    <i class="fa fa-mobile icon" *ngIf="phoneNum !== 'undefined'"></i>
+                                    <span class="sub-texts">{{phoneNum}}</span>
                                 </div>
                                 <div class="e-mail" *ngIf="customer[0].email">
                                     <i class="fa fa-envelope icon"></i>
@@ -83,7 +87,7 @@
                 </div>
                 <div class="col-md-12 no-padding">
                     <div class="col-md-6 col-xs-12 col-sm-12 no-padding-small consumer-dash"
-                        *ngIf="phoneNumber || (customer && customer[0] && customer[0].email)">
+                        *ngIf="phoneNumber || (customer && customer[0] && customer[0].email) || phoneNum">
                         <div class="grid-card ">
                             <div>
                                 <div class="card no-padding">
@@ -149,7 +153,7 @@
                                                 </div>
                                                 <div class="disp-flex whatsp">
                                                     <label> Whatsapp # : <span class="bold">
-                                                            &nbsp;+{{phoneNum}}</span></label>
+                                                            &nbsp;{{phoneNum}}</span></label>
 
                                                 </div>
                                                 <div class="clearfix"></div>

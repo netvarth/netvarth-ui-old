@@ -405,12 +405,13 @@ addConsumerInboxMessage() {
 gotoSecureVideo() {
   this.closeDialog();
   const customerId = this.orderDetails.orderFor.id
-    // const whtasappNum = this.orderDetails.virtualService.WhatsApp;
+    //  const whtasappNum = this.orderDetails.virtualService.WhatsApp;
+    const num = this.orderDetails.countryCode + ' ' + this.orderDetails.phoneNumber;
+
   const navigationExtras: NavigationExtras = {
       queryParams: {
           id : customerId,
-          // phoneNum : whtasappNum,
-          type: 'secure_video'
+         phoneNum : num,
       }
   };
   this.router.navigate(['provider', 'secure-video'], navigationExtras);
