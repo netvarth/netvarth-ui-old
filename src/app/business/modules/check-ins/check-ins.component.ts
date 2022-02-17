@@ -479,7 +479,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
-    if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
+    if (this.active_user && this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
       this.activeUser = this.active_user.id;
     }
 
@@ -1836,7 +1836,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.today_waitlist_count = 0;
     this.history_waitlist_count = 0;
     this.future_waitlist_count = 0;
-    if (this.time_type !== 2 && this.activeQs.length > 0 || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) {
+    if (this.time_type !== 2 && this.activeQs.length > 0 || (this.active_user && this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) {
       this.getFutureWLCount()
         .then(
           (result) => {
@@ -1852,7 +1852,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         );
     }
-    if (this.time_type !== 1 && this.activeQs.length > 0 || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) {
+    if (this.time_type !== 1 && this.activeQs.length > 0 || (this.active_user && this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) {
       this.getTodayWLCount()
         .then(
           (result) => {
