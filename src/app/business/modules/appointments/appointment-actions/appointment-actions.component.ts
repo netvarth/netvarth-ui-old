@@ -695,15 +695,19 @@ export class AppointmentActionsComponent implements OnInit {
         // const customerDetails = this.appt;
         const customerId = this.appt.appmtFor[0].id;
         const num = this.appt.countryCode + ' ' + this.appt.phoneNumber;
+        // const firstName = this.appt.appmtFor[0].firstName
+        // const lastName=this.appt.appmtFor[0].lastName
         // const customerId = customerDetails[0].id;
         const dialogref = this.dialog.open(VoiceConfirmComponent, {
             width: '60%',
-            height: '35%',
+            // height: '35%',
             panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
                 customerId: customerId,
                 customer: num,
+                // firstName:firstName,
+                // lastName:lastName
             }
         });
         dialogref.afterClosed().subscribe(
