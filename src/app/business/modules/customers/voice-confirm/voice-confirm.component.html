@@ -1,4 +1,4 @@
-<div style="text-align:center" class="disply">
+<!-- <div style="text-align:center" class="disply">
   <div mat-dialog-content class="col-md-12 col-lg-12 col-sm-12 col-xs-12 msg">
     <div class="col-md-4 col-lg-3 col-sm-4 col-xs-4">
       <img class="image" src="/assets/images/NewVoicecall.png" alt="Basic Plus">
@@ -15,8 +15,8 @@
   </div>
   <br>
   <br>
-</div>
-<div class="mobile_disply">
+</div> -->
+<!-- <div class="mobile_disply">
   <div mat-dialog-content class="col-md-12 col-sm-12 col-xs-12">
     <div class="col-md-3 col-lg-3 col-sm-4 col-xs-4">
       <img class="image" src="/assets/images/NewVoicecall.png" alt="Basic Plus">
@@ -33,19 +33,19 @@
   </div>
   <br>
   <br>
-</div>
+</div> -->
 
-<!-- <div style="display: flex;align-items: center;"mat-dialog-content >
-
+<div style="display: flex;align-items: center;justify-content: space-between;"mat-dialog-content >
   <div>
     <img class="image" src="/assets/images/NewVoicecall.png" alt="Basic Plus">
   </div>
   <div>
-    <div style="font-size: 20px;font-weight: 700;">Are you sure you want start a voice call with {{customer}}</div>
-    <div style="display:flex"  mat-dialog-actions style="margin-top: 10px;padding: 20px;">
-      <button tabindex="2" mat-dialog-close class="cs-btn bt1" style="width:30%" (click)="voiceCall()">YES</button>&nbsp;&nbsp;
-      <button tabindex="2" mat-dialog-close class="cs-btn bt1"style="width:30%" (click)="onClick()">NO</button>
+    <div class="textFontSize" >Are you ready to start a voice call with {{customer}} ?</div>
+    <div style="display:flex"  style="margin-top: 10px;padding: 20px;">
+      <div style="display:flex;justify-content:center">
+        <button tabindex="2" mat-dialog-close class="cs-btn bt1"  (click)="voiceCall()">YES</button>&nbsp;&nbsp;
+      <button tabindex="2" mat-dialog-close class="cs-btn bt1" (click)="onClick()">NO</button>
+      </div>
     </div>
   </div>
-
-</div> -->
+</div>
