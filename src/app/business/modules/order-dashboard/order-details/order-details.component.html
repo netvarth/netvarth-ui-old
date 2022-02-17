@@ -148,7 +148,7 @@
     </div>
      <!-- Questionnaire starts-->
      <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10 mgn-up-20 card">
-        <div class="">
+        <div class="" *ngIf="questionnaires.length > 1">
           <h3 class="">
             {{customerLabel | capitalizeFirst}} info
           </h3>
