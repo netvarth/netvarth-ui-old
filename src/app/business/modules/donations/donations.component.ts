@@ -12,6 +12,8 @@ import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { CommunicationService } from '../../services/communication-service';
+import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 @Component({
   'selector': 'app-donations',
@@ -85,7 +87,9 @@ export class DonationsComponent implements OnInit {
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
     private dateTimeProcessor: DateTimeProcessor,
-    private wordProcessor: WordProcessor) {
+    private wordProcessor: WordProcessor,
+    private shared_functions: SharedFunctions,
+    private lStorageService: LocalStorageService,) {
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
     this.filtericonclearTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -183,7 +187,8 @@ export class DonationsComponent implements OnInit {
     } else {
       this.services.splice(indx, 1);
     }
-    this.doSearch();
+    // this.doSearch();
+    this.keyPressed()
   }
   // getDonationsList(from_oninit = false, loc?) {
   //     let filter = this.setFilterForApi();
@@ -286,6 +291,24 @@ export class DonationsComponent implements OnInit {
     } else {
       this.filterapplied = false;
     }
+  }
+  keyPressed(){
+
+    this.shared_functions.setFilter();
+    this.lStorageService.removeitemfromLocalStorage('filter');
+    // this.endminday = this.filter.check_in_start_date;
+    // if (this.filter.check_in_end_date) {
+    //   this.maxday = this.filter.check_in_end_date;
+    // } else {
+    //   this.maxday = this.yesterdayDate;
+    // }
+    // this.labelSelection();
+    if (this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.service) {
+      this.filterapplied = true;
+    } else {
+      this.filterapplied = false;
+    }
+    
   }
   resetFilter() {
     this.filters = {

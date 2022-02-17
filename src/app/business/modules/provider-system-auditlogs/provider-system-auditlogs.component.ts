@@ -12,13 +12,13 @@ import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 
 @Component({
   selector: 'app-provider-system-auditlogs',
-  templateUrl: './provider-system-auditlogs.component.html'
-  /*
-  styleUrls: ['./provider-auditlogs.component.css']*/
+  templateUrl: './provider-system-auditlogs.component.html',
+  styleUrls: ['./provider-system-auditlogs.component.css']
 })
 export class ProviderSystemAuditLogComponent implements OnInit {
   tooltipcls = '';
@@ -94,6 +94,8 @@ export class ProviderSystemAuditLogComponent implements OnInit {
     private dateTimeProcessor: DateTimeProcessor,
     private sharedfunctionObj: SharedFunctions,
     private provider_servicesobj: ProviderServices,
+    private shared_functions: SharedFunctions,
+    private lStorageService: LocalStorageService,
 
   ) { 
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
@@ -364,6 +366,19 @@ redirecToHelp() {
   }
   hideFilterSidebar() {
     this.filter_sidebar = false;
+  }
+
+  keyPressed(){
+
+    this.shared_functions.setFilter();
+    this.lStorageService.removeitemfromLocalStorage('filter');
+
+    if (this.auditStartdate || this.auditEnddate) {
+      this.filterapplied = true;
+    } else {
+      this.filterapplied = false;
+    }
+    
   }
 }
 
