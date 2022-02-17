@@ -2114,12 +2114,24 @@ export class ProviderServices {
     const url = 'provider/questionnaire/service/' + serviceId + '/' + channel + '/consumer/' + consumerId;
     return this.servicemeta.httpGet(url);
   }
+  getProviderorderQuestionnaire(serviceId, channel, consumerId ) {
+    const url = 'provider/questionnaire/order/' + serviceId + '/' + channel + '/consumer/' + consumerId;
+    return this.servicemeta.httpGet(url);
+  }
   submitProviderApptQuestionnaire(body, uuid) {
     const url = 'provider/appointment/questionnaire/' + uuid;
     return this.servicemeta.httpPost(url, body);
   }
   resubmitProviderApptQuestionnaire(body, uuid) {
     const url = 'provider/appointment/questionnaire/resubmit/' + uuid;
+    return this.servicemeta.httpPost(url, body);
+  }
+  submitProviderOrderQuestionnaire(body, uuid) {
+    const url = 'provider/orders/questionnaire/' + uuid;
+    return this.servicemeta.httpPost(url, body);
+  }
+  resubmitProviderOrderQuestionnaire(body, uuid) {
+    const url = 'provider/orders/questionnaire/resubmit/' + uuid;
     return this.servicemeta.httpPost(url, body);
   }
   submitProviderWaitlistQuestionnaire(body, uuid) {
@@ -2208,6 +2220,10 @@ export class ProviderServices {
     const url = 'provider/appointment/questionnaire/upload/status/' + uid;
     return this.servicemeta.httpPut(url, data);
   }
+  providerOrderQnrUploadStatusUpdate(uid, data) {
+    const url = 'provider/orders/questionnaire/upload/status/' + uid;
+    return this.servicemeta.httpPut(url, data);
+  }
   providerWaitlistQnrUploadStatusUpdate(uid, data) {
     const url = 'provider/waitlist/questionnaire/upload/status/' + uid;
     return this.servicemeta.httpPut(url, data);
@@ -2252,6 +2268,10 @@ export class ProviderServices {
   }
   getWaitlistQuestionnaireByUid(uid) {
     const url = 'provider/waitlist/questionnaire/' + uid;
+    return this.servicemeta.httpGet(url);
+  }
+  getOrderQuestionnaireByUid(uid) {
+    const url = 'provider/orders/questionnaire/' + uid;
     return this.servicemeta.httpGet(url);
   }
   getApptQuestionnaireByUid(uid) {

@@ -165,7 +165,14 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
   store_availables: any;
   home_availables: any;
   private subs = new SubSink();
-
+  questionnaireList: any = [];
+  questionAnswers;
+  showBlockHint = false;
+  showQuestionnaire = false;
+  api_loading_video;
+  api_loading = true;
+  channel;
+  uuid;
   constructor(private fb: FormBuilder,
     private wordProcessor: WordProcessor,
     public router: Router,
@@ -179,6 +186,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private activated_route: ActivatedRoute,
     private provider_services: ProviderServices,
+    private providerService: ProviderServices,
     private dateTimeProcessor: DateTimeProcessor,
     private s3Processor: S3UrlProcessor) {
 
@@ -252,12 +260,14 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
     this.no_of_grids = Math.round(divident / divider);
   }
   ngOnInit() {
+    
     this.accountId = this.groupService.getitemFromGroupStorage('accountId');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.searchby = 'Search by ' + this.customer_label + ' id/name/email/phone number';
     this.createForm();
     this.getCatalog();
     this.gets3curl();
+    
 
 
   }
@@ -426,6 +436,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
               this.show_customer = true;
               this.create_customer = false;
               this.getDeliveryAddress();
+              this.getProviderQuestionnaire();
               this.formMode = data.type;
               if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
                 this.countryCode = this.customer_data.countryCode;
@@ -554,6 +565,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
         }
         this.getOrderAvailableDatesForPickup();
         this.getOrderAvailableDatesForHome();
+        
         // this.getAvailabilityByDate(this.sel_checkindate);    
         this.showfuturediv = false;
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
@@ -589,7 +601,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
 
       }
     });
-
+  
   }
 
 
@@ -1137,26 +1149,51 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
       dataToSend.append('captions', blobPropdata);
       const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
       dataToSend.append('order', blobpost_Data);
+     
       this.shared_services.CreateWalkinOrder(this.accountId, dataToSend)
-        .pipe(takeUntil(this.onDestroy$))
-        .subscribe(data => {
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(data => {
+        // this.uuid = data;
+        const retData = data;
+        let retUuid;
+        Object.keys(retData).forEach(key => {
+            retUuid = retData[key];
+            this.uuid = retData[key];
+        });
+        if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+          this.submitQuestionnaire(retUuid);
+      } 
+        this.placeOrderDisabled = false;
+        this.snackbarService.openSnackBar('Your Order placed successfully');
+        this.router.navigate(['provider', 'orders']);
+
+      },
+        error => {
           this.placeOrderDisabled = false;
-          this.snackbarService.openSnackBar('Your Order placed successfully');
-          this.router.navigate(['provider', 'orders']);
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
 
-        },
-          error => {
-            this.placeOrderDisabled = false;
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }
+      );
+    }
 
-        );
-    } else {
+      
+     
+    else {
+     
       const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
       dataToSend.append('order', blobpost_Data);
       this.shared_services.CreateWalkinOrder(this.accountId, dataToSend)
         .pipe(takeUntil(this.onDestroy$))
         .subscribe(data => {
+          const retData = data;
+        let retUuid;
+        Object.keys(retData).forEach(key => {
+            retUuid = retData[key];
+            this.uuid = retData[key];
+        });
+          if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+            this.submitQuestionnaire(retUuid);
+        } 
           this.placeOrderDisabled = false;
           this.snackbarService.openSnackBar('Your Order placed successfully');
           this.orderList = [];
@@ -1169,6 +1206,8 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
 
         );
     }
+      
+    
 
   }
   addAddress() {
@@ -1432,8 +1471,77 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
         }
       });
   }
-
-
+  getQuestionAnswers(event) {
+    this.questionAnswers = null;
+    this.questionAnswers = event;
+}
+getProviderQuestionnaire() {
+  // let consumerId;
+  // if (this.showBlockHint) {
+  //     consumerId = this.customer_data.id;
+  // } 
+  this.channel = 'WALKIN';
+  this.providerService.getProviderorderQuestionnaire(this.catalog_Id , this.channel , this.customer_data.id ).subscribe(data => {
+      this.questionnaireList = data;
+          if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+              this.showQuestionnaire = true;
+             
+          } 
+          // else {
+          //     this.confirmWaitlistBlockPopup();
+          // }
+      
+  });
+}
+submitQuestionnaire(uuid) {
+  const dataToSend: FormData = new FormData();
+  // if (this.questionAnswers.files) {
+  //     for (const pic of this.questionAnswers.files) {
+  //         dataToSend.append('files', pic['name']);
+  //     }
+  // }
+  const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+  dataToSend.append('question', blobpost_Data);
+  this.providerService.submitProviderOrderQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
+      let postData = {
+          urls: []
+      };
+      if (data.urls && data.urls.length > 0) {
+          for (const url of data.urls) {
+              this.api_loading_video = true;
+              const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
+              this.provider_services.videoaudioS3Upload(file, url.url)
+                  .subscribe(() => {
+                      postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                      if (data.urls.length === postData['urls'].length) {
+                          this.provider_services.providerOrderQnrUploadStatusUpdate(uuid, postData)
+                              .subscribe((data) => {
+                                  this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+                                  this.router.navigate(['provider', 'orders']);
+                              },
+                                  error => {
+                                      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                      this.api_loading = false;
+                                      this.api_loading_video = false;
+                                  });
+                      }
+                  },
+                      error => {
+                          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                          this.api_loading = false;
+                          this.api_loading_video = false;
+                      });
+          }
+      } else {
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+          this.router.navigate(['provider', 'orders']);
+      }
+  }, error => {
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+      this.api_loading = false;
+      this.api_loading_video = false;
+  });
+}
 }
 
 

@@ -29,6 +29,7 @@ import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.m
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { PaytmService } from '../../../../../app/shared/services/paytm.service';
 import { JcCouponNoteComponent } from '../../jc-coupon-note/jc-coupon-note.component';
+import { ProviderServices } from '../../../../../../src/app/business/services/provider-services.service';
 
 @Component({
   selector: 'app-checkout',
@@ -198,6 +199,14 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   isPayment: boolean;
   indian_payment_modes: any=[];
   non_indian_modes: any=[];
+  questionnaireList: any = [];
+  questionAnswers;
+  catalogId: any;
+  questionnaireLoaded = false;
+  qnr;
+  api_loading_video;
+  disableButton;
+  disablebutton = false;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -219,7 +228,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     public razorpayService: RazorpayService,
     private ngZone: NgZone,
     private cdRef: ChangeDetectorRef,
-    private paytmService: PaytmService
+    private paytmService: PaytmService,
+    public provider_services: ProviderServices,
   ) {
 
 
@@ -232,7 +242,15 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       phone: ['', Validators.required],
       email: ['', Validators.required]
     });
-
+    this.route.queryParams.subscribe(
+      params => {
+      
+        if (params.catalog_Id) {
+          this.catalogId = params.catalog_Id;
+        }
+      });
+      this.chosenDateDetails = this.lStorageService.getitemfromLocalStorage('chosenDateTime');
+      this.account_id = this.chosenDateDetails.account_id;
     this.route.queryParams.subscribe(
       params => {
         this.provider_id = params.providerId;
@@ -307,7 +325,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
     }
 
-
+    this.getConsumerQuestionnaire();
 
 
     this.getCatalogDetails(this.account_id).then(data => {
@@ -1082,6 +1100,7 @@ getPaymentModes() {
               .subscribe(() => {
               });
           }
+          
           this.checkoutDisabled = false;
           // let prepayAmount;
           const uuidList = [];
@@ -1103,11 +1122,20 @@ getPaymentModes() {
                   this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.catalog_details.advanceAmount)
                     .subscribe(data => {
                       this.remainingadvanceamount = data;
+                      if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                        this.submitQuestionnaire(this.trackUuid, paytype);
+                    } else {
                       this.payuPayment(paytype);
+                    }
+                     
                     });
                 }
                 else {
+                  if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    this.submitQuestionnaire(this.trackUuid, paytype);
+                } else {
                   this.payuPayment(paytype);
+                }
                 }
 
               });
@@ -1179,11 +1207,20 @@ getPaymentModes() {
                   this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.cartDetails.advanceAmount)
                     .subscribe(data => {
                       this.remainingadvanceamount = data;
+                      if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                        this.submitQuestionnaire(this.trackUuid, paytype);
+                    } else {
                       this.payuPayment(paytype);
+                    }
+                    
                     });
                 }
                 else {
+                  if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    this.submitQuestionnaire(this.trackUuid, paytype);
+                } else {
                   this.payuPayment(paytype);
+                }
                 }
               });
           } else {
@@ -1911,4 +1948,66 @@ getPaymentModes() {
     // this.ngZone.run(() => this.router.navigate(['consumer']));
     this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
   }
+  getQuestionAnswers(event) {
+    this.questionAnswers = event;
+  }
+  getConsumerQuestionnaire() {
+    this.subs.sink =  this.shared_services.getConsumerOrderQuestionnaire(this.catalogId,this.account_id).subscribe(data => {
+        this.questionnaireList = data;
+        this.qnr = true;
+        console.log(this.questionnaireList)
+        this.questionnaireLoaded = true;
+    });
+  }
+  submitQuestionnaire(uuid, paymenttype?) {
+    const dataToSend: FormData = new FormData();
+    if (this.questionAnswers.files) {
+        for (const pic of this.questionAnswers.files) {
+            dataToSend.append('files', pic, pic['name']);
+        }
+    }
+    const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+    dataToSend.append('question', blobpost_Data);
+    this.subs.sink = this.shared_services.submitConsumerOrderQuestionnaire(dataToSend, uuid, this.account_id).subscribe((data: any) => {
+        let postData = {
+            urls: []
+        };
+        if (data.urls && data.urls.length > 0) {
+            for (const url of data.urls) {
+                this.api_loading_video = true;
+                const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
+                this.provider_services.videoaudioS3Upload(file, url.url)
+                    .subscribe(() => {
+                        postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                        if (data.urls.length === postData['urls'].length) {
+                            this.shared_services.consumerOrderQnrUploadStatusUpdate(uuid, this.account_id, postData)
+                                .subscribe((data) => {
+                                    this.payuPayment(paymenttype);
+                                },
+                                    error => {
+                                        this.isClickedOnce = false;
+                                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                        this.disablebutton = false;
+                                        this.api_loading_video = false;
+                                    });
+                        }
+                    },
+                        error => {
+                            this.isClickedOnce = false;
+                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                            this.disablebutton = false;
+                            this.api_loading_video = false;
+                        });
+            }
+        } else {
+            this.payuPayment(paymenttype);
+        }
+    },
+        error => {
+            this.isClickedOnce = false;
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.disablebutton = false;
+            this.api_loading_video = false;
+        });
+}
 }

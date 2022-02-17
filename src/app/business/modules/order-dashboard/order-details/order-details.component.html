@@ -131,6 +131,44 @@
             </div>
         </div>
     </div>
+      <!-- Questionnaire starts-->
+      <div class="card">
+        <div class="">
+          <h3 class="">
+            {{customerLabel | capitalizeFirst}} info
+          </h3>
+        </div>
+        <ng-container *ngIf="questionnaires.length > 1">
+          <mat-accordion class="qnr-accord no-padding" *ngFor="let qnr of questionnaires">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{(qnr.questionnaireName) ? qnr.questionnaireName : qnr.questionnaireId}}
+                  <div class="qnrstatus">
+                    <span class="greenc" *ngIf="getQnrStatus(qnr) === 'submitted'">Submitted</span>
+                    <span class="red" *ngIf="getQnrStatus(qnr) !== 'submitted'">Released</span>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="c-details">
+                <app-questionnaire [questionnaireList]="qnr" [source]="'proOrder'" [uuid]="orderDetails.uid"
+                  [type]="'details'" [waitlistStatus]="orderDetails.orderStatus"
+                  (returnAnswers)="getQuestionAnswers($event)">
+                </app-questionnaire>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </ng-container>
+        <ng-container *ngIf="questionnaires.length === 1">
+          <div class="c-details" *ngFor="let qnr of questionnaires">
+            <app-questionnaire [questionnaireList]="qnr" [source]="'proOrder'" [uuid]="orderDetails.uid"
+              [type]="'details'" [waitlistStatus]="orderDetails.orderStatus"
+              (returnAnswers)="getQuestionAnswers($event)">
+            </app-questionnaire>
+          </div>
+        </ng-container>
+      </div>
+      <!-- Questionnaire end-->
     <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4 mgn-up-10" *ngIf="!loading">
         <div class="card">
             <h5>Order History</h5>

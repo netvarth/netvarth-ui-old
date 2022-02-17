@@ -14,6 +14,7 @@ import { OrderWizardComponent } from "./order-wizard.component";
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
 import { RouterModule, Routes } from "@angular/router";
+import { QuestionnaireModule } from "../../../../../../src/app/shared/components/questionnaire/questionnaire.module";
 const routes: Routes = [
     {path: '', component: OrderWizardComponent}
 ]
@@ -33,6 +34,7 @@ const routes: Routes = [
         MatRadioModule,
         MatDatepickerModule,
         MatChipsModule,
+        QuestionnaireModule,
         CapitalizeFirstPipeModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         [RouterModule.forChild(routes)]

@@ -27,6 +27,8 @@ export class QuestionnaireComponent implements OnInit {
   @Input() uuid;
   @Input() type;
   @Input() waitlistStatus;
+  @Input() orderStatus;
+  
   @Input() donationDetails;
   @Output() returnAnswers = new EventEmitter<any>();
   answers: any = {};
@@ -677,7 +679,7 @@ export class QuestionnaireComponent implements OnInit {
     const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
     this.buttonDisable = true;
-    if (this.source === 'consCheckin' || this.source === 'consAppt' || this.source === 'consDonationDetails') {
+    if (this.source === 'consCheckin' || this.source === 'consAppt' || this.source === 'consOrder' || this.source === 'consDonationDetails') {
       this.validateConsumerQuestionnaireResubmit(passData.answers, dataToSend);
     } else {
       this.validateProviderQuestionnaireResubmit(passData.answers, dataToSend);
@@ -741,6 +743,22 @@ export class QuestionnaireComponent implements OnInit {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }
+  resubmitConsumerOrderQuestionnaire(body) {
+    this.sharedService.resubmitConsumerOrderQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
+      this.uploadAudioVideo(data, 'consOrder');
+    }, error => {
+      this.buttonDisable = false;
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
+  submitConsumerOrderQuestionnaire(body) {
+    this.sharedService.submitConsumerOrderQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
+      this.uploadAudioVideo(data, 'consOrder');
+    }, error => {
+      this.buttonDisable = false;
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
   resubmitProviderWaitlistQuestionnaire(body) {
     this.providerService.resubmitProviderWaitlistQuestionnaire(body, this.uuid).subscribe(data => {
       this.uploadAudioVideo(data, 'proCheckin');
@@ -768,6 +786,22 @@ export class QuestionnaireComponent implements OnInit {
   submitProviderApptQuestionnaire(body) {
     this.providerService.submitProviderApptQuestionnaire(body, this.uuid).subscribe(data => {
       this.uploadAudioVideo(data, 'proAppt');
+    }, error => {
+      this.buttonDisable = false;
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
+  resubmitProviderOrderQuestionnaire(body) {
+    this.providerService.resubmitProviderOrderQuestionnaire(body, this.uuid).subscribe(data => {
+      this.uploadAudioVideo(data, 'proOrder');
+    }, error => {
+      this.buttonDisable = false;
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
+  submitProviderOrderQuestionnaire(body) {
+    this.providerService.submitProviderOrderQuestionnaire(body, this.uuid).subscribe(data => {
+      this.uploadAudioVideo(data, 'proOrder');
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -813,6 +847,16 @@ export class QuestionnaireComponent implements OnInit {
                     });
               } else if (type === 'consAppt') {
                 this.sharedService.consumerApptQnrUploadStatusUpdate(this.uuid, this.accountId, postData)
+                  .subscribe((data) => {
+                    this.successGoback();
+                  },
+                    error => {
+                      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                      this.buttonDisable = false;
+                    });
+              } 
+              else if (type === 'consOrder') {
+                this.sharedService.consumerOrderQnrUploadStatusUpdate(this.uuid, this.accountId, postData)
                   .subscribe((data) => {
                     this.successGoback();
                   },
@@ -884,7 +928,14 @@ export class QuestionnaireComponent implements OnInit {
           } else {
             this.submitProviderWaitlistQuestionnaire(dataToSend);
           }
-        } else {
+        } 
+        else if (this.source === 'proOrder') {
+          if (this.qnrStatus === 'submitted') {
+            this.resubmitProviderOrderQuestionnaire(dataToSend);
+          } else {
+            this.submitProviderOrderQuestionnaire(dataToSend);
+          }
+        }else {
           if (this.qnrStatus === 'submitted') {
             this.resubmitProviderApptQuestionnaire(dataToSend);
           } else {
@@ -912,6 +963,13 @@ export class QuestionnaireComponent implements OnInit {
             this.resubmitConsumerApptQuestionnaire(dataToSend);
           } else {
             this.submitConsumerApptQuestionnaire(dataToSend);
+          }
+        }
+        else if(this.source === 'consOrder') {
+          if (this.qnrStatus === 'submitted') {
+            this.resubmitConsumerOrderQuestionnaire(dataToSend);
+          } else {
+            this.submitConsumerOrderQuestionnaire(dataToSend);
           }
         }
         else{
@@ -980,6 +1038,11 @@ export class QuestionnaireComponent implements OnInit {
           return true;
         }
       }
+      if (this.source === 'consOrder' || this.source === 'proOrder') {
+        if (this.waitlistStatus !== 'Order Confirmed') {
+          return true;
+        }
+      }
     }
     if (this.source === 'consDonationDetails' || this.source === 'qnrDetails' || this.source === 'qnrView' || (this.type && this.type !== 'qnr-link' && !this.editQuestionnaire)) {
       return true;
@@ -996,6 +1059,12 @@ export class QuestionnaireComponent implements OnInit {
         if (this.waitlistStatus !== 'Confirmed' && this.waitlistStatus !== 'Arrived') {
           return false;
         }
+      }
+      if (this.source === 'consOrder' || this.source === 'proOrder') {
+        if (this.waitlistStatus !== 'Order Confirmed') {
+          return false;
+        }
+        
       }
       if (this.source === 'consDonationDetails' || this.source === 'qnrDetails' || this.source === 'qnrView' || (this.type && this.type !== 'qnr-link' && !this.editQuestionnaire)) {
         return false;

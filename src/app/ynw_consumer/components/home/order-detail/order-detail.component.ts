@@ -76,6 +76,7 @@ buttons: [
   provider_id;
   delivery_address: any;
   private subs=new SubSink();
+  questionnaires: any = [];
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -122,6 +123,11 @@ buttons: [
   }
   ngOnInit() {
     this.getCommunicationHistory();
+    this.getOrderDetails();
+    this.getStoreContact();
+    this.getFavouriteProvider();
+  }
+  getOrderDetails(){
     this.subs.sink=this.sharedServices.getOrderByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
       (data) => {
         this.waitlist = data;
@@ -146,15 +152,21 @@ buttons: [
           this.image_list_popup.push(imgobj);
           }
         }
+        if (this.waitlist.questionnaires && this.waitlist.questionnaires.length > 0) {
+          this.questionnaires = this.waitlist.questionnaires;
+        }
+        if (this.waitlist.releasedQnr && this.waitlist.releasedQnr.length > 0 && this.waitlist.orderStatus !== 'Cancelled') {
+          const releasedQnrs = this.waitlist.releasedQnr.filter(qnr => qnr.status === 'released');
+          if (releasedQnrs.length > 0) {
+            this.getReleasedQnrs(releasedQnrs);
+          }
+        }
         this.generateQR();
       },
       (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
-    this.getStoreContact();
-    this.getFavouriteProvider();
   }
-
   gets3curl() {
     this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,null, 'terminologies').subscribe(
       (accountS3s) => {   
@@ -367,6 +379,35 @@ buttons: [
         this.getCommunicationHistory();
       }
     });
+  }
+  getReleasedQnrs(releasedQnrs) {
+    this.sharedServices.getOrderQuestionnaireByUid(this.ynwUuid, this.providerId)
+      .subscribe(
+        (data: any) => {
+          const qnrs = data.filter(function (o1) {
+            return releasedQnrs.some(function (o2) {
+              return o1.id === o2.id;
+            });
+          });
+          this.questionnaires = this.questionnaires.concat(qnrs);
+          console.log(this.questionnaires + 'this.questionnaires') 
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getQuestionAnswers(event) {
+    if (event === 'reload') {
+      this.getOrderDetails();
+    }
+  }
+  getQnrStatus(qnr) {
+    const id = (qnr.questionnaireId) ? qnr.questionnaireId : qnr.id;
+    const questr = this.waitlist.releasedQnr.filter(questionnaire => questionnaire.id === id);
+    if (questr[0]) {
+      return questr[0].status;
+    }
   }
 }
 

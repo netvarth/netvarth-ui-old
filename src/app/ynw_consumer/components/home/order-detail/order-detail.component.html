@@ -295,6 +295,18 @@
                                                 [buttonsConfig]="customButtonsFontAwesomeConfig"></ks-modal-gallery>
                                         </div>
                                     </div>
+                                    <div *ngIf="questionnaires.length === 1">
+                                        <div class="c-details" *ngFor="let qnr of questionnaires">
+                                            <app-questionnaire [questionnaireList]="qnr" [source]="'consOrder'"
+                                                [uuid]="waitlist.uid" [accountId]="waitlist.providerAccount.id"
+                                                [type]="'details'" [waitlistStatus]="waitlist.orderStatus"
+                                                (returnAnswers)="getQuestionAnswers($event)">
+                                            </app-questionnaire>
+                                        </div>
+                                    </div>
+
+
+
                                     <div class="col-md-12">
                                     </div>
                                 </div>

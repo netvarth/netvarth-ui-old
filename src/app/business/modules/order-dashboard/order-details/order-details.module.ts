@@ -13,6 +13,8 @@ import { OrderActionsModule } from "../order-actions/order-actions.module";
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
 import { Nl2BrPipeModule } from "nl2br-pipe";
 import { RouterModule, Routes } from "@angular/router";
+import { QuestionnaireModule } from "../../../../../../src/app/shared/components/questionnaire/questionnaire.module";
+import { MatExpansionModule } from "@angular/material/expansion";
 const routes: Routes = [
     {path: '', component: OrderDetailsComponent}
 ]
@@ -23,10 +25,12 @@ const routes: Routes = [
         MatIconModule,
         MatBadgeModule,
         MatTooltipModule,
+        MatExpansionModule,
         LoadingSpinnerModule,
         CommunicationModule,
         CardModule,
         OrderActionsModule,
+        QuestionnaireModule,
         CapitalizeFirstPipeModule,
         Nl2BrPipeModule,
         [RouterModule.forChild(routes)],

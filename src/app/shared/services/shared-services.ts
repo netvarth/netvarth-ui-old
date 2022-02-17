@@ -1192,6 +1192,10 @@ export class SharedServices {
     const url = 'consumer/appointment/questionnaire/' + uid + '?account=' + accountId;
     return this.servicemeta.httpGet(url);
   }
+  getOrderQuestionnaireByUid(uid, accountId) {
+    const url = 'consumer/orders/questionnaire/' + uid + '?account=' + accountId;
+    return this.servicemeta.httpGet(url);
+  }
   getAppointmentReschedulePricelist(serviceid) { 
     const url = 'consumer/appointment/schedule/' + serviceid + '/pricelist';
     return this.servicemeta.httpGet(url);
@@ -1214,5 +1218,21 @@ export class SharedServices {
   updatePaytmPayProvider(data) {
     const url = 'provider/payment/paytm/update';
     return this.servicemeta.httpPost(url,data);
+  }
+  getConsumerOrderQuestionnaire(catelogId, accountId) {
+    const url = 'consumer/questionnaire/order/' + catelogId + '?account=' + accountId;
+    return this.servicemeta.httpGet(url);
+  }
+  submitConsumerOrderQuestionnaire(body, uuid, accountId) {
+    const url = 'consumer/orders/questionnaire/' + uuid + '?account=' + accountId;
+    return this.servicemeta.httpPost(url, body);
+  }
+  resubmitConsumerOrderQuestionnaire(body, uuid, accountId) {
+    const url = 'consumer/orders/questionnaire/resubmit/' + uuid + '?account=' + accountId;
+    return this.servicemeta.httpPost(url, body);
+  }
+  consumerOrderQnrUploadStatusUpdate(uid, account, data) {
+    const url = 'consumer/orders/questionnaire/upload/status/' + uid + '?account=' + account;
+    return this.servicemeta.httpPut(url, data);
   }
 }

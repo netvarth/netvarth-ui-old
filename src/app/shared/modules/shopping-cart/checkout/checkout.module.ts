@@ -23,6 +23,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { PaymentModesModule } from "../../payment-modes/payment-modes.module";
 import { RefundpolicyModule } from '../../../../ynw_consumer/modules/refundpolicy/refundpolicy.module';
+import { QuestionnaireModule } from "../../../../../../src/app/shared/components/questionnaire/questionnaire.module";
 const routes: Routes = [
     {path: '', component: CheckoutComponent}
 ]
@@ -48,6 +49,7 @@ const routes: Routes = [
         LoadingSpinnerModule,
         FormMessageDisplayModule,
         ReactiveFormsModule,
+        QuestionnaireModule,
         PaymentModesModule,RefundpolicyModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         [RouterModule.forChild(routes)]
