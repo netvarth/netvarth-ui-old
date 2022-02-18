@@ -203,7 +203,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   questionAnswers;
   catalogId: any;
   questionnaireLoaded = false;
-  qnr;
+  qnr = false;
   api_loading_video;
   disableButton;
   disablebutton = false;
@@ -1954,14 +1954,23 @@ getPaymentModes() {
   getConsumerQuestionnaire() {
     this.subs.sink =  this.shared_services.getConsumerOrderQuestionnaire(this.catalogId,this.account_id).subscribe(data => {
         this.questionnaireList = data;
-        this.qnr = true;
+        if(this.questionnaireList.questionnaireId){
+          this.qnr = true;
+        }
+       
         console.log(this.questionnaireList)
         this.questionnaireLoaded = true;
     });
   }
   submitQuestionnaire(uuid, paymenttype?) {
     const dataToSend: FormData = new FormData();
-    if (this.questionAnswers.files) {
+    console.log(this.questionAnswers)
+    if(this.questionAnswers === undefined){
+      this.snackbarService.openSnackBar('Please fill more info to complete your booking.', { 'panelClass': 'snackbarerror' });
+      this.isClickedOnce = false;
+    }
+    else{
+      if (this.questionAnswers && this.questionAnswers.files) {
         for (const pic of this.questionAnswers.files) {
             dataToSend.append('files', pic, pic['name']);
         }
@@ -2010,4 +2019,6 @@ getPaymentModes() {
             this.api_loading_video = false;
         });
 }
+    }
+  
 }
