@@ -2395,8 +2395,8 @@
               </td>
             </tr>
           </tbody>
-          <tbody
-            *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user && this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && small_device_display">
+          <!-- *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user && this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && small_device_display" -->
+          <tbody *ngIf="check_in_filtered_list.length > 0 && small_device_display">
             <div [class.user-tr-backclr]="checkin.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
               *ngFor="let checkin of check_in_filtered_list, let i=index">
               <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="check_in_filtered_list.length > 1">
