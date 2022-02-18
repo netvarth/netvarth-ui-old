@@ -569,7 +569,10 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       if(this.from){
         queryParam['isFrom']= 'providerdetail'
       }
-      
+      if(this.catalog_Id ){
+        queryParam['catalog_Id']= this.catalog_Id;
+      }
+     
       const navigationExtras: NavigationExtras = {
         queryParams: queryParam,
       };
