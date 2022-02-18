@@ -40,7 +40,7 @@ export class PrintBookingDetailsComponent implements OnInit {
   isJaldeeId: boolean = false;
   spName: any;
   phoneNumber: any;
-
+  phoneNum: any;
 
   constructor(private activated_route: ActivatedRoute,
     private groupService: GroupStorageService,
@@ -76,6 +76,9 @@ export class PrintBookingDetailsComponent implements OnInit {
         if (this.bookingType === 'order') {
           this.getOrderBookingDetails(this.bookingId).then((data) => {
             this.bookingDetails = data;
+            if(this.bookingDetails && this.bookingDetails.phoneNumber){
+              this.phoneNum = this.bookingDetails.phoneNumber
+            } 
             if (this.bookingDetails.questionnaire) {
               this.questionnaires = this.bookingDetails.questionnaire;
               this.questionanswers = this.questionnaires.questionAnswers;

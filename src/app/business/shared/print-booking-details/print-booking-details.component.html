@@ -85,7 +85,11 @@
                                       {{bookingDetails.countryCode}} {{phoneNumber}} </td>
 
                                 </tr>
-                           
+                                <tr *ngIf="bookingType==='order' && phoneNum">
+                                    <td colspan="2" align="center"> {{customer_label| capitalizeFirst}} Ph #:
+                                        {{bookingDetails.countryCode}} {{phoneNum}} </td>
+
+                                </tr>
                                 <tr *ngIf="bookingDetails && bookingDetails.service">
                                     <td class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" colspan="2" align="center">
                                         Service : <i class="fa meet-icon"
