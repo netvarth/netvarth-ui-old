@@ -641,9 +641,18 @@ export class FolderFilesComponent implements OnInit {
     }
   }
   getImage(url, file) {
+    console.log("File Type :",file.type);
     if (file.type == 'application/pdf') {
       return '../../../../../assets/images/pdf.png';
-    } else {
+    }
+    else if(file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg'){
+      return '../../../../../assets/images/audio.png';
+
+    }
+    else if(file.type == 'video/mp4' || file.type == 'video/mpeg'){
+      return '../../../../../assets/images/video.png';
+    }
+    else {
       return url;
     }
   }

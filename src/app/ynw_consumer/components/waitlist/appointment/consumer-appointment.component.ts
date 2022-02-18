@@ -1225,10 +1225,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         const input = event.target.files;
         if (input) {
             for (const file of input) {
-                if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-                    this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-                    return;
-                } else if (file.size > projectConstants.FILE_MAX_SIZE) {
+                // if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+                //     this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+                //     return;
+                // } else
+                
+                if (file.size > projectConstants.FILE_MAX_SIZE) {
                     this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
                     return;
                 } else {
@@ -1239,6 +1241,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     };
                     reader.readAsDataURL(file);
                     this.action = 'attachment';
+                    if(this.selectedMessage.caption){
+                        return this.imgCaptions;
+                    }
+                    else{
+                        return this.imgCaptions = '';
+                    }
                 }
             }
             if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0 && input.length > 0) {
@@ -1922,11 +1930,20 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
     }
     getImage(url, file) {
+        console.log("File Type :",file.type)
         if (file.type == 'application/pdf') {
             return '../../../../../assets/images/pdf.png';
-        } else {
+          }
+          else if(file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg'){
+            return '../../../../../assets/images/audio.png';
+      
+          }
+          else if(file.type == 'video/mp4' || file.type == 'video/mpeg'){
+            return '../../../../../assets/images/video.png';
+          }
+          else {
             return url;
-        }
+          }
     }
 
     viewAttachments() {
