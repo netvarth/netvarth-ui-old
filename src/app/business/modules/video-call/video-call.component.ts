@@ -12,6 +12,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TeleServiceConfirmBoxComponent } from '../teleservice/teleservice-confirm-box/teleservice-confirm-box.component';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
+import {TeleBookingService} from '../../../shared/services/tele-bookings-service'
 
 
 @Component({
@@ -85,6 +86,7 @@ export class VideoCallSharedComponent implements OnInit, OnDestroy {
   phoneNumber;
   customer_label = '';
   provider_label = '';
+  whatsAppNumber : any;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -96,6 +98,8 @@ export class VideoCallSharedComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
     private wordProcessor: WordProcessor,
+    private teleService:TeleBookingService
+
 
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -136,8 +140,20 @@ export class VideoCallSharedComponent implements OnInit, OnDestroy {
     this.provider_services.getProviderCustomers(filter)
       .subscribe(
         data => {
-          // console.log(data)
+         console.log("Data :",data)
           this.customer = data;
+          
+         
+          // this.customer.map((element:any)=>{
+          //   console.log("Element:",element);
+          //   element.phoneNo = this.teleService.getTeleNumber(this.phoneNum)
+          //   this.whatsAppNumber = element.phoneNo;
+          //   console.log("Whats App Number :",this.whatsAppNumber);
+          // });
+        
+          this.whatsAppNumber =  this.teleService.getTeleNumber(this.phoneNum)
+             console.log("Response :",this.whatsAppNumber)
+          
           if (this.customer[0] && this.customer[0].phoneNo && this.customer[0].phoneNo.trim() !== '') {
           this.phoneNumber = this.customer[0].phoneNo;
           }
