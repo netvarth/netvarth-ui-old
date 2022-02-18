@@ -96,11 +96,11 @@
                                                             <i class="fa chat-icon"></i>
                                                             {{send_message_cap}}</button>
 
-                                                        <button mat-menu-item *ngIf="his_wait.billStatus && his_wait.amountDue==0"
+                                                        <button mat-menu-item *ngIf="his_wait.billStatus && his_wait.billStatus == 'Settled'"
                                                             (click)="getWaitlistBill(his_wait)">
                                                             <i class="bill-icon-history"></i>
                                                             Receipt</button>
-                                                        <button mat-menu-item *ngIf="his_wait.billStatus && his_wait.amountDue>0"
+                                                        <button mat-menu-item  *ngIf="his_wait.billStatus && his_wait.billStatus !== 'Settled'"
                                                             (click)="getWaitlistBill(his_wait)">
                                                             <i class="bill-icon-history"></i>
                                                             Bill</button>
