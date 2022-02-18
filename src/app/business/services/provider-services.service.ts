@@ -1379,6 +1379,11 @@ export class ProviderServices {
     const url = 'provider/appointment/' + appmntId;
     return this.servicemeta.httpGet(url);
   }
+  getOrderById(appmntId) {
+    const url = 'provider/orders/' + appmntId;
+    return this.servicemeta.httpGet(url);
+  }
+  
   setAppointmentPresence(status) {
     const url = 'provider/account/settings/appointment/' + status;
     return this.servicemeta.httpPut(url);

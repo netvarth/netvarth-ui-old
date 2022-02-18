@@ -73,6 +73,19 @@ export class PrintBookingDetailsComponent implements OnInit {
             this.internalStatusLog = data;
           });
         }
+        if (this.bookingType === 'order') {
+          this.getOrderBookingDetails(this.bookingId).then((data) => {
+            this.bookingDetails = data;
+            if (this.bookingDetails.questionnaire) {
+              this.questionnaires = this.bookingDetails.questionnaire;
+              this.questionanswers = this.questionnaires.questionAnswers;
+              if (this.questionanswers) {
+                this.groupQuestionsBySection();
+              }
+            };
+            this.setPrintDetails();
+          });
+        }
         if (this.bookingType === 'checkin') {
           this.getWaitlistBookingDetails(this.bookingId).then((data) => {
             this.bookingDetails = data;
@@ -186,7 +199,14 @@ export class PrintBookingDetailsComponent implements OnInit {
         this.spName = (this.bookingDetails.provider.businessName) ? this.bookingDetails.provider.businessName : this.bookingDetails.provider.firstName + ' ' + this.bookingDetails.provider.lastName;
       }
 
-    } else {
+    } 
+    else if(this.bookingType === 'order'){
+     
+      if (this.bookingDetails && this.bookingDetails.consumer && this.bookingDetails.consumer.jaldeeId) {
+        this.customerName = this.bookingDetails.consumer.jaldeeId
+      }
+    }
+    else {
       this.customer = this.bookingDetails.waitlistingFor[0];
       console.log('cutomer',this.customer)
       const fname = (this.bookingDetails.waitlistingFor[0].firstName) ? this.bookingDetails.waitlistingFor[0].firstName : '';
@@ -210,6 +230,23 @@ export class PrintBookingDetailsComponent implements OnInit {
     return new Promise(function (resolve, reject) {
 
       _this.providerServices.getAppointmentById(bookingId)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+
+    });
+
+  }
+  getOrderBookingDetails(bookingId) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+
+      _this.providerServices.getOrderById(bookingId)
         .subscribe(
           data => {
             resolve(data);

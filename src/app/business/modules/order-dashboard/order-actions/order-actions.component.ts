@@ -60,6 +60,7 @@ export class OrderActionsComponent implements OnInit {
     this.loading = true;
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.orderDetails = this.data.selectedOrder;
+    console.log(this.orderDetails)
     if(this.data.type){
       this.timeType = this.data.type;
     }
@@ -452,5 +453,57 @@ voiceCallConfirmed() {
 }
   closeDialog() {
     this.dialogRef.close();
+}
+printOrder() {
+  this.dialogRef.close();
+  this.router.navigate(['provider', 'orders', this.orderDetails.uid, 'print'],{queryParams:{bookingType:'order'}});
+  // this.qrCodegeneration(this.checkin);
+  // const bprof = this.groupService.getitemFromGroupStorage('ynwbp');
+  // const bname = bprof.bn;
+  // const fname = (this.checkin.waitlistingFor[0].firstName) ? this.checkin.waitlistingFor[0].firstName : '';
+  // const lname = (this.checkin.waitlistingFor[0].lastName) ? this.checkin.waitlistingFor[0].lastName : '';
+  // setTimeout(() => {
+  //     const printContent = document.getElementById('print-section');
+  //     const params = [
+  //         'height=' + screen.height,
+  //         'width=' + screen.width,
+  //         'fullscreen=yes'
+  //     ].join(',');
+  //     const printWindow = window.open('', '', params);
+  //     let checkin_html = '';
+  //     checkin_html += '<table style="width:100%;"><thead>';
+  //     checkin_html += '<tr><td colspan="3" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">' + this.dateformat.transformToDIsplayFormat(this.checkin.date) + '<br/>';
+  //     if (this.checkin.token) {
+  //         checkin_html += 'Token# <span style="font-weight:bold">' + this.checkin.token + '</span>';
+  //     }
+  //     checkin_html += '</td></tr>';
+  //     checkin_html += '<tr><td colspan="3" style="text-align:center">' + bname.charAt(0).toUpperCase() + bname.substring(1) + '</td></tr>';
+  //     // checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.checkin.queue.location.place + '</td></tr>';
+  //     checkin_html += '<tr><td width="48%" align="right">Location</td><td>:</td><td>' + this.checkin.queue.location.place + '</td></tr>';
+
+  //     checkin_html += '</thead><tbody>';
+  //     if (fname !== '' || lname !== '') {
+  //         checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + '</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
+  //     } else {
+  //         checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ' Id </td><td>:</td><td>' + this.checkin.consumer.jaldeeId + '</td></tr>';
+  //     }
+  //     if (this.checkin.service && this.checkin.service.deptName) {
+  //         checkin_html += '<tr><td width="48%" align="right">Department</td><td>:</td><td>' + this.checkin.service.deptName + '</td></tr>';
+  //     }
+  //     checkin_html += '<tr><td width="48%" align="right">Service</td><td>:</td><td>' + this.checkin.service.name + '</td></tr>';
+  //     if (this.checkin.provider && this.checkin.provider.firstName && this.checkin.provider.lastName) {
+  //         checkin_html += '<tr><td width="48%" align="right">' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + '</td><td>:</td><td>' + this.checkin.provider.firstName.charAt(0).toUpperCase() + this.checkin.provider.firstName.substring(1) + ' ' + this.checkin.provider.lastName + '</td></tr>';
+  //     }
+  //     checkin_html += '<tr><td width="48%" align="right">Queue</td><td>:</td><td>' + this.checkin.queue.name + ' [' + this.checkin.queue.queueStartTime + ' - ' + this.checkin.queue.queueEndTime + ']' + '</td></tr>';
+  //     checkin_html += '<tr><td colspan="3" align="center">' + printContent.innerHTML + '</td></tr>';
+  //     checkin_html += '<tr><td colspan="3" align="center">Scan to know your status or log on to ' + this.qr_value + '</td></tr>';
+  //     checkin_html += '</tbody></table>';
+  //     printWindow.document.write('<html><head><title></title>');
+  //     printWindow.document.write('</head><body>');
+  //     printWindow.document.write(checkin_html);
+  //     printWindow.document.write('</body></html>');
+  //     printWindow.moveTo(0, 0);
+  //     printWindow.print();
+  // });
 }
 }

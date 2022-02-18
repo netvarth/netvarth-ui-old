@@ -41,7 +41,7 @@
                                 <tr>
                                     <td colspan="2" align="center">{{bname}} </td>
                                 </tr>
-                                <tr *ngIf="bookingDetails.provider&& bookingDetails.provider.firstName">
+                                <tr *ngIf="bookingDetails && bookingDetails.provider && bookingDetails.provider.firstName">
                                     <td colspan="2" align="center"> {{provider_label| capitalizeFirst}}:
                                       <span >{{spName}}</span>
                                       <!--   <span>{{bookingDetails.countryCode}}</span> -->
@@ -61,8 +61,14 @@
                                     </td>
 
                                 </tr>
+                                <!-- <tr *ngIf="bookingType==='order'">
+                                    <td align="center" colspan="2">
+                                        Location : {{this.bookingDetails.location.place}}
+                                    </td>
+
+                                </tr> -->
                                 <tr *ngIf="!isJaldeeId">
-                                    <td colspan="2" align="center"  *ngIf="customer.firstName === 'null' && customer.firstName === 'null' ">{{customer_label| capitalizeFirst}}  #: NIL</td>
+                                    <td colspan="2" align="center"  *ngIf="customer && customer.firstName && customer.firstName === 'null' && customer.firstName === 'null' ">{{customer_label| capitalizeFirst}}  #: NIL</td>
 
                                     <td colspan="2" align="center"> {{customer_label| capitalizeFirst}}:
                                         {{customerName}} </td>
@@ -80,7 +86,7 @@
 
                                 </tr>
                            
-                                <tr>
+                                <tr *ngIf="bookingDetails && bookingDetails.service">
                                     <td class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item" colspan="2" align="center">
                                         Service : <i class="fa meet-icon"
                                             *ngIf="bookingDetails.service.serviceType === 'virtualService' && bookingDetails.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
@@ -99,7 +105,7 @@
                                     <!-- <td colspan="2" align="center"> Service : {{bookingDetails.service.name}} </td> -->
 
                                 </tr>
-                                <tr *ngIf="bookingDetails.service.deptName">
+                                <tr *ngIf="bookingDetails && bookingDetails.service && bookingDetails.service.deptName">
                                     <td colspan="2" align="center"> Department :
                                         {{this.bookingDetails.service.deptName}} </td>
 

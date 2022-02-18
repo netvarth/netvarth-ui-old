@@ -39,6 +39,13 @@
                 <div class="icon-text">Billing</div>
             </div>
         </div>
+        <div class="action-box pointer-cursor"  *ngIf="!mulipleSelection"
+        (click)="printOrder()">
+        <div class="action-box-sub">
+            <span class="printer-icon"></span>
+            <div class="icon-text">Print</div>
+        </div>
+    </div>
         <div class="action-box pointer-cursor" (click)="showLabels()">
             <div class="action-box-sub">
                 <span class="label-icon"></span>

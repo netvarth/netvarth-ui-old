@@ -19,7 +19,8 @@ const routes: Routes = [
   { path: '', component: OrderDashboardComponent },
   { path: 'edit/:id', loadChildren: ()=> import('./order-edit/order-edit.module').then(m=>m.OrderEditModule)},
   { path: 'order-wizard', loadChildren: ()=> import('./order-wizard/order-wizard.module').then(m=>m.OrderWizardModule)},
-  { path: ':id', loadChildren: ()=> import('./order-details/order-details.module').then(m=>m.OrderDetailsModule)}
+  { path: ':id', loadChildren: ()=> import('./order-details/order-details.module').then(m=>m.OrderDetailsModule)},
+  { path: ':id/print', loadChildren: ()=> import('../../shared/print-booking-details/print-booking-detail.module').then(m=>m.PrintBookingDetailModule)} 
 ];
 @NgModule({
   declarations: [
