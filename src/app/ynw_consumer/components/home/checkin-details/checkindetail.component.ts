@@ -114,8 +114,10 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
     this.subs.sink = this.sharedServices.getCheckinByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
       (data) => {
         this.waitlist = data;
-
-        this.whatsAppNumber = this.teleBookingService.getTeleNumber(this.waitlist.virtualService[this.waitlist.service.virtualCallingModes[0].callingMode]);
+        if(this.waitlist && this.waitlist.service && this.waitlist.service.virtualCallingModes){
+          this.whatsAppNumber = this.teleBookingService.getTeleNumber(this.waitlist.virtualService[this.waitlist.service.virtualCallingModes[0].callingMode]);
+        }
+      
 
 
         console.log(this.waitlist);

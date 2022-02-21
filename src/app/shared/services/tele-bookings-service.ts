@@ -324,14 +324,17 @@ export class TeleBookingService {
         });
     }
     getTeleNumber(phNo) {
-        console.log("Input Phone:", phNo);
-        if (phNo.lastIndexOf('+')===0) {
-            return phNo;
-        } else if (phNo.lastIndexOf('+')===-1) {
-            return '+' + phNo;
-        } else {
-            return phNo.substr(phNo.lastIndexOf('+'), phNo.length);
+        if(phNo){
+            if (phNo.lastIndexOf('+')===0) {
+                return phNo;
+            } else if (phNo.lastIndexOf('+')===-1) {
+                return '+' + phNo;
+            } else {
+                return phNo.substr(phNo.lastIndexOf('+'), phNo.length);
+            }
         }
+        console.log("Input Phone:", phNo);
+       
     }
 }
 
