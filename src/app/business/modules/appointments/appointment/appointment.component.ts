@@ -1931,7 +1931,7 @@ export class AppointmentComponent implements OnInit {
         if (this.selectedMessage) {
             for (const pic of this.selectedMessage.files) {
                 dataToSend.append('attachments', pic, pic['name']);
-                captions[i] = 'caption';
+                captions[i] = '';
                 i++;
             }
         }

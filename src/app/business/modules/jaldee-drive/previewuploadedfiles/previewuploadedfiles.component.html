@@ -1,4 +1,5 @@
-<h1 class="mat-dialog-title"> {{details.fileName}} <br> {{details.caption ? details.caption : ''}}
+<h1 class="mat-dialog-title"> {{details.fileName}} <br>
+   <span *ngIf="details.caption"> {{details.caption ? details.caption : ''}} </span>
   <button #locte mat-dialog-close class="modal_close" tabindex="-1">
     <i class="fa fa-window-close" aria-hidden="true"></i>
   </button>
