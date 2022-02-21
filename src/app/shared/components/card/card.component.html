@@ -101,9 +101,94 @@
 
     </div>
 </div>
+<div *ngIf="item.type=='pitem'">
+    
+    <div [id]="'item-' + service.itemId" class="card booking-card pointer-cursor order items pitem height-301"
+        [class.disabled]="service['status'] && service['status']=='INACTIVE' || (!service.isStockAvailable && item.type=='item')"
+        *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'"
+        (click)="cardActionPerformed(item.type, 'view', item, loc, null, $event)">
+
+        
+
+        <span class="ribbon-new" *ngIf="service.promotionLabel && item.type=='item'">{{service.promotionLabel}}</span>
+        <div class="card-item-head mgn-up-5" >
+            <button class="fx" mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="item.actions"
+                (click)="stopProp($event)">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #appMenu="matMenu">
+                <button mat-menu-item *ngFor="let action of item.actions"
+                    (click)="cardActionPerformed(item.type, action.action, item, null, null, $event)">
+                    <i class="{{action.iconClass}}"></i>{{action.displayName}}</button>
+            </mat-menu>
+           <div style="text-align:center !important;display: flex !important;align-items:center !important;justify-content:center !important">
+            <img class="img-responsive imageside img-circle"   [src]="getItemImg(service)" alt="Profile Pic" />
+           </div>
+        </div>
+        <br>
+        <div class="" style="text-align: center !important;text-transform: capitalize;">
+            <h4 class="card-title">
+                <a class="name module1 twoline-break" >{{(service.itemNameInLocal) ? service.itemNameInLocal :
+                    service.displayName}}1</a>
+            </h4>
+            <div style="height: 22px !important;">
+                <p style="color: rgb(145, 143, 143);" *ngIf="service.itemNameInLocal" class="short-description module1 line-clamp1">
+                    {{service.displayName}}</p>
+            </div>
+            <div class="col-md-12 no-padding" style="text-align: center !important;">
+                <div class="col-md-12 d-flex mgn-up-10 no-padding">
+                    <div class="amount" *ngIf="item.showpric">
+                        <div *ngIf="service.showPromotionalPrice">
+                            <div class="amount-value strikeMe">
+                                <i class="fa fa-inr"></i> {{service.price | currency:'':''}}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="amount-value">
+                                <i class="fa fa-inr"></i>
+                                {{(service.showPromotionalPrice ? service.promotionalPrice : service.price) |
+                                currency:'':''}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amount" style="height: 44px !important;" *ngIf="!item.showpric">&nbsp;</div>
+                    <div class="quantity">
+                        <div class="outstock" *ngIf="!service.isStockAvailable && item.type=='item'">
+                            Sold Out
+                        </div>
+                        <button (click)="cardActionPerformed(item.type, 'add', item, loc, null, $event)"
+                            class="add-to-cart"
+                            *ngIf="service.isStockAvailable && item.type=='item' && getItemQty(item)==0">
+                            <i class="fa fa-shopping-bag"></i> Add
+                        </button>
+                        <div *ngIf="service.isStockAvailable && item.type=='item' && getItemQty(item)!=0">
+                            <div [class.disableall]="item.maxqty === getItemQty(item)" class="btn-rt"
+                                *ngIf="item.type=='item'">
+                                <button (click)="cardActionPerformed(item.type, 'add', item, loc, null, $event)">
+                                    <i class="fa fa-chevron-up"></i>
+                                </button>
+                            </div>
+                            <div class="count-o" *ngIf="item.type=='item'">
+                                {{getItemQty(item)}}
+                            </div>
+                            <div class="btn-lt" *ngIf="item.type=='item'">
+                                <button (click)="cardActionPerformed(item.type, 'remove', item, loc, null, $event)">
+                                    <i class="fa fa-chevron-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-<div *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'">
+
+
+
+<div *ngIf="item.type=='catalog' || item.type=='item'">
     <div [id]="'item-' + service.itemId" class="card booking-card pointer-cursor order items height-301"
         [class.disabled]="service['status'] && service['status']=='INACTIVE' || (!service.isStockAvailable && item.type=='item')"
         *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'"
