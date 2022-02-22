@@ -27,6 +27,10 @@
             Create {{customer_label |
             capitalizeFirst}}
           </button>
+          <button  mat-menu-item *ngIf="customers.length > 0 && selectedGroup === 'all'" (click)="sendmsgToAll()">
+            To all {{customer_label | capitalizeFirst}}s
+          </button>
+          
         </mat-menu>
       </a>
     </h5>
@@ -86,9 +90,9 @@
                 style="width: 22px !important; margin-top: -4px !important;">
               Filter
             </a>
-              <a (click)="sendmsgToAll()" *ngIf="customers.length > 0"  class="btn mb-2 action-button mgn-lt-5 pull-right">
+              <a (click)="sendmsgToAll()" *ngIf="customers.length > 0 && selectedGroup === 'all'"  class="disp-none-small btn mb-2 action-button mgn-lt-5 pull-right ">
                 <i
-                class="flaticon2-chat-1" aria-hidden="true"></i> to all {{customer_label | capitalizeFirst}}s
+                class="flaticon2-chat-1" aria-hidden="true"></i> To all {{customer_label | capitalizeFirst}}s
             </a>
            
             <div class="sel-group-desc" [class.mgn-lt-28]="hideGroups">{{selectedGroup.description}}</div>
@@ -111,7 +115,7 @@
             </button>
             <!-- CustomersInboxMessage() -->
             
-            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="sendmsgToAll()"
+            <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="CustomersInboxMessage()"
             [matTooltip]="'Send message'"
             *ngIf="!showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>1 && !hide_msgicon"><i
               class="flaticon2-chat-1" aria-hidden="true"></i> </button>

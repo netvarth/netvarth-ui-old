@@ -174,7 +174,7 @@
 }
 @media (max-width: 893px) {
   .disp-none-small {
-    display: none;
+    display: none !important;
   }
 }
 .card.card-custom .card-body {

@@ -82,8 +82,11 @@
               [questionAnswers]="questionAnswers" [accountId]="account_id"
               (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
                     </div>
-                    <div [hidden]="!qnr">
-                      <button class="nxt-btn" mat-flat-button matStepperNext>Next</button>
+                    <div *ngIf="bookStep=='qnr'"> 
+                      <button class="nxt-btn" mat-flat-button  (click)="validateQuestionnaire()">save</button>
+                    </div>
+                    <div *ngIf="bookStep=='Step 3'"> 
+                      <button class="nxt-btn" mat-flat-button  matStepperNext >Next</button>
                     </div>
                   </mat-step>
                   <mat-step label="Step 3">
@@ -419,7 +422,7 @@
                           class="payment-mode-card-styles">
                           <ng-container *ngIf="!shownonIndianModes">
                             <app-payment-modes [paymentModes]="indian_payment_modes"
-                         indian_payment_mode_onchange     (modeSelected)="($event)">
+                              (modeSelected)="indian_payment_mode_onchange($event)">
                             </app-payment-modes>
                           </ng-container>
                           <ng-container *ngIf="shownonIndianModes">

@@ -207,6 +207,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   api_loading_video;
   disableButton;
   disablebutton = false;
+  bookStep = 'qnr';
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -2022,5 +2023,32 @@ getPaymentModes() {
         });
 }
     }
+    validateQuestionnaire() {
+      if (!this.questionAnswers) {
+          this.questionAnswers = {
+              answers: {
+                  answerLine: [],
+                  questionnaireId: this.questionnaireList.id
+              }
+          }
+      }
+      if (this.questionAnswers.answers) {
+          this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
+            if (data.length === 0) {
+              this.bookStep = 'Step 3';
+          }
+          else{
+            this.bookStep = 'qnr';
+            this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
+          }
+          
+          
+           
+           
+          }, error => {
+              this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
+      }
+  }
   
 }
