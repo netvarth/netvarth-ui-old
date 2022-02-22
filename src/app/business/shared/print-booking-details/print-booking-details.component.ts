@@ -204,10 +204,29 @@ export class PrintBookingDetailsComponent implements OnInit {
 
     } 
     else if(this.bookingType === 'order'){
-     
-      if (this.bookingDetails && this.bookingDetails.consumer && this.bookingDetails.consumer.jaldeeId) {
-        this.customerName = this.bookingDetails.consumer.jaldeeId
+      if(this.bookingDetails && this.bookingDetails.orderFor){
+        this.customer = this.bookingDetails.orderFor;
+        console.log('cutomer',this.customer)
+      const fname = (this.bookingDetails.orderFor.firstName) ? this.bookingDetails.orderFor.firstName : '';
+      const lname = (this.bookingDetails.orderFor.lastName) ? this.bookingDetails.orderFor.lastName : '';
+      if (fname !== '' || lname !== '') {
+        this.customerName = fname + " " + lname;
+
       }
+      else {
+        this.isJaldeeId = true;
+        if (this.bookingDetails && this.bookingDetails.consumer && this.bookingDetails.consumer.jaldeeId) {
+          this.customerName = this.bookingDetails.consumer.jaldeeId
+        }
+      }
+      }
+      else{
+        if (this.bookingDetails && this.bookingDetails.consumer && this.bookingDetails.consumer.jaldeeId) {
+          this.customerName = this.bookingDetails.consumer.jaldeeId
+        }
+      }
+      
+     
     }
     else {
       this.customer = this.bookingDetails.waitlistingFor[0];
