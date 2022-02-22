@@ -883,6 +883,16 @@ export class QuestionnaireComponent implements OnInit {
                       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                       this.buttonDisable = false;
                     });
+              } 
+              else if (type === 'proOrder') {
+                this.providerService.providerOrderQnrUploadStatusUpdate(this.uuid, postData)
+                  .subscribe((data) => {
+                    this.successGoback();
+                  },
+                    error => {
+                      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                      this.buttonDisable = false;
+                    });
               } else {
                 this.providerService.providerApptQnrUploadStatusUpdate(this.uuid, postData)
                   .subscribe((data) => {
@@ -1039,7 +1049,7 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
       if (this.source === 'consOrder' || this.source === 'proOrder') {
-        if (this.waitlistStatus !== 'Order Confirmed') {
+        if (this.waitlistStatus !== 'Order Confirmed' && this.waitlistStatus !== 'Order Received') {
           return true;
         }
       }
@@ -1061,7 +1071,7 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
       if (this.source === 'consOrder' || this.source === 'proOrder') {
-        if (this.waitlistStatus !== 'Order Confirmed') {
+        if (this.waitlistStatus !== 'Order Confirmed' && this.waitlistStatus !== 'Order Received') {
           return false;
         }
         
