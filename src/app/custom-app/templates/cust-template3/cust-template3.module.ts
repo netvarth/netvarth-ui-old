@@ -16,6 +16,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 import { ConsDepartmentsModule } from '../../cons-departments/cons-departments.module';
 import { PictureGalleryModule } from '../../picture-gallery/picture-gallery.module';
+import { OnlineUsersModule } from '../../online-users/online-users.module';
 
 const routes: Routes = [
   { path: '', component: CustTemplate3Component }
@@ -41,6 +42,7 @@ const routes: Routes = [
     OrdersModule,
     ConsDepartmentsModule,
     PictureGalleryModule,
+    OnlineUsersModule,
     RouterModule.forChild(routes)
   ],
   exports: [

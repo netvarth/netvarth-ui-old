@@ -438,7 +438,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.activaterouterobj.queryParams.subscribe(qparams => {
       if (qparams.src) {
         this.pSource = qparams.src;
-
+      }
+      if (qparams && qparams.theme) {
+        this.theme = qparams.theme;
       }
       this.businessjson = [];
       this.servicesjson = [];
@@ -2204,7 +2206,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         if (status) {
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           if (_this.userType === 'consumer') {
-            this.showDonation(locid, cdate, service);
+
+            
+            this.shared_services.generateDonationLink('','').subscribe(
+              (paymentLink)=> {
+
+              }
+            )
+            // this.showDonation(locid, cdate, service);
           }
         } else {
           const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, service: service, consumer: 'consumer' };

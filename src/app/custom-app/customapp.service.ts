@@ -112,6 +112,10 @@ export class CustomappService {
     return this.businessJsons['businessProfile'];
   }
 
+  getUsers() {
+    return this.businessJsons['departmentProviders'];
+  }
+
   //   showCommunicate(provid) {
   //     this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
   //       width: '50%',

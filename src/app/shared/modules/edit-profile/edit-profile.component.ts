@@ -417,6 +417,9 @@ export class EditProfileComponent implements OnInit {
     if(this.accountId) {
       queryParams['accountId'] = this.accountId;
     }
+    if(this.theme) {
+      queryParams['theme'] = this.theme;
+    }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams
     };

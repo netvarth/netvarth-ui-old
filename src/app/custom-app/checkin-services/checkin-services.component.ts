@@ -51,7 +51,8 @@ export class CheckinServicesComponent implements OnInit, OnChanges {
       data: {
         alldetails: actionObj,
         apptSettingsJson: this.apptSettings,
-        domain: this.businessProfile.serviceSector.domain
+        domain: this.businessProfile.serviceSector.domain,
+        theme: this.templateJson['theme']
       }
     });
     this.availabilityDialogref.afterClosed().subscribe(result => {

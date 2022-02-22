@@ -84,7 +84,7 @@
   box-shadow: 15px 15px 40px #DBA8C4;
   opacity: 1;
 }
-.heartfulness_theme1 .quest-head{
+.heartfulness_theme1 .quest-head, .content.bus-page.heartfulness_theme1 .bus-page-header .bus-title-content .business-name{
   color:#522e5a !important;
 }
 .heartfulness_theme1 .bookdetails {
@@ -118,6 +118,9 @@
 .heartfulness_theme1 .title-gb {
   background:#522e5a !important;
   color: #fff !important;
+}
+.heartfulness_theme1 .bus-item-N {
+border: 2px solid #ddd !important;
 }
 .heartfulness_theme1.custom-login-form {
   background-image: none !important;
@@ -189,8 +192,10 @@
   background-color: white !important;
 }
 
-.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .business-name, .content.bus-page .bus-page-header .bus-title-content .business-user-name,
-.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .business-name, .content.bus-page .bus-page-header .bus-title-content .business-user-name,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .business-name,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .business-user-name,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .business-name,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .business-user-name,
 .heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1
 .heartfulness_theme1 .question-value1, .question-valuearr,
 .heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1,
@@ -468,8 +473,10 @@ footer.heartfulness_theme1.bus-page-footer.site-footer .footer-bottom .footer-li
   background-color: white !important;
 }
 
-.mediExpat.content.bus-page .bus-page-header .bus-title-content .business-name, .content.bus-page .bus-page-header .bus-title-content .business-user-name,
-.mediExpat.content.bus-page .bus-page-header .bus-title-content .business-name, .content.bus-page .bus-page-header .bus-title-content .business-user-name,
+.mediExpat.content.bus-page .bus-page-header .bus-title-content .business-name, 
+.mediExpat.content.bus-page .bus-page-header .bus-title-content .business-user-name,
+.mediExpat.content.bus-page .bus-page-header .bus-title-content .business-name, 
+.mediExpat.content.bus-page .bus-page-header .bus-title-content .business-user-name,
 .mediExpat.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1
 .mediExpat .question-value1, .question-valuearr,
 .mediExpat.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1,

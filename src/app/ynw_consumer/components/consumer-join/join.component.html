@@ -2,10 +2,10 @@
 <form [formGroup]="loginForm" class="login-form custom-login-form consumer-join-component" novalidate (ngSubmit)="loginForm.valid &&
 onSubmit(loginForm.value)" [ngClass]="theme?theme:''">
     <div class="mat-dialog-title">
-        <button mat-dialog-close class="modal_close cust-logpage-close" tabindex="-1"
+        <a mat-dialog-close class="modal_close cust-logpage-close" tabindex="-1"
             *ngIf="moreParams['source'] != 'qnrlink'">
             <i class="fa fa-window-close" aria-hidden="true"></i>
-        </button>
+        </a>
     </div>
     <!-- step 1 for mobile number entering  -->
     <div *ngIf="step==1" class="cust-loginpge-color">

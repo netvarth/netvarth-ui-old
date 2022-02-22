@@ -51,6 +51,7 @@ export class ChangeMobileComponent implements OnInit {
   submit_data: any = {};
   accountId: any;
   customId: any;
+  theme: any;
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -70,6 +71,9 @@ export class ChangeMobileComponent implements OnInit {
       }
       if (qparams && qparams.customId) {
         this.customId = qparams.customId;
+      }
+      if(qparams && qparams.theme) {
+        this.theme = qparams.theme;
       }
     });
   }
@@ -221,6 +225,9 @@ export class ChangeMobileComponent implements OnInit {
     }
     if(this.accountId) {
       queryParams['accountId'] = this.accountId;
+    }
+    if(this.theme) {
+      queryParams['theme'] = this.theme;
     }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams

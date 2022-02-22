@@ -99,6 +99,16 @@
                         </div>
                         <div class="clearfix"></div>
                     </div>
+                    <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section1.users">
+                        <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section1.usersDescription"
+                            [innerHtml]="templateJson.section1.usersDescription | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding" *ngIf="onlineUsers">
+                            <app-online-users [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                            [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [users]="onlineUsers"></app-online-users>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </mat-tab>
             <mat-tab label="{{templateJson.section2.title}}">
@@ -165,6 +175,16 @@
                         </div>
                         <div class="col-xs-12 no-padding" *ngIf="galleryJson">
                             <app-picture-gallery [galleryJson]="galleryJson"></app-picture-gallery>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section2.users">
+                        <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section2.usersDescription"
+                            [innerHtml]="templateJson.section2.usersDescription | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding" *ngIf="onlineUsers">
+                            <app-online-users [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                            [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [users]="onlineUsers"></app-online-users>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -244,6 +264,16 @@
                         </div>
                         <div class="col-xs-12 no-padding" *ngIf="galleryJson">
                             <app-picture-gallery [galleryJson]="galleryJson"></app-picture-gallery>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section3.users">
+                        <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section3.usersDescription"
+                            [innerHtml]="templateJson.section3.usersDescription | safeHtml">
+                        </div>
+                        <div class="col-xs-12 no-padding" *ngIf="onlineUsers">
+                            <app-online-users [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                            [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [users]="onlineUsers"></app-online-users>
                         </div>
                         <div class="clearfix"></div>
                     </div>

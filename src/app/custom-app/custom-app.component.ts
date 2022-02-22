@@ -47,8 +47,11 @@ export class CustomAppComponent implements OnInit, OnDestroy {
     private lStorageService: LocalStorageService
   ) {
     this.activatedRoute.queryParams.subscribe(qparams => {
-      if (qparams.at) {
+      if (qparams && qparams.at) {
         this.lStorageService.setitemonLocalStorage('authToken', qparams.at);
+      }
+      if (qparams && qparams.muid) {
+        this.lStorageService.setitemonLocalStorage('mUniqueId', qparams.muid);
       }
     });
     this.router.routeReuseStrategy.shouldReuseRoute = function () {

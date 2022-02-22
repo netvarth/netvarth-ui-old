@@ -1,9 +1,9 @@
-<div class="login-form custom-login-form availability-container slotdiv">
+<div class="login-form custom-login-form availability-container slotdiv" [ngClass]="theme?theme:''">
     <!-- checkavailability dialog box -->
     <div class="mat-dialog-title">
-        <button (click)="dismissModal()" class="modal_close cust-logpage-close" tabindex="-1">
+        <a (click)="dismissModal()" class="modal_close cust-logpage-close" tabindex="-1">
             <i class="fa fa-window-close" aria-hidden="true"></i>
-        </button>
+        </a>
     </div>
     <!-- <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
         <span class="text-white pull-left mt-3">Check Availability</span> &nbsp;<img class="pull-right mt-3"

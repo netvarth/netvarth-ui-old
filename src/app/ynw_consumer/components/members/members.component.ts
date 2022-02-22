@@ -43,6 +43,7 @@ export class MembersComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
   customId: any;
   accountId: any;
+  theme: any;
   constructor(private consumer_services: ConsumerServices,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -59,6 +60,9 @@ export class MembersComponent implements OnInit, OnDestroy {
       }
       if (qparams && qparams.customId) {
         this.customId = qparams.customId;
+      }
+      if(qparams && qparams.theme) {
+        this.theme = qparams.theme;
       }
     });
   }
@@ -103,7 +107,7 @@ export class MembersComponent implements OnInit, OnDestroy {
     }
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass', this.theme],
       disableClose: true,
       data: {
         'message': 'Do you really want to delete this Member?'
@@ -129,7 +133,7 @@ export class MembersComponent implements OnInit, OnDestroy {
   addMember() {
     const dialogRef = this.dialog.open(AddMembersHolderComponent, {
       width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'popup-class'],
+      panelClass: ['popup-class', 'commonpopupmainclass', 'popup-class', this.theme],
       disableClose: true,
       data: {
         type: 'add',
@@ -145,7 +149,7 @@ export class MembersComponent implements OnInit, OnDestroy {
   editMember(member) {
     const dialogRef = this.dialog.open(AddMembersHolderComponent, {
       width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'popup-class'],
+      panelClass: ['popup-class', 'commonpopupmainclass', 'popup-class', this.theme],
       disableClose: true,
       data: {
         member: member,
@@ -165,6 +169,9 @@ export class MembersComponent implements OnInit, OnDestroy {
     }
     if (this.accountId) {
       queryParams['accountId'] = this.accountId;
+    }
+    if(this.theme) {
+      queryParams['theme'] = this.theme;
     }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams

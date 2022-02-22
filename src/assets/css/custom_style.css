@@ -14485,3 +14485,6 @@ pointer-events: none !important;
     background: transparent !important;
     border: none !important;
   }
+  .consumer-profile .picker-form-group svg {
+    margin-top: -10px;
+  }

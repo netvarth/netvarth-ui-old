@@ -56,6 +56,7 @@ export class CheckavailabilityComponent implements OnInit {
     availabledatevariable: any;
     servicedetails: any;
     domain: any;
+    theme: any;
     constructor(
         public dialogRef: MatDialogRef<CheckavailabilityComponent>,
         public dateTimeProcessor: DateTimeProcessor,
@@ -68,7 +69,9 @@ export class CheckavailabilityComponent implements OnInit {
         if (data.domain) {
             this.domain = data.domain;
         }
-        
+        if (this.data.theme) {
+            this.theme = this.data.theme;
+        }
         console.log("Domain:",this.domain);
             console.log("Details :", this.actionObj)
         this.apptSettings = data.apptSettingsJson
