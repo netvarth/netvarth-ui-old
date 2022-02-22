@@ -1989,6 +1989,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         }
                         this.changePrice = newprice - oldprice;
                         this.amountdifference = this.appointment.amountDue + this.changePrice;
+                        console.log("Amount Differenc :",this.amountdifference);
                     });
             }
         }

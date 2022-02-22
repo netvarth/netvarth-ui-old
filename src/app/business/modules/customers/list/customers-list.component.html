@@ -109,14 +109,14 @@
               *ngIf="selectedGroup !== 'all' && !showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>0"><i
                 class="fa fa-trash" aria-hidden="true"></i>
             </button>
-            <!-- CustomersInboxMessage -->
+            <!-- CustomersInboxMessage() -->
             
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="sendmsgToAll()"
             [matTooltip]="'Send message'"
             *ngIf="!showCustomers && selectedcustomersformsg && selectedcustomersformsg.length>1 && !hide_msgicon"><i
               class="flaticon2-chat-1" aria-hidden="true"></i> </button>
            
-           
+           <!-- CustomersInboxMessage() -->
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="CustomersInboxMessage()"
               [matTooltip]="'Send message'"
               *ngIf="!showCustomers && selectedcustomersformsg.length === 1 &&  !hide_msgicon"><i

@@ -1003,10 +1003,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             if (this.interNatioanalPaid) {
                 this.isClickedOnce = true
                 this.paymentBtnDisabled = false;
+                console.log("InterNational clicked ",this.interNatioanalPaid)
             }
             if (this.razorpayEnabled && !this.paytmEnabled) {
                 this.isClickedOnce = true
                 this.paymentBtnDisabled = false;
+                console.log("Razorpay clicked ",this.razorpayEnabled)
             }
         }
         // if (this.selectedService.serviceType === 'virtualService' && type === 'next') {

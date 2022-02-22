@@ -419,7 +419,7 @@
                           class="payment-mode-card-styles">
                           <ng-container *ngIf="!shownonIndianModes">
                             <app-payment-modes [paymentModes]="indian_payment_modes"
-                              (modeSelected)="indian_payment_mode_onchange($event)">
+                         indian_payment_mode_onchange     (modeSelected)="($event)">
                             </app-payment-modes>
                           </ng-container>
                           <ng-container *ngIf="shownonIndianModes">
@@ -451,7 +451,7 @@
                       </div>
                       <div class="cancelpolicy mgn-rt-5 txt-align-center mgn-up-10" >
                         <!-- *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0" -->
-                      <div class="pad_policy">
+                      <div class="pad_policy" *ngIf="cartDetails.advanceAmount > 0">
                         <!-- *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0" -->
                           <a data-toggle="modal" data-target="#exampleModal"
                               class="refund_policy">Cancellation Policy</a>

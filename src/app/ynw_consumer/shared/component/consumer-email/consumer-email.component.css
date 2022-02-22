@@ -3,3 +3,8 @@
     margin:25px;
 
 }
+
+ .mat-dialog-actions .mat-button {
+    margin: auto 15px;
+
+}

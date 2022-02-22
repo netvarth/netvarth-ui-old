@@ -1076,6 +1076,7 @@ getPaymentModes() {
     });
   }
   confirmOrder(post_Data, paytype?) {
+    console.log("Orderr Data :",post_Data);
     const dataToSend: FormData = new FormData();
     if (this.orderType === 'SHOPPINGLIST') {
       const captions = {};
@@ -1157,6 +1158,7 @@ getPaymentModes() {
               let navigationExtras: NavigationExtras = {
                 queryParams: queryParams
               };
+              console.log("Payment Data :",this.from);
               this.router.navigate(['consumer'], navigationExtras);
             } else {
               let queryParams = {

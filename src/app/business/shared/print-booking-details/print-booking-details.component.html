@@ -70,7 +70,7 @@
                                 <tr *ngIf="!isJaldeeId">
                                     <td colspan="2" align="center"  *ngIf="customer && customer.firstName && customer.firstName === 'null' && customer.firstName === 'null' ">{{customer_label| capitalizeFirst}}  #: NIL</td>
 
-                                    <td colspan="2" align="center"> {{customer_label| capitalizeFirst}}:
+                                    <td colspan="2" align="center"> {{customer_label| capitalizeFirst}} Id #:
                                         {{customerName}} </td>
 
                                 </tr>
@@ -85,6 +85,7 @@
                                       {{bookingDetails.countryCode}} {{phoneNumber}} </td>
 
                                 </tr>
+                               
                                 <tr *ngIf="bookingType==='order' && phoneNum">
                                     <td colspan="2" align="center"> {{customer_label| capitalizeFirst}} Ph #:
                                         {{bookingDetails.countryCode}} {{phoneNum}} </td>
