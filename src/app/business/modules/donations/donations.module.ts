@@ -11,6 +11,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { CommunicationService } from '../../services/communication-service';
 import { AddInboxMessagesModule } from '../../../shared/components/add-inbox-messages/add-inbox-messages.module';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [
     { path: '', component: DonationsComponent },
@@ -31,6 +33,8 @@ const routes: Routes = [
         CapitalizeFirstPipeModule,
         MatTooltipModule,
         MatDatepickerModule,
+        MatMenuModule,
+        MatIconModule,
         MatCheckboxModule,
         AddInboxMessagesModule,
         [RouterModule.forChild(routes)]

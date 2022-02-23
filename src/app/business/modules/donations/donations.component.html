@@ -298,17 +298,35 @@
                         </div>
                         <div class="td three rupee-font"> <span class="amt"></span> {{donation.donationAmount |
                           currency:'&#8377;' }}
-                         
-                          <span class="pull-right mgn-rt-5">
-                            <i *ngIf="!donation.note" class="icon-note" style="visibility: hidden;"></i>
-                            <i *ngIf="donation.note" [matTooltip]="'Notes'" class="icon-note pointer-cursor"
+                        
+                        <!-- <span >
+                          <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #appMenu="matMenu">
+                            <button mat-menu-item>
+                              <i *ngIf="!donation.note" class="icon-note" style="visibility: hidden;"></i>
+                              <i *ngIf="donation.note" [matTooltip]="'Notes'" class="icon-note pointer-cursor"
                               (click)="stopprop($event);showConsumerNote(donation)"></i>
-                          </span>&nbsp;
+                            </button>
+                            <button mat-menu-item>
+                            <i class="printer-icon" [matTooltip]="'Print'" (click)="stopprop($event);printCheckin(donation)"></i>
+                            </button>
+                           
+                        </mat-menu>
+                        </span> -->
+                         
+                          
                           <span class="pull-right mgn-rt-5">
                             <i class="printer-icon" [matTooltip]="'Print'" (click)="stopprop($event);printCheckin(donation)"></i>
                           </span>
+                          <span class="pull-right mgn-rt-5" *ngIf="donation.note" >
+                            <i *ngIf="!donation.note" class="icon-note" style="visibility: hidden;"></i>
+                            <i *ngIf="donation.note" [matTooltip]="'Notes'" class="icon-note pointer-cursor"
+                              (click)="stopprop($event);showConsumerNote(donation)"></i>
+                          </span>
                         </div>
-                      
+                        
                         <!-- <div class="td onerupee-font"> <span class="amt"></span> {{donation.customerPaidCharges |
                           currency:'&#8377;' }}
                           

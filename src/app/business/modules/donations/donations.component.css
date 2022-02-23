@@ -839,4 +839,17 @@
           .printer-icon {
             width: 14px !important;
           }
+          @media (max-width: 375px) {
+            .printer-icon {
+                width: 10px !important;
+              }
+        }
+        .icon-note{
+            width: 14px !important;
+          }
+          @media (max-width: 375px) {
+            .icon-note {
+                width: 10px !important;
+              }
+        }
           
