@@ -202,8 +202,9 @@ export class PrintBookingDetailsComponent implements OnInit {
     const bprof = this.groupService.getitemFromGroupStorage('ynwbp');
     this.bname = bprof.bn;
     if (this.bookingType === 'appt') {
-      this.customer = this.bookingDetails.appmtFor[0];
-      console.log('cutomer',this.customer)
+      if(this.bookingDetails && this.bookingDetails.appmtFor[0]){
+        this.customer = this.bookingDetails.appmtFor[0];
+      }
       const fname = (this.bookingDetails.appmtFor[0].firstName) ? this.bookingDetails.appmtFor[0].firstName : '';
       const lname = (this.bookingDetails.appmtFor[0].lastName) ? this.bookingDetails.appmtFor[0].lastName : '';
       if (fname !== '' || lname !== '') {
@@ -255,6 +256,23 @@ export class PrintBookingDetailsComponent implements OnInit {
       }
       }
     }
+    else {
+      this.customer = this.bookingDetails.waitlistingFor[0];
+      console.log('cutomer',this.customer)
+      const fname = (this.bookingDetails.waitlistingFor[0].firstName) ? this.bookingDetails.waitlistingFor[0].firstName : '';
+      const lname = (this.bookingDetails.waitlistingFor[0].lastName) ? this.bookingDetails.waitlistingFor[0].lastName : '';
+      if (fname !== '' || lname !== '') {
+        this.customerName = fname + " " + lname;
+      }
+      else {
+        this.isJaldeeId = true;
+        this.customerName = this.bookingDetails.consumer.jaldeeId
+      }
+      if (this.bookingDetails.provider) {
+        this.spName = (this.bookingDetails.provider.businessName) ? this.bookingDetails.provider.businessName : this.bookingDetails.provider.firstName + ' ' + this.bookingDetails.provider.lastName;
+      }
+    }
+
 
   }
   getApptBookingDetails(bookingId) {
