@@ -298,10 +298,14 @@
                         </div>
                         <div class="td three rupee-font"> <span class="amt"></span> {{donation.donationAmount |
                           currency:'&#8377;' }}
+                         
                           <span class="pull-right mgn-rt-5">
                             <i *ngIf="!donation.note" class="icon-note" style="visibility: hidden;"></i>
                             <i *ngIf="donation.note" [matTooltip]="'Notes'" class="icon-note pointer-cursor"
                               (click)="stopprop($event);showConsumerNote(donation)"></i>
+                          </span>&nbsp;
+                          <span class="pull-right mgn-rt-5">
+                            <i class="printer-icon" [matTooltip]="'Print'" (click)="stopprop($event);printCheckin(donation)"></i>
                           </span>
                         </div>
                       

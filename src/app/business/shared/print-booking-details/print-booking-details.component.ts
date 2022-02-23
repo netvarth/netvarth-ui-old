@@ -89,6 +89,22 @@ export class PrintBookingDetailsComponent implements OnInit {
             this.setPrintDetails();
           });
         }
+        if (this.bookingType === 'donation') {
+          this.getDonationBookingDetails(this.bookingId).then((data) => {
+            this.bookingDetails = data;
+            if(this.bookingDetails && this.bookingDetails.donorPhoneNumber){
+              this.phoneNum = this.bookingDetails.donorPhoneNumber
+            } 
+            if (this.bookingDetails.questionnaire) {
+              this.questionnaires = this.bookingDetails.questionnaire;
+              this.questionanswers = this.questionnaires.questionAnswers;
+              if (this.questionanswers) {
+                this.groupQuestionsBySection();
+              }
+            };
+            this.setPrintDetails();
+          });
+        }
         if (this.bookingType === 'checkin') {
           this.getWaitlistBookingDetails(this.bookingId).then((data) => {
             this.bookingDetails = data;
@@ -228,23 +244,17 @@ export class PrintBookingDetailsComponent implements OnInit {
       
      
     }
-    else {
-      this.customer = this.bookingDetails.waitlistingFor[0];
-      console.log('cutomer',this.customer)
-      const fname = (this.bookingDetails.waitlistingFor[0].firstName) ? this.bookingDetails.waitlistingFor[0].firstName : '';
-      const lname = (this.bookingDetails.waitlistingFor[0].lastName) ? this.bookingDetails.waitlistingFor[0].lastName : '';
+    else if(this.bookingType === 'donation'){
+      if(this.bookingDetails && this.bookingDetails.donor){
+        this.customer = this.bookingDetails.donor;
+        console.log('cutomer',this.customer)
+      const fname = (this.bookingDetails.donor.firstName) ? this.bookingDetails.donor.firstName : '';
+      const lname = (this.bookingDetails.donor.lastName) ? this.bookingDetails.donor.lastName : '';
       if (fname !== '' || lname !== '') {
         this.customerName = fname + " " + lname;
       }
-      else {
-        this.isJaldeeId = true;
-        this.customerName = this.bookingDetails.consumer.jaldeeId
-      }
-      if (this.bookingDetails.provider) {
-        this.spName = (this.bookingDetails.provider.businessName) ? this.bookingDetails.provider.businessName : this.bookingDetails.provider.firstName + ' ' + this.bookingDetails.provider.lastName;
       }
     }
-
 
   }
   getApptBookingDetails(bookingId) {
@@ -269,6 +279,23 @@ export class PrintBookingDetailsComponent implements OnInit {
     return new Promise(function (resolve, reject) {
 
       _this.providerServices.getOrderById(bookingId)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+
+    });
+
+  }
+  getDonationBookingDetails(bookingId) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+
+      _this.providerServices.getDonationById(bookingId)
         .subscribe(
           data => {
             resolve(data);

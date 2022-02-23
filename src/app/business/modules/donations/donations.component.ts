@@ -82,6 +82,7 @@ export class DonationsComponent implements OnInit {
   filtericonclearTooltip: any;
   constructor(private provider_services: ProviderServices,
     public dateformat: DateFormatPipe,
+    public router: Router,
     private communicationService: CommunicationService,
     private routerobj: Router, private dialog: MatDialog,
     private snackbarService: SnackbarService,
@@ -608,5 +609,8 @@ export class DonationsComponent implements OnInit {
   gotoDonation(donation) {
     this.routerobj.navigate(['provider', 'donations', donation.uid]);
   }
+  printCheckin(donation) {
+    this.router.navigate(['provider', 'donations', donation.uid, 'print'],{queryParams:{bookingType:'donation'}});
+}
 }
 

@@ -27,6 +27,10 @@
                 <span class="customer-action-btn pointer-cursor pull-left mgn-rt-10 mgn-up-20"
                     (click)="addInboxMessage()">
                     <i class="fa fa-comments-o"></i> Send message</span>
+                    <span class="customer-action-btn pointer-cursor pull-left mgn-rt-10 mgn-up-20"
+                    (click)="printCheckin()">
+                    <i class="fa fa-print"></i> Print</span>
+                  
                 <span *ngIf="donationDetails.note" class="customer-action-btn pointer-cursor pull-left mgn-up-20"
                     (click)="showConsumerNote()">
                     <i class="icon-note mgn-rt-5"></i>Notes</span>

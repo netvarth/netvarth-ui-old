@@ -610,6 +610,10 @@ export class ProviderServices {
     const url = 'provider/waitlist/' + uuid;
     return this.servicemeta.httpGet(url);
   }
+  getProviderOrderDetailById(uuid) {
+    const url = 'provider/orders/' + uuid;
+    return this.servicemeta.httpGet(url);
+  }
   addProviderWaitlistNote(uuid, message) {
     const url = 'provider/waitlist/notes/' + uuid;
     return this.servicemeta.httpPost(url, message);
@@ -1383,7 +1387,10 @@ export class ProviderServices {
     const url = 'provider/orders/' + appmntId;
     return this.servicemeta.httpGet(url);
   }
-  
+  getDonationById(appmntId) {
+    const url = 'provider/donation/' + appmntId;
+    return this.servicemeta.httpGet(url);
+  }
   setAppointmentPresence(status) {
     const url = 'provider/account/settings/appointment/' + status;
     return this.servicemeta.httpPut(url);

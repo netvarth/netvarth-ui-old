@@ -15,7 +15,8 @@ import { AddInboxMessagesModule } from '../../../shared/components/add-inbox-mes
 const routes: Routes = [
     { path: '', component: DonationsComponent },
     { path: '', children: [
-            { path: ':id', loadChildren: ()=> import('./details/donation-details.module').then(m=>m.DonationDetailsModule) }
+            { path: ':id', loadChildren: ()=> import('./details/donation-details.module').then(m=>m.DonationDetailsModule) },
+            { path: ':id/print', loadChildren: ()=> import('../../shared/print-booking-details/print-booking-detail.module').then(m=>m.PrintBookingDetailModule)} 
         ]
     }
 ];
