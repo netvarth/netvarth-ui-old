@@ -12408,7 +12408,7 @@ hr {
   padding: 3px 25px;
   border: 1px solid;
   border-radius: 20px;
-  float: right;
+  /* float: right; */
 }
 .recentactivity {
   border: 1px solid #ccc;

@@ -601,7 +601,7 @@ export class ProviderCheckinComponent implements OnInit {
     }
     openthirdpopup(domain,showOther,customer_label) {
         this.thirdpartyoptions = this.dialog.open(ThirdpartypopupComponent, {
-            width: '40%',
+            width: '100%',
             panelClass: ['popup-class', 'confirmationmainclass'],
             data : {
                 'domain':domain,
