@@ -33,10 +33,6 @@ export class DatePaginationComponent extends ConsumerCheckinComponent implements
     {
       this.sel_checkindate = this.hold_checkindate
     }
-    else
-    {
-      this.minDate = this.sel_checkindate
-    }
     console.log(this.sel_checkindate)
     let today_date1 = new Date(this.sel_checkindate);
     this.default_value =  this.week[today_date1.getDay()]+this.month[today_date1.getMonth()]+today_date1.getDate();
@@ -63,7 +59,7 @@ next_date(n)
   this.default_value =  this.week[tommorow.getDay()]+this.month[tommorow.getMonth()]+tommorow.getDate();
   this.sel_checkindate =  new Date(tommorow).toISOString().slice(0, 10);
   this.selectedDate = this.sel_checkindate;
-  tommorow = new Date(this.sel_checkindate);
+  //tommorow = new Date(this.sel_checkindate);
   tommorow.setDate(tommorow.getDate() + 1);
   this.next_date_value =  this.week[tommorow.getDay()]+this.month[tommorow.getMonth()]+tommorow.getDate();
   tommorow.setDate(tommorow.getDate() + 1);
@@ -77,6 +73,7 @@ next_date(n)
   tommorow.setDate(tommorow.getDate() - 1);
   this.prev_date_value_2 =  this.week[tommorow.getDay()]+this.month[tommorow.getMonth()]+tommorow.getDate();
   this.date_change_event.emit(this.sel_checkindate);
+  this.date_handling_btn()
 }
 
 
@@ -87,7 +84,7 @@ prev_date(n)
     this.default_value =  this.week[yesterday.getDay()]+this.month[yesterday.getMonth()]+yesterday.getDate();
     this.sel_checkindate =  new Date(yesterday).toISOString().slice(0, 10);
     this.selectedDate = this.sel_checkindate;
-    yesterday = new Date(this.sel_checkindate);
+    //yesterday = new Date(this.sel_checkindate);
     yesterday.setDate(yesterday.getDate() - 1);
     this.prev_date_value =  this.week[yesterday.getDay()]+this.month[yesterday.getMonth()]+yesterday.getDate();
     yesterday.setDate(yesterday.getDate() - 1);
@@ -101,7 +98,7 @@ prev_date(n)
     yesterday.setDate(yesterday.getDate() + 1);
     this.next_date_value_2 =  this.week[yesterday.getDay()]+this.month[yesterday.getMonth()]+yesterday.getDate();
     this.date_change_event.emit(this.sel_checkindate);
-
+    
 }
 
 date_value_changed()
