@@ -1,9 +1,9 @@
-.mob-container {
-    /* max-width: 100% !important; */
+/* .mob-container {
+    max-width: 100% !important;
   
-    /* wh1ite-space: nowrap; */
-    /* background-color: #f6f6f6; */
-}
+    wh1ite-space: nowrap;
+    background-color: #f6f6f6;
+} */
 .display-lg-show {
   display: block;
 }
@@ -30,7 +30,8 @@ align-items: center;
   color: black !important;
   text-align: center;
 }
-@media(max-width: 768px) { 
+@media(max-width: 768px) 
+{ 
   .displaysmall { opacity: 0 !important; }
   .orangebox {
     all:initial !important;
@@ -40,8 +41,8 @@ align-items: center;
     background-color: #1E4079;
     border-bottom-right-radius: 5px;
     border-top-right-radius: 5px;
-    width: 50px !important;
-    height: 70px !important;
+    width: 40px !important;
+    height: 40px !important;
     /* padding-left: 5px !important; */
     /* padding-right: 30px !important; */
     color: white;
@@ -54,9 +55,9 @@ align-items: center;
   .no-margin {
     margin: 0px !important;
   }
-  .findcolor {
-    /* padding: 0px !important; */
-  }
+  /* .findcolor {
+    padding: 0px !important;
+  } */
   .display-xs-small {
     /* display: inline-block !important; */
     display: flex !important;
@@ -89,19 +90,40 @@ align-items: center;
 
     /* display: none !important; */
   }
+  h6
+  {
+    font-size: 15px!important;
+  }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .card1 {
   /* width: 90% !important; */
   max-width: 320px;
   /* height: 30% !important; */
+  background-color: #1E4079;
+  color: #fff;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
   touch-action: manipulation;
   cursor: pointer;
 
-  padding: 15px 0 15px 0px;
+  /* padding: 15px 0 15px 0px; */
   
   vertical-align: middle !important;
   -webkit-box-shadow:0 2px 4px 0 rgba(0, 0, 0, 0.2),  0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;
@@ -197,7 +219,8 @@ align-items: center;
   }
  
   .pro-action {
-    background-color: #ffc737 !important;
+    border:1px solid #1E4079 !important;
+    color: #1E4079 !important;
   }
   .inputbox1 {
     background-color: #f6f6f6 !important; 
@@ -215,7 +238,7 @@ align-items: center;
   }
   .inputstyling {
     border: 1px solid rgb(212, 208, 208);
-    height: 70px !important;
+    /* height: 70px !important; */
     background-color: #f6f6f6 !important; 
     /* max-width: 320px !important; */
     width: 100% !important;
@@ -224,7 +247,7 @@ align-items: center;
   }
   .inputstyling:focus {
     border: 1px solid rgb(212, 208, 208);
-    height: 70px !important;
+    /* height: 70px !important; */
     background-color: #f6f6f6 !important; 
     /* max-width: 320px !important; */
     color: black;
@@ -233,13 +256,13 @@ align-items: center;
 
   /* ::ng-deep .mat-select-arrow { opacity: 0; } */
 
- 
+
   .findcolor{
     background-color: #1E4079;
     border-bottom-right-radius: 5px;
     border-top-right-radius: 5px;
-    width: 90px;
-    height: 70px;
+    width: 40px;
+    height: 40px;
     padding-left: 10px !important;
     /* padding-right: 30px !important; */
     color: white;
@@ -270,4 +293,58 @@ align-items: center;
 .change:-ms-input-placeholder {
     /* Internet Explorer 10-11 */
     color: rgba(202, 195, 202, 0.61);
+}
+.consumer-name
+{
+  color: #1E4079!important;
+  font-size: 25px!important;
+  font-weight: bold!important;
+}
+
+.consumer-id
+{
+  color: #1E4079!important;
+  font-size: 17px!important;
+}
+.flex-column
+{
+  flex-direction: column!important;
+  align-items: flex-start!important;
+}
+
+.freeslots mat-chip
+{
+  border: none!important;
+  border-radius: 5px!important;
+  cursor: pointer;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.freeslots mat-chip.mat-chip-selected
+{
+  background-color: #1e4079!important;
+  color: white!important;
+  font-weight: 900!important;
+}
+.freeslots mat-chip.mat-chip.mat-focus-indicator.text-center.mat-primary.mat-standard-chip
+{
+  padding: 0!important;
+}
+.notes,.fa-chevron-down,.fa-chevron-up,.attachment
+{
+  color: #1e4079!important;
+  font-size: 13px!important;
+}
+.categoryfield
+{
+  height: 40px!important;
+}
+.mat-select
+{
+  padding: 0!important;
+}
+.provider-checkin .mat-chip-list-wrapper .mat-standard-chip {
+  margin: 2px!important;
+}
+.ynw-common-form-nm .mat-select {
+  padding: 10px 0px 0px 15px!important;
 }

@@ -12422,7 +12422,7 @@ hr {
   padding: 3px 25px;
   border: 1px solid;
   border-radius: 20px;
-  float: right;
+  /* float: right; */
 }
 .recentactivity {
   border: 1px solid #ccc;
@@ -14534,4 +14534,14 @@ pointer-events: none !important;
 }
  .qnrsec .mat-select {
     padding: 10px !important;
+  }
+
+  
+  @media(max-width: 768px) { 
+    .provider-appointment-walkin .mat-chip-list-wrapper{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      margin: -4px!important;
+  }
   }

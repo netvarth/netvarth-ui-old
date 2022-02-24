@@ -12,7 +12,7 @@
     /* font-style: Montserrat; */
     /* display: inline-block; */
     /* margin-bottom: 2px; */
-    text-align: center;
+    text-align: left;
     margin-bottom: 10px  !important;
     
     /* width: 100px !important; */
@@ -22,7 +22,8 @@
     cursor: pointer;
     /* background-image: none; */
     /* border: 1px solid transparent; */
-    padding: 15px;
+    padding: 7px;
+    margin: 5px!important;
     font-size: 15px;
     line-height: 1.42857143;
     border-radius: 5px;
@@ -44,4 +45,8 @@
     .font-size {
         font-size: 15px !important;
     }
+}
+.text-light
+{
+    color: #1E4079!important;
 }
