@@ -30,7 +30,8 @@ align-items: center;
   color: black !important;
   text-align: center;
 }
-@media(max-width: 768px) { 
+@media(max-width: 768px) 
+{ 
   .displaysmall { opacity: 0 !important; }
   .orangebox {
     all:initial !important;
@@ -89,12 +90,33 @@ align-items: center;
 
     /* display: none !important; */
   }
+  h6
+  {
+    font-size: 15px!important;
+  }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .card1 {
   /* width: 90% !important; */
   max-width: 320px;
   /* height: 30% !important; */
+  background-color: #1E4079;
+  color: #fff;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
@@ -278,12 +300,7 @@ align-items: center;
   font-size: 25px!important;
   font-weight: bold!important;
 }
-.consumer-name
-{
-  color: #1E4079!important;
-  font-size: 25px!important;
-  font-weight: bold!important;
-}
+
 .consumer-id
 {
   color: #1E4079!important;
@@ -327,4 +344,7 @@ align-items: center;
 }
 .provider-checkin .mat-chip-list-wrapper .mat-standard-chip {
   margin: 2px!important;
+}
+.ynw-common-form-nm .mat-select {
+  padding: 10px 0px 0px 15px!important;
 }
