@@ -1372,7 +1372,7 @@
                                         <div class="textcenter"
                                             *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                             
-                                            <span class="ser_price no-mgn-bt bold">Service Price : <span
+                                            <span *ngIf="paymentDetails.showPrice" class="ser_price no-mgn-bt bold">Service Price : <span
                                                     class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
                                                     | currency:'&#8377;'}}</span></span>
                                             <span class="ser_price no-mgn-bt bold"
@@ -1387,7 +1387,7 @@
                                     <div class="disply my-5">
                                         <div class="textcenter"
                                             *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                            <span class="ser_price no-mgn-bt bold">Service Price : <span
+                                            <span *ngIf="paymentDetails.showPrice" class="ser_price no-mgn-bt bold">Service Price : <span
                                                     class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
                                                     | currency:'&#8377;'}}</span></span><br>
                                             <span class="ser_price no-mgn-bt bold"

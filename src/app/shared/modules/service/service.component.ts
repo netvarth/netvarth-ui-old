@@ -165,9 +165,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
     qrdialogRef: any;
     wndw_path = projectConstantsLocal.PATH;
     tool_code;
-    showPrice;
     priceDescription = false;
     showServiceduration = true;
+    showPrice;
     paymentSubscription: any;
     paymentProfiles: any = [];
     selected = false;
@@ -243,6 +243,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                     this.serviceForm.get('paymentProfileId').setValue('spDefaultBillProfile');
                                 }
                                 this.showServiceduration = this.service_data.serviceDurationEnabled;
+                                if(this.service_data && this.service_data.showPrice){
+                                    this.showPrice = this.service_data.showPrice;
+                                }
+                               
                                 this.preInfoEnabled = this.service_data.preInfoEnabled;
                                 this.postInfoEnabled = this.service_data.postInfoEnabled;
                                 this.preInfoTitle = this.service_data.preInfoTitle || '';
@@ -657,6 +661,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 const duration = this.shared_service.getTimeinMin(this.duration);
                 form_data.serviceDuration = duration;
                 form_data.serviceDurationEnabled = this.showServiceduration;
+               
+                    form_data.showPrice = this.showPrice;
+                
+               
             }
             if (this.departmentId) {
                 form_data['department'] = this.departmentId;

@@ -145,7 +145,7 @@
                                         class="bold">{{HHMM}}</span>
                                 </li>
                                 <li
-                                    *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0">
+                                    *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0 && servicedetails.showPrice">
                                     <span class="service-li-title">Service Fee<i class="fa fa-info-circle"
                                             [matTooltip]="servicedetails.paymentDescription"></i></span><br /><span
                                         class="bold price rupee-font">{{servicedetails.totalAmount |
