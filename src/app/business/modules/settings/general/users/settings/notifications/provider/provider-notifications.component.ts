@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../../../services/provider-services.service';
@@ -9,13 +9,15 @@ import { GroupStorageService } from '../../../../../../../../shared/services/gro
 import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
 import { AddproviderAddonComponent } from '../../../../../../../../business/modules/add-provider-addons/add-provider-addons.component';
-import { UpdateProviderUserNotificationsComponent } from '../update-provider-notifications/update-provider-notifications.component';
+import { MatTabChangeEvent } from '@angular/material/tabs';
+// import { UpdateProviderUserNotificationsComponent } from '../update-provider-notifications/update-provider-notifications.component';
 
 @Component({
   selector: 'app-provider-notifications',
   templateUrl: './provider-notifications.component.html'
 })
 export class ProviderUserNotificationUserComponent implements OnInit {
+  // @Output() actionPerformed = new EventEmitter<any>();
   isCheckin;
   mode_of_notify = '';
   SelchkinNotify = false;
@@ -88,6 +90,8 @@ export class ProviderUserNotificationUserComponent implements OnInit {
   addondialogRef: any;
   is_noSMS = false;
   isInternationalUser = false;
+  // actionObj: {};
+  type: string;
   constructor(
     private routerobj: Router,
     private shared_functions: SharedFunctions,
@@ -102,6 +106,7 @@ export class ProviderUserNotificationUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.type='Token';
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
@@ -993,26 +998,69 @@ export class ProviderUserNotificationUserComponent implements OnInit {
       });
     }
   }
+  
+
+  tabClick(event: MatTabChangeEvent) {
+    const type = event.tab.textLabel;
+    // console.log(tab);
+    if ((type === 'Token Notifications' || type === 'Check-in Notifications') && !this.waitlistStatus) {
+      this.snackbarService.openSnackBar('Jaldee QManager is disabled in your settings', { 'panelClass': 'snackbarerror' });
+    } else if (type === 'Appointment Notifications' && !this.appointment_status) {
+      this.snackbarService.openSnackBar('Jaldee Appointment Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
+    } else {
+      if(type=="Token Notifications") {
+        this.type='Token';
+      } else if(type=="Check-in Notifications") {
+        this.type='Check-in';
+      }else {
+        this.type='Appointment';
+      }
+     
+      // this.actionPerformed.emit(actionObj)
+      // const dialogref = this.dialog.open(UpdateProviderUserNotificationsComponent, {
+      //   width: '40%',
+      //   panelClass: ['popup-class', 'commonpopupmainclass'],
+      //   disableClose: true,
+      //   data: {
+      //     inernationalUser : this.isInternationalUser,
+      //     type: type,
+      //     userId: this.userId
+      //   }
+      // });
+      // dialogref.afterClosed().subscribe(
+      //   result => {
+
+      //   });
+    }
+  }
   showNotificationPopup(type) {
+
+    console.log("type..",type)
+
+
+
     if ((type === 'Token' || type === 'Check-in') && !this.waitlistStatus) {
       this.snackbarService.openSnackBar('Jaldee QManager is disabled in your settings', { 'panelClass': 'snackbarerror' });
     } else if (type === 'Appointment' && !this.appointment_status) {
       this.snackbarService.openSnackBar('Jaldee Appointment Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
     } else {
-      const dialogref = this.dialog.open(UpdateProviderUserNotificationsComponent, {
-        width: '40%',
-        panelClass: ['popup-class', 'commonpopupmainclass'],
-        disableClose: true,
-        data: {
-          inernationalUser : this.isInternationalUser,
-          type: type,
-          userId: this.userId
-        }
-      });
-      dialogref.afterClosed().subscribe(
-        result => {
+    
+      this.type=type;
+      // this.actionPerformed.emit(actionObj)
+      // const dialogref = this.dialog.open(UpdateProviderUserNotificationsComponent, {
+      //   width: '40%',
+      //   panelClass: ['popup-class', 'commonpopupmainclass'],
+      //   disableClose: true,
+      //   data: {
+      //     inernationalUser : this.isInternationalUser,
+      //     type: type,
+      //     userId: this.userId
+      //   }
+      // });
+      // dialogref.afterClosed().subscribe(
+      //   result => {
 
-        });
+      //   });
     }
   }
 }

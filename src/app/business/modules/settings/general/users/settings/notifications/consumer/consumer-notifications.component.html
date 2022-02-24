@@ -1,4 +1,4 @@
-<section class="">
+<section class="mgn-up-10 mgn-lt-5 mgn-rt-5">
   <div class="card title-gb">
     <h5 class="mgn-up-10">
       <span class="fa fa-arrow-left pointer-cursor"
@@ -35,11 +35,11 @@
         </div>
         <mat-accordion *ngIf="waitlistStatus">
           <mat-expansion-panel [expanded]="true">
-            <mat-expansion-panel-header class="mgn-bt-10">
-              <mat-panel-title class="block-level" *ngIf="showToken">Token Notifications<br>
+            <mat-expansion-panel-header class="mgn-bt-10" >
+              <mat-panel-title class="block-level1" *ngIf="showToken">Token Notifications<br>
                 <span class="form-level-settings">{{mode_of_notify}}</span>
               </mat-panel-title>
-              <mat-panel-title class="block-level" *ngIf="!showToken">Check-in Notifications<br>
+              <mat-panel-title class="block-level1" *ngIf="!showToken">Check-in Notifications<br>
                 <span class="form-level-settings">{{mode_of_notify}}</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
@@ -51,17 +51,34 @@
                   <!-- {{customer_label | capitalizeFirst}} Ahead -->
                 </div>
               </div>
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+              <!-- <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
                 Channels
-              </div>
+              </div> -->
             </div>
             <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10 noti-section">
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
                 <div class="col-md-9 col-xs-12 col-sm-12 col-lg-9 no-padding">
-                  <div class="font1"> Early Notifications</div>
+                  <div class="font1"> <b>Early Notifications</b></div>
                   <div class="form-level-settings">Notify a {{customer_label}}, the number of people ahead of
                     him/her
                     in line via SMS/Email/Notifications</div>
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding" [class.mgn-up-30]="!small_device_display">
+                  <mat-checkbox [checked]="earlyWLNotificatonSettings.sms"
+                    (change)="showSubmit('EARLY_WL', 'sms', $event)" class="mgn-rt-20">
+                    Via SMS</mat-checkbox>
+                  <mat-checkbox [checked]="earlyWLNotificatonSettings.email"
+                    (change)="showSubmit('EARLY_WL', 'email', $event)" class="mgn-rt-20">
+                    Via Email</mat-checkbox>
+                  <mat-checkbox [checked]="earlyWLNotificatonSettings.pushNotification"
+                    (change)="showSubmit('EARLY_WL', 'pushNotification', $event)" class="mgn-rt-20">
+                    Via App</mat-checkbox>
+                  <span *ngIf="showButton['EARLY_WL'] && earlyWLNotificatonSettings.personsAhead && !small_device_display"
+                    (click)="changeNotificationSettings('EARLY_WL')" class="notify-ok-btn">OK</span>
+                  <div class="mgn-up-10"
+                    *ngIf="showButton['EARLY_WL'] && small_device_display && earlyWLNotificatonSettings.personsAhead">
+                    <span (click)="changeNotificationSettings('EARLY_WL')" class="notify-ok-btn">OK</span>
+                  </div>
                 </div>
                 <div class="notify-phead col-md-3 col-xs-12 col-sm-12 col-lg-3 no-padding">
                   <mat-form-field class="example-full-width mgn-rt-10">
@@ -74,31 +91,16 @@
                   </mat-form-field>
                 </div>
               </div>
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding" [class.mgn-up-30]="!small_device_display">
-                <mat-checkbox [checked]="earlyWLNotificatonSettings.sms"
-                  (change)="showSubmit('EARLY_WL', 'sms', $event)" class="mgn-rt-20">
-                  Via SMS</mat-checkbox>
-                <mat-checkbox [checked]="earlyWLNotificatonSettings.email"
-                  (change)="showSubmit('EARLY_WL', 'email', $event)" class="mgn-rt-20">
-                  Via Email</mat-checkbox>
-                <mat-checkbox [checked]="earlyWLNotificatonSettings.pushNotification"
-                  (change)="showSubmit('EARLY_WL', 'pushNotification', $event)" class="mgn-rt-20">
-                  Via App</mat-checkbox>
-                <span *ngIf="showButton['EARLY_WL'] && earlyWLNotificatonSettings.personsAhead && !small_device_display"
-                  (click)="changeNotificationSettings('EARLY_WL')" class="notify-ok-btn">OK</span>
-                <div class="mgn-up-10"
-                  *ngIf="showButton['EARLY_WL'] && small_device_display && earlyWLNotificatonSettings.personsAhead">
-                  <span (click)="changeNotificationSettings('EARLY_WL')" class="notify-ok-btn">OK</span>
-                </div>
-              </div>
+              
             </div>
             <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20 noti-section">
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
-                <div class="font1"> Pre final Notifications</div>
+              <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+                <div class="font1"> <b>Pre final Notifications</b></div>
                 <div class="form-level-settings">Notify a {{customer_label}} when he is second next in line via
                   SMS/Email/Notifications.</div>
               </div>
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+              <br>
+              <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-4 no-padding">
                 <mat-checkbox [checked]="prefinalWLNotificationSettings.sms"
                   (change)="showSubmit('PREFINAL_WL', 'sms', $event)" class="mgn-rt-20">
                   Via SMS</mat-checkbox>
@@ -116,12 +118,13 @@
               </div>
             </div>
             <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20 noti-section">
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
-                <div class="font1"> Final Notifications</div>
+              <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+                <div class="font1"> <b>Final Notifications</b></div>
                 <div class="form-level-settings">Notify a {{customer_label}} when he is next in line via
                   SMS/Email/Notifications.</div>
               </div>
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+              <br>
+              <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-4 no-padding">
                 <mat-checkbox [checked]="finalWLNotificationSettings.sms"
                   (change)="showSubmit('FINAL_WL', 'sms', $event)" class="mgn-rt-20">
                   Via SMS</mat-checkbox>
@@ -139,15 +142,16 @@
               </div>
             </div>
             <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20 noti-section">
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
-                <div class="font1" *ngIf="showToken">Add token Notifications</div>
-                <div class="font1" *ngIf="!showToken"> Add checkin Notifications</div>
+              <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+                <div class="font1" *ngIf="showToken"><b>Add token Notifications</b></div>
+                <div class="font1" *ngIf="!showToken"> <b>Add checkin Notifications</b></div>
                 <div class="form-level-settings" *ngIf="!showToken">Notify a {{customer_label}} via
                   SMS/Email/Notifications when a Check-in happens.</div>
                   <div class="form-level-settings" *ngIf="showToken">Notify a {{customer_label}} via
                     SMS/Email/Notifications when a token happens.</div>
               </div>
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+              <br>
+              <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 col-lg-4 no-padding">
                 <mat-checkbox [checked]="wlAddNotificationSettings.sms"
                   (change)="showSubmit('WAITLISTADD', 'sms', $event)" class="mgn-rt-20">
                   Via SMS</mat-checkbox>
@@ -169,7 +173,7 @@
         <mat-accordion *ngIf="appointment_status">
           <mat-expansion-panel [expanded]="false">
             <mat-expansion-panel-header class="mgn-bt-10">
-              <mat-panel-title class="block-level">Appointment Notifications<br>
+              <mat-panel-title class="block-level1">Appointment Notifications<br>
                 <span class="form-level-settings">Specify how and when your {{customer_label}}s need to be notified
                   about their appointment</span>
               </mat-panel-title>
@@ -177,17 +181,17 @@
             <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10" *ngIf="!small_device_display">
               <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
               </div>
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+              <!-- <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
                 Channels
-              </div>
+              </div> -->
             </div>
             <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-10 noti-section">
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
-                Appointment Confirmation Notifications
+              <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+              <b>  Appointment Confirmation Notifications</b>
                 <div class="form-level-settings">Notify {{customer_label}} when appointment is
                   confirmed.</div>
               </div>
-              <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+              <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
                 <mat-checkbox [checked]="apptAddNotificationSettings.sms"
                   (change)="showSubmit('APPOINTMENTADD', 'sms', $event)" class="mgn-rt-20">
                   Via SMS</mat-checkbox>
@@ -224,39 +228,18 @@
                         <!-- Minutes -->
                       </div>
                     </div>
-                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
+                    <!-- <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding">
                       Channels
-                    </div>
+                    </div> -->
                   </div>
                   <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20 noti-section">
-                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
-                      <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
-                        First Reminder
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+                      <!-- <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding"> -->
+                        <b>First Reminder</b>
                         <div class="form-level-settings">Specify when the 1st reminder should be sent to your
                           {{customer_label}}</div>
-                      </div>
-                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
-                        [class.mgn-up-minus-20]="!small_device_display">
-                        <mat-form-field class="mgn-rt-10">
-                          <mat-select placeholder="Hour" [ngModel]="f_selected_hr" #f_hrsel
-                            (selectionChange)="handleHrSelction(f_hrsel.value,'first')">
-                            <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
-                              {{hr}}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
-                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
-                        [class.mgn-up-minus-20]="!small_device_display">
-                        <mat-form-field class="mgn-rt-10">
-                          <mat-select placeholder="Minute" [ngModel]="f_selected_min" #f_minsel
-                            (selectionChange)="handleMinSelction(f_minsel.value,'first')">
-                            <mat-option *ngFor="let min of appt_remind_min" [value]="min">
-                              {{min}}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
+                      <!-- </div> -->
+                     
                     </div>
                     <!-- <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
                       <mat-checkbox [checked]="firstAPPTNotificationSettings.sms"
@@ -274,52 +257,56 @@
                         <span (click)="changeNotificationSettings('FIRST_APPT')" class="notify-ok-btn">OK</span>
                       </div>
                     </div> -->
-                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-15">
+                      <div class="col-md-3 col-xs-6 col-sm-12 col-lg-2 no-padding"
+                      [class.mgn-up-minus-20]="!small_device_display">
+                      <mat-form-field class="mgn-rt-10">
+                        <mat-select placeholder="Hour" [ngModel]="f_selected_hr" #f_hrsel
+                          (selectionChange)="handleHrSelction(f_hrsel.value,'first')">
+                          <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
+                            {{hr}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-3 col-xs-6 col-sm-12 col-lg-2 no-padding"
+                      [class.mgn-up-minus-20]="!small_device_display">
+                      <mat-form-field class="mgn-rt-10">
+                        <mat-select placeholder="Minute" [ngModel]="f_selected_min" #f_minsel
+                          (selectionChange)="handleMinSelction(f_minsel.value,'first')">
+                          <mat-option *ngFor="let min of appt_remind_min" [value]="min">
+                            {{min}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-lg-8 col-md-6 col-xs-12 col-sm-12 no-padding">
                       <mat-checkbox [checked]="firstAPPTNotificationSettings.sms"
-                        (change)="showSubmit('FIRST_APPT', 'sms', $event)" class="mgn-rt-20">
-                        Via SMS</mat-checkbox>
-                      <mat-checkbox [checked]="firstAPPTNotificationSettings.email"
-                        (change)="showSubmit('FIRST_APPT', 'email', $event)" class="mgn-rt-20">
-                        Via Email</mat-checkbox>
-                      <mat-checkbox [checked]="firstAPPTNotificationSettings.pushNotification"
-                        (change)="showSubmit('FIRST_APPT', 'pushNotification', $event)" class="mgn-rt-20">
-                        Via App</mat-checkbox>
-                      <span *ngIf="showButton['FIRST_APPT'] && !small_device_display"
-                        (click)="changeNotificationSettings('FIRST_APPT')" class="notify-ok-btn">OK</span>
-                      <div class="mgn-up-10" *ngIf="showButton['FIRST_APPT'] && small_device_display">
-                        <span (click)="changeNotificationSettings('FIRST_APPT')" class="notify-ok-btn">OK</span>
-                      </div>
+                      (change)="showSubmit('FIRST_APPT', 'sms', $event)" class="mgn-rt-20">
+                      Via SMS</mat-checkbox>
+                    <mat-checkbox [checked]="firstAPPTNotificationSettings.email"
+                      (change)="showSubmit('FIRST_APPT', 'email', $event)" class="mgn-rt-20">
+                      Via Email</mat-checkbox>
+                    <mat-checkbox [checked]="firstAPPTNotificationSettings.pushNotification"
+                      (change)="showSubmit('FIRST_APPT', 'pushNotification', $event)" class="mgn-rt-20">
+                      Via App</mat-checkbox>
+                    <span *ngIf="showButton['FIRST_APPT'] && !small_device_display"
+                      (click)="changeNotificationSettings('FIRST_APPT')" class="notify-ok-btn">OK</span>
+                    <div class="mgn-up-10" *ngIf="showButton['FIRST_APPT'] && small_device_display">
+                      <span (click)="changeNotificationSettings('FIRST_APPT')" class="notify-ok-btn">OK</span>
+                    </div>
+                    </div>
+                   
                     </div>
                   </div>
                   <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20 noti-section">
-                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
-                      <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
-                        Second Reminder
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+                      <!-- <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding"> -->
+                       <b> Second Reminder</b>
                         <div class="form-level-settings">Specify when the 2nd reminder should be sent to your
                           {{customer_label}}</div>
-                      </div>
-                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
-                        [class.mgn-up-minus-20]="!small_device_display">
-                        <mat-form-field class="mgn-rt-10">
-                          <mat-select placeholder="Hour" [ngModel]="s_selected_hr" #s_hrsel
-                            (selectionChange)="handleHrSelction(s_hrsel.value,'second')">
-                            <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
-                              {{hr}}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
-                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
-                        [class.mgn-up-minus-20]="!small_device_display">
-                        <mat-form-field class="mgn-rt-10">
-                          <mat-select placeholder="Minute" [ngModel]="s_selected_min" #s_minsel
-                            (selectionChange)="handleMinSelction(s_minsel.value,'second')">
-                            <mat-option *ngFor="let min of appt_remind_min" [value]="min">
-                              {{min}}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
+                      <!-- </div> -->
+                      
                     </div>
                     <!-- <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
                       <mat-checkbox [checked]="secondAPPTNotificationSettings.sms"
@@ -338,8 +325,31 @@
                       </div>
                     </div> -->
 
-                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
-                      <mat-checkbox [checked]="secondAPPTNotificationSettings.sms"
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-15">
+                      <div class="col-md-3 col-xs-6 col-sm-12 col-lg-2 no-padding"
+                        [class.mgn-up-minus-20]="!small_device_display">
+                        <mat-form-field class="mgn-rt-10">
+                          <mat-select placeholder="Hour" [ngModel]="s_selected_hr" #s_hrsel
+                            (selectionChange)="handleHrSelction(s_hrsel.value,'second')">
+                            <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
+                              {{hr}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-3 col-xs-6 col-sm-12 col-lg-2 no-padding"
+                        [class.mgn-up-minus-20]="!small_device_display">
+                        <mat-form-field class="mgn-rt-10">
+                          <mat-select placeholder="Minute" [ngModel]="s_selected_min" #s_minsel
+                            (selectionChange)="handleMinSelction(s_minsel.value,'second')">
+                            <mat-option *ngFor="let min of appt_remind_min" [value]="min">
+                              {{min}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12 no-padding" > 
+                        <mat-checkbox [checked]="secondAPPTNotificationSettings.sms"
                         (change)="showSubmit('SECOND_APPT', 'sms', $event)" class="mgn-rt-20">
                         Via SMS</mat-checkbox>
                       <mat-checkbox [checked]="secondAPPTNotificationSettings.email"
@@ -353,37 +363,18 @@
                       <div class="mgn-up-10" *ngIf="showButton['SECOND_APPT'] && small_device_display">
                         <span (click)="changeNotificationSettings('SECOND_APPT')" class="notify-ok-btn">OK</span>
                       </div>
+                      </div>
+                    
                     </div>
                   </div>
                   <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20 noti-section">
-                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
-                      <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
-                        Third Reminder
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+                      <!-- <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding"> -->
+                        <b>Third Reminder</b>
                         <div class="form-level-settings">Specify when the 3rd reminder should be sent to your
                           {{customer_label}}</div>
-                      </div>
-                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
-                        [class.mgn-up-minus-20]="!small_device_display">
-                        <mat-form-field class="mgn-rt-10">
-                          <mat-select placeholder="Hour" [ngModel]="t_selected_hr" #t_hrsel
-                            (selectionChange)="handleHrSelction(t_hrsel.value,'third')">
-                            <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
-                              {{hr}}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
-                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
-                        [class.mgn-up-minus-20]="!small_device_display">
-                        <mat-form-field class="mgn-rt-10">
-                          <mat-select placeholder="Minute" [ngModel]="t_selected_min" #t_minsel
-                            (selectionChange)="handleMinSelction(t_minsel.value,'third')">
-                            <mat-option *ngFor="let min of appt_remind_min" [value]="min">
-                              {{min}}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
+                      <!-- </div> -->
+                      
                     </div>
                     <!-- <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
                       <mat-checkbox [checked]="thirdAPPTNotificationSettings.sms"
@@ -401,8 +392,31 @@
                         <span (click)="changeNotificationSettings('THIRD_APPT')" class="notify-ok-btn">OK</span>
                       </div>
                     </div> -->
-                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
-                      <mat-checkbox [checked]="thirdAPPTNotificationSettings.sms"
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-15">
+                      <div class="col-md-3 col-xs-6 col-sm-12 col-lg-2 no-padding"
+                        [class.mgn-up-minus-20]="!small_device_display">
+                        <mat-form-field class="mgn-rt-10">
+                          <mat-select placeholder="Hour" [ngModel]="t_selected_hr" #t_hrsel
+                            (selectionChange)="handleHrSelction(t_hrsel.value,'third')">
+                            <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
+                              {{hr}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-3 col-xs-6 col-sm-12 col-lg-2 no-padding"
+                        [class.mgn-up-minus-20]="!small_device_display">
+                        <mat-form-field class="mgn-rt-10">
+                          <mat-select placeholder="Minute" [ngModel]="t_selected_min" #t_minsel
+                            (selectionChange)="handleMinSelction(t_minsel.value,'third')">
+                            <mat-option *ngFor="let min of appt_remind_min" [value]="min">
+                              {{min}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12 no-padding" >
+                        <mat-checkbox [checked]="thirdAPPTNotificationSettings.sms"
                         (change)="showSubmit('THIRD_APPT', 'sms', $event)" class="mgn-rt-20">
                         Via SMS</mat-checkbox>
                       <mat-checkbox [checked]="thirdAPPTNotificationSettings.email"
@@ -416,37 +430,19 @@
                       <div class="mgn-up-10" *ngIf="showButton['THIRD_APPT'] && small_device_display">
                         <span (click)="changeNotificationSettings('THIRD_APPT')" class="notify-ok-btn">OK</span>
                       </div>
+
+                      </div>
+                     
                     </div>
                   </div>
                   <div class="rw col-md-12 col-xs-12 col-sm-12 mgn-bt-20 noti-section">
-                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
-                      <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding">
-                        Fourth Reminder
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+                      <!-- <div class="col-md-6 col-xs-12 col-sm-12 col-lg-8 no-padding"> -->
+                        <b>Fourth Reminder</b>
                         <div class="form-level-settings">Specify when the 4th reminder should be sent to your
                           {{customer_label}}</div>
-                      </div>
-                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
-                        [class.mgn-up-minus-20]="!small_device_display">
-                        <mat-form-field class="mgn-rt-10">
-                          <mat-select placeholder="Hour" [ngModel]="ft_selected_hr" #ft_hrsel
-                            (selectionChange)="handleHrSelction(ft_hrsel.value,'fourth')">
-                            <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
-                              {{hr}}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
-                      <div class="col-md-3 col-xs-4 col-sm-12 col-lg-2 no-padding"
-                        [class.mgn-up-minus-20]="!small_device_display">
-                        <mat-form-field class="mgn-rt-10">
-                          <mat-select placeholder="Minute" [ngModel]="ft_selected_min" #ft_minsel
-                            (selectionChange)="handleMinSelction(ft_minsel.value,'fourth')">
-                            <mat-option *ngFor="let min of appt_remind_min" [value]="min">
-                              {{min}}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
+                      <!-- </div> -->
+                      
                     </div>
                     <!-- <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
                       <mat-checkbox [checked]="fourthAPPTNotificationSettings.sms"
@@ -465,21 +461,45 @@
                       </div>
                     </div> -->
 
-                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-4 no-padding mgn-up-15">
-                      <mat-checkbox [checked]="fourthAPPTNotificationSettings.sms"
-                        (change)="showSubmit('FOURTH_APPT', 'sms', $event)" class="mgn-rt-20">
-                        Via SMS</mat-checkbox>
-                      <mat-checkbox [checked]="fourthAPPTNotificationSettings.email"
-                        (change)="showSubmit('FOURTH_APPT', 'email', $event)" class="mgn-rt-20">
-                        Via Email</mat-checkbox>
-                      <mat-checkbox [checked]="fourthAPPTNotificationSettings.pushNotification"
-                        (change)="showSubmit('FOURTH_APPT', 'pushNotification', $event)" class="mgn-rt-20">
-                        Via App</mat-checkbox>
-                      <span *ngIf="showButton['FOURTH_APPT'] && !small_device_display"
-                        (click)="changeNotificationSettings('FOURTH_APPT')" class="notify-ok-btn">OK</span>
-                      <div class="mgn-up-10" *ngIf="showButton['FOURTH_APPT'] && small_device_display">
-                        <span (click)="changeNotificationSettings('FOURTH_APPT')" class="notify-ok-btn">OK</span>
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-15">
+                      <div class="col-md-3 col-xs-6 col-sm-12 col-lg-2 no-padding"
+                        [class.mgn-up-minus-20]="!small_device_display">
+                        <mat-form-field class="mgn-rt-10">
+                          <mat-select placeholder="Hour" [ngModel]="ft_selected_hr" #ft_hrsel
+                            (selectionChange)="handleHrSelction(ft_hrsel.value,'fourth')">
+                            <mat-option *ngFor="let hr of appt_remind_hr" [value]="hr">
+                              {{hr}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
                       </div>
+                      <div class="col-md-3 col-xs-6 col-sm-12 col-lg-2 no-padding"
+                        [class.mgn-up-minus-20]="!small_device_display">
+                        <mat-form-field class="mgn-rt-10">
+                          <mat-select placeholder="Minute" [ngModel]="ft_selected_min" #ft_minsel
+                            (selectionChange)="handleMinSelction(ft_minsel.value,'fourth')">
+                            <mat-option *ngFor="let min of appt_remind_min" [value]="min">
+                              {{min}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12 no-padding" >
+                      <mat-checkbox [checked]="fourthAPPTNotificationSettings.sms"
+                      (change)="showSubmit('FOURTH_APPT', 'sms', $event)" class="mgn-rt-20">
+                      Via SMS</mat-checkbox>
+                    <mat-checkbox [checked]="fourthAPPTNotificationSettings.email"
+                      (change)="showSubmit('FOURTH_APPT', 'email', $event)" class="mgn-rt-20">
+                      Via Email</mat-checkbox>
+                    <mat-checkbox [checked]="fourthAPPTNotificationSettings.pushNotification"
+                      (change)="showSubmit('FOURTH_APPT', 'pushNotification', $event)" class="mgn-rt-20">
+                      Via App</mat-checkbox>
+                    <span *ngIf="showButton['FOURTH_APPT'] && !small_device_display"
+                      (click)="changeNotificationSettings('FOURTH_APPT')" class="notify-ok-btn">OK</span>
+                    <div class="mgn-up-10" *ngIf="showButton['FOURTH_APPT'] && small_device_display">
+                      <span (click)="changeNotificationSettings('FOURTH_APPT')" class="notify-ok-btn">OK</span>
+                    </div>
+                    </div>
                     </div>
                   </div>
                 </mat-expansion-panel>
