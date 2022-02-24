@@ -1141,7 +1141,7 @@ export class CheckinActionsComponent implements OnInit {
         });
     }
     showQnr() {
-        if (!this.data.multiSelection && this.checkin.releasedQnr && this.checkin.releasedQnr.length > 1 && this.checkin.waitlistStatus !== 'cancelled') {
+        if (!this.data.multiSelection && this.checkin.waitlistStatus !== 'cancelled') {
             return true;
         }
         return false;
