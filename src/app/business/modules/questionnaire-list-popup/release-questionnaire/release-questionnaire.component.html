@@ -19,10 +19,15 @@
           {{data.waitlist_data.appmtFor[0].firstName}}
           {{data.waitlist_data.appmtFor[0].lastName}}
         </h5>
+        <h5
+        *ngIf="data.source == 'order' && (data.waitlist_data.orderFor.firstName || data.waitlist_data.orderFor.lastName)">
+        {{data.waitlist_data.orderFor.firstName}}
+        {{data.waitlist_data.orderFor.lastName}}
+      </h5>
         <div class="email" *ngIf="data.waitlist_data.token">
           <span class="value">Token: {{data.waitlist_data.token}}</span>
         </div>
-        <div class="contact-no">
+        <div class="contact-no" *ngIf="data.source == 'checkin' || data.source == 'appt'">
           <i class="fa fa-cogs icon"></i>
           <span class="value">{{data.waitlist_data.service.name}}</span>
         </div>
@@ -34,6 +39,10 @@
           <i class="fa fa-mobile icon"></i>
           <span class="value">{{data.waitlist_data.countryCode}} {{data.waitlist_data.phoneNumber}}</span>
         </div>
+        <div class="contact-no" *ngIf="data.source == 'order' && data.waitlist_data.phoneNumber">
+          <i class="fa fa-mobile icon"></i>
+          <span class="value">{{data.waitlist_data.countryCode}} {{data.waitlist_data.phoneNumber}}</span>
+        </div>
         <div class="email" *ngIf="data.source == 'checkin' && data.waitlist_data.waitlistingFor[0].email">
           <i class="fa fa-envelope icon"></i>
           <span class="value">{{data.waitlist_data.waitlistingFor[0].email}}</span>
@@ -41,6 +50,10 @@
         <div class="email" *ngIf="data.source == 'appt' && data.waitlist_data.providerConsumer.email">
           <i class="fa fa-envelope icon"></i>
           <span class="value">{{data.waitlist_data.providerConsumer.email}}</span>
+        </div>
+        <div class="email" *ngIf="data.source == 'order' && data.waitlist_data.email">
+          <i class="fa fa-envelope icon"></i>
+          <span class="value">{{data.waitlist_data.email}}</span>
         </div>
         <div class="email" *ngIf="data.source == 'checkin'">
           <i class="fa fa-calendar-o icon"></i>
@@ -52,6 +65,11 @@
           <i class="fa fa-calendar-o icon"></i>
           <span class="value">{{data.waitlist_data.appmtDate | date: newDateFormat }},
             {{getSingleTime(data.waitlist_data.appmtTime)}}</span>
+        </div>
+        <div class="email" *ngIf="data.source == 'order'">
+          <i class="fa fa-calendar-o icon"></i>
+          <span class="value">{{data.waitlist_data.orderDate | date: newDateFormat }},
+            {{getSingleTime(data.waitlist_data.orderDate)}}</span>
         </div>
       </div>
       <div class="form-group mgn-bt-30">

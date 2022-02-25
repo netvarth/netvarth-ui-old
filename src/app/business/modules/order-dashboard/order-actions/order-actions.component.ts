@@ -46,6 +46,7 @@ export class OrderActionsComponent implements OnInit {
   meet_data: any;
   id: any;
   providerMeetingUrl: any;
+  showQnr = false;
   constructor(public dialogRef: MatDialogRef<OrderActionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public router: Router, public provider_services: ProviderServices,
@@ -61,12 +62,16 @@ export class OrderActionsComponent implements OnInit {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.orderDetails = this.data.selectedOrder;
     console.log(this.orderDetails)
+   
     if(this.data.type){
       this.timeType = this.data.type;
     }
     if (this.orderDetails.length > 1) {
       this.mulipleSelection = true;
     }
+    if (!this.mulipleSelection && this.orderDetails.releasedQnr && this.orderDetails.releasedQnr.length > 0) {
+      this.showQnr = true;
+   }
     this.getLabel();
     this.getPos();
   }
@@ -505,5 +510,9 @@ printOrder() {
   //     printWindow.moveTo(0, 0);
   //     printWindow.print();
   // });
+}
+showQuestionnaires() {
+  this.dialogRef.close();
+  this.router.navigate(['provider', 'orders', 'questionnaires'], { queryParams: { source: 'order', uid: this.orderDetails.uid } });
 }
 }

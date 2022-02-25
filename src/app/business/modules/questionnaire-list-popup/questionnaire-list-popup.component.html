@@ -10,7 +10,7 @@
     <app-questionnaire [questionnaireList]="selectedQnr" [source]="'qnrView'"></app-questionnaire>
   </div>
   <div class="qnr-details" *ngIf="data.status!='unReleased'">
-    <app-questionnaire [questionnaireList]="selectedQnr" [source]="(data.waitlistStatus) ? 'proCheckin' : 'proAppt'"
+    <app-questionnaire [questionnaireList]="selectedQnr" [source]="(data.waitlistStatus) ? 'proCheckin' : 'proAppt' "
       [uuid]="uid" [type]="'details'" [waitlistStatus]="(data.waitlistStatus) ? data.waitlistStatus : data.apptStatus"
       (returnAnswers)="getQuestionAnswers($event)">
     </app-questionnaire>
