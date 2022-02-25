@@ -160,7 +160,7 @@
                 <div class="icon-text">Reschedule</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showQnr()" (click)="showQuestionnaires()">
+        <div class="action-box pointer-cursor" *ngIf="showQnr" (click)="showQuestionnaires()">
             <div class="action-box-sub">
                 <span class="qnr-icon"></span>
                 <div class="icon-text">Get More Info</div>
@@ -264,7 +264,7 @@
             </div>
         </div>
         <!--Added By Mani for Video Play-->
-        <div *ngIf="!data.multiSelection && appt.service.serviceType === 'virtualService' && appt.s3VideoUrls"
+        <div *ngIf="!data.multiSelection && appt.service.serviceType === 'virtualService'"
             class="action-box pointer-cursor" (click)="viewRecordings()">
             <div class="action-box-sub">
                 <!-- <span class="mr-rx-icon"></span> -->
