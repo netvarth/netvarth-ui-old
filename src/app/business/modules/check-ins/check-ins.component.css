@@ -708,6 +708,11 @@ display: inline-flex;
     }
 }
 
+@media (min-width:360px){
+    .reqInfo{
+        display: block;
+    }
+}
 @media(max-width: 675px) {
     #selectViewModal .modal-body ul.menu.dd-menu li {
         width: 33% !important;

@@ -157,6 +157,7 @@ export class CustomerDetailComponent implements OnInit {
                             this.getCustomers(this.customerId).then(
                                 (customer) => {
                                     this.customer = customer;
+                                    console.log("Customer Details :",this.customer)
                                     this.customerName = this.customer[0].firstName;
                                     this.viewCustomer = true;
                                     this.loading = false;

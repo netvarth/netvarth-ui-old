@@ -367,6 +367,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   showattachmentDialogRef: any;
   unassignview = false;
   todaybyId: any;
+  changeText:boolean;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -382,6 +383,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     private dateTimeProcessor: DateTimeProcessor,
     private teleService: TeleBookingService,
     private titleService: Title) {
+      this.changeText = false;
     this.titleService.setTitle('Jaldee Business - Appointments');
     this.onResize();
     this.delayTooltip = this.wordProcessor.getProjectMesssages('ADJUSTDELAY_TOOPTIP');
@@ -581,6 +583,28 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       );
     });
+  }
+
+
+  getAgent(fileName){
+    return fileName.toLocaleLowerCase();
+  }
+  getBookingReqFrom(fileName) {
+    let filename = ''
+    // if (fileName.indexOf('fileName')) {
+    //   if (fileName.length > 10) {
+    //     filename = fileName.slice(0, 10) + '...'
+    //   }
+    //   if (fileName.length <= 10) {
+    //     filename = fileName;
+    //   }
+    // }
+     filename = fileName.slice(0, 3);
+     if(fileName.length >7){
+      filename = fileName.slice(0,7);
+    }
+
+    return filename.toLocaleLowerCase();
   }
   refresh() {
     if (this.time_type === 1) {

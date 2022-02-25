@@ -46,7 +46,22 @@
                 *ngIf="waitlist_data.appmtFor[0].firstName || waitlist_data.appmtFor[0].lastName">
                 <span class="itemHead">Booking For</span>
                 <span class="itemVal">{{waitlist_data.appmtFor[0].firstName | capitalizeFirst}}
-                  {{waitlist_data.appmtFor[0].lastName | capitalizeFirst}}</span>
+                  {{waitlist_data.appmtFor[0].lastName | capitalizeFirst}}
+                </span>
+                <span class="itemHead">Booking Via</span>
+                <span *ngIf="waitlist_data.requestInfo.agent && waitlist_data.requestInfo.bookingReqFrom">
+
+                  <img src="../../../../assets/icons/icon 294 (Traced).png"
+                    *ngIf="getBookingReqFrom(waitlist_data.requestInfo.bookingReqFrom) === 'web'"
+                    style="width: 18px !important; margin-top: -6px !important;">
+                  <img src="../../../../assets/icons/Group 482249.png"
+                    *ngIf="getBookingReqFrom(waitlist_data.requestInfo.bookingReqFrom) === 'app'"
+                    style="width: 18px !important; margin-top: -6px !important;">
+                  <img src="../../../../assets/icons/icon 295 (Traced).png"
+                    *ngIf="getBookingReqFrom(waitlist_data.requestInfo.bookingReqFrom) === 'android'"
+                    style="width: 18px !important; margin-top: -6px !important;">
+                  {{getAgent(waitlist_data.requestInfo.agent) | capitalizeFirst}},
+                  {{getBookingReqFrom(waitlist_data.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
               </div>
               <div class="mgn-up-10 stats-item">
                 <span class="itemHead">Booking id</span>
@@ -77,10 +92,12 @@
               <div class="mgn-up-10 stats-item"
                 *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
                 <span class="itemHead">WhatsApp #</span>
-                <span class="itemVal" *ngIf=" waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                <span class="itemVal"
+                  *ngIf=" waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode].startsWith('+')">
                   {{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
-                  <span class="itemVal" *ngIf=" !waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode].startsWith('+')">
-                    +{{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
+                <span class="itemVal"
+                  *ngIf=" !waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                  +{{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.appmtFor[0].memberJaldeeId">
                 <span class="itemHead">{{customer_label | capitalizeFirst}} id</span>
@@ -123,9 +140,9 @@
                     {{check_in_statuses[waitlist_data.apptStatus | capitalizeFirst]}}
                   </span>
                   <span *ngIf="waitlist_data.internalStatus"><small style="color:blue">{{waitlist_data.internalStatus |
-                    capitalizeFirst}}</small>
+                      capitalizeFirst}}</small>
 
-                </span>
+                  </span>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xl-4 col-xs-5 stats-item">
                   <span class="status-label">DATE & TIME-WINDOW</span>
@@ -142,31 +159,35 @@
                   </span>
                 </div>
               </div>
-                <!-- privatenote -->
+              <!-- privatenote -->
 
-                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stat-bar" style="background-color: #f2f2f2;">
-                  <div class="more_view">
-                    <span class="pvtnote">Private Notes</span>
-                    
-                  </div>
-                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stats-item pl0">
-                    <span *ngIf="waitlist_notes.length > 0">
-                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 pnotes" *ngFor="let note of waitlist_notes; let i = index">
-                        <div class="note_view">
-                          <!-- <p style="float: left;">{{note.firstName}}Aparna</p> -->
-                          <span class="status-label note_name" *ngIf="note.firstName != '' || note.lastName != ''">{{note.firstName}} {{note.lastName}}</span>
-                          <span *ngIf="note.noteTime" class="status-label note_date">, {{note.noteTime}}</span>
-                          <span class="status-label note_date">{{note.timeStamp | date: newDateFormat}}</span>
-                         
-                          <div class="note" [innerHTML]="note.note | nl2br">
-                          </div>
+              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stat-bar"
+                style="background-color: #f2f2f2;">
+                <div class="more_view">
+                  <span class="pvtnote">Private Notes</span>
+
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stats-item pl0">
+                  <span *ngIf="waitlist_notes.length > 0">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 pnotes"
+                      *ngFor="let note of waitlist_notes; let i = index">
+                      <div class="note_view">
+                        <!-- <p style="float: left;">{{note.firstName}}Aparna</p> -->
+                        <span class="status-label note_name"
+                          *ngIf="note.firstName != '' || note.lastName != ''">{{note.firstName}}
+                          {{note.lastName}}</span>
+                        <span *ngIf="note.noteTime" class="status-label note_date">, {{note.noteTime}}</span>
+                        <span class="status-label note_date">{{note.timeStamp | date: newDateFormat}}</span>
+
+                        <div class="note" [innerHTML]="note.note | nl2br">
+                        </div>
                         <!-- <p style="float: right;">{{note.timeStamp | date: newDateFormat}}</p> -->
                         <!-- <br> -->
                         <!-- <p [innerHTML]="note.note | nl2br"></p> -->
                         <div class="result attach" *ngIf="note.attachment && note.attachment.length > 0"
                           (click)="showImagesection(i)">
                           <i class="fa fa-file-text-o" aria-hidden="true"></i> <a class="attach-link">
-                           {{note.attachment.length}} Attachment(s) </a>
+                            {{note.attachment.length}} Attachment(s) </a>
                         </div>
                         <div class="thumbnails mt10 mb10" *ngIf="showImages[i]">
                           <a class="mg-10" target="_blank" [href]="attachment.s3path"
@@ -174,11 +195,11 @@
                               style="width:100px; height:100px" /></a>
                         </div>
                       </div>
-                      </div>
-                    </span>
-                    <span class="no_note" *ngIf="waitlist_notes && waitlist_notes.length == 0">{{no_pvt_notes_cap}}</span>
-                  </div>
+                    </div>
+                  </span>
+                  <span class="no_note" *ngIf="waitlist_notes && waitlist_notes.length == 0">{{no_pvt_notes_cap}}</span>
                 </div>
+              </div>
               <!-- View more and Less -->
               <div class="more_view mgn-up-20">
                 <span class="opt-viewmore" *ngIf="!view_more" (click)="viewMore()"><a class="fl-left">View
@@ -264,14 +285,14 @@
           </div>
           <!-- Questionnaire end-->
         </div>
-        
+
         <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
           <div class="card">
             <h2>{{checkin_label |capitalizeFirst}} History</h2>
-           
+
             <div class="appthistory">
-            
-              
+
+
               <ul class="c-history">
                 <li *ngFor="let history of waitlist_history" class="{{history.appointmentStatus}}">
                   <div class="time">{{history.date | date: newDateFormat }} {{history.time}}</div>

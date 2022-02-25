@@ -166,6 +166,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   checkin_label = '';
   start_label = '';
   no_future_checkins = '';
+  changeText:boolean;
   pagination: any = {
     startpageval: 1,
     totalCnt: 0,
@@ -381,6 +382,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     private teleService: TeleBookingService,
     private titleService: Title) {
     this.onResize();
+    this.changeText = false;
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.arrived_label = this.wordProcessor.getTerminologyTerm('arrived');
@@ -571,7 +573,36 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         () => { }
       );
   }
+  getAgent(fileName){
+    return fileName.toLocaleLowerCase();
+  }
+  getBookingReqFrom(fileName) {
+    let filename = ''
+    // if (fileName.indexOf('fileName')) {
+    //   if (fileName.length > 10) {
+    //     filename = fileName.slice(0, 10) + '...'
+    //   }
+    //   if (fileName.length <= 10) {
+    //     filename = fileName;
+    //   }
+    // }
+    // if(fileName = 'APP'){
+    //   filename = fileName.slice(0, 3);
+    // }
+    // if(fileName = 'ANDROID'){
+    //   filename = fileName.slice(0,7);
+    // }
+    //if(fileName = 'WEB_UI'){
+    
+  //  }
+  filename = fileName.slice(0, 3);
+  if(fileName.length >7){
+    filename = fileName.slice(0,7);
+  }
+   
 
+    return filename.toLocaleLowerCase();
+  }
   setLabelFilter(label, event) {
     this.resetPaginationData();
     const value = event.checked;
@@ -1433,6 +1464,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
                 _this.setCounts(this.appt_list);
                 _this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
+                console.log("Active Today :",this.check_in_filtered_list)
                 _this.startedCheckins = this.getActiveAppointments(this.todayAppointments, 'started');
                 _this.loading = false;
               },

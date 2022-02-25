@@ -43,7 +43,17 @@
                 *ngIf="waitlist_data.waitlistingFor[0].firstName || waitlist_data.waitlistingFor[0].lastName">
                 <span class="itemHead">Booking For</span>
                 <span class="itemVal" *ngFor="let user of waitlist_data.waitlistingFor">
-                  {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
+                  {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}} <br>
+                  <span class="itemHead">Booking Via</span><br>
+                  <span *ngIf="waitlist_data.requestInfo.agent && waitlist_data.requestInfo.bookingReqFrom">
+                    <img src="../../../../../assets/icons/icon 294 (Traced).png"  *ngIf="getBookingReqFrom(waitlist_data.requestInfo.bookingReqFrom) === 'web'"
+                    style="width: 18px !important; margin-top: -6px !important;"> 
+                    <img src="../../../../assets/icons/Group 482249.png" *ngIf="getBookingReqFrom(waitlist_data.requestInfo.bookingReqFrom) === 'app'"
+                    style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/icon 295 (Traced).png" *ngIf="getBookingReqFrom(waitlist_data.requestInfo.bookingReqFrom) === 'android'"
+                    style="width: 18px !important; margin-top: -6px !important;">
+                    {{getAgent(waitlist_data.requestInfo.agent) | capitalizeFirst}},
+                    {{getBookingReqFrom(waitlist_data.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
                 </span>
               </div>
               <div class="mgn-up-10 stats-item">

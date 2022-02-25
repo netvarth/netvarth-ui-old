@@ -616,6 +616,12 @@
                     (click)="gotoCustomerDetails(checkin)">
                     {{checkin.waitlistingFor[0].firstName}}
                     {{checkin.waitlistingFor[0].lastName}}
+                    <img src="../../../../assets/icons/icon 294 (Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'web'"
+                    style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/Group 482249.png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'app'" 
+                    style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/icon 295 (Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'android'"
+                    style="width: 18px !important; margin-top: -6px !important;">
                     <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                       <span
                         *ngIf="checkin.waitlistingFor[0].bookingLocation.district">{{checkin.waitlistingFor[0].bookingLocation.district}},</span>
@@ -629,6 +635,9 @@
                       <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                       <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender |
                         capitalizeFirst}}</span>
+                        <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && changeText">
+                          {{getAgent(checkin.requestInfo.agent) | capitalizeFirst}},
+                          {{getBookingReqFrom(checkin.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
                       <span
                         *ngIf="checkin.waitlistingFor[0].preferredLanguage && (checkin.waitlistingFor[0].gender || checkin.waitlistingFor[0].age)">,</span>
                       <span *ngIf="checkin.waitlistingFor[0].preferredLanguage">&nbsp;</span>
@@ -745,7 +754,7 @@
                       <span *ngIf="checkin.whatsApp_PhNumber">
                         {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
                         checkin.whatsApp_PhNumber}}
-                      </span>                      
+                      </span>
                     </span>
                   </a>
                   <a class="statusText btn-play pointer-cursor done-btn"
@@ -864,7 +873,13 @@
                     (click)="gotoCustomerDetails(checkin)" [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
                     [class.pointer-auto]="checkin.waitlistStatus=='blocked'">
                     {{checkin.waitlistingFor[0].firstName}}
-                    {{checkin.waitlistingFor[0].lastName}}
+                    {{checkin.waitlistingFor[0].lastName}} <img src="../../../../assets/icons/icon 294 (Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'web'"
+                    style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/Group 482249.png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'app'" 
+                    style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/icon 295 (Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'android'"
+                    style="width: 18px !important; margin-top: -6px !important;">
+
                     <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                     <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                       <span
@@ -879,6 +894,10 @@
                       <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                       <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender |
                         capitalizeFirst}}</span>
+                        <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && changeText">
+                          {{getAgent(checkin.requestInfo.agent) | capitalizeFirst}},
+                          {{getBookingReqFrom(checkin.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
+
                       <span
                         *ngIf="checkin.waitlistingFor[0].preferredLanguage && (checkin.waitlistingFor[0].gender || checkin.waitlistingFor[0].age)">,</span>
                       <span *ngIf="checkin.waitlistingFor[0].preferredLanguage">&nbsp;</span>
@@ -1012,7 +1031,7 @@
                       <span *ngIf="checkin.whatsApp_PhNumber">
                         {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
                         checkin.whatsApp_PhNumber}}
-                      </span>                      
+                      </span>
                     </span>
                   </a>
                   <a class="statusText btn-play pointer-cursor done-btn"
@@ -1492,7 +1511,13 @@
                   [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                   (click)="gotoCustomerDetails(checkin)" [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
                   [class.pointer-auto]="checkin.waitlistStatus=='blocked'">{{checkin.waitlistingFor[0].firstName}}
-                  {{checkin.waitlistingFor[0].lastName}}
+                  {{checkin.waitlistingFor[0].lastName}} <img src="../../../../assets/icons/icon 294 (Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'web'"
+                  style="width: 18px !important; margin-top: -6px !important;">
+                  <img src="../../../../assets/icons/Group 482249.png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'app'" 
+                  style="width: 18px !important; margin-top: -6px !important;">
+                  <img src="../../../../assets/icons/icon 295 (Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'android'"
+                  style="width: 18px !important; margin-top: -6px !important;">
+
                   <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                   <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                     <span
@@ -1508,6 +1533,10 @@
                     <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                     <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender |
                       capitalizeFirst}}</span>
+                      <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && changeText">
+                        {{getAgent(checkin.requestInfo.agent) | capitalizeFirst}},
+                        {{getBookingReqFrom(checkin.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
+
                     <span
                       *ngIf="checkin.waitlistingFor[0].preferredLanguage && (checkin.waitlistingFor[0].gender || checkin.waitlistingFor[0].age)">,</span>
                     <span *ngIf="checkin.waitlistingFor[0].preferredLanguage">&nbsp;</span>
@@ -2232,7 +2261,13 @@
                   [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                   (click)="gotoCustomerDetails(checkin)">
                   {{checkin.waitlistingFor[0].firstName}}
-                  {{checkin.waitlistingFor[0].lastName}}
+                  {{checkin.waitlistingFor[0].lastName}} <img src="../../../../assets/icons/icon 294 (Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'web'"
+                    style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/Group 482249.png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'app'" 
+                    style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/icon 295 (Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'android'"
+                    style="width: 18px !important; margin-top: -6px !important;">
+
                   <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                     <span
                       *ngIf="checkin.waitlistingFor[0].bookingLocation.district">{{checkin.waitlistingFor[0].bookingLocation.district}},</span>
@@ -2246,6 +2281,9 @@
                     <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                     <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender |
                       capitalizeFirst}}</span>
+                      <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && changeText">
+                        {{getAgent(checkin.requestInfo.agent) | capitalizeFirst}},
+                        {{getBookingReqFrom(checkin.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
                     <span
                       *ngIf="checkin.waitlistingFor[0].preferredLanguage && (checkin.waitlistingFor[0].gender || checkin.waitlistingFor[0].age)">,</span>
                     <span *ngIf="checkin.waitlistingFor[0].preferredLanguage">&nbsp;</span>
@@ -2362,13 +2400,13 @@
                   </span>
                   <span
                     *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                  
+
                     <!-- {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
                     checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }} -->
                     <span *ngIf="checkin.whatsApp_PhNumber">
                       {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
                       checkin.whatsApp_PhNumber}}
-                    </span>                    
+                    </span>
                   </span>
                 </a>
                 <a class="statusText btn-play pointer-cursor done-btn"
@@ -2429,7 +2467,7 @@
     <app-common-innerloading-spinner></app-common-innerloading-spinner>
   </div>
   </div>
- 
+
   <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
     [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
     (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>

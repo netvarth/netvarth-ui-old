@@ -31,7 +31,11 @@ export class ConfirmBoxLocationComponent implements OnInit {
       this.cancel_btn_cap = Messages.NO_BTN;
     }
     if (this.data.user) {
-      this.user_loc = this.data.user.bussloc;
+      //bussloc
+      this.user_loc = this.data.user.bussLocations;
+      console.log("Localtion",this.user_loc)
+      console.log("Message",data)
+
     }
     this.getProviderLocations().then(res => {
       this.apiloading = false;
