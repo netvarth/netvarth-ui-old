@@ -123,6 +123,7 @@ export class CheckinActionsComponent implements OnInit {
     location: any;
     statusBooking: any;
     callingNumber: any;
+    showQnr = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -145,6 +146,12 @@ export class CheckinActionsComponent implements OnInit {
         this.setMinMaxDate();
         this.getLabel();
         this.checkin = this.data.checkinData;
+        console.log('multiSelection:' , this.data.multiSelection)
+        console.log('releasedQnr:' , this.checkin.releasedQnr && this.checkin.releasedQnr.length > 1)
+        console.log('waitlistStatus:' , this.checkin.waitlistStatus !== 'cancelled')
+        if (!this.data.multiSelection && this.checkin.releasedQnr && this.checkin.releasedQnr.length > 0 && this.checkin.waitlistStatus !== 'cancelled') {
+           this.showQnr = true;
+        }
         this.statusBooking = this.data.statusBooking;
         if (!this.data.multiSelection) {
             this.ynwUuid = this.checkin.ynwUuid;
@@ -1140,12 +1147,11 @@ export class CheckinActionsComponent implements OnInit {
             this.groups = data;
         });
     }
-    showQnr() {
-        if (!this.data.multiSelection && this.checkin.waitlistStatus !== 'cancelled') {
-            return true;
-        }
-        return false;
-    }
+    // showQnr() {
+    //     console.log(!this.data.multiSelection && this.checkin.releasedQnr && this.checkin.releasedQnr.length > 1 && this.checkin.waitlistStatus !== 'cancelled')
+        
+    //     return false;
+    // }
     showQuestionnaires() {
         this.dialogRef.close();
         this.router.navigate(['provider', 'check-ins', 'questionnaires'], { queryParams: { source: 'checkin', uid: this.checkin.ynwUuid } });

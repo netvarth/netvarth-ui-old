@@ -110,6 +110,7 @@ export class AppointmentActionsComponent implements OnInit {
     users: any = [];
     location: any;
     status_booking: any;
+    showQnr = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -132,6 +133,9 @@ export class AppointmentActionsComponent implements OnInit {
         this.apiloading = true;
         this.appt = this.data.checkinData;
         console.log("Appointment Actions :",this.appt)
+        if (!this.data.multiSelection && this.appt.releasedQnr && this.appt.releasedQnr.length > 0 && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') {
+            this.showQnr = true;
+        }
           this.status_booking=this.data.status
         if (!this.data.multiSelection) {
             this.getPos();
@@ -1140,12 +1144,12 @@ export class AppointmentActionsComponent implements OnInit {
 
         this.provider_shared_functions.changeApptinternalStatus(this, this.appt, action);
     }
-    showQnr() {
-        if (!this.data.multiSelection && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') {
-            return true;
-        }
-        return false;
-    }
+    // showQnr() {
+    //     if (!this.data.multiSelection && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') {
+    //         return true;
+    //     }
+    //     return false;
+    // }
     showQuestionnaires() {
         this.dialogRef.close();
         this.router.navigate(['provider', 'appointments', 'questionnaires'], { queryParams: { source: 'appt', uid: this.appt.uid } });
