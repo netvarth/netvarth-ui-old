@@ -198,7 +198,15 @@ img::-moz-selection {
   align-items: center;
   justify-content: space-between;
 }
-
+.mat-tab-label-content {
+  color: #0e3166;
+  font-size: 15px;
+  font-weight: 600;
+}
+.mat-ink-bar {
+  background-color: #0e3166 !important;
+  height: 4px !important;
+}
 .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.selectbox {
   flex-grow: 1;
 }
