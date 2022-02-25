@@ -8532,8 +8532,8 @@ owl-carousel .bt3.active {
 .appt-in-chip .mat-chip {
   font-size: .75rem !important;
   text-align: center !important;
-  min-width: 15%;
-  max-width: 20%;
+  min-width: 8%;
+  max-width: 8%;
   border-radius: .5px !important;
   margin: 10px !important;
   border: 1px solid black !important;

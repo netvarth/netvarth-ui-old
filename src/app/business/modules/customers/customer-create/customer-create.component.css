@@ -8,6 +8,7 @@
     margin-bottom: 1rem !important;
 }
 .card-body {
+    padding:1rem!important;
     padding-bottom: 0px !important;
 }
 .or{
@@ -94,15 +95,18 @@
     }
 }
 .countrycode{
-width:40%;
+width:20%;
 float: left;
 }
 .mobilenumber{
-width: 60%;
+width: 80%;
 margin-top: -1px;
 }
 @media (max-width: 576px) {
     .countrycode{
-        width:30%;
+        width:25%;
         }
+    .mobilenumber{
+    width: 75%;
+    }
 }

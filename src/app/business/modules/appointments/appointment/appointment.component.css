@@ -288,6 +288,7 @@
 .freeslots mat-chip.mat-chip.mat-focus-indicator.text-center.mat-primary.mat-standard-chip
 {
   padding: 0!important;
+  margin: auto!important;
 }
 .notes,.fa-chevron-down,.fa-chevron-up,.attachment
 {
@@ -315,4 +316,12 @@
 .mat-chip-list-wrapper
 {
   margin: 0px!important;
+}
+.p-checkin .mainouter .queue-outer .mat-chip-list .mat-chip-list-wrapper .mat-chip
+{
+  padding: 0!important;
+}
+.appt-in-chip .mat-chip
+{
+  margin: 3px!important;
 }

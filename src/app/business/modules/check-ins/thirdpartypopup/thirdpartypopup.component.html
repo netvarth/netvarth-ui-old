@@ -4,42 +4,42 @@
             <img (click)="closetab()" src="../../../../../assets/images/cross.jpg" style="width: 30px;height: 30px;">
         </div> -->
         <div>
-            <span style="color: navy;text-align: center;font-size: 18px;" class="font-size"><b>Choose Third Party Options</b></span>
-            <i (click)="closetab()" class="fa fa-times text-dark float-right" style="color: navy!important;cursor: pointer;font-size: 20px;"></i>
+            <span style="color: #000;text-align: center;font-size: 18px;" class="font-size"><b>Choose Third Party Options</b></span>
+            <i (click)="closetab()" class="fa fa-times text-dark float-right" style="color: #000!important;cursor: pointer;font-size: 20px;"></i>
         </div>
     </div>
-    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-2" style="display:flex;text-align: left!important;;justify-content: center;align-items: center;flex-flow: row wrap;">
-        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-8 no-padding mx-2">
-            <button *ngIf="domain === 'healthCare'" class="thirdparycard  mgn-bt-10"
+    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 my-3 text-center">
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-8 no-padding text-center mx-2">
+            <button *ngIf="domain === 'healthCare'" class="thirdparycard  mgn-bt-10 my-2 text-center"
                 (click)="buttonclicked('practo')"><img
-                    src="../../../../../assets/images/practo.png" width="35px" height="35px" >
-                    <span class="ml-3">Practo</span>
+                    src="../../../../../assets/images/practo.png" width="35px" height="35px" ><br>
+                    <span class="my-2 text-blue">Practo</span>
             </button>
         </div>
-        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-8 no-padding mx-2">
-            <button class="thirdparycard mgn-bt-10" (click)="buttonclicked('justdial')"><img
-                src="../../../../../assets/images/just dial.png" width="35px" height="35px">
-                <span class="ml-3">Just dial</span>
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-8 no-padding text-center mx-2">
+            <button class="thirdparycard mgn-bt-10 my-2 text-center" (click)="buttonclicked('justdial')"><img
+                src="../../../../../assets/images/just dial.png" width="35px" height="35px"><br>
+                <span class="my-2 text-blue">Just dial</span>
             </button>
         </div>
-        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-8 no-padding mx-2">
-            <button class="thirdparycard  mgn-bt-10" (click)="buttonclicked('google')"><img
-                    src="../../../../../assets/images/Google.png" width="35px" height="35px">
-                <span class="ml-3">Google</span>
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-8 no-padding text-center mx-2">
+            <button class="thirdparycard  mgn-bt-10 my-2 text-center" (click)="buttonclicked('google')"><img
+                    src="../../../../../assets/images/Google.png" width="35px" height="35px"><br>
+                <span class="my-2 text-blue">Google</span>
             </button>
         </div>
-        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-8 no-padding mx-2 ">
-            <button class="thirdparycard  mgn-bt-10" *ngIf="domain === 'healthCare'"
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-8 no-padding text-center mx-2">
+            <button class="thirdparycard  mgn-bt-10 my-2 text-center" *ngIf="domain === 'healthCare'"
                 (click)="buttonclicked('mfine')"><img src="../../../../../assets/images/MFine.png"
-                    width="35px" height="35px">
-                <span class="ml-3">MFine</span>
+                    width="35px" height="35px"><br>
+                <span class="my-2 text-blue">MFine</span>
             </button>
         </div>
-        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-8 no-padding mx-2">
-            <button class="thirdparycard  mgn-bt-10" [class.btn-selected]="showOther"
-                (click)="buttonclicked('other')"><img src="../../../../../assets/images/others (2).png" width="35px"
-                    height="35px">
-                    <span class="ml-3">Others</span>
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-8 no-padding text-center mx-2">
+            <button class="thirdparycard  mgn-bt-10 my-2 text-center" [class.btn-selected]="showOther"
+                (click)="buttonclicked('other')"><img src="../../../../../assets/images/others.png" width="35px"
+                    height="35px"><br>
+                    <span class="my-2 text-blue">Others</span>
             </button>
         </div>
     </div>

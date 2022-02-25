@@ -127,8 +127,7 @@
                                         *ngIf="slotTime">
                                         <div class="col-md-5 col-lg-4 col-xs-5 col-sm-6 no-padding">
                                             Date: {{sel_checkindate | date: dateFormat}} </div>
-                                        <div class="col-md-5 col-lg-4 col-xs-7 col-sm-6 no-padding"> Appointment
-                                            slot: {{getSingleTime(slotTime)}}</div>
+                                        <div class="col-md-5 col-lg-4 col-xs-7 col-sm-6 no-padding">{{getSingleTime(slotTime)}}</div>
                                     </div>
 
 
@@ -462,7 +461,6 @@
                                 </div>
                                 <div class="col-md-12 no-padding">
                                     <div class="col-md-12 mgn-bt-10 freeslots pl-0" *ngIf="queuejson.length > 0">
-                                        <div class="date-head">Appointment slot</div>
                                         <mat-chip-list class="">
                                             <!-- <owl-carousel [options]="carouselOne" class="carouselList"
                                                 [carouselClasses]="['owl-theme']"> -->
@@ -485,42 +483,6 @@
                                         </mat-chip-list>
 
                                     </div>
-                                </div>
-                                <div>
-                                    <ng-container *ngIf="queuejson.length > 0 && servicesjson.length > 0">
-                                        <div class="col-md-12 form-group queue-outer mgn-bt-20"
-                                            *ngIf="freeSlots.length>0 && showEditView">
-                                            <div class="ttle mgn-bt-10">Select Appointment Time</div>
-                                            <mat-chip-list class="appt-in-chip freeslots">
-                                                <mat-chip *ngFor="let slot of freeSlots"
-                                                    [selected]="slot.time === apptTime"
-                                                    (click)="timeSelected(slot.time);">{{getSingleTime(slot.time)}}
-                                                </mat-chip>
-                                            </mat-chip-list>
-
-                                        </div>
-                                        <div class="col-md-12 form-group queue-outer mgn-bt-20" *ngIf="!showEditView">
-                                            <div *ngIf="showApptTime && !api_loading">
-                                                <div class="ttle mgn-bt-10">Appointment Time</div>
-                                                <span class="label-bold">{{getSingleTime(apptTime)}} </span>
-                                                <span style="cursor:pointer;color:black!important" (click)="editClicked()" class="fa fa-pencil-square-o" aria-hidden="true"></span>
-                                            </div>
-                                            <div *ngIf="!showApptTime && !api_loading">TimeSlots are not available
-                                            </div>
-                                        </div>
-
-
-                                        <div class="clearfix"></div>
-                                        <app-common-innerloading-spinner *ngIf="api_loading">
-                                        </app-common-innerloading-spinner>
-                                    </ng-container>
-                                    <ng-container *ngIf="queuejson.length == 0 && queueQryExecuted">
-                                        <span
-                                            class='no-queue-available'>Appointment{{not_accepted_for_this_date}}</span>
-                                    </ng-container>
-                                    <ng-container *ngIf="queuejson.length > 0 && servicesjson.length == 0">
-                                        <span class='no-queue-available'>{{no_services_avail_cap}}</span>
-                                    </ng-container>
                                 </div>
                             </ng-container>
                             <div class="col-md-12  mgn-up-20 " *ngIf="showAction">
@@ -605,46 +567,7 @@
 
 
                             <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
-                            <div>
-                                <div class="display-sm-show provider-appointment-walkin"  *ngIf="!showAction">
-                                    <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
-                                        <mat-chip class="pro-action" (click)="handleSideScreen('members')"><a>Add/Change
-                                                Member</a>
-                                        </mat-chip>
-                                        <mat-chip class="pro-action" (click)="handleSideScreen('note')">
-                                            <a>{{(sel_ser_det.consumerNoteTitle) ? sel_ser_det.consumerNoteTitle : 'Notes'}}
-                                                <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span> </a>
-                                        </mat-chip>
-                                        <mat-chip class="pro-action" (click)="imagefile.click()"><a>
-                                                <input #imagefile type="file" accept="/*;capture=camera" style="display:none;"
-                                                    multiple (change)="filesSelected($event)">
-                                                <span> Upload
-                                                    File</span>
-                                                <span
-                                                    *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span></a>
-                                        </mat-chip>
-                                    </mat-chip-list>
-                                </div>
-                                <div class="display-lg-show provider-appointment-walkin" *ngIf="!showAction">
-                                    <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
-                                        <mat-chip class="pro-action" (click)="handleSideScreen('members')"><a>Add/Change
-                                                Member </a>
-                                        </mat-chip>
-                                        <mat-chip class="pro-action" (click)="handleSideScreen('note')">
-                                            <a>{{(sel_ser_det.consumerNoteTitle) ? sel_ser_det.consumerNoteTitle : 'Notes'}}
-                                                <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span> </a>
-                                        </mat-chip>
-                                        <mat-chip class="pro-action" (click)="imagefile.click()"><a>
-                                                <input #imagefile type="file" accept="/*;capture=camera" style="display:none;"
-                                                    multiple (change)="filesSelected($event)">
-                                                <span> Upload
-                                                    File</span>
-                                                <span
-                                                    *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span></a>
-                                        </mat-chip>
-                                    </mat-chip-list>
-                                </div>
-                            </div>
+                            
                         </div>
                         <div class="row col-md-12 ml-1">
                             <div class="mgn-up-20 btns mr-1" *ngIf="consumerNote">
@@ -693,6 +616,85 @@
                         </div>
                         
                     </div>
+                    <div>
+                        <ng-container *ngIf="queuejson.length > 0 && servicesjson.length > 0">
+                            <div class="col-md-12 form-group queue-outer mgn-bt-20"
+                                *ngIf="freeSlots.length>0">
+                                <div class="ttle mgn-bt-10">Select Appointment Time</div>
+                                <mat-chip-list class="appt-in-chip freeslots">
+                                    <mat-chip *ngFor="let slot of freeSlots"
+                                        [selected]="slot.time === apptTime"
+                                        (click)="timeSelected(slot.time);">{{getSingleTime(slot.time)}}
+                                    </mat-chip>
+                                </mat-chip-list>
+
+                            </div>
+                            <!-- <div class="col-md-12 form-group queue-outer mgn-bt-20" *ngIf="!showEditView">
+                                <div *ngIf="showApptTime && !api_loading">
+                                    <div class="ttle mgn-bt-10">Appointment Time</div>
+                                    <span class="label-bold">{{getSingleTime(apptTime)}} </span>
+                                    <span style="cursor:pointer;color:black!important" (click)="editClicked()" class="fa fa-pencil-square-o" aria-hidden="true"></span>
+                                </div>
+                                <div *ngIf="!showApptTime && !api_loading">TimeSlots are not available
+                                </div>
+                            </div> -->
+
+
+                            <div class="clearfix"></div>
+                            <app-common-innerloading-spinner *ngIf="api_loading">
+                            </app-common-innerloading-spinner>
+                        </ng-container>
+                        <ng-container *ngIf="queuejson.length == 0 && queueQryExecuted">
+                            <span
+                                class='no-queue-available'>Appointment{{not_accepted_for_this_date}}</span>
+                        </ng-container>
+                        <ng-container *ngIf="queuejson.length > 0 && servicesjson.length == 0">
+                            <span class='no-queue-available'>{{no_services_avail_cap}}</span>
+                        </ng-container>
+                    </div>
+                    <div>
+                        <div class="display-sm-show provider-appointment-walkin"  *ngIf="!showAction">
+                            <!-- <span class="col-lg-12 my-2 text-primary"><b>Please upload Notes/Files related to your service</b></span> -->
+                            <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
+                                <mat-chip class="pro-action" (click)="handleSideScreen('members')"><a>Add/Change
+                                        Member</a>
+                                </mat-chip>
+                                <mat-chip class="pro-action" (click)="handleSideScreen('note')">
+                                    <a>{{(sel_ser_det.consumerNoteTitle) ? sel_ser_det.consumerNoteTitle : 'Notes'}}
+                                        <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span> </a>
+                                </mat-chip>
+                                <mat-chip class="pro-action" (click)="imagefile.click()"><a>
+                                        <input #imagefile type="file" accept="/*;capture=camera" style="display:none;"
+                                            multiple (change)="filesSelected($event)">
+                                        <span> Upload
+                                            File</span>
+                                        <span
+                                            *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span></a>
+                                </mat-chip>
+                            </mat-chip-list>
+                        </div>
+                        <div class="display-lg-show provider-appointment-walkin" *ngIf="!showAction">
+                            <span class="my-2 text-primary"><b>Please upload Notes/Files related to your service</b></span>
+                            <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
+                                <mat-chip class="pro-action" (click)="handleSideScreen('members')"><a>Add/Change
+                                        Member </a>
+                                </mat-chip>
+                                <mat-chip class="pro-action" (click)="handleSideScreen('note')">
+                                    <a>{{(sel_ser_det.consumerNoteTitle) ? sel_ser_det.consumerNoteTitle : 'Notes'}}
+                                        <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span> </a>
+                                </mat-chip>
+                                <mat-chip class="pro-action" (click)="imagefile.click()"><a>
+                                        <input #imagefile type="file" accept="/*;capture=camera" style="display:none;"
+                                            multiple (change)="filesSelected($event)">
+                                        <span> Upload
+                                            File</span>
+                                        <span
+                                            *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span></a>
+                                </mat-chip>
+                            </mat-chip-list>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
                     <div class="mainouter col-md-12 mx-auto text-center">
                         <div class="col-md-12 btborder1 mgn-bt-20">&nbsp;</div>
                         <ng-container *ngIf="checkinLabel && queuejson.length > 0  && servicesjson.length > 0">
