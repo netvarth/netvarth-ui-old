@@ -535,7 +535,27 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   viewMore() {
     this.view_more = !this.view_more;
   }
+  getAgent(fileName){
+    return fileName.toLocaleLowerCase();
+  }
+  getBookingReqFrom(fileName) {
+    let filename = ''
+    // if (fileName.indexOf('fileName')) {
+    //   if (fileName.length > 10) {
+    //     filename = fileName.slice(0, 10) + '...'
+    //   }
+    //   if (fileName.length <= 10) {
+    //     filename = fileName;
+    //   }
+    // }
+     filename = fileName.slice(0, 3);
+     if(fileName.length >7){
+      filename = fileName.slice(0,7);
+    }
 
+    return filename.toLocaleLowerCase();
+  }
+  
   gotoActions(checkin?) {
     let waitlist = [];
     if (checkin) {

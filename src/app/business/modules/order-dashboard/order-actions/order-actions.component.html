@@ -58,6 +58,12 @@
                 <div class="icon-text">Edit Order</div>
             </div>
         </div>
+        <div class="action-box pointer-cursor" *ngIf="showQnr" (click)="showQuestionnaires()">
+            <div class="action-box-sub">
+                <span class="qnr-icon"></span>
+                <div class="icon-text">Get More Info</div>
+            </div>
+        </div>
         <div class="action-box pointer-cursor" (click)="addConsumerInboxMessage()">
             <div class="action-box-sub">
                 <span class="message-icon"></span>

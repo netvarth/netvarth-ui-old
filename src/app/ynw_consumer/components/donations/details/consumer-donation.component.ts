@@ -681,6 +681,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             'note': this.consumerNote,
             'donorEmail': this.userEmail
         };
+        console.log("Donation Data :",post_Data)
         // if (this.userData.userProfile.email === this.payEmail) {
         //     post_Data['donorEmail'] = this.userData.userProfile.email;
         // }else {
@@ -698,6 +699,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addCustomerDonation(post_Data, this.account_id)
             .subscribe(data => {
                 this.uid = data['uid'];
+                console.log("Donation Response :",data);
                 if (this.customId) {
                     console.log("businessid" + this.account_id);
                     this.shared_services.addProvidertoFavourite(this.account_id)

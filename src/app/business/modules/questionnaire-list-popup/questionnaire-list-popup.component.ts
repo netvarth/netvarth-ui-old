@@ -45,6 +45,9 @@ export class QuestionnaireListPopupComponent implements OnInit {
       } else if (params.source === 'checkin') {
         this.getWaitlistDetail();
       }
+      else if (params.source === 'order') {
+        this.getOrderDetail();
+      }
     });
   }
 
@@ -53,6 +56,9 @@ export class QuestionnaireListPopupComponent implements OnInit {
       this.getApptQuestionnaires();
     } else if (this.source === 'checkin') {
       this.getWaitlistQuestionnaires();
+    }
+    else if (this.source === 'order') {
+      this.getOrderQuestionnaires();
     }
     this.selectedQnr = this.data.selectedQnr;
     if (this.waitlist_data && this.waitlist_data.releasedQnr) {
@@ -64,6 +70,16 @@ export class QuestionnaireListPopupComponent implements OnInit {
       .subscribe(
         data => {
           this.waitlist_data = data;
+          this.releasedQnrs = this.waitlist_data.releasedQnr;
+          this.loading = false;
+        });
+  }
+  getOrderDetail() {
+    this.providerServices.getProviderOrderDetailById(this.uid)
+      .subscribe(
+        data => {
+          this.waitlist_data = data;
+          console.log('waitlist_data' ,  this.waitlist_data)
           this.releasedQnrs = this.waitlist_data.releasedQnr;
           this.loading = false;
         });
@@ -83,6 +99,12 @@ export class QuestionnaireListPopupComponent implements OnInit {
       this.loading = false;
     });
   }
+  getOrderQuestionnaires() {
+    this.providerServices.getOrderQuestionnaireByUid(this.uid).subscribe(data => {
+      this.questionnaires = data;
+      this.loading = false;
+    });
+  }
   getApptQuestionnaires() {
     this.providerServices.getApptQuestionnaireByUid(this.uid).subscribe(data => {
       this.questionnaires = data;
@@ -95,9 +117,13 @@ export class QuestionnaireListPopupComponent implements OnInit {
     if (this.source === 'appt') {
       isEmail = (this.waitlist_data.providerConsumer.email) ? true : false;
       isPhone = (this.waitlist_data.providerConsumer.phoneNo && this.waitlist_data.providerConsumer.phoneNo.trim() !== '') ? true : false;
-    } else {
+    } else if(this.source === 'checkin') {
       isEmail = (this.waitlist_data.waitlistingFor[0].email) ? true : false;
       isPhone = (this.waitlist_data.consumer.phoneNo) ? true : false;
+    }
+    else if(this.source === 'order'){
+      isEmail = (this.waitlist_data.email) ? true : false;
+      isPhone = (this.waitlist_data.phoneNumber) ? true : false;
     }
     const statusmsg = (this.getQnrStatus(id) === 'released') ? 'unrelease' : 'release';
     if (this.getQnrStatus(id) === 'released' || (!isEmail && !isPhone)) {
@@ -133,8 +159,11 @@ export class QuestionnaireListPopupComponent implements OnInit {
           this.loading = true;
           if (this.source === 'checkin') {
             this.getWaitlistDetail();
-          } else {
+          } else if (this.source === 'appt') {
             this.getApptDetails();
+          }
+          else if (this.source === 'order') {
+            this.getOrderDetail();
           }
         }
       });
@@ -150,10 +179,19 @@ export class QuestionnaireListPopupComponent implements OnInit {
       }, error => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
-    } else {
+    } else if(this.source === 'appt'){
       this.providerServices.changeApptQnrReleaseStatus(status, this.uid, id).subscribe(data => {
         this.loading = true;
         this.getApptDetails();
+        this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
+      }, error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+    }
+    else if(this.source === 'order'){
+      this.providerServices.changeOrderQnrReleaseStatus(status, this.uid, id).subscribe(data => {
+        this.loading = true;
+        this.getOrderDetail();
         this.snackbarService.openSnackBar('questionnaire ' + statusmsg + 'd', { 'panelclass': 'snackbarerror' });
       }, error => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -190,6 +228,9 @@ export class QuestionnaireListPopupComponent implements OnInit {
           this.getApptDetails();
         } else if (this.source === 'checkin') {
           this.getWaitlistDetail();
+        }
+        else if (this.source === 'order') {
+          this.getOrderDetail();
         }
       }
     });
