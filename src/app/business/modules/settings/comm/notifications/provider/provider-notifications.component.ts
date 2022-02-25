@@ -1732,6 +1732,7 @@ export class ProviderNotificationsComponent implements OnInit {
       this.order_status = data.enableOrder;
     });
   }
+
   type='Token'
   tabClick(event: MatTabChangeEvent) {
     const type = event.tab.textLabel;

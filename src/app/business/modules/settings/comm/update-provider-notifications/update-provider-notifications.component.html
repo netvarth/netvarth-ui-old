@@ -4,7 +4,7 @@
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button> -->
 </h1>
-<mat-dialog-content class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">
+<mat-dialog-content class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding entirecard">
     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
         <div class="form-group mgn-lt-20" *ngIf="!api_loading">
@@ -36,15 +36,21 @@
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
                         <img class="mgn-rt-20" width="50px" height="50px" src="../../../../../../../../../assets/images/sms.svg">
                     </div>
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" style="min-height: 100px !important;">
+                    <div class="{{ ph_arr.length > 0 ? 'col-lg-9 col-md-9 col-sm-9 col-xs-9 minimum-height' : 'col-lg-9 col-md-9 col-sm-9 col-xs-9'}}">
                         <span class="notification"> via SMS </span>
                     
                     <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a
                             (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : '
                         to
                         avoid undelivered SMS'}}</div>
-                    <div class="form-group mgn-up-10" *ngIf="sms">
-                        <div class="input-group mb-3 phadd">
+                   
+                    <div  *ngIf="ph_arr.length > 0">
+                        <div *ngFor="let phne of ph_arr">{{phne.countryCode}} {{' '}} {{phne.number}}<i class="pointer-cursor icon-delete"
+                                (click)="removePhEmail(phne, ph_arr, 'newcheckin')"></i></div>
+                        </div>
+                    </div>
+                    <div class="form-group mgn-up-5" *ngIf="sms">
+                        <div class="input-group" style="display: flex !important;">
                             <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
                                  [(ngModel)]="smsCountrycode" minlength="2" maxlength="4">
                             <input type="text" class="form-control" placeholder="Phonenumber"
@@ -55,11 +61,7 @@
                             </div>
                         </div>
                     </div>
-                    <div  *ngIf="ph_arr.length > 0">
-                        <div *ngFor="let phne of ph_arr">{{phne.countryCode}} {{' '}} {{phne.number}}<i class="pointer-cursor icon-delete"
-                                (click)="removePhEmail(phne, ph_arr, 'newcheckin')"></i></div>
-                        </div>
-                    </div>
+                    <div class="minimum-height" *ngIf="!sms && ph_arr.length == 0"></div>
                     <div style="text-align: center;">
                         <span [class.disabled]="is_noSMS" class="noti-add-btn col-lg-12 col-md-12 col-xs-12 col-sm-12" (click)="smsAddClicked()">Add</span>
                     </div>
@@ -70,22 +72,24 @@
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                         <img src="../../../../../../../../../assets/images/mail.svg" class="mgn-rt-20" width="50px" height="50px">
                     </div>
-                   <div  class="col-lg-9 col-md-9 col-sm-9 col-xs-9" style="min-height: 100px !important;">
+                   <div  class="{{em_arr.length  > 0 ? 'col-lg-9 col-md-9 col-sm-9 col-xs-9 minimum-height' : 'col-lg-9 col-md-9 col-sm-9 col-xs-9'}}">
                     <span class="notification"> via Email</span>
                   
-                  <div class="form-group mgn-up-10" *ngIf="email">
-                      <div class="input-group mb-3 emadd">
-                          <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifyemail">
-                          <div class="input-group-append">
-                              <button class="btn bt3 btn-default " (click)="addChkinemil()" type="button">Ok</button>
-                          </div>
-                      </div>
-                  </div>
+                  
                   <div  *ngIf="em_arr.length > 0">
                       <div style="word-wrap: break-word !important;" *ngFor="let emailval of em_arr">{{emailval}} <i class="pointer-cursor icon-delete"
                               (click)="removePhEmail(emailval, em_arr, 'newcheckin')"></i></div>
                       </div>
                    </div>
+                   <div class="form-group mgn-up-5" *ngIf="email">
+                    <div class="input-group" style="display: flex !important;">
+                        <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifyemail">
+                        <div class="input-group-append">
+                            <button class="btn bt3 btn-default " (click)="addChkinemil()" type="button">Ok</button>
+                        </div>
+                    </div>
+                </div>
+                   <div class="minimum-height" *ngIf="em_arr.length==0 && !email"></div>
                    <div style="text-align: center;">
                     <span class="noti-add-btn col-lg-12 col-md-12 col-xs-12 col-sm-12" (click)="emailAddClicked()">Add</span>
                     </div>
@@ -95,11 +99,17 @@
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                         <img src="../../../../../../../../../assets/images/app(1).svg" class="mgn-rt-20" width="50px" height="50px">
                     </div>
-                    <div  class="col-lg-9 col-md-9 col-sm-9 col-xs-9" style="min-height: 100px !important;">
+                    <div  class="{{cheknPushph_arr.length  > 0 ? 'col-lg-9 col-md-9 col-sm-9 col-xs-9 minimum-height' : 'col-lg-9 col-md-9 col-sm-9 col-xs-9'}}">
                         <span class="notification">App notification</span>
                  
-                    <div class="form-group mgn-up-10" *ngIf="cheknPushph">
-                        <div class="input-group mb-3 phadd">
+                    
+                    <div  *ngIf="cheknPushph_arr.length > 0">
+                        <div *ngFor="let phne of cheknPushph_arr">{{phne.countryCode}} {{' '}} {{phne.number}}<i class="pointer-cursor icon-delete"
+                                (click)="removePhEmail(phne, cheknPushph_arr, 'newcheckin')"></i></div>
+                        </div>
+                    </div>
+                    <div class="form-group mgn-up-5" *ngIf="cheknPushph">
+                        <div class="input-group" style="display: flex !important;">
                            
                                 <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
                                 [(ngModel)]="pushCountrycode" minlength="2" maxlength="4">
@@ -111,11 +121,7 @@
                             </div>
                         </div>
                     </div>
-                    <div  *ngIf="cheknPushph_arr.length > 0">
-                        <div *ngFor="let phne of cheknPushph_arr">{{phne.countryCode}} {{' '}} {{phne.number}}<i class="pointer-cursor icon-delete"
-                                (click)="removePhEmail(phne, cheknPushph_arr, 'newcheckin')"></i></div>
-                        </div>
-                    </div>
+                    <div class="minimum-height" *ngIf="cheknPushph_arr.length==0 && !cheknPushph "></div>
                     <div style="text-align: center;">
                         <span class="noti-add-btn col-lg-12 col-md-12 col-xs-12 col-sm-12"
                         *ngIf="accountType==='BRANCH' || (accountType!=='BRANCH' && cheknPushph_arr.length === 0)"
@@ -128,12 +134,18 @@
                         <img src="../../../../../../../../../assets/images/telegram.svg" class="mgn-rt-20" width="50px" height="50px"> 
                     </div>
   
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" style="min-height: 100px !important;">
+                    <div class="{{tele_arr.length  > 0 ? 'col-lg-9 col-md-9 col-sm-9 col-xs-9 minimum-height' : 'col-lg-9 col-md-9 col-sm-9 col-xs-9'}}">
                         <span class="notification"> via Telegram </span>
                   
                    
-                    <div class="form-group mgn-up-10" *ngIf="telegram">
-                        <div class="input-group mb-3 phadd">
+                   
+                    <div  *ngIf="tele_arr.length > 0">
+                        <div *ngFor="let tele of tele_arr"> {{tele.countryCode}} {{' '}} {{tele.number}} <i class="pointer-cursor icon-delete"
+                                (click)="removePhEmail(tele, tele_arr, 'newcheckin')"></i></div>
+                        </div>
+                    </div>
+                    <div class="form-group mgn-up-5" *ngIf="telegram">
+                        <div class="input-group" style="display: flex !important;">
                             <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
                                  [(ngModel)]="teleCountrycode" minlength="2" maxlength="4" (keypress)="isNumericSign($event)">
                             <input type="text" class="form-control" placeholder="Phonenumber"
@@ -144,19 +156,15 @@
                             </div>
                         </div>
                     </div>
-                    <div  *ngIf="tele_arr.length > 0">
-                        <div *ngFor="let tele of tele_arr"> {{tele.countryCode}} {{' '}} {{tele.number}} <i class="pointer-cursor icon-delete"
-                                (click)="removePhEmail(tele, tele_arr, 'newcheckin')"></i></div>
-                        </div>
-                    </div>
+                    <div class="minimum-height"  *ngIf="!telegram && tele_arr.length==0"></div>
                     <div style="text-align: center;">
                         <span class="noti-add-btn col-lg-12 col-md-12 col-xs-12 col-sm-12" (click)="telegramAddClicked()">Add</span>
                     </div>
                 </div>
             </div>
         </section>
-        <button *ngIf="okCheckinStatus" (click)="chekinNotifications('newcheckin')" type="button" mat-button
-            class="cs-btn bt1 notifyOk">OK</button>
+        <!-- <button *ngIf="okCheckinStatus" (click)="chekinNotifications('newcheckin')" type="button" mat-button
+            class="cs-btn bt1 notifyOk">OK</button> -->
     </div>
     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="type !== 'Donation' && type !== 'Account'">
         <div class="form-group mgn-lt-20" *ngIf="!api_loading">
@@ -184,15 +192,21 @@
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                         <img src="../../../../../../../../../assets/images/sms-1.svg" class="mgn-rt-20" width="50px" height="50px"> 
                     </div>
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" style="min-height: 100px !important;">
+                    <div class="{{ph1_arr.length  > 0 ? 'col-lg-9 col-md-9 col-sm-9 col-xs-9 minimum-height' : 'col-lg-9 col-md-9 col-sm-9 col-xs-9'}}">
                         <span class="notification"> via SMS</span>
 
                     <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a
                             (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : '
                         to
                         avoid undelivered SMS'}}</div>
-                    <div class="form-group mgn-up-10" *ngIf="cancelsms">
-                        <div class="input-group mb-3 phadd">
+                    
+                    <div  *ngIf="ph1_arr.length > 0">
+                        <div *ngFor="let phnecancel of ph1_arr">{{phnecancel.countryCode}} {{' '}} {{phnecancel.number}}<i class="pointer-cursor icon-delete"
+                                (click)="removePhEmail(phnecancel, ph1_arr, 'cancelcheckin')"></i></div>
+                   </div>
+                    </div>
+                    <div class="form-group mgn-up-5" *ngIf="cancelsms">
+                        <div class="input-group" style="display: flex !important;">
                          
                                 <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
                                 [(ngModel)]="sms1Countrycode" minlength="2" maxlength="4"> 
@@ -205,11 +219,7 @@
                             </div>
                         </div>
                     </div>
-                    <div  *ngIf="ph1_arr.length > 0">
-                        <div *ngFor="let phnecancel of ph1_arr">{{phnecancel.countryCode}} {{' '}} {{phnecancel.number}}<i class="pointer-cursor icon-delete"
-                                (click)="removePhEmail(phnecancel, ph1_arr, 'cancelcheckin')"></i></div>
-                   </div>
-                    </div>
+                    <div class="minimum-height" *ngIf="!cancelsms && ph1_arr.length==0"></div>
                     <div style="text-align: center;">
                         <span [class.disabled]="is_noSMS" class="noti-add-btn col-lg-12 col-md-12 col-xs-12 col-sm-12"
                         (click)="cancelledCheckinsmsAddClicked()">Add</span>
@@ -221,24 +231,26 @@
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                         <img src="../../../../../../../../../assets/images/mail-1.svg" class="mgn-rt-20" width="50px" height="50px"> 
                     </div>
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" style="min-height: 100px !important;">
+                    <div class="{{ em1_arr.length > 0 ? 'col-lg-9 col-md-9 col-sm-9 col-xs-9 minimum-height' : 'col-lg-9 col-md-9 col-sm-9 col-xs-9'}}">
                         <span class="notification"> via Email </span>
                    
                        
-                        <div class="form-group mgn-up-10" *ngIf="cancelemail">
-                            <div class="input-group mb-3 emadd">
-                                <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifycanclemail">
-                                <div class="input-group-append">
-                                    <button class="btn bt3 btn-default" (click)="addCheknCanclemil()"
-                                        type="button">Ok</button>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div  *ngIf="em1_arr.length > 0">
                             <div style="word-wrap: break-word !important;" *ngFor="let emailcancl of em1_arr">{{emailcancl}} <i class="pointer-cursor icon-delete"
                                     (click)="removePhEmail(emailcancl,em1_arr, 'cancelcheckin')"></i></div>
                        </div>
                     </div>
+                    <div class="form-group mgn-up-5" *ngIf="cancelemail">
+                        <div class="input-group" style="display: flex !important;">
+                            <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifycanclemail">
+                            <div class="input-group-append">
+                                <button class="btn bt3 btn-default" (click)="addCheknCanclemil()"
+                                    type="button">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="minimum-height" *ngIf="!cancelemail && em1_arr.length==0"></div>
                     <div style="text-align: center;">
                         <span class="noti-add-btn col-lg-12 col-md-12 col-xs-12 col-sm-12" (click)="cancelledCheckinemailAddClicked()">Add</span>
                     </div>
@@ -248,30 +260,32 @@
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                         <img src="../../../../../../../../../assets/images/app-1(1).svg" class="mgn-rt-20" width="50px" height="50px"> 
                     </div>
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" style="min-height: 100px !important;">
+                    <div class="{{cheknCancelPushph_arr.length  > 0 ? 'col-lg-9 col-md-9 col-sm-9 col-xs-9 minimum-height' : 'col-lg-9 col-md-9 col-sm-9 col-xs-9'}}">
                         <span class="notification">App notification</span>
                 
                        
-                        <div class="form-group mgn-up-10" *ngIf="cheknCancelPushph">
-                            <div class="input-group mb-3 phadd">
-                               
-                                    <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
-                                    [(ngModel)]="push1Countrycode" minlength="2" maxlength="4"> 
-                                <input type="text" class="form-control" placeholder="Phonenumber"
-                                    (keypress)="isNumeric($event)" [(ngModel)]="notifycheknCancelPushphonenumber"
-                                    minlength="0" maxlength="10">
-                                <div class="input-group-append">
-                                    <button class="btn bt3 btn-default" (click)="addcheknCancelPushPh()"
-                                        type="button">Ok</button>
-                                </div>
-                            </div>
-                        </div>
+                       
                         <div  *ngIf="cheknCancelPushph_arr.length > 0">
                             <div *ngFor="let phne of cheknCancelPushph_arr">{{phne.countryCode}} {{' '}} {{phne.number}}<i
                                     class="pointer-cursor icon-delete"
                                     (click)="removePhEmail(phne, cheknCancelPushph_arr, 'cancelcheckin')"></i></div>
                        </div>
                     </div>
+                    <div class="form-group mgn-up-5" *ngIf="cheknCancelPushph">
+                        <div class="input-group" style="display: flex !important;">
+                           
+                                <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
+                                [(ngModel)]="push1Countrycode" minlength="2" maxlength="4"> 
+                            <input type="text" class="form-control" placeholder="Phonenumber"
+                                (keypress)="isNumeric($event)" [(ngModel)]="notifycheknCancelPushphonenumber"
+                                minlength="0" maxlength="10">
+                            <div class="input-group-append">
+                                <button class="btn bt3 btn-default" (click)="addcheknCancelPushPh()"
+                                    type="button">Ok</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="minimum-height" *ngIf="cheknCancelPushph_arr.length==0 && !cheknCancelPushph"></div>
                     <div style="text-align: center;">
                         <span class="noti-add-btn col-lg-12 col-md-12 col-xs-12 col-sm-12"
                         *ngIf="accountType==='BRANCH' || (accountType!=='BRANCH' && cheknCancelPushph_arr.length === 0)"
@@ -283,11 +297,17 @@
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                         <img src="../../../../../../../../../assets/images/telegram-1.svg" class="mgn-rt-20" width="50px" height="50px"> 
                     </div>
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" style="min-height: 100px !important;"> 
+                    <div class="{{tele1_arr.length  > 0 ? 'col-lg-9 col-md-9 col-sm-9 col-xs-9 minimum-height' : 'col-lg-9 col-md-9 col-sm-9 col-xs-9'}}"> 
                       <span class="notification"> via Telegram</span>
                    
-                    <div class="form-group mgn-up-10" *ngIf="cancelTelegram">
-                        <div class="input-group mb-3 phadd">
+                    
+                    <div  *ngIf="tele1_arr.length > 0">
+                        <div *ngFor="let telecancel of tele1_arr">{{telecancel.countryCode}} {{' '}} {{telecancel.number}}<i class="pointer-cursor icon-delete"
+                                (click)="removePhEmail(telecancel, tele1_arr, 'cancelcheckin')"></i></div>
+                   </div>
+                     </div>
+                     <div class="form-group mgn-up-5" *ngIf="cancelTelegram">
+                        <div class="input-group" style="display: flex !important;">
                
                                 <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
                                 [(ngModel)]="tele1Countrycode" minlength="2" maxlength="4">
@@ -300,11 +320,7 @@
                             </div>
                         </div>
                     </div>
-                    <div  *ngIf="tele1_arr.length > 0">
-                        <div *ngFor="let telecancel of tele1_arr">{{telecancel.countryCode}} {{' '}} {{telecancel.number}}<i class="pointer-cursor icon-delete"
-                                (click)="removePhEmail(telecancel, tele1_arr, 'cancelcheckin')"></i></div>
-                   </div>
-                     </div>
+                    <div class="minimum-height" *ngIf="tele1_arr.length==0 && !cancelTelegram"></div>
                      <div style="text-align: center;">
                         <span  class="noti-add-btn col-lg-12 col-md-12 col-xs-12 col-sm-12"
                         (click)="cancelledCheckintelegramAddClicked()">Add</span>
@@ -312,7 +328,7 @@
                 </div>
             </div>
         </section>
-        <button *ngIf="okCancelStatus" (click)="checkinCancelNotifications('cancelcheckin')" type="button" mat-button
-            class="cs-btn bt1 notifyOk">OK</button>
+        <!-- <button *ngIf="okCancelStatus" (click)="checkinCancelNotifications('cancelcheckin')" type="button" mat-button
+            class="cs-btn bt1 notifyOk">OK</button> -->
     </div>
 </mat-dialog-content>

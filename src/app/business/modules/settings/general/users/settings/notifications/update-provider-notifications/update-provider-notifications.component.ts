@@ -277,6 +277,9 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       // }
       this.okCheckinStatus = true;
       this.notifyphonenumber = '';
+      if(this.okCheckinStatus) {
+        this.chekinNotifications('newcheckin')
+      }
     }
   }
   isSmsNumExists(curphone) {
@@ -351,6 +354,9 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       this.okCheckinStatus = true;
       this.notifycheknPushphonenumber = '';
       this.cheknPushph = false;
+      if(this.okCheckinStatus) {
+        this.chekinNotifications('newcheckin')
+      }
     }
   }
   isPushNumExists(curphone) {
@@ -397,6 +403,9 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       }
       this.okCheckinStatus = true;
       this.notifyemail = '';
+      if(this.okCheckinStatus) {
+        this.chekinNotifications('newcheckin')
+      }
     }
   }
   addTele() {
@@ -470,6 +479,9 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
 
       }
       this.okCheckinStatus = true;
+      if(this.okCheckinStatus) {
+        this.chekinNotifications('newcheckin')
+      }
       // this.notifyTele = '';
     }
   }
@@ -558,6 +570,9 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       // this.ph1_arr.push(curphone1);
       this.okCancelStatus = true;
       this.notifycanclphonenumber = '';
+      if(this.okCancelStatus) {
+        this.checkinCancelNotifications('cancelcheckin')
+      }
     }
   }
   addCheknCancltelegram() {
@@ -614,6 +629,9 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       }
 
       this.okCancelStatus = true;
+      if(this.okCancelStatus) {
+        this.checkinCancelNotifications('cancelcheckin')
+      }
       // this.notifycancltelegram = '';
     }
   }
@@ -748,6 +766,9 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       this.okCancelStatus = true;
       this.notifycheknCancelPushphonenumber = '';
       this.cheknCancelPushph = false;
+      if(this.okCancelStatus) {
+        this.checkinCancelNotifications('cancelcheckin')
+      }
     }
   }
   addCheknCanclemil() {
@@ -771,6 +792,9 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       }
       this.notifycanclemail = '';
       this.okCancelStatus = true;
+      if(this.okCancelStatus) {
+        this.checkinCancelNotifications('cancelcheckin')
+      }
     }
   }
   chekinNotifications(source) {
@@ -910,6 +934,12 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
     }
     if (source === 'cancelcheckin') {
       this.okCancelStatus = true;
+    }
+    if(this.okCheckinStatus) {
+      this.chekinNotifications('newcheckin')
+    }
+    if(this.okCancelStatus) {
+      this.checkinCancelNotifications('cancelcheckin')
     }
   }
   smsAddClicked() {

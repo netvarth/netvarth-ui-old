@@ -96,6 +96,7 @@ export class ConsumerNotificationUserComponent implements OnInit {
   is_noSMS = false;
   small_device_display = false;
   screenWidth;
+  titlehead: string;
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     public provider_services: ProviderServices,
@@ -147,6 +148,11 @@ export class ConsumerNotificationUserComponent implements OnInit {
       .subscribe(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
+        if(this.showToken) {
+          this.titlehead = 'Token';
+        } else {
+          this.titlehead = 'Checkin';
+        }
       }, () => {
       });
   }

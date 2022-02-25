@@ -89,6 +89,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('entered');
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
     this.getGlobalSettingsStatus();
@@ -110,6 +111,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       .subscribe(
         data => {
           this.notificationList = data;
+          console.log('eeeeeeeeee',this.notificationList)
           this.setNotificationList(this.notificationList);
         },
         error => {
@@ -135,7 +137,9 @@ export class UpdateProviderNotificationsComponent implements OnInit {
         addList = notificationList.filter(notification => notification.eventType === 'ORDERCONFIRM');
         cancelList = notificationList.filter(notification => notification.eventType === 'ORDERCANCEL');
       }
-      if (addList && addList[0]) {
+
+      console.log("addlist.........",addList);
+            if (addList && addList[0]) {
         // if (addList[0].email.length === 0 && addList[0].sms.length === 0 && addList[0].pushMsg.length === 0) {
         //   this.SelchkinNotify = false;
         // }
@@ -145,6 +149,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
         }
         if (addList[0].sms && addList[0].sms.length !== 0) {
           this.ph_arr = addList[0].sms;
+          console.log(this.ph_arr,';;;;;')
           // this.SelchkinNotify = true;
         }
         if (addList[0].telegramPhone && addList[0].telegramPhone.length !== 0) {
@@ -313,6 +318,10 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       // }
       this.okCheckinStatus = true;
       this.notifyphonenumber = '';
+      if(this.okCheckinStatus) {
+        this.chekinNotifications('newcheckin')
+      }
+     
     }
   }
   addTele() {
@@ -386,6 +395,9 @@ export class UpdateProviderNotificationsComponent implements OnInit {
 
       }
       this.okCheckinStatus = true;
+      if(this.okCheckinStatus) {
+        this.chekinNotifications('newcheckin')
+      }
       // this.notifyTele = '';
     }
   }
@@ -525,6 +537,9 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       //   // 'Phone number already exists'
       // }
       this.okCheckinStatus = true;
+      if(this.okCheckinStatus) {
+        this.chekinNotifications('newcheckin')
+      }
       this.notifycheknPushphonenumber = '';
       this.cheknPushph = false;
     }
@@ -573,6 +588,9 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       }
       this.okCheckinStatus = true;
       this.notifyemail = '';
+      if(this.okCheckinStatus) {
+        this.chekinNotifications('newcheckin')
+      }
     }
   }
   addCheknCanclph() {
@@ -619,6 +637,9 @@ export class UpdateProviderNotificationsComponent implements OnInit {
 
       // this.ph1_arr.push(curphone1);
       this.okCancelStatus = true;
+      if(this.okCancelStatus) {
+        this.checkinCancelNotifications('cancelcheckin')
+      }
       this.notifycanclphonenumber = '';
     }
   }
@@ -676,6 +697,9 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       }
 
       this.okCancelStatus = true;
+      if(this.okCancelStatus) {
+        this.checkinCancelNotifications('cancelcheckin')
+      }
       // this.notifycancltelegram = '';
     }
   }
@@ -728,6 +752,9 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       this.okCancelStatus = true;
       this.notifycheknCancelPushphonenumber = '';
       this.cheknCancelPushph = false;
+      if(this.okCancelStatus) {
+        this.checkinCancelNotifications('cancelcheckin')
+      }
     }
   }
   addCheknCanclemil() {
@@ -751,6 +778,9 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       }
       this.notifycanclemail = '';
       this.okCancelStatus = true;
+      if(this.okCancelStatus) {
+        this.checkinCancelNotifications('cancelcheckin')
+      }
     }
   }
   isSmsCancelNumExists(curphone1) {
@@ -971,6 +1001,12 @@ export class UpdateProviderNotificationsComponent implements OnInit {
     }
     if (source === 'cancelcheckin') {
       this.okCancelStatus = true;
+    }
+    if(this.okCheckinStatus) {
+      this.chekinNotifications('newcheckin')
+    }
+    if(this.okCancelStatus) {
+      this.checkinCancelNotifications('cancelcheckin')
     }
   }
   smsAddClicked() {
