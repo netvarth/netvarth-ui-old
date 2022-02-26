@@ -196,21 +196,32 @@
       <div class="card" *ngIf="showCheckin && !showQuestionnaire">
         <div class="">
           <div class="btborder">
-            <ul class="availer-ul pl-0" *ngIf="thirdParty === ''">
-              <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
-                <li class="block-level consumer-name d-flex justify-content-start">
-                  <div class="my-auto">
-                    <img src="../../../../../assets/images/avatar.png" width="60px" height="60px" class="my-auto">
-                  </div>
-                  <div class="ml-3">
-                    {{waitfor.firstName | capitalizeFirst}} {{waitfor.lastName | capitalizeFirst}}
-                    <div *ngIf="jaldeeId" class="consumer-id">
-                      {{customer_label | capitalizeFirst}} id: {{getJaldeeId(waitfor)}}
-                    </div>
-                  </div>
-                </li>
-              </ng-container>
-            </ul>
+            <div class="row">
+              <div class="col-lg-6 col-md-6">
+                <ul class="availer-ul pl-0" *ngIf="thirdParty === ''">
+                  <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
+                    <li class="block-level consumer-name d-flex justify-content-start">
+                      <div class="my-auto">
+                        <img src="../../../../../assets/images/avatar.png" width="60px" height="60px" class="my-auto">
+                      </div>
+                      <div class="ml-3">
+                        {{waitfor.firstName | capitalizeFirst}} {{waitfor.lastName | capitalizeFirst}}
+                        <div *ngIf="jaldeeId" class="consumer-id">
+                          {{customer_label | capitalizeFirst}} id: {{getJaldeeId(waitfor)}}
+                        </div>
+                      </div>
+                    </li>
+                  </ng-container>
+                </ul>
+              </div>
+              <div class="col-lg-6 col-md-6">
+                <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
+                  <mat-chip class="pro-action" (click)="openModal()"><a>Add /
+                    Change Member </a>
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+            </div>
             <div *ngIf="thirdParty !== ''" class="row">
               <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                 <span class="consumer-name">{{customer_label | capitalizeFirst}} from {{(thirdPartyList[thirdParty]) ? thirdPartyList[thirdParty] : thirdParty}}</span>
@@ -377,7 +388,7 @@
             <div class="row mainouter">
               <div class="date-outer flex-column col-md-5 col-lg-5 col-sm-12 col-xs-12">
                 <div class="" *ngIf="!settingsjson['showTokenId']">{{checkinLabel}} {{date_cap}}</div>
-                <div class="" *ngIf="settingsjson['showTokenId']"><h6 class="p-0 m-0 text-dark">Select Token {{date_cap}}</h6></div><br>
+                <div class="" *ngIf="settingsjson['showTokenId']"><h6 class="p-0 m-0 text-dark">Token {{date_cap}}</h6></div><br>
                 <div class="date-body" style="background-color: #f6f6f6 !important;border: 1px solid #f6f6f6 !important;">
                   <span class="selected-date p-1">
                     <!-- <span class="icon-minus" [class.disable]="disableMinus()"
@@ -401,7 +412,7 @@
     
               <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12">
                 <div  *ngIf="queuejson.length > 0" class="flex-column" style="display: flex !important;align-items: center;">
-                  <div><h6>Select Token Time : &nbsp;</h6></div>
+                  <div><h6>Token Time : &nbsp;</h6></div>
                   <div class="freeslots mt-3">
                     <!-- <mat-form-field class="padding-0">
                       <mat-select  class="inputbox1 p-0" [(ngModel)]="queuejson[0].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].queueSchedule.timeSlots[0]['eTime']">
@@ -477,10 +488,12 @@
               </div>
               <span class="my-2 text-primary"><b>Please upload Notes/Files related to your service</b></span>
               <mat-chip-list class="btns provider-checkin mt-2" *ngIf="thirdParty === '' && queuejson.length > 0" style="margin:0px!important">
-                <mat-chip class="pro-action" (click)="handleSideScreen('members')"><a>Add /
-                    Change
-                    Member </a>
+                <!-- <mat-chip class="pro-action" (click)="handleSideScreen('members')"><a>Add /
+                    Change Member </a>
                 </mat-chip>
+                <mat-chip class="pro-action" (click)="openModal()"><a>Add /
+                  Change Member </a>
+                </mat-chip> -->
                 <mat-chip class="pro-action" (click)="handleSideScreen('note')">
                   <a>{{(sel_ser_det.consumerNoteTitle) ? sel_ser_det.consumerNoteTitle : 'Notes'}}
                     <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span> </a>
@@ -664,10 +677,15 @@
             </div>
             <span class="my-2 text-primary"><b>Please upload Notes/Files related to your service</b></span>
             <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
-              <mat-chip class="pro-action" (click)="handleSideScreen('members')"><a>Add /
-                  Change
-                  Member </a>
-              </mat-chip>
+              <!-- <mat-chip class="pro-action" (click)="handleSideScreen('members')"><a>Add /
+                  Change Member </a>
+              </mat-chip> -->
+              <!-- <mat-chip class="pro-action" (click)="openModal()"><a>Add /
+                Change Member </a>
+              </mat-chip> -->
+              <!-- <button type="button" class="btn btn-info btn-lg" (click)="openModal()">click to open</button> -->
+              
+              
               <mat-chip class="pro-action" (click)="handleSideScreen('note')">
                 <a>{{(sel_ser_det.consumerNoteTitle) ? sel_ser_det.consumerNoteTitle : 'Notes'}}
                   <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span> </a>
@@ -727,7 +745,106 @@
             </div>
           </div>
         </div>
-          <!-- <hr>Narendra -->
+          <!-- Add or Change Member Modal -->
+          <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title mx-auto text-primary">Add or Change Member</h4>
+                  <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><i class="fa fa-times" aria-hidden="true"></i></button>
+                </div>
+                <div class="modal-body">
+                  <div class="servicefor-outer">
+                    <ng-container>
+                      <div class="member-outer">
+                        <div class="member-head">
+                          <!-- {{select_the_cap}}
+                          <ng-container *ngIf="!multipleMembers_allowed">
+                            {{member_cap}}
+                          </ng-container>
+                          <ng-container *ngIf="multipleMembers_allowed">{{members_cap}}
+                          </ng-container>
+                          {{for_whom_the_cap}}
+                          <span *ngIf="settingsjson['showTokenId']">
+                            token
+                          </span> -->
+                          <!-- <span *ngIf="!settingsjson['showTokenId']">{{checkin_label}}
+                          </span>
+                          {{is_beingmade_cap}} -->
+                          <h4 class="text-primary"><b>Service For</b></h4>
+                        </div>
+                        <div class="member-list">
+                          
+                          <ul class="member-ul pl-0" style="list-style-type: none!important;">
+                            <ng-container *ngIf="multipleMembers_allowed">
+                              <li *ngFor="let memb of familymembers">
+                                <mat-checkbox
+                                  (change)="handleMemberSelect(memb.id, memb.firstName, memb.lastName, $event)"
+                                  [value]="memb.id" [checked]="isChecked(memb.id)">
+                                  <ng-container *ngIf="memb.firstName || memb.lastName">
+                                    {{memb.firstName | capitalizeFirst}} {{memb.lastName}}
+                                  </ng-container>
+                                  <ng-container *ngIf="!memb.firstName && !memb.lastName">
+                                    {{customer_label | capitalizeFirst}} id: {{memb.jaldeeId}}
+                                  </ng-container>
+                                </mat-checkbox>
+                              </li>
+                            </ng-container>
+                            <ng-container *ngIf="!multipleMembers_allowed">
+                              <mat-radio-group>
+                                <li *ngFor="let memb of familymembers">
+                                  <mat-radio-button *ngIf="memb.firstName"
+                                    (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
+                                    [value]="memb.id" [checked]="isChecked(memb.id)">
+                                    {{memb.firstName | capitalizeFirst}}
+                                    {{(memb.lastName) ? memb.lastName : ''}}
+                                  </mat-radio-button>
+                                  <mat-radio-button *ngIf="!memb.firstName"
+                                    (change)="handleOneMemberSelect(memb.id, memb.firstName, memb.lastName, memb.jaldeeId)"
+                                    [value]="memb.id" [checked]="isChecked(memb.id)">
+                                    {{customer_label | capitalizeFirst}} Id:{{memb.jaldeeId}}
+                                  </mat-radio-button>
+                                </li>
+                              </mat-radio-group>
+                            </ng-container>
+                          </ul>
+                          <div class="cs-btn bt3 member-add mt-2 btn btn-primary" (click)="addMember()" *ngIf="!showCreateMember">
+                            <img src="../../../../../assets/images/create new patient.png" width="25px" height="25px">&nbsp;&nbsp;{{add_member_cap}}
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <div class="col-md-12 mgn-bt-20" *ngIf="!showCreateMember">
+                        <button mat-button class="cs-btn bt1 backtocheckin" (click)="handleGoBack(1)">OK
+                        </button>
+                      </div> -->
+                    </ng-container>
+                    <ng-container *ngIf="showCreateMember">
+                      <div class="addmember-outer">
+                        <div class="addMemberHeader text-primary"><b>{{add_member_cap}}</b></div>
+                        <app-checkin-consumer-add-member [calledFrom]="'checkin'" [globalsettings]="customidFormat"
+                          (returnDetails)="handleReturnDetails($event)">
+                        </app-checkin-consumer-add-member>
+                        <div class="actiondiv">
+                          <button type="button" class="cs-btn bt2 backbtn"
+                            (click)="handleGoBack(3)">{{cancel_btn}}</button>&nbsp;
+                          <button class="cs-btn bt1 savemember btn btn-primary" mat-button [disabled]="disable"
+                            (click)="handleSaveMember()">OK</button>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="modal-footer text-center">
+                  <!-- <button type="button" class="btn btn-light" (click)="onCloseHandled()" >Close</button> -->
+                  <button type="button" class="btn btn-primary" (click)="handleGoBack(1);onCloseHandled()" >Ok</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
           <div class="mx-auto col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-center border-top pt-10 width-100">
             <div class="mr-2" *ngIf="!showBlockHint">
               <button type="button" class="btn btn-light-primary font-weight-bold" (click)="goBack()">

@@ -225,6 +225,7 @@ export class ProviderCheckinComponent implements OnInit {
     showBlockHint = false;
     uid;
     source;
+    display:any;
     virtualServicemode;
     virtualServicenumber;
     emptyFielderror = false;
@@ -352,6 +353,7 @@ export class ProviderCheckinComponent implements OnInit {
                 );
             }
         });
+        this.display = "none";
     }
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -391,6 +393,12 @@ export class ProviderCheckinComponent implements OnInit {
         this.showfuturediv = false;
         this.revealphonenumber = true;
     }
+    openModal() {
+        this.display = "block";
+      }
+      onCloseHandled() {
+        this.display = "none";
+      }
     performActions(action) {
         if (action === 'learnmore') {
             this.router.navigate(['/provider/' + this.domain + '/check-ins->check-in']);
@@ -2106,6 +2114,10 @@ export class ProviderCheckinComponent implements OnInit {
         this.showAction = true;
         this.action = action;
     }
+    actionChange(action)
+    {
+         this.action = action;
+    }
     hideFilterSidebar() {
         this.showAction = false;
     }
@@ -2255,5 +2267,9 @@ export class ProviderCheckinComponent implements OnInit {
                 this.api_loading = false;
             });
         }
+    }
+    popupClosed()
+    {
+
     }
 }

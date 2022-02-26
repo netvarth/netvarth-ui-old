@@ -348,3 +348,12 @@ align-items: center;
 .ynw-common-form-nm .mat-select {
   padding: 10px 0px 0px 15px!important;
 }
+.modal
+{
+  background: rgb(255, 255, 255)!important;
+}
+.fa-times
+{
+  color:black!important;
+  font-size: 20px!important;
+}

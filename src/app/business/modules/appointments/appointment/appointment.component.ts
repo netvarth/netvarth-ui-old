@@ -247,6 +247,7 @@ export class AppointmentComponent implements OnInit {
     selfAssign;
     assignmyself;
     thirdpartyoptions: any;
+    display: string;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -380,6 +381,7 @@ export class AppointmentComponent implements OnInit {
             }
 
         });
+        this.display = "none";
     }
     ngOnInit() {
         this.carouselOne = {
@@ -418,6 +420,12 @@ export class AppointmentComponent implements OnInit {
         // this.getCurrentLocation();
         this.showfuturediv = false;
         this.revealphonenumber = true;
+    }
+    openModal() {
+        this.display = "block";
+      }
+    onCloseHandled() {
+    this.display = "none";
     }
     performActions(action) {
         if (action === 'learnmore') {
