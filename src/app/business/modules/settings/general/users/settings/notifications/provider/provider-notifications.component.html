@@ -1,4 +1,10 @@
-<section class="">
+
+
+
+
+
+
+<section class="mgn-up-10 mgn-bt-10 mgn-lt-5 mgn-rt-5">
   <div class="card title-gb">
     <h5 class="mgn-up-10">
       <span class="fa fa-arrow-left pointer-cursor"
@@ -7,30 +13,61 @@
     </h5>
   </div>
 </section>
-<section>
+<section >
   <div class="row col-md-12 m0 no-padding-small" *ngIf="api_loading">
     <div class="card">
       <app-common-innerloading-spinner></app-common-innerloading-spinner>
     </div>
   </div>
 </section>
-<section *ngIf="!waitlistStatus && !appointment_status && !api_loading">
+<section  *ngIf="!waitlistStatus && !appointment_status && !api_loading">
   <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12">
     <div class="token-appt">
       To setup ‘Notifications’, Appointment manager/QManager need to be enabled from your settings.
     </div>
   </div>
 </section>
-<section *ngIf="!api_loading">
-  <div class="col-md-12 col-xs-12 col=sm-12 col-lg-12 card">
-    <div class="pro-notify-box bold" *ngIf="showToken" (click)="showNotificationPopup('Token')">
-      <span>Token Notifications</span>
+<section class="mgn-lt-10 mgn-rt-10 card" *ngIf="!api_loading" >
+  <mat-tab-group (selectedTabChange)="tabClick($event)"  >
+    <mat-tab class="notifilabel" label="Token Notifications" *ngIf="showToken" >
+        <app-update-provider-notifications [type]="type" [userid]="userId" [internationalUser]="isInternationalUser"></app-update-provider-notifications>
+
+    </mat-tab>
+    <mat-tab class="notifilabel" label="Check-in Notifications"  *ngIf="!showToken" >
+      <app-update-provider-notifications [type]="type" [userid]="userId" [internationalUser]="isInternationalUser"></app-update-provider-notifications>
+
+    </mat-tab>
+    <mat-tab class="notifilabel" label="Appointment Notifications" > 
+      
+      <app-update-provider-notifications [type]="type" [userid]="userId" [internationalUser]="isInternationalUser"></app-update-provider-notifications>
+
+    
+    </mat-tab>
+  </mat-tab-group>
+  <!-- <div class="col-md-12 col-xs-12 col=sm-12 col-lg-12 card no-padding">
+    <div class="{{type=='Token'?'newpro-notify-box1 bold':'newpro-notify-box bold'}} " *ngIf="showToken" (click)="showNotificationPopup('Token')">
+      <div class="telenoti " style="display: flex;justify-content:space-between;">
+        <div class="{{type=='Token'?'yellowline':'line'}}"></div>
+        <span><br>Token Notifications</span>
+        <div class="{{type=='Token'?'yellowcircle':'circle'}}"></div>
+      </div>
     </div>
-    <div class="pro-notify-box bold" *ngIf="!showToken" (click)="showNotificationPopup('Check-in')">
-      <span>Check-in Notifications</span>
+    <div class="{{type=='Check-in'?'newpro-notify-box1 bold':'newpro-notify-box bold'}} " *ngIf="!showToken" (click)="showNotificationPopup('Check-in')">
+      <div class="telenoti " style="display: flex;justify-content:space-between;">
+        <div class="{{type=='Check-in'?'yellowline':'line'}}"></div>
+        <span><br>Check-in Notifications</span>
+        <div class="{{type=='Check-in'?'yellowcircle':'circle'}}"></div>
+      </div>
     </div>
-    <div class="pro-notify-box bold" (click)="showNotificationPopup('Appointment')">
-      <span>Appointment Notifications</span>
+    <div class="{{type=='Appointment'?'newpro-notify-box1 bold':'newpro-notify-box bold'}} " (click)="showNotificationPopup('Appointment')">
+      <div class="telenoti " style="display: flex;justify-content:space-between;">
+        <div class="{{type=='Appointment'?'yellowline':'line'}}"></div>
+        <span><br>Appointment Notifications</span>
+        <div class="{{type=='Appointment'?'yellowcircle':'circle'}}"></div>
+      </div>
     </div>
-  </div>
+<app-update-provider-notifications [type]="type" [userid]="userId" [internationalUser]="isInternationalUser"></app-update-provider-notifications>
+    
+  </div> -->
+
 </section>

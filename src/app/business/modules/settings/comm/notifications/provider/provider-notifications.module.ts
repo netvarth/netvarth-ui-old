@@ -7,6 +7,8 @@ import { LoadingSpinnerModule } from "../../../../../../shared/modules/loading-s
 import { UpdateProviderNotificationsModule } from "../../update-provider-notifications/update-provider-notifications.module";
 import { ProviderNotificationsComponent } from "./provider-notifications.component";
 import { AddProviderAddonsModule } from "../../../../../../business/modules/add-provider-addons/add-provider-addons.module";
+import {MatTabsModule} from '@angular/material/tabs';
+
 const routes: Routes = [
     { path: '', component: ProviderNotificationsComponent }
 ];
@@ -17,6 +19,7 @@ const routes: Routes = [
         UpdateProviderNotificationsModule,
         MatDialogModule,
         LoadingSpinnerModule,
+        MatTabsModule,
         CapitalizeFirstPipeModule,
         [RouterModule.forChild(routes)]
     ],

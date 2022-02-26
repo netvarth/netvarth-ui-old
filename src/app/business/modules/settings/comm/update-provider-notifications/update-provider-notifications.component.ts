@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
@@ -16,6 +16,7 @@ import { AddproviderAddonComponent } from '../../../add-provider-addons/add-prov
   styleUrls: ['./update-provider-notifications.component.css']
 })
 export class UpdateProviderNotificationsComponent implements OnInit {
+  @Input() type;
   telegram = false;
   sms = false;
   email = false;
@@ -120,17 +121,17 @@ export class UpdateProviderNotificationsComponent implements OnInit {
     if (notificationList.length !== 0) {
       let addList = [];
       let cancelList = [];
-      if (this.data.type === 'Token' || this.data.type === 'Check-in') {
+      if (this.type === 'Token' || this.type === 'Check-in') {
         addList = notificationList.filter(notification => notification.eventType === 'WAITLISTADD');
         cancelList = notificationList.filter(notification => notification.eventType === 'WAITLISTCANCEL');
-      } else if (this.data.type === 'Appointment') {
+      } else if (this.type === 'Appointment') {
         addList = notificationList.filter(notification => notification.eventType === 'APPOINTMENTADD');
         cancelList = notificationList.filter(notification => notification.eventType === 'APPOINTMENTCANCEL');
-      } else if (this.data.type === 'Donation') {
+      } else if (this.type === 'Donation') {
         addList = notificationList.filter(notification => notification.eventType === 'DONATIONSERVICE');
-      } else if (this.data.type === 'Account') {
+      } else if (this.type === 'Account') {
         addList = notificationList.filter(notification => notification.eventType === 'LICENSE');
-      } else if (this.data.type === 'Order') {
+      } else if (this.type === 'Order') {
         addList = notificationList.filter(notification => notification.eventType === 'ORDERCONFIRM');
         cancelList = notificationList.filter(notification => notification.eventType === 'ORDERCANCEL');
       }
@@ -211,19 +212,19 @@ export class UpdateProviderNotificationsComponent implements OnInit {
     //   this.chekinNotifications('newcheckin');
     // }
     this.notificationJson = {};
-    if (this.data.type === 'Token' || this.data.type === 'Check-in') {
+    if (this.type === 'Token' || this.type === 'Check-in') {
       this.notificationJson.resourceType = 'CHECKIN';
       this.notificationJson.eventType = 'WAITLISTADD';
-    } else if (this.data.type === 'Appointment') {
+    } else if (this.type === 'Appointment') {
       this.notificationJson.resourceType = 'APPOINTMENT';
       this.notificationJson.eventType = 'APPOINTMENTADD';
-    } else if (this.data.type === 'Donation') {
+    } else if (this.type === 'Donation') {
       this.notificationJson.resourceType = 'DONATION';
       this.notificationJson.eventType = 'DONATIONSERVICE';
-    } else if (this.data.type === 'Account') {
+    } else if (this.type === 'Account') {
       this.notificationJson.resourceType = 'ACCOUNT';
       this.notificationJson.eventType = 'LICENSE';
-    } else if (this.data.type === 'Order') {
+    } else if (this.type === 'Order') {
       this.notificationJson.resourceType = 'ORDER';
       this.notificationJson.eventType = 'ORDERCONFIRM';
     }
@@ -233,13 +234,13 @@ export class UpdateProviderNotificationsComponent implements OnInit {
   selectChekinCanclNotify(event) {
     this.SelchkincnclNotify = event.checked;
     this.cancelNotificationJson = {};
-    if (this.data.type === 'Token' || this.data.type === 'Check-in') {
+    if (this.type === 'Token' || this.type === 'Check-in') {
       this.cancelNotificationJson.resourceType = 'CHECKIN';
       this.cancelNotificationJson.eventType = 'WAITLISTCANCEL';
-    } else if (this.data.type === 'Appointment') {
+    } else if (this.type === 'Appointment') {
       this.cancelNotificationJson.resourceType = 'APPOINTMENT';
       this.cancelNotificationJson.eventType = 'APPOINTMENTCANCEL';
-    } else if (this.data.type === 'Order') {
+    } else if (this.type === 'Order') {
       this.cancelNotificationJson.resourceType = 'ORDER';
       this.cancelNotificationJson.eventType = 'ORDERCANCEL';
     }
@@ -841,11 +842,11 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       chekinMode = 'ADD';
     }
     for (const notifyList of this.notificationList) {
-      if (((this.data.type === 'Token' || this.data.type === 'Check-in') && notifyList.eventType && notifyList.eventType === 'WAITLISTADD') ||
-        (this.data.type === 'Appointment' && notifyList.eventType && notifyList.eventType === 'APPOINTMENTADD') ||
-        (this.data.type === 'Donation' && notifyList.eventType && notifyList.eventType === 'DONATIONSERVICE') ||
-        (this.data.type === 'Account' && notifyList.eventType && notifyList.eventType === 'LICENSE') ||
-        (this.data.type === 'Order' && notifyList.eventType && notifyList.eventType === 'ORDERCONFIRM')) {
+      if (((this.type === 'Token' || this.type === 'Check-in') && notifyList.eventType && notifyList.eventType === 'WAITLISTADD') ||
+        (this.type === 'Appointment' && notifyList.eventType && notifyList.eventType === 'APPOINTMENTADD') ||
+        (this.type === 'Donation' && notifyList.eventType && notifyList.eventType === 'DONATIONSERVICE') ||
+        (this.type === 'Account' && notifyList.eventType && notifyList.eventType === 'LICENSE') ||
+        (this.type === 'Order' && notifyList.eventType && notifyList.eventType === 'ORDERCONFIRM')) {
         chekinMode = 'UPDATE';
       }
     }
@@ -854,19 +855,19 @@ export class UpdateProviderNotificationsComponent implements OnInit {
     //   this.ph_arr = [];
     //   this.cheknPushph_arr = [];
     // }
-    if (this.data.type === 'Token' || this.data.type === 'Check-in') {
+    if (this.type === 'Token' || this.type === 'Check-in') {
       this.savechekinNotification_json.resourceType = 'CHECKIN';
       this.savechekinNotification_json.eventType = 'WAITLISTADD';
-    } else if (this.data.type === 'Appointment') {
+    } else if (this.type === 'Appointment') {
       this.savechekinNotification_json.resourceType = 'APPOINTMENT';
       this.savechekinNotification_json.eventType = 'APPOINTMENTADD';
-    } else if (this.data.type === 'Donation') {
+    } else if (this.type === 'Donation') {
       this.savechekinNotification_json.resourceType = 'DONATION';
       this.savechekinNotification_json.eventType = 'DONATIONSERVICE';
-    } else if (this.data.type === 'Account') {
+    } else if (this.type === 'Account') {
       this.savechekinNotification_json.resourceType = 'ACCOUNT';
       this.savechekinNotification_json.eventType = 'LICENSE';
-    } else if (this.data.type === 'Order') {
+    } else if (this.type === 'Order') {
       this.savechekinNotification_json.resourceType = 'ORDER';
       this.savechekinNotification_json.eventType = 'ORDERCONFIRM';
     }
@@ -885,9 +886,9 @@ export class UpdateProviderNotificationsComponent implements OnInit {
       chekincancelMode = 'ADD';
     }
     for (const notifyList of this.notificationList) {
-      if (((this.data.type === 'Token' || this.data.type === 'Check-in') && notifyList.eventType && notifyList.eventType === 'WAITLISTCANCEL') ||
-        (this.data.type === 'Appointment' && notifyList.eventType && notifyList.eventType === 'APPOINTMENTCANCEL') ||
-        (this.data.type === 'Order' && notifyList.eventType && notifyList.eventType === 'ORDERCANCEL')) {
+      if (((this.type === 'Token' || this.type === 'Check-in') && notifyList.eventType && notifyList.eventType === 'WAITLISTCANCEL') ||
+        (this.type === 'Appointment' && notifyList.eventType && notifyList.eventType === 'APPOINTMENTCANCEL') ||
+        (this.type === 'Order' && notifyList.eventType && notifyList.eventType === 'ORDERCANCEL')) {
         chekincancelMode = 'UPDATE';
       }
     }
@@ -896,13 +897,13 @@ export class UpdateProviderNotificationsComponent implements OnInit {
     //   this.ph1_arr = [];
     //   this.cheknCancelPushph_arr = [];
     // }
-    if (this.data.type === 'Token' || this.data.type === 'Check-in') {
+    if (this.type === 'Token' || this.type === 'Check-in') {
       this.savecancelNotification_json.resourceType = 'CHECKIN';
       this.savecancelNotification_json.eventType = 'WAITLISTCANCEL';
-    } else if (this.data.type === 'Appointment') {
+    } else if (this.type === 'Appointment') {
       this.savecancelNotification_json.resourceType = 'APPOINTMENT';
       this.savecancelNotification_json.eventType = 'APPOINTMENTCANCEL';
-    } else if (this.data.type === 'Order') {
+    } else if (this.type === 'Order') {
       this.savecancelNotification_json.resourceType = 'ORDER';
       this.savecancelNotification_json.eventType = 'ORDERCANCEL';
     }
