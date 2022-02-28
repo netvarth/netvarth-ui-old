@@ -105,7 +105,15 @@
 
             </div>
 
-            <div class="disp-flex" *ngIf="showOther">
+            
+
+
+            <!-- <div class="col-lg-12 col-md-12 col-xs-0 col-sm-0 mgn-up-20" ></div> -->
+            
+
+
+            <div class="clearfix"></div>
+            <div class="disp-flex my-3" *ngIf="showOther">
               <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
                 <mat-form-field>
                   <input matInput placeholder="Enter your third party listing site *" [(ngModel)]="otherThirdParty"
@@ -119,12 +127,6 @@
                 <button class="create_new_button cs-btn bt3" (click)="showOtherSection(true)">Ok</button>
               </div>
             </div>
-
-
-            <!-- <div class="col-lg-12 col-md-12 col-xs-0 col-sm-0 mgn-up-20" ></div> -->
-            
-
-
             <div class="clearfix"></div>
             <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding" *ngIf="showBlockHint">
               <table class="table table-head-custom table-head-bg table-borderless table-vertical-center bold">
@@ -486,7 +488,7 @@
                   </div>
                 </div>
               </div>
-              <span class="my-2 text-primary"><b>Please upload Notes/Files related to your service</b></span>
+              <span class="my-2 text-primary" *ngIf="thirdParty === '' && queuejson.length > 0"><b>Please upload Notes/Files related to your service</b></span>
               <mat-chip-list class="btns provider-checkin mt-2" *ngIf="thirdParty === '' && queuejson.length > 0" style="margin:0px!important">
                 <!-- <mat-chip class="pro-action" (click)="handleSideScreen('members')"><a>Add /
                     Change Member </a>
@@ -675,7 +677,7 @@
                 </div>
               </div>
             </div>
-            <span class="my-2 text-primary"><b>Please upload Notes/Files related to your service</b></span>
+            <span class="my-2 text-primary" *ngIf="thirdParty === '' && queuejson.length > 0"><b>Please upload Notes/Files related to your service</b></span>
             <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
               <!-- <mat-chip class="pro-action" (click)="handleSideScreen('members')"><a>Add /
                   Change Member </a>

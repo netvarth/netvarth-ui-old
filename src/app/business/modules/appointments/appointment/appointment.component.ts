@@ -358,7 +358,7 @@ export class AppointmentComponent implements OnInit {
     }
     openthirdpopup(domain,showOther,customer_label) {
         this.thirdpartyoptions = this.dialog.open(ThirdpartypopupComponent, {
-            width: '60%',
+            width: '80%',
             panelClass: ['popup-class', 'confirmationmainclass'],
             data : {
                 'domain':domain,
