@@ -533,6 +533,44 @@
                     </div>
                   </div>
                 </div>
+                <!----for multi user filter start today tab-->
+                <div class="card" *ngIf="users.length >0">
+                  <div class="card-header">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseServicesMultiUser" aria-expanded="false">
+                        <div>
+                          <div style="display: inline-block !important;">
+                            <i class="fa fa-user"></i>
+                          </div>
+                          <span>&nbsp;Multi User</span>
+                        </div>
+                        <i class="fa fa-angle-down"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapseServicesMultiUser" class="collapse in" data-parent="#accordion3">
+                    <div class="card-body" >
+                      <div class="filter-checkbox-input" >
+                        <!-- <label class="filterHeaders">Services</label> -->
+                        <!-- <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li> -->
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox class="filter-checkbox" [checked]="allServiceSelectedMultiUser"
+                            (change)="setFilterDataCheckbox('multiUser', 'all', $event)" >
+                            All</mat-checkbox>
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize" *ngFor="let multiUser of users">
+                          <mat-checkbox class="filter-checkbox"
+                            [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
+                            (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)" >
+                            {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
+                        </li>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!----for multi user filter end today tab -->
               </ul>
             </section>
             <div class="filter-footer" *ngIf="filterapplied === true">
@@ -1709,7 +1747,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card" style="padding-bottom: 30px !important;">
+                  <div class="card" >
                     <div class="card-header">
                       <h2 class="mb-0">
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseDate3"
@@ -1739,6 +1777,44 @@
                       </div>
                     </div>
                   </div>
+                  <!----for multi user filter start future tab-->
+                  <div class="card" *ngIf="users.length >0">
+                    <div class="card-header">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseServicesMultiUser" aria-expanded="false">
+                          <div>
+                            <div style="display: inline-block !important;">
+                              <i class="fa fa-user"></i>
+                            </div>
+                            <span>&nbsp;Multi User</span>
+                          </div>
+                          <i class="fa fa-angle-down"></i>
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapseServicesMultiUser" class="collapse in" data-parent="#accordion3">
+                      <div class="card-body" >
+                        <div class="filter-checkbox-input" >
+                          <!-- <label class="filterHeaders">Services</label> -->
+                          <!-- <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                          </li> -->
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox class="filter-checkbox" [checked]="allServiceSelectedMultiUser"
+                              (change)="setFilterDataCheckbox('multiUser', 'all', $event)" >
+                              All</mat-checkbox>
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize" *ngFor="let multiUser of users">
+                            <mat-checkbox class="filter-checkbox"
+                              [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
+                              (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)" >
+                              {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
+                          </li>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!----for multi user filter end future tab -->
                 </ul>
               </section>
               <div class="filter-footer" *ngIf="filterapplied === true">
@@ -2375,7 +2451,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card" *ngIf="time_type == 3" style="padding-bottom: 30px !important;">
+                  <div class="card" *ngIf="time_type == 3">
                     <div class="card-header">
                       <h2 class="mb-0">
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseDate3"
@@ -2415,6 +2491,44 @@
                       </div>
                     </div>
                   </div>
+                  <!----for multi user filter start hisytory tab-->
+                  <div class="card" *ngIf="users.length >0">
+                    <div class="card-header">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseServicesMultiUser" aria-expanded="false">
+                          <div>
+                            <div style="display: inline-block !important;">
+                              <i class="fa fa-user"></i>
+                            </div>
+                            <span>&nbsp;Multi User</span>
+                          </div>
+                          <i class="fa fa-angle-down"></i>
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapseServicesMultiUser" class="collapse in" data-parent="#accordion3">
+                      <div class="card-body" >
+                        <div class="filter-checkbox-input" >
+                          <!-- <label class="filterHeaders">Services</label> -->
+                          <!-- <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                          </li> -->
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox class="filter-checkbox" [checked]="allServiceSelectedMultiUser"
+                              (change)="setFilterDataCheckbox('multiUser', 'all', $event)" >
+                              All</mat-checkbox>
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize" *ngFor="let multiUser of users">
+                            <mat-checkbox class="filter-checkbox"
+                              [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
+                              (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)" >
+                              {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
+                          </li>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!----for multi user filter end history tab -->
                 </ul>
               </section>
               <div class="filter-footer" *ngIf="filterapplied === true">
