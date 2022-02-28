@@ -30,13 +30,13 @@
   <section class="qnrlist" [class.bookingQnr]="type">
     <div class="content">
       <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small" [class.no-padding]="type">
-        <div class="card no-padding-small" *ngIf="questionnaires.length === 1">
+        <div class="card no-padding-small" *ngIf="questionnaires.length >1">
           <app-questionnaire [questionnaireList]="waitlist_data.questionnaires[0]"
             [source]="(waitlist_data.waitlistStatus) ? 'proCheckin' : 'proAppt'" [uuid]="uid" [type]="'details'"
             [waitlistStatus]="(waitlist_data.waitlistStatus) ? waitlist_data.waitlistStatus : waitlist_data.apptStatus">
           </app-questionnaire>
         </div>
-        <div class="card no-padding-small" *ngIf="questionnaires.length > 1">
+        <div class="card no-padding-small" *ngIf="questionnaires.length > 0">
           <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
           <div class="table-responsive1" *ngIf="!loading">
             <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
