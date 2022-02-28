@@ -136,8 +136,8 @@
                                     (click)="removePhEmail(tele, tele_arr, 'newcheckin')"></i></div>
                             </div>
                         </div>
-                        <div class="form-group mgn-up-5" style="display: flex !important;" *ngIf="telegram">
-                            <div class="input-group">
+                        <div class="form-group mgn-up-5"  *ngIf="telegram">
+                            <div class="input-group" style="display: flex !important;">
                                 <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
                                      [(ngModel)]="teleCountrycode" minlength="2" maxlength="4" (keypress)="isNumericSign($event)">
                                 <input type="text" class="form-control" placeholder="Phonenumber"

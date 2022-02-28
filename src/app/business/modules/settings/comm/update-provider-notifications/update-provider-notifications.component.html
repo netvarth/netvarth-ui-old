@@ -123,6 +123,7 @@
                     </div>
                     <div class="minimum-height" *ngIf="cheknPushph_arr.length==0 && !cheknPushph "></div>
                     <div style="text-align: center;">
+                        
                         <span class="noti-add-btn col-lg-12 col-md-12 col-xs-12 col-sm-12"
                         *ngIf="accountType==='BRANCH' || (accountType!=='BRANCH' && cheknPushph_arr.length === 0)"
                         (click)="cheknPushAddClicked()">Add</span>
