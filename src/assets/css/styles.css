@@ -10102,3 +10102,10 @@ span.inactive{
 }
 
 
+ngx-intl-tel-input input
+{
+  height: 40px!important;
+}
+.provider-checkin .mat-chip-list-wrapper .mat-standard-chip {
+    margin: 2px!important;
+  }

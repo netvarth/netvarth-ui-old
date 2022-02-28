@@ -20,6 +20,7 @@ import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-servi
 import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
+import { ThirdpartypopupComponent } from '../thirdpartypopup/thirdpartypopup.component';
 
 @Component({
     selector: 'app-provider-checkin',
@@ -224,6 +225,7 @@ export class ProviderCheckinComponent implements OnInit {
     showBlockHint = false;
     uid;
     source;
+    display:any;
     virtualServicemode;
     virtualServicenumber;
     emptyFielderror = false;
@@ -245,6 +247,9 @@ export class ProviderCheckinComponent implements OnInit {
     cuntryCode;
     selfAssign;
     assignmyself;
+    categoryForSearchingarray=['Search with PhoneNumber','Search with Email ID','Search with Patient ID']
+    categoryvalue='Search with PhoneNumber';
+    thirdpartyoptions: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -348,6 +353,7 @@ export class ProviderCheckinComponent implements OnInit {
                 );
             }
         });
+        this.display = "none";
     }
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -387,6 +393,12 @@ export class ProviderCheckinComponent implements OnInit {
         this.showfuturediv = false;
         this.revealphonenumber = true;
     }
+    openModal() {
+        this.display = "block";
+      }
+      onCloseHandled() {
+        this.display = "none";
+      }
     performActions(action) {
         if (action === 'learnmore') {
             this.router.navigate(['/provider/' + this.domain + '/check-ins->check-in']);
@@ -594,6 +606,32 @@ export class ProviderCheckinComponent implements OnInit {
                     }
                 );
         }
+    }
+    openthirdpopup(domain,showOther,customer_label) {
+        this.thirdpartyoptions = this.dialog.open(ThirdpartypopupComponent, {
+            width: '80%',
+            panelClass: ['popup-class', 'confirmationmainclass'],
+            data : {
+                'domain':domain,
+                'showOther':showOther,
+                'customer_label':customer_label
+            }
+           
+        })
+        this.thirdpartyoptions.afterClosed().subscribe(result => {
+            if(result=='practo') {
+                this.initCheckIn('practo')
+            } else if(result=='justdial') {
+                this.initCheckIn('justdial')
+            } else if(result=='google') {
+                this.initCheckIn('google')
+            } else if(result == 'mfine') {
+                this.initCheckIn('mfine')
+            } else if(result=='other') {
+                this.showOtherSection()
+            }
+
+        });
     }
     confirmWaitlistBlockPopup() {
         const removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
@@ -2080,6 +2118,10 @@ export class ProviderCheckinComponent implements OnInit {
         this.showAction = true;
         this.action = action;
     }
+    actionChange(action)
+    {
+         this.action = action;
+    }
     hideFilterSidebar() {
         this.showAction = false;
     }
@@ -2230,5 +2272,9 @@ export class ProviderCheckinComponent implements OnInit {
                 this.api_loading = false;
             });
         }
+    }
+    popupClosed()
+    {
+
     }
 }
