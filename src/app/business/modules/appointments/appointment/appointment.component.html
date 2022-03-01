@@ -13,100 +13,111 @@
                 <div class="card p0" *ngIf="!showCheckin && !showQuestionnaire">
                     <div class="copy locd">
                         <div class="lbl col-sm-12 col-md-12 col-lg-12">
-                            <h5 class="mgn-up-10" *ngIf="source !== 'appt-block'"><b> Find an existing
-                                    {{customer_label}} and create
-                                    appointment</b></h5>
-                            <h5 class="mgn-up-10" *ngIf="source === 'appt-block'"> <b>Find an existing
-                                    {{customer_label}}</b></h5>
-
-                                
-                                    
-                                      <div class="col-lg-12 col-md-12 col-xs-0 col-sm-0 mgn-up-20" ></div>
-                                      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding display-xs-small" >
-                                       
-                                        <div *ngIf="categoryvalue=='Search with PhoneNumber'" class="col-lg-4 col-md-4 col-xs-3 col-sm-3   mgn-bt-10 padding-0 " style="margin-top: 18px !important;" >
-                          
-                                          <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox padding-0 numberstyle " [preferredCountries]="preferredCountries"
-                                            [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
-                                            [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
-                                            [maxLength]="15" [phoneValidation]="true" [selectedCountryISO]="selectedCountry"
-                                            [separateDialCode]="separateDialCode"  name="phone"
-                                            [(ngModel)]="phone" (keyup)="resetApiErrors()">
-                                            <!-- [numberFormat]="PhoneNumberFormat.National" -->
-                                          </ngx-intl-tel-input>
-                                          
-                                        </div>
-                                        <form *ngIf="categoryvalue!='Search with PhoneNumber'" [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()" class="col-lg-4 col-md-4 col-xs-3 col-sm-3   padding-0"  >
-                                          <div class="form-group">
-                                            <div class="input-group mob-container">
-                                              <input  autocomplete="off" placeholder="{{customer_label | capitalizeFirst}} Name or ID or Email"
-                                                type="text" class="inputstyling" formControlName="search_input"
-                                                (keypress)="findCustomer(searchForm.value, $event)">
-                                                              
-                                            </div>
-                                            <div  *ngIf="emptyFielderror" class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding">
-                                              <span class="sts-msg error" >Please enter the
-                                                {{customer_label | capitalizeFirst}} ID or Email</span>
-                                              <app-field-error-display style="color: #f24949 !important;" [displayError]="true" *ngIf="create_new"
-                                                errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
-                                                      Please create {{customer_label}} to take appointment">
-                                              </app-field-error-display>
-                                            </div>
-                                          </div>
-                                        </form>
-                                        <div class="col-lg-0 col-sm-1  col-md-0 col-xs-1 no-padding display-sm-show">
-                                          <mat-form-field >
-                                       
-                                              
-                                              <img style="margin-top:2px" src="../../../../../assets/images/Group 1512.png" width="50px" height="40px" >
-                                            
-                                 
-                                            <mat-select class="displaysmall" [(ngModel)]="categoryvalue">
-                                              <mat-option  *ngFor="let category of categoryForSearchingarray"  [value]="category">{{category}}</mat-option>
-                                            </mat-select>
-                                          </mat-form-field>
-                                        </div>
-                                        <div class="col-lg-2 col-sm-1 display-lg-show col-md-2 col-xs-1 no-padding ">
-                                          <mat-form-field  >
-                                            <mat-label class=" "  *ngIf="!categoryvalue" style="color: black;background-color: #f6f6f6;padding-left: 30px;">Category&nbsp;&nbsp;&nbsp;<span class="fa fa-angle-down"></span></mat-label>
-                                            <mat-select  class="categoryfield"  [(ngModel)]="categoryvalue">
-                                              <mat-option  *ngFor="let category of categoryForSearchingarray"  [value]="category">{{category}}</mat-option>
-                                            </mat-select>
-                                          </mat-form-field>
-                                        </div>
-                                        <div class=" padding-0 no-padding" style="margin-top: 18px !important;"  >
-                                          
-                                          <button *ngIf="categoryvalue!='Search with PhoneNumber'" class="findcolor" (click)="searchCustomer(searchForm.value)"><i class="fa fa-search padding-0"
-                                            aria-hidden="true"></i>
-                                          </button>
-                                          <button *ngIf="categoryvalue=='Search with PhoneNumber'" class="findcolor" (click)="serchCustomers(phone)"><i class="fa fa-search padding-0" aria-hidden="true"></i>
-                                          </button>
-                                        </div>
-                                       
-                                        
-                                        
-                                      </div>
-                         
-                                      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding ">
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding mb-4">
               
-                                        <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 " style="margin-right: 40px;"  (click)="createNew()" *ngIf="!showBlockHint" >
+                                <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 " style="margin-right: 40px;"  (click)="createNew()" *ngIf="!showBlockHint" >
+                                  <img src="../../../../../assets/images/user_plus.png" style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Create New Patient</b>
+                                </div>
+                    
+                                <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 "  (click)="openthirdpopup(domain,showOther,customer_label)" *ngIf="source !== 'waitlist-block'" >
+                                    <img src="../../../../../assets/images/snowflake.png" style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Third party options</b> 
+                                </div>
+                  
+                            </div>
+                            <div class="clearfix"></div>
+                            <span class="mgn-up-10 text-light" *ngIf="source !== 'appt-block'"> Find an existing
+                                    {{customer_label}} and create
+                                    appointment</span>
+                            <span class="mgn-up-10 text-light" *ngIf="source === 'appt-block'"> Find an existing
+                                    {{customer_label}}</span>
+                                
+                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding display-xs-small" >
+                                
+                                <div class="col-lg-2 col-sm-1 display-lg-show col-md-2 col-xs-1 no-padding searchbar">
+                                    <mat-form-field  >
+                                        <mat-label class=" "  *ngIf="!categoryvalue" style="color: black;background-color: #f6f6f6;padding-left: 30px;">Category&nbsp;&nbsp;&nbsp;<span class="fa fa-angle-down"></span></mat-label>
+                                        <mat-select  class="categoryfield"  [(ngModel)]="categoryvalue">
+                                            <mat-option  *ngFor="let category of categoryForSearchingarray"  [value]="category">{{category.slice(12)}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-0 col-sm-1  col-md-0 col-xs-1 no-padding display-sm-show searchbar">
+                                    <mat-form-field >
+                                
                                         
-                                          <img src="../../../../../assets/images/create new patient.png" style="width: 50px;height: 50px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Create New Patient</b>
-                                        </div>
+                                        <img src="../../../../../assets/images/Group 1512.png" width="50px" height="40px" >
+                                    
                             
-                                        <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 "  (click)="openthirdpopup(domain,showOther,customer_label)" *ngIf="source !== 'waitlist-block'" >
-                                      
-                                            <img src="../../../../../assets/images/3rd party.png" style="width: 50px;height: 50px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Third party options</b>
-                                 
-                                         
-                                         
-                                        </div>
-                          
+                                    <mat-select class="displaysmall" [(ngModel)]="categoryvalue">
+                                        <mat-option  *ngFor="let category of categoryForSearchingarray"  [value]="category">{{category.slice(12)}}</mat-option>
+                                    </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div *ngIf="categoryvalue=='Search with PhoneNumber'" class="col-lg-4 col-md-4 col-xs-3 col-sm-3   mgn-bt-10 padding-0 ">
+                    
+                                    <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox padding-0 numberstyle " [preferredCountries]="preferredCountries"
+                                    [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                    [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
+                                    [maxLength]="15" [phoneValidation]="true" [selectedCountryISO]="selectedCountry"
+                                    [separateDialCode]="separateDialCode"  name="phone"
+                                    [(ngModel)]="phone" (keyup)="resetApiErrors()">
+                                    <!-- [numberFormat]="PhoneNumberFormat.National" -->
+                                    </ngx-intl-tel-input>
+                                    
+                                </div>
+                                
+                                
+                                <form *ngIf="categoryvalue!='Search with PhoneNumber'" [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()" class="col-lg-4 col-md-4 col-xs-3 col-sm-3   padding-0"  >
+                                    <div class="form-group">
+                                    <div class="input-group mob-container">
+                                        <input  autocomplete="off" placeholder="{{customer_label | capitalizeFirst}} Name or ID or Email"
+                                        type="text" class="inputstyling" formControlName="search_input"
+                                        (keypress)="findCustomer(searchForm.value, $event)">
+                                                        
                                     </div>
+                                    <div  *ngIf="emptyFielderror" class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding">
+                                        <span class="sts-msg error" >Please enter the
+                                        {{customer_label | capitalizeFirst}} ID or Email</span>
+                                        <app-field-error-display style="color: #f24949 !important;" [displayError]="true" *ngIf="create_new"
+                                        errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
+                                                Please create {{customer_label}} to take appointment">
+                                        </app-field-error-display>
+                                    </div>
+                                    </div>
+                                </form>
+                                
+                                
+                                <div class=" padding-0 no-padding">
+                                    
+                                    <button *ngIf="categoryvalue!='Search with PhoneNumber'" class="findcolor" (click)="searchCustomer(searchForm.value)"><i class="fa fa-search padding-0"
+                                    aria-hidden="true"></i>
+                                    </button>
+                                    <button *ngIf="categoryvalue=='Search with PhoneNumber'" class="findcolor" (click)="serchCustomers(phone)"><i class="fa fa-search padding-0" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                
+                                
+                            </div>
+                                <div class="clearfix"></div>
+                                <div class="disp-flex" *ngIf="showOther">
+                                    <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
+                                      <mat-form-field>
+                                        <input matInput placeholder="Enter your third party listing site *" [(ngModel)]="otherThirdParty"
+                                          type="text" class="form-control" (keypress)="resetError()" autocomplete="off">
+                                      </mat-form-field>
+                                      <app-field-error-display style="color: #f24949 !important;" [displayError]="true"
+                                        *ngIf="thirdparty_error" errorMsg="{{thirdparty_error}}">
+                                      </app-field-error-display>
+                                    </div>
+                                    <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
+                                      <button class="create_new_button cs-btn bt3" (click)="showOtherSection(true)">Ok</button>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
                          
-                         
-                                      <div class="input-group mob-container mgn-up-20">
-                                <!-- <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox"
+                                
+                                <!-- <div class="input-group mob-container mgn-up-20">
+                                <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox"
                                     [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="true"
                                     [enablePlaceholder]="true" [searchCountryFlag]="true"
                                     [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
@@ -114,11 +125,11 @@
                                     [selectedCountryISO]="selectedCountry" [separateDialCode]="separateDialCode"
                                     [numberFormat]="PhoneNumberFormat.National" name="phone" [(ngModel)]="phone"
                                     (keyup)="resetApiErrors()">
-                                </ngx-intl-tel-input> -->
-                                <!-- <button class="findcolor" (click)="serchCustomers(phone)"><i class="fa fa-search"
+                                </ngx-intl-tel-input>
+                                 <button class="findcolor" (click)="serchCustomers(phone)"><i class="fa fa-search"
                                         aria-hidden="true"></i>
-                                </button> -->
-                            </div>
+                                </button>
+                            </div> -->
                             <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()" class="mgn-up-20">
                                 
                                 <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding  mgn-up-20 sc-frm">
@@ -154,26 +165,7 @@
                                 </div>
                             </form>
 
-
-
-
-
-                            <div class="clearfix"></div>
-                            <div class="disp-flex mb-3" *ngIf="showOther">
-                                <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
-                                  <mat-form-field>
-                                    <input matInput placeholder="Enter your third party listing site *" [(ngModel)]="otherThirdParty"
-                                      type="text" class="form-control" (keypress)="resetError()" autocomplete="off">
-                                  </mat-form-field>
-                                  <app-field-error-display style="color: #f24949 !important;" [displayError]="true"
-                                    *ngIf="thirdparty_error" errorMsg="{{thirdparty_error}}">
-                                  </app-field-error-display>
-                                </div>
-                                <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
-                                  <button class="create_new_button cs-btn bt3" (click)="showOtherSection(true)">Ok</button>
-                                </div>
-                              </div>
-                              <div class="clearfix"></div>
+                            
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20" *ngIf="showBlockHint">
                                 <table
                                     class="table table-head-custom table-head-bg table-borderless table-vertical-center bold">
@@ -272,16 +264,14 @@
                                 </div>
                             </div> -->
                         </div>
-                        <div class="lbr col-sm-12 col-md-4 col-lg-4">
-                        </div>
                     </div>
                 </div>
             </div>
             <div class="card" *ngIf="showCheckin && !showQuestionnaire">
                 <div class="">
                     <div class="servicefor-outer btborder">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6">
+                        <div>
+                            <div class="row">
                               <ul class="availer-ul pl-0" *ngIf="thirdParty === ''">
                                 <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
                                   <li class="block-level consumer-name d-flex justify-content-start">
@@ -298,7 +288,7 @@
                                 </ng-container>
                               </ul>
                             </div>
-                            <div class="col-lg-6 col-md-6">
+                            <div class="row">
                               <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
                                 <mat-chip class="pro-action" (click)="openModal()"><a>Add /
                                   Change Member </a>
@@ -561,7 +551,7 @@
                     
                     <div>
              <span class="m-2 text-primary" *ngIf="thirdParty === '' && queuejson.length > 0"><b>Please upload Notes/Files related to your service</b></span><br>
-             <div class="display-lg-show provider-appointment-walkin" *ngIf="!showAction">
+             <div class="provider-appointment-walkin" *ngIf="!showAction">
                 <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
                     <!-- <mat-chip class="pro-action" (click)="handleSideScreen('members')"><a>Add/Change
                                 Member </a>
@@ -582,11 +572,11 @@
                     </div>
                 </mat-chip-list>
             </div>
-             <div class="display-sm-show provider-appointment-walkin"  *ngIf="!showAction">
+             <!-- <div class="display-sm-show"  *ngIf="!showAction">
                 <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
-                <!-- <mat-chip class="pro-action" (click)="handleSideScreen('members')"><a>Add/Change
+                <mat-chip class="pro-action" (click)="handleSideScreen('members')"><a>Add/Change
                             Member</a>
-                    </mat-chip> -->
+                    </mat-chip>
                     <mat-chip class="pro-action" (click)="handleSideScreen('note')">
                         <a>{{(sel_ser_det.consumerNoteTitle) ? sel_ser_det.consumerNoteTitle : 'Notes'}}
                             <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span> </a>
@@ -599,7 +589,7 @@
                                 *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span></a>
                     </mat-chip>
                 </mat-chip-list>
-            </div>
+            </div> -->
         <!-- Add or Change Member Modal -->
           <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
             <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
@@ -663,8 +653,8 @@
                               </mat-radio-group>
                             </ng-container>
                           </ul>
-                          <div class="cs-btn bt3 member-add mt-2 btn btn-primary" (click)="addMember()" *ngIf="!showCreateMember">
-                            <img src="../../../../../assets/images/create new patient.png" width="25px" height="25px">&nbsp;&nbsp;{{add_member_cap}}
+                          <div class="cs-btn bt3 member-add my-2 btn btn-primary p-1 text-capitalize" (click)="addMember()" *ngIf="!showCreateMember">
+                            <img src="../../../../../assets/images/user_plus_white.png" width="25px" height="25px">&nbsp;&nbsp;{{add_member_cap}}
                           </div>
                         </div>
                       </div>

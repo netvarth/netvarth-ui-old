@@ -14,14 +14,52 @@
       <div class="card no-padding"  *ngIf="!showCheckin">
         <div class="copy locd">
           <div class="lbl col-sm-12 col-md-12 col-lg-12  mgn-lt-20 no-padding">
-            <h5 class="mgn-up-10 mgn-bt-20" *ngIf="source !== 'waitlist-block'"><b>Find an existing {{customer_label}} and
-                create {{(showtoken? 'token' :
-                'check-in')}}</b><br> </h5>
-            <h5 class="mgn-up-10 mgn-bt-20" *ngIf="source === 'waitlist-block'"> <b>Find an existing {{customer_label}}</b> <br></h5>
+            
 
-            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 display-xs-small pl-0">
-             
-              <div *ngIf="categoryvalue=='Search with PhoneNumber'" class="col-lg-4 col-md-4 col-xs-3 col-sm-3 mgn-up-18  mgn-bt-10 padding-0 "  >
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding mb-4">
+              
+              <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 " style="margin-right: 40px;"  (click)="createNew()" *ngIf="!showBlockHint" >
+                <img src="../../../../../assets/images/user_plus.png" style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Create New Patient</b>
+              </div>
+  
+              <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 "  (click)="openthirdpopup(domain,showOther,customer_label)" *ngIf="source !== 'waitlist-block'" >
+                  <img src="../../../../../assets/images/snowflake.png" style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Third party options</b> 
+              </div>
+
+            </div>
+            <div class="clearfix"></div>
+            <span class="mgn-up-10 text-light" *ngIf="source !== 'waitlist-block'">Find an existing {{customer_label}} and
+              create {{(showtoken? 'token' :
+              'check-in')}}</span>
+            <span class="mgn-up-10 text-light" *ngIf="source === 'waitlist-block'"> Find an existing {{customer_label}}</span>
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 display-xs-small pl-0 pb-0" style='width: 95%!important;border-radius: 5px!important;'>
+
+              <div class="col-lg-2 col-sm-1 display-lg-show col-md-2 col-xs-1 no-padding border-0 searchbar">
+                <mat-form-field>
+                  <!-- <mat-label>Category&nbsp;&nbsp;&nbsp;<span class="fa fa-angle-down"></span></mat-label> -->
+                  <!-- <mat-label class="display-sm-show"><img src="../../../../../assets/images/Group 1512.png" width="70px" height="70px"></mat-label> -->
+                  <mat-select  class="categoryfield"  [(ngModel)]="categoryvalue">
+                    <mat-option *ngFor="let category of categoryForSearchingarray"  [value]="category">{{category.slice(12)}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-lg-0 col-sm-1  col-md-0 col-xs-1 no-padding display-sm-show border-0 searchbar">
+                <mat-form-field >
+                  <!-- <mat-label > -->
+                    
+                    <img src="../../../../../assets/images/Group 1512.png" width="50px" height="40px" >
+                  
+                  <!-- </mat-label> -->
+                  <!-- <mat-label>Category&nbsp;&nbsp;&nbsp;<span class="fa fa-angle-down"></span></mat-label> -->
+                  <mat-select class="displaysmall" [(ngModel)]="categoryvalue">
+                    <mat-option *ngFor="let category of categoryForSearchingarray"  [value]="category">{{category.slice(12)}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              
+
+              <div *ngIf="categoryvalue=='Search with PhoneNumber'" class="col-lg-4 col-md-4 col-xs-3 col-sm-3 mgn-bt-10 padding-0 "  >
 
                 <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox padding-0 numberstyle " [preferredCountries]="preferredCountries"
                   [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
@@ -33,7 +71,7 @@
                 </ngx-intl-tel-input>
                 
               </div>
-              <form *ngIf="categoryvalue!='Search with PhoneNumber'" [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()" class="col-lg-4 col-md-4 col-xs-3 col-sm-3  mgn-up-18 padding-0" >
+              <form *ngIf="categoryvalue!='Search with PhoneNumber'" [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()" class="col-lg-4 col-md-4 col-xs-3 col-sm-3 padding-0" >
                 <div class="form-group">
                   <div class="input-group mob-container">
                     <input  autocomplete="off" placeholder="{{customer_label | capitalizeFirst}} Name or ID or Email"
@@ -51,29 +89,9 @@
                   </div>
                 </div>
               </form>
-              <div class="col-lg-0 col-sm-1  col-md-0 col-xs-1 no-padding display-sm-show">
-                <mat-form-field >
-                  <!-- <mat-label > -->
-                    
-                    <img style="margin-top:2px" src="../../../../../assets/images/Group 1512.png" width="50px" height="40px" >
-                  
-                  <!-- </mat-label> -->
-                  <!-- <mat-label>Category&nbsp;&nbsp;&nbsp;<span class="fa fa-angle-down"></span></mat-label> -->
-                  <mat-select class="displaysmall" [(ngModel)]="categoryvalue">
-                    <mat-option *ngFor="let category of categoryForSearchingarray"  [value]="category">{{category}}</mat-option>
-                  </mat-select>
-                </mat-form-field>
-               </div>
-              <div class="col-lg-2 col-sm-1 display-lg-show col-md-2 col-xs-1 no-padding ">
-                <mat-form-field>
-                  <!-- <mat-label>Category&nbsp;&nbsp;&nbsp;<span class="fa fa-angle-down"></span></mat-label> -->
-                  <!-- <mat-label class="display-sm-show"><img src="../../../../../assets/images/Group 1512.png" width="70px" height="70px"></mat-label> -->
-                  <mat-select  class="categoryfield"  [(ngModel)]="categoryvalue">
-                    <mat-option *ngFor="let category of categoryForSearchingarray"  [value]="category">{{category}}</mat-option>
-                  </mat-select>
-                </mat-form-field>
-               </div>
-              <div class=" mgn-up-18 padding-0 no-padding mr-1">
+              
+              
+              <div class="padding-0 no-padding mr-1">
                 <button *ngIf="categoryvalue!='Search with PhoneNumber'" class="findcolor" (click)="searchCustomer(searchForm.value)"><i class="fa fa-search padding-0"
                   aria-hidden="true"></i>
                 </button>
@@ -84,34 +102,6 @@
              
               
             </div>
-            <div class="clearfix"></div>
-            
-            
-            
-            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding mb-4">
-              
-              <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 " style="margin-right: 40px;"  (click)="createNew()" *ngIf="!showBlockHint" >
-              
-                <img src="../../../../../assets/images/create new patient.png" style="width: 50px;height: 50px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Create New Patient</b>
-              </div>
-  
-              <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 "  (click)="openthirdpopup(domain,showOther,customer_label)" *ngIf="source !== 'waitlist-block'" >
-            
-                  <img src="../../../../../assets/images/3rd party.png" style="width: 50px;height: 50px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Third party options</b>
-       
-               
-               
-              </div>
-
-            </div>
-
-            
-
-
-            <!-- <div class="col-lg-12 col-md-12 col-xs-0 col-sm-0 mgn-up-20" ></div> -->
-            
-
-
             <div class="clearfix"></div>
             <div class="disp-flex my-3" *ngIf="showOther">
               <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
@@ -197,9 +187,9 @@
       </div>
       <div class="card" *ngIf="showCheckin && !showQuestionnaire">
         <div class="">
-          <div class="btborder">
-            <div class="row">
-              <div class="col-lg-6 col-md-6">
+          <div class="">
+            <div>
+              <div class="row">
                 <ul class="availer-ul pl-0" *ngIf="thirdParty === ''">
                   <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
                     <li class="block-level consumer-name d-flex justify-content-start">
@@ -216,7 +206,7 @@
                   </ng-container>
                 </ul>
               </div>
-              <div class="col-lg-6 col-md-6">
+              <div class="row">
                 <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
                   <mat-chip class="pro-action" (click)="openModal()"><a>Add /
                     Change Member </a>
@@ -810,8 +800,8 @@
                               </mat-radio-group>
                             </ng-container>
                           </ul>
-                          <div class="cs-btn bt3 member-add mt-2 btn btn-primary" (click)="addMember()" *ngIf="!showCreateMember">
-                            <img src="../../../../../assets/images/create new patient.png" width="25px" height="25px">&nbsp;&nbsp;{{add_member_cap}}
+                          <div class="cs-btn bt3 member-add mt-2 btn btn-primary p-1 text-capitalize" (click)="addMember()" *ngIf="!showCreateMember">
+                            <img src="../../../../../assets/images/user_plus_white.png" width="25px" height="25px">&nbsp;&nbsp;{{add_member_cap}}
                           </div>
                         </div>
                       </div>
@@ -847,7 +837,7 @@
 
 
 
-          <div class="mx-auto col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-center border-top pt-10 width-100">
+          <div class="mx-auto col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100">
             <div class="mr-2" *ngIf="!showBlockHint">
               <button type="button" class="btn btn-light-primary font-weight-bold" (click)="goBack()">
                 Previous

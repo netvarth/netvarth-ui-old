@@ -40,6 +40,10 @@
     all:initial !important;
   
   }
+  .card1
+  {
+    max-width: 320px!important;
+  }
   .findcolor{
     background-color: #1E4079;
     border-bottom-right-radius: 5px;
@@ -106,21 +110,24 @@
 
 .card1 {
   /* width: 90% !important; */
-  max-width: 320px;
-  background-color: #1E4079;
-  color: #fff;
+  max-width: 220px;
+  background-color: #fff;
+  color: #1E4079;
+  border: 1px solid #1E4079;
   /* height: 30% !important; */
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
   touch-action: manipulation;
   cursor: pointer;
+  border-radius: 10px!important;
+
 
   /* padding: 15px 0 15px 0px; */
   
   vertical-align: middle !important;
-  -webkit-box-shadow:0 2px 4px 0 rgba(0, 0, 0, 0.2),  0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),  0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;
+  /* -webkit-box-shadow:0 2px 4px 0 rgba(0, 0, 0, 0.2),  0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),  0 3px 10px 0 rgba(0, 0, 0, 0.19) !important; */
 }
 
 .categoryfield {
@@ -235,7 +242,7 @@
     color: rgba(202, 195, 202, 0.61);
 }
 .inputstyling {
-  margin-top: 18px !important;
+  /* margin-top: 18px !important; */
   border: 1px solid rgb(212, 208, 208);
   /* height: 70px !important; */
   background-color: #f6f6f6 !important; 
@@ -338,4 +345,8 @@
 {
   color:black!important;
   font-size: 20px!important;
+}
+.text-light
+{
+  color: rgb(139, 139, 139)!important;
 }

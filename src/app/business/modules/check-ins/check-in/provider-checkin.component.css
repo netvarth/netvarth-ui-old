@@ -37,14 +37,16 @@ align-items: center;
     all:initial !important;
   
   }
+  .card1
+  {
+    max-width: 320px!important;
+  }
   .findcolor{
     background-color: #1E4079;
     border-bottom-right-radius: 5px;
     border-top-right-radius: 5px;
     width: 40px !important;
     height: 40px !important;
-    /* padding-left: 5px !important; */
-    /* padding-right: 30px !important; */
     color: white;
     align-items: center;
     text-align: center;
@@ -113,21 +115,21 @@ align-items: center;
 
 .card1 {
   /* width: 90% !important; */
-  max-width: 320px;
+  max-width: 220px;
   /* height: 30% !important; */
-  background-color: #1E4079;
-  color: #fff;
+  background-color: #fff;
+  color: #1E4079;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
   touch-action: manipulation;
   cursor: pointer;
-
+  border: 1px solid #1E4079;
   /* padding: 15px 0 15px 0px; */
-  
+  border-radius: 10px!important;
   vertical-align: middle !important;
-  -webkit-box-shadow:0 2px 4px 0 rgba(0, 0, 0, 0.2),  0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),  0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;
+  /* -webkit-box-shadow:0 2px 4px 0 rgba(0, 0, 0, 0.2),  0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),  0 3px 10px 0 rgba(0, 0, 0, 0.19) !important; */
 }
 .padding-0{
   padding-right:0;
@@ -360,4 +362,12 @@ align-items: center;
 .addmem-head
 {
   font-size: 10px!important;
+}
+.fa-search
+{
+  color: #fff!important;
+}
+.text-light
+{
+  color: rgb(139, 139, 139)!important;
 }
