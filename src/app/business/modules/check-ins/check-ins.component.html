@@ -654,12 +654,12 @@
                     (click)="gotoCustomerDetails(checkin)">
                     {{checkin.waitlistingFor[0].firstName}}
                     {{checkin.waitlistingFor[0].lastName}}
-                    <img src="../../../../assets/icons/icon 294 (Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" class="reqInfo"  *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'web' && checkin.waitlistingFor[0]"
+                    <img src="../../../../assets/icons/icon294(Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'web'"
                     style="width: 18px !important; margin-top: -6px !important;">
-                    <img src="../../../../assets/icons/Group 482249.png" (mouseover)="changeText=true" (mouseout)="changeText=false" class="reqInfo"  *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'app' && checkin.waitlistingFor[0]" 
+                    <img src="../../../../assets/icons/Group482249.png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'app'" 
                     style="width: 18px !important; margin-top: -6px !important;">
-                    <img src="../../../../assets/icons/icon 295 (Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" class="reqInfo"  *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'consumer' && checkin.waitlistingFor[0]"
-                    style="width: 18px !important; margin-top: -6px !important; border-radius: 5%;">
+                    <img src="../../../../assets/icons/icon295(Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'android'"
+                    style="width: 18px !important; margin-top: -6px !important;">
                     <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                       <span
                         *ngIf="checkin.waitlistingFor[0].bookingLocation.district">{{checkin.waitlistingFor[0].bookingLocation.district}},</span>
@@ -911,12 +911,12 @@
                     (click)="gotoCustomerDetails(checkin)" [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
                     [class.pointer-auto]="checkin.waitlistStatus=='blocked'">
                     {{checkin.waitlistingFor[0].firstName}}
-                    {{checkin.waitlistingFor[0].lastName}} <img src="../../../../assets/icons/icon 294 (Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" class="reqInfo"  *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'web' && checkin.waitlistingFor[0]"
+                    {{checkin.waitlistingFor[0].lastName}} <img src="../../../../assets/icons/icon294(Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'web'"
                     style="width: 18px !important; margin-top: -6px !important;">
-                    <img src="../../../../assets/icons/Group 482249.png" (mouseover)="changeText=true" (mouseout)="changeText=false" class="reqInfo"  *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'app' && checkin.waitlistingFor[0]" 
+                    <img src="../../../../assets/icons/Group482249.png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'app'" 
                     style="width: 18px !important; margin-top: -6px !important;">
-                    <img src="../../../../assets/icons/icon 295 (Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" class="reqInfo"  *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'consumer' && checkin.waitlistingFor[0]"
-                    style="width: 18px !important; margin-top: -6px !important; border-radius: 5%;" >
+                    <img src="../../../../assets/icons/icon295(Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'android'"
+                    style="width: 18px !important; margin-top: -6px !important;">
 
                     <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                     <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
@@ -1587,12 +1587,12 @@
                   [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                   (click)="gotoCustomerDetails(checkin)" [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
                   [class.pointer-auto]="checkin.waitlistStatus=='blocked'">{{checkin.waitlistingFor[0].firstName}}
-                  {{checkin.waitlistingFor[0].lastName}} <img src="../../../../assets/icons/icon 294 (Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" class="reqInfo"  *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'web' && checkin.waitlistingFor[0]"
+                  {{checkin.waitlistingFor[0].lastName}} <img src="../../../../assets/icons/icon294(Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'web'"
                   style="width: 18px !important; margin-top: -6px !important;">
-                  <img src="../../../../assets/icons/Group 482249.png" (mouseover)="changeText=true" (mouseout)="changeText=false" class="reqInfo"  *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'app' && checkin.waitlistingFor[0] " 
+                  <img src="../../../../assets/icons/Group482249.png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'app'" 
                   style="width: 18px !important; margin-top: -6px !important;">
-                  <img src="../../../../assets/icons/icon 295 (Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" class="reqInfo"  *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'consumer' && checkin.waitlistingFor[0]"
-                  style="width: 18px !important; margin-top: -6px !important; border-radius: 5%;">
+                  <img src="../../../../assets/icons/icon295(Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'android'"
+                  style="width: 18px !important; margin-top: -6px !important;">
 
                   <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                   <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
@@ -2375,12 +2375,12 @@
                   [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                   (click)="gotoCustomerDetails(checkin)">
                   {{checkin.waitlistingFor[0].firstName}}
-                  {{checkin.waitlistingFor[0].lastName}} <img class="reqInfo" src="../../../../assets/icons/icon 294 (Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'web'&& checkin.waitlistingFor[0]"
+                  {{checkin.waitlistingFor[0].lastName}} <img src="../../../../assets/icons/icon294(Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'web'"
                     style="width: 18px !important; margin-top: -6px !important;">
-                    <img class="reqInfo"  src="../../../../assets/icons/Group 482249.png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'app' && checkin.waitlistingFor[0]" 
+                    <img src="../../../../assets/icons/Group482249.png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'app'" 
                     style="width: 18px !important; margin-top: -6px !important;">
-                    <img class="reqInfo"  src="../../../../assets/icons/icon 295 (Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'consumer' && checkin.waitlistingFor[0]"
-                    style="width: 18px !important; margin-top: -6px !important; border-radius: 5%;">
+                    <img src="../../../../assets/icons/icon295(Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'android'"
+                    style="width: 18px !important; margin-top: -6px !important;">
 
                   <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                     <span

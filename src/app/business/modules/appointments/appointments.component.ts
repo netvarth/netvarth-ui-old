@@ -606,11 +606,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     //     filename = fileName;
     //   }
     // }
-    //"CONSUMER_APP"
-     filename = fileName.slice(0, 3);
-     if(fileName.length >8){
-      filename = fileName.slice(0,8);
+    if(filename){
+      filename = fileName.slice(0, 3);
     }
+   if(filename){
+    if(fileName.length >7){
+      filename = fileName.slice(0,7);
+    }
+   }
+    
 
     return filename.toLocaleLowerCase();
   }
@@ -1439,9 +1443,6 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                 _this.apptByTimeSlot = this.shared_functions.groupBy(_this.check_in_filtered_list, 'appmtTime');
                 _this.handleApptSelectionType();
                 _this.startedAppts = _this.getActiveAppointments(_this.todayAppointments, 'started');
-                console.log("Today Appointments :",_this.todayAppointments);
-                console.log("Today Appts :",_this.check_in_filtered_list);
-
               },
               () => {
                 _this.loading = false;
