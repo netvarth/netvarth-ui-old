@@ -606,10 +606,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     //     filename = fileName;
     //   }
     // }
-     filename = fileName.slice(0, 3);
-     if(fileName.length >7){
+    if(filename){
+      filename = fileName.slice(0, 3);
+    }
+   if(filename){
+    if(fileName.length >7){
       filename = fileName.slice(0,7);
     }
+   }
+    
 
     return filename.toLocaleLowerCase();
   }
