@@ -2278,6 +2278,10 @@ export class ProviderServices {
     const url = 'provider/appointment/questionnaire/change/' + status + '/' + uid + '/' + id;
     return this.servicemeta.httpPut(url);
   }
+  changeOrderQnrReleaseStatus(status, uid, id) {
+    const url = 'provider/orders/questionnaire/change/' + status + '/' + uid + '/' + id;
+    return this.servicemeta.httpPut(url);
+  }
   getWaitlistQuestionnaireByUid(uid) {
     const url = 'provider/waitlist/questionnaire/' + uid;
     return this.servicemeta.httpGet(url);
@@ -2304,6 +2308,10 @@ export class ProviderServices {
   }
   sendApptQnrNotification(uid, post_data) {
     const url = 'provider/appointment/questionnaire/notification/' + uid;
+    return this.servicemeta.httpPut(url, post_data);
+  }
+  sendOrderQnrNotification(uid, post_data) {
+    const url = 'provider/orders/questionnaire/notification/' + uid;
     return this.servicemeta.httpPut(url, post_data);
   }
   unassignTeamWaitlist(post_data) {

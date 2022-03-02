@@ -147,6 +147,7 @@ export class ProviderUserNotificationUserComponent implements OnInit {
       .subscribe(
         data => {
           this.notificationList = data;
+          console.log("notification list..",this.notificationList)
           this.setNotificationList(this.notificationList);
         },
         error => {

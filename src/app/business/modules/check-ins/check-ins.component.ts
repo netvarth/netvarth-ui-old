@@ -118,7 +118,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     page: 1,
     futurecheckin_date: null,
     age: 'all',
-    gender: 'all'
+    gender: 'all',
+    multiUser:'all',
   }; // same in resetFilter Fn
   filters = {
     first_name: false,
@@ -139,7 +140,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     check_in_end_date: false,
     location_id: false,
     age: false,
-    gender: false
+    gender: false,
+    multiUser:false,
   };
   filter_date_start_min = null;
   filter_date_start_max = null;
@@ -363,6 +365,11 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   locId;
   location_select: any = [];
   internalStats: any = [];
+  
+//multi user variable start
+allServiceSelectedMultiUser=false
+selectedMultiUser:any=[]
+multiUserFilter:any=[];
   @ViewChild('closebutton') closebutton;
   showattachmentDialogRef: any;
   constructor(private shared_functions: SharedFunctions,
@@ -827,6 +834,50 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.filterLocation.length === this.locations.length) {
         this.filter['location'] = 'all';
         this.allLocationSelected = true;
+      }
+    }
+    //for multi user
+    if(type ==='multiUser'){
+      // console.log('users List:',this.users);
+      // console.log('event:',event.checked)
+      // console.log(value)
+      if(value === 'all'){
+        // console.log('all1')
+        this.multiUserFilter=[];
+
+        this.allServiceSelectedMultiUser=false;
+        
+        if(event.checked){
+          for (const multi of this.users) {
+
+            // console.log(this.multiUserFilter.indexOf(multi.id))
+            if (this.multiUserFilter.indexOf(multi.id) === -1) {
+              this.multiUserFilter.push(multi.id);
+            }
+          }
+          // console.log('multiuserFilter:',this.multiUserFilter);
+          this.allServiceSelectedMultiUser=true;
+        }
+      }else{
+        this.allServiceSelectedMultiUser = false;
+        const indx = this.multiUserFilter.indexOf(value);
+        // console.log(indx)
+        if (indx === -1) {
+          this.multiUserFilter.push(value);
+          // console.log(this.multiUserFilter)
+        } else {
+          this.multiUserFilter.splice(indx, 1);
+          // console.log(this.multiUserFilter)
+        }
+        
+      }
+      // console.log(this.multiUserFilter.length)
+      // console.log(this.users.length)
+      // console.log(this.filter)
+      if (this.multiUserFilter.length === this.users.length) {
+        // console.log('all2')
+        this.filter['multiUser'] = 'all';
+        this.allServiceSelectedMultiUser = true;
       }
     }
     this.keyPressed();
@@ -2003,6 +2054,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.allLabelSelected = false;
     this.allQSelected = false;
     this.allLocationSelected = false;
+    this.multiUserFilter=[];
+    this.allServiceSelectedMultiUser=false;
   }
   setFilterdobMaxMin() {
     this.filter_dob_start_max = new Date();
@@ -2065,6 +2118,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.filterService.length > 0 && this.filter.service !== 'all') {
       api_filter['service-eq'] = this.filterService.toString();
+    }
+    if(this.multiUserFilter.length >0 && this.filter.multiUser !== 'all' ){
+      api_filter['provider-eq'] = this.multiUserFilter.toString();
     }
     if (this.apptStatuses.length > 0 && this.filter.waitlist_status !== 'all') {
       api_filter['waitlistStatus-eq'] = this.apptStatuses.toString();
@@ -2149,10 +2205,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' || this.filter.location != 'all'
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.checkinEncId || this.filter.patientId || this.filter.multiUser !=='all' || this.filter.service !== 'all' || this.filter.location != 'all'
       || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.internalStatus !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== ''
-      || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
+      || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allServiceSelectedMultiUser || this.allApptStatusSelected
       || this.allPayStatusSelected || this.allModeSelected || this.allStatusSelected || this.allLabelSelected || this.allQSelected || this.allLocationSelected) {
       this.filterapplied = true;
     } else {
@@ -2185,6 +2241,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       queue: false,
       location: false,
       service: false,
+      multiUser:false,
       waitlist_status: false,
       payment_status: false,
       internalStatus: false,
@@ -2206,6 +2263,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       queue: 'all',
       location: 'all',
       service: 'all',
+      multiUser:'all',
       waitlist_status: 'all',
       payment_status: 'all',
       waitlistMode: 'all',
@@ -2519,7 +2577,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.filters[type]) {
       if (type === 'check_in_start_date' || type === 'check_in_end_date' || type === 'check_in_date') {
         this.filter[type] = null;
-      } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'location' || type === 'waitlistMode' || type === 'internalStatus') {
+      } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'location' || type === 'waitlistMode' || type === 'internalStatus'|| type==='multiUser') {
         this.filter[type] = 'all';
       } else if (type === 'waitlist_status') {
         this.statusMultiCtrl = [];
@@ -2838,10 +2896,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' || this.filter.location != 'all'
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.checkinEncId || this.filter.patientId||this.filter.multiUser !=='all' || this.filter.service !== 'all' || this.filter.location != 'all'
       || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.internalStatus !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== ''
-      || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
+      || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected||this.allServiceSelectedMultiUser || this.allApptStatusSelected
       || this.allPayStatusSelected || this.allModeSelected || this.allStatusSelected || this.allLabelSelected || this.allQSelected || this.allLocationSelected) {
       this.filterapplied = true;
     } else {

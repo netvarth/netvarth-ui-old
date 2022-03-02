@@ -10102,3 +10102,22 @@ span.inactive{
 }
 
 
+ngx-intl-tel-input input
+{
+  height: 40px!important;
+  /* background-color: #fff!important; */
+}
+.provider-checkin .mat-chip-list-wrapper .mat-standard-chip {
+    margin: 2px!important;
+  }
+
+  .searchbar .mat-form-field-infix
+  {
+      border: none!important;
+      padding: 0!important;
+  }
+  .searchbar .mat-form-field-infix
+  {
+      border: none!important;
+      padding: 0!important;
+  }

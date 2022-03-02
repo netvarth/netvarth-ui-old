@@ -20,6 +20,7 @@ import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-servi
 import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
+import { ThirdpartypopupComponent } from '../thirdpartypopup/thirdpartypopup.component';
 
 @Component({
     selector: 'app-provider-checkin',
@@ -224,6 +225,7 @@ export class ProviderCheckinComponent implements OnInit {
     showBlockHint = false;
     uid;
     source;
+    display:any;
     virtualServicemode;
     virtualServicenumber;
     emptyFielderror = false;
@@ -245,6 +247,21 @@ export class ProviderCheckinComponent implements OnInit {
     cuntryCode;
     selfAssign;
     assignmyself;
+    categoryForSearchingarray=['Search with PhoneNumber','Search with Email ID','Search with Patient ID']
+    categoryvalue='Search with PhoneNumber';
+    thirdpartyoptions: any;
+    follow_up_Details;
+    followup_uuid;
+    type;
+    showFollowup = false;
+    firstname;
+    lastname;
+    custId;
+    cusfirstname;
+    cuslastname;
+    cusId;
+    servId;
+    accId;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -266,6 +283,16 @@ export class ProviderCheckinComponent implements OnInit {
         this.activated_route.queryParams.subscribe(qparams => {
             if (qparams.source) {
                 this.source = qparams.source;
+            }
+            if (qparams.followup_uuid) {
+                this.followup_uuid = qparams.followup_uuid;
+
+                this.type = qparams.type;
+                if (this.type === 'followup') {
+                    this.showFollowup = true;
+                    this.getFollowUpWaitlist();
+                    this.initCheckIn();
+                }
             }
             if (qparams.serviceId) {
                 this.sel_ser = qparams.serviceId;
@@ -348,6 +375,7 @@ export class ProviderCheckinComponent implements OnInit {
                 );
             }
         });
+        this.display = "none";
     }
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -387,6 +415,12 @@ export class ProviderCheckinComponent implements OnInit {
         this.showfuturediv = false;
         this.revealphonenumber = true;
     }
+    openModal() {
+        this.display = "block";
+      }
+      onCloseHandled() {
+        this.display = "none";
+      }
     performActions(action) {
         if (action === 'learnmore') {
             this.router.navigate(['/provider/' + this.domain + '/check-ins->check-in']);
@@ -595,6 +629,32 @@ export class ProviderCheckinComponent implements OnInit {
                 );
         }
     }
+    openthirdpopup(domain,showOther,customer_label) {
+        this.thirdpartyoptions = this.dialog.open(ThirdpartypopupComponent, {
+            width: '80%',
+            panelClass: ['popup-class', 'confirmationmainclass'],
+            data : {
+                'domain':domain,
+                'showOther':showOther,
+                'customer_label':customer_label
+            }
+           
+        })
+        this.thirdpartyoptions.afterClosed().subscribe(result => {
+            if(result=='practo') {
+                this.initCheckIn('practo')
+            } else if(result=='justdial') {
+                this.initCheckIn('justdial')
+            } else if(result=='google') {
+                this.initCheckIn('google')
+            } else if(result == 'mfine') {
+                this.initCheckIn('mfine')
+            } else if(result=='other') {
+                this.showOtherSection()
+            }
+
+        });
+    }
     confirmWaitlistBlockPopup() {
         const removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
             width: '50%',
@@ -656,8 +716,13 @@ export class ProviderCheckinComponent implements OnInit {
         this.otherThirdParty = '';
         this.waitlist_for = [];
         if (this.thirdParty === '') {
-            this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
+            if (this.type !== 'followup') {
+                this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
+            }
         }
+        // if (this.thirdParty === '') {
+        //     this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
+        // }
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         this.today = new Date(this.today);
         this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
@@ -689,75 +754,86 @@ export class ProviderCheckinComponent implements OnInit {
         if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
             this.isFuturedate = true;
         }
-        this.getWaitlistMgr().then(
-            () => {
-                _this.setTerminologyLabels();
-                _this.getBussinessProfileApi()
-                    .then(
-                        (data: any) => {
-                            _this.account_id = data.id;
-                            _this.accountType = data.accountType;
-                            _this.domain = data.serviceSector.domain;
-                            _this.getPartysizeDetails(_this.domain, data.serviceSubSector.subDomain);
-                            if (_this.domain === 'foodJoints') {
-                                _this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
-                                _this.note_placeholder = 'Item No Item Name Item Quantity';
-                                _this.note_cap = 'Add Note / Delivery address';
-                            } else {
-                                _this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
-                                _this.note_placeholder = 'Add Note';
-                                _this.note_cap = 'Add Note';
-                            }
-                            _this.shared_services.getProviderServicesByLocationId(_this.sel_loc).subscribe(
-                                (services: any) => {
-                                    // _this.servicesjson = services;
-                                    // _this.serviceslist = services;
-                                    if (_this.thirdParty === '' && !_this.customer_data.phoneNo && !_this.customer_data.email) {
-                                        _this.servicesjson = [];
-                                        _this.serviceslist = [];
-                                        for (let i = 0; i < services.length; i++) {
-                                            if (services[i].serviceType !== 'virtualService') {
-                                                _this.servicesjson.push(services[i]);
-                                                _this.serviceslist.push(services[i]);
+        if( this.type === 'followup'){
+            console.log(this.servId + 'sevid')
+            console.log(this.sel_loc + 'sel_loc')
+            console.log(this.sel_checkindate + 'sel_checkindate')
+            console.log(this.accId + 'accId')
+            this.getQueuesbyLocationandServiceId(this.sel_loc, this.servId, this.sel_checkindate, this.accId);
+            this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.servId, this.accId);
+        }
+        else{
+            this.getWaitlistMgr().then(
+                () => {
+                    _this.setTerminologyLabels();
+                    _this.getBussinessProfileApi()
+                        .then(
+                            (data: any) => {
+                                _this.account_id = data.id;
+                                _this.accountType = data.accountType;
+                                _this.domain = data.serviceSector.domain;
+                                _this.getPartysizeDetails(_this.domain, data.serviceSubSector.subDomain);
+                                if (_this.domain === 'foodJoints') {
+                                    _this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
+                                    _this.note_placeholder = 'Item No Item Name Item Quantity';
+                                    _this.note_cap = 'Add Note / Delivery address';
+                                } else {
+                                    _this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
+                                    _this.note_placeholder = 'Add Note';
+                                    _this.note_cap = 'Add Note';
+                                }
+                                _this.shared_services.getProviderServicesByLocationId(_this.sel_loc).subscribe(
+                                    (services: any) => {
+                                        // _this.servicesjson = services;
+                                        // _this.serviceslist = services;
+                                        if (_this.thirdParty === '' && !_this.customer_data.phoneNo && !_this.customer_data.email) {
+                                            _this.servicesjson = [];
+                                            _this.serviceslist = [];
+                                            for (let i = 0; i < services.length; i++) {
+                                                if (services[i].serviceType !== 'virtualService') {
+                                                    _this.servicesjson.push(services[i]);
+                                                    _this.serviceslist.push(services[i]);
+                                                }
+                                            }
+                                        } else {
+                                            _this.servicesjson = services;
+                                            _this.serviceslist = services;
+                                        }
+                                        // this.sel_ser_det = [];
+                                        if (_this.servicesjson.length > 0) {
+                                            //     this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
+                                            //     this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
+                                            //     this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
+                                            if (this.accountType === 'BRANCH') {
+                                                _this.initDepartments(_this.account_id).then(
+                                                    () => {
+                                                        _this.handleDeptSelction(_this.selected_dept);
+                                                    },
+                                                    () => {
+                                                        this.getAvailableUsers();
+                                                        // this.getAllUsers();
+                                                        // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                                                    }
+                                                );
+                                            } else {
+                                                this.sel_ser = this.servicesjson[0].id;
+                                                this.setServiceDetails(this.sel_ser);
+                                                this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+                                                this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
                                             }
                                         }
-                                    } else {
-                                        _this.servicesjson = services;
-                                        _this.serviceslist = services;
-                                    }
-                                    // this.sel_ser_det = [];
-                                    if (_this.servicesjson.length > 0) {
-                                        //     this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
-                                        //     this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
-                                        //     this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
-                                        if (this.accountType === 'BRANCH') {
-                                            _this.initDepartments(_this.account_id).then(
-                                                () => {
-                                                    _this.handleDeptSelction(_this.selected_dept);
-                                                },
-                                                () => {
-                                                    this.getAvailableUsers();
-                                                    // this.getAllUsers();
-                                                    // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
-                                                }
-                                            );
-                                        } else {
-                                            this.sel_ser = this.servicesjson[0].id;
-                                            this.setServiceDetails(this.sel_ser);
-                                            this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
-                                            this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
-                                        }
-                                    }
-                                    //     this.api_loading1 = false;
-                                    // },
-                                    //     () => {
-                                    //         this.api_loading1 = false;
-                                    //         this.sel_ser = '';
-                                    //     });
-                                });
-                        }
-                    );
-            });
+                                        //     this.api_loading1 = false;
+                                        // },
+                                        //     () => {
+                                        //         this.api_loading1 = false;
+                                        //         this.sel_ser = '';
+                                        //     });
+                                    });
+                            }
+                        );
+                });
+        }
+       
     }
     initDepartments(accountId) {
         this.departmentlist = this.departments = [];
@@ -1177,7 +1253,71 @@ export class ProviderCheckinComponent implements OnInit {
                 });
     }
     saveCheckin() {
-        // const waitlistarr = [];
+        if (this.type === 'followup') {
+            this.sel_ser = this.servId;
+            this.sel_ser_det.serviceType = this.follow_up_Details.service.serviceType;
+            this.waitlist_for.push({ id: this.cusId, firstName: this.cusfirstname, lastName: this.cuslastname });
+            const post_Data = {
+                'queue': {
+                    'id': this.sel_queue_id
+                },
+                'date': this.sel_checkindate,
+                'service': {
+                    'id': this.sel_ser,
+                    'serviceType': this.sel_ser_det.serviceType
+                },
+                'consumerNote': this.consumerNote,
+                'countryCode': this.countryCode,
+                // 'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr))
+                'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for)),
+                'waitlistMode': this.checkinType
+            };
+            if (this.follow_up_Details.provider && this.follow_up_Details.provider.id) {
+                post_Data['provider'] = { 'id': this.follow_up_Details.provider.id };
+            }
+            this.virtualServiceArray = {}
+           console.log(JSON.stringify(this.follow_up_Details.virtualService + '11111'));
+            if (this.sel_ser_det.serviceType === 'virtualService') {
+             
+                    if (this.follow_up_Details.virtualService.WhatsApp) {
+                        post_Data['virtualService'] = { 'WhatsApp': this.follow_up_Details.virtualService.WhatsApp };
+                    } else if (this.follow_up_Details.virtualService.GoogleMeet) {
+                        post_Data['virtualService'] = { 'GoogleMeet': this.follow_up_Details.virtualService.GoogleMeet };
+                    } else if (this.follow_up_Details.virtualService.Zoom) {
+                        post_Data['virtualService'] = { 'Zoom': this.follow_up_Details.virtualService.Zoom };
+                    } else if (this.follow_up_Details.virtualService.Phone) {
+                        post_Data['virtualService'] = { 'Phone': this.follow_up_Details.virtualService.Phone};
+                    } else {
+                        post_Data['virtualService'] = { 'VideoCall': '' };
+                    }
+                    //  else {
+                    //     post_Data['virtualService'] = {};
+                    // }
+               
+            }
+            if (this.api_error === null) {
+                post_Data['consumer'] = { id: this.cusId };
+                post_Data['ignorePrePayment'] = true;
+                if (!this.is_wtsap_empty) {
+                    if (this.thirdParty === '') {
+                        if (this.waitlist_for.length === 0) {
+                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages('Please select atleast one member'), { 'panelClass': 'snackbarerror' });
+                        } else {
+                            if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                                this.validateQnr(post_Data);
+                            } else {
+                                this.addCheckInProvider(post_Data);
+                            }
+                        }
+                    } else {
+                        this.addWaitlistBlock(post_Data);
+                    }
+                }
+            }
+
+        }
+        else{
+  // const waitlistarr = [];
         // for (let i = 0; i < this.waitlist_for.length; i++) {
         //     waitlistarr.push({ id: this.waitlist_for[i].id });
         // }
@@ -1287,6 +1427,8 @@ export class ProviderCheckinComponent implements OnInit {
                 }
             }
         }
+        }
+      
     }
     addWaitlistBlock(post_Data) {
         this.provider_services.addWaitlistBlock(post_Data)
@@ -1632,9 +1774,21 @@ export class ProviderCheckinComponent implements OnInit {
         const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
         const nDt = new Date(ndate);
         if (nDt.getTime() >= strtDt.getTime()) {
-            this.sel_checkindate = ndate;
-            this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
-            this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
+            if(this.type === 'followup'){
+                console.log(this.servId + 'sevid')
+                console.log(this.sel_loc + 'sel_loc')
+                console.log(this.sel_checkindate + 'sel_checkindate')
+                console.log(this.accId + 'accId')
+                this.sel_checkindate = ndate;
+                this.getQueuesbyLocationandServiceId(this.sel_loc, this.servId, this.sel_checkindate, this.accId);
+                this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.servId, this.accId);
+            }
+            else{
+                this.sel_checkindate = ndate;
+                this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+                this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
+            }
+           
         }
         const dt = this.sel_checkindate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const dt1 = moment(dt, 'YYYY-MM-DD HH:mm').format();
@@ -2080,6 +2234,10 @@ export class ProviderCheckinComponent implements OnInit {
         this.showAction = true;
         this.action = action;
     }
+    actionChange(action)
+    {
+         this.action = action;
+    }
     hideFilterSidebar() {
         this.showAction = false;
     }
@@ -2230,5 +2388,34 @@ export class ProviderCheckinComponent implements OnInit {
                 this.api_loading = false;
             });
         }
+    }
+    getFollowUpWaitlist() {
+        this.provider_services.getFollowUpWaitlist(this.followup_uuid)
+            .subscribe(
+                data => {
+                    this.follow_up_Details = data;
+                    this.cusfirstname = this.follow_up_Details.waitlistingFor[0].firstName
+                    this.cuslastname = this.follow_up_Details.waitlistingFor[0].lastName
+                    this.cusId = this.follow_up_Details.waitlistingFor[0].id
+                    this.firstname = this.follow_up_Details.consumer.firstName;
+                    this.lastname = this.follow_up_Details.consumer.lastName;
+                    this.jaldeeId = this.follow_up_Details.consumer.jaldeeId;
+                    this.custId = this.follow_up_Details.consumer.id;
+                    this.servId = this.follow_up_Details.service.id;
+                    this.accId = this.follow_up_Details.providerAccount.id;
+                    console.log(this.servId + 'sevid')
+                    console.log(this.sel_loc + 'sel_loc')
+                    console.log(this.sel_checkindate + 'sel_checkindate')
+                    console.log(this.accId + 'accId')
+                    // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                    // this.setServiceDetails(this.servId);
+                    this.getQueuesbyLocationandServiceId(this.sel_loc, this.servId, this.sel_checkindate, this.accId);
+                    // this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.servId, this.accId);
+                })
+               
+    }
+    popupClosed()
+    {
+
     }
 }

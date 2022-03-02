@@ -277,6 +277,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       // }
       this.okCheckinStatus = true;
       this.notifyphonenumber = '';
+      
     }
   }
   isSmsNumExists(curphone) {
@@ -351,6 +352,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       this.okCheckinStatus = true;
       this.notifycheknPushphonenumber = '';
       this.cheknPushph = false;
+      
     }
   }
   isPushNumExists(curphone) {
@@ -397,6 +399,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       }
       this.okCheckinStatus = true;
       this.notifyemail = '';
+      
     }
   }
   addTele() {
@@ -470,6 +473,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
 
       }
       this.okCheckinStatus = true;
+      
       // this.notifyTele = '';
     }
   }
@@ -558,6 +562,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       // this.ph1_arr.push(curphone1);
       this.okCancelStatus = true;
       this.notifycanclphonenumber = '';
+      
     }
   }
   addCheknCancltelegram() {
@@ -614,6 +619,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       }
 
       this.okCancelStatus = true;
+      
       // this.notifycancltelegram = '';
     }
   }
@@ -748,6 +754,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       this.okCancelStatus = true;
       this.notifycheknCancelPushphonenumber = '';
       this.cheknCancelPushph = false;
+      
     }
   }
   addCheknCanclemil() {
@@ -771,6 +778,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       }
       this.notifycanclemail = '';
       this.okCancelStatus = true;
+      
     }
   }
   chekinNotifications(source) {
@@ -910,6 +918,12 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
     }
     if (source === 'cancelcheckin') {
       this.okCancelStatus = true;
+    }
+    if(this.okCheckinStatus) {
+      this.chekinNotifications('newcheckin')
+    }
+    if(this.okCancelStatus) {
+      this.checkinCancelNotifications('cancelcheckin')
     }
   }
   smsAddClicked() {

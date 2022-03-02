@@ -173,7 +173,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   remainingadvanceamount;
   amounttopay: any;
   wallet: any;
-  orderDetails:any;
+  orderDetails: any;
   pGateway: any;
   payment_popup = null;
   razorModel: Razorpaymodel;
@@ -197,8 +197,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   isInternatonal: boolean;
   shownonIndianModes: boolean;
   isPayment: boolean;
-  indian_payment_modes: any=[];
-  non_indian_modes: any=[];
+  indian_payment_modes: any = [];
+  non_indian_modes: any = [];
   questionnaireList: any = [];
   questionAnswers;
   catalogId: any;
@@ -245,13 +245,13 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.route.queryParams.subscribe(
       params => {
-      
+
         if (params.catalog_Id) {
           this.catalogId = params.catalog_Id;
         }
       });
-      this.chosenDateDetails = this.lStorageService.getitemfromLocalStorage('chosenDateTime');
-      this.account_id = this.chosenDateDetails.account_id;
+    this.chosenDateDetails = this.lStorageService.getitemfromLocalStorage('chosenDateTime');
+    this.account_id = this.chosenDateDetails.account_id;
     this.route.queryParams.subscribe(
       params => {
         this.provider_id = params.providerId;
@@ -457,42 +457,42 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   indian_payment_mode_onchange(event) {
     this.selected_payment_mode = event.value;
     this.isInternatonal = false;
-}
-non_indian_modes_onchange(event) {
+  }
+  non_indian_modes_onchange(event) {
     this.selected_payment_mode = event.value;
     this.isInternatonal = true;
-}
-togglepaymentMode(){
-    this.shownonIndianModes=!this.shownonIndianModes;
+  }
+  togglepaymentMode() {
+    this.shownonIndianModes = !this.shownonIndianModes;
     this.selected_payment_mode = null;
-}
-getImageSrc(mode){
-    
-  return 'assets/images/payment-modes/'+mode+'.png';
-}
-getPaymentModes() {
-    this.shared_services.getPaymentModesofProvider(this.account_id,0, 'prePayment')
-        .subscribe(
-            data => {
-                
-                this.paymentmodes = data[0];
-                this.isPayment = true;
-                if (this.paymentmodes && this.paymentmodes.indiaPay) {
-                    this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
-                }
-                 if (this.paymentmodes && this.paymentmodes.internationalPay) {
-                    this.non_indian_modes = this.paymentmodes.internationalBankInfo;
+  }
+  getImageSrc(mode) {
 
-                }
-                if(this.paymentmodes && !this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
-                    this.shownonIndianModes=true;
-                }else{
-                    this.shownonIndianModes=false;  
-                }
-        
-}
-        );
-}
+    return 'assets/images/payment-modes/' + mode + '.png';
+  }
+  getPaymentModes() {
+    this.shared_services.getPaymentModesofProvider(this.account_id, 0, 'prePayment')
+      .subscribe(
+        data => {
+
+          this.paymentmodes = data[0];
+          this.isPayment = true;
+          if (this.paymentmodes && this.paymentmodes.indiaPay) {
+            this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
+          }
+          if (this.paymentmodes && this.paymentmodes.internationalPay) {
+            this.non_indian_modes = this.paymentmodes.internationalBankInfo;
+
+          }
+          if (this.paymentmodes && !this.paymentmodes.indiaPay && this.paymentmodes.internationalPay) {
+            this.shownonIndianModes = true;
+          } else {
+            this.shownonIndianModes = false;
+          }
+
+        }
+      );
+  }
   ngAfterViewInit() {
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
@@ -531,7 +531,7 @@ getPaymentModes() {
     this.shared_services.getCartdetails(this.account_id, passdata)
       .subscribe(
         data => {
-          console.log('cartData'+data);
+          console.log('cartData' + data);
           this.cartDetails = data;
           if (this.cartDetails.eligibleJcashAmt) {
             this.checkJcash = true
@@ -1077,7 +1077,7 @@ getPaymentModes() {
     });
   }
   confirmOrder(post_Data, paytype?) {
-    console.log("Orderr Data :",post_Data);
+    console.log("Orderr Data :", post_Data);
     const dataToSend: FormData = new FormData();
     if (this.orderType === 'SHOPPINGLIST') {
       const captions = {};
@@ -1096,13 +1096,14 @@ getPaymentModes() {
       this.shared_services.CreateConsumerOrder(this.account_id, dataToSend)
         .subscribe(data => {
           const retData = data;
+
           if (this.customId) {
             console.log("businessid" + this.account_id);
             this.shared_services.addProvidertoFavourite(this.account_id)
               .subscribe(() => {
               });
           }
-          
+
           this.checkoutDisabled = false;
           // let prepayAmount;
           const uuidList = [];
@@ -1126,23 +1127,27 @@ getPaymentModes() {
                       this.remainingadvanceamount = data;
                       if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                         this.submitQuestionnaire(this.trackUuid, paytype);
-                    } else {
-                      this.payuPayment(paytype);
-                    }
-                     
+                      } else {
+                        this.payuPayment(paytype);
+                      }
+
                     });
                 }
                 else {
                   if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.submitQuestionnaire(this.trackUuid, paytype);
-                } else {
-                  this.payuPayment(paytype);
-                }
+                  } else {
+                    this.payuPayment(paytype);
+                  }
                 }
 
               });
           } else {
-            this.orderList = [];
+
+            if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+              this.submitQuestionnaire(this.trackUuid, paytype);
+              setTimeout(() => {
+                this.orderList = [];
             this.lStorageService.removeitemfromLocalStorage('order_sp');
             this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
             this.lStorageService.removeitemfromLocalStorage('order_spId');
@@ -1159,7 +1164,7 @@ getPaymentModes() {
               let navigationExtras: NavigationExtras = {
                 queryParams: queryParams
               };
-              console.log("Payment Data :",this.from);
+              console.log("Payment Data :", this.from);
               this.router.navigate(['consumer'], navigationExtras);
             } else {
               let queryParams = {
@@ -1170,6 +1175,10 @@ getPaymentModes() {
               };
               this.router.navigate(['consumer'], navigationExtras);
             }
+              }, 2000);
+            }
+            
+          
           }
         },
           error => {
@@ -1179,12 +1188,19 @@ getPaymentModes() {
           }
 
         );
-    } else {
+    } 
+    
+    
+    
+    
+    
+    else {
       const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
       dataToSend.append('order', blobpost_Data);
       this.shared_services.CreateConsumerOrder(this.account_id, dataToSend)
         .subscribe(data => {
           const retData = data;
+
           if (this.customId) {
             console.log("businessid" + this.account_id);
             this.shared_services.addProvidertoFavourite(this.account_id)
@@ -1212,49 +1228,57 @@ getPaymentModes() {
                       this.remainingadvanceamount = data;
                       if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                         this.submitQuestionnaire(this.trackUuid, paytype);
-                    } else {
-                      this.payuPayment(paytype);
-                    }
-                    
+                      } else {
+                        this.payuPayment(paytype);
+                      }
+
                     });
                 }
                 else {
                   if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.submitQuestionnaire(this.trackUuid, paytype);
-                } else {
-                  this.payuPayment(paytype);
-                }
+                  } else {
+                    this.payuPayment(paytype);
+                  }
                 }
               });
           } else {
-            this.orderList = [];
-            this.lStorageService.removeitemfromLocalStorage('order_sp');
-            this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
-            this.lStorageService.removeitemfromLocalStorage('order_spId');
-            this.lStorageService.removeitemfromLocalStorage('order');
-            this.snackbarService.openSnackBar('Your Order placed successfully');
-            if (this.from) {
-              let queryParams = {
-                'source': 'order'
-              }
-              if (this.customId) {
-                queryParams['customId'] = this.customId;
-                queryParams['accountId'] = this.account_id;
-              }
-              let navigationExtras: NavigationExtras = {
-                queryParams: queryParams
-              };
-              this.router.navigate(['consumer'], navigationExtras);
-              // this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
-            } else {
-              let queryParams = {
-                'source': 'order'
-              }
-              let navigationExtras: NavigationExtras = {
-                queryParams: queryParams
-              };
-              this.router.navigate(['consumer'], navigationExtras);
+
+            if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+              this.submitQuestionnaire(this.trackUuid, paytype);
+              setTimeout(() => {
+                this.orderList = [];
+                this.lStorageService.removeitemfromLocalStorage('order_sp');
+                this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+                this.lStorageService.removeitemfromLocalStorage('order_spId');
+                this.lStorageService.removeitemfromLocalStorage('order');
+                this.snackbarService.openSnackBar('Your Order placed successfully');
+                if (this.from) {
+                  let queryParams = {
+                    'source': 'order'
+                  }
+                  if (this.customId) {
+                    queryParams['customId'] = this.customId;
+                    queryParams['accountId'] = this.account_id;
+                  }
+                  let navigationExtras: NavigationExtras = {
+                    queryParams: queryParams
+                  };
+                  this.router.navigate(['consumer'], navigationExtras);
+                  // this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
+                } else {
+                  let queryParams = {
+                    'source': 'order'
+                  }
+                  let navigationExtras: NavigationExtras = {
+                    queryParams: queryParams
+                  };
+                  this.router.navigate(['consumer'], navigationExtras);
+                }
+              }, 2000);
+
             }
+          
           }
         },
           error => {
@@ -1735,9 +1759,9 @@ getPaymentModes() {
       'uuid': this.trackUuid,
       'accountId': this.account_id,
       'purpose': 'prePayment',
-      'serviceId':0,
-      'isInternational':this.isInternatonal
-     
+      'serviceId': 0,
+      'isInternational': this.isInternatonal
+
     };
     this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
     this.lStorageService.setitemonLocalStorage('acid', this.account_id);
@@ -1752,9 +1776,9 @@ getPaymentModes() {
         'isJcashUsed': true,
         'isreditUsed': false,
         'paymentMode': 'JCASH',
-        'serviceId':0,
-        'isinternational':this.isInternatonal,
-     
+        'serviceId': 0,
+        'isinternational': this.isInternatonal,
+
       };
       this.shared_services.PayByJaldeewallet(postData)
         .subscribe(data => {
@@ -1795,8 +1819,8 @@ getPaymentModes() {
         'paymentPurpose': 'prePayment',
         'isJcashUsed': true,
         'isreditUsed': false,
-        'serviceId':0,
-        'isinternational':this.isInternatonal,
+        'serviceId': 0,
+        'isinternational': this.isInternatonal,
         'paymentMode': this.selected_payment_mode
       };
       // if (paymentMode == 'PPI') {
@@ -1813,11 +1837,11 @@ getPaymentModes() {
         .subscribe((pData: any) => {
           if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
             if (pData.response.paymentGateway == 'PAYTM') {
-                this.payWithPayTM(pData.response, this.account_id);
+              this.payWithPayTM(pData.response, this.account_id);
             } else {
-                this.paywithRazorpay(pData.response);
+              this.paywithRazorpay(pData.response);
             }
-        }
+          }
         },
           error => {
             this.isClickedOnce = false;
@@ -1866,7 +1890,7 @@ getPaymentModes() {
     this.razorModel.amount = pData.amount;
     this.razorModel.order_id = pData.orderId;
     this.razorModel.name = pData.providerName;
-    this.razorModel.mode=this.selected_payment_mode;
+    this.razorModel.mode = this.selected_payment_mode;
     this.isClickedOnce = false;
     this.razorModel.description = pData.description;
     this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'order_prepayment', this.trackUuid, this.livetrack, this.account_id, this.cartDetails.advanceAmount, this.customId);
@@ -1875,7 +1899,7 @@ getPaymentModes() {
   }
   payWithPayTM(pData: any, accountId: any) {
     this.loadingPaytm = true;
-    pData.paymentMode=this.selected_payment_mode;
+    pData.paymentMode = this.selected_payment_mode;
     this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
   }
   transactionCompleted(response, payload, accountId) {
@@ -1912,9 +1936,9 @@ getPaymentModes() {
             }
           }
         },
-        error=>{
-          this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' }); 
-        })
+          error => {
+            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+          })
 
     } else if (response.STATUS == 'TXN_FAILURE') {
       this.isClickedOnce = false;
@@ -1955,100 +1979,100 @@ getPaymentModes() {
     this.questionAnswers = event;
   }
   getConsumerQuestionnaire() {
-    this.subs.sink =  this.shared_services.getConsumerOrderQuestionnaire(this.catalogId,this.account_id).subscribe(data => {
-        this.questionnaireList = data;
-        if(this.questionnaireList.questionnaireId){
-          this.qnr = true;
-        }
-       
-        console.log(this.questionnaireList)
-        this.questionnaireLoaded = true;
+    this.subs.sink = this.shared_services.getConsumerOrderQuestionnaire(this.catalogId, this.account_id).subscribe(data => {
+      this.questionnaireList = data;
+      if (this.questionnaireList.questionnaireId) {
+        this.qnr = true;
+      }
+
+      console.log(this.questionnaireList)
+      this.questionnaireLoaded = true;
     });
   }
   submitQuestionnaire(uuid, paymenttype?) {
     const dataToSend: FormData = new FormData();
     console.log(this.questionAnswers)
-    if(this.questionAnswers === undefined){
+    if (this.questionAnswers === undefined) {
       this.snackbarService.openSnackBar('Please fill more info to complete your booking.', { 'panelClass': 'snackbarerror' });
       this.isClickedOnce = false;
     }
-    else{
+    else {
       if (this.questionAnswers && this.questionAnswers.files) {
         for (const pic of this.questionAnswers.files) {
-            dataToSend.append('files', pic, pic['name']);
+          dataToSend.append('files', pic, pic['name']);
         }
-    }
-    const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
-    dataToSend.append('question', blobpost_Data);
-    this.subs.sink = this.shared_services.submitConsumerOrderQuestionnaire(dataToSend, uuid, this.account_id).subscribe((data: any) => {
+      }
+      const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+      dataToSend.append('question', blobpost_Data);
+      this.subs.sink = this.shared_services.submitConsumerOrderQuestionnaire(dataToSend, uuid, this.account_id).subscribe((data: any) => {
         let postData = {
-            urls: []
+          urls: []
         };
         if (data.urls && data.urls.length > 0) {
-            for (const url of data.urls) {
-                this.api_loading_video = true;
-                const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
-                this.provider_services.videoaudioS3Upload(file, url.url)
-                    .subscribe(() => {
-                        postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-                        if (data.urls.length === postData['urls'].length) {
-                            this.shared_services.consumerOrderQnrUploadStatusUpdate(uuid, this.account_id, postData)
-                                .subscribe((data) => {
-                                    this.payuPayment(paymenttype);
-                                },
-                                    error => {
-                                        this.isClickedOnce = false;
-                                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                        this.disablebutton = false;
-                                        this.api_loading_video = false;
-                                    });
-                        }
+          for (const url of data.urls) {
+            this.api_loading_video = true;
+            const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
+            this.provider_services.videoaudioS3Upload(file, url.url)
+              .subscribe(() => {
+                postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                if (data.urls.length === postData['urls'].length) {
+                  this.shared_services.consumerOrderQnrUploadStatusUpdate(uuid, this.account_id, postData)
+                    .subscribe((data) => {
+                      this.payuPayment(paymenttype);
                     },
-                        error => {
-                            this.isClickedOnce = false;
-                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                            this.disablebutton = false;
-                            this.api_loading_video = false;
-                        });
-            }
+                      error => {
+                        this.isClickedOnce = false;
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                        this.disablebutton = false;
+                        this.api_loading_video = false;
+                      });
+                }
+              },
+                error => {
+                  this.isClickedOnce = false;
+                  this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                  this.disablebutton = false;
+                  this.api_loading_video = false;
+                });
+          }
         } else {
-            this.payuPayment(paymenttype);
+          this.payuPayment(paymenttype);
         }
-    },
+      },
         error => {
-            this.isClickedOnce = false;
-            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-            this.disablebutton = false;
-            this.api_loading_video = false;
+          this.isClickedOnce = false;
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.disablebutton = false;
+          this.api_loading_video = false;
         });
-}
     }
-    validateQuestionnaire() {
-      if (!this.questionAnswers) {
-          this.questionAnswers = {
-              answers: {
-                  answerLine: [],
-                  questionnaireId: this.questionnaireList.id
-              }
-          }
-      }
-      if (this.questionAnswers.answers) {
-          this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
-            if (data.length === 0) {
-              this.bookStep = 'Step 3';
-          }
-          else{
-            this.bookStep = 'qnr';
-            this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
-          }
-          
-          
-           
-           
-          }, error => {
-              this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-          });
-      }
   }
-  
+  validateQuestionnaire() {
+    if (!this.questionAnswers) {
+      this.questionAnswers = {
+        answers: {
+          answerLine: [],
+          questionnaireId: this.questionnaireList.id
+        }
+      }
+    }
+    if (this.questionAnswers.answers) {
+      this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
+        if (data.length === 0) {
+          this.bookStep = 'Step 3';
+        }
+        else {
+          this.bookStep = 'qnr';
+          this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
+        }
+
+
+
+
+      }, error => {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+      });
+    }
+  }
+
 }
