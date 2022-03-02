@@ -80,13 +80,13 @@
                 <div  class="icon-text">Change Status to Complete</div>
             </div>
         </div> 
-        <!-- <div class="action-box pointer-cursor"
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && checkin.waitlistStatus === 'done'"
         (click)="followUpClicked()">
         <div class="action-box-sub">
             <span class="reschedule-icon"></span>
             <div class="icon-text">Follow Up</div>
         </div>
-    </div> -->
+    </div>
         <div class="action-box pointer-cursor"
             *ngIf="!data.multiSelection && accountType=='BRANCH' &&  (checkin.queue.provider.id === 0) && (checkin.waitlistStatus === 'arrived' || checkin.waitlistStatus === 'checkedIn') && checkin.provider"
             (click)="removeProvider()">
