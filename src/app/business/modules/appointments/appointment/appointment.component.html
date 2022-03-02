@@ -855,23 +855,27 @@
                     <app-questionnaire [questionnaireList]="questionnaireList" [questionAnswers]="questionAnswers"
                         [source]="'proAppt'" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
                         
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                        <div class="mr-2" *ngIf="!showBlockHint">
-                            <button type="button" class="btn btn-light-primary font-weight-bold" (click)="goBack()">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding text-center mx-auto">
+                        
+                            <button type="button" class="mx-1 btn btn-light-primary font-weight-bold" (click)="goBack()"  *ngIf="!showBlockHint">
                                 Previous
                             </button>
-                        </div>
-                        <div>
-                            <button type="button" class="btn btn-primary font-weight-bold" (click)="saveCheckin()"
+                        
+                        
+                            <button type="button" class="mx-1 btn btn-primary font-weight-bold" (click)="saveCheckin()"
                                 [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
                                 [class.spinner-center]="api_loading" [disabled]="api_loading"
                                 [class.disabled]="api_loading"
-                                *ngIf="!showBlockHint">{{showCheckinButtonCaption()}}</button>
-                            <button type="button" class="btn btn-primary font-weight-bold" (click)="validateQnr()"
+                                *ngIf="!showBlockHint">{{showCheckinButtonCaption()}}
+                            </button>
+                        
+                        
+                            <button type="button" class="mx-1 btn btn-primary font-weight-bold" (click)="validateQnr()"
                                 [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
                                 [class.spinner-center]="api_loading" [disabled]="api_loading"
-                                [class.disabled]="api_loading" *ngIf="showBlockHint">Confirm</button>
-                        </div>
+                                [class.disabled]="api_loading" *ngIf="showBlockHint">Confirm
+                            </button>
+                        
                     </div>
                 </div>
             </div>

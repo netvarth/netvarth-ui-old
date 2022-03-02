@@ -1290,9 +1290,9 @@
         </div>
       </div>
     </div>
-    <div class="card">
-      <div class="card">
-        <div *ngIf="api_loading_video" class="incomplete-msg">
+    <div>
+      <div class="card"  *ngIf="api_loading_video">
+        <div class="incomplete-msg">
           <div style="padding: 0 30px;">
             Files are Uploading...
           </div>
