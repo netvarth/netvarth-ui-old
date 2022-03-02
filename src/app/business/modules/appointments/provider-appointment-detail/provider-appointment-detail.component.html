@@ -48,9 +48,10 @@
                 <span class="itemVal">{{waitlist_data.appmtFor[0].firstName | capitalizeFirst}}
                   {{waitlist_data.appmtFor[0].lastName | capitalizeFirst}}
                 </span>
-                <span class="itemHead">Booking Via</span>
+                <!-- <span class="itemHead"
+                  *ngIf="waitlist_data.requestInfo.agent && waitlist_data.requestInfo.bookingReqFrom">Booking Via</span> -->
                 <span *ngIf="waitlist_data.requestInfo.agent && waitlist_data.requestInfo.bookingReqFrom">
-
+                  <span class="itemHead">Booking Via</span><br>
                   <img src="../../../../assets/icons/icon294(Traced).png"
                     *ngIf="getBookingReqFrom(waitlist_data.requestInfo.bookingReqFrom) === 'web'"
                     style="width: 18px !important; margin-top: -6px !important;">
@@ -58,7 +59,7 @@
                     *ngIf="getBookingReqFrom(waitlist_data.requestInfo.bookingReqFrom) === 'app'"
                     style="width: 18px !important; margin-top: -6px !important;">
                   <img src="../../../../assets/icons/icon295(Traced).png"
-                    *ngIf="getBookingReqFrom(waitlist_data.requestInfo.bookingReqFrom) === 'android'"
+                    *ngIf="getBookingReqFrom(waitlist_data.requestInfo.bookingReqFrom) === 'consumer'"
                     style="width: 18px !important; margin-top: -6px !important;">
                   {{getAgent(waitlist_data.requestInfo.agent) | capitalizeFirst}},
                   {{getBookingReqFrom(waitlist_data.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>

@@ -160,13 +160,18 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   getAgent(fileName){
     return fileName.toLocaleLowerCase();
   }
-  getBookingReqFrom(fileName) {
-    let filename = ''
-    filename = fileName.slice(0, 3);
-    if(fileName.length >8){
-      filename = fileName.slice(0,8);
+  getBookingReqFrom(browser) {
+    let browserName = ''
+    if(browser){
+    browserName = browser.slice(0, 3);
     }
-    return filename.toLocaleLowerCase();
+    if(browser){
+     if(browser.length >8){
+      browserName = browser.slice(0,8);
+    }
+  }
+
+    return browserName.toLocaleLowerCase();
   }
   getWaitListMode(mode) {
     let currentmode=[];

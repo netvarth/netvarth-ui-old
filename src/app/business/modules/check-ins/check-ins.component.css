@@ -710,8 +710,6 @@ display: inline-flex;
 
 @media screen and (max-width: 1200px) {
     .reqInfo{
-        visibility: visible !important;
-        padding: 0 !important;
         display: flex !important;
         
     }

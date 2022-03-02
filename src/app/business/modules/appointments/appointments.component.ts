@@ -596,27 +596,18 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getAgent(fileName){
     return fileName.toLocaleLowerCase();
   }
-  getBookingReqFrom(fileName) {
-    let filename = ''
-    // if (fileName.indexOf('fileName')) {
-    //   if (fileName.length > 10) {
-    //     filename = fileName.slice(0, 10) + '...'
-    //   }
-    //   if (fileName.length <= 10) {
-    //     filename = fileName;
-    //   }
-    // }
-    if(filename){
-      filename = fileName.slice(0, 3);
+  getBookingReqFrom(browser) {
+    let browserName = ''
+    if(browser){
+    browserName = browser.slice(0, 3);
     }
-   if(filename){
-    if(fileName.length >7){
-      filename = fileName.slice(0,7);
+    if(browser){
+     if(browser.length >8){
+      browserName = browser.slice(0,8);
     }
-   }
-    
+  }
 
-    return filename.toLocaleLowerCase();
+    return browserName.toLocaleLowerCase();
   }
   refresh() {
     if (this.time_type === 1) {

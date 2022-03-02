@@ -538,22 +538,18 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   getAgent(fileName){
     return fileName.toLocaleLowerCase();
   }
-  getBookingReqFrom(fileName) {
-    let filename = ''
-    // if (fileName.indexOf('fileName')) {
-    //   if (fileName.length > 10) {
-    //     filename = fileName.slice(0, 10) + '...'
-    //   }
-    //   if (fileName.length <= 10) {
-    //     filename = fileName;
-    //   }
-    // }
-     filename = fileName.slice(0, 3);
-     if(fileName.length >8){
-      filename = fileName.slice(0,8);
+  getBookingReqFrom(browser) {
+    let browserName = ''
+    if(browser){
+    browserName = browser.slice(0, 3);
     }
+    if(browser){
+     if(browser.length >8){
+      browserName = browser.slice(0,8);
+    }
+  }
 
-    return filename.toLocaleLowerCase();
+    return browserName.toLocaleLowerCase();
   }
   
   gotoActions(checkin?) {

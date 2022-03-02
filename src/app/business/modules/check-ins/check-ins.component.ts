@@ -583,36 +583,19 @@ multiUserFilter:any=[];
   getAgent(fileName){
     return fileName.toLocaleLowerCase();
   }
-  getBookingReqFrom(fileName) {
-    let filename = ''
-    // if (fileName.indexOf('fileName')) {
-    //   if (fileName.length > 10) {
-    //     filename = fileName.slice(0, 10) + '...'
-    //   }
-    //   if (fileName.length <= 10) {
-    //     filename = fileName;
-    //   }
-    // }
-    // if(fileName = 'APP'){
-    //   filename = fileName.slice(0, 3);
-    // }
-    // if(fileName = 'ANDROID'){
-    //   filename = fileName.slice(0,7);
-    // }
-    //if(fileName = 'WEB_UI'){
-    
-  //  }
-  if(filename){
-    filename = fileName.slice(0, 3);
-  }
-  if(filename){
-  if(fileName.length >7){
-    filename = fileName.slice(0,7);
-  }
-}
-   
 
-    return filename.toLocaleLowerCase();
+  getBookingReqFrom(browser) {
+    let browserName = ''
+    if(browser){
+    browserName = browser.slice(0, 3);
+    }
+    if(browser){
+     if(browser.length >8){
+      browserName = browser.slice(0,8);
+    }
+  }
+
+    return browserName.toLocaleLowerCase();
   }
   setLabelFilter(label, event) {
     this.resetPaginationData();
