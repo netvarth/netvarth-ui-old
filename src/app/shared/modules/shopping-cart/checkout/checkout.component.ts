@@ -1115,71 +1115,12 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
               uuidList.push(retData[key]);
             }
           });
+          if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+            this.submitQuestionnaire(this.trackUuid, paytype);
+        } else {
+          this.paymentOperation(post_Data, paytype);
+        }
 
-
-          if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
-            console.log(post_Data.email)
-            this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
-              .subscribe(res => {
-                if (this.jcashamount > 0 && this.checkJcash) {
-                  this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.catalog_details.advanceAmount)
-                    .subscribe(data => {
-                      this.remainingadvanceamount = data;
-                      if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                        this.submitQuestionnaire(this.trackUuid, paytype);
-                      } else {
-                        this.payuPayment(paytype);
-                      }
-
-                    });
-                }
-                else {
-                  if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                    this.submitQuestionnaire(this.trackUuid, paytype);
-                  } else {
-                    this.payuPayment(paytype);
-                  }
-                }
-
-              });
-          } else {
-
-            if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-              this.submitQuestionnaire(this.trackUuid, paytype);
-              setTimeout(() => {
-                this.orderList = [];
-            this.lStorageService.removeitemfromLocalStorage('order_sp');
-            this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
-            this.lStorageService.removeitemfromLocalStorage('order_spId');
-            this.lStorageService.removeitemfromLocalStorage('order');
-            this.snackbarService.openSnackBar('Your Order placed successfully');
-            if (this.from) {
-              let queryParams = {
-                'source': 'order'
-              }
-              if (this.customId) {
-                queryParams['customId'] = this.customId;
-                queryParams['accountId'] = this.account_id;
-              }
-              let navigationExtras: NavigationExtras = {
-                queryParams: queryParams
-              };
-              console.log("Payment Data :", this.from);
-              this.router.navigate(['consumer'], navigationExtras);
-            } else {
-              let queryParams = {
-                'source': 'order'
-              }
-              let navigationExtras: NavigationExtras = {
-                queryParams: queryParams
-              };
-              this.router.navigate(['consumer'], navigationExtras);
-            }
-              }, 2000);
-            }
-            
-          
-          }
         },
           error => {
             this.isClickedOnce = false;
@@ -1189,11 +1130,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
         );
     } 
-    
-    
-    
-    
-    
+
+
+
     else {
       const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
       dataToSend.append('order', blobpost_Data);
@@ -1218,68 +1157,12 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           });
 
-
-          if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
-            this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
-              .subscribe(res => {
-                if (this.jcashamount > 0 && this.checkJcash) {
-                  this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.cartDetails.advanceAmount)
-                    .subscribe(data => {
-                      this.remainingadvanceamount = data;
-                      if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                        this.submitQuestionnaire(this.trackUuid, paytype);
-                      } else {
-                        this.payuPayment(paytype);
-                      }
-
-                    });
-                }
-                else {
-                  if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                    this.submitQuestionnaire(this.trackUuid, paytype);
-                  } else {
-                    this.payuPayment(paytype);
-                  }
-                }
-              });
-          } else {
-
-            if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-              this.submitQuestionnaire(this.trackUuid, paytype);
-              setTimeout(() => {
-                this.orderList = [];
-                this.lStorageService.removeitemfromLocalStorage('order_sp');
-                this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
-                this.lStorageService.removeitemfromLocalStorage('order_spId');
-                this.lStorageService.removeitemfromLocalStorage('order');
-                this.snackbarService.openSnackBar('Your Order placed successfully');
-                if (this.from) {
-                  let queryParams = {
-                    'source': 'order'
-                  }
-                  if (this.customId) {
-                    queryParams['customId'] = this.customId;
-                    queryParams['accountId'] = this.account_id;
-                  }
-                  let navigationExtras: NavigationExtras = {
-                    queryParams: queryParams
-                  };
-                  this.router.navigate(['consumer'], navigationExtras);
-                  // this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
-                } else {
-                  let queryParams = {
-                    'source': 'order'
-                  }
-                  let navigationExtras: NavigationExtras = {
-                    queryParams: queryParams
-                  };
-                  this.router.navigate(['consumer'], navigationExtras);
-                }
-              }, 2000);
-
-            }
-          
-          }
+          if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+            this.submitQuestionnaire(this.trackUuid, paytype);
+        } else {
+          this.paymentOperation(post_Data, paytype);
+        }
+        
         },
           error => {
             this.isClickedOnce = false;
@@ -1290,7 +1173,59 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         );
     }
   }
+  paymentOperation(post_Data ? , paytype?) {
+    if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
+      console.log(post_Data.email)
+      this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
+        .subscribe(res => {
+          if (this.jcashamount > 0 && this.checkJcash) {
+            this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.catalog_details.advanceAmount)
+              .subscribe(data => {
+                this.remainingadvanceamount = data;
+               
+                this.payuPayment(paytype);
+                
 
+              });
+          }
+          else {
+              this.payuPayment(paytype);
+            
+          }
+
+        });
+      
+    } else {
+      this.orderList = [];
+      this.lStorageService.removeitemfromLocalStorage('order_sp');
+      this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+      this.lStorageService.removeitemfromLocalStorage('order_spId');
+      this.lStorageService.removeitemfromLocalStorage('order');
+      this.snackbarService.openSnackBar('Your Order placed successfully');
+      if (this.from) {
+        let queryParams = {
+          'source': 'order'
+        }
+        if (this.customId) {
+          queryParams['customId'] = this.customId;
+          queryParams['accountId'] = this.account_id;
+        }
+        let navigationExtras: NavigationExtras = {
+          queryParams: queryParams
+        };
+        console.log("Payment Data :", this.from);
+        this.router.navigate(['consumer'], navigationExtras);
+      } else {
+        let queryParams = {
+          'source': 'order'
+        }
+        let navigationExtras: NavigationExtras = {
+          queryParams: queryParams
+        };
+        this.router.navigate(['consumer'], navigationExtras);
+      }
+    }
+}
   goBackToCheckout(selectesTimeslot, queue) {
     this.action = '';
     const selectqueue = queue['sTime'] + ' - ' + queue['eTime'];
@@ -2018,7 +1953,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
                 if (data.urls.length === postData['urls'].length) {
                   this.shared_services.consumerOrderQnrUploadStatusUpdate(uuid, this.account_id, postData)
                     .subscribe((data) => {
-                      this.payuPayment(paymenttype);
+                      this.paymentOperation(paymenttype);
                     },
                       error => {
                         this.isClickedOnce = false;
@@ -2036,7 +1971,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
                 });
           }
         } else {
-          this.payuPayment(paymenttype);
+          this.paymentOperation(paymenttype);
         }
       },
         error => {
