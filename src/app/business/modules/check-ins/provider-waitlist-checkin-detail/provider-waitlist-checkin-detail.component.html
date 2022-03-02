@@ -21,7 +21,7 @@
                 <i *ngIf="waitlist_data.service.serviceType === 'virtualService'" [class]="iconClass"></i>
                 {{waitlist_data.service.name |
                 capitalizeFirst}}
-                <span class="customer-action-btn pointer-cursor" (click)="gotoActions(waitlist_data)">Actions</span>
+                <span style="float:right" class="customer-action-btn pointer-cursor" (click)="gotoActions(waitlist_data)">Actions</span>
                 <br>
                 <span class="loc-cls"><i class="fa fa-map-marker"></i>&nbsp;{{waitlist_data.queue.location.place
                   | capitalizeFirst}}</span><br>
