@@ -163,8 +163,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   getBookingReqFrom(fileName) {
     let filename = ''
     filename = fileName.slice(0, 3);
-    if(fileName.length >7){
-      filename = fileName.slice(0,7);
+    if(fileName.length >8){
+      filename = fileName.slice(0,8);
     }
     return filename.toLocaleLowerCase();
   }

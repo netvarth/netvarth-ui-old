@@ -181,8 +181,13 @@
                             <div class="card-body">
                                     <span><img class="image" src="./assets/images/Asset2@300x(1).png" alt="Basic Plus"></span>
                                     <span class="notistyle">Telegram Notifications </span>
-                                            <span class="badge badge-info  notistyles" *ngIf="!status" (click)="enableTelegram('ENABLED')">Off</span>
-                                            <span class="badge badge-info notistyles"*ngIf="status" (click)="enableTelegram('DISABLED')">On</span>
+                                    <mat-slide-toggle [checked]="status" (change)="enableTelegram($event)"  [ngClass]="{'active': status}">
+                                    </mat-slide-toggle>
+                                    &nbsp; {{waitlist_statusstr}}
+                                    <!-- <mat-slide-toggle  class="badge badge-info notistyles" (change)="enableTelegram($event)">{{stat}}
+                                    </mat-slide-toggle> -->
+                                            <!-- <span class="badge badge-info  notistyles" *ngIf="!status" (click)="enableTelegram('ENABLED')">Off</span>
+                                            <span class="badge badge-info notistyles"*ngIf="status" (click)="enableTelegram('DISABLED')">On</span> -->
                             </div>
                         </div>
             </div>
@@ -191,8 +196,14 @@
                             <div class="card-body">
                                     <span><img class="image" src="./assets/images/Asset2@300x(1).png" alt="Basic Plus"></span>
                                     <span class="notistyle">Telegram Notifications</span>
-                                            <span class="badge badge-info notistyles" *ngIf="!status" (click)="enableTelegram('ENABLED')">Off</span>
-                                            <span class="badge badge-info notistyles"*ngIf="status" (click)="enableTelegram('DISABLED')">On</span>
+                                    <!-- [checked]="onlinepresence_status" (change)="confirm_opsearchStatus($event)" -->
+                                    <mat-slide-toggle  [checked]="waitlist_statusstr" (change)="enableTelegram($event)">
+                                    </mat-slide-toggle>
+                                    &nbsp; {{waitlist_statusstr}}
+                                    <!-- <mat-slide-toggle  class="badge badge-info notistyles"*ngIf="status" (change)="enableTelegram($event)">{{stat}}
+                                    </mat-slide-toggle> -->
+                                            <!-- <span class="badge badge-info notistyles" *ngIf="!status" (click)="enableTelegram('ENABLED')">Off</span>
+                                            <span class="badge badge-info notistyles"*ngIf="status" (click)="enableTelegram('DISABLED')">On</span> -->
                             </div>
                         </div>
             </div>

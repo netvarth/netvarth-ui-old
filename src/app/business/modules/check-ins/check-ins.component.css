@@ -708,11 +708,15 @@ display: inline-flex;
     }
 }
 
-@media (min-width:360px){
+@media screen and (max-width: 1200px) {
     .reqInfo{
-        display: block;
+        visibility: visible !important;
+        padding: 0 !important;
+        display: flex !important;
+        
     }
-}
+  }
+
 @media(max-width: 675px) {
     #selectViewModal .modal-body ul.menu.dd-menu li {
         width: 33% !important;

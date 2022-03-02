@@ -32,9 +32,10 @@
                     [ngModelOptions]="{standalone: true}">App
                     notification
                 </mat-checkbox>
-                <mat-checkbox *ngIf="!IsTelegramDisable" [disabled]="((source === 'customer-list' || source === 'donation-list') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list') && ((!phone && !phone_history )|| phone === 'null' || phone === '' ) || IsTelegramDisable))" class="mgright25 example-margin" [(ngModel)]="telegram" [ngModelOptions]="{standalone: true}">
+                <mat-checkbox  [disabled]="((source === 'customer-list' || source === 'donation-list') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list') && ((!phone && !phone_history )|| phone === 'null' || phone === '' )))" class="mgright25 example-margin" [(ngModel)]="telegram" [ngModelOptions]="{standalone: true}">
                     Telegram
                 </mat-checkbox>
+                <!-- *ngIf="!IsTelegramDisable"  || IsTelegramDisable-->
                 <!-- typeOfMsg !== 'multiple' && -->
             </div>
             <div class="sms_credit_warn mgn-up-10" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>

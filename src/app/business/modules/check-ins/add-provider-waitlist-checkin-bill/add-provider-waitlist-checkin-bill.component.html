@@ -961,18 +961,64 @@
 											<div class="modal-body pb-3" *ngIf="is_policy">
 												<div class="row">
 													<div class="col-md-12 py-md-2 pr-md-2">
-														<ul>
-															<li>If the {{customer_label}} cancels the consultation
+														<ul *ngIf="source==='order'">
+															<li>If the {{customer_label}} cancels the Order
 																before the service date, refund will be processed
 																automatically to the {{customer_label}}’s bank.
 															</li>
 															<li>The refund will not be processed automatically on the
 																day of service, until it is approved by the service
 																provider.</li>
-															<li>If the {{customer_label}} cancels the booking, the
+															<li>If the {{customer_label}} cancels the order, the
 																amount refunded will be 3% less (3% deduction includes
 																Jaldee service charges and Online Gateway fees).</li>
-															<li>The service provider can cancel the booking and refund
+															<li>The service provider can cancel the order and refund
+																any amount less than or equal to the prepayment amount
+																paid by the {{customer_label}}.</li>
+															<li>Service Providers will have to refund the full amount,
+																if the cancellation happens due to the fault of the
+																Service Provider. An amount of 3% of the service fees
+																will be levied from the provider.</li>
+															<li>Only the prepayment amount will be transferred directly to
+																{{customer_label}} bank account.</li>
+															<li>The refund option will be active for 2 days after the
+																service date for the service provider.</li>
+														</ul>
+														<ul *ngIf="source==='appt'">
+															<li>If the {{customer_label}} cancels the appointment
+																before the service date, refund will be processed
+																automatically to the {{customer_label}}’s bank.
+															</li>
+															<li>The refund will not be processed automatically on the
+																day of service, until it is approved by the service
+																provider.</li>
+															<li>If the {{customer_label}} cancels the appointment, the
+																amount refunded will be 3% less (3% deduction includes
+																Jaldee service charges and Online Gateway fees).</li>
+															<li>The service provider can cancel the appointment and refund
+																any amount less than or equal to the prepayment amount
+																paid by the {{customer_label}}.</li>
+															<li>Service Providers will have to refund the full amount,
+																if the cancellation happens due to the fault of the
+																Service Provider. An amount of 3% of the service fees
+																will be levied from the provider.</li>
+															<li>Only the prepayment amount will be transferred directly to
+																{{customer_label}} bank account.</li>
+															<li>The refund option will be active for 2 days after the
+																service date for the service provider.</li>
+														</ul>
+														<ul *ngIf="source!=='appt' && source !== 'order'">
+															<li>If the {{customer_label}} cancels the token
+																before the service date, refund will be processed
+																automatically to the {{customer_label}}’s bank.
+															</li>
+															<li>The refund will not be processed automatically on the
+																day of service, until it is approved by the service
+																provider.</li>
+															<li>If the {{customer_label}} cancels the token, the
+																amount refunded will be 3% less (3% deduction includes
+																Jaldee service charges and Online Gateway fees).</li>
+															<li>The service provider can cancel the token and refund
 																any amount less than or equal to the prepayment amount
 																paid by the {{customer_label}}.</li>
 															<li>Service Providers will have to refund the full amount,

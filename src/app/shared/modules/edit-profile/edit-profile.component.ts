@@ -352,14 +352,23 @@ export class EditProfileComponent implements OnInit {
     );
   }
 
+
   enableTelegram(event) {
     // console.log("Event..........",event)
-    const stat = (event) ? 'ENABLED' : 'DISABLED';
-    console.log('stat',stat);
+    //) ? 'ENABLED' : 'DISABLED';
+     if(event.source.checked){
+    const stat = event.source.checked ? 'ENABLED' : 'DISABLED';
+    if(stat === 'ENABLED'){
+      this.waitlist_statusstr = 'On';
+    }
+    else{
+      this.waitlist_statusstr = 'Off';
+    }
+    console.log('status', this.status );
     this.shared_services.consumertelegramChat(this.removePlus(this.countryCode), this.phonenoHolder).subscribe(data => {
       this.chatId = data;
     })
-    this.teleGramStat(stat).then(
+    this.teleGramStat( this.status).then(
       (data) => {
         console.log('then');
         this.getTelegramstat();
@@ -371,6 +380,11 @@ export class EditProfileComponent implements OnInit {
           this.telegramInfo();
         }
       });
+    }
+    if(event.source.checked === false){
+      this.waitlist_statusstr = 'Off';
+
+    }
   }
   teleGramStat(stat) {
     const _this = this;
@@ -391,9 +405,11 @@ export class EditProfileComponent implements OnInit {
       .subscribe(
         (data: any) => {
           console.log(data);
-          this.status = data.status;
-          this.waitlist_statusstr = this.status ? 'On' : 'Off';
-          console.log(this.waitlist_statusstr,data.status,"waitlist")
+         this.status =  data.status;
+          this.waitlist_statusstr = this.status === true ? 'On' : 'Off';
+       // this.status = !this.status;
+      
+          console.log("Status :",this.waitlist_statusstr,data.status,"waitlist")
           if (data.botUrl) {
             this.boturl = data.botUrl;
           }
