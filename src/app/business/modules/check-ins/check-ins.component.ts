@@ -596,8 +596,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     
   //  }
   filename = fileName.slice(0, 3);
-  if(fileName.length >7){
-    filename = fileName.slice(0,7);
+  if(fileName.length >8){
+    filename = fileName.slice(0,8);
   }
    
 
