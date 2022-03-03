@@ -1295,6 +1295,7 @@ export class AppointmentComponent implements OnInit {
                             list['id'] = this.customer_data.id;
                         }
                     }
+
                 }
                 const retData = data;
                 let retUuid;
@@ -2209,6 +2210,10 @@ export class AppointmentComponent implements OnInit {
                 this.api_loading = false;
             });
         }
+    }
+    sample()
+    {
+        console.log(this.waitlist_for)
     }
 }
 
