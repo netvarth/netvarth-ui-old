@@ -21,6 +21,7 @@ import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.com
 import { MatDialog } from '@angular/material/dialog';
 import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
 import { ThirdpartypopupComponent } from '../thirdpartypopup/thirdpartypopup.component';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-provider-checkin',
@@ -272,6 +273,7 @@ export class ProviderCheckinComponent implements OnInit {
         public provider_services: ProviderServices,
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
+         public _location: Location,
         private groupService: GroupStorageService,
         private dateTimeProcessor: DateTimeProcessor,
         private jaldeeTimeService: JaldeeTimeService,
@@ -2292,9 +2294,12 @@ export class ProviderCheckinComponent implements OnInit {
     goBack() {
         if (this.showQuestionnaire) {
             this.showQuestionnaire = false;
-        } else if (this.showCheckin) {
+        } else if (this.showCheckin && this.type !== 'followup') {
             this.showCheckin = false;
             this.otherThirdParty = '';
+        } 
+        else if (this.showCheckin && this.type === 'followup') {
+             this._location.back();
         } else {
             this.router.navigate(['provider', 'check-ins']);
         }
