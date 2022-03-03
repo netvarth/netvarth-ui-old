@@ -208,6 +208,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   disableButton;
   disablebutton = false;
   bookStep = 'qnr';
+  con_email: any;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -1115,10 +1116,13 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
               uuidList.push(retData[key]);
             }
           });
+          if(post_Data.email){
+            this.con_email = post_Data.email
+          }
           if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
             this.submitQuestionnaire(this.trackUuid, paytype);
         } else {
-          this.paymentOperation(post_Data, paytype);
+          this.paymentOperation(this.con_email, paytype);
         }
 
         },
@@ -1156,11 +1160,14 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
               uuidList.push(retData[key]);
             }
           });
-
+          if(post_Data.email){
+            this.con_email = post_Data.email
+          }
           if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
             this.submitQuestionnaire(this.trackUuid, paytype);
         } else {
-          this.paymentOperation(post_Data, paytype);
+          console.log(post_Data)
+          this.paymentOperation(this.con_email, paytype);
         }
         
         },
@@ -1175,8 +1182,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   paymentOperation(post_Data ? , paytype?) {
     if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
-      console.log(post_Data.email)
-      this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, post_Data.email)
+      console.log(post_Data.email + 'post_Data.email')
+      this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.con_email)
         .subscribe(res => {
           if (this.jcashamount > 0 && this.checkJcash) {
             this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.catalog_details.advanceAmount)
@@ -1953,7 +1960,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
                 if (data.urls.length === postData['urls'].length) {
                   this.shared_services.consumerOrderQnrUploadStatusUpdate(uuid, this.account_id, postData)
                     .subscribe((data) => {
-                      this.paymentOperation(paymenttype);
+                      this.paymentOperation(this.con_email , paymenttype);
                     },
                       error => {
                         this.isClickedOnce = false;
@@ -1971,7 +1978,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
                 });
           }
         } else {
-          this.paymentOperation(paymenttype);
+          this.paymentOperation(this.con_email , paymenttype);
         }
       },
         error => {
