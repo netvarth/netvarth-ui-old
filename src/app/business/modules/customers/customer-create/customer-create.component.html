@@ -86,7 +86,7 @@
                                 <div class="input-group">
                                     <div class="countrycode">
                                         <input type="text"
-                                            [readonly]="action === 'edit'&& customer[0].jaldeeConsumer !=0 && customer[0].phoneNo"
+                                         [readonly]="action === 'edit'&& customer[0].jaldeeConsumer !=0 && customer[0].phoneNo"
                                             (keypress)="isNumericSign($event)" matInput class="form-control"
                                             id="countryCode" placeholder="Country code " formControlName="countryCode"
                                             autocomplete="off" maxlength="5" style="width: 90%;">

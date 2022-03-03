@@ -16,7 +16,7 @@
                             <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding mb-4">
               
                                 <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 " style="margin-right: 40px;"  (click)="createNew()" *ngIf="!showBlockHint" >
-                                  <img src="../../../../../assets/images/user_plus.png" style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Create New Patient</b>
+                                  <img src="../../../../../assets/images/user_plus.png" style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Create New {{customer_label | capitalizeFirst}}</b>
                                 </div>
                     
                                 <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 "  (click)="openthirdpopup(domain,showOther,customer_label)" *ngIf="source !== 'waitlist-block'" >

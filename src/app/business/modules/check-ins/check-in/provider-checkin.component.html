@@ -21,8 +21,7 @@
               <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 " style="margin-right: 40px;"
                 (click)="createNew()" *ngIf="!showBlockHint">
                 <img src="../../../../../assets/images/user_plus.png"
-                  style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Create New
-                  Patient</b>
+                  style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Create New {{customer_label | capitalizeFirst}}</b>
               </div>
 
               <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 "
@@ -1308,18 +1307,16 @@
         </h6>
         <app-questionnaire [questionnaireList]="questionnaireList" [questionAnswers]="questionAnswers"
           [source]="'proCheckin'" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12">
-          <div class="mr-2" *ngIf="!showBlockHint">
-            <button type="button" class="btn btn-light-primary font-weight-bold" (click)="goBack()">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding text-center mx-auto">
+          <div>
+            <button  *ngIf="!showBlockHint" type="button" class="mx-1 btn btn-light-primary font-weight-bold" (click)="goBack()">
               Previous
             </button>
-          </div>
-          <div>
-            <button type="button" class="btn btn-primary font-weight-bold" (click)="saveCheckin()"
+            <button type="button" class="mx-1 btn btn-primary font-weight-bold" (click)="saveCheckin()"
               [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
               [class.spinner-center]="api_loading" [disabled]="api_loading" [class.disabled]="api_loading"
               *ngIf="!showBlockHint">{{showCheckinButtonCaption()}}</button>
-            <button type="button" class="btn btn-primary font-weight-bold" (click)="validateQnr()"
+            <button type="button" class="mx-1 btn btn-primary font-weight-bold" (click)="validateQnr()"
               [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
               [class.spinner-center]="api_loading" [disabled]="api_loading" [class.disabled]="api_loading"
               *ngIf="showBlockHint">Confirm</button>
