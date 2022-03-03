@@ -1267,14 +1267,14 @@
                 <a>{{(sel_ser_det.consumerNoteTitle) ? sel_ser_det.consumerNoteTitle : 'Notes'}}
                   <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span> </a>
               </mat-chip>
-              <!-- <mat-chip class="pro-action" (click)="imagefile.click()"><a>
+              <mat-chip class="pro-action" (click)="imagefile.click()"><a>
                     <input #imagefile type="file" accept="/*;capture=camera" style="display:none;" multiple
                       (change)="filesSelected($event)">
                     <span> Upload
                       File</span>
                     <span
                       *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span></a>
-                </mat-chip> -->
+                </mat-chip>
             </mat-chip-list>
             <!-- <div class="col-md-12 btborder1 mgn-bt-20">&nbsp;</div>
             <ng-container *ngIf="checkinLabel && queuejson.length > 0">
