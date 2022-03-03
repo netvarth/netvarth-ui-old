@@ -27,7 +27,7 @@
 
               <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 "
                 (click)="openthirdpopup(domain,showOther,customer_label)" *ngIf="source !== 'waitlist-block'">
-                <img src="../../../../../assets/images/snowflake.png"
+                <img src="../../../../../assets/images/third_party_primary.png"
                   style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Third party
                   options</b>
               </div>
@@ -58,7 +58,7 @@
                 <mat-form-field>
                   <!-- <mat-label > -->
 
-                  <img src="../../../../../assets/images/Group 1512.png" width="50px" height="40px">
+                  <img src="../../../../../assets/images/Group_1512.png" width="50px" height="40px">
 
                   <!-- </mat-label> -->
                   <!-- <mat-label>Category&nbsp;&nbsp;&nbsp;<span class="fa fa-angle-down"></span></mat-label> -->
@@ -400,7 +400,7 @@
               <div class="date-outer flex-column col-md-5 col-lg-5 col-sm-12 col-xs-12">
                 <div class="" *ngIf="!settingsjson['showTokenId']">{{checkinLabel}} {{date_cap}}</div>
                 <div class="" *ngIf="settingsjson['showTokenId']">
-                  <h6 class="p-0 m-0 text-dark">Token {{date_cap}}</h6>
+                  <h6 class="p-0 m-0 text-dark">{{date_cap}}</h6>
                 </div><br>
                 <div class="date-body"
                   style="background-color: #f6f6f6 !important;border: 1px solid #f6f6f6 !important;">
@@ -408,7 +408,7 @@
                     <!-- <span class="icon-minus" [class.disable]="disableMinus()"
                       (click)="calculateDate(-1)"></span>{{sel_checkindate | date: dateFormat}} -->
                     <!-- <span class="icon-add" (click)="calculateDate(1)"></span> -->
-                    {{sel_checkindate}}
+                    {{sel_checkindate  | date: dateFormat}}
                   </span>
                   <div class="form-group dt py-1">
                     <div class="pickerouter">
@@ -428,7 +428,7 @@
                 <div *ngIf="queuejson.length > 0" class="flex-column"
                   style="display: flex !important;align-items: center;">
                   <div>
-                    <h6>Token Time : &nbsp;</h6>
+                    <h6>Time : &nbsp;</h6>
                   </div>
                   <div class="freeslots mt-3">
                     <!-- <mat-form-field class="padding-0">
@@ -505,6 +505,7 @@
                     </div>
                   </div>
                 </div>
+                <div class="clearfix"></div><br>
                 <span class="my-2 text-primary" *ngIf="thirdParty === '' && queuejson.length > 0"><b>Please upload
                     Notes/Files related to your service</b></span>
                 <mat-chip-list class="btns provider-checkin mt-2" *ngIf="thirdParty === '' && queuejson.length > 0"
@@ -696,6 +697,7 @@
                 </div>
               </div>
             </div>
+            <div class="clearfix"></div><br>
             <span class="my-2 text-primary" *ngIf="thirdParty === '' && queuejson.length > 0"><b>Please upload
                 Notes/Files related to your service</b></span>
             <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
@@ -958,7 +960,7 @@
 
 
               </div>
-              <div class="servicefor-outer btborder" *ngIf="this.follow_up_Details && this.follow_up_Details.service">
+              <div class="servicefor-outer" *ngIf="this.follow_up_Details && this.follow_up_Details.service">
                 <ul class="availer-ul">
                   <ng-container>
                     <li class="block-level">
@@ -1010,7 +1012,7 @@
 
               <div class="date-outer">
                 <div class="date-head" *ngIf="!settingsjson['showTokenId']">{{checkinLabel}} {{date_cap}}</div>
-                <div class="date-head" *ngIf="settingsjson['showTokenId']"> Token {{date_cap}}</div>
+                <div class="date-head" *ngIf="settingsjson['showTokenId']">{{date_cap}}</div>
                 <div class="date-body">
                   <span class="selected-date">
                     <span class="icon-minus" [class.disable]="disableMinus()"
@@ -1029,7 +1031,7 @@
                 </div>
               </div>
               <div class="col-md-12 no-padding ">
-                <div class="col-md-12 mgn-bt-10 btborder" *ngIf="queuejson.length > 0">
+                <div class="col-md-12 mgn-bt-10" *ngIf="queuejson.length > 0">
                   <mat-chip-list class="pcheckin-owl">
                     <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']">
                       <mat-chip class="item" *ngFor="let queue of queuejson, let i= index"

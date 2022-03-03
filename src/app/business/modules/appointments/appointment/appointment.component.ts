@@ -234,7 +234,7 @@ export class AppointmentComponent implements OnInit {
     channel;
     questionAnswers;
     bookingMode;
-    categoryForSearchingarray=['Search with PhoneNumber','Search with Email ID','Search with Patient ID']
+    categoryForSearchingarray=['Search with PhoneNumber','Search with Email ID','Search with ID']
     categoryvalue='Search with PhoneNumber';
     api_loading_video;
     separateDialCode = true;

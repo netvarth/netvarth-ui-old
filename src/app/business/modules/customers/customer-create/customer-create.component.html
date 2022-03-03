@@ -56,7 +56,7 @@
                         <div class="form-group row">
                             <div class="col-lg-4">
                                 <label>First Name</label>
-                                <input type="email" name="first_name" class="form-control" id="first_name"
+                                <input type="email" name="first_name" formControlName="first_name" class="form-control" id="first_name"
                                     placeholder="{{f_name_cap}}"  autocomplete="off"
                                     (blur)="onFieldBlur('first_name')" />
                                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_name')"
