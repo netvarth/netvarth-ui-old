@@ -31,7 +31,7 @@
       </span> -->
       <span class="filter-head-title">Filters</span>
       <i class="icon-filter-one-op ng-star-inserted closeFilter" (click)="hideFilterSidebar()"
-      [matTooltip]="'Close filter sidebar'"  ></i>
+      [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'" ></i>
     </div>
     <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
     <ul class="sidebar-menu accordion" id="accordion1">

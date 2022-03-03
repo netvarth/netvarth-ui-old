@@ -156,7 +156,7 @@
                       </h2>
                     </div>
                     <div id="collapseId" class="collapse in" data-parent="#accordion1">
-                      <div class="card-body">
+                      <div class="card-body" style="padding: 0px !important;">
                         <div class="filterTextinput filter-text-input">
                           <li class="filterli filter-li">
                             <input type="text" id="jaldeeid" [(ngModel)]="filter.jaldeeid" #jaldeeid
@@ -176,14 +176,14 @@
                             <div style="display: inline-block !important;">
                               <i class="fa fa-user"></i>
                             </div>
-                            Name
+                             <span>&nbsp; Name </span>
                           </div>
                           <i class="fa fa-angle-down"></i>
                         </button>
                       </h2>
                     </div>
                     <div id="collapseName" class="collapse in" data-parent="#accordion1">
-                      <div class="card-body">
+                      <div class="card-body" style="padding: 0px !important;">
                         <div class="filterTextinput filter-text-input">
                           <li class="filterli filter-li">
                             <input type="text" id="firstName" [(ngModel)]="filter.first_name" #firstName
@@ -210,14 +210,14 @@
                             <div style="display: inline-block !important;">
                               <i class="fa fa-calendar-o"></i>
                             </div>
-                            Date of birth
+                               <span>&nbsp; Date of birth </span>
                           </div>
                           <i class="fa fa-angle-down"></i>
                         </button>
                       </h2>
                     </div>
                     <div id="collapseDOB" class="collapse in" data-parent="#accordion1">
-                      <div class="card-body">
+                      <div class="card-body" style="padding: 0px !important;">
                         <div class="filterTextinput filter-text-input">
                           <li class="filterli filterDatepicker filter-li">
                             <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday"
@@ -240,14 +240,14 @@
                             <div style="display: inline-block !important;">
                               <i class="fa fa-phone"></i>
                             </div>
-                            Phone Number
+                             <span>&nbsp;  Phone Number </span>
                           </div>
                           <i class="fa fa-angle-down"></i>
                         </button>
                       </h2>
                     </div>
                     <div id="collapsePhone1" class="collapse in" data-parent="#accordion1">
-                      <div class="card-body">
+                      <div class="card-body" style="padding: 0px !important;">
                         <div class="filterTextinput filter-text-input">
                           <li class="filterli filter-li">
                              <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPress()"
@@ -268,18 +268,18 @@
                             <div style="display: inline-block !important;">
                               <i class="fa fa-envelope"></i>
                             </div>
-                            email
+                            <span>&nbsp;   Email   </span>
                           </div>
                           <i class="fa fa-angle-down"></i>
                         </button>
                       </h2>
                     </div>
                     <div id="collapseEmail" class="collapse in" data-parent="#accordion1">
-                      <div class="card-body">
+                      <div class="card-body" style="padding: 0px !important;">
                         <div class="filterTextinput filter-text-input">
                           <li class="filterli filter-li">
                             <input type="text" id="email" [(ngModel)]="filter.email" #email (keyup)="keyPress()"
-                              class="filterTextbox filter-textbox" placeholder="Enter email">
+                              class="filterTextbox filter-textbox" placeholder="Enter Email">
                           </li>
                         </div>
                       </div>
@@ -294,14 +294,14 @@
                             <div style="display: inline-block !important;">
                               <i class="fa fa-tags"></i>
                             </div>
-                            Labels
+                          <span>&nbsp;     Labels      </span>
                           </div>
                           <i class="fa fa-angle-down"></i>
                         </button>
                       </h2>
                     </div>
                     <div id="collapseLabel" class="collapse in" data-parent="#accordion1">
-                      <div class="card-body">
+                      <div class="card-body" style="padding: 0px !important;">
                         <div class="filter-checkbox-input" *ngIf="providerLabels.length > 0">
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                             *ngFor="let lbl of providerLabels">
