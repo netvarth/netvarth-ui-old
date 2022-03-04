@@ -593,13 +593,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
 
-  getAgent(fileName){
-    return fileName.toLocaleLowerCase();
-  }
-  getBookingReqFrom(browser) {
+  // getAgent(fileName){
+  //   return fileName.toLocaleLowerCase();
+  // }
+  getReqFrom(browser,agent) {
     let browserName = ''
-    if(browser){
+     if(browser){
+    if(browser === "WEB_UI"){
     browserName = browser.slice(0, 3);
+    }
+    if(browser === 'WEB_LINK'){
+      browserName = 'IOS'
     }
     if(browser){
      if(browser.length >8){
@@ -609,7 +613,48 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     return browserName.toLocaleLowerCase();
   }
-  refresh() {
+  if(browser === undefined && agent === "BROWSER"){
+    browserName = 'web'
+    return browserName;
+  }
+    
+  
+  
+}
+  getBookingReqFrom(browser) {
+    let browserName = ''
+    if(browser){
+    browserName = browser.slice(0, 3);
+    }
+    if(browser === 'WEB_LINK'){
+      browserName = 'iphone'
+    }
+    if(browser){
+     if(browser.length >8){
+      browserName = browser.slice(0,8);
+    }
+  }
+
+    return browserName.toLocaleLowerCase();
+  }
+  getRequestedFrom(browser,reqFrom){
+    let browserName = ''
+    if(browser){
+    browserName = browser.slice(0, 3);
+    }
+    if(browser === 'WEB_LINK'){
+      browserName = 'IOS'
+    }
+    if(browser){
+     if(browser.length >8){
+      browserName = browser.slice(0,8);
+    }
+  }
+
+    return reqFrom.toLocaleLowerCase() + ', ' + browserName.toLocaleLowerCase();
+  }
+
+ refresh() {
     if (this.time_type === 1) {
       this.getTodayAppointments();
     }

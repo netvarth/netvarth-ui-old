@@ -50,6 +50,8 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     selQIds: any = [];
     qualification;
     disablecheckavailabilitybutton=false;
+    tooltipcls = '';
+
     constructor(
         private lStorageService: LocalStorageService,
         private wordProcessor: WordProcessor,
@@ -64,6 +66,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     ngOnInit() {
         if (this.type == 'appointment-dashboard') {
             this.appointment = this.item;
+            console.log("Appointment :",this.appointment)
         }
         if (this.type) {
             this.item.type = this.type;
@@ -74,10 +77,12 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             }
             if (this.time_type === 2 && this.groupService.getitemFromGroupStorage('future_selQ')) {
                 this.selQIds = this.groupService.getitemFromGroupStorage('future_selQ');
+
             } else if (this.time_type === 1 && this.groupService.getitemFromGroupStorage('selQ')) {
                 this.selQIds = this.groupService.getitemFromGroupStorage('selQ');
             } else if (this.time_type === 3 && this.groupService.getitemFromGroupStorage('history_selQ')) {
                 this.selQIds = this.groupService.getitemFromGroupStorage('history_selQ');
+
             }
         } else {
             if (this.groupService.getitemFromGroupStorage('appt-selectedUser')) {
@@ -154,6 +159,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 break;
         }
         console.log('waitlist...',this.waitlist)
+       // console.log("Request Info :",this.waitlist.requestInfo)
     }
     getServiceName(serviceName) {
         let name = '';
@@ -164,6 +170,69 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         }
         return name;
       }
+      
+      getReqFrom(browser,agent) {
+        let browserName = ''
+         if(browser){
+        if(browser === "WEB_UI"){
+        browserName = browser.slice(0, 3);
+        }
+        if(browser === 'WEB_LINK'){
+          browserName = 'IOS'
+        }
+        if(browser){
+         if(browser.length >8){
+          browserName = browser.slice(0,8);
+        }
+      }
+    
+        return browserName.toLocaleLowerCase();
+      }
+      if(browser === undefined && agent === "BROWSER"){
+        browserName = 'web'
+        return browserName;
+      }
+        
+      
+      
+    }
+    
+      getBookingReqFrom(browser) {
+        let browserName = ''
+         if(browser){
+        if(browser === "WEB_UI"){
+        browserName = browser.slice(0, 3);
+        }
+        if(browser === 'WEB_LINK'){
+          browserName = 'IOS'
+        }
+        if(browser){
+         if(browser.length >8){
+          browserName = browser.slice(0,8);
+        }
+      }
+    
+        return browserName.toLocaleLowerCase();
+      }
+     
+    }
+      getRequestedFrom(browser,reqFrom){
+        let browserName = ''
+        if(browser){
+        browserName = browser.slice(0, 3);
+        }
+        if(browser === 'WEB_LINK'){
+          browserName = 'IOS'
+        }
+        if(browser){
+         if(browser.length >8){
+          browserName = browser.slice(0,8);
+        }
+      }
+    
+        return reqFrom.toLocaleLowerCase() + ', ' + browserName.toLocaleLowerCase();
+      }
+    
     ngOnChanges() {
         // this.itemQty = this.quantity;
         // this.cdref.detectChanges();
@@ -375,6 +444,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     }
     showMoreorLess(waitlist, type) {
         for (let checkin of this.checkins) {
+            
             checkin.show = false;
         }
         if (type === 'more') {

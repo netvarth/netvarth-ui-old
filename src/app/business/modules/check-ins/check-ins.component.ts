@@ -365,6 +365,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   locId;
   location_select: any = [];
   internalStats: any = [];
+  showMore= false;
   
 //multi user variable start
 allServiceSelectedMultiUser=false
@@ -580,14 +581,17 @@ multiUserFilter:any=[];
         () => { }
       );
   }
-  getAgent(fileName){
-    return fileName.toLocaleLowerCase();
-  }
-
-  getBookingReqFrom(browser) {
+  // getAgent(fileName){
+  //   return fileName.toLocaleLowerCase();
+  // }
+  getReqFrom(browser,agent) {
     let browserName = ''
-    if(browser){
+     if(browser){
+    if(browser === "WEB_UI"){
     browserName = browser.slice(0, 3);
+    }
+    if(browser === 'WEB_LINK'){
+      browserName = 'IOS'
     }
     if(browser){
      if(browser.length >8){
@@ -596,6 +600,51 @@ multiUserFilter:any=[];
   }
 
     return browserName.toLocaleLowerCase();
+  }
+  if(browser === undefined && agent === "BROWSER"){
+    browserName = 'web'
+    return browserName;
+  }
+    
+  
+  
+}
+  getBookingReqFrom(browser) {
+    let browserName = ''
+    if(browser){
+    browserName = browser.slice(0, 3);
+    }
+    if(browser === 'WEB_LINK'){
+      browserName = 'iphone'
+    }
+    if(browser){
+     if(browser.length >8){
+      browserName = browser.slice(0,8);
+    }
+  }
+
+    return browserName.toLocaleLowerCase();
+  }
+  getRequestedFrom(browser,reqFrom){
+    let browserName = ''
+    if(browser){
+    browserName = browser.slice(0, 3);
+    }
+    if(browser === 'WEB_LINK'){
+      browserName = 'IOS'
+    }
+    if(browser){
+     if(browser.length >8){
+      browserName = browser.slice(0,8);
+    }
+  }
+
+    return reqFrom.toLocaleLowerCase() + ', ' + browserName.toLocaleLowerCase();
+  }
+
+
+  showText(){
+    this.showMore = true;
   }
   setLabelFilter(label, event) {
     this.resetPaginationData();
@@ -3238,6 +3287,7 @@ multiUserFilter:any=[];
     return this.shared_functions.isNumeric(evt);
   }
   gotoCustomerDetails(waitlist) {
+    this.showMore = false;
     this.lStorageService.setitemonLocalStorage('wlfilter', this.setFilterForApi());
     if (waitlist.waitlistStatus !== 'blocked') {
       this.router.navigate(['/provider/customers/' + waitlist.waitlistingFor[0].id]);

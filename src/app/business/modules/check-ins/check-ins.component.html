@@ -654,12 +654,7 @@
                     (click)="gotoCustomerDetails(checkin)">
                     {{checkin.waitlistingFor[0].firstName}}
                     {{checkin.waitlistingFor[0].lastName}}
-                    <img src="../../../../assets/icons/icon294(Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'web'"
-                    style="width: 18px !important; margin-top: -6px !important;">
-                    <img src="../../../../assets/icons/Group482249.png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'app'" 
-                    style="width: 18px !important; margin-top: -6px !important;">
-                    <img src="../../../../assets/icons/icon295(Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'consumer'"
-                    style="width: 18px !important; margin-top: -6px !important;">
+                    <!-- (mouseover)="changeText=true" (mouseout)="changeText=false" -->
                     <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                       <span
                         *ngIf="checkin.waitlistingFor[0].bookingLocation.district">{{checkin.waitlistingFor[0].bookingLocation.district}},</span>
@@ -673,16 +668,22 @@
                       <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                       <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender |
                         capitalizeFirst}}</span>
-                        <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && changeText">
+                        <!-- <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && showMore">
                           {{getAgent(checkin.requestInfo.agent) | capitalizeFirst}},
-                          {{getBookingReqFrom(checkin.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
+                          {{getBookingReqFrom(checkin.requestInfo.bookingReqFrom) | capitalizeFirst}}</span> -->
                       <span
                         *ngIf="checkin.waitlistingFor[0].preferredLanguage && (checkin.waitlistingFor[0].gender || checkin.waitlistingFor[0].age)">,</span>
                       <span *ngIf="checkin.waitlistingFor[0].preferredLanguage">&nbsp;</span>
                       <span
                         *ngIf="checkin.waitlistingFor[0].preferredLanguage">{{checkin.waitlistingFor[0].preferredLanguage}}</span>
                     </div>
-                  </div>
+                  </div> <img src="../../../../assets/icons/icon294(Traced).png" [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst"  *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'web'"
+                    style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/Group482249.png"  [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'ios'" 
+                    style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/icon295(Traced).png" [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst"  *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'consumer'"
+                    style="width: 18px !important; margin-top: -6px !important;">
+                
                   <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                     class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                     *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
@@ -911,12 +912,7 @@
                     (click)="gotoCustomerDetails(checkin)" [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
                     [class.pointer-auto]="checkin.waitlistStatus=='blocked'">
                     {{checkin.waitlistingFor[0].firstName}}
-                    {{checkin.waitlistingFor[0].lastName}} <img src="../../../../assets/icons/icon294(Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'web'"
-                    style="width: 18px !important; margin-top: -6px !important;">
-                    <img src="../../../../assets/icons/Group482249.png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'app'" 
-                    style="width: 18px !important; margin-top: -6px !important;">
-                    <img src="../../../../assets/icons/icon295(Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'consumer'"
-                    style="width: 18px !important; margin-top: -6px !important;">
+                    {{checkin.waitlistingFor[0].lastName}}
 
                     <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                     <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
@@ -932,9 +928,9 @@
                       <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                       <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender |
                         capitalizeFirst}}</span>
-                        <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && changeText">
+                        <!-- <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && showMore">
                           {{getAgent(checkin.requestInfo.agent) | capitalizeFirst}},
-                          {{getBookingReqFrom(checkin.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
+                          {{getBookingReqFrom(checkin.requestInfo.bookingReqFrom) | capitalizeFirst}}</span> -->
 
                       <span
                         *ngIf="checkin.waitlistingFor[0].preferredLanguage && (checkin.waitlistingFor[0].gender || checkin.waitlistingFor[0].age)">,</span>
@@ -942,7 +938,12 @@
                       <span
                         *ngIf="checkin.waitlistingFor[0].preferredLanguage">{{checkin.waitlistingFor[0].preferredLanguage}}</span>
                     </div>
-                  </div>
+                  </div> <img src="../../../../assets/icons/icon294(Traced).png" [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'web'"
+                    style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/Group482249.png"  [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'ios'" 
+                    style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/icon295(Traced).png"  [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'consumer'"
+                    style="width: 18px !important; margin-top: -6px !important;">
                   <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                     class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                     *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
@@ -1587,12 +1588,7 @@
                   [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                   (click)="gotoCustomerDetails(checkin)" [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
                   [class.pointer-auto]="checkin.waitlistStatus=='blocked'">{{checkin.waitlistingFor[0].firstName}}
-                  {{checkin.waitlistingFor[0].lastName}} <img src="../../../../assets/icons/icon294(Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'web'"
-                  style="width: 18px !important; margin-top: -6px !important;">
-                  <img src="../../../../assets/icons/Group482249.png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'app'" 
-                  style="width: 18px !important; margin-top: -6px !important;">
-                  <img src="../../../../assets/icons/icon295(Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'consumer'"
-                  style="width: 18px !important; margin-top: -6px !important;">
+                  {{checkin.waitlistingFor[0].lastName}} 
 
                   <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                   <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
@@ -1609,9 +1605,9 @@
                     <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                     <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender |
                       capitalizeFirst}}</span>
-                      <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && changeText">
+                      <!-- <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && showMore">
                         {{getAgent(checkin.requestInfo.agent) | capitalizeFirst}},
-                        {{getBookingReqFrom(checkin.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
+                        {{getBookingReqFrom(checkin.requestInfo.bookingReqFrom) | capitalizeFirst}}</span> -->
 
                     <span
                       *ngIf="checkin.waitlistingFor[0].preferredLanguage && (checkin.waitlistingFor[0].gender || checkin.waitlistingFor[0].age)">,</span>
@@ -1619,7 +1615,12 @@
                     <span
                       *ngIf="checkin.waitlistingFor[0].preferredLanguage">{{checkin.waitlistingFor[0].preferredLanguage}}</span>
                   </div>
-                </div>
+                </div> <img src="../../../../assets/icons/icon294(Traced).png" [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'web'"
+                  style="width: 18px !important; margin-top: -6px !important;">
+                  <img src="../../../../assets/icons/Group482249.png"  [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'ios'" 
+                  style="width: 18px !important; margin-top: -6px !important;">
+                  <img src="../../../../assets/icons/icon295(Traced).png"  [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'consumer'"
+                  style="width: 18px !important; margin-top: -6px !important;">
                 <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                   class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                   *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
@@ -2375,13 +2376,7 @@
                   [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                   (click)="gotoCustomerDetails(checkin)">
                   {{checkin.waitlistingFor[0].firstName}}
-                  {{checkin.waitlistingFor[0].lastName}} <img src="../../../../assets/icons/icon294(Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'web'"
-                    style="width: 18px !important; margin-top: -6px !important;">
-                    <img src="../../../../assets/icons/Group482249.png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'app'" 
-                    style="width: 18px !important; margin-top: -6px !important;">
-                    <img src="../../../../assets/icons/icon295(Traced).png" (mouseover)="changeText=true" (mouseout)="changeText=false" *ngIf="getBookingReqFrom(checkin.requestInfo.bookingReqFrom) === 'consumer'"
-                    style="width: 18px !important; margin-top: -6px !important;">
-
+                  {{checkin.waitlistingFor[0].lastName}}
                   <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                     <span
                       *ngIf="checkin.waitlistingFor[0].bookingLocation.district">{{checkin.waitlistingFor[0].bookingLocation.district}},</span>
@@ -2395,16 +2390,22 @@
                     <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                     <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender |
                       capitalizeFirst}}</span>
-                      <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && changeText">
+                      <!-- <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && showMore">
                         {{getAgent(checkin.requestInfo.agent) | capitalizeFirst}},
-                        {{getBookingReqFrom(checkin.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
+                        {{getBookingReqFrom(checkin.requestInfo.bookingReqFrom) | capitalizeFirst}}</span> -->
                     <span
                       *ngIf="checkin.waitlistingFor[0].preferredLanguage && (checkin.waitlistingFor[0].gender || checkin.waitlistingFor[0].age)">,</span>
                     <span *ngIf="checkin.waitlistingFor[0].preferredLanguage">&nbsp;</span>
                     <span
                       *ngIf="checkin.waitlistingFor[0].preferredLanguage">{{checkin.waitlistingFor[0].preferredLanguage}}</span>
                   </div>
-                </div>
+                </div> <img src="../../../../assets/icons/icon294(Traced).png" [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'web'"
+                  style="width: 18px !important; margin-top: -6px !important;">
+                  <img src="../../../../assets/icons/Group482249.png"  [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'ios'" 
+                  style="width: 18px !important; margin-top: -6px !important;">
+                  <img src="../../../../assets/icons/icon295(Traced).png"  [matTooltipClass]="tooltipcls"  [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'consumer'"
+                  style="width: 18px !important; margin-top: -6px !important;">
+
                 <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                   class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                   *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"

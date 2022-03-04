@@ -398,8 +398,14 @@
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
                     *ngIf="item.type=='checkin-dashboard' && (waitlist.waitlistingFor[0].firstName || waitlist.waitlistingFor[0].lastName)">
                     {{waitlist.waitlistingFor[0].firstName}}
-                    {{waitlist.waitlistingFor[0].lastName}}
+                    {{waitlist.waitlistingFor[0].lastName}} <span *ngIf="waitlist.requestInfo"><img src="../../../../assets/icons/icon294(Traced).png" [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(waitlist.requestInfo.bookingReqFrom,waitlist.requestInfo.agent) | capitalizeFirst"  class="pointer-curso"  *ngIf="getReqFrom(waitlist.requestInfo.bookingReqFrom,waitlist.requestInfo.agent) === 'web'"
+                    style="width: 18px !important;">
+                    <img src="../../../../assets/icons/Group482249.png"  [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(waitlist.requestInfo.bookingReqFrom,waitlist.requestInfo.agent) | capitalizeFirst" class="pointer-curso" *ngIf="getBookingReqFrom(waitlist.requestInfo.bookingReqFrom) === 'ios'" 
+                    style="width: 18px !important;">
+                    <img src="../../../../assets/icons/icon295(Traced).png" [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(waitlist.requestInfo.bookingReqFrom,waitlist.requestInfo.agent) | capitalizeFirst" class="pointer-curso"  *ngIf="getBookingReqFrom(waitlist.requestInfo.bookingReqFrom) === 'consumer'"
+                    style="width: 18px !important;"></span>
                 </div>
+
 
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
                     *ngIf="item.type=='checkin-dashboard' && !waitlist.waitlistingFor[0].firstName && !waitlist.waitlistingFor[0].lastName && waitlist.consumer && waitlist.consumer.jaldeeId">
@@ -513,7 +519,12 @@
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
                     *ngIf="item.type=='appointment-dashboard' && (appointment.appmtFor[0].firstName || appointment.appmtFor[0].lastName)">
                     {{appointment.appmtFor[0].firstName}}
-                    {{appointment.appmtFor[0].lastName}}
+                    {{appointment.appmtFor[0].lastName}} <span *ngIf="appointment.requestInfo"><img src="../../../../assets/icons/icon294(Traced).png" [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(appointment.requestInfo.bookingReqFrom,appointment.requestInfo.agent) | capitalizeFirst"  class="pointer-curso"  *ngIf="getReqFrom(appointment.requestInfo.bookingReqFrom,appointment.requestInfo.agent) === 'web'"
+                    style="width: 18px !important;">
+                    <img src="../../../../assets/icons/Group482249.png"  [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(appointment.requestInfo.bookingReqFrom,appointment.requestInfo.agent) | capitalizeFirst" class="pointer-curso" *ngIf="getBookingReqFrom(appointment.requestInfo.bookingReqFrom) === 'ios'" 
+                    style="width: 18px !important;">
+                    <img src="../../../../assets/icons/icon295(Traced).png" [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(appointment.requestInfo.bookingReqFrom,appointment.requestInfo.agent) | capitalizeFirst" class="pointer-curso"  *ngIf="getBookingReqFrom(appointment.requestInfo.bookingReqFrom) === 'consumer'"
+                    style="width: 18px !important;"></span> 
                 </div>
 
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"

@@ -666,17 +666,7 @@
                     *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
                     [class.pointer-cursor]="appt.apptStatus!=='blocked'"
                     [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
-                    {{appt.appmtFor[0].lastName}} <img src="../../../../assets/icons/icon294(Traced).png"
-                      (mouseover)="changeText=true" (mouseout)="changeText=false"
-                      *ngIf="getBookingReqFrom(appt.requestInfo.bookingReqFrom) === 'web'"
-                      style="width: 18px !important; margin-top: -6px !important;">
-                    <img src="../../../../assets/icons/Group482249.png" (mouseover)="changeText=true"
-                      (mouseout)="changeText=false" *ngIf="getBookingReqFrom(appt.requestInfo.bookingReqFrom) === 'app'"
-                      style="width: 18px !important; margin-top: -6px !important;">
-                    <img src="../../../../assets/icons/icon295(Traced).png" (mouseover)="changeText=true"
-                      (mouseout)="changeText=false"
-                      *ngIf="getBookingReqFrom(appt.requestInfo.bookingReqFrom) === 'consumer'"
-                      style="width: 18px !important; margin-top: -6px !important;">
+                    {{appt.appmtFor[0].lastName}} 
 
                     <div class="bold" *ngIf="appt.appmtFor[0].bookingLocation">
                       <span
@@ -690,16 +680,21 @@
                       <span *ngIf="appt.appmtFor[0].age">,</span>
                       <span *ngIf="appt.appmtFor[0].gender">&nbsp;</span>
                       <span *ngIf="appt.appmtFor[0].gender">{{appt.appmtFor[0].gender | capitalizeFirst}}</span>
-                      <span *ngIf="appt.requestInfo.agent && appt.requestInfo.bookingReqFrom && changeText">
+                      <!-- <span *ngIf="appt.requestInfo.agent && appt.requestInfo.bookingReqFrom && changeText">
                         {{getAgent(appt.requestInfo.agent) | capitalizeFirst}},
-                        {{getBookingReqFrom(appt.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
+                        {{getBookingReqFrom(appt.requestInfo.bookingReqFrom) | capitalizeFirst}}</span> -->
                       <span
                         *ngIf="appt.appmtFor[0].preferredLanguage && (appt.appmtFor[0].gender || appt.appmtFor[0].age)">,</span>
                       <span *ngIf="appt.appmtFor[0].preferredLanguage">&nbsp;</span>
                       <span *ngIf="appt.appmtFor[0].preferredLanguage">{{appt.appmtFor[0].preferredLanguage}}</span>
                     </div>
                     <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
-                  </div>
+                  </div> <img src="../../../../assets/icons/icon294(Traced).png" [matTooltip]="getRequestedFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) | capitalizeFirst"  *ngIf="getReqFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) === 'web'"
+                  style="width: 18px !important; margin-top: -6px !important;">
+                  <img src="../../../../assets/icons/Group482249.png"   [matTooltip]="getRequestedFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) === 'ios'" 
+                  style="width: 18px !important; margin-top: -6px !important;">
+                  <img src="../../../../assets/icons/icon295(Traced).png"  [matTooltip]="getRequestedFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) | capitalizeFirst"  *ngIf="getReqFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) === 'consumer'"
+                  style="width: 18px !important; margin-top: -6px !important;">
                   <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                     class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
                     *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
@@ -1240,17 +1235,7 @@
                     *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
                     [class.pointer-cursor]="appt.apptStatus!=='blocked'"
                     [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
-                    {{appt.appmtFor[0].lastName}} <img src="../../../../assets/icons/icon294(Traced).png"
-                      (mouseover)="changeText=true" (mouseout)="changeText=false"
-                      *ngIf="getBookingReqFrom(appt.requestInfo.bookingReqFrom) === 'web'"
-                      style="width: 18px !important; margin-top: -6px !important;">
-                    <img src="../../../../assets/icons/Group482249.png" (mouseover)="changeText=true"
-                      (mouseout)="changeText=false" *ngIf="getBookingReqFrom(appt.requestInfo.bookingReqFrom) === 'app'"
-                      style="width: 18px !important; margin-top: -6px !important;">
-                    <img src="../../../../assets/icons/icon295(Traced).png" (mouseover)="changeText=true"
-                      (mouseout)="changeText=false"
-                      *ngIf="getBookingReqFrom(appt.requestInfo.bookingReqFrom) === 'consumer'"
-                      style="width: 18px !important; margin-top: -6px !important;">
+                    {{appt.appmtFor[0].lastName}}
                     <div class="bold" *ngIf="appt.appmtFor[0].bookingLocation">
                       <span
                         *ngIf="appt.appmtFor[0].bookingLocation.district">{{appt.appmtFor[0].bookingLocation.district}},</span>
@@ -1263,16 +1248,21 @@
                       <span *ngIf="appt.appmtFor[0].age">,</span>
                       <span *ngIf="appt.appmtFor[0].gender">&nbsp;</span>
                       <span *ngIf="appt.appmtFor[0].gender">{{appt.appmtFor[0].gender | capitalizeFirst}}</span>
-                      <span *ngIf="appt.requestInfo.agent && appt.requestInfo.bookingReqFrom && changeText">
+                      <!-- <span *ngIf="appt.requestInfo.agent && appt.requestInfo.bookingReqFrom && changeText">
                         {{getAgent(appt.requestInfo.agent) | capitalizeFirst}},
-                        {{getBookingReqFrom(appt.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
+                        {{getBookingReqFrom(appt.requestInfo.bookingReqFrom) | capitalizeFirst}}</span> -->
                       <span
                         *ngIf="appt.appmtFor[0].preferredLanguage && (appt.appmtFor[0].gender || appt.appmtFor[0].age)">,</span>
                       <span *ngIf="appt.appmtFor[0].preferredLanguage">&nbsp;</span>
                       <span *ngIf="appt.appmtFor[0].preferredLanguage">{{appt.appmtFor[0].preferredLanguage}}</span>
                     </div>
                     <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
-                  </div>
+                  </div> <img src="../../../../assets/icons/icon294(Traced).png" [matTooltip]="getRequestedFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) | capitalizeFirst"  *ngIf="getReqFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) === 'web'"
+                  style="width: 18px !important; margin-top: -6px !important;">
+                  <img src="../../../../assets/icons/Group482249.png"   [matTooltip]="getRequestedFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) === 'ios'" 
+                  style="width: 18px !important; margin-top: -6px !important;">
+                  <img src="../../../../assets/icons/icon295(Traced).png"  [matTooltip]="getRequestedFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) | capitalizeFirst"  *ngIf="getReqFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) === 'consumer'"
+                  style="width: 18px !important; margin-top: -6px !important;">
                   <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                     class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
                     *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
@@ -1880,17 +1870,7 @@
                   *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
                   [class.pointer-cursor]="appt.apptStatus!=='blocked'"
                   [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
-                  {{appt.appmtFor[0].lastName}} <img src="../../../../assets/icons/icon294(Traced).png"
-                    (mouseover)="changeText=true" (mouseout)="changeText=false"
-                    *ngIf="getBookingReqFrom(appt.requestInfo.bookingReqFrom) === 'web'"
-                    style="width: 18px !important; margin-top: -6px !important;">
-                  <img src="../../../../assets/icons/Group482249.png" (mouseover)="changeText=true"
-                    (mouseout)="changeText=false" *ngIf="getBookingReqFrom(appt.requestInfo.bookingReqFrom) === 'app'"
-                    style="width: 18px !important; margin-top: -6px !important;">
-                  <img src="../../../../assets/icons/icon295(Traced).png" (mouseover)="changeText=true"
-                    (mouseout)="changeText=false"
-                    *ngIf="getBookingReqFrom(appt.requestInfo.bookingReqFrom) === 'consumer'"
-                    style="width: 18px !important; margin-top: -6px !important;">
+                  {{appt.appmtFor[0].lastName}}
                   <div class="bold" *ngIf="appt.appmtFor[0].bookingLocation">
                     <span
                       *ngIf="appt.appmtFor[0].bookingLocation.district">{{appt.appmtFor[0].bookingLocation.district}},</span>
@@ -1903,16 +1883,21 @@
                     <span *ngIf="appt.appmtFor[0].age">,</span>
                     <span *ngIf="appt.appmtFor[0].gender">&nbsp;</span>
                     <span *ngIf="appt.appmtFor[0].gender">{{appt.appmtFor[0].gender | capitalizeFirst}}</span>
-                    <span *ngIf="appt.requestInfo.agent && appt.requestInfo.bookingReqFrom && changeText">
+                    <!-- <span *ngIf="appt.requestInfo.agent && appt.requestInfo.bookingReqFrom && changeText">
                       {{getAgent(appt.requestInfo.agent) | capitalizeFirst}},
-                      {{getBookingReqFrom(appt.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
+                      {{getBookingReqFrom(appt.requestInfo.bookingReqFrom) | capitalizeFirst}}</span> -->
                     <span
                       *ngIf="appt.appmtFor[0].preferredLanguage && (appt.appmtFor[0].gender || appt.appmtFor[0].age)">,</span>
                     <span *ngIf="appt.appmtFor[0].preferredLanguage">&nbsp;</span>
                     <span *ngIf="appt.appmtFor[0].preferredLanguage">{{appt.appmtFor[0].preferredLanguage}}</span>
                   </div>
                   <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
-                </div>
+                </div> <img src="../../../../assets/icons/icon294(Traced).png" [matTooltip]="getRequestedFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) | capitalizeFirst"  *ngIf="getReqFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) === 'web'"
+                style="width: 18px !important; margin-top: -6px !important;">
+                <img src="../../../../assets/icons/Group482249.png"   [matTooltip]="getRequestedFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) === 'ios'" 
+                style="width: 18px !important; margin-top: -6px !important;">
+                <img src="../../../../assets/icons/icon295(Traced).png"  [matTooltip]="getRequestedFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) | capitalizeFirst"  *ngIf="getReqFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) === 'consumer'"
+                style="width: 18px !important; margin-top: -6px !important;">
                 <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                   class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
                   *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
@@ -2586,17 +2571,7 @@
                   *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
                   [class.pointer-cursor]="appt.apptStatus!=='blocked'"
                   [class.pointer-auto]="appt.apptStatus=='blocked'">{{appt.appmtFor[0].firstName}}
-                  {{appt.appmtFor[0].lastName}} <img src="../../../../assets/icons/icon294(Traced).png"
-                    (mouseover)="changeText=true" (mouseout)="changeText=false"
-                    *ngIf="getBookingReqFrom(appt.requestInfo.bookingReqFrom) === 'web'"
-                    style="width: 18px !important; margin-top: -6px !important;">
-                  <img src="../../../../assets/icons/Group482249.png" (mouseover)="changeText=true"
-                    (mouseout)="changeText=false" *ngIf="getBookingReqFrom(appt.requestInfo.bookingReqFrom) === 'app'"
-                    style="width: 18px !important; margin-top: -6px !important;">
-                  <img src="../../../../assets/icons/icon295(Traced).png" (mouseover)="changeText=true"
-                    (mouseout)="changeText=false"
-                    *ngIf="getBookingReqFrom(appt.requestInfo.bookingReqFrom) === 'consumer'"
-                    style="width: 18px !important; margin-top: -6px !important;">
+                  {{appt.appmtFor[0].lastName}} 
                   <div class="bold" *ngIf="appt.appmtFor[0].bookingLocation">
                     <span
                       *ngIf="appt.appmtFor[0].bookingLocation.district">{{appt.appmtFor[0].bookingLocation.district}},</span>
@@ -2609,16 +2584,21 @@
                     <span *ngIf="appt.appmtFor[0].age">,</span>
                     <span *ngIf="appt.appmtFor[0].gender">&nbsp;</span>
                     <span *ngIf="appt.appmtFor[0].gender">{{appt.appmtFor[0].gender | capitalizeFirst}}</span>
-                    <span *ngIf="appt.requestInfo.agent && appt.requestInfo.bookingReqFrom && changeText">
+                    <!-- <span *ngIf="appt.requestInfo.agent && appt.requestInfo.bookingReqFrom && changeText">
                       {{getAgent(appt.requestInfo.agent) | capitalizeFirst}},
-                      {{getBookingReqFrom(appt.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
+                      {{getBookingReqFrom(appt.requestInfo.bookingReqFrom) | capitalizeFirst}}</span> -->
                     <span
                       *ngIf="appt.appmtFor[0].preferredLanguage && (appt.appmtFor[0].gender || appt.appmtFor[0].age)">,</span>
                     <span *ngIf="appt.appmtFor[0].preferredLanguage">&nbsp;</span>
                     <span *ngIf="appt.appmtFor[0].preferredLanguage">{{appt.appmtFor[0].preferredLanguage}}</span>
                   </div>
                   <div class="block-hint" *ngIf="appt.apptStatus==='blocked'">Blocked</div>
-                </div>
+                </div> <img src="../../../../assets/icons/icon294(Traced).png" [matTooltip]="getRequestedFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) | capitalizeFirst"  *ngIf="getReqFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) === 'web'"
+                style="width: 18px !important; margin-top: -6px !important;">
+                <img src="../../../../assets/icons/Group482249.png"   [matTooltip]="getRequestedFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) === 'ios'" 
+                style="width: 18px !important; margin-top: -6px !important;">
+                <img src="../../../../assets/icons/icon295(Traced).png"  [matTooltip]="getRequestedFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) | capitalizeFirst"  *ngIf="getReqFrom(appt.requestInfo.bookingReqFrom,appt.requestInfo.agent) === 'consumer'"
+                style="width: 18px !important; margin-top: -6px !important;">
                 <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                   class="bold pull-left mgn-lt-5 name pointer-cursor font11" (click)="gotoCustomerDetails(appt)"
                   *ngIf="!appt.appmtFor[0].firstName && !appt.appmtFor[0].lastName">
