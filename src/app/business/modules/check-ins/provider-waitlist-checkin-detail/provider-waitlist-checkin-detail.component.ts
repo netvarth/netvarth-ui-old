@@ -158,7 +158,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
 
   }
   getAgent(fileName){
+    if(fileName){
     return fileName.toLocaleLowerCase();
+    }
   }
   getReqFrom(browser,agent) {
     let browserName = ''
