@@ -10,7 +10,8 @@
 <mat-dialog-actions>
     <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">{{cancel_btn_cap}}</button>
     <button mat-button class="cs-btn bt1" (click)="handleSaveMember()"
-        [disabled]="disableButton">{{ (data.type == 'add') ? save_btn_cap : update_btn_cap}} {{member_cap}}</button>
+        [disabled]="disableButton"> <span *ngIf="data.type == 'add'">{{save_btn_cap}}</span> <span *ngIf="data.type == 'edit'">{{update_btn_cap}} {{member_cap}}</span></button>
+        <!-- update_btn_cap -->
 </mat-dialog-actions>
 
 <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>

@@ -542,7 +542,8 @@
                 <div class="card" *ngIf="users.length >0">
                   <div class="card-header">
                     <h2 class="mb-0">
-                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseServicesMultiUser" aria-expanded="false">
+                      <button class="btn btn-link" type="button" data-toggle="collapse"
+                        data-target="#collapseServicesMultiUser" aria-expanded="false">
                         <div>
                           <div style="display: inline-block !important;">
                             <i class="fa fa-user"></i>
@@ -554,20 +555,21 @@
                     </h2>
                   </div>
                   <div id="collapseServicesMultiUser" class="collapse in" data-parent="#accordion3">
-                    <div class="card-body" >
-                      <div class="filter-checkbox-input" >
+                    <div class="card-body">
+                      <div class="filter-checkbox-input">
                         <!-- <label class="filterHeaders">Services</label> -->
                         <!-- <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                         </li> -->
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                           <mat-checkbox class="filter-checkbox" [checked]="allServiceSelectedMultiUser"
-                            (change)="setFilterDataCheckbox('multiUser', 'all', $event)" >
+                            (change)="setFilterDataCheckbox('multiUser', 'all', $event)">
                             All</mat-checkbox>
                         </li>
-                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize" *ngFor="let multiUser of users">
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let multiUser of users">
                           <mat-checkbox class="filter-checkbox"
                             [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
-                            (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)" >
+                            (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)">
                             {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
                         </li>
                       </div>
@@ -653,7 +655,20 @@
                     [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                     (click)="gotoCustomerDetails(checkin)">
                     {{checkin.waitlistingFor[0].firstName}}
-                    {{checkin.waitlistingFor[0].lastName}}
+                    {{checkin.waitlistingFor[0].lastName}} <img src="../../../../assets/icons/icon294(Traced).png"
+                      [matTooltipClass]="tooltipcls"
+                      [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst"
+                      *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'web'"
+                      style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/Group482249.png" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst"
+                      *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'ios'"
+                      style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/icon295(Traced).png" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst"
+                      *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'consumer'"
+                      style="width: 18px !important; margin-top: -6px !important;">
+
                     <!-- (mouseover)="changeText=true" (mouseout)="changeText=false" -->
                     <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                       <span
@@ -668,7 +683,7 @@
                       <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                       <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender |
                         capitalizeFirst}}</span>
-                        <!-- <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && showMore">
+                      <!-- <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && showMore">
                           {{getAgent(checkin.requestInfo.agent) | capitalizeFirst}},
                           {{getBookingReqFrom(checkin.requestInfo.bookingReqFrom) | capitalizeFirst}}</span> -->
                       <span
@@ -677,13 +692,7 @@
                       <span
                         *ngIf="checkin.waitlistingFor[0].preferredLanguage">{{checkin.waitlistingFor[0].preferredLanguage}}</span>
                     </div>
-                  </div> <img src="../../../../assets/icons/icon294(Traced).png" [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst"  *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'web'"
-                    style="width: 18px !important; margin-top: -6px !important;">
-                    <img src="../../../../assets/icons/Group482249.png"  [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'ios'" 
-                    style="width: 18px !important; margin-top: -6px !important;">
-                    <img src="../../../../assets/icons/icon295(Traced).png" [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst"  *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'consumer'"
-                    style="width: 18px !important; margin-top: -6px !important;">
-                
+                  </div>
                   <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                     class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                     *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
@@ -912,7 +921,19 @@
                     (click)="gotoCustomerDetails(checkin)" [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
                     [class.pointer-auto]="checkin.waitlistStatus=='blocked'">
                     {{checkin.waitlistingFor[0].firstName}}
-                    {{checkin.waitlistingFor[0].lastName}}
+                    {{checkin.waitlistingFor[0].lastName}} <img src="../../../../assets/icons/icon294(Traced).png"
+                      [matTooltipClass]="tooltipcls"
+                      [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst"
+                      *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'web'"
+                      style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/Group482249.png" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst"
+                      *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'ios'"
+                      style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/icon295(Traced).png" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst"
+                      *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'consumer'"
+                      style="width: 18px !important; margin-top: -6px !important;">
 
                     <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                     <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
@@ -928,7 +949,7 @@
                       <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                       <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender |
                         capitalizeFirst}}</span>
-                        <!-- <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && showMore">
+                      <!-- <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && showMore">
                           {{getAgent(checkin.requestInfo.agent) | capitalizeFirst}},
                           {{getBookingReqFrom(checkin.requestInfo.bookingReqFrom) | capitalizeFirst}}</span> -->
 
@@ -938,12 +959,7 @@
                       <span
                         *ngIf="checkin.waitlistingFor[0].preferredLanguage">{{checkin.waitlistingFor[0].preferredLanguage}}</span>
                     </div>
-                  </div> <img src="../../../../assets/icons/icon294(Traced).png" [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'web'"
-                    style="width: 18px !important; margin-top: -6px !important;">
-                    <img src="../../../../assets/icons/Group482249.png"  [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'ios'" 
-                    style="width: 18px !important; margin-top: -6px !important;">
-                    <img src="../../../../assets/icons/icon295(Traced).png"  [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'consumer'"
-                    style="width: 18px !important; margin-top: -6px !important;">
+                  </div>
                   <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                     class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                     *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
@@ -1458,7 +1474,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card" >
+                  <div class="card">
                     <div class="card-header">
                       <h2 class="mb-0">
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseDate3"
@@ -1489,43 +1505,45 @@
                     </div>
                   </div>
                   <!----for multi user filter start future tab-->
-                <div class="card" *ngIf="users.length >0">
-                  <div class="card-header">
-                    <h2 class="mb-0">
-                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseServicesMultiUser" aria-expanded="false">
-                        <div>
-                          <div style="display: inline-block !important;">
-                            <i class="fa fa-user"></i>
+                  <div class="card" *ngIf="users.length >0">
+                    <div class="card-header">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                          data-target="#collapseServicesMultiUser" aria-expanded="false">
+                          <div>
+                            <div style="display: inline-block !important;">
+                              <i class="fa fa-user"></i>
+                            </div>
+                            <span>&nbsp;Multi User</span>
                           </div>
-                          <span>&nbsp;Multi User</span>
-                        </div>
-                        <i class="fa fa-angle-down"></i>
-                      </button>
-                    </h2>
-                  </div>
-                  <div id="collapseServicesMultiUser" class="collapse in" data-parent="#accordion3">
-                    <div class="card-body" >
-                      <div class="filter-checkbox-input" >
-                        <!-- <label class="filterHeaders">Services</label> -->
-                        <!-- <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                          <i class="fa fa-angle-down"></i>
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapseServicesMultiUser" class="collapse in" data-parent="#accordion3">
+                      <div class="card-body">
+                        <div class="filter-checkbox-input">
+                          <!-- <label class="filterHeaders">Services</label> -->
+                          <!-- <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                         </li> -->
-                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                          <mat-checkbox class="filter-checkbox" [checked]="allServiceSelectedMultiUser"
-                            (change)="setFilterDataCheckbox('multiUser', 'all', $event)" >
-                            All</mat-checkbox>
-                        </li>
-                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize" *ngFor="let multiUser of users">
-                          <mat-checkbox class="filter-checkbox"
-                            [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
-                            (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)" >
-                            {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
-                        </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox class="filter-checkbox" [checked]="allServiceSelectedMultiUser"
+                              (change)="setFilterDataCheckbox('multiUser', 'all', $event)">
+                              All</mat-checkbox>
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                            *ngFor="let multiUser of users">
+                            <mat-checkbox class="filter-checkbox"
+                              [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
+                              (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)">
+                              {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
+                          </li>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <!----for multi user filter end future tab -->
+                  <!----for multi user filter end future tab -->
                 </ul>
               </section>
               <div class="filter-footer" *ngIf="filterapplied === true">
@@ -1588,7 +1606,19 @@
                   [ngClass]="{'mgn-up-10' : (time_type!==3 && checkin.token?true:false)}"
                   (click)="gotoCustomerDetails(checkin)" [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
                   [class.pointer-auto]="checkin.waitlistStatus=='blocked'">{{checkin.waitlistingFor[0].firstName}}
-                  {{checkin.waitlistingFor[0].lastName}} 
+                  {{checkin.waitlistingFor[0].lastName}} <img src="../../../../assets/icons/icon294(Traced).png"
+                    [matTooltipClass]="tooltipcls"
+                    [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst"
+                    *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'web'"
+                    style="width: 18px !important; margin-top: -6px !important;">
+                  <img src="../../../../assets/icons/Group482249.png" [matTooltipClass]="tooltipcls"
+                    [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst"
+                    *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'ios'"
+                    style="width: 18px !important; margin-top: -6px !important;">
+                  <img src="../../../../assets/icons/icon295(Traced).png" [matTooltipClass]="tooltipcls"
+                    [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst"
+                    *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'consumer'"
+                    style="width: 18px !important; margin-top: -6px !important;">
 
                   <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                   <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
@@ -1605,7 +1635,7 @@
                     <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                     <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender |
                       capitalizeFirst}}</span>
-                      <!-- <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && showMore">
+                    <!-- <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && showMore">
                         {{getAgent(checkin.requestInfo.agent) | capitalizeFirst}},
                         {{getBookingReqFrom(checkin.requestInfo.bookingReqFrom) | capitalizeFirst}}</span> -->
 
@@ -1615,12 +1645,7 @@
                     <span
                       *ngIf="checkin.waitlistingFor[0].preferredLanguage">{{checkin.waitlistingFor[0].preferredLanguage}}</span>
                   </div>
-                </div> <img src="../../../../assets/icons/icon294(Traced).png" [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'web'"
-                  style="width: 18px !important; margin-top: -6px !important;">
-                  <img src="../../../../assets/icons/Group482249.png"  [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'ios'" 
-                  style="width: 18px !important; margin-top: -6px !important;">
-                  <img src="../../../../assets/icons/icon295(Traced).png"  [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'consumer'"
-                  style="width: 18px !important; margin-top: -6px !important;">
+                </div>
                 <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                   class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                   *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
@@ -2279,43 +2304,45 @@
                     </div>
                   </div>
                   <!----for multi user filter start history tab-->
-                <div class="card" *ngIf="users.length >0">
-                  <div class="card-header">
-                    <h2 class="mb-0">
-                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseServicesMultiUser" aria-expanded="false">
-                        <div>
-                          <div style="display: inline-block !important;">
-                            <i class="fa fa-user"></i>
+                  <div class="card" *ngIf="users.length >0">
+                    <div class="card-header">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                          data-target="#collapseServicesMultiUser" aria-expanded="false">
+                          <div>
+                            <div style="display: inline-block !important;">
+                              <i class="fa fa-user"></i>
+                            </div>
+                            <span>&nbsp;Multi User</span>
                           </div>
-                          <span>&nbsp;Multi User</span>
-                        </div>
-                        <i class="fa fa-angle-down"></i>
-                      </button>
-                    </h2>
-                  </div>
-                  <div id="collapseServicesMultiUser" class="collapse in" data-parent="#accordion3">
-                    <div class="card-body" >
-                      <div class="filter-checkbox-input" >
-                        <!-- <label class="filterHeaders">Services</label> -->
-                        <!-- <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                          <i class="fa fa-angle-down"></i>
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapseServicesMultiUser" class="collapse in" data-parent="#accordion3">
+                      <div class="card-body">
+                        <div class="filter-checkbox-input">
+                          <!-- <label class="filterHeaders">Services</label> -->
+                          <!-- <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                         </li> -->
-                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                          <mat-checkbox class="filter-checkbox" [checked]="allServiceSelectedMultiUser"
-                            (change)="setFilterDataCheckbox('multiUser', 'all', $event)" >
-                            All</mat-checkbox>
-                        </li>
-                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize" *ngFor="let multiUser of users">
-                          <mat-checkbox class="filter-checkbox"
-                            [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
-                            (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)" >
-                            {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
-                        </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox class="filter-checkbox" [checked]="allServiceSelectedMultiUser"
+                              (change)="setFilterDataCheckbox('multiUser', 'all', $event)">
+                              All</mat-checkbox>
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                            *ngFor="let multiUser of users">
+                            <mat-checkbox class="filter-checkbox"
+                              [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
+                              (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)">
+                              {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
+                          </li>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <!----for multi user filter end history tab -->
+                  <!----for multi user filter end history tab -->
                 </ul>
               </section>
               <div class="filter-footer" *ngIf="filterapplied === true">
@@ -2390,7 +2417,7 @@
                     <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                     <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender |
                       capitalizeFirst}}</span>
-                      <!-- <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && showMore">
+                    <!-- <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.bookingReqFrom && showMore">
                         {{getAgent(checkin.requestInfo.agent) | capitalizeFirst}},
                         {{getBookingReqFrom(checkin.requestInfo.bookingReqFrom) | capitalizeFirst}}</span> -->
                     <span
@@ -2399,11 +2426,17 @@
                     <span
                       *ngIf="checkin.waitlistingFor[0].preferredLanguage">{{checkin.waitlistingFor[0].preferredLanguage}}</span>
                   </div>
-                </div> <img src="../../../../assets/icons/icon294(Traced).png" [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'web'"
+                </div> <img src="../../../../assets/icons/icon294(Traced).png" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst"
+                  *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'web'"
                   style="width: 18px !important; margin-top: -6px !important;">
-                  <img src="../../../../assets/icons/Group482249.png"  [matTooltipClass]="tooltipcls" [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'ios'" 
+                <img src="../../../../assets/icons/Group482249.png" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst"
+                  *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'ios'"
                   style="width: 18px !important; margin-top: -6px !important;">
-                  <img src="../../../../assets/icons/icon295(Traced).png"  [matTooltipClass]="tooltipcls"  [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst" *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'consumer'"
+                <img src="../../../../assets/icons/icon295(Traced).png" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="getRequestedFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) | capitalizeFirst"
+                  *ngIf="getReqFrom(checkin.requestInfo.bookingReqFrom,checkin.requestInfo.agent) === 'consumer'"
                   style="width: 18px !important; margin-top: -6px !important;">
 
                 <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
