@@ -21,7 +21,8 @@
                 <i *ngIf="waitlist_data.service.serviceType === 'virtualService'" [class]="iconClass"></i>
                 {{waitlist_data.service.name |
                 capitalizeFirst}}
-                <span style="float:right" class="customer-action-btn pointer-cursor" (click)="gotoActions(waitlist_data)">Actions</span>
+                <span style="float:right" class="customer-action-btn pointer-cursor"
+                  (click)="gotoActions(waitlist_data)">Actions</span>
                 <br>
                 <span class="loc-cls"><i class="fa fa-map-marker"></i>&nbsp;{{waitlist_data.location.place
                   | capitalizeFirst}}</span><br>
@@ -52,13 +53,13 @@
                   *ngIf="waitlist_data.requestInfo.agent && waitlist_data.requestInfo.bookingReqFrom">Booking Via</span> -->
                 <span *ngIf="waitlist_data.requestInfo.agent || waitlist_data.requestInfo.bookingReqFrom">
                   <span class="itemHead">Booking Via</span><br>
-                  <img src="../../../../assets/icons/icon294(Traced).png">
+                  <img src="../../../../assets/icons/icon294(Traced).png"
                     *ngIf="getReqFrom(waitlist_data.requestInfo.bookingReqFrom,waitlist_data.requestInfo.agent) === 'web'"
                     style="width: 18px !important; margin-top: -6px !important;">
-                  <img src="../../../../assets/icons/Group482249.png">
+                  <img src="../../../../assets/icons/Group482249.png"
                     *ngIf="getReqFrom(waitlist_data.requestInfo.bookingReqFrom,waitlist_data.requestInfo.agent) === 'ios'"
                     style="width: 18px !important; margin-top: -6px !important;">
-                  <img src="../../../../assets/icons/icon295(Traced).png">
+                  <img src="../../../../assets/icons/icon295(Traced).png"
                     *ngIf="getReqFrom(waitlist_data.requestInfo.bookingReqFrom,waitlist_data.requestInfo.agent) === 'consumer'"
                     style="width: 18px !important; margin-top: -6px !important;">
                   {{getAgent(waitlist_data.requestInfo.agent) | capitalizeFirst}},
