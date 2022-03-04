@@ -356,7 +356,7 @@ export const Messages = {
   'NO_CHECKINS_CAP': 'No current Check-Ins available',
   'MAKE_PAYMENT_CAP': 'Make Payment',
   'TOKEN_NO': 'Token Number',
-  'PERSONS_AHEAD': 'People ahead of you',
+  'PERSONS_AHEAD': 'People ahead of you ',
   'PARTY_SIZE': 'Party Size',
   'STATUS_CANCELLED': 'Cancelled',
   'STATUS_STARTED': 'Started',
@@ -422,7 +422,7 @@ export const Messages = {
   'NO_CHECKINS_EXISTS_CAP': 'Sorry no Check-In exist',
   // Kiosk-report as arrived
   'TOKEN_CAP': 'Token:',
-  'PERS_AHEAD': 'People ahead of you:',
+  'PERS_AHEAD': 'People ahead :',
   'NAME_CAP': 'Name:',
   'STATUS_CAP': 'Status:',
   'CONFIRM_ARRIVAL_CAP': 'Confirm Arrival',
