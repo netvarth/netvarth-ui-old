@@ -10,7 +10,7 @@
     </div>
 </div>
 <div class="d-lg-flex justify-content-center col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding my-3">
-    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 text-center">
+    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 text-center" *ngIf="domain === 'healthCare'">
         <button *ngIf="domain === 'healthCare'" class="thirdparycard  mgn-bt-10 my-2 text-center"
             (click)="buttonclicked('practo')"><img
                 src="../../../../../assets/images/practo.png" width="35px" height="35px" ><br>
@@ -29,7 +29,7 @@
             <span class="my-2 text-blue">Google</span>
         </button>
     </div>
-    <div class="col-lg-2 col-md-2  col-sm-12 col-xs-12 text-center">
+    <div class="col-lg-2 col-md-2  col-sm-12 col-xs-12 text-center" *ngIf="domain === 'healthCare'">
         <button class="thirdparycard  mgn-bt-10 my-2 text-center" *ngIf="domain === 'healthCare'"
             (click)="buttonclicked('mfine')"><img src="../../../../../assets/images/MFine.png"
                 width="35px" height="35px"><br>

@@ -56,7 +56,7 @@
                         <div class="form-group row">
                             <div class="col-lg-4">
                                 <label>First Name</label>
-                                <input type="email" name="first_name" class="form-control" id="first_name"
+                                <input type="email" name="first_name" formControlName="first_name" class="form-control" id="first_name"
                                     placeholder="{{f_name_cap}}"  autocomplete="off"
                                     (blur)="onFieldBlur('first_name')" />
                                 <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'first_name')"
@@ -86,7 +86,7 @@
                                 <div class="input-group">
                                     <div class="countrycode">
                                         <input type="text"
-                                            [readonly]="action === 'edit'&& customer[0].jaldeeConsumer !=0 && customer[0].phoneNo"
+                                         [readonly]="action === 'edit'&& customer[0].jaldeeConsumer !=0 && customer[0].phoneNo"
                                             (keypress)="isNumericSign($event)" matInput class="form-control"
                                             id="countryCode" placeholder="Country code " formControlName="countryCode"
                                             autocomplete="off" maxlength="5" style="width: 90%;">

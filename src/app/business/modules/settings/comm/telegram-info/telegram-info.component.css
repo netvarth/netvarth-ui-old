@@ -64,7 +64,12 @@
 }
 @media  (max-width: 750px)  {
   .web{
-      display: none !important;
+      /* display: none !important; */
+
+  }
+  .text{
+    padding-top: 0px !important;
+    margin-top: 0px !important;
   }
 }
 @media (min-width: 450px) {

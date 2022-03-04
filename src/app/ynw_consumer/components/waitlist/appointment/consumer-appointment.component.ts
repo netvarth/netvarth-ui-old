@@ -928,12 +928,13 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     rescheduleAppointment() {
+        console.log(this.selectedApptTime + 'selectedApptTime')
         this.apptdisable = true;
         const post_Data = {
             'uid': this.rescheduleUserId,
             'time': this.apptTime['time'],
             'date': this.date_pagination_date,
-            'schedule': this.selectedApptTime['scheduleId'],
+            'schedule': this.apptTime['scheduleId'],
             'consumerNote': this.consumerNote
         };
         console.log("post data of time : ",post_Data['time'])

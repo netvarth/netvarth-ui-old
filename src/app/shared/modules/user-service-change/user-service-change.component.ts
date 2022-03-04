@@ -15,6 +15,8 @@ import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { userContactInfoComponent } from '../../../business/modules/settings/general/users/user-contact-info/user-contact-info.component';
 import { ConfirmBoxLocationComponent } from './confirm-box-location/confirm-box-location.component';
+// import {projectConstants } from '../../constants/project-constants';
+import { projectConstants } from '../../../../app/app.component';
 
 @Component({
   selector: 'app-user-service-change',
@@ -23,6 +25,7 @@ import { ConfirmBoxLocationComponent } from './confirm-box-location/confirm-box-
 })
 
 export class UserServiceChnageComponent implements OnInit {
+  tooltipcls = projectConstants.TOOLTIP_CLS;
   accountType: any;
   serviceList: any;
   services_selected: any = [];

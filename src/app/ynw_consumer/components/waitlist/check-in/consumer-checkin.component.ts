@@ -277,6 +277,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     waitlistForPrev: any = [];
     selectedTime: any;
     date_pagination_date: any;
+    provider_label = '';
 
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -403,6 +404,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.gets3curl(); // Collecting informations from s3 businessProfile, settings etc.
         this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+
 
         this.customerService.getCustomerInfo(this.activeUser.id).then(data => {
             _this.parentCustomer = data;
