@@ -12,26 +12,15 @@
             <div class="row">
                 <div class="card p0" *ngIf="!showCheckin && !showQuestionnaire">
                     <div class="copy locd">
-                        <div class="lbl col-sm-12 col-md-12 col-lg-12">
-                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding mb-4">
-              
-                                <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 " style="margin-right: 40px;"  (click)="createNew()" *ngIf="!showBlockHint" >
-                                  <img src="../../../../../assets/images/user_plus.png" style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Create New {{customer_label | capitalizeFirst}}</b>
-                                </div>
-                    
-                                <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 "  (click)="openthirdpopup(domain,showOther,customer_label)" *ngIf="source !== 'waitlist-block'" >
-                                    <img src="../../../../../assets/images/third_party_primary.png" style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Third party options</b> 
-                                </div>
-                  
-                            </div>
-                            <div class="clearfix"></div>
+                        <div class="lbl col-sm-12 col-md-12 col-lg-12 mt-2 mgn-lt-20 no-padding">
+                            
                             <span class="mgn-up-10 text-light" *ngIf="source !== 'appt-block'"> Find an existing
                                     {{customer_label}} and create
                                     appointment</span>
                             <span class="mgn-up-10 text-light" *ngIf="source === 'appt-block'"> Find an existing
                                     {{customer_label}}</span>
                                 
-                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding display-xs-small" >
+                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding display-xs-small" style='width: 90%!important;border-radius: 5px!important;'>
                                 
                                 <div class="col-lg-2 col-sm-1 display-lg-show col-md-2 col-xs-1 no-padding searchbar">
                                     <mat-form-field  >
@@ -47,7 +36,7 @@
                                     <mat-form-field >
                                 
                                         
-                                        <img src="../../../../../assets/images/Group 1512.png" width="50px" height="40px" >
+                                        <img src="../../../../../assets/images/Group_1512.png" width="50px" height="40px" >
                                     
                             
                                     <mat-select class="displaysmall" [(ngModel)]="categoryvalue">
@@ -100,7 +89,26 @@
                                 
                                 
                             </div>
-                                <div class="clearfix"></div>
+                                
+                            <div class="clearfix"></div>
+
+
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding mb-4">
+              
+                                <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 mr-2" (click)="createNew()" *ngIf="!showBlockHint" >
+                                  <img src="../../../../../assets/images/user_plus.png" style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Create New {{customer_label | capitalizeFirst}}</b>
+                                </div>
+                    
+                                <div class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 "  (click)="openthirdpopup(domain,showOther,customer_label)" *ngIf="source !== 'waitlist-block'" >
+                                    <img src="../../../../../assets/images/third_party_primary.png" style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Third party options</b> 
+                                </div>
+                  
+                            </div>
+                            <div class="clearfix"></div>
+
+
+
+
                                 <div class="disp-flex" *ngIf="showOther">
                                     <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
                                       <mat-form-field>
@@ -132,7 +140,9 @@
                                         aria-hidden="true"></i>
                                 </button>
                             </div> -->
-                            <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()" class="mgn-up-20">
+
+
+                            <!-- <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()" class="mgn-up-20">
                                 
                                 <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding  mgn-up-20 sc-frm">
                                     
@@ -144,8 +154,8 @@
                                     </div>
 
 
-                                    <!-- <div class="form-group mgn-up-20"> -->
-                                    <!-- <div class="input-group mob-container">
+                                     <div class="form-group mgn-up-20"> 
+                                     <div class="input-group mob-container">
                                         <input autocomplete="off"
                                             placeholder="{{customer_label | capitalizeFirst}} Name or ID or Email"
                                             type="text" class="form-control" formControlName="search_input"
@@ -162,10 +172,10 @@
                                             [displayError]="true" *ngIf="create_new" errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
                                                 Please create {{customer_label}} to take appointment">
                                         </app-field-error-display>
-                                    </div> -->
+                                    </div> 
 
                                 </div>
-                            </form>
+                            </form> -->
 
                             
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20" *ngIf="showBlockHint">
