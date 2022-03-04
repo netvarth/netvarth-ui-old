@@ -21,7 +21,7 @@
                 <i *ngIf="waitlist_data.service.serviceType === 'virtualService'" [class]="iconClass"></i>
                 {{waitlist_data.service.name |
                 capitalizeFirst}}
-                <span class="customer-action-btn pointer-cursor" (click)="gotoActions(waitlist_data)">Actions</span>
+                <span style="float:right" class="customer-action-btn pointer-cursor" (click)="gotoActions(waitlist_data)">Actions</span>
                 <br>
                 <span class="loc-cls"><i class="fa fa-map-marker"></i>&nbsp;{{waitlist_data.queue.location.place
                   | capitalizeFirst}}</span><br>
@@ -48,12 +48,21 @@
                   <span *ngIf="waitlist_data.requestInfo.agent || waitlist_data.requestInfo.bookingReqFrom">
                     <span class="itemHead">Booking Via</span> <br>
 
+<<<<<<< HEAD
                     <img src="../../../../../assets/icons/icon294(Traced).png"  *ngIf="getReqFrom(waitlist_data.requestInfo.bookingReqFrom,waitlist_data.requestInfo.agent) === 'web'"
                     style="width: 18px !important; margin-top: -6px !important;"> 
                     <img src="../../../../assets/icons/Group482249.png" *ngIf="getReqFrom(waitlist_data.requestInfo.bookingReqFrom,waitlist_data.requestInfo.agent) === 'ios'"
                     style="width: 18px !important; margin-top: -6px !important;">
                     <img src="../../../../assets/icons/icon295(Traced).png" *ngIf="getReqFrom(waitlist_data.requestInfo.bookingReqFrom,waitlist_data.requestInfo.agent) === 'consumer'"
                     style="width: 18px !important; margin-top: -6px !important;">
+=======
+                    <img src="../../../../../assets/icons/icon294(Traced).png"  *ngIf="getBookingReqFrom(waitlist_data.requestInfo.bookingReqFrom) === 'web'"
+                    style="width: 18px !important; "> 
+                    <img src="../../../../assets/icons/Group482249.png" *ngIf="getBookingReqFrom(waitlist_data.requestInfo.bookingReqFrom) === 'app'"
+                    style="width: 18px !important; ">
+                    <img src="../../../../assets/icons/icon295(Traced).png" *ngIf="getBookingReqFrom(waitlist_data.requestInfo.bookingReqFrom) === 'consumer'"
+                    style="width: 18px !important; ">
+>>>>>>> branch '1.8-jcash-clone-jdrive_virtualform' of https://github.com/netvarth/calpine-ui
                     {{getAgent(waitlist_data.requestInfo.agent) | capitalizeFirst}},
                     {{getBookingReqFrom(waitlist_data.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
                 </span>

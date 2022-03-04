@@ -160,10 +160,38 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   getAgent(fileName){
     return fileName.toLocaleLowerCase();
   }
+  getReqFrom(browser,agent) {
+    let browserName = ''
+     if(browser){
+    if(browser === "WEB_UI"){
+    browserName = browser.slice(0, 3);
+    }
+    if(browser === 'WEB_LINK'){
+      browserName = 'IOS'
+    }
+    if(browser){
+     if(browser.length >8){
+      browserName = browser.slice(0,8);
+    }
+  }
+
+    return browserName.toLocaleLowerCase();
+  }
+  if(browser === undefined && agent === "BROWSER"){
+    browserName = 'web'
+    return browserName;
+  }
+    
+  
+  
+}
   getBookingReqFrom(browser) {
     let browserName = ''
     if(browser){
     browserName = browser.slice(0, 3);
+    }
+    if(browser === 'WEB_LINK'){
+      browserName = 'IOS'
     }
     if(browser){
      if(browser.length >8){
