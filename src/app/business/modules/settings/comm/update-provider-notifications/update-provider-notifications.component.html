@@ -4,11 +4,11 @@
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button> -->
 </h1>
-<mat-dialog-content class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding">
-    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding boxshadowstyle">
+<mat-dialog-content class="col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
+    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12  boxshadowstyle">
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
         <div class="form-group mgn-lt-15 mgn-up-10" *ngIf="!api_loading">
-            <div class="disp-flex">
+            <div class="disp-flex" style="justify-content:flex-start;align-items: baseline;">
                
                 <h3 *ngIf="type === 'Token'" class="notification" style="font-weight: 600;margin-right: 10px;">Notify whenever a
                     token is
@@ -31,27 +31,32 @@
             </div>
         </div>
         <section *ngIf="SelchkinNotify">
-            <div class="notifications col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
+            <div class="notifications col-lg-12 col-md-12 col-xs-12 col-sm-12 " style="display: flex;justify-content: space-between;flex-wrap: wrap;">
                 <div class="greenborder col-lg-3 col-md-6 col-sm-6 col-xs-12 "> 
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
-                        <img class="mgn-rt-20" width="50px" height="50px" src="../../../../../../../../../assets/images/sms.svg">
+                    <div style="display: flex;"> 
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
+                            <img class="mgn-rt-20" width="50px" height="50px" src="../../../../../../../../../assets/images/sms.svg">
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mgn-up-15">
+                            <span class="notification"> via SMS </span>
+                        
+                        <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a
+                                (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : '
+                            to
+                            avoid undelivered SMS'}}</div>
+                       
+                       
+                        </div>
                     </div>
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mgn-up-15">
-                        <span class="notification"> via SMS </span>
-                    
-                    <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a
-                            (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : '
-                        to
-                        avoid undelivered SMS'}}</div>
-                   
-                   
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 minimum-height mgn-up-10 overflowstyle no-padding" >
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 minimum-height mgn-up-10 overflowstyle " >
                                 <div *ngIf="ph_arr.length > 0">
-                                    <div *ngFor="let phne of ph_arr">{{phne.countryCode}} {{' '}} {{phne.number}}<i class="pointer-cursor icon-delete"
-                                        (click)="removePhEmail(phne, ph_arr, 'newcheckin')"></i></div>
+                                    <div *ngFor="let phne of ph_arr" style="display: flex;justify-content: space-between;align-items: center;padding:2px">
+                                        <div style="font-size: 15px;font-weight:bold">{{phne.countryCode}} {{' '}} {{phne.number}}</div>
+                                        <div><i class="pointer-cursor icon-delete"
+                                            (click)="removePhEmail(phne, ph_arr, 'newcheckin')"></i></div>
+                                    </div>
                                 </div>
-                                <div class="form-group mgn-up-5" *ngIf="sms">
+                                <div class="form-group mgn-up-10" *ngIf="sms">
                                     <div class="input-group" style="display: flex !important;">
                                         <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
                                              [(ngModel)]="smsCountrycode" minlength="2" maxlength="4">
@@ -66,25 +71,30 @@
                         </div>
                    
                     <div class="minimum-height col-lg-12 col-md-12 col-xs-12 col-sm-12 mgn-up-10" *ngIf="!sms && ph_arr.length == 0"></div>
-                    <div style="text-align: center;">
+                    <div style="text-align: center;margin-top:40px" >
                         <span [class.disabled]="is_noSMS" class="noti-add-btn col-lg-12 col-md-12 col-xs-12 col-sm-12" (click)="smsAddClicked()">Add</span>
                     </div>
                     
                 </div>
                
                 <div class="greenborder col-lg-3 col-md-6 col-sm-6 col-xs-12 ">
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        <img src="../../../../../../../../../assets/images/mail.svg" class="mgn-rt-20" width="50px" height="50px">
+                    <div style="display: flex;">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <img src="../../../../../../../../../assets/images/mail.svg" class="mgn-rt-20" width="50px" height="50px">
+                        </div>
+                       <div  class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mgn-up-15">
+                        <span class="notification "> via Email</span>
+                       </div>
                     </div>
-                   <div  class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mgn-up-15">
-                    <span class="notification "> via Email</span>
-                   </div>
-                   <div class="minimum-height col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 overflowstyle no-padding"  >
-                       <div  *ngIf="em_arr.length > 0">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding" style="word-break: break-all;"  *ngFor="let emailval of em_arr"> 
-                            <div class="col-lg-10 col-md-10 col-xs-10 col-sm-10">{{emailval}}</div>
+                   <div class="minimum-height col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 overflowstyle "  >
+                       <div  *ngIf="em_arr.length > 0" >
+                        <div   *ngFor="let emailval of em_arr" style="display: flex;justify-content: space-between;align-items: center;padding:2px"> 
+                            <div class="col-lg-10 col-md-10 col-xs-10 col-sm-10"style="font-size: 15px;font-weight:bold;word-break: break-all;padding-left: 0px !important;">{{emailval}}</div>
+                        <div>
                             <i class="pointer-cursor icon-delete col-lg-2 col-sm-2 col-xs-2 col-md-2"
-                            (click)="removePhEmail(emailval, em_arr, 'newcheckin')"></i> </div>
+                            (click)="removePhEmail(emailval, em_arr, 'newcheckin')"></i>
+                        </div>    
+                        </div>
                        </div>
             
                             <div class="form-group mgn-up-5" *ngIf="email">
@@ -104,19 +114,24 @@
                     
                 </div>
                 <div class="greenborder col-lg-3 col-md-6 col-sm-6 col-xs-12 ">
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        <img src="../../../../../../../../../assets/images/app(1).svg" class="mgn-rt-20" width="50px" height="50px">
+                    <div style="display: flex;">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <img src="../../../../../../../../../assets/images/app(1).svg" class="mgn-rt-20" width="50px" height="50px">
+                        </div>
+                        <div  class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mgn-up-15">
+                            <span class="notification">App notification</span>
+                     
+                        
+                        
+                        </div>
                     </div>
-                    <div  class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mgn-up-15">
-                        <span class="notification">App notification</span>
-                 
-                    
-                    
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 minimum-height mgn-up-10 overflowstyle no-padding" >
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 minimum-height mgn-up-10 overflowstyle" >
                         <div  *ngIf="cheknPushph_arr.length > 0">
-                            <div *ngFor="let phne of cheknPushph_arr">{{phne.countryCode}} {{' '}} {{phne.number}}<i class="pointer-cursor icon-delete"
-                                (click)="removePhEmail(phne, cheknPushph_arr, 'newcheckin')"></i></div>
+                            <div *ngFor="let phne of cheknPushph_arr" style="display: flex;justify-content: space-between;align-items: center;padding:2px">
+                                <div style="font-size: 15px;font-weight:bold;">{{phne.countryCode}} {{' '}} {{phne.number}}</div>
+                            <div><i class="pointer-cursor icon-delete"
+                                (click)="removePhEmail(phne, cheknPushph_arr, 'newcheckin')"></i></div>    
+                            </div>
                         </div>
                                 <div class="form-group mgn-up-5" *ngIf="cheknPushph">
                                     <div class="input-group" style="display: flex !important;">
@@ -143,16 +158,14 @@
                     
                 </div>
                 <div class="greenborder col-lg-3 col-md-6 col-sm-6 col-xs-12 ">
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        <img src="../../../../../../../../../assets/images/telegram.svg" class="mgn-rt-20" width="50px" height="50px"> 
-                    </div>
-  
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mgn-up-15">
-                        <span class="notification"> via Telegram </span>
-                  
-                   
-                   
-                   
+                    <div style="display: flex;">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <img src="../../../../../../../../../assets/images/telegram.svg" class="mgn-rt-20" width="50px" height="50px"> 
+                        </div>
+      
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mgn-up-15">
+                            <span class="notification"> via Telegram </span>
+                        </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mgn-up-10 overflowstyle no-padding minimum-height" >
                             <div  *ngIf="tele_arr.length > 0" >
@@ -187,9 +200,9 @@
        </div>
     </div>
     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mgn-up-10 mgn-bt-10"></div>
-    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding boxshadowstyle" *ngIf="type !== 'Donation' && type !== 'Account'">
+    <div style="margin-bottom: 10px;" class="col-lg-12 col-md-12 col-xs-12 col-sm-12  boxshadowstyle" *ngIf="type !== 'Donation' && type !== 'Account'">
         <div class="form-group mgn-lt-15 mgn-up-10" *ngIf="!api_loading">
-            <div style="display: flex">
+            <div style="display: flex;justify-content: flex-start;align-items:baseline">
                 <h3 *ngIf="type === 'Token'" class="notification" style="font-weight: 600;margin-right: 10px;"> Notify whenever a
                     token gets
                     cancelled</h3>
@@ -208,29 +221,34 @@
             </div>
         </div>
         <section *ngIf="SelchkincnclNotify">
-            <div class="notifications  col-lg-12 col-md-12 col-xs-12 col-sm-12">
+            <div class="notifications col-lg-12 col-md-12 col-xs-12 col-sm-12 " style="display: flex;justify-content: space-between;flex-wrap: wrap;" >
                 <div class="redborder col-lg-3 col-md-6 col-sm-6 col-xs-12 ">
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        <img src="../../../../../../../../../assets/images/sms-1.svg" class="mgn-rt-20" width="50px" height="50px"> 
+                    <div style="display: flex;">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <img src="../../../../../../../../../assets/images/sms-1.svg" class="mgn-rt-20" width="50px" height="50px"> 
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mgn-up-15">
+                            <span class="notification"> via SMS</span>
+    
+                        <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a
+                                (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : '
+                            to
+                            avoid undelivered SMS'}}</div>
+                        
+                      
+                        </div>
                     </div>
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mgn-up-15">
-                        <span class="notification"> via SMS</span>
-
-                    <div class="sms_credit_warn" *ngIf="is_smsLow">{{smsWarnMsg}} <a
-                            (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : '
-                        to
-                        avoid undelivered SMS'}}</div>
-                    
-                  
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mgn-up-10 overflowstyle no-padding minimum-height" >
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mgn-up-10 overflowstyle  minimum-height" >
                       <div *ngIf="ph1_arr.length > 0"> 
-                        <div *ngFor="let phnecancel of ph1_arr">{{phnecancel.countryCode}} {{' '}} {{phnecancel.number}}<i class="pointer-cursor icon-delete"
-                            (click)="removePhEmail(phnecancel, ph1_arr, 'cancelcheckin')"></i></div>
+                        <div *ngFor="let phnecancel of ph1_arr" style="display: flex;justify-content: space-between;align-items: center;padding:2px">
+                            <div style="font-size: 15px;font-weight:bold;">{{phnecancel.countryCode}} {{' '}} {{phnecancel.number}}</div>
+                        <div><i class="pointer-cursor icon-delete"
+                            (click)="removePhEmail(phnecancel, ph1_arr, 'cancelcheckin')"></i></div>    
+                        </div>
                       </div>
 
 
-                                <div class="form-group mgn-up-5" *ngIf="cancelsms">
+                                <div class="form-group mgn-up-10" *ngIf="cancelsms">
                                     <div class="input-group" style="display: flex !important;">
                                      
                                             <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
@@ -247,7 +265,7 @@
                    </div>
                     
                     <!-- <div class="minimum-height col-lg-12 col-md-12 col-xs-12 col-sm-12 mgn-up-10" *ngIf="!cancelsms && ph1_arr.length==0"></div> -->
-                    <div style="text-align: center;">
+                    <div style="text-align: center;margin-top:40px">
                         <span [class.disabled]="is_noSMS" class="noti-add-btn col-lg-12 col-md-12 col-xs-12 col-sm-12"
                         (click)="cancelledCheckinsmsAddClicked()">Add</span>
                     </div>
@@ -255,22 +273,25 @@
                 </div>
                
                 <div class="redborder col-lg-3 col-md-6 col-sm-6 col-xs-12 ">
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        <img src="../../../../../../../../../assets/images/mail-1.svg" class="mgn-rt-20" width="50px" height="50px"> 
+                    <div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <img src="../../../../../../../../../assets/images/mail-1.svg" class="mgn-rt-20" width="50px" height="50px"> 
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mgn-up-15">
+                            <span class="notification"> via Email </span>
+                        </div>
                     </div>
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mgn-up-15">
-                        <span class="notification"> via Email </span>
-                   
-                       
-                        
-                       
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 minimum-height overflowstyle no-padding mgn-up-10">
+                    <div class="minimum-height col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 overflowstyle ">
                         <div  *ngIf="em1_arr.length > 0">
-                            <div style="word-wrap: break-word !important;" class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding" *ngFor="let emailcancl of em1_arr"> <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">{{emailcancl}}</div> <i class="pointer-cursor icon-delete col-lg-2 col-md-2 col-xs-2 col-sm-2"
-                                    (click)="removePhEmail(emailcancl,em1_arr, 'cancelcheckin')"></i></div>
+                            <div *ngFor="let emailcancl of em1_arr" style="display: flex;justify-content: space-between;align-items: center;padding:2px"> 
+                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="font-size: 15px;font-weight:bold;word-break: break-all;padding-left: 0px !important;">{{emailcancl}}</div> 
+                            <div>
+                                <i class="pointer-cursor icon-delete col-lg-2 col-md-2 col-xs-2 col-sm-2"
+                                    (click)="removePhEmail(emailcancl,em1_arr, 'cancelcheckin')"></i>
+                            </div>
+                            </div>
                        </div>
-                       <div class="form-group mgn-up-5" *ngIf="cancelemail">
+                       <div class="form-group mgn-up-10" *ngIf="cancelemail">
                         <div class="input-group" style="display: flex !important;">
                             <input type="text" class="form-control" placeholder="Email" [(ngModel)]="notifycanclemail">
                             <div class="input-group-append">
@@ -287,19 +308,25 @@
                     
                 </div>
                 <div class="redborder col-lg-3 col-md-6 col-sm-6 col-xs-12 ">
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        <img src="../../../../../../../../../assets/images/app-1(1).svg" class="mgn-rt-20" width="50px" height="50px"> 
+                    <div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <img src="../../../../../../../../../assets/images/app-1(1).svg" class="mgn-rt-20" width="50px" height="50px"> 
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mgn-up-15">
+                            <span class="notification">App notification</span>
+                        </div>
                     </div>
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mgn-up-15">
-                        <span class="notification">App notification</span>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding minimum-height overflowstyle mgn-up-10">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 minimum-height overflowstyle mgn-up-10">
                         <div  *ngIf="cheknCancelPushph_arr.length > 0">
-                            <div *ngFor="let phne of cheknCancelPushph_arr">{{phne.countryCode}} {{' '}} {{phne.number}}<i
-                                    class="pointer-cursor icon-delete"
-                                    (click)="removePhEmail(phne, cheknCancelPushph_arr, 'cancelcheckin')"></i></div>
+                            <div *ngFor="let phne of cheknCancelPushph_arr" style="display: flex;justify-content: space-between;align-items: center;padding:2px">
+                                <div style="font-size: 15px;font-weight:bold">{{phne.countryCode}} {{' '}} {{phne.number}}</div>
+                            <div>
+                                <i class="pointer-cursor icon-delete"
+                                (click)="removePhEmail(phne, cheknCancelPushph_arr, 'cancelcheckin')"></i>
+                            </div>   
+                            </div>
                        </div>
-                       <div class="form-group mgn-up-5" *ngIf="cheknCancelPushph">
+                       <div class="form-group mgn-up-10" *ngIf="cheknCancelPushph">
                         <div class="input-group" style="display: flex !important;">
                            
                                 <input type="text" class="form-control" style="max-width: 50px !important;" type="text" 
@@ -324,12 +351,14 @@
                     
                 </div>
                 <div class="redborder col-lg-3 col-md-6 col-sm-6 col-xs-12 ">
+                   <div style="display: flex;">
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                         <img src="../../../../../../../../../assets/images/telegram-1.svg" class="mgn-rt-20" width="50px" height="50px"> 
                     </div>
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9"> 
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 mgn-up-15"> 
                       <span class="notification"> via Telegram</span>
                      </div>
+                   </div>
                      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding minimum-height overflowstyle mgn-up-10">
                         <div  *ngIf="tele1_arr.length > 0">
                             <div *ngFor="let telecancel of tele1_arr">{{telecancel.countryCode}} {{' '}} {{telecancel.number}}<i class="pointer-cursor icon-delete"
