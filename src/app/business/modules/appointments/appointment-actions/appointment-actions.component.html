@@ -149,6 +149,11 @@
                 <div class="icon-text">
                     {{appt.apptStatus == 'Started' ? 'Resume' : 'Start'}} Service
                 </div>
+                <!-- <div class="icon-text"
+                *ngIf="appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
+                {{appt.apptStatus == 'Started' ? 'Resume' : 'Start'}} Service
+            </div> -->
+           
             </div>
 
         </div>

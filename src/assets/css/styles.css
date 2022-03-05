@@ -1417,6 +1417,7 @@ body { font-size: 1rem !important}
 
 .content.see-pages .outer-card .card.members-card {
     width: 75%;
+    margin-left: 5px !important;
 }
 
 .content.see-pages .outer-card .right-menu {
