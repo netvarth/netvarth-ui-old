@@ -1127,7 +1127,7 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url, post_data);
   }
   getUsersCount(filter = {}) {
-    const url = 'provider/user/count';
+    const url = 'provider/user/count?status-eq=ACTIVE';
     return this.servicemeta.httpGet(url, null, filter);
   }
   createUser(post_data) {
