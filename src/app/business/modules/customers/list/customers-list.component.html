@@ -94,7 +94,10 @@
                 <i
                 class="flaticon2-chat-1" aria-hidden="true"></i> To all {{customer_label | capitalizeFirst}}s
             </a>
-           
+            <a (click)="sendmsgToGroup()" *ngIf="selectedGroup !== 'all'"  class="btn mb-2 action-button mgn-lt-5 pull-right ">
+              <i
+              class="flaticon2-chat-1" aria-hidden="true"></i> GROUP
+          </a>
             <div class="sel-group-desc" [class.mgn-lt-28]="hideGroups">{{selectedGroup.description}}</div>
           </h3>
         </div>

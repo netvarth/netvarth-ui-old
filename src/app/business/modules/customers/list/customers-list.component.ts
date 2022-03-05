@@ -506,6 +506,25 @@ export class CustomersListComponent implements OnInit {
       }
     });
   }
+  sendmsgToGroup() {
+    const terminologies = this.common_datastorage.get('terminologies');
+    this.smsdialogRef = this.dialog.open(AddInboxMessagesComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'loginmainclass', 'smallform'],
+      disableClose: true,
+      autoFocus: true,
+      data: {
+        source: 'provider-sendAll_group',
+        grup_id : this.selectedGroup.id,
+        typeOfMsg: 'multiple',
+        terminologies: terminologies,
+      } 
+    });
+    this.smsdialogRef.afterClosed().subscribe(result => {
+      if (result === 'reloadlist') {
+      }
+    });
+  }
   CreateVoiceCall() {
     this.customerlist = this.selectedcustomersforcall;
     for (let i in this.customerlist) {

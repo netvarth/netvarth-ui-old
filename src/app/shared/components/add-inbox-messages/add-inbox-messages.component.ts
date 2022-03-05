@@ -74,6 +74,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   countryCod;
   ynw_credentials;
   customers_label;
+  grup_id;
   constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -106,6 +107,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     this.source = this.data.source || null;
     this.receiver_name = this.data.name || null;
     this.terminologies = data.terminologies;
+    if(data.grup_id){
+      this.grup_id = data.grup_id
+    }
     if (data.jaldeeConsumer) {
       this.jaldeeConsumer = (data.jaldeeConsumer === 'true') ? true : false;
     }
@@ -242,6 +246,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       consumer_label = (this.terminologies && this.terminologies['customer']) ? this.terminologies['customer'] : 'customer';
       this.customers_label = consumer_label + 's';
     }
+    if(this.source === 'provider-sendAll_group'){
+      consumer_label = (this.terminologies && this.terminologies['customer']) ? this.terminologies['customer'] : 'customer';
+      this.customers_label = consumer_label + 's';
+    }
     switch (this.source) {
       case 'provider-waitlist': this.message_label = 'Message to ' + consumer_label; break;
       case 'provider-waitlist-inbox': this.message_label = 'Message to ' + consumer_label; break;
@@ -251,6 +259,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       case 'customer-list': this.message_label = 'Message to ' + consumer_label; break;
       case 'donation-list': this.message_label = 'Message to ' + consumer_label; break;
       case 'provider-sendAll': this.message_label = 'Message to ' + this.customers_label; break;
+      case 'provider-sendAll_group': this.message_label = 'Message to ' + this.customers_label; break;
     }
   }
   createForm() {
@@ -373,6 +382,41 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
                 telegram: this.telegram
               },
               communicationMessage: form_data.message,
+            };
+            const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+            dataToSend.append('communication', blobpost_Data);
+            this.shared_services.customerAllMassCommunication(dataToSend).
+              subscribe(() => {
+                this.api_success = Messages.PROVIDERTOCONSUMER_NOTE_ADD;
+                setTimeout(() => {
+                  this.dialogRef.close('reloadlist');
+                }, projectConstants.TIMEOUT_DELAY);
+              },
+                error => {
+                  this.wordProcessor.apiErrorAutoHide(this, error);
+                  this.disableButton = false;
+                }
+              );
+          }
+        } 
+        else if (this.source === 'provider-sendAll_group') {
+          if (!this.sms && !this.email && !this.pushnotify || (this.IsTelegramDisable && !this.telegram)) {
+            this.api_error = 'share message via options are not selected';
+            this.disableButton = false;
+            setTimeout(() => {
+             this.api_error='';
+            }, projectConstants.TIMEOUT_DELAY);
+          
+          } else {
+            const post_data = {
+              medium: {
+                email: this.email,
+                sms: this.sms,
+                pushNotification: this.pushnotify,
+                telegram: this.telegram
+              },
+              communicationMessage: form_data.message,
+              groupId : this.grup_id
             };
             const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
             dataToSend.append('communication', blobpost_Data);

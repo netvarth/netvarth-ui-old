@@ -18,7 +18,7 @@
                 errorMsg="Please enter a message.">
             </app-field-error-display>
         </div>
-        <div class="mgtop40 form-group" *ngIf="!api_loading && (typeOfMsg === 'multiple' || source ==='provider-waitlist' || source === 'customer-list' || source === 'donation-list' || source === 'provider-sendAll')">
+        <div class="mgtop40 form-group" *ngIf="!api_loading && (typeOfMsg === 'multiple' || source ==='provider-waitlist' || source === 'customer-list' || source === 'donation-list' || source === 'provider-sendAll'  || source === 'provider-sendAll_group')">
             <div class="card-head-grey">Send message via</div>
             <div class="coupon-outer">
                 <!-- countryCode !='+91' -->
@@ -91,7 +91,7 @@
                 <app-common-innerloading-spinner *ngIf="disableButton" [spinnerParams]="{diameter:20}"></app-common-innerloading-spinner>
             </button>
             <button type="button"
-                *ngIf="source === 'customer-list' || source === 'donation-list' || source=='provider-waitlist' || source === 'provider-sendAll' ||(typeOfMsg === 'single' && (source=='consumer-waitlist' || source == 'provider-waitlist-inbox' || source === 'consumer-common' || source === 'provider-common'))"
+                *ngIf="source === 'customer-list' || source === 'donation-list' || source=='provider-waitlist' || source === 'provider-sendAll' || source === 'provider-sendAll_group' ||(typeOfMsg === 'single' && (source=='consumer-waitlist' || source == 'provider-waitlist-inbox' || source === 'consumer-common' || source === 'provider-common'))"
                 class="cs-btn btn-attach bt_attach" (click)="logofile.click()" [matTooltip]="'Upload files'">
                 <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
                     (change)="filesSelected($event)">
