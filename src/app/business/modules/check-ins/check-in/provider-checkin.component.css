@@ -379,3 +379,7 @@ align-items: center;
 {
   color: rgb(139, 139, 139)!important;
 }
+.ynw-common-form-nm .mat-input-element
+{
+    padding:0px 0px 0px 3px!important;
+}

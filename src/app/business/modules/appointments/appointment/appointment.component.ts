@@ -20,7 +20,7 @@ import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.com
 import { MatDialog } from '@angular/material/dialog';
 import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
 import { ThirdpartypopupComponent } from '../../check-ins/thirdpartypopup/thirdpartypopup.component';
-
+declare var $: any;
 @Component({
     selector: 'app-appointment-checkin',
     templateUrl: './appointment.component.html',
@@ -378,6 +378,7 @@ export class AppointmentComponent implements OnInit {
                 this.initAppointment('mfine')
             } else if(result=='other') {
                 this.showOtherSection()
+                $('.other-party-options-modal').modal('show')
             }
 
         });
@@ -426,6 +427,10 @@ export class AppointmentComponent implements OnInit {
       }
     onCloseHandled() {
     this.display = "none";
+    }
+     otherPartyModalClose()
+    {
+        $('.other-party-options-modal').modal('hide')
     }
     performActions(action) {
         if (action === 'learnmore') {

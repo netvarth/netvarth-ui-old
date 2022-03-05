@@ -21,8 +21,7 @@ import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.com
 import { MatDialog } from '@angular/material/dialog';
 import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
 import { ThirdpartypopupComponent } from '../thirdpartypopup/thirdpartypopup.component';
-import { Location } from '@angular/common';
-
+declare var $: any;
 @Component({
     selector: 'app-provider-checkin',
     templateUrl: './provider-checkin.component.html',
@@ -273,7 +272,6 @@ export class ProviderCheckinComponent implements OnInit {
         public provider_services: ProviderServices,
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
-         public _location: Location,
         private groupService: GroupStorageService,
         private dateTimeProcessor: DateTimeProcessor,
         private jaldeeTimeService: JaldeeTimeService,
@@ -653,6 +651,7 @@ export class ProviderCheckinComponent implements OnInit {
                 this.initCheckIn('mfine')
             } else if(result=='other') {
                 this.showOtherSection()
+                $('.other-party-options-modal').modal('show')
             }
 
         });
@@ -973,6 +972,10 @@ export class ProviderCheckinComponent implements OnInit {
             return false;
         }
         return true;
+    }
+    otherPartyModalClose()
+    {
+        $('.other-party-options-modal').modal('hide')
     }
     resetApiErrors() {
         this.emailerror = null;
@@ -2294,12 +2297,9 @@ export class ProviderCheckinComponent implements OnInit {
     goBack() {
         if (this.showQuestionnaire) {
             this.showQuestionnaire = false;
-        } else if (this.showCheckin && this.type !== 'followup') {
+        } else if (this.showCheckin) {
             this.showCheckin = false;
             this.otherThirdParty = '';
-        } 
-        else if (this.showCheckin && this.type === 'followup') {
-             this._location.back();
         } else {
             this.router.navigate(['provider', 'check-ins']);
         }

@@ -115,3 +115,8 @@ margin-top: -1px;
   /* color: rgb(139, 139, 139)!important; */
   font-size: 0.8rem!important;
 }
+.custom-btn-length
+{
+    width: 90px !important;
+    text-align: center!important;
+}

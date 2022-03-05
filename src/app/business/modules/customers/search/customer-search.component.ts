@@ -17,7 +17,6 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 
-
 @Component({
     selector: 'app-customer-search',
     templateUrl: './customer-search.component.html',
@@ -126,6 +125,8 @@ export class CustomerSearchComponent implements OnInit {
     main_heading;
     dispCustomernote = false;
     dispCustomerEmail = false;
+    categoryForSearchingarray=['Search with PhoneNumber','Search with Email ID','Search with ID']
+    categoryvalue='Search with PhoneNumber';
     CweekDays = { 0: 'Sun', 1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri', 6: 'Sat' };
     queueQryExecuted = false;
     todaydate;

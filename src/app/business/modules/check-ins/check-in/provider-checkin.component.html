@@ -112,29 +112,49 @@
               <div class="col-lg-3 col-sm-6 col-xs-6 col-md-3 card1 font-9 mgn-up-10 "
                 (click)="openthirdpopup(domain,showOther,customer_label)" *ngIf="source !== 'waitlist-block'">
                 <img src="../../../../../assets/images/third_party_primary.png"
-                  style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Third party
-                  options</b>
+                  style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Third party options</b>
               </div>
 
             </div>
             <div class="clearfix"></div>
 
+            <!-- Other Party Options -->
 
-
-            <div class="disp-flex my-3" *ngIf="showOther">
-              <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
-                <mat-form-field>
-                  <input matInput placeholder="Enter your third party listing site *" [(ngModel)]="otherThirdParty"
-                    type="text" class="form-control" (keypress)="resetError()" autocomplete="off">
-                </mat-form-field>
-                <app-field-error-display style="color: #f24949 !important;" [displayError]="true"
-                  *ngIf="thirdparty_error" errorMsg="{{thirdparty_error}}">
-                </app-field-error-display>
-              </div>
-              <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
-                <button class="create_new_button cs-btn bt3" (click)="showOtherSection(true)">Ok</button>
+            <div class="modal other-party-options-modal" tabindex="-1" role="dialog" >
+              <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header border-0">
+                    <h4 class="modal-title mr-auto text-primary"><img src="../../../../../assets/images/others.png" width="35px"
+                      height="35px">&nbsp;&nbsp;<b>Other party options</b></h4>
+                    <button type="button" class="close ml-auto" aria-label="Close" (click)="otherPartyModalClose()"><i class="fa fa-times"
+                      aria-hidden="true"></i></button>
+                  </div>
+                  <div class="modal-body pt-0 mt-0">
+                    <div class="">
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding third-party-listing-field">
+                        <mat-form-field>
+                          <label class="p-0 pb-1 m-0">Enter your third party listing site *</label>
+                          <input matInput [(ngModel)]="otherThirdParty"
+                            type="text" class="form-control" (keypress)="resetError()" autocomplete="off">
+                        </mat-form-field>
+                        <app-field-error-display style="color: #f24949 !important;" [displayError]="true"
+                          *ngIf="thirdparty_error" errorMsg="{{thirdparty_error}}">
+                        </app-field-error-display>
+                      </div>
+                      <div class="mgn-up-10">
+                        <button class="create_new_button cs-btn bt3 btn btn-primary px-2 py-1" (click)="showOtherSection(true)">Ok</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-light" (click)="onCloseHandled()" >Close</button>
+                    <button type="button" class="btn btn-primary" (click)="onCloseHandled()">Ok</button>
+                  </div> -->
+    
+                </div>
               </div>
             </div>
+            
             <div class="clearfix"></div>
             <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding" *ngIf="showBlockHint">
               <table class="table table-head-custom table-head-bg table-borderless table-vertical-center bold">
@@ -775,8 +795,10 @@
             </div>
           </div>
         </div>
+
+
         <!-- Add or Change Member Modal -->
-        <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+        <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}" id="add">
           <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
