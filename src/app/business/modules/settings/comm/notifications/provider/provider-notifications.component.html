@@ -18,21 +18,21 @@
 <section class="mgn-lt-10 mgn-rt-10 card" *ngIf="!api_loading">
 
   <mat-tab-group (selectedTabChange)="tabClick($event)"  >
-    <mat-tab class="notifilabel" label="Token Notifications" [disabled]="!waitlistStatus" *ngIf="showToken" >
+    <mat-tab class="notifilabel" label="Token Notifications" *ngIf="showToken && waitlistStatus" >
       
         <div *ngIf="type=='Token'">
           <app-update-provider-notifications [type]="type" ></app-update-provider-notifications>
         </div>
 
     </mat-tab>
-    <mat-tab class="notifilabel" [disabled]="!waitlistStatus" label="Check-in Notifications"  *ngIf="!showToken" >
+    <mat-tab class="notifilabel"  label="Check-in Notifications"  *ngIf="!showToken && waitlistStatus" >
       <div *ngIf="type=='Check-in'">
       <app-update-provider-notifications [type]="type" ></app-update-provider-notifications>
 
       </div>
 
     </mat-tab>
-    <mat-tab class="notifilabel" [disabled]="!appointment_status" label="Appointment Notifications" > 
+    <mat-tab class="notifilabel" label="Appointment Notifications" *ngIf="appointment_status" > 
       <div *ngIf="type=='Appointment'">
         <app-update-provider-notifications [type]="type" ></app-update-provider-notifications>
 
@@ -40,13 +40,13 @@
       
     
     </mat-tab>
-    <mat-tab class="notifilabel" label="Order Notifications" [disabled]="!order_status" *ngIf="showToken" >
+    <mat-tab class="notifilabel" label="Order Notifications" *ngIf="showToken && order_status" >
      <div *ngIf="type=='Order'">
       <app-update-provider-notifications [type]="type" ></app-update-provider-notifications>
      </div>
 
   </mat-tab>
-  <mat-tab class="notifilabel" label="Donation Notifications" [disabled]="!donations_status" *ngIf="showToken" >
+  <mat-tab class="notifilabel" label="Donation Notifications" *ngIf="showToken && donations_status" >
    <div *ngIf="type=='Donation'">
     <app-update-provider-notifications [type]="type" ></app-update-provider-notifications>
    </div>
