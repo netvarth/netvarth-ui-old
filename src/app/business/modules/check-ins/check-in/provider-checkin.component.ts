@@ -247,7 +247,7 @@ export class ProviderCheckinComponent implements OnInit {
     cuntryCode;
     selfAssign;
     assignmyself;
-    categoryForSearchingarray=['Search with PhoneNumber','Search with Email ID','Search with ID']
+    categoryForSearchingarray=['Search with PhoneNumber','Search with Email ID','Search with Name or ID']
     categoryvalue='Search with PhoneNumber';
     thirdpartyoptions: any;
     follow_up_Details;

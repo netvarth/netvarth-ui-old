@@ -383,3 +383,8 @@ align-items: center;
 {
     padding:0px 0px 0px 3px!important;
 }
+.p-checkin .mainouter .date-outer
+{
+  border: none!important;
+  padding-bottom: 0px!important;
+}

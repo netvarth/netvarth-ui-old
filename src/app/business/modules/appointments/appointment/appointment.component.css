@@ -304,6 +304,10 @@
   padding: 0!important;
   margin: auto!important;
 }
+.freeslots .mat-chip-list-wrapper
+{
+  margin-top: 1px!important;
+}
 .notes,.fa-chevron-down,.fa-chevron-up,.attachment
 {
   color: #1e4079!important;

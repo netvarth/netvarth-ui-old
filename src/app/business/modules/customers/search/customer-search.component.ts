@@ -125,7 +125,7 @@ export class CustomerSearchComponent implements OnInit {
     main_heading;
     dispCustomernote = false;
     dispCustomerEmail = false;
-    categoryForSearchingarray=['Search with PhoneNumber','Search with Email ID','Search with ID']
+    categoryForSearchingarray=['Search with PhoneNumber','Search with Email ID','Search with Name or ID']
     categoryvalue='Search with PhoneNumber';
     CweekDays = { 0: 'Sun', 1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri', 6: 'Sat' };
     queueQryExecuted = false;

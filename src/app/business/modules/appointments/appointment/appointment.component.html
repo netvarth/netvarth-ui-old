@@ -129,7 +129,7 @@
                                         *ngIf="thirdparty_error" errorMsg="{{thirdparty_error}}">
                                         </app-field-error-display>
                                     </div>
-                                    <div class="mgn-up-10 mb-5">
+                                    <div class="mgn-up-10 mb-5 mx-auto text-center">
                                         <button class="create_new_button cs-btn bt3 btn btn-primary px-2 py-1" (click)="showOtherSection(true)">Okay</button>
                                     </div>
                                     </div>
@@ -351,12 +351,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="lbl col-sm-12 col-md-7 col-lg-7">
-                        <div class="mainouter checkin-page ">
+                    <div class="lbl col-sm-12 col-md-7 col-lg-7 no-padding">
+                        <div class="mainouter checkin-page walkin-form-fields-appointment">
                             <ng-container *ngIf="!api_loading1">
-                                <div class="service-outer p-0" *ngIf="filterDepart">
+                                <div class="service-outer p-0 m-0" *ngIf="filterDepart">
                                     <ng-container><br>
-                                        <span class="p-0 m-0">{{select_deptment_cap}}</span>
+                                        <span class="p-0 m-0 text-light">{{select_deptment_cap}}</span>
                                         <mat-form-field *ngIf="deptLength == 1">
                                             <input class="inputbox" matInput *ngFor="let dept of departments" [readonly]="true"
                                                 placeholder="Department"
@@ -373,9 +373,9 @@
                                         </mat-form-field>
                                     </ng-container>
                                 </div>
-                                <div class="service-outer" *ngIf="users.length > 0 && accountType === 'BRANCH'">
+                                <div class="service-outer p-0 m-0" *ngIf="users.length > 0 && accountType === 'BRANCH'">
                                     <ng-container>
-                                        <span class="p-0 m-0">Select {{provider_label | capitalizeFirst}}</span>
+                                        <span class="p-0 m-0 text-light">Select {{provider_label | capitalizeFirst}}</span>
                                         <mat-form-field *ngIf="users.length == 1">
                                         <input matInput class="inputbox"  *ngFor="let user of users" [readonly]="true"
                                             placeholder="{{provider_label | capitalizeFirst}}"
@@ -441,7 +441,7 @@
                                             </mat-select>
                                         </mat-form-field>
                                         <ng-container *ngIf="servicesjson.length == 0">
-                                            <span class='no-queue-available'>{{no_services_avail_cap}}</span>
+                                            <span class='no-queue-available text-danger'>{{no_services_avail_cap}}</span>
                                         </ng-container>
                                     </ng-container>
                                     <div class="callingmode mgn-lt-10"
@@ -485,7 +485,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="date-outer">
+                                <div class="date-outer p-0 m-0 walkin-form-fields-appointment">
                                     <span class="date-head">Appointment {{date_cap}}&nbsp;</span>
                                     <div class="date-body" style="background-color: #f6f6f6 !important;border: 1px solid #f6f6f6 !important;">
                                         <span class="selected-date">
@@ -508,9 +508,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12 no-padding">
-                                    <div class="col-md-12 mgn-bt-10 freeslots pl-0" *ngIf="queuejson.length > 0">
-                                        <span class="date-head">Appointment Schedule</span>
+                                <ng-container *ngIf="queuejson.length == 0 && queueQryExecuted">
+                                    <span
+                                        class='no-queue-available text-danger'>Appointment{{not_accepted_for_this_date}}</span>
+                                </ng-container>
+                                <ng-container *ngIf="queuejson.length > 0 && servicesjson.length == 0">
+                                    <span class='no-queue-available text-danger'>{{no_services_avail_cap}}</span>
+                                </ng-container>
+                                <div class="col-md-12 no-padding my-0 py-0">
+                                    <div class="col-md-12 freeslots pl-0" *ngIf="queuejson.length > 0">
+                                        <span class="text-light">Appointment Schedule</span>
                                         <mat-chip-list class="">
                                             <!-- <owl-carousel [options]="carouselOne" class="carouselList"
                                                 [carouselClasses]="['owl-theme']"> -->
@@ -546,7 +553,7 @@
                     </div>
                     <div>
                         <ng-container *ngIf="queuejson.length > 0 && servicesjson.length > 0">
-                            <div class="col-md-12 form-group queue-outer mgn-bt-20"
+                            <div class="col-md-12 form-group queue-outer mgn-bt-20 no-padding"
                                 *ngIf="freeSlots.length>0">
                                 <span class="date-head">Appointment Slot</span>
                                 <mat-chip-list class="appt-in-chip freeslots">
@@ -572,13 +579,7 @@
                             <app-common-innerloading-spinner *ngIf="api_loading">
                             </app-common-innerloading-spinner>
                         </ng-container>
-                        <ng-container *ngIf="queuejson.length == 0 && queueQryExecuted">
-                            <span
-                                class='no-queue-available'>Appointment{{not_accepted_for_this_date}}</span>
-                        </ng-container>
-                        <ng-container *ngIf="queuejson.length > 0 && servicesjson.length == 0">
-                            <span class='no-queue-available'>{{no_services_avail_cap}}</span>
-                        </ng-container>
+                        
                     </div>
 
                     
@@ -712,9 +713,9 @@
                     </ng-container>
                   </div>
                 </div>
-                <div class="modal-footer text-center">
+                <div class="modal-footer mx-auto text-center">
                   <!-- <button type="button" class="btn btn-light" (click)="onCloseHandled()" >Close</button> -->
-                  <button type="button" class="btn btn-primary" (click)="handleGoBack(1);onCloseHandled()" >Ok</button>
+                  <button type="button" class="btn btn-primary py-2 px-3" (click)="handleGoBack(1);onCloseHandled()" >Okay</button>
                 </div>
               </div>
             </div>
