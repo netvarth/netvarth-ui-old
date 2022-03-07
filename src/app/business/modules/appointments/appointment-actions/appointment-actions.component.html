@@ -80,13 +80,13 @@
                 <div  class="icon-text">Change Status to Complete</div>
             </div>
         </div> 
-        <!-- <div class="action-box pointer-cursor"
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && appt.apptStatus === 'Completed'"
         (click)="followUpClicked()">
         <div class="action-box-sub">
             <span class="reschedule-icon"></span>
             <div class="icon-text">Follow Up</div>
         </div>
-    </div> -->
+    </div>
         <!-- <div class="action-box pointer-cursor" 
         *ngIf="!data.multiSelection && accountType=='BRANCH' && (this.appt.schedule.provider.id === 0) && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && (location && location.length > 1)"
         (click)="chnageLocation()">
