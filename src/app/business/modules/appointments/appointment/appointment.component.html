@@ -398,10 +398,9 @@
                                   </div>
                                 </div> 
                                 <div class="service-outer" *ngIf="servicesjson.length > 0">
-                                    <ng-container>
-                                        <span class="p-0 m-0">{{select_service_cap}}</span>
-                                        <span *ngIf="servicesjson.length == 1">
-                                            <div class="one-service">Service</div>
+                                    <ng-container class="one-service mt-2 pb-0 mb-0">
+                                        <span *ngIf="servicesjson.length == 1" style="display: flex;align-items: center;flex-wrap: row wrap;">
+                                            <span class="pt-2 text-primary"><b>Service :&nbsp;</b></span>
                                             <ng-container *ngFor="let serv of servicesjson">
                                                 <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType === 'audioService'"
                                                     class="fa wtsapaud-icon"></i>
@@ -415,12 +414,13 @@
                                                     class="fa meet-icon"></i>
                                                 <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Phone'"
                                                     class="fa phon-icon" aria-hidden="true"></i>
-                                                <span class="pad-left-5">{{serv.name | capitalizeFirst}}</span>
+                                                <span class="pad-left-5 pt-2 text-primary"><b>{{serv.name | capitalizeFirst}}</b></span>
                                                 <!-- <input matInput [readonly]="true" placeholder="Service" value="{{serv.name | capitalizeFirst}}"> -->
                                             </ng-container>
 
                                         </span>
                                         <mat-form-field *ngIf="servicesjson.length > 1">
+                                        <span class="p-0 m-0">{{select_service_cap}}</span>
                                             <mat-select class="inputbox" [ngModel]="sel_ser"
                                                 #servsel (selectionChange)="handleServiceSel(servsel.value)">
                                                 <mat-option *ngFor="let serv of servicesjson" [value]="serv.id">
@@ -436,7 +436,7 @@
                                                         class="fa meet-icon"></i>
                                                     <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Phone'"
                                                         class="fa phon-icon" aria-hidden="true"></i>
-                                                    <span class="dash">{{serv.name | capitalizeFirst}}</span>
+                                                    <span class="dash text-primary"><b>{{serv.name | capitalizeFirst}}</b></span>
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>
@@ -444,7 +444,7 @@
                                             <span class='no-queue-available text-danger'>{{no_services_avail_cap}}</span>
                                         </ng-container>
                                     </ng-container>
-                                    <div class="callingmode mgn-lt-10"
+                                    <div class="callingmode"
                                         *ngIf="sel_ser_det && sel_ser_det.serviceType==='virtualService'">
                                         <div class="mgn-bt-10 mgn-up-5">
                                             <div class=""

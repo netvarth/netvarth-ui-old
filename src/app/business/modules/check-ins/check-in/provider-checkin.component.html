@@ -322,24 +322,22 @@
                   <ng-container>
                     <span class="one-service font-weight-bold pl-0" *ngIf="servicesjson.length == 1"
                       style="display: flex;align-items: center;flex-wrap: row wrap;">
-                      <h6><b>Service : </b></h6>
-                      <ng-container *ngFor="let serv of servicesjson">
+                      <h6 class="pt-4"><b>Service :&nbsp;</b></h6>
+                      <ng-container *ngFor="let serv of servicesjson" class="pt-0">
                         <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType==='audioService'"
                           class="fa wtsapaud-icon"></i>
                         <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType==='videoService'"
                           class="fa wtsapvid-icon"></i>
-
                         <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'"
                           class="fa zoom-icon"></i>
                         <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'VideoCall'"
                           class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"></i>
-
                         <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'"
                           class="fa meet-icon"></i>
                         <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Phone'"
                           class="fa phon-icon" aria-hidden="true"></i>
                         <span class="pad-left-5">
-                          <h6><b>{{serv.name | capitalizeFirst}}</b></h6>
+                          <h6 class="pt-4"><b>{{serv.name | capitalizeFirst}}</b></h6>
                         </span>
                       </ng-container>
                     </span>
@@ -368,7 +366,7 @@
                       <span class='no-queue-available'>{{no_services_avail_cap}}</span>
                     </ng-container>
                   </ng-container>
-                  <div class="callingmode mgn-lt-10" *ngIf="sel_ser_det && sel_ser_det.serviceType==='virtualService'">
+                  <div class="callingmode" *ngIf="sel_ser_det && sel_ser_det.serviceType==='virtualService'">
                     <div class="mgn-bt-10 mgn-up-5">
                       <div class="" *ngFor="let mode of sel_ser_det.virtualCallingModes;let i = index">
                         <div style="visibility: hidden;">
