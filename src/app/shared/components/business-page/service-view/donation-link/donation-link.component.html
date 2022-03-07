@@ -1,0 +1,204 @@
+<section #consumer_donation class="container no-padding cons-donate no-padding-small">
+    <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
+    <div class="content p0 loc-list p-checkin ynw-common-form-nm">
+        <div class="panel panel-default">
+            <app-common-innerloading-spinner *ngIf="loadingPaytm"></app-common-innerloading-spinner>
+            <div class="panel-body flex-column-fluid hf-panel-body">
+                <div class="card card-custom no-margin">
+                    <div class="card-body p-0">
+                        <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
+                            data-wizard-clickable="false">
+                            <div class="row justify-content-center">
+                                <div class="loading-hgt my-5 login-form_custom" *ngIf="loading">
+                                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                                </div>
+                                <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding-small right-part"
+                                    data-wizard-type="step-content" data-wizard-state="current"
+                                    [ngClass]="{'highlight': api_loading_video}">
+                                    <div class="panel-body no-padding">
+                                        <div class="c-outer m0">
+                                            <div class="c-body">
+                                                <div class="col-md-12 no-padding">
+                                                    <div class="copy locd">
+                                                        <div
+                                                            class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding">
+                                                            <div
+                                                                class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt">
+                                                                <div
+                                                                    class="col-md-12 col-xs-12 col-sm-12 no-padding mobile-donation-for-styling">
+                                                                    <div
+                                                                        class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 card-title service">
+                                                                        Donation For<span *ngIf="sel_ser">
+                                                                            {{sel_ser_det.name |
+                                                                            capitalizeFirst}}
+                                                                            <p>{{sel_ser_det.description}}
+                                                                            </p>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp check-new-group no-padding">
+                                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                                                    <div
+                                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 no-padding c-checkin-new">
+                                                                        <div class="clearfix"></div>
+
+                                                                        <div class="mobile-donor-details">
+                                                                            <div
+                                                                                class="col-md-12 col-xs-12 col-sm-12 lnk pad-10 donation_label">
+                                                                                Donor details for
+                                                                                sending donation acknowledgement
+                                                                                and related communications.<br>
+                                                                            </div>
+                                                                            <div class="clearfix"></div>
+                                                                            <div class="mgn-bt-10">
+                                                                                <div style="color:#7a7a7a;">
+                                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name
+                                                                                </div>
+                                                                                <div class="mobile-edit-icon">
+                                                                                    <span
+                                                                                        class="mgn-lt-5 phonevallabel boldmobiletext"
+                                                                                        *ngFor="let member of waitlist_for ">
+                                                                                        <i class="fa fa-user"></i>&nbsp;
+                                                                                        {{donorName}}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="mgn-bt-10">
+                                                                                <div style="color:#7a7a7a;">
+                                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone
+                                                                                </div>
+
+                                                                                <div class="mobile-edit-icon">
+                                                                                    <span
+                                                                                        class="mgn-lt-10 phonevallabel boldmobiletext"
+                                                                                        *ngIf="userPhone"><i
+                                                                                            class="fa fa-mobile "></i>&nbsp;{{dialCode}}
+                                                                                        {{userPhone}}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="" *ngIf="userEmail">
+                                                                                <div style="color:#7a7a7a;">
+                                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email
+                                                                                </div>
+                                                                                <div class="mobile-edit-icon">
+                                                                                    <span
+                                                                                        class="mgn-lt-5 emailvallabel boldmobiletext">
+                                                                                        <i
+                                                                                            class="fa fa-envelope-o "></i>&nbsp;{{userEmail}}</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-sm-12 col-xs-12 col-md-12 no-padding">
+                                                                            <div
+                                                                                class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-20 amount-section-mobile">
+                                                                                <div>
+                                                                                    <div>
+                                                                                        <div
+                                                                                            class="col-md-12 col-xs-12 col-sm-12 no-padding amount mgn-bt-10">
+                                                                                            Amount (<i
+                                                                                                class="fa fa-inr"></i>)
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="col-md-12 col-xs-12 col-sm-12 no-padding mobile-input">
+                                                                                            <label>
+                                                                                                <span
+                                                                                                    class="bold rupee-font">&#8377;{{donationAmount}}
+                                                                                            </span>
+                                                                                                <!-- <input type="text"
+                                                                                                    min="0"
+                                                                                                    class="form-control  rupee-font"
+                                                                                                    placeholder="&#8377; Enter Amount"
+                                                                                                    [(ngModel)]="donationAmount"
+                                                                                                    (keypress)=isNumeric($event)> -->
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!-- <div class="prepay-amt mgn-bt-20">
+                                                                                        <div *ngIf="sel_ser_det"
+                                                                                            class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding red">
+                                                                                            <p class="form-level-settings applybill"
+                                                                                                *ngIf="sel_ser_det.minDonationAmount != sel_ser_det.maxDonationAmount">
+                                                                                                Minimum <span
+                                                                                                    class="bold rupee-font">
+                                                                                                    {{sel_ser_det.minDonationAmount
+                                                                                                    |
+                                                                                                    currency:'&#8377;'}}
+                                                                                                </span>
+                                                                                                Maximum <span
+                                                                                                    class="bold rupee-font">
+                                                                                                    {{sel_ser_det.maxDonationAmount
+                                                                                                    |
+                                                                                                    currency:'&#8377;'}}
+                                                                                                </span>
+                                                                                            </p>
+                                                                                            <p class="form-level-settings applybill"
+                                                                                                *ngIf="sel_ser_det.minDonationAmount == sel_ser_det.maxDonationAmount">
+                                                                                                Donation Amount
+                                                                                                <span class="bold"><i
+                                                                                                        class="fa fa-inr"></i>
+                                                                                                    {{sel_ser_det.minDonationAmount}}</span>
+                                                                                            </p>
+                                                                                        </div>
+                                                                                    </div> -->
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="clearfix"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div
+                                        class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding d-flex justify-content-between border-top pt-10 width-100 hf-double-btn-container">
+                                        <div class="clearfix"></div>
+                                        <div class="col-xs-12 no-padding-small">
+                                            <ng-container *ngIf="!shownonIndianModes">
+                                                <app-payment-modes [paymentModes]="indian_payment_modes"
+                                                    (modeSelected)="indian_payment_mode_onchange($event)">
+                                                </app-payment-modes>
+                                            </ng-container>
+                                            <ng-container *ngIf="shownonIndianModes">
+                                                <app-payment-modes [paymentModes]="non_indian_modes"
+                                                    (modeSelected)="non_indian_modes_onchange($event)">
+                                                </app-payment-modes>
+                                            </ng-container>
+                                            <div class="clearfix"></div>
+                                            <div class="txt-align-center pad_link mgn-up-20">
+                                                <span [class.disabled]="isClickedOnce" (click)="togglepaymentMode()"
+                                                    class="pointer-cursor"><a class="refund_policy"
+                                                        *ngIf="paymentmodes">
+                                                        <span
+                                                            *ngIf="!shownonIndianModes && paymentmodes && paymentmodes.internationalPay">Non
+                                                            Indian Payment ? Click here</span>
+                                                        <span
+                                                            *ngIf="shownonIndianModes && paymentmodes && paymentmodes.indiaPay">Indian
+                                                            Payment ? Click here</span>
+                                                    </a></span>
+                                            </div>
+                                            <div class="txt-align-center mgn-up-10">
+                                                <button type="button"
+                                                    class="next-button btn btn-primary mobile-button-color font-weight-bold text-uppercase "
+                                                    [class.disabled]="isClickedOnce"
+                                                    (click)="!isClickedOnce && goToGateway()">
+                                                    Make Payment
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

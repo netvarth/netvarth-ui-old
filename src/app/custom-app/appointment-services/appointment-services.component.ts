@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationExtras, Router } from '@angular/router';
-import { AuthService } from '../../shared/services/auth-service';
+// import { AuthService } from '../../shared/services/auth-service';
 import { CheckavailabilityComponent } from '../../shared/components/checkavailability/checkavailability.component';
 import { DateTimeProcessor } from '../../shared/services/datetime-processor.service';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
@@ -31,7 +31,7 @@ export class AppointmentServicesComponent implements OnInit, OnChanges {
 
   constructor(private dialog: MatDialog,
     private dateTimeProcessor: DateTimeProcessor,
-    private authService: AuthService,
+    // private authService: AuthService,
     private router: Router,
     private lStorageService: LocalStorageService) { }
 
@@ -109,22 +109,22 @@ export class AppointmentServicesComponent implements OnInit, OnChanges {
   }
   appointmentClicked(location, service: any) {
     const _this = this;
-    const current_provider = {
-      'id': location.id,
-      'place': location.place,
-      'location': location,
-      'cdate': service.serviceAvailability.nextAvailableDate,
-      'service': service
-    };
-    _this.authService.goThroughLogin().then(
-      (status) => {
-        if (status) {
+    // const current_provider = {
+    //   'id': location.id,
+    //   'place': location.place,
+    //   'location': location,
+    //   'cdate': service.serviceAvailability.nextAvailableDate,
+    //   'service': service
+    // };
+    // _this.authService.goThroughLogin().then(
+    //   (status) => {
+    //     if (status) {
           _this.showAppointment(location, service);
-        } else {
-          const passParam = { callback: 'appointment', current_provider: current_provider };
-          _this.doLogin('consumer', passParam);
-        }
-      });
+      //   } else {
+      //     const passParam = { callback: 'appointment', current_provider: current_provider };
+      //     _this.doLogin('consumer', passParam);
+      //   }
+      // });
   }
   showAppointment(location, service) {
     let queryParam = {

@@ -3,10 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { NavigationExtras, Router } from '@angular/router';
 import { ServiceDetailComponent } from '../../shared/components/service-detail/service-detail.component';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
-import { AuthService } from '../../shared/services/auth-service';
+// import { AuthService } from '../../shared/services/auth-service';
 import { DateTimeProcessor } from '../../shared/services/datetime-processor.service';
 import { ConsumerJoinComponent } from '../../ynw_consumer/components/consumer-join/join.component';
-import { CheckavailabilityComponent } from '../../shared/components/checkavailability/checkavailability.component';
+// import { CheckavailabilityComponent } from '../../shared/components/checkavailability/checkavailability.component';
 
 @Component({
   selector: 'app-checkin-services',
@@ -31,7 +31,7 @@ export class CheckinServicesComponent implements OnInit, OnChanges {
 
   constructor(private dialog: MatDialog,
     private dateTimeProcessor: DateTimeProcessor,
-    private authService: AuthService,
+    // private authService: AuthService,
     private router: Router,
     private lStorageService: LocalStorageService) { }
 
@@ -43,32 +43,33 @@ export class CheckinServicesComponent implements OnInit, OnChanges {
     this.services = this.filteredServices;
   }
   
-  checkAvailableSlots(actionObj) {
-    this.availabilityDialogref = this.dialog.open(CheckavailabilityComponent, {
-      width: '100%',
-      panelClass: ['loginmainclass', 'popup-class', this.templateJson['theme']],
-      height: 'auto',
-      data: {
-        alldetails: actionObj,
-        apptSettingsJson: this.apptSettings,
-        domain: this.businessProfile.serviceSector.domain,
-        theme: this.templateJson['theme']
-      }
-    });
-    this.availabilityDialogref.afterClosed().subscribe(result => {
-      if (result != 'undefined') {
-        if(actionObj['service']['bType']=='Waitlist' || !actionObj['service']['bType']) {
-          console.log("***Waitlist***");
-          this.checkinClicked(actionObj['location'], actionObj['service']);
-        }
-      }
-    });
-  }
+  // checkAvailableSlots(actionObj) {
+  //   this.availabilityDialogref = this.dialog.open(CheckavailabilityComponent, {
+  //     width: '100%',
+  //     panelClass: ['loginmainclass', 'popup-class', this.templateJson['theme']],
+  //     height: 'auto',
+  //     data: {
+  //       alldetails: actionObj,
+  //       apptSettingsJson: this.apptSettings,
+  //       domain: this.businessProfile.serviceSector.domain,
+  //       theme: this.templateJson['theme']
+  //     }
+  //   });
+  //   this.availabilityDialogref.afterClosed().subscribe(result => {
+  //     if (result != 'undefined') {
+  //       if(actionObj['service']['bType']=='Waitlist' || !actionObj['service']['bType']) {
+  //         console.log("***Waitlist***");
+  //         this.checkinClicked(actionObj['location'], actionObj['service']);
+  //       }
+  //     }
+  //   });
+  // }
   cardClicked(actionObj) {
-    console.log(actionObj);
-    if (actionObj['type'] == 'checkavailability') {
-      this.checkAvailableSlots(actionObj);
-    } else if (actionObj['type'] === 'waitlist') {
+    // console.log(actionObj);
+    // if (actionObj['type'] == 'checkavailability') {
+    //   this.checkAvailableSlots(actionObj);
+    // } else 
+    if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessProfile.businessName);
       } else {
@@ -97,23 +98,23 @@ export class CheckinServicesComponent implements OnInit, OnChanges {
     });
   }
   checkinClicked(location, service) {
-    const current_provider = {
-      'id': location.id,
-      'place': location.place,
-      'location': location,
-      'cdate': service.serviceAvailability.availableDate,
-      'service': service
-    };
-    const _this = this;
-    _this.authService.goThroughLogin().then(
-      (status) => {
-        if (status) {
-          _this.showCheckin(location, service);
-        } else {
-          const passParam = { callback: '', current_provider: current_provider };
-          _this.doLogin('consumer', passParam);
-        }
-      });
+    // const current_provider = {
+    //   'id': location.id,
+    //   'place': location.place,
+    //   'location': location,
+    //   'cdate': service.serviceAvailability.availableDate,
+    //   'service': service
+    // };
+    // const _this = this;
+    // _this.authService.goThroughLogin().then(
+    //   (status) => {
+    //     if (status) {
+          this.showCheckin(location, service);
+      //   } else {
+      //     const passParam = { callback: '', current_provider: current_provider };
+      //     _this.doLogin('consumer', passParam);
+      //   }
+      // });
   }
   showCheckin(location, service) {
     console.log("Location:", location);
