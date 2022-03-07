@@ -13,6 +13,7 @@ import { CapitalizeFirstPipeModule } from "../../../../../../shared/pipes/capita
 import { LoadingSpinnerModule } from "../../../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { ConsumerNotificationsComponent } from "./consumer-notifications.component";
 import { AddProviderAddonsModule } from "../../../../../../business/modules/add-provider-addons/add-provider-addons.module";
+import { MatTabsModule } from "@angular/material/tabs";
 const routes: Routes = [
     { path: '', component: ConsumerNotificationsComponent }
 ];
@@ -27,6 +28,7 @@ const routes: Routes = [
         MatFormFieldModule,
         MatInputModule,
         MatCheckboxModule,
+        MatTabsModule,
         MatSelectModule,
         MatOptionModule,
         CapitalizeFirstPipeModule,

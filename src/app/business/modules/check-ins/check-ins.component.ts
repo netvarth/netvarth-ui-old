@@ -32,6 +32,7 @@ import { AttachmentPopupComponent } from '../../../../app/shared/components/atta
 import { InstantQueueComponent } from './instant-q/instant-queue.component';
 import { CommunicationService } from '../../services/communication-service';
 declare let cordova: any;
+import { TeleBookingService } from '../../../shared/services/tele-bookings-service';
 @Component({
   selector: 'app-checkins',
   templateUrl: './check-ins.component.html',
@@ -100,7 +101,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     first_name: '',
     last_name: '',
     phone_number: '',
-    countrycode:'',
+    countrycode: '',
     checkinEncId: '',
     patientId: '',
     queue: 'all',
@@ -118,7 +119,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     page: 1,
     futurecheckin_date: null,
     age: 'all',
-    gender: 'all'
+    gender: 'all',
+    multiUser:'all',
   }; // same in resetFilter Fn
   filters = {
     first_name: false,
@@ -139,7 +141,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     check_in_end_date: false,
     location_id: false,
     age: false,
-    gender: false
+    gender: false,
+    multiUser:false,
   };
   filter_date_start_min = null;
   filter_date_start_max = null;
@@ -166,6 +169,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   checkin_label = '';
   start_label = '';
   no_future_checkins = '';
+  changeText:boolean;
   pagination: any = {
     startpageval: 1,
     totalCnt: 0,
@@ -208,7 +212,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   labelFilterData = '';
   labelsCount: any = [];
   qr_value;
-  path = projectConstants.PATH;
+  path = projectConstantsLocal.PATH;
   showQR = false;
   printContent;
   filterStatus = true;
@@ -362,6 +366,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   locId;
   location_select: any = [];
   internalStats: any = [];
+  showMore= false;
+  
+//multi user variable start
+allServiceSelectedMultiUser=false
+selectedMultiUser:any=[]
+multiUserFilter:any=[];
   @ViewChild('closebutton') closebutton;
   showattachmentDialogRef: any;
   constructor(private shared_functions: SharedFunctions,
@@ -378,8 +388,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor,
     private communicationService: CommunicationService,
+    private teleService: TeleBookingService,
     private titleService: Title) {
     this.onResize();
+    this.changeText = false;
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.arrived_label = this.wordProcessor.getTerminologyTerm('arrived');
@@ -478,10 +490,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
-    if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
+    if (this.active_user && this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
       this.activeUser = this.active_user.id;
     }
-    
+
     this.bussLocs = this.active_user.bussLocs;
     if (this.active_user.adminPrivilege || this.active_user.userType === 5) {
       this.admin = true;
@@ -528,12 +540,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.location_select = data;
         });
   }
-  getInternalStatus(){
+  getInternalStatus() {
     this.provider_services.getInternalStatus()
-    .subscribe(
-      (data: any) => {
-        this.internalStats = data;
-      });
+      .subscribe(
+        (data: any) => {
+          this.internalStats = data;
+        });
   }
   getDepartments() {
     this.provider_services.getDepartments().subscribe(
@@ -570,7 +582,68 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         () => { }
       );
   }
+  // getAgent(fileName){
+  //   return fileName.toLocaleLowerCase();
+  // }
+//   getReqFrom(browser,agent) {
+//     let browserName = ''
+//      if(browser){
+ 
+//   if(browser.includes("Android")){
+//     browserName = 'Android'
+//     return browserName.toLocaleLowerCase();
 
+//   }
+//   if(browser.includes("iPhone")){
+//     browserName = 'IOS'
+//     return browserName.toLocaleLowerCase();
+
+//   }
+//   if(browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("iPhone")){
+//     browserName = 'Web'
+//     return browserName.toLocaleLowerCase();
+
+//   }
+ 
+
+//    }
+//   if(browser === undefined && agent === "BROWSER"){
+//     browserName = 'web'
+//     return browserName;
+//   }
+    
+  
+  
+// }
+//   getBookingReqFrom(browser) {
+//     let browserName = ''
+//     if(browser){
+      
+//   }
+
+//     return browserName.toLocaleLowerCase();
+//   }
+//   getRequestedFrom(browser,reqFrom){
+//     let browserName = ''
+//     if(browser){
+//     browserName = browser.slice(0, 3);
+//     }
+//     if(browser === 'WEB_LINK'){
+//       browserName = 'IOS'
+//     }
+//     if(browser){
+//      if(browser.length >8){
+//       browserName = browser.slice(0,8);
+//     }
+//   }
+
+//     return reqFrom.toLocaleLowerCase() + ', ' + browserName.toLocaleLowerCase();
+//   }
+
+
+  showText(){
+    this.showMore = true;
+  }
   setLabelFilter(label, event) {
     this.resetPaginationData();
     const value = event.checked;
@@ -663,7 +736,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
 
-   
+
     if (type === 'payment_status') {
       if (value === 'all') {
         this.paymentStatuses = [];
@@ -797,6 +870,50 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.allLocationSelected = true;
       }
     }
+    //for multi user
+    if(type ==='multiUser'){
+      // console.log('users List:',this.users);
+      // console.log('event:',event.checked)
+      // console.log(value)
+      if(value === 'all'){
+        // console.log('all1')
+        this.multiUserFilter=[];
+
+        this.allServiceSelectedMultiUser=false;
+        
+        if(event.checked){
+          for (const multi of this.users) {
+
+            // console.log(this.multiUserFilter.indexOf(multi.id))
+            if (this.multiUserFilter.indexOf(multi.id) === -1) {
+              this.multiUserFilter.push(multi.id);
+            }
+          }
+          // console.log('multiuserFilter:',this.multiUserFilter);
+          this.allServiceSelectedMultiUser=true;
+        }
+      }else{
+        this.allServiceSelectedMultiUser = false;
+        const indx = this.multiUserFilter.indexOf(value);
+        // console.log(indx)
+        if (indx === -1) {
+          this.multiUserFilter.push(value);
+          // console.log(this.multiUserFilter)
+        } else {
+          this.multiUserFilter.splice(indx, 1);
+          // console.log(this.multiUserFilter)
+        }
+        
+      }
+      // console.log(this.multiUserFilter.length)
+      // console.log(this.users.length)
+      // console.log(this.filter)
+      if (this.multiUserFilter.length === this.users.length) {
+        // console.log('all2')
+        this.filter['multiUser'] = 'all';
+        this.allServiceSelectedMultiUser = true;
+      }
+    }
     this.keyPressed();
   }
   getDisplayboardCount() {
@@ -826,7 +943,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         });
   }
   getTomorrowDate() {
-    const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const server = this.server_date.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     const serverdate = moment(server).format();
     const servdate = new Date(serverdate);
     this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
@@ -837,7 +954,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   getYesterdayDate() {
-    const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const server = this.server_date.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     const serverdate = moment(server).format();
     const servdate = new Date(serverdate);
     this.yesterdayDate = this.maxday = this.endmaxday = new Date(moment(new Date(servdate)).add(-1, 'days').format('YYYY-MM-DD'));
@@ -1417,6 +1534,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               (data: any) => {
                 _this.appt_list = [];
                 _this.appt_list = data;
+                _this.appt_list.map(function (appt) {
+                  // checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode])
+                  if (appt.service.virtualCallingModes && (appt.service.virtualCallingModes[0].callingMode==='Phone' || appt.service.virtualCallingModes[0].callingMode==='WhatsApp') && appt.virtualService[appt.service.virtualCallingModes[0].callingMode]) {
+                    appt.whatsApp_PhNumber = _this.teleService.getTeleNumber(appt.virtualService[appt.service.virtualCallingModes[0].callingMode]);
+                  }
+                  return appt;
+                })
                 _this.todayAppointments = _this.shared_functions.groupBy(_this.appt_list, 'waitlistStatus');
                 if (_this.filterapplied === true) {
                   _this.noFilter = false;
@@ -1425,6 +1549,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
                 _this.setCounts(this.appt_list);
                 _this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
+                console.log("Active Today :",this.check_in_filtered_list)
                 _this.startedCheckins = this.getActiveAppointments(this.todayAppointments, 'started');
                 _this.loading = false;
               },
@@ -1443,6 +1568,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   getFutureWL() {
+    const _this = this;
     this.resetCheckList();
     this.loading = true;
     this.futureAppointments = [];
@@ -1483,10 +1609,18 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       const promise = this.getFutureWLCount(Mfilter);
       promise.then(
         result => {
-          this.provider_services.getFutureWaitlist(Mfilter)
+          _this.provider_services.getFutureWaitlist(Mfilter)
             .subscribe(
-              data => {
-                this.futureAppointments = this.shared_functions.groupBy(data, 'waitlistStatus');
+              (data: any) => {
+                let appts = data;
+                appts.map(function (appt) {
+                  // checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode])
+                  if (appt.service.virtualCallingModes && (appt.service.virtualCallingModes[0].callingMode==='Phone' || appt.service.virtualCallingModes[0].callingMode==='WhatsApp') && appt.virtualService[appt.service.virtualCallingModes[0].callingMode]) {
+                    appt.whatsApp_PhNumber = _this.teleService.getTeleNumber(appt.virtualService[appt.service.virtualCallingModes[0].callingMode]);
+                  }
+                  return appt;
+                })
+                this.futureAppointments = this.shared_functions.groupBy(appts, 'waitlistStatus');
                 if (this.filterapplied === true) {
                   this.noFilter = false;
                 } else {
@@ -1515,45 +1649,55 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cancelled_count = this.getActiveAppointments(appointments, 'cancelled').length;
   }
   getHistoryWL() {
-    this.loading = true;
-    let Mfilter = this.setFilterForApi();
-    if (this.active_user.accountType === 'BRANCH' && !this.active_user.adminPrivilege && this.active_user.userType !== 5) {
-      if (this.active_user.userTeams && this.active_user.userTeams.length > 0 && !this.admin) {
-        Mfilter['or=team-eq'] = 'id::' + this.active_user.userTeams + ',provider-eq=' + this.active_user.id;
+    const _this = this;
+    _this.loading = true;
+    let Mfilter = _this.setFilterForApi();
+    if (_this.active_user.accountType === 'BRANCH' && !_this.active_user.adminPrivilege && _this.active_user.userType !== 5) {
+      if (_this.active_user.userTeams && _this.active_user.userTeams.length > 0 && !_this.admin) {
+        Mfilter['or=team-eq'] = 'id::' + _this.active_user.userTeams + ',provider-eq=' + _this.active_user.id;
       } else {
-        Mfilter['provider-eq'] = this.active_user.id;
+        Mfilter['provider-eq'] = _this.active_user.id;
       }
     }
-    const promise = this.getHistoryWLCount(Mfilter);
+    const promise = _this.getHistoryWLCount(Mfilter);
     promise.then(
       result => {
-        this.pagination.totalCnt = result;
-        Mfilter = this.setPaginationFilter(Mfilter);
-        this.appointmentsChecked = {};
-        this.chkAppointments = {};
-        this.chkSelectAppointments = false;
-        this.setApptSelections();
-        this.provider_services.getHistoryWaitlist(Mfilter)
+        _this.pagination.totalCnt = result;
+        Mfilter = _this.setPaginationFilter(Mfilter);
+        _this.appointmentsChecked = {};
+        _this.chkAppointments = {};
+        _this.chkSelectAppointments = false;
+        _this.setApptSelections();
+        _this.provider_services.getHistoryWaitlist(Mfilter)
           .subscribe(
             data => {
-              this.appt_list = this.check_in_filtered_list = data;
-              this.loading = false;
-              if (this.filterapplied === true) {
-                this.noFilter = false;
+              _this.appt_list = data;
+              console.log("Checkin List:", _this.appt_list);
+              _this.appt_list.map(function (appt) {
+                // checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode])
+                if (appt.service.virtualCallingModes && (appt.service.virtualCallingModes[0].callingMode==='Phone' || appt.service.virtualCallingModes[0].callingMode==='WhatsApp') && appt.virtualService[appt.service.virtualCallingModes[0].callingMode]) {
+                  appt.whatsApp_PhNumber = _this.teleService.getTeleNumber(appt.virtualService[appt.service.virtualCallingModes[0].callingMode]);
+                }
+                return appt;
+              });
+              _this.check_in_filtered_list = _this.appt_list;
+              _this.loading = false;
+              if (_this.filterapplied === true) {
+                _this.noFilter = false;
               } else {
-                this.noFilter = true;
+                _this.noFilter = true;
               }
-              this.loading = false;
+              _this.loading = false;
             },
             () => {
-              this.loading = false;
+              _this.loading = false;
             },
             () => {
-              this.loading = false;
+              _this.loading = false;
             });
       },
       () => {
-        this.loading = false;
+        _this.loading = false;
       });
   }
   setApptSelections() {
@@ -1777,6 +1921,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       //   Mfilter = this.setFilterForApi();
       Mfilter = {};
     }
+    if (this.selected_location && this.selected_location.id) {
+      Mfilter['location-eq'] = this.selected_location.id;
+    }
     if (this.filter.waitlist_status === 'all') {
       Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     }
@@ -1806,7 +1953,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.today_waitlist_count = 0;
     this.history_waitlist_count = 0;
     this.future_waitlist_count = 0;
-    if (this.time_type !== 2 && this.activeQs.length > 0 || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) {
+    if (this.time_type !== 2 && this.activeQs.length > 0 || (this.active_user && this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) {
       this.getFutureWLCount()
         .then(
           (result) => {
@@ -1822,7 +1969,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         );
     }
-    if (this.time_type !== 1 && this.activeQs.length > 0 || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) {
+    if (this.time_type !== 1 && this.activeQs.length > 0 || (this.active_user && this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) {
       this.getTodayWLCount()
         .then(
           (result) => {
@@ -1941,6 +2088,8 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.allLabelSelected = false;
     this.allQSelected = false;
     this.allLocationSelected = false;
+    this.multiUserFilter=[];
+    this.allServiceSelectedMultiUser=false;
   }
   setFilterdobMaxMin() {
     this.filter_dob_start_max = new Date();
@@ -1992,7 +2141,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.filter.phone_number !== '') {
       api_filter['phoneNo-eq'] = this.filter.phone_number;
     }
-    if(this.filter.countrycode !== ''){
+    if (this.filter.countrycode !== '') {
       api_filter['countryCode-eq'] = this.filter.countrycode;
     }
     if (this.filter.checkinEncId !== '') {
@@ -2003,6 +2152,9 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     if (this.filterService.length > 0 && this.filter.service !== 'all') {
       api_filter['service-eq'] = this.filterService.toString();
+    }
+    if(this.multiUserFilter.length >0 && this.filter.multiUser !== 'all' ){
+      api_filter['provider-eq'] = this.multiUserFilter.toString();
     }
     if (this.apptStatuses.length > 0 && this.filter.waitlist_status !== 'all') {
       api_filter['waitlistStatus-eq'] = this.apptStatuses.toString();
@@ -2087,10 +2239,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' || this.filter.location != 'all'
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.checkinEncId || this.filter.patientId || this.filter.multiUser !=='all' || this.filter.service !== 'all' || this.filter.location != 'all'
       || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.internalStatus !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== ''
-      || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
+      || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allServiceSelectedMultiUser || this.allApptStatusSelected
       || this.allPayStatusSelected || this.allModeSelected || this.allStatusSelected || this.allLabelSelected || this.allQSelected || this.allLocationSelected) {
       this.filterapplied = true;
     } else {
@@ -2123,6 +2275,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       queue: false,
       location: false,
       service: false,
+      multiUser:false,
       waitlist_status: false,
       payment_status: false,
       internalStatus: false,
@@ -2138,12 +2291,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       first_name: '',
       last_name: '',
       phone_number: '',
-      countrycode:'',
+      countrycode: '',
       checkinEncId: '',
       patientId: '',
       queue: 'all',
       location: 'all',
       service: 'all',
+      multiUser:'all',
       waitlist_status: 'all',
       payment_status: 'all',
       waitlistMode: 'all',
@@ -2457,7 +2611,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.filters[type]) {
       if (type === 'check_in_start_date' || type === 'check_in_end_date' || type === 'check_in_date') {
         this.filter[type] = null;
-      } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'location' || type === 'waitlistMode' || type === 'internalStatus') {
+      } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'location' || type === 'waitlistMode' || type === 'internalStatus'|| type==='multiUser') {
         this.filter[type] = 'all';
       } else if (type === 'waitlist_status') {
         this.statusMultiCtrl = [];
@@ -2585,14 +2739,14 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
               for (let i = 0; i < this.historyCheckins.length; i++) {
                 const fname = (this.historyCheckins[i].waitlistingFor[0].firstName) ? this.historyCheckins[i].waitlistingFor[0].firstName : '';
                 const lname = (this.historyCheckins[i].waitlistingFor[0].lastName) ? this.historyCheckins[i].waitlistingFor[0].lastName : '';
-                let name='';
-                if(fname!== '' && lname!==''){
-                name=fname+''+ lname;
+                let name = '';
+                if (fname !== '' && lname !== '') {
+                  name = fname + '' + lname;
                 }
-                else{
-                name='Nil';
+                else {
+                  name = 'Nil';
                 }
-                
+
                 checkin_html += '<tr style="line-height:20px;padding:10px">';
                 checkin_html += '<td style="padding:10px">' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
                 checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].checkInTime + '</td>';
@@ -2777,10 +2931,10 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode||this.filter.checkinEncId || this.filter.patientId || this.filter.service !== 'all' || this.filter.location != 'all'
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.checkinEncId || this.filter.patientId||this.filter.multiUser !=='all' || this.filter.service !== 'all' || this.filter.location != 'all'
       || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.internalStatus !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== ''
-      || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allApptStatusSelected
+      || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected||this.allServiceSelectedMultiUser || this.allApptStatusSelected
       || this.allPayStatusSelected || this.allModeSelected || this.allStatusSelected || this.allLabelSelected || this.allQSelected || this.allLocationSelected) {
       this.filterapplied = true;
     } else {
@@ -3071,16 +3225,19 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         status: status,
         labelFilterData: this.labelFilterData,
         labelsCount: this.labelsCount,
-        statusBooking :this.statusAction
+        statusBooking: this.statusAction
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
       if (data === 'reload') {
-        this.chkSelectAppointments = false;
-        this.chkStartedSelectAppointments = false;
+     
         this.getLabel();
         this.loadApiSwitch('');
       }
+      this.chkSelectAppointments = false;
+      this.chkStartedSelectAppointments = false;
+      this.chkAppointments = false;
+      this.startedChkAppointments = false;
     });
   }
   statusClick(status) {
@@ -3129,6 +3286,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.shared_functions.isNumeric(evt);
   }
   gotoCustomerDetails(waitlist) {
+    this.showMore = false;
     this.lStorageService.setitemonLocalStorage('wlfilter', this.setFilterForApi());
     if (waitlist.waitlistStatus !== 'blocked') {
       this.router.navigate(['/provider/customers/' + waitlist.waitlistingFor[0].id]);

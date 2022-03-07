@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
@@ -16,6 +16,9 @@ import { AddproviderAddonComponent } from '../../../../../../../../business/modu
   styleUrls: ['./update-provider-notifications.component.css']
 })
 export class UpdateProviderUserNotificationsComponent implements OnInit {
+  @Input() type;
+  @Input() userid;
+  @Input() internationalUser;
   telegram = false;
   sms = false;
   email = false;
@@ -84,12 +87,12 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
     this.accountType = user.accountType;
     this.getNotificationList();
     this.getSMSCredits();
-    this.isInternationalUser = this.data.inernationalUser;
+    this.isInternationalUser = this.internationalUser;
     console.log(this.isInternationalUser)
   }
   getNotificationList() {
     this.api_loading = true;
-    this.provider_services.getUserNotificationList(this.data.userId)
+    this.provider_services.getUserNotificationList(this.userid)
       .subscribe(
         data => {
           this.notificationList = data;
@@ -104,10 +107,10 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
     if (notificationList.length !== 0) {
       let addList = [];
       let cancelList = [];
-      if (this.data.type === 'Token' || this.data.type === 'Check-in') {
+      if (this.type === 'Token' || this.type === 'Check-in') {
         addList = notificationList.filter(notification => notification.eventType === 'WAITLISTADD');
         cancelList = notificationList.filter(notification => notification.eventType === 'WAITLISTCANCEL');
-      } else if (this.data.type === 'Appointment') {
+      } else if (this.type === 'Appointment') {
         addList = notificationList.filter(notification => notification.eventType === 'APPOINTMENTADD');
         cancelList = notificationList.filter(notification => notification.eventType === 'APPOINTMENTCANCEL');
       }
@@ -174,39 +177,39 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
     //   this.chekinNotifications('newcheckin');
     // }
     this.notificationJson = {};
-    if (this.data.type === 'Token' || this.data.type === 'Check-in') {
+    if (this.type === 'Token' || this.type === 'Check-in') {
       this.notificationJson.resourceType = 'CHECKIN';
       this.notificationJson.eventType = 'WAITLISTADD';
-    } else if (this.data.type === 'Appointment') {
+    } else if (this.type === 'Appointment') {
       this.notificationJson.resourceType = 'APPOINTMENT';
       this.notificationJson.eventType = 'APPOINTMENTADD';
-    } else if (this.data.type === 'Donation') {
+    } else if (this.type === 'Donation') {
       this.notificationJson.resourceType = 'DONATION';
       this.notificationJson.eventType = 'DONATIONSERVICE';
-    } else if (this.data.type === 'Account') {
+    } else if (this.type === 'Account') {
       this.notificationJson.resourceType = 'ACCOUNT';
       this.notificationJson.eventType = 'LICENSE';
-    } else if (this.data.type === 'Order') {
+    } else if (this.type === 'Order') {
       this.notificationJson.resourceType = 'ORDER';
       this.notificationJson.eventType = 'ORDERCONFIRM';
     }
-    this.notificationJson.providerId = this.data.userId;
+    this.notificationJson.providerId = this.userid;
     this.setProviderNotificationStatus(event, this.notificationJson);
   }
   selectChekinCanclNotify(event) {
     this.SelchkincnclNotify = event.checked;
     this.cancelNotificationJson = {};
-    if (this.data.type === 'Token' || this.data.type === 'Check-in') {
+    if (this.type === 'Token' || this.type === 'Check-in') {
       this.cancelNotificationJson.resourceType = 'CHECKIN';
       this.cancelNotificationJson.eventType = 'WAITLISTCANCEL';
-    } else if (this.data.type === 'Appointment') {
+    } else if (this.type === 'Appointment') {
       this.cancelNotificationJson.resourceType = 'APPOINTMENT';
       this.cancelNotificationJson.eventType = 'APPOINTMENTCANCEL';
-    } else if (this.data.type === 'Order') {
+    } else if (this.type === 'Order') {
       this.cancelNotificationJson.resourceType = 'ORDER';
       this.cancelNotificationJson.eventType = 'ORDERCANCEL';
     }
-    this.cancelNotificationJson.providerId = this.data.userId;
+    this.cancelNotificationJson.providerId = this.userid;
     this.setProviderNotificationStatus(event, this.cancelNotificationJson);
     // if (!this.SelchkincnclNotify) {
     //   this.checkinCancelNotifications('cancelcheckin');
@@ -274,6 +277,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       // }
       this.okCheckinStatus = true;
       this.notifyphonenumber = '';
+      
     }
   }
   isSmsNumExists(curphone) {
@@ -348,6 +352,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       this.okCheckinStatus = true;
       this.notifycheknPushphonenumber = '';
       this.cheknPushph = false;
+      
     }
   }
   isPushNumExists(curphone) {
@@ -394,6 +399,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       }
       this.okCheckinStatus = true;
       this.notifyemail = '';
+      
     }
   }
   addTele() {
@@ -467,6 +473,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
 
       }
       this.okCheckinStatus = true;
+      
       // this.notifyTele = '';
     }
   }
@@ -555,6 +562,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       // this.ph1_arr.push(curphone1);
       this.okCancelStatus = true;
       this.notifycanclphonenumber = '';
+      
     }
   }
   addCheknCancltelegram() {
@@ -611,6 +619,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       }
 
       this.okCancelStatus = true;
+      
       // this.notifycancltelegram = '';
     }
   }
@@ -745,6 +754,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       this.okCancelStatus = true;
       this.notifycheknCancelPushphonenumber = '';
       this.cheknCancelPushph = false;
+      
     }
   }
   addCheknCanclemil() {
@@ -768,6 +778,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       }
       this.notifycanclemail = '';
       this.okCancelStatus = true;
+      
     }
   }
   chekinNotifications(source) {
@@ -777,11 +788,11 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       chekinMode = 'ADD';
     }
     for (const notifyList of this.notificationList) {
-      if (((this.data.type === 'Token' || this.data.type === 'Check-in') && notifyList.eventType && notifyList.eventType === 'WAITLISTADD') ||
-        (this.data.type === 'Appointment' && notifyList.eventType && notifyList.eventType === 'APPOINTMENTADD') ||
-        (this.data.type === 'Donation' && notifyList.eventType && notifyList.eventType === 'DONATIONSERVICE') ||
-        (this.data.type === 'Account' && notifyList.eventType && notifyList.eventType === 'LICENSE') ||
-        (this.data.type === 'Order' && notifyList.eventType && notifyList.eventType === 'ORDERCONFIRM')) {
+      if (((this.type === 'Token' || this.type === 'Check-in') && notifyList.eventType && notifyList.eventType === 'WAITLISTADD') ||
+        (this.type === 'Appointment' && notifyList.eventType && notifyList.eventType === 'APPOINTMENTADD') ||
+        (this.type === 'Donation' && notifyList.eventType && notifyList.eventType === 'DONATIONSERVICE') ||
+        (this.type === 'Account' && notifyList.eventType && notifyList.eventType === 'LICENSE') ||
+        (this.type === 'Order' && notifyList.eventType && notifyList.eventType === 'ORDERCONFIRM')) {
         chekinMode = 'UPDATE';
       }
     }
@@ -791,19 +802,19 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       this.tele_arr = [];
       this.cheknPushph_arr = [];
     }
-    if (this.data.type === 'Token' || this.data.type === 'Check-in') {
+    if (this.type === 'Token' || this.type === 'Check-in') {
       this.savechekinNotification_json.resourceType = 'CHECKIN';
       this.savechekinNotification_json.eventType = 'WAITLISTADD';
-    } else if (this.data.type === 'Appointment') {
+    } else if (this.type === 'Appointment') {
       this.savechekinNotification_json.resourceType = 'APPOINTMENT';
       this.savechekinNotification_json.eventType = 'APPOINTMENTADD';
-    } else if (this.data.type === 'Donation') {
+    } else if (this.type === 'Donation') {
       this.savechekinNotification_json.resourceType = 'DONATION';
       this.savechekinNotification_json.eventType = 'DONATIONSERVICE';
-    } else if (this.data.type === 'Account') {
+    } else if (this.type === 'Account') {
       this.savechekinNotification_json.resourceType = 'ACCOUNT';
       this.savechekinNotification_json.eventType = 'LICENSE';
-    } else if (this.data.type === 'Order') {
+    } else if (this.type === 'Order') {
       this.savechekinNotification_json.resourceType = 'ORDER';
       this.savechekinNotification_json.eventType = 'ORDERCONFIRM';
     }
@@ -811,7 +822,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
     this.savechekinNotification_json.email = this.em_arr;
     this.savechekinNotification_json.pushMsg = this.cheknPushph_arr;
     this.savechekinNotification_json.telegramPhone = this.tele_arr;
-    this.savechekinNotification_json.providerId = this.data.userId;
+    this.savechekinNotification_json.providerId = this.userid;
     this.saveNotifctnJson(this.savechekinNotification_json, chekinMode, source);
   }
 
@@ -822,9 +833,9 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       chekincancelMode = 'ADD';
     }
     for (const notifyList of this.notificationList) {
-      if (((this.data.type === 'Token' || this.data.type === 'Check-in') && notifyList.eventType && notifyList.eventType === 'WAITLISTCANCEL') ||
-        (this.data.type === 'Appointment' && notifyList.eventType && notifyList.eventType === 'APPOINTMENTCANCEL') ||
-        (this.data.type === 'Order' && notifyList.eventType && notifyList.eventType === 'ORDERCANCEL')) {
+      if (((this.type === 'Token' || this.type === 'Check-in') && notifyList.eventType && notifyList.eventType === 'WAITLISTCANCEL') ||
+        (this.type === 'Appointment' && notifyList.eventType && notifyList.eventType === 'APPOINTMENTCANCEL') ||
+        (this.type === 'Order' && notifyList.eventType && notifyList.eventType === 'ORDERCANCEL')) {
         chekincancelMode = 'UPDATE';
       }
     }
@@ -834,13 +845,13 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
       this.tele1_arr = [];
       this.cheknCancelPushph_arr = [];
     }
-    if (this.data.type === 'Token' || this.data.type === 'Check-in') {
+    if (this.type === 'Token' || this.type === 'Check-in') {
       this.savecancelNotification_json.resourceType = 'CHECKIN';
       this.savecancelNotification_json.eventType = 'WAITLISTCANCEL';
-    } else if (this.data.type === 'Appointment') {
+    } else if (this.type === 'Appointment') {
       this.savecancelNotification_json.resourceType = 'APPOINTMENT';
       this.savecancelNotification_json.eventType = 'APPOINTMENTCANCEL';
-    } else if (this.data.type === 'Order') {
+    } else if (this.type === 'Order') {
       this.savecancelNotification_json.resourceType = 'ORDER';
       this.savecancelNotification_json.eventType = 'ORDERCANCEL';
     }
@@ -848,7 +859,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
     this.savecancelNotification_json.email = this.em1_arr;
     this.savecancelNotification_json.telegramPhone = this.tele1_arr;
     this.savecancelNotification_json.pushMsg = this.cheknCancelPushph_arr;
-    this.savecancelNotification_json.providerId = this.data.userId;
+    this.savecancelNotification_json.providerId = this.userid;
     this.saveNotifctnJson(this.savecancelNotification_json, chekincancelMode, source);
   }
 
@@ -907,6 +918,12 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
     }
     if (source === 'cancelcheckin') {
       this.okCancelStatus = true;
+    }
+    if(this.okCheckinStatus) {
+      this.chekinNotifications('newcheckin')
+    }
+    if(this.okCancelStatus) {
+      this.checkinCancelNotifications('cancelcheckin')
     }
   }
   smsAddClicked() {
@@ -1022,7 +1039,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
   telegramInfo() {
     const dialogref = this.dialog.open(TelegramInfoComponent, {
       width: '70%',
-      height: '40%',
+      height: '60%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'full-screen-modal', 'telegramPopupClass'],
       disableClose: true,
     });

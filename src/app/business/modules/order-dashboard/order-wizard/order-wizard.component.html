@@ -158,7 +158,9 @@
                                                     <div class="bold font11"
                                                         *ngIf="customer_data.firstName || customer_data.lastName">
                                                         {{ customer_data.firstName }} {{ customer_data.lastName }}</div>
-                                                    <div *ngIf="jaldeeId">Id - {{ jaldeeId }}</div>
+                                                    <div *ngIf="jaldeeId">Id - {{ customer_data.jaldeeId }}</div>
+                                                    <!-- <div *ngIf="jaldeeId === customer_data.firstName">Id - {{ customer_data.jaldeeId }}</div> -->
+
                                                     <div *ngIf="customer_data.phoneNo.trim()!==''"> <i
                                                             class="fa fa-phone" aria-hidden="true"></i> {{countryCode}}
                                                         {{customer_data.phoneNo}}</div>
@@ -300,6 +302,27 @@
                                 </div>
                                 <!--end::Wizard Step 2-->
                                 <!--begin::Wizard Step 3-->
+
+                              
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                 <div class="pb-5" *ngIf="step == 3">
                                     <div class="flex-row-fluid">
                                         <!--begin::Section-->
@@ -312,6 +335,10 @@
                                                         Summary
                                                     </span>
                                                 </h3>
+                                            </div>
+                                            <div class="pb-5" *ngIf="showQuestionnaire">
+                                                <app-questionnaire [questionnaireList]="questionnaireList" [questionAnswers]="questionAnswers"
+                                                [source]="'proOrder'" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
                                             </div>
                                             <!--end::Header-->
                                             <div class="card-body p-0">

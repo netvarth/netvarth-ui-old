@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { projectConstants } from '../../app.component';
 import * as moment from 'moment';
 
 @Injectable({
@@ -275,7 +274,7 @@ export class DateTimeProcessor {
    * @returns 
    */
   transformToYMDFormat(date) {
-    const server = date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const server = date.toLocaleString(this.REGION_LANGUAGE, { timeZone: this.TIME_ZONE_REGION });
     const serverdate = moment(server).format();
     const newdate = new Date(serverdate);
     const dd = newdate.getDate();
@@ -337,6 +336,6 @@ export class DateTimeProcessor {
   }
 
   getLocaleDateFromServer(serverDate) {
-    return new Date(serverDate.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })
+    return new Date(serverDate.split(' ')[0]).toLocaleString(this.REGION_LANGUAGE, { timeZone: this.TIME_ZONE_REGION })
   }
 }

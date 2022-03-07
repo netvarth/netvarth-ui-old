@@ -25,6 +25,7 @@ import { WordProcessor } from '../../../../../../../shared/services/word-process
 import { QRCodeGeneratorComponent } from '../../../../bprofile/qrcodegenerator/qrcodegenerator.component';
 import { Meta } from '@angular/platform-browser';
 import { QuestionService } from '../../../../../../../shared/modules/dynamic-form/dynamic-form-question.service';
+import { projectConstantsLocal } from '../../../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-buserprofile',
@@ -241,7 +242,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   user_arr;
   normal_search_active = false;
   jaldee_acc_url = Messages.JALDEE_URL;
-  wndw_path = projectConstants.PATH;
+  wndw_path = projectConstantsLocal.PATH;
   subdomain: any;
   maintooltip: any;
   qrdialogRef: MatDialogRef<QRCodeGeneratorComponent, any>;
@@ -565,7 +566,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   }
   qrCodegenerateOnlineID(valuetogenerate,userid) {
     this.imageUrl = this.wndw_path + 'assets/images/logo.png';
-    this.qr_value = projectConstants.PATH + valuetogenerate +'/'+ userid + "/";
+    this.qr_value = projectConstantsLocal.PATH + valuetogenerate +'/'+ userid + "/";
     this.qr_code_oId = true;
     this.cdref.detectChanges();
     setTimeout(() => {
@@ -583,7 +584,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     }, 50);
   }
   generateQR(id,userid) {
-    this.qr_value = projectConstants.PATH + id +'/'+ userid + "/";
+    this.qr_value = projectConstantsLocal.PATH + id +'/'+ userid + "/";
   }
   createForm() {
 

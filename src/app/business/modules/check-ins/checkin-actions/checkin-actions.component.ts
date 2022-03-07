@@ -27,6 +27,7 @@ import { ListRecordingsDialogComponent } from '../../../../shared/components/lis
 import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.component';
 import { VoiceConfirmComponent } from '../../customers/voice-confirm/voice-confirm.component';
 import { CommunicationService } from '../../../../business/services/communication-service';
+import { TeleBookingService } from '../../../../shared/services/tele-bookings-service';
 
 @Component({
     selector: 'app-checkin-actions',
@@ -39,7 +40,7 @@ export class CheckinActionsComponent implements OnInit {
     checkin;
     provider_label = '';
     qr_value;
-    path = projectConstants.PATH;
+    path = projectConstantsLocal.PATH;
     showQR = false;
     trackDetail: any = [];
     customerMsg;
@@ -121,6 +122,8 @@ export class CheckinActionsComponent implements OnInit {
     users: any = [];
     location: any;
     statusBooking: any;
+    callingNumber: any;
+    showQnr = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public shared_services: SharedServices,
@@ -134,7 +137,8 @@ export class CheckinActionsComponent implements OnInit {
         private galleryService: GalleryService,
         private dateTimeProcessor: DateTimeProcessor,
         public dialogRef: MatDialogRef<CheckinActionsComponent>,
-        private communicationService: CommunicationService) {
+        private communicationService: CommunicationService,
+        private teleService: TeleBookingService) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
     ngOnInit() {
@@ -142,6 +146,12 @@ export class CheckinActionsComponent implements OnInit {
         this.setMinMaxDate();
         this.getLabel();
         this.checkin = this.data.checkinData;
+        console.log('multiSelection:' , this.data.multiSelection)
+        console.log('releasedQnr:' , this.checkin.releasedQnr && this.checkin.releasedQnr.length > 1)
+        console.log('waitlistStatus:' , this.checkin.waitlistStatus !== 'cancelled')
+        if (!this.data.multiSelection && this.checkin.releasedQnr && this.checkin.releasedQnr.length > 0 && this.checkin.waitlistStatus !== 'cancelled') {
+           this.showQnr = true;
+        }
         this.statusBooking = this.data.statusBooking;
         if (!this.data.multiSelection) {
             this.ynwUuid = this.checkin.ynwUuid;
@@ -155,6 +165,11 @@ export class CheckinActionsComponent implements OnInit {
             }
             this.accountid = this.checkin.providerAccount.id;
             this.showToken = this.checkin.showToken;
+            if (this.checkin.service.virtualCallingModes && this.checkin.service.virtualCallingModes[0].callingMode && this.checkin.virtualService[this.checkin.service.virtualCallingModes[0].callingMode]) {
+                this.callingNumber = this.teleService.getTeleNumber(this.checkin.virtualService[this.checkin.service.virtualCallingModes[0].callingMode]);
+            }
+            
+
             this.getPos();
             this.getInternStatus();
         } else {
@@ -271,9 +286,9 @@ export class CheckinActionsComponent implements OnInit {
         this.action = 'reschedule';
     }
     setMinMaxDate() {
-        this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         this.today = new Date(this.today);
-        this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         this.minDate = new Date(this.minDate);
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
     }
@@ -337,7 +352,7 @@ export class CheckinActionsComponent implements OnInit {
         this.getQueuesbyLocationandServiceIdavailability(this.location_id, this.serv_id, this.accountid);
     }
     calculateDate(days, type) {
-        const dte = this.checkin_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dte = this.checkin_date.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
         const newdate = new Date(date);
         const newdate1 = new Date(date);
@@ -367,11 +382,11 @@ export class CheckinActionsComponent implements OnInit {
         }
     }
     disableMinus() {
-        const seldate1 = this.checkin_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const seldate1 = this.checkin_date.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
         const seldate = new Date(seldate2);
         const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
-        const strtDt1 = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const strtDt1 = this.server_date.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
         const strtDt = new Date(strtDt2);
         const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
@@ -747,7 +762,7 @@ export class CheckinActionsComponent implements OnInit {
         // const customerId = customerDetails[0].id;
         const dialogref = this.dialog.open(VoiceConfirmComponent, {
             width: '60%',
-            height: '35%',
+            // height: '35%',
             panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
@@ -1132,12 +1147,11 @@ export class CheckinActionsComponent implements OnInit {
             this.groups = data;
         });
     }
-    showQnr() {
-        if (!this.data.multiSelection && this.checkin.releasedQnr && this.checkin.releasedQnr.length > 1 && this.checkin.waitlistStatus !== 'cancelled') {
-            return true;
-        }
-        return false;
-    }
+    // showQnr() {
+    //     console.log(!this.data.multiSelection && this.checkin.releasedQnr && this.checkin.releasedQnr.length > 1 && this.checkin.waitlistStatus !== 'cancelled')
+        
+    //     return false;
+    // }
     showQuestionnaires() {
         this.dialogRef.close();
         this.router.navigate(['provider', 'check-ins', 'questionnaires'], { queryParams: { source: 'checkin', uid: this.checkin.ynwUuid } });

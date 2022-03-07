@@ -19,7 +19,9 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
-
+import { ThirdpartypopupComponent } from '../../check-ins/thirdpartypopup/thirdpartypopup.component';
+import { Location } from '@angular/common';
+declare var $: any;
 @Component({
     selector: 'app-appointment-checkin',
     templateUrl: './appointment.component.html',
@@ -233,6 +235,8 @@ export class AppointmentComponent implements OnInit {
     channel;
     questionAnswers;
     bookingMode;
+    categoryForSearchingarray=['Search with PhoneNumber','Search with Email ID','Search with Name or ID']
+    categoryvalue='Search with PhoneNumber';
     api_loading_video;
     separateDialCode = true;
     SearchCountryField = SearchCountryField;
@@ -243,6 +247,21 @@ export class AppointmentComponent implements OnInit {
     cuntryCode: any;
     selfAssign;
     assignmyself;
+    thirdpartyoptions: any;
+    display: string;
+    follow_up_Details;
+    followup_uuid;
+    type;
+    showFollowup = false;
+    firstname;
+    lastname;
+    custId;
+    cusfirstname;
+    cuslastname;
+    cusId;
+    servId;
+    accId;
+    memberJaldeeId: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -256,6 +275,7 @@ export class AppointmentComponent implements OnInit {
         private groupService: GroupStorageService,
         private dateTimeProcessor: DateTimeProcessor,
         private providerService: ProviderServices,
+        public _location: Location,
         private lStorageService: LocalStorageService) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -263,6 +283,16 @@ export class AppointmentComponent implements OnInit {
         this.activated_route.queryParams.subscribe(qparams => {
             if (qparams.source) {
                 this.source = qparams.source;
+            }
+            if (qparams.followup_uuid) {
+                this.followup_uuid = qparams.followup_uuid;
+
+                this.type = qparams.type;
+                if (this.type === 'followup') {
+                    this.showFollowup = true;
+                    this.getFollowUpWaitlist();
+                    this.initAppointment();
+                }
             }
             if (qparams.uid) {
                 this.uid = qparams.uid;
@@ -293,9 +323,9 @@ export class AppointmentComponent implements OnInit {
                 this.thirdParty = qparams.thirdParty;
             }
             if (qparams.date) {
-                this.sel_checkindate = moment(qparams.date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+                this.sel_checkindate = moment(qparams.date.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
             } else {
-                this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+                this.sel_checkindate = moment(new Date().toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
             }
             if (qparams.timeslot) {
                 this.slotTime = qparams.timeslot;
@@ -351,6 +381,34 @@ export class AppointmentComponent implements OnInit {
             }
         });
     }
+    openthirdpopup(domain,showOther,customer_label) {
+        this.thirdpartyoptions = this.dialog.open(ThirdpartypopupComponent, {
+            width: '80%',
+            panelClass: ['popup-class', 'confirmationmainclass'],
+            data : {
+                'domain':domain,
+                'showOther':showOther,
+                'customer_label':customer_label
+            }
+           
+        })
+        this.thirdpartyoptions.afterClosed().subscribe(result => {
+            if(result=='practo') {
+                this.initAppointment('practo')
+            } else if(result=='justdial') {
+                this.initAppointment('justdial')
+            } else if(result=='google') {
+                this.initAppointment('google')
+            } else if(result == 'mfine') {
+                this.initAppointment('mfine')
+            } else if(result=='other') {
+                this.showOtherSection()
+                $('.other-party-options-modal').modal('show')
+            }
+
+        });
+        this.display = "none";
+    }
     ngOnInit() {
         this.carouselOne = {
             dots: false,
@@ -388,6 +446,16 @@ export class AppointmentComponent implements OnInit {
         // this.getCurrentLocation();
         this.showfuturediv = false;
         this.revealphonenumber = true;
+    }
+    openModal() {
+        this.display = "block";
+      }
+    onCloseHandled() {
+    this.display = "none";
+    }
+     otherPartyModalClose()
+    {
+        $('.other-party-options-modal').modal('hide')
     }
     performActions(action) {
         if (action === 'learnmore') {
@@ -653,11 +721,13 @@ export class AppointmentComponent implements OnInit {
         this.heading = 'New Appointment';
         this.waitlist_for = [];
         if (this.thirdParty === '') {
-            this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
+            if (this.type !== 'followup') {
+                this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
+            }
         }
-        this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         this.today = new Date(this.today);
-        this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         this.minDate = new Date(this.minDate);
         const dd = this.today.getDate();
         const mm = this.today.getMonth() + 1; // January is 0!
@@ -673,69 +743,76 @@ export class AppointmentComponent implements OnInit {
         const loc = this.groupService.getitemFromGroupStorage('loc_id');
         this.sel_loc = loc.id;
         // if (this.sel_checkindate === undefined) {
-        //     this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+        //     this.sel_checkindate = moment(new Date().toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
         // }
         this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
-        const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const day = new Date(this.sel_checkindate).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const ddd = new Date(day);
         this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
         this.hold_sel_checkindate = this.sel_checkindate;
-        const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dt1 = new Date(this.sel_checkindate).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const date1 = new Date(dt1);
-        const dt2 = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dt2 = new Date(this.todaydate).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const date2 = new Date(dt2);
         if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
             this.isFuturedate = true;
         }
-        this.getWaitlistMgr().then(
-            () => {
-                this.setTerminologyLabels();
-                this.getBussinessProfileApi()
-                    .then(
-                        (data: any) => {
-                            this.account_id = data.id;
-                            this.accountType = data.accountType;
-                            this.domain = data.serviceSector.domain;
-                            this.getPartysizeDetails(this.domain, data.serviceSubSector.subDomain);
-                            if (this.domain === 'foodJoints') {
-                                this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
-                                this.note_placeholder = 'Item No Item Name Item Quantity';
-                                this.note_cap = 'Add Note / Delivery address';
-                            } else {
-                                this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
-                                this.note_placeholder = 'Add Note';
-                                this.note_cap = 'Add Note';
+        if( this.type === 'followup'){
+            this.getQueuesbyLocationandServiceId(this.sel_loc, this.servId, this.sel_checkindate, this.accId);
+            this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.servId, this.accId);
+        }
+        else{
+            this.getWaitlistMgr().then(
+                () => {
+                    this.setTerminologyLabels();
+                    this.getBussinessProfileApi()
+                        .then(
+                            (data: any) => {
+                                this.account_id = data.id;
+                                this.accountType = data.accountType;
+                                this.domain = data.serviceSector.domain;
+                                this.getPartysizeDetails(this.domain, data.serviceSubSector.subDomain);
+                                if (this.domain === 'foodJoints') {
+                                    this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
+                                    this.note_placeholder = 'Item No Item Name Item Quantity';
+                                    this.note_cap = 'Add Note / Delivery address';
+                                } else {
+                                    this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
+                                    this.note_placeholder = 'Add Note';
+                                    this.note_cap = 'Add Note';
+                                }
+                                this.shared_services.getProviderServicesforAppontmntByLocationId(this.sel_loc).subscribe(
+                                    (services: any) => {
+                                        this.servicesjson = services;
+                                        this.serviceslist = services;
+                                        // this.sel_ser_det = [];
+                                        if (this.servicesjson.length > 0) {
+                                            //     this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
+                                            //     this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
+                                            //     this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
+                                            this.initDepartments(this.account_id).then(
+                                                () => {
+                                                    this.handleDeptSelction(this.selected_dept);
+                                                },
+                                                () => {
+                                                    // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                                                    // this.getAllUsers();
+                                                    this.getAvailableUsers();
+                                                }
+                                            );
+                                        }
+                                        //     this.api_loading1 = false;
+                                        // },
+                                        //     () => {
+                                        //         this.api_loading1 = false;
+                                        //         this.sel_ser = '';
+                                        //     });
+                                    });
                             }
-                            this.shared_services.getProviderServicesforAppontmntByLocationId(this.sel_loc).subscribe(
-                                (services: any) => {
-                                    this.servicesjson = services;
-                                    this.serviceslist = services;
-                                    // this.sel_ser_det = [];
-                                    if (this.servicesjson.length > 0) {
-                                        //     this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
-                                        //     this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
-                                        //     this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
-                                        this.initDepartments(this.account_id).then(
-                                            () => {
-                                                this.handleDeptSelction(this.selected_dept);
-                                            },
-                                            () => {
-                                                // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
-                                                // this.getAllUsers();
-                                                this.getAvailableUsers();
-                                            }
-                                        );
-                                    }
-                                    //     this.api_loading1 = false;
-                                    // },
-                                    //     () => {
-                                    //         this.api_loading1 = false;
-                                    //         this.sel_ser = '';
-                                    //     });
-                                });
-                        }
-                    );
-            });
+                        );
+                });
+        }
+       
     }
     initDepartments(accountId) {
         const _this = this;
@@ -922,7 +999,7 @@ export class AppointmentComponent implements OnInit {
         this.queuejson = [];
         this.queueQryExecuted = false;
         if (!pdate) {
-            this.sel_checkindate = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
+            this.sel_checkindate = moment(new Date().toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
             pdate = this.sel_checkindate;
         }
         if (locid && servid) {
@@ -943,7 +1020,12 @@ export class AppointmentComponent implements OnInit {
                         this.sel_queue_indx = selindx;
                         this.setTerminologyLabels();
                         if (this.queuejson[this.sel_queue_indx].timeDuration && this.queuejson[this.sel_queue_indx].timeDuration !== 0) {
+                            if(this.type === 'followup'){
+                                this.getAvailableTimeSlots(this.sel_queue_id, pdate, servid);
+                            }
+                           else{
                             this.getAvailableTimeSlots(this.queuejson[this.sel_queue_indx].apptSchedule.timeSlots[0]['sTime'], this.queuejson[this.sel_queue_indx].apptSchedule.timeSlots[0]['eTime'], this.queuejson[this.sel_queue_indx].timeDuration);
+                           }
                         }
                     } else {
                         this.sel_queue_indx = -1;
@@ -1045,10 +1127,10 @@ export class AppointmentComponent implements OnInit {
         }
         const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
         this.sel_checkindate = seldate;
-        const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dt0 = this.todaydate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
         const date2 = new Date(dt2);
-        const dte0 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dte0 = this.sel_checkindate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
         const datee2 = new Date(dte2);
         if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
@@ -1057,8 +1139,14 @@ export class AppointmentComponent implements OnInit {
             this.isFuturedate = false;
         }
         this.handleFuturetoggle();
-        this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
-        this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
+        if(this.type === 'followup'){
+            this.getQueuesbyLocationandServiceId(this.sel_loc, this.servId, this.sel_checkindate, this.accId);
+            this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.servId, this.accId);
+        }
+        else{
+            this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+            this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
+        }
     }
     handleServiceForWhom() {
         this.resetApi();
@@ -1128,114 +1216,179 @@ export class AppointmentComponent implements OnInit {
                 });
     }
     saveCheckin() {
-        this.is_wtsap_empty = false;
-        // if (this.waitlist_for.length !== 0) {
-        //     for (const list of this.waitlist_for) {
-        //         if (list.id === this.customer_data.id) {
-        //             list['id'] = 0;
-        //         }
-        //     }
-        // }
-        // const waitlistarr = [];
-        // for (let i = 0; i < this.waitlist_for.length; i++) {
-        //     waitlistarr.push({ id: this.waitlist_for[i].id });
-        // }
-        this.virtualServiceArray = {};
-        // for (let i = 0; i < this.callingModes.length; i++) {
-        if (this.callingModes !== '' && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes.length > 0) {
-            if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
-                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
-            } else if (!this.thirdParty) {
-                if(this.cuntryCode){
-                    if(this.cuntryCode.includes('+')){
-                        this.cuntryCode=this.cuntryCode.slice(1);
-                    }}
-                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.cuntryCode + '' + this.callingModes;
-            } else {
-                const thirdparty_countrycode = '91';
-                this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = thirdparty_countrycode + '' + this.callingModes;
+        if (this.type === 'followup') {
+            this.sel_ser = this.servId;
+            this.sel_ser_det.serviceType = this.follow_up_Details.service.serviceType;
+            this.waitlist_for.push({ id: this.cusId, firstName: this.cusfirstname, lastName: this.cuslastname , apptTime: this.apptTime});
+            const post_Data = {
+                'schedule': {
+                    'id': this.sel_queue_id
+                },
+                'appmtDate': this.sel_checkindate,
+                'service': {
+                    'id': this.sel_ser,
+                    'serviceType': this.sel_ser_det.serviceType
+                },
+                'consumerNote': this.consumerNote,
+                'countryCode': this.countryCode,
+                // 'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr))
+                'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
+                'appointmentMode': this.apptType
+            };
+            if (this.follow_up_Details.provider && this.follow_up_Details.provider.id) {
+                post_Data['provider'] = { 'id': this.follow_up_Details.provider.id };
             }
-        }
-        // }
-        this.showEditView = false;
-        if (this.thirdParty !== '' && this.waitlist_for.length === 0) {
-            this.waitlist_for.push({ firstName: this.thirdParty, lastName: 'user', apptTime: this.apptTime });
-        }
-        const post_Data = {
-            'schedule': {
-                'id': this.sel_queue_id
-            },
-            'appmtDate': this.sel_checkindate,
-            'service': {
-                'id': this.sel_ser,
-                'serviceType': this.sel_ser_det.serviceType
-            },
-            'consumerNote': this.consumerNote,
-            'countryCode': this.countryCode,
-            // 'phoneNumber': this.consumerPhoneNo,
-            'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
-            'appointmentMode': this.apptType
-        };
-        // if (this.apptTime) {
-        //     post_Data['appointmentTime'] = this.apptTime;
-        // }
-
-        if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
-            post_Data['provider'] = { 'id': this.selectedUser.id };
-        }
-        if (this.selectedUser && this.selectedUser.firstName === Messages.NOUSERCAP) {
-            post_Data['selfAssign'] = this.selfAssign;
-        }
-        if (this.sel_ser_det.serviceType === 'virtualService') {
-            // post_Data['virtualService'] = this.virtualServiceArray;
-            if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
-                if (!this.callingModes || !this.cuntryCode) {
-                    this.snackbarService.openSnackBar('Please enter a valid number to contact you', { 'panelClass': 'snackbarerror' });
-                    this.is_wtsap_empty = true;
-                }
-            }
-            for (const i in this.virtualServiceArray) {
-                if (i === 'WhatsApp') {
-                    post_Data['virtualService'] = this.virtualServiceArray;
-                } else if (i === 'GoogleMeet') {
-                    post_Data['virtualService'] = this.virtualServiceArray;
-                } else if (i === 'Zoom') {
-                    post_Data['virtualService'] = this.virtualServiceArray;
-                } else if (i === 'Phone') {
-                    post_Data['virtualService'] = this.virtualServiceArray;
-                } else {
-                    post_Data['virtualService'] = { 'VideoCall': '' };
-                }
-                //  else {
-                //     post_Data['virtualService'] = {};
-                // }
-            }
-        }
-        // if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
-        //     // this.api_error = this.wordProcessor.getProjectMesssages('ADDNOTE_ERROR');
-        //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
-        //     return;
-        // }
-        // if (this.partySizeRequired) {
-        //     this.holdenterd_partySize = this.enterd_partySize;
-        //     post_Data['partySize'] = Number(this.holdenterd_partySize);
-        // }
-
-        if (this.api_error === null) {
-            post_Data['consumer'] = { id: this.customer_data.id };
-            //   post_Data['ignorePrePayment'] = true;
-            if (!this.is_wtsap_empty) {
-                if (this.thirdParty === '') {
-                    if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                        this.validateQnr(post_Data);
+            this.virtualServiceArray = {}
+            if (this.sel_ser_det.serviceType === 'virtualService') {
+             
+                    if (this.follow_up_Details.virtualService.WhatsApp) {
+                        post_Data['virtualService'] = { 'WhatsApp': this.follow_up_Details.virtualService.WhatsApp };
+                    } else if (this.follow_up_Details.virtualService.GoogleMeet) {
+                        post_Data['virtualService'] = { 'GoogleMeet': this.follow_up_Details.virtualService.GoogleMeet };
+                    } else if (this.follow_up_Details.virtualService.Zoom) {
+                        post_Data['virtualService'] = { 'Zoom': this.follow_up_Details.virtualService.Zoom };
+                    } else if (this.follow_up_Details.virtualService.Phone) {
+                        post_Data['virtualService'] = { 'Phone': this.follow_up_Details.virtualService.Phone};
                     } else {
-                        this.addAppointmentInProvider(post_Data);
+                        post_Data['virtualService'] = { 'VideoCall': '' };
                     }
+                    //  else {
+                    //     post_Data['virtualService'] = {};
+                    // }
+               
+            }
+            if (this.api_error === null) {
+                post_Data['consumer'] = { id: this.cusId };
+                post_Data['ignorePrePayment'] = true;
+                if (!this.is_wtsap_empty) {
+                    if (this.thirdParty === '') {
+                        if (this.waitlist_for.length === 0) {
+                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages('Please select atleast one member'), { 'panelClass': 'snackbarerror' });
+                        } else {
+                            if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                                this.validateQnr(post_Data);
+                            } else {
+                                this.addAppointmentInProvider(post_Data);
+                            }
+                        }
+                    } else {
+                        this.addAppointmentBlock(post_Data);
+                    }
+                }
+            }
+
+        }
+        else{
+            this.is_wtsap_empty = false;
+            // if (this.waitlist_for.length !== 0) {
+            //     for (const list of this.waitlist_for) {
+            //         if (list.id === this.customer_data.id) {
+            //             list['id'] = 0;
+            //         }
+            //     }
+            // }
+            // const waitlistarr = [];
+            // for (let i = 0; i < this.waitlist_for.length; i++) {
+            //     waitlistarr.push({ id: this.waitlist_for[i].id });
+            // }
+            this.virtualServiceArray = {};
+            // for (let i = 0; i < this.callingModes.length; i++) {
+            if (this.callingModes !== '' && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes.length > 0) {
+                if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
+                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
+                } else if (!this.thirdParty) {
+                    if(this.cuntryCode){
+                        if(this.cuntryCode.includes('+')){
+                            this.cuntryCode=this.cuntryCode.slice(1);
+                        }}
+                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.cuntryCode + '' + this.callingModes;
                 } else {
-                    this.addAppointmentBlock(post_Data);
+                    const thirdparty_countrycode = '91';
+                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = thirdparty_countrycode + '' + this.callingModes;
+                }
+            }
+            // }
+            this.showEditView = false;
+            if (this.thirdParty !== '' && this.waitlist_for.length === 0) {
+                this.waitlist_for.push({ firstName: this.thirdParty, lastName: 'user', apptTime: this.apptTime });
+            }
+            const post_Data = {
+                'schedule': {
+                    'id': this.sel_queue_id
+                },
+                'appmtDate': this.sel_checkindate,
+                'service': {
+                    'id': this.sel_ser,
+                    'serviceType': this.sel_ser_det.serviceType
+                },
+                'consumerNote': this.consumerNote,
+                'countryCode': this.countryCode,
+                // 'phoneNumber': this.consumerPhoneNo,
+                'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
+                'appointmentMode': this.apptType
+            };
+            // if (this.apptTime) {
+            //     post_Data['appointmentTime'] = this.apptTime;
+            // }
+    
+            if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
+                post_Data['provider'] = { 'id': this.selectedUser.id };
+            }
+            if (this.selectedUser && this.selectedUser.firstName === Messages.NOUSERCAP) {
+                post_Data['selfAssign'] = this.selfAssign;
+            }
+            if (this.sel_ser_det.serviceType === 'virtualService') {
+                // post_Data['virtualService'] = this.virtualServiceArray;
+                if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
+                    if (!this.callingModes || !this.cuntryCode) {
+                        this.snackbarService.openSnackBar('Please enter a valid number to contact you', { 'panelClass': 'snackbarerror' });
+                        this.is_wtsap_empty = true;
+                    }
+                }
+                for (const i in this.virtualServiceArray) {
+                    if (i === 'WhatsApp') {
+                        post_Data['virtualService'] = this.virtualServiceArray;
+                    } else if (i === 'GoogleMeet') {
+                        post_Data['virtualService'] = this.virtualServiceArray;
+                    } else if (i === 'Zoom') {
+                        post_Data['virtualService'] = this.virtualServiceArray;
+                    } else if (i === 'Phone') {
+                        post_Data['virtualService'] = this.virtualServiceArray;
+                    } else {
+                        post_Data['virtualService'] = { 'VideoCall': '' };
+                    }
+                    //  else {
+                    //     post_Data['virtualService'] = {};
+                    // }
+                }
+            }
+            // if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
+            //     // this.api_error = this.wordProcessor.getProjectMesssages('ADDNOTE_ERROR');
+            //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
+            //     return;
+            // }
+            // if (this.partySizeRequired) {
+            //     this.holdenterd_partySize = this.enterd_partySize;
+            //     post_Data['partySize'] = Number(this.holdenterd_partySize);
+            // }
+    
+            if (this.api_error === null) {
+                post_Data['consumer'] = { id: this.customer_data.id };
+                //   post_Data['ignorePrePayment'] = true;
+                if (!this.is_wtsap_empty) {
+                    if (this.thirdParty === '') {
+                        if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                            this.validateQnr(post_Data);
+                        } else {
+                            this.addAppointmentInProvider(post_Data);
+                        }
+                    } else {
+                        this.addAppointmentBlock(post_Data);
+                    }
                 }
             }
         }
+      
     }
     addAppointmentBlock(post_Data) {
         this.provider_services.addAppointmentBlock(post_Data)
@@ -1257,6 +1410,7 @@ export class AppointmentComponent implements OnInit {
                             list['id'] = this.customer_data.id;
                         }
                     }
+
                 }
                 const retData = data;
                 let retUuid;
@@ -1562,7 +1716,7 @@ export class AppointmentComponent implements OnInit {
     }
     calculateDate(days) {
         this.resetApi();
-        const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dte = this.sel_checkindate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
         const newdate = new Date(date);
         newdate.setDate(newdate.getDate() + days);
@@ -1575,14 +1729,20 @@ export class AppointmentComponent implements OnInit {
         const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
         const nDt = new Date(ndate);
         if (nDt.getTime() >= strtDt.getTime()) {
-            this.sel_checkindate = ndate;
+            if(this.type === 'followup'){
+                this.getQueuesbyLocationandServiceId(this.sel_loc, this.servId, this.sel_checkindate, this.accId);
+                this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.servId, this.accId);
+            }
+            else{
+                this.sel_checkindate = ndate;
             this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
             this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
+            }
         }
-        const dt = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dt = this.sel_checkindate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const dt1 = moment(dt, 'YYYY-MM-DD HH:mm').format();
         const date1 = new Date(dt1);
-        const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dt0 = this.todaydate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
         const date2 = new Date(dt2);
         // if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
@@ -1591,17 +1751,17 @@ export class AppointmentComponent implements OnInit {
         } else {
             this.isFuturedate = false;
         }
-        const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const day1 = this.sel_checkindate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
         const ddd = new Date(day);
         this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
     }
     disableMinus() {
-        const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const seldate1 = this.sel_checkindate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
         const seldate = new Date(seldate2);
         const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
-        const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const strtDt1 = this.hold_sel_checkindate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
         const strtDt = new Date(strtDt2);
         const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
@@ -1931,7 +2091,7 @@ export class AppointmentComponent implements OnInit {
         if (this.selectedMessage) {
             for (const pic of this.selectedMessage.files) {
                 dataToSend.append('attachments', pic, pic['name']);
-                captions[i] = 'caption';
+                captions[i] = '';
                 i++;
             }
         }
@@ -1962,7 +2122,8 @@ export class AppointmentComponent implements OnInit {
     getAvailableTimeSlots(QStartTime, QEndTime, interval) {
         this.api_loading = true;
         this.freeSlots = [];
-        this.provider_services.getAppointmentSlotsByDate(this.sel_queue_id, this.sel_checkindate, this.sel_ser)
+if(this.type === 'followup'){
+    this.provider_services.getAppointmentSlotsByDate(QStartTime, QEndTime, interval)
             //this.provider_services.getAppointmentSlotsByDate(this.sel_queue_id, this.sel_checkindate)
             .subscribe(
                 (data) => {
@@ -2013,6 +2174,61 @@ export class AppointmentComponent implements OnInit {
                     this.wordProcessor.apiErrorAutoHide(this, error);
                 }
             );
+}
+else{
+    this.provider_services.getAppointmentSlotsByDate(this.sel_queue_id, this.sel_checkindate, this.sel_ser)
+    //this.provider_services.getAppointmentSlotsByDate(this.sel_queue_id, this.sel_checkindate)
+    .subscribe(
+        (data) => {
+            this.slots = data;
+            this.availableSlots = this.slots.availableSlots;
+            for (const freslot of this.availableSlots) {
+                if (freslot.noOfAvailbleSlots !== '0' && freslot.active) {
+                    this.freeSlots.push(freslot);
+                }
+            }
+            if (this.freeSlots.length > 0) {
+                // this.showSubq = 0;
+                this.showApptTime = true;
+                this.api_loading = false;
+                if (this.comingSchduleId === '') {
+                    this.apptTime = this.freeSlots[0].time;
+                    for (const list of this.waitlist_for) {
+                        list['apptTime'] = this.apptTime;
+                    }
+                } else {
+                    if (this.queuejson[this.sel_queue_indx].id === this.comingSchduleId) {
+                        this.apptTime = this.slotTime;
+                        for (const list of this.waitlist_for) {
+                            list['apptTime'] = this.apptTime;
+                        }
+                    } else {
+                        this.apptTime = this.freeSlots[0].time;
+                        for (const list of this.waitlist_for) {
+                            list['apptTime'] = this.apptTime;
+                        }
+                    }
+                }
+            } else if (this.freeSlots.length === 0 && this.queuejson.length > 0) {
+                this.showApptTime = true;
+                this.api_loading = false;
+                for (let i = 0; i < this.queuejson.length; i++) {
+                    if (this.queuejson[this.sel_queue_indx].id === this.queuejson[i].id) {
+                        this.queuejson.splice(i, 1);
+                    }
+                }
+                this.handleQueueSelection(this.queuejson[0], 0);
+            } else {
+                this.showApptTime = false;
+                this.api_loading = false;
+            }
+        },
+        error => {
+            this.wordProcessor.apiErrorAutoHide(this, error);
+        }
+    );
+}
+       
     }
     toggleAttachment() {
         this.attachments = !this.attachments;
@@ -2089,10 +2305,13 @@ export class AppointmentComponent implements OnInit {
     goBack() {
         if (this.showQuestionnaire) {
             this.showQuestionnaire = false;
-        } else if (this.showCheckin) {
+        } else if (this.showCheckin && this.type !== 'followup') {
             this.showCheckin = false;
             this.otherThirdParty = '';
-        } else {
+        }
+        else if (this.showCheckin && this.type === 'followup') {
+            this._location.back();
+       }else {
             this.router.navigate(['provider', 'appointments']);
         }
         this.heading = 'Create an Appointment';
@@ -2171,6 +2390,45 @@ export class AppointmentComponent implements OnInit {
                 this.api_loading = false;
             });
         }
+    }
+    getFollowUpWaitlist() {
+        this.provider_services.getFollowUpAppt(this.followup_uuid)
+            .subscribe(
+                data => {
+                    this.follow_up_Details = data;
+                    if(this.follow_up_Details.appmtFor[0]){
+                        this.cusfirstname = this.follow_up_Details.appmtFor[0].firstName
+                        this.cuslastname = this.follow_up_Details.appmtFor[0].lastName
+                    }
+                    if(this.follow_up_Details && this.follow_up_Details.appmtFor[0] && this.follow_up_Details.appmtFor[0].memberJaldeeId){
+                        this.memberJaldeeId = this.follow_up_Details.appmtFor[0].memberJaldeeId
+                     
+                    }
+                    if(this.follow_up_Details.consumer){
+                        this.firstname = this.follow_up_Details.consumer.firstName;
+                    this.lastname = this.follow_up_Details.consumer.lastName;
+                    }
+                    if(this.follow_up_Details.consumer && this.follow_up_Details.consumer.id){
+                        this.custId = this.follow_up_Details.consumer.id;
+                    }
+                    this.cusId = this.follow_up_Details.appmtFor[0].id
+                 
+                    this.servId = this.follow_up_Details.service.id;
+                    this.accId = this.follow_up_Details.providerAccount.id;
+                    console.log(this.servId + 'sevid')
+                    console.log(this.sel_loc + 'sel_loc')
+                    console.log(this.sel_checkindate + 'sel_checkindate')
+                    console.log(this.accId + 'accId')
+                    // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                    // this.setServiceDetails(this.servId);
+                    this.getQueuesbyLocationandServiceId(this.sel_loc, this.servId, this.sel_checkindate, this.accId);
+                    // this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.servId, this.accId);
+                })
+               
+    }
+    sample()
+    {
+        console.log(this.waitlist_for)
     }
 }
 

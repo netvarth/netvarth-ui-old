@@ -1,0 +1,193 @@
+<section class="content bus-page" [ngClass]="accountProperties?accountProperties['theme']:''">
+    <div class="container">
+        <div class="row pad-bt-10 bus-page-header">
+            <div class="panel panel-default">
+                <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <a class="pull-left back-btn mgn-up-5" *ngIf="userId" (click)="goBack()"><i
+                                class="fa fa-arrow-left"></i></a>
+                        &nbsp;
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
+                        <app-header *ngIf="accountIdExists && sharedFunctionobj.checkLogin()"
+                            [includedfrom]="'pdetails'" [accountId]="accountId" [customId]="customId"
+                            [showHeaderAction]="true"></app-header>
+                        <div class="view-booking" *ngIf="accountIdExists && !sharedFunctionobj.checkLogin()">
+                            <button class="pull-right btn btn-primary dashboard-btn" (click)="dashboardClicked()">My
+                                Bookings</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Cover Foto -->
+                <div *ngIf="bgCover" class="cvr-ht"
+                    [ngStyle]="{ 'background-image': (!profileSettings || (profileSettings && profileSettings['showCoverPicture'])) ? 'url(' + bgCover + ')': ''}">
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-2 col-xs-12 col-sm-12 col-lg-2">
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" [ngClass]="{'cvr-dp-mgn': bgCover}">
+                                <img alt="Profile Image" src="{{bLogo}}" id="profile-image1"
+                                    class="img-circle img-responsive cvr-dp"
+                                    [ngClass]="{'cvr-dp-bdr': bgCover}"
+                                    >
+                            </div>
+                        </div>
+                        <div class="col-lg-1 col-md-1"></div>
+                        <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8 mgn-bt-10 no-padding bus-title-content"
+                            *ngIf="businessjson">
+                            <div class="col-md-10 col-xs-12 col-sm-12 col-lg-11 no-padding"
+                                *ngIf="(!profileSettings || (profileSettings && profileSettings['showSpecialization'] || profileSettings['showProfile']))">
+                                <div class="no-padding right-padding-md-15"
+                                    [ngClass]="{'col-md-12 col-sm-12':(businessjson.verifyLevel == 'BASIC' ||
+                        businessjson.verifyLevel == 'BASIC_PLUS' || businessjson.verifyLevel == 'ADVANCED')?true:false}">
+                                    <h3 class="business-name" *ngIf="businessjson.businessName">
+                                        {{businessjson.businessName
+                                        | capitalizeFirst}}
+                                    </h3>
+                                    <h3 class="font_user_size business-user-name" *ngIf="businessjson.businessUserName">
+                                        {{businessjson.businessUserName | capitalizeFirst}}
+                                    </h3>
+                                    <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12"></div>
+                                    <div class="address col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-5 no-padding single-loc "
+                                        *ngIf="locationjson && locationjson.length > 0">
+                                        <span *ngIf="locationjson.length == 1" class="locbtn"><a
+                                                [href]="selectedLocation.googleMapUrl" target="_blank"
+                                                *ngIf="selectedLocation.googleMapUrl!=''"><i
+                                                    class="fa fa-map-marker takeTourTitle mgn-rt-10"></i></a>{{selectedLocation.place
+                                            | capitalizeFirst}}</span>
+                                        <div class="locbtn" *ngIf="locationjson.length > 1"><a
+                                                [href]="selectedLocation.googleMapUrl" target="_blank"
+                                                *ngIf="selectedLocation.googleMapUrl!=''"><i
+                                                    class="fa fa-map-marker takeTourTitle mgn-rt-10"></i></a>
+                                            <select class="selectbxstyle" [(ngModel)]="selectedLocation"
+                                                (ngModelChange)="changeLocation($event)">
+                                                <option *ngFor="let loc of locationjson" [ngValue]="loc">
+                                                    {{loc.place}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12 mgn-up-10"></div>
+                                    <div class="single-loc">
+                                        <h6 style="color: #747474;">About us </h6>
+                                        <p *ngIf="businessjson && businessjson.businessDesc">
+                                            <b>{{businessjson.businessDesc |
+                                                capitalizeFirst}}</b>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding">
+                        <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 card-outer-cont no-margin"
+                            style="background-color: #1e4079;">
+                            <div class="col-md-2 col-xs-3 col-sm-3 col-lg-1 no-padding card-inner-img-cont">
+                                <div class="img-circle"
+                                    *ngIf="servicedetails && !servicedetails.servicegallery && servicedetails.serviceType == 'virtualService'">
+                                    <i class="fa phon-icon "
+                                        *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                    <i class="fa meet-icon" style="background: #1E4079 !important;"
+                                        *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                    <i class="fa zoom-icon" 
+                                        *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                    <i class="fa wtsapaud-icon" style="background: #1E4079 !important;"
+                                        *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'audioService'"></i>
+                                    <i class="fa wtsapvid-icon" style="background: #1E4079 !important;"
+                                        *ngIf="servicedetails.virtualCallingModes && servicedetails.virtualCallingModes[0].callingMode === 'WhatsApp' && servicedetails.virtualServiceType === 'videoService'"></i>
+                                    <i class="fa jaldeevideo-icon"
+                                        *ngIf="servicedetails.virtualCallingModes  && servicedetails.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                                </div>
+                                <div class="service-detail-content service-popup-content img-circle"
+                                    *ngIf="servicedetails && servicedetails.servicegallery && servicedetails.servicegallery.length > 0">
+                                    <div class="servicedet_outer">
+                                        <div class="img-outer"
+                                            *ngIf="serviceGalleryPopup && serviceGalleryPopup.length>0">
+                                            <ul class="gal"
+                                                *ngIf="servicedetails && servicedetails.servicegallery && servicedetails.servicegallery.length >0">
+                                                <li>
+                                                    <div class="galbx">
+                                                        <div class="overlay"
+                                                            (click)="openImageModalRow(serviceGalleryPopup[0],serviceGalleryPopup,0 )">
+                                                            <span *ngIf="servicedetails.servicegallery.length > 1">+
+                                                                {{servicedetails.servicegallery.length - 1 }}</span>
+                                                        </div>
+                                                        <img class=" img-responsive"
+                                                            [src]="servicedetails.servicegallery[0].thumbUrl"
+                                                            alt="Image">
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-10 col-xs-9 col-sm-9 col-lg-11 pointer-cursor service-head-cont">
+                                <h5 class="line-clamp-ln2 mgn-bt-5">
+                                    {{servicename | capitalizeFirst}}
+                                </h5>
+                                
+                            </div>
+                            <!-- <div *ngIf="servicedetails.serviceType !== 'virtualService'" style="margin-left: 0px;" class="col-md-10 col-xs-9 col-sm-9 col-lg-11 pointer-cursor service-head-cont">
+                                <h5 class="line-clamp-ln2 mgn-bt-5">
+                                    {{servicename | capitalizeFirst}}
+                                </h5>
+                            </div> -->
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 description" *ngIf="servicedetails && servicedetails.description">
+                                {{servicedetails.description}}
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding">
+                            <ul class="service-ul flex" *ngIf="servicedetails">
+                                <li
+                                    *ngIf="servicedetails && servicedetails.serviceDuration && servicedetails.serviceDurationEnabled && !is_donation_serv">
+                                    <span class="service-li-title">Duration</span><br /><span
+                                        class="bold">{{HHMM}}</span>
+                                </li>
+                                <li
+                                    *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0 && servicedetails.showPrice">
+                                    <span class="service-li-title">Service Fee<i class="fa fa-info-circle"
+                                            [matTooltip]="servicedetails.paymentDescription"></i></span><br /><span
+                                        class="bold price rupee-font">{{servicedetails.totalAmount |
+                                        currency:'&#8377;'}}</span>
+                                </li>
+                                <li
+                                    *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount">
+                                    <span class="service-li-title">Amount Required Now <i class="fa fa-info-circle"
+                                            [matTooltip]="servicedetails.paymentDescription"></i></span><br /><span
+                                        class="bold price rupee-font">{{servicedetails.minPrePaymentAmount |
+                                        currency:'&#8377;'}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <br>
+                    <app-common-innerloading-spinner *ngIf="loading || loading_direct">
+                    </app-common-innerloading-spinner>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding"
+                        *ngIf="servicesAndProviders && servicesAndProviders.length >0 && !loading && !loading_direct">
+                        <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
+                            <app-card [source]="'service-view'" [item]="sp"
+                                [domain]="businessjson?.serviceSector?.domain" [terminology]='terminologiesjson'
+                                [loc]="selectedLocation" (actionPerformed)="cardClicked($event)"></app-card>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 marginalignmentincards"
+                        *ngIf="donationServices && donationServices.length >0 && !loading && !loading_direct">
+                        <div class="bus-item-N" *ngFor="let sp of donationServices">
+                            <app-card [source]="'service-view'" [item]="sp"
+                                [domain]="businessjson?.serviceSector?.domain" [terminology]='terminologiesjson'
+                                [loc]="selectedLocation" (actionPerformed)="cardClicked($event)"></app-card>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ks-modal-gallery [id]="0" [modalImages]="serviceGalleryPopup" [plainGalleryConfig]="customPlainGalleryRowConfig"
+            [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
+            (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+        <!-- <ks-modal-gallery [id]="1" [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
+            [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
+            (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery> -->
+    </div>
+</section>

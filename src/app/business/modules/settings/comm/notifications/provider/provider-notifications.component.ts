@@ -5,11 +5,12 @@ import { ProviderServices } from '../../../../../services/provider-services.serv
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { MatDialog } from '@angular/material/dialog';
-import { UpdateProviderNotificationsComponent } from '../../update-provider-notifications/update-provider-notifications.component';
+// import { UpdateProviderNotificationsComponent } from '../../update-provider-notifications/update-provider-notifications.component';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { AddproviderAddonComponent } from '../../../../../../business/modules/add-provider-addons/add-provider-addons.component';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-provider-notifications',
@@ -1731,27 +1732,59 @@ export class ProviderNotificationsComponent implements OnInit {
       this.order_status = data.enableOrder;
     });
   }
-  showNotificationPopup(type) {
-    if ((type === 'Token' || type === 'Check-in') && !this.waitlistStatus) {
+
+  type='Token'
+  tabClick(event: MatTabChangeEvent) {
+    const type = event.tab.textLabel;
+    // console.log(tab);
+    if ((type === 'Token Notifications' || type === 'Check-in Notifications') && !this.waitlistStatus) {
       this.snackbarService.openSnackBar('Jaldee QManager is disabled in your settings', { 'panelClass': 'snackbarerror' });
-    } else if (type === 'Appointment' && !this.appointment_status) {
+    } else if (type === 'Appointment Notifications' && !this.appointment_status) {
       this.snackbarService.openSnackBar('Jaldee Appointment Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
-    } else if (type === 'Order' && !this.order_status) {
+    } else if (type === 'Order Notifications' && !this.order_status) {
       this.snackbarService.openSnackBar('Jaldee Order Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
-    } else if (type === 'Donation' && !this.donations_status) {
+    } else if (type === 'Donation Notifications' && !this.donations_status) {
       this.snackbarService.openSnackBar('Donation Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
     } else {
-      const dialogref = this.dialog.open(UpdateProviderNotificationsComponent, {
-        width: '40%',
-        panelClass: ['popup-class', 'commonpopupmainclass'],
-        disableClose: true,
-        data: {
-          type: type
-        }
-      });
-      dialogref.afterClosed().subscribe(
-        result => {
-        });
+      if(type=="Token Notifications") {
+        this.type='Token';
+      } else if(type=="Check-in Notifications") {
+        this.type='Check-in';
+      }else if(type=="Appointment Notifications"){
+        this.type='Appointment';
+      } else if(type=="Order Notifications") {
+        this.type='Order'
+      } else if(type=="Donation Notifications") {
+        this.type='Donation'
+      } else {
+        this.type='Account'
+      }
+     
+    
     }
   }
+
+  // showNotificationPopup(type) {
+  //   if ((type === 'Token' || type === 'Check-in') && !this.waitlistStatus) {
+  //     this.snackbarService.openSnackBar('Jaldee QManager is disabled in your settings', { 'panelClass': 'snackbarerror' });
+  //   } else if (type === 'Appointment' && !this.appointment_status) {
+  //     this.snackbarService.openSnackBar('Jaldee Appointment Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
+  //   } else if (type === 'Order' && !this.order_status) {
+  //     this.snackbarService.openSnackBar('Jaldee Order Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
+  //   } else if (type === 'Donation' && !this.donations_status) {
+  //     this.snackbarService.openSnackBar('Donation Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
+  //   } else {
+  //     const dialogref = this.dialog.open(UpdateProviderNotificationsComponent, {
+  //       width: '40%',
+  //       panelClass: ['popup-class', 'commonpopupmainclass'],
+  //       disableClose: true,
+  //       data: {
+  //         type: type
+  //       }
+  //     });
+  //     dialogref.afterClosed().subscribe(
+  //       result => {
+  //       });
+  //   }
+  // }
 }

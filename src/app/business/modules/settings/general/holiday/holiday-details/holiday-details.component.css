@@ -1,7 +1,7 @@
 .adddatetime-box {
     display: inline-block; 
     width: 700px;
-    height: 40px;
+    /* height: 40px; */
     padding: 5px;
     border: 1px ; 
     background-color :#1e4079 ;
@@ -10,6 +10,9 @@
     text-align: left;
     color:white
     
+  }
+  .adddatetime-box{
+    padding-left: 15px !important;
   }
   .start-box {
     display: inline-block; 
@@ -33,6 +36,10 @@
   }
   .margn-reason{
     margin-top: 150px;
+  }
+  input#reason{
+    border-radius: 5px !important;
+    border-bottom: 2px solid !important;
   }
   .inn{
   border-radius: 0;
@@ -81,6 +88,11 @@
       text-align: left;
       color:white
       
+    }
+    @media (max-width: 992px) {
+      .adddatetime-box {
+        padding-top: 9px !important;
+      }
     }
     .start-box {
       display: inline-block; 

@@ -1,6 +1,6 @@
-<mat-radio-group class="paymentmode shadow" name="paymentMode" (change)="paymentModeSelected($event)">
+<mat-radio-group class="text-center mx-auto" name="paymentMode" (change)="paymentModeSelected($event)">
     <div *ngFor="let modes of paymentModes">
-        <mat-radio-button class="pay-rad mgn-up-5" [value]="modes.mode">
+        <mat-radio-button class="pay-rad mgn-up-5 ml-auto" [value]="modes.mode">
             <div class="clearfix"></div>
             <div class="col-xs-12 no-padding pay-mode mgn-up-10">
                 <div class="col-xs-12 no-padding mgn-up-10 text-center">

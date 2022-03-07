@@ -42,6 +42,7 @@ import { CustomerService } from '../../../../shared/services/customer.service';
 export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     paymentBtnDisabled = false;
     isClickedOnce = false;
+    showMoreAvailableSlots = false;
     tooltipcls = '';
     add_member_cap = Messages.ADD_MEMBER_CAP;
     cancel_btn = Messages.CANCEL_BTN;
@@ -321,6 +322,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     commObj = {}
     waitlistForPrev: any = [];
     multipleMembers_allowed = false; // No multiple selection
+    date_pagination_date: any;
 
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -399,10 +401,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.step = 1;
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
         if (this.server_date) {
-            this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+            this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         }
         this.today = new Date(this.today);
-        this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         this.minDate = new Date(this.minDate);
         const dd = this.today.getDate();
         const mm = this.today.getMonth() + 1; // January is 0!
@@ -423,14 +425,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.todaydate = dtoday;
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
         this.minDate = this.todaydate;
-        const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const day = new Date(this.sel_checkindate).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const ddd = new Date(day);
         this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
         this.hold_sel_checkindate = this.sel_checkindate;
         this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-        const dt1 = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dt1 = new Date(this.sel_checkindate).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const date1 = new Date(dt1);
-        const dt2 = new Date(this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dt2 = new Date(this.todaydate).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const date2 = new Date(dt2);
         if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
             this.isFuturedate = true;
@@ -543,7 +545,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
                 _this.currentScheduleId = _this.appointment.schedule.id;
                 _this.selectedServiceId = _this.appointment.service.id;
-                _this.holdselectedTime = _this.appointment.appmtTime;
+                _this.holdselectedTime = _this.apptTime;
                 console.log("getRescheduleApptDet:" + _this.sel_loc);
                 _this.getServicebyLocationId(_this.sel_loc, _this.sel_checkindate);
                 _this.getSchedulesbyLocationandServiceIdavailability(_this.sel_loc, _this.selectedServiceId, _this.account_id);
@@ -679,6 +681,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
+    showMoreTimeSlots()
+    {
+        this.showMoreAvailableSlots = !this.showMoreAvailableSlots;
+    }
+
     getAvailableSlotByLocationandService(locid, servid, pdate, accountid, type?) {
         this.subs.sink = this.shared_services.getSlotsByLocationServiceandDate(locid, servid, pdate, accountid)
             .subscribe(data => {
@@ -696,15 +703,22 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
                 if (this.freeSlots.length > 0) {
                     this.showApptTime = true;
-                    if (this.appointment && this.appointment.appmtTime && this.sel_checkindate === this.selectedDate) {
+                    const datePassed = moment(pdate, 'YYYY-MM-DD HH:mm').format();
+                    if (this.appointment && this.appointment.appmtTime && datePassed === this.selectedDate) {
                         const appttime = this.freeSlots.filter(slot => slot.time === this.appointment.appmtTime);
-                        this.apptTime = appttime[0];
+                        if (appttime) {
+                            this.apptTime = appttime[0];
+                        } else {
+                            this.apptTime = this.freeSlots[0];
+                        }                        
                     } else {
-                        console.log(this.selectedTime)
+                        // console.log(this.selectedTime)
                         if (this.selectedTime) {
                             const appttime = this.freeSlots.filter(slot => slot.displayTime === this.selectedTime);
-                            if (appttime) {
+                            if (appttime && appttime.length > 0) {
                                 this.apptTime = appttime[0];
+                            } else {
+                                this.apptTime = this.freeSlots[0];
                             }
 
                             console.log("**********")
@@ -733,19 +747,24 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         const newdate = tdate.split('/').reverse().join('-');
         const futrDte = new Date(newdate);
         const obtmonth = (futrDte.getMonth() + 1);
+        const obtdate = futrDte.getDate()
         let cmonth = '' + obtmonth;
         if (obtmonth < 10) {
             cmonth = '0' + obtmonth;
         }
-        const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
+        let cdate = '' + obtdate
+        if (obtdate < 10) {
+            cdate = '0' + obtdate;
+        }
+        const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + cdate;
         this.sel_checkindate = seldate;
         this.getAvailableSlotByLocationandService(this.sel_loc, this.selectedServiceId, this.sel_checkindate, this.account_id);
     }
     checkFutureorToday() {
-        const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dt0 = this.todaydate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
         const date2 = new Date(dt2);
-        const dte0 = this.selectedDate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dte0 = this.selectedDate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
         const datee2 = new Date(dte2);
         if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
@@ -900,15 +919,26 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         // }
 
     }
+
+
+    changed_date_value(data)
+    {
+        this.date_pagination_date = data;
+        this.getAvailableSlotByLocationandService(this.sel_loc, this.selectedServiceId, this.date_pagination_date, this.account_id);
+    }
+
     rescheduleAppointment() {
+        console.log(this.selectedApptTime + 'selectedApptTime')
         this.apptdisable = true;
         const post_Data = {
             'uid': this.rescheduleUserId,
-            'time': this.selectedApptTime['time'],
-            'date': this.selectedDate,
-            'schedule': this.selectedApptTime['scheduleId'],
+            'time': this.apptTime['time'],
+            'date': this.date_pagination_date,
+            'schedule': this.apptTime['scheduleId'],
             'consumerNote': this.consumerNote
         };
+        console.log("post data of time : ",post_Data['time'])
+        console.log("appt selected time",this.apptTime)
         this.subs.sink = this.shared_services.rescheduleConsumerApptmnt(this.account_id, post_Data)
             .subscribe(
                 () => {
@@ -1062,7 +1092,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.action = 'email';
     }
     calculateDate(days) {
-        const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dte = this.sel_checkindate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
         const newdate = new Date(date);
         newdate.setDate(newdate.getDate() + days);
@@ -1078,17 +1108,17 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.sel_checkindate = ndate;
             this.getAvailableSlotByLocationandService(this.sel_loc, this.selectedServiceId, this.sel_checkindate, this.account_id);
         }
-        const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const day1 = this.sel_checkindate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
         const ddd = new Date(day);
         this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
     }
     disableMinus() {
-        const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const seldate1 = this.sel_checkindate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
         const seldate = new Date(seldate2);
         const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
-        const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const strtDt1 = this.hold_sel_checkindate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
         const strtDt = new Date(strtDt2);
         const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
@@ -1196,10 +1226,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         const input = event.target.files;
         if (input) {
             for (const file of input) {
-                if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-                    this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-                    return;
-                } else if (file.size > projectConstants.FILE_MAX_SIZE) {
+                // if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+                //     this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+                //     return;
+                // } else
+                
+                if (file.size > projectConstants.FILE_MAX_SIZE) {
                     this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
                     return;
                 } else {
@@ -1210,6 +1242,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     };
                     reader.readAsDataURL(file);
                     this.action = 'attachment';
+                    if(this.selectedMessage.caption){
+                        return this.imgCaptions;
+                    }
+                    else{
+                        return this.imgCaptions = '';
+                    }
                 }
             }
             if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0 && input.length > 0) {
@@ -1603,18 +1641,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             } else {
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.bookStep--;
-                }
-                if (this.bookStep === 1) {
-                    this.bookStep--;
-                }
-                else {
-                    this.bookStep = 1;
-                }
+                } else {
+                    if (this.bookStep === 3) {
+                        this.bookStep = 1;
+                    } else {
+                        this.bookStep--;
+                    }
+                } 
             }
-            // else
-            // {
-            //     this.bookStep = 1;
-            // }
         }
         if (this.action !== 'addmember') {
             this.closebutton.nativeElement.click();
@@ -1698,7 +1732,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         });
     }
     disableButn() {
-        if (moment(this.sel_checkindate).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.selectedApptTime['time'] === this.holdselectedTime) {
+        if (moment(this.date_pagination_date).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.selectedApptTime['time'] === this.holdselectedTime) {
             return true;
         } else {
             return false;
@@ -1897,11 +1931,20 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
     }
     getImage(url, file) {
+        console.log("File Type :",file.type)
         if (file.type == 'application/pdf') {
             return '../../../../../assets/images/pdf.png';
-        } else {
+          }
+          else if(file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg'){
+            return '../../../../../assets/images/audio.png';
+      
+          }
+          else if(file.type == 'video/mp4' || file.type == 'video/mpeg'){
+            return '../../../../../assets/images/video.png';
+          }
+          else {
             return url;
-        }
+          }
     }
 
     viewAttachments() {
@@ -1925,8 +1968,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         return length;
     }
     actionCompleted() {
-        if (this.action === 'slotChange') {
-            this.selectedDate = this.sel_checkindate;
+        
+        if (this.action !== 'members' && this.action !== 'addmember' && this.action !== 'note' && this.action !== 'slotChange' && this.action !== 'attachment' && this.action !== 'coupons') {
+            this.selectedDate = this.date_pagination_date;
             this.checkFutureorToday();
             this.selectedApptTime = this.apptTime;
             this.waitlist_for[0].apptTime = this.apptTime['time'];
@@ -1946,6 +1990,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         }
                         this.changePrice = newprice - oldprice;
                         this.amountdifference = this.appointment.amountDue + this.changePrice;
+                        console.log("Amount Differenc :",this.amountdifference);
                     });
             }
         }
@@ -1961,10 +2006,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     popupClosed() {
-        this.sel_checkindate = this.selectedDate;
-        this.checkFutureorToday();
-        this.apptTime = this.selectedApptTime;
-        this.waitlist_for[0].apptTime = this.apptTime['time'];
+        // this.sel_checkindate = this.selectedDate;
+        // this.checkFutureorToday();
+        // this.apptTime = this.selectedApptTime;
+        // this.waitlist_for[0].apptTime = this.apptTime['time'];
     }
     getQuestionAnswers(event) {
         this.questionAnswers = event;
@@ -2437,9 +2482,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             } else {
                 this.virtualForm.patchValue({ islanguage: 'yes' });
             }
-            if (customer.bookingLocation && customer.bookingLocation.pincode) {
-                this.virtualForm.patchValue({ pincode: customer.bookingLocation.pincode });
-            }
+            // if (customer.bookingLocation && customer.bookingLocation.pincode) {
+            //     this.virtualForm.patchValue({ pincode: customer.bookingLocation.pincode });
+            // }
             if (customer.bookingLocation && customer.bookingLocation.district) {
                 this.virtualForm.patchValue({ localarea: customer.bookingLocation.district });
             }
@@ -2472,9 +2517,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.virtualForm.patchValue({ islanguage: 'yes' });
                 }
             }
-            if (customer.userProfile && customer.userProfile.pinCode) {
-                this.virtualForm.patchValue({ pincode: customer.userProfile.pinCode });
-            }
+            // if (customer.userProfile && customer.userProfile.pinCode) {
+            //     this.virtualForm.patchValue({ pincode: customer.userProfile.pinCode });
+            // }
             if (customer.userProfile && customer.userProfile.city) {
                 this.virtualForm.patchValue({ localarea: customer.userProfile.city });
             }
@@ -2622,7 +2667,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             member['telegramNum'] = customerInfo['telegramNum'];
             member['preferredLanguages'] = customerInfo['preferredLanguages'];
             const bookingLocation = {};
-            bookingLocation['pincode'] = customerInfo['pinCode'];
+            // bookingLocation['pincode'] = customerInfo['pinCode'];
             bookingLocation['district'] = customerInfo['bookingLocation']['district'];
             bookingLocation['state'] = customerInfo['bookingLocation']['state'];
             member['bookingLocation'] = bookingLocation;
@@ -2676,7 +2721,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 customerInfo['lastName'] = _this.parentCustomer.userProfile.lastName;
                 customerInfo['whatsAppNum'] = whatsup;
                 customerInfo['telegramNum'] = telegram;
-                customerInfo['pinCode'] = formdata.pincode;
+                // customerInfo['pinCode'] = formdata.pincode;
                 if (formdata.email !== '' && formdata.updateEmail) {
                     customerInfo['email'] = formdata.email
                 }
@@ -2725,7 +2770,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     customerInfo['userProfile']['email'] = formdata.email;
                 }
                 customerInfo['bookingLocation'] = {};
-                customerInfo['bookingLocation']['pincode'] = formdata.pincode;
+                // customerInfo['bookingLocation']['pincode'] = formdata.pincode;
                 if (_this.parentCustomer.countryCode !== '+91' && formdata.localarea && formdata.localarea !== '') {
                     customerInfo['bookingLocation']['district'] = formdata.localarea;
                 }
@@ -2820,15 +2865,15 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     validateVirtualForm() {
         let isinvalid = false;
         if (this.parentCustomer.userProfile.countryCode === '+91') {
-            if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
-                isinvalid = true;
-            }
+            // if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
+            //     isinvalid = true;
+            // }
         }
-        if (this.parentCustomer.userProfile.countryCode !== '+91') {
+        // if (this.parentCustomer.userProfile.countryCode !== '+91') {
             if (this.virtualForm.get('localarea').value === '' || this.virtualForm.get('state').value === '') {
                 isinvalid = true;
             }
-        }
+        // }
         if (this.virtualForm.get('gender').value === '') { isinvalid = true; }
         if (this.virtualForm.get('age').value === '') { isinvalid = true; }
         if (this.virtualForm.get('islanguage').value === 'no') {
@@ -2864,7 +2909,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
      */
     cancelLanguageSelection() {
         if (this.virtualForm.get('preferredLanguage').value.length == 0) {
-            this.virtualForm.get('preferredLanguage').setValue(['English']);
+           // this.virtualForm.get('preferredLanguage').setValue(['English']);
             this.lngknown = 'yes';
             this.virtualForm.patchValue({ islanguage: 'yes' });
         } else {

@@ -358,6 +358,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   }
 
   updateEmailPopup() {
+    console.log("provider setting")
     const dialogref = this.dialog.open(UpdateEmailComponent, {
       width: '40%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],

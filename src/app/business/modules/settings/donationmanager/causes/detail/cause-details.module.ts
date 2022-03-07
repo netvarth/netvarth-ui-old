@@ -1,6 +1,8 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { GalleryModule } from "../../../../../../shared/modules/gallery/gallery.module";
+
 import { GalleryService } from "../../../../../../shared/modules/gallery/galery-service";
 import { LoadingSpinnerModule } from "../../../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { ServiceModule } from "../../../../../../shared/modules/service/service.module";
@@ -14,6 +16,7 @@ const routes: Routes = [
     imports: [
         CommonModule,
         ServiceModule,
+        GalleryModule,
         LoadingSpinnerModule,
         [RouterModule.forChild(routes)]
     ],

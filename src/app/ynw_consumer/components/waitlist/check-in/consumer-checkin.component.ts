@@ -276,6 +276,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     commObj = {}
     waitlistForPrev: any = [];
     selectedTime: any;
+    date_pagination_date: any;
+    provider_label = '';
 
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -362,9 +364,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         const _this = this;
         this.api_loading1 = true;
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-        this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         this.today = new Date(this.today);
-        this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         this.minDate = new Date(this.minDate);
         const dd = this.today.getDate();
         const mm = this.today.getMonth() + 1; // January is 0!
@@ -385,13 +387,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.todaydate = dtoday;
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
         this.minDate = this.todaydate;
-        const day = new Date(this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const day = new Date(this.sel_checkindate).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const ddd = new Date(day);
         this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
         this.hold_sel_checkindate = this.sel_checkindate;
-        const dt1 = new Date(_this.sel_checkindate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dt1 = new Date(_this.sel_checkindate).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const date1 = new Date(dt1);
-        const dt2 = new Date(_this.todaydate).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dt2 = new Date(_this.todaydate).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const date2 = new Date(dt2);
         if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
             _this.isFuturedate = true;
@@ -402,6 +404,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.gets3curl(); // Collecting informations from s3 businessProfile, settings etc.
         this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+
 
         this.customerService.getCustomerInfo(this.activeUser.id).then(data => {
             _this.parentCustomer = data;
@@ -440,7 +444,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         return this.sharedFunctionobj.isNumericSign(evt);
     }
 
+    changed_date_value(data) {
+        console.log("ServiceId:", this.selectedServiceId);
+        this.date_pagination_date = data;
+        this.date_pagination_date = this.date_pagination_date + "T00:00:00+05:30"
+        console.log("changed_date_value Date:",this.date_pagination_date)
+        this.getQueuesbyLocationandServiceId(this.sel_loc, this.selectedServiceId, this.date_pagination_date, this.account_id);
 
+    }
 
     langSel(sel) {
         if (this.languageSelected.length > 0) {
@@ -582,7 +593,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.sel_loc = this.waitlist.queue.location.id;
                 this.selectedServiceId = this.waitlist.service.id;
                 this.sel_checkindate = this.selectedDate = this.hold_sel_checkindate = this.waitlist.date;
-                this.selectedServiceId = this.waitlist.service.id;
+                // this.selectedServiceId = this.waitlist.service.id;
                 this.getPaymentModes();
                 this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
                 this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.selectedServiceId, this.account_id);
@@ -591,10 +602,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     rescheduleWaitlist() {
         const post_Data = {
             'ynwUuid': this.rescheduleUserId,
-            'date': this.selectedDate,
-            'queue': this.queueId,
+            'date': this.date_pagination_date,
+            'queue': this.sel_queue_id,
             'consumerNote': this.consumerNote
         };
+        console.log(post_Data)
         this.subs.sink = this.shared_services.rescheduleConsumerWaitlist(this.account_id, post_Data)
             .subscribe(
                 () => {
@@ -740,6 +752,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {
         const _this = this;
+        console.log("getQueuesbyLocationandServiceIdavailability");
+        console.log("Location:" + locid + ", Service Id:" + servid + ", AccountId:" + accountid);
         if (locid && servid && accountid) {
             _this.subs.sink = _this.shared_services.getQueuesbyLocationandServiceIdAvailableDates(locid, servid, accountid)
                 .subscribe((data: any) => {
@@ -756,6 +770,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     getQueuesbyLocationandServiceId(locid, servid, pdate, accountid, type?) {
         this.queueQryExecuted = false;
+        console.log(pdate)
+        console.log("Date:",pdate) 
+        // pdate = "2022-02-15T00:00:00+05:30"
+        // console.log(pdate)
         if (locid && servid) {
             this.subs.sink = this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
@@ -792,9 +810,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     if (type) {
                         if (this.selectedTime) {
                             this.selectedQTime = this.selectedTime
+                            
                         } else {
                             this.selectedQTime = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
-
+                            console.log(this.selectedQTime)
                         }
                         this.personsAhead = this.sel_queue_personaahead;
                         this.waitingTime = this.sel_queue_waitingmins;
@@ -825,18 +844,24 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         const futrDte = new Date(newdate);
         const obtmonth = (futrDte.getMonth() + 1);
         let cmonth = '' + obtmonth;
+        const obtdate = futrDte.getDate()
         if (obtmonth < 10) {
             cmonth = '0' + obtmonth;
         }
-        const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + futrDte.getDate();
+        let cdate = '' + obtdate
+        if (obtdate < 10) {
+            cdate = '0' + obtdate;
+        }
+        const seldate = futrDte.getFullYear() + '-' + cmonth + '-' + cdate;
         this.sel_checkindate = seldate;
+        console.log(this.sel_checkindate)
         this.getQueuesbyLocationandServiceId(this.sel_loc, this.selectedServiceId, this.sel_checkindate, this.account_id);
     }
     checkFutureorToday() {
-        const dt0 = this.todaydate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dt0 = this.todaydate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
         const date2 = new Date(dt2);
-        const dte0 = this.selectedDate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dte0 = this.selectedDate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
         const datee2 = new Date(dte2);
         if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
@@ -859,7 +884,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     confirmcheckin(type?, paymenttype?) {
-        alert('confirm');
         // type === 'checkin' && 
         if (this.selectedService.isPrePayment  && (!this.commObj['communicationEmail'] || this.commObj['communicationEmail']=== '')) {
             this.paymentBtnDisabled = true;
@@ -982,10 +1006,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             if (this.interNatioanalPaid) {
                 this.isClickedOnce = true
                 this.paymentBtnDisabled = false;
+                console.log("InterNational clicked ",this.interNatioanalPaid)
             }
             if (this.razorpayEnabled && !this.paytmEnabled) {
                 this.isClickedOnce = true
                 this.paymentBtnDisabled = false;
+                console.log("Razorpay clicked ",this.razorpayEnabled)
             }
         }
         // if (this.selectedService.serviceType === 'virtualService' && type === 'next') {
@@ -1302,7 +1328,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
 
     calculateDate(days) {
-        const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dte = this.sel_checkindate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
         const newdate = new Date(date);
         newdate.setDate(newdate.getDate() + days);
@@ -1318,17 +1344,17 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.sel_checkindate = ndate;
             this.getQueuesbyLocationandServiceId(this.sel_loc, this.selectedServiceId, this.sel_checkindate, this.account_id);
         }
-        const day1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const day1 = this.sel_checkindate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const day = moment(day1, 'YYYY-MM-DD HH:mm').format();
         const ddd = new Date(day);
         this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
     }
     disableMinus() {
-        const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const seldate1 = this.sel_checkindate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
         const seldate = new Date(seldate2);
         const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
-        const strtDt1 = this.hold_sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const strtDt1 = this.hold_sel_checkindate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
         const strtDt = new Date(strtDt2);
         const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
@@ -1405,10 +1431,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         const input = event.target.files;
         if (input) {
             for (const file of input) {
-                if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-                    this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-                    return;
-                } else if (file.size > projectConstants.FILE_MAX_SIZE) {
+                // if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+                //     this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+                //     return;
+                // } else
+                
+                if (file.size > projectConstants.FILE_MAX_SIZE) {
                     this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
                     return;
                 } else {
@@ -1419,6 +1447,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     };
                     reader.readAsDataURL(file);
                     this.action = 'attachment';
+                    if(this.selectedMessage.caption){
+                        return this.imgCaptions;
+                    }
+                    else{
+                        return this.imgCaptions = '';
+                    }
                 }
             }
             if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0 && input.length > 0) {
@@ -1571,6 +1605,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
             case 'businessProfile': {
                 this.businessjson = result;
+                console.log(this.businessjson)
                 if (this.businessjson.uniqueId === 128007) {
                     this.heartfulnessAccount = true;
                 }
@@ -1825,13 +1860,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             } else {
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.bookStep--;
-                }
-                if (this.bookStep === 1) {
-                    this.bookStep--;
-                }
-                else {
-                    this.bookStep = 1;
-                }
+                } else {
+                    if (this.bookStep === 3) {
+                        this.bookStep = 1;
+                    } else {
+                        this.bookStep--;
+                    }
+                } 
             }
         }
         if (this.action !== 'addmember') {
@@ -1934,7 +1969,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         });
     }
     disableButn() {
-        if (moment(this.sel_checkindate).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.waitlist.queue && this.queuejson[this.sel_queue_indx] && this.waitlist.queue.id === this.queuejson[this.sel_queue_indx].id) {
+        if (moment(this.date_pagination_date).format('YYYY-MM-DD') === this.hold_sel_checkindate && this.waitlist.queue && this.queuejson[this.sel_queue_indx] && this.waitlist.queue.id === this.queuejson[this.sel_queue_indx].id) {
             return true;
         } else {
             return false;
@@ -2130,11 +2165,20 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
     }
     getImage(url, file) {
+        console.log("File Type :",file.type)
         if (file.type == 'application/pdf') {
-            return 'assets/images/pdf.png';
-        } else {
+            return '../../../../../assets/images/pdf.png';
+          }
+          else if(file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg'){
+            return '../../../../../assets/images/audio.png';
+      
+          }
+          else if(file.type == 'video/mp4' || file.type == 'video/mpeg'){
+            return '../../../../../assets/images/video.png';
+          }
+          else {
             return url;
-        }
+          }
     }
     getThumbUrl(attachment) {
         if (attachment && attachment.s3path) {
@@ -2153,11 +2197,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         return length;
     }
     actionCompleted() {
-        if (this.action === 'timeChange') {
+        if (this.action !== 'members' && this.action !== 'addmember' && this.action !== 'note' && this.action !== 'slotChange' && this.action !== 'attachment' && this.action !== 'coupons') {
             if (this.queuejson[this.sel_queue_indx]) {
                 this.selectedQTime = this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' + this.queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime'];
             }
-            this.selectedDate = this.sel_checkindate;
+            this.selectedDate = this.date_pagination_date;
             this.checkFutureorToday();
             this.personsAhead = this.sel_queue_personaahead;
             this.waitingTime = this.sel_queue_waitingmins;
@@ -2344,9 +2388,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             } else {
                 this.virtualForm.patchValue({ islanguage: 'yes' });
             }
-            if (customer.bookingLocation && customer.bookingLocation.pincode) {
-                this.virtualForm.patchValue({ pincode: customer.bookingLocation.pincode });
-            }
+            // if (customer.bookingLocation && customer.bookingLocation.pincode) {
+            //     this.virtualForm.patchValue({ pincode: customer.bookingLocation.pincode });
+            // }
             if (customer.bookingLocation && customer.bookingLocation.district) {
                 this.virtualForm.patchValue({ localarea: customer.bookingLocation.district });
             }
@@ -2379,9 +2423,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.virtualForm.patchValue({ islanguage: 'yes' });
                 }
             }
-            if (customer.userProfile && customer.userProfile.pinCode) {
-                this.virtualForm.patchValue({ pincode: customer.userProfile.pinCode });
-            }
+            // if (customer.userProfile && customer.userProfile.pinCode) {
+            //     this.virtualForm.patchValue({ pincode: customer.userProfile.pinCode });
+            // }
             if (customer.userProfile && customer.userProfile.city) {
                 this.virtualForm.patchValue({ localarea: customer.userProfile.city });
             }
@@ -2489,16 +2533,16 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
      */
     validateVirtualForm() {
         let isinvalid = false;
-        if (this.parentCustomer.userProfile.countryCode === '+91') {
-            if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
-                isinvalid = true;
-            }
-        }
-        if (this.parentCustomer.userProfile.countryCode !== '+91') {
+        // if (this.parentCustomer.userProfile.countryCode === '+91') {
+        //     if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
+        //         isinvalid = true;
+        //     }
+        // }
+        // if (this.parentCustomer.userProfile.countryCode !== '+91') {
             if (this.virtualForm.get('localarea').value === '' || this.virtualForm.get('state').value === '') {
                 isinvalid = true;
             }
-        }
+        // }
         if (this.virtualForm.get('gender').value === '') { isinvalid = true; }
         if (this.virtualForm.get('age').value === '') { isinvalid = true; }
         if (this.virtualForm.get('islanguage').value === 'no') {
@@ -2680,7 +2724,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 customerInfo['lastName'] = _this.parentCustomer.userProfile.lastName;
                 customerInfo['whatsAppNum'] = whatsup;
                 customerInfo['telegramNum'] = telegram;
-                customerInfo['pinCode'] = formdata.pincode;
+                // customerInfo['pinCode'] = formdata.pincode;
                 if (formdata.email !== '' && formdata.updateEmail) {
                     customerInfo['email'] = formdata.email
                 }
@@ -2729,7 +2773,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     customerInfo['userProfile']['email'] = formdata.email;
                 }
                 customerInfo['bookingLocation'] = {};
-                customerInfo['bookingLocation']['pincode'] = formdata.pincode;
+                // customerInfo['bookingLocation']['pincode'] = formdata.pincode;
                 if (_this.parentCustomer.countryCode !== '+91' && formdata.localarea && formdata.localarea !== '') {
                     customerInfo['bookingLocation']['district'] = formdata.localarea;
                 }
@@ -2784,7 +2828,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             member['telegramNum'] = customerInfo['telegramNum'];
             member['preferredLanguages'] = customerInfo['preferredLanguages'];
             const bookingLocation = {};
-            bookingLocation['pincode'] = customerInfo['pinCode'];
+            // bookingLocation['pincode'] = customerInfo['pinCode'];
             bookingLocation['district'] = customerInfo['bookingLocation']['district'];
             bookingLocation['state'] = customerInfo['bookingLocation']['state'];
             member['bookingLocation'] = bookingLocation;

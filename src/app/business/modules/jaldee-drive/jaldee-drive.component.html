@@ -1,8 +1,8 @@
 <section class="display-min-none">
   <div class="card title-gb">
     <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
-      Jaldee Drive
-      <p class="text-secondary">Manage the files uploaded by the providers or consumers or you!</p>
+     Jaldee Drive
+      <p class="text-secondary">Manage the files uploaded by the {{provider_label}}s or {{customer_label}}s or you!</p>
     </div>
   </div>
 </section>
@@ -299,7 +299,7 @@
     </div>
   </div>
   <div class="mx-3 my-3">
-    <p class="text-secondary">Manage the files uploaded by the providers or consumers or you!</p>
+    <p class="text-secondary small_text">Manage the files uploaded by the {{provider_label | capitalizeFirst}}s or {{customer_label | capitalizeFirst}}s or you!</p>
   </div>
 </section>
 <section class="waitlist-box-check">
@@ -308,12 +308,12 @@
       <div class="w-dta">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-12 col-md-8  col-lg-8 no-padding">
-            <div class="card no-mgn-bt card_addon txt_centr">
+            <div class="card no-mgn-bt card_addon txt_centr no-padding-small">
               <div>
-                <div class="mx-2 mt-4" *ngIf="!sharedFolder">
+                <div class="mx-4 mt-4" *ngIf="!sharedFolder">
                   <h4>Statistics</h4>
                 </div>
-                <div class="mx-2" *ngIf="!sharedFolder">
+                <div *ngIf="!sharedFolder">
                   <div class="row">
                     <div class="col-sm-12 col-md-4 col-lg-4  col-xs-12 col-12 disp-flex">
                       <div class="card color" style="word-wrap: normal !important;">
@@ -374,7 +374,7 @@
                   </div>
                 </div>
               </div>
-              <div style="text-align: center;">
+              <div style="text-align: center;" class="my-3">
                 <div class="prov-name-txt" style="text-transform:none !important;">
                   Unlock More Space!
                 </div>

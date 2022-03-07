@@ -165,6 +165,9 @@ export class StatementsComponent implements OnInit {
       .subscribe(
         data => {
           this.invoice = data;
+          console.log("Invoice Data :",this.invoice)
+          console.log("Invoice processing :",this.invoice.customerPaidCharges)
+
           if (this.invoice.creditDebitJson) {
             this.credt_debtJson = this.invoice.creditDebitJson;
             this.credt_debtDetls = this.credt_debtJson.creditDebitDetails;
@@ -260,6 +263,8 @@ export class StatementsComponent implements OnInit {
       .subscribe(
         data => {
           this.payment_detail = data;
+          console.log("Payment Detailes :",this.payment_detail)
+          console.log("Processing Fee :",this.payment_detail[0].customerPaidCharges)
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

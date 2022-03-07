@@ -11,9 +11,9 @@ import { MatButtonModule } from '@angular/material/button';
 import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { projectConstants } from '../../../app.component';
+import { projectConstantsLocal } from '../../constants/project-constants';
 export function homeHttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, projectConstants.PATH+'assets/i18n/home/', '.json');
+  return new TranslateHttpLoader(http, projectConstantsLocal.PATH+'assets/i18n/home/', '.json');
 }
 @NgModule({
     imports: [

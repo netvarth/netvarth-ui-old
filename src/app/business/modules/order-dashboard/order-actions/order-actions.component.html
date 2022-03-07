@@ -39,6 +39,13 @@
                 <div class="icon-text">Billing</div>
             </div>
         </div>
+        <div class="action-box pointer-cursor"  *ngIf="!mulipleSelection"
+        (click)="printOrder()">
+        <div class="action-box-sub">
+            <span class="printer-icon"></span>
+            <div class="icon-text">Print</div>
+        </div>
+    </div>
         <div class="action-box pointer-cursor" (click)="showLabels()">
             <div class="action-box-sub">
                 <span class="label-icon"></span>
@@ -49,6 +56,12 @@
             <div class="action-box-sub">
                 <span class="bill-icon"></span>
                 <div class="icon-text">Edit Order</div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="showQnr" (click)="showQuestionnaires()">
+            <div class="action-box-sub">
+                <span class="qnr-icon"></span>
+                <div class="icon-text">Get More Info</div>
             </div>
         </div>
         <div class="action-box pointer-cursor" (click)="addConsumerInboxMessage()">

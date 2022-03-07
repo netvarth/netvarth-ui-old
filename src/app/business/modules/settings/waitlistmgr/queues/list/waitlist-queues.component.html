@@ -364,12 +364,12 @@
                                                                                         class="fa fa-plus"></i>
                                                                                 {{tokenOrcheckinCount}}
                                                                         </button>
-                                                                        <button mat-menu-item
+                                                                        <!-- <button mat-menu-item
                                                                                 (click)="viewDashboard(queue,i,'todayQ')"
                                                                                 *ngIf="queue.queueState=='ENABLED' && !todayQcountCaption[i] && !queue.provider">
                                                                                 <i
                                                                                         class="fa fa-plus"></i>{{tokenOrcheckinCount}}
-                                                                        </button>
+                                                                        </button> -->
                                                                         <button mat-menu-item *ngIf="!queue.provider"
                                                                                 (click)="editInstantQueue(queue)">
                                                                                 <i class="icon-edit"></i> Edit
@@ -527,12 +527,12 @@
                                                                                                 class="fa fa-plus"></i>
                                                                                         {{tokenOrcheckinCount}}
                                                                                 </button>
-                                                                                <button mat-menu-item
+                                                                                <!-- <button mat-menu-item
                                                                                         (click)="viewDashboard(queue,i,'scheduleQ')"
                                                                                         *ngIf="queue.queueState=='ENABLED' && !futureQcountCaption[i] && !queue.provider">
                                                                                         <i
                                                                                                 class="fa fa-plus"></i>{{tokenOrcheckinCount}}
-                                                                                </button>
+                                                                                </button> -->
                                                                                 <button mat-menu-item
                                                                                         (click)="addEditProviderQueue('editFromList', queue)"
                                                                                         *ngIf="queue.queueState=='ENABLED' && !queue.provider">

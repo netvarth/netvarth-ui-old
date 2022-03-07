@@ -58,8 +58,11 @@ export class BusinessComponent implements OnInit {
           this.shared_functions.getGlobalSettings()
             .then(
               (settings: any) => {
+                console.log("Settings:",settings);
+                console.log("In Jaldee Business :", router.url);
                 if (router.url === '\/provider') {
                   setTimeout(() => {
+                     console.log("constructor")
                     if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
                       if (settings.waitlist) {
                         router.navigate(['provider', 'check-ins']);
@@ -160,12 +163,14 @@ export class BusinessComponent implements OnInit {
       data => {
         this.contactInfo = data;
         if (!this.contactInfo.primaryEmail) {
+          
           this.getProfile();
         }
       }
     );
   }
   updateEmailPopup() {
+    console.log("business component")
     const dialogref = this.dialog.open(UpdateEmailComponent, {
       width: '40%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
@@ -233,6 +238,7 @@ export class BusinessComponent implements OnInit {
       );
   }
   getBusinessProfile() {
+    console.log('entered...')
     let bProfile: any = [];
     this.getBussinessProfileApi()
       .then(

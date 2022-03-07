@@ -1,5 +1,5 @@
-<section >
-    <div class="col-md-12 no-padding-small ">
+<section class="body-color">
+    <div class="col-md-12 no-padding-small body-color">
         <!-- Step 0 -->
         <!-- <div *ngIf="active_step==0 && !loading_active && bProfile && !subDomainLinks[bProfile.serviceSubSector.subDomain]"
             class="is-bx step0 col-12 col-sm-12 col-lg-12 ml-auto mr-auto">
@@ -790,28 +790,27 @@
             </form>
         </div> -->
 
- <!--logo start-->
- <div>
-    <img class="img-fluid" src="/assets/images/jaldee-logo.png" />
-</div>
-<!----logo end-->
-<!---jaldee business logo start-->
-<div class="containers">
-    <div>
+        <!--logo start-->
         <div>
-            <img class="img-fluid" src="/assets/images/welcome.svg" />
+            <img class="img-fluid" src="/assets/images/jaldee-logo.png" />
         </div>
-        <div class="centered1">
-            <h5 style="color: #fff;" >Welcome to</h5>
-            <h2 style="color: #fcde98;">JALDEE </h2>
-            <h2 style="color: #fcde98;">BUSINESS</h2>
-        
-        </div>
-        
-    </div>
-    <div class="centered2">
-        <button  type="submit" 
-        style="padding: 1rem 2rem 0.9rem;
+        <!----logo end-->
+        <!---jaldee business logo start-->
+        <div class="containers">
+            <div>
+                <div class="container-fluid no-padding">
+                    <img class="img-fluids" src="/assets/images/welcome.svg" />
+                </div>
+                <div class="centered1">
+                    <h5 style="color: #fff;">Welcome to</h5>
+                    <h2 style="color: #fcde98;">JALDEE </h2>
+                    <h2 style="color: #fcde98;">BUSINESS</h2>
+
+                </div>
+
+            </div>
+            <div class="centered2">
+                <button type="submit" style="padding: 1rem 2rem 0.9rem;
         margin: 0.5rem;
         border-radius: 2rem;
         border: 1px solid #e0e0e0;
@@ -819,50 +818,57 @@
         color: #162182;
         cursor: pointer;
         font-weight: bold;
-        box-shadow: 0px 5px 10px rgb(0 0 0 / 30%);" (click)="expressSignup()" >
-   Take me to assissted account setup
-     </button>
-    
-    </div>
-    <div class="centered3">
-        <ul class="underline"  (click)="skipMe()">I'll explore myself</ul>
-    </div>
-    
-    
-    
-</div>
-<!---jaldee business logo end-->
-<div style="background-color: #fff7ce;margin-bottom:4rem" class="jaldeeBusiness">
-   <div style="display: flex;padding: 3rem;" class="imageText">
-       <div>
-       <div  >
-        <div style="font-size: 25px; color: #162182;font-weight: bold;">Save Your Time </div>
-        <div style="font-size: 25px; color: #162182;font-weight: bold;">And just relax</div>
-       </div>
-        
-        <div style="color: #f9c250;font-size: 15px;">Jaldee team create your profile and make your account live for free.Jaldee team offers you free Jaldee support and consultation</div>
-        <!-- <div> </div>
-        <div></div> -->
-       </div>
-       <div class="imageDetails">
-           <img style="height: auto;width:100%;" class="img-fluid"src="/assets/images/W2.svg" />
-          
-           <div class="btn">
-            <button  type="submit" style="padding: 1rem 2rem 0.9rem;
-            margin: 0.5rem;
-            border-radius: 2rem;
-            border: 1px solid #162182;
-            background-color: #162182;
-color: #fff;cursor: pointer;"  (click)="showSection('why-jaldee')">
-       Why Jaldee Business
-         </button>
-           </div>
-         
-       </div>
-       
-       
-   </div>
-</div>
+        box-shadow: 0px 5px 10px rgb(0 0 0 / 30%);" (click)="expressSignup()">
+                    Take me to assissted account setup
+                </button>
+            </div><br><br>
+            <div class="centered3">
+                <ul class="underline" (click)="skipMe()">I'll explore myself</ul>
+            </div>
+        </div>
+        <!---jaldee business logo end-->
+        <div style="background-color: #e1e5e6;margin-bottom:4rem" class="jaldeeBusiness">
+            <div style="display: flex;padding: 3rem;" class="imageText">
+                <div>
+                    <div>
+                        <div style="font-size: 35px; color: #162182;font-weight: bold;">Save Time </div>
+                        <div style="font-size: 35px; color: #162182;font-weight: bold;">Sit Back & Relax!</div>
+                    </div>
+                    <div style="color: #585852;font-size: 20px;">Jaldee is working on getting your account and profile ready. We offer free customer support & consultation, so feel free to call or WhatsApp us at +91 73068 23011</div>
+                    <button type="submit" style="padding: 1rem 2rem 0.9rem;margin: 1rem;border-radius: 2rem;border: 1px solid #162182;background-color: #162182;color: #fff;cursor: pointer;" (click)="showSection('why-jaldee')">
+                        Why Jaldee Business ?
+                    </button>
+                </div>
+                <div class="imageDetails" style="width: 500px;">
+                    <button type="submit" style="padding: 1rem 2rem 0.9rem;
+                    margin: 0.5rem;
+                    border: 1px solid #f4f5f8;
+                    background-color: hsl(231, 100%, 99%);
+            color: orangered;cursor: pointer;width: -webkit-fill-available;display: flex;
+    justify-content: center;
+    align-items: center;" (click)="openContactUsPage()"  >
+                                
+                                <img   src="/assets/images/support-text.svg" /> 
+                                <div>
+                                    Jaldee Team Support
+                                </div>
+                                </button>
+                    <button type="submit" style="padding: 1rem 2rem 0.9rem;
+                    margin: 0.5rem;
+                    border: 1px solid #f4f5f8;
+                    background-color: hsl(231, 100%, 99%);
+            color: orangered;cursor: pointer;width: -webkit-fill-available;display: flex;
+    justify-content: center;
+    align-items: center;"  (click)="openReqDemoPage()" >
+                                 <!-- <i class="fa fa-user fa-2x" aria-hidden="true"></i> -->
+                                 <img   src="/assets/images/customer-care.svg" />  
+                                 <div>
+                                      Request Demo
+                                 </div>
+                                </button> <br>
+                </div>
+            </div>
+        </div>
 
 
 

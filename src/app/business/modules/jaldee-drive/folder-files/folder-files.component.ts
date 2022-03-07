@@ -109,6 +109,8 @@ export class FolderFilesComponent implements OnInit {
   png: boolean;
   jpeg: boolean;
   jpg: boolean;
+  mp3:boolean;
+  mp4:boolean;
   selectrow = false;
   user_count_filterApplied: any;
   availabileSelected: boolean;
@@ -372,11 +374,33 @@ export class FolderFilesComponent implements OnInit {
         this.filter.fileType = 'pdf';
 
       }
+      else if (value === 'mp3') {
+        this.mp3 = true;
+        this.png = false;
+        this.jpeg = false;
+        this.jpg = false;
+        this.pdf = false;
+        this.mp4 = false;
+        this.filter.fileType = 'mp3';
+
+      }
+      else if (value === 'mp4') {
+        this.mp4 =  true;
+        this.png = false;
+        this.jpeg = false;
+        this.jpg = false;
+        this.pdf = false;
+        this.mp3 = false;
+        this.filter.fileType = 'mp4';
+
+      }
       else {
         this.png = false;
         this.jpeg = false;
         this.jpg = false;
         this.pdf = false;
+        this.mp3 = false;
+        this.mp4 = false;
         this.filter.fileType = '';
       }
     }
@@ -387,14 +411,28 @@ export class FolderFilesComponent implements OnInit {
         console.log("File Size : ", this.filter.fileSize)
       }
       if (value === 'lessMb') {
-        this.lessMb = true;
-        this.grateMB = false;
-        this.filter.fileSize = '1';
+        if(!this.lessMb) {
+          this.lessMb = true;
+          this.grateMB = false;
+          this.filter.fileSize = '1';
+        } else {
+          this.lessMb = false;
+          this.grateMB = false;
+          this.filter.fileSize = '';
+        }
+        
       }
       else if (value === 'grateMB') {
-        this.lessMb = false;
-        this.grateMB = true;
-        this.filter.fileSize = '1';
+        if(!this.grateMB) {
+          this.lessMb = false;
+          this.grateMB = true;
+          this.filter.fileSize = '1';
+        } else {
+          this.lessMb = false;
+          this.grateMB = false;
+          this.filter.fileSize = '';
+        }
+       
       }
       else {
         this.lessMb = false;
@@ -420,7 +458,7 @@ export class FolderFilesComponent implements OnInit {
       }
     });
   }
-  deletepreview(id, fileName) {
+  deleteFile(id, fileName) {
     console.log("ID : ", id)
     this.fileviewdialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '30%',
@@ -435,6 +473,7 @@ export class FolderFilesComponent implements OnInit {
         if (result === 1) {
           this.provider_servicesobj.deleteAttachment(id).subscribe(
             (data: any) => {
+              this.snackbarService.openSnackBar('Deleted Successfully');
               this.getfiles();
             });
         }
@@ -582,9 +621,11 @@ export class FolderFilesComponent implements OnInit {
           this.action = 'attachment';
         }
       }
-      if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0 && input.length > 0) {
+      // if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0 && input.length > 0) {
         this.modal.nativeElement.click();
-      }
+     // }
+    
+     
     }
   }
   getCaption(caption) {
@@ -600,9 +641,18 @@ export class FolderFilesComponent implements OnInit {
     }
   }
   getImage(url, file) {
+    console.log("File Type :",file.type);
     if (file.type == 'application/pdf') {
       return '../../../../../assets/images/pdf.png';
-    } else {
+    }
+    else if(file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg'){
+      return '../../../../../assets/images/audio.png';
+
+    }
+    else if(file.type == 'video/mp4' || file.type == 'video/mpeg'){
+      return '../../../../../assets/images/video.png';
+    }
+    else {
       return url;
     }
   }

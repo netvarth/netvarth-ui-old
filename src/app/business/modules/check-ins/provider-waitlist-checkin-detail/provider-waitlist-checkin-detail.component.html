@@ -21,7 +21,7 @@
                 <i *ngIf="waitlist_data.service.serviceType === 'virtualService'" [class]="iconClass"></i>
                 {{waitlist_data.service.name |
                 capitalizeFirst}}
-                <span class="customer-action-btn pointer-cursor" (click)="gotoActions(waitlist_data)">Actions</span>
+                <span style="float:right" class="customer-action-btn pointer-cursor" (click)="gotoActions(waitlist_data)">Actions</span>
                 <br>
                 <span class="loc-cls"><i class="fa fa-map-marker"></i>&nbsp;{{waitlist_data.queue.location.place
                   | capitalizeFirst}}</span><br>
@@ -43,7 +43,19 @@
                 *ngIf="waitlist_data.waitlistingFor[0].firstName || waitlist_data.waitlistingFor[0].lastName">
                 <span class="itemHead">Booking For</span>
                 <span class="itemVal" *ngFor="let user of waitlist_data.waitlistingFor">
-                  {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}}
+                  {{user.firstName | capitalizeFirst}} {{user.lastName | capitalizeFirst}} <br>
+                  <!-- <span class="itemHead" *ngIf="waitlist_data.requestInfo.agent && waitlist_data.requestInfo.bookingReqFrom">Booking Via</span><br> -->
+                  <span *ngIf="waitlist_data.requestInfo.agent || waitlist_data.requestInfo.browser">
+                    <span class="itemHead">Booking Via</span> <br>
+
+                    <!-- <img src="../../../../../assets/icons/icon294(Traced).png"  *ngIf="getReqFrom(waitlist_data.requestInfo.browser,waitlist_data.requestInfo.agent) === 'web'"
+                    style="width: 18px !important; margin-top: -6px !important;"> 
+                    <img src="../../../../assets/icons/Group482249.png" *ngIf="getReqFrom(waitlist_data.requestInfo.browser,waitlist_data.requestInfo.agent) === 'ios'"
+                    style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/icon295(Traced).png" *ngIf="getReqFrom(waitlist_data.requestInfo.browser,waitlist_data.requestInfo.agent) === 'android'"
+                    style="width: 18px !important; margin-top: -6px !important;"> -->
+                    {{getAgent(waitlist_data.requestInfo.agent) | capitalizeFirst}},
+                    {{getBookingReqFrom(waitlist_data.requestInfo.browser,waitlist_data.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
                 </span>
               </div>
               <div class="mgn-up-10 stats-item">
@@ -80,8 +92,12 @@
               <div class="mgn-up-10 stats-item"
                 *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
                 <span class="itemHead">WhatsApp #</span>
-                <span class="itemVal">
-                  {{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
+                <!-- <span class="itemVal">
+                  {{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span> -->
+                  <span class="itemVal" *ngIf=" waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                    {{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
+                    <span class="itemVal" *ngIf=" !waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                      +{{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
               </div>
               <div class="mgn-up-10 stats-item" *ngIf="waitlist_data.waitlistingFor[0].email">
                 <span class="itemHead">Email</span>

@@ -1417,6 +1417,7 @@ body { font-size: 1rem !important}
 
 .content.see-pages .outer-card .card.members-card {
     width: 75%;
+    margin-left: 5px !important;
 }
 
 .content.see-pages .outer-card .right-menu {
@@ -10102,3 +10103,44 @@ span.inactive{
 }
 
 
+ngx-intl-tel-input input
+{
+  height: 40px!important;
+  /* background-color: #fff!important; */
+}
+.provider-checkin .mat-chip-list-wrapper .mat-standard-chip {
+    margin: 2px!important;
+  }
+
+  .searchbar .mat-form-field-infix
+  {
+      border: none!important;
+      padding: 0!important;
+  }
+  .searchbar .mat-form-field-infix
+  {
+      border: none!important;
+      padding: 0!important;
+  }
+
+  .walkin-form-fields .mat-form-field-infix
+  {
+      padding: 0px!important;
+      padding-top: 5px!important;
+      border: none!important;
+  }
+
+  .walkin-form-fields-appointment .mat-form-field-infix
+  {
+      padding: 0px!important;
+      border: none!important;
+  }
+  
+  .third-party-listing-field .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element{
+    border:1px solid #1E4079!important;
+  }
+  
+  .freeslots .mat-chip-list-wrapper
+  {
+      margin: 2px 0px!important;
+  }

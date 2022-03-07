@@ -11,11 +11,14 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { CommunicationService } from '../../services/communication-service';
 import { AddInboxMessagesModule } from '../../../shared/components/add-inbox-messages/add-inbox-messages.module';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [
     { path: '', component: DonationsComponent },
     { path: '', children: [
-            { path: ':id', loadChildren: ()=> import('./details/donation-details.module').then(m=>m.DonationDetailsModule) }
+            { path: ':id', loadChildren: ()=> import('./details/donation-details.module').then(m=>m.DonationDetailsModule) },
+            { path: ':id/print', loadChildren: ()=> import('../../shared/print-booking-details/print-booking-detail.module').then(m=>m.PrintBookingDetailModule)} 
         ]
     }
 ];
@@ -30,6 +33,8 @@ const routes: Routes = [
         CapitalizeFirstPipeModule,
         MatTooltipModule,
         MatDatepickerModule,
+        MatMenuModule,
+        MatIconModule,
         MatCheckboxModule,
         AddInboxMessagesModule,
         [RouterModule.forChild(routes)]

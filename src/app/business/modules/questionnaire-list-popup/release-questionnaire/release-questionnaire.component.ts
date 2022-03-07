@@ -5,7 +5,6 @@ import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
-import { projectConstants } from '../../../../app.component';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
@@ -37,6 +36,8 @@ export class ReleaseQuestionnaireComponent implements OnInit {
   qnrLink;
   newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   customer_label = '';
+  uid: any;
+  phone: any;
   constructor(public dialogRef: MatDialogRef<ReleaseQuestionnaireComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private provider_services: ProviderServices,
@@ -52,21 +53,38 @@ export class ReleaseQuestionnaireComponent implements OnInit {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.sms = this.data.isPhone;
     this.email = this.data.isEmail;
+    console.log('data' + JSON.stringify(this.data))
     if (this.data.source === 'appt') {
       this.countryCode = this.data.waitlist_data.providerConsumer.countryCode.split('+')[1];
       if ((this.data.isEmail || this.data.isPhone) && this.data.waitlist_data.consumer) {
         this.pushnotify = true;
         this.isPush = true;
       }
-    } else {
+    } else if(this.data.source === 'checkin'){
       this.countryCode = this.data.waitlist_data.consumer.countryCode.split('+')[1];
       if ((this.data.isEmail || this.data.isPhone) && this.data.waitlist_data.jaldeeConsumer) {
         this.pushnotify = true;
         this.isPush = true;
       }
     }
-    const uid = (this.data.source === 'appt') ? this.data.waitlist_data.uid : this.data.waitlist_data.ynwUuid;
-    this.qnrLink = projectConstants.PATH + 'questionnaire/' + uid + '/' + this.data.qnrId + '/' + this.data.waitlist_data.providerAccount.id;
+    else if(this.data.source === 'order'){
+      this.countryCode = this.data.waitlist_data.countryCode.split('+')[1];
+      if ((this.data.isEmail || this.data.isPhone) && this.data.waitlist_data.jaldeeConsumer) {
+        this.pushnotify = true;
+        this.isPush = true;
+      }
+    }
+    if(this.data.source === 'appt'){
+      this.uid = this.data.waitlist_data.uid;
+    }
+    else if (this.data.source === 'checkin'){
+      this.uid = this.data.waitlist_data.ynwUuid ;
+    }
+    else if (this.data.source === 'order'){
+      this.uid = this.data.waitlist_data.uid ;
+    }
+    // const uid = (this.data.source === 'appt') ? this.data.waitlist_data.uid : this.data.waitlist_data.ynwUuid;
+    this.qnrLink = projectConstantsLocal.PATH + 'questionnaire/' + this.uid + '/' + this.data.qnrId + '/' + this.data.waitlist_data.providerAccount.id;
     this.createForm();
   }
   createForm() {
@@ -85,8 +103,17 @@ export class ReleaseQuestionnaireComponent implements OnInit {
     return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
   getTelegramChatId() {
-    let phone = (this.data.source === 'appt') ? this.data.waitlist_data.providerConsumer.phoneNo : this.data.waitlist_data.consumer.phoneNo;
-    this.provider_services.telegramChat(this.countryCode, phone)
+    if(this.data.source === 'appt'){
+      this.phone = this.data.waitlist_data.providerConsumer.phoneNo;
+    }
+    else if (this.data.source === 'checkin'){
+      this.phone = this.data.waitlist_data.consumer.phoneNo;
+    }
+    else if (this.data.source === 'order'){
+      this.phone = this.data.waitlist_data.phoneNumber;
+    }
+    // let phone = (this.data.source === 'appt') ? this.data.waitlist_data.providerConsumer.phoneNo : this.data.waitlist_data.consumer.phoneNo;
+    this.provider_services.telegramChat(this.countryCode, this.phone)
       .subscribe(
         data => {
           if (data === null) {
@@ -170,8 +197,16 @@ export class ReleaseQuestionnaireComponent implements OnInit {
         this.api_error = error.error;
         this.disableButton = false;
       });
-    } else {
+    } else if(this.data.source === 'checkin'){
       this.provider_services.sendWaitlistQnrNotification(this.data.waitlist_data.ynwUuid, postData).subscribe(data => {
+        this.changeQnrReleaseStatus('share');
+      }, error => {
+        this.api_error = error.error;
+        this.disableButton = false;
+      });
+    }
+    else if(this.data.source === 'order'){
+      this.provider_services.sendOrderQnrNotification(this.data.waitlist_data.uid, postData).subscribe(data => {
         this.changeQnrReleaseStatus('share');
       }, error => {
         this.api_error = error.error;
@@ -201,9 +236,18 @@ export class ReleaseQuestionnaireComponent implements OnInit {
     this.dialogRef.close('reload');
   }
   changeQnrReleaseStatus(type?) {
-    const uid = (this.data.source === 'checkin') ? this.data.waitlist_data.ynwUuid : this.data.waitlist_data.uid;
+    if(this.data.source === 'appt'){
+      this.uid = this.data.waitlist_data.uid;
+    }
+    else if (this.data.source === 'checkin'){
+      this.uid = this.data.waitlist_data.ynwUuid ;
+    }
+    else if (this.data.source === 'order'){
+      this.uid = this.data.waitlist_data.uid ;
+    }
+    // const uid = (this.data.source === 'checkin') ? this.data.waitlist_data.ynwUuid : this.data.waitlist_data.uid;
     if (this.data.source === 'checkin') {
-      this.provider_services.changeWaitlistQnrReleaseStatus('released', uid, this.data.qnrId).subscribe(data => {
+      this.provider_services.changeWaitlistQnrReleaseStatus('released', this.uid, this.data.qnrId).subscribe(data => {
         if (type) {
           this.snackbarService.openSnackBar('Link has been shared');
           setTimeout(() => {
@@ -213,8 +257,20 @@ export class ReleaseQuestionnaireComponent implements OnInit {
       }, error => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
-    } else {
-      this.provider_services.changeApptQnrReleaseStatus('released', uid, this.data.qnrId).subscribe(data => {
+    } else if(this.data.source === 'appt'){
+      this.provider_services.changeApptQnrReleaseStatus('released', this.uid, this.data.qnrId).subscribe(data => {
+        if (type) {
+          this.snackbarService.openSnackBar('Link has been shared');
+          setTimeout(() => {
+            this.dialogRef.close('reload');
+          }, 200);
+        }
+      }, error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+    }
+    else if(this.data.source === 'order'){
+      this.provider_services.changeOrderQnrReleaseStatus('released', this.uid, this.data.qnrId).subscribe(data => {
         if (type) {
           this.snackbarService.openSnackBar('Link has been shared');
           setTimeout(() => {

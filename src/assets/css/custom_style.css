@@ -198,7 +198,15 @@ img::-moz-selection {
   align-items: center;
   justify-content: space-between;
 }
-
+.mat-tab-label-content {
+  color: #0e3166;
+  font-size: 15px;
+  font-weight: 600;
+}
+.mat-ink-bar {
+  background-color: #0e3166 !important;
+  height: 4px !important;
+}
 .bill-section .bill-section-content .bill-wrapper .section-two .edit-row.service .spl .item.selectbox {
   flex-grow: 1;
 }
@@ -1714,6 +1722,7 @@ sup {
   width: 400px !important;
 }
 
+
 .smallform .mat-dialog-container {
   width: 500px !important;
 }
@@ -2204,11 +2213,25 @@ sup {
 .content.settings .set-otr .card .copy .hd {
   margin-bottom: 10px !important
 }
-
-.block-level {
-  display: block !important
+.mat-tab-label-content {
+  color: #0e3166;
+  font-size: 15px;
+  font-weight: 600;
 }
+.mat-ink-bar {
+  background-color: #0e3166 !important;
+  height: 4px !important;
+}
+.block-level {
+  display: block !important;
+}
+.block-level1 {
+  display: block !important;
+  color: #074192 !important;
+  font-size:15px !important;
+  font-weight: 800;
 
+}
 .content .col-a .card .adwds.w-dta h2 {
   margin-bottom: 3px !important
 }
@@ -8532,8 +8555,8 @@ owl-carousel .bt3.active {
 .appt-in-chip .mat-chip {
   font-size: .75rem !important;
   text-align: center !important;
-  min-width: 15%;
-  max-width: 20%;
+  min-width: 10%;
+  max-width: 12%;
   border-radius: .5px !important;
   margin: 10px !important;
   border: 1px solid black !important;
@@ -10255,6 +10278,7 @@ a {
   position: relative;
   padding-right: 1px;
   width: 26px;
+  object-fit: cover;
 }
 
 .wtsapvid-icon {
@@ -11275,6 +11299,15 @@ header.consumer {
 header.consumer img, header .tp-l.lgo img {
   width: 150px !important;
 }
+header.consumer .logo-custom img{
+  width: 35px !important;
+  height: 35px !important;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: transparent;
+  padding: 3px;
+  margin: 5px;
+}
 
 .c-checkin-new ul.member-ul .members label .mat-radio-label-content {
   font-weight: 500 !important;
@@ -11324,10 +11357,10 @@ header.consumer .tp-1 .tp-l {
   width: 100% !important;
 }
 
-.lgin.cust button {
+/* .lgin.cust button {
   height: 40px !important;
   width: 40px !important;
-}
+} */
 
 .lgin.cust .fa-user-circle-o {
   font-size: 1.25rem !important;
@@ -11355,7 +11388,9 @@ img.busN-logo {
   font-size: 0.75rem;
   height: 40px;
 }
-
+.panel-default>.panel-heading {
+  border: none !important;
+}
 .panel-heading a {
   color: #161bc9 !important;
 }
@@ -12408,7 +12443,7 @@ hr {
   padding: 3px 25px;
   border: 1px solid;
   border-radius: 20px;
-  float: right;
+  /* float: right; */
 }
 .recentactivity {
   border: 1px solid #ccc;
@@ -12798,16 +12833,19 @@ hr {
 }
 
 ngx-intl-tel-input input {
-	height: 44px;
-	margin-bottom: 20px;
-	padding: 10px;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #c7cace;
-	border-radius: 4px;
+  height: 70px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #c7cace;
+  border-radius: 4px;
   font-size: 18px;
   width:100% !important;
+  background-color: #f6f6f6;
+ 
 }
+
 
 ngx-intl-tel-input.ng-invalid.ng-touched input {
 	border: 1px solid #c0392b;
@@ -13057,7 +13095,7 @@ color: #fff !important;
 .notify-phead .bodr-lft,
 .notify-phead .bodr-rht,
 .notify-phead .person-ahead {
-  padding: 5px 10px;
+  /* padding: 5px 10px; */
 }
 .notify-phead .bodr-lft {
   border: 1px solid;
@@ -13087,6 +13125,64 @@ color: #fff !important;
   padding: 20px;
   width: 300px;
   cursor: pointer;
+}
+.line {
+  width: 50px;
+  height: 5px;
+  background-color: white;
+  border-radius: 5px;
+}
+.circle {
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  border-radius: 50%;
+  /* display: inline-block; */
+}
+.yellowline {
+  width: 50px;
+  height: 5px;
+  background-color: yellow;
+  border-radius: 5px;
+}
+.yellowcircle {
+  height: 20px;
+  width: 20px;
+  background-color: yellow;
+  border-radius: 50%;
+  /* display: inline-block; */
+}
+.newpro-notify-box {
+  float: left;
+  max-width: 350px;
+  margin: 20px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+  padding: 20px 20px 20px 0px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  background-color: #ced4ff;
+}
+/* .mat-tab-header{
+  background-color: #1e297c;
+  
+}
+.mat-tab-label-content {
+  color: white;
+} */
+.mat-tab-body-content {
+  overflow-x: hidden;
+}
+.newpro-notify-box1 {
+  float: left;
+  max-width: 350px;
+  margin: 20px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+  padding: 20px 20px 20px 0px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  background-color: #1e297c;
 }
 .mgn-20 {
   margin: 20px;
@@ -13813,7 +13909,7 @@ margin-top: 200px;
   box-shadow: 5px 5px 5px 0px #cccccc60 !important;
 border: 1px solid #cccccc7d !important;
 min-height: 100px!important;
-max-height: 100px!important;
+/* max-height: 100px!important; */
 margin: 5px;
 }
 .usrstyle{
@@ -14243,6 +14339,7 @@ font-weight: 700 !important;
    float:left !important;
    display:table-column !important;
    width:33.33% !important;
+   overflow: hidden !important;
 }
 
 .main-box{
@@ -14392,12 +14489,16 @@ pointer-events: none !important;
 }
 .txt-qr1{
   color:dodgerblue !important;
-  margin-left: 250px;
+  /* margin-left: 250px; */
+  display: flex;
+  justify-content: center;
 }
 @media(max-width: 750px){ 
   .txt-qr1{
       color:dodgerblue !important;
-      margin-left: 130px;
+      /* margin-left: 130px; */
+      display: flex;
+      justify-content: center;
     }
   }
   .userqrdwnld-icon {
@@ -14462,4 +14563,14 @@ pointer-events: none !important;
 }
  .qnrsec .mat-select {
     padding: 10px !important;
+  }
+  .panel {
+    margin-bottom: 0 !important;
+  }
+  .panel-default>.panel-heading{
+    background: transparent !important;
+    border: none !important;
+  }
+  .consumer-profile .picker-form-group svg {
+    margin-top: -10px;
   }

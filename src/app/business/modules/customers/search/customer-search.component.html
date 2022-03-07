@@ -12,47 +12,78 @@
             <div class="row">
                 <div class="card p0">
                     <div class="copy locd">
-                        <div class="lbl col-sm-12 col-md-10 col-lg-10">
-                            <h5 class="mgn-up-10"><b> Find an existing {{customer_label}}</b></h5>
-                            <div class="input-group mob-container mgn-up-20">
-                                <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox"
-                                    [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="true"
-                                    [enablePlaceholder]="true" [searchCountryFlag]="true"
-                                    [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
-                                    [selectFirstCountry]="false" [maxLength]="15" [phoneValidation]="true"
-                                    [selectedCountryISO]="selectedCountry" [separateDialCode]="separateDialCode"
-                                    [numberFormat]="PhoneNumberFormat.National" name="phone" [(ngModel)]="phone"
-                                    (keyup)="resetApiErrors()">
-                                </ngx-intl-tel-input>
-                                <button class="findcolor" (click)="serchCustomers(phone)"><i class="fa fa-search p0"
-                                        aria-hidden="true"></i>
-                                </button>
-                            </div>                            
-                            <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()" class="mgn-up-20">
-                                <div class="or-style">OR</div>
-                                <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding  mgn-up-20 ">                                    
-                                    <div class="input-group mob-container">
-                                        <input autocomplete="off"
-                                            placeholder="{{customer_label | capitalizeFirst}} Name or ID or Email"
-                                            type="text" class="form-control" formControlName="search_input"
-                                            (keypress)="findCustomer(searchForm.value, $event)">
-                                        <button class="findcolor"
-                                            (click)="searchCustomer(searchForm.value,selectedMode)"><i
-                                                class="fa fa-search p0" aria-hidden="true"></i>
-                                        </button>
-                                    </div>
-                                    <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
-                                        <span *ngIf="emptyFielderror" class="sts-msg error">Please enter the
-                                            {{customer_label | capitalizeFirst}} ID or Email</span>
-                                    </div>
+                        <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12"><br>
+                            <span class="mt-2 text-light">Find an existing {{customer_label}}</span>
+                            <div class="input-group d-flex flex-row">
+                                <div class="col-lg-2 col-sm-1 display-lg-show col-md-2 col-xs-1 no-padding border-0 searchbar">
+                                    <mat-form-field>
+                                      <mat-select class="categoryfield" [(ngModel)]="categoryvalue">
+                                        <mat-option *ngFor="let category of categoryForSearchingarray" [value]="category">
+                                          {{category.slice(12)}}
+                                        </mat-option>
+                                      </mat-select>
+                                    </mat-form-field>
                                 </div>
-                            </form>
-                            <div class="col-md-12 col-xs-12 col-sm-12 create_new mgn-bt-20 font-9 no-padding mgn-up-20 mgn-lt-5"
+                                <div class="col-lg-0 col-sm-1  col-md-0 col-xs-1 no-padding display-sm-show border-0 searchbar">
+                                    <mat-form-field>
+                                        <img src="../../../../../assets/images/Group_1512.png" width="50px" height="40px">
+                                        <mat-select class="displaysmall" [(ngModel)]="categoryvalue">
+                                        <mat-option *ngFor="let category of categoryForSearchingarray" [value]="category">
+                                            {{category.slice(12)}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div *ngIf="categoryvalue=='Search with PhoneNumber'"
+                                    class="col-lg-3 col-md-3 col-xs-8 col-sm-8 mgn-bt-10 no-padding">
+                                    <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox no-padding"
+                                        [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="true"
+                                        [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                        [selectFirstCountry]="false" [maxLength]="15" [phoneValidation]="true"
+                                        [selectedCountryISO]="selectedCountry" [separateDialCode]="separateDialCode"
+                                        [numberFormat]="PhoneNumberFormat.National" name="phone" [(ngModel)]="phone"
+                                        (keyup)="resetApiErrors()">
+                                    </ngx-intl-tel-input>
+                                </div>
+                                <div *ngIf="categoryvalue!='Search with PhoneNumber'"
+                                    class="col-lg-3 col-md-3 col-xs-8 col-sm-8 mgn-bt-10 no-padding">
+                                    <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()" class="">
+                                        <div class="form-group">                             
+                                            <div class="input-group">
+                                                <input autocomplete="off"
+                                                    placeholder="{{customer_label | capitalizeFirst}} {{categoryvalue.slice(12)}}"
+                                                    type="text" class="form-control" formControlName="search_input"
+                                                    (keypress)="findCustomer(searchForm.value, $event)">
+                                                    <button *ngIf="categoryvalue!='Search with PhoneNumber'" class="findcolor"
+                                                    (click)="searchCustomer(searchForm.value)"><i class="fa fa-search padding-0" aria-hidden="true"></i>
+                                                    </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                                <div class="clearfix"></div>
+                                <div *ngIf="categoryvalue=='Search with PhoneNumber'"
+                                    class="col-lg-1 col-md-1 col-xs-2 col-sm-2 mgn-bt-10 no-padding">
+                                    <button *ngIf="categoryvalue=='Search with PhoneNumber'" class="findcolor no-padding"
+                                        (click)="serchCustomers(phone)"><i class="fa fa-search padding-0" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+
+                    
+                            </div>                            
+                            
+                            <div class="my-3 col-lg-12 col-sm-12 col-xs-12 col-md-12 card1 font-9 mr-2"
+                                (click)="createNew()">
+                                <img src="../../../../../assets/images/user_plus.png"
+                                style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Create New {{customer_label | capitalizeFirst}}</b>
+                            </div>
+                            <!-- <div class="col-md-12 col-xs-12 col-sm-12 create_new mgn-bt-20 font-9 no-padding mgn-up-20 mgn-lt-5"
                                 *ngIf="!searchClicked">
                                 <div class="or-style">OR</div>
                                 <a class="underline" (click)="createNew()"> Create a new
                                     {{customer_label}} </a>
-                            </div>
+                            </div> -->
                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20"
                                 *ngIf="searchClicked && foundCustomer">
                                 <div class="col-md-6 col-xs-12 col-sm-6" class="createcheckin"
@@ -125,10 +156,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20">
-                            </div>
-                        </div>
-                        <div class="lbr col-sm-12 col-md-4 col-lg-4">
                         </div>
                     </div>
                 </div>

@@ -13,6 +13,7 @@ import { LoadingSpinnerModule } from "../../../../../../../../shared/modules/loa
 import { ConsumerNotificationUserComponent } from "./consumer-notifications.component";
 import { AddProviderAddonsModule } from "../../../../../../../../business/modules/add-provider-addons/add-provider-addons.module";
 import { RouterModule, Routes } from "@angular/router";
+import { MatTabsModule } from "@angular/material/tabs";
 const routes: Routes = [
     {path: '',component:ConsumerNotificationUserComponent }
 ]
@@ -26,6 +27,7 @@ const routes: Routes = [
         MatExpansionModule,
         MatFormFieldModule,
         MatInputModule,
+        MatTabsModule,
         MatCheckboxModule,
         MatSelectModule,
         MatOptionModule,

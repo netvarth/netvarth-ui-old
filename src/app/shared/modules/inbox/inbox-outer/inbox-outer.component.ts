@@ -67,6 +67,7 @@ export class InboxOuterComponent implements OnInit {
   @ViewChildren('outmsgId') outmsgIds: QueryList<ElementRef>;
   @ViewChildren('inmsgId') inmsgId: QueryList<ElementRef>;
   customId: any;
+  theme: any;
   constructor(private inbox_services: InboxServices,
     public shared_functions: SharedFunctions,
     private groupService: GroupStorageService,
@@ -80,6 +81,9 @@ export class InboxOuterComponent implements OnInit {
         this.accId = qparams.accountId;
         this.customId = qparams.customId;
         this.showChat = true;
+      }
+      if (qparams.theme) {
+        this.theme = qparams.theme;
       }
     });
   }

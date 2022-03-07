@@ -2369,7 +2369,7 @@
 }
 
 @media only screen and (max-width: 575px) {
-    .signupmainclass, .loginmainclass, .moreoptionsmainclass, .forgotpasswordmainclass, .commonpopupmainclass, .googlemainmappopup, .outer-card, .consumerpopupmainclass, .specialclass {
+    .signupmainclass, .loginmainclass, .moreoptionsmainclass, .forgotpasswordmainclass, .commonpopupmainclass, .googlemainmappopup, .consumerpopupmainclass, .specialclass {
         max-width: 92vw !important;
     }
 }
@@ -3702,7 +3702,8 @@
 
 .specialclass .mat-dialog-container {
     overflow: auto;
-    display: table;
+    /* display: table; */
+    width:100%;
 }
 
 .specialclass .mat-dialog-container .mat-dialog-title:after {

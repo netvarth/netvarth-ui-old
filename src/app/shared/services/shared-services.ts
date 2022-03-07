@@ -375,7 +375,72 @@ export class SharedServices {
     const url = 'provider/alerts/count' + retparam;
     return this.servicemeta.httpGet(url);
   }
-  buildAlertsParams(ackStatus, sdate, edate) {
+  getAuditFilterlogs( sdate, edate, startfrom, limit) {
+    let retparam = this.buildAuditsParams( sdate, edate);
+    if (startfrom !== '') {
+      if (retparam !== '') {
+        retparam += '&';
+      }
+      retparam += 'from=' + startfrom;
+    }
+    if (limit !== '') {
+      if (retparam !== '') {
+        retparam += '&';
+      }
+      retparam += 'count=' + limit;
+    }
+    if (retparam !== '') {
+      retparam = '?' + retparam;
+    }
+    const url = 'provider/auditlogs' + retparam;
+    return this.servicemeta.httpGet(url);
+  }
+  getAuditFilterlogsTotalCnt( sdate, edate) {
+    let retparam = this.buildAuditsParams(sdate, edate);
+    if (retparam !== '') {
+      retparam = '?' + retparam;
+    }
+    const url = 'provider/auditlogs/count' + retparam;
+    return this.servicemeta.httpGet(url);
+  }
+  buildAuditsParams(sdate, edate) {
+    let param = '';
+    // if (ackStatus === 'true') {
+    //   param += 'ackStatus-eq=true';
+    // } else if (ackStatus === 'false') {
+    //   if (ackStatus === 'false') {
+    //     param += 'ackStatus-eq=false';
+    //   }
+    // } else if (ackStatus === 'true,false') {
+    //   param += 'ackStatus-eq=false,true';
+    // }
+    /*if (subcat !== '') {
+      if (param !== '') {
+        param += '&';
+      }
+      param += 'subCategory-eq=' + subcat;
+    }
+    if (action !== '') {
+      if (param !== '') {
+        param += '&';
+      }
+      param += 'action-eq=' + action;
+    }*/
+    if (sdate && sdate !== '') {
+      if (param !== '') {
+        param += '&';
+      }
+      param += 'createdDate-ge=' + sdate;
+    }
+    if (edate && edate !== '') {
+      if (param !== '') {
+        param += '&';
+      }
+      param += 'createdDate-le=' + edate;
+    }
+    return param;
+  }
+  buildAlertsParams(ackStatus,sdate, edate) {
     let param = '';
     if (ackStatus === 'true') {
       param += 'ackStatus-eq=true';
@@ -1035,12 +1100,20 @@ export class SharedServices {
     const url = 'consumer/appointment/questionnaire/' + uuid + '?account=' + accountId;
     return this.servicemeta.httpPost(url, body);
   }
+  submitConsumerDonationQuestionnaire(body, uuid, accountId) {
+    const url = 'consumer/donation/questionnaire/' + uuid + '?account=' + accountId;
+    return this.servicemeta.httpPost(url, body);
+  }
   resubmitConsumerWaitlistQuestionnaire(body, uuid, accountId) {
     const url = 'consumer/waitlist/questionnaire/resubmit/' + uuid + '?account=' + accountId;
     return this.servicemeta.httpPost(url, body);
   }
   resubmitConsumerApptQuestionnaire(body, uuid, accountId) {
     const url = 'consumer/appointment/questionnaire/resubmit/' + uuid + '?account=' + accountId;
+    return this.servicemeta.httpPost(url, body);
+  }
+  resubmitConsumerDonationQuestionnaire(body, uuid, accountId) {
+    const url = 'consumer/donation/questionnaire/resubmit/' + uuid + '?account=' + accountId;
     return this.servicemeta.httpPost(url, body);
   }
   validateConsumerQuestionnaire(body, accountId) {
@@ -1083,6 +1156,10 @@ export class SharedServices {
     const url = 'consumer/appointment/questionnaire/upload/status/' + uid + '?account=' + account;
     return this.servicemeta.httpPut(url, data);
   }
+  consumerDonationQnrUploadStatusUpdate(uid, account, data) {
+    const url = 'consumer/donation/questionnaire/upload/status/' + uid + '?account=' + account;
+    return this.servicemeta.httpPut(url, data);
+  }
   consumertelegramChat(countryCode, loginId) {
     const url = 'chatbot/telegram/consumer/chatId/' + countryCode + '/' + loginId;
     return this.servicemeta.httpGet(url);
@@ -1104,6 +1181,10 @@ export class SharedServices {
   }
   getApptQuestionnaireByUid(uid, accountId) {
     const url = 'consumer/appointment/questionnaire/' + uid + '?account=' + accountId;
+    return this.servicemeta.httpGet(url);
+  }
+  getOrderQuestionnaireByUid(uid, accountId) {
+    const url = 'consumer/orders/questionnaire/' + uid + '?account=' + accountId;
     return this.servicemeta.httpGet(url);
   }
   getAppointmentReschedulePricelist(serviceid) { 
@@ -1128,5 +1209,21 @@ export class SharedServices {
   updatePaytmPayProvider(data) {
     const url = 'provider/payment/paytm/update';
     return this.servicemeta.httpPost(url,data);
+  }
+  getConsumerOrderQuestionnaire(catelogId, accountId) {
+    const url = 'consumer/questionnaire/order/' + catelogId + '?account=' + accountId;
+    return this.servicemeta.httpGet(url);
+  }
+  submitConsumerOrderQuestionnaire(body, uuid, accountId) {
+    const url = 'consumer/orders/questionnaire/' + uuid + '?account=' + accountId;
+    return this.servicemeta.httpPost(url, body);
+  }
+  resubmitConsumerOrderQuestionnaire(body, uuid, accountId) {
+    const url = 'consumer/orders/questionnaire/resubmit/' + uuid + '?account=' + accountId;
+    return this.servicemeta.httpPost(url, body);
+  }
+  consumerOrderQnrUploadStatusUpdate(uid, account, data) {
+    const url = 'consumer/orders/questionnaire/upload/status/' + uid + '?account=' + account;
+    return this.servicemeta.httpPut(url, data);
   }
 }

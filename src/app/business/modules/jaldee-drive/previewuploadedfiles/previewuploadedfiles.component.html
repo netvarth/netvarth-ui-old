@@ -1,20 +1,23 @@
-<h1 class="mat-dialog-title"> {{details.fileName}} <br> {{details.caption ? details.caption : 'caption' }}
+<h1 class="mat-dialog-title"> {{details.fileName}} <br>
+   <span *ngIf="details.caption"> {{details.caption ? details.caption : ''}} </span>
   <button #locte mat-dialog-close class="modal_close" tabindex="-1">
     <i class="fa fa-window-close" aria-hidden="true"></i>
   </button>
 </h1>
-<div class="pad-20 image-scroll" *ngIf="details.fileType && details.fileType != 'pdf'">
-  <img style="width:100%;margin-top: -20px;" [src]="details.filePath"
-    *ngIf="details.fileType && details.fileType == 'bmp'|| details.fileType =='png' || details.fileType == 'gif' || details.fileType == 'jpg' ||details.fileType =='jpeg' || details.fileType =='jfif' ||details.fileType == 'webp'" />
-</div>
-<div *ngIf="details.fileType && details.fileType == 'pdf' || details.fileType == 'mp3' || details.fileType == 'mp4'">
-  <div class="mx-3 py-2 px-2">
+
+<div
+    *ngIf="details.fileType && details.fileType == 'pdf'  || details.fileType && details.fileType == 'mp3' || details.fileType && details.fileType == 'mp4'">
+  <div class="mx-3 py-2 px-2 pad-20">
     <i class="fa fa-file-video-o" aria-hidden="true" *ngIf="details.fileType == 'mp4'" style="color:red;"></i>
     <i class="fa fa-file-audio-o" aria-hidden="true" *ngIf="details.fileType == 'mp3'" style="color:red;"></i>
     <i class="fa fa-file-pdf-o" aria-hidden="true" *ngIf="details.fileType == 'pdf'" style="color:red;"></i>
     <a [href]="details.filePath" target="_blank" download>
-      <!-- {{details.caption ? details.caption:'document'}}-{ -->
+      <!--|| details.fileType && details.fileType == '.pdf' {{details.caption ? details.caption:'document'}}-{ -->
       {{details.fileType ? details.fileType:'file' }}
     </a>
   </div>
+</div>
+<div class="pad-20 image-scroll" *ngIf="details.fileType && details.fileType != 'pdf'">
+  <img style="width:100%;margin-top: -20px;" [src]="details.filePath"
+    *ngIf="details.fileType && details.fileType == 'bmp'|| details.fileType =='png' || details.fileType == 'gif' || details.fileType == 'jpg' ||details.fileType =='jpeg' || details.fileType =='jfif' ||details.fileType == 'webp'" />
 </div>

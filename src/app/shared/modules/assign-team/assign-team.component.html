@@ -85,9 +85,10 @@
                     </tr>
                   </thead>
                   <tbody *ngIf="!loading">
+                 
                     <tr class="row_data border-bottom pointer-cursor"
                       *ngFor="let service of service_dataSource.data; let i = index;" (click)="selectedRow(i,service)">
-                      <td class="waitlist-box">
+                      <td class="waitlist-box" *ngIf="service.status === 'ACTIVE'">
                         <span class="mgn-up-5 d-lg-none pull-right" (click)="stopprop($event);"><a class="assign-btn"
                             (click)="selectedRow(i,service)">Assign</a>
                         </span>
@@ -99,7 +100,7 @@
                           </div>
                         </div>
                       </td>
-                      <td class="display-min-none">
+                      <td class="display-min-none" *ngIf="service.status === 'ACTIVE'">
                         <span *ngIf="service.description">
                           <a > {{service.description}}</a>
                         </span>
@@ -107,7 +108,7 @@
                       <!-- <td class="display-min-none">
                         {{service.size}}
                       </td> -->
-                      <td class="display-min-none">
+                      <td class="display-min-none" *ngIf="service.status === 'ACTIVE'">
                           <span *ngIf="service.users.length > 0"> 
                             <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)">View</a>
                           </span>
@@ -115,7 +116,7 @@
                               <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(service)"></a>
                             </span>
                       </td>
-                      <td class="display-min-none">
+                      <td class="display-min-none" *ngIf="service.status === 'ACTIVE'">
                         {{service.status}}
                       </td>
                     </tr>

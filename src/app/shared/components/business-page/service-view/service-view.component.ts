@@ -12,7 +12,6 @@ import { WordProcessor } from '../../../services/word-processor.service';
 import { Location } from '@angular/common';
 import { SearchDetailServices } from '../../search-detail/search-detail-services.service';
 import { DateTimeProcessor } from '../../../services/datetime-processor.service';
-import { projectConstants } from '../../../../app.component';
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { GroupStorageService } from '../../../services/group-storage.service';
 // import { VirtualFieldsComponent } from '../../../../ynw_consumer/components/virtualfields/virtualfields.component';
@@ -65,6 +64,7 @@ export class ServiceViewComponent implements OnInit {
     ]
   };
   image_list_popup: any = [];
+  serviceGalleryPopup: any = [];
   busname: any;
   serviceid: string;
   accountEncId: string;
@@ -123,7 +123,7 @@ export class ServiceViewComponent implements OnInit {
   showmoreDesc = false;
   server_date;
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
-  buttonCaption = Messages.GET_TOKEN;
+  buttonCaption = '';
   changedate_req = false;
   userType: any;
   activeUser: any;
@@ -145,6 +145,7 @@ export class ServiceViewComponent implements OnInit {
   showpreinfo = false;
   showpostinfo = false;
   checkavailabilitydialogref: any;
+  extra_service_img_count: number;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public shared_services: SharedServices,
@@ -413,6 +414,8 @@ export class ServiceViewComponent implements OnInit {
             this.is_donation_serv =true;
             this.servicename = this.donationServicesjson[dIndex]['name'];
             this.servicedetails = this.donationServicesjson[dIndex];
+            console.log("Donation:");
+            this.setServiceGallery(this.servicedetails);
           }
         }
         break;
@@ -434,6 +437,24 @@ export class ServiceViewComponent implements OnInit {
         break;
       }
     }
+  }
+  setServiceGallery(servicedetails: any) {
+    console.log(servicedetails);
+    this.serviceGalleryPopup = [];
+    if (servicedetails.servicegallery && servicedetails.servicegallery.length > 0) {
+      if (servicedetails.servicegallery.length > 5) {
+        this.extra_service_img_count = servicedetails.servicegallery.length - 5;
+      }
+        for (let i = 0; i < servicedetails.servicegallery.length; i++) {
+          const imgobj = new Image(
+            i,
+            { // modal
+              img: servicedetails.servicegallery[i].url,
+              description: servicedetails.servicegallery.caption || ''
+            });
+          this.serviceGalleryPopup.push(imgobj);
+        }
+      }
   }
   showDesc() {
     if (this.showmoreDesc) {
@@ -545,6 +566,8 @@ export class ServiceViewComponent implements OnInit {
           if (_this.wlServices[aptIndex]['id'] == _this.serviceid && _this.wlServices[aptIndex].serviceAvailability) {
             _this.servicename = _this.wlServices[aptIndex]['name'];
             _this.servicedetails = _this.wlServices[aptIndex];
+            console.log("Waitlist:");
+            _this.setServiceGallery(_this.servicedetails);
             console.log("detailswait" + JSON.stringify(_this.servicedetails));
            if (_this.servicedetails.serviceAvailability['personAhead'] >= 0) {
             _this.personsAheadText = 'People in line : ' + _this.servicedetails.serviceAvailability['personAhead'];
@@ -573,7 +596,8 @@ export class ServiceViewComponent implements OnInit {
                 _this.servicename = _this.apptServices[aptIndex]['name'];
                 _this.servicedetails = _this.apptServices[aptIndex];
                 console.log("details" + JSON.stringify(_this.servicedetails));
-
+                console.log("Appt:");
+                _this.setServiceGallery(_this.servicedetails);
                 _this.getduration(_this.servicedetails);
                 if (_this.servicedetails.serviceAvailability['nextAvailable']) {
                   _this.timingCaptionapt = 'Next Available Time';
@@ -583,9 +607,9 @@ export class ServiceViewComponent implements OnInit {
                   _this.deptname = _this.apptServices[aptIndex]['deptName'];
                 }
               }
-              console.log("Service Images :",_this.apptServices[aptIndex]['servicegallery']);
-              this.images  = _this.apptServices[aptIndex]['servicegallery'];
-              console.log("List Images : ",this.images)
+              // console.log("Service Images :",_this.apptServices[aptIndex]['servicegallery']);
+              // this.images  = _this.apptServices[aptIndex]['servicegallery'];
+              // console.log("List Images : ",this.images)
 
             }
             console.log("",_this.apptServices);
@@ -774,13 +798,14 @@ export class ServiceViewComponent implements OnInit {
       this.showDepartments = true;
     }
   }
-  openImageModalRow(image: Image) {
-    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+  openImageModalRow(image: Image, gallery, index) {
+    console.log("openImageModalRow", gallery);
+    // const index: number = this.getCurrentIndexCustomLayout(image, gallery);
     this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
   }
-  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
-    return image ? images.indexOf(image) : -1;
-  }
+  // private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+  //   return image ? images.indexOf(image) : -1;
+  // }
   onButtonBeforeHook() {
   }
   onButtonAfterHook() { }
@@ -877,7 +902,7 @@ export class ServiceViewComponent implements OnInit {
       this.searchdetailserviceobj.getUserApptTime(post_provids_locid)
         .subscribe(data => {
           this.appttime_arr = data;
-          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
           const today = new Date(todaydt);
           const dd = today.getDate();
           const mm = today.getMonth() + 1; // January is 0!
@@ -949,6 +974,7 @@ export class ServiceViewComponent implements OnInit {
         });
   }
   getButtontype(item) {
+    console.log("getButtontype:",item);
     if (item.type == 'waitlist') {
       if (item.item.serviceAvailability['showToken']) {
         this.buttonCaption = Messages.GET_TOKEN;
@@ -990,11 +1016,12 @@ export class ServiceViewComponent implements OnInit {
   opencheckavail(actionObj) {
       this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
         width: '100%',
-        panelClass: ['commonpopupmainclass', 'popup-class', 'availability-container', this.theme],
+        panelClass: ['loginmainclass', 'popup-class', this.theme],
         height: 'auto',
         data: {
         alldetails:actionObj,
         apptSettingsJson:this.apptSettingsJson,
+        domain: this.businessjson.serviceSector.domain
         }
       });
 
@@ -1032,7 +1059,7 @@ export class ServiceViewComponent implements OnInit {
       service.serviceAvailability.availableDate=location.date
     }
 
-    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
     const mm = today.getMonth() + 1; // January is 0!
@@ -1087,7 +1114,7 @@ export class ServiceViewComponent implements OnInit {
       current_provider['cdate']=location.date
       service.serviceAvailability.nextAvailableDate=location.date
     }
-    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
     const mm = today.getMonth() + 1; // January is 0!
@@ -1320,7 +1347,7 @@ export class ServiceViewComponent implements OnInit {
     });
   }
   getAvailibilityForCheckin(date, serviceTime) {
-    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
     const mm = today.getMonth() + 1; // January is 0!
@@ -1346,7 +1373,7 @@ export class ServiceViewComponent implements OnInit {
     }
   }
   getAvailabilityforAppt(date, time) {
-    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
     const mm = today.getMonth() + 1; // January is 0!
@@ -1410,6 +1437,31 @@ export class ServiceViewComponent implements OnInit {
       this.showpostinfo = false;
     } else {
       this.showpostinfo = true;
+    }
+  }
+  cardClicked(actionObj) {
+    console.log('entering into Service page');
+    console.log(actionObj);
+    if (actionObj['type'] === 'waitlist') {
+      if (actionObj['action'] === 'view') {
+        // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
+      } else {
+        this.checkinClicked(actionObj['location'], actionObj['service']);
+      }
+    } else if (actionObj['type'] == 'checkavailability') {
+      this.opencheckavail(actionObj);
+    } else if (actionObj['type'] === 'appt') {
+      if (actionObj['action'] === 'view') {
+        // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
+      } else {
+        this.appointmentClicked(actionObj['location'], actionObj['service']);
+      }
+    } else if (actionObj['type'] === 'donation') {
+      if (actionObj['action'] === 'view') {
+        // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
+      } else {
+        this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
+      }
     }
   }
 }

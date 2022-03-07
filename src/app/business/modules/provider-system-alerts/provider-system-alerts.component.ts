@@ -11,9 +11,11 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 @Component({
   selector: 'app-provider-system-alerts',
-  templateUrl: './provider-system-alerts.component.html'
+  templateUrl: './provider-system-alerts.component.html',
+  styleUrls: ['./provider-system-alerts.component.css']
 })
 export class ProviderSystemAlertComponent implements OnInit {
   tooltipcls = '';
@@ -40,7 +42,7 @@ export class ProviderSystemAlertComponent implements OnInit {
   holdalertSelAck = null;
   holdalertStartdate = null;
   holdalertEnddate = null;
-  filterapplied = true;
+  filterapplied = false;
   filter_sidebar = false;
   open_filter = false;
   api_loading = true;
@@ -67,7 +69,9 @@ export class ProviderSystemAlertComponent implements OnInit {
     public date_format: DateFormatPipe,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
-    private dateTimeProcessor: DateTimeProcessor
+    private dateTimeProcessor: DateTimeProcessor,
+    private shared_functions: SharedFunctions,
+    private lStorageService: LocalStorageService,
   ) { }
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -225,4 +229,27 @@ export class ProviderSystemAlertComponent implements OnInit {
   hideFilterSidebar() {
     this.filter_sidebar = false;
   }
+  keyPressed(){
+
+    this.shared_functions.setFilter();
+    this.lStorageService.removeitemfromLocalStorage('filter');
+
+    if (this.alertStartdate || this.alertEnddate || this.ackStatus || this.notAckStatus) {
+      this.filterapplied = true;
+    } else {
+      this.filterapplied = false;
+    }
+    
+  }
+  // setFilterDataCheckbox(type, value, event) {
+  //   this.filter[type] = value;
+  //   const indx = this.services.indexOf(value);
+  //   if (indx === -1) {
+  //     this.services.push(value);
+  //   } else {
+  //     this.services.splice(indx, 1);
+  //   }
+  //   // this.doSearch();
+  //   this.keyPressed()
+  // }
 }

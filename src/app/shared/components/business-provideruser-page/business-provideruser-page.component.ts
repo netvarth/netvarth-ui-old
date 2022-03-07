@@ -3,7 +3,6 @@ import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { Messages } from '../../constants/project-messages';
-import { projectConstants } from '../../../app.component';
 import { MatDialog } from '@angular/material/dialog';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
@@ -164,7 +163,7 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
   itemQty: number;
   activeCatalog: any;
   qrdialogRef;
-  wndw_path = projectConstants.PATH;
+  wndw_path = projectConstantsLocal.PATH;
   apptSettingsJson: any = [];
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
@@ -883,7 +882,7 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
           this.customAppIOSPopup.nativeElement.style.display = 'block';
         }
       }
-      // const path = this.customAppSerice.getManifest(res, projectConstantsLocal.UIS3PATH + this.provider_id, projectConstants.PATH);
+      // const path = this.customAppSerice.getManifest(res, projectConstantsLocal.UIS3PATH + this.provider_id, projectConstantsLocal.PATH);
       if (this.pwaEnabled) {
         const path = projectConstantsLocal.UIS3PATH + this.provider_id + '/manifest.json';
         document.getElementById('dynamic_manifest_url').setAttribute('href', path);
@@ -1294,7 +1293,7 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
       this.searchdetailserviceobj.getUserApptTime(post_provids_locid)
         .subscribe(data => {
           this.appttime_arr = data;
-          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
           const today = new Date(todaydt);
           const dd = today.getDate();
           const mm = today.getMonth() + 1; // January is 0!
@@ -1339,7 +1338,7 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
       this.searchdetailserviceobj.getUserEstimatedWaitingTime(post_provids)
         .subscribe(data => {
           this.waitlisttime_arr = data;
-          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+          const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
           const today = new Date(todaydt);
           const dd = today.getDate();
           const mm = today.getMonth() + 1; // January is 0!
@@ -1602,7 +1601,7 @@ console.log("fgf"+JSON.stringify(loc));
   }
   getDateDisplay(dt) {
     let str = '';
-    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
     const mm = today.getMonth() + 1; // January is 0!
@@ -1715,7 +1714,7 @@ console.log("fgf"+JSON.stringify(loc));
   showCommunicate(provid) {
     this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'loginmainclass', 'smallform'],
       disableClose: true,
       data: {
         caption: 'Enquiry',
@@ -1745,7 +1744,7 @@ console.log("fgf"+JSON.stringify(loc));
       current_provider['cdate']=location.date
       service.serviceAvailability.availableDate=location.date
     }
-    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
     const mm = today.getMonth() + 1; // January is 0!
@@ -1801,7 +1800,7 @@ console.log("fgf"+JSON.stringify(loc));
       current_provider['cdate']=location.date
       service.serviceAvailability.nextAvailableDate=location.date
     }
-    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
     const mm = today.getMonth() + 1; // January is 0!
@@ -2205,7 +2204,7 @@ console.log("fgf"+JSON.stringify(loc));
     return this.dateTimeProcessor.convertMinutesToHourMinute(min);
   }
   getAvailibilityForCheckin(date, serviceTime) {
-    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
     const mm = today.getMonth() + 1; // January is 0!
@@ -2231,7 +2230,7 @@ console.log("fgf"+JSON.stringify(loc));
     }
   }
   getAvailabilityforAppt(date, time) {
-    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
     const mm = today.getMonth() + 1; // January is 0!
@@ -2312,11 +2311,12 @@ console.log("fgf"+JSON.stringify(loc));
     // }else {
       this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
         width: '100%',
-        panelClass: ['commonpopupmainclass', 'popup-class', 'availability-container', this.theme],
+        panelClass: ['loginmainclass', 'popup-class', this.theme],
         height: 'auto',
         data: {
         alldetails:actionObj,
         apptSettingsJson:this.apptSettingsJson,
+        domain: this.businessjson.serviceSector.domain
         }
       });
     // }

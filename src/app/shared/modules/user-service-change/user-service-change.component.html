@@ -24,16 +24,16 @@
   </div>
 </section>
 <aside class="app-user-service-change-component filterSidebar filter-sidebar user-filter" *ngIf="filter_sidebar">
-  <section class="sidebar filter-container" id="filterContainer" style="overflow:auto;" 
-    [ngStyle]="{'height.vh': 90, 'margin-top.px': filterapplied === true ? 95 : 44}">
-    <div class="filterClosebtn filter-head">
+  <section class="sidebar sidebar-bottom checkfilter filter-container" id="filterContainer"  >
+    <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
       <!-- <span *ngIf="filterapplied === true" class="clearFilter reset-filter" (click)="clearFilter()" [matTooltip]="'Reset filter'">
         Reset
       </span> -->
       <span class="filter-head-title">Filters</span>
       <i class="icon-filter-one-op ng-star-inserted closeFilter" (click)="hideFilterSidebar()"
-        [matTooltip]="'Close filter sidebar'"></i>
+      [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'" ></i>
     </div>
+    <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
     <ul class="sidebar-menu accordion" id="accordion1">
       <div class="card">
         <div class="card-header">
@@ -43,14 +43,14 @@
                 <div style="display: inline-block !important;">
                   <i class="fa fa-user-md"></i>
                 </div>
-                Name
+                <span>&nbsp;Name</span>
               </div>
               <i class="fa fa-angle-down"></i>
             </button>
           </h2>
         </div>
         <div id="collapseName1" class="collapse in" data-parent="#accordion1">
-          <div class="card-body">
+          <div class="card-body" style="padding:0px !important">
             <div class="filterTextinput filter-text-input">
               <li class="filterli filter-li">
                 <input type="text" id="firstName" [(ngModel)]="filter.firstName" #firstName
@@ -74,14 +74,14 @@
                 <div style="display: inline-block !important;">
                   <i class="fa fa-location-arrow"></i>
                 </div>
-                Pincode
+              <span>&nbsp; Pincode</span>
               </div>
               <i class="fa fa-angle-down"></i>
             </button>
           </h2>
         </div>
         <div id="collapsePin1" class="collapse in" data-parent="#accordion1">
-          <div class="card-body">
+          <div class="card-body" style="padding:0px !important">
             <div class="filterTextinput filter-text-input">
               <li class="filterli filter-li">
                 <input type="text" id="pincode" [(ngModel)]="filter.pincode" #pincode 
@@ -99,14 +99,14 @@
                 <div style="display: inline-block !important;">
                   <i class="fa fa-map-marker"></i>
                 </div>
-                Residing Location
+                <span>&nbsp;  Residing Location</span>
               </div>
               <i class="fa fa-angle-down"></i>
             </button>
           </h2>
         </div>
         <div id="collapseLocation1" class="collapse in" data-parent="#accordion1">
-          <div class="card-body">
+          <div class="card-body" style="padding:0px !important">
             <div class="filterTextinput filter-text-input">
               <li class="filterli filter-li">
                 <input type="text" id="city" [(ngModel)]="filter.city" #city
@@ -132,14 +132,14 @@
                 <div style="display: inline-block !important;">
                   <i class="fa fa-clock-o"></i>
                 </div>
-                Availability
+                <span>&nbsp; Availability</span>
               </div>
               <i class="fa fa-angle-down"></i>
             </button>
           </h2>
         </div>
         <div id="collapseAvailable1" class="collapse in" data-parent="#accordion1">
-          <div class="card-body">
+          <div class="card-body" style="padding:0px !important">
             <div class="filterTextinput filter-checkbox-input">
               <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
               </li>
@@ -170,14 +170,14 @@
                 <div style="display: inline-block !important;">
                   <i class="fa fa-phone"></i>
                 </div>
-                Phone Number
+               <span>&nbsp;Phone Number</span>
               </div>
               <i class="fa fa-angle-down"></i>
             </button>
           </h2>
         </div>
         <div id="collapsePhone1" class="collapse in" data-parent="#accordion1">
-          <div class="card-body">
+          <div class="card-body" style="padding:0px !important">
             <div class="filterTextinput filter-text-input">
               <li class="filterli filter-li">
                 <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo" #primaryMobileNo
@@ -191,19 +191,19 @@
       <div class="card">
         <div class="card-header">
           <h2 class="mb-0">
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePhone1" aria-expanded="false">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseEmployeeId" aria-expanded="false">
               <div>
                 <div style="display: inline-block !important;">
                   <i class="fa fa-bookmark"></i>
                 </div>
-                Employee ID
+               <span>&nbsp; Employee ID</span>
               </div>
               <i class="fa fa-angle-down"></i>
             </button>
           </h2>
         </div>
-        <div id="collapsePhone1" class="collapse in" data-parent="#accordion1">
-          <div class="card-body">
+        <div id="collapseEmployeeId" class="collapse in" data-parent="#accordion1">
+          <div class="card-body" style="padding:0px !important">
             <div class="filterTextinput filter-text-input">
               <li class="filterli filter-li">
                 <input type="text" id="employeeId" [(ngModel)]="filter.employeeId" #primaryMobileNo
@@ -222,14 +222,14 @@
                 <div style="display: inline-block !important;">
                   <i class="fa fa-envelope"></i>
                 </div>
-                Email
+              <span>&nbsp;Email</span>
               </div>
               <i class="fa fa-angle-down"></i>
             </button>
           </h2>
         </div>
         <div id="collapseEmail1" class="collapse in" data-parent="#accordion1">
-          <div class="card-body">
+          <div class="card-body" style="padding:0px !important">
             <div class="filterTextinput filter-text-input">
                 <li class="filterli filter-li">
                     <input type="text" id="email" [(ngModel)]="filter.email"
@@ -248,17 +248,17 @@
                 <div style="display: inline-block !important;">
                   <i class="fa fa-language"></i>
                 </div>
-                Languages
+                <span>&nbsp; Languages </span>
               </div>
               <i class="fa fa-angle-down"></i>
             </button>
           </h2>
         </div>
         <div id="collapseLanguages1" class="collapse" data-parent="#accordion1">
-          <div class="card-body">
+          <div class="card-body" style="padding:0px !important">
             <div class="filterTextinput filter-checkbox-input">
               <!-- <label class="filterHeaders">Languages</label> -->
-              <li class="filterli">
+              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                 <mat-checkbox *ngFor="let language of languages_arr" class="filter-checkbox"
                   [checked]="selectedLanguages.indexOf(language.name) !== -1"
                   (change)="setFilterDataCheckbox('languages', language.name)">
@@ -276,17 +276,17 @@
                 <div style="display: inline-block !important;">
                   <i class="fas fa-user-tag"></i>
                 </div>
-                Specializations
+                 <span>&nbsp; Specializations</span>
               </div>
               <i class="fa fa-angle-down"></i>
             </button>
           </h2>
         </div>
         <div id="collapseSpecializations1" class="collapse" data-parent="#accordion1">
-          <div class="card-body">
+          <div class="card-body" style="padding:0px !important">
             <div class="filter-checkbox-input">
               <!-- <label class="filterHeaders">Specializations</label> -->
-              <li class="filterli">
+              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                 <mat-checkbox *ngFor="let special of specialization_arr" class="filter-checkbox"
                   [checked]="selectedSpecialization.indexOf(special.name) !== -1"
                   (change)="setFilterDataCheckbox('specializations', special.name)">
@@ -304,17 +304,17 @@
                 <div style="display: inline-block !important;">
                   <i class="fa fa-language"></i>
                 </div>
-                Business Locations
+                 <span>&nbsp; Business Locations </span>
               </div>
               <i class="fa fa-angle-down"></i>
             </button>
           </h2>
         </div>
         <div id="collapseLocation2" class="collapse" data-parent="#accordion1">
-          <div class="card-body">
+          <div class="card-body" style="padding:0px !important">
             <div class="filterTextinput filter-checkbox-input">
                 <!-- <label class="filterHeaders">Languages</label> -->
-                <li class="filterli">
+                <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                     <mat-checkbox *ngFor="let loc of loc_list" class="filter-checkbox"
                         [checked]="selectedLocations.indexOf(loc.id) !== -1"
                         (change)="setFilterDataCheckbox('location', loc.id)">

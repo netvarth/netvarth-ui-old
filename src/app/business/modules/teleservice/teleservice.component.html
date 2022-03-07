@@ -52,7 +52,7 @@
                                     <i class="fa fa-language icon"></i>
                                     <span class="sub-texts">{{data.waitlistingFor[0].preferredLanguage}}</span>
                                 </div>
-                                <div class="location-place" *ngIf="data.waitlistingFor[0].bookingLocation">
+                                <div class="location-place" *ngIf="data.waitlistingFor[0].bookingLocation && (data.waitlistingFor[0].bookingLocation.localArea || data.waitlistingFor[0].bookingLocation.district)">
                                     <i class="fa fa-map-marker icon"></i>
                                     <span class="sub-texts">{{data.waitlistingFor[0].bookingLocation.localArea}},
                                         {{data.waitlistingFor[0].bookingLocation.district}}</span>
@@ -95,7 +95,7 @@
                                     <i class="fa fa-language icon"></i>
                                     <span class="sub-texts">{{data.appmtFor[0].preferredLanguage}}</span>
                                 </div>
-                                <div class="location-place" *ngIf="data.appmtFor[0].bookingLocation">
+                                <div class="location-place" *ngIf="data.appmtFor[0].bookingLocation && (data.appmtFor[0].bookingLocation.localArea || data.appmtFor[0].bookingLocation.district)">
                                     <i class="fa fa-map-marker icon"></i>
                                     <span class="sub-texts">{{data.appmtFor[0].bookingLocation.localArea}},
                                         {{data.appmtFor[0].bookingLocation.district}}</span>
@@ -176,12 +176,29 @@
                                         </div>
                                     </div>
                                     <div class="mgn-up-20 call-inst" *ngIf="callingModes === 'WhatsApp'">
-                                        You can call the {{customer_label}} directly at
-                                        {{data.virtualService['WhatsApp']}}
+                                        <!-- You can call the {{customer_label}} directly at
+                                        +{{data.virtualService['WhatsApp']}} -->
+                                        <div  *ngIf=" data.virtualService[data.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                                            You can call the {{customer_label}} directly at
+                                            {{data.virtualService['WhatsApp']}}
+                                        </div>
+                                        <div  *ngIf="! data.virtualService[data.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                                            You can call the {{customer_label}} directly at
+                                            +{{data.virtualService['WhatsApp']}}
+                                        </div>
                                     </div>
                                     <div class="mgn-up-20 call-inst" *ngIf="callingModes === 'Phone'">
-                                        You can call the {{customer_label}} directly at
-                                        +{{data.virtualService['Phone']}}
+                                        <div  *ngIf=" data.virtualService[data.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                                            You can call the {{customer_label}} directly at
+                                            {{data.virtualService['Phone']}}
+                                        </div>
+                                        <div  *ngIf="! data.virtualService[data.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                                            You can call the {{customer_label}} directly at
+                                            +{{data.virtualService['Phone']}}
+                                        </div>
+
+                                        <!-- You can call the {{customer_label}} directly at
+                                        +{{data.virtualService['Phone']}} -->
                                     </div>
                                 </div>
                                 <!--Content box with Reminder,meeting details,Customer details(btns) -->

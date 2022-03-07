@@ -318,7 +318,7 @@ export class DisplayboardDetailComponent implements OnInit {
         console.log("Layout : ", navigationExtras);
         // if (source) {
         //     const path = 'displayboard/' + layout.id + '?type=wl';
-        //     // const path = projectConstants.PATH + 'displayboard/' + layout.id + '?type=wl';
+        //     // const path = projectConstantsLocal.PATH + 'displayboard/' + layout.id + '?type=wl';
         //     window.open(path, '_blank');
         // }
 

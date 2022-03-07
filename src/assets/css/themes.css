@@ -1,14 +1,21 @@
-.heartfulness_theme1 .panel, 
+.heartfulness_theme1 .panel,.heartfulness_theme1 .panel-default,
 .heartfulness_theme1 .serv-head.service-serv-head,
 .heartfulness_theme1 mat-toolbar  {
     background: #522e5a 0% 0% no-repeat padding-box !important; 
     background-color: transparent !important; 
+    border-color: transparent !important; 
 }
 .heartfulness_theme1 mat-sidenav {
   background: #522e5a 0% 0% no-repeat padding-box !important; 
 }
-.heartfulness_theme1 .mat-button {
-    background-color: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+.heartfulness_theme1.consumer-dashhome  .c-checkins .ng-tns-c16-8 .find-sp-btn,
+.heartfulness_theme1.consumer-dashhome .consumer-dash .flat-icon-btn,
+.heartfulness_theme1.consumer-dashhome .consumer-dash .c-checkins .ng-tns-c16-8 .flat-btn, table .flat-btn {
+  background: #522e5a 0% 0% no-repeat padding-box !important; 
+}
+.heartfulness_theme1 .mat-button, .heartfulness_theme1 .getappointmentbutton {
+    background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
+    border:none !important;
   }
   .heartfulness_theme1 .panel-heading.top-row {
     background: #522e5a 0% 0% no-repeat padding-box !important;
@@ -16,15 +23,26 @@
   }
   .heartfulness_theme1 { 
     background-image: url(../images/heartfulness/BG.jpg) !important; 
-    background-repeat: no-repeat  !important; ;
-    background-attachment: fixed  !important; ;
-    background-size: 100% 100%  !important; ;
+    background-repeat: no-repeat  !important; 
+    background-attachment: fixed  !important; 
+    background-size: 100% 100%  !important;
+    /* color: #fff !important; */
   }
-  .heartfulness_theme1 .serv-head.service-serv-head {
+  .heartfulness_theme1 .bus-item-N, .heartfulness_theme1 h3, .heartfulness_theme1 mat-label,
+  .heartfulness_theme1 .right-menu-header, .heartfulness_theme1 .back-btn i{ 
     color: #fff !important;
   }
-  .heartfulness_theme1 .serv-head.service-serv-head h5 {
+  .heartfulness_theme1 .serv-head.service-serv-head, .heartfulness_theme1 .mat-tab-label,
+  .heartfulness_theme1 .serv-head.service-serv-head h5, .heartfulness_theme1 .mat-select-value,
+  .heartfulness_theme1.bus-page .dept-title-h4,.heartfulness_theme1 .lgmem .lgin,
+  .heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .bus-actions .message a,
+  .heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .bus-actions .share a {
     color: #fff !important;
+  }
+  .heartfulness_theme1 .checkavailabilitybutton {
+    color: #eee !important;
+    background-color: rgba(224,152,208,1) !important;
+    border:none !important;
   }
   .heartfulness_theme1.bus-page .dept-title-h4.department-title {
     text-decoration: none !important;
@@ -37,13 +55,6 @@
     font-style: normal !important;
     background-color: transparent !important;
   }
-  .heartfulness_theme1.bus-page .dept-title-h4  {
-      color: #fff  !important;
-  }
-  .heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .bus-actions .message a,
-  .heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .bus-actions .share a{
-color:#fff !important;
-  }
   .heartfulness_theme1 .modal-header .service-detail-header{
     background: #522e5a 0% 0% no-repeat padding-box !important;
     font-size: 1.25rem !important;
@@ -53,6 +64,7 @@ color:#fff !important;
   .heartfulness_theme1 .c-checkin-new  a.changeitem, .heartfulness_theme1.c-checkin-new .btns .lnk.action i {
     color:#522e5a !important
   }
+
   .heartfulness_theme1.c-checkin-new .btns .lnk.action{
     font-size: 0.8rem !important;
     color:#522e5a !important
@@ -61,9 +73,6 @@ color:#fff !important;
     font-size: 2rem !important;
     color:#522e5a !important;
     font-weight: 700 !important;
-}
-.heartfulness_theme1 .lgmem .lgin{
-  color:#fff !important;
 }
 .heartfulness_theme1 button.next-button {
   border: 0 !important;
@@ -75,7 +84,7 @@ color:#fff !important;
   box-shadow: 15px 15px 40px #DBA8C4;
   opacity: 1;
 }
-.heartfulness_theme1 .quest-head{
+.heartfulness_theme1 .quest-head, .content.bus-page.heartfulness_theme1 .bus-page-header .bus-title-content .business-name{
   color:#522e5a !important;
 }
 .heartfulness_theme1 .bookdetails {
@@ -106,7 +115,13 @@ color:#fff !important;
 .heartfulness_theme1 .tab-selected .step-icon {
   background:#522e5a !important;
 }
-
+.heartfulness_theme1 .title-gb {
+  background:#522e5a !important;
+  color: #fff !important;
+}
+.heartfulness_theme1 .bus-item-N {
+border: 2px solid #ddd !important;
+}
 .heartfulness_theme1.custom-login-form {
   background-image: none !important;
 }
@@ -168,7 +183,8 @@ color:#fff !important;
   margin-left: 0 !important;
 }
 
-.heartfulness_theme1.c-checkin-new .panel-heading i.fa.fa-arrow-left {
+.heartfulness_theme1.c-checkin-new .panel-heading i.fa.fa-arrow-left,
+.heartfulness_theme1 .panel-heading i.fa.fa-arrow-left {
   color: white !important;
 }
 
@@ -176,8 +192,10 @@ color:#fff !important;
   background-color: white !important;
 }
 
-.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .business-name, .content.bus-page .bus-page-header .bus-title-content .business-user-name,
-.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .business-name, .content.bus-page .bus-page-header .bus-title-content .business-user-name,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .business-name,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .business-user-name,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .business-name,
+.heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .business-user-name,
 .heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1
 .heartfulness_theme1 .question-value1, .question-valuearr,
 .heartfulness_theme1.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1,
@@ -257,7 +275,9 @@ footer.heartfulness_theme1.bus-page-footer.site-footer .footer-bottom .footer-li
 .heartfulness_theme1.c-checkin-new .primary-color {
   color: #522e5a !important;
 }
-
+.heartfulness_theme1 .ok-btn span{
+  background: #522e5a 0% 0% no-repeat padding-box !important;
+}
 .heartfulness_theme1 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
   border-color: #59345D !important;
 }
@@ -268,4 +288,288 @@ footer.heartfulness_theme1.bus-page-footer.site-footer .footer-bottom .footer-li
 
 .heartfulness_theme1 .c-checkin-new .lnk a {
   color: #59345D !important;
+}
+.heartfulness_theme1 .mat-tab-label {
+  color:black;
+}
+
+.mediExpat .panel, 
+.mediExpat .serv-head.service-serv-head,
+.mediExpat mat-toolbar  {
+    background: #FD7029 0% 0% no-repeat padding-box !important; 
+    background-color: transparent !important; 
+}
+.mediExpat mat-sidenav {
+  background: #FD7029 0% 0% no-repeat padding-box !important; 
+}
+.mediExpat .mat-button, .mediExpat .getappointmentbutton {
+    background: linear-gradient(45deg, #FD7029 0%, #FD7029 100%) !important;
+    border-color: #FD7029 !important;
+  }
+  .mediExpat .panel-heading.top-row {
+    background: #FD7029 0% 0% no-repeat padding-box !important;
+    height: 50px !important;
+  }
+  .mediExpat { 
+    /* background-image: url(../images/heartfulness/BG.jpg) !important;  */
+    /* background: #FD7029; */
+    background-repeat: no-repeat  !important; 
+    background-attachment: fixed  !important; 
+    background-size: 100% 100%  !important;
+    /* color: #fff !important; */
+  }
+  /* .mediExpat .serv-head.service-serv-head, .mediExpat .mat-tab-label,
+  .mediExpat .serv-head.service-serv-head h5, .mediExpat .mat-select-value,
+  .mediExpat.bus-page .dept-title-h4,.mediExpat .lgmem .lgin,
+  .mediExpat.content.bus-page .bus-page-header .bus-title-content .bus-actions .message a,
+  .mediExpat.content.bus-page .bus-page-header .bus-title-content .bus-actions .share a {
+    color: #fff !important;
+  } */
+  .mediExpat .checkavailabilitybutton {
+    color: #6c4e4e !important;
+    background-color: #f8f9fa !important;
+  }
+  .mediExpat.bus-page .dept-title-h4.department-title {
+    text-decoration: none !important;
+    padding: 12px 15px !important;
+    text-transform: capitalize !important;
+    font-size: 19px !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    text-align: left !important;
+    font-style: normal !important;
+    background-color: transparent !important;
+  }
+  .mediExpat .modal-header .service-detail-header{
+    background: #FD7029 0% 0% no-repeat padding-box !important;
+    font-size: 1.25rem !important;
+    color: #fff !important;
+    font-weight: 500 !important;
+
+  }
+  .mediExpat .ok-btn span{
+    background: #FD7029 0% 0% no-repeat padding-box !important;
+  }
+  .mediExpat .c-checkin-new  a.changeitem, .mediExpat.c-checkin-new .btns .lnk.action i,   .mediExpat .ok-btn span{
+    color:#FD7029 !important
+  }
+  .mediExpat.c-checkin-new .btns .lnk.action{
+    font-size: 0.8rem !important;
+    color:#FD7029 !important
+  }
+  .mediExpat.c-checkin-new .card-title.serv-time {
+    font-size: 2rem !important;
+    color:#FD7029 !important;
+    font-weight: 700 !important;
+}
+.mediExpat button.next-button {
+  border: 0 !important;
+  border-radius: 30px !important;
+  height: 50px !important;
+  padding: 10px 30px !important;
+  color:#fff!important;
+  background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #FD7029 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 15px 15px 40px #DBA8C4;
+  opacity: 1;
+}
+.mediExpat .quest-head{
+  color:#FD7029 !important;
+}
+.mediExpat .bookdetails {
+  margin-bottom: 20px;
+  width: 100%;
+  color:#FD7029 !important;
+  line-height: 2;
+}
+.mediExpat .containerAppt {
+  font-size: 1.7rem;
+  margin: auto;
+  color:#FD7029 !important;
+  font-weight: bold;
+  margin-bottom: 20px;
+  border: 1px solid #00008b26;
+  box-shadow: 0px 0px 2px 2px #c29179;
+}
+.mediExpat table.bookdetails {
+  margin-bottom: 20px;
+  width: 100%;
+  color:#c29179 !important;
+  line-height: 2;
+}
+.mediExpat  .tab-selected h3,
+.mediExpat .tab-selected i {
+  color:#FD7029 !important;
+}
+.mediExpat .tab-selected .step-icon {
+  background:#FD7029 !important;
+}
+
+.heartfulness_theme1.custom-login-form {
+  background-image: none !important;
+}
+
+.mediExpat.forgot-password-component {
+  background-image: none !important;
+}
+
+.mediExpat.custom-sp-form {
+  background-image: none !important;
+}
+
+.mediExpat.custom-login-form.login-form .mat-dialog-title,
+.mediExpat.custom-login-form .mat-dialog-title,
+.mediExpat .custom-login-form.mat-dialog-title {
+  background: #c29179 0% 0% no-repeat padding-box !important;
+  background-color: #FD7029 !important;
+}
+
+.mediExpat.custom-login-form button,
+.mediExpat.custom-login-form .go-back,
+.mediExpat.forgot-password-component button,
+.mediExpat.forgot-password-component .back-button,
+.mediExpat.custom-sp-form button {
+  background: transparent radial-gradient(closest-side at 15% 0%, #E7B7C8 0%, #FD7029 100%) 0% 0% no-repeat padding-box !important;
+  box-shadow: 15px 15px 40px #dba8c4 !important;
+}
+
+.mediExpat.c-checkin-new button.hf-btn,
+.mediExpat.confirm-aptckn .ok-btn span.hf-btn {
+  background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #FD7029 100%) 0% 0% no-repeat padding-box !important;
+  box-shadow: 15px 15px 40px #DBA8C4 !important;
+  opacity: 1 !important;
+  border-radius: 32px !important;
+  border: none !important;
+}
+
+.mediExpat.card.booking-card.service {
+  background-image: none !important;
+}
+
+.mediExpat.card.booking-card.service .hf-btn {
+  background: transparent radial-gradient(closest-side at 15% 0%, #E7B7C8 0%, #FD7029 100%) 0% 0% no-repeat padding-box !important;
+  box-shadow: 15px 15px 40px #dba8c4 !important;
+  border: none !important;
+  color: white !important;
+}
+.mediExpat.c-checkin-new .hf-double-btn-container {
+  padding-bottom: 35px !important;
+  justify-content: space-between !important;
+  display: flex !important;
+  margin-left: 0 !important;
+}
+
+.mediExpat.c-checkin-new .hf-single-btn-container {
+  padding-bottom: 35px !important;
+  justify-content: center !important;
+  display: flex !important;
+  margin-left: 0 !important;
+}
+
+.mediExpat.c-checkin-new .panel-heading i.fa.fa-arrow-left {
+  color: white !important;
+}
+
+.mediExpat.c-checkin-new .hf-panel-body {
+  background-color: white !important;
+}
+
+.mediExpat.content.bus-page .bus-page-header .bus-title-content .business-name, 
+.mediExpat.content.bus-page .bus-page-header .bus-title-content .business-user-name,
+.mediExpat.content.bus-page .bus-page-header .bus-title-content .business-name, 
+.mediExpat.content.bus-page .bus-page-header .bus-title-content .business-user-name,
+.mediExpat.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1
+.mediExpat .question-value1, .question-valuearr,
+.mediExpat.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1,
+.mediExpat.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1 .more,
+.mediExpat.content.bus-page .bus-page-header .bus-title-content .specialization-value.question-value1,
+.mediExpat.content.bus-page .bus-page-header .bus-title-content .showmoresec .question-main-outer .question-value1,
+.mediExpat.content.bus-page .bus-page-header .bus-title-content .showmoresec .question-main-outer .question-valuearr .virtual-field-ul .vfield-row,
+.mediExpat.content.bus-page .bus-page-header .bus-title-content.showmoresec .question-main-outer .question-value1 .badges li
+.mediExpat ul.details.badges li
+{
+color: #fff !important;
+}
+.mediExpat.content.bus-page .bus-page-header .bus-title-content .specialization-header.question-header,
+.mediExpat.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-header,
+.mediExpat.content.bus-page .bus-page-header .bus-title-content .bus-actions .more-less-button a
+{
+color: #aaa !important;
+
+}
+.mediExpat.content.bus-page .bus-page-header .bus-title-content .address h6 a {
+color: #fff !important;
+}
+.mediExpat.content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions {
+  background-color: transparent !important;
+}
+
+.mediExpat.content.bus-page .bus-page-header .panel-heading .dashboard-btn {
+  color: white !important;
+}
+
+footer.mediExpat.bus-page-footer.site-footer {
+  background-color: #FD7029 !important;
+  background-image: none !important;
+  border-bottom: 10px solid #c29179 !important;
+}
+
+footer.mediExpat.bus-page-footer.site-footer .footer-bottom {
+  border: none !important;
+}
+
+footer.mediExpat.bus-page-footer.site-footer .footer-bottom .footer-links {
+  color: white !important;
+  margin: 0 !important;
+}
+
+footer.mediExpat.bus-page-footer.site-footer .footer-bottom .footer-links.bd-pd-right {
+    padding-right: 10px !important;
+    border-right: 1px solid white !important;
+}
+
+footer.mediExpat.bus-page-footer.site-footer .footer-bottom .footer-links.bd-pd-left {
+    border-left: 1px solid white !important;
+    padding-left: 10px !important;
+}
+
+.mediExpat .hf-bg-white {
+  background-color: white !important;
+}
+
+.mediExpat.confirm-aptckn .content.hf-no-padding {
+  padding: 0 !important;
+}
+
+.mediExpat.hf-no-bg {
+  background-image: none !important;
+}
+
+.mediExpat.c-checkin-new .slotdiv mat-chip.mat-chip-selected {
+  color: #c29179 !important;
+  border-color: #c29179 !important;
+}
+
+.mediExpat.c-checkin-new .lnk a {
+  color: #FD7029 !important;
+}
+
+.mediExpat.c-checkin-new .primary-color {
+  color: #FD7029 !important;
+}
+
+.mediExpat .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #c29179 !important;
+}
+
+.mediExpat .mat-radio-button.mat-accent .mat-radio-inner-circle, .mediExpat .service-view-glb .active {
+  background-color: #c29179 !important;
+}
+
+.mediExpat .c-checkin-new .lnk a {
+  color: #c29179 !important;
+}
+
+
+.mediExpat .mat-tab-label {
+  color:black;
 }
