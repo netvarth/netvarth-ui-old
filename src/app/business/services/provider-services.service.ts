@@ -2372,13 +2372,11 @@ export class ProviderServices {
     const url = 'provider/waitlist/multiStatusChange/' +status;
     return this.servicemeta.httpPut(url,idlist);
   }
-  getFollowUpWaitlist(uid)
-  {
+  getFollowUpWaitlist(uid){
     const url = 'provider/waitlist/followUp/' + uid;
     return this.servicemeta.httpGet(url);
   }
-  getFollowUpAppt(uid)
-  {
+  getFollowUpAppt(uid){
     const url = 'provider/appointment/followUp/' + uid;
     return this.servicemeta.httpGet(url);
   }
