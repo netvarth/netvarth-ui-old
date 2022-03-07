@@ -158,6 +158,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
 
   }
   getAgent(fileName){
+    //'BROWSER' || 'IOS' || 'ANDROID'
     if(fileName){
     return fileName.toLocaleLowerCase();
     }
@@ -165,19 +166,36 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   getReqFrom(browser,agent) {
     let browserName = ''
      if(browser){
-    if(browser === "WEB_UI"){
-    browserName = browser.slice(0, 3);
-    }
-    if(browser === 'WEB_LINK'){
-      browserName = 'IOS'
-    }
-    if(browser){
-     if(browser.length >8){
-      browserName = browser.slice(0,8);
-    }
-  }
+  //   if(browser === "WEB_UI"){
+  //   browserName = browser.slice(0, 3);
+  //   }
+  //   if(browser === 'WEB_LINK'){
+  //     browserName = 'IOS'
+  //   }
+  //   if(browser){
+  //    if(browser.length >8){
+  //     browserName = browser.slice(0,8);
+  //   }
+  // }
+  
+    if(browser.includes("Android")){
+      browserName = 'Android'
+      return browserName.toLocaleLowerCase();
 
-    return browserName.toLocaleLowerCase();
+    }
+    if(browser.includes("iPhone")){
+      browserName = 'IOS'
+      return browserName.toLocaleLowerCase();
+
+    }
+    if(browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("iPhone")){
+      browserName = 'Web'
+      return browserName.toLocaleLowerCase();
+
+    }
+   
+  
+
   }
   if(browser === undefined && agent === "BROWSER"){
     browserName = 'web'
@@ -187,19 +205,40 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   
   
 }
-  getBookingReqFrom(browser) {
+  getBookingReqFrom(browser, reqFrom) {
     let browserName = ''
+    //let status;
     if(browser){
-    browserName = browser.slice(0, 3);
+      if(browser.includes("Android")){
+        browserName = 'Android'
+        return browserName.toLocaleLowerCase();
+  
+      }
+      if(browser.includes("iPhone")){
+        browserName = 'IOS'
+        return browserName.toLocaleLowerCase();
+  
+      }
+      if(browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("Linux")){
+        browserName = 'Web'
+        return browserName.toLocaleLowerCase();
+  
+      }
+     
+     
     }
-    if(browser === 'WEB_LINK'){
-      browserName = 'IOS'
+    if (browser === undefined && reqFrom === "SP_APP" || "CONSUMER_APP") {
+      browserName = "App";
+      return browserName.toLocaleLowerCase();
     }
-    if(browser){
-     if(browser.length >8){
-      browserName = browser.slice(0,8);
-    }
-  }
+    // if(browser === 'WEB_LINK'){
+    //   browserName = 'IOS'
+    // }
+    // if(browser){
+    //  if(browser.length >8){
+    //   browserName = browser.slice(0,8);
+    // }
+  
 
     return browserName.toLocaleLowerCase();
   }

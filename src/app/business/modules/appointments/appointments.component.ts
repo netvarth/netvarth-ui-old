@@ -596,63 +596,68 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   // getAgent(fileName){
   //   return fileName.toLocaleLowerCase();
   // }
-  getReqFrom(browser,agent) {
-    let browserName = ''
-     if(browser){
-    if(browser === "WEB_UI"){
-    browserName = browser.slice(0, 3);
-    }
-    if(browser === 'WEB_LINK'){
-      browserName = 'IOS'
-    }
-    if(browser){
-     if(browser.length >8){
-      browserName = browser.slice(0,8);
-    }
-  }
-
-    return browserName.toLocaleLowerCase();
-  }
-  if(browser === undefined && agent === "BROWSER"){
-    browserName = 'web'
-    return browserName;
-  }
+//   getReqFrom(browser,agent) {
+//     let browserName = ''
+//      if(browser){
+//       if(browser.includes("Android")){
+//         browserName = 'Android'
+//         return browserName.toLocaleLowerCase();
+    
+//       }
+//       if(browser.includes("iPhone")){
+//         browserName = 'IOS'
+//         return browserName.toLocaleLowerCase();
+    
+//       }
+//       if(browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("iPhone")){
+//         browserName = 'Web'
+//         return browserName.toLocaleLowerCase();
+    
+//       }
+     
+    
+//        }
+//       if(browser === undefined && agent === "BROWSER"){
+//         browserName = 'web'
+//         return browserName;
+//       }
+     
     
   
   
-}
-  getBookingReqFrom(browser) {
-    let browserName = ''
-    if(browser){
-    browserName = browser.slice(0, 3);
-    }
-    if(browser === 'WEB_LINK'){
-      browserName = 'iphone'
-    }
-    if(browser){
-     if(browser.length >8){
-      browserName = browser.slice(0,8);
-    }
-  }
+// }
+//   getBookingReqFrom(browser) {
+//     let browserName = ''
+//     if(browser){
+//     browserName = browser.slice(0, 3);
+//     }
+//     if(browser === 'WEB_LINK'){
+//       browserName = 'iphone'
+//     }
+//     if(browser){
+//      if(browser.length >8){
+//       browserName = browser.slice(0,8);
+//     }
+//   }
 
-    return browserName.toLocaleLowerCase();
-  }
-  getRequestedFrom(browser,reqFrom){
-    let browserName = ''
-    if(browser){
-    browserName = browser.slice(0, 3);
-    }
-    if(browser === 'WEB_LINK'){
-      browserName = 'IOS'
-    }
-    if(browser){
-     if(browser.length >8){
-      browserName = browser.slice(0,8);
-    }
-  }
+//     return browserName.toLocaleLowerCase();
+//   }
+//   getRequestedFrom(browser,reqFrom){
+//     let browserName = ''
+//     if(browser){
+//     browserName = browser.slice(0, 3);
+//     }
+//     if(browser === 'WEB_LINK'){
+//       browserName = 'IOS'
+//     }
+//     if(browser){
+//      if(browser.length >8){
+//       browserName = browser.slice(0,8);
+//     }
+//   }
 
-    return reqFrom.toLocaleLowerCase() + ', ' + browserName.toLocaleLowerCase();
-  }
+//     return reqFrom.toLocaleLowerCase() + ', ' + browserName.toLocaleLowerCase();
+//   }
 
  refresh() {
     if (this.time_type === 1) {

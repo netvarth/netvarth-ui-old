@@ -171,67 +171,67 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         return name;
       }
       
-      getReqFrom(browser,agent) {
-        let browserName = ''
-         if(browser){
-        if(browser === "WEB_UI"){
-        browserName = browser.slice(0, 3);
-        }
-        if(browser === 'WEB_LINK'){
-          browserName = 'IOS'
-        }
-        if(browser){
-         if(browser.length >8){
-          browserName = browser.slice(0,8);
-        }
-      }
+    //   getReqFrom(browser,agent) {
+    //     let browserName = ''
+    //      if(browser){
+    //     if(browser === "WEB_UI"){
+    //     browserName = browser.slice(0, 3);
+    //     }
+    //     if(browser === 'WEB_LINK'){
+    //       browserName = 'IOS'
+    //     }
+    //     if(browser){
+    //      if(browser.length >8){
+    //       browserName = browser.slice(0,8);
+    //     }
+    //   }
     
-        return browserName.toLocaleLowerCase();
-      }
-      if(browser === undefined && agent === "BROWSER"){
-        browserName = 'web'
-        return browserName;
-      }
+    //     return browserName.toLocaleLowerCase();
+    //   }
+    //   if(browser === undefined && agent === "BROWSER"){
+    //     browserName = 'web'
+    //     return browserName;
+    //   }
         
       
       
-    }
+    // }
     
-      getBookingReqFrom(browser) {
-        let browserName = ''
-         if(browser){
-        if(browser === "WEB_UI"){
-        browserName = browser.slice(0, 3);
-        }
-        if(browser === 'WEB_LINK'){
-          browserName = 'IOS'
-        }
-        if(browser){
-         if(browser.length >8){
-          browserName = browser.slice(0,8);
-        }
-      }
+    //   getBookingReqFrom(browser) {
+    //     let browserName = ''
+    //      if(browser){
+    //     if(browser === "WEB_UI"){
+    //     browserName = browser.slice(0, 3);
+    //     }
+    //     if(browser === 'WEB_LINK'){
+    //       browserName = 'IOS'
+    //     }
+    //     if(browser){
+    //      if(browser.length >8){
+    //       browserName = browser.slice(0,8);
+    //     }
+    //   }
     
-        return browserName.toLocaleLowerCase();
-      }
+    //     return browserName.toLocaleLowerCase();
+    //   }
      
-    }
-      getRequestedFrom(browser,reqFrom){
-        let browserName = ''
-        if(browser){
-        browserName = browser.slice(0, 3);
-        }
-        if(browser === 'WEB_LINK'){
-          browserName = 'IOS'
-        }
-        if(browser){
-         if(browser.length >8){
-          browserName = browser.slice(0,8);
-        }
-      }
+    // }
+    //   getRequestedFrom(browser,reqFrom){
+    //     let browserName = ''
+    //     if(browser){
+    //     browserName = browser.slice(0, 3);
+    //     }
+    //     if(browser === 'WEB_LINK'){
+    //       browserName = 'IOS'
+    //     }
+    //     if(browser){
+    //      if(browser.length >8){
+    //       browserName = browser.slice(0,8);
+    //     }
+    //   }
     
-        return reqFrom.toLocaleLowerCase() + ', ' + browserName.toLocaleLowerCase();
-      }
+    //     return reqFrom.toLocaleLowerCase() + ', ' + browserName.toLocaleLowerCase();
+    //   }
     
     ngOnChanges() {
         // this.itemQty = this.quantity;
