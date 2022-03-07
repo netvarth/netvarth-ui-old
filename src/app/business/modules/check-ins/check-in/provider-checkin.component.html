@@ -295,13 +295,12 @@
                 </div>
                 <div class="" *ngIf="users.length > 0 && accountType === 'BRANCH'">
                   <ng-container>
+                    <span class="pb-0 mb-0 text-light" style="color: black;">Select {{provider_label | capitalizeFirst}}</span>
                     <mat-form-field *ngIf="users.length == 1" class="py-0 my-0">
                       <input matInput class="inputbox" *ngFor="let user of users" [readonly]="true"
-                        placeholder="{{provider_label | capitalizeFirst}}"
                         value="{{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}">
                     </mat-form-field>
-                    <mat-form-field *ngIf="users.length > 1">
-                      <span class="pb-0 mb-0 text-light" style="color: black;">Select {{provider_label | capitalizeFirst}}</span>
+                    <mat-form-field *ngIf="users.length > 1" class="py-0 my-0">
                       <mat-select class="inputbox" [ngModel]="selected_user" #usersel
                         (selectionChange)="handleUserSelection(usersel.value)">
                         <mat-option *ngFor="let user of users" [value]="user">
@@ -652,7 +651,7 @@
               <ng-container *ngIf="action=='note'">
                 <div class="col-md-12 mgn-bt-20">
                   <mat-form-field>
-                    <textarea matInput class="form-control" [(ngModel)]="consumerNote" #consumernote
+                    <textarea matInput class="form-control mt-2" [(ngModel)]="consumerNote" #consumernote
                       (change)="handleConsumerNote(consumernote.value)" maxlength="1000"
                       placeholder="{{note_placeholder}}"></textarea>
                   </mat-form-field>
@@ -1257,7 +1256,7 @@
               <ng-container *ngIf="action=='note'">
                 <div class="col-md-12 mgn-bt-20">
                   <mat-form-field>
-                    <textarea matInput class="form-control" [(ngModel)]="consumerNote" #consumernote
+                    <textarea matInput class="form-control mt-2" [(ngModel)]="consumerNote" #consumernote
                       (change)="handleConsumerNote(consumernote.value)" maxlength="1000"
                       placeholder="{{note_placeholder}}"></textarea>
                   </mat-form-field>

@@ -377,8 +377,7 @@
                                     <ng-container>
                                         <span class="p-0 m-0 text-light">Select {{provider_label | capitalizeFirst}}</span>
                                         <mat-form-field *ngIf="users.length == 1">
-                                        <input matInput class="inputbox"  *ngFor="let user of users" [readonly]="true"
-                                            placeholder="{{provider_label | capitalizeFirst}}"
+                                        <input matInput class="inputbox"  *ngFor="let user of users" [readonly]="true"   
                                             value="{{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}">
                                         </mat-form-field>
                                         <mat-form-field *ngIf="users.length > 1">
@@ -836,7 +835,7 @@
                             <ng-container *ngIf="action=='note'">
                                 <div class="col-md-12 mgn-bt-20">
                                     <mat-form-field>
-                                        <textarea matInput class="form-control" [(ngModel)]="consumerNote"
+                                        <textarea matInput class="form-control mt-3" [(ngModel)]="consumerNote"
                                             #consumernote (change)="handleConsumerNote(consumernote.value)"
                                             maxlength="1000" placeholder="{{note_placeholder}}"></textarea>
                                     </mat-form-field>
