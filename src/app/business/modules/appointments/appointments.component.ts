@@ -23,12 +23,8 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { Title } from '@angular/platform-browser';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { AttachmentPopupComponent } from '../../../../app/shared/components/attachment-popup/attachment-popup.component';
-<<<<<<< HEAD
 declare let cordova: any;
-=======
-import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { TeleBookingService } from '../../../shared/services/tele-bookings-service';
->>>>>>> refs/remotes/origin/1.8-jcash-clone-jdrive_virtualform
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html',
