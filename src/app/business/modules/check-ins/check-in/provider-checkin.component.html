@@ -444,14 +444,17 @@
                   <span class='no-queue-available text-danger'>{{no_services_avail_cap}}</span>
                 </ng-container>
               </div>
-
+              <div class="clearfix"></div>
               <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12">
                 <div *ngIf="queuejson.length > 0" class="flex-column"
                   style="display: flex !important;align-items: center;">
-                  <div>
+                  <!-- <div>
                     <span class="py-0 my-0 text-light">Time : &nbsp;</span>
-                  </div>
-                  <div class="freeslots">
+                  </div> -->
+                  <div class="freeslots" style="line-height: 15px!important;">
+                    <div>
+                      <span class="py-0 my-0 text-light">Time : &nbsp;</span>
+                    </div>
                     <!-- <mat-form-field class="padding-0">
                       <mat-select  class="inputbox1 p-0" [(ngModel)]="queuejson[0].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].queueSchedule.timeSlots[0]['eTime']">
                         <mat-option (click)="handleQueueSelection(queue, i);"  *ngFor="let queue of queuejson, let i= index" [value]="queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']" >{{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
@@ -461,7 +464,7 @@
 
                     <mat-chip *ngFor="let queue of queuejson, let i= index"
                       [selected]="queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']"
-                      class="text-center m-1" (click)="handleQueueSelection(queue, i);"
+                      class="check-in-chip text-center m-1 my-0 py-0" (click)="handleQueueSelection(queue, i);"
                       [(ngModel)]="queuejson[0].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].queueSchedule.timeSlots[0]['eTime']">
                       <span class="m-2">{{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
                         queue.queueSchedule.timeSlots[0]['eTime']}}</span>
@@ -470,7 +473,7 @@
                 </div>
 
               </div>
-
+              <div class="clearfix"></div>
             </div>
 
 
