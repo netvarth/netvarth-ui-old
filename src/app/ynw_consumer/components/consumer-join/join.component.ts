@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, Output, EventEmitter, HostListener } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
@@ -20,9 +20,10 @@ import { AuthService } from '../../../shared/services/auth-service';
 @Component({
   selector: 'app-consumer-join',
   templateUrl: './join.component.html',
-  styleUrls: ['./join.component.scss'] 
+  styleUrls: ['./join.component.scss']
 })
 export class ConsumerJoinComponent implements OnInit, OnDestroy {
+  @Output() actionPerformed = new EventEmitter<any>();
   mobile_no_cap = Messages.MOBILE_NUMBER_CAP;
   mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
   password_cap = Messages.PASSWORD_CAP;
@@ -56,7 +57,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   close_message: any;
   fname: any;
   lname: any;
-  theme:any;
+  theme: any;
   phoneExists = false;
   isPhoneValid = false;
   resendViaEmail: boolean;
@@ -69,7 +70,9 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   phoneError: string;
   phoneDialCode;
   joinStep = true;
+  isDesktop = true;
   private subs = new SubSink();
+  screenWidth: number;
   constructor(
     public dialogRef: MatDialogRef<ConsumerJoinComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -86,6 +89,19 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   ) {
 
     this.test_provider = data.test_account;
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 767) {
+    } else {
+      this.isDesktop = false;
+    }
+    // if (this.screenWidth <= 1040) {
+    //   this.isDesktop = true;
+    // } else {
+    //   this.isDesktop = false;
+    // }
   }
   ngOnInit() {
     this.joinStep = true;
@@ -143,6 +159,8 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     this.phoneExists = false;
   }
   onSubmit(data) {
+    console.log(data);
+    console.log(this.data);
     const dialCode = data.phone.dialCode;
     const pN = data.phone.e164Number.trim();
 
@@ -185,7 +203,12 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
             this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
             // this.dialogRef.close();
             setTimeout(() => {
-              this.dialogRef.close();
+              console.log("191;", this.data);
+              if (this.data) {
+                this.dialogRef.close();
+              } else {
+                this.actionPerformed.emit('success');
+              }
             }, projectConstants.TIMEOUT_DELAY_SMALL);
           },
           error => {
@@ -193,31 +216,43 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
             this.api_loading = false;
           }
         );
-    } else if (this.data.type === 'consumer') {
+    } else if (!this.data['type'] || this.data.type === 'consumer') {
+      let moreparams;
+      if (!this.data['type']) {
+        moreparams = {};
+        moreparams['bypassDefaultredirection'] = 1;
+      } else {
+        moreparams = this.moreParams;
+      }
       if (post_data.loginId.startsWith('55') && this.test_provider === false) {
         setTimeout(() => {
           ob.api_error = this.wordProcessor.getProjectMesssages('TESTACC_LOGIN_NA');
           this.api_loading = false;
         }, projectConstants.TIMEOUT_DELAY_SMALL);
       } else {
-        
+
         post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
         console.log("Before Checking authToken");
-      console.log("Token: " + this.lStorageService.getitemfromLocalStorage('authToken'));
-      if (this.lStorageService.getitemfromLocalStorage('authToken')) {
-        post_data['token'] = this.lStorageService.getitemfromLocalStorage('authToken');
-      }
-        this.authService.consumerLogin(post_data, this.moreParams)
+        console.log("Token: " + this.lStorageService.getitemfromLocalStorage('authToken'));
+        if (this.lStorageService.getitemfromLocalStorage('authToken')) {
+          post_data['token'] = this.lStorageService.getitemfromLocalStorage('authToken');
+        }
+        this.authService.consumerLogin(post_data, moreparams)
           .then(
             () => {
               const encrypted = this.shared_services.set(data.password, projectConstantsLocal.KEY);
               this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
               this.lStorageService.setitemonLocalStorage('qrp', data.password);
               let pre_header = dialCode.split('+')[1] + "-" + loginId;
-          if (this.lStorageService.getitemfromLocalStorage('authToken')) {
-            this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
-          }
-              this.dialogRef.close('success');
+              if (this.lStorageService.getitemfromLocalStorage('authToken')) {
+                this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
+              }
+              console.log("235:", this.data);
+              if (this.data && (!Array.isArray(this.data) && this.data.length!==0)) {
+                this.dialogRef.close('success');
+              } else {
+                this.actionPerformed.emit('success');
+              }
             },
             error => {
               if (error.status === 401 && error.error === 'Session already exists.') {
@@ -225,19 +260,24 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
                 const activeUser = this.lStorageService.getitemfromLocalStorage('ynw-user');
                 if (!activeUser) {
                   this.shared_services.ConsumerLogout().subscribe(
-                    ()=> {
+                    () => {
                       this.authService.consumerLogin(post_data, this.moreParams).then(
                         () => {
                           const encrypted = this.shared_services.set(data.password, projectConstantsLocal.KEY);
                           this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
                           this.lStorageService.setitemonLocalStorage('qrp', data.password);
-                          this.dialogRef.close('success');
+                          if (this.data && !Array.isArray(this.data)) {
+                            this.dialogRef.close('success');
+                          } else {
+                            this.actionPerformed.emit('success');
+                          }
                         });
                     }
-                  )              
+                  )
                 } else {
                   this.lStorageService.setitemonLocalStorage('qrp', data.password);
-                  this.dialogRef.close('success');
+                  // this.dialogRef.close('success');
+                  this.actionPerformed.emit('success');
                 }
               } else {
                 ob.api_error = this.wordProcessor.getProjectErrorMesssages(error);
@@ -307,7 +347,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     this.resendemailotpsuccess = false;
     if (this.lStorageService.getitemfromLocalStorage('customId') && this.lStorageService.getitemfromLocalStorage('accountId')) {
       user_details['accountId'] = this.lStorageService.getitemfromLocalStorage('accountId');
-  }
+    }
     this.subs.sink = this.shared_services.signUpConsumer(user_details)
       .subscribe(
         () => {
@@ -406,7 +446,12 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
                     const encrypted = this.shared_services.set(post_data.password, projectConstantsLocal.KEY);
                     this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
                     this.lStorageService.setitemonLocalStorage('qrp', post_data.password);
-                    this.dialogRef.close('success');
+                    console.log("432:", this.data);
+                    if (this.data && !Array.isArray(this.data)) {
+                      this.dialogRef.close('success');
+                    } else {
+                      this.actionPerformed.emit('success');
+                    }
                   },
                   error => {
                     this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
@@ -458,9 +503,20 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   }
   handleSignup() {
     if (this.moreParams && (this.moreParams['source'] === 'searchlist_checkin' || this.moreParams['source'] === 'business_page')) {
-      this.dialogRef.close('showsignup');
+      console.log("489:", this.data);
+      if (this.data && !Array.isArray(this.data)) {
+        this.dialogRef.close('showsignup');
+      } else {
+        this.actionPerformed.emit('showsignup');
+      }
     } else {
-      this.dialogRef.close('showsignupfromlogin'); // closing the signin window
+      console.log("496:", this.data);
+      if (this.data && !Array.isArray(this.data)) {
+        this.dialogRef.close('showsignupfromlogin'); // closing the signin window
+      } else {
+        this.actionPerformed.emit('showsignupfromlogin');
+      }
+
     }
     if (this.data.moreparams && (this.data.moreparams.source === 'businesshome_page')) {
       this.doSignup();
@@ -489,7 +545,10 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     this.step = 1;
   }
   goBusinessClicked() {
-    this.dialogRef.close();
+    console.log("531:", this.data);
+    if (this.data && !Array.isArray(this.data)) {
+      this.dialogRef.close();
+    }
     this.router.navigate(['/business']);
   }
 
@@ -518,11 +577,11 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   toastNext(str) {
     console.log('toast');
     this.joinStep = !this.joinStep;
-    if(str === 'sUp') {
+    if (str === 'sUp') {
       this.step = 3;
     } else {
       this.step = 1;
     }
   }
-  
- }
+
+}

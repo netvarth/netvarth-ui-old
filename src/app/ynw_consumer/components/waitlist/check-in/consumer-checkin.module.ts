@@ -22,6 +22,7 @@ import { MembersModule } from '../../../modules/members/members.module';
 import { CommunicationsModule } from '../../../modules/communications/communications.module';
 import { PaymentModesModule } from '../../../../shared/modules/payment-modes/payment-modes.module';
 import { DatePaginationComponent } from './date-pagination/date-pagination.component';
+import { ConsumerJoinModule } from '../../consumer-join/join.component.module';
 const routes: Routes = [
     { path: '', component: ConsumerCheckinComponent},
     { path: 'track/:id', loadChildren: ()=> import('./livetrack/livetrack.module').then(m=>m.ConsumerLiveTrackModule) },
@@ -55,6 +56,7 @@ const routes: Routes = [
         ReactiveFormsModule,
         LoadingSpinnerModule,
         PaymentModesModule,
+        ConsumerJoinModule,
         [RouterModule.forChild(routes)]
     ],
     schemas: [

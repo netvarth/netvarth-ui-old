@@ -22,7 +22,10 @@ export class ConsumerComponent implements OnInit {
   userProfile: any = [];
   ngOnInit() {
     this.titleService.setTitle('Jaldee-Avoid Waiting in Queues');
-    this.getProfile();
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (user) {
+      this.getProfile();
+    }
   }
   getProfile() {
     this.shared_functions.getProfile()

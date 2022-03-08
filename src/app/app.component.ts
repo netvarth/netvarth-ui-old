@@ -37,8 +37,18 @@ export class AppComponent implements OnInit, AfterViewInit {
    */
   ngOnInit() {
     
+    // this.lStorageService.setitemonLocalStorage('authToken', 'abcd'.toString());
+    // let token = this.lStorageService.getitemfromLocalStorage('authToken');
+    // if (token) {
+    //   let regexToReplace = /\-/gi;
+    //   let authToken = token.replace(regexToReplace, "&");
+    //   this.lStorageService.setitemonLocalStorage('authToken', authToken);
+    // }
 
     projectConstants = this.globalService.getGlobalConstants();
+
+    this.lStorageService.setitemonLocalStorage('ios', true);
+
     if(projectConstants){
       return false;
     }

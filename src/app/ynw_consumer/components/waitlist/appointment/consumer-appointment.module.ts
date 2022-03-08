@@ -27,6 +27,7 @@ import { CustomerService } from '../../../../shared/services/customer.service';
 import { CommunicationsModule } from '../../../../ynw_consumer/modules/communications/communications.module';
 import { PaymentModesModule } from '../../../../shared/modules/payment-modes/payment-modes.module';
 import { AppointmentDatePaginationComponent } from './appointment-date-pagination/appointment-date-pagination.component';
+import { ConsumerJoinModule } from '../../consumer-join/join.component.module';
 const routes: Routes = [
     { path: '', component: ConsumerAppointmentComponent},
     { path: 'track/:id', loadChildren:()=> import('./livetrack/livetrack.module').then(m=>m.ConsumerApptLiveTrackModule) },
@@ -64,6 +65,7 @@ const routes: Routes = [
         RefundpolicyModule,
         MembersModule,
         CommunicationsModule,
+        ConsumerJoinModule,
         PaymentModesModule,
         [RouterModule.forChild(routes)]
     ],

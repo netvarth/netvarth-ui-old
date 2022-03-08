@@ -18,11 +18,12 @@
                     <div class="card-body p-0">
                         <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
                             data-wizard-clickable="false">
-                            <div class="row justify-content-center">
-                                <div class="loading-hgt" *ngIf="loading">
-                                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
-                                </div>
-                                <div class="col-xl-12 no-padding-small" *ngIf="!loading">
+                            <div class="loading-hgt my-5 login-form_custom" *ngIf="!loggedIn || loading">
+                                <app-consumer-join *ngIf="!loggedIn" (actionPerformed)="actionPerformed($event)"></app-consumer-join>
+                                <app-common-innerloading-spinner *ngIf="loggedIn && loading"></app-common-innerloading-spinner>
+                            </div>
+                            <div class="row justify-content-center">                               
+                                <div class="col-xl-12 no-padding-small" *ngIf="loggedIn && !loading">
                                     <div
                                         class="lbl col-sm-12 col-md-5 col-lg-4 col-xs-12 col-sm-12 no-padding-small displ-none">
                                         <div class="wizard-nav">
@@ -142,15 +143,6 @@
                                                                         class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                                         <div
                                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 no-padding c-checkin-new">
-                                                                            <!-- <div
-                                                                                class="col-md-12 col-xs-12 col-sm-12 mgn-bt-5 mgn-up-5 donation_label no-padding">
-                                                                                Donor name <a
-                                                                                    class="lnk pointer-cursor action mgn-lt-5 mgn-rt-20"
-                                                                                    (click)="editDonor()"
-                                                                                    data-toggle="modal"
-                                                                                    data-target="#exampleModalCenter">Change
-                                                                                </a>
-                                                                            </div> -->
                                                                             <div class="clearfix"></div>
                                                                             
                                                                             <div class="mobile-donor-details">
@@ -235,17 +227,12 @@
                                                                             </div>
                                                                             <div
                                                                                 class="col-sm-12 col-xs-12 col-md-12 no-padding">
-                                                                                <!-- <h6 class="card-title service"
-                                                                                    *ngFor="let member of waitlist_for">
-                                                                                    {{donorName}}
-                                                                                </h6> -->
-
+                                                                                
                                                                                 <div
                                                                                     class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 mgn-up-20 amount-section-mobile">
                                                                                     <div>
                                                                                         <div>
-                                                                                            <!-- <div -->
-                                                                                            <!-- > -->
+                                                                                         
                                                                                             <div
                                                                                                 class="col-md-12 col-xs-12 col-sm-12 no-padding amount mgn-bt-10">
                                                                                                 Amount (<i
@@ -262,7 +249,6 @@
                                                                                                         (keypress)=isNumeric($event)>
                                                                                                 </label>
                                                                                             </div>
-                                                                                            <!-- </div> -->
                                                                                         </div>
                                                                                         <div
                                                                                             class="prepay-amt mgn-bt-20">
@@ -272,14 +258,12 @@
                                                                                                     *ngIf="sel_ser_det.minDonationAmount != sel_ser_det.maxDonationAmount">
                                                                                                     Minimum <span
                                                                                                         class="bold rupee-font">
-                                                                                                        <!-- <i class="fa fa-inr"></i> -->
                                                                                                         {{sel_ser_det.minDonationAmount
                                                                                                         |
                                                                                                         currency:'&#8377;'}}
                                                                                                     </span>
                                                                                                     Maximum <span
                                                                                                         class="bold rupee-font">
-                                                                                                        <!-- <i class="fa fa-inr"></i> -->
                                                                                                         {{sel_ser_det.maxDonationAmount
                                                                                                         |
                                                                                                         currency:'&#8377;'}}
@@ -298,7 +282,6 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="clearfix"></div>
-                                                                                <!-- <div class="clearfix"></div> -->
                                                                             </div>
                                                                             <div
                                                                                 class="col-sm-12 col-xs-12 chk-btns-div col-md-12 mgn-up-10 no-padding">
@@ -586,7 +569,7 @@
                                             <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
                                         </div>
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 hf-double-btn-container">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12  border-top pt-10 width-100 hf-double-btn-container">
                                             <!-- <div class="mr-2"
                                                 *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
                                                 <button type="button"
@@ -596,7 +579,7 @@
                                                 </button>
                                             </div> -->
                                             <div class="clearfix"></div>
-                                            <div class="col-xs-12 no-padding-small">
+                                            <div class="col-xs-12 no-padding-small" *ngIf="!from_iOS">
                                                 <ng-container *ngIf="!shownonIndianModes">
                                                     <app-payment-modes [paymentModes]="indian_payment_modes"
                                                         (modeSelected)="indian_payment_mode_onchange($event)">
@@ -621,21 +604,19 @@
                                                                 Payment ? Click
                                                                 here</span>
                                                         </a></span>
-                                                </div>
-                                                <div class="txt-align-center mgn-up-10">
-                                                    <button type="button"
-                                                        class="next-button btn btn-primary mobile-button-color font-weight-bold text-uppercase "
-                                                        [class.disabled]="isClickedOnce"
-                                                        (click)="!isClickedOnce && goToGateway()">
-                                                        Make Payment
-                                                    </button>
-                                                   
-                                                </div>
-                                                
+                                                </div>                                                                                               
                                             </div>
+                                            <div class="clearfix"></div>
+                                            <div class="col-xs-12 no-padding-small txt-align-center mgn-up-10">
+                                                <button type="button"
+                                                    class="next-button btn btn-primary mobile-button-color font-weight-bold text-uppercase "
+                                                    [class.disabled]="isClickedOnce"
+                                                    (click)="!isClickedOnce && goToGateway()">
+                                                    Make Payment
+                                                </button>                                                   
+                                            </div> 
                                         </div>
-                                    </div>
-                                   
+                                    </div>                                   
                                 </div>
                             </div>
                         </div>

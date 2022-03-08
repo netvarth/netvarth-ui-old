@@ -109,7 +109,7 @@ ul#topnav li a {
 }
 
 .pageitem p {
-    padding:0 75px;
+    /* padding:0 75px; */
     margin:0;
     font-size:18px !important;
     line-height:200%;

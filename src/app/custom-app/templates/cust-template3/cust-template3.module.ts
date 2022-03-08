@@ -6,10 +6,7 @@ import { SafeHtmlModule } from '../../../shared/pipes/safe-html/safehtml.module'
 import { RouterModule, Routes } from '@angular/router';
 import { ServiceDisplayModule } from '../../service-display/service-display.module';
 import { MatTabsModule } from '@angular/material/tabs';
-import { DonationServicesComponent } from '../../donation-services/donation-services.component';
 import { CardModule } from '../../../shared/components/card/card.module';
-import { AppointmentServicesComponent } from '../../appointment-services/appointment-services.component';
-import { CheckinServicesComponent } from '../../checkin-services/checkin-services.component';
 import { OrdersModule } from '../../orders/orders.module';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
@@ -17,6 +14,9 @@ import { FormsModule } from '@angular/forms';
 import { ConsDepartmentsModule } from '../../cons-departments/cons-departments.module';
 import { PictureGalleryModule } from '../../picture-gallery/picture-gallery.module';
 import { OnlineUsersModule } from '../../online-users/online-users.module';
+import { AppointmentServicesModule } from '../../appointment-services/appointment-services.module';
+import { DonationServicesModule } from '../../donation-services/donation-services.module';
+import { CheckinServicesModule } from '../../checkin-services/checkin-services.module';
 
 const routes: Routes = [
   { path: '', component: CustTemplate3Component }
@@ -24,10 +24,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    CustTemplate3Component,
-    DonationServicesComponent,
-    AppointmentServicesComponent,
-    CheckinServicesComponent
+    CustTemplate3Component
   ],
   imports: [
     CommonModule,
@@ -43,6 +40,9 @@ const routes: Routes = [
     ConsDepartmentsModule,
     PictureGalleryModule,
     OnlineUsersModule,
+    AppointmentServicesModule,
+    DonationServicesModule,
+    CheckinServicesModule,
     RouterModule.forChild(routes)
   ],
   exports: [

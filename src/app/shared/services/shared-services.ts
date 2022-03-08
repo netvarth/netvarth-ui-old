@@ -843,6 +843,9 @@ export class SharedServices {
   addCustomerDonation(postData, accountid) {
     return this.servicemeta.httpPost('consumer/donation?account=' + accountid, postData);
   }
+  donationViaLink(postData) {
+    return this.servicemeta.httpPost('consumer/payment/paylink/donation', postData);
+  }
   getDonationByConsumerUUID(uuid, accountid) {
     const url = 'consumer/donation/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
@@ -858,6 +861,14 @@ export class SharedServices {
   getConsumerDonationServices(accountid) {
     const url = 'consumer/donation/services?account=' + accountid;
     return this.servicemeta.httpGet(url);
+  }
+  generateDonationLink(accountid, data) {
+    const url = 'consumer/payment/generate/paylink?account=' + accountid;
+    return this.servicemeta.httpPost(url,data);
+  }
+  getDonationLinkUuid(uuid) {
+      const url = 'consumer/payment/paylink/donation/' + uuid;
+      return this.servicemeta.httpGet(url);
   }
   getCheckinbyEncId(encId) {
     const url = 'consumer/waitlist/enc/' + encId;

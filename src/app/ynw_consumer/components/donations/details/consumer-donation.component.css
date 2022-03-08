@@ -524,3 +524,6 @@ a, .fa-file-text-o {
       padding: 5px !important;
     }
   }
+  .loading-hgt {
+    height: 85vh;
+  }

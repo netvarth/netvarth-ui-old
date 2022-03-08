@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationExtras, Router } from '@angular/router';
-import { AuthService } from '../../shared/services/auth-service';
+// import { AuthService } from '../../shared/services/auth-service';
 import { ServiceDetailComponent } from '../../shared/components/service-detail/service-detail.component';
 import { ConsumerJoinComponent } from '../../ynw_consumer/components/consumer-join/join.component';
 
@@ -21,7 +21,7 @@ export class DonationServicesComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private router: Router,
-    private authService: AuthService
+    // private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -56,16 +56,16 @@ export class DonationServicesComponent implements OnInit {
 
 
   payClicked(locid, locname, cdate, service) {
-    const _this = this;
-    _this.authService.goThroughLogin().then(
-      (status) => {
-        if (status) {
+    // const _this = this;
+    // _this.authService.goThroughLogin().then(
+    //   (status) => {
+    //     if (status) {
             this.showDonation(locid, cdate, service);
-        } else {
-          const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, service: service };
-          this.doLogin('consumer', passParam);
-        }
-      });
+      //   } else {
+      //     const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, service: service };
+      //     this.doLogin('consumer', passParam);
+      //   }
+      // });
   }
   doLogin(origin?, passParam?) {
     // const current_provider = passParam['current_provider'];

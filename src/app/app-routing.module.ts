@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuardConsumer, AuthGuardHome, AuthGuardProvider } from './shared/guard/auth.guard';
+import { AuthGuardHome, AuthGuardProvider } from './shared/guard/auth.guard';
 const routes: Routes = [
     { path: 'admin/login/:accountId/:userId', loadChildren: () => import('./shared/components/admin/login/login.module').then(m => m.AdminLoginModule) },
     {
@@ -8,8 +8,7 @@ const routes: Routes = [
         canActivate: [AuthGuardProvider]
     },
     {
-        path: 'consumer', loadChildren: () => import('./ynw_consumer/consumer.module').then(m => m.ConsumerModule),
-        canActivate: [AuthGuardConsumer]
+        path: 'consumer', loadChildren: () => import('./ynw_consumer/consumer.module').then(m => m.ConsumerModule)
     },
     {
         path: 'customapp/:id', loadChildren: () => import('./custom-app/custom-app.module').then(m => m.CustomAppModule)
