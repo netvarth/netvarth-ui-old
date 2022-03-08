@@ -353,11 +353,20 @@ export class AdjustscheduleDelayComponent implements OnInit {
     const time = this.getTimeinMin();
     let queueId;
     // if (time !== 0) {
+     
     const post_data = {
       'delayDuration': time,
       'sendMsg': form_data.send_message,
       'message': form_data.message || '',
     };
+    // const post_data = {
+    //   'apptDelay': time,
+    //   'apptDelayMessage': form_data.send_message,
+    //   'message': form_data.message || '',
+    //   'appointments':[ 
+    //     queueId
+    //   ]
+    // };
     // this.provider_services.addQueueDelay(form_data.queue_id, post_data)
     if (this.queuejson.length === 1) {
       for (let i = 0; i < this.queuejson.length; i++) {
@@ -366,6 +375,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
     } else {
       queueId = form_data.queueControl;
     }
+  
     this.provider_services.addScheduleDelay(queueId, post_data)
       .subscribe(
         () => {
@@ -373,6 +383,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
             // this.api_success = this.wordProcessor.getProjectMesssages('ADD_DELAY');
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ADD_DELAY'), { 'panelclass': 'snackbarerror' });
             // this.closePopup('reloadlist');
+            this.route.navigate(['provider','appointments']);
           } else {
             // this.api_success = this.wordProcessor.getProjectMesssages('ADD_DELAY_NO_MSG');
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ADD_DELAY_NO_MSG'), { 'panelclass': 'snackbarerror' });
@@ -403,6 +414,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
         }
       );
   }
+
   setServiceDetails(curservid) {
     let serv;
     for (let i = 0; i < this.servicesjson.length; i++) {
