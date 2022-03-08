@@ -59,7 +59,7 @@
                 <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox padding-0 numberstyle "
                   [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="true" [enablePlaceholder]="true"
                   [searchCountryFlag]="true" [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
-                  [selectFirstCountry]="false" [maxLength]="15" [phoneValidation]="true"
+                  [selectFirstCountry]="false" [maxLength]="10" [phoneValidation]="true"
                   [selectedCountryISO]="selectedCountry" [separateDialCode]="separateDialCode" name="phone"
                   [(ngModel)]="phone" (keyup)="resetApiErrors()">
                   <!-- [numberFormat]="PhoneNumberFormat.National" -->
@@ -75,9 +75,8 @@
                       (keypress)="findCustomer(searchForm.value, $event)">
 
                   </div>
-                  <div *ngIf="emptyFielderror" class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding">
-                    <span class="sts-msg error">Please enter the
-                      {{customer_label | capitalizeFirst}} ID or Email</span>
+                  <div *ngIf="emptyFielderror" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                    <span class="sts-msg error">Please enter the {{customer_label | capitalizeFirst}} ID or Email</span>
                     <app-field-error-display style="color: #f24949 !important;" [displayError]="true" *ngIf="create_new"
                       errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
                             Please create {{customer_label}} to take appointment">
@@ -156,51 +155,7 @@
             </div>
             
             <div class="clearfix"></div>
-            <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding" *ngIf="showBlockHint">
-              <table class="table table-head-custom table-head-bg table-borderless table-vertical-center bold">
-                <thead>
-                  <tr class="text-left text-uppercase">
-                    <th style="min-width: 100px;">Name</th>
-                    <th style="min-width: 100px;">Id</th>
-                    <th style="min-width: 100px;">Phone</th>
-                    <th style="min-width: 100px;" class="hiddencontent">Email</th>
-                    <th style="min-width: 100px;" class="hiddencontent">DOB</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="row_data border-bottom pointer-cursor tbl-hover" (click)="getProviderQuestionnaire()">
-                    <td>
-                      <span class="text-dark-75 d-block">{{customer_data.firstName}}
-                        {{customer_data.lastName}}</span>
-                    </td>
-                    <td>
-                      <span class="text-dark-75 d-block" *ngIf="customer_data.jaldeeId">
-                        {{customer_data.jaldeeId}}
-                      </span>
-                    </td>
-                    <td>
-                      <span class="text-dark-75 d-block" *ngIf="customer_data.phoneNo">
-                        {{customer_data.countryCode}} {{customer_data.phoneNo}}
-                      </span>
-                    </td>
-                    <td class="hiddencontent">
-                      <span class="text-dark-75 d-block" *ngIf="customer_data.email">
-                        {{customer_data.email}}
-                      </span>
-                    </td>
-                    <td class="hiddencontent">
-                      <span class="text-dark-75 d-block" *ngIf="customer_data.dob">
-                        {{customer_data.dob | date:newDateFormat}}
-                      </span>
-                    </td>
-                    <td class="">
-                      <i class="fa fa-arrow-right black" aria-hidden="true"></i>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            
 
 
 
@@ -223,7 +178,58 @@
         </div>
         <!-- </div> -->
       </div>
-      <div class="card" *ngIf="showCheckin && !showQuestionnaire && !showFollowup">
+
+
+      <div class="card" *ngIf="showCheckin && !showQuestionnaire && !showFollowup && foundMultiConsumers">
+        <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
+          <table class="table table-head-custom table-head-bg table-borderless table-vertical-center bold">
+            <thead>
+              <tr class="text-left text-uppercase">
+                <th style="min-width: 100px;">Name</th>
+                <th style="min-width: 100px;">Id</th>
+                <th style="min-width: 100px;">Phone</th>
+                <th style="min-width: 100px;" class="hiddencontent">Email</th>
+                <th style="min-width: 100px;" class="hiddencontent">DOB</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let customer of customer_data let i=index">
+              <tr class="row_data border-bottom pointer-cursor tbl-hover" (click)="searchCustomerById(customer.jaldeeId)">
+                <td>
+                  <span class="text-dark-75 d-block">{{customer.firstName}}
+                    {{customer.lastName}}</span>
+                </td>
+                <td>
+                  <span class="text-dark-75 d-block" *ngIf="customer.jaldeeId"  (click) = "searchCustomerById(customer.jaldeeId)">
+                    {{customer.jaldeeId}}
+                  </span>
+                </td>
+                <td>
+                  <span class="text-dark-75 d-block" *ngIf="customer.phoneNo">
+                    {{customer.countryCode}} {{customer.phoneNo}}
+                  </span>
+                </td>
+                <td class="hiddencontent">
+                  <span class="text-dark-75 d-block" *ngIf="customer.email">
+                    {{customer.email}}
+                  </span>
+                </td>
+                <td class="hiddencontent">
+                  <span class="text-dark-75 d-block" *ngIf="customer.dob">
+                    {{customer.dob | date:newDateFormat}}
+                  </span>
+                </td>
+                <td class="">
+                  <i class="fa fa-arrow-right black" aria-hidden="true"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <div class="card" *ngIf="showCheckin && !showQuestionnaire && !showFollowup && !foundMultiConsumers">
         <div class="">
           <div class="">
             <div>
@@ -464,7 +470,7 @@
 
                     <mat-chip *ngFor="let queue of queuejson, let i= index"
                       [selected]="queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']"
-                      class="check-in-chip text-center m-1 my-0 py-0" (click)="handleQueueSelection(queue, i);"
+                      class="text-center m-1 my-0 py-0" (click)="handleQueueSelection(queue, i);"
                       [(ngModel)]="queuejson[0].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].queueSchedule.timeSlots[0]['eTime']">
                       <span class="m-2">{{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
                         queue.queueSchedule.timeSlots[0]['eTime']}}</span>

@@ -191,6 +191,7 @@ export class ProviderCheckinComponent implements OnInit {
     customerid: any;
     callingMode;
     virtualServiceArray;
+    foundMultiConsumers = false;
     callingModes: any = [];
     showInputSection = false;
     callingModesDisplayName = projectConstants.CALLING_MODES;
@@ -361,9 +362,11 @@ export class ProviderCheckinComponent implements OnInit {
                     (data: any) => {
                         if (data.length > 1) {
                             const customer = data.filter(member => !member.parent);
-                            this.customer_data = customer[0];
+                            this.customer_data = customer;
+                            this.foundMultiConsumers = true;
                         } else {
                             this.customer_data = data[0];
+                            this.foundMultiConsumers = false;
                         }
                         if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
                             this.countryCode = this.customer_data.countryCode;
@@ -509,12 +512,14 @@ export class ProviderCheckinComponent implements OnInit {
                     } else {
                         if (data.length > 1) {
                             const customer = data.filter(member => !member.parent);
-                            this.customer_data = customer[0];
+                            this.customer_data = customer;
+                            this.foundMultiConsumers = true
                             // if(this.qParams['phone'] === '0000'){
                             //     this.createNew('create');
                             // }
                         } else {
                             this.customer_data = data[0];
+                            this.foundMultiConsumers = false
 
                         }
                         this.jaldeeId = this.customer_data.jaldeeId;
@@ -602,9 +607,11 @@ export class ProviderCheckinComponent implements OnInit {
                         } else {
                             if (data.length > 1) {
                                 const customer = data.filter(member => !member.parent);
-                                this.customer_data = customer[0];
+                                this.customer_data = customer;
+                                this.foundMultiConsumers = true;
                             } else {
                                 this.customer_data = data[0];
+                                this.foundMultiConsumers = false;
                             }
                             this.jaldeeId = this.customer_data.jaldeeId;
                             if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
@@ -631,6 +638,64 @@ export class ProviderCheckinComponent implements OnInit {
                 );
         }
     }
+
+
+
+
+
+    searchCustomerById(customer_id) {
+        console.log(customer_id)
+        if (!customer_id) {
+            this.emptyFielderror = true;
+        } else {
+            this.qParams = {};
+            this.create_new = false;
+            let post_data = {};
+            post_data['or=jaldeeId-eq'] = customer_id + ',firstName-eq=' + customer_id;
+            this.provider_services.getCustomer(post_data)
+                .subscribe(
+                    (data: any) => {
+                        if (data.length === 0) {
+                            this.createNew('create');
+                        } else {
+                            if (data.length > 1) {
+                                const customer = data.filter(member => !member.parent);
+                                this.customer_data = customer;
+                                this.foundMultiConsumers = true;
+                            } else {
+                                this.customer_data = data[0];
+                                this.foundMultiConsumers = false;
+                            }
+                            this.jaldeeId = this.customer_data.jaldeeId;
+                            if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                                this.countryCode = this.customer_data.countryCode;
+                            } else {
+                                this.countryCode = '+91';
+                            }
+                            if (this.source === 'waitlist-block') {
+                                this.showBlockHint = true;
+                                if (this.showtoken) {
+                                    this.heading = 'Confirm your Token';
+                                } else {
+                                    this.heading = 'Confirm your Check-in';
+                                }
+                            } else {
+                                this.getFamilyMembers();
+                                this.initCheckIn();
+                            }
+                        }
+                    },
+                    error => {
+                        this.wordProcessor.apiErrorAutoHide(this, error);
+                    }
+                );
+        }
+    }
+
+
+
+
+
     openthirdpopup(domain,showOther,customer_label) {
         this.thirdpartyoptions = this.dialog.open(ThirdpartypopupComponent, {
             width: '80%',
@@ -1245,9 +1310,11 @@ export class ProviderCheckinComponent implements OnInit {
                 (data: any) => {
                     if (data.length > 1) {
                         const customer = data.filter(member => !member.parent);
-                        this.customer_data = customer[0];
+                        this.customer_data = customer;
+                        this.foundMultiConsumers = true;
                     } else {
                         this.customer_data = data[0];
+                        this.foundMultiConsumers = false;
                     }
                     this.jaldeeId = this.customer_data.jaldeeId;
                     if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {

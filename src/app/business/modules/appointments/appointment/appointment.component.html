@@ -144,163 +144,60 @@
                             </div>
                 
                             <div class="clearfix"></div>
-
-                         
-                                
-                                <!-- <div class="input-group mob-container mgn-up-20">
-                                <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox"
-                                    [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="true"
-                                    [enablePlaceholder]="true" [searchCountryFlag]="true"
-                                    [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
-                                    [selectFirstCountry]="false" [maxLength]="15" [phoneValidation]="true"
-                                    [selectedCountryISO]="selectedCountry" [separateDialCode]="separateDialCode"
-                                    [numberFormat]="PhoneNumberFormat.National" name="phone" [(ngModel)]="phone"
-                                    (keyup)="resetApiErrors()">
-                                </ngx-intl-tel-input>
-                                 <button class="findcolor" (click)="serchCustomers(phone)"><i class="fa fa-search"
-                                        aria-hidden="true"></i>
-                                </button>
-                            </div> -->
-
-
-                            <!-- <form [formGroup]="searchForm" novalidate (keyup)="resetApiErrors()" class="mgn-up-20">
-                                
-                                <div class="form-group col-md-12 col-xs-12 col-sm-12 no-padding  mgn-up-20 sc-frm">
-                                    
-                                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding mgn-bt-50 apptdate-slot"
-                                        *ngIf="slotTime">
-                                        <div class="col-md-5 col-lg-4 col-xs-5 col-sm-6 no-padding">
-                                            Date: {{sel_checkindate | date: dateFormat}} </div>
-                                        <div class="col-md-5 col-lg-4 col-xs-7 col-sm-6 no-padding">{{getSingleTime(slotTime)}}</div>
-                                    </div>
-
-
-                                     <div class="form-group mgn-up-20"> 
-                                     <div class="input-group mob-container">
-                                        <input autocomplete="off"
-                                            placeholder="{{customer_label | capitalizeFirst}} Name or ID or Email"
-                                            type="text" class="form-control" formControlName="search_input"
-                                            (keypress)="findCustomer(searchForm.value, $event)">
-                                        <button class="findcolor" (click)="searchCustomer(searchForm.value)"><i
-                                                class="fa fa-search p0" aria-hidden="true"></i>
-                                        </button>
-
-                                    </div>
-                                    <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
-                                        <span *ngIf="emptyFielderror" class="sts-msg error">Please enter the
-                                            {{customer_label | capitalizeFirst}} ID or Email</span>
-                                        <app-field-error-display style="color: #f24949 !important;"
-                                            [displayError]="true" *ngIf="create_new" errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
-                                                Please create {{customer_label}} to take appointment">
-                                        </app-field-error-display>
-                                    </div> 
-
-                                </div>
-                            </form> -->
-
-                            
-                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-20" *ngIf="showBlockHint">
-                                <table
-                                    class="table table-head-custom table-head-bg table-borderless table-vertical-center bold">
-                                    <thead>
-                                        <tr class="text-left text-uppercase">
-                                            <th style="min-width: 100px;">Name</th>
-                                            <th style="min-width: 100px;">Id</th>
-                                            <th style="min-width: 100px;">Phone</th>
-                                            <th style="min-width: 100px;" class="hiddencontent">Email</th>
-                                            <th style="min-width: 100px;" class="hiddencontent">DOB</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="row_data border-bottom pointer-cursor tbl-hover"
-                                            (click)="getProviderQuestionnaire()">
-                                            <td>
-                                                <span class="text-dark-75 d-block">{{customer_data.firstName}}
-                                                    {{customer_data.lastName}}</span>
-                                            </td>
-                                            <td>
-                                                <span class="text-dark-75 d-block" *ngIf="customer_data.jaldeeId">
-                                                    {{customer_data.jaldeeId}}
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <span class="text-dark-75 d-block" *ngIf="customer_data.phoneNo">
-                                                    {{customer_data.countryCode}} {{customer_data.phoneNo}}
-                                                </span>
-                                            </td>
-                                            <td class="hiddencontent">
-                                                <span class="text-dark-75 d-block" *ngIf="customer_data.email">
-                                                    {{customer_data.email}}
-                                                </span>
-                                            </td>
-                                            <td class="hiddencontent">
-                                                <span class="text-dark-75 d-block" *ngIf="customer_data.dob">
-                                                    {{customer_data.dob | date:dateFormat}}
-                                                </span>
-                                            </td>
-                                            <td class="">
-                                                <i class="fa fa-arrow-right black" aria-hidden="true"></i>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- <div class="create_new mgn-bt-20 font-9" *ngIf="!showBlockHint">
-                                <div class="or-style">OR</div>
-                                <a class="underline coloroflabels" (click)="createNew()"
-                                    *ngIf="source !== 'appt-block'">
-                                    Create a new {{customer_label}} and get appointment
-                                </a>
-                                <a class="underline coloroflabels" (click)="createNew()"
-                                    *ngIf="source === 'appt-block'">
-                                    Create a new {{customer_label}}
-                                </a>
-                            </div>
-                            <div class="create_new mgn-bt-20 font-9" *ngIf="source !== 'appt-block'">
-                                <div class="or-style">OR</div>
-                                <span class="coloroflabels">
-                                    Choose the third party listing site/app through which the {{customer_label}} came.
-                                 
-                                </span>
-                                <div class="mgn-up-10">
-                                    <button *ngIf="domain === 'healthCare'"
-                                        class="create_new_button cs-btn bt3 mgn-rt-10 mgn-bt-10"
-                                        (click)="initAppointment('practo')">Practo</button>
-                                    <button class="create_new_button cs-btn bt3 mgn-rt-10 mgn-bt-10"
-                                        (click)="initAppointment('justdial')">Just
-                                        dial</button>
-                                    <button class="create_new_button cs-btn bt3 mgn-rt-10 mgn-bt-10"
-                                        (click)="initAppointment('google')">Google</button>
-                                    <button class="create_new_button cs-btn bt3 mgn-rt-10 mgn-bt-10"
-                                        *ngIf="domain === 'healthCare'"
-                                        (click)="initAppointment('mfine')">MFine</button>
-                                    <button class="create_new_button cs-btn bt3 mgn-bt-10"
-                                        [class.btn-selected]="showOther" (click)="showOtherSection()">Other</button>
-                                </div>
-                                <div class="disp-flex" *ngIf="showOther">
-                                    <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
-                                        <mat-form-field>
-                                            <input matInput placeholder="Enter your third party listing site *"
-                                                [(ngModel)]="otherThirdParty" type="text" class="form-control"
-                                                (keypress)="resetError()">
-                                        </mat-form-field>
-                                        <app-field-error-display style="color: #f24949 !important;"
-                                            [displayError]="true" *ngIf="thirdparty_error"
-                                            errorMsg="{{thirdparty_error}}">
-                                        </app-field-error-display>
-                                    </div>
-                                    <div class="col-md-2 col-xs-2 col-sm-2 mgn-up-25 mgn-lt-5">
-                                        <button class="create_new_button cs-btn bt3"
-                                            (click)="showOtherSection(true)">Ok</button>
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card" *ngIf="showCheckin && !showQuestionnaire && !showFollowup">
+
+
+            <div class="card" *ngIf="showCheckin && !showQuestionnaire && !showFollowup && foundMultipleCustomers">
+                <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 no-padding">
+                  <table class="table table-head-custom table-head-bg table-borderless table-vertical-center bold">
+                    <thead>
+                      <tr class="text-left text-uppercase">
+                        <th style="min-width: 100px;">Name</th>
+                        <th style="min-width: 100px;">Id</th>
+                        <th style="min-width: 100px;">Phone</th>
+                        <th style="min-width: 100px;" class="hiddencontent">Email</th>
+                        <th style="min-width: 100px;" class="hiddencontent">DOB</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let customer of customer_data let i=index">
+                      <tr class="row_data border-bottom pointer-cursor tbl-hover" (click)="searchCustomerById(customer.jaldeeId)">
+                        <td>
+                          <span class="text-dark-75 d-block">{{customer.firstName}}
+                            {{customer.lastName}}</span>
+                        </td>
+                        <td>
+                          <span class="text-dark-75 d-block" *ngIf="customer.jaldeeId"  (click) = "searchCustomerById(customer.jaldeeId)">
+                            {{customer.jaldeeId}}
+                          </span>
+                        </td>
+                        <td>
+                          <span class="text-dark-75 d-block" *ngIf="customer.phoneNo">
+                            {{customer.countryCode}} {{customer.phoneNo}}
+                          </span>
+                        </td>
+                        <td class="hiddencontent">
+                          <span class="text-dark-75 d-block" *ngIf="customer.email">
+                            {{customer.email}}
+                          </span>
+                        </td>
+                        <td class="hiddencontent">
+                          <span class="text-dark-75 d-block" *ngIf="customer.dob">
+                            {{customer.dob | date:dateFormat}}
+                          </span>
+                        </td>
+                        <td class="">
+                          <i class="fa fa-arrow-right black" aria-hidden="true"></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            <div class="card" *ngIf="showCheckin && !showQuestionnaire && !showFollowup && !foundMultipleCustomers">
                 <div class="">
                     <div class="servicefor-outer btborder">
                         <div>
@@ -835,7 +732,7 @@
                             <ng-container *ngIf="action=='note'">
                                 <div class="col-md-12 mgn-bt-20">
                                     <mat-form-field>
-                                        <textarea matInput class="form-control mt-3" [(ngModel)]="consumerNote"
+                                        <textarea matInput class="form-control mt-4" [(ngModel)]="consumerNote"
                                             #consumernote (change)="handleConsumerNote(consumernote.value)"
                                             maxlength="1000" placeholder="{{note_placeholder}}"></textarea>
                                     </mat-form-field>

@@ -232,6 +232,7 @@ export class AppointmentComponent implements OnInit {
     provider_label = '';
     showQuestionnaire = false;
     questionnaireList: any = [];
+    foundMultipleCustomers = false;
     channel;
     questionAnswers;
     bookingMode;
@@ -360,9 +361,11 @@ export class AppointmentComponent implements OnInit {
                         (data: any) => {
                             if (data.length > 1) {
                                 const customer = data.filter(member => !member.parent);
-                                this.customer_data = customer[0];
+                                this.customer_data = customer;
+                                this.foundMultipleCustomers = true;
                             } else {
                                 this.customer_data = data[0];
+                                this.foundMultipleCustomers = false;
                             }
                             if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
                                 this.countryCode = this.customer_data.countryCode;
@@ -543,9 +546,11 @@ export class AppointmentComponent implements OnInit {
                 } else {
                     if (data.length > 1) {
                         const customer = data.filter(member => !member.parent);
-                        this.customer_data = customer[0];
+                        this.customer_data = customer;
+                        this.foundMultipleCustomers = true;
                     } else {
                         this.customer_data = data[0];
+                        this.foundMultipleCustomers = false;
                     }
                     this.jaldeeId = this.customer_data.jaldeeId;
                     this.consumerPhoneNo = this.customer_data.phoneNo;
@@ -632,9 +637,11 @@ export class AppointmentComponent implements OnInit {
                         } else {
                             if (data.length > 1) {
                                 const customer = data.filter(member => !member.parent);
-                                this.customer_data = customer[0];
+                                this.customer_data = customer;
+                                this.foundMultipleCustomers = true;
                             } else {
                                 this.customer_data = data[0];
+                                this.foundMultipleCustomers = false
                             }
                             this.jaldeeId = this.customer_data.jaldeeId;
                             this.consumerPhoneNo = this.customer_data.phoneNo;
@@ -1201,9 +1208,11 @@ export class AppointmentComponent implements OnInit {
                 (data: any) => {
                     if (data.length > 1) {
                         const customer = data.filter(member => !member.parent);
-                        this.customer_data = customer[0];
+                        this.customer_data = customer;
+                        this.foundMultipleCustomers = true;
                     } else {
                         this.customer_data = data[0];
+                        this.foundMultipleCustomers = false;
                     }
                     this.jaldeeId = this.customer_data.jaldeeId;
                     if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
@@ -1215,6 +1224,55 @@ export class AppointmentComponent implements OnInit {
                     this.saveCheckin();
                 });
     }
+
+
+    searchCustomerById(customer_id) {
+        console.log(customer_id)
+        if (!customer_id) {
+            this.emptyFielderror = true;
+        } else {
+            this.qParams = {};
+            this.create_new = false;
+            let post_data = {};
+            post_data['or=jaldeeId-eq'] = customer_id + ',firstName-eq=' + customer_id;
+            this.provider_services.getCustomer(post_data)
+                .subscribe(
+                    (data: any) => {
+                        if (data.length === 0) {
+                            this.createNew('create');
+                        } else {
+                            if (data.length > 1) {
+                                const customer = data.filter(member => !member.parent);
+                                this.customer_data = customer;
+                                this.foundMultipleCustomers = true;
+                            } else {
+                                this.customer_data = data[0];
+                                this.foundMultipleCustomers = false;
+                            }
+                            this.jaldeeId = this.customer_data.jaldeeId;
+                            if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                                this.countryCode = this.customer_data.countryCode;
+                            } else {
+                                this.countryCode = '+91';
+                            }
+                            if (this.source === 'appt-block') {
+                                this.showBlockHint = true;
+                                this.heading = 'Confirm your Appointment';
+                            } else {
+                                this.getFamilyMembers();
+                                this.initAppointment();
+                            }
+                        }
+                    },
+                    error => {
+                        this.wordProcessor.apiErrorAutoHide(this, error);
+                    }
+                );
+        }
+    }
+
+
+
     saveCheckin() {
         if (this.type === 'followup') {
             this.sel_ser = this.servId;
