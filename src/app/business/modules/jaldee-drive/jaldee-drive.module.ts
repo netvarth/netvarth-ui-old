@@ -8,6 +8,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { PreviewuploadedfilesModule } from './previewuploadedfiles/previewuploadedfiles.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+ import { CapitalizeFirstPipeModule } from "../../../shared/pipes/capitalize.module";
+
 const routes: Routes = [
   { path: '', component: JaldeeDriveComponent },
   { path: 'folderfiles', loadChildren: ()=> import('./folder-files/folder-files.module').then(m=>m.FolderFileModule) },
@@ -25,6 +27,7 @@ const routes: Routes = [
     MatTooltipModule,
     FormsModule,
     PreviewuploadedfilesModule,
+    CapitalizeFirstPipeModule,
     [RouterModule.forChild(routes)],
   ],
   exports: [JaldeeDriveComponent]

@@ -9,6 +9,8 @@ import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 import {NgxPaginationModule} from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter'; // import ng2search pipe module
+import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
+
 
 const routes: Routes = [
     { path: '', component: FolderFilesComponent }
@@ -24,6 +26,7 @@ const routes: Routes = [
         FormsModule,
         NgxPaginationModule,
         Ng2SearchPipeModule,
+        CapitalizeFirstPipeModule,
         [RouterModule.forChild(routes)]
     ],
     exports: [

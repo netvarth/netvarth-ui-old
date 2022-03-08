@@ -119,4 +119,10 @@ font-weight: bold;
   }
   
 
-  
+  .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element:disabled,
+  .picker-form-group input{
+      background: transparent !important;
+  }
+  svg {
+      margin-top: -10px !important;
+  }

@@ -62,9 +62,12 @@ export function init_app(globalService: GlobalService) {
 }
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { projectConstantsLocal } from './shared/constants/project-constants';
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, projectConstants.PATH + 'assets/i18n/home/', '.json');
+  if (projectConstants) {
+    return new TranslateHttpLoader(http, projectConstantsLocal.PATH + 'assets/i18n/home/', '.json');
+  }
 }
 
 @NgModule({

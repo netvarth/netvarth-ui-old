@@ -304,9 +304,11 @@ export class CustomerCreateComponent implements OnInit {
               this.amForm.get('countryCode').setValue(data[0].userProfile.countryCode);
               this.amForm.get('first_name').setValue(data[0].userProfile.firstName);
               this.amForm.get('last_name').setValue(data[0].userProfile.lastName);
-              if (this.customerDetails.email) {
-                this.amForm.get('email_id').setValue(this.customerDetails.email);
-              }
+              this.amForm.get('email_id').setValue(data[0].userProfile.email);
+
+              // if (this.customerDetails.email) {
+              //   this.amForm.get('email_id').setValue(this.customerDetails.email);
+              // }
               if (this.customerDetails.address) {
                 this.amForm.get('address').setValue(this.customerDetails.address);
               }

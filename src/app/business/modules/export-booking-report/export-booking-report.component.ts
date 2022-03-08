@@ -3,6 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ExportReportService } from '../reports/export-report.service';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+
 
 @Component({
   selector: 'app-export-booking-report',
@@ -13,13 +15,20 @@ export class ExportBookingReportComponent implements OnInit {
   bookingList: any;
   criteriaText: any;
   headerColumns;
+  provider_label = '';
+  customer_label = '';
   dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   @ViewChild('source') source: ElementRef;
 
   constructor(public dialogRef: MatDialogRef<ExportBookingReportComponent>,
     @Inject(MAT_DIALOG_DATA) public booking: any,
     private shared_functions: SharedFunctions,
-    private exportService: ExportReportService) {
+    private exportService: ExportReportService,
+    private wordProcessor:WordProcessor) {
+      this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+      this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+
+
     // this.bookingList = booking.bookingList;
   }
   getQuestionAnswers(a: any) {

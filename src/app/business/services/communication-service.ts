@@ -58,7 +58,7 @@ export class CommunicationService {
         return new Promise<void>((resolve, reject) => {
             this.sendglobalmsgdialogRef = this.dialog.open(AddInboxMessagesComponent, {
                 width: '50%',
-                panelClass: ['popup-class', 'commonpopupmainclass'],
+                panelClass: ['popup-class', 'commonpopupmainclass', 'loginmainclass', 'smallform'],
                 disableClose: true,
                 data: {
                     typeOfMsg: type,
@@ -169,7 +169,7 @@ export class CommunicationService {
         return new Promise<void>((resolve, reject) => {
             Cthis.sendmsgdialogRef = this.dialog.open(AddInboxMessagesComponent, {
                 width: '50%',
-                panelClass: ['popup-class', 'commonpopupmainclass'],
+                panelClass: ['popup-class', 'commonpopupmainclass', 'loginmainclass', 'smallform'],
                 disableClose: true,
                 data: {
                     typeOfMsg: type,

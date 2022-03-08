@@ -39,6 +39,9 @@ export class OrderDetailsComponent implements OnInit {
   image_list_popup: Image[];
   imagelist: any = [];
   orderlist_history: any = [];
+  questionnaires: any = [];
+  api_loading = true;
+  customer_label = '';
   orderstatus: any = projectConstantsLocal.ORDER_STATUS_FILTER;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
     strategy: PlainGalleryStrategy.CUSTOM,
@@ -60,6 +63,7 @@ export class OrderDetailsComponent implements OnInit {
   private onDestroy$: Subject<void> = new Subject<void>();
   constructor(public activaterouter: ActivatedRoute,
     public providerservice: ProviderServices, private dialog: MatDialog,
+    private provider_services: ProviderServices,
     public location: Location, public sharedFunctions: SharedFunctions,
     private wordProcessor: WordProcessor) {
     this.activaterouter.params
@@ -96,6 +100,16 @@ export class OrderDetailsComponent implements OnInit {
     .pipe(takeUntil(this.onDestroy$))
     .subscribe(data => {
       this.orderDetails = data;
+      if (this.orderDetails.questionnaires && this.orderDetails.questionnaires.length > 0) {
+        this.questionnaires = this.orderDetails.questionnaires;
+        console.log(this.questionnaires)
+      }
+      if (this.orderDetails.releasedQnr && this.orderDetails.releasedQnr.length > 0) {
+        const releasedQnrs = this.orderDetails.releasedQnr.filter(qnr => qnr.status === 'released');
+        if (releasedQnrs.length > 0) {
+          this.getReleasedQnrs(releasedQnrs);
+        }
+      }
       if (this.orderDetails.homeDeliveryAddress) {
         this.delivery_address = this.orderDetails.homeDeliveryAddress;
       }
@@ -124,6 +138,21 @@ export class OrderDetailsComponent implements OnInit {
       }
       this.loading = false;
     });
+  }
+  getReleasedQnrs(releasedQnrs) {
+    this.provider_services.getOrderQuestionnaireByUid(this.orderDetails.uid).subscribe((data: any) => {
+      const qnrs = data.filter(function (o1) {
+        return releasedQnrs.some(function (o2) {
+          return o1.id === o2.id;
+        });
+      });
+      this.questionnaires = this.questionnaires.concat(qnrs);
+    });
+  }
+  getQuestionAnswers(event) {
+    if (event === 'reload') {
+      this.getOrderDetails(this.uid);
+    }
   }
   goBack() {
     this.location.back();
@@ -267,6 +296,13 @@ for (const stat of this.orderstatus) {
     let timeDate;
     timeDate = time.replace(/\s/, 'T');
     return timeDate;
+  }
+  getQnrStatus(qnr) {
+    const id = (qnr.questionnaireId) ? qnr.questionnaireId : qnr.id;
+    const questr = this.orderDetails.releasedQnr.filter(questionnaire => questionnaire.id === id);
+    if (questr[0]) {
+      return questr[0].status;
+    }
   }
   onButtonBeforeHook() {
   }

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { projectConstants } from '../../../../app/app.component';
 import { ActivatedRoute } from '@angular/router';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
@@ -7,6 +6,7 @@ import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pi
 import { ProviderServices } from '../../services/provider-services.service';
 import { Location } from '@angular/common';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 
 
@@ -21,7 +21,7 @@ export class PrintBookingDetailsComponent implements OnInit {
   bookingDetails: any;
   elementType = 'url';
   bookingId: any;
-  path = projectConstants.PATH;
+  path = projectConstantsLocal.PATH;
   groupedQnr: any;
   qr_value: string;
   showQR = false;
@@ -40,7 +40,7 @@ export class PrintBookingDetailsComponent implements OnInit {
   isJaldeeId: boolean = false;
   spName: any;
   phoneNumber: any;
-
+  phoneNum: any;
 
   constructor(private activated_route: ActivatedRoute,
     private groupService: GroupStorageService,
@@ -71,6 +71,38 @@ export class PrintBookingDetailsComponent implements OnInit {
           });
           this.getAppointmentInternalStatus(this.bookingId).then((data) => {
             this.internalStatusLog = data;
+          });
+        }
+        if (this.bookingType === 'order') {
+          this.getOrderBookingDetails(this.bookingId).then((data) => {
+            this.bookingDetails = data;
+            if(this.bookingDetails && this.bookingDetails.phoneNumber){
+              this.phoneNum = this.bookingDetails.phoneNumber
+            } 
+            if (this.bookingDetails.questionnaire) {
+              this.questionnaires = this.bookingDetails.questionnaire;
+              this.questionanswers = this.questionnaires.questionAnswers;
+              if (this.questionanswers) {
+                this.groupQuestionsBySection();
+              }
+            };
+            this.setPrintDetails();
+          });
+        }
+        if (this.bookingType === 'donation') {
+          this.getDonationBookingDetails(this.bookingId).then((data) => {
+            this.bookingDetails = data;
+            if(this.bookingDetails && this.bookingDetails.donorPhoneNumber){
+              this.phoneNum = this.bookingDetails.donorPhoneNumber
+            } 
+            if (this.bookingDetails.questionnaire) {
+              this.questionnaires = this.bookingDetails.questionnaire;
+              this.questionanswers = this.questionnaires.questionAnswers;
+              if (this.questionanswers) {
+                this.groupQuestionsBySection();
+              }
+            };
+            this.setPrintDetails();
           });
         }
         if (this.bookingType === 'checkin') {
@@ -170,8 +202,9 @@ export class PrintBookingDetailsComponent implements OnInit {
     const bprof = this.groupService.getitemFromGroupStorage('ynwbp');
     this.bname = bprof.bn;
     if (this.bookingType === 'appt') {
-      this.customer = this.bookingDetails.appmtFor[0];
-      console.log('cutomer',this.customer)
+      if(this.bookingDetails && this.bookingDetails.appmtFor[0]){
+        this.customer = this.bookingDetails.appmtFor[0];
+      }
       const fname = (this.bookingDetails.appmtFor[0].firstName) ? this.bookingDetails.appmtFor[0].firstName : '';
       const lname = (this.bookingDetails.appmtFor[0].lastName) ? this.bookingDetails.appmtFor[0].lastName : '';
       if (fname !== '' || lname !== '') {
@@ -186,7 +219,44 @@ export class PrintBookingDetailsComponent implements OnInit {
         this.spName = (this.bookingDetails.provider.businessName) ? this.bookingDetails.provider.businessName : this.bookingDetails.provider.firstName + ' ' + this.bookingDetails.provider.lastName;
       }
 
-    } else {
+    } 
+    else if(this.bookingType === 'order'){
+      if(this.bookingDetails && this.bookingDetails.orderFor){
+        this.customer = this.bookingDetails.orderFor;
+        console.log('cutomer',this.customer)
+      const fname = (this.bookingDetails.orderFor.firstName) ? this.bookingDetails.orderFor.firstName : '';
+      const lname = (this.bookingDetails.orderFor.lastName) ? this.bookingDetails.orderFor.lastName : '';
+      if (fname !== '' || lname !== '') {
+        this.customerName = fname + " " + lname;
+
+      }
+      else {
+        this.isJaldeeId = true;
+        if (this.bookingDetails && this.bookingDetails.consumer && this.bookingDetails.consumer.jaldeeId) {
+          this.customerName = this.bookingDetails.consumer.jaldeeId
+        }
+      }
+      }
+      else{
+        if (this.bookingDetails && this.bookingDetails.consumer && this.bookingDetails.consumer.jaldeeId) {
+          this.customerName = this.bookingDetails.consumer.jaldeeId
+        }
+      }
+      
+     
+    }
+    else if(this.bookingType === 'donation'){
+      if(this.bookingDetails && this.bookingDetails.donor){
+        this.customer = this.bookingDetails.donor;
+        console.log('cutomer',this.customer)
+      const fname = (this.bookingDetails.donor.firstName) ? this.bookingDetails.donor.firstName : '';
+      const lname = (this.bookingDetails.donor.lastName) ? this.bookingDetails.donor.lastName : '';
+      if (fname !== '' || lname !== '') {
+        this.customerName = fname + " " + lname;
+      }
+      }
+    }
+    else {
       this.customer = this.bookingDetails.waitlistingFor[0];
       console.log('cutomer',this.customer)
       const fname = (this.bookingDetails.waitlistingFor[0].firstName) ? this.bookingDetails.waitlistingFor[0].firstName : '';
@@ -210,6 +280,40 @@ export class PrintBookingDetailsComponent implements OnInit {
     return new Promise(function (resolve, reject) {
 
       _this.providerServices.getAppointmentById(bookingId)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+
+    });
+
+  }
+  getOrderBookingDetails(bookingId) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+
+      _this.providerServices.getOrderById(bookingId)
+        .subscribe(
+          data => {
+            resolve(data);
+          },
+          () => {
+            reject();
+          }
+        );
+
+    });
+
+  }
+  getDonationBookingDetails(bookingId) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+
+      _this.providerServices.getDonationById(bookingId)
         .subscribe(
           data => {
             resolve(data);

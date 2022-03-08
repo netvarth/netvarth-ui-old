@@ -38,8 +38,9 @@ subscription:Subscription;
   getUsers() {
    this.subscription= this.provider_services.getUsers().subscribe(
       (data: any) => {
-        this.user_list = data.filter(obj=>obj.userType==='PROVIDER');
+        this.user_list = data.filter(obj=>obj.userType==='PROVIDER' && obj.status === 'ACTIVE');
         this.loading=false;
+      
       },
 
       (error: any) => {

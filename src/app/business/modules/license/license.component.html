@@ -118,7 +118,8 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                                    <div *ngIf="currentlicense_details.dueAmount > 0"
+                                    <!-- *ngIf="currentlicense_details.dueAmount > 0" -->
+                                    <div *ngIf="invoices.length != 0"
                                         class="card no-mgn-bt card_addon txt_centr">
                                         <div class="txt_adon">Bill Due</div>
                                         <div>Amount - <span

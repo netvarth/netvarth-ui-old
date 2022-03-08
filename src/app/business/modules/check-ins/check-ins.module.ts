@@ -32,7 +32,6 @@ import { BookingHistoryModule } from '../../shared/booking-history/booking-histo
 // import {NgbCarousel} from '@ng-bootstrap/ng-bootstrap';
 
 
-
 const routes: Routes = [
     { path: '', component: CheckInsComponent },
     { 
@@ -85,7 +84,6 @@ const routes: Routes = [
     ],
     declarations: [
         CheckInsComponent,
-
     ],
     exports: [CheckInsComponent]
 })

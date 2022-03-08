@@ -9,7 +9,8 @@ import { GroupStorageService } from '../../../../../../../../shared/services/gro
 import { WordProcessor } from '../../../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
 import { AddproviderAddonComponent } from '../../../../../../../../business/modules/add-provider-addons/add-provider-addons.component';
-import { UpdateProviderUserNotificationsComponent } from '../update-provider-notifications/update-provider-notifications.component';
+// import { UpdateProviderUserNotificationsComponent } from '../update-provider-notifications/update-provider-notifications.component';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-provider-notifications',
@@ -146,6 +147,7 @@ export class ProviderUserNotificationUserComponent implements OnInit {
       .subscribe(
         data => {
           this.notificationList = data;
+          console.log("notification list..",this.notificationList)
           this.setNotificationList(this.notificationList);
         },
         error => {
@@ -993,26 +995,60 @@ export class ProviderUserNotificationUserComponent implements OnInit {
       });
     }
   }
-  showNotificationPopup(type) {
-    if ((type === 'Token' || type === 'Check-in') && !this.waitlistStatus) {
+  type='Token'; 
+  tabClick(event: MatTabChangeEvent) {
+    const type = event.tab.textLabel;
+    // console.log(tab);
+    if ((type === 'Token Notifications' || type === 'Check-in Notifications') && !this.waitlistStatus) {
       this.snackbarService.openSnackBar('Jaldee QManager is disabled in your settings', { 'panelClass': 'snackbarerror' });
-    } else if (type === 'Appointment' && !this.appointment_status) {
+    } else if (type === 'Appointment Notifications' && !this.appointment_status) {
       this.snackbarService.openSnackBar('Jaldee Appointment Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
     } else {
-      const dialogref = this.dialog.open(UpdateProviderUserNotificationsComponent, {
-        width: '40%',
-        panelClass: ['popup-class', 'commonpopupmainclass'],
-        disableClose: true,
-        data: {
-          inernationalUser : this.isInternationalUser,
-          type: type,
-          userId: this.userId
-        }
-      });
-      dialogref.afterClosed().subscribe(
-        result => {
+      if(type=="Token Notifications") {
+        this.type='Token';
+      } else if(type=="Check-in Notifications") {
+        this.type='Check-in';
+      }else {
+        this.type='Appointment';
+      }
+     
+      // this.actionPerformed.emit(actionObj)
+      // const dialogref = this.dialog.open(UpdateProviderUserNotificationsComponent, {
+      //   width: '40%',
+      //   panelClass: ['popup-class', 'commonpopupmainclass'],
+      //   disableClose: true,
+      //   data: {
+      //     inernationalUser : this.isInternationalUser,
+      //     type: type,
+      //     userId: this.userId
+      //   }
+      // });
+      // dialogref.afterClosed().subscribe(
+      //   result => {
 
-        });
+      //   });
     }
   }
+  // showNotificationPopup(type) {
+  //   if ((type === 'Token' || type === 'Check-in') && !this.waitlistStatus) {
+  //     this.snackbarService.openSnackBar('Jaldee QManager is disabled in your settings', { 'panelClass': 'snackbarerror' });
+  //   } else if (type === 'Appointment' && !this.appointment_status) {
+  //     this.snackbarService.openSnackBar('Jaldee Appointment Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
+  //   } else {
+  //     const dialogref = this.dialog.open(UpdateProviderUserNotificationsComponent, {
+  //       width: '40%',
+  //       panelClass: ['popup-class', 'commonpopupmainclass'],
+  //       disableClose: true,
+  //       data: {
+  //         inernationalUser : this.isInternationalUser,
+  //         type: type,
+  //         userId: this.userId
+  //       }
+  //     });
+  //     dialogref.afterClosed().subscribe(
+  //       result => {
+
+  //       });
+  //   }
+  // }
 }

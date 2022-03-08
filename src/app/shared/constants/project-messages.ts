@@ -161,7 +161,7 @@ export const Messages = {
   'ADD_PROVIDER_CUSTOMER_WAITLIST': 'Wailist added successfully',
   'WAITLIST_STATUS_CHANGE': '[waitlist] status changed to [status]',
   'WAITLISTTOKEN_STATUS_CHANGE': 'Token status changed to [status]',
-  'PROVIDER_NOTE_ADD': 'Note added successfully',
+  'PROVIDER_NOTE_ADD': 'Private note added successfully',
   'CONSUMERTOPROVIDER_NOTE_ADD': 'Message has been successfully sent',
   'PROVIDERTOCONSUMER_NOTE_ADD': 'Message has been successfully sent',
   'TELESERVICE_SHARE_LINK': 'Notification has been sent to you and your [customer]',
@@ -356,7 +356,7 @@ export const Messages = {
   'NO_CHECKINS_CAP': 'No current Check-Ins available',
   'MAKE_PAYMENT_CAP': 'Make Payment',
   'TOKEN_NO': 'Token Number',
-  'PERSONS_AHEAD': 'People ahead of you',
+  'PERSONS_AHEAD': 'People ahead of you ',
   'PARTY_SIZE': 'Party Size',
   'STATUS_CANCELLED': 'Cancelled',
   'STATUS_STARTED': 'Started',
@@ -422,7 +422,7 @@ export const Messages = {
   'NO_CHECKINS_EXISTS_CAP': 'Sorry no Check-In exist',
   // Kiosk-report as arrived
   'TOKEN_CAP': 'Token:',
-  'PERS_AHEAD': 'People ahead of you:',
+  'PERS_AHEAD': 'People ahead :',
   'NAME_CAP': 'Name:',
   'STATUS_CAP': 'Status:',
   'CONFIRM_ARRIVAL_CAP': 'Confirm Arrival',
@@ -788,7 +788,7 @@ export const Messages = {
   'PUSH_MESSAGE_CAP': 'App Notification',
   'SERVICE_EMAIL_CAP': 'Email',
   'GALLERY_CAP': 'Gallery',
-  'SELECT_IMAGE_CAP': 'Click here to select the image files',
+  'SELECT_IMAGE_CAP': 'Click here to select the files',
   'GO_TO_SERVICE_CAP': 'Add the new service to working hours',
 
   // App-ynw_provider-components-add-provider-service-gallery

@@ -1,17 +1,33 @@
 <section class="">
   <div class="card title-gb rounded-0">
-    <h5 class="mgn-up-10">
+    <h5 class="mgn-up-10" *ngIf="foldertype === 'shared'">
+      <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
+      </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {{customer_label | capitalizeFirst}} Files
+    </h5>
+    <h5 class="mgn-up-10" *ngIf="foldertype === 'public'">
+      <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
+      </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {{provider_label | capitalizeFirst}} Files
+    </h5>
+    <h5 class="mgn-up-10" *ngIf="foldertype === 'private'">
       <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
       </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       {{foldername}} Files
     </h5>
-    <p *ngIf="foldertype === 'shared' || foldertype === 'public' && !isHealthCare"
+    <!-- <p class="text-secondary mx-5 no-padding">
+      Manage the files uploaded by the {{customer_label ? customer_label : provider_label}}s !
+    </p> -->
+    <p *ngIf="foldertype === 'shared'"
       class="text-secondary mx-5 no-padding">
-      Manage the files uploaded by the {{foldername=='Provider' ? 'provider' : 'consumer'}} label!</p>
-    <p *ngIf="foldertype === 'public' && provider_label && isHealthCare" class="text-secondary mx-5 no-padding">
-      Manage the files uploaded by the {{provider_label}} lable!</p>
-    <p *ngIf="foldertype === 'shared'&& customer_label && isHealthCare" class="text-secondary mx-5 no-padding">
-      Manage the files uploaded by the {{customer_label}} lable!</p>
+      <!-- && !isHealthCare -->
+      <!-- Manage the files uploaded by the {{foldername=='Provider' ? 'provider' : 'consumer'}} label! -->
+      Manage the files uploaded by the {{customer_label | capitalizeFirst}}s label!
+    </p>
+    <p *ngIf="foldertype === 'public'" class="text-secondary mx-5 no-padding">
+      <!-- && provider_label && isHealthCare -->
+      Manage the files uploaded by the {{provider_label | capitalizeFirst}}s label!
+    </p>
     <p *ngIf="foldertype === 'private'" class="text-secondary mx-5 no-padding">Manage your own files!
     </p>
   </div>
@@ -74,7 +90,7 @@
         <button type="button" class="pull-left p-button-rounded p-ripple p-button p-component mx-2 my-3 p-1">
           <a style="color: white !important;" #modal data-toggle="modal" data-target="#exampleModalCenter">
           </a>
-          <a style="color: white !important;" class="pointer-cursor mr-1 p-2" (click)="imagefile1.click();"><input
+          <a style="color: white !important;" class="pointer-cursor mr-1 p-2" (click)="$event.target.value=null;imagefile1.click();"><input
               #imagefile1 type="file" accept="/*;capture=camera" style="display:none;" multiple
               (change)="filesSelected($event, 'close')"><i style="color: white !important;" class="fa fa-plus mgn-rt-5"
               aria-hidden="true"></i> Upload File </a>
@@ -99,7 +115,7 @@
                 class="table  table-responsive table-hover table-head-custom table-head-bg table-borderless table-vertical-center">
                 <thead>
                   <tr class="text-left text-uppercase mx-2 " style="background-color: #f3f6f9; height: 60px;">
-                    <th style="min-width: 140px">
+                    <th style="min-width: 145px">
                       Name
                     </th>
                     <th style="min-width: 80px" *ngIf="foldertype === 'shared'">
@@ -164,7 +180,7 @@
                     <td *ngIf="foldertype === 'private'">
                       <span class="text-dark-75 d-block">
                         <i class="fa fa-trash" style="color: red;" aria-hidden="true"
-                          (click)="deletepreview(customer.id,customer.fileName)"></i>
+                          (click)="deleteFile(customer.id,customer.fileName)"></i>
 
                       </span>
                     </td>
@@ -290,6 +306,16 @@
                       <mat-checkbox class="filter-checkbox" (change)="setFilterDataCheckbox('fileType', 'pdf')"
                         [checked]="pdf">
                         PDF</mat-checkbox>
+                    </li>
+                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                      <mat-checkbox class="filter-checkbox" (change)="setFilterDataCheckbox('fileType', 'mp4')"
+                        [checked]="mp4">
+                        MP4</mat-checkbox>
+                    </li>
+                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                      <mat-checkbox class="filter-checkbox" (change)="setFilterDataCheckbox('fileType', 'mp3')"
+                        [checked]="mp3">
+                        MP3</mat-checkbox>
                     </li>
                   </div>
                 </div>

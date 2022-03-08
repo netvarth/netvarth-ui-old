@@ -15,6 +15,8 @@ import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { userContactInfoComponent } from '../../../business/modules/settings/general/users/user-contact-info/user-contact-info.component';
 import { ConfirmBoxLocationComponent } from './confirm-box-location/confirm-box-location.component';
+// import {projectConstants } from '../../constants/project-constants';
+import { projectConstants } from '../../../../app/app.component';
 
 @Component({
   selector: 'app-user-service-change',
@@ -23,6 +25,7 @@ import { ConfirmBoxLocationComponent } from './confirm-box-location/confirm-box-
 })
 
 export class UserServiceChnageComponent implements OnInit {
+  tooltipcls = projectConstants.TOOLTIP_CLS;
   accountType: any;
   serviceList: any;
   services_selected: any = [];
@@ -345,11 +348,14 @@ getLanguages(languages) {
     }
   }
   updateUserWithLocation(user) {
+    const businessName = this.selectedUser.businessName?this.selectedUser.businessName:(this.selectedUser.firstName + ' ' + this.selectedUser.lastName);
+
     let msg = '';
     if (!this.selectedUser.isAvailable && (this.user.id === 136239 || this.user.id === 9341)) {
-      msg = this.selectedUser.businessName + ' seems to be unavailable now. Assign anyway ? ';
+
+      msg = businessName + ' seems to be unavailable now. Assign anyway ? ';
     } else {
-     msg = 'Select the location of ' + this.selectedUser.businessName + ' to whom the '+ this.customer_label + ' ,' + this.userDetails + ' will be assigned';
+     msg = 'Select the location of ' + businessName + ' to whom the '+ this.customer_label + ' ,' + this.userDetails + ' will be assigned';
       // msg = 'Do you want to assign this ' + this.customer_label + ' to ' + this.selectedUser.businessName + '?';
     }
     const dialogrefd = this.dialog.open(ConfirmBoxLocationComponent, {

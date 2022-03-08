@@ -191,7 +191,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   // jaldee_turn_on_cap=Messages.JALDEEE_TURN_ON_CAP;
   // jaldee_turn_ff_cap=Messages.JALDEE_TURN_OFF_CAP;
   // path = window.location.host + ;
-  wndw_path = projectConstants.PATH;
+  wndw_path = projectConstantsLocal.PATH;
   // @ViewChildren('qrCodeParent') qrCodeParent: ElementRef;
   @ViewChild('closebutton') closebutton;
   notedialogRef: any;
@@ -1292,7 +1292,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   generateQR(id) {
-    this.qr_value = projectConstants.PATH + id + "/";
+    this.qr_value = projectConstantsLocal.PATH + id + "/";
   }
 
   // Getting Provider Profile Pic
@@ -1414,7 +1414,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   // dwnld QR
   qrCodegenerateOnlineID(valuetogenerate) {
     this.imageUrl = this.wndw_path + 'assets/images/logo.png';
-    this.qr_value = projectConstants.PATH + valuetogenerate + "/";
+    this.qr_value = projectConstantsLocal.PATH + valuetogenerate + "/";
     this.qr_code_oId = true;
     this.changeDetectorRef.detectChanges();
     setTimeout(() => {

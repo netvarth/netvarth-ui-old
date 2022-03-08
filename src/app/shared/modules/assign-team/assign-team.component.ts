@@ -130,6 +130,7 @@ export class AssignTeam implements OnInit {
 
     this.provider_services.getTeamGroup().subscribe((data: any) => {
       this.groups = data;
+      console.log("Data:",this.groups)
      this.service_dataSource.data = this.setServiceDataSource(data);
       this.filterApplied_count = this.service_dataSource.data.length;
          setTimeout(() => {

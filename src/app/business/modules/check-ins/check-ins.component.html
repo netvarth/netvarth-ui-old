@@ -538,6 +538,46 @@
                     </div>
                   </div>
                 </div>
+                <!----for multi user filter start today tab-->
+                <div class="card" *ngIf="users.length >0">
+                  <div class="card-header">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link" type="button" data-toggle="collapse"
+                        data-target="#collapseServicesMultiUser" aria-expanded="false">
+                        <div>
+                          <div style="display: inline-block !important;">
+                            <i class="fa fa-user"></i>
+                          </div>
+                          <span>&nbsp;Multi User</span>
+                        </div>
+                        <i class="fa fa-angle-down"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapseServicesMultiUser" class="collapse in" data-parent="#accordion3">
+                    <div class="card-body">
+                      <div class="filter-checkbox-input">
+                        <!-- <label class="filterHeaders">Services</label> -->
+                        <!-- <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li> -->
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox class="filter-checkbox" [checked]="allServiceSelectedMultiUser"
+                            (change)="setFilterDataCheckbox('multiUser', 'all', $event)">
+                            All</mat-checkbox>
+                        </li>
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                          *ngFor="let multiUser of users">
+                          <mat-checkbox class="filter-checkbox"
+                            [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
+                            (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)">
+                            {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
+                        </li>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!----for multi user filter end today tab -->
 
               </ul>
             </section>
@@ -590,7 +630,7 @@
               </tr>
             </tbody>
             <tbody
-              *ngIf="startedCheckins.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0) ) && !small_device_display">
+              *ngIf="startedCheckins.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user && this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0) ) && !small_device_display">
               <tr class="pointer-cursor" [class.user-tr-backclr]="checkin.provider"
                 *ngFor="let checkin of startedCheckins, let i=index" (click)="goCheckinDetail(checkin)">
                 <td class="chkWth" *ngIf="startedCheckins.length > 1">
@@ -616,6 +656,21 @@
                     (click)="gotoCustomerDetails(checkin)">
                     {{checkin.waitlistingFor[0].firstName}}
                     {{checkin.waitlistingFor[0].lastName}}
+                     <!-- <img src="../../../../assets/icons/icon294(Traced).png"
+                      [matTooltipClass]="tooltipcls"
+                      [matTooltip]="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) | capitalizeFirst"
+                      *ngIf="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) === 'web'"
+                      style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/Group482249.png" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) | capitalizeFirst"
+                      *ngIf="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) === 'ios'"
+                      style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/icon295(Traced).png" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) | capitalizeFirst"
+                      *ngIf="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) === 'andriod'"
+                      style="width: 18px !important; margin-top: -6px !important;"> -->
+
+                    <!-- (mouseover)="changeText=true" (mouseout)="changeText=false" -->
                     <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                       <span
                         *ngIf="checkin.waitlistingFor[0].bookingLocation.district">{{checkin.waitlistingFor[0].bookingLocation.district}},</span>
@@ -629,6 +684,9 @@
                       <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                       <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender |
                         capitalizeFirst}}</span>
+                      <!-- <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.browser && showMore">
+                          {{getAgent(checkin.requestInfo.agent) | capitalizeFirst}},
+                          {{getbrowser(checkin.requestInfo.browser) | capitalizeFirst}}</span> -->
                       <span
                         *ngIf="checkin.waitlistingFor[0].preferredLanguage && (checkin.waitlistingFor[0].gender || checkin.waitlistingFor[0].age)">,</span>
                       <span *ngIf="checkin.waitlistingFor[0].preferredLanguage">&nbsp;</span>
@@ -740,8 +798,12 @@
                     </span>
                     <span
                       *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                      {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
-                      checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
+                      <!-- {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
+                      checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }} -->
+                      <span *ngIf="checkin.whatsApp_PhNumber">
+                        {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
+                        checkin.whatsApp_PhNumber}}
+                      </span>
                     </span>
                   </a>
                   <a class="statusText btn-play pointer-cursor done-btn"
@@ -770,7 +832,7 @@
               </tr>
             </tbody>
             <tbody
-              *ngIf="startedCheckins.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && small_device_display && !statusLoaded">
+              *ngIf="startedCheckins.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user && this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && small_device_display && !statusLoaded">
               <div [class.user-tr-backclr]="checkin.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
                 *ngFor="let checkin of startedCheckins, let i=index">
                 <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="startedCheckins.length > 1">
@@ -834,7 +896,7 @@
               </tr>
             </tbody>
             <tbody
-              *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && !small_device_display">
+              *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user && this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && !small_device_display">
               <tr class="pointer-cursor" [class.user-tr-backclr]="checkin.provider"
                 *ngFor="let checkin of check_in_filtered_list, let i=index" (click)="goCheckinDetail(checkin)">
                 <td class="chkWth" *ngIf="showSelectAll()">
@@ -861,6 +923,20 @@
                     [class.pointer-auto]="checkin.waitlistStatus=='blocked'">
                     {{checkin.waitlistingFor[0].firstName}}
                     {{checkin.waitlistingFor[0].lastName}}
+                    <!-- <img src="../../../../assets/icons/icon294(Traced).png"
+                      [matTooltipClass]="tooltipcls"
+                      [matTooltip]="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) | capitalizeFirst"
+                      *ngIf="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) === 'web'"
+                      style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/Group482249.png" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) | capitalizeFirst"
+                      *ngIf="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) === 'ios'"
+                      style="width: 18px !important; margin-top: -6px !important;">
+                    <img src="../../../../assets/icons/icon295(Traced).png" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) | capitalizeFirst"
+                      *ngIf="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) === 'andriod'"
+                      style="width: 18px !important; margin-top: -6px !important;"> -->
+
                     <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                     <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                       <span
@@ -875,6 +951,10 @@
                       <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                       <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender |
                         capitalizeFirst}}</span>
+                      <!-- <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.browser && showMore">
+                          {{getAgent(checkin.requestInfo.agent) | capitalizeFirst}},
+                          {{getbrowser(checkin.requestInfo.browser) | capitalizeFirst}}</span> -->
+
                       <span
                         *ngIf="checkin.waitlistingFor[0].preferredLanguage && (checkin.waitlistingFor[0].gender || checkin.waitlistingFor[0].age)">,</span>
                       <span *ngIf="checkin.waitlistingFor[0].preferredLanguage">&nbsp;</span>
@@ -1003,8 +1083,12 @@
                     </span>
                     <span
                       *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                      {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
-                      checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
+                      <!-- {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
+                      checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }} -->
+                      <span *ngIf="checkin.whatsApp_PhNumber">
+                        {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
+                        checkin.whatsApp_PhNumber}}
+                      </span>
                     </span>
                   </a>
                   <a class="statusText btn-play pointer-cursor done-btn"
@@ -1033,7 +1117,7 @@
               </tr>
             </tbody>
             <tbody
-              *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && small_device_display && !statusLoaded">
+              *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user && this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && small_device_display && !statusLoaded">
               <div [class.user-tr-backclr]="checkin.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
                 *ngFor="let checkin of check_in_filtered_list, let i=index">
                 <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="showSelectAll()">
@@ -1392,7 +1476,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card" style="padding-bottom: 30px !important;">
+                  <div class="card">
                     <div class="card-header">
                       <h2 class="mb-0">
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseDate3"
@@ -1422,6 +1506,46 @@
                       </div>
                     </div>
                   </div>
+                  <!----for multi user filter start future tab-->
+                  <div class="card" *ngIf="users.length >0">
+                    <div class="card-header">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                          data-target="#collapseServicesMultiUser" aria-expanded="false">
+                          <div>
+                            <div style="display: inline-block !important;">
+                              <i class="fa fa-user"></i>
+                            </div>
+                            <span>&nbsp;Multi User</span>
+                          </div>
+                          <i class="fa fa-angle-down"></i>
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapseServicesMultiUser" class="collapse in" data-parent="#accordion3">
+                      <div class="card-body">
+                        <div class="filter-checkbox-input">
+                          <!-- <label class="filterHeaders">Services</label> -->
+                          <!-- <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li> -->
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox class="filter-checkbox" [checked]="allServiceSelectedMultiUser"
+                              (change)="setFilterDataCheckbox('multiUser', 'all', $event)">
+                              All</mat-checkbox>
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                            *ngFor="let multiUser of users">
+                            <mat-checkbox class="filter-checkbox"
+                              [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
+                              (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)">
+                              {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
+                          </li>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!----for multi user filter end future tab -->
                 </ul>
               </section>
               <div class="filter-footer" *ngIf="filterapplied === true">
@@ -1459,7 +1583,7 @@
             </tr>
           </tbody>
           <tbody
-            *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && !small_device_display">
+            *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user && this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && !small_device_display">
             <tr class="pointer-cursor" [class.user-tr-backclr]="checkin.provider"
               *ngFor="let checkin of check_in_filtered_list, let i=index" (click)="goCheckinDetail(checkin)">
               <td class="chkWth" *ngIf="showSelectAll()">
@@ -1485,6 +1609,20 @@
                   (click)="gotoCustomerDetails(checkin)" [class.pointer-cursor]="checkin.waitlistStatus!=='blocked'"
                   [class.pointer-auto]="checkin.waitlistStatus=='blocked'">{{checkin.waitlistingFor[0].firstName}}
                   {{checkin.waitlistingFor[0].lastName}}
+                   <!-- <img src="../../../../assets/icons/icon294(Traced).png"
+                    [matTooltipClass]="tooltipcls"
+                    [matTooltip]="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) | capitalizeFirst"
+                    *ngIf="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) === 'web'"
+                    style="width: 18px !important; margin-top: -6px !important;">
+                  <img src="../../../../assets/icons/Group482249.png" [matTooltipClass]="tooltipcls"
+                    [matTooltip]="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) | capitalizeFirst"
+                    *ngIf="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) === 'ios'"
+                    style="width: 18px !important; margin-top: -6px !important;">
+                  <img src="../../../../assets/icons/icon295(Traced).png" [matTooltipClass]="tooltipcls"
+                    [matTooltip]="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) | capitalizeFirst"
+                    *ngIf="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) === 'andriod'"
+                    style="width: 18px !important; margin-top: -6px !important;"> -->
+
                   <div class="block-hint" *ngIf="checkin.waitlistStatus==='blocked'">Blocked</div>
                   <div class="bold" *ngIf="checkin.waitlistingFor[0].bookingLocation">
                     <span
@@ -1500,6 +1638,10 @@
                     <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                     <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender |
                       capitalizeFirst}}</span>
+                    <!-- <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.browser && showMore">
+                        {{getAgent(checkin.requestInfo.agent) | capitalizeFirst}},
+                        {{getbrowser(checkin.requestInfo.browser) | capitalizeFirst}}</span> -->
+
                     <span
                       *ngIf="checkin.waitlistingFor[0].preferredLanguage && (checkin.waitlistingFor[0].gender || checkin.waitlistingFor[0].age)">,</span>
                     <span *ngIf="checkin.waitlistingFor[0].preferredLanguage">&nbsp;</span>
@@ -1612,8 +1754,12 @@
                   </span>
                   <span
                     *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                    {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
-                    checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
+                    <!-- {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
+                    checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }} -->
+                    <span *ngIf="checkin.whatsApp_PhNumber">
+                      {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
+                      checkin.whatsApp_PhNumber}}
+                    </span>
                   </span>
                 </a>
                 <a class="statusText btn-play pointer-cursor done-btn"
@@ -1647,7 +1793,7 @@
             </tr>
           </tbody>
           <tbody
-            *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && small_device_display && !statusLoaded">
+            *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user && this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && small_device_display && !statusLoaded">
             <div [class.user-tr-backclr]="checkin.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
               *ngFor="let checkin of check_in_filtered_list, let i=index">
               <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="showSelectAll()">
@@ -2160,6 +2306,46 @@
                       </div>
                     </div>
                   </div>
+                  <!----for multi user filter start history tab-->
+                  <div class="card" *ngIf="users.length >0">
+                    <div class="card-header">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                          data-target="#collapseServicesMultiUser" aria-expanded="false">
+                          <div>
+                            <div style="display: inline-block !important;">
+                              <i class="fa fa-user"></i>
+                            </div>
+                            <span>&nbsp;Multi User</span>
+                          </div>
+                          <i class="fa fa-angle-down"></i>
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapseServicesMultiUser" class="collapse in" data-parent="#accordion3">
+                      <div class="card-body">
+                        <div class="filter-checkbox-input">
+                          <!-- <label class="filterHeaders">Services</label> -->
+                          <!-- <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                        </li> -->
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                            <mat-checkbox class="filter-checkbox" [checked]="allServiceSelectedMultiUser"
+                              (change)="setFilterDataCheckbox('multiUser', 'all', $event)">
+                              All</mat-checkbox>
+                          </li>
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                            *ngFor="let multiUser of users">
+                            <mat-checkbox class="filter-checkbox"
+                              [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
+                              (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)">
+                              {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
+                          </li>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!----for multi user filter end history tab -->
                 </ul>
               </section>
               <div class="filter-footer" *ngIf="filterapplied === true">
@@ -2234,6 +2420,9 @@
                     <span *ngIf="checkin.waitlistingFor[0].gender">&nbsp;</span>
                     <span *ngIf="checkin.waitlistingFor[0].gender">{{checkin.waitlistingFor[0].gender |
                       capitalizeFirst}}</span>
+                    <!-- <span *ngIf="checkin.requestInfo.agent && checkin.requestInfo.browser && showMore">
+                        {{getAgent(checkin.requestInfo.agent) | capitalizeFirst}},
+                        {{getbrowser(checkin.requestInfo.browser) | capitalizeFirst}}</span> -->
                     <span
                       *ngIf="checkin.waitlistingFor[0].preferredLanguage && (checkin.waitlistingFor[0].gender || checkin.waitlistingFor[0].age)">,</span>
                     <span *ngIf="checkin.waitlistingFor[0].preferredLanguage">&nbsp;</span>
@@ -2241,6 +2430,19 @@
                       *ngIf="checkin.waitlistingFor[0].preferredLanguage">{{checkin.waitlistingFor[0].preferredLanguage}}</span>
                   </div>
                 </div>
+                 <!-- <img src="../../../../assets/icons/icon294(Traced).png" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) | capitalizeFirst"
+                  *ngIf="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) === 'web'"
+                  style="width: 18px !important; margin-top: -6px !important;">
+                <img src="../../../../assets/icons/Group482249.png" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) | capitalizeFirst"
+                  *ngIf="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) === 'ios'"
+                  style="width: 18px !important; margin-top: -6px !important;">
+                <img src="../../../../assets/icons/icon295(Traced).png" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) | capitalizeFirst"
+                  *ngIf="getReqFrom(checkin.requestInfo.browser,checkin.requestInfo.agent) === 'andriod'"
+                  style="width: 18px !important; margin-top: -6px !important;"> -->
+
                 <div [matTooltipClass]="tooltipcls" [matTooltip]="customerIdTooltip | capitalizeFirst"
                   class="bold pull-left mgn-lt-5 name pointer-cursor font11"
                   *ngIf="!checkin.waitlistingFor[0].firstName && !checkin.waitlistingFor[0].lastName"
@@ -2350,8 +2552,13 @@
                   </span>
                   <span
                     *ngIf="checkin.service.virtualCallingModes[0].callingMode === 'Phone' || checkin.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                    {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
-                    checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }}
+
+                    <!-- {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call +' +
+                    checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode] }} -->
+                    <span *ngIf="checkin.whatsApp_PhNumber">
+                      {{checkin.waitlistStatus == 'started' ? 'Resume' : 'Call ' +
+                      checkin.whatsApp_PhNumber}}
+                    </span>
                   </span>
                 </a>
                 <a class="statusText btn-play pointer-cursor done-btn"
@@ -2378,8 +2585,8 @@
               </td>
             </tr>
           </tbody>
-          <tbody
-            *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && small_device_display">
+          <!-- *ngIf="check_in_filtered_list.length > 0 && (activeQs.length > 0 || activeUser || (this.active_user && this.active_user.accountType === 'BRANCH' && this.activeQs.length == 0)) && small_device_display" -->
+          <tbody *ngIf="check_in_filtered_list.length > 0 && small_device_display">
             <div [class.user-tr-backclr]="checkin.provider" class="waitlist-box col-xs-12 col-sm-12 no-padding"
               *ngFor="let checkin of check_in_filtered_list, let i=index">
               <div class="col-xs-12 col-sm-12 no-padding chkWth" *ngIf="check_in_filtered_list.length > 1">
@@ -2412,7 +2619,7 @@
     <app-common-innerloading-spinner></app-common-innerloading-spinner>
   </div>
   </div>
- 
+
   <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
     [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
     (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>

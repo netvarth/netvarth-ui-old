@@ -56,7 +56,7 @@
                                             <div class="item">
                                                 <span class="ttle">{{service_cap}}</span> <span class="it0"
                                                     *ngFor="let service of queue_data.services">
-                                                    <span class="itm">
+                                                    <span class="itm" style="word-break: break-all; justify-content: space-between;">
                                                         <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
                                                             class="fa meet-icon"></i>
                                                         <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'Zoom'"
@@ -206,7 +206,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                         {{select_All}}</i>
                                 </div>
                                 <div *ngFor="let department of departments;let i = index">
-                                    <mat-checkbox *ngIf="department.serviceIds.length > 0"
+                                    <mat-checkbox *ngIf="department.serviceIds.length > 0" style="word-break: break-all; justify-content: space-between;"
                                         (change)="selectdeprtservice(i,$event,department.departmentName)"
                                         [checked]="department.checked === true">{{department.departmentName}}
                                     </mat-checkbox>
@@ -216,7 +216,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                             <mat-checkbox class="example-margin"
                                                 (change)="serviceunderdept(j,department.departmentName, i, services)"
                                                 [checked]="serviceSelection[department.departmentName][j]"
-                                                *ngIf="SelService[i] && services" style="display:block">{{services}}
+                                                *ngIf="SelService[i] && services" style="display:block;word-break: break-all; justify-content: space-between;">{{services}}
                                             </mat-checkbox>
                                         </div>
                                     </section>
@@ -237,7 +237,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                 <section class="service-section leftselectAll start-endtime-wrap main-box">
                                     <div *ngFor="let service of services_list; index as i" class="five-a-row">
                                         <mat-checkbox class="example-margin" [value]="service.id"
-                                            (change)="handleServicechecbox(i)"
+                                            (change)="handleServicechecbox(i)" 
                                             [checked]="services_list[i].checked === true">
                                             <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
                                                 class="fa meet-icon"></i>
@@ -253,7 +253,7 @@ onSubmit(amForm.value)" class="ynw-common-form schedule_outer">
                                             <i *ngIf="service.serviceType === 'virtualService' && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType === 'videoService'"
                                                 class="fa wtsapvid-icon"></i>
 
-                                            {{service.name | capitalizeFirst}}
+                                           {{service.name | capitalizeFirst}}
                                         </mat-checkbox>
                                     </div>
                                 </section>

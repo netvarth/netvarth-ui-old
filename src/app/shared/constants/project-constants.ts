@@ -1051,9 +1051,21 @@ export const projectConstantsLocal = {
   },
   PAYTMLOCAL_URL: 'https://securegw-stage.paytm.in',
   PAYTM_URL: 'https://securegw.paytm.in',
+  SUPPORTEDLANGUAGES: [
+    { value: 'en', viewValue: 'English' },
+    { value: 'hd', viewValue: 'Hindi' },
+    { value: 'kan', viewValue: 'Kannada' },
+    { value: 'tel', viewValue: 'Telugu' },
+    { value: 'mal', viewValue: 'Malayalam' },
+    { value: 'tam', viewValue: 'Tamil' }
+  ],
   // UIS3PATH: "https://jaldeeuiscale.s3.ap-south-1.amazonaws.com/"
   // UIS3PATH: "https://jaldeeuitest.s3.ap-south-1.amazonaws.com/"
-  UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/"
+  UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/",
+  //PATH:'https://localhost:4200/',
+  // PATH:'https://scale.jaldee.com/',
+  PATH:'https://www.jaldee.com/',
+  // PATH:'https://test.jaldee.com/jaldee/'
 
 };
 

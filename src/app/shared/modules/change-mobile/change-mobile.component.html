@@ -1,7 +1,7 @@
-<section class="container no-padding no-padding-small" *ngIf="curtype=='consumer'">
+<section class="container no-padding no-padding-small" *ngIf="curtype=='consumer'"  [ngClass]="theme?theme:''">
   <div class="content p0 see-pages cons-members">
     <div class="panel panel-default">
-      <div class="panel-heading top-row ">
+      <div class="panel-heading  col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row ">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
           <app-header *ngIf="shared_functions.checkLogin()" [customId]="customId" [accountId]="accountId" [showHeaderAction]="true"></app-header>
         </div>
@@ -71,7 +71,7 @@
   <div class="card title-gb">
     <h5 class="mgn-up-10">
       <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Change
-      Mobile #
+      Mobile #11111111111
     </h5>
   </div>
   <div class="content see-pages mgn-up-10">
@@ -91,8 +91,8 @@
                 <label for="phonenumber">{{your_curmob_msg}} <b>{{currentcountryCode}} {{prev_phonenumber}}</b> </label>
               </div>
               <div class="codenumber">
-                <input class="width100 height40 email-border code-field pull-right" id="countryCode" placeholder=""
-                  name="countryCode" formControlName="countryCode" autocomplete="off">
+                <input  class="width100 height40 email-border code-field pull-right" id="countryCode" placeholder=""
+                  name="countryCode"  formControlName="countryCode" autocomplete="off">
                 <input class="width100 height40 email-border input-field pull-right" id="newPhone" placeholder=""
                   name="newPhone" formControlName="phonenumber" autocomplete="off" (keypress)="isNumeric($event)"
                   maxlength="10" formc>

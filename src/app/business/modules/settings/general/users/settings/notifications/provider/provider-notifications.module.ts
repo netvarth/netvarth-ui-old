@@ -7,6 +7,7 @@ import { AddProviderAddonsModule } from "../../../../../../../../business/module
 import { RouterModule, Routes } from "@angular/router";
 import { ProviderUserNotificationUserComponent } from "./provider-notifications.component";
 import { UpdateProviderUserNotificationsModule } from "../update-provider-notifications/update-provider-notifications.module";
+import {MatTabsModule} from '@angular/material/tabs';
 const routes: Routes = [
     {path: '',component:ProviderUserNotificationUserComponent }
 ]
@@ -17,6 +18,7 @@ const routes: Routes = [
         UpdateProviderUserNotificationsModule,
         MatDialogModule,
         LoadingSpinnerModule,
+        MatTabsModule,
         CapitalizeFirstPipeModule,
         [RouterModule.forChild(routes)]
     ],

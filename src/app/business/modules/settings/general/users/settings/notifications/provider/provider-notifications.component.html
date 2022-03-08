@@ -1,9 +1,9 @@
-<section class="">
+<section class="mgn-up-10 mgn-bt-10 mgn-lt-5 mgn-rt-5">
   <div class="card title-gb">
     <h5 class="mgn-up-10">
       <span class="fa fa-arrow-left pointer-cursor"
         (click)="redirecToUserNotifications()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      {{provider_label | capitalizeFirst}} Notifications
+      {{provider_label | capitalizeFirst}} Notifications   
     </h5>
   </div>
 </section>
@@ -21,16 +21,29 @@
     </div>
   </div>
 </section>
-<section *ngIf="!api_loading">
-  <div class="col-md-12 col-xs-12 col=sm-12 col-lg-12 card">
-    <div class="pro-notify-box bold" *ngIf="showToken" (click)="showNotificationPopup('Token')">
-      <span>Token Notifications</span>
-    </div>
-    <div class="pro-notify-box bold" *ngIf="!showToken" (click)="showNotificationPopup('Check-in')">
-      <span>Check-in Notifications</span>
-    </div>
-    <div class="pro-notify-box bold" (click)="showNotificationPopup('Appointment')">
-      <span>Appointment Notifications</span>
-    </div>
-  </div>
+<section class="mgn-lt-10 mgn-rt-10 card" *ngIf="!api_loading" >
+  <mat-tab-group (selectedTabChange)="tabClick($event)"  >
+    <mat-tab class="notifilabel" label="Token Notifications" [disabled]="!waitlistStatus" *ngIf="showToken" >
+      <div *ngIf="type=='Token'">
+        <app-update-provider-notifications [type]="type" [userid]="userId" [internationalUser]="isInternationalUser"></app-update-provider-notifications>
+      </div>  
+
+
+    </mat-tab>
+    <mat-tab class="notifilabel" label="Check-in Notifications" [disabled]="!waitlistStatus"  *ngIf="!showToken" >
+      <div *ngIf="type=='Check-in'">
+        <app-update-provider-notifications [type]="type" [userid]="userId" [internationalUser]="isInternationalUser"></app-update-provider-notifications>
+
+      </div>
+    </mat-tab>
+  
+    <mat-tab class="notifilabel" label="Appointment Notifications" [disabled]="!appointment_status" > 
+      
+     <div *ngIf="type=='Appointment'">
+      <app-update-provider-notifications [type]="type" [userid]="userId" [internationalUser]="isInternationalUser"></app-update-provider-notifications>
+
+     </div>
+    
+    </mat-tab>
+  </mat-tab-group>
 </section>

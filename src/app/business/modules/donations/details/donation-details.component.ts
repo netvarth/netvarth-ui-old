@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProviderServices } from '../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Location } from '@angular/common';
@@ -27,6 +27,7 @@ export class DonationDetailsComponent {
         public providerservices: ProviderServices,
         public location: Location, private dialog: MatDialog,
         private communicationService: CommunicationService,
+        public router: Router,
         private wordProcessor: WordProcessor) {
         this.activaterouter.params.subscribe(param => {
             this.uid = param.id;
@@ -72,5 +73,8 @@ export class DonationDetailsComponent {
         if (event === 'reload') {
             this.getDonationDetails();
         }
+    }
+    printCheckin() {
+        this.router.navigate(['provider', 'donations', this.uid, 'print'],{queryParams:{bookingType:'donation'}});
     }
 }

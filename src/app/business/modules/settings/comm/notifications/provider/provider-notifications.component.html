@@ -1,4 +1,4 @@
-<section class="">
+<section class="mgn-up-10 mgn-bt-10 mgn-lt-5 mgn-rt-5">
   <div class="card title-gb">
     <h5 class="mgn-up-10">
       <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -13,25 +13,50 @@
     </div>
   </div>
 </section>
-<section *ngIf="!api_loading">
-  <div class="col-md-12 col-xs-12 col=sm-12 col-lg-12 card">
-    <div class="pro-notify-box bold" *ngIf="showToken" (click)="showNotificationPopup('Token')">
-      <span>Token Notifications</span>
-    </div>
-    <div class="pro-notify-box bold" *ngIf="!showToken" (click)="showNotificationPopup('Check-in')">
-      <span>Check-in Notifications</span>
-    </div>
-    <div class="pro-notify-box bold" (click)="showNotificationPopup('Appointment')">
-      <span>Appointment Notifications</span>
-    </div>
-    <div class="pro-notify-box bold" (click)="showNotificationPopup('Order')">
-      <span>Order Notifications</span>
-    </div>
-    <div class="pro-notify-box bold" (click)="showNotificationPopup('Donation')">
-      <span>Donation Notifications</span>
-    </div>
-    <div class="pro-notify-box bold" (click)="showNotificationPopup('Account')">
-      <span>Account Notifications</span>
-    </div>
+
+
+<section class="mgn-lt-10 mgn-rt-10 card" *ngIf="!api_loading">
+
+  <mat-tab-group (selectedTabChange)="tabClick($event)"  >
+    <mat-tab class="notifilabel" label="Token Notifications" *ngIf="showToken && waitlistStatus" >
+      
+        <div *ngIf="type=='Token'">
+          <app-update-provider-notifications [type]="type" ></app-update-provider-notifications>
+        </div>
+
+    </mat-tab>
+    <mat-tab class="notifilabel"  label="Check-in Notifications"  *ngIf="!showToken && waitlistStatus" >
+      <div *ngIf="type=='Check-in'">
+      <app-update-provider-notifications [type]="type" ></app-update-provider-notifications>
+
+      </div>
+
+    </mat-tab>
+    <mat-tab class="notifilabel" label="Appointment Notifications" *ngIf="appointment_status" > 
+      <div *ngIf="type=='Appointment'">
+        <app-update-provider-notifications [type]="type" ></app-update-provider-notifications>
+
+        </div>
+      
+    
+    </mat-tab>
+    <mat-tab class="notifilabel" label="Order Notifications" *ngIf="showToken && order_status" >
+     <div *ngIf="type=='Order'">
+      <app-update-provider-notifications [type]="type" ></app-update-provider-notifications>
+     </div>
+
+  </mat-tab>
+  <mat-tab class="notifilabel" label="Donation Notifications" *ngIf="showToken && donations_status" >
+   <div *ngIf="type=='Donation'">
+    <app-update-provider-notifications [type]="type" ></app-update-provider-notifications>
+   </div>
+
+</mat-tab>
+<mat-tab class="notifilabel" label="Account Notifications" *ngIf="showToken" >
+  <div *ngIf="type=='Account'">
+    <app-update-provider-notifications [type]="type" ></app-update-provider-notifications>
   </div>
+
+</mat-tab>
+  </mat-tab-group>
 </section>

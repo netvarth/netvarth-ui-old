@@ -22,7 +22,8 @@ import * as moment from 'moment';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { ConfirmPaymentBoxComponent } from '../../../../business/shared/confirm-paymentbox/confirm-paymentbox.component';
 import { JcCouponNoteComponent } from '../../../../shared/modules/jc-coupon-note/jc-coupon-note.component';
-import { ConfirmPaymentLinkComponent } from '../../../../../../src/app/business/shared/confirm-paymentlink/confirm-paymentlink.component';
+import { ConfirmPaymentLinkComponent } from '../../../../business/shared/confirm-paymentlink/confirm-paymentlink.component';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 
 export interface ItemServiceGroup {
@@ -263,6 +264,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     private lStorageService: LocalStorageService,
     private datepipe: DatePipe,
     public dateformat: DateFormatPipe,
+    private dateTimeProcessor: DateTimeProcessor,
     @Inject(DOCUMENT) public document
   ) {
     this.activated_route.params.subscribe(params => {
@@ -311,7 +313,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
   getYesterdayDate() {
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-    const server = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+    const server = this.server_date.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     const serverdate = moment(server).format();
     const servdate = new Date(serverdate);
     this.yesterdayDate = new Date(moment(new Date(servdate)).add(-1, 'days').format('YYYY-MM-DD'));

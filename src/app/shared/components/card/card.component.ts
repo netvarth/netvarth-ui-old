@@ -1,5 +1,4 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
@@ -27,6 +26,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() checkins;
     @Input() theme;
     @Input() teams;
+    @Input() source;
     // @Input() pos;
     @Input() statusAction;
     service: any;
@@ -50,6 +50,8 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     selQIds: any = [];
     qualification;
     disablecheckavailabilitybutton=false;
+    tooltipcls = '';
+
     constructor(
         private lStorageService: LocalStorageService,
         private wordProcessor: WordProcessor,
@@ -64,6 +66,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     ngOnInit() {
         if (this.type == 'appointment-dashboard') {
             this.appointment = this.item;
+            console.log("Appointment :",this.appointment)
         }
         if (this.type) {
             this.item.type = this.type;
@@ -74,10 +77,12 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             }
             if (this.time_type === 2 && this.groupService.getitemFromGroupStorage('future_selQ')) {
                 this.selQIds = this.groupService.getitemFromGroupStorage('future_selQ');
+
             } else if (this.time_type === 1 && this.groupService.getitemFromGroupStorage('selQ')) {
                 this.selQIds = this.groupService.getitemFromGroupStorage('selQ');
             } else if (this.time_type === 3 && this.groupService.getitemFromGroupStorage('history_selQ')) {
                 this.selQIds = this.groupService.getitemFromGroupStorage('history_selQ');
+
             }
         } else {
             if (this.groupService.getitemFromGroupStorage('appt-selectedUser')) {
@@ -153,6 +158,8 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 this.user = this.item.item;
                 break;
         }
+        console.log('waitlist...',this.waitlist)
+       // console.log("Request Info :",this.waitlist.requestInfo)
     }
     getServiceName(serviceName) {
         let name = '';
@@ -163,6 +170,69 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         }
         return name;
       }
+      
+    //   getReqFrom(browser,agent) {
+    //     let browserName = ''
+    //      if(browser){
+    //     if(browser === "WEB_UI"){
+    //     browserName = browser.slice(0, 3);
+    //     }
+    //     if(browser === 'WEB_LINK'){
+    //       browserName = 'IOS'
+    //     }
+    //     if(browser){
+    //      if(browser.length >8){
+    //       browserName = browser.slice(0,8);
+    //     }
+    //   }
+    
+    //     return browserName.toLocaleLowerCase();
+    //   }
+    //   if(browser === undefined && agent === "BROWSER"){
+    //     browserName = 'web'
+    //     return browserName;
+    //   }
+        
+      
+      
+    // }
+    
+    //   getBookingReqFrom(browser) {
+    //     let browserName = ''
+    //      if(browser){
+    //     if(browser === "WEB_UI"){
+    //     browserName = browser.slice(0, 3);
+    //     }
+    //     if(browser === 'WEB_LINK'){
+    //       browserName = 'IOS'
+    //     }
+    //     if(browser){
+    //      if(browser.length >8){
+    //       browserName = browser.slice(0,8);
+    //     }
+    //   }
+    
+    //     return browserName.toLocaleLowerCase();
+    //   }
+     
+    // }
+    //   getRequestedFrom(browser,reqFrom){
+    //     let browserName = ''
+    //     if(browser){
+    //     browserName = browser.slice(0, 3);
+    //     }
+    //     if(browser === 'WEB_LINK'){
+    //       browserName = 'IOS'
+    //     }
+    //     if(browser){
+    //      if(browser.length >8){
+    //       browserName = browser.slice(0,8);
+    //     }
+    //   }
+    
+    //     return reqFrom.toLocaleLowerCase() + ', ' + browserName.toLocaleLowerCase();
+    //   }
+    
     ngOnChanges() {
         // this.itemQty = this.quantity;
         // this.cdref.detectChanges();
@@ -247,7 +317,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         return this.dateTimeProcessor.convertMinutesToHourMinute(min);
     }
     getAvailibilityForCheckin(date, serviceTime) {
-        const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const today = new Date(todaydt);
         const dd = today.getDate();
         const mm = today.getMonth() + 1; // January is 0!
@@ -273,7 +343,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         }
     }
     getAvailabilityforAppt(date, time) {
-        const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const today = new Date(todaydt);
         const dd = today.getDate();
         const mm = today.getMonth() + 1; // January is 0!
@@ -316,7 +386,8 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         if (user.profilePicture) {
             return user.profilePicture['url'];
         }
-        return 'assets/images/img-null.svg';
+        return null;
+        // return 'assets/images/img-null.svg';
     }
     getItemImg(item) {
         if (item.itemImages) {
@@ -369,9 +440,11 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         } else {
             this.router.navigate(['provider', 'appointments', this.appointment.uid], { queryParams: { timetype: this.time_type } });
         }
+        // setTimeout(() => { this.gotoDetails() },2000)
     }
     showMoreorLess(waitlist, type) {
         for (let checkin of this.checkins) {
+            
             checkin.show = false;
         }
         if (type === 'more') {

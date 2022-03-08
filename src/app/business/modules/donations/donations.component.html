@@ -63,7 +63,7 @@
                 <input [checked]="selectAll" type="checkbox" class="ckbx pull-left" (change)="selectAllDonations($event)" />
                 &nbsp;&nbsp;Select all
               </a>
-              <div class="customer-selected mx-2" *ngIf="selectedDonations && selectedDonations.length > 0">
+              <div style="margin-left: 0.99rem !important;" class="customer-selected mx-2" *ngIf="selectedDonations && selectedDonations.length > 0">
                 {{selectedDonations.length}} {{(selectedDonations.length === 1) ? customer_label
                 : customer_label + 's'}} selected </div>
             </li>
@@ -77,28 +77,41 @@
             </li> -->
           </ul>
         </div>
-        <aside class="filterSidebar" *ngIf="filter_sidebar">
+        <!-- <aside class="filterSidebar" *ngIf="filter_sidebar" style="height: 100vh !important;">
           <section class="sidebar sidebar-bottom">
-            <div class="filterClosebtn">
-              <i class="icon-filter-one-op ng-star-inserted pointer-cursor " (click)="hideFilterSidebar()"
+            <div style="display: flex;background-color: #E3E9ED;height: 44px;text-transform: uppercase;padding: 15px;justify-content: space-between;">
+              <div>Filters</div>
+              <div>
+                <i class="icon-filter-one-op ng-star-inserted pointer-cursor " (click)="hideFilterSidebar()"
                 [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
               <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
                 [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear All</span>
+              </div>
             </div>
-            <ul class="sidebar-menu">
-              <div class="filterTextinput">
-                <li class="filterli">
+            <div style="padding: 10px;">
+              <div style="display: inline-block !important;">
+                <i class="fa fa-user"></i>
+              </div>
+              <span style="font-weight: bold;">&nbsp;Name</span>
+            </div>
+            <ul class="sidebar-menu " id="accordion2">
+              <div style="padding-bottom: 15px;border-bottom: solid 1px #c4b7b7;">
+                <li class="filterli" >
                   <input type="text" #Ffname (blur)="doSearch()" class="filterTextbox" [(ngModel)]="filter.first_name"
-                    placeholder="First Name">
+                    placeholder="Enter First Name">
+                </li>
+                <li class="filterli" style="padding-top: 10px;">
+                  <input type="text" #Llname (blur)="doSearch()" class="filterTextbox"  [(ngModel)]="filter.last_name"
+                    placeholder="Enter Last Name">
                 </li>
               </div>
-              <div class="filterTextinput">
-                <li class="filterli">
-                  <input type="text" #Llname (blur)="doSearch()" class="filterTextbox" [(ngModel)]="filter.last_name"
-                    placeholder="Last Name">
-                </li>
+              <div style="padding: 10px;">
+                <div style="display: inline-block !important;">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <span style="font-weight: bold;">&nbsp;Filter by Date</span>
               </div>
-              <div class="filterTextinput">
+              <div class="filterTextinput" style="margin-top: -22px;">
                 <li class="filterli filterDatepicker">
                   <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday" [matDatepicker]="picker"
                     #Fdate (dateChange)="doSearch()" (blur)="doSearch()" class="filterTextbox" placeholder="Date"
@@ -118,7 +131,132 @@
               </div>
             </ul>
           </section>
-        </aside>
+        </aside> -->
+        <div>
+          <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
+            <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+              <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+                <span class="filter-head-title">Filters</span>
+                <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right" (click)="hideFilterSidebar()"
+                  [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+              </div>
+              <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
+              <ul class="sidebar-menu accordion" id="accordion1">
+                <div class="card">
+                  <div class="card-header">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName1"
+                        aria-expanded="false">
+                        <div>
+                          <div style="display: inline-block !important;">
+                            <i class="fa fa-user"></i>
+                          </div>
+                          <span>&nbsp;Name</span>
+                        </div>
+                        <i class="fa fa-angle-down"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapseName1" class="collapse in" data-parent="#accordion1">
+                    <div class="card-body">
+                      <div class="filterTextinput filter-text-input">
+                        <li class="filterli filter-li">
+                          <!-- <input type="text" #Ffname  class="filterTextbox filter-textbox"
+                            [(ngModel)]="filter.first_name" [ngModelOptions]="{standalone: true}"
+                            placeholder="Enter First Name"> -->
+                            <input type="text" #Ffname  class="filterTextbox" [(ngModel)]="filter.first_name"
+                            placeholder="Enter First Name" (keyup)="keyPressed()">
+                        </li>
+                      </div>
+                      <div class="filterTextinput filter-text-input">
+                        <li class="filterli filter-li">
+                          <!-- <input type="text" #Flname  class="filterTextbox filter-textbox"
+                            [(ngModel)]="filter.last_name" [ngModelOptions]="{standalone: true}"
+                            placeholder="Enter Last Name"> -->
+                            <input type="text" #Llname  class="filterTextbox" (keyup)="keyPressed()"  [(ngModel)]="filter.last_name"
+                            placeholder="Enter Last Name">
+                        </li>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseId1"
+                        aria-expanded="false">
+                        <div>
+                          <div style="display: inline-block !important;">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <span>&nbsp;Filter by Date</span>
+                        </div>
+                        <i class="fa fa-angle-down"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapseId1" class="collapse in" data-parent="#accordion1">
+                    <div class="card-body">
+                      <div class="filterTextinput filter-text-input">
+                        <li class="filterli filter-li">
+                          <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday" [matDatepicker]="picker"
+                    #Fdate  class="filterTextbox" placeholder="Date"
+                    readonly (dateChange)="keyPressed()" >
+                  <mat-datepicker-toggle matSuffix [for]="picker">
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                        </li>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseBNo1"
+                        aria-expanded="false">
+                        <div>
+                          <div style="display: inline-block !important;">
+                            <i class="fa fa-bookmark"></i>
+                          </div>
+                          <span>&nbsp;Causes</span>
+                        </div>
+                        <i class="fa fa-angle-down"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="collapseBNo1" class="collapse in" data-parent="#accordion1">
+                    <div class="card-body">
+                      <div class="filterTextinput filter-text-input">
+                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                          <mat-checkbox *ngFor="let service of donationServices" [checked]="services.indexOf(service.id) !== -1"
+                            (change)="setFilterDataCheckbox('service', service.id, $event)">
+                            {{service.name}}</mat-checkbox>
+                        </li>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ul>
+            </section>
+            <div class="filter-footer" *ngIf="filterapplied === true">
+              <button class="btn reset-btn" (click)="clearFilter()">
+                <i class="fa fa-undo"></i>&nbsp;Reset
+              </button>
+              <button class="btn apply-btn" (click)="doSearch()">
+                <i class="fa fa-check"></i>&nbsp;Apply
+              </button>
+            </div>
+          </aside>
+        </div>
+
+
+
+
+
+
+
+
         <div class="bill-section">
           <div class="c-outer bill-section-content m0">
             <div class="c-body bill-wrapper">
@@ -160,13 +298,35 @@
                         </div>
                         <div class="td three rupee-font"> <span class="amt"></span> {{donation.donationAmount |
                           currency:'&#8377;' }}
+                        
+                        <!-- <span >
+                          <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu" (click)="stopprop($event)">
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #appMenu="matMenu">
+                            <button mat-menu-item>
+                              <i *ngIf="!donation.note" class="icon-note" style="visibility: hidden;"></i>
+                              <i *ngIf="donation.note" [matTooltip]="'Notes'" class="icon-note pointer-cursor"
+                              (click)="stopprop($event);showConsumerNote(donation)"></i>
+                            </button>
+                            <button mat-menu-item>
+                            <i class="printer-icon" [matTooltip]="'Print'" (click)="stopprop($event);printCheckin(donation)"></i>
+                            </button>
+                           
+                        </mat-menu>
+                        </span> -->
+                         
+                          
                           <span class="pull-right mgn-rt-5">
+                            <i class="printer-icon" [matTooltip]="'Print'" (click)="stopprop($event);printCheckin(donation)"></i>
+                          </span>
+                          <span class="pull-right mgn-rt-5" *ngIf="donation.note" >
                             <i *ngIf="!donation.note" class="icon-note" style="visibility: hidden;"></i>
                             <i *ngIf="donation.note" [matTooltip]="'Notes'" class="icon-note pointer-cursor"
                               (click)="stopprop($event);showConsumerNote(donation)"></i>
                           </span>
                         </div>
-                      
+                        
                         <!-- <div class="td onerupee-font"> <span class="amt"></span> {{donation.customerPaidCharges |
                           currency:'&#8377;' }}
                           

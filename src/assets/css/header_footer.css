@@ -7,6 +7,7 @@ header.consumer .tp-1 {
     display: flex;
     position: relative;
 }
+
 .ml-auto, .mx-auto { margin-left: auto!important;}
 header.consumer .tp-1 .tp-l {
     margin-right: 20px;
@@ -39,6 +40,7 @@ header.consumer .tp-1 .tp-r .tc1 .topsignouter {
     flex-basis: 100%;
     align-items: center;
     justify-content: flex-end;
+    height: 50px;
 }
 
 header.consumer .tp-1 .tp-r .tc1 .topsignouter .sgn {
@@ -61,7 +63,8 @@ header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx {
     cursor: pointer;
 }
 
-header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx .ot-bx {
+header.consumer .tp-1 .tp-r .tc1 .topsignouter .bnps .inbx .ot-bx
+ {
     width: 35px;
     height: 35px;
     -webkit-border-radius: 50px;
@@ -115,11 +118,15 @@ header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem {
 
 header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem .lgin {
     color: #222223;
+    margin-right: 10px;
 }
 
 header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem .lgin button {
-    width: 24px;
-    height: 24px;
+    width: 35px;
+    height: 35px;
+    background: #fff;
+    line-height: 1;
+    color: #222223;
 }
 
 header.consumer .tp-1 .tp-r .tc1 .topsignouter .lgmem .lgin button .icon-angle-down {

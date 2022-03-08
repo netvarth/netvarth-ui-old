@@ -610,6 +610,10 @@ export class ProviderServices {
     const url = 'provider/waitlist/' + uuid;
     return this.servicemeta.httpGet(url);
   }
+  getProviderOrderDetailById(uuid) {
+    const url = 'provider/orders/' + uuid;
+    return this.servicemeta.httpGet(url);
+  }
   addProviderWaitlistNote(uuid, message) {
     const url = 'provider/waitlist/notes/' + uuid;
     return this.servicemeta.httpPost(url, message);
@@ -1123,7 +1127,7 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url, post_data);
   }
   getUsersCount(filter = {}) {
-    const url = 'provider/user/count';
+    const url = 'provider/user/count?status-eq=ACTIVE';
     return this.servicemeta.httpGet(url, null, filter);
   }
   createUser(post_data) {
@@ -1326,8 +1330,8 @@ export class ProviderServices {
     const url = 'provider/appointment/schedule/nextAvailableTime/' + scheduleid;
     return this.servicemeta.httpGet(url);
   }
-  getSlotsByLocationServiceandDate(locid, servid, pdate) {
-    const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid;
+  getSlotsByLocationServiceandDate(locid, servid, pdate,accountid) {
+    const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
   getAppointmentSlotsByDate(scheduleid, date, serviceid) {
@@ -1377,6 +1381,14 @@ export class ProviderServices {
   }
   getAppointmentById(appmntId) {
     const url = 'provider/appointment/' + appmntId;
+    return this.servicemeta.httpGet(url);
+  }
+  getOrderById(appmntId) {
+    const url = 'provider/orders/' + appmntId;
+    return this.servicemeta.httpGet(url);
+  }
+  getDonationById(appmntId) {
+    const url = 'provider/donation/' + appmntId;
     return this.servicemeta.httpGet(url);
   }
   setAppointmentPresence(status) {
@@ -2114,12 +2126,24 @@ export class ProviderServices {
     const url = 'provider/questionnaire/service/' + serviceId + '/' + channel + '/consumer/' + consumerId;
     return this.servicemeta.httpGet(url);
   }
+  getProviderorderQuestionnaire(serviceId, channel, consumerId ) {
+    const url = 'provider/questionnaire/order/' + serviceId + '/' + channel + '/consumer/' + consumerId;
+    return this.servicemeta.httpGet(url);
+  }
   submitProviderApptQuestionnaire(body, uuid) {
     const url = 'provider/appointment/questionnaire/' + uuid;
     return this.servicemeta.httpPost(url, body);
   }
   resubmitProviderApptQuestionnaire(body, uuid) {
     const url = 'provider/appointment/questionnaire/resubmit/' + uuid;
+    return this.servicemeta.httpPost(url, body);
+  }
+  submitProviderOrderQuestionnaire(body, uuid) {
+    const url = 'provider/orders/questionnaire/' + uuid;
+    return this.servicemeta.httpPost(url, body);
+  }
+  resubmitProviderOrderQuestionnaire(body, uuid) {
+    const url = 'provider/orders/questionnaire/resubmit/' + uuid;
     return this.servicemeta.httpPost(url, body);
   }
   submitProviderWaitlistQuestionnaire(body, uuid) {
@@ -2208,6 +2232,10 @@ export class ProviderServices {
     const url = 'provider/appointment/questionnaire/upload/status/' + uid;
     return this.servicemeta.httpPut(url, data);
   }
+  providerOrderQnrUploadStatusUpdate(uid, data) {
+    const url = 'provider/orders/questionnaire/upload/status/' + uid;
+    return this.servicemeta.httpPut(url, data);
+  }
   providerWaitlistQnrUploadStatusUpdate(uid, data) {
     const url = 'provider/waitlist/questionnaire/upload/status/' + uid;
     return this.servicemeta.httpPut(url, data);
@@ -2250,8 +2278,16 @@ export class ProviderServices {
     const url = 'provider/appointment/questionnaire/change/' + status + '/' + uid + '/' + id;
     return this.servicemeta.httpPut(url);
   }
+  changeOrderQnrReleaseStatus(status, uid, id) {
+    const url = 'provider/orders/questionnaire/change/' + status + '/' + uid + '/' + id;
+    return this.servicemeta.httpPut(url);
+  }
   getWaitlistQuestionnaireByUid(uid) {
     const url = 'provider/waitlist/questionnaire/' + uid;
+    return this.servicemeta.httpGet(url);
+  }
+  getOrderQuestionnaireByUid(uid) {
+    const url = 'provider/orders/questionnaire/' + uid;
     return this.servicemeta.httpGet(url);
   }
   getApptQuestionnaireByUid(uid) {
@@ -2272,6 +2308,10 @@ export class ProviderServices {
   }
   sendApptQnrNotification(uid, post_data) {
     const url = 'provider/appointment/questionnaire/notification/' + uid;
+    return this.servicemeta.httpPut(url, post_data);
+  }
+  sendOrderQnrNotification(uid, post_data) {
+    const url = 'provider/orders/questionnaire/notification/' + uid;
     return this.servicemeta.httpPut(url, post_data);
   }
   unassignTeamWaitlist(post_data) {
@@ -2332,13 +2372,11 @@ export class ProviderServices {
     const url = 'provider/waitlist/multiStatusChange/' +status;
     return this.servicemeta.httpPut(url,idlist);
   }
-  getFollowUpWaitlist(uid)
-  {
+  getFollowUpWaitlist(uid){
     const url = 'provider/waitlist/followUp/' + uid;
     return this.servicemeta.httpGet(url);
   }
-  getFollowUpAppt(uid)
-  {
+  getFollowUpAppt(uid){
     const url = 'provider/appointment/followUp/' + uid;
     return this.servicemeta.httpGet(url);
   }

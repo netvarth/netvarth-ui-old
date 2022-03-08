@@ -9,6 +9,7 @@ import { WordProcessor } from '../../../../../../shared/services/word-processor.
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { AddproviderAddonComponent } from '../../../../../../business/modules/add-provider-addons/add-provider-addons.component';
+// import { title } from 'process';
 
 @Component({
   selector: 'app-consumer-notifications',
@@ -134,6 +135,7 @@ export class ConsumerNotificationsComponent implements OnInit {
       this.small_device_display = false;
     }
   }
+  titlename;
   ngOnInit() {
     for (let j = 0; j <= 60; j++) {
       this.appt_remind_min[j] = j;
@@ -152,12 +154,18 @@ export class ConsumerNotificationsComponent implements OnInit {
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     this.mode_of_notify = Messages.FRM_LVL_CUSTMR_NOTIFY_MODE.replace('[customer]', this.customer_label);
     this.getProviderSettings();
+   
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
       .subscribe(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
+        if(this.showToken) {
+          this.titlename='Token'
+        } else {
+          this.titlename='Check in'
+        }
       }, () => {
       });
   }

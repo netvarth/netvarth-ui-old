@@ -14,7 +14,7 @@
 	<p class="font-size-h4 line-height-md" style="font-size: 1.2rem !important;">
 		There may be a misspelling in the URL entered,<br>or the page you are looking for may no longer exist.
 	</p>
-	<button style="width: 6rem !important; color: black !important; border-color: black !important;" type="button" [routerLink]="['/']" class="cs-btn bt3 mgn-bt-10" tabindex="-1">
+	<button style="width: 6rem !important; color: black !important; border-color: black !important;" type="button" (click)="gotoHome()" class="cs-btn bt3 mgn-bt-10" tabindex="-1">
 		Restart</button>
 </div>
 <!--end::Content-->

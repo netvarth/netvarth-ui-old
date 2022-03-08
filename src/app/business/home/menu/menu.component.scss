@@ -20,7 +20,7 @@ a, .aside-menu i {
 }
 .aside-menu {
     height: 90vh;
-    overflow-y: scroll;
+    overflow-y: scroll !important;
     margin-top: 10px;
 }
 /* Hide scrollbar for Chrome, Safari and Opera */

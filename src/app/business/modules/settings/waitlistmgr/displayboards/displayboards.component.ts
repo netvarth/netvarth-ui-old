@@ -359,7 +359,7 @@ export class DisplayboardsComponent implements OnInit, OnChanges {
     //     console.log("Layout : ", layout.name, layout.metric, layout.metric[0].queueSet['fieldList']);
     //     if (source) {
     //         // const path = 'provider/settings/q-manager/displayboards/' + layout.id;
-    //         // const path = projectConstants.PATH + 'displayboard/' + layout.id + '?type=wl';
+    //         // const path = projectConstantsLocal.PATH + 'displayboard/' + layout.id + '?type=wl';
     //         //  window.open(path, '_blank');
     //         // const path = 'displayboard/' + layout.id + '?type=wl';
     //         console.log("Route", 'displayboard/' + layout.id + '?type=wl')
@@ -383,7 +383,7 @@ export class DisplayboardsComponent implements OnInit, OnChanges {
     goDisplayboardLayoutDetails(layout,source){
         if (source) {
             const path = 'displayboard/' + layout.id + '?type=wl';
-            // const path = projectConstants.PATH + 'displayboard/' + layout.id + '?type=wl';
+            // const path = projectConstantsLocal.PATH + 'displayboard/' + layout.id + '?type=wl';
             window.open(path, '_blank');
         } else {
             const navigationExtras: NavigationExtras = {

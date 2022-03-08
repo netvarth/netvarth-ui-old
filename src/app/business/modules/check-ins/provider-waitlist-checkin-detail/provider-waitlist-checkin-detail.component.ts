@@ -157,6 +157,91 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     }
 
   }
+  getAgent(fileName){
+    //'BROWSER' || 'IOS' || 'ANDROID'
+    if(fileName){
+    return fileName.toLocaleLowerCase();
+    }
+  }
+  getReqFrom(browser,agent) {
+    let browserName = ''
+     if(browser){
+  //   if(browser === "WEB_UI"){
+  //   browserName = browser.slice(0, 3);
+  //   }
+  //   if(browser === 'WEB_LINK'){
+  //     browserName = 'IOS'
+  //   }
+  //   if(browser){
+  //    if(browser.length >8){
+  //     browserName = browser.slice(0,8);
+  //   }
+  // }
+  
+    if(browser.includes("Android")){
+      browserName = 'Android'
+      return browserName.toLocaleLowerCase();
+
+    }
+    if(browser.includes("iPhone")){
+      browserName = 'IOS'
+      return browserName.toLocaleLowerCase();
+
+    }
+    if(browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("iPhone")){
+      browserName = 'Web'
+      return browserName.toLocaleLowerCase();
+
+    }
+   
+  
+
+  }
+  if(browser === undefined && agent === "BROWSER"){
+    browserName = 'web'
+    return browserName;
+  }
+    
+  
+  
+}
+  getBookingReqFrom(browser, reqFrom) {
+    let browserName = ''
+    //let status;
+    if(browser){
+      if(browser.includes("Android")){
+        browserName = 'Android'
+        return browserName.toLocaleLowerCase();
+  
+      }
+      if(browser.includes("iPhone")){
+        browserName = 'IOS'
+        return browserName.toLocaleLowerCase();
+  
+      }
+      if(browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("Linux")){
+        browserName = 'Web'
+        return browserName.toLocaleLowerCase();
+  
+      }
+     
+     
+    }
+    if (browser === undefined && reqFrom === "SP_APP" || "CONSUMER_APP") {
+      browserName = "App";
+      return browserName.toLocaleLowerCase();
+    }
+    // if(browser === 'WEB_LINK'){
+    //   browserName = 'IOS'
+    // }
+    // if(browser){
+    //  if(browser.length >8){
+    //   browserName = browser.slice(0,8);
+    // }
+  
+
+    return browserName.toLocaleLowerCase();
+  }
   getWaitListMode(mode) {
     let currentmode=[];
     currentmode=this.waitlistModes.filter(obj=>obj.mode===mode);
@@ -446,9 +531,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.availableSlots = [];
     const _this = this;
     const locId = this.groupService.getitemFromGroupStorage('loc_id');
-    // const curTimeSub = moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION })).subtract(interval, 'm');
+    // const curTimeSub = moment(new Date().toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION })).subtract(interval, 'm');
     // const curTimeSubDt = moment(curTimeSub, 'YYYY-MM-DD HH:mm A').format(projectConstants.POST_DATE_FORMAT_WITHTIME_A);
-    const nextTimeDt = this.dateTimeProcessor.getDateFromTimeString(moment(new Date().toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION }), ['YYYY-MM-DD HH:mm A']).format('HH:mm A').toString());
+    const nextTimeDt = this.dateTimeProcessor.getDateFromTimeString(moment(new Date().toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION }), ['YYYY-MM-DD HH:mm A']).format('HH:mm A').toString());
     const filter = {};
     this.availableSlots = [];
     filter['queue-eq'] = _this.groupService.getitemFromGroupStorage('pdq');

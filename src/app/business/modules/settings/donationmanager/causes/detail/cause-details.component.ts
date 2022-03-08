@@ -32,6 +32,7 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
     view_time_wind_cap = Messages.BPROFILE_VIEW_SERVICE_WINDOW_CAP;
     showGallery = false;
     causecaption = 'Add Cause';
+    hideBack = false;
     constructor(private provider_services: ProviderServices,
         private groupService:GroupStorageService,
         private servicesService: ServicesService,

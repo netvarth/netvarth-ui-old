@@ -71,9 +71,11 @@ export class NewReportComponent implements OnInit {
   appointment_status: any;
   appointment_paymentStatus: any;
   waitlist_status_list: { displayName: string; value: string; }[];
+  waitlist_intstatus_list: { displayName: string; value: string; }[];
   bill_payment_status: { value: string; displayName: string; }[];
   waitlist_mode_list: { displayName: string; value: string; }[];
   appointment_status_list: { displayName: string; value: string; }[];
+  appointment_intstatus_list: { displayName: string; value: string; }[];
   appointment_mode_list: { displayName: string; value: string; }[];
   payment_purpose: { value: string; displayName: string; }[];
   donation_timePeriod: string;
@@ -136,12 +138,21 @@ export class NewReportComponent implements OnInit {
   user: string;
   user_id: any;
   loading = false;
+  @ViewChild('selectIntStatus') selectIntStatus: MatSelect;
   @ViewChild('select') select: MatSelect;
   @ViewChild('apptStatusSelect') apptStatusSelect: MatSelect;
-  allWlStatusSelected = false;
+  @ViewChild('apptIntStatusSelect') apptIntStatusSelect: MatSelect;
+
   waitlistStatusFilter: any = [];
   apptStatusFilter: any= [];
+  apptIntStatusFilter: any = [];
+  waitlistIntStatusFilter: any = [];
+  
+  
+  allWlStatusSelected = false;
   allApptStatusSelected = false;
+  allWlIntStatusSelected = false;
+  allApptIntStatusSelected = false;
   constructor(
     private router: Router,
     private activated_route: ActivatedRoute,
@@ -192,6 +203,23 @@ export class NewReportComponent implements OnInit {
     this.payment_transactionType = 0;
     this.waitlist_billpaymentstatus = this.appointment_billpaymentstatus = 0;
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+
+
+    if (this.report_type === 'token' || this.report_type === 'appointment') {
+        this.provider_services.getInternalStatus()
+          .subscribe(
+            (data: any) => {
+              // this.internalStats = data;
+              console.log("Internal Statuses", data);
+
+              this.waitlist_intstatus_list = this.appointment_intstatus_list = data.map(function(status) {
+                return { 'value': status.statusId, displayName: status.status }
+              })
+
+            });
+    }
+
+
     this.report_data_service._service_data.subscribe((res: any) => {
       this.setServiceData(res);
     });
@@ -317,6 +345,53 @@ export class NewReportComponent implements OnInit {
     }
     console.log(this.apptStatusFilter);
   }
+
+  /**
+   * @author Mani E V
+   */
+
+   setApptIntStatusFilter() {
+    this.apptIntStatusFilter = [];
+    let newStatus = true;
+    this.apptIntStatusSelect.options.forEach((item: MatOption) => {
+      if (!item.selected) {
+        newStatus = false;
+      } else {
+        this.apptIntStatusFilter.push(item.value);
+      }
+    });
+    this.allApptIntStatusSelected = newStatus;
+    console.log(this.apptIntStatusFilter);
+  }
+  toggleAllApptIntStatusSelection () {
+    const _this = this;
+    this.apptIntStatusFilter = [];
+    if (this.allApptIntStatusSelected) {
+      this.apptIntStatusSelect.options.forEach(function (item: MatOption) {
+        item.select();
+        _this.apptIntStatusFilter.push(item.value);
+      });
+    } else {
+      this.apptIntStatusSelect.options.forEach(function(item: MatOption) {
+        item.deselect();
+      });
+    }
+    console.log(this.apptIntStatusFilter);
+  }
+  setWLIntStatusFilter() {
+    this.waitlistIntStatusFilter = [];
+    let newIntStatus = true;
+    this.selectIntStatus.options.forEach((item: MatOption) => {
+      if (!item.selected) {
+        newIntStatus = false;
+      } else {
+        this.waitlistIntStatusFilter.push(item.value);
+      }
+    });
+    this.allWlIntStatusSelected = newIntStatus;
+    console.log(this.waitlistIntStatusFilter);
+  }
+
   setStatusFilter() {
     this.waitlistStatusFilter = [];
     let newStatus = true;
@@ -344,6 +419,24 @@ export class NewReportComponent implements OnInit {
       });
     }
     console.log(this.waitlistStatusFilter);
+  }
+  /**
+   * @author Mani E V
+   */
+  toggleAllIntStatusSelection () {
+    const _this = this;
+    this.waitlistIntStatusFilter = [];
+    if (this.allWlIntStatusSelected) {
+      this.selectIntStatus.options.forEach(function (item: MatOption) {
+        item.select();
+        _this.waitlistIntStatusFilter.push(item.value);
+      });
+    } else {
+      this.selectIntStatus.options.forEach(function(item: MatOption) {
+        item.deselect();
+      });
+    }
+    console.log(this.waitlistIntStatusFilter);
   }
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
@@ -658,6 +751,9 @@ export class NewReportComponent implements OnInit {
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
+        if (this.apptIntStatusFilter.length > 0) {
+          this.filterparams['internalStatus'] = this.apptIntStatusFilter.toString();
+        }
         if (this.appointment_mode === 0) {
           delete this.filterparams.appointmentMode;
         }
@@ -715,6 +811,9 @@ export class NewReportComponent implements OnInit {
         if (this.waitlistStatusFilter.length > 0) {
         // this.waitlist_status = this.waitlistStatusFilter.toString();
         this.filterparams['waitlistStatus'] = this.waitlistStatusFilter.toString();
+        }
+        if (this.waitlistIntStatusFilter.length > 0) {
+          this.filterparams['internalStatus'] = this.waitlistIntStatusFilter.toString();
         }
         // if (this.waitlist_status === 0) {
         //   delete this.filterparams.waitlistStatus;
@@ -1105,6 +1204,9 @@ export class NewReportComponent implements OnInit {
           this.filterparams ['waitlistStatus'] = this.waitlistStatusFilter.toString();
           // delete this.filterparams.waitlistStatus;
         }
+        if (this.waitlistIntStatusFilter.length > 0) {
+          this.filterparams['internalStatus'] = this.waitlistIntStatusFilter.toString();
+        }
         // if (this.waitlist_status === 0) {
         //   delete this.filterparams.waitlistStatus;
         // }
@@ -1140,6 +1242,14 @@ export class NewReportComponent implements OnInit {
         if (this.waitlist_timePeriod === 'TODAY') {
           filter['date-eq'] = this.dateformat.transformTofilterDate(new Date());
         }
+
+        // const request_payload: any = {};
+        // request_payload.reportType = 'QNRTOKEN';
+        // request_payload.reportDateCategory = this.waitlist_timePeriod;
+        // request_payload.filter = filter;
+        // request_payload.responseType = 'INLINE';
+        // this.passPayloadForReportGeneration(request_payload);
+        // this.report_data_service.setReportCriteriaInput(request_payload);
 
         if (this.waitlist_timePeriod === 'TODAY') {
           this.provider_services.getTodayWaitlist(filter).subscribe(
@@ -1201,6 +1311,9 @@ export class NewReportComponent implements OnInit {
         if (this.apptStatusFilter.length > 0) {
           this.filterparams ['apptStatus'] = this.apptStatusFilter.toString();
           // delete this.filterparams.waitlistStatus;
+        }
+        if (this.apptIntStatusFilter.length > 0) {
+          this.filterparams['internalStatus'] = this.apptIntStatusFilter.toString();
         }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
@@ -1272,5 +1385,6 @@ export class NewReportComponent implements OnInit {
         }
       }
     }
+    
   }
 }

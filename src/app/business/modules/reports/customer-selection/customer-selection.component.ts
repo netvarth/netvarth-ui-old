@@ -174,9 +174,19 @@ export class CustomerSelectionComponent implements OnInit {
       let post_data = {};
       const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
       const isEmail = emailPattern.test(form_data.search_input);
-      if (isEmail) {
+      const namePattern = new RegExp(projectConstantsLocal.VALIDATOR_CHARONLY)
+      const isFirstName = namePattern.test(form_data.search_input)
+      // if (isName) {
+      //   mode = "name"
+      // }
+
+      if (isFirstName) {
+        mode = "name"
+      }
+      else if (isEmail) {
         mode = 'email';
-      } else {
+      }
+      else {
         const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
         const isNumber = phonepattern.test(form_data.search_input);
         const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
@@ -186,7 +196,9 @@ export class CustomerSelectionComponent implements OnInit {
         } else {
           mode = 'id';
         }
+
       }
+
       switch (mode) {
         case 'phone':
           post_data = {
@@ -203,11 +215,18 @@ export class CustomerSelectionComponent implements OnInit {
             'jaldeeId-eq': form_data.search_input
           };
           break;
+        case 'name':
+          post_data = {
+            'firstName-eq': form_data.search_input
+          };
+          break;
+
       }
       this.provider_services.getCustomer(post_data)
         .subscribe(
           (data: any) => {
             this.patient_dataSource.data = data;
+            console.log("Pateint Data :", data)
             this.count = data.length;
           },
           error => {

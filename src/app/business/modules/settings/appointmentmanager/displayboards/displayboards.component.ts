@@ -257,7 +257,7 @@ export class DisplayboardsComponent implements OnInit {
     goDisplayboardLayoutDetails(layout, source?) {
         if (source) {
             const path = 'displayboard/' + layout.id + '?type=appt';
-            // const path = projectConstants.PATH + 'displayboard/' + layout.id + '?type=appt';
+            // const path = projectConstantsLocal.PATH + 'displayboard/' + layout.id + '?type=appt';
             window.open(path, '_blank');
         } else {
             const navigationExtras: NavigationExtras = {

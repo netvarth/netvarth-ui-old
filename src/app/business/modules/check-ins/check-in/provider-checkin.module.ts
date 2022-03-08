@@ -21,6 +21,7 @@ import { CheckinAddMemberModule } from "../../../../shared/modules/checkin-add-m
 import { FormMessageDisplayModule } from "../../../../shared/modules/form-message-display/form-message-display.module";
 import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { ProviderCheckinComponent } from "./provider-checkin.component";
+import { ThirdpartypopupModule } from "../thirdpartypopup/thirdpartypopup.module";
 const routes: Routes = [
     {path: '', component: ProviderCheckinComponent}
 ]
@@ -35,6 +36,7 @@ const routes: Routes = [
         NgxIntlTelInputModule,
         FormMessageDisplayModule,
         CheckinAddMemberModule,
+        ThirdpartypopupModule,
         MatFormFieldModule,
         MatInputModule,
         MatSelectModule,

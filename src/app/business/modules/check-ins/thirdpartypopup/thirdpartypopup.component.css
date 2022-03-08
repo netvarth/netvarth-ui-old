@@ -1,0 +1,56 @@
+
+.thirdparycard {
+    /* background-color: rgba(30, 64, 121, 0.2); */
+    border: 1px solid  rgba(30, 64, 121, 0.2);
+    color:#4E4D53;
+    width: 100% !important;
+    /* margin-left: 5px !important; */
+    /* height: 30%; */
+   /* word-wrap: break-word; */
+    font-weight: 600;
+    font-family: "Poppins";
+    /* font-style: Montserrat; */
+    /* display: inline-block; */
+    /* margin-bottom: 2px; */
+    text-align: left;
+    margin-bottom: 10px  !important;
+    
+    /* width: 100px !important; */
+    /* white-space: nowrap; */
+    /* vertical-align: middle; */
+    touch-action: manipulation;
+    cursor: pointer;
+    /* background-image: none; */
+    /* border: 1px solid transparent; */
+    padding: 17px;
+    margin: 5px!important;
+    font-size: 15px;
+    line-height: 1.42857143;
+    border-radius: 5px;
+    background-color:white;
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;
+
+
+}
+.paddding-0 {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+.mgn-lt-2 {
+    margin-left: 2px !important;
+    /* margin-bottom: 5px !important; */
+}
+@media (max-width:720px) {
+    .font-size {
+        font-size: 15px !important;
+    }
+}
+.text-light
+{
+    color: #1E4079!important;
+}
+.text-blue
+{
+    color: rgb(55, 172, 214)!important;
+}

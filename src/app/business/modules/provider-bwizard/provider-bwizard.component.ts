@@ -1553,4 +1553,10 @@ export class ProviderbWizardComponent implements OnInit, AfterViewInit {
       }
     });
   }
+  openContactUsPage(){
+    window.open('https://business.jaldee.com/contact-us/')
+  }
+  openReqDemoPage(){
+    window.open('https://demo.jaldee.com/')
+  }
 }

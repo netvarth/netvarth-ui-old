@@ -136,6 +136,7 @@ export class BranchUsersComponent implements OnInit {
     showusers = false;
     selecteTeamdUsers: any = [];
     addUser = false;
+    users_activecount;
     // subdomain: any;
     constructor(
         private router: Router,
@@ -554,6 +555,7 @@ export class BranchUsersComponent implements OnInit {
                 .subscribe(
                     data => {
                         this.pagination.totalCnt = data;
+                        this.users_activecount = data;
                         this.user_count = this.pagination.totalCnt;
                         resolve(data);
                     },

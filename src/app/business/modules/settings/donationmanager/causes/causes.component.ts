@@ -12,6 +12,7 @@ import { DateTimeProcessor } from '../../../../../shared/services/datetime-proce
 import { MatDialog } from '@angular/material/dialog';
 import { ServiceQRCodeGeneratordetailComponent } from '../..../../../../../../shared/modules/service/serviceqrcodegenerator/serviceqrcodegeneratordetail.component';
 import { ProviderDataStorageService } from '../../../../services/provider-datastorage.service';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-donation-causelist',
@@ -37,7 +38,7 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
     order = 'status';
     bprofile: any = [];
     qrdialogRef: any;
-    wndw_path = projectConstants.PATH;
+    wndw_path = projectConstantsLocal.PATH;
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         public provider_shared_functions: ProviderSharedFuctions,

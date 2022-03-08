@@ -343,7 +343,7 @@
 
 .filter-sidebar .filter-container .sidebar-menu#accordion1 .card-body .filter-text-input li.filter-li .filter-textbox {
   /* height: 40px !important; */
-  height: 34px !important;
+  height: 100%!important;
   width: 100% !important;
   margin: 0 !important;
   /* background-color: #e3e3e3 !important; */

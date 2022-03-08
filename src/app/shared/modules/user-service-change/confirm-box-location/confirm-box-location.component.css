@@ -5,3 +5,9 @@
     display: initial;
     width: 50% !important;
 }
+
+@media only screen and (max-width: 767px){
+    .bt2 {
+        padding: 5px 10px !important;
+    }
+}

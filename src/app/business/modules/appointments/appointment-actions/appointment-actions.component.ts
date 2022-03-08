@@ -38,7 +38,7 @@ export class AppointmentActionsComponent implements OnInit {
     appt;
     provider_label = '';
     qr_value;
-    path = projectConstants.PATH;
+    path = projectConstantsLocal.PATH;
     showQR = false;
     trackDetail: any = [];
     customerMsg;
@@ -110,6 +110,7 @@ export class AppointmentActionsComponent implements OnInit {
     users: any = [];
     location: any;
     status_booking: any;
+    showQnr = false;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -131,6 +132,10 @@ export class AppointmentActionsComponent implements OnInit {
         this.getLabel();
         this.apiloading = true;
         this.appt = this.data.checkinData;
+        console.log("Appointment Actions :",this.appt)
+        if (!this.data.multiSelection && this.appt.releasedQnr && this.appt.releasedQnr.length > 0 && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') {
+            this.showQnr = true;
+        }
           this.status_booking=this.data.status
         if (!this.data.multiSelection) {
             this.getPos();
@@ -373,7 +378,12 @@ export class AppointmentActionsComponent implements OnInit {
         });
         addnotedialogRef.afterClosed().subscribe(result => {
             this.dialogRef.close();
-            if (result === 'reloadlist') { }
+            if (result === 'reloadlist') { 
+                // this.provider_services.getAppointmentById(this.appt.uid)
+                // this.provider_services.getProviderAppointmentNotes(this.appt.uid)
+                // this.provider_services.getAppointmentById(this.appt.uid);
+
+            }
         });
     }
     changeWaitlistStatus(action) {
@@ -549,7 +559,10 @@ export class AppointmentActionsComponent implements OnInit {
         if ((this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && this.data.timetype !== 2 && (!this.appt.virtualService) && !this.data.teleservice) {
             this.showStart = true;
         }
-        if ((this.data.timetype === 1 || this.data.timetype === 3) && this.appt.virtualService && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && !this.data.teleservice) {
+        // if ((this.data.timetype === 1 || this.data.timetype === 3) && this.appt.virtualService && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && !this.data.teleservice) {
+        //     this.showTeleserviceStart = true;
+        // }
+        if ((this.data.timetype === 1 || this.data.timetype === 3) && (this.appt.service.serviceType === 'virtualService') && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Started') && !this.data.teleservice) {
             this.showTeleserviceStart = true;
         }
         if (this.board_count > 0 && this.data.timetype === 1 && !this.appt.virtualService && (this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Arrived') && !this.data.teleservice) {
@@ -689,15 +702,19 @@ export class AppointmentActionsComponent implements OnInit {
         // const customerDetails = this.appt;
         const customerId = this.appt.appmtFor[0].id;
         const num = this.appt.countryCode + ' ' + this.appt.phoneNumber;
+        // const firstName = this.appt.appmtFor[0].firstName
+        // const lastName=this.appt.appmtFor[0].lastName
         // const customerId = customerDetails[0].id;
         const dialogref = this.dialog.open(VoiceConfirmComponent, {
             width: '60%',
-            height: '35%',
+            // height: '35%',
             panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
             disableClose: true,
             data: {
                 customerId: customerId,
                 customer: num,
+                // firstName:firstName,
+                // lastName:lastName
             }
         });
         dialogref.afterClosed().subscribe(
@@ -802,7 +819,7 @@ export class AppointmentActionsComponent implements OnInit {
     getAppointmentSlots() {
         this.freeSlots = [];
         this.loading = true;
-        this.provider_services.getSlotsByLocationServiceandDate(this.locId, this.servId, this.sel_checkindate).subscribe(data => {
+        this.provider_services.getSlotsByLocationServiceandDate(this.locId, this.servId, this.sel_checkindate,this.accountid).subscribe(data => {
             this.schedules = data;
             this.loading = false;
             for (const scheduleSlots of this.schedules) {
@@ -819,11 +836,11 @@ export class AppointmentActionsComponent implements OnInit {
         });
     }
     disableMinus() {
-        const seldate1 = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const seldate1 = this.sel_checkindate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const seldate2 = moment(seldate1, 'YYYY-MM-DD HH:mm').format();
         const seldate = new Date(seldate2);
         const selecttdate = new Date(seldate.getFullYear() + '-' + this.dateTimeProcessor.addZero(seldate.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(seldate.getDate()));
-        const strtDt1 = this.server_date.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const strtDt1 = this.server_date.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const strtDt2 = moment(strtDt1, 'YYYY-MM-DD HH:mm').format();
         const strtDt = new Date(strtDt2);
         const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
@@ -834,7 +851,7 @@ export class AppointmentActionsComponent implements OnInit {
         }
     }
     calculateDate(days, type) {
-        const dte = this.sel_checkindate.toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        const dte = this.sel_checkindate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
         const newdate = new Date(date);
         const newdate1 = new Date(date);
@@ -865,9 +882,9 @@ export class AppointmentActionsComponent implements OnInit {
         }
     }
     setMinMaxDate() {
-        this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         this.today = new Date(this.today);
-        this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(projectConstants.REGION_LANGUAGE, { timeZone: projectConstants.TIME_ZONE_REGION });
+        this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         this.minDate = new Date(this.minDate);
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
     }
@@ -1130,12 +1147,12 @@ export class AppointmentActionsComponent implements OnInit {
 
         this.provider_shared_functions.changeApptinternalStatus(this, this.appt, action);
     }
-    showQnr() {
-        if (!this.data.multiSelection && this.appt.releasedQnr && this.appt.releasedQnr.length > 1 && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') {
-            return true;
-        }
-        return false;
-    }
+    // showQnr() {
+    //     if (!this.data.multiSelection && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') {
+    //         return true;
+    //     }
+    //     return false;
+    // }
     showQuestionnaires() {
         this.dialogRef.close();
         this.router.navigate(['provider', 'appointments', 'questionnaires'], { queryParams: { source: 'appt', uid: this.appt.uid } });

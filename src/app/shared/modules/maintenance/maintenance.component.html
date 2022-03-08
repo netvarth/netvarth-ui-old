@@ -1,5 +1,5 @@
 <section>
-   <div>
+   <div *ngIf="!loading">
       <div style="padding: 10px;height: 100vh;background-color:#fff; margin: 5px;">
          <div>
             <!----logo start-->
@@ -15,8 +15,8 @@
             font-weight: bold;
             color: #2e2e2e;padding: 5px;">We're Offline</div>
                <div class="offline" style="padding: 5px;">
-                  unfortunately the website is down for a bit now. We will
-                  be online as soon as possible. Please check again in a littile while.
+                  Unfortunately the website is down for a bit now. We will
+                  be online as soon as possible. Please check again in a little while.
                   Thankyou...!
                </div>
                <!--btn start-->
@@ -36,5 +36,8 @@
             </div>
          </div>
       </div>
+   </div>
+   <div *ngIf="loading">
+      <app-common-innerloading-spinner></app-common-innerloading-spinner>
    </div>
 </section>
