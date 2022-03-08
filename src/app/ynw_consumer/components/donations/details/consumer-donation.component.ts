@@ -26,13 +26,21 @@ import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.ser
 import { SubSink } from '../../../../../../node_modules/subsink';
 import { PaytmService } from '../../../../shared/services/paytm.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
-import { AuthService } from '../../../../shared/services/auth-service';
+// import { AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig,Image} from '@ks89/angular-modal-gallery';
+// import { ButtonsConfig, ButtonsStrategy, ButtonType } from '@ks89/angular-modal-gallery';
+import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image} from '@ks89/angular-modal-gallery';
+
+
 @Component({
     selector: 'app-consumer-donation',
     templateUrl: './consumer-donation.component.html',
     styleUrls: ['./consumer-donation.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class ConsumerDonationComponent implements OnInit, OnDestroy {
+    customPlainGalleryRowConfig: PlainGalleryConfig = {
+        strategy: PlainGalleryStrategy.CUSTOM,
+        layout: new AdvancedLayout(-1, true)
+      };
 
     select_service_cap = Messages.SELECT_SER_CAP;
     select_deptment_cap = Messages.SELECT_DEPT_CAP;
@@ -241,8 +249,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     paymentmodes: any;
     customer_countrycode: any;
     from: string;
-    indian_payment_modes: any = [];
-    non_indian_modes: any = [];
+    indian_payment_modes: any=[];
+    non_indian_modes: any =[];
     shownonIndianModes: boolean;
     selected_payment_mode: any;
     isInternatonal: boolean;
@@ -250,11 +258,38 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     theme: any;
     api_loading_video = false;
     disablebutton = false;
-    loggedIn = true;
-    paymentWindow: Window;
-
-    from_iOS = false;
-
+    catalogimage_list_popup: Image[];
+    image_list_popup: Image[];
+    image_list_bool:boolean=false
+    pSource;
+    deptUsers: any = [];
+    showDepartments = false;
+    galleryenabledArr = [];
+    gallerydisabledArr = [];
+    tempgalleryjson: any = [];
+    imgLength;
+    extra_img_count: number;
+    bLogo = '';
+    galleryExists = false;
+    bgCover: any;
+    customButtonsFontAwesomeConfig: ButtonsConfig = {
+        visible: true,
+        strategy: ButtonsStrategy.CUSTOM,
+        buttons: [
+          {
+            className: 'inside close-image',
+            type: ButtonType.CLOSE,
+            ariaLabel: 'custom close aria label',
+            title: 'Close',
+            fontSize: '20px'
+          }
+        ]
+      };
+      type;
+      googleMapUrl;
+      appointment: any = [];
+      locationName;
+   
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -277,25 +312,27 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         private paytmService: PaytmService,
         private cdRef: ChangeDetectorRef,
         private dateTimeProcessor: DateTimeProcessor,
-        private authService: AuthService,
-        private ngZone: NgZone) {
+        private ngZone: NgZone, private activaterouterobj: ActivatedRoute,) {
         this.subs.sink = this.route.queryParams.subscribe(
             params => {
+                this.type = params.type;
+                this.googleMapUrl = params.googleMapUrl;
+                this.locationName = params.locname;
                 // tslint:disable-next-line:radix
                 this.sel_loc = parseInt(params.loc_id);
                 this.account_id = params.account_id;
                 this.accountId = params.accountId;
-                console.log("Account Id",this.accountId);
                 this.provider_id = params.unique_id;
                 this.sel_ser = JSON.parse(params.service_id);
                 if (params.isFrom && params.isFrom == 'providerdetail') {
                     this.from = 'providerdetail';
                 }
+                this.getConsumerQuestionnaire();
                 if (params.customId) {
                     this.customId = params.customId;
                 }
-                if (params.theme) {
-                    this.theme = params.theme;
+                if(params.theme) {
+                    this.theme =params.theme;
                 }
                 // this.action = params.action;
             });
@@ -304,30 +341,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.subs.unsubscribe();
     }
     ngOnInit() {
-
+        this.getServicebyLocationId(this.sel_loc);
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-        if (this.lStorageService.getitemfromLocalStorage('ios')) {
-            this.from_iOS=true;
-        }
-        // if(this.customer_countrycode == '+91'){
-        //     this.getPaymentModes();
-        // } else {
-        //     this.razorpayEnabled = true;
-        // }        
-        this.gets3curl();
-        this.goThroughLogin().then(
-            (status) => {
-                console.log("Status:", status);
-                if (status) {
-                    this.initDonation();
-                    this.loggedIn = true;
-                } else {
-                    this.loggedIn = false;
-                }
-            });
-
-    }
-    initDonation() {
         const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         // this.api_loading = false;
         if (activeUser) {
@@ -345,8 +360,13 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
         this.customer_countrycode = credentials.countryCode;
         console.log("credentioooo" + credentials.countryCode);
-        this.getServicebyLocationId(this.sel_loc);
+        // if(this.customer_countrycode == '+91'){
+        //     this.getPaymentModes();
+        // } else {
+        //     this.razorpayEnabled = true;
+        // }
         this.getProfile();
+        this.gets3curl();
         this.getFamilyMembers();
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         this.today = new Date(this.today);
@@ -369,51 +389,80 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.todaydate = dtoday;
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
         this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
+        // this.minDate = this.todaydate;
+        // const day = new Date(this.sel_checkindate).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
+        // const ddd = new Date(day);
+        // this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+        // this.hold_sel_checkindate = this.sel_checkindate;
+        // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
         this.revealphonenumber = true;
+        this.activaterouterobj.queryParams.subscribe(qparams => {
+            console.log('qparams',qparams)
+            if (qparams.src) {
+              this.pSource = qparams.src;
+            }
+            if (qparams && qparams.theme) {
+              this.theme = qparams.theme;
+            }
+            this.businessjson = [];
+            this.servicesjson = [];
+            
+            this.image_list_popup = [];
+            this.catalogimage_list_popup = [];
+            this.galleryjson = [];
+            this.deptUsers = [];
+            if (qparams.psource) {
+              this.pSource = qparams.psource;
+              if (qparams.psource === 'business') {
+                this.loading = true;
+                this.showDepartments = false;
+                setTimeout(() => {
+                  this.loading = false;
+                }, 2500);
+              }
+            }
+          });
     }
-    goThroughLogin() {
-        if (this.lStorageService.getitemfromLocalStorage('reqFrom')) {
-            const _this = this;
-            console.log("Entered to goThroughLogin Method");
-            return new Promise((resolve) => {
-                if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')) {
-                    resolve(true);
-                } else {
-                    resolve(false);
-                }
-            });
-        } else {
-            return new Promise((resolve) => {
-                const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
-                let qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
-                qrusr = JSON.parse(qrusr);
-                if (qrusr && qrpw) {
-                    const data = {
-                        'countryCode': qrusr.countryCode,
-                        'loginId': qrusr.loginId,
-                        'password': qrpw,
-                        'mUniqueId': null
-                    };
-                    this.shared_services.ConsumerLogin(data).subscribe(
-                        (loginInfo: any) => {
-                            this.authService.setLoginData(loginInfo, data, 'consumer');
-                            this.lStorageService.setitemonLocalStorage('qrp', data.password);
-                            resolve(true);
-                        },
-                        (error) => {
-                            if (error.status === 401 && error.error === 'Session already exists.') {
-                                resolve(true);
-                            } else {
-                                resolve(false);
-                            }
-                        }
-                    );
-                } else {
-                    resolve(false);
-                }
-            });
-        }
-    }
+    // getPaymentModes() {
+    //     this.paytmEnabled = false;
+    //     this.razorpayEnabled = false;
+    //     this.interNatioanalPaid = false;
+    //     this.shared_services.getPaymentModesofProvider(this.account_id,this.sel_ser, 'donation')
+    //         .subscribe(
+    //             data => {
+    //                 this.paymentmodes = data;
+    //                 if (this.paymentmodes[0].isJaldeeBank) {
+    //                     if (this.customer_countrycode == '+91') {
+    //                         this.paytmEnabled = true;
+    //                         this.interNatioanalPaid = true;
+    //                     }
+    //                     else {
+    //                         this.razorpayEnabled = true;
+    //                     }
+    //                 } else {
+    //                     if (this.customer_countrycode == '+91') {
+    //                         for (let modes of this.paymentmodes) {
+    //                             for (let gateway of modes.payGateways) {
+    //                                 if (gateway == 'PAYTM') {
+    //                                     this.paytmEnabled = true;
+    //                                 }
+    //                                 if (gateway == 'RAZORPAY') {
+    //                                     this.razorpayEnabled = true;
+    //                                 }
+    //                             }
+    //                         }
+    //                     }
+    //                     else {
+    //                         this.razorpayEnabled = true;
+    //                     }
+    //                 }
+    //                 console.log("paymode" + this.paymentmodes.payGateways);
+
+
+    //             },
+
+    //         );
+    // }
     getPaymentModes() {
         this.paytmEnabled = false;
         this.razorpayEnabled = false;
@@ -422,44 +471,69 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.paymentmodes = data[0];
-                    console.log('payment details..', this.paymentmodes)
+                    console.log('payment details..',this.paymentmodes)
                     this.isPayment = true;
                     if (this.paymentmodes.indiaPay) {
                         this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
                     }
-                    if (this.paymentmodes.internationalPay) {
+                     if (this.paymentmodes.internationalPay) {
                         this.non_indian_modes = this.paymentmodes.internationalBankInfo;
+ 
+                    }
+                    if(!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
+                        this.shownonIndianModes=true;
+                    }else{
+                        this.shownonIndianModes=false;  
+                    }
 
-                    }
-                    if (!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay) {
-                        this.shownonIndianModes = true;
-                    } else {
-                        this.shownonIndianModes = false;
-                    }
                 },
                 error => {
                     this.isPayment = false;
                     console.log(this.isPayment);
                 }
+
+
             );
     }
     indian_payment_mode_onchange(event) {
         this.selected_payment_mode = event.value;
         this.isInternatonal = false;
+
+
+
     }
     non_indian_modes_onchange(event) {
         this.selected_payment_mode = event.value;
         this.isInternatonal = true;
+
+
+
     }
-    togglepaymentMode() {
-        this.shownonIndianModes = !this.shownonIndianModes;
+    togglepaymentMode(){
+        this.shownonIndianModes=!this.shownonIndianModes;
         this.selected_payment_mode = null;
     }
+    
     createForm() {
         this.searchForm = this.fb.group({
             mobile_number: ['', Validators.compose([Validators.required, Validators.maxLength(10),
             Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
             first_last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
+        });
+    }
+    getWaitlistMgr() {
+        const _this = this;
+        return new Promise<void>(function (resolve, reject) {
+            _this.subs.sink = _this.provider_services.getWaitlistMgr()
+                .subscribe(
+                    data => {
+                        _this.settingsjson = data;
+                        resolve();
+                    },
+                    () => {
+                        reject();
+                    }
+                );
         });
     }
     getBussinessProfileApi() {
@@ -478,7 +552,9 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     }
     getFamilyMembers() {
         this.api_loading1 = true;
+
         let self_obj;
+
         self_obj = {
             'userProfile': {
                 'id': this.customer_data.id,
@@ -548,9 +624,118 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.action = 'phone';
         this.selected_phone = this.userPhone;
     }
-    editDonor() {
+    editDonor(email:any) {
         this.action = 'donor';
+        this.edit = false;
+        this.action = 'phone';
+        this.selected_phone = this.userPhone;
+
+        this.action = 'email';
+        this.confrmshow = false;
+        this.payEmail = email;
+        this.payEmail1 = '';
+        // if (this.dispCustomerEmail) {
+        //     this.dispCustomerEmail = false;
+        // } else {
+        //     this.dispCustomerEmail = true;
+        // }
+
     }
+    addDonorDetails(){
+        this.addDonor()
+        this.addPhone()
+        this.addEmail()
+        setTimeout(() => {
+            this.action = '';
+        }, 500);
+        this.closebutton.nativeElement.click();
+
+    }
+    onButtonBeforeHook() {
+    }
+    onButtonAfterHook() { }
+    
+
+    setAccountGallery(res) {
+        console.log('response.........',res);
+        this.galleryenabledArr = []; // For showing gallery
+        this.image_list_popup = [];
+        this.tempgalleryjson = res;
+        if (this.tempgalleryjson.length > 5) {
+          this.extra_img_count = this.tempgalleryjson.length - 5;
+        }
+        let indx = 0;
+        if (this.bLogo !== '../../../assets/images/img-null.svg') {
+          this.galleryjson[0] = { keyName: 'logo', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+          indx = 1;
+        }
+        for (let i = 0; i < this.tempgalleryjson.length; i++) {
+          this.galleryjson[(i + indx)] = this.tempgalleryjson[i];
+        }
+        if (this.galleryjson.length > 0) {
+          this.galleryExists = true;
+          for (let i = 0; i < this.galleryjson.length; i++) {
+            const imgobj = new Image(
+              i,
+              { // modal
+                img: this.galleryjson[i].url,
+                description: this.galleryjson[i].caption || ''
+              });
+            // this.image_list_popup.push(imgobj);
+            this.image_list_popup.push(imgobj);
+          }
+          console.log('image_list_popup..',this.image_list_popup)
+        }
+        this.imgLength = this.image_list_popup.length;
+        const imgLength = this.image_list_popup.length > 5 ? 5 : this.image_list_popup.length;
+        console.log(imgLength)
+        for (let i = 0; i < imgLength; i++) {
+          this.galleryenabledArr.push(i);
+          console.log("......",this.galleryenabledArr)
+        }
+      }
+      setGalleryNotFound() {
+        this.galleryjson = [];
+        if (this.bLogo !== '../../../assets/images/img-null.svg') {
+          this.galleryExists = true;
+          this.image_list_popup = [];
+          this.galleryjson[0] = { keyName: 'logo', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+          const imgobj = new Image(0,
+            { // modal
+              img: this.galleryjson[0].url,
+              description: this.galleryjson[0].caption || ''
+            });
+          this.image_list_popup.push(imgobj);
+          console.log(this.image_list_popup)
+        } else {
+          this.bLogo = '../../../assets/images/img-null.svg';
+        }
+      }
+      private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+        return image ? images.indexOf(image) : -1;
+      }
+      openImageModalRow(image: Image) {
+        const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+        this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+        console.log(index)  
+    }
+
+      openGallery(){
+        this.image_list_bool=true
+      }
+      
+
+    // handleEmail(email) {
+    //     this.action = 'email';
+    //     this.confrmshow = false;
+    //     this.payEmail = email;
+    //     this.payEmail1 = '';
+    //     // if (this.dispCustomerEmail) {
+    //     //     this.dispCustomerEmail = false;
+    //     // } else {
+    //     //     this.dispCustomerEmail = true;
+    //     // }
+    // }
 
     validateEmail(mail) {
         const emailField = mail;
@@ -575,8 +760,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         }
         this.sel_ser_det = [];
         this.sel_ser_det = serv;
-        console.log('donation details.......', this.sel_ser_det);
-        this.getConsumerQuestionnaire();
+        console.log('donation details.......',this.sel_ser_det)
+        this.setAccountGallery( this.sel_ser_det.servicegallery)
     }
     handleServiceSel(obj) {
         // this.sel_ser = obj.id;
@@ -608,7 +793,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.step = 3;
         this.main_heading = 'Family Members';
     }
-    goToGateway() {
+    // donateClicked() {
+
+    // }
+    goToGateway(){
         this.isClickedOnce = true;
         this.resetApi();
         if (this.sel_ser) {
@@ -617,10 +805,37 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             this.snackbarService.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
             return;
         }
-        // let paymenttype = this.selected_payment_mode;
-        this.donate();
+        let paymenttype=this.selected_payment_mode;
+        this.donate(paymenttype);  
     }
-    donate() {
+    // payuPayment() {
+    //     this.isClickedOnce = true;
+    //     this.resetApi();
+    //     if (this.sel_ser) {
+
+    //     } else {
+    //         this.snackbarService.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
+    //         return;
+    //     }
+    //     let paymentWay;
+    //     paymentWay = 'DC';
+    //     this.donate(paymentWay);
+    // }
+    // paytmPayment() {
+    //     this.isClickedOnce = true;
+    //     this.resetApi();
+    //     if (this.sel_ser) {
+
+    //     } else {
+    //         this.isClickedOnce = false;
+    //         this.snackbarService.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
+    //         return;
+    //     }
+    //     let paymentWay;
+    //     paymentWay = 'PPI';
+    //     this.donate(paymentWay);
+    // }
+    donate(paymentWay) {
         this.showEditView = false;
         const post_Data = {
             'consumer': {
@@ -646,145 +861,45 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             'note': this.consumerNote,
             'donorEmail': this.userEmail
         };
+        console.log("Donation Data :",post_Data)
         // if (this.userData.userProfile.email === this.payEmail) {
         //     post_Data['donorEmail'] = this.userData.userProfile.email;
         // }else {
         //     post_Data['donorEmail'] = this.payEmail;
         // }
         if (this.api_error === null && this.donationAmount) {
-            this.addDonationConsumer(post_Data);
+            this.addDonationConsumer(post_Data, paymentWay);
         } else {
             this.isClickedOnce = false;
             this.snackbarService.openSnackBar('Please enter valid donation amount', { 'panelClass': 'snackbarerror' });
         }
     }
-    addDonationConsumer(post_Data) {
-        const _this = this;
+    addDonationConsumer(post_Data, paymentWay) {
         this.api_loading = true;
+        this.subs.sink = this.shared_services.addCustomerDonation(post_Data, this.account_id)
+            .subscribe(data => {
+                this.uid = data['uid'];
+                console.log("Donation Response :",data);
+                if (this.customId) {
+                    console.log("businessid" + this.account_id);
+                    this.shared_services.addProvidertoFavourite(this.account_id)
+                        .subscribe(() => {
+                        });
 
-        if (this.from_iOS) {
-
-            // let activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-            // let post_data = {
-            //   consumer: {
-            //     id: activeUser.id
-            //   },
-            //   countryCode: '+91',
-            //   date: curdate,
-            //   donationAmount: 0,
-            //   donor: {
-            //     firstName: this.activeUser.firstName,
-            //     lastName: this.activeUser.lastName
-            //   },
-            //   donorEmail: '',
-            //   donorPhoneNumber: this.activeUser.primaryPhoneNumber,
-            //   location: locid,
-            //   note: 'Testing donation',
-            //   providerCustomer: {
-            //     id: activeUser.id
-            //   },
-            //   service: service.id
-            // }
-
-            this.shared_services.generateDonationLink(this.accountId, post_Data).subscribe(
-                (paymentLinkResponse:any) => {
-                    console.log("Payment Link:", paymentLinkResponse);
-                    this.uid = paymentLinkResponse['uuid'];
-                    if (this.customId) {
-                        console.log("businessid" + this.account_id);
-                        this.shared_services.addProvidertoFavourite(this.account_id)
-                            .subscribe(() => {
-                            });
-                    }
-                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                        this.submitQuestionnaire(this.uid, post_Data).then(
-                            (status) => {
-                                if (status) {
-                                    _this.openPaymentLink(_this.customId, post_Data['service'].id, paymentLinkResponse.paylink);
-                                }
-                            }
-                        );
-                    } else {
-                        this.openPaymentLink(this.customId, post_Data['service'].id, paymentLinkResponse.paylink);
-                    }
-                },
+                }
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    this.submitQuestionnaire(this.uid, post_Data, paymentWay);
+                } else {
+                    this.consumerPayment(this.uid, post_Data, paymentWay);
+                }
+            },
                 error => {
                     this.isClickedOnce = false;
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
-        } else {
-            const paymentWay = this.selected_payment_mode;
-            this.subs.sink = this.shared_services.addCustomerDonation(post_Data, this.account_id)
-                .subscribe(data => {
-                    this.uid = data['uid'];
-                    if (this.customId) {
-                        console.log("businessid" + this.account_id);
-                        this.shared_services.addProvidertoFavourite(this.account_id)
-                            .subscribe(() => {
-                            });
-
-                    }
-                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                        this.submitQuestionnaire(this.uid, post_Data).then(
-                            (status)=> {
-                                if (status) {
-                                    this.consumerPayment(this.uid, post_Data, paymentWay);
-                                }
-                            }
-                        );
-                    } else {
-                        this.consumerPayment(this.uid, post_Data, paymentWay);
-                    }
-                },
-                    error => {
-                        this.isClickedOnce = false;
-                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    });
-        }
     }
-
-    isDonationSuccess(paylink) {
-        const _this = this;
-        return new Promise(function(resolve,reject) {
-            _this.shared_services.getDonationLinkUuid(paylink).subscribe(
-                (donationInfo: any)=> {
-                    if (donationInfo.donationStatus!=='PROCESSING') {
-                        resolve(true);
-                    } else {
-                        resolve(false);
-                    }
-                }
-            )
-        })
-        
-    }
-
-    openPaymentLink(businessId, serviceId, paylink, userId?) {
-        const _this = this;
-        const url = projectConstantsLocal.PATH + businessId + "/service/" + serviceId + "/pay/" + paylink;
-        this.paymentWindow = window.open(url, "_blank");
-        
-        let easingLoop = setInterval(function() {
-            _this.isDonationSuccess(paylink).then(
-                (status)=> {
-                    if (status) {
-                        clearInterval(easingLoop);
-                        _this.paymentWindow.close();
-                        _this.isClickedOnce = false;
-                    }
-                });
-        }, 5000);
-        // setTimeout(() => {
-        //    
-        //     
-        // }, 5000);
-
-
-    }
-
-
     consumerPayment(uid, post_Data, paymentWay) {
-        const payInfo: any = {
+        const payInfo:any = {
             'amount': post_Data.donationAmount,
             'custId': this.customer_data.id,
             'paymentMode': paymentWay,
@@ -792,9 +907,9 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             'accountId': this.account_id,
             'source': 'Desktop',
             'purpose': 'donation',
-            'serviceId': this.sel_ser
+            'serviceId':this.sel_ser
         };
-        payInfo.isInternational = this.isInternatonal;
+       payInfo.isInternational=this.isInternatonal;
         this.lStorageService.setitemonLocalStorage('uuid', uid);
         this.lStorageService.setitemonLocalStorage('acid', this.account_id);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_d');
@@ -839,13 +954,13 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.razorModel.order_id = pData.orderId;
         this.razorModel.name = pData.providerName;
         this.razorModel.description = pData.description;
-        this.razorModel.mode = this.selected_payment_mode;
+        this.razorModel.mode=this.selected_payment_mode;
         this.isClickedOnce = false;
         this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uid, null, this.account_id, null, null, this.customId);
     }
     payWithPayTM(pData: any, accountId: any) {
         this.loadingPaytm = true;
-        pData.paymentMode = this.selected_payment_mode;
+        pData.paymentMode=this.selected_payment_mode;
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
     }
     transactionCompleted(response, payload, accountId) {
@@ -862,7 +977,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                         if (this.customId) {
                             queryParams['customId'] = this.customId;
                             if (this.lStorageService.getitemfromLocalStorage('theme')) {
-                                queryParams['theme'] = this.lStorageService.getitemfromLocalStorage('theme');
+                                queryParams['theme']=this.lStorageService.getitemfromLocalStorage('theme');
                             }
                         }
                         if (this.from) {
@@ -891,9 +1006,9 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
 
         }
     }
-    getImageSrc(mode) {
-
-        return 'assets/images/payment-modes/' + mode + '.png';
+    getImageSrc(mode){
+    
+        return 'assets/images/payment-modes/'+mode+'.png';
     }
     closeloading() {
         this.isClickedOnce = false;
@@ -951,14 +1066,14 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 }, 500);
                 if (this.closebutton) {
                     this.closebutton.nativeElement.click();
-                }
+                }                    
             }
             // else {
             //     console.log("else");
             //     this.location.back();
             // }
         }
-
+        
     }
     handleGoBack(cstep) {
         this.resetApi();
@@ -1169,7 +1284,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 this.servicesjson = data;
                 this.serviceslist = data;
                 this.sel_ser_det = [];
-                console.log('donation details.......', this.sel_ser_det)
+                console.log('donation details.......',this.sel_ser_det)
                 if (this.servicesjson.length > 0) {
                     // this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
                     this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
@@ -1215,18 +1330,20 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     }
     gets3curl() {
         this.api_loading1 = true;
-        let accountS3List = 'settings,terminologies,businessProfile';
+        let accountS3List = 'settings,terminologies,businessProfile,gallery';
         this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
             null, accountS3List).subscribe(
                 (accountS3s) => {
+                    console.log('accountS3s',accountS3s)
                     if (accountS3s['settings']) {
                         this.processS3s('settings', accountS3s['settings']);
                     }
                     if (accountS3s['terminologies']) {
                         this.processS3s('terminologies', accountS3s['terminologies']);
                     }
-                    if (accountS3s['businessProfile']) {
-                        this.processS3s('businessProfile', accountS3s['businessProfile']);
+                    
+                    if (accountS3s['gallery']) {
+                        this.processS3s('gallery', accountS3s['gallery']);
                     }
                     this.api_loading1 = false;
                 }
@@ -1234,6 +1351,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     }
     processS3s(type, res) {
         let result = this.s3Processor.getJson(res);
+        console.log('result....',result)
         switch (type) {
             case 'settings': {
                 this.settingsjson = result;
@@ -1248,8 +1366,101 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 this.businessjson = result;
                 break;
             }
+            case 'gallery': {
+                this.setAccountGallery(result);
+                break;
+              }
+            // case 'coupon': {
+            //     this.s3CouponsList.JC = result;
+            //     if (this.s3CouponsList.JC.length > 0) {
+            //         this.showCouponWB = true;
+            //     }
+            //     break;
+            // }
+            // case 'providerCoupon': {
+            //     this.s3CouponsList.OWN = result;
+            //     if (this.s3CouponsList.OWN.length > 0) {
+            //         this.showCouponWB = true;
+            //     }
+            //     break;
+            // }
+            // case 'departmentProviders': {
+            //     let deptProviders: any = [];
+            //     deptProviders = result;
+            //     if (!this.filterDepart) {
+            //         this.users = deptProviders;
+            //     } else {
+            //         deptProviders.forEach(depts => {
+            //             if (depts.users.length > 0) {
+            //                 this.users = this.users.concat(depts.users);
+            //             }
+            //         });
+            //     }
+            //     if (this.selectedUserParam) {
+            //         this.setUserDetails(this.selectedUserParam);
+            //     }
+            //     break;
+            // }
         }
     }
+    // gets3curl() {
+    //     this.api_loading1 = true;
+    //     this.retval = this.sharedFunctionobj.getS3Url()
+    //         .then(
+    //             res => {
+    //                 this.s3url = res;
+    //                 this.getbusinessprofiledetails_json('businessProfile', true);
+    //                 this.getbusinessprofiledetails_json('settings', true);
+    //                 this.getbusinessprofiledetails_json('coupon', true);
+    //                 if (!this.terminologiesjson) {
+    //                     this.getbusinessprofiledetails_json('terminologies', true);
+    //                 } else {
+    //                     if (this.terminologiesjson.length === 0) {
+    //                         this.getbusinessprofiledetails_json('terminologies', true);
+    //                     } else {
+    //                         // this.datastorage.set('terminologies', this.terminologiesjson);
+    //                         this.wordProcessor.setTerminologies(this.terminologiesjson);
+    //                     }
+    //                 }
+    //                 this.api_loading1 = false;
+    //             },
+    //             () => {
+    //                 this.api_loading1 = false;
+    //             }
+    //         );
+    // }
+    // gets the various json files based on the value of "section" parameter
+    // getbusinessprofiledetails_json(section, modDateReq: boolean) {
+    //     let UTCstring = null;
+    //     if (modDateReq) {
+    //         UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+    //     }
+    //     this.subs.sink=this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+    //         .subscribe(res => {
+    //             switch (section) {
+    //                 case 'settings':
+    //                     this.settingsjson = res;
+    //                     break;
+    //                 case 'terminologies':
+    //                     this.terminologiesjson = res;
+    //                     // this.datastorage.set('terminologies', this.terminologiesjson);
+    //                     this.wordProcessor.setTerminologies(this.terminologiesjson);
+    //                     break;
+    //                 case 'businessProfile':
+    //                     this.businessjson = res;
+    //                     break;
+    //                 case 'coupon':
+    //                     this.s3CouponsList = res;
+    //                     if (this.s3CouponsList.length > 0) {
+    //                         this.showCouponWB = true;
+    //                     }
+    //                     break;
+    //             }
+    //         },
+    //             () => {
+    //             }
+    //         );
+    // }
     toggleNotes() {
         this.notes = !this.notes;
     }
@@ -1303,72 +1514,64 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     getQuestionAnswers(event) {
         this.questionAnswers = event;
     }
-    submitQuestionnaire(uuid, post_Data) {
-        const _this = this;
-        return new Promise(function(resolve, reject) {
-            const dataToSend: FormData = new FormData();
-            if (_this.questionAnswers.files) {
-                for (const pic of _this.questionAnswers.files) {
-                    dataToSend.append('files', pic, pic['name']);
-                }
+    submitQuestionnaire(uuid, post_Data, paymentWay) {
+        const dataToSend: FormData = new FormData();
+        if (this.questionAnswers.files) {
+            for (const pic of this.questionAnswers.files) {
+                dataToSend.append('files', pic, pic['name']);
             }
-            const blobpost_Data = new Blob([JSON.stringify(_this.questionAnswers.answers)], { type: 'application/json' });
-            dataToSend.append('question', blobpost_Data);
-            _this.shared_services.submitDonationQuestionnaire(uuid, dataToSend, _this.account_id).subscribe((data: any) => {
-                let postData = {
-                    urls: []
-                };
-                if (data.urls && data.urls.length > 0) {
-                    for (const url of data.urls) {
-                        const file = _this.questionAnswers.filestoUpload[url.labelName][url.document];
-                        _this.provider_services.videoaudioS3Upload(file, url.url)
-                            .subscribe(() => {
-                                postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-                                if (data.urls.length === postData['urls'].length) {
-                                    _this.shared_services.consumerDonationQnrUploadStatusUpdate(uuid, _this.account_id, postData)
-                                        .subscribe((data) => {
-                                            _this.api_loading_video = true;
-                                            // this.paymentOperation(paymenttype);
-                                            // this.consumerPayment(this.uid, post_Data, paymentWay);
-    
-                                               
-                                            resolve(true);
-                                            _this.api_loading_video = false;
-                                        },
-                                            error => {
-                                                _this.isClickedOnce = false;
-                                                _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                                _this.disablebutton = false;
-                                                _this.api_loading_video = false;
-                                                resolve(false);
-                                            });
-    
-                                }
-    
-                            },
-                                error => {
-                                    this.isClickedOnce = false;
-                                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                    this.disablebutton = false;
-                                    this.api_loading_video = false;
-                                });
-                    }
-                } else {
-                    // this.consumerPayment(this.uid, post_Data, paymentWay);
-                    resolve(true);
+        }
+        const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+        dataToSend.append('question', blobpost_Data);
+        this.shared_services.submitDonationQuestionnaire(uuid, dataToSend, this.account_id).subscribe((data: any) => {
+            
+            let postData = {
+                urls: []
+            };
+            if (data.urls && data.urls.length > 0) {
+                for (const url of data.urls) {
+                   
+                    const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
+                    this.provider_services.videoaudioS3Upload(file, url.url)
+                        .subscribe(() => {
+                            postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                            if (data.urls.length === postData['urls'].length) {
+                                this.shared_services.consumerDonationQnrUploadStatusUpdate(uuid, this.account_id, postData)
+                                    .subscribe((data) => {
+                                        this.api_loading_video = true;
+                                        // this.paymentOperation(paymenttype);
+                                        this.consumerPayment(this.uid, post_Data, paymentWay);
+                                        this.api_loading_video = false;
+                                    },
+                                        error => {
+                                            this.isClickedOnce = false;
+                                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                            this.disablebutton = false;
+                                           this.api_loading_video = false;
+                                        });
+
+                            }
+                           
+                        },
+                            error => {
+                                this.isClickedOnce = false;
+                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                this.disablebutton = false;
+                                this.api_loading_video = false;
+                            });
                 }
-            },
-                error => {
-
-                    this.isClickedOnce = false;
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                    this.disablebutton = false;
-                    this.api_loading_video = false;
-                });
-        })
-
-
-        
+            } else {
+                this.consumerPayment(this.uid, post_Data, paymentWay);
+            }
+          
+        },
+            error => {
+                
+                this.isClickedOnce = false;
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                this.disablebutton = false;
+                this.api_loading_video = false;
+            });
     }
     goToStep(type) {
         if (this.bookStep === 'qnr') {
@@ -1403,11 +1606,5 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     }
     showText() {
         this.readMore = !this.readMore;
-    }
-    actionPerformed(status) {
-        if (status === 'success') {
-            this.loggedIn = true;
-            this.initDonation();
-        }
     }
 }
