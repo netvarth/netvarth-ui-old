@@ -80,7 +80,7 @@
                 <div  class="icon-text">Change Status to Complete</div>
             </div>
         </div> 
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && checkin.waitlistStatus === 'done'"
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection"
         (click)="followUpClicked()">
         <div class="action-box-sub">
             <span class="reschedule-icon"></span>
