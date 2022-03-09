@@ -648,22 +648,25 @@
                   </div>
                 </ng-container>
               </div>
+             
               <ng-container *ngIf="action=='note'">
                 <div class="col-md-12 mgn-bt-20">
-                  <mat-form-field>
-                    <textarea matInput class="form-control mt-2" [(ngModel)]="consumerNote" #consumernote
-                      (change)="handleConsumerNote(consumernote.value)" maxlength="1000"
-                      placeholder="{{note_placeholder}}"></textarea>
-                  </mat-form-field>
-                  <div class="col-md-12 no-padding mgn-up-10 glbl-seting-heder">
-                    <button mat-button class="cs-btn bt1 backbtn mgn-rt-10" (click)="handleGoBack(1)">
-                      Cancel
-                    </button>
-                    <button mat-button class="cs-btn bt1 backtocheckin" (click)="handleGoBack(1)">OK
-                    </button>
-                  </div>
+                    <mat-form-field>
+                        <textarea matInput class="form-control mt-3" [(ngModel)]="consumerNote"
+                            #consumernote (change)="handleConsumerNote(consumernote.value)"
+                            maxlength="1000" placeholder="{{note_placeholder}}"></textarea>
+                    </mat-form-field>
+                    <div class="col-md-12 no-padding mgn-up-10 glbl-seting-heder">
+                        <button mat-button class="cs-btn bt1 backbtn mgn-rt-10"
+                            (click)="handleGoBack(1)">
+                            Cancel
+                        </button>
+                        <button mat-button class="cs-btn bt1 backtocheckin"
+                            (click)="handleGoBack(1)">OK
+                        </button>
+                    </div>
                 </div>
-              </ng-container>
+            </ng-container>
             </aside>
           </div>
           <div class="col-md-12 display-lg-show" style="background-color:#ffffff;
