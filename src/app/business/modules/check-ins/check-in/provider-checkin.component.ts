@@ -1185,8 +1185,15 @@ export class ProviderCheckinComponent implements OnInit {
             this.isFuturedate = false;
         }
         this.handleFuturetoggle();
-        this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
-        this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
+         if(this.type === 'followup'){
+            this.getQueuesbyLocationandServiceId(this.sel_loc, this.servId, this.sel_checkindate, this.accId);
+            this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.servId, this.accId);
+        }
+        else{
+            this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+            this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
+        }
+      
     }
     handleServiceForWhom() {
         this.resetApi();
