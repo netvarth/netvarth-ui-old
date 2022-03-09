@@ -158,7 +158,7 @@
                                                                                     </div> -->
                                                                                     <div class="mobile-edit-icon">
 
-                                                                                        <span style="display: flex;align-items: center;gap: 15px;"
+                                                                                        <span style="display: flex;align-items: center;gap: 5px;"
                                                                                             class="mgn-lt-5 phonevallabel boldmobiletext"
                                                                                             *ngFor="let member of waitlist_for ">
                                                                                            <div> <i style="font-size: 15px !important;"
@@ -386,15 +386,16 @@
                                                                        <div *ngIf="sel_ser" class="resBgChange">
                                                                             {{sel_ser_det.name |
                                                                             capitalizeFirst}}
-                                                                            <div style="font-size: 10px;padding: 10px;" class="textChange">{{sel_ser_det.description}}</div>
+                                                                            <div style="font-size: 10px;padding: 10px;" class="textChange desktop_disply">{{sel_ser_det.description}}</div>
+                                                                            <div *ngIf="sel_ser_det.description.length >=250" style="font-size: 10px;padding: 10px;" class="textChange mobile_disply">{{sel_ser_det.description | slice:0:90}}...</div>
                                                                         </div>
 
                                                                         <!----image start-->
                                                                    <div>
                                                                     <div *ngFor="let image of sel_ser_det.servicegallery,let i=index">
-                                                                       <div *ngIf="sel_ser_det.servicegallery.length>0" style="padding:10px">
+                                                                       <div *ngIf="sel_ser_det.servicegallery.length>0" style="padding:10px" class="serviceGalleryImg">
                                                                            <div *ngIf="sel_ser_det.servicegallery.length==1">
-                                                                             <img style="height: 100%;width:100%;border-radius: 50px;" src="{{image.url}}" alt="Donation">
+                                                                             <img class="resImg" style="height: 100%;width:100%;" src="{{image.url}}" alt="Donation">
                                                                            </div>
                                                                            <div *ngIf="sel_ser_det.servicegallery.length!=1">
                                                                               
@@ -478,6 +479,28 @@
                                                                         <!---edit donor name start-->
                                                                         <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding-small notes"
                                                                             *ngIf="action=='donor' || 'phone' || 'email'">
+                                                                            <!----donor description start-->
+                                                                            <div class=" mgn-up-5 input-group mobile-error c-checkin-new mobile_disply">
+                                                                                <div
+                                                                                class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 resMobileNum" style="font-size: 0.7rem !important;
+                                                                                font-weight: 700 !important;">
+                                                                                Donor Description
+                                                                            </div>
+                                                                            <div class="col-md-12 col-xs-12 col-sm-12 resMobileNum">
+                                                                                <div *ngIf="sel_ser" class="resBgChange">
+                                                                                    <!-- {{sel_ser_det.name |
+                                                                                    capitalizeFirst}} -->
+                                                                                    <div style="color: #2e2e2e !important;
+                                                                                    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+                                                                                    transition: 0.3s;
+                                                                                    margin-bottom: 15px;font-size: 12px !important;padding: 10px !important;font-weight: bold !important;word-spacing: 5px !important;" >{{sel_ser_det.description}}</div>
+                                                                                    
+                                                                                </div>
+                                                                                    </div>
+
+                                                                            </div>
+                                                                 
+                                                                  <!--donor description end-->
                                                                             <div
                                                                                 class="mgn-up-5 input-group mobile-error c-checkin-new">
                                                                                 <div
@@ -717,6 +740,7 @@
                                                                       </div>
                                                                   </div>
                                                                   <!--edit email end-->
+                                                                  
 
                                                                   <div class="input-group-btn " style="text-align: center;">
                                                                     <button
@@ -930,7 +954,7 @@
                                         </div>
                                         <!----payment start-->
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between   hf-double-btn-container paymentBtn" style="padding-top: 1rem;">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between   hf-double-btn-container paymentBtn" >
                                             <!-- <div class="mr-2"
                                                 *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
                                                 <button type="button"

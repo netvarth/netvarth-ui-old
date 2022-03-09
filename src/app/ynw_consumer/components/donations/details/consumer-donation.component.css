@@ -535,6 +535,8 @@ box-shadow: 4px 4px 5px gainsboro;
   flex-direction: row-reverse !important;
   box-shadow: none !important;
   align-items: center !important;
+  justify-content: space-between !important;
+  gap: 5px !important;
     
   }
   .cardBoxShadow{
@@ -562,28 +564,46 @@ box-shadow: 4px 4px 5px gainsboro;
   }
 }
 @media (min-width:1200px){
-  .paymentBtn{
+  /* .paymentBtn{
     margin-top: -14rem;
+  } */
+  .mobile_disply{
+    display: none !important;
+  }
+  .cardTop{
+    height: 360px !important;
   }
 }
 @media (min-width:992px) and (max-width:1200px){
-  .paymentBtn{
+  /* .paymentBtn{
     margin-top: -8rem;
+  } */
+  .mobile_disply{
+    display: none !important;
   }
 }
 @media (min-width:900px) and (max-width:992px){
-  .paymentBtn{
+  /* .paymentBtn{
     margin-top: -10rem;
+  } */
+  .mobile_disply{
+    display: none !important;
   }
 }
 @media (min-width:847px) and (max-width:900px){
-  .paymentBtn{
+  /* .paymentBtn{
     margin-top: -8rem;
+  } */
+  .mobile_disply{
+    display: none !important;
   }
 }
 @media (min-width:765px) and (max-width:847px){
-  .paymentBtn{
+  /* .paymentBtn{
     margin-top: -8rem;
+  } */
+  .mobile_disply{
+    display: none !important;
   }
 }
 @media (min-width:400px) and (max-width:765px){
@@ -604,7 +624,8 @@ box-shadow: 4px 4px 5px gainsboro;
     border-top-left-radius: 0px !important;
     border-top-right-radius: 50px !important;
     border-bottom-right-radius: 50px !important;
-    margin-left: -25px;
+    margin-left: -12px !important;
+    margin-top: -15px !important;
   
   }
   .cardTop{
@@ -626,7 +647,7 @@ box-shadow: 4px 4px 5px gainsboro;
     transform: scaleX(1.1) !important;
   }
   .textChange{
-    font-size: 10px !important;
+    font-size: 12px !important;
   padding: 10px !important;
   font-weight: lighter !important;
   word-spacing: 5px !important;
@@ -635,6 +656,12 @@ box-shadow: 4px 4px 5px gainsboro;
   .resCard{
     gap: 0px !important;
    }
+   .desktop_disply{
+     display: none !important;
+   }
+   .serviceGalleryImg{
+    padding: 0px !important;
+  }
 }
 @media (max-width:400px) {
   .resImg{
@@ -662,9 +689,10 @@ box-shadow: 4px 4px 5px gainsboro;
     border-top-left-radius: 0px !important;
     border-top-right-radius: 50px !important;
     border-bottom-right-radius: 50px !important;
-    margin-left: -25px !important;
-    /* margin-left: -25px; */
+    /* margin-left: -10px !important; */
+    margin-left: -12px !important;
     /* margin-right: 1px !important; */
+    margin-top: -15px !important;
   }
   .resBgChange{
     text-align: left  !important;
@@ -682,10 +710,10 @@ box-shadow: 4px 4px 5px gainsboro;
   .mobile-donation-for-styling{
     border-radius: 0px !important;
     padding: 0px !important;
-    transform: scaleX(1.13) !important;
+    transform: scaleX(1.14) !important;
   }
   .textChange{
-    font-size: 10px !important;
+    font-size: 12px !important;
   padding: 10px !important;
   font-weight: lighter !important;
   word-spacing: 5px !important;
@@ -693,6 +721,12 @@ box-shadow: 4px 4px 5px gainsboro;
   }.resCard{
     gap: 0px !important;
    }
+   .desktop_disply{
+    display: none !important;
+  }
+  .serviceGalleryImg{
+    padding: 0px !important;
+  }
 }
 .resImg{
   border-bottom-left-radius: 50px ;
