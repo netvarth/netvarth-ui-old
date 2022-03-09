@@ -535,7 +535,7 @@ box-shadow: 4px 4px 5px gainsboro;
   flex-direction: row-reverse !important;
   box-shadow: none !important;
   align-items: center !important;
-  justify-content: space-between !important;
+  justify-content: flex-end !important;
   gap: 5px !important;
     
   }
@@ -556,6 +556,7 @@ box-shadow: 4px 4px 5px gainsboro;
   }
   .resCard{
    gap: 0px !important;
+   margin-left: 0px !important;
   }
 }
 @media (max-width: 575px){
@@ -564,15 +565,20 @@ box-shadow: 4px 4px 5px gainsboro;
   }
 }
 @media (min-width:1200px){
-  /* .paymentBtn{
-    margin-top: -14rem;
-  } */
+  .paymentBtn{
+    margin-left: -25px;
+  }
   .mobile_disply{
     display: none !important;
   }
   .cardTop{
     height: 360px !important;
   }
+  .resCard{
+    /* gap: 0px !important; */
+    margin-left: -25px !important;
+   }
+
 }
 @media (min-width:992px) and (max-width:1200px){
   /* .paymentBtn{
@@ -581,6 +587,10 @@ box-shadow: 4px 4px 5px gainsboro;
   .mobile_disply{
     display: none !important;
   }
+  .resCard{
+    gap: 0px !important;
+    /* margin-left: -25px !important; */
+   }
 }
 @media (min-width:900px) and (max-width:992px){
   /* .paymentBtn{

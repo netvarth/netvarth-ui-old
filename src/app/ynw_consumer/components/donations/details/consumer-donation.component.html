@@ -8,6 +8,14 @@
                     <a class="pull-left back-btn mgn-up-5" (click)="goBack('backyy')"><i
                             class="fa fa-arrow-left"></i></a>
                 </div>
+
+                <!-- <div class="text-center mx-auto">
+                    
+                    <span class="mobile-only"><b>{{businessjson.businessName}}</b></span><br>
+                    <span class="mobile-only" ><a href="{{googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</a></span>
+                    <span class="mobile-only" ><a href="{{appointment.location?.googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{appointment.location?.place}}</a></span>
+                </div> -->
+
                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
                     <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'donation'"
                         [accountId]="accountId" [customId]="customId"></app-header>
@@ -305,14 +313,14 @@
                                                                                                         currency:'&#8377;'}}
                                                                                                     </span>
                                                                                                 </p> -->
-                                                                                                <p class="form-level-settings applybill"
+                                                                                                <!-- <p class="form-level-settings applybill"
                                                                                                     *ngIf="sel_ser_det.minDonationAmount == sel_ser_det.maxDonationAmount">
                                                                                                     Donation Amount
                                                                                                     <span
                                                                                                         class="bold"><i
                                                                                                             class="fa fa-inr"></i>
                                                                                                         {{sel_ser_det.minDonationAmount}}</span>
-                                                                                                </p>
+                                                                                                </p> -->
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -481,7 +489,12 @@
                                                                             *ngIf="action=='donor' || 'phone' || 'email'">
                                                                             <!----donor description start-->
                                                                             <div class=" mgn-up-5 input-group mobile-error c-checkin-new mobile_disply">
-                                                                                <div
+                                                                                <div *ngIf="sel_ser_det.description.length===0"
+                                                                                class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 resMobileNum" style="font-size: 0.7rem !important;
+                                                                                font-weight: 700 !important;display: none;">
+                                                                                Donor Description
+                                                                            </div>
+                                                                                <div *ngIf="sel_ser_det.description.length!==0"
                                                                                 class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 resMobileNum" style="font-size: 0.7rem !important;
                                                                                 font-weight: 700 !important;">
                                                                                 Donor Description
@@ -490,10 +503,15 @@
                                                                                 <div *ngIf="sel_ser" class="resBgChange">
                                                                                     <!-- {{sel_ser_det.name |
                                                                                     capitalizeFirst}} -->
-                                                                                    <div style="color: #2e2e2e !important;
+                                                                                    <div *ngIf="sel_ser_det.description.length===0" style="color: #2e2e2e !important;
                                                                                     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
                                                                                     transition: 0.3s;
-                                                                                    margin-bottom: 15px;font-size: 12px !important;padding: 10px !important;font-weight: bold !important;word-spacing: 5px !important;" >{{sel_ser_det.description}}</div>
+                                                                                    margin-bottom: 15px;font-size: 12px !important;padding: 10px !important;font-weight: bold !important;word-spacing: 5px !important;display: none;" >{{sel_ser_det.description}}</div>
+
+                                                                                <div *ngIf="sel_ser_det.description.length!==0" style="color: #2e2e2e !important;
+                                                                                box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+                                                                                transition: 0.3s;
+                                                                                margin-bottom: 15px;font-size: 12px !important;padding: 10px !important;font-weight: bold !important;word-spacing: 5px !important;" >{{sel_ser_det.description}}</div>          
                                                                                     
                                                                                 </div>
                                                                                     </div>
@@ -749,7 +767,7 @@
                                                                         (click)="goBack()">
                                                                         Cancel
                                                                     </button>
-                                                                    <button class=" mgn-rt-10 btn bt3 btnCancel btn-primary mobile-button-color font-weight-bold text-uppercase "
+                                                                    <button style="border-radius: 0px !important;" class=" mgn-rt-10 btn bt3 btnCancel btn-primary mobile-button-color font-weight-bold text-uppercase "
                                                                     
                                                                         (click)="addDonorDetails()"
                                                                         type="button">{{!userEmail ?
