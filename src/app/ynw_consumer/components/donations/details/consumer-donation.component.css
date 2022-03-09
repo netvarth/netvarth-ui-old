@@ -534,6 +534,7 @@ box-shadow: 4px 4px 5px gainsboro;
   flex-wrap: nowrap !important;
   flex-direction: row-reverse !important;
   box-shadow: none !important;
+  align-items: center !important;
     
   }
   .cardBoxShadow{
@@ -551,7 +552,9 @@ box-shadow: 4px 4px 5px gainsboro;
     color: #fff !important;
     background-color:#133072 !important;
   }
-  
+  .resCard{
+   gap: 0px !important;
+  }
 }
 @media (max-width: 575px){
   .resMobileNum{
@@ -586,15 +589,27 @@ box-shadow: 4px 4px 5px gainsboro;
 @media (min-width:400px) and (max-width:765px){
   .resImg{
     /* margin-top: -8rem; */
-    height: 285px !important;
+    /* height: 285px !important;
   width: 150px !important;
   border-bottom-left-radius: 0px !important;
   border-top-left-radius: 0px !important;
   border-top-right-radius: 50px !important;
   border-bottom-right-radius: 50px !important;
   margin-left: -25px;
-  margin-top: -50px !important;
+  margin-top: -50px !important; */
+
+  height: 150px !important;
+    width: 150px !important;
+    border-bottom-left-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 50px !important;
+    border-bottom-right-radius: 50px !important;
+    margin-left: -25px;
   
+  }
+  .cardTop{
+    transform: rotateX(45deg) !important; 
+    margin-top: 0px !important;
   }
   .resBgChange{
     text-align: left  !important;
@@ -602,7 +617,8 @@ box-shadow: 4px 4px 5px gainsboro;
   }
   .reverseDetails{
     padding: 0px !important;
-    height: 260px!important;
+    /* height: 260px!important; */
+    font-size: 18px !important;
   }
   .mobile-donation-for-styling{
     border-radius: 0px !important;
@@ -610,12 +626,15 @@ box-shadow: 4px 4px 5px gainsboro;
     transform: scaleX(1.1) !important;
   }
   .textChange{
-    font-size: 8px !important;
+    font-size: 10px !important;
   padding: 10px !important;
   font-weight: lighter !important;
   word-spacing: 5px !important;
   color: #c2cee6 !important;
   }
+  .resCard{
+    gap: 0px !important;
+   }
 }
 @media (max-width:400px) {
   .resImg{
@@ -629,14 +648,23 @@ box-shadow: 4px 4px 5px gainsboro;
   margin-right: -15px !important;
   margin-top: -79px !important; */
 
-  height: 330px !important;
+  /* height: 330px !important;
   width: 150px !important;
   border-bottom-left-radius: 0px !important;
   border-top-left-radius: 0px !important;
   border-top-right-radius: 50px !important;
   border-bottom-right-radius: 50px !important;
   margin-right: 1px !important;
-  margin-top: -50px;
+  margin-top: -50px; */
+  height: 150px !important;
+    width: 150px !important;
+    border-bottom-left-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 50px !important;
+    border-bottom-right-radius: 50px !important;
+    margin-left: -25px !important;
+    /* margin-left: -25px; */
+    /* margin-right: 1px !important; */
   }
   .resBgChange{
     text-align: left  !important;
@@ -644,7 +672,12 @@ box-shadow: 4px 4px 5px gainsboro;
   }
   .reverseDetails{
     padding: 0px !important;
-    height: 305px!important;
+    /* height: 305px!important; */
+    font-size: 18px !important;
+  }
+  .cardTop{
+    transform: rotateX(45deg) !important; 
+    margin-top: 0px !important;
   }
   .mobile-donation-for-styling{
     border-radius: 0px !important;
@@ -652,12 +685,14 @@ box-shadow: 4px 4px 5px gainsboro;
     transform: scaleX(1.13) !important;
   }
   .textChange{
-    font-size: 8px !important;
+    font-size: 10px !important;
   padding: 10px !important;
   font-weight: lighter !important;
   word-spacing: 5px !important;
   color: #c2cee6 !important;
-  }
+  }.resCard{
+    gap: 0px !important;
+   }
 }
 .resImg{
   border-bottom-left-radius: 50px ;
