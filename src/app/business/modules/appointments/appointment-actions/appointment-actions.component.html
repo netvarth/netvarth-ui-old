@@ -269,7 +269,7 @@
             </div>
         </div>
         <!--Added By Mani for Video Play-->
-        <div *ngIf="!data.multiSelection && appt.service.serviceType === 'virtualService'"
+        <div *ngIf="!data.multiSelection && appt.service.serviceType === 'virtualService' && appt.s3VideoUrls"
             class="action-box pointer-cursor" (click)="viewRecordings()">
             <div class="action-box-sub">
                 <!-- <span class="mr-rx-icon"></span> -->
