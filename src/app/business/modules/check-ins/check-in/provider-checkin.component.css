@@ -39,7 +39,7 @@ align-items: center;
   }
   .card1
   {
-    max-width: 160px!important;
+    max-width: 170px!important;
     font-size: 10px!important;
     margin-left: 0!important;
   }
@@ -122,7 +122,7 @@ align-items: center;
 
 .card1 {
   /* width: 90% !important; */
-  max-width: 220px;
+  max-width: 230px !important;
   /* height: 30% !important; */
   background-color: #fff;
   color: #1E4079;
