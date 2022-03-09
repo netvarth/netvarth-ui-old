@@ -3,18 +3,23 @@
     <div class="content p0 loc-list p-checkin ynw-common-form-nm">
         <div class="panel panel-default">
             <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row " style="box-shadow: 0 1px 1px 0 rgb(0 0 0 / 20%), 0 2px 5px 0 rgb(0 0 0 / 19%);
-            z-index: 999;">
+            z-index: 999;" >
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <a class="pull-left back-btn mgn-up-5" (click)="goBack('backyy')"><i
+                    <a class="pull-left back-btn mgn-up-5" style="margin-top: 13px !important;" (click)="goBack('backyy')"><i
                             class="fa fa-arrow-left"></i></a>
+                            <div class="text-left " style="margin-left: 25px !important;
+                            margin-top: 4px;
+                            font-size: 14px;
+                            color: #1a3767;font-weight:bold">
+                    
+                                <span ><b>{{providerName}}</b></span><br>
+                                <span  ><a style=" color: #1a3767 !important" href="{{googleUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{placeName}}</a></span>
+                                <!-- <span class="mobile-only" ><a href="{{googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</a></span>
+                                <span class="mobile-only" ><a href="{{appointment.location?.googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{appointment.location?.place}}</a></span> -->
+                            </div>
                 </div>
 
-                <!-- <div class="text-center mx-auto">
-                    
-                    <span class="mobile-only"><b>{{businessjson.businessName}}</b></span><br>
-                    <span class="mobile-only" ><a href="{{googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</a></span>
-                    <span class="mobile-only" ><a href="{{appointment.location?.googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{appointment.location?.place}}</a></span>
-                </div> -->
+                
 
                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
                     <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'donation'"
@@ -235,11 +240,21 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <!--donor email end-->
+                                                                                <div class="" *ngIf="!userEmail">
+                                                                                    <i style="font-size: 15px !important;" class="fa fa-envelope-o mr-2"></i>
+    
+                                                                                    <a  class="mgn-lt-5 lnk pointer-"><i
+                                                                                            class="fa fa-plus fa-1x"
+                                                                                            style="color: blue;font-size: 15px !important;"
+                                                                                            data-toggle="modal"
+                                                                                            data-target="#exampleModalCenter">Add
+                                                                                            Email</i></a>
+                                                                                </div>
                                                                             </div>
 
                                                                             </div>
                                                                             <!---donor name phno email end-->
-                                                                            <div class="" *ngIf="!userEmail">
+                                                                            <!-- <div class="" *ngIf="!userEmail">
                                                                                 <i style="font-size: 15px !important;" class="fa fa-envelope-o mr-2"></i>
 
                                                                                 <a  class="mgn-lt-5 lnk pointer-"><i
@@ -248,7 +263,7 @@
                                                                                         data-toggle="modal"
                                                                                         data-target="#exampleModalCenter">Add
                                                                                         Email</i></a>
-                                                                            </div>
+                                                                            </div> -->
                                                                           
                                                                             <div>
                                                                                   <!--amount start-->
@@ -331,7 +346,7 @@
                                                                                     {{sel_ser_det.consumerNoteTitle}}
                                                                                 </div> -->
                                                                                 <div >
-                                                                                    <textarea rows="10" style="height: 34px;" placeholder="{{sel_ser_det.consumerNoteTitle}}"
+                                                                                    <textarea rows="10" style="height: 34px;border-radius: 5px;" placeholder="{{sel_ser_det.consumerNoteTitle}}"
                                                                                         class="form-control mgn-bt-20 "
                                                                                         [(ngModel)]="consumerNote"
                                                                                         #consumernote
@@ -395,7 +410,10 @@
                                                                             {{sel_ser_det.name |
                                                                             capitalizeFirst}}
                                                                             <div style="font-size: 10px;padding: 10px;" class="textChange desktop_disply">{{sel_ser_det.description}}</div>
-                                                                            <div *ngIf="sel_ser_det.description.length >=250" style="font-size: 10px;padding: 10px;" class="textChange mobile_disply">{{sel_ser_det.description | slice:0:90}}...</div>
+                                                                            <div *ngIf="sel_ser_det.description.length >=250" style="font-size: 10px;padding: 10px;" class="textChange mobile_disply">{{sel_ser_det.description | slice:0:120}}...<a data-target="#examplemodaldescriptio" data-toggle="modal"  aria-hidden="true" style="color: #fff !important;">See More</a>
+                                                                                <!-- <i data-target="#examplemodaldescriptio" data-toggle="modal" class="fa fa-file-text" aria-hidden="true"></i> -->
+                                                                            </div>
+                                                                            
                                                                         </div>
 
                                                                         <!----image start-->
@@ -488,7 +506,7 @@
                                                                         <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding-small notes"
                                                                             *ngIf="action=='donor' || 'phone' || 'email'">
                                                                             <!----donor description start-->
-                                                                            <div class=" mgn-up-5 input-group mobile-error c-checkin-new mobile_disply">
+                                                                            <!-- <div class=" mgn-up-5 input-group mobile-error c-checkin-new mobile_disply">
                                                                                 <div *ngIf="sel_ser_det.description.length===0"
                                                                                 class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 resMobileNum" style="font-size: 0.7rem !important;
                                                                                 font-weight: 700 !important;display: none;">
@@ -501,8 +519,7 @@
                                                                             </div>
                                                                             <div class="col-md-12 col-xs-12 col-sm-12 resMobileNum">
                                                                                 <div *ngIf="sel_ser" class="resBgChange">
-                                                                                    <!-- {{sel_ser_det.name |
-                                                                                    capitalizeFirst}} -->
+                                                                                    
                                                                                     <div *ngIf="sel_ser_det.description.length===0" style="color: #2e2e2e !important;
                                                                                     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
                                                                                     transition: 0.3s;
@@ -516,7 +533,7 @@
                                                                                 </div>
                                                                                     </div>
 
-                                                                            </div>
+                                                                            </div> -->
                                                                  
                                                                   <!--donor description end-->
                                                                             <div
@@ -964,6 +981,84 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+
+                                                        <div class="modal fade" id="examplemodaldescriptio" tabindex="-1"
+                                                            role="dialog" aria-labelledby="exampleModalLabel"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="close-btn">
+                                                                        <button type="button" class="close"
+                                                                            aria-label="Close" data-dismiss="modal">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <!---modal for name,email,ph no start-->
+                                                                    <div class="modal-body">
+                                                                        
+                                                                        
+                                                                        
+                                                                        <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding-small notes"
+                                                                            >
+                                                                            <!----donor description start-->
+                                                                            <div class=" mgn-up-5 input-group mobile-error c-checkin-new mobile_disply">
+                                                                                <div *ngIf="sel_ser_det.description.length===0"
+                                                                                class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 resMobileNum" style="font-weight: bold !important;
+                                                                                font-size: 12px !important;
+                                                                            ;display: none;">
+                                                                                Donor Description
+                                                                            </div>
+                                                                                <div *ngIf="sel_ser_det.description.length!==0"
+                                                                                class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 resMobileNum" style="font-size: 12px !important;
+                                                                                font-weight: bold !important;">
+                                                                                Donor Description
+                                                                            </div>
+                                                                            <div class="col-md-12 col-xs-12 col-sm-12 resMobileNum">
+                                                                                <div *ngIf="sel_ser" class="resBgChange">
+                                                                                    
+                                                                                    <div *ngIf="sel_ser_det.description.length===0" style="color: #2e2e2e !important;
+                                                                                    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+                                                                                    transition: 0.3s;
+                                                                                    margin-bottom: 15px;font-size: 12px !important;padding: 10px !important;font-weight: bold !important;word-spacing: 5px !important;display: none;" >{{sel_ser_det.description}}</div>
+
+                                                                                <div *ngIf="sel_ser_det.description.length!==0" style="color: #2e2e2e !important;
+                                                                                box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+                                                                                transition: 0.3s;
+                                                                                margin-bottom: 15px;font-size: 12px !important;padding: 10px !important;font-weight: bold !important;word-spacing: 5px !important;" >{{sel_ser_det.description}}</div>          
+                                                                                    
+                                                                                </div>
+                                                                                    </div>
+
+                                                                            </div>
+                                                                 
+                                                                  <!--donor description end-->
+                                                                            
+                                                                        
+
+                                                                        </div>
+                                                                        <!---edit donor name end-->
+                                                                        
+                                                                    </div>
+                                                                      <!---modal for name,email,ph no end-->
+                                                                    <!-- <div class="disp-none modal-footer">
+                                                                        <button type="button"
+                                                                            class="btn btn-light-primary font-weight-bold"
+                                                                            data-dismiss="modal" #closebutton></button>
+                                                                    </div> -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+
+
+
+
+
+
+
+
                                                     </div>
                                                 </div>
                                             </div>

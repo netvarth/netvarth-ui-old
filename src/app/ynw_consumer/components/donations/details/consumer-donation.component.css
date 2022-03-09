@@ -306,8 +306,9 @@ border-left: none !important;
   background-color: #fafafa;
   border-radius: 10px;
   padding: 5px;
-  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+  /* -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important; */
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 10%), 0 6px 20px 0 rgb(0 0 0 / 0%) !important;
 }
 .mobile-input input{
   border-radius: 5px;
@@ -634,7 +635,7 @@ box-shadow: 4px 4px 5px gainsboro;
     border-top-left-radius: 0px !important;
     border-top-right-radius: 50px !important;
     border-bottom-right-radius: 50px !important;
-    margin-left: -12px !important;
+    margin-left: -15px !important;
     margin-top: -15px !important;
   
   }
@@ -657,10 +658,10 @@ box-shadow: 4px 4px 5px gainsboro;
     transform: scaleX(1.1) !important;
   }
   .textChange{
-    font-size: 12px !important;
+    font-size: 10px !important;
   padding: 10px !important;
-  font-weight: lighter !important;
-  word-spacing: 5px !important;
+  /* font-weight: lighter !important;
+  word-spacing: 5px !important; */
   color: #c2cee6 !important;
   }
   .resCard{
@@ -700,7 +701,7 @@ box-shadow: 4px 4px 5px gainsboro;
     border-top-right-radius: 50px !important;
     border-bottom-right-radius: 50px !important;
     /* margin-left: -10px !important; */
-    margin-left: -12px !important;
+    margin-left: -15px !important;
     /* margin-right: 1px !important; */
     margin-top: -15px !important;
   }
@@ -723,10 +724,10 @@ box-shadow: 4px 4px 5px gainsboro;
     transform: scaleX(1.14) !important;
   }
   .textChange{
-    font-size: 12px !important;
+    font-size: 10px !important;
   padding: 10px !important;
-  font-weight: lighter !important;
-  word-spacing: 5px !important;
+  /* font-weight: lighter !important;
+  word-spacing: 5px !important; */
   color: #c2cee6 !important;
   }.resCard{
     gap: 0px !important;
@@ -750,6 +751,12 @@ box-shadow: 4px 4px 5px gainsboro;
     transform: scaleX(1.25) !important;
   }
 }
+textarea::placeholder {  
+                  
+  /* Firefox, Chrome, Opera */ 
+  padding-left: 13px; 
+}
+
 
 /* resMobileNums{
 

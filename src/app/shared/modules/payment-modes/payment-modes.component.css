@@ -23,15 +23,15 @@
 }
 @media (max-width: 768px) {
   .pay-rad{
-    width: 31.5%;
-    height: 115px;
+    width: 30%;
+    height: 100%;
   }
   
 }
 /* @media (min-width:769px ) and (max-width: 860px)*/
 @media(min-width: 768px) and (max-width: 856px) {
   .pay-rad{
-    width: 27.5%;
+    width: 30%;
     height: 120px;
   }
   

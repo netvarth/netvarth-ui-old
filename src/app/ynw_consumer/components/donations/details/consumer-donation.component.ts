@@ -289,6 +289,9 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
       googleMapUrl;
       appointment: any = [];
       locationName;
+      providerName:any;
+      placeName:any
+      googleUrl:any
    
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
@@ -1333,8 +1336,13 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         let accountS3List = 'settings,terminologies,businessProfile,gallery';
         this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
             null, accountS3List).subscribe(
-                (accountS3s) => {
+                (accountS3s:any) => {
                     console.log('accountS3s',accountS3s)
+                    this.providerName = accountS3s.businessProfile.businessName;
+                    this.placeName =accountS3s.businessProfile.baseLocation.place;
+                    console.log(' this.placeName ', this.placeName )
+                    this.googleUrl =accountS3s.businessProfile.baseLocation.googleMapUrl;
+                    console.log('this.googleUrl',this.googleUrl)
                     if (accountS3s['settings']) {
                         this.processS3s('settings', accountS3s['settings']);
                     }
