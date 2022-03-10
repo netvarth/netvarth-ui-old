@@ -80,7 +80,7 @@
                 <div  class="icon-text">Change Status to Complete</div>
             </div>
         </div> 
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && appt.apptStatus === 'Completed'"
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection"
         (click)="followUpClicked()">
         <div class="action-box-sub">
             <span class="reschedule-icon"></span>
@@ -269,7 +269,7 @@
             </div>
         </div>
         <!--Added By Mani for Video Play-->
-        <div *ngIf="!data.multiSelection && appt.service.serviceType === 'virtualService'"
+        <div *ngIf="!data.multiSelection && appt.service.serviceType === 'virtualService' && appt.s3VideoUrls"
             class="action-box pointer-cursor" (click)="viewRecordings()">
             <div class="action-box-sub">
                 <!-- <span class="mr-rx-icon"></span> -->

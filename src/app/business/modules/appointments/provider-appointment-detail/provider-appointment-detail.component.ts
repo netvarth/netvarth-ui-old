@@ -606,7 +606,8 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
         return browserName.toLocaleLowerCase();
     
       }
-      if(browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("iPhone")){
+     // "Mozilla/5.0 (X11; CrOS aarch64 14388.61.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.107 Safari/537.36"
+      if(browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("Linux") || browser.includes("CrOS") || browser.includes("AppleWebKit")){
         browserName = 'Web'
         return browserName.toLocaleLowerCase();
     
@@ -630,7 +631,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
         return browserName.toLocaleLowerCase();
     
       }
-      if(browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("iPhone")){
+      if(browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("Linux") || browser.includes("CrOS")){
         browserName = 'Web'
         return browserName.toLocaleLowerCase();
     

@@ -47,13 +47,6 @@
                   <!-- <span class="itemHead" *ngIf="waitlist_data.requestInfo.agent && waitlist_data.requestInfo.bookingReqFrom">Booking Via</span><br> -->
                   <span *ngIf="waitlist_data.requestInfo.agent || waitlist_data.requestInfo.browser">
                     <span class="itemHead">Booking Via</span> <br>
-
-                    <!-- <img src="../../../../../assets/icons/icon294(Traced).png"  *ngIf="getReqFrom(waitlist_data.requestInfo.browser,waitlist_data.requestInfo.agent) === 'web'"
-                    style="width: 18px !important; margin-top: -6px !important;"> 
-                    <img src="../../../../assets/icons/Group482249.png" *ngIf="getReqFrom(waitlist_data.requestInfo.browser,waitlist_data.requestInfo.agent) === 'ios'"
-                    style="width: 18px !important; margin-top: -6px !important;">
-                    <img src="../../../../assets/icons/icon295(Traced).png" *ngIf="getReqFrom(waitlist_data.requestInfo.browser,waitlist_data.requestInfo.agent) === 'android'"
-                    style="width: 18px !important; margin-top: -6px !important;"> -->
                     {{getAgent(waitlist_data.requestInfo.agent) | capitalizeFirst}},
                     {{getBookingReqFrom(waitlist_data.requestInfo.browser,waitlist_data.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
                 </span>
@@ -298,7 +291,7 @@
 
               <p class="no-result" *ngIf="waitlist_history && waitlist_history.length == 0">{{no_history_found}}</p>
             </div>
-            <button class="mgn-bt-10" (click)="openbookinghistory()">Booking History</button>
+            <!-- <button class="mgn-bt-10" (click)="openbookinghistory()">Booking History</button> -->
           </div>
           <div class="card" *ngIf="internalStatuslog && internalStatuslog.length>0">
             <h2>Internal Status History</h2>

@@ -3238,6 +3238,7 @@ multiUserFilter:any=[];
       this.chkStartedSelectAppointments = false;
       this.chkAppointments = false;
       this.startedChkAppointments = false;
+      this.apptMultiSelection = false;
     });
   }
   statusClick(status) {
