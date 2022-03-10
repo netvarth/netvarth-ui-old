@@ -2643,6 +2643,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     apiFilter['userType-eq'] = 'PROVIDER';
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.users = data;
+      this.users.sort((a:any, b:any) => (a.firstName).localeCompare(b.firstName))
       const tempUser = {};
       tempUser['firstName'] = 'All';
       tempUser['id'] = 'all';

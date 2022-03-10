@@ -2972,6 +2972,8 @@ multiUserFilter:any=[];
       apiFilter['userType-eq'] = 'PROVIDER';
       _this.provider_services.getUsers(apiFilter).subscribe(data => {
         _this.users = data;
+          _this.users.sort((a:any, b:any) => (a.firstName).localeCompare(b.firstName))
+        console.log('dataToken',data)
         const tempUser = {};
         tempUser['firstName'] = 'All';
         tempUser['id'] = 'all';
