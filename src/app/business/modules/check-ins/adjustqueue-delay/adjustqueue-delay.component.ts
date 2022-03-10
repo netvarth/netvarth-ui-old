@@ -386,6 +386,8 @@ export class AdjustqueueDelayComponent implements OnInit {
             // this.api_success = this.wordProcessor.getProjectMesssages('ADD_DELAY');
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ADD_DELAY'), { 'panelclass': 'snackbarerror' });
             // this.closePopup('reloadlist');
+            this.route.navigate(['check-ins']);
+
           } else {
             // this.api_success = this.wordProcessor.getProjectMesssages('ADD_DELAY_NO_MSG');
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ADD_DELAY_NO_MSG'), { 'panelclass': 'snackbarerror' });
@@ -597,6 +599,7 @@ export class AdjustqueueDelayComponent implements OnInit {
       }
     );
   }
+
   gotoSmsAddon() {
     if (this.corpSettings && this.corpSettings.isCentralised) {
       this.snackbarService.openSnackBar(Messages.CONTACT_SUPERADMIN, { 'panelClass': 'snackbarerror' });
