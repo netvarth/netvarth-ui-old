@@ -1,11 +1,8 @@
 <div>
-    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 my-3 text-center">
-        <!-- <div style="display: flex;justify-content: flex-end;cursor: pointer;">
-            <img (click)="closetab()" src="../../../../../assets/images/cross.jpg" style="width: 30px;height: 30px;">
-        </div> -->
+    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 my-3 mgn-up-20 text-center">
         <div>
             <span style="color: #000;text-align: center;font-size: 18px;" class="font-size"><b>Choose Third Party Options</b></span>
-            <i (click)="closetab()" class="fa fa-times text-dark float-right" style="color: #000!important;cursor: pointer;font-size: 20px;"></i>
+            <i (click)="closetab()" class="fa fa-times text-dark pull-right" style="color: #000!important;cursor: pointer;font-size: 20px;"></i>
         </div>
     </div>
 </div>
@@ -13,32 +10,32 @@
     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 text-center" *ngIf="domain === 'healthCare'">
         <button *ngIf="domain === 'healthCare'" class="thirdparycard  mgn-bt-10 my-2 text-center"
             (click)="buttonclicked('practo')"><img
-                src="../../../../../assets/images/practo.png" width="35px" height="35px" ><br>
+                src="./assets/images/practo.png" width="35px" height="35px" ><br>
                 <span class="my-2 text-blue">Practo</span>
         </button>
     </div>
     <div class="col-lg-2 col-md-2  col-sm-12 col-xs-12 text-center">
         <button class="thirdparycard mgn-bt-10 my-2 text-center" (click)="buttonclicked('justdial')"><img
-            src="../../../../../assets/images/just_dial.png" width="35px" height="35px"><br>
+            src="./assets/images/just_dial.png" width="35px" height="35px"><br>
             <span class="my-2 text-blue">Just dial</span>
         </button>
     </div>
     <div class="col-lg-2 col-md-2  col-sm-12 col-xs-12 text-center">
         <button class="thirdparycard  mgn-bt-10 my-2 text-center" (click)="buttonclicked('google')"><img
-                src="../../../../../assets/images/Google.png" width="35px" height="35px"><br>
+                src="./assets/images/Google.png" width="35px" height="35px"><br>
             <span class="my-2 text-blue">Google</span>
         </button>
     </div>
     <div class="col-lg-2 col-md-2  col-sm-12 col-xs-12 text-center" *ngIf="domain === 'healthCare'">
         <button class="thirdparycard  mgn-bt-10 my-2 text-center" *ngIf="domain === 'healthCare'"
-            (click)="buttonclicked('mfine')"><img src="../../../../../assets/images/MFine.png"
+            (click)="buttonclicked('mfine')"><img src="./assets/images/MFine.png"
                 width="35px" height="35px"><br>
             <span class="my-2 text-blue">MFine</span>
         </button>
     </div>
     <div class="col-lg-2 col-md-2  col-sm-12 col-xs-12 text-center">
         <button class="thirdparycard  mgn-bt-10 my-2 text-center" [class.btn-selected]="showOther"
-            (click)="buttonclicked('other')"><img src="../../../../../assets/images/others.png" width="35px"
+            (click)="buttonclicked('other')"><img src="./assets/images/others.png" width="35px"
                 height="35px"><br>
                 <span class="my-2 text-blue">Others</span>
         </button>

@@ -27,7 +27,7 @@
   }
   .card1 {
     /* width: 90% !important; */
-    max-width: 230px;
+    max-width: 220px;
     /* height: 30% !important; */
     background-color: #fff;
     color: #1E4079;
@@ -97,21 +97,17 @@
 
 
 
-@media(max-width: 768px) 
-{ 
+@media only screen and (max-width: 768px) { 
   .displaysmall { opacity: 0 !important; }
   .orangebox {
     all:initial !important;
-  
   }
-  .card1
-  {
-    max-width: 170px!important;
-    font-size: 10px!important;
-    margin-left: 0!important;
+  .card1 {
+    max-width: 160px !important;
+    font-size: 10px !important;
+    margin-left: 0 !important;
   }
-  .card1 img
-  {
+  .card1 img {
     width: 20px!important;
     height: 20px!important;
   }
