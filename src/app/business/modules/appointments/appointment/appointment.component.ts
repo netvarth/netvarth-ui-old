@@ -262,6 +262,7 @@ export class AppointmentComponent implements OnInit {
     servId;
     accId;
     memberJaldeeId: any;
+    tday = new Date();
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
