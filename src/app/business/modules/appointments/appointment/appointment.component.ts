@@ -1439,6 +1439,7 @@ export class AppointmentComponent implements OnInit {
                 error => {
                     // this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.waitlist_for = [];
                     this.api_loading = false;
                 });
     }
