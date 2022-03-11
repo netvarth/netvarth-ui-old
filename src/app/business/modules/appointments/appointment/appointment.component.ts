@@ -718,7 +718,7 @@ export class AppointmentComponent implements OnInit {
         this.api_loading1 = false;
         this.showCheckin = true;
         this.otherThirdParty = '';
-        this.heading = 'New Appointment';
+        this.heading = 'Create an Appointment';
         this.waitlist_for = [];
         if (this.thirdParty === '') {
             if (this.type !== 'followup') {
