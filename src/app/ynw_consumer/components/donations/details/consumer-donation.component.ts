@@ -676,6 +676,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
           this.galleryjson[(i + indx)] = this.tempgalleryjson[i];
         }
         if (this.galleryjson.length > 0) {
+            console.log('this.galleryjson',this.galleryjson)
           this.galleryExists = true;
           for (let i = 0; i < this.galleryjson.length; i++) {
             const imgobj = new Image(

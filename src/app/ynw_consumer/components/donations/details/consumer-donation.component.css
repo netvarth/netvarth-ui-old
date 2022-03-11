@@ -673,8 +673,14 @@ box-shadow: 4px 4px 5px gainsboro;
    .serviceGalleryImg{
     padding: 0px !important;
   }
+  .resDesName{
+    line-height: 20px !important;
+  }
 }
 @media (max-width:400px) {
+  .resDesName{
+    line-height: 20px !important;
+  }
   .resImg{
     /* margin-top: -8rem; */
     /* height: 193px !important;

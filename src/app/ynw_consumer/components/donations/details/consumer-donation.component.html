@@ -403,10 +403,15 @@
                                                                 color: #133072;box-shadow: 0 1px 1px 0 rgb(0 0 0 / 20%), 0 2px 5px 0 rgb(0 0 0 / 19%) ;background-color: #fff;padding: 20px;border-radius: 10px;"
                                                                 class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 card-title service reverseDetails">
                                                                <div *ngIf="sel_ser" class="resBgChange">
-                                                                    {{sel_ser_det.name |
-                                                                    capitalizeFirst}}
-                                                                    <div style="font-size: 10px;padding: 10px;" class="textChange desktop_disply">{{sel_ser_det.description}}</div>
-                                                                    <div *ngIf="sel_ser_det.description.length >=250" style="font-size: 10px;padding: 10px;" class="textChange mobile_disply">{{sel_ser_det.description | slice:0:120}}...<a data-target="#examplemodaldescriptio" data-toggle="modal"  aria-hidden="true" style="color: #fff !important;">See More</a>
+                                                                    <div class="resDesName">{{sel_ser_det.name |
+                                                                        capitalizeFirst}}</div>
+                                                                    <div *ngIf="(sel_ser_det.description.length !=0 && sel_ser_det.description.length <=50)" style="font-size: 10px;padding: 10px;" class="textChange desktop_disply">{{sel_ser_det.description}}</div>
+                                                                    <div *ngIf="sel_ser_det.description.length >=50" style="font-size: 10px;padding: 10px;" class="textChange desktop_disply">{{sel_ser_det.description}}</div>
+                                                                    <div *ngIf="(sel_ser_det.description.length !=0 && sel_ser_det.description.length <=50)" style="font-size: 10px;padding: 10px;" class="textChange mobile_disply">{{sel_ser_det.description | slice:0:120}}...
+                                                                        <!-- <a data-target="#examplemodaldescriptio" data-toggle="modal"  aria-hidden="true" style="color: #fff !important;">See More</a> -->
+                                                                    </div>
+                                                                    <div *ngIf="sel_ser_det.description.length >=50" style="font-size: 10px;padding: 10px;" class="textChange mobile_disply">{{sel_ser_det.description | slice:0:120}}...
+                                                                        <a data-target="#examplemodaldescriptio" data-toggle="modal"  aria-hidden="true" style="color: #fff !important;">See More</a>
                                                                         <!-- <i data-target="#examplemodaldescriptio" data-toggle="modal" class="fa fa-file-text" aria-hidden="true"></i> -->
                                                                     </div>
                                                                    
