@@ -26,12 +26,21 @@ import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.ser
 import { SubSink } from '../../../../../../node_modules/subsink';
 import { PaytmService } from '../../../../shared/services/paytm.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+// import { AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig,Image} from '@ks89/angular-modal-gallery';
+// import { ButtonsConfig, ButtonsStrategy, ButtonType } from '@ks89/angular-modal-gallery';
+import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image} from '@ks89/angular-modal-gallery';
+
+
 @Component({
     selector: 'app-consumer-donation',
     templateUrl: './consumer-donation.component.html',
     styleUrls: ['./consumer-donation.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class ConsumerDonationComponent implements OnInit, OnDestroy {
+    customPlainGalleryRowConfig: PlainGalleryConfig = {
+        strategy: PlainGalleryStrategy.CUSTOM,
+        layout: new AdvancedLayout(-1, true)
+      };
 
     select_service_cap = Messages.SELECT_SER_CAP;
     select_deptment_cap = Messages.SELECT_DEPT_CAP;
@@ -249,6 +258,41 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     theme: any;
     api_loading_video = false;
     disablebutton = false;
+    catalogimage_list_popup: Image[];
+    image_list_popup: Image[];
+    image_list_bool:boolean=false
+    pSource;
+    deptUsers: any = [];
+    showDepartments = false;
+    galleryenabledArr = [];
+    gallerydisabledArr = [];
+    tempgalleryjson: any = [];
+    imgLength;
+    extra_img_count: number;
+    bLogo = '';
+    galleryExists = false;
+    bgCover: any;
+    customButtonsFontAwesomeConfig: ButtonsConfig = {
+        visible: true,
+        strategy: ButtonsStrategy.CUSTOM,
+        buttons: [
+          {
+            className: 'inside close-image',
+            type: ButtonType.CLOSE,
+            ariaLabel: 'custom close aria label',
+            title: 'Close',
+            fontSize: '20px'
+          }
+        ]
+      };
+      type;
+      googleMapUrl;
+      appointment: any = [];
+      locationName;
+      providerName:any;
+      placeName:any
+      googleUrl:any
+   
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -271,9 +315,12 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         private paytmService: PaytmService,
         private cdRef: ChangeDetectorRef,
         private dateTimeProcessor: DateTimeProcessor,
-        private ngZone: NgZone) {
+        private ngZone: NgZone, private activaterouterobj: ActivatedRoute,) {
         this.subs.sink = this.route.queryParams.subscribe(
             params => {
+                this.type = params.type;
+                this.googleMapUrl = params.googleMapUrl;
+                this.locationName = params.locname;
                 // tslint:disable-next-line:radix
                 this.sel_loc = parseInt(params.loc_id);
                 this.account_id = params.account_id;
@@ -352,6 +399,32 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         // this.hold_sel_checkindate = this.sel_checkindate;
         // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
         this.revealphonenumber = true;
+        this.activaterouterobj.queryParams.subscribe(qparams => {
+            console.log('qparams',qparams)
+            if (qparams.src) {
+              this.pSource = qparams.src;
+            }
+            if (qparams && qparams.theme) {
+              this.theme = qparams.theme;
+            }
+            this.businessjson = [];
+            this.servicesjson = [];
+            
+            this.image_list_popup = [];
+            this.catalogimage_list_popup = [];
+            this.galleryjson = [];
+            this.deptUsers = [];
+            if (qparams.psource) {
+              this.pSource = qparams.psource;
+              if (qparams.psource === 'business') {
+                this.loading = true;
+                this.showDepartments = false;
+                setTimeout(() => {
+                  this.loading = false;
+                }, 2500);
+              }
+            }
+          });
     }
     // getPaymentModes() {
     //     this.paytmEnabled = false;
@@ -554,9 +627,118 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.action = 'phone';
         this.selected_phone = this.userPhone;
     }
-    editDonor() {
+    editDonor(email:any) {
         this.action = 'donor';
+        this.edit = false;
+        this.action = 'phone';
+        this.selected_phone = this.userPhone;
+
+        this.action = 'email';
+        this.confrmshow = false;
+        this.payEmail = email;
+        this.payEmail1 = '';
+        // if (this.dispCustomerEmail) {
+        //     this.dispCustomerEmail = false;
+        // } else {
+        //     this.dispCustomerEmail = true;
+        // }
+
     }
+    addDonorDetails(){
+        this.addDonor()
+        this.addPhone()
+        this.addEmail()
+        setTimeout(() => {
+            this.action = '';
+        }, 500);
+        this.closebutton.nativeElement.click();
+
+    }
+    onButtonBeforeHook() {
+    }
+    onButtonAfterHook() { }
+    
+
+    setAccountGallery(res) {
+        console.log('response.........',res);
+        this.galleryenabledArr = []; // For showing gallery
+        this.image_list_popup = [];
+        this.tempgalleryjson = res;
+        if (this.tempgalleryjson.length > 5) {
+          this.extra_img_count = this.tempgalleryjson.length - 5;
+        }
+        let indx = 0;
+        if (this.bLogo !== '../../../assets/images/img-null.svg') {
+          this.galleryjson[0] = { keyName: 'logo', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+          indx = 1;
+        }
+        for (let i = 0; i < this.tempgalleryjson.length; i++) {
+          this.galleryjson[(i + indx)] = this.tempgalleryjson[i];
+        }
+        if (this.galleryjson.length > 0) {
+          this.galleryExists = true;
+          for (let i = 0; i < this.galleryjson.length; i++) {
+            const imgobj = new Image(
+              i,
+              { // modal
+                img: this.galleryjson[i].url,
+                description: this.galleryjson[i].caption || ''
+              });
+            // this.image_list_popup.push(imgobj);
+            this.image_list_popup.push(imgobj);
+          }
+          console.log('image_list_popup..',this.image_list_popup)
+        }
+        this.imgLength = this.image_list_popup.length;
+        const imgLength = this.image_list_popup.length > 5 ? 5 : this.image_list_popup.length;
+        console.log(imgLength)
+        for (let i = 0; i < imgLength; i++) {
+          this.galleryenabledArr.push(i);
+          console.log("......",this.galleryenabledArr)
+        }
+      }
+      setGalleryNotFound() {
+        this.galleryjson = [];
+        if (this.bLogo !== '../../../assets/images/img-null.svg') {
+          this.galleryExists = true;
+          this.image_list_popup = [];
+          this.galleryjson[0] = { keyName: 'logo', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+          const imgobj = new Image(0,
+            { // modal
+              img: this.galleryjson[0].url,
+              description: this.galleryjson[0].caption || ''
+            });
+          this.image_list_popup.push(imgobj);
+          console.log(this.image_list_popup)
+        } else {
+          this.bLogo = '../../../assets/images/img-null.svg';
+        }
+      }
+      private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+        return image ? images.indexOf(image) : -1;
+      }
+      openImageModalRow(image: Image) {
+        const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+        this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+        console.log(index)  
+    }
+
+      openGallery(){
+        this.image_list_bool=true
+      }
+      
+
+    // handleEmail(email) {
+    //     this.action = 'email';
+    //     this.confrmshow = false;
+    //     this.payEmail = email;
+    //     this.payEmail1 = '';
+    //     // if (this.dispCustomerEmail) {
+    //     //     this.dispCustomerEmail = false;
+    //     // } else {
+    //     //     this.dispCustomerEmail = true;
+    //     // }
+    // }
 
     validateEmail(mail) {
         const emailField = mail;
@@ -582,6 +764,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.sel_ser_det = [];
         this.sel_ser_det = serv;
         console.log('donation details.......',this.sel_ser_det)
+        this.setAccountGallery( this.sel_ser_det.servicegallery)
     }
     handleServiceSel(obj) {
         // this.sel_ser = obj.id;
@@ -1150,18 +1333,25 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     }
     gets3curl() {
         this.api_loading1 = true;
-        let accountS3List = 'settings,terminologies,businessProfile';
+        let accountS3List = 'settings,terminologies,businessProfile,gallery';
         this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
             null, accountS3List).subscribe(
-                (accountS3s) => {
+                (accountS3s:any) => {
+                    console.log('accountS3s',accountS3s)
+                    this.providerName = accountS3s.businessProfile.businessName;
+                    this.placeName =accountS3s.businessProfile.baseLocation.place;
+                    console.log(' this.placeName ', this.placeName )
+                    this.googleUrl =accountS3s.businessProfile.baseLocation.googleMapUrl;
+                    console.log('this.googleUrl',this.googleUrl)
                     if (accountS3s['settings']) {
                         this.processS3s('settings', accountS3s['settings']);
                     }
                     if (accountS3s['terminologies']) {
                         this.processS3s('terminologies', accountS3s['terminologies']);
                     }
-                    if (accountS3s['businessProfile']) {
-                        this.processS3s('businessProfile', accountS3s['businessProfile']);
+                    
+                    if (accountS3s['gallery']) {
+                        this.processS3s('gallery', accountS3s['gallery']);
                     }
                     this.api_loading1 = false;
                 }
@@ -1169,6 +1359,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     }
     processS3s(type, res) {
         let result = this.s3Processor.getJson(res);
+        console.log('result....',result)
         switch (type) {
             case 'settings': {
                 this.settingsjson = result;
@@ -1183,6 +1374,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 this.businessjson = result;
                 break;
             }
+            case 'gallery': {
+                this.setAccountGallery(result);
+                break;
+              }
             // case 'coupon': {
             //     this.s3CouponsList.JC = result;
             //     if (this.s3CouponsList.JC.length > 0) {

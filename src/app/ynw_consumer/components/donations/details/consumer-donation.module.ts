@@ -14,6 +14,7 @@ import { FormsModule } from "@angular/forms";
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
 import { MatRadioModule } from "@angular/material/radio";
 import { PaymentModesModule } from "../../../../shared/modules/payment-modes/payment-modes.module";
+import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 const routes: Routes = [
     {path: '', component: ConsumerDonationComponent}
 ]
@@ -34,6 +35,7 @@ const routes: Routes = [
         QuestionnaireModule,
         MatRadioModule,
         PaymentModesModule,
+        ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         [RouterModule.forChild(routes)]
     ]
 })
