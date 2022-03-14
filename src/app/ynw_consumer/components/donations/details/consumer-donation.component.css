@@ -775,6 +775,14 @@ textarea::placeholder {
 .paymentBtn{
   transform: translateX(10px) !important;
 }
+textarea:disabled{
+  height: 50px !important;
+  /* font-size: 13px; */
+  text-align: justify;
+  resize: none;
+  overflow: hidden;
+
+}
 
 
 /* resMobileNums{

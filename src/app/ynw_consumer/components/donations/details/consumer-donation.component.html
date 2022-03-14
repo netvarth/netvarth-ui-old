@@ -341,12 +341,12 @@
                                                                             {{sel_ser_det.consumerNoteTitle}}
                                                                         </div> -->
                                                                         <div >
-                                                                            <textarea rows="10" style="height: 34px;border-radius: 5px;" placeholder="{{sel_ser_det.consumerNoteTitle}}"
+                                                                            <textarea rows="10" style="height: 34px !important;border-radius: 5px;" placeholder="{{sel_ser_det.consumerNoteTitle}}"
                                                                                 class="form-control mgn-bt-20 "
                                                                                 [(ngModel)]="consumerNote"
-                                                                                #consumernote
+                                                                                #consumernote (keyup)="autoGrowTextZone($event)"
                                                                                 (change)="handleConsumerNote(consumernote.value)"
-                                                                                maxlength="1000"></textarea>
+                                                                                maxlength="500"></textarea>
                                                                             <!-- <div
                                                                                 class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
                                                                                 <button mat-button
@@ -616,8 +616,15 @@
                                                                                 autocomplete="off"
                                                                                 (keypress)="isNumeric($event)">
                                                                         </div>
-                                                                        <div class="sts-msg error"
+                                                                        <!-- <div class="sts-msg error"
                                                                             *ngIf="phoneerror!=''">
+                                                                            {{phoneerror}}
+                                                                        </div> -->
+                                                                        <div class="sts-msg error"  style="background: white !important;
+                                                                        color: #f24949 !important;
+                                                                        padding: 0px !important;
+                                                                        font-weight: bold !important;"
+                                                                            *ngIf="phoneerror!=''" >
                                                                             {{phoneerror}}
                                                                         </div>
 
@@ -786,9 +793,9 @@
                                                                 (click)="goBack()">
                                                                 Cancel
                                                             </button>
-                                                            <button style="border-radius: 0px !important;" class=" mgn-rt-10 btn bt3 btnCancel btn-primary mobile-button-color font-weight-bold text-uppercase "
+                                                            <button style="border-radius: 0px !important;" class="btn bt3 btn-default coupon-apply-btn"
                                                             
-                                                                (click)="addDonorDetails()"
+                                                                (click)="addDonorDetails('donor','phone','email')"
                                                                 type="button">{{!userEmail ?
                                                                 'Add' : 'Save'}}</button>
                                                         </div>
