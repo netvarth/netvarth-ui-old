@@ -15,12 +15,9 @@ export class RefundpolicyComponent implements OnInit {
   constructor( private wordProcessor:WordProcessor) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
-
-
    }
 
   ngOnInit(): void {
-
   }
 
 }

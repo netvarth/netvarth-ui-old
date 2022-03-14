@@ -4,25 +4,22 @@
             Status, alerts, communications will be sent to
         </h5>
     </div>
-    <div class="consumer_appt mgn-bt-10">
+    <div class="consumer_appt mgn-bt-10" *ngIf="mode=='write'">
         <div class="mgn-bt-20 mgn-lt-10 mgn-up-10 disp-flex">
             <i class="fa phon-icon"
                 *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Phone'"></i>
-            <i class="fa fa-phone"
-                style="font-size: 20px !important; align-self: center; padding-right: 9px;"
+            <i class="fa fa-phone" style="font-size: 20px !important; align-self: center; padding-right: 9px;"
                 *ngIf="!(selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Phone')"></i>
             <div class="number-caption"
                 [class.width-input]="selectedService && selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp'">
                 Phone#</div>
             <div class="codenumber">
-                <input class="width100 height40 email-border code-field pull-right"
-                    id="countryCode" placeholder="" name="countryCode" [(ngModel)]="commObj.communicationPhCountryCode"
+                <input class="width100 height40 email-border code-field pull-right" id="countryCode" placeholder=""
+                    name="countryCode" [(ngModel)]="commObj.communicationPhCountryCode"
                     [ngModelOptions]="{standalone: true}" autocomplete="off">
-                <input
-                    class="width100 height40 email-border input-field pull-right"
-                    id="newPhone" placeholder="" name="newPhone"
-                    [(ngModel)]="commObj.communicationPhNo"  [ngModelOptions]="{standalone: true}" autocomplete="off"
-                    (keypress)="isNumericSign($event)" maxlength="10">
+                <input class="width100 height40 email-border input-field pull-right" id="newPhone" placeholder=""
+                    name="newPhone" [(ngModel)]="commObj.communicationPhNo" [ngModelOptions]="{standalone: true}"
+                    autocomplete="off" (keypress)="isNumericSign($event)" maxlength="10">
             </div>
             <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div>
         </div>
@@ -33,12 +30,13 @@
                 *ngIf="selectedService.virtualServiceType === 'videoService'"></i>
             <div class="number-caption"> WhatsApp#</div>
             <div class="codenumber">
-                <input class="width100 height40 email-border code-field pull-right"
-                    id="whatsappCountryCode" placeholder="" name="whatsappCountryCode" (blur)="setCommFields()"
-                    [(ngModel)]="commObj.comWhatsappCountryCode" [ngModelOptions]="{standalone: true}" autocomplete="off">
-                <input class="width100 height40 email-border input-field pull-right"
-                    id="newWhatsapp" placeholder="" name="newWhatsapp" 
-                    [(ngModel)]="commObj.comWhatsappNo" [ngModelOptions]="{standalone: true}" autocomplete="off">
+                <input class="width100 height40 email-border code-field pull-right" id="whatsappCountryCode"
+                    placeholder="" name="whatsappCountryCode" (blur)="setCommFields()"
+                    [(ngModel)]="commObj.comWhatsappCountryCode" [ngModelOptions]="{standalone: true}"
+                    autocomplete="off">
+                <input class="width100 height40 email-border input-field pull-right" id="newWhatsapp" placeholder=""
+                    name="newWhatsapp" [(ngModel)]="commObj.comWhatsappNo" [ngModelOptions]="{standalone: true}"
+                    autocomplete="off">
             </div>
             <div class="sts-msg error" *ngIf="whatsapperror">{{whatsapperror}}</div>
         </div>
@@ -48,12 +46,39 @@
                 [class.width-input]="selectedService && selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp'">
                 Email </div>
             <div class="width-100">
-                <input class="width100 height40 email-border email-field pull-right"
-                    id="newEmail" placeholder="Email(user@xyz.com)" name="newEmail" 
-                    [(ngModel)]="commObj.communicationEmail" [ngModelOptions]="{standalone: true}" autocomplete="off" />
-                <app-field-error-display class="red" [displayError]="true" *ngIf="emailerror != null" errorMsg={{emailerror}}>
+                <input class="width100 height40 email-border email-field pull-right" id="newEmail"
+                    placeholder="Email(user@xyz.com)" name="newEmail" [(ngModel)]="commObj.communicationEmail"
+                    [ngModelOptions]="{standalone: true}" autocomplete="off" />
+                <app-field-error-display class="red" [displayError]="true" *ngIf="emailerror != null"
+                    errorMsg={{emailerror}}>
                 </app-field-error-display>
             </div>
+        </div>
+    </div>
+
+    <div class="consumer_appt mgn-bt-10" *ngIf="mode=='read'">
+        <div class="contact-section">
+            <i class="fa fa-volume-control-phone"></i>
+            <i class="fa phon-icon mgn-lt-10"
+                *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Phone'"></i>
+            <span class="mgn-lt-10 phonevallabel">&nbsp;{{commObj['communicationPhCountryCode']}}
+                {{commObj['communicationPhNo']}}</span><a class="mgn-lt-5 lnk pointer-cursor">
+            </a>
+        </div>
+        <div class="contact-section"
+            *ngIf="selectedService && selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp'">
+            <i class="fa wtsapaud-icon wtsap-cal" *ngIf="selectedService.virtualServiceType === 'audioService'"></i>
+            <i class="fa wtsapvid-icon" style="width: 20px;"
+                *ngIf="selectedService.virtualServiceType === 'videoService'"></i>
+            <span class="mgn-lt-10 phonevallabel">{{commObj['comWhatsappCountryCode']}}
+                {{commObj['comWhatsappNo']}}</span><a class="mgn-lt-5 lnk pointer-cursor">
+            </a>
+        </div>
+        <div class="contact-section">
+            <div class="float-left"><i class="fa fa-envelope-o"></i>
+            </div>
+            <span class="mgn-lt-10 emailvallabel">{{commObj['communicationEmail']}}</span>
+            <a class="mgn-lt-5 lnk pointer-cursor"></a>
         </div>
     </div>
 </div>

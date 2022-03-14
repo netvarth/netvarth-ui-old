@@ -338,4 +338,27 @@ export class DateTimeProcessor {
   getLocaleDateFromServer(serverDate) {
     return new Date(serverDate.split(' ')[0]).toLocaleString(this.REGION_LANGUAGE, { timeZone: this.TIME_ZONE_REGION })
   }
+
+  getToday(serverDate) {
+    let today: any;
+    today = new Date(serverDate.split(' ')[0]).toLocaleString(this.REGION_LANGUAGE, { timeZone: this.TIME_ZONE_REGION });
+    today = new Date(today);
+    const dd = today.getDate();
+    const mm = today.getMonth() + 1; // January is 0!
+    const yyyy = today.getFullYear();
+    let cday = '';
+    if (dd < 10) {
+      cday = '0' + dd;
+    } else {
+      cday = '' + dd;
+    }
+    let cmon;
+    if (mm < 10) {
+      cmon = '0' + mm;
+    } else {
+      cmon = '' + mm;
+    }
+    const dtoday = yyyy + '-' + cmon + '-' + cday;
+    return dtoday;
+  }
 }

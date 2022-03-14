@@ -26,8 +26,10 @@ import { MembersModule } from '../../../../ynw_consumer/modules/members/members.
 import { CustomerService } from '../../../../shared/services/customer.service';
 import { CommunicationsModule } from '../../../../ynw_consumer/modules/communications/communications.module';
 import { PaymentModesModule } from '../../../../shared/modules/payment-modes/payment-modes.module';
-import { AppointmentDatePaginationComponent } from './appointment-date-pagination/appointment-date-pagination.component';
 import { ConsumerJoinModule } from '../../consumer-join/join.component.module';
+import { BookingAccountinfoModule } from '../../../../ynw_consumer/modules/booking-accountinfo/booking-accountinfo.module';
+import { DatePaginationModule } from '../../../../ynw_consumer/modules/date-pagination/date-pagination.module';
+import { SlotPickerModule } from '../../../../ynw_consumer/modules/slot-picker/slot-picker.module';
 const routes: Routes = [
     { path: '', component: ConsumerAppointmentComponent},
     { path: 'track/:id', loadChildren:()=> import('./livetrack/livetrack.module').then(m=>m.ConsumerApptLiveTrackModule) },
@@ -37,8 +39,7 @@ const routes: Routes = [
 ];
 @NgModule({
     declarations: [
-        ConsumerAppointmentComponent,
-        AppointmentDatePaginationComponent
+        ConsumerAppointmentComponent
     ],
     imports: [
         FormMessageDisplayModule,
@@ -67,6 +68,9 @@ const routes: Routes = [
         CommunicationsModule,
         ConsumerJoinModule,
         PaymentModesModule,
+        DatePaginationModule,
+        BookingAccountinfoModule,
+        SlotPickerModule,
         [RouterModule.forChild(routes)]
     ],
     schemas: [

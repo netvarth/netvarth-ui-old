@@ -1,0 +1,48 @@
+
+  .freeslots mat-chip {
+    border: none!important;
+    border-radius: 5px!important;
+    cursor: pointer;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  
+  .freeslots mat-chip.mat-chip-selected {
+    background-color: #1e4079!important;
+    color: white!important;
+    font-weight: 900!important;
+  }
+  .freeslots mat-chip.mat-chip.mat-focus-indicator.text-center.mat-primary.mat-standard-chip {
+    padding: 0!important;
+  }
+  @media (min-width:320px)  {
+    .freeslots mat-chip {
+    width:auto!important;
+    margin:3px!important;
+    }
+  }
+  @media (min-width:1025px) { 
+    .freeslots mat-chip{
+    width:20%!important;
+    }
+    .freeslots.appt mat-chip {
+      width: 13% !important;
+  }
+  }
+  @media (min-width:1281px) {
+    .freeslots mat-chip {
+    width:20% !important;
+    margin:4px !important;
+    }
+    .freeslots.appt mat-chip {
+      width: 13% !important;
+  }
+  }
+  
+  .mat-chip.mat-standard-chip.mat-primary  {
+      color: #1E4079 !important;
+      background-color: white !important;
+      border: 1px solid #1E4079;
+    }
+    .mat-chip-selected {
+      color: green !important;
+    }

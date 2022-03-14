@@ -21,8 +21,12 @@ import { CustomerService } from '../../../../shared/services/customer.service';
 import { MembersModule } from '../../../modules/members/members.module';
 import { CommunicationsModule } from '../../../modules/communications/communications.module';
 import { PaymentModesModule } from '../../../../shared/modules/payment-modes/payment-modes.module';
-import { DatePaginationComponent } from './date-pagination/date-pagination.component';
+// import { DatePaginationComponent } from '../../../modules/date-pagination/date-pagination.component';
 import { ConsumerJoinModule } from '../../consumer-join/join.component.module';
+import { DatePaginationModule } from '../../../../ynw_consumer/modules/date-pagination/date-pagination.module';
+import { SlotPickerModule } from '../../../../ynw_consumer/modules/slot-picker/slot-picker.module';
+import { BookingNoteModule } from '../../../../ynw_consumer/modules/booking-note/booking-note.module';
+import { BookingAccountinfoModule } from '../../../../ynw_consumer/modules/booking-accountinfo/booking-accountinfo.module';
 const routes: Routes = [
     { path: '', component: ConsumerCheckinComponent},
     { path: 'track/:id', loadChildren: ()=> import('./livetrack/livetrack.module').then(m=>m.ConsumerLiveTrackModule) },
@@ -32,7 +36,7 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         ConsumerCheckinComponent,
-        DatePaginationComponent
+        // DatePaginationComponent
     ],
     imports: [
         CommonModule,
@@ -57,6 +61,10 @@ const routes: Routes = [
         LoadingSpinnerModule,
         PaymentModesModule,
         ConsumerJoinModule,
+        DatePaginationModule,
+        SlotPickerModule,
+        BookingNoteModule,
+        BookingAccountinfoModule,
         [RouterModule.forChild(routes)]
     ],
     schemas: [

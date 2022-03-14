@@ -1671,14 +1671,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     } else {
       this.changedate_req = true;
     }
-    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    console.log(this.userType);
-    if (this.userType === 'consumer') {   
+    // this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    // console.log(this.userType);
+    // if (this.userType === 'consumer') {   
         this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer',current_provider['ctime']);
-    } else if (this.userType === '') {
-      const passParam = { callback: 'checkin', current_provider: current_provider, serviceType: service.serviceType };
-      this.doLogin('consumer', passParam);
-    }
+    // } else if (this.userType === '') {
+    //   const passParam = { callback: 'checkin', current_provider: current_provider, serviceType: service.serviceType };
+    //   this.doLogin('consumer', passParam);
+    // }
   }
   appointmentClicked(location, service: any) {
     this.futureAllowed = true;
@@ -1730,14 +1730,14 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.futureAllowed = false;
     }
     console.log(this.changedate_req,'lllllllllllll')
-    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    console.log(this.userType);
-    if (this.userType === 'consumer') {
+    // this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    // console.log(this.userType);
+    // if (this.userType === 'consumer') {
         this.showAppointment(location.id, location.place, location.googleMapUrl, this.locationdate, service, 'consumer',current_provider['ctime']);
-    } else if (this.userType === '') {
-      const passParam = { callback: 'appointment', current_provider: current_provider, serviceType: service.serviceType };
-      this.doLogin('consumer', passParam);
-    }
+    // } else if (this.userType === '') {
+    //   const passParam = { callback: 'appointment', current_provider: current_provider, serviceType: service.serviceType };
+    //   this.doLogin('consumer', passParam);
+    // }
   }
   doLogin(origin?, passParam?) {
     // this.snackbarService.openSnackBar('You need to login to check in');
@@ -2055,12 +2055,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   payClicked(locid, locname, cdate, service) {
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    if (this.userType === 'consumer') {
+    // if (this.userType === 'consumer') {
       this.showDonation(locid, cdate, service);
-    } else if (this.userType === '') {
-      const passParam = { callback: 'donation', loc_id: locid, date: cdate, service: service };
-      this.doLogin('consumer', passParam);
-    }
+    // } else if (this.userType === '') {
+    //   const passParam = { callback: 'donation', loc_id: locid, date: cdate, service: service };
+    //   this.doLogin('consumer', passParam);
+    // }
   }
   showDonation(locid, curdate, service) {
     const navigationExtras: NavigationExtras = {

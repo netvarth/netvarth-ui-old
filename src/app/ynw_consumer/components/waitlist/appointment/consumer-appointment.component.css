@@ -2060,18 +2060,7 @@ box-shadow: 4px 4px 5px gainsboro;
       background-color: #1e4079!important;
       color: white;
       border-radius: 10px;
-    }
-    
-    .mat-chip.mat-standard-chip.mat-primary
-    {
-      color: #1E4079!important;
-      background-color: white!important;
-      border: 1px solid #1E4079;
-    }
-    .mat-chip-selected{
-      color: green!important;
-    }
-    
+    }  
     
     .appointment-details-card
     {
@@ -2116,7 +2105,7 @@ box-shadow: 4px 4px 5px gainsboro;
       display: inline;
     } */
   
-  .freeslots mat-chip
+  /* .freeslots mat-chip
   {
     border: none!important;
     border-radius: 5px!important;
@@ -2133,7 +2122,7 @@ box-shadow: 4px 4px 5px gainsboro;
   {
     padding: 0!important;
   }
- 
+  */
 
 
   .header .fa-map-marker
@@ -2168,11 +2157,11 @@ box-shadow: 4px 4px 5px gainsboro;
     {
      padding-bottom: 130px!important;
     }
-    .freeslots mat-chip
+    /* .freeslots mat-chip
     {
     width:31%!important;
     margin:3px!important;
-    }
+    } */
     .card.shadow
     {
       padding: 8px!important;
@@ -2258,10 +2247,10 @@ box-shadow: 4px 4px 5px gainsboro;
    .pad-10.d-flex.flex-column-fluid {
      padding-bottom: 0px!important;
  }
- .freeslots mat-chip
+ /* .freeslots mat-chip
   {
   width:13%!important;
-  }
+  } */
   .back-btn-text{
     font-size: 30px!important;
     font-weight: 700;
@@ -2283,11 +2272,11 @@ box-shadow: 4px 4px 5px gainsboro;
    .pad-10.d-flex.flex-column-fluid {
      padding-bottom: 0px!important;
  }
- .freeslots mat-chip
+ /* .freeslots mat-chip
     {
     width:13%!important;
     margin:4px!important;
-    }
+    } */
     .back-btn-text{
       font-size: 30px!important;
       font-weight: 700;

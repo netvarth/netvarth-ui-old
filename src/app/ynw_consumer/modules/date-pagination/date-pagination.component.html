@@ -1,11 +1,6 @@
-<!-- <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mb-2">
-    <div class="pull-left brd-round brd-light mgn-up-10">
-        <div class="pull-left chkindt text-success"><b>{{sel_checkindate}}</b></div>
-    </div>
-    
-</div> -->
-
-
+<div class="pb-0 px-auto my-3 font-weight-bold text-left">
+  <h5 class="text-capitalize text-primary"><b>Choose Date </b></h5>
+</div>
 <div class="date-carousel container-fluid col-lg-12 col-md-12 mb-5 mt-3 p-0 text-center">
   <div class="my-auto mr-1">
     <button (click)="previous_date_handling_btn ? prev_date(1):false;date_handling_btn()" class="date-carousel-prev my-auto" [class.not-allowed]="!previous_date_handling_btn">&lt;</button>
@@ -41,7 +36,7 @@
       </mat-datepicker>
       <input class="" style="visibility: hidden; width:1px"
           type="text" [matDatepicker]="picker" [min]="minDate"
-          [max]="maxDate" [value]="this.sel_checkindate"
-          (dateChange)="handleFutureDateChange($event);date_value_changed();" [(ngModel)]="selected_date">
+          [max]="maxDate" [value]="selected_date"
+          (dateChange)="date_value_changed();" [(ngModel)]="selected_date">
   </div>
 </div>

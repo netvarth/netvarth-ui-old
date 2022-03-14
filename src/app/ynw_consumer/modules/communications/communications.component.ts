@@ -8,10 +8,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class CommunicationsComponent implements OnInit {
 
   @Input() selectedService;
-  @Input() parentCustomer;
-  @Input() selectedMember;
   @Output() setCommunications = new EventEmitter<any>(); 
   @Input() commObj;
+  @Input() mode;
   emailerror = null;
   whatsapperror = '';
   phoneError = '';

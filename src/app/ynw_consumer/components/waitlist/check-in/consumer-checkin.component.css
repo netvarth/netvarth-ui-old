@@ -2035,25 +2035,6 @@ body.modal-open {
       display: inline;
     } */
   
-  .freeslots mat-chip
-  {
-    border: none!important;
-    border-radius: 5px!important;
-    cursor: pointer;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  
-  .freeslots mat-chip.mat-chip-selected
-  {
-    background-color: #1e4079!important;
-    color: white!important;
-    font-weight: 900!important;
-  }
-  .freeslots mat-chip.mat-chip.mat-focus-indicator.text-center.mat-primary.mat-standard-chip
-  {
-    padding: 0!important;
-  }
-
 
 
   .header .fa-map-marker
@@ -2084,11 +2065,7 @@ body.modal-open {
     {
      padding-bottom: 130px!important;
     }
-    .freeslots mat-chip
-    {
-    width:auto!important;
-    margin:3px!important;
-    }
+    
     .card.shadow
     {
       padding: 8px!important;
@@ -2178,10 +2155,7 @@ body.modal-open {
    .pad-10.d-flex.flex-column-fluid {
      padding-bottom: 0px!important;
  }
- .freeslots mat-chip
-  {
-  width:20%!important;
-  }
+ 
   .back-btn-text{
     font-size: 30px!important;
     font-weight: 700;
@@ -2204,11 +2178,7 @@ body.modal-open {
    .pad-10.d-flex.flex-column-fluid {
      padding-bottom: 0px!important;
  }
- .freeslots mat-chip
-    {
-    width:20%!important;
-    margin:4px!important;
-    }
+
     .back-btn-text{
       font-size: 30px!important;
       font-weight: 700;
