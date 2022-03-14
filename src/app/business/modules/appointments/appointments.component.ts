@@ -2552,6 +2552,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   locationSelected(location) {
     this.selected_location = location;
+    this.getProviders();
     const _this = this;
     if (this.selected_location) {
       this.groupService.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
@@ -2641,6 +2642,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getProviders() {
     const apiFilter = {};
     apiFilter['userType-eq'] = 'PROVIDER';
+    apiFilter['businessLocs-eq'] = this.selected_location.id
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.users = data;
       this.users.sort((a:any, b:any) => (a.firstName).localeCompare(b.firstName))
