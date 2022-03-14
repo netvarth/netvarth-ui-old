@@ -130,7 +130,9 @@ height: 150px !important;
 .bus-item-medium.div-selected-outline  .card.card-item-n{
   border: 5px solid #106e76 !important;
 }
-
+.resBgChange{
+line-height: 25px;
+}
 .checkin-btn-bp1 {
   height: 25px;
   max-width: 75%;

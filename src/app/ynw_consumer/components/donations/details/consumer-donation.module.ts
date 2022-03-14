@@ -16,6 +16,7 @@ import { MatRadioModule } from "@angular/material/radio";
 import { PaymentModesModule } from "../../../../shared/modules/payment-modes/payment-modes.module";
 import { ConsumerJoinModule } from "../../consumer-join/join.component.module";
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
+import { BookingAccountinfoModule } from "../../../../ynw_consumer/modules/booking-accountinfo/booking-accountinfo.module";
 // import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
 // import {  CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 // import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
@@ -40,7 +41,7 @@ const routes: Routes = [
         MatRadioModule,
         PaymentModesModule,
         ConsumerJoinModule,
-      
+        BookingAccountinfoModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         [RouterModule.forChild(routes)]
     ]
