@@ -48,7 +48,9 @@ export class InboxListComponent implements OnInit, OnDestroy {
     public shared_functions: SharedFunctions,
     public wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
-    private dateTimeProcessor: DateTimeProcessor) { }
+    private dateTimeProcessor: DateTimeProcessor) { 
+      console.log("Messages:",this.messages)
+    }
 
   ngOnInit() {
     if (this.fromsource === 'provider_checkin_detail' ||
@@ -140,6 +142,7 @@ export class InboxListComponent implements OnInit, OnDestroy {
   }
   formatDateDisplay(dateStr) {
     dateStr = JSON.parse(dateStr);
+   // console.log("Time :",dateStr)
     let retdate = '';
     const pubDate = new Date(dateStr);
     const obtdate = new Date(pubDate.getFullYear() + '-' + this.dateTimeProcessor.addZero((pubDate.getMonth() + 1)) + '-' + this.dateTimeProcessor.addZero(pubDate.getDate()));

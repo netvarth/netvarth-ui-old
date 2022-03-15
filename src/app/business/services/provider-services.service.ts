@@ -1623,6 +1623,14 @@ export class ProviderServices {
     const url = 'provider/appointment/schedule/' + queueId + '/delay';
     return this.servicemeta.httpPost(url, data);
   }
+  getAppointmentDelays() {
+    const url = 'provider/appointment/today';
+    return this.servicemeta.httpGet(url);
+  }
+  addAppointmentDelay(data) {
+    const url = 'provider/appointment/addDelayOnMultipleAppointment';
+    return this.servicemeta.httpPut(url, data);
+  }
   getTodayApptlist(filter) {
     const url = 'provider/appointment/today/';
     return this.servicemeta.httpGet(url, null, filter);
