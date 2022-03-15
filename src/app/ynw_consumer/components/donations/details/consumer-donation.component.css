@@ -1,4 +1,3 @@
-
 .bus-item-medium .card.card-item-n {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
   transition: 0.3s;
@@ -526,6 +525,9 @@ box-shadow: 4px 4px 5px gainsboro;
   }
   
 }
+.resDesName{
+  line-height: 25px !important;
+}
 @media (max-width: 766px){
   .lbl{
     flex-wrap: wrap-reverse !important;
@@ -660,8 +662,6 @@ box-shadow: 4px 4px 5px gainsboro;
   .textChange{
     font-size: 10px !important;
   padding: 10px !important;
-  /* font-weight: lighter !important;
-  word-spacing: 5px !important; */
   color: #c2cee6 !important;
   }
   .resCard{
@@ -673,33 +673,9 @@ box-shadow: 4px 4px 5px gainsboro;
    .serviceGalleryImg{
     padding: 0px !important;
   }
-  .resDesName{
-    line-height: 20px !important;
-  }
 }
 @media (max-width:400px) {
-  .resDesName{
-    line-height: 20px !important;
-  }
   .resImg{
-    /* margin-top: -8rem; */
-    /* height: 193px !important;
-  width: 150px !important;
-  border-bottom-left-radius: 0px !important;
-  border-top-left-radius: 0px !important;
-  border-top-right-radius: 50px !important;
-  border-bottom-right-radius: 50px !important;
-  margin-right: -15px !important;
-  margin-top: -79px !important; */
-
-  /* height: 330px !important;
-  width: 150px !important;
-  border-bottom-left-radius: 0px !important;
-  border-top-left-radius: 0px !important;
-  border-top-right-radius: 50px !important;
-  border-bottom-right-radius: 50px !important;
-  margin-right: 1px !important;
-  margin-top: -50px; */
   height: 150px !important;
     width: 150px !important;
     border-bottom-left-radius: 0px !important;
@@ -732,8 +708,6 @@ box-shadow: 4px 4px 5px gainsboro;
   .textChange{
     font-size: 10px !important;
   padding: 10px !important;
-  /* font-weight: lighter !important;
-  word-spacing: 5px !important; */
   color: #c2cee6 !important;
   }.resCard{
     gap: 0px !important;
@@ -763,12 +737,10 @@ box-shadow: 4px 4px 5px gainsboro;
 }
 @media (max-width:765px) and (min-width:576px){
   .mobile-donation-for-styling{
-   
     transform: scaleX(1.25) !important;
   }
 }
 textarea::placeholder {  
-                  
   /* Firefox, Chrome, Opera */ 
   padding-left: 13px; 
 }
@@ -777,22 +749,7 @@ textarea::placeholder {
 }
 textarea:disabled{
   height: 50px !important;
-  /* font-size: 13px; */
   text-align: justify;
   resize: none;
   overflow: hidden;
-
 }
-
-
-/* resMobileNums{
-
-} */
-/* @media (min-width: 768px) {
-  .pay-rad{
-    width: 31.5% !important;
-    height: 100px !important;
-  }
-  
-} */
-
