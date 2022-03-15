@@ -15,6 +15,13 @@ import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.m
 import { MatRadioModule } from "@angular/material/radio";
 import { PaymentModesModule } from "../../../../shared/modules/payment-modes/payment-modes.module";
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
+// import { ServiceModule } from "../../../../../../shared/modules/service/service.module";
+import { ServiceModule } from "../../../../shared/modules/service/service.module";
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {  ReactiveFormsModule } from '@angular/forms';
 const routes: Routes = [
     {path: '', component: ConsumerDonationComponent}
 ]
@@ -36,6 +43,13 @@ const routes: Routes = [
         MatRadioModule,
         PaymentModesModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
+        ServiceModule,
+        MatTooltipModule,
+        MatSlideToggleModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+
         [RouterModule.forChild(routes)]
     ]
 })

@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, OnDestroy, ViewChild, NgZone, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+// import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT, Location } from '@angular/common';
 import { Messages } from '../../../../shared/constants/project-messages';
@@ -29,6 +30,8 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 // import { AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig,Image} from '@ks89/angular-modal-gallery';
 // import { ButtonsConfig, ButtonsStrategy, ButtonType } from '@ks89/angular-modal-gallery';
 import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image} from '@ks89/angular-modal-gallery';
+// import { ConsoleReporter } from 'jasmine';
+// import { ServicesService } from '../../../../shared/modules/service/service.module';
 
 
 @Component({
@@ -296,6 +299,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
       noErrorEmail:any
       noErrorName:any
       noErrorPhone:any
+      showAdvancedSettings = false;
    
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
@@ -319,7 +323,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         private paytmService: PaytmService,
         private cdRef: ChangeDetectorRef,
         private dateTimeProcessor: DateTimeProcessor,
-        private ngZone: NgZone, private activaterouterobj: ActivatedRoute,) {
+        private ngZone: NgZone, private activaterouterobj: ActivatedRoute,
+        // private servicesService: ServicesService,
+        public sharedFunctons: SharedFunctions,
+        ) {
         this.subs.sink = this.route.queryParams.subscribe(
             params => {
                 this.type = params.type;
@@ -600,10 +607,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         } else {
             this.donorFirstName = dnrFirst;
             this.donorLastName = dnrLast;
-            setTimeout(() => {
-                this.action = '';
-            }, 500);
-            this.closebutton.nativeElement.click();
+            // setTimeout(() => {
+            //     this.action = '';
+            // }, 500);
+            // this.closebutton.nativeElement.click();
             this.donorName = dnrFirst + ' ' + dnrLast;
             // this.donorName = this.donor.trim();
         }
@@ -619,18 +626,21 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             this.phoneerror = 'Please enter the mobile number';
             return;
         } else if (!result) {
-            this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
+            this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Please enter a valid mobile phone number';
             console.log('Message',Messages.BPROFILE_PRIVACY_PHONE_INVALID)
+            // this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS').subscribe((msg:any)=>{
+            //     console.log('messageMsg',msg)
+            // })
             return;
         } else {
             this.consumerPhoneNo = this.selected_phone;
             this.userPhone = this.selected_phone;
             this.edit = true;
-            setTimeout(() => {
-                this.action = '';
-            }, 500);
-            this.closebutton.nativeElement.click();
-        }
+            // setTimeout(() => {
+            //     this.action = '';
+            // }, 500);
+            // this.closebutton.nativeElement.click();
+        }    
     }
     editPhone() {
         this.edit = false;
@@ -638,6 +648,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.selected_phone = this.userPhone;
     }
     editDonor(email:any) {
+      
         this.action = 'donor';
         this.edit = false;
         this.action = 'phone';
@@ -654,142 +665,19 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         // }
 
     }
-    addDonorDetails(donorNameDetails,donorPh,donorEmail){
-        
-        // this.addDonor()
-        //donor name stat
-        if(donorNameDetails == 'donor'){
-        // const donorNameStart='start'
-        const dnrFirst = this.donorfirst.trim();
-        const dnrLast = this.donorlast.trim();
-        if (dnrFirst === '') {
-            this.donorerror = 'Please enter the first name';
-            return;
-        } else if (dnrLast === '') {
-            this.donorlasterror = 'Please enter the last name';
-            return;
-        } else {
-            this.donorFirstName = dnrFirst;
-            this.donorLastName = dnrLast;
-            this.donorerror='';
-            this.donorlasterror='';
-            setTimeout(() => {
-                this.action = '';
-            }, 500);
-            this.closebutton.nativeElement.click();
-            this.donorName = dnrFirst + ' ' + dnrLast;
-            // this.donorName = this.donor.trim();
-        }
-        // if( ( dnrFirst === '' || dnrLast === '' )){
-        //     alert('ff')
-        // }else{
-        //     if(donorNameStart=='start')
-        //      console.log('donor')
-        //     setTimeout(() => {
-        //         this.action = '';
-        //     }, 500);
-        //     this.closebutton.nativeElement.click();
-        //     this.donorName = dnrFirst + ' ' + dnrLast;
-        // }
-
-        }
-        
-        //donor name end
-        // this.addPhone()
-        //donor ph no start
-        if(donorPh=='phone'){
-            this.phoneError = '';
-        this.resetApiErrors();
-        this.resetApi();
-        const curphone = this.selected_phone;
-        console.log(curphone.length)
-        const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
-        const result = pattern.test(curphone);
-        console.log('result',result)
-        if (this.selected_phone === null) {
-            this.phoneerror = 'Please enter the mobile number';
+    addDonorDetails(donorNameDetails: string = 'donor',donorPh: string='phone',donorEmail: string='email'){
+        console.log(donorNameDetails)
+        setTimeout(() => {
+            // this.action = '';
+            this.addDonor(),  this.addPhone() , this.addEmail()
+        }, 500);
+        this.closebutton.nativeElement.click();
+            // this.addDonor()
+            //  this.addPhone() 
+            //  this.addEmail()
             
-            return;
-        } 
-        else if (!result) {
-            this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
-            console.log('Message',Messages.BPROFILE_PRIVACY_PHONE_INVALID);
-           
-            return;
-        } 
-        // else if(curphone.length !== 10){
-        //     this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
-        //     console.log('Message',Messages.BPROFILE_PRIVACY_PHONE_INVALID)
-        //     return;
-        // }
-        
-        else {
-            
-            this.consumerPhoneNo = this.selected_phone;
-            this.userPhone = this.selected_phone;
-            this.edit = true;
-            this.phoneerror =''
-            this.noErrorPhone='No Error'
-            console.log('No eror',this.noErrorPhone)
-            setTimeout(() => {
-                this.action = '';
-            }, 500);
-            this.closebutton.nativeElement.click();
-        }
-
-        }
-        //donor pph no end
-        // this.addEmail()
-        //email start
-        if(donorEmail=='email'){
-            // const donorEmailStart='email'
-            this.emailerror='';
-        this.email1error='';
-        this.resetApiErrors();
-        this.resetApi();
-        const stat = this.validateEmail(this.payEmail);
-        console.log('stat',stat)
-        const stat1 = this.validateEmail(this.payEmail1);
-        console.log('stat1',stat1)
-        if (this.payEmail === '' || !stat) {
-            this.emailerror = 'Please enter a valid email.';
-            return
-           
-        }
-        else if (this.payEmail1 === '' || !stat1) {
-            this.email1error = 'Please enter a valid email.';
-            return
-            
-        }
-        else if (stat && stat1) {
-            if (this.payEmail === this.payEmail1) {
-                this.userEmail = this.payEmail;
-                this.emailerror='';
-                this.email1error='';
-                setTimeout(() => {
-                    this.action = '';
-                }, 500);
-                this.closebutton.nativeElement.click();
-            } else {
-                this.email1error = 'Email and Re-entered Email do not match';
-            }
-        }
-        // if(((this.emailerror = 'Please enter a valid email.') || (this.email1error = 'Please enter a valid email.') ||(this.email1error = 'Email and Re-entered Email do not match'|| 'Please enter a valid email.'))){
-        //     // alert('ee') 
-        //  }else{
-        //      if(donorEmailStart ==='email')
-        //      setTimeout(() => {
-        //          this.action = '';
-        //      }, 500);
-        //      this.closebutton.nativeElement.click();
-        //  }
-
-        }
-        //email end
-        
-        
-        
-        
+    }
+    onSubmit(form_data){
 
     }
     onButtonBeforeHook() {
@@ -1181,10 +1069,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (stat && stat1) {
             if (this.payEmail === this.payEmail1) {
                 this.userEmail = this.payEmail;
-                setTimeout(() => {
-                    this.action = '';
-                }, 500);
-                this.closebutton.nativeElement.click();
+                // setTimeout(() => {
+                //     this.action = '';
+                // }, 500);
+                // this.closebutton.nativeElement.click();
             } else {
                 this.email1error = 'Email and Re-entered Email do not match';
             }
