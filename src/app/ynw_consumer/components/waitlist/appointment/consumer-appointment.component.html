@@ -6,13 +6,8 @@
         <app-booking-accountinfo [businessInfo]="businessInfo" [smallDevice]="small_device" *ngIf="small_device">
         </app-booking-accountinfo>
     </div>
-    <!-- <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-        <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'checkin'"
-            [accountId]="businessId" [customId]="customId"></app-header>
-    </div> -->
 </div>
 <section #consumer_appointment class="container-fluid" [ngClass]="theme?theme:''">
-
     <div class="loading-hgt my-5 login-form_custom" *ngIf="!loggedIn || loading">
         <div class="card card-custom no-margin">
             <div class="card-body p-0">
@@ -21,10 +16,6 @@
             </div>
         </div>
     </div>
-    <!-- <div class="loading-hgt my-5" *ngIf="!questionnaireLoaded">
-        <app-common-innerloading-spinner></app-common-innerloading-spinner>
-        
-    </div> -->
     <div class="row" *ngIf="loggedIn">
         <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch desktop-only p-1">
             <div class="card shadow">
@@ -38,9 +29,6 @@
                 <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
                     data-wizard-clickable="false">
                     <div class="">
-                        <!-- <div class="loading-hgt" *ngIf="loggedIn && loading">
-                            <app-common-innerloading-spinner></app-common-innerloading-spinner>
-                        </div> -->
                         <div *ngIf="!loading">
                             <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding"
                                 data-wizard-type="step-content" data-wizard-state="current" *ngIf="bookStep === 2">
@@ -50,22 +38,6 @@
                                             *ngIf="hideTokenFor">
                                             <div class="text-capitalize">
                                                 <div class="" *ngIf="selectedServiceId || type == 'waitlistreschedule'">
-                                                    <!-- <div class="service-icon pull-left"
-                                                        *ngIf="selectedService.serviceType == 'virtualService'">
-                                                        <i class="fa phon-icon"
-                                                            *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                        <i class="fa meet-icon"
-                                                            *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                                                        <i class="fa zoom-icon zoom1"
-                                                            *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                                                        <i class="fa jvideo-icon jvideo-icon-m jvideo-icon-mg5"
-                                                            *ngIf="selectedService.virtualCallingModes  && selectedService.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
-                                                        <i class="fa wtsapaud-icon"
-                                                            *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' && selectedService.virtualServiceType === 'audioService'"></i>
-                                                        <i class="fa wtsapvid-icon"
-                                                            *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' && selectedService.virtualServiceType === 'videoService'"></i>
-
-                                                    </div> -->
                                                     <h5 class="text-left text-success text-capitalize service">
                                                         <b>{{selectedService.name}}</b>
                                                     </h5>
@@ -150,12 +122,9 @@
                                                                 (click)="showSpec()">
                                                                 {{selectedService.description}}
                                                             </p>
-
-
                                                             <p *ngIf="selectedService && selectedService.description && showmoreSpec"
                                                                 (click)="showSpec()">
                                                                 {{selectedService.description}}</p>
-
                                                         </div>
                                                         <div class="">
                                                             <div class="callingmode mgn-lt-10"
@@ -203,14 +172,7 @@
                                                     [availableDates]="availableDates">
                                                 </app-date-pagination>
                                             </div>
-                                        </div>
-                                        <!-- <div class="pb-0 px-auto my-3 mx-2 font-weight-bold text-left">
-                                            <h5 class="text-capitalize text-primary"><b>Select Appointment Date </b>
-                                            </h5>
-                                        </div> -->
-
-                                        <!-- <app-appointment-date-pagination (date_change_event)=changed_date_value($event)
-                                            [hold_checkindate]=hold_sel_checkindate></app-appointment-date-pagination> -->
+                                        </div>                                        
                                             <app-slot-picker (slotSelected)="slotSelected($event)"
                                             [slots]="freeSlots"
                                             *ngIf="freeSlots && freeSlots.length > 0" [mode]="'appt'"></app-slot-picker>
@@ -343,22 +305,11 @@
                                             </div>
                                         </ng-container>
                                         <ng-container *ngIf="action=='note'">
-                                            <div class="modal-body">
-                                                <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
-                                                    {{selectedService.consumerNoteTitle}}
-                                                    <div class="form-level-settings">
-                                                        Add any other notes to the
-                                                        {{businessjson.businessName ? businessjson.businessName :
-                                                        selectedService.name}}
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <textarea class="form-control mgn-bt-20 mgn-up-20"
-                                                        [(ngModel)]="consumerNote" #consumernote
-                                                        (change)="handleConsumerNote(consumernote.value)"
-                                                        maxlength="1000" placeholder="{{note_placeholder}}"></textarea>
-                                                </div>
-                                            </div>
+                                            <app-booking-note (noteChanged)="handleConsumerNote($event)"
+                                                [selectedService]="selectedService"
+                                                [businessProfile]="businessjson"
+                                                [placeHolder]="note_placeholder" [note]="consumerNote">
+                                            </app-booking-note>
                                         </ng-container>
                                         <ng-container *ngIf="action=='addmember'">
                                             <div class="modal-body">

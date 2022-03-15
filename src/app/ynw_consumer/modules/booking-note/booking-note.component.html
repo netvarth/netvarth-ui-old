@@ -2,11 +2,8 @@
     <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">
         {{selectedService.consumerNoteTitle}}
         <div class="form-level-settings">
-            Add any other notes to the
-            {{customer.firstName + " " +
-            customer.lastName}}
-            <!-- {{businessjson.businessName ?
-            businessjson.businessName : selectedService.name}} -->
+            Add any other notes to the 
+            {{businessProfile.businessName ? businessProfile.businessName : selectedService.name}}
         </div>
     </div>
     <div class="col-md-12 col-sm-12 col-xs-12">

@@ -11,7 +11,7 @@ export class BookingNoteComponent implements OnInit {
   @Input() note;
   @Input() placeholder;
   @Input() selectedService;
-  @Input() customer;
+  @Input() businessProfile;
 
 
   constructor() { }

@@ -884,8 +884,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.getAvailableTimeSlots(queue.queueSchedule.timeSlots[0]['sTime'], queue.queueSchedule.timeSlots[0]['eTime'], queue.timeInterval);
         }
     }
-    handleConsumerNote(vale) {
-        this.consumerNote = vale;
+    handleConsumerNote(value) {
+        this.consumerNote = value;
     }
     // handleFutureDateChange(e) {
     //     const tdate = e.targetElement.value;

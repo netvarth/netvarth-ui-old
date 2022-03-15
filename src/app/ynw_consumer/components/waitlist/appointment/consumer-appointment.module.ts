@@ -30,6 +30,7 @@ import { ConsumerJoinModule } from '../../consumer-join/join.component.module';
 import { BookingAccountinfoModule } from '../../../../ynw_consumer/modules/booking-accountinfo/booking-accountinfo.module';
 import { DatePaginationModule } from '../../../../ynw_consumer/modules/date-pagination/date-pagination.module';
 import { SlotPickerModule } from '../../../../ynw_consumer/modules/slot-picker/slot-picker.module';
+import { BookingNoteModule } from '../../../../ynw_consumer/modules/booking-note/booking-note.module';
 const routes: Routes = [
     { path: '', component: ConsumerAppointmentComponent},
     { path: 'track/:id', loadChildren:()=> import('./livetrack/livetrack.module').then(m=>m.ConsumerApptLiveTrackModule) },
@@ -69,6 +70,7 @@ const routes: Routes = [
         ConsumerJoinModule,
         PaymentModesModule,
         DatePaginationModule,
+        BookingNoteModule,
         BookingAccountinfoModule,
         SlotPickerModule,
         [RouterModule.forChild(routes)]
