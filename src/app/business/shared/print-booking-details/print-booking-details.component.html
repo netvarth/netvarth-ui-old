@@ -184,7 +184,7 @@
                                                 </td> -->
 
                                                 <td
-                                                    *ngIf="isDatagrid(question) && question.answerLine.answer.dataGrid.length>0">
+                                                    *ngIf="isDatagrid(question) && question && question.answerLine && question.answerLine.answer && question.answerLine.answer.dataGrid && question.answerLine.answer.dataGrid.length>0">
                                                     <ng-container
                                                         *ngFor="let data of question.answerLine.answer.dataGrid ">
                                                         <table style="width:100%" border="1" border-color='#eee'>

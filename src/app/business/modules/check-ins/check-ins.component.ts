@@ -373,6 +373,7 @@ selectedMultiUser:any=[]
 multiUserFilter:any=[];
   @ViewChild('closebutton') closebutton;
   showattachmentDialogRef: any;
+  locid: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -507,18 +508,11 @@ multiUserFilter:any=[];
     this.getDisplayboardCount();
     this.getPos();
     this.getLabel();
+    this.getLocationList();
+    this.getServiceList();
     if (this.active_user.accountType === 'BRANCH') {
       this.getDepartments();
-      this.getProviders().then(
-        () => {
-          this.getLocationList();
-          this.getServiceList();
-          this.refresh();
-        }
-      );
-    } else {
-      this.getLocationList();
-      this.getServiceList();
+      this.getProviders();
     }
     if (this.active_user.accountType === 'BRANCH') {
       this.getTeams().then((data) => {
@@ -1279,6 +1273,7 @@ multiUserFilter:any=[];
                     );
                   }
                 );
+               
               }
             } else {
               self.selectLocationFromCookies(parseInt(cookie_location_id, 10));
@@ -1341,6 +1336,8 @@ multiUserFilter:any=[];
   }
   locationSelected(location) {
     this.selected_location = location;
+
+    this.getProviders();
     const _this = this;
     if (_this.selected_location) {
       _this.groupService.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
@@ -2965,29 +2962,52 @@ multiUserFilter:any=[];
       }
     });
   }
+  // getProviders() {
+  //   alert('1')
+  //   alert(this.selected_location.id)
+  //   this.locid = this.selected_location.id;
+  //   alert(this.selected_location.id)
+  //   const _this = this;
+  //   return new Promise<void>(function (resolve) {
+  //     const apiFilter = {};
+  //     apiFilter['userType-eq'] = 'PROVIDER';
+  //     alert(this.locid + '1')  
+  //     _this.provider_services.getUsers(apiFilter).subscribe(data => {
+  //       _this.users = data;
+  //         _this.users.sort((a:any, b:any) => (a.firstName).localeCompare(b.firstName))
+  //       console.log('dataToken',data)
+  //       const tempUser = {};
+  //       tempUser['firstName'] = 'All';
+  //       tempUser['id'] = 'all';
+  //       if (_this.groupService.getitemFromGroupStorage('selectedUser')) {
+  //         _this.selectedUser = _this.groupService.getitemFromGroupStorage('selectedUser');
+  //       } else {
+  //         _this.selectedUser = tempUser;
+  //       }
+  //       resolve();
+  //     },
+  //       () => {
+  //         resolve();
+  //       });
+  //   });
+  // }
   getProviders() {
-    const _this = this;
-    return new Promise<void>(function (resolve) {
-      const apiFilter = {};
-      apiFilter['userType-eq'] = 'PROVIDER';
-      _this.provider_services.getUsers(apiFilter).subscribe(data => {
-        _this.users = data;
-        const tempUser = {};
-        tempUser['firstName'] = 'All';
-        tempUser['id'] = 'all';
-        if (_this.groupService.getitemFromGroupStorage('selectedUser')) {
-          _this.selectedUser = _this.groupService.getitemFromGroupStorage('selectedUser');
-        } else {
-          _this.selectedUser = tempUser;
-        }
-        resolve();
-      },
-        () => {
-          resolve();
-        });
+    const apiFilter = {};
+    apiFilter['userType-eq'] = 'PROVIDER';
+    apiFilter['businessLocs-eq'] = this.selected_location.id
+    this.provider_services.getUsers(apiFilter).subscribe(data => {
+      this.users = data;
+      this.users.sort((a:any, b:any) => (a.firstName).localeCompare(b.firstName))
+      const tempUser = {};
+      tempUser['firstName'] = 'All';
+      tempUser['id'] = 'all';
+      if (this.groupService.getitemFromGroupStorage('selectedUser')) {
+        this.selectedUser = this.groupService.getitemFromGroupStorage('selectedUser');
+      } else {
+        this.selectedUser = tempUser;
+      }
     });
   }
-
   getTeams() {
     const _this = this;
     return new Promise<void>(function (resolve) {
@@ -3236,6 +3256,7 @@ multiUserFilter:any=[];
       this.chkStartedSelectAppointments = false;
       this.chkAppointments = false;
       this.startedChkAppointments = false;
+      this.apptMultiSelection = false;
     });
   }
   statusClick(status) {

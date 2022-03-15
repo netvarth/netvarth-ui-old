@@ -1250,8 +1250,15 @@ export class ProviderCheckinComponent implements OnInit {
             this.isFuturedate = false;
         }
         this.handleFuturetoggle();
-        this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
-        this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
+         if(this.type === 'followup'){
+            this.getQueuesbyLocationandServiceId(this.sel_loc, this.servId, this.sel_checkindate, this.accId);
+            this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.servId, this.accId);
+        }
+        else{
+            this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+            this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
+        }
+      
     }
     handleServiceForWhom() {
         this.resetApi();
@@ -1330,7 +1337,10 @@ export class ProviderCheckinComponent implements OnInit {
         if (this.type === 'followup') {
             this.sel_ser = this.servId;
             this.sel_ser_det.serviceType = this.follow_up_Details.service.serviceType;
-            this.waitlist_for.push({ id: this.cusId, firstName: this.cusfirstname, lastName: this.cuslastname });
+            
+                this.waitlist_for.push({ id: this.cusId, firstName: this.cusfirstname, lastName: this.cuslastname });
+            
+        
             const post_Data = {
                 'queue': {
                     'id': this.sel_queue_id
@@ -1353,13 +1363,13 @@ export class ProviderCheckinComponent implements OnInit {
            console.log(JSON.stringify(this.follow_up_Details.virtualService + '11111'));
             if (this.sel_ser_det.serviceType === 'virtualService') {
              
-                    if (this.follow_up_Details.virtualService.WhatsApp) {
+                    if (this.follow_up_Details && this.follow_up_Details.virtualService && this.follow_up_Details.virtualService.WhatsApp) {
                         post_Data['virtualService'] = { 'WhatsApp': this.follow_up_Details.virtualService.WhatsApp };
-                    } else if (this.follow_up_Details.virtualService.GoogleMeet) {
+                    } else if (this.follow_up_Details && this.follow_up_Details.virtualService && this.follow_up_Details.virtualService.GoogleMeet) {
                         post_Data['virtualService'] = { 'GoogleMeet': this.follow_up_Details.virtualService.GoogleMeet };
-                    } else if (this.follow_up_Details.virtualService.Zoom) {
+                    } else if (this.follow_up_Details && this.follow_up_Details.virtualService && this.follow_up_Details.virtualService.Zoom) {
                         post_Data['virtualService'] = { 'Zoom': this.follow_up_Details.virtualService.Zoom };
-                    } else if (this.follow_up_Details.virtualService.Phone) {
+                    } else if (this.follow_up_Details && this.follow_up_Details.virtualService && this.follow_up_Details.virtualService.Phone) {
                         post_Data['virtualService'] = { 'Phone': this.follow_up_Details.virtualService.Phone};
                     } else {
                         post_Data['virtualService'] = { 'VideoCall': '' };
@@ -1509,6 +1519,7 @@ export class ProviderCheckinComponent implements OnInit {
             .subscribe((data) => {
                 if (this.settingsjson.showTokenId) {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+                   
                 } else {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
                 }
@@ -1550,6 +1561,7 @@ export class ProviderCheckinComponent implements OnInit {
                 error => {
                     // this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.waitlist_for = [];
                     this.api_loading = false;
                 });
     }

@@ -100,21 +100,32 @@
             </div>
             <div class="clearfix"></div>
 
-            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding mb-4">
+            <!-- <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding mb-4">
 
-              <div class="col-lg-3 col-sm-6 col-xs-6 col-md-3 card1 font-9 mgn-up-10 mr-2"
+              <span class="col-lg-3 col-sm-6 col-xs-6 col-md-3 card1 font-9 mgn-up-10 mr-2"
                 (click)="createNew()" *ngIf="!showBlockHint">
                 <img src="../../../../../assets/images/user_plus.png"
                   style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Create New {{customer_label | capitalizeFirst}}</b>
-              </div>
+              </span>
 
-              <div class="col-lg-3 col-sm-6 col-xs-6 col-md-3 card1 font-9 mgn-up-10 "
+              <span class="col-lg-3 col-sm-6 col-xs-6 col-md-3 card1 font-9 mgn-up-10 "
                 (click)="openthirdpopup(domain,showOther,customer_label)" *ngIf="source !== 'waitlist-block'">
                 <img src="../../../../../assets/images/third_party_primary.png"
                   style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp;&nbsp; <b>Third party options</b>
-              </div>
+              </span>
 
-            </div>
+            </div> -->
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 no-padding mb-4">
+              
+              <span class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 mr-2" (click)="createNew()" *ngIf="!showBlockHint" >
+                <img src="../../../../../assets/images/user_plus.png" style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp; <b>Create New {{customer_label | capitalizeFirst}}</b>
+              </span>
+  
+              <span class="col-lg-3 col-sm-6 col-xs-12 col-md-3 card1 font-9  mgn-up-10 "  (click)="openthirdpopup(domain,showOther,customer_label)" *ngIf="source !== 'waitlist-block'" >
+                  <img src="../../../../../assets/images/third_party_primary.png" style="width: 25px;height: 25px;margin: 10px 0px 10px 0px;">&nbsp;&nbsp; <b>Third party options</b> 
+              </span>
+
+          </div>
             <div class="clearfix"></div>
 
             <!-- Other Party Options -->
@@ -657,22 +668,25 @@
                   </div>
                 </ng-container>
               </div>
+             
               <ng-container *ngIf="action=='note'">
                 <div class="col-md-12 mgn-bt-20">
-                  <mat-form-field>
-                    <textarea matInput class="form-control mt-2" [(ngModel)]="consumerNote" #consumernote
-                      (change)="handleConsumerNote(consumernote.value)" maxlength="1000"
-                      placeholder="{{note_placeholder}}"></textarea>
-                  </mat-form-field>
-                  <div class="col-md-12 no-padding mgn-up-10 glbl-seting-heder">
-                    <button mat-button class="cs-btn bt1 backbtn mgn-rt-10" (click)="handleGoBack(1)">
-                      Cancel
-                    </button>
-                    <button mat-button class="cs-btn bt1 backtocheckin" (click)="handleGoBack(1)">OK
-                    </button>
-                  </div>
+                    <mat-form-field>
+                        <textarea matInput class="form-control mt-3" [(ngModel)]="consumerNote"
+                            #consumernote (change)="handleConsumerNote(consumernote.value)"
+                            maxlength="1000" placeholder="{{note_placeholder}}"></textarea>
+                    </mat-form-field>
+                    <div class="col-md-12 no-padding mgn-up-10 glbl-seting-heder">
+                        <button mat-button class="cs-btn bt1 backbtn mgn-rt-10"
+                            (click)="handleGoBack(1)">
+                            Cancel
+                        </button>
+                        <button mat-button class="cs-btn bt1 backtocheckin"
+                            (click)="handleGoBack(1)">OK
+                        </button>
+                    </div>
                 </div>
-              </ng-container>
+            </ng-container>
             </aside>
           </div>
           <div class="col-md-12 display-lg-show" style="background-color:#ffffff;
@@ -1038,9 +1052,10 @@
                 <div class="date-head" *ngIf="settingsjson['showTokenId']">{{date_cap}}</div>
                 <div class="date-body">
                   <span class="selected-date">
-                    <span class="icon-minus" [class.disable]="disableMinus()"
-                      (click)="calculateDate(-1)"></span>{{sel_checkindate | date: dateFormat}}
-                    <span class="icon-add" (click)="calculateDate(1)"></span>
+                    <!-- <span class="icon-minus" [class.disable]="disableMinus()"
+                      (click)="calculateDate(-1)"></span>
+                    <span class="icon-add" (click)="calculateDate(1)"></span> -->
+                    {{sel_checkindate | date: dateFormat}}
                   </span>
                   <div class="form-group dt">
                     <div class="pickerouter">

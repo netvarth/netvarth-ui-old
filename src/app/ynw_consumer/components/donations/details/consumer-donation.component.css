@@ -130,9 +130,7 @@ height: 150px !important;
 .bus-item-medium.div-selected-outline  .card.card-item-n{
   border: 5px solid #106e76 !important;
 }
-.resBgChange{
-line-height: 25px;
-}
+
 .checkin-btn-bp1 {
   height: 25px;
   max-width: 75%;
@@ -287,7 +285,7 @@ border-left: none !important;
 .mobile-donation-for-styling {
   /* background-color: #fae5af; */
   font-size: 1.0rem !important;
-  line-height:normal !important;
+  line-height:15px !important;
   font-weight: bold;
   padding-top: 10px !important;
   padding-bottom: 10px !important;
@@ -657,7 +655,7 @@ box-shadow: 4px 4px 5px gainsboro;
   .mobile-donation-for-styling{
     border-radius: 0px !important;
     padding: 10px !important;
-    transform: scaleX(1.1) !important;
+    transform: scaleX(1.11) !important;
   }
   .textChange{
     font-size: 10px !important;
@@ -675,8 +673,14 @@ box-shadow: 4px 4px 5px gainsboro;
    .serviceGalleryImg{
     padding: 0px !important;
   }
+  .resDesName{
+    line-height: 20px !important;
+  }
 }
 @media (max-width:400px) {
+  .resDesName{
+    line-height: 20px !important;
+  }
   .resImg{
     /* margin-top: -8rem; */
     /* height: 193px !important;
@@ -768,10 +772,18 @@ textarea::placeholder {
   /* Firefox, Chrome, Opera */ 
   padding-left: 13px; 
 }
-
-.back-btn i {
-    color: #000 !important;
+.paymentBtn{
+  transform: translateX(10px) !important;
 }
+textarea:disabled{
+  height: 50px !important;
+  /* font-size: 13px; */
+  text-align: justify;
+  resize: none;
+  overflow: hidden;
+
+}
+
 
 /* resMobileNums{
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, OnDestroy, ViewChild, NgZone, ChangeDetectorRef, HostListener } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy, ViewChild, NgZone, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -29,7 +29,6 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 // import { AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig,Image} from '@ks89/angular-modal-gallery';
 // import { ButtonsConfig, ButtonsStrategy, ButtonType } from '@ks89/angular-modal-gallery';
 import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image} from '@ks89/angular-modal-gallery';
-import { AuthService } from '../../../../shared/services/auth-service';
 
 
 @Component({
@@ -293,10 +292,11 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
       providerName:any;
       placeName:any
       googleUrl:any
-      from_iOS = false;
-      loggedIn = true;
-      small_device: boolean;
-      businessInfo: any = {};
+
+      noErrorEmail:any
+      noErrorName:any
+      noErrorPhone:any
+   
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -319,20 +319,13 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         private paytmService: PaytmService,
         private cdRef: ChangeDetectorRef,
         private dateTimeProcessor: DateTimeProcessor,
-        private authService: AuthService,
-        private ngZone: NgZone, 
-        // private activaterouterobj: ActivatedRoute
-        ) {
+        private ngZone: NgZone, private activaterouterobj: ActivatedRoute,) {
         this.subs.sink = this.route.queryParams.subscribe(
             params => {
                 this.type = params.type;
-                // this.googleMapUrl = params.googleMapUrl;
-                // this.locationName = params.locname;
+                this.googleMapUrl = params.googleMapUrl;
+                this.locationName = params.locname;
                 // tslint:disable-next-line:radix
-                if (params.locname) {
-                    this.businessInfo['locationName'] = params.locname;
-                    this.businessInfo['googleMapUrl'] = params.googleMapUrl;
-                }
                 this.sel_loc = parseInt(params.loc_id);
                 this.account_id = params.account_id;
                 this.accountId = params.accountId;
@@ -341,6 +334,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 if (params.isFrom && params.isFrom == 'providerdetail') {
                     this.from = 'providerdetail';
                 }
+                this.getConsumerQuestionnaire();
                 if (params.customId) {
                     this.customId = params.customId;
                 }
@@ -353,46 +347,14 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.subs.unsubscribe();
     }
-    @HostListener('window:resize', ['$event'])
-    onResize() {
-      if (window.innerWidth <= 767) {
-        this.small_device = true    ;
-      } else {
-        this.small_device = false;
-      }
-      console.log("Small:",this.small_device);
-    }
     ngOnInit() {
-
+        this.getServicebyLocationId(this.sel_loc);
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-        if (this.lStorageService.getitemfromLocalStorage('ios')) {
-            this.from_iOS=true;
-        }
-        // if(this.customer_countrycode == '+91'){
-        //     this.getPaymentModes();
-        // } else {
-        //     this.razorpayEnabled = true;
-        // }        
-        this.gets3curl();
-        this.goThroughLogin().then(
-            (status) => {
-                console.log("Status:", status);
-                if (status) {
-                    this.initDonation();
-                    this.loggedIn = true;
-                } else {
-                    this.loggedIn = false;
-                }
-            });
-
-    }
-    initDonation() {
         const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         // this.api_loading = false;
         if (activeUser) {
             this.customer_data = activeUser;
         }
-        this.getConsumerQuestionnaire();
         this.donorName = this.donor = this.customer_data.firstName + ' ' + this.customer_data.lastName;
         this.donorFirstName = this.customer_data.firstName;
         this.donorLastName = this.customer_data.lastName;
@@ -405,8 +367,13 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
         this.customer_countrycode = credentials.countryCode;
         console.log("credentioooo" + credentials.countryCode);
-        this.getServicebyLocationId(this.sel_loc);
+        // if(this.customer_countrycode == '+91'){
+        //     this.getPaymentModes();
+        // } else {
+        //     this.razorpayEnabled = true;
+        // }
         this.getProfile();
+        this.gets3curl();
         this.getFamilyMembers();
         this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         this.today = new Date(this.today);
@@ -429,134 +396,45 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.todaydate = dtoday;
         this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
         this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
+        // this.minDate = this.todaydate;
+        // const day = new Date(this.sel_checkindate).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
+        // const ddd = new Date(day);
+        // this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
+        // this.hold_sel_checkindate = this.sel_checkindate;
+        // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
         this.revealphonenumber = true;
-    }
-    goThroughLogin() {
-        if (this.lStorageService.getitemfromLocalStorage('reqFrom')) {
-            const _this = this;
-            console.log("Entered to goThroughLogin Method");
-            return new Promise((resolve) => {
-                if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')) {
-                    resolve(true);
-                } else {
-                    resolve(false);
-                }
-            });
-        } else {
-            return new Promise((resolve) => {
-                const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
-                let qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
-                qrusr = JSON.parse(qrusr);
-                if (qrusr && qrpw) {
-                    const data = {
-                        'countryCode': qrusr.countryCode,
-                        'loginId': qrusr.loginId,
-                        'password': qrpw,
-                        'mUniqueId': null
-                    };
-                    this.shared_services.ConsumerLogin(data).subscribe(
-                        (loginInfo: any) => {
-                            this.authService.setLoginData(loginInfo, data, 'consumer');
-                            this.lStorageService.setitemonLocalStorage('qrp', data.password);
-                            resolve(true);
-                        },
-                        (error) => {
-                            if (error.status === 401 && error.error === 'Session already exists.') {
-                                resolve(true);
-                            } else {
-                                resolve(false);
-                            }
-                        }
-                    );
-                } else {
-                    resolve(false);
-                }
-            });
-        }
-    }
-    // ngOnInit() {
-    //     this.getServicebyLocationId(this.sel_loc);
-    //     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-    //     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-    //     // this.api_loading = false;
-    //     if (activeUser) {
-    //         this.customer_data = activeUser;
-    //     }
-    //     this.donorName = this.donor = this.customer_data.firstName + ' ' + this.customer_data.lastName;
-    //     this.donorFirstName = this.customer_data.firstName;
-    //     this.donorLastName = this.customer_data.lastName;
-    //     this.donorfirst = this.customer_data.firstName;
-    //     this.donorlast = this.customer_data.lastName;
-    //     this.main_heading = this.checkinLabel; // 'Check-in';
-    //     this.maxsize = 1;
-    //     this.step = 1;
-    //     this.getPaymentModes();
-    //     const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
-    //     this.customer_countrycode = credentials.countryCode;
-    //     console.log("credentioooo" + credentials.countryCode);
-    //     // if(this.customer_countrycode == '+91'){
-    //     //     this.getPaymentModes();
-    //     // } else {
-    //     //     this.razorpayEnabled = true;
-    //     // }
-    //     this.getProfile();
-    //     this.gets3curl();
-    //     this.getFamilyMembers();
-    //     this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
-    //     this.today = new Date(this.today);
-    //     const dd = this.today.getDate();
-    //     const mm = this.today.getMonth() + 1; // January is 0!
-    //     const yyyy = this.today.getFullYear();
-    //     let cday = '';
-    //     if (dd < 10) {
-    //         cday = '0' + dd;
-    //     } else {
-    //         cday = '' + dd;
-    //     }
-    //     let cmon;
-    //     if (mm < 10) {
-    //         cmon = '0' + mm;
-    //     } else {
-    //         cmon = '' + mm;
-    //     }
-    //     const dtoday = yyyy + '-' + cmon + '-' + cday;
-    //     this.todaydate = dtoday;
-    //     this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
-    //     this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
-    //     // this.minDate = this.todaydate;
-    //     // const day = new Date(this.sel_checkindate).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
-    //     // const ddd = new Date(day);
-    //     // this.ddate = new Date(ddd.getFullYear() + '-' + this.sharedFunctionobj.addZero(ddd.getMonth() + 1) + '-' + this.sharedFunctionobj.addZero(ddd.getDate()));
-    //     // this.hold_sel_checkindate = this.sel_checkindate;
-    //     // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
-    //     this.revealphonenumber = true;
-    //     this.activaterouterobj.queryParams.subscribe(qparams => {
-    //         console.log('qparams',qparams)
-    //         if (qparams.src) {
-    //           this.pSource = qparams.src;
-    //         }
-    //         if (qparams && qparams.theme) {
-    //           this.theme = qparams.theme;
-    //         }
-    //         this.businessjson = [];
-    //         this.servicesjson = [];
+        this.activaterouterobj.queryParams.subscribe(qparams => {
+            console.log('qparams',qparams)
+            if (qparams.src) {
+              this.pSource = qparams.src;
+            }
+            if (qparams && qparams.theme) {
+              this.theme = qparams.theme;
+            }
+            this.businessjson = [];
+            this.servicesjson = [];
             
-    //         this.image_list_popup = [];
-    //         this.catalogimage_list_popup = [];
-    //         this.galleryjson = [];
-    //         this.deptUsers = [];
-    //         if (qparams.psource) {
-    //           this.pSource = qparams.psource;
-    //           if (qparams.psource === 'business') {
-    //             this.loading = true;
-    //             this.showDepartments = false;
-    //             setTimeout(() => {
-    //               this.loading = false;
-    //             }, 2500);
-    //           }
-    //         }
-    //       });
-    // }
+            this.image_list_popup = [];
+            this.catalogimage_list_popup = [];
+            this.galleryjson = [];
+            this.deptUsers = [];
+            if (qparams.psource) {
+              this.pSource = qparams.psource;
+              if (qparams.psource === 'business') {
+                this.loading = true;
+                this.showDepartments = false;
+                setTimeout(() => {
+                  this.loading = false;
+                }, 2500);
+              }
+            }
+          });
+    }
+    autoGrowTextZone(e) {
+        console.log('textarea',e)
+        e.target.style.height = "0px";
+        e.target.style.height = (e.target.scrollHeight + 15)+"px";
+      }
     // getPaymentModes() {
     //     this.paytmEnabled = false;
     //     this.razorpayEnabled = false;
@@ -742,6 +620,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             return;
         } else if (!result) {
             this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
+            console.log('Message',Messages.BPROFILE_PRIVACY_PHONE_INVALID)
             return;
         } else {
             this.consumerPhoneNo = this.selected_phone;
@@ -775,14 +654,142 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         // }
 
     }
-    addDonorDetails(){
-        this.addDonor()
-        this.addPhone()
-        this.addEmail()
-        setTimeout(() => {
-            this.action = '';
-        }, 500);
-        this.closebutton.nativeElement.click();
+    addDonorDetails(donorNameDetails,donorPh,donorEmail){
+        
+        // this.addDonor()
+        //donor name stat
+        if(donorNameDetails == 'donor'){
+        // const donorNameStart='start'
+        const dnrFirst = this.donorfirst.trim();
+        const dnrLast = this.donorlast.trim();
+        if (dnrFirst === '') {
+            this.donorerror = 'Please enter the first name';
+            return;
+        } else if (dnrLast === '') {
+            this.donorlasterror = 'Please enter the last name';
+            return;
+        } else {
+            this.donorFirstName = dnrFirst;
+            this.donorLastName = dnrLast;
+            this.donorerror='';
+            this.donorlasterror='';
+            setTimeout(() => {
+                this.action = '';
+            }, 500);
+            this.closebutton.nativeElement.click();
+            this.donorName = dnrFirst + ' ' + dnrLast;
+            // this.donorName = this.donor.trim();
+        }
+        // if( ( dnrFirst === '' || dnrLast === '' )){
+        //     alert('ff')
+        // }else{
+        //     if(donorNameStart=='start')
+        //      console.log('donor')
+        //     setTimeout(() => {
+        //         this.action = '';
+        //     }, 500);
+        //     this.closebutton.nativeElement.click();
+        //     this.donorName = dnrFirst + ' ' + dnrLast;
+        // }
+
+        }
+        
+        //donor name end
+        // this.addPhone()
+        //donor ph no start
+        if(donorPh=='phone'){
+            this.phoneError = '';
+        this.resetApiErrors();
+        this.resetApi();
+        const curphone = this.selected_phone;
+        console.log(curphone.length)
+        const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+        const result = pattern.test(curphone);
+        console.log('result',result)
+        if (this.selected_phone === null) {
+            this.phoneerror = 'Please enter the mobile number';
+            
+            return;
+        } 
+        else if (!result) {
+            this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
+            console.log('Message',Messages.BPROFILE_PRIVACY_PHONE_INVALID);
+           
+            return;
+        } 
+        // else if(curphone.length !== 10){
+        //     this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
+        //     console.log('Message',Messages.BPROFILE_PRIVACY_PHONE_INVALID)
+        //     return;
+        // }
+        
+        else {
+            
+            this.consumerPhoneNo = this.selected_phone;
+            this.userPhone = this.selected_phone;
+            this.edit = true;
+            this.phoneerror =''
+            this.noErrorPhone='No Error'
+            console.log('No eror',this.noErrorPhone)
+            setTimeout(() => {
+                this.action = '';
+            }, 500);
+            this.closebutton.nativeElement.click();
+        }
+
+        }
+        //donor pph no end
+        // this.addEmail()
+        //email start
+        if(donorEmail=='email'){
+            // const donorEmailStart='email'
+            this.emailerror='';
+        this.email1error='';
+        this.resetApiErrors();
+        this.resetApi();
+        const stat = this.validateEmail(this.payEmail);
+        console.log('stat',stat)
+        const stat1 = this.validateEmail(this.payEmail1);
+        console.log('stat1',stat1)
+        if (this.payEmail === '' || !stat) {
+            this.emailerror = 'Please enter a valid email.';
+            return
+           
+        }
+        else if (this.payEmail1 === '' || !stat1) {
+            this.email1error = 'Please enter a valid email.';
+            return
+            
+        }
+        else if (stat && stat1) {
+            if (this.payEmail === this.payEmail1) {
+                this.userEmail = this.payEmail;
+                this.emailerror='';
+                this.email1error='';
+                setTimeout(() => {
+                    this.action = '';
+                }, 500);
+                this.closebutton.nativeElement.click();
+            } else {
+                this.email1error = 'Email and Re-entered Email do not match';
+            }
+        }
+        // if(((this.emailerror = 'Please enter a valid email.') || (this.email1error = 'Please enter a valid email.') ||(this.email1error = 'Email and Re-entered Email do not match'|| 'Please enter a valid email.'))){
+        //     // alert('ee') 
+        //  }else{
+        //      if(donorEmailStart ==='email')
+        //      setTimeout(() => {
+        //          this.action = '';
+        //      }, 500);
+        //      this.closebutton.nativeElement.click();
+        //  }
+
+        }
+        //email end
+        
+        
+        
+        
 
     }
     onButtonBeforeHook() {
@@ -807,6 +814,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
           this.galleryjson[(i + indx)] = this.tempgalleryjson[i];
         }
         if (this.galleryjson.length > 0) {
+            console.log('this.galleryjson',this.galleryjson)
           this.galleryExists = true;
           for (let i = 0; i < this.galleryjson.length; i++) {
             const imgobj = new Image(
@@ -1464,15 +1472,16 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     }
     gets3curl() {
         this.api_loading1 = true;
-        let accountS3List = 'settings,terminologies,businessProfile,gallery,donationServices';
+        let accountS3List = 'settings,terminologies,businessProfile,gallery';
         this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
             null, accountS3List).subscribe(
                 (accountS3s:any) => {
                     console.log('accountS3s',accountS3s)
-                    
-                    if (accountS3s['businessProfile']) {
-                        this.processS3s('businessProfile', accountS3s['businessProfile']);
-                    }
+                    this.providerName = accountS3s.businessProfile.businessName;
+                    this.placeName =accountS3s.businessProfile.baseLocation.place;
+                    console.log(' this.placeName ', this.placeName )
+                    this.googleUrl =accountS3s.businessProfile.baseLocation.googleMapUrl;
+                    console.log('this.googleUrl',this.googleUrl)
                     if (accountS3s['settings']) {
                         this.processS3s('settings', accountS3s['settings']);
                     }
@@ -1502,33 +1511,103 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             }
             case 'businessProfile': {
                 this.businessjson = result;
-                // this.providerName = accountS3s.businessProfile.businessName;
-                //     this.placeName =accountS3s.businessProfile.baseLocation.place;
-                //     console.log(' this.placeName ', this.placeName )
-                //     this.googleUrl =accountS3s.businessProfile.baseLocation.googleMapUrl;
-                    // console.log('this.googleUrl',this.googleUrl)
-                this.businessInfo['businessName'] = this.businessjson.businessName;
-
-                if (!this.businessInfo['locationName']) {
-                    this.businessInfo['locationName'] = this.businessjson.baseLocation?.place;
-                }
-                if (!this.businessInfo['googleMapUrl']) {
-                    this.businessInfo['googleMapUrl'] = this.businessjson.baseLocation?.googleMapUrl;
-                }
-                if (this.businessjson['logo']) {
-                    this.businessInfo['logo'] = this.businessjson['logo'];
-                }
                 break;
             }
             case 'gallery': {
                 this.setAccountGallery(result);
                 break;
               }
-              case 'donationService': {
-
-              }
+            // case 'coupon': {
+            //     this.s3CouponsList.JC = result;
+            //     if (this.s3CouponsList.JC.length > 0) {
+            //         this.showCouponWB = true;
+            //     }
+            //     break;
+            // }
+            // case 'providerCoupon': {
+            //     this.s3CouponsList.OWN = result;
+            //     if (this.s3CouponsList.OWN.length > 0) {
+            //         this.showCouponWB = true;
+            //     }
+            //     break;
+            // }
+            // case 'departmentProviders': {
+            //     let deptProviders: any = [];
+            //     deptProviders = result;
+            //     if (!this.filterDepart) {
+            //         this.users = deptProviders;
+            //     } else {
+            //         deptProviders.forEach(depts => {
+            //             if (depts.users.length > 0) {
+            //                 this.users = this.users.concat(depts.users);
+            //             }
+            //         });
+            //     }
+            //     if (this.selectedUserParam) {
+            //         this.setUserDetails(this.selectedUserParam);
+            //     }
+            //     break;
+            // }
         }
     }
+    // gets3curl() {
+    //     this.api_loading1 = true;
+    //     this.retval = this.sharedFunctionobj.getS3Url()
+    //         .then(
+    //             res => {
+    //                 this.s3url = res;
+    //                 this.getbusinessprofiledetails_json('businessProfile', true);
+    //                 this.getbusinessprofiledetails_json('settings', true);
+    //                 this.getbusinessprofiledetails_json('coupon', true);
+    //                 if (!this.terminologiesjson) {
+    //                     this.getbusinessprofiledetails_json('terminologies', true);
+    //                 } else {
+    //                     if (this.terminologiesjson.length === 0) {
+    //                         this.getbusinessprofiledetails_json('terminologies', true);
+    //                     } else {
+    //                         // this.datastorage.set('terminologies', this.terminologiesjson);
+    //                         this.wordProcessor.setTerminologies(this.terminologiesjson);
+    //                     }
+    //                 }
+    //                 this.api_loading1 = false;
+    //             },
+    //             () => {
+    //                 this.api_loading1 = false;
+    //             }
+    //         );
+    // }
+    // gets the various json files based on the value of "section" parameter
+    // getbusinessprofiledetails_json(section, modDateReq: boolean) {
+    //     let UTCstring = null;
+    //     if (modDateReq) {
+    //         UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
+    //     }
+    //     this.subs.sink=this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
+    //         .subscribe(res => {
+    //             switch (section) {
+    //                 case 'settings':
+    //                     this.settingsjson = res;
+    //                     break;
+    //                 case 'terminologies':
+    //                     this.terminologiesjson = res;
+    //                     // this.datastorage.set('terminologies', this.terminologiesjson);
+    //                     this.wordProcessor.setTerminologies(this.terminologiesjson);
+    //                     break;
+    //                 case 'businessProfile':
+    //                     this.businessjson = res;
+    //                     break;
+    //                 case 'coupon':
+    //                     this.s3CouponsList = res;
+    //                     if (this.s3CouponsList.length > 0) {
+    //                         this.showCouponWB = true;
+    //                     }
+    //                     break;
+    //             }
+    //         },
+    //             () => {
+    //             }
+    //         );
+    // }
     toggleNotes() {
         this.notes = !this.notes;
     }
@@ -1674,11 +1753,5 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     }
     showText() {
         this.readMore = !this.readMore;
-    }
-    actionPerformed(status) {
-        if (status === 'success') {
-            this.loggedIn = true;
-            this.initDonation();
-        }
     }
 }

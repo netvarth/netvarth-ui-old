@@ -219,7 +219,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         return browserName.toLocaleLowerCase();
   
       }
-      if(browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("Linux")){
+      if(browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("Linux") || browser.includes("CrOS")){
         browserName = 'Web'
         return browserName.toLocaleLowerCase();
   

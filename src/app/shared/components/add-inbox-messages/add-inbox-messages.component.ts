@@ -75,6 +75,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   ynw_credentials;
   customers_label;
   grup_id;
+  selectedcustomersformsg;
   constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -109,6 +110,9 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     this.terminologies = data.terminologies;
     if(data.grup_id){
       this.grup_id = data.grup_id
+    }
+    if(data.selectedcustomersformsg){
+      this.selectedcustomersformsg = data.selectedcustomersformsg;
     }
     if (data.jaldeeConsumer) {
       this.jaldeeConsumer = (data.jaldeeConsumer === 'true') ? true : false;
@@ -259,7 +263,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       case 'customer-list': this.message_label = 'Message to ' + consumer_label; break;
       case 'donation-list': this.message_label = 'Message to ' + consumer_label; break;
       case 'provider-sendAll': this.message_label = 'Message to ' + this.customers_label; break;
-      case 'provider-sendAll_group': this.message_label = 'Message to ' + this.customers_label; break;
+      case 'provider-sendAll_group': this.message_label = 'Message to ' + this.selectedcustomersformsg + ' ' +this.customers_label; break;
     }
   }
   createForm() {

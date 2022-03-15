@@ -475,10 +475,13 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                         this.sharedServices.PayByJaldeewallet(postData)
                             .subscribe((pData: any) => {
                                 this.origin = 'consumer';
+                                console.log(pData)
                                 if (pData.isGateWayPaymentNeeded && pData.isJCashPaymentSucess) {
-                                    if (paymentType == 'paytm') {
+                                    if (pData.response.paymentGateway == 'PAYTM') {
+                                      
                                         this.payWithPayTM(pData.response, this.accountId);
                                     } else {
+                                       
                                         this.paywithRazorpay(pData.response);
                                     }
                                 }
