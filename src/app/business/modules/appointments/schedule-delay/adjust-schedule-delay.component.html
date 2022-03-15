@@ -168,7 +168,7 @@
               <!-- <p class="form-level-settings">{{frm_adjust_del_cap}}</p> -->
               <!-- <div class="card bg-secondary col-md-12 col-xs-12 col-sm-12 mx-2 my-2"> -->
               <div class="card" aria-readonly="true">
-                <div class="row bg-secondary" style="background-color: rgb(205, 212, 210);">
+                <div class="row bg-secondary" style="background-color: rgb(225, 236, 233);">
                   <div class="col-md-12 col-xs-12 col-sm-12 my-1">
                     <ng-container aria-readonly="true">
                       <p> Consumer Name:
@@ -178,7 +178,7 @@
                     </ng-container>
                   </div>
                 </div>
-                <div class="row bg-secondary" style="background-color: rgb(205, 212, 210);">
+                <div class="row bg-secondary" style="background-color: rgb(225, 236, 233);">
                   <div class="col-md-6 col-xs-12 col-sm-12">
 
                     <p> Service Name:</p>
@@ -214,7 +214,7 @@
                     <span class="bold"> {{apptData.service.name}}</span> -->
                   </ng-container>
                 </div>
-                <div class="col-md-6 col-xs-12 col-sm-12" *ngIf="users.length > 0">
+                <!-- <div class="col-md-6 col-xs-12 col-sm-12" *ngIf="users.length > 0">
                   <ng-container>
                     <mat-form-field *ngIf="users.length == 1">
                       <input matInput *ngFor="let user of users" [readonly]="true" placeholder="Doctors"
@@ -230,7 +230,7 @@
                       </mat-select>
                     </mat-form-field>
                   </ng-container>
-                </div>
+                </div> -->
                 <!-- <div class="col-md-6 col-xs-12 col-sm-12" *ngIf="servicesjson.length > 0">
                 <ng-container>
                   <mat-form-field *ngIf="servicesjson.length == 1">
@@ -318,11 +318,13 @@
                   </div> -->
                 </div>
 
-                <div class="form-group inline" *ngIf="queuejson.length > 0">
-                  <div class="row">
-                    <div class="col-md-12 col-xs-12 col-sm-12">
+                <div class="form-group inline adjustdelay" *ngIf="queuejson.length > 0">
+                  
+                   
                       <!-- <p>{{send_message_cap}}</p> -->
-                      <mat-checkbox formControlName="send_message">{{send_message_cap}}</mat-checkbox>
+                        <mat-checkbox formControlName="send_message">Send message to patient about the delay</mat-checkbox>
+
+                      <!-- <mat-checkbox formControlName="send_message"></mat-checkbox><p>{{send_message_cap}}</p> -->
                       <!-- formControlName="message"
                         id="" cols="40" rows="3"  *ngIf="amForm.get('send_message').value === true"-->
                       <ng-container *ngIf="amForm.get('send_message').value === true">
@@ -333,22 +335,19 @@
                       </ng-container>
                       <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
 
-                    </div>
-
-                  </div>
-                  <!-- <mat-checkbox formControlName="send_message">{{send_message_cap}}</mat-checkbox> -->
+                 
                 </div>
-                <div class="form-group inline">
-                  <div class="row">
-                    <div class="col-md-12 col-xs-12 col-sm-12">
+                <div class="form-group inline" *ngIf="amForm.get('send_message').value === true">
+                  <!-- <div class="row">
+                    <div class="col-md-12 col-xs-12 col-sm-12"> -->
                   <label class="col-form-label mt-2">Select Notification Mode:</label>
                   <mat-checkbox formControlName="isSMS">Via SMS</mat-checkbox>&nbsp;
                   <mat-checkbox formControlName="isEmail">Via Email</mat-checkbox>&nbsp;
                   <mat-checkbox formControlName="isApp">Via App</mat-checkbox>&nbsp;
                   <mat-checkbox formControlName="isTelegram">Telegram</mat-checkbox>
                 </div>
-                </div>
-                </div>
+                <!-- </div>
+                </div> -->
 
                 <!-- <div class="form-group">
                   <ng-container class="example-full-width" *ngIf="amForm.get('send_message').value === true">
