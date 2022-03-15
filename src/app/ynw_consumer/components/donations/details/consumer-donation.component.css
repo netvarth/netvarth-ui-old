@@ -769,6 +769,9 @@ textarea::placeholder {
   padding-left: 13px; 
 }
 
+.back-btn i {
+    color: #000 !important;
+}
 
 /* resMobileNums{
 

@@ -1,6 +1,6 @@
 <div class="card shadow d-flex flex-row">
     <div class="my-auto">
-        <a class="" (click)="goBack('back')"><i class="fa fa-arrow-left"></i>&emsp;</a>
+        <a class="back-btn" (click)="goBack('back')"><i class="fa fa-arrow-left"></i>&emsp;</a>
     </div>
     <div class="text-center mx-auto" *ngIf="small_device">
         <app-booking-accountinfo [businessInfo]="businessInfo" [smallDevice]="small_device" >
