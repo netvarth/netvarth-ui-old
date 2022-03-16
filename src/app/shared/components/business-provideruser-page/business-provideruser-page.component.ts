@@ -2341,17 +2341,21 @@ console.log("fgf"+JSON.stringify(loc));
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
-      } else {
+      } 
+      else if(actionObj['action'] === 'availability'){
+        this.opencheckavail(actionObj);
+      }else {
         this.checkinClicked(actionObj['location'], actionObj['service']);
       }
 
     } 
-    else if(actionObj['type']=='checkavailability') {
-      this.opencheckavail(actionObj);
-    }
+    
     else if (actionObj['type'] === 'appt') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
+      } 
+      else if(actionObj['action'] === 'availability'){
+        this.opencheckavail(actionObj);
       } else {
         this.appointmentClicked(actionObj['location'], actionObj['service']);
       }

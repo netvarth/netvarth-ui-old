@@ -92,7 +92,7 @@ export class AppointmentServicesComponent implements OnInit, OnChanges {
   }
 
   cardClicked(actionObj) {
-    if (actionObj['type'] == 'checkavailability') {
+    if (actionObj['action'] == 'availability') {
       this.checkAvailableSlots(actionObj);
     } else if (actionObj['type'] === 'appt') {
       if (actionObj['action'] === 'view') {

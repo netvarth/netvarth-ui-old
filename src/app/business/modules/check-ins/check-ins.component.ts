@@ -1847,7 +1847,8 @@ multiUserFilter:any=[];
       Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     }
     return new Promise((resolve) => {
-      this.provider_services.getwaitlistTodayCount(Mfilter)
+      if(this.selected_location.id){
+this.provider_services.getwaitlistTodayCount(Mfilter)
         .subscribe(
           data => {
             if (no_filter) { this.today_waitlist_count = data; }
@@ -1855,7 +1856,9 @@ multiUserFilter:any=[];
           },
           () => {
           });
-    });
+    }
+      }
+      );
   }
   getFutureWLCount(Mfilter = null) {
     const queueid = this.groupService.getitemFromGroupStorage('future_selQ');
