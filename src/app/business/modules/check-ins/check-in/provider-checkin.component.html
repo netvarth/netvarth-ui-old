@@ -277,7 +277,7 @@
             </div>
             <div class="date-outer" *ngIf="partySizeRequired">
               <div class="form-group party-size">
-                <label class="col-form-label">{{enter_party_size_cap}}1233</label>
+                <label class="col-form-label">{{enter_party_size_cap}}</label>
                 <input class="inputbox" class="partysize-input" type="text" #partysize [(ngModel)]="enterd_partySize"
                   (focus)="clearerrorParty()" (blur)="checkPartySize(partysize.value)" maxlength="5" />
                 <div class="error" *ngIf="partyapi_error">{{partyapi_error}}</div>
