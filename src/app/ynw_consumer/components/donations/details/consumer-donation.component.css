@@ -340,7 +340,7 @@ border-left: none !important;
   margin-top: 10px;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #dadcdf;
+  border: 1px solid #cdc8c9;
 }
 /* .chk-btns-div mat-chip {
   width: 100%;
@@ -636,10 +636,11 @@ box-shadow: 4px 4px 5px gainsboro;
     width: 150px !important;
     border-bottom-left-radius: 0px !important;
     border-top-left-radius: 0px !important;
-    border-top-right-radius: 50px !important;
-    border-bottom-right-radius: 50px !important;
+    border-top-right-radius:  25px !important;
+    border-bottom-right-radius:  25px !important;
     margin-left: -25px !important;
     margin-top: -15px !important;
+    object-fit: fill;
   
   }
   .cardTop{
@@ -680,7 +681,7 @@ box-shadow: 4px 4px 5px gainsboro;
     line-height: 20px !important;
   }
   .resPaymrntDetails{
-    display: flex !important;
+    /* display: flex !important;
     justify-content: center !important;
     text-align: center;
     font-size: 15px;
@@ -691,7 +692,19 @@ box-shadow: 4px 4px 5px gainsboro;
     border-radius: 5px;
     padding: 10px;
     width: auto !important;
-    margin: 15px;
+    margin: 15px; */
+
+    display: flex !important;
+    justify-content: left !important;
+    text-align: left;
+    font-size: 15px;
+    font-weight: bold;
+   
+    /* background-color: #133072; */
+    color: #133072;
+    border-radius: 5px;
+    width: auto !important;
+    margin: 5px;
   }
   .advanceSettings{
     width: 25rem !important;
@@ -736,12 +749,13 @@ box-shadow: 4px 4px 5px gainsboro;
     width: 150px !important;
     border-bottom-left-radius: 0px !important;
     border-top-left-radius: 0px !important;
-    border-top-right-radius: 50px !important;
-    border-bottom-right-radius: 50px !important;
+    border-top-right-radius: 25px !important;
+    border-bottom-right-radius: 25px !important;
     /* margin-left: -10px !important; */
     margin-left: -15px !important;
     /* margin-right: 1px !important; */
     margin-top: -15px !important;
+    object-fit: fill;
   }
   .resBgChange{
     text-align: left  !important;
@@ -792,16 +806,16 @@ box-shadow: 4px 4px 5px gainsboro;
   .resPaymrntDetails{
     /* display: contents !important; */
     display: flex !important;
-    justify-content: center !important;
-    text-align: center;
+    justify-content: left !important;
+    text-align: left;
     font-size: 15px;
     font-weight: bold;
    
-    background-color: #133072;
-    color: #fff;
+    /* background-color: #133072; */
+    color: #133072;
     border-radius: 5px;
     width: auto !important;
-    margin: 15px;
+    margin: 5px;
   }
   .advanceSettings{
     width: 25rem !important;
@@ -837,17 +851,17 @@ textarea:disabled{
 }
 .resPaymrntDetails{
   display: flex !important;
-  justify-content: center !important;
-  text-align: center;
+  justify-content: left !important;
+  text-align: left;
   font-size: 15px;
   font-weight: bold;
  
-  background-color: #133072;
-  color: #fff;
+  /* background-color: #133072; */
+  color: #133072;
   border-radius: 5px;
-  padding: 10px;
+  /* padding: 10px; */
   width: 26rem;
-    margin: 15px;
+    margin: 5px;
 }
 .advanceSettings{
   width: 27.5rem !important;

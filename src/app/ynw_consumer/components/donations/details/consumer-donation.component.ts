@@ -303,7 +303,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
       tempDonorName:any;
       tempDonorEmail:any;
       tempDonorPh:any;
-      tempDonorDetails:any
+      tempDonorDetails:any;
+      tempErrorDonationAmmount:any
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -634,8 +635,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             this.phoneerror = Messages.BPROFILE_PHONENO;
             return;
         }  if (!result) {
-            this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
-            console.log('Message',Messages.BPROFILE_PRIVACY_PHONE_INVALID)
+            this.phoneerror ='Please enter valid phone number'// Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
+            // console.log('Message',Messages.BPROFILE_PRIVACY_PHONE_INVALID)
             return;
         } 
          if (!result1) {
@@ -1547,6 +1548,21 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.payEmail1 = '';
     }
     isNumeric(evt) {
+        console.log(evt)
+    //     var key;
+    // key = evt.charCode; 
+    // if((key > 47 && key < 58)){
+    //     return ((key > 47 && key < 58) );
+    // } else{
+    //     this.tempErrorDonationAmmount='Please enter valid ammount '
+
+    // }
+    // if(evt.charCode<58 && evt.charCode>47 ){
+    //     this.tempErrorDonationAmmount=''
+    //     return this.sharedFunctionobj.isNumeric(evt);
+    // }else{
+
+    // }
         return this.sharedFunctionobj.isNumeric(evt);
     }
     showServiceDetail(serv, busname) {

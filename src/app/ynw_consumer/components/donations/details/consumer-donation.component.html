@@ -10,10 +10,10 @@
                             <div class="text-left " style="margin-left: 25px !important;
                             margin-top: 4px;
                             font-size: 14px;
-                            color: #1a3767;font-weight:bold">
+                            ;font-weight:bold">
                     
-                                <span ><b>{{providerName}}</b></span><br>
-                                <span  ><a style=" color: #1a3767 !important" href="{{googleUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{placeName}}</a></span>
+                                <span><b style="color: #133072;">{{providerName}}</b></span><br>
+                                <span  ><a style=" color: #cdc8c9 !important;font-size: 11px !important;" href="{{googleUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{placeName}}</a></span>
                                 <!-- <span class="mobile-only" ><a href="{{googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</a></span>
                                 <span class="mobile-only" ><a href="{{appointment.location?.googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{appointment.location?.place}}</a></span> -->
                             </div>
@@ -309,8 +309,14 @@
                                                                                                         |
                                                                                                         currency:'&#8377;'}}"
                                                                                                 [(ngModel)]="donationAmount"
-                                                                                                (keypress)=isNumeric($event)>
+                                                                                                (keypress)=isNumeric($event)   
+                                                                                                onpaste="return false;"
+                                                                                                oncopy="return false"
+                                                                                                oncut="return false"
+                                                                                                ondrag="return false"
+                                                                                                ondrop="return false">
                                                                                         </label>
+                                                                                        
                                                                                     </div>
                                                                                     <!-- </div> -->
                                                                                 </div>
@@ -528,7 +534,7 @@
                                                                 <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding-small notes"
                                                                 *ngIf="action=='phone'|| 'donor' || 'email'">
                                                                     <div style="text-align: center;
-                                                                    font-size: 13px;
+                                                                    font-size: 12px;
                                                                     font-weight: bold;
                                                                     padding: 10px;
                                                                     
@@ -536,10 +542,13 @@
                                                                     ">Donor Details</div>
                                                                     <div 
                                                                         class=" input-group mobile-error c-checkin-new">
+                                                                       <div >
                                                                         <div style="font-weight: 400 !important;color: #3f4254 !important;font-size: 13px !important;margin-bottom: 0px !important;"
-                                                                            class="col-md-12 col-xs-12 col-sm-12 lnk  resMobileNum">
-                                                                             First name
-                                                                        </div>
+                                                                        class="col-md-12 col-xs-12 col-sm-12 lnk  resMobileNum">
+                                                                         First name <span style="color: #f24949 !important;">*</span>
+                                                                    </div>
+                                                                    
+                                                                       </div>
                                                                         <div
                                                                             class="col-md-12 col-xs-12 col-sm-12 resMobileNum">
                                                                             <label style="display: contents !important;">
@@ -559,10 +568,13 @@
                                                                                     *ngIf="donorerror != null"
                                                                                     errorMsg={{donorerror}}>
                                                                                 </app-field-error-display>
-                                                                                <div style="font-weight: 400 !important;color: #3f4254 !important;padding-top: 5px !important;font-size: 13px !important;margin-bottom: 0px !important;"
+                                                                                <div>
+                                                                                    <div style="font-weight: 400 !important;color: #3f4254 !important;padding-top: 5px !important;font-size: 13px !important;margin-bottom: 0px !important;"
                                                                             class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 resMobileNum plMob">
-                                                                            Last name
+                                                                            Last name<span style="color: #f24949 !important;">*</span>
                                                                         </div>
+                                                                        
+                                                                                </div>
                                                                                 <input (keyup)="resetErrors()"
                                                                                 style="background-color: #f6f6f6!important;
                                                                                 border-radius: 4px;
@@ -588,10 +600,13 @@
                                                                >
                                                                 <div
                                                                     class="mgn-up-5 input-group mobile-error c-checkin-new " >
+                                                                   <div >
                                                                     <div style="padding:0px !important;font-weight: 400 !important;color: #3f4254 !important;font-size: 13px !important;margin-bottom: 0px !important;"
-                                                                            class="col-md-12 col-xs-12 col-sm-12 lnk resMobileNum" >
-                                                                            Mobile number
-                                                                        </div>
+                                                                    class="col-md-12 col-xs-12 col-sm-12 lnk resMobileNum" >
+                                                                    Mobile number <span style="color: #f24949 !important;">*</span>
+                                                                </div>
+                                                               
+                                                                   </div>
                                                                     <div
                                                                         class="col-md-12 col-xs-12  mgn-bt-10 resMobileNum "style="padding:0px !important" >
                                                                         <div class="codenumber mgn-bt-10" >
@@ -639,9 +654,12 @@
                                                                <!--edit not useremail id start-->
                                                                <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding email-sec mgn-bt-5"
                                                                *ngIf="!userEmail" style="margin-top: -15px !important">
-                                                               <div style="margin-bottom: 0px !important;font-size: 0.7rem !important;font-weight: 400 !important;color: #3f4254 !important;font-size: 13px !important;"
-                                                                   class="col-md-12 col-xs-12 col-sm-12 lnk  no-padding resMobileNum">
-                                                                   Email</div>
+                                                               <div style="display: flex;">
+                                                                <div style="margin-bottom: 0px !important;font-size: 0.7rem !important;font-weight: 400 !important;color: #3f4254 !important;font-size: 13px !important;"
+                                                                class="col-md-12 col-xs-12 col-sm-12 lnk  no-padding resMobileNum">
+                                                                Email <span style="color: #f24949 !important;">*</span></div>
+                                                               
+                                                               </div>
                                                                <div
                                                                class="col-md-12 col-sm-12 col-xs-12 resMobileNum">
                                                                    <ng-container>
@@ -706,9 +724,12 @@
                                                               <!----edit email start-->
                                                               <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding email-sec mgn-bt-5"
                                                               style="margin-top: -15px !important" *ngIf="userEmail">
-                                                              <div style="font-size: 0.7rem !important;font-weight: 400 !important;color: #3f4254 !important;font-size: 13px !important;margin-bottom: 0px !important;"
-                                                                  class="col-md-12 col-xs-12 col-sm-12 lnk  resMobileNum">
-                                                                  Email</div>
+                                                             <div >
+                                                                <div style="font-size: 0.7rem !important;font-weight: 400 !important;color: #3f4254 !important;font-size: 13px !important;margin-bottom: 0px !important;"
+                                                                class="col-md-12 col-xs-12 col-sm-12 lnk  resMobileNum">
+                                                                Email <span style="color: #f24949 !important;">*</span> </div>
+                                                                
+                                                             </div>
                                                               <div
                                                                   class="col-md-12 col-sm-12 col-xs-12 resMobileNum">
                                                                   <ng-container>
@@ -891,7 +912,7 @@
                                 
                                   
                                 <div style="padding: 5px !important">
-                                    <div  class="resPaymrntDetails">Payment Details</div>
+                                    <div  class="resPaymrntDetails">Select Payment Mode</div>
                                 </div>
                                 <div
                                     class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between   hf-double-btn-container paymentBtn" >
