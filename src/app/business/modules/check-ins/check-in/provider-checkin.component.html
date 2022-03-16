@@ -246,9 +246,13 @@
                         <img src="../../../../../assets/images/avatar.png" width="60px" height="60px" class="my-auto">
                       </div>
                       <div class="ml-3">
-                        {{waitfor.firstName | capitalizeFirst}} {{waitfor.lastName | capitalizeFirst}}
+                        {{waitfor.firstName | capitalizeFirst}} {{waitfor.lastName | capitalizeFirst}} &nbsp; 
+                        <span *ngIf="thirdParty === '' && queuejson.length > 0 && small_device_display" (click)="openModal()">
+                          <a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                      </span>
                         <div *ngIf="jaldeeId" class="consumer-id">
                           {{customer_label | capitalizeFirst}} id: {{getJaldeeId(waitfor)}}
+                          
                         </div>
                       </div>
                     </li>
@@ -256,7 +260,7 @@
                 </ul>
               </div>
               <div class="row">
-                <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
+                <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0 && !small_device_display">
                   <mat-chip class="pro-action" (click)="openModal()"><a>Add /
                       Change Member </a>
                   </mat-chip>
