@@ -105,12 +105,12 @@ export class MembersComponent implements OnInit {
   handleOneMemberSelect(id, firstName, lastName, email) {
     this.selectedMember = [];
     this.selectedMember.push({ id: id, firstName: firstName, lastName: lastName });
-    if (email && email.trim() !== '') {
+    if (email && email !== undefined && email.trim() !== '') {
       this.selectedMember[0]['email'] = email;
-    } else if (this.parentCustomer.userProfile.email.trim() !== '') {
+    } else if (this.parentCustomer && this.parentCustomer.userProfile && this.parentCustomer.userProfile.email !== undefined && this.parentCustomer.userProfile.email.trim() !== '') {
       this.selectedMember[0]['email'] = this.parentCustomer.userProfile.email;
     } else {
-      this.parentCustomer[0]['email'] = '';
+      this.selectedMember[0]['email'] = '';
     }
     this.memberSelected.emit(this.selectedMember);
   }

@@ -670,8 +670,29 @@ box-shadow: 4px 4px 5px gainsboro;
    .serviceGalleryImg{
     padding: 0px !important;
   }
+  .resPaymrntDetails{
+    display: flex !important;
+    justify-content: center !important;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+   
+    background-color: #133072;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  .advanceSettings{
+    width: 25rem !important;
+  }
+  .customText{
+    text-align: center !important;
+  }
 }
 @media (max-width:400px) {
+  .customText{
+    text-align: center !important;
+  }
   .resImg{
   height: 150px !important;
     width: 150px !important;
@@ -725,6 +746,24 @@ box-shadow: 4px 4px 5px gainsboro;
     grid-gap: 5px !important;
     gap: 5px !important;
   }
+  /* .resPaymrntDetails{
+
+  } */
+  .resPaymrntDetails{
+    /* display: contents !important; */
+    display: flex !important;
+    justify-content: center !important;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+   
+    background-color: #133072;
+    color: #fff;
+    border-radius: 5px;
+  }
+  .advanceSettings{
+    width: 25rem !important;
+  }
 }
 .resImg{
   border-bottom-left-radius: 50px ;
@@ -749,4 +788,18 @@ textarea:disabled{
   text-align: justify;
   resize: none;
   overflow: hidden;
+}
+.resPaymrntDetails{
+  display: none;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+ 
+  background-color: #133072;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+}
+.advanceSettings{
+  width: 27.5rem !important;
 }

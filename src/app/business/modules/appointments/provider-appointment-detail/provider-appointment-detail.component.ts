@@ -188,6 +188,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     this.provider_services.getAppointmentById(this.waitlist_id).subscribe(
       data => {
         this.waitlist_data = data;
+        console.log("Waitlist Data :",this.waitlist_data)
         if (
           this.waitlist_data.questionnaires &&
           this.waitlist_data.questionnaires.length > 0
@@ -240,6 +241,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
         // this.getTimeSlots();
         if (this.waitlist_data.appmtTime) {
           this.apptTime = this.waitlist_data.appmtTime;
+          console.log("Appointment Time :",this.apptTime);
         }
         const waitlist_date = new Date(this.waitlist_data.date);
         this.today.setHours(0, 0, 0, 0);
@@ -335,6 +337,9 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
             his.waitlistId === uuid.replace("h_", "")
           ) {
             this.communication_history.push(his);
+            console.log("Communication History :",this.communication_history.push(his))
+
+            console.log("History :",this.dateTimeProcessor.convertMinutesToHourMinute(this.communication_history[0].timeStamp))
           }
         }
         this.sortMessages();
@@ -578,6 +583,24 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   getSingleTime(slot) {
     const slots = slot.split("-");
     return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
+  }
+  formatDateDisplay(dateStr) {
+    dateStr = JSON.parse(dateStr);
+   // console.log("Time :",dateStr)
+    let retdate = '';
+    const pubDate = new Date(dateStr);
+    const obtdate = new Date(pubDate.getFullYear() + '-' + this.dateTimeProcessor.addZero((pubDate.getMonth() + 1)) + '-' + this.dateTimeProcessor.addZero(pubDate.getDate()));
+    const obtshowdate = this.dateTimeProcessor.addZero(pubDate.getDate()) + '/' + this.dateTimeProcessor.addZero((pubDate.getMonth() + 1)) + '/' + pubDate.getFullYear();
+    const obtshowtime = this.dateTimeProcessor.addZero(pubDate.getHours()) + ':' + this.dateTimeProcessor.addZero(pubDate.getMinutes());
+    const today = new Date();
+    const todaydate = new Date(today.getFullYear() + '-' + this.dateTimeProcessor.addZero((today.getMonth() + 1)) + '-' + this.dateTimeProcessor.addZero(today.getDate()));
+
+    if (obtdate.getTime() === todaydate.getTime()) {
+      retdate = this.dateTimeProcessor.convert24HourtoAmPm(obtshowtime);
+    } else {
+      retdate = obtshowdate + ' ' + this.dateTimeProcessor.convert24HourtoAmPm(obtshowtime);
+    }
+    return retdate;
   }
   getPos() {
     this.provider_services.getProviderPOSStatus().subscribe(data => {

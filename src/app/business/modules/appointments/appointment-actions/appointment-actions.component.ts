@@ -26,6 +26,7 @@ import { ListRecordingsDialogComponent } from '../../../../shared/components/lis
 import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.component';
 import { VoiceConfirmComponent } from '../../customers/voice-confirm/voice-confirm.component';
 import { CommunicationService } from '../../../../business/services/communication-service';
+import { AdjustscheduleDelayComponent } from '../schedule-delay/adjust-schedule-delay.component';
 
 @Component({
     selector: 'app-appointment-actions',
@@ -300,6 +301,26 @@ export class AppointmentActionsComponent implements OnInit {
     }
     goBacktoApptDtls() {
         this.action = 'reschedule';
+    }
+    delayActionClicked(){
+        this.dialogRef.close();
+        const delayAction = this.dialog.open(AdjustscheduleDelayComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass'],
+            disableClose: true,
+            data: {
+                qdata: this.appt,
+                uuid: this.appt.uid,
+                chekintype: 'appointment',
+                action:'delay'
+            }
+        });
+        delayAction.afterClosed().subscribe(result => {
+            this.dialogRef.close();
+            if(result === 'reloadlist'){
+                
+            }
+        });
     }
     smsCheckin() {
         this.dialogRef.close();

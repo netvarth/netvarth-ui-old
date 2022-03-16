@@ -17,9 +17,12 @@ import { PaymentModesModule } from "../../../../shared/modules/payment-modes/pay
 import { ConsumerJoinModule } from "../../consumer-join/join.component.module";
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { BookingAccountinfoModule } from "../../../../ynw_consumer/modules/booking-accountinfo/booking-accountinfo.module";
-// import { GalleryModule } from '../../../shared/modules/gallery/gallery.module';
-// import {  CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-// import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
+import { ServiceModule } from "../../../../shared/modules/service/service.module";
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {  ReactiveFormsModule } from '@angular/forms';
 const routes: Routes = [
     {path: '', component: ConsumerDonationComponent}
 ]
@@ -43,6 +46,13 @@ const routes: Routes = [
         ConsumerJoinModule,
         BookingAccountinfoModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
+        ServiceModule,
+        MatTooltipModule,
+        MatSlideToggleModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+
         [RouterModule.forChild(routes)]
     ]
 })
