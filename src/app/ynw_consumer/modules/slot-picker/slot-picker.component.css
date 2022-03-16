@@ -11,14 +11,20 @@
     color: white!important;
     font-weight: 900!important;
   }
-  .freeslots mat-chip.mat-chip.mat-focus-indicator.text-center.mat-primary.mat-standard-chip {
+  /* .freeslots mat-chip.mat-chip.mat-focus-indicator.text-center.mat-primary.mat-standard-chip {
     padding: 0!important;
-  }
+  } */
   @media (min-width:320px)  {
-    .freeslots mat-chip {
-    width:auto!important;
+    .freeslots.appt mat-chip {
+    width:30% !important;
+    
     margin:3px!important;
     }
+    .freeslots.token mat-chip {
+      width:48% !important;
+      font-size: 0.79rem !important;
+      margin:3px!important;
+      }
   }
   @media (min-width:1025px) { 
     .freeslots mat-chip{

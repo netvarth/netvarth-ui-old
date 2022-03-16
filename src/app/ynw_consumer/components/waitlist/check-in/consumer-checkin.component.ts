@@ -558,9 +558,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     initCheckin() {
         const _this = this;
         _this.waitlist_for = [];
-        this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-        this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
-        console.log("WaitlistFor1:", _this.waitlist_for);
+        _this.activeUser = _this.groupService.getitemFromGroupStorage('ynw-user');
+        _this.consumer_label = _this.wordProcessor.getTerminologyTerm('customer');
+        console.log("Active User:", _this.waitlist_for);
         return new Promise(function(resolve, reject){
             _this.customerService.getCustomerInfo(_this.activeUser.id).then(data => {
                 _this.parentCustomer = data;

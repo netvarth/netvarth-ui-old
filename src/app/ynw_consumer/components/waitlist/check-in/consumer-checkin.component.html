@@ -231,7 +231,7 @@
                                                     class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
                                                     (click)="goToStep('next');actionCompleted()"
                                                     [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1)">
-                                                    Next1
+                                                    Next
                                                 </button>
                                             </div>
                                             <div *ngIf="type != 'waitlistreschedule' && selectedService.isPrePayment && questionnaireList.labels && questionnaireList.labels.length > 0"
@@ -240,7 +240,7 @@
                                                     class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
                                                     (click)="goToStep('next');actionCompleted()"
                                                     [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1)">
-                                                    Next2
+                                                    Next
                                                 </button>
                                             </div>
                                             <div *ngIf="type != 'waitlistreschedule' && selectedService.isPrePayment && !questionnaireList.labels"
@@ -545,7 +545,7 @@
                                                 <button type="button"
                                                     class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
                                                     (click)="goToStep('next');actionCompleted()">
-                                                    Next3
+                                                    Next
                                                 </button>
                                             </div>
                                             <div *ngIf="selectedService.isPrePayment">

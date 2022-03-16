@@ -2,7 +2,7 @@
   <h5 class="text-capitalize text-primary"><b>Choose Time </b>
   </h5>
 </div>
-<div *ngIf="slots && slots.length > 0 && !mode" class="freeslots m-1 my-3">
+<div *ngIf="slots && slots.length > 0 && !mode" class="freeslots token m-1 my-3">
   <mat-chip-list>
     <mat-chip *ngFor="let slot of slots, let i= index" class="text-center mx-auto"
       [selected]="selectedSlot && (slot.id === selectedSlot.id)" (click)="slotPicked(slot)">

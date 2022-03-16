@@ -622,7 +622,7 @@
                                         <div
                                             class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between   hf-double-btn-container paymentBtn">
                                             <div class="clearfix"></div>
-                                            <div class="col-xs-12 no-padding-small">
+                                            <div class="col-xs-12 no-padding-small" *ngIf="!from_iOS">
                                                 <ng-container *ngIf="!shownonIndianModes">
                                                     <app-payment-modes [paymentModes]="indian_payment_modes"
                                                         (modeSelected)="indian_payment_mode_onchange($event)">
@@ -647,15 +647,15 @@
                                                                 Payment ? Click
                                                                 here</span>
                                                         </a></span>
-                                                </div>
-                                                <div class="txt-align-center mgn-up-10">
-                                                    <button type="button"
-                                                        class="next-button btn btn-primary mobile-button-color font-weight-bold text-uppercase "
-                                                        [class.disabled]="isClickedOnce"
-                                                        (click)="!isClickedOnce && goToGateway()">
-                                                        Make Payment
-                                                    </button>
-                                                </div>
+                                                </div>                                                
+                                            </div>
+                                            <div class="txt-align-center mgn-up-10">
+                                                <button type="button"
+                                                    class="next-button btn btn-primary mobile-button-color font-weight-bold text-uppercase "
+                                                    [class.disabled]="isClickedOnce"
+                                                    (click)="!isClickedOnce && goToGateway()">
+                                                    Make Payment
+                                                </button>
                                             </div>
                                         </div>
                                         <!----payment end-->

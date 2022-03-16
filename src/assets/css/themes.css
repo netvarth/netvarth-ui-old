@@ -30,6 +30,7 @@
   }
   .heartfulness_theme1 .bus-item-N, .heartfulness_theme1 h3, .heartfulness_theme1 mat-label,
   .heartfulness_theme1 .consumer-join-component mat-label,
+  .heartfulness_theme1 .mat-tab-label-content,
   .heartfulness_theme1 .right-menu-header, .heartfulness_theme1 .back-btn i{ 
     color: #fff !important;
   }

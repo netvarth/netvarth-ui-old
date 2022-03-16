@@ -1084,19 +1084,19 @@ export class ServiceViewComponent implements OnInit {
     }
     const _this = this;
     _this.loading_direct = true;
-    _this.goThroughLogin().then(
-      (status) => {
-        if (status) {
-          console.log("logged In");
-          _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
-          if (_this.userType === 'consumer') {
+    // _this.goThroughLogin().then(
+    //   (status) => {
+    //     if (status) {
+    //       console.log("logged In");
+    //       _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
+    //       if (_this.userType === 'consumer') {
               _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer',current_provider['ctime']);
-          }
-        } else {
-          const passParam = { callback: '', current_provider: current_provider };
-          _this.doLogin('consumer', passParam);
-        }
-      });
+      //     }
+      //   } else {
+      //     const passParam = { callback: '', current_provider: current_provider };
+      //     _this.doLogin('consumer', passParam);
+      //   }
+      // });
   }
   appointmentClicked(location, service) {
     const _this = this;
@@ -1141,34 +1141,34 @@ export class ServiceViewComponent implements OnInit {
       this.futureAllowed = false;
     }
     _this.loading_direct = true;
-    _this.goThroughLogin().then(
-      (status) => {
-        if (status) {
-          _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
-          if (_this.userType === 'consumer') {
+    // _this.goThroughLogin().then(
+    //   (status) => {
+    //     if (status) {
+    //       _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
+    //       if (_this.userType === 'consumer') {
               _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer', current_provider['ctime']);
-          }
-        } else {
-          const passParam = { callback: 'appointment', current_provider: current_provider };
-          _this.doLogin('consumer', passParam);
-        }
-      });
+      //     }
+      //   } else {
+      //     const passParam = { callback: 'appointment', current_provider: current_provider };
+      //     _this.doLogin('consumer', passParam);
+      //   }
+      // });
   }
   payClicked(locid, locname, cdate, service) {
     const _this = this;
     _this.loading_direct = true;
-    _this.goThroughLogin().then(
-      (status) => {
-        if (status) {
-          _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
-          if (_this.userType === 'consumer') {
+    // _this.goThroughLogin().then(
+    //   (status) => {
+    //     if (status) {
+    //       _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
+    //       if (_this.userType === 'consumer') {
             this.showDonation(locid, cdate, service);
-          }
-        } else {
-          const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, service: service, consumer: 'consumer' };
-          this.doLogin('consumer', passParam);
-        }
-      });
+      //     }
+      //   } else {
+      //     const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, service: service, consumer: 'consumer' };
+      //     this.doLogin('consumer', passParam);
+      //   }
+      // });
   }
   goThroughLogin() {
     return new Promise((resolve) => {

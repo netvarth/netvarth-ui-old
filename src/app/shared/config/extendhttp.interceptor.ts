@@ -308,7 +308,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       this.loggedUrls.shift();
     }
     this.loggedUrls.push(req);
-
+    console.log(JSON.stringify(req));
     return req;
   }
 

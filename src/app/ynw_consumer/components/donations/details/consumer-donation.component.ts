@@ -294,6 +294,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     businessInfo: any = {};
     loggedIn = true;
     from_iOS = false;
+    paymentWindow: Window;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -1069,29 +1070,152 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         }
     }
     addDonationConsumer(post_Data, paymentWay) {
-        this.api_loading = true;
-        this.subs.sink = this.shared_services.addCustomerDonation(post_Data, this.account_id)
-            .subscribe(data => {
-                this.uid = data['uid'];
-                console.log("Donation Response :", data);
-                if (this.customId) {
-                    console.log("businessid" + this.account_id);
-                    this.shared_services.addProvidertoFavourite(this.account_id)
-                        .subscribe(() => {
-                        });
 
-                }
-                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                    this.submitQuestionnaire(this.uid, post_Data, paymentWay);
-                } else {
-                    this.consumerPayment(this.uid, post_Data, paymentWay);
-                }
-            },
+        const _this = this;
+        this.api_loading = true;
+
+        if (this.from_iOS) {
+
+            // let activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+            // let post_data = {
+            //   consumer: {
+            //     id: activeUser.id
+            //   },
+            //   countryCode: '+91',
+            //   date: curdate,
+            //   donationAmount: 0,
+            //   donor: {
+            //     firstName: this.activeUser.firstName,
+            //     lastName: this.activeUser.lastName
+            //   },
+            //   donorEmail: '',
+            //   donorPhoneNumber: this.activeUser.primaryPhoneNumber,
+            //   location: locid,
+            //   note: 'Testing donation',
+            //   providerCustomer: {
+            //     id: activeUser.id
+            //   },
+            //   service: service.id
+            // }
+
+            this.shared_services.generateDonationLink(this.accountId, post_Data).subscribe(
+                (paymentLinkResponse:any) => {
+                    console.log("Payment Link:", paymentLinkResponse);
+                    this.uid = paymentLinkResponse['uuid'];
+                    if (this.customId) {
+                        console.log("businessid" + this.account_id);
+                        this.shared_services.addProvidertoFavourite(this.account_id)
+                            .subscribe(() => {
+                            });
+                    }
+                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                        this.submitQuestionnaire(this.uid, post_Data).then(
+                            (status) => {
+                                if (status) {
+                                    _this.openPaymentLink(_this.customId, post_Data['service'].id, paymentLinkResponse.paylink);
+                                }
+                            }
+                        );
+                    } else {
+                        this.openPaymentLink(this.customId, post_Data['service'].id, paymentLinkResponse.paylink);
+                    }
+                },
                 error => {
                     this.isClickedOnce = false;
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
+        } else {
+            const paymentWay = this.selected_payment_mode;
+            this.subs.sink = this.shared_services.addCustomerDonation(post_Data, this.account_id)
+                .subscribe(data => {
+                    this.uid = data['uid'];
+                    if (this.customId) {
+                        console.log("businessid" + this.account_id);
+                        this.shared_services.addProvidertoFavourite(this.account_id)
+                            .subscribe(() => {
+                            });
+
+                    }
+                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                        this.submitQuestionnaire(this.uid, post_Data).then(
+                            (status)=> {
+                                if (status) {
+                                    this.consumerPayment(this.uid, post_Data, paymentWay);
+                                }
+                            }
+                        );
+                    } else {
+                        this.consumerPayment(this.uid, post_Data, paymentWay);
+                    }
+                },
+                    error => {
+                        this.isClickedOnce = false;
+                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    });
+        }
+
+
+        // this.api_loading = true;
+        // this.subs.sink = this.shared_services.addCustomerDonation(post_Data, this.account_id)
+        //     .subscribe(data => {
+        //         this.uid = data['uid'];
+        //         console.log("Donation Response :", data);
+        //         if (this.customId) {
+        //             console.log("businessid" + this.account_id);
+        //             this.shared_services.addProvidertoFavourite(this.account_id)
+        //                 .subscribe(() => {
+        //                 });
+
+        //         }
+        //         if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+        //             this.submitQuestionnaire(this.uid, post_Data, paymentWay);
+        //         } else {
+        //             this.consumerPayment(this.uid, post_Data, paymentWay);
+        //         }
+        //     },
+        //         error => {
+        //             this.isClickedOnce = false;
+        //             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        //         });
     }
+    isDonationSuccess(paylink) {
+        const _this = this;
+        return new Promise(function(resolve,reject) {
+            _this.shared_services.getDonationLinkUuid(paylink).subscribe(
+                (donationInfo: any)=> {
+                    if (donationInfo.donationStatus!=='PROCESSING') {
+                        resolve(true);
+                    } else {
+                        resolve(false);
+                    }
+                }
+            )
+        })
+        
+    }
+    openPaymentLink(businessId, serviceId, paylink, userId?) {
+        const _this = this;
+        const url = projectConstantsLocal.PATH + businessId + "/service/" + serviceId + "/pay/" + paylink;
+        this.paymentWindow = window.open(url, "_blank");
+        
+        let easingLoop = setInterval(function() {
+            _this.isDonationSuccess(paylink).then(
+                (status)=> {
+                    if (status) {
+                        clearInterval(easingLoop);
+                        _this.paymentWindow.close();
+                        _this.isClickedOnce = false;
+                    }
+                });
+        }, 5000);
+        // setTimeout(() => {
+        //    
+        //     
+        // }, 5000);
+
+
+    }
+
     consumerPayment(uid, post_Data, paymentWay) {
         const payInfo: any = {
             'amount': post_Data.donationAmount,
@@ -1637,64 +1761,68 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     getQuestionAnswers(event) {
         this.questionAnswers = event;
     }
-    submitQuestionnaire(uuid, post_Data, paymentWay) {
-        const dataToSend: FormData = new FormData();
-        if (this.questionAnswers.files) {
-            for (const pic of this.questionAnswers.files) {
-                dataToSend.append('files', pic, pic['name']);
-            }
-        }
-        const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
-        dataToSend.append('question', blobpost_Data);
-        this.shared_services.submitDonationQuestionnaire(uuid, dataToSend, this.account_id).subscribe((data: any) => {
-
-            let postData = {
-                urls: []
-            };
-            if (data.urls && data.urls.length > 0) {
-                for (const url of data.urls) {
-
-                    const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
-                    this.provider_services.videoaudioS3Upload(file, url.url)
-                        .subscribe(() => {
-                            postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-                            if (data.urls.length === postData['urls'].length) {
-                                this.shared_services.consumerDonationQnrUploadStatusUpdate(uuid, this.account_id, postData)
-                                    .subscribe((data) => {
-                                        this.api_loading_video = true;
-                                        // this.paymentOperation(paymenttype);
-                                        this.consumerPayment(this.uid, post_Data, paymentWay);
-                                        this.api_loading_video = false;
-                                    },
-                                        error => {
-                                            this.isClickedOnce = false;
-                                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                            this.disablebutton = false;
-                                            this.api_loading_video = false;
-                                        });
-
-                            }
-
-                        },
-                            error => {
-                                this.isClickedOnce = false;
-                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                this.disablebutton = false;
-                                this.api_loading_video = false;
-                            });
+    submitQuestionnaire(uuid, post_Data) {
+        const _this = this;
+        return new Promise(function(resolve, reject) {
+            const dataToSend: FormData = new FormData();
+            if (_this.questionAnswers.files) {
+                for (const pic of _this.questionAnswers.files) {
+                    dataToSend.append('files', pic, pic['name']);
                 }
-            } else {
-                this.consumerPayment(this.uid, post_Data, paymentWay);
             }
-
-        },
-            error => {
-
-                this.isClickedOnce = false;
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                this.disablebutton = false;
-                this.api_loading_video = false;
-            });
+            const blobpost_Data = new Blob([JSON.stringify(_this.questionAnswers.answers)], { type: 'application/json' });
+            dataToSend.append('question', blobpost_Data);
+            _this.shared_services.submitDonationQuestionnaire(uuid, dataToSend, _this.account_id).subscribe((data: any) => {
+                let postData = {
+                    urls: []
+                };
+                if (data.urls && data.urls.length > 0) {
+                    for (const url of data.urls) {
+                        const file = _this.questionAnswers.filestoUpload[url.labelName][url.document];
+                        _this.provider_services.videoaudioS3Upload(file, url.url)
+                            .subscribe(() => {
+                                postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                                if (data.urls.length === postData['urls'].length) {
+                                    _this.shared_services.consumerDonationQnrUploadStatusUpdate(uuid, _this.account_id, postData)
+                                        .subscribe((data) => {
+                                            _this.api_loading_video = true;
+                                            // this.paymentOperation(paymenttype);
+                                            // this.consumerPayment(this.uid, post_Data, paymentWay);
+    
+                                               
+                                            resolve(true);
+                                            _this.api_loading_video = false;
+                                        },
+                                            error => {
+                                                _this.isClickedOnce = false;
+                                                _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                                _this.disablebutton = false;
+                                                _this.api_loading_video = false;
+                                                resolve(false);
+                                            });
+    
+                                }
+    
+                            },
+                                error => {
+                                    this.isClickedOnce = false;
+                                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                    this.disablebutton = false;
+                                    this.api_loading_video = false;
+                                });
+                    }
+                } else {
+                    // this.consumerPayment(this.uid, post_Data, paymentWay);
+                    resolve(true);
+                }
+            },
+                error => {
+                    this.isClickedOnce = false;
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.disablebutton = false;
+                    this.api_loading_video = false;
+                });
+        })
     }
     goToStep(type) {
         if (this.bookStep === 'qnr') {
