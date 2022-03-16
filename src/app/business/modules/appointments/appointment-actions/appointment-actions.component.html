@@ -165,14 +165,14 @@
                 <div class="icon-text">Reschedule</div>
             </div>
         </div>
-        <!-- <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && (appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Arrived')"
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && (appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Arrived')"
         (click)="delayActionClicked()">
             <div class="action-box-sub">
-                <span class="fa fa-hourglass-start" style="width: 25px !important;">
+                <span class="fa fa-hourglass-start" style="width: 40px !important; height: 40px !important;">
                 </span>
                 <div class="icon-text">Delay</div>
             </div>
-        </div> -->
+        </div>
         <div class="action-box pointer-cursor" *ngIf="showQnr" (click)="showQuestionnaires()">
             <div class="action-box-sub">
                 <span class="qnr-icon"></span>
