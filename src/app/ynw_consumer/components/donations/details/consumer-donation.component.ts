@@ -300,7 +300,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
       noErrorName:any
       noErrorPhone:any
       showAdvancedSettings = false;
-   
+      tempDonorName:any;
+      tempDonorEmail:any;
+      tempDonorPh:any;
+      tempDonorDetails:any
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -596,24 +599,27 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             });
     }
     addDonor() {
+        console.log('donor...........')
+        console.log('Donor first',this.donorfirst)
         const dnrFirst = this.donorfirst.trim();
         const dnrLast = this.donorlast.trim();
         if (dnrFirst === '') {
             this.donorerror = 'Please enter the first name';
             return;
-        } else if (dnrLast === '') {
+        }  if (dnrLast === '') {
             this.donorlasterror = 'Please enter the last name';
             return;
-        } else {
+        } 
+        // else {
             this.donorFirstName = dnrFirst;
             this.donorLastName = dnrLast;
-            // setTimeout(() => {
-            //     this.action = '';
-            // }, 500);
-            // this.closebutton.nativeElement.click();
+            setTimeout(() => {
+                this.action = '';
+            }, 500);
+            this.closebutton.nativeElement.click();
             this.donorName = dnrFirst + ' ' + dnrLast;
             // this.donorName = this.donor.trim();
-        }
+        // }
     }
     addPhone() {
         this.phoneError = '';
@@ -622,24 +628,29 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         const curphone = this.selected_phone;
         const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
         const result = pattern.test(curphone);
-        if (this.selected_phone === null) {
-            this.phoneerror = 'Please enter the mobile number';
+        const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+        const result1 = pattern1.test(curphone);
+        if (this.selected_phone === '') {
+            this.phoneerror = Messages.BPROFILE_PHONENO;
             return;
-        } else if (!result) {
-            this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Please enter a valid mobile phone number';
+        }  if (!result) {
+            this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
             console.log('Message',Messages.BPROFILE_PRIVACY_PHONE_INVALID)
-            // this.wordProcessor.getProjectMesssages('BPROFILE_PRIVACY_PHONE_10DIGITS').subscribe((msg:any)=>{
-            //     console.log('messageMsg',msg)
-            // })
             return;
-        } else {
+        } 
+         if (!result1) {
+            this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Mobile number should have 10 digits';
+            return;
+        }
+        
+         {
             this.consumerPhoneNo = this.selected_phone;
             this.userPhone = this.selected_phone;
             this.edit = true;
-            // setTimeout(() => {
-            //     this.action = '';
-            // }, 500);
-            // this.closebutton.nativeElement.click();
+            setTimeout(() => {
+                this.action = '';
+            }, 500);
+            this.closebutton.nativeElement.click();
         }    
     }
     editPhone() {
@@ -647,7 +658,14 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.action = 'phone';
         this.selected_phone = this.userPhone;
     }
-    editDonor(email:any) {
+    editDonor(email:any,name:any,phone:any) {
+        console.log('email',email)
+        console.log('donorName',name)
+        console.log('userPhone',phone)
+        // console.log('Donor first',this.donorfirst)
+        this.tempDonorName='name'+name;
+        this.tempDonorPh='phone'+phone;
+        this.tempDonorEmail='email'+email;
       
         this.action = 'donor';
         this.edit = false;
@@ -665,19 +683,37 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         // }
 
     }
-    addDonorDetails(donorNameDetails: string = 'donor',donorPh: string='phone',donorEmail: string='email'){
-        console.log(donorNameDetails)
-        setTimeout(() => {
-            // this.action = '';
-            this.addDonor(),  this.addPhone() , this.addEmail()
-        }, 500);
-        this.closebutton.nativeElement.click();
-            // this.addDonor()
-            //  this.addPhone() 
-            //  this.addEmail()
-            
+    addDonorDetails(){
+        if(this.tempDonorDetails.startsWith('f') ||this.tempDonorDetails.startsWith('l')){
+            this.addDonor()
+        }
+         if(this.tempDonorDetails.startsWith('p')){
+             this.addPhone()
+        }
+         if(this.tempDonorDetails.startsWith('e')){
+            this.addEmail()
+       }
+//        else{
+//         setTimeout(() => {
+//             this.action = '';
+//         }, 500);
+//         this.closebutton.nativeElement.click();
+//    }
+       
+        
+        // this.addDonor()
+        // this.addPhone()
+        // this.addEmail()  
     }
-    onSubmit(form_data){
+    donorDetails(donorDetails:any){
+        console.log('donorDetails...........',donorDetails)
+        this.tempDonorDetails=donorDetails
+        // if(this.tempDonorDetails!=undefined){
+        //     this.tempDonorDetails=donorDetails
+        // }
+        // else{
+        //     this.tempDonorDetails=undefined
+        // }
 
     }
     onButtonBeforeHook() {
@@ -702,9 +738,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
           this.galleryjson[(i + indx)] = this.tempgalleryjson[i];
         }
         if (this.galleryjson.length > 0) {
-            console.log('this.galleryjson',this.galleryjson)
+            // console.log('this.galleryjson',this.galleryjson)
+            // console.log('this.galleryjson',this.galleryjson.length)
           this.galleryExists = true;
-          for (let i = 0; i < this.galleryjson.length; i++) {
+          for (let i = 1; i < this.galleryjson.length; i++) {
             const imgobj = new Image(
               i,
               { // modal
@@ -745,9 +782,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         return image ? images.indexOf(image) : -1;
       }
       openImageModalRow(image: Image) {
+          console.log('image==========',image)
         const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
         this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
-        console.log(index)  
+        console.log('index.........',index)  
     }
 
       openGallery(){
@@ -1069,10 +1107,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (stat && stat1) {
             if (this.payEmail === this.payEmail1) {
                 this.userEmail = this.payEmail;
-                // setTimeout(() => {
-                //     this.action = '';
-                // }, 500);
-                // this.closebutton.nativeElement.click();
+                setTimeout(() => {
+                    this.action = '';
+                }, 500);
+                this.closebutton.nativeElement.click();
             } else {
                 this.email1error = 'Email and Re-entered Email do not match';
             }

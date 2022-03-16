@@ -176,7 +176,7 @@
                                                                                     <a style="font-size: 15px !important;"
                                                                                     class="mgn-lt-5  lnk pointer-cursor"><i
                                                                                         class="fa fa-pencil-square-o"
-                                                                                        (click)="editDonor(userEmail)"
+                                                                                        (click)="editDonor(userEmail,donorName,userPhone)"
                                                                                         data-toggle="modal"
                                                                                         data-target="#exampleModalCenter"></i></a>
                                                                                    </div>
@@ -529,14 +529,14 @@
                                                                     font-size: 15px;
                                                                     font-weight: bold;
                                                                     padding: 10px;
-                                                                    background-color: #133072;
-                                                                    color: #fff;
-                                                                    border-radius: 5px;">Donor Details</div>
-                                                                    <div
+                                                                    
+                                                                    color: #2e2e2e;
+                                                                    ">Donor Details</div>
+                                                                    <div 
                                                                         class="mgn-up-10 input-group mobile-error c-checkin-new">
-                                                                        <div style="font-weight: bold !important;"
+                                                                        <div style="font-weight: bold !important;color: #808080 !important"
                                                                             class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 resMobileNum">
-                                                                            Enter Donor name
+                                                                             First name
                                                                         </div>
                                                                         <div
                                                                             class="col-md-12 col-xs-12 col-sm-12 resMobileNum">
@@ -546,22 +546,26 @@
                                                                                     font-weight: bold !important;
                                                                                     color: #2e2e2e;"
                                                                                     type="text"
-                                                                                    placeholder="First name"
+                                                                                    placeholder="Enter First name"
                                                                                     class="form-control phonenum"
-                                                                                    [(ngModel)]="donorfirst" />
+                                                                                    [(ngModel)]="donorfirst" (ngModelChange)="donorDetails('firstName')" />
                                                                                 <app-field-error-display
                                                                                     [displayError]="true"
                                                                                     *ngIf="donorerror != null"
                                                                                     errorMsg={{donorerror}}>
                                                                                 </app-field-error-display>
+                                                                                <div style="font-weight: bold !important;padding-top: 5px !important;color: #808080 !important;"
+                                                                            class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 resMobileNum">
+                                                                            Last name
+                                                                        </div>
                                                                                 <input (keyup)="resetErrors()"
-                                                                                    style="margin-top: 10px;font-size: 13px !important;
+                                                                                    style="font-size: 13px !important;
                                                                                     font-weight: bold !important;
                                                                                     color: #2e2e2e;"
                                                                                     type="text"
-                                                                                    placeholder="Last name"
+                                                                                    placeholder="Enter Last name"
                                                                                     class="form-control phonenum"
-                                                                                    [(ngModel)]="donorlast" />
+                                                                                    [(ngModel)]="donorlast" (ngModelChange)="donorDetails('lastName')" />
                                                                                 <app-field-error-display
                                                                                     [displayError]="true"
                                                                                     *ngIf="donorlasterror != null"
@@ -576,9 +580,9 @@
                                                                >
                                                                 <div
                                                                     class="mgn-up-5 input-group mobile-error c-checkin-new " >
-                                                                    <div style="padding:0px !important;font-weight: bold !important;"
+                                                                    <div style="padding:0px !important;font-weight: bold !important;color: #808080 !important"
                                                                             class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 resMobileNum" >
-                                                                            Enter new mobile number
+                                                                            Mobile number
                                                                         </div>
                                                                     <div
                                                                         class="col-md-12 col-xs-12  mgn-bt-10 resMobileNum "style="padding:0px !important" >
@@ -596,12 +600,13 @@
                                                                             font-weight: bold !important;
                                                                             color: #2e2e2e;"
                                                                                 class="width100 height40 email-border input-field pull-right"
-                                                                                id="newPhone" placeholder=""
+                                                                                id="newPhone" placeholder="Enter New Mobile Number"
                                                                                 name="newPhone"
                                                                                 [(ngModel)]="selected_phone"
                                                                                 autocomplete="off"
-                                                                                (keypress)="isNumeric($event)">
+                                                                                (keypress)="isNumeric($event)" (ngModelChange)="donorDetails('phone')">
                                                                         </div>
+                                                                        
                                                                         
                                                                         <div class="sts-msg error"  style="background: white !important;
                                                                         color: #f24949 !important;
@@ -618,11 +623,11 @@
                                                                <!--edit not useremail id start-->
                                                                <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding email-sec mgn-bt-5"
                                                                *ngIf="!userEmail" style="margin-top: -10px !important">
-                                                               <div style="font-size: 0.7rem !important;
-                                                               font-weight: 700 !important;margin-top: -5px;"
+                                                               <div style="font-size: 0.7rem !important;color: #808080 !important;
+                                                               font-weight: 700 !important;"
                                                                    class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding resMobileNum">
                                                                    Please
-                                                                   enter your
+                                                                   give your
                                                                    email for payment</div>
                                                                <div
                                                                class="col-md-12 col-sm-12 col-xs-12 resMobileNum">
@@ -642,7 +647,7 @@
                                                                                oncopy="return false"
                                                                                oncut="return false"
                                                                                ondrag="return false"
-                                                                               ondrop="return false">
+                                                                               ondrop="return false" (ngModelChange)="donorDetails('email')">
                                                                            <app-field-error-display
                                                                                [displayError]="true"
                                                                                *ngIf="emailerror != null"
@@ -665,7 +670,7 @@
                                                                                oncut="return false"
                                                                                ondrag="return false"
                                                                                ondrop="return false"
-                                                                               (keyup)="resetApiErrors()">
+                                                                               (keyup)="resetApiErrors()" (ngModelChange)="donorDetails('email')">
                                                                            <app-field-error-display
                                                                                [displayError]="true"
                                                                                *ngIf="email1error != null"
@@ -680,11 +685,11 @@
                                                               <!----edit email start-->
                                                               <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding email-sec mgn-bt-5"
                                                               style="margin-top: -10px !important">
-                                                              <div style="font-size: 0.7rem !important;
-                                                              font-weight: 700 !important;margin-top: -5px;"
+                                                              <div style="font-size: 0.7rem !important;color: #808080 !important;
+                                                              font-weight: 700 !important;"
                                                                   class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 resMobileNum">
                                                                   Please
-                                                                  enter your
+                                                                  give your
                                                                   email for payment</div>
                                                               <div
                                                                   class="col-md-12 col-sm-12 col-xs-12 resMobileNum">
@@ -704,7 +709,7 @@
                                                                               oncopy="return false"
                                                                               oncut="return false"
                                                                               ondrag="return false"
-                                                                              ondrop="return false">
+                                                                              ondrop="return false" (ngModelChange)="donorDetails('email')">
                                                                           <app-field-error-display
                                                                               [displayError]="true"
                                                                               *ngIf="emailerror != null"
@@ -712,7 +717,7 @@
                                                                           </app-field-error-display>
                                                                       </div>
                                                                       <div class="form-group"
-                                                                          *ngIf="confrmshow">
+                                                                          *ngIf="confrmshow" style="margin-top: -15px !important;">
                                                                           <input 
                                                                               style="border: 1px solid #b6cdd8;font-size: 13px !important;
                                                                               font-weight: bold !important;
@@ -727,7 +732,7 @@
                                                                               oncut="return false"
                                                                               ondrag="return false"
                                                                               ondrop="return false"
-                                                                              (keyup)="resetApiErrors()">
+                                                                              (keyup)="resetApiErrors()" (ngModelChange)="donorDetails('email')">
                                                                           <app-field-error-display
                                                                               [displayError]="true"
                                                                               *ngIf="email1error != null"
@@ -754,7 +759,7 @@
                                                             width: 6rem;
                                                             border-radius: 5px !important;" class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
                                                             
-                                                                (click)="addDonorDetails('donor','phone','email')"
+                                                                (click)="addDonorDetails()"
                                                                 type="button">{{!userEmail ?
                                                                 'Add' : 'Save'}}</button>
                                                         </div>
@@ -796,12 +801,12 @@
                                                                         class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 resMobileNum" style="font-weight: bold !important;
                                                                         font-size: 12px !important;
                                                                     ;display: none;">
-                                                                        Donor Description
+                                                                        Description
                                                                     </div>
                                                                         <div *ngIf="sel_ser_det.description.length!==0"
                                                                         class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 resMobileNum" style="font-size: 12px !important;
                                                                         font-weight: bold !important;">
-                                                                        Donor Description
+                                                                        Description 
                                                                     </div>
                                                                     <div class="col-md-12 col-xs-12 col-sm-12 resMobileNum">
                                                                         <div *ngIf="sel_ser" class="resBgChange">

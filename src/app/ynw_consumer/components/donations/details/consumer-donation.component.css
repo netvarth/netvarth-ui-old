@@ -687,6 +687,8 @@ box-shadow: 4px 4px 5px gainsboro;
     color: #fff;
     border-radius: 5px;
     padding: 10px;
+    width: auto !important;
+    margin: 15px;
   }
   .advanceSettings{
     width: 25rem !important;
@@ -789,6 +791,8 @@ box-shadow: 4px 4px 5px gainsboro;
     background-color: #133072;
     color: #fff;
     border-radius: 5px;
+    width: auto !important;
+    margin: 15px;
   }
   .advanceSettings{
     width: 25rem !important;
@@ -823,7 +827,8 @@ textarea:disabled{
 
 }
 .resPaymrntDetails{
-  display: none;
+  display: flex !important;
+  justify-content: center !important;
   text-align: center;
   font-size: 15px;
   font-weight: bold;
@@ -832,6 +837,8 @@ textarea:disabled{
   color: #fff;
   border-radius: 5px;
   padding: 10px;
+  width: 26rem;
+    margin: 15px;
 }
 .advanceSettings{
   width: 27.5rem !important;
