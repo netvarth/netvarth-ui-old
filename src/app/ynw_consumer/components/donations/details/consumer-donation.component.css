@@ -618,6 +618,9 @@ box-shadow: 4px 4px 5px gainsboro;
   }
 }
 @media (min-width:400px) and (max-width:765px){
+  .plMob{
+    margin-left: 0px !important;
+  }
   .resImg{
     /* margin-top: -8rem; */
     /* height: 285px !important;
@@ -697,7 +700,13 @@ box-shadow: 4px 4px 5px gainsboro;
     text-align: center !important;
   }
 }
+.plMob{
+  margin-left: -10px 
+}
 @media (max-width:400px) {
+  .plMob{
+    margin-left: 0px !important;
+  }
   .customText{
     text-align: center !important;
   }
