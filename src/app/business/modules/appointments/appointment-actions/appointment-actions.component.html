@@ -16,9 +16,12 @@
             {{customer_label | capitalizeFirst}} id : {{appt.providerConsumer.jaldeeId}} </p>
         <p>Appointment Time : {{getSingleTime(appt.appmtTime)}}
         </p>
-        <p *ngIf="action === 'status' &&statusList && statusList.length == 0">Current  Status: {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}</p>
-        <p *ngIf="action === 'status' &&statusList && statusList.length > 0">Current External Status: {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}</p>
-        <p *ngIf="action === 'status'&&statusList && statusList.length > 0">Current Internal Status: {{appt.internalStatus || 'Nil'}}</p>
+        <p *ngIf="action === 'status' &&statusList && statusList.length == 0">Current Status:
+            {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}</p>
+        <p *ngIf="action === 'status' &&statusList && statusList.length > 0">Current External Status:
+            {{check_in_statuses[getStatusLabel(appt.apptStatus)]}}</p>
+        <p *ngIf="action === 'status'&&statusList && statusList.length > 0">Current Internal Status:
+            {{appt.internalStatus || 'Nil'}}</p>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding scro" *ngIf="action === ''">
         <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && !data.NoViewDetail"
@@ -44,7 +47,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor"
-           *ngIf="(this.users.length > 1 && !this.data.multiSelection && this.accountType == 'BRANCH' && (this.appt.schedule.provider.id === 0) && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed'))"
+            *ngIf="(this.users.length > 1 && !this.data.multiSelection && this.accountType == 'BRANCH' && (this.appt.schedule.provider.id === 0) && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed'))"
             (click)="changeWaitlistservice()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
@@ -54,39 +57,38 @@
             </div>
         </div>
 
-        <div class="action-box pointer-cursor" 
-        *ngIf="!data.multiSelection && accountType=='BRANCH' && (this.appt.schedule.provider.id === 0)  && groups.length > 0 && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.teamId == 0"
-        (click)="assignteam()">
+        <div class="action-box pointer-cursor"
+            *ngIf="!data.multiSelection && accountType=='BRANCH' && (this.appt.schedule.provider.id === 0)  && groups.length > 0 && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.teamId == 0"
+            (click)="assignteam()">
             <div class="action-box-sub">
                 <span class="team-icon-action"></span>
-                <div  class="icon-text">Assign Team</div>
+                <div class="icon-text">Assign Team</div>
             </div>
         </div>
 
 
-        <div class="action-box pointer-cursor" 
-        *ngIf="!data.multiSelection && accountType=='BRANCH' && (this.appt.schedule.provider.id === 0)  && appt.teamId != 0 && groups.length > 1 && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
-        (click)="assignteam()">
+        <div class="action-box pointer-cursor"
+            *ngIf="!data.multiSelection && accountType=='BRANCH' && (this.appt.schedule.provider.id === 0)  && appt.teamId != 0 && groups.length > 1 && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
+            (click)="assignteam()">
             <div class="action-box-sub">
                 <span class="team-icon-action"></span>
-                <div  class="icon-text">Change Team</div>
+                <div class="icon-text">Change Team</div>
             </div>
-        </div> 
-        <div class="action-box pointer-cursor" 
-        *ngIf="data.multiSelection && ((status_booking ==='new' && this.data.timetype === 1) || this.data.timetype === 3)"
-        (click)="changeStatusToCompleted()">
+        </div>
+        <div class="action-box pointer-cursor"
+            *ngIf="data.multiSelection && ((status_booking ==='new' && this.data.timetype === 1) || this.data.timetype === 3)"
+            (click)="changeStatusToCompleted()">
             <div class="action-box-sub">
                 <span class="changestatus-icon"></span>
-                <div  class="icon-text">Change Status to Complete</div>
+                <div class="icon-text">Change Status to Complete</div>
             </div>
-        </div> 
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection"
-        (click)="followUpClicked()">
-        <div class="action-box-sub">
-            <span class="reschedule-icon"></span>
-            <div class="icon-text">Follow Up</div>
         </div>
-    </div>
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection" (click)="followUpClicked()">
+            <div class="action-box-sub">
+                <span class="reschedule-icon"></span>
+                <div class="icon-text">Follow Up</div>
+            </div>
+        </div>
         <!-- <div class="action-box pointer-cursor" 
         *ngIf="!data.multiSelection && accountType=='BRANCH' && (this.appt.schedule.provider.id === 0) && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && (location && location.length > 1)"
         (click)="chnageLocation()">
@@ -96,7 +98,7 @@
                
             </div>
         </div> -->
-         <!-- <div *ngIf="appt.teamId != 0"  class="icon-text">Change Team</div> -->
+        <!-- <div *ngIf="appt.teamId != 0"  class="icon-text">Change Team</div> -->
         <div class="action-box pointer-cursor"
             *ngIf="!data.multiSelection && accountType=='BRANCH' && (appt.schedule.provider.id === 0) &&  (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.provider"
             (click)="removeProvider()">
@@ -106,12 +108,12 @@
             </div>
         </div>
         <div class="action-box pointer-cursor"
-        *ngIf="!data.multiSelection && accountType=='BRANCH' && (appt.schedule.provider.id === 0) && groups && groups.length > 0 &&    (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.teamId != 0"
-           (click)="removeTeam()">
-          <div class="action-box-sub">
-              <span class="team-icon-action"></span>
-              <div class="icon-text">Unassign Team </div>
-           </div>
+            *ngIf="!data.multiSelection && accountType=='BRANCH' && (appt.schedule.provider.id === 0) && groups && groups.length > 0 &&    (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.teamId != 0"
+            (click)="removeTeam()">
+            <div class="action-box-sub">
+                <span class="team-icon-action"></span>
+                <div class="icon-text">Unassign Team </div>
+            </div>
         </div>
         <div class="action-box pointer-cursor" *ngIf="showCall" (click)="callingAppt()">
             <div class="action-box-sub" *ngIf="appt.callingStatus">
@@ -153,7 +155,7 @@
                 *ngIf="appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
                 {{appt.apptStatus == 'Started' ? 'Resume' : 'Start'}} Service
             </div> -->
-           
+
             </div>
 
         </div>
@@ -165,11 +167,12 @@
                 <div class="icon-text">Reschedule</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection && (appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Arrived')"
-        (click)="delayActionClicked()">
+        <div class="action-box pointer-cursor"
+            *ngIf="!data.multiSelection && (appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Arrived') && this.data.timetype === 1 || this.data.timetype === 2"
+            (click)="delayActionClicked()">
             <div class="action-box-sub">
-                <span class="fa fa-hourglass-start" style="width: 40px !important; height: 40px !important;">
-                </span>
+                <!-- <span class="glyphicon glyphicon-hourglass"></span> -->
+                <span class="glyphicon glyphicon-hourglass"></span>
                 <div class="icon-text">Delay</div>
             </div>
         </div>
@@ -185,8 +188,7 @@
                 <div class="icon-text">Share Booking Info</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection"
-            (click)="printAppt()">
+        <div class="action-box pointer-cursor" *ngIf="!data.multiSelection" (click)="printAppt()">
             <div class="action-box-sub">
                 <span class="printer-icon"></span>
                 <div class="icon-text">Print</div>
@@ -264,13 +266,15 @@
                 <div class="icon-text">Labels</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" (click)="gotoSecureVideo()" *ngIf="!data.multiSelection && appt.phoneNumber && appt.apptStatus!=='blocked' && (showMsg || (appt.virtualService && appt.virtualService.WhatsApp))">
+        <div class="action-box pointer-cursor" (click)="gotoSecureVideo()"
+            *ngIf="!data.multiSelection && appt.phoneNumber && appt.apptStatus!=='blocked' && (showMsg || (appt.virtualService && appt.virtualService.WhatsApp))">
             <div class="action-box-sub">
                 <span class="jvideo-icon"></span>
                 <div class="icon-text">Video Call</div>
             </div>
         </div>
-        <div class="action-box pointer-cursor" (click)="startVoiceCall()" *ngIf="!data.multiSelection && appt.apptStatus!=='blocked' && appt.phoneNumber">
+        <div class="action-box pointer-cursor" (click)="startVoiceCall()"
+            *ngIf="!data.multiSelection && appt.apptStatus!=='blocked' && appt.phoneNumber">
             <div class="action-box-sub">
                 <span class="phon-icon"></span>
                 <div class="icon-text">Voice Call</div>
@@ -304,7 +308,8 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 scro"
         *ngIf="providerLabels.length > 0 && !loading">
         <div class="mgn-bt-5" *ngFor="let label of providerLabels;let i = index">
-            <mat-checkbox [checked]="label.selected" (change)="addLabeltoAppt(label.label, $event)" [disabled]="!label.isPermitted">
+            <mat-checkbox [checked]="label.selected" (change)="addLabeltoAppt(label.label, $event)"
+                [disabled]="!label.isPermitted">
                 {{label.displayName | capitalizeFirst}}</mat-checkbox>
         </div>
     </div>
@@ -331,13 +336,16 @@
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button>
 </h1>
-<div *ngIf="action === 'reschedule'"class="reschdle">
-    <div style="background-color: rgb(207, 198, 198);padding: 10px;font-weight: bold;display: flex;align-items: baseline;justify-content: space-between;">
-            <div>
-                <div  style="font-size: 17px !important;padding-left: 20px;font-weight: 700;">Reschedule Appointment for {{appt.appmtFor[0].firstName |capitalizeFirst}} {{appt.appmtFor[0].lastName |capitalizeFirst}}</div>
-            </div>
+<div *ngIf="action === 'reschedule'" class="reschdle">
+    <div
+        style="background-color: rgb(207, 198, 198);padding: 10px;font-weight: bold;display: flex;align-items: baseline;justify-content: space-between;">
         <div>
-            <i style="font-size: 17px !important" class="fa fa-close"aria-hidden="true" mat-dialog-close  tabindex="-1"></i>
+            <div style="font-size: 17px !important;padding-left: 20px;font-weight: 700;">Reschedule Appointment for
+                {{appt.appmtFor[0].firstName |capitalizeFirst}} {{appt.appmtFor[0].lastName |capitalizeFirst}}</div>
+        </div>
+        <div>
+            <i style="font-size: 17px !important" class="fa fa-close" aria-hidden="true" mat-dialog-close
+                tabindex="-1"></i>
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 ">
@@ -425,38 +433,44 @@
     </div>
 </div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-20 status-scro no-padding" *ngIf="action === 'status'">
-        <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 stst-bx mgn-up-10 mgn-lt-10" *ngIf="appt.apptStatus !== 'done'" >
-                <div>External Status</div>
-                <p class="settings_info"> External status is public and visible for your {{customer_label}}s</p>
-    <div class="status-box" *ngIf="showArrived" (click)="changeWaitlistStatus('Arrived')">
-        <div class="status"> Arrived</div>
-        <!-- <div class="form-level-settings">hints</div> -->
-    </div>
-    <div class="status-box" *ngIf="showStart || (showTeleserviceStart && appt.apptStatus != 'Started')" (click)="changeWaitlistStatus('Started')">
-        <div class="status"> In Progress</div>
-        <!-- <div class="form-level-settings">hints</div> -->
-    </div>
-    <div class="status-box" *ngIf="appt.apptStatus == 'Started' || appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' && data.timetype !== 2" (click)="changeWaitlistStatus('Completed')">
+    <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 stst-bx mgn-up-10 mgn-lt-10" *ngIf="appt.apptStatus !== 'done'">
+        <div>External Status</div>
+        <p class="settings_info"> External status is public and visible for your {{customer_label}}s</p>
+        <div class="status-box" *ngIf="showArrived" (click)="changeWaitlistStatus('Arrived')">
+            <div class="status"> Arrived</div>
+            <!-- <div class="form-level-settings">hints</div> -->
+        </div>
+        <div class="status-box" *ngIf="showStart || (showTeleserviceStart && appt.apptStatus != 'Started')"
+            (click)="changeWaitlistStatus('Started')">
+            <div class="status"> In Progress</div>
+            <!-- <div class="form-level-settings">hints</div> -->
+        </div>
+        <div class="status-box"
+            *ngIf="appt.apptStatus == 'Started' || appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' && data.timetype !== 2"
+            (click)="changeWaitlistStatus('Completed')">
             <div class="status"> Complete</div>
-        <!-- <div class="form-level-settings">hints</div> -->
-    </div>
-    <div class="status-box" *ngIf="showCancel" (click)="changeWaitlistStatus('Cancelled')">
-        <div class="status"> Cancel</div>
-        <!-- <div class="form-level-settings">hints</div> -->
-    </div>
-    <div class="status-box" *ngIf="showUndo" (click)="changeWaitlistStatus('Confirmed')">
-        <div class="status"> Checked In</div>
-        <!-- <div class="form-level-settings">hints</div> -->
-    </div>
+            <!-- <div class="form-level-settings">hints</div> -->
         </div>
-    <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 stst-bx mgn-up-10 mgn-lt-10" *ngIf="statusList && statusList.length > 0 && appt.apptStatus !== 'Cancelled'">
-            <div>Internal Status</div>
-            <p class="settings_info">Internal status is only visible for users of this account. Not visible for your {{customer_label}}s</p>
-            <ng-container  *ngFor="let stat of statusList, let i= index">
-                <div  [ngClass]="stat.isPermitted ?'status-box-internal':'status-box-disabled'" (click)="changeWaitlistInternalStatus(stat.statusId)">
-                    <div class="status"  > {{stat.status|capitalizeFirst}}</div>
-                    <!-- <div class="form-level-settings">hints</div> -->
-                </div>
-            </ng-container>
+        <div class="status-box" *ngIf="showCancel" (click)="changeWaitlistStatus('Cancelled')">
+            <div class="status"> Cancel</div>
+            <!-- <div class="form-level-settings">hints</div> -->
         </div>
+        <div class="status-box" *ngIf="showUndo" (click)="changeWaitlistStatus('Confirmed')">
+            <div class="status"> Checked In</div>
+            <!-- <div class="form-level-settings">hints</div> -->
+        </div>
+    </div>
+    <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 stst-bx mgn-up-10 mgn-lt-10"
+        *ngIf="statusList && statusList.length > 0 && appt.apptStatus !== 'Cancelled'">
+        <div>Internal Status</div>
+        <p class="settings_info">Internal status is only visible for users of this account. Not visible for your
+            {{customer_label}}s</p>
+        <ng-container *ngFor="let stat of statusList, let i= index">
+            <div [ngClass]="stat.isPermitted ?'status-box-internal':'status-box-disabled'"
+                (click)="changeWaitlistInternalStatus(stat.statusId)">
+                <div class="status"> {{stat.status|capitalizeFirst}}</div>
+                <!-- <div class="form-level-settings">hints</div> -->
+            </div>
+        </ng-container>
+    </div>
 </div>

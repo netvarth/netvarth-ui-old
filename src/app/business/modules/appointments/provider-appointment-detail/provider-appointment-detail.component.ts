@@ -580,8 +580,16 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       ? (this.showTimePicker = false)
       : (this.showTimePicker = true);
   }
+  addZero(i) {
+    if (i < 10) {
+      i = '0' + i;
+    }
+    return i;
+  }
   getSingleTime(slot) {
     const slots = slot.split("-");
+    const min = parseInt(slot[1], 10);
+    console.log("Minutes :",'delay by '+this.addZero(min) + 'mins')
     return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
   formatDateDisplay(dateStr) {

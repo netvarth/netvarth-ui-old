@@ -241,6 +241,20 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     ngAfterViewChecked() {
         this.cdref.detectChanges();
     }
+    getTimeMinute(time){
+        let hr;
+        let min; 
+        if(time >=60){
+          hr = Math.floor(time / 60 );
+          min =  Math.floor(time % 60);
+          return 'delayed by ' + hr+ 'hr'+':'+min + 'mins';
+        }
+        if(time<60){
+         min =  Math.floor(time % 60);
+         return 'delayed by ' +min + 'mins';
+        }
+       
+       }
     getItemQty(itemObj) {
         const item = itemObj.item;
         const orderList = this.extras;

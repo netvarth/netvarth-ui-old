@@ -197,13 +197,13 @@
               </div> -->
 
                 <!-- </div>
-              <div class="card mx-2 my-2"> -->
+              <div class="card mx-2 my-2"> fa fa-clock-o glyphicon glyphicon-time-->
                 </div>
                 <div class="card mx-2">
                 <div class="form-group my-2" *ngIf="queuejson.length > 0">
                   <!-- <div class="row">
                     <div class="col-md-6 col-xs-12 col-sm-12"> -->
-                  <label class="col-form-label"> <i class="fa fa-clock-o" style="color: rgb(45, 45, 109);"
+                  <label class="col-form-label"> <i class="glyphicon glyphicon-time" style="color: rgb(45, 45, 109);"
                       aria-hidden="true"></i> {{delay_cap}}</label>
                   <ngb-timepicker [(ngModel)]="time" (keyup)="isInRange($event)" formControlName="delay">
                   </ngb-timepicker>
@@ -255,9 +255,9 @@
 
           </div>
 
-          <div class="col-md-12 mgn-bt-10" style="margin-top: 15px;display: inline-flex; float: right !important;"
+          <div class="col-md-12 mgn-bt-10" style="margin-top: 15px;display: inline-flex;"
             *ngIf="queuejson.length > 0">
-            <button (click)="onCancel()" type="button" class="cs-btn bt2">{{ cancel_btn}}</button>&nbsp;
+            <button (click)="onCancel()" type="button" class="cs-btn bt2 pull-right">{{ cancel_btn}}</button>&nbsp;
             <button type="submit" mat-button [disabled]="!amForm.valid || disableButton"
               class="cs-btn bt1 pull-right">{{save_btn}}</button>
           </div>
