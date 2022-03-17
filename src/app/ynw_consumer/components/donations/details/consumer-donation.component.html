@@ -257,8 +257,8 @@
                                                                         color: #6c6c6c;">
                                                                             Pre Instruction
                                                                             </div> -->
-                                                                            <div style="font-size: 14px;color: #3c3c3f;
-                                                                            font-weight: 700;text-align: center;margin-top: 10px;
+                                                                            <div style="font-size: 15px;color: #3c3c3f;
+                                                                            font-weight: 700;text-align: left;margin-top: 10px;margin-left: 5px;
                                                                             ;">{{sel_ser_det.preInfoTitle}}</div>
                                                                             <div style="font-size: 14px;
                                                                             ;padding: 5px;text-align: left !important;">
@@ -297,7 +297,7 @@
                                                                                         <div style="text-align: left;
                                                                                         font-size: 15px;
                                                                                         font-weight: bold;
-                                                                                        color: #666767;">Amount(<i style=" color: #666767 !important"class="fa fa-rupee"></i>)</div>
+                                                                                        color: #666767;margin-bottom: 5px;">Amount(<i style=" color: #666767 !important"class="fa fa-rupee"></i>)</div>
                                                                                         <label style="display:flex !important">
                                                                                            
                                                                                             <input type="number"
@@ -442,11 +442,11 @@
                                                             <div *ngFor="let image of sel_ser_det.servicegallery,let i=index">
                                                                <div *ngIf="sel_ser_det.servicegallery.length>0" style="padding:10px" class="serviceGalleryImg">
                                                                    <div *ngIf="sel_ser_det.servicegallery.length==1">
-                                                                     <img class="resImg" style="height: 100%;width:100%;" src="{{image.url}}" alt="Donation">
+                                                                     <img class="resImg" style="width:100%;" src="{{image.url}}" alt="Donation">
                                                                    </div>
                                                                    <div *ngIf="sel_ser_det.servicegallery.length!=1">
                                                                       
-                                                                     <img  class="resImg" *ngIf="i==1" (click)="openImageModalRow(image_list_popup[0])"  style="height: 100%;width:100%;cursor: pointer;"  src="{{sel_ser_det.servicegallery[0].url}}" alt="Donation">
+                                                                     <img  class="resImg" *ngIf="i==1" (click)="openImageModalRow(image_list_popup[0])"  style="width:100%;cursor: pointer;"  src="{{sel_ser_det.servicegallery[0].url}}" alt="Donation">
                                                                     
                                                                    </div>
                                                                    <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" [ngClass]="{'cvr-dp-mgn': bgCover}">
@@ -840,20 +840,20 @@
                                                                 
                                                                 
                                                                 
-                                                                <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding-small notes"
-                                                                    >
+                                                                <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding-small notes">
                                                                     <!----donor description start-->
-                                                                    <div class=" mgn-up-5 input-group mobile-error c-checkin-new mobile_disply">
+                                                                    <div class=" mgn-up-5 input-group mobile-error c-checkin-new mobile_disply" *ngIf="sel_ser">
                                                                         <div *ngIf="sel_ser_det.description.length===0"
                                                                         class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 resMobileNum" style="font-weight: bold !important;
-                                                                        font-size: 12px !important;
+                                                                        font-size: 15px !important;
                                                                     ;display: none;">
-                                                                        Description
+                                                                        {{sel_ser_det.name |capitalizeFirst}}
+                                                                        
                                                                     </div>
                                                                         <div *ngIf="sel_ser_det.description.length!==0"
-                                                                        class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 resMobileNum" style="font-size: 12px !important;
+                                                                        class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 resMobileNum" style="font-size: 15px !important;
                                                                         font-weight: bold !important;">
-                                                                        Description 
+                                                                       {{sel_ser_det.name |capitalizeFirst}}
                                                                     </div>
                                                                     <div class="col-md-12 col-xs-12 col-sm-12 resMobileNum">
                                                                         <div *ngIf="sel_ser" class="resBgChange">

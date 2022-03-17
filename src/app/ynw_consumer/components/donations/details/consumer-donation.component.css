@@ -638,11 +638,14 @@ box-shadow: 4px 4px 5px gainsboro;
     border-top-left-radius: 0px !important;
     border-top-right-radius:  25px !important;
     border-bottom-right-radius:  25px !important;
-    margin-left: -25px !important;
+    /* margin-left: -25px !important; */
     margin-top: -15px !important;
     object-fit: fill;
   
   }
+  .reverseDetails{
+    margin-left: -24px !important;
+  } 
   .cardTop{
     transform: rotateX(45deg) !important; 
     margin-top: 0px !important;
@@ -655,6 +658,7 @@ box-shadow: 4px 4px 5px gainsboro;
     padding: 0px !important;
     /* height: 260px!important; */
     font-size: 18px !important;
+    width: auto !important;
   }
   .mobile-donation-for-styling{
     border-radius: 0px !important;
@@ -666,7 +670,12 @@ box-shadow: 4px 4px 5px gainsboro;
   padding: 10px !important;
   /* font-weight: lighter !important;
   word-spacing: 5px !important; */
-  color: #c2cee6 !important;
+    font-weight: 700;
+    z-index: 99999;
+    opacity: 100%;
+    color: #c2cee6 !important;
+    filter: brightness(1.75);
+    line-height: normal;
   }
   .resCard{
     gap: 0px !important;
@@ -752,10 +761,13 @@ box-shadow: 4px 4px 5px gainsboro;
     border-top-right-radius: 25px !important;
     border-bottom-right-radius: 25px !important;
     /* margin-left: -10px !important; */
-    margin-left: -15px !important;
+    /* margin-left: -15px !important; */
     /* margin-right: 1px !important; */
     margin-top: -15px !important;
     object-fit: fill;
+  }
+  .reverseDetails{
+    margin-left: -24px !important;
   }
   .resBgChange{
     text-align: left  !important;
@@ -765,6 +777,7 @@ box-shadow: 4px 4px 5px gainsboro;
     padding: 0px !important;
     /* height: 305px!important; */
     font-size: 18px !important;
+    width: auto !important;
   }
   .cardTop{
     transform: rotateX(45deg) !important; 
@@ -781,6 +794,12 @@ box-shadow: 4px 4px 5px gainsboro;
   /* font-weight: lighter !important;
   word-spacing: 5px !important; */
   color: #c2cee6 !important;
+  font-weight: 700;
+    z-index: 99999;
+    opacity: 100%;
+    color: #c2cee6 !important;
+    filter: brightness(1.75);
+    line-height: normal;
   }.resCard{
     gap: 0px !important;
    }
@@ -826,6 +845,7 @@ box-shadow: 4px 4px 5px gainsboro;
   border-top-left-radius: 50px ;
   border-top-right-radius: 50px ;
   border-bottom-right-radius: 50px ;
+  height: 483px ;
 }
 @media (max-width:765px) and (min-width:576px){
   .mobile-donation-for-styling{
