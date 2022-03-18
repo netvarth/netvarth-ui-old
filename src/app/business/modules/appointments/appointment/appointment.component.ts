@@ -1909,8 +1909,11 @@ export class AppointmentComponent implements OnInit {
                         }
                     }
                     if (found) {
+                        if(this.users.length !==0){
+                            this.users.push(this.userN);
+                        }
                         // addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
-                        this.users.push(this.userN);
+                       
                     }
                     if (this.users.length !== 0) {
                         if (this.selectUser) {
@@ -2025,8 +2028,11 @@ export class AppointmentComponent implements OnInit {
             (users: any) => {
                 // const filteredUser = users.filter(user => user.status === 'ACTIVE');
                 this.users = users;
+                if(this.users.length !==0){
+                    this.users.push(this.userN);
+                }
                 // this.users = filteredUser;
-                this.users.push(this.userN);
+              
                 if (this.selectUser) {
                     const userDetails = this.users.filter(user => user.id === this.selectUser);
                     this.selected_user = userDetails[0];
