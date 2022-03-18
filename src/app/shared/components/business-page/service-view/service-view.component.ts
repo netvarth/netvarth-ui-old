@@ -998,14 +998,16 @@ export class ServiceViewComponent implements OnInit {
   }
   bttonClick(item, type?) {
 
-    if(type=='checkavailability') {
-      item['location']=this.selectedLocation;
-      item['service'] = item['item']
-      console.log("item..",item)
-      this.opencheckavail(item)
+    // if(type=='checkavailability') {
+    //   item['location']=this.selectedLocation;
+    //   item['service'] = item['item']
+    //   console.log("item..",item)
+    //   this.opencheckavail(item)
       
-    }
-    else if (item.type == 'waitlist') {
+    // }
+
+    // else 
+    if (item.type == 'waitlist') {
       this.checkinClicked(this.selectedLocation, item.item)
     } else if (item.type == 'appt') {
       this.appointmentClicked(this.selectedLocation, item.item);
@@ -1445,14 +1447,16 @@ export class ServiceViewComponent implements OnInit {
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
         // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
+      } else if(actionObj['action'] === 'availability'){
+        this.opencheckavail(actionObj);
       } else {
         this.checkinClicked(actionObj['location'], actionObj['service']);
       }
-    } else if (actionObj['type'] == 'checkavailability') {
-      this.opencheckavail(actionObj);
     } else if (actionObj['type'] === 'appt') {
       if (actionObj['action'] === 'view') {
         // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
+      } else if(actionObj['action'] === 'availability'){
+        this.opencheckavail(actionObj);
       } else {
         this.appointmentClicked(actionObj['location'], actionObj['service']);
       }

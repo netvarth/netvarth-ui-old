@@ -339,7 +339,7 @@ border-left: none !important;
   margin-top: 10px;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #dadcdf;
+  border: 1px solid #cdc8c9;
 }
 /* .chk-btns-div mat-chip {
   width: 100%;
@@ -617,6 +617,9 @@ box-shadow: 4px 4px 5px gainsboro;
   }
 }
 @media (min-width:400px) and (max-width:765px){
+  .plMob{
+    margin-left: 0px !important;
+  }
   .resImg{
     /* margin-top: -8rem; */
     /* height: 285px !important;
@@ -632,12 +635,16 @@ box-shadow: 4px 4px 5px gainsboro;
     width: 150px !important;
     border-bottom-left-radius: 0px !important;
     border-top-left-radius: 0px !important;
-    border-top-right-radius: 50px !important;
-    border-bottom-right-radius: 50px !important;
-    margin-left: -25px !important;
+    border-top-right-radius:  25px !important;
+    border-bottom-right-radius:  25px !important;
+    /* margin-left: -25px !important; */
     margin-top: -15px !important;
+    object-fit: fill;
   
   }
+  .reverseDetails{
+    margin-left: -24px !important;
+  } 
   .cardTop{
     transform: rotateX(45deg) !important; 
     margin-top: 0px !important;
@@ -650,6 +657,7 @@ box-shadow: 4px 4px 5px gainsboro;
     padding: 0px !important;
     /* height: 260px!important; */
     font-size: 18px !important;
+    width: auto !important;
   }
   .mobile-donation-for-styling{
     border-radius: 0px !important;
@@ -659,7 +667,14 @@ box-shadow: 4px 4px 5px gainsboro;
   .textChange{
     font-size: 10px !important;
   padding: 10px !important;
-  color: #c2cee6 !important;
+  /* font-weight: lighter !important;
+  word-spacing: 5px !important; */
+    font-weight: 700;
+    z-index: 99999;
+    opacity: 100%;
+    color: #c2cee6 !important;
+    filter: brightness(1.75);
+    line-height: normal;
   }
   .resCard{
     gap: 0px !important;
@@ -671,7 +686,7 @@ box-shadow: 4px 4px 5px gainsboro;
     padding: 0px !important;
   }
   .resPaymrntDetails{
-    display: flex !important;
+    /* display: flex !important;
     justify-content: center !important;
     text-align: center;
     font-size: 15px;
@@ -681,6 +696,20 @@ box-shadow: 4px 4px 5px gainsboro;
     color: #fff;
     border-radius: 5px;
     padding: 10px;
+    width: auto !important;
+    margin: 15px; */
+
+    display: flex !important;
+    justify-content: left !important;
+    text-align: left;
+    font-size: 15px;
+    font-weight: bold;
+   
+    /* background-color: #133072; */
+    color: #133072;
+    border-radius: 5px;
+    width: auto !important;
+    margin: 5px;
   }
   .advanceSettings{
     width: 25rem !important;
@@ -689,7 +718,13 @@ box-shadow: 4px 4px 5px gainsboro;
     text-align: center !important;
   }
 }
+.plMob{
+  margin-left: -10px 
+}
 @media (max-width:400px) {
+  .plMob{
+    margin-left: 0px !important;
+  }
   .customText{
     text-align: center !important;
   }
@@ -698,12 +733,16 @@ box-shadow: 4px 4px 5px gainsboro;
     width: 150px !important;
     border-bottom-left-radius: 0px !important;
     border-top-left-radius: 0px !important;
-    border-top-right-radius: 50px !important;
-    border-bottom-right-radius: 50px !important;
+    border-top-right-radius: 25px !important;
+    border-bottom-right-radius: 25px !important;
     /* margin-left: -10px !important; */
-    margin-left: -15px !important;
+    /* margin-left: -15px !important; */
     /* margin-right: 1px !important; */
     margin-top: -15px !important;
+    object-fit: fill;
+  }
+  .reverseDetails{
+    margin-left: -24px !important;
   }
   .resBgChange{
     text-align: left  !important;
@@ -713,6 +752,7 @@ box-shadow: 4px 4px 5px gainsboro;
     padding: 0px !important;
     /* height: 305px!important; */
     font-size: 18px !important;
+    width: auto !important;
   }
   .cardTop{
     transform: rotateX(45deg) !important; 
@@ -727,6 +767,12 @@ box-shadow: 4px 4px 5px gainsboro;
     font-size: 10px !important;
   padding: 10px !important;
   color: #c2cee6 !important;
+  font-weight: 700;
+    z-index: 99999;
+    opacity: 100%;
+    color: #c2cee6 !important;
+    filter: brightness(1.75);
+    line-height: normal;
   }.resCard{
     gap: 0px !important;
    }
@@ -752,14 +798,16 @@ box-shadow: 4px 4px 5px gainsboro;
   .resPaymrntDetails{
     /* display: contents !important; */
     display: flex !important;
-    justify-content: center !important;
-    text-align: center;
+    justify-content: left !important;
+    text-align: left;
     font-size: 15px;
     font-weight: bold;
    
-    background-color: #133072;
-    color: #fff;
+    /* background-color: #133072; */
+    color: #133072;
     border-radius: 5px;
+    width: auto !important;
+    margin: 5px;
   }
   .advanceSettings{
     width: 25rem !important;
@@ -770,6 +818,7 @@ box-shadow: 4px 4px 5px gainsboro;
   border-top-left-radius: 50px ;
   border-top-right-radius: 50px ;
   border-bottom-right-radius: 50px ;
+  height: 483px ;
 }
 @media (max-width:765px) and (min-width:576px){
   .mobile-donation-for-styling{
@@ -790,16 +839,26 @@ textarea:disabled{
   overflow: hidden;
 }
 .resPaymrntDetails{
-  display: none;
-  text-align: center;
+  display: flex !important;
+  justify-content: left !important;
+  text-align: left;
   font-size: 15px;
   font-weight: bold;
  
-  background-color: #133072;
-  color: #fff;
+  /* background-color: #133072; */
+  color: #133072;
   border-radius: 5px;
-  padding: 10px;
+  /* padding: 10px; */
+  width: 26rem;
+    margin: 5px;
 }
 .advanceSettings{
   width: 27.5rem !important;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* margin: 0;  */
 }

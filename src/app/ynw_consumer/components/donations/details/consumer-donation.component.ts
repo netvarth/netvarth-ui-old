@@ -292,6 +292,11 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     from_iOS = false;
     paymentWindow: Window;
     showAdvancedSettings = false;
+     tempDonorName:any;
+      tempDonorEmail:any;
+      tempDonorPh:any;
+      tempDonorDetails:any;
+      tempErrorDonationAmmount:any
     oneTimeInfo: any;
     onetimeQuestionnaireList;
     constructor(public fed_service: FormMessageDisplayService,
@@ -605,19 +610,20 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (dnrFirst === '') {
             this.donorerror = 'Please enter the first name';
             return;
-        } else if (dnrLast === '') {
+        }  if (dnrLast === '') {
             this.donorlasterror = 'Please enter the last name';
             return;
-        } else {
+        } 
+        // else {
             this.donorFirstName = dnrFirst;
             this.donorLastName = dnrLast;
-            // setTimeout(() => {
-            //     this.action = '';
-            // }, 500);
-            // this.closebutton.nativeElement.click();
+            setTimeout(() => {
+                this.action = '';
+            }, 500);
+            this.closebutton.nativeElement.click();
             this.donorName = dnrFirst + ' ' + dnrLast;
             // this.donorName = this.donor.trim();
-        }
+        // }
     }
     addPhone() {
         this.phoneError = '';
@@ -626,22 +632,30 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         const curphone = this.selected_phone;
         const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
         const result = pattern.test(curphone);
-        if (this.selected_phone === null) {
-            this.phoneerror = 'Please enter the mobile number';
+        const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+        const result1 = pattern1.test(curphone);
+        if (this.selected_phone === '') {
+            this.phoneerror = Messages.BPROFILE_PHONENO;
             return;
-        } else if (!result) {
-            this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Please enter a valid mobile phone number';
-            console.log('Message', Messages.BPROFILE_PRIVACY_PHONE_INVALID)
+        }  if (!result) {
+            this.phoneerror ='Please enter valid phone number'// Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
+            // console.log('Message',Messages.BPROFILE_PRIVACY_PHONE_INVALID)
             return;
-        } else {
+        } 
+if (!result1) {
+            this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Mobile number should have 10 digits';
+            return;
+        }
+        
+         {
             this.consumerPhoneNo = this.selected_phone;
             this.userPhone = this.selected_phone;
             this.edit = true;
-            // setTimeout(() => {
-            //     this.action = '';
-            // }, 500);
-            // this.closebutton.nativeElement.click();
-        }
+            setTimeout(() => {
+                this.action = '';
+            }, 500);
+            this.closebutton.nativeElement.click();
+        }   
     }
     editPhone() {
         this.edit = false;
@@ -660,19 +674,37 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.payEmail1 = '';
 
     }
-    addDonorDetails(donorNameDetails: string = 'donor', donorPh: string = 'phone', donorEmail: string = 'email') {
-        console.log(donorNameDetails)
-        setTimeout(() => {
-            // this.action = '';
-            this.addDonor(), this.addPhone(), this.addEmail()
-        }, 500);
-        this.closebutton.nativeElement.click();
+    addDonorDetails(){
+        if(this.tempDonorDetails.startsWith('f') ||this.tempDonorDetails.startsWith('l')){
+            this.addDonor()
+        }
+         if(this.tempDonorDetails.startsWith('p')){
+             this.addPhone()
+        }
+         if(this.tempDonorDetails.startsWith('e')){
+            this.addEmail()
+       }
+//        else{
+//         setTimeout(() => {
+//             this.action = '';
+//         }, 500);
+//         this.closebutton.nativeElement.click();
+//    }
+       
+        
         // this.addDonor()
-        //  this.addPhone() 
-        //  this.addEmail()
-
+        // this.addPhone()
+        // this.addEmail()  
     }
-    onSubmit(form_data) {
+    donorDetails(donorDetails:any){
+        console.log('donorDetails...........',donorDetails)
+        this.tempDonorDetails=donorDetails
+        // if(this.tempDonorDetails!=undefined){
+        //     this.tempDonorDetails=donorDetails
+        // }
+        // else{
+        //     this.tempDonorDetails=undefined
+        // }
 
     }
     onButtonBeforeHook() {
@@ -1058,10 +1090,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (stat && stat1) {
             if (this.payEmail === this.payEmail1) {
                 this.userEmail = this.payEmail;
-                // setTimeout(() => {
-                //     this.action = '';
-                // }, 500);
-                // this.closebutton.nativeElement.click();
+                setTimeout(() => {
+                    this.action = '';
+                }, 500);
+                this.closebutton.nativeElement.click();
             } else {
                 this.email1error = 'Email and Re-entered Email do not match';
             }
@@ -1321,6 +1353,21 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.payEmail1 = '';
     }
     isNumeric(evt) {
+        console.log(evt)
+    //     var key;
+    // key = evt.charCode; 
+    // if((key > 47 && key < 58)){
+    //     return ((key > 47 && key < 58) );
+    // } else{
+    //     this.tempErrorDonationAmmount='Please enter valid ammount '
+
+    // }
+    // if(evt.charCode<58 && evt.charCode>47 ){
+    //     this.tempErrorDonationAmmount=''
+    //     return this.sharedFunctionobj.isNumeric(evt);
+    // }else{
+
+    // }
         return this.sharedFunctionobj.isNumeric(evt);
     }
     showServiceDetail(serv, busname) {

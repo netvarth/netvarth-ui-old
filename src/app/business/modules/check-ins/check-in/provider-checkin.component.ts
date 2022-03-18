@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,HostListener} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
@@ -264,6 +264,8 @@ export class ProviderCheckinComponent implements OnInit {
     cusId;
     servId;
     accId;
+    screenWidth;
+    small_device_display = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -381,6 +383,20 @@ export class ProviderCheckinComponent implements OnInit {
             }
         });
         this.display = "none";
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+      this.screenWidth = window.innerWidth;
+      if (this.screenWidth <= 700) {
+      } else {
+        this.small_device_display = false;
+      }
+      if (this.screenWidth <= 1040) {
+        this.small_device_display = true;
+      } else {
+        this.small_device_display = false;
+      }
     }
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -1529,7 +1545,45 @@ export class ProviderCheckinComponent implements OnInit {
             });
     }
     addCheckInProvider(post_Data) {
-        this.api_loading = true;
+        if(this.type === 'followup'){
+            this.api_loading = true;
+            this.shared_services.addProviderCheckin(post_Data)
+                .subscribe((data) => {
+                    const retData = data;
+                    // let retUuid;
+                    let parentUid;
+                    Object.keys(retData).forEach(key => {
+                        //  retUuid = retData[key];
+                        this.trackUuid = retData[key];
+                        parentUid = retData['parent_uuid'];
+                    });
+                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                        this.submitQuestionnaire(parentUid);
+                    } else {
+                        this.router.navigate(['provider', 'check-ins']);
+                        if (this.settingsjson.showTokenId) {
+                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+                        } else {
+                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
+                        }
+                    }
+                    if (this.selectedMessage.files.length > 0) {
+                        this.consumerNoteAndFileSave(parentUid);
+                    }
+                    this.showCheckin = false;
+                    this.searchForm.reset();
+                    // this.router.navigate(['provider', 'check-ins']);
+    
+                },
+                    error => {
+                        // this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                        this.waitlist_for = [];
+                        this.api_loading = false;
+                    });
+        }
+        else{
+            this.api_loading = true;
         this.shared_services.addProviderCheckin(post_Data)
             .subscribe((data) => {
                 const retData = data;
@@ -1561,9 +1615,9 @@ export class ProviderCheckinComponent implements OnInit {
                 error => {
                     // this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                    this.waitlist_for = [];
                     this.api_loading = false;
                 });
+        }
     }
     submitQuestionnaire(uuid) {
         const dataToSend: FormData = new FormData();
@@ -2003,8 +2057,10 @@ export class ProviderCheckinComponent implements OnInit {
                         }
                     }
                     if (found) {
+                        if(this.users.length !==0){
+                            this.users.push(this.userN);
+                        }
                         // addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
-                        this.users.push(this.userN);
                     }
                     if (this.users.length !== 0) {
                         if (this.selectUser) {
@@ -2119,8 +2175,10 @@ export class ProviderCheckinComponent implements OnInit {
             (users: any) => {
                 // const filteredUser = users.filter(user => user.status === 'ACTIVE');
                 this.users = users;
+                if(this.users.length !==0){
+                    this.users.push(this.userN);
+                }
                 // this.users = filteredUser;
-                this.users.push(this.userN);
                 if (this.selectUser) {
                     const userDetails = this.users.filter(user => user.id === this.selectUser);
                     this.selected_user = userDetails[0];

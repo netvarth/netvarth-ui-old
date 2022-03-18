@@ -22,6 +22,11 @@
     height: 90px;
   }
 }
+.fa .fa-hourglass-star{
+  width: 40px !important;
+  word-wrap: normal;
+  height: 40px !important;
+}
 @media (max-width: 520px) {
   .action-box {
     width: 100px;
@@ -35,6 +40,11 @@
   }
   .customerdetails-icon {
     width: 20px !important;
+  }
+  .textIcon{
+    width: 40px !important;
+    height: 40px !important;
+    color: blue !important;
   }
   .action-box .zoom-icon, .action-box .wtsapaud-icon, .action-box .wtsapvid-icon {
     width: 50px !important;

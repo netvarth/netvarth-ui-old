@@ -199,7 +199,7 @@
               </div>
             <div class="card" *ngIf="showCheckin && !showQuestionnaire && !showFollowup && !foundMultipleCustomers">
                 <div class="">
-                    <div class="servicefor-outer btborder">
+                    <div class="">
                         <div>
                             <div class="row">
                               <ul class="availer-ul pl-0" *ngIf="thirdParty === ''">
@@ -209,9 +209,13 @@
                                       <img src="../../../../../assets/images/avatar.png" width="60px" height="60px" class="my-auto">
                                     </div>
                                     <div class="ml-3">
-                                      {{waitfor.firstName | capitalizeFirst}} {{waitfor.lastName | capitalizeFirst}}
+                                      {{waitfor.firstName | capitalizeFirst}} {{waitfor.lastName | capitalizeFirst}} &nbsp; 
+                                      <span *ngIf="thirdParty === '' && queuejson.length > 0 && small_device_display" (click)="openModal()">
+                                        <a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                    </span>
                                       <div *ngIf="jaldeeId" class="consumer-id">
-                                        {{customer_label | capitalizeFirst}} id: {{jaldeeId}}
+                                        {{customer_label | capitalizeFirst}} id: {{jaldeeId}} 
+                                        
                                       </div>
                                     </div>
                                   </li>
@@ -219,11 +223,15 @@
                               </ul>
                             </div>
                             <div class="row">
-                              <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
+                              <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0 && !small_device_display">
                                 <mat-chip class="pro-action" (click)="openModal()"><a>Add /
                                   Change Member </a>
                                 </mat-chip>
                               </mat-chip-list>
+                              <!-- <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0 && small_device_display">
+                                <mat-chip class="pro-action" (click)="openModal()"><a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                </mat-chip>
+                              </mat-chip-list> -->
                             </div>
                         </div>
                         <div *ngIf="thirdParty !== ''" class="row">
@@ -407,7 +415,7 @@
                                 <ng-container *ngIf="queuejson.length == 0 && queueQryExecuted">
                                     <span
                                         class='no-queue-available text-danger'>Appointment{{not_accepted_for_this_date}}</span>
-                                </ng-container>
+                                </ng-container><br>
                                 <ng-container *ngIf="queuejson.length > 0 && servicesjson.length == 0">
                                     <span class='no-queue-available text-danger'>{{no_services_avail_cap}}</span>
                                 </ng-container>
@@ -448,6 +456,7 @@
                         
                     </div>
                     <div>
+                        <br>
                         <ng-container *ngIf="queuejson.length > 0 && servicesjson.length > 0">
                             <div class="col-md-12 form-group queue-outer mgn-bt-20 no-padding"
                                 *ngIf="freeSlots.length>0">
@@ -871,7 +880,7 @@
                           
                       </div>
                       
-                  </div>
+                  </div><br><br>
                   <div>
                       <ng-container *ngIf="queuejson.length > 0">
                           <div class="col-md-12 form-group queue-outer mgn-bt-20 no-padding"

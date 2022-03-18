@@ -184,6 +184,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   tempActiveSchedules: any = [];
   selQidsforHistory: any = [];
   board_count = 0;
+  time = { hour: 0, minute: 0 };
+
   tomorrowDate;
   filter_date_start_min = null;
   filter_date_start_max = null;
@@ -1923,10 +1925,34 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   getSingleTime(slot) {
+   // console.log("Appt Time :",slot)
     const slots = slot.split('-');
     return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
-
+  addZero(i) {
+    if (i < 10) {
+      i = '0' + i;
+    }
+    return i;
+  }
+  getTimeinMin() {
+    const time_min = this.time.hour * 60 + this.time.minute;
+    return typeof time_min === "number" ? time_min : 0;
+  }
+ getTimeMinute(time){
+  let hr;
+  let min; 
+  if(time >=60){
+    hr = Math.floor(time / 60 );
+    min =  Math.floor(time % 60);
+    return 'delayed by ' + hr+ 'hr'+':'+min + 'mins';
+  }
+  if(time<60){
+   min =  Math.floor(time % 60);
+   return 'delayed by ' +min + 'mins';
+  }
+ 
+ }
   apptClicked(type, time?) {
     if (this.schedules.length === 0) {
       this.snackbarService.openSnackBar('No active schedules', { 'panelClass': 'snackbarerror' });
@@ -1940,6 +1966,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       let serviceId;
       if (time) {
         slot = time.time;
+        console.log("Slot :",slot);
         scheduleId = time.scheduleId;
         const qfilter = this.activeSchedules.filter(q => q.id === time.scheduleId);
         if (qfilter && qfilter[0].services && qfilter[0].services.length > 0) {
@@ -2410,6 +2437,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   goCheckinDetail(checkin) {
+    console.log("Details :",checkin)
     this.lStorageService.setitemonLocalStorage('filter', this.setFilterForApi());
     if (this.time_type === 3) {
       this.groupService.setitemToGroupStorage('appthP', this.filter.page || 1);

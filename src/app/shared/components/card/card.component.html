@@ -3,7 +3,7 @@
 
 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" [ngClass]="theme?theme:''"
     *ngIf="((service && service.serviceAvailability) || item.type=='donation') && !source">
-    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding pointer-cursor card-outer-cont" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)">
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding pointer-cursor card-outer-cont" (click)="cardActionPerformed(item.type, 'availability', service, loc, null, $event)">
         <div class="col-md-9 col-xs-9 col-sm-9 col-lg-9 ">
             <h5 class="line-clamp-ln2 mgn-bt-5"
                 [ngClass]="{'no-padding':service.serviceType && service.serviceType == 'virtualService'}">{{service.name
@@ -56,7 +56,7 @@
         </div>
         <div [ngClass]="(timings&&personsAheadText)?'col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding':'col-sm-12 col-xs-12 col-md-12 col-lg-12 no-padding'">
             <div class="no-padding card-head-grey" *ngIf="timings">{{timingCaption}}</div>
-            <h6 class="no-padding " *ngIf="timings">{{timings}}<i class="pointer-cursor seemore-link" *ngIf="item.type==='appt'" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)">, see more...</i>
+            <h6 class="no-padding " *ngIf="timings">{{timings}}<i class="pointer-cursor seemore-link" *ngIf="item.type==='appt'" (click)="cardActionPerformed(item.type, 'availability', service, loc, null, $event)">, see more...</i>
                 <!-- <i class="fa fa-calendar pointer-cursor" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)"></i> -->
             </h6>
         </div>
@@ -83,7 +83,7 @@
         </div>
         <div [ngClass]="(timings&&personsAheadText)?'col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding':'col-sm-12 col-xs-12 col-md-12 col-lg-12 no-padding'">
             <div class="no-padding card-head-grey" *ngIf="timings">{{timingCaption}}</div>
-            <h6 class="no-padding " *ngIf="timings">{{timings}}<i class="pointer-cursor seemore-link" *ngIf="item.type==='appt'" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)">, see more...</i>
+            <h6 class="no-padding " *ngIf="timings">{{timings}}<i class="pointer-cursor seemore-link" *ngIf="item.type==='appt'" (click)="cardActionPerformed(item.type, 'availability', service, loc, null, $event)">, see more...</i>
                 <!-- <i class="fa fa-calendar poin" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)"></i> -->
             </h6>
         </div>
@@ -514,8 +514,9 @@
             <div class="date mgn-lt-5" *ngIf="time_type!=1">
                 {{appointment.appmtDate | date: newTimeDateFormat}}</div>
             <div class="mgn-lt-5 date" *ngIf="time_type!=3">
-                <span class="greenc bold font11">{{getSingleTime(appointment.appmtTime)}}</span>
-            </div>
+                <span class="greenc bold font11">{{getSingleTime(appointment.appmtFor[0].apptTime)}}</span><br>
+                <span *ngIf="appointment.isApptDelayed === true && time_type === 1 || time_type === 2" style="color: rgb(255, 123, 0) !important;">{{getTimeMinute(appointment.apptDelay)}}</span>&nbsp;        
+                </div>
             <div class="box1 mgn-lt-5" [class.mgn-bt-minus]="appointment.provider">
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
                     *ngIf="item.type=='appointment-dashboard' && (appointment.appmtFor[0].firstName || appointment.appmtFor[0].lastName)">

@@ -252,9 +252,13 @@
                         <img src="../../../../../assets/images/avatar.png" width="60px" height="60px" class="my-auto">
                       </div>
                       <div class="ml-3">
-                        {{waitfor.firstName | capitalizeFirst}} {{waitfor.lastName | capitalizeFirst}}
+                        {{waitfor.firstName | capitalizeFirst}} {{waitfor.lastName | capitalizeFirst}} &nbsp; 
+                        <span *ngIf="thirdParty === '' && queuejson.length > 0 && small_device_display" (click)="openModal()">
+                          <a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                      </span>
                         <div *ngIf="jaldeeId" class="consumer-id">
                           {{customer_label | capitalizeFirst}} id: {{getJaldeeId(waitfor)}}
+                          
                         </div>
                       </div>
                     </li>
@@ -262,7 +266,7 @@
                 </ul>
               </div>
               <div class="row">
-                <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
+                <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0 && !small_device_display">
                   <mat-chip class="pro-action" (click)="openModal()"><a>Add /
                       Change Member </a>
                   </mat-chip>
@@ -283,7 +287,7 @@
             </div>
             <div class="date-outer" *ngIf="partySizeRequired">
               <div class="form-group party-size">
-                <label class="col-form-label">{{enter_party_size_cap}}1233</label>
+                <label class="col-form-label">{{enter_party_size_cap}}</label>
                 <input class="inputbox" class="partysize-input" type="text" #partysize [(ngModel)]="enterd_partySize"
                   (focus)="clearerrorParty()" (blur)="checkPartySize(partysize.value)" maxlength="5" />
                 <div class="error" *ngIf="partyapi_error">{{partyapi_error}}</div>

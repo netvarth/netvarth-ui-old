@@ -2395,22 +2395,22 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   
   }
   cardClicked(actionObj) {
+    console.log(JSON.stringify(actionObj) + 'actionObj')
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessjson.name);
+      } else if(actionObj['action'] === 'availability'){
+        this.opencheckavail(actionObj);
       } else {
         this.checkinClicked(actionObj['location'], actionObj['service']);
       }
 
-    }
-    else if(actionObj['type']=='checkavailability') {
-     
-      this.opencheckavail(actionObj);
-    }
-    else if (actionObj['type'] === 'appt') {
+    } else if (actionObj['type'] === 'appt') {
       if (actionObj['action'] === 'view') {
         
         this.showServiceDetail(actionObj['service'], this.businessjson.name);
+      } else if(actionObj['action'] === 'availability'){
+        this.opencheckavail(actionObj);
       } else {
        
         this.appointmentClicked(actionObj['location'], actionObj['service']);

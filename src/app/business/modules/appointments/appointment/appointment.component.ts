@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , HostListener } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
@@ -264,6 +264,8 @@ export class AppointmentComponent implements OnInit {
     accId;
     memberJaldeeId: any;
     tday = new Date();
+    screenWidth;
+    small_device_display = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -384,6 +386,19 @@ export class AppointmentComponent implements OnInit {
                 this.initAppointment(this.thirdParty);
             }
         });
+    }
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+      this.screenWidth = window.innerWidth;
+      if (this.screenWidth <= 700) {
+      } else {
+        this.small_device_display = false;
+      }
+      if (this.screenWidth <= 1040) {
+        this.small_device_display = true;
+      } else {
+        this.small_device_display = false;
+      }
     }
     openthirdpopup(domain,showOther,customer_label) {
         this.thirdpartyoptions = this.dialog.open(ThirdpartypopupComponent, {
@@ -1459,6 +1474,7 @@ export class AppointmentComponent implements OnInit {
             });
     }
     addAppointmentInProvider(post_Data) {
+        if(this.type === 'followup'){
         this.api_loading = true;
         //  this.shared_services.addProviderCheckin(post_Data)
         this.shared_services.addProviderAppointment(post_Data)
@@ -1501,6 +1517,50 @@ export class AppointmentComponent implements OnInit {
                     this.waitlist_for = [];
                     this.api_loading = false;
                 });
+            }
+            else{
+                this.api_loading = true;
+        //  this.shared_services.addProviderCheckin(post_Data)
+        this.shared_services.addProviderAppointment(post_Data)
+            .subscribe((data) => {
+                if (this.waitlist_for.length !== 0) {
+                    for (const list of this.waitlist_for) {
+                        if (list.id === 0) {
+                            list['id'] = this.customer_data.id;
+                        }
+                    }
+
+                }
+                const retData = data;
+                let retUuid;
+                Object.keys(retData).forEach(key => {
+                    retUuid = retData[key];
+                    this.trackUuid = retData[key];
+                });
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    this.submitQuestionnaire(retUuid);
+                } else {
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+
+                    this.router.navigate(['provider', 'appointments']);
+                }
+                if (this.selectedMessage.files.length > 0 || this.consumerNote !== '') {
+                    this.consumerNoteAndFileSave(retUuid);
+                }
+                // if (this.settingsjson.calculationMode !== 'NoCalc' || (this.settingsjson.calculationMode === 'NoCalc' && !this.settingsjson.showTokenId)) {
+                // } else if (this.settingsjson.calculationMode === 'NoCalc' && this.settingsjson.showTokenId) {
+                //    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+                // }
+                this.showCheckin = false;
+                this.searchForm.reset();
+                // this.router.navigate(['provider', 'appointments']);
+            },
+                error => {
+                    // this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.api_loading = false;
+                }); 
+            }
     }
     submitQuestionnaire(uuid) {
         const dataToSend: FormData = new FormData();
@@ -1907,8 +1967,11 @@ export class AppointmentComponent implements OnInit {
                         }
                     }
                     if (found) {
+                        if(this.users.length !==0){
+                            this.users.push(this.userN);
+                        }
                         // addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
-                        this.users.push(this.userN);
+                       
                     }
                     if (this.users.length !== 0) {
                         if (this.selectUser) {
@@ -2023,8 +2086,11 @@ export class AppointmentComponent implements OnInit {
             (users: any) => {
                 // const filteredUser = users.filter(user => user.status === 'ACTIVE');
                 this.users = users;
+                if(this.users.length !==0){
+                    this.users.push(this.userN);
+                }
                 // this.users = filteredUser;
-                this.users.push(this.userN);
+              
                 if (this.selectUser) {
                     const userDetails = this.users.filter(user => user.id === this.selectUser);
                     this.selected_user = userDetails[0];
