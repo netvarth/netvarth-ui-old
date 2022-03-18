@@ -26,8 +26,6 @@ import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.ser
 import { SubSink } from '../../../../../../node_modules/subsink';
 import { PaytmService } from '../../../../shared/services/paytm.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
-// import { AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig,Image} from '@ks89/angular-modal-gallery';
-// import { ButtonsConfig, ButtonsStrategy, ButtonType } from '@ks89/angular-modal-gallery';
 import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image } from '@ks89/angular-modal-gallery';
 import { AuthService } from '../../../../shared/services/auth-service';
 
@@ -143,7 +141,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     main_heading;
     dispCustomernote = false;
     dispCustomerEmail = false;
-    CweekDays = { 0: 'Sun', 1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri', 6: 'Sat' };
     queueQryExecuted = false;
     todaydate;
     estimateCaption = Messages.EST_WAIT_TIME_CAPTION;
@@ -233,7 +230,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     customId: any;
     questionnaireList: any = [];
     questionAnswers;
-    bookStep = 'donation';
+    bookStep;
     loading = true;
     @ViewChild('closebutton') closebutton;
     accountId;
@@ -246,7 +243,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     razorpayEnabled = false;
     interNatioanalPaid = false;
     paymentmodes: any;
-    customer_countrycode: any;
     from: string;
     indian_payment_modes: any = [];
     non_indian_modes: any = [];
@@ -295,7 +291,9 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     loggedIn = true;
     from_iOS = false;
     paymentWindow: Window;
-     showAdvancedSettings = false;
+    showAdvancedSettings = false;
+    oneTimeInfo: any;
+    onetimeQuestionnaireList;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -338,6 +336,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 if (params.isFrom && params.isFrom == 'providerdetail') {
                     this.from = 'providerdetail';
                 }
+                this.setSystemDate();
                 // this.getConsumerQuestionnaire();
                 if (params.customId) {
                     this.customId = params.customId;
@@ -394,92 +393,130 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             });
         }
     }
+    setSystemDate() {
+        this.shared_services.getSystemDate()
+            .subscribe(
+                res => {
+                    this.server_date = res;
+                    this.lStorageService.setitemonLocalStorage('sysdate', res);
+                });
+    }
     initDonation() {
-        this.getConsumerQuestionnaire();
-        this.getServicebyLocationId(this.sel_loc);
-        this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-        const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-        // this.api_loading = false;
-        if (activeUser) {
-            this.customer_data = activeUser;
-        }
-        this.donorName = this.donor = this.customer_data.firstName + ' ' + this.customer_data.lastName;
-        this.donorFirstName = this.customer_data.firstName;
-        this.donorLastName = this.customer_data.lastName;
-        this.donorfirst = this.customer_data.firstName;
-        this.donorlast = this.customer_data.lastName;
-        this.main_heading = this.checkinLabel; // 'Check-in';
-        this.maxsize = 1;
-        this.step = 1;
-        this.getPaymentModes();
-        const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
-        this.customer_countrycode = credentials.countryCode;
-        console.log("credentioooo" + credentials.countryCode);
-        this.getProfile();
-        this.gets3curl();
-        this.getFamilyMembers();
-        this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
-        this.today = new Date(this.today);
-        const dd = this.today.getDate();
-        const mm = this.today.getMonth() + 1; // January is 0!
-        const yyyy = this.today.getFullYear();
-        let cday = '';
-        if (dd < 10) {
-            cday = '0' + dd;
-        } else {
-            cday = '' + dd;
-        }
-        let cmon;
-        if (mm < 10) {
-            cmon = '0' + mm;
-        } else {
-            cmon = '' + mm;
-        }
-        const dtoday = yyyy + '-' + cmon + '-' + cday;
-        this.todaydate = dtoday;
-        this.maxDate = new Date((this.today.getFullYear() + 4), 12, 31);
-        this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
-        this.revealphonenumber = true;
-        this.activaterouterobj.queryParams.subscribe(qparams => {
-            console.log('qparams', qparams)
-            if (qparams.src) {
-                this.pSource = qparams.src;
-            }
-            if (qparams && qparams.theme) {
-                this.theme = qparams.theme;
-            }
-            this.businessjson = [];
-            this.servicesjson = [];
-
-            this.image_list_popup = [];
-            this.catalogimage_list_popup = [];
-            this.galleryjson = [];
-            this.deptUsers = [];
-            if (qparams.psource) {
-                this.pSource = qparams.psource;
-                if (qparams.psource === 'business') {
-                    this.loading = true;
-                    this.showDepartments = false;
-                    setTimeout(() => {
-                        this.loading = false;
-                    }, 2500);
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.todaydate = _this.dateTimeProcessor.getToday(_this.server_date);
+            _this.activaterouterobj.queryParams.subscribe(qparams => {
+                console.log('qparams', qparams)
+                if (qparams.src) {
+                    _this.pSource = qparams.src;
                 }
+                if (qparams && qparams.theme) {
+                    _this.theme = qparams.theme;
+                }
+                _this.businessjson = [];
+                _this.servicesjson = [];
+                _this.image_list_popup = [];
+                _this.catalogimage_list_popup = [];
+                _this.galleryjson = [];
+                _this.deptUsers = [];
+                if (qparams.psource) {
+                    _this.pSource = qparams.psource;
+                    if (qparams.psource === 'business') {
+                        _this.loading = true;
+                        _this.showDepartments = false;
+                        setTimeout(() => {
+                            _this.loading = false;
+                        }, 2500);
+                    }
+                }
+            });
+            const activeUser = _this.groupService.getitemFromGroupStorage('ynw-user');
+            if (activeUser) {
+                _this.setDonorInfo(activeUser);
             }
-        });
+            _this.main_heading = _this.checkinLabel; // 'Check-in';
+            _this.maxsize = 1;
+            _this.step = 1;
+            _this.getPaymentModes();
+            _this.gets3curl();
+            _this.sharedFunctionobj.getProfile().then(data => {
+                _this.setProfileInfo(data);
+                _this.getConsumerQuestionnaire().then(
+                    (data) => {
+                        if (data) {
+                            _this.questionnaireList = data;
+                        }
+                        _this.loading = false;
+                        resolve(true);
+                    }
+                );
+            });
+        })
+
+    }
+    setDonorInfo(customerInfo) {
+        this.donorName = this.donor = customerInfo.firstName + ' ' + customerInfo.lastName;
+        this.donorFirstName = customerInfo.firstName;
+        this.donorLastName = customerInfo.lastName;
+        this.donorfirst = customerInfo.firstName;
+        this.donorlast = customerInfo.lastName;
+    }
+    setProfileInfo(data: any) {
+        this.userData = data;
+        if (this.userData.userProfile !== undefined) {
+            this.userEmail = this.userData.userProfile.email || '';
+            this.userPhone = this.userData.userProfile.primaryMobileNo || '';
+            this.dialCode = this.userData.userProfile.countryCode || '';
+            this.consumerPhoneNo = this.userPhone;
+        }
+        if (this.userEmail) {
+            this.emailExist = true;
+        } else {
+            this.emailExist = false;
+        }
     }
     ngOnInit() {
-
-        this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-        if (this.lStorageService.getitemfromLocalStorage('ios')) {
-            this.from_iOS = true;
+        const _this = this;
+        this.server_date = _this.lStorageService.getitemfromLocalStorage('sysdate');
+        if (_this.lStorageService.getitemfromLocalStorage('ios')) {
+            _this.from_iOS = true;
         }
-        this.gets3curl();
-        this.goThroughLogin().then(
+        // _this.gets3curl();
+        _this.goThroughLogin().then(
             (status) => {
                 console.log("Status:", status);
                 if (status) {
-                    this.initDonation();
-                    this.loggedIn = true;
+                    _this.initDonation().then(
+                        (status) => {
+                            console.log("init Donation Status1:", status);
+                            _this.getOneTimeInfo(_this.account_id).then(
+                                (questions) => {
+                                    console.log("Questions:", questions);
+                                    // _this.onetimeQuestionnaireList = { "questionnaireId": "WalkinConsumer", "id": 7, "labels": [{ "transactionType": "CONSUMERCREATION", "transactionId": 0, "channel": "ANY", "questionnaireId": "WalkinConsumer", "questions": [{ "id": 18, "labelName": "General Health3", "sequnceId": "", "fieldDataType": "bool", "fieldScope": "consumer", "label": "Do you have any chronic diseases?", "labelValues": ["Yes", "No"], "billable": false, "mandatory": false, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] } }] }] };
+                                    if (questions) {
+                                    _this.onetimeQuestionnaireList = questions;
+                                    if (_this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0) {
+                                        _this.bookStep = 'profile';
+                                    } else if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                        _this.bookStep = 'qnr';
+                                    } else {
+                                        _this.bookStep = 'donation';
+                                    }
+                                    _this.loggedIn = true;
+                                    } else {
+                                        if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                            _this.bookStep = 'qnr';
+                                        } else {
+                                            _this.bookStep = 'donation';
+                                        }
+                                        _this.loggedIn = true;
+                                    }
+                                    _this.loading = false;
+                                }
+                            )
+                        }
+                    );
+
                 } else {
                     this.loggedIn = false;
                 }
@@ -490,46 +527,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         e.target.style.height = "0px";
         e.target.style.height = (e.target.scrollHeight + 15) + "px";
     }
-    // getPaymentModes() {
-    //     this.paytmEnabled = false;
-    //     this.razorpayEnabled = false;
-    //     this.interNatioanalPaid = false;
-    //     this.shared_services.getPaymentModesofProvider(this.account_id,this.sel_ser, 'donation')
-    //         .subscribe(
-    //             data => {
-    //                 this.paymentmodes = data;
-    //                 if (this.paymentmodes[0].isJaldeeBank) {
-    //                     if (this.customer_countrycode == '+91') {
-    //                         this.paytmEnabled = true;
-    //                         this.interNatioanalPaid = true;
-    //                     }
-    //                     else {
-    //                         this.razorpayEnabled = true;
-    //                     }
-    //                 } else {
-    //                     if (this.customer_countrycode == '+91') {
-    //                         for (let modes of this.paymentmodes) {
-    //                             for (let gateway of modes.payGateways) {
-    //                                 if (gateway == 'PAYTM') {
-    //                                     this.paytmEnabled = true;
-    //                                 }
-    //                                 if (gateway == 'RAZORPAY') {
-    //                                     this.razorpayEnabled = true;
-    //                                 }
-    //                             }
-    //                         }
-    //                     }
-    //                     else {
-    //                         this.razorpayEnabled = true;
-    //                     }
-    //                 }
-    //                 console.log("paymode" + this.paymentmodes.payGateways);
-
-
-    //             },
-
-    //         );
-    // }
     getPaymentModes() {
         this.paytmEnabled = false;
         this.razorpayEnabled = false;
@@ -552,35 +549,25 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                     } else {
                         this.shownonIndianModes = false;
                     }
-
                 },
                 error => {
                     this.isPayment = false;
                     console.log(this.isPayment);
                 }
-
-
             );
     }
     indian_payment_mode_onchange(event) {
         this.selected_payment_mode = event.value;
         this.isInternatonal = false;
-
-
-
     }
     non_indian_modes_onchange(event) {
         this.selected_payment_mode = event.value;
         this.isInternatonal = true;
-
-
-
     }
     togglepaymentMode() {
         this.shownonIndianModes = !this.shownonIndianModes;
         this.selected_payment_mode = null;
     }
-
     createForm() {
         this.searchForm = this.fb.group({
             mobile_number: ['', Validators.compose([Validators.required, Validators.maxLength(10),
@@ -588,40 +575,9 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             first_last_name: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
         });
     }
-    getWaitlistMgr() {
-        const _this = this;
-        return new Promise<void>(function (resolve, reject) {
-            _this.subs.sink = _this.provider_services.getWaitlistMgr()
-                .subscribe(
-                    data => {
-                        _this.settingsjson = data;
-                        resolve();
-                    },
-                    () => {
-                        reject();
-                    }
-                );
-        });
-    }
-    getBussinessProfileApi() {
-        const _this = this;
-        return new Promise(function (resolve, reject) {
-            _this.subs.sink = _this.provider_services.getBussinessProfile()
-                .subscribe(
-                    data => {
-                        resolve(data);
-                    },
-                    () => {
-                        reject();
-                    }
-                );
-        });
-    }
     getFamilyMembers() {
         this.api_loading1 = true;
-
         let self_obj;
-
         self_obj = {
             'userProfile': {
                 'id': this.customer_data.id,
@@ -685,7 +641,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             //     this.action = '';
             // }, 500);
             // this.closebutton.nativeElement.click();
-        }    
+        }
     }
     editPhone() {
         this.edit = false;
@@ -702,32 +658,26 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.confrmshow = false;
         this.payEmail = email;
         this.payEmail1 = '';
-        // if (this.dispCustomerEmail) {
-        //     this.dispCustomerEmail = false;
-        // } else {
-        //     this.dispCustomerEmail = true;
-        // }
 
     }
-    addDonorDetails(donorNameDetails: string = 'donor',donorPh: string='phone',donorEmail: string='email'){
+    addDonorDetails(donorNameDetails: string = 'donor', donorPh: string = 'phone', donorEmail: string = 'email') {
         console.log(donorNameDetails)
         setTimeout(() => {
             // this.action = '';
-            this.addDonor(),  this.addPhone() , this.addEmail()
+            this.addDonor(), this.addPhone(), this.addEmail()
         }, 500);
         this.closebutton.nativeElement.click();
-            // this.addDonor()
-            //  this.addPhone() 
-            //  this.addEmail()
-            
+        // this.addDonor()
+        //  this.addPhone() 
+        //  this.addEmail()
+
     }
-    onSubmit(form_data){
+    onSubmit(form_data) {
 
     }
     onButtonBeforeHook() {
     }
     onButtonAfterHook() { }
-
 
     setAccountGallery(res) {
         console.log('response.........', res);
@@ -797,20 +747,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     openGallery() {
         this.image_list_bool = true
     }
-
-
-    // handleEmail(email) {
-    //     this.action = 'email';
-    //     this.confrmshow = false;
-    //     this.payEmail = email;
-    //     this.payEmail1 = '';
-    //     // if (this.dispCustomerEmail) {
-    //     //     this.dispCustomerEmail = false;
-    //     // } else {
-    //     //     this.dispCustomerEmail = true;
-    //     // }
-    // }
-
     validateEmail(mail) {
         const emailField = mail;
         const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
@@ -825,51 +761,27 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.phoneerror = '';
     }
     setServiceDetails(curservid) {
-        let serv;
-        for (let i = 0; i < this.servicesjson.length; i++) {
-            if (this.servicesjson[i].id === curservid) {
-                serv = this.servicesjson[i];
-                break;
-            }
+        // let serv;
+        // for (let i = 0; i < this.servicesjson.length; i++) {
+        //     if (this.servicesjson[i].id === curservid) {
+        //         serv = this.servicesjson[i];
+        //         break;
+        //     }
+        // }
+        // this.sel_ser_det = [];
+        this.sel_ser_det = this.servicesjson.filter(service => service.id === curservid)[0];
+        // this.sel_ser_det = serv;
+        console.log('donation details.......', this.sel_ser_det);
+        if (this.sel_ser_det && this.sel_ser_det['servicegallery']) {
+            this.setAccountGallery(this.sel_ser_det.servicegallery)
         }
-        this.sel_ser_det = [];
-        this.sel_ser_det = serv;
-        console.log('donation details.......', this.sel_ser_det)
-        this.setAccountGallery(this.sel_ser_det.servicegallery)
-    }
-    handleServiceSel(obj) {
-        // this.sel_ser = obj.id;
-        this.sel_ser = obj;
-        this.setServiceDetails(obj);
-        this.resetApi();
     }
     showConfrmEmail() {
         this.confrmshow = true;
     }
-    isSelectedService(id) {
-        let clr = false;
-        if (id === this.sel_ser) {
-            clr = true;
-        } else {
-            clr = false;
-        }
-        return clr;
-    }
-    revealChk() {
-        this.revealphonenumber = !this.revealphonenumber;
-    }
     handleConsumerNote(vale) {
         this.consumerNote = vale.trim();
     }
-    handleServiceForWhom() {
-        this.resetApi();
-        this.holdwaitlist_for = this.waitlist_for;
-        this.step = 3;
-        this.main_heading = 'Family Members';
-    }
-    // donateClicked() {
-
-    // }
     goToGateway() {
         this.isClickedOnce = true;
         this.resetApi();
@@ -882,33 +794,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         let paymenttype = this.selected_payment_mode;
         this.donate(paymenttype);
     }
-    // payuPayment() {
-    //     this.isClickedOnce = true;
-    //     this.resetApi();
-    //     if (this.sel_ser) {
-
-    //     } else {
-    //         this.snackbarService.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
-    //         return;
-    //     }
-    //     let paymentWay;
-    //     paymentWay = 'DC';
-    //     this.donate(paymentWay);
-    // }
-    // paytmPayment() {
-    //     this.isClickedOnce = true;
-    //     this.resetApi();
-    //     if (this.sel_ser) {
-
-    //     } else {
-    //         this.isClickedOnce = false;
-    //         this.snackbarService.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
-    //         return;
-    //     }
-    //     let paymentWay;
-    //     paymentWay = 'PPI';
-    //     this.donate(paymentWay);
-    // }
     donate(paymentWay) {
         this.showEditView = false;
         const post_Data = {
@@ -935,12 +820,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             'note': this.consumerNote,
             'donorEmail': this.userEmail
         };
-        console.log("Donation Data :", post_Data)
-        // if (this.userData.userProfile.email === this.payEmail) {
-        //     post_Data['donorEmail'] = this.userData.userProfile.email;
-        // }else {
-        //     post_Data['donorEmail'] = this.payEmail;
-        // }
+        console.log("Donation Data :", post_Data);
         if (this.api_error === null && this.donationAmount) {
             this.addDonationConsumer(post_Data, paymentWay);
         } else {
@@ -954,31 +834,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.api_loading = true;
 
         if (this.from_iOS) {
-
-            // let activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-            // let post_data = {
-            //   consumer: {
-            //     id: activeUser.id
-            //   },
-            //   countryCode: '+91',
-            //   date: curdate,
-            //   donationAmount: 0,
-            //   donor: {
-            //     firstName: this.activeUser.firstName,
-            //     lastName: this.activeUser.lastName
-            //   },
-            //   donorEmail: '',
-            //   donorPhoneNumber: this.activeUser.primaryPhoneNumber,
-            //   location: locid,
-            //   note: 'Testing donation',
-            //   providerCustomer: {
-            //     id: activeUser.id
-            //   },
-            //   service: service.id
-            // }
-
             this.shared_services.generateDonationLink(this.accountId, post_Data).subscribe(
-                (paymentLinkResponse:any) => {
+                (paymentLinkResponse: any) => {
                     console.log("Payment Link:", paymentLinkResponse);
                     this.uid = paymentLinkResponse['uuid'];
                     if (this.customId) {
@@ -1017,7 +874,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                     }
                     if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                         this.submitQuestionnaire(this.uid, post_Data).then(
-                            (status)=> {
+                            (status) => {
                                 if (status) {
                                     this.consumerPayment(this.uid, post_Data, paymentWay);
                                 }
@@ -1032,37 +889,13 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     });
         }
-
-
-        // this.api_loading = true;
-        // this.subs.sink = this.shared_services.addCustomerDonation(post_Data, this.account_id)
-        //     .subscribe(data => {
-        //         this.uid = data['uid'];
-        //         console.log("Donation Response :", data);
-        //         if (this.customId) {
-        //             console.log("businessid" + this.account_id);
-        //             this.shared_services.addProvidertoFavourite(this.account_id)
-        //                 .subscribe(() => {
-        //                 });
-
-        //         }
-        //         if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-        //             this.submitQuestionnaire(this.uid, post_Data, paymentWay);
-        //         } else {
-        //             this.consumerPayment(this.uid, post_Data, paymentWay);
-        //         }
-        //     },
-        //         error => {
-        //             this.isClickedOnce = false;
-        //             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        //         });
     }
     isDonationSuccess(paylink) {
         const _this = this;
-        return new Promise(function(resolve,reject) {
+        return new Promise(function (resolve, reject) {
             _this.shared_services.getDonationLinkUuid(paylink).subscribe(
-                (donationInfo: any)=> {
-                    if (donationInfo.donationStatus!=='PROCESSING') {
+                (donationInfo: any) => {
+                    if (donationInfo.donationStatus !== 'PROCESSING') {
                         resolve(true);
                     } else {
                         resolve(false);
@@ -1070,16 +903,16 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 }
             )
         })
-        
+
     }
     openPaymentLink(businessId, serviceId, paylink, userId?) {
         const _this = this;
         const url = projectConstantsLocal.PATH + businessId + "/service/" + serviceId + "/pay/" + paylink;
         this.paymentWindow = window.open(url, "_blank");
-        
-        let easingLoop = setInterval(function() {
+
+        let easingLoop = setInterval(function () {
             _this.isDonationSuccess(paylink).then(
-                (status)=> {
+                (status) => {
                     if (status) {
                         clearInterval(easingLoop);
                         _this.paymentWindow.close();
@@ -1091,8 +924,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         //    
         //     
         // }, 5000);
-
-
     }
 
     consumerPayment(uid, post_Data, paymentWay) {
@@ -1120,15 +951,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 } else {
                     if (pData['response']) {
                         this.payWithPayTM(pData, this.account_id);
-                        // this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-                        // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                        // setTimeout(() => {
-                        //     if (paymentWay === 'DC') {
-                        //         this.document.getElementById('payuform').submit();
-                        //     } else {
-                        //         this.document.getElementById('paytmform').submit();
-                        //     }
-                        // }, 2000);
                     } else {
                         this.isClickedOnce = false;
                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
@@ -1305,67 +1127,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         caption = 'Confirm';
         return caption;
     }
-    handleOneMemberSelect(id, firstName, lastName) {
-        this.resetApi();
-        this.waitlist_for = [];
-        this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime });
-    }
-    handleMemberSelect(id, firstName, lastName, obj) {
-        this.resetApi();
-        if (this.waitlist_for.length === 0) {
-            this.waitlist_for.push({ id: id, firstName: firstName, lastName: lastName, apptTime: this.apptTime });
-        } else {
-            let exists = false;
-            let existindx = -1;
-            for (let i = 0; i < this.waitlist_for.length; i++) {
-                if (this.waitlist_for[i].id === id) {
-                    exists = true;
-                    existindx = i;
-                }
-            }
-            if (exists) {
-                this.waitlist_for.splice(existindx, 1);
-            } else {
-                if (this.ismoreMembersAllowedtopush()) {
-                    this.waitlist_for.push({ id: id, lastName: lastName, firstName: firstName, apptTime: this.apptTime });
-                } else {
-                    obj.source.checked = false; // preventing the current checkbox from being checked
-                    if (this.maxsize > 1) {
-                        // this.api_error = 'Only ' + this.maxsize + ' member(s) can be selected';
-                        this.snackbarService.openSnackBar('Only ' + this.maxsize + ' member(s) can be selected', { 'panelClass': 'snackbarerror' });
-
-                    } else if (this.maxsize === 1) {
-                        // this.api_error = 'Only ' + this.maxsize + ' member can be selected';
-                        this.snackbarService.openSnackBar('Only ' + this.maxsize + ' member can be selected', { 'panelClass': 'snackbarerror' });
-                    }
-                }
-            }
-        }
-    }
-    ismoreMembersAllowedtopush() {
-        if (this.maxsize > this.waitlist_for.length) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    isChecked(id) {
-        let retval = false;
-        if (this.waitlist_for.length > 0) {
-            for (let i = 0; i < this.waitlist_for.length; i++) {
-                if (this.waitlist_for[i].id === id) {
-                    retval = true;
-                }
-            }
-        }
-        return retval;
-    }
-    addMember() {
-        this.resetApi();
-        this.showCreateMember = true;
-        // this.step = 4; // show add member section
-        // this.main_heading = 'Add Family Member';
-    }
     editClicked() {
         this.showEditView = true;
     }
@@ -1452,46 +1213,11 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             this.dispCustomernote = true;
         }
     }
-    // handleEmail() {
-    //     if (this.dispCustomerEmail) {
-    //         this.dispCustomerEmail = false;
-    //     } else {
-    //         this.dispCustomerEmail = true;
-    //     }
-    // }
     handleEmail(email) {
         this.action = 'email';
         this.confrmshow = false;
         this.payEmail = email;
         this.payEmail1 = '';
-        // if (this.dispCustomerEmail) {
-        //     this.dispCustomerEmail = false;
-        // } else {
-        //     this.dispCustomerEmail = true;
-        // }
-    }
-    clearerrorParty() {
-        this.partyapi_error = '';
-    }
-    getServicebyLocationId(locid) {
-        this.api_loading1 = true;
-        this.resetApi();
-        this.subs.sink = this.shared_services.getConsumerDonationServices(this.account_id)
-            .subscribe(data => {
-                this.servicesjson = data;
-                this.serviceslist = data;
-                this.sel_ser_det = [];
-                console.log('donation details.......', this.sel_ser_det)
-                if (this.servicesjson.length > 0) {
-                    // this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
-                    this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
-                }
-                this.api_loading1 = false;
-            },
-                () => {
-                    this.api_loading1 = false;
-                    this.sel_ser = '';
-                });
     }
     consumerNoteAndFileSave(uuid) {
         const dataToSend: FormData = new FormData();
@@ -1507,36 +1233,13 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 }
             );
     }
-    getProfile() {
-        this.sharedFunctionobj.getProfile()
-            .then(
-                data => {
-                    this.userData = data;
-                    if (this.userData.userProfile !== undefined) {
-                        this.userEmail = this.userData.userProfile.email || '';
-                        this.userPhone = this.userData.userProfile.primaryMobileNo || '';
-                        this.dialCode = this.userData.userProfile.countryCode || '';
-                        this.consumerPhoneNo = this.userPhone;
-                    }
-                    if (this.userEmail) {
-                        this.emailExist = true;
-                    } else {
-                        this.emailExist = false;
-                    }
-                });
-    }
     gets3curl() {
         this.api_loading1 = true;
-        let accountS3List = 'settings,terminologies,businessProfile,gallery';
+        let accountS3List = 'settings,terminologies,businessProfile,gallery,donationServices';
         this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
             null, accountS3List).subscribe(
                 (accountS3s: any) => {
                     console.log('accountS3s', accountS3s)
-                    // this.providerName = accountS3s.businessProfile.businessName;
-                    // this.placeName =accountS3s.businessProfile.baseLocation.place;
-                    // console.log(' this.placeName ', this.placeName )
-                    // this.googleUrl =accountS3s.businessProfile.baseLocation.googleMapUrl;
-                    // console.log('this.googleUrl',this.googleUrl)
                     if (accountS3s['settings']) {
                         this.processS3s('settings', accountS3s['settings']);
                     }
@@ -1548,6 +1251,12 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                     }
                     if (accountS3s['gallery']) {
                         this.processS3s('gallery', accountS3s['gallery']);
+                    }
+                    if (accountS3s['gallery']) {
+                        this.processS3s('gallery', accountS3s['gallery']);
+                    }
+                    if (accountS3s['donationServices']) {
+                        this.processS3s('donationServices', accountS3s['donationServices']);
                     }
                     this.api_loading1 = false;
                 }
@@ -1582,7 +1291,19 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 break;
             }
             case 'gallery': {
-                this.setAccountGallery(result);
+                if (result) {
+                    this.setAccountGallery(result);
+                }
+                break;
+            }
+            case 'donationServices': {
+                this.servicesjson = result;
+                if (this.servicesjson.length > 0) {
+                    if (!this.sel_ser) {
+                        this.sel_ser = this.servicesjson[0].id;
+                    }
+                    this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
+                }
                 break;
             }
         }
@@ -1629,20 +1350,21 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.action = 'service';
     }
     getConsumerQuestionnaire() {
-        this.subs.sink = this.shared_services.getDonationQuestionnaire(this.sel_ser, this.account_id).subscribe(data => {
-            this.questionnaireList = data;
-            if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                this.bookStep = 'qnr';
-            }
-            this.loading = false;
-        });
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.subs.sink = _this.shared_services.getDonationQuestionnaire(_this.sel_ser, _this.account_id).subscribe(data => {
+                resolve(data);
+            }, () => {
+                resolve(false);
+            });
+        })
     }
     getQuestionAnswers(event) {
         this.questionAnswers = event;
     }
     submitQuestionnaire(uuid, post_Data) {
         const _this = this;
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             const dataToSend: FormData = new FormData();
             if (_this.questionAnswers.files) {
                 for (const pic of _this.questionAnswers.files) {
@@ -1667,8 +1389,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                                             _this.api_loading_video = true;
                                             // this.paymentOperation(paymenttype);
                                             // this.consumerPayment(this.uid, post_Data, paymentWay);
-    
-                                               
                                             resolve(true);
                                             _this.api_loading_video = false;
                                         },
@@ -1679,9 +1399,9 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                                                 _this.api_loading_video = false;
                                                 resolve(false);
                                             });
-    
+
                                 }
-    
+
                             },
                                 error => {
                                     this.isClickedOnce = false;
@@ -1704,6 +1424,11 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         })
     }
     goToStep(type) {
+        if (this.bookStep === 'profile') {
+            alert("Here");
+            this.getBookStep('profile');
+            // this.validateOneTimeInfo();
+        }
         if (this.bookStep === 'qnr') {
             this.validateQuestionnaire();
         } else {
@@ -1730,6 +1455,37 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             });
         }
     }
+    validateOneTimeInfo() {
+        console.log("OneTime:", this.oneTimeInfo);
+        if (!this.oneTimeInfo) {
+            this.oneTimeInfo = {
+                answers: {
+                    answerLine: [],
+                    questionnaireId: this.questionnaireList.id
+                }
+            }
+        }
+        // this.getBookStep('profile');
+        if (this.oneTimeInfo.answers) {
+            this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
+                if (data.length === 0) {
+                    this.getBookStep('profile');
+                }
+                this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
+            }, error => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
+        }
+    }
+    getBookStep(curStep) {
+        if (curStep === 'profile') {
+            if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                this.bookStep = 'qnr';
+            } else {
+                this.bookStep = 'donation';
+            }
+        }
+    }
     resetErrors() {
         this.donorerror = null;
         this.donorlasterror = null;
@@ -1738,9 +1494,107 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.readMore = !this.readMore;
     }
     actionPerformed(status) {
+        const _this = this;
         if (status === 'success') {
             this.loggedIn = true;
-            this.initDonation();
+            this.initDonation().then(
+                (status) => {
+                    console.log("init Donation Status:", status);
+                    _this.getOneTimeInfo(_this.account_id).then(
+                        (questions) => {
+                            console.log("Questions:", questions);
+                            _this.onetimeQuestionnaireList = { "questionnaireId": "WalkinConsumer", "id": 7, "labels": [{ "transactionType": "CONSUMERCREATION", "transactionId": 0, "channel": "ANY", "questionnaireId": "WalkinConsumer", "questions": [{ "id": 18, "labelName": "General Health3", "sequnceId": "", "fieldDataType": "bool", "fieldScope": "consumer", "label": "Do you have any chronic diseases?", "labelValues": ["Yes", "No"], "billable": false, "mandatory": false, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] } }] }] };
+                            if (questions) {
+                            _this.onetimeQuestionnaireList = questions;
+                            if (_this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0) {
+                                _this.bookStep = 'profile';
+                            } else if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                _this.bookStep = 'qnr';
+                            } else {
+                                _this.bookStep = 'donation';
+                            }
+                            _this.loggedIn = true;
+                            } else {
+                                if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                    _this.bookStep = 'qnr';
+                                } else {
+                                    _this.bookStep = 'donation';
+                                }
+                                _this.loggedIn = true;
+                            }
+                            _this.loading = false;
+                        }
+                    )
+                }
+            );
         }
+    }
+
+    getOneTimeInfo(accountId) {
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.shared_services.getCustomerOnetimeInfo(accountId).subscribe(
+                (questions) => {
+                    resolve(questions);
+                    // resolve({"questionnaireId":"WalkinConsumer","id":7,"proConId":0,"labels":[{"transactionType":"CONSUMERCREATION","transactionId":0,"channel":"ANY","questionnaireId":"WalkinConsumer","questions":[{"id":16,"labelName":"General Health1","sequnceId":"1","fieldDataType":"number","fieldScope":"consumer","label":"How healthy do you consider yourself on a scale of 1 to 10?","labelValues":"5.0","numberPropertie":{"start":1,"end":10,"minAnswers":1,"maxAnswers":1},"billable":false,"mandatory":true,"scopTarget":{"target":[{"targetUser":"PROVIDER"},{"targetUser":"CONSUMER"}]},"sectionName":"sectionname1","sectionOrder":0},{"id":17,"labelName":"General Health2","sequnceId":"2","fieldDataType":"plainText","fieldScope":"consumer","label":"How often do you get a health checkup?","labelValues":"Once a year","hint":"Once in 6 months, Once a year","plainTextPropertie":{"minNoOfLetter":20,"maxNoOfLetter":100},"billable":false,"mandatory":true,"scopTarget":{"target":[{"targetUser":"PROVIDER"},{"targetUser":"CONSUMER"}]},"sectionName":"sectionname1","sectionOrder":1},{"id":18,"labelName":"General Health3","sequnceId":"3","fieldDataType":"bool","fieldScope":"consumer","label":"Do you have any chronic diseases?","labelValues":["Yes","No"],"billable":false,"mandatory":false,"scopTarget":{"target":[{"targetUser":"PROVIDER"},{"targetUser":"CONSUMER"}]},"sectionName":"sectionname1","sectionOrder":1},{"id":19,"labelName":"General Health4","sequnceId":"4","fieldDataType":"plainText","fieldScope":"consumer","label":"Do you have any hereditary conditions/diseases?","labelValues":"no","hint":"Diabetes, Hemophilia","plainTextPropertie":{"minNoOfLetter":20,"maxNoOfLetter":100},"billable":false,"mandatory":true,"scopTarget":{"target":[{"targetUser":"PROVIDER"},{"targetUser":"CONSUMER"}]},"sectionName":"sectionname2","sectionOrder":2},{"id":20,"labelName":"General Health5","sequnceId":"5","fieldDataType":"plainText","fieldScope":"consumer","label":"Are you habitual to nicotine, drugs or alcohol?","labelValues":"no","hint":"Smoking, Alcohol drinking","plainTextPropertie":{"minNoOfLetter":20,"maxNoOfLetter":100},"billable":false,"mandatory":true,"scopTarget":{"target":[{"targetUser":"PROVIDER"},{"targetUser":"CONSUMER"}]},"sectionName":"sectionname2","sectionOrder":2}]}]})
+                }, () => {
+                    resolve(false);
+                }
+            )
+        })
+    }
+    getOneTimeQuestionAnswers(event) {
+        this.oneTimeInfo = event;
+        console.log("OneTimeInfo:",this.oneTimeInfo);
+    }
+    submitOneTimeInfo() {
+        const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+        const dataToSend: FormData = new FormData();
+        if (this.oneTimeInfo.files) {
+            for (const pic of this.oneTimeInfo.files) {
+                dataToSend.append('files', pic, pic['name']);
+            }
+        }
+        const blobpost_Data = new Blob([JSON.stringify(this.oneTimeInfo.answers)], { type: 'application/json' });
+        dataToSend.append('question', blobpost_Data);
+        this.subs.sink = this.shared_services.submitCustomerOnetimeInfo(dataToSend, activeUser.id).subscribe((data: any) => {
+            let postData = {
+                urls: []
+            };
+            if (data.urls && data.urls.length > 0) {
+                for (const url of data.urls) {
+                    this.api_loading_video = true;
+                    const file = this.oneTimeInfo.filestoUpload[url.labelName][url.document];
+                    this.provider_services.videoaudioS3Upload(file, url.url)
+                        .subscribe(() => {
+                            postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                            if (data.urls.length === postData['urls'].length) {
+                                // this.shared_services.consumerApptQnrUploadStatusUpdate(uuid, this.account_id, postData)
+                                //     .subscribe((data) => {
+                                //         this.paymentOperation(paymenttype);
+                                //     },
+                                //         error => {
+                                //             this.isClickedOnce = false;
+                                //             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                //             this.disablebutton = false;
+                                //             this.api_loading_video = false;
+                                //         });
+                            }
+                        },
+                            error => {
+                                this.isClickedOnce = false;
+                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                this.disablebutton = false;
+                                this.api_loading_video = false;
+                            });
+                }
+            }
+        },
+            error => {
+                this.isClickedOnce = false;
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                this.disablebutton = false;
+                this.api_loading_video = false;
+            });
     }
 }

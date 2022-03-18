@@ -123,9 +123,13 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    console.log("Questionaire init");
+    console.log("QuestionAnswers:",this.questionAnswers);
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     if (this.questionnaireList) {
-      if (this.source === 'customer-create') {
+      console.log("QuestionaireList:", this.questionnaireList);
+      console.log(this.source);
+      if (this.source === 'customer-create' || this.source === 'onetime') {
         if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
           this.questions = this.questionnaireList.labels[0].questions;
           this.groupQuestionsBySection();
@@ -137,6 +141,7 @@ export class QuestionnaireComponent implements OnInit {
         this.questions = this.questionnaireList.questions;
         this.groupQuestionsBySection();
       } else if (!this.uuid) {
+        console.log("here");
         this.questions = this.questionnaireList.labels;
         this.groupQuestionsBySection();
       } else if (this.source === 'qnrView') {
@@ -194,7 +199,7 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   groupQuestionsBySection() {
-    if (this.source === 'customer-create' || this.source === 'qnrDetails') {
+    if (this.source === 'customer-create' || this.source === 'qnrDetails' || this.source === 'onetime') {
       this.groupedQnr = this.sharedFunctionobj.groupBy(this.questions, 'sectionName');
     } else {
       this.groupedQnr = this.questions.reduce(function (rv, x) {
@@ -214,6 +219,7 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   getAnswers(answerData, type?) {
+    console.log("Get Answers:", answerData);
     this.answers = new Object();
     this.dataGridColumns = {};
     if (type === 'get') {
@@ -221,6 +227,7 @@ export class QuestionnaireComponent implements OnInit {
       this.uploadedImages = [];
       this.uploadedFiles = [];
       for (let answ of answerData) {
+        console.log("Answer:",answ);
         if (answ.answerLine) {
           if (answ.question.fieldDataType === 'fileUpload') {
             if (answ.answerLine.answer && answ.answerLine.answer[answ.question.fieldDataType] && answ.answerLine.answer[answ.question.fieldDataType].length > 0) {
@@ -407,6 +414,8 @@ export class QuestionnaireComponent implements OnInit {
     return this.sharedFunctionobj.isNumeric(evt);
   }
   onSubmit(keytype?) {
+    console.log("KeyType:", keytype);
+    console.log(this.answers);
     Object.keys(this.filestoUpload).forEach(key => {
       if (!this.answers[key]) {
         this.answers[key] = [];
@@ -919,7 +928,7 @@ export class QuestionnaireComponent implements OnInit {
     this.location.back();
   }
   getQuestion(question) {
-    if (this.source === 'customer-create' || this.source === 'qnrDetails') {
+    if (this.source === 'customer-create' || this.source === 'qnrDetails' || this.source === 'onetime') {
       return question;
     } else {
       return question.question;

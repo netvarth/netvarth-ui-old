@@ -272,6 +272,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     small_device: boolean;
     businessInfo: any = {};
     queuesLoaded: boolean = false;
+    oneTimeInfo: any;
+    onetimeQuestionnaireList: any = [];
     constructor(public fed_service: FormMessageDisplayService,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
@@ -2550,11 +2552,40 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.checkPolicy = status;
     }
     actionPerformed(status) {
-        if (status === 'success') {
-            this.loggedIn=true;
-            this.initCheckin().then(
+
+        const _this = this;
+        alert("ActionPerformed:" + status);
+
+        if (status === 'success') {                      
+            _this.initCheckin().then(
                 ()=> {
-                    this.goToStep('next');
+                    _this.getOneTimeInfo(_this.account_id).then(
+                        (questions) => {
+                            console.log("Questions:", questions);
+                            // _this.onetimeQuestionnaireList = { "questionnaireId": "WalkinConsumer", "id": 7, "labels": [{ "transactionType": "CONSUMERCREATION", "transactionId": 0, "channel": "ANY", "questionnaireId": "WalkinConsumer", "questions": [{ "id": 18, "labelName": "General Health3", "sequnceId": "", "fieldDataType": "bool", "fieldScope": "consumer", "label": "Do you have any chronic diseases?", "labelValues": ["Yes", "No"], "billable": false, "mandatory": false, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] } }] }] };
+                            if (questions) {
+                                _this.onetimeQuestionnaireList = questions;
+                                if (_this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0) {
+                                    _this.bookStep = 2;
+                                } else if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                    _this.bookStep = 3;
+                                } else {
+                                    _this.bookStep = 4;
+                                    this.saveCheckin('next');
+                                }
+                                _this.loggedIn = true;
+                            } else {
+                                if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                    _this.bookStep = 3;
+                                } else {
+                                    _this.bookStep = 4;
+                                    this.saveCheckin('next');
+                                }
+                                _this.loggedIn = true;
+                            }
+                            _this.loading = false;
+                        }
+                    )                 
                 }
             );
         }
@@ -2576,16 +2607,33 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         if (status) {
                             _this.initCheckin().then(
                                 (status)=> {
-                                    _this.loggedIn = true;
-                                    if (_this.tele_srv_stat === 'true'){                                       
-                                        _this.bookStep = 2;
-                                    } else {
-                                        _this.getBookStep();
-                                    }    
-                                    console.log("New BookStep",_this.bookStep);
-                                    if (_this.bookStep === 4) {
-                                        _this.saveCheckin('next');
-                                    }                                                                    
+                                    _this.getOneTimeInfo(_this.account_id).then(
+                                        (questions) => {
+                                            console.log("Questions:", questions);
+                                            // _this.onetimeQuestionnaireList = { "questionnaireId": "WalkinConsumer", "id": 7, "labels": [{ "transactionType": "CONSUMERCREATION", "transactionId": 0, "channel": "ANY", "questionnaireId": "WalkinConsumer", "questions": [{ "id": 18, "labelName": "General Health3", "sequnceId": "", "fieldDataType": "bool", "fieldScope": "consumer", "label": "Do you have any chronic diseases?", "labelValues": ["Yes", "No"], "billable": false, "mandatory": false, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] } }] }] };
+                                            if (questions) {
+                                                _this.onetimeQuestionnaireList = questions;
+                                                if (_this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0) {
+                                                    _this.bookStep = 2;
+                                                } else if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                                    _this.bookStep = 3;
+                                                } else {
+                                                    _this.bookStep = 4;
+                                                    this.saveCheckin('next');
+                                                }
+                                                _this.loggedIn = true;
+                                            } else {
+                                                if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                                    _this.bookStep = 3;
+                                                } else {
+                                                    _this.bookStep = 4;
+                                                    this.saveCheckin('next');
+                                                }
+                                                _this.loggedIn = true;
+                                            }
+                                            _this.loading = false;
+                                        }
+                                    )                                                               
                                 }
                             );                           
                         } else {
@@ -2594,6 +2642,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     });
                     break;
                 case 2: //Virtual Fields
+                    // this.submitOneTimeInfo();
                     _this.getBookStep();
                     break;
                 case 3:
@@ -2610,14 +2659,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             if (this.bookStep===4) {
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.bookStep = 3;
-                } else if (this.tele_srv_stat==='true') {
-                    this.bookStep = 2;
+                } else if (this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0) {
+                    _this.bookStep = 2;
                 } else {
                     this.bookStep= 1;
                 }
             } else if (this.bookStep ===3) {
-                if (this.tele_srv_stat==='true') {
-                    this.bookStep = 2;
+                if (this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0) {
+                    _this.bookStep = 2;
                 } else {
                     this.bookStep= 1;
                 }
@@ -2673,4 +2722,76 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.serviceTime = slot.serviceTime || '';
         this.queueId = slot.id;
     }
+
+
+    getOneTimeInfo(accountId) {
+        // const _this = this;
+        return new Promise(function (resolve, reject) {
+            // _this.shared_services.getCustomerOnetimeInfo(accountId).subscribe(
+            //     (questions) => {
+            //         resolve(questions);
+            resolve({ "questionnaireId": "WalkinConsumer", "id": 7, "proConId": 0, "labels": [{ "transactionType": "CONSUMERCREATION", "transactionId": 0, "channel": "ANY", "questionnaireId": "WalkinConsumer", "questions": [{ "id": 16, "labelName": "General Health1", "sequnceId": "1", "fieldDataType": "number", "fieldScope": "consumer", "label": "How healthy do you consider yourself on a scale of 1 to 10?", "labelValues": "5.0", "numberPropertie": { "start": 1, "end": 10, "minAnswers": 1, "maxAnswers": 1 }, "billable": false, "mandatory": true, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] }, "sectionName": "sectionname1", "sectionOrder": 0 }, { "id": 17, "labelName": "General Health2", "sequnceId": "2", "fieldDataType": "plainText", "fieldScope": "consumer", "label": "How often do you get a health checkup?", "labelValues": "Once a year", "hint": "Once in 6 months, Once a year", "plainTextPropertie": { "minNoOfLetter": 20, "maxNoOfLetter": 100 }, "billable": false, "mandatory": true, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] }, "sectionName": "sectionname1", "sectionOrder": 1 }, { "id": 18, "labelName": "General Health3", "sequnceId": "3", "fieldDataType": "bool", "fieldScope": "consumer", "label": "Do you have any chronic diseases?", "labelValues": ["Yes", "No"], "billable": false, "mandatory": false, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] }, "sectionName": "sectionname1", "sectionOrder": 1 }, { "id": 19, "labelName": "General Health4", "sequnceId": "4", "fieldDataType": "plainText", "fieldScope": "consumer", "label": "Do you have any hereditary conditions/diseases?", "labelValues": "no", "hint": "Diabetes, Hemophilia", "plainTextPropertie": { "minNoOfLetter": 20, "maxNoOfLetter": 100 }, "billable": false, "mandatory": true, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] }, "sectionName": "sectionname2", "sectionOrder": 2 }, { "id": 20, "labelName": "General Health5", "sequnceId": "5", "fieldDataType": "plainText", "fieldScope": "consumer", "label": "Are you habitual to nicotine, drugs or alcohol?", "labelValues": "no", "hint": "Smoking, Alcohol drinking", "plainTextPropertie": { "minNoOfLetter": 20, "maxNoOfLetter": 100 }, "billable": false, "mandatory": true, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] }, "sectionName": "sectionname2", "sectionOrder": 2 }] }] })
+            //         }, () => {
+            //             resolve(false);
+            //         }
+            //     )
+        })
+    }
+    getOneTimeQuestionAnswers(event) {
+        this.oneTimeInfo = event;
+    }
+    submitOneTimeInfo() {
+        const dataToSend: FormData = new FormData();
+        if (this.oneTimeInfo.files) {
+            for (const pic of this.oneTimeInfo.files) {
+                dataToSend.append('files', pic, pic['name']);
+            }
+        }
+        const blobpost_Data = new Blob([JSON.stringify(this.oneTimeInfo.answers)], { type: 'application/json' });
+        dataToSend.append('question', blobpost_Data);
+        this.subs.sink = this.shared_services.submitCustomerOnetimeInfo(dataToSend, this.activeUser.id).subscribe((data: any) => {
+            let postData = {
+                urls: []
+            };
+            if (data.urls && data.urls.length > 0) {
+                for (const url of data.urls) {
+                    this.api_loading_video = true;
+                    const file = this.oneTimeInfo.filestoUpload[url.labelName][url.document];
+                    this.provider_services.videoaudioS3Upload(file, url.url)
+                        .subscribe(() => {
+                            postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                            if (data.urls.length === postData['urls'].length) {
+                                // this.shared_services.consumerApptQnrUploadStatusUpdate(uuid, this.account_id, postData)
+                                //     .subscribe((data) => {
+                                //         this.paymentOperation(paymenttype);
+                                //     },
+                                //         error => {
+                                //             this.isClickedOnce = false;
+                                //             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                //             this.disablebutton = false;
+                                //             this.api_loading_video = false;
+                                //         });
+                            }
+                        },
+                            error => {
+                                this.isClickedOnce = false;
+                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                this.disablebutton = false;
+                                this.api_loading_video = false;
+                            });
+                }
+            } 
+            // else {
+            //     this.paymentOperation(paymenttype);
+            // }
+        },
+            error => {
+                this.isClickedOnce = false;
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                this.disablebutton = false;
+                this.api_loading_video = false;
+            });
+    }
+   
+
 }

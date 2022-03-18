@@ -1144,6 +1144,19 @@ export class SharedServices {
     const url = 'consumer/questionnaire/resubmit/validate' + '?account=' + accountId;
     return this.servicemeta.httpPut(url, body);
   }
+
+  getCustomerOnetimeInfo(accountId) {
+    const url = 'consumer/providerCustomer/' + accountId;
+    // {account}
+    return this.servicemeta.httpGet(url);
+  }
+  submitCustomerOnetimeInfo(body, userId) {
+    const url = 'consumer/questionnaire/' + userId;
+    return this.servicemeta.httpPost(url, body);
+  }
+
+
+
   getLocationsByPincode(pinCode) {
     const url = 'provider/account/settings/locations/' + pinCode;
     return this.servicemeta.httpGet(url);

@@ -32,8 +32,18 @@
                         <div *ngIf="!loading">
                             <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding"
                                 data-wizard-type="step-content" data-wizard-state="current" *ngIf="bookStep === 2">
-                                <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 p-1">
-                                    <div class="">
+                                
+                                    <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 p-1">   
+                                        <div class="pad-20 quest-head">
+                                            Fill the following one time information
+                                        </div>
+                                        <app-questionnaire [questionnaireList]="onetimeQuestionnaireList"
+                                            [questionAnswers]="oneTimeInfo" [source]="'onetime'"
+                                            (returnAnswers)="getOneTimeQuestionAnswers($event)">
+                                        </app-questionnaire>
+                                    </div>
+                                    <!--<div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 p-1">
+                                     <div class="">
                                         <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
                                             *ngIf="hideTokenFor">
                                             <div class="text-capitalize">
@@ -89,9 +99,12 @@
 
                                     <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
                                         style="overflow: auto!important;overflow-x: hidden!important;">
-                                        <!--Virtual Form-->
+                                        <app-questionnaire [questionnaireList]="questionnaireList"
+                                            [questionAnswers]="questionAnswers" [source]="'consCheckin'"
+                                            [accountId]="account_id" (returnAnswers)="getOneTimeQuestionAnswers($event)">
+                                        </app-questionnaire>
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="clearfix"></div>
                                 <hr>
                                 <div

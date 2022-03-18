@@ -251,6 +251,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
               if (this.data && (!Array.isArray(this.data) && this.data.length!==0)) {
                 this.dialogRef.close('success');
               } else {
+                console.log("Successs");
                 this.actionPerformed.emit('success');
               }
             },

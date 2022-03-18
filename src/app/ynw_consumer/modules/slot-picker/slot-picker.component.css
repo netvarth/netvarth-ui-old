@@ -31,7 +31,7 @@
     width:20%!important;
     }
     .freeslots.appt mat-chip {
-      width: 13% !important;
+      width: 14% !important;
   }
   }
   @media (min-width:1281px) {
@@ -40,7 +40,7 @@
     margin:4px !important;
     }
     .freeslots.appt mat-chip {
-      width: 13% !important;
+      width: 14% !important;
   }
   }
   
