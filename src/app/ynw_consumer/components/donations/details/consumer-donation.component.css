@@ -663,7 +663,7 @@ box-shadow: 4px 4px 5px gainsboro;
   .mobile-donation-for-styling{
     border-radius: 0px !important;
     padding: 10px !important;
-    transform: scaleX(1.11) !important;
+    transform: scaleX(1.129) !important;
   }
   .textChange{
     font-size: 10px !important;
@@ -767,7 +767,7 @@ box-shadow: 4px 4px 5px gainsboro;
     object-fit: fill;
   }
   .reverseDetails{
-    margin-left: -24px !important;
+    margin-left: -15px !important;
   }
   .resBgChange{
     text-align: left  !important;
@@ -786,7 +786,7 @@ box-shadow: 4px 4px 5px gainsboro;
   .mobile-donation-for-styling{
     border-radius: 0px !important;
     padding: 0px !important;
-    transform: scaleX(1.14) !important;
+    transform: scaleX(1.13) !important;
   }
   .textChange{
     font-size: 10px !important;

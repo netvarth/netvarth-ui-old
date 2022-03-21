@@ -1259,8 +1259,9 @@ ul.service-ul li {
     height: 100%;
 }
 .card-outer-cont {
-  height: 88px !important;
+  height: 50px !important;
   display: table;
+  padding: 0px !important;
 }
 .service-head-cont,.card-inner-img-cont {
   height: 100%;
