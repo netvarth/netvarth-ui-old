@@ -33,6 +33,7 @@ export class AddNoteComponent implements OnInit {
   };
   showCaptionBox: any = {};
   activeImageCaption: any = [];
+  customer_label:any;
   constructor(
     public dialogRef: MatDialogRef<AddNoteComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -49,6 +50,7 @@ export class AddNoteComponent implements OnInit {
   }
   ngOnInit() {
     this.createForm();
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
   createForm() {
     this.amForm = this.fb.group({

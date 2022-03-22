@@ -68,13 +68,13 @@
   </mat-dialog-content>
 </ng-template>
 <ng-template [ngIf]="part==='privateCustomerDB'">
-  <h2 mat-dialog-title><span *ngIf="type=='patients'">Patient</span><span *ngIf="type!='patients'">Customer</span> Relationship Management System</h2>
+  <h2 mat-dialog-title><span *ngIf="type=='patients'">{{customer_label}}</span><span *ngIf="type!='patients'">Customer</span> Relationship Management System</h2>
   <mat-dialog-content class="mat-typography">
     <ul>
       <li>Are you fed up managing your different customer contacts on multiple platforms or on paper? </li>
       <li>Jaldee offers a Private Secured Customer Database to save all your customer information.</li>
       <li>Maintain relationships with your customers regularly.</li>
-      <li>Collect and manage all your <span *ngIf="type=='patients'">patients</span><span *ngIf="type!='patients'">customers</span> in one place.</li>
+      <li>Collect and manage all your <span *ngIf="type=='patients'">{{customer_label}}s</span><span *ngIf="type!='patients'">customers</span> in one place.</li>
     </ul>
   </mat-dialog-content>
 </ng-template>
@@ -82,7 +82,7 @@
   <h2 mat-dialog-title><span *ngIf="type=='patients'">Telehealth </span>Video Consultations</h2>
   <mat-dialog-content class="mat-typography">
     <ul>
-      <li>Jaldee Teleconsultation is the perfect solution for connecting with your patients or customers without any barrier</li>
+      <li>Jaldee Teleconsultation is the perfect solution for connecting with your {{customer_label}}s or customers without any barrier</li>
       <li>Accept payments and offer video consultations on Jaldee’s own proprietary video calling platform or on prominent video enabled platforms WhatsApp Video, Google Meet and Zoom.</li>
     </ul>
   </mat-dialog-content>
@@ -138,8 +138,8 @@
   <mat-dialog-content class="mat-typography">
     <h3>Medical Records</h3>
     <ul>
-      <li>Store medical records of your patients safely in Jaldee’s highly secured and encrypted database.</li>
-      <li>Patient medical history can be fed in your account and retained safely.</li>
+      <li>Store medical records of your {{customer_label}}s safely in Jaldee’s highly secured and encrypted database.</li>
+      <li>{{customer_label}} medical history can be fed in your account and retained safely.</li>
       <li>Secure the data and access it from Jaldee Medical records instantly from anywhere, anytime.</li>
     </ul>
     <h3>E-prescriptions</h3>
@@ -273,7 +273,7 @@
   <mat-dialog-content class="mat-typography">
     <ul>
       <li>This plan allows you to list your practice on Jaldee.com</li>
-      <li><span *ngIf="type=='patients'">Patients</span><span *ngIf="type!='patients'">Customers</span> searching for <span *ngIf="type=='patients'">doctors</span><span *ngIf="type!='patients'">providers</span> in their area on Jaldee.com can avail your service</li>
+      <li><span *ngIf="type=='patients'">{{customer_label}}s</span><span *ngIf="type!='patients'">Customers</span> searching for <span *ngIf="type=='patients'">doctors</span><span *ngIf="type!='patients'">providers</span> in their area on Jaldee.com can avail your service</li>
       <li>Jaldee.com charges the specified flat rate for your plan on bookings coming through jaldee.com</li>
     </ul>
   </mat-dialog-content>

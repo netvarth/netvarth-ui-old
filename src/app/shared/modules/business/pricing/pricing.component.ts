@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Meta, Title } from '@angular/platform-browser';
 import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 import { PricingContentDialog } from '../pricing-content-dialog/pricing-content-dialog.component';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-pricing',
@@ -13,14 +14,17 @@ import { PricingContentDialog } from '../pricing-content-dialog/pricing-content-
 export class PricingComponent implements OnInit {
   carouselOne;
   carouselTwo;
+  customer_label:any;
 
   constructor(private _scrollToService: ScrollToService,
     private titleService: Title,
     private metaService: Meta,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private wordProcessor: WordProcessor,
     ) { }
 
   ngOnInit() {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.carouselOne = {
       nav: true,
       navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
