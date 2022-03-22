@@ -16,6 +16,7 @@ import { WordProcessor } from "../../../../shared/services/word-processor.servic
 import { SnackbarService } from "../../../../shared/services/snackbar.service";
 import { GroupStorageService } from "../../../../shared/services/group-storage.service";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: "app-adjust-schedule-delay",
@@ -91,6 +92,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
+    private dateTimeProcessor: DateTimeProcessor,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AdjustscheduleDelayComponent>
   ) {
@@ -181,6 +183,11 @@ export class AdjustscheduleDelayComponent implements OnInit {
       this.customer_label
     );
   }
+  getSingleTime(slot) {
+    // console.log("Appt Time :",slot)
+     const slots = slot.split('-');
+     return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
+   }
   performActions(actions) {
     if (actions === "learnmore") {
       this.route.navigate([
@@ -437,16 +444,16 @@ export class AdjustscheduleDelayComponent implements OnInit {
     //   queueId = form_data.queueControl;
     // }
     let apptIds = [];
-   if (this.chekintype) {
-    this.apptData.forEach(element=>{
-      if(element.uid){
-        apptIds.push(element.uid)
-      }
-    })   
-   } else {
+    if (this.chekintype) {
+      this.apptData.forEach(element => {
+        if (element.uid) {
+          apptIds.push(element.uid);
+        }
+      });
+    } else {
       apptIds.push(this.apptData.uid);
     }
-  
+
     const post_appointmentData = {
       apptDelay: time,
       sendMsg: form_data.send_message,
@@ -468,9 +475,8 @@ export class AdjustscheduleDelayComponent implements OnInit {
           (this.arrived_cnt !== 0 || this.checkedin_cnt !== 0) &&
           form_data.send_message
         ) {
-          console.log("Delay Respone:", res);
-          this.dialogRef.close("reloadlist");
-          this.getAppointmentDelays()
+         console.log("Delay Respone:", res);
+         // this.dialogRef.close("reload");
           // this.api_success = this.wordProcessor.getProjectMesssages('ADD_DELAY');
           this.snackbarService.openSnackBar(
             this.wordProcessor.getProjectMesssages("ADD_DELAY"),
@@ -488,6 +494,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
         }
         setTimeout(() => {
           this.dialogRef.close("reload");
+          this.getAppointmentDelays();
           this.disableButton = false;
         }, projectConstants.TIMEOUT_DELAY_LARGE);
       },
@@ -504,7 +511,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
     // }
   }
 
-  getAppointmentDelays(){
+  getAppointmentDelays() {
     this.provider_services.getAppointmentDelays().subscribe(
       data => {
         console.log("Getting Delays :", data);

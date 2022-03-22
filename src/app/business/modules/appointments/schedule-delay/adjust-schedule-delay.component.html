@@ -157,7 +157,7 @@
         </h5>
         <!-- <hr> -->
 
-        <div class="card mx-2 mb-2" aria-readonly="true" style="background-color: rgb(240, 250, 247);">
+        <div class="card mx-2 mb-2"  aria-readonly="true" style="background-color: rgb(240, 250, 247);">
           <div class="row" *ngIf="!chekintype">
             <div class="col-md-12 col-xs-12 col-sm-12 my-1">
               <ng-container aria-readonly="true">
@@ -168,8 +168,8 @@
               </ng-container>
             </div>
           </div>
-          <div class="row bg-secondary">
-            <div class="col-md-6 col-xs-12 col-sm-12" *ngIf="!chekintype">
+          <div class="row" *ngIf="!chekintype">
+            <div class="col-md-6 col-xs-12 col-sm-12">
 
               <p> Service Name:</p>
               <span class="bold"> {{apptData.service.name }}</span>
@@ -177,13 +177,22 @@
             <div class="col-md-6 col-xs-12 col-sm-12">
 
               <p>Selected Slots:</p>
-              <span class="bold">({{queuejson[0].apptSchedule.timeSlots[0].sTime}} -
-                {{queuejson[0].apptSchedule.timeSlots[0].eTime}})</span>
+              <!-- <span class="bold"> check_in_list ({{queuejson[0].apptSchedule.timeSlots[0].sTime}} -
+                {{queuejson[0].apptSchedule.timeSlots[0].eTime}})</span> -->
+                <span class="bold" >{{apptData.appmtTime}}</span>
+
             </div>
 
           </div>
-          <div class="service-outer" *ngIf="servicesjson.length > 0 && queuejson.length == 0">
-            <span class='no-queue-available'>No schedules available</span>
+          <div class="row" *ngIf="chekintype">
+            <p>Selected Slots:</p>
+            <div class="col-md-3 col-xs-6 col-sm-6" *ngFor="let appt of apptData, let i=index">
+              <span class="bold" >{{appt.appmtTime}}</span>
+            </div>
+
+          </div>
+          <div class="service-outer" *ngIf="apptData.appmtTime == 0">
+            <span class='no-queue-available'>No slots available</span>
           </div>
         </div>
 
