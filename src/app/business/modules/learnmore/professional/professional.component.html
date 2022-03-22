@@ -1775,31 +1775,31 @@
                                         <mat-panel-title class="accordion-title">
                                             <span class="helpcontent"
                                                 (click)="handleScroll('livetracking','general')">Locate your
-                                                Customer</span>
+                                                {{customer_label}}</span>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
 
                                     <div class="helpcontent">
-                                        <span><strong>What is Jaldee Locate your Customer?</strong></span>
+                                        <span><strong>What is Jaldee Locate your {{customer_label}}?</strong></span>
                                         <li>
-                                            Jaldee Locate Your Customer enables the service provider to know the
+                                            Jaldee Locate Your {{customer_label}} enables the service provider to know the
                                             location and the time taken by the consumer
                                         </li>
-                                        <span><strong>How to activate Locate your Customer?
+                                        <span><strong>How to activate Locate your {{customer_label}}?
                                             </strong></span>
                                         <li>
                                             Go to <strong>license</strong>,upgrade your license to
                                             <strong>premium</strong> or above and then in <strong>Features and
-                                                Customization</strong> options, click on Locate Your Customer and ON the
+                                                Customization</strong> options, click on Locate Your {{customer_label}} and ON the
                                             toggle button
                                         </li>
-                                        <span><strong>How Locate your Customer works?</strong></span>
-                                        <li>After enabling the Locate your Customer feature, a service provider can
-                                            click ON the <strong>ENABLE Locate your Customer</strong> option under
+                                        <span><strong>How Locate your {{customer_label}} works?</strong></span>
+                                        <li>After enabling the Locate your {{customer_label}} feature, a service provider can
+                                            click ON the <strong>ENABLE Locate your {{customer_label}}</strong> option under
                                             additional info of a service </li>
                                         <li>
                                             To track a consumer after a checkin/appointment, a service provider can
-                                            click on the <strong>“Where is my customer�? option which shows the distance
+                                            click on the <strong>“Where is my {{customer_label}}? option which shows the distance
                                                 and time to reach provider
                                             </strong>
                                         </li>
@@ -2021,7 +2021,7 @@
                                         </li>
                                         <ul class="ul-normal">
                                             <span> <strong>TOKEN System</strong></span>
-                                            <li>Customer will receive a token number
+                                            <li>{{customer_label}} will receive a token number
                                             </li>
                                             <li>To activate, Go to Jaldee Qmanager and click on Token System
                                             </li>
@@ -2032,10 +2032,10 @@
                                                 <li>Show waiting time</li>
                                                 <li>Number of persons ahead</li>
                                             </ul>
-                                            <li>Customer can see the selected options by provider</li>
+                                            <li>{{customer_label}} can see the selected options by provider</li>
                                             <li>Provider can enable Online tokens for Today and Future({{customer_label}}s can get
                                                 tokens via Jaldee app,Jaldee.com,Scanning Jaldee provider QR code and
-                                                using the link shared with customer)
+                                                using the link shared with {{customer_label}})
                                             </li>
 
                                         </ul>
@@ -2059,7 +2059,7 @@
                                             </li>
                                             <li>Provider can enable Online queue check-in for Today and Future(Consumers
                                                 can get checkins via Jaldee app,Jaldee.com,Scanning Jaldee provider QR
-                                                code and using the link shared with customer)
+                                                code and using the link shared with {{customer_label}})
                                             </li>
                                         </ul>
                                     </ul>
@@ -2301,12 +2301,12 @@
                                                     <div class="helpcontent">
                                                         <ul class="ul-normal">
                                                             <span><strong>Onsiteservice</strong>&nbsp; allows the
-                                                                customer and provider to have direct communication
+                                                                {{customer_label}} and provider to have direct communication
                                                             </span>
                                                         </ul>
                                                         <ul class="ul-normal">
                                                             <span><strong>Teleservice</strong>&nbsp; allows you to
-                                                                communicate with the customers remotely via various
+                                                                communicate with the {{customer_label}}s remotely via various
                                                                 digital platforms like<br> Zoom, Google Meet, WhatsApp
                                                                 as well as Zoom.
                                                             </span>
@@ -2346,7 +2346,7 @@
                                                     accepting the payment online in advance</strong>
                                             </li>
                                             <li> Select the <strong>Additional info to enable the service price,Locate
-                                                    Your Customer, tax applicable and notification of service
+                                                    Your {{customer_label}}, tax applicable and notification of service
                                                     completion(via Push notification or Email)</strong></li>
                                             <li>Click <strong>save</strong>
                                             </li>
@@ -2713,12 +2713,12 @@
                                                     <div class="helpcontent">
                                                         <ul class="ul-normal">
                                                             <span><strong>Onsiteservice</strong>&nbsp; allows the
-                                                                customer and provider to have direct communication
+                                                                {{customer_label}} and provider to have direct communication
                                                             </span>
                                                         </ul>
                                                         <ul class="ul-normal">
                                                             <span><strong>Teleservice</strong>&nbsp; allows you to
-                                                                communicate with the customers remotely via various
+                                                                communicate with the {{customer_label}}s remotely via various
                                                                 digital platforms like<br> Zoom, Google Meet, WhatsApp
                                                                 as well as Zoom.
                                                             </span>
@@ -2757,7 +2757,7 @@
                                                 provider is accepting the payment in advance
                                             </li>
                                             <li>Select the <strong>Additional info</strong> to enable the service
-                                                price,Locate Your Customer, tax applicable and notification of service
+                                                price,Locate Your {{customer_label}}, tax applicable and notification of service
                                                 completion(via Push notification or Email)
                                             </li>
                                             <li>Click <strong>save</strong></li>
@@ -3734,8 +3734,8 @@
                                                 <ul ol class="ol-normal">
                                                     <li><strong>Jaldee Bank :</strong>
                                                         When a provide choose Jaldee bank to accept online payments from
-                                                        customer,
-                                                        customer can pay online for the services directly to the
+                                                        {{customer_label}},
+                                                        {{customer_label}} can pay online for the services directly to the
                                                         <strong>Jaldee
                                                             Bank</strong> and in turn, the <strong>Jaldee team</strong>
                                                         will
@@ -3743,7 +3743,7 @@
                                                         transaction) to the
                                                         provider. The providers may or may not opt Jaldee bank for
                                                         accepting online
-                                                        payments from customers.
+                                                        payments from {{customer_label}}s.
                                                         <br>
                                                         <span><strong>How is commission charged for each transaction
                                                                 when a provider
@@ -3890,7 +3890,7 @@
                                                 in
                                                 the respective section (i.e. Settings -> QManager
                                                 ->Services).</li>
-                                            <li>Jaldee has no role in paying taxes paid by the customer to the
+                                            <li>Jaldee has no role in paying taxes paid by the {{customer_label}} to the
                                                 service provider. All types
                                                 of
                                                 taxes are collected directly by the service provider, so it is the
@@ -4102,7 +4102,7 @@
                                             a subtle art of
                                             offering deals and discounts to your services will definitely make it appear
                                             you are
-                                            offering a better price to your customers. Jaldee features <strong>JALDEE
+                                            offering a better price to your {{customer_label}}s. Jaldee features <strong>JALDEE
                                                 DISCOUNT
                                                 NETWORK</strong> , which is a type of provider discount which will be
                                             applied on every
@@ -4136,13 +4136,13 @@
                                                 </li>
                                                 <li>Finally click <strong>ENABLE JDN</strong> to enable JDN.</li>
                                             </ul>
-                                            Once JDN is created by the provider, the provider profile in customer
+                                            Once JDN is created by the provider, the provider profile in {{customer_label}}
                                             dashboard shows
-                                            <strong><i>JDN symbol</i></strong> with which customers get to know the
+                                            <strong><i>JDN symbol</i></strong> with which {{customer_label}}s get to know the
                                             details of discount
-                                            offered by a particular provider. And when a customer checks-in for a
+                                            offered by a particular provider. And when a {{customer_label}} checks-in for a
                                             provider profile with
-                                            JDN subscribed feature, the customer gets a fixed discount on the total bill
+                                            JDN subscribed feature, the {{customer_label}} gets a fixed discount on the total bill
                                             amount.A
                                             provider can disable JDN anytime and the provider has to pay an amount of
                                             Rs.499/- to
@@ -4201,14 +4201,14 @@
                         <mat-expansion-panel [expanded]='showcustomers'>
                             <mat-expansion-panel-header class="accordion">
                                 <mat-panel-title class="accordion-title" (click)="menu('customers')">
-                                    Customers
+                                    {{customer_label}}s
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="helpcontent">
                                 <span>
-                                    <strong> What is Jaldee Customers?</strong>
+                                    <strong> What is Jaldee {{customer_label}}s?</strong>
 
-                                    <li>Jaldee customer is a feature that allows the customers to view their walkin
+                                    <li>Jaldee {{customer_label}} is a feature that allows the {{customer_label}}s to view their walkin
                                         check-ins</li>
                                 </span>
                             </div>
@@ -4219,18 +4219,18 @@
                                         <mat-panel-title class="accordion-title">
                                             <span class="helpcontent"
                                                 (click)="handleScroll('custid-settings', 'customers')">How to enable
-                                                customer ID?
+                                                {{customer_label}} ID?
                                             </span>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
                                     <div class="helpcontent">
                                         <section>
                                             <ul class="ul-normal">
-                                                <li>Go to customers , click on Customer ID </li>
+                                                <li>Go to {{customer_label}}s , click on {{customer_label}} ID </li>
                                                 <li>Provider can set either in Manual or Auto(once set into manual,it
                                                     cannot be switched to auto)</li>
                                                 <li>In auto , provider can set Prefix and suffix for the ID</li>
-                                                <li>Provider can view ID from Customers tab list</li>
+                                                <li>Provider can view ID from {{customer_label}}s tab list</li>
                                             </ul>
                                         </section>
                                     </div>
@@ -4269,7 +4269,7 @@
 
                                             <br>
                                             <span>Teleservice promotes social distancing and allows you to communicate
-                                                with the customers remotely via
+                                                with the {{customer_label}}s remotely via
                                                 various digital platforms like Zoom, Google Meet, WhatsApp as well as
                                                 Zoom.
                                             </span>
@@ -4380,7 +4380,7 @@
                                         <span>Notifications are information the provider send and receive, it can be
                                             reminders,
                                             communication
-                                            from customers, or other timely information</span><br>
+                                            from {{customer_label}}s, or other timely information</span><br>
                                         <strong><u>Enable SMS Notification</u></strong><br>
                                         This is a global notification toggle button which can only be enabled, if the
                                         provider
@@ -4401,28 +4401,28 @@
                                                 class="accordion">
                                                 <mat-panel-title class="accordion-title">
                                                     <span class="helpcontent">
-                                                        Customer Notifications</span>
+                                                        {{customer_label}} Notifications</span>
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
 
                                             <div class="helpcontent">
-                                                <span>Deliver timely information to your customers like, the number of
-                                                    customers
+                                                <span>Deliver timely information to your {{customer_label}}s like, the number of
+                                                    {{customer_label}}s
                                                     ahead of a particular
-                                                    customer in line, when the customer is second next in line and also
+                                                    {{customer_label}} in line, when the {{customer_label}} is second next in line and also
                                                     when the
-                                                    customer is next in line for the actual appointment.</span>
+                                                    {{customer_label}} is next in line for the actual appointment.</span>
                                                 <ol>
                                                     <li><strong>Early Notification:</strong><br>
-                                                        Notify a customer, the number of people ahead of him/her in line
+                                                        Notify a {{customer_label}}, the number of people ahead of him/her in line
                                                         via
                                                         SMS/Email/Notifications. First the provider has to enter a
-                                                        customer number
+                                                        {{customer_label}} number
                                                         to whom you
                                                         wish to send a notification. Enable the following modes of
                                                         channel through
                                                         which you
-                                                        wish to send notifications to your customer.
+                                                        wish to send notifications to your {{customer_label}}.
                                                         <ul>
                                                             <li>Via SMS</li>
                                                             <li>Via Email</li>
@@ -4436,12 +4436,12 @@
                                                         <strong>
                                                             Pre Final Notification
                                                         </strong><br>
-                                                        Notify a customer when he is second next in line via
+                                                        Notify a {{customer_label}} when he is second next in line via
                                                         SMS/Email/Notifications.
                                                         Enable the following modes of channel through which you wish to
                                                         send
                                                         notifications to your
-                                                        customer.
+                                                        {{customer_label}}.
                                                         <ul>
                                                             <li>Via SMS</li>
                                                             <li>Via Email</li>
@@ -4455,11 +4455,11 @@
                                                         <strong>
                                                             Final Notification
                                                         </strong><br>
-                                                        Notify a customer when he is next in line via
+                                                        Notify a {{customer_label}} when he is next in line via
                                                         SMS/Email/Notifications.
                                                         Enable the following modes of channel through which you wish to
                                                         send
-                                                        notifications to your customer.
+                                                        notifications to your {{customer_label}}.
                                                         <ul>
                                                             <li>Via SMS</li>
                                                             <li>Via Email</li>
@@ -4486,13 +4486,13 @@
 
                                             <div class="helpcontent">
                                                 <span>It is important to receive notifications for the provider when a
-                                                    customer
-                                                    checks-in or when a customer check-in is cancelled.
+                                                    {{customer_label}}
+                                                    checks-in or when a {{customer_label}} check-in is cancelled.
                                                 </span>
                                                 <ul>
                                                     <li>
                                                         <strong>Notify whenever check-in happens:</strong><br>
-                                                        When a customer checks-in with the provider, the provider can
+                                                        When a {{customer_label}} checks-in with the provider, the provider can
                                                         receive
                                                         notifications in the following ways:
                                                         <ul>
@@ -4508,7 +4508,7 @@
                                                     </li>
                                                     <li>
                                                         <strong>Notify whenever check-in gets cancelled:</strong><br>
-                                                        When a customer checks-in gets cancelled with the provider, the
+                                                        When a {{customer_label}} checks-in gets cancelled with the provider, the
                                                         provider can
                                                         receive notifications in the following ways:
                                                         <ul>
@@ -4548,16 +4548,16 @@
                             <div class="helpcontent">
                                 <section>
                                     <span>The dashboard section lets the provider manage and monitor the check-ins of a
-                                        customer.
+                                        {{customer_label}}.
                                         Here
                                         a provider can monitor the current check-ins <strong>(Today)</strong> and the
                                         future
                                         check-ins
-                                        <strong>(Future).</strong> The customer's previous check-ins can be viewed in
+                                        <strong>(Future).</strong> The {{customer_label}}'s previous check-ins can be viewed in
                                         this
                                         section
                                         under the <strong>“History“</strong> tab. To view the details, click on the
-                                        customer's
+                                        {{customer_label}}'s
                                         name.
                                         There are location and working hours to help the provider monitor the details of
                                         check-ins
@@ -4573,12 +4573,12 @@
                                         The
                                         adjoined
                                         brackets display the number of future check-ins.</li>
-                                    <li><strong>History</strong> - All of the customer's previous check-ins until a day
+                                    <li><strong>History</strong> - All of the {{customer_label}}'s previous check-ins until a day
                                         before
                                         are
                                         listed here. To view the details click on the “date of check-in“ or on the “name
                                         of the
-                                        customer". Actions can also be changed from here.</li>
+                                        {{customer_label}}". Actions can also be changed from here.</li>
                                 </ol>
                                 <section>
                                     <h6>Location Selection</h6>
@@ -4589,7 +4589,7 @@
                                         location.</span><br>
                                     <span><strong>Note: A provider needs to select the location of service while he/she
                                             checks-in a
-                                            “walk-in“ customer.</strong></span>
+                                            “walk-in“ {{customer_label}}.</strong></span>
                                 </section>
                                 <section>
                                     <mat-accordion>
@@ -4605,33 +4605,33 @@
                                                         the
                                                         working
                                                         hour from the dashboard.</li>
-                                                    <li>Here the provider can see a list of customers who have checked
+                                                    <li>Here the provider can see a list of {{customer_label}}s who have checked
                                                         in
                                                         (Online
                                                         or
                                                         Walk-in ).</li>
                                                     <li>In some cases, a “cloud symbol“ is prefixed to a name, it means
                                                         that the
-                                                        customer has checked in online. </li>
-                                                    <li>To view the check-in details of a customer, provider can click
+                                                        {{customer_label}} has checked in online. </li>
+                                                    <li>To view the check-in details of a {{customer_label}}, provider can click
                                                         on
                                                         the name
                                                         of
-                                                        the customer. Check-in history, communication history, and
+                                                        the {{customer_label}}. Check-in history, communication history, and
                                                         history of
                                                         private notes are listed here. In addition to that, the user can
                                                         cancel
                                                         a
-                                                        customer's check-in and inform this through <strong>Send
+                                                        {{customer_label}}'s check-in and inform this through <strong>Send
                                                             Message.</strong> A
-                                                        provider can add a private note for a customer using <strong>Add
+                                                        provider can add a private note for a {{customer_label}} using <strong>Add
                                                             private
                                                             note.</strong></li>
                                                     <li>For <strong>“Manual“</strong> wait time calculation, the
                                                         provider
                                                         can edit
                                                         individual check-ins wait time from the check-in details.</li>
-                                                    <li>Each of the customer's <strong>Name, Wait Time</strong> and
+                                                    <li>Each of the {{customer_label}}'s <strong>Name, Wait Time</strong> and
                                                         <strong>Service</strong> is displayed here.
                                                     </li>
                                                     <li>The three dots menu in the right side of check-in has the
@@ -4642,16 +4642,16 @@
                                                         <li><strong>Send Message :</strong> Instantly type and send a
                                                             message to
                                                             the
-                                                            customer here. These messages can be seen in communication
+                                                            {{customer_label}} here. These messages can be seen in communication
                                                             history
                                                             anytime.</li>
                                                         <li><strong>Cancel check-in :</strong>
                                                             <ul class="ul-normal">
-                                                                <li>To cancel a customer's check-in, click on
+                                                                <li>To cancel a {{customer_label}}'s check-in, click on
                                                                     <strong>“Cancel
                                                                         Check-In“</strong>.
                                                                 </li>
-                                                                <li>Customers are notified about the cancellation of
+                                                                <li>{{customer_label}}s are notified about the cancellation of
                                                                     Check-in
                                                                     through App message/email.</li>
                                                                 <li>When a provider clicks on <strong>“Cancel
@@ -4663,7 +4663,7 @@
                                                                     suggested
                                                                     reasons and then click <strong>“Save“.</strong>
                                                                 </li>
-                                                                <li>The provider can inform the customer about the
+                                                                <li>The provider can inform the {{customer_label}} about the
                                                                     cancellation.
                                                                     To do
                                                                     this, click on the <strong>Send Message</strong>
@@ -4681,10 +4681,10 @@
                                                             wants
                                                             to keep
                                                             a
-                                                            personal note about a particular customer, he/she can write
+                                                            personal note about a particular {{customer_label}}, he/she can write
                                                             and add
                                                             a
-                                                            note here. This note can be seen anytime the customer
+                                                            note here. This note can be seen anytime the {{customer_label}}
                                                             checks-in
                                                             again
                                                             with the provider under <strong>“Private Notes“.</strong>
@@ -4692,7 +4692,7 @@
                                                         <li><strong>Change Status to Check-in :</strong> The option to
                                                             check-in
                                                             a
-                                                            customer appears only when the customer's status is
+                                                            {{customer_label}} appears only when the {{customer_label}}'s status is
                                                             <strong>“Arrived“.</strong> The provider can change the
                                                             status
                                                             back to
@@ -4701,10 +4701,10 @@
                                                             the
                                                             following circumstances:
                                                             <ul class="ul-normal">
-                                                                <li>When a customer gets cancelled for some reason and
+                                                                <li>When a {{customer_label}} gets cancelled for some reason and
                                                                     wanted to
                                                                     check-in again.</li>
-                                                                <li>When a customer's check-in status has been
+                                                                <li>When a {{customer_label}}'s check-in status has been
                                                                     mistakenly
                                                                     changed to
                                                                     <strong>Arrived</strong> status.
@@ -4726,7 +4726,7 @@
                                                 <span>The following are the main actions the provider can
                                                     perform:</span>
                                                 <ol class="ol-normal adjust-delay-num">
-                                                    <li><strong>Arrived :</strong> This button is used when a customer
+                                                    <li><strong>Arrived :</strong> This button is used when a {{customer_label}}
                                                         arrives
                                                         at
                                                         the premise of the business location to avail the services. When
@@ -4735,17 +4735,17 @@
                                                         clicks this button, an <strong>“Arrived“</strong> label gets
                                                         adjoined to
                                                         the
-                                                        name of the customer. In case of a walk-in or kiosk customer,
+                                                        name of the {{customer_label}}. In case of a walk-in or kiosk {{customer_label}},
                                                         the
                                                         <strong>“Arrived“</strong> label is automatically adjoined as
                                                         the
-                                                        customers
+                                                        {{customer_label}}s
                                                         are present at the premises. Service can now be started.
                                                     </li>
                                                     <li><strong>Start :</strong> Click on <strong>“Start“</strong> when
                                                         the
                                                         service
-                                                        is started. This will move the customer's entry to
+                                                        is started. This will move the {{customer_label}}'s entry to
                                                         <strong>“Started“</strong> tab. This will lead to the activation
                                                         of the
                                                         other two buttons, namely, <strong>“Complete“</strong> and
@@ -4755,9 +4755,9 @@
                                                     <li><strong>Complete :</strong>Click on the
                                                         <strong>“Complete“</strong> tab
                                                         after completion of the service. The check-in status of the
-                                                        customer
+                                                        {{customer_label}}
                                                         changes
-                                                        to complete. This will move the customer's entry to the
+                                                        to complete. This will move the {{customer_label}}'s entry to the
                                                         <strong>“Completed“</strong> tab. The completed tab generates
                                                         two
                                                         actions,
@@ -4767,7 +4767,7 @@
                                                     <li><strong>Cancel :</strong>If the service gets cancelled for some
                                                         reason,
                                                         click on the <strong>“Cancel“</strong> tab. This will remove the
-                                                        customer's
+                                                        {{customer_label}}'s
                                                         check-in entry from the list.</li>
                                                     <li><strong>Bill :</strong>After the completion of the service, a
                                                         bill gets
@@ -4788,7 +4788,7 @@
                                                     <li><strong>Accept Payment :</strong>Click on <strong>“Accept
                                                             Payment“</strong>“Accept Payment“tab to receive the payment
                                                         for the
-                                                        services. This opens the generated Bill page. Once the customer
+                                                        services. This opens the generated Bill page. Once the {{customer_label}}
                                                         pays the
                                                         bill, a provider can settle the bill by clicking on the
                                                         <strong>“Settle“</strong> tab.
@@ -4806,13 +4806,13 @@
                                             </mat-expansion-panel-header>
                                             <div class="helpcontent">
                                                 <ul class="ul-normal">
-                                                    <li>Under this tab, a provider can view the list of customers who
+                                                    <li>Under this tab, a provider can view the list of {{customer_label}}s who
                                                         have
                                                         already
                                                         started availing the service. The check-in tab will no longer
                                                         contain
                                                         these
-                                                        customers entry.</li>
+                                                        {{customer_label}}s entry.</li>
                                                     <li>Name, Wait Time and Service will be the same as that in the
                                                         check-ins
                                                         tab.
@@ -4824,7 +4824,7 @@
                                                         <strong>“Complete“</strong>
                                                         button
                                                         after the completion of the service. This will move the
-                                                        customer's entry
+                                                        {{customer_label}}'s entry
                                                         from <strong>Started tab</strong> to the <strong>Completed
                                                             tab.</strong>
                                                         In
@@ -4834,7 +4834,7 @@
                                                         the <strong>“Add Service“</strong>, an App message or email will
                                                         be sent
                                                         to
-                                                        the customer, thus informing them about the service completion.
+                                                        the {{customer_label}}, thus informing them about the service completion.
                                                     </li>
                                                     <li><strong>Bill :</strong> A <strong>“Bill“</strong> button appears
                                                         when a
@@ -4858,7 +4858,7 @@
                                                                 are
                                                                 offered
                                                                 by the provider.</li>
-                                                            <span>*The option to Add Private Note and customer Note is
+                                                            <span>*The option to Add Private Note and {{customer_label}} Note is
                                                                 available
                                                                 here.
                                                             </span>
@@ -4900,17 +4900,17 @@
                                                         <ol class="ol-normal">
                                                             <li><strong>Add Private Note :</strong> Write a note about a
                                                                 particular
-                                                                customer here.</li>
+                                                                {{customer_label}} here.</li>
                                                             <li><strong>Send Message :</strong> Write text to the
-                                                                customer here
+                                                                {{customer_label}} here
                                                                 and
-                                                                send it to the customer. All of the sent messages can be
+                                                                send it to the {{customer_label}}. All of the sent messages can be
                                                                 seen in
                                                                 communication history anytime.</li>
                                                             <li><strong>Change Status to check-in :</strong>The option
                                                                 to
                                                                 check-in a
-                                                                customer appears only if the customers status is marked
+                                                                {{customer_label}} appears only if the {{customer_label}}s status is marked
                                                                 to
                                                                 <strong>“Arrived“.</strong> A provider can change the
                                                                 status back
@@ -4920,11 +4920,11 @@
                                                                 in
                                                                 the following circumstances:
                                                                 <ul>
-                                                                    <li>When a customer gets cancelled for some reason
+                                                                    <li>When a {{customer_label}} gets cancelled for some reason
                                                                         and
                                                                         wanted to
                                                                         check-in again.</li>
-                                                                    <li>When a customer's check-in status has been
+                                                                    <li>When a {{customer_label}}'s check-in status has been
                                                                         mistakenly
                                                                         changed to <strong>“Arrived“</strong> status.
                                                                     </li>
@@ -4935,8 +4935,8 @@
                                                     <li><strong>Payment Status:</strong> This shows the payment status
                                                         (not
                                                         paid,
-                                                        partially paid, or fully paid) of the customer.</li>
-                                                    <li><strong>Customer Note:</strong> When a customer adds any note
+                                                        partially paid, or fully paid) of the {{customer_label}}.</li>
+                                                    <li><strong>{{customer_label}} Note:</strong> When a {{customer_label}} adds any note
                                                         while
                                                         checking-in, it is displayed here.</li>
                                                 </ul>
@@ -4952,7 +4952,7 @@
                                             </mat-expansion-panel-header>
                                             <div class="helpcontent">
                                                 <ul class="ul-normal">
-                                                    <li>Once a service is done click on“Complete“ button, the customer's
+                                                    <li>Once a service is done click on“Complete“ button, the {{customer_label}}'s
                                                         entry
                                                         will
                                                         move under the <strong>“Completed“</strong> tab.</li>
@@ -4973,18 +4973,18 @@
                                                                         settle the bill. The due amount in the bill is
                                                                         also
                                                                         visible
-                                                                        in the customer dashboard.</li>
+                                                                        in the {{customer_label}} dashboard.</li>
                                                                     <li><strong>Jaldee Pay :</strong> This enables the
-                                                                        customer
+                                                                        {{customer_label}}
                                                                         to
                                                                         pay online by generating the bill to the
-                                                                        customer
+                                                                        {{customer_label}}
                                                                         dashboard
                                                                         also.</li>
                                                                     <li><strong>Pay by cash or others :</strong> This
                                                                         enables
                                                                         the
-                                                                        customer to complete the bill settlement either
+                                                                        {{customer_label}} to complete the bill settlement either
                                                                         in cash
                                                                         or
                                                                         by other means.</li>
@@ -4997,11 +4997,11 @@
                                                         <ol class="ol-normal">
                                                             <li><strong>Add Private Note :</strong> Write a note about a
                                                                 particular
-                                                                customer here.</li>
+                                                                {{customer_label}} here.</li>
                                                             <li><strong>Send Message :</strong> Write text to the
-                                                                customer here
+                                                                {{customer_label}} here
                                                                 and
-                                                                send it to the customer. All of the sent messages can be
+                                                                send it to the {{customer_label}}. All of the sent messages can be
                                                                 seen in
                                                                 communication history anytime.</li>
                                                         </ol>
@@ -5020,24 +5020,24 @@
                                             </mat-expansion-panel-header>
                                             <div class="helpcontent">
                                                 <ul class="ul-normal">
-                                                    <li>Here the provider can view the list of all cancelled customer
+                                                    <li>Here the provider can view the list of all cancelled {{customer_label}}
                                                         check-ins.
                                                     </li>
                                                     <li>The three dot menu available has the following options:
                                                         <ul class="normal-abc">
                                                             <li><strong>Add Private Note :</strong> Write a note about a
                                                                 particular
-                                                                customer here.</li>
+                                                                {{customer_label}} here.</li>
                                                             <li><strong>Send Message :</strong> Write text to the
-                                                                customer here
+                                                                {{customer_label}} here
                                                                 and
-                                                                send it to the customer. All of the sent messages can be
+                                                                send it to the {{customer_label}}. All of the sent messages can be
                                                                 seen in
                                                                 communication history anytime.</li>
                                                             <li><strong>Change Status to check-in :</strong> The option
                                                                 to
                                                                 check-in
-                                                                a customer appears only if the customer's status is
+                                                                a {{customer_label}} appears only if the {{customer_label}}'s status is
                                                                 marked
                                                                 to
                                                                 <strong>“Arrived“.</strong> A provider can change the
@@ -5064,7 +5064,7 @@
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="helpcontent">
-                                <span>A provider can take an appointment for a customer for service.
+                                <span>A provider can take an appointment for a {{customer_label}} for service.
                                 </span>
                             </div>
                             <mat-accordion>
@@ -5080,19 +5080,19 @@
 
                                     <div class="helpcontent">
                                         <ul class="ul-normal">
-                                            <li>A provider can create and check-in a customer for service.</li>
-                                            <li>To search for a customer and to check whether he/she has already been
+                                            <li>A provider can create and check-in a {{customer_label}} for service.</li>
+                                            <li>To search for a {{customer_label}} and to check whether he/she has already been
                                                 registered
                                                 with
-                                                Jaldee, the provider can use the customer's mobile number, his/her first
+                                                Jaldee, the provider can use the {{customer_label}}'s mobile number, his/her first
                                                 name/last
                                                 name.
                                             </li>
-                                            <li>In case, the customer's data does not exist in the Jaldee database, the
+                                            <li>In case, the {{customer_label}}'s data does not exist in the Jaldee database, the
                                                 provider
                                                 can input
                                                 the
-                                                details of the customer and get him/her registered with Jaldee.com.</li>
+                                                details of the {{customer_label}} and get him/her registered with Jaldee.com.</li>
                                         </ul>
 
 
@@ -5101,7 +5101,7 @@
                                                 <li>In the check-in/get token window, first, select the service from the
                                                     drop-down menu
                                                     that
-                                                    a customer wishes to avail. In case, the provider has only one
+                                                    a {{customer_label}} wishes to avail. In case, the provider has only one
                                                     default
                                                     service,
                                                     then
@@ -5110,7 +5110,7 @@
                                                 <li>Check-in/Get Token/Order window has a feature to add or change a
                                                     family
                                                     member whom the
-                                                    customer wishes to do a check-in for. Click “Add/Change Member“ to
+                                                    {{customer_label}} wishes to do a check-in for. Click “Add/Change Member“ to
                                                     add a new
                                                     member
                                                     with
@@ -5124,7 +5124,7 @@
                                                         with a
                                                         single
                                                         check-in.</strong></li>
-                                                <li>If a customer has any note, the provider can click <strong>“If you
+                                                <li>If a {{customer_label}} has any note, the provider can click <strong>“If you
                                                         have a
                                                         note,
                                                         Click
@@ -5134,9 +5134,9 @@
                                                     check-in
                                                     process of
                                                     the
-                                                    walk-in customer by clicking on <strong>“Confirm Check-in“.</strong>
+                                                    walk-in {{customer_label}} by clicking on <strong>“Confirm Check-in“.</strong>
                                                 </li>
-                                                <li>App message will be sent to the customer's mobile and an email
+                                                <li>App message will be sent to the {{customer_label}}'s mobile and an email
                                                     notification
                                                     to the
                                                     registered email address regarding the information of check-in.</li>
@@ -5180,10 +5180,10 @@
                                             </li>
                                             <li>Delay cannot be greater than the available working hours.
                                             </li>
-                                            <li>In case if the provider wants to inform the customer about the delay,
+                                            <li>In case if the provider wants to inform the {{customer_label}} about the delay,
                                                 click
                                                 <strong>"Send
-                                                    Message“.</strong> A default message will be sent to the customers
+                                                    Message“.</strong> A default message will be sent to the {{customer_label}}s
                                                 informing
                                                 that
                                                 the
@@ -5218,7 +5218,7 @@
                                                 <strong>START button</strong> and <strong>TELESERVICE button.
                                                 </strong>
                                             </li>
-                                            <li><strong>START BUTTON </strong>allows you to move the customer to
+                                            <li><strong>START BUTTON </strong>allows you to move the {{customer_label}} to
                                                 <strong>“STARTED�?</strong> status.</li>
                                             <li><strong>TELESERVICE BUTTON</strong> shows a pop-up which has different
                                                 options regarding teleservice. The different options are:-
@@ -5227,13 +5227,13 @@
                                                     <li><strong>Launch the service - </strong> Click on<strong>
                                                             “Launch�?</strong> to launch the respective application.
                                                         <br>After the pop-up appears,<br>
-                                                        Respond “YES�?, if you want to change the status of the customer
+                                                        Respond “YES�?, if you want to change the status of the {{customer_label}}
                                                         into STARTED.<br>
-                                                        Respond “NO�?, if you want the customer to remain in NEW.
+                                                        Respond “NO�?, if you want the {{customer_label}} to remain in NEW.
                                                     </li>
                                                     <li><strong>Reminder -</strong> Click on
                                                         <strong>“Reminder�?</strong> to send a reminder message to the
-                                                        customer by
+                                                        {{customer_label}} by
                                                         <ul class="normal-abc">
                                                             <li>SMS</li>
                                                             <li>App Notifications</li>
@@ -5242,7 +5242,7 @@
                                                     </li>
                                                     <li><strong>Waiting for you! -</strong> Click on<strong> “Waiting
                                                             for you!�?</strong> to notify that you are waiting for the
-                                                        customer to join the video/audio call.
+                                                        {{customer_label}} to join the video/audio call.
                                                         <ul class="normal-abc">
                                                             <li>SMS</li>
                                                             <li>App Notifications</li>
@@ -5254,7 +5254,7 @@
                                                         Meeting.
                                                         <ul class="normal-abc">
                                                             <li><u>Share</u> - Click on <strong> SHARE</strong> to send
-                                                                the meeting details to the customer
+                                                                the meeting details to the {{customer_label}}
                                                             </li>
                                                             <li><u>CopyInfo</u> - Click on <strong>COPY INFO</strong> to
                                                                 copy the link to the clipboard.</li>
@@ -5275,7 +5275,7 @@
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="helpcontent">
-                                <span>A provider can create and check-in a customer for service.
+                                <span>A provider can create and check-in a {{customer_label}} for service.
                                 </span>
                             </div>
                             <mat-accordion>
@@ -5290,19 +5290,19 @@
 
                                     <div class="helpcontent">
                                         <ul class="ul-normal">
-                                            <li>A provider can create and check-in a customer for service.</li>
-                                            <li>To search for a customer and to check whether he/she has already been
+                                            <li>A provider can create and check-in a {{customer_label}} for service.</li>
+                                            <li>To search for a {{customer_label}} and to check whether he/she has already been
                                                 registered
                                                 with
-                                                Jaldee, the provider can use the customer's mobile number, his/her first
+                                                Jaldee, the provider can use the {{customer_label}}'s mobile number, his/her first
                                                 name/last
                                                 name.
                                             </li>
-                                            <li>In case, the customer's data does not exist in the Jaldee database, the
+                                            <li>In case, the {{customer_label}}'s data does not exist in the Jaldee database, the
                                                 provider
                                                 can input
                                                 the
-                                                details of the customer and get him/her registered with Jaldee.com.</li>
+                                                details of the {{customer_label}} and get him/her registered with Jaldee.com.</li>
                                         </ul>
 
 
@@ -5311,7 +5311,7 @@
                                                 <li>In the check-in/get token window, first, select the service from the
                                                     drop-down menu
                                                     that
-                                                    a customer wishes to avail. In case, the provider has only one
+                                                    a {{customer_label}} wishes to avail. In case, the provider has only one
                                                     default
                                                     service,
                                                     then
@@ -5320,7 +5320,7 @@
                                                 <li>Check-in/Get Token/Order window has a feature to add or change a
                                                     family
                                                     member whom the
-                                                    customer wishes to do a check-in for. Click “Add/Change Member“ to
+                                                    {{customer_label}} wishes to do a check-in for. Click “Add/Change Member“ to
                                                     add a new
                                                     member
                                                     with
@@ -5334,7 +5334,7 @@
                                                         with a
                                                         single
                                                         check-in.</strong></li>
-                                                <li>If a customer has any note, the provider can click <strong>“If you
+                                                <li>If a {{customer_label}} has any note, the provider can click <strong>“If you
                                                         have a
                                                         note,
                                                         Click
@@ -5344,9 +5344,9 @@
                                                     check-in
                                                     process of
                                                     the
-                                                    walk-in customer by clicking on <strong>“Confirm Check-in“.</strong>
+                                                    walk-in {{customer_label}} by clicking on <strong>“Confirm Check-in“.</strong>
                                                 </li>
-                                                <li>App message will be sent to the customer's mobile and an email
+                                                <li>App message will be sent to the {{customer_label}}'s mobile and an email
                                                     notification
                                                     to the
                                                     registered email address regarding the information of check-in.</li>
@@ -5390,10 +5390,10 @@
                                             </li>
                                             <li>Delay cannot be greater than the available working hours.
                                             </li>
-                                            <li>In case if the provider wants to inform the customer about the delay,
+                                            <li>In case if the provider wants to inform the {{customer_label}} about the delay,
                                                 click
                                                 <strong>"Send
-                                                    Message“.</strong> A default message will be sent to the customers
+                                                    Message“.</strong> A default message will be sent to the {{customer_label}}s
                                                 informing
                                                 that
                                                 the
@@ -5428,7 +5428,7 @@
                                                 <strong>START button</strong> and <strong>TELESERVICE button.
                                                 </strong>
                                             </li>
-                                            <li><strong>START BUTTON </strong>allows you to move the customer to
+                                            <li><strong>START BUTTON </strong>allows you to move the {{customer_label}} to
                                                 <strong>“STARTED�?</strong> status.</li>
                                             <li><strong>TELESERVICE BUTTON</strong> shows a pop-up which has different
                                                 options regarding teleservice. The different options are:-
@@ -5437,13 +5437,13 @@
                                                     <li><strong>Launch the service - </strong> Click on<strong>
                                                             “Launch�?</strong> to launch the respective application.
                                                         <br>After the pop-up appears,<br>
-                                                        Respond “YES�?, if you want to change the status of the customer
+                                                        Respond “YES�?, if you want to change the status of the {{customer_label}}
                                                         into STARTED.<br>
-                                                        Respond “NO�?, if you want the customer to remain in NEW.
+                                                        Respond “NO�?, if you want the {{customer_label}} to remain in NEW.
                                                     </li>
                                                     <li><strong>Reminder -</strong> Click on
                                                         <strong>“Reminder�?</strong> to send a reminder message to the
-                                                        customer by
+                                                        {{customer_label}} by
                                                         <ul class="normal-abc">
                                                             <li>SMS</li>
                                                             <li>App Notifications</li>
@@ -5452,7 +5452,7 @@
                                                     </li>
                                                     <li><strong>Waiting for you! -</strong> Click on<strong> “Waiting
                                                             for you!�?</strong> to notify that you are waiting for the
-                                                        customer to join the video/audio call.
+                                                        {{customer_label}} to join the video/audio call.
                                                         <ul class="normal-abc">
                                                             <li>SMS</li>
                                                             <li>App Notifications</li>
@@ -5464,7 +5464,7 @@
                                                         Meeting.
                                                         <ul class="normal-abc">
                                                             <li><u>Share</u> - Click on <strong> SHARE</strong> to send
-                                                                the meeting details to the customer
+                                                                the meeting details to the {{customer_label}}
                                                             </li>
                                                             <li><u>CopyInfo</u> - Click on <strong>COPY INFO</strong> to
                                                                 copy the link to the clipboard.</li>
@@ -6182,7 +6182,7 @@
                                                                         <td class="th5 light-col long">Yes </td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <th class="th3 headcol">Live Track customer ETAs
+                                                                        <th class="th3 headcol">Live Track {{customer_label}} ETAs
                                                                         </th>
                                                                         <td class="th2 light-col long">No</td>
                                                                         <td class="brozelicensecol long">
@@ -6283,7 +6283,7 @@
                                             <ul class="ul-normal">
                                                 <li><strong>Number of business profile views :</strong> This refers to
                                                     the number of
-                                                    customers
+                                                    {{customer_label}}s
                                                     who have clicked for a detailed view of the provider.</li>
                                                 <li><strong>Transactions :</strong> This refers to the number of
                                                     check-ins.</li>

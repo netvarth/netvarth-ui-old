@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { Location } from '@angular/common';
 import { Messages } from '../../../shared/constants/project-messages';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-consumer-faq',
@@ -17,12 +18,15 @@ export class ConsumerFaqComponent implements  OnInit {
   activeMenu;
   domain;
   go_back_cap = Messages.CHECK_DET_GO_BACK_CAP;
+  customer_label:any;
   constructor(
     private _scrollToService: ScrollToService,
     private _location: Location,
+    private wordProcessor: WordProcessor,
   ) { }
   ngOnInit() {
     this.activeMenu = 'searchh';
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
  
   }
   scroll() {
