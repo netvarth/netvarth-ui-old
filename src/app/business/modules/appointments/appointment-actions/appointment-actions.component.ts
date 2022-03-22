@@ -112,6 +112,8 @@ export class AppointmentActionsComponent implements OnInit {
     location: any;
     status_booking: any;
     showQnr = false;
+    showDelay = false;
+    multipleSelection;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router,
         private provider_services: ProviderServices,
         public dateformat: DateFormatPipe, private dialog: MatDialog,
@@ -133,7 +135,10 @@ export class AppointmentActionsComponent implements OnInit {
         this.getLabel();
         this.apiloading = true;
         this.appt = this.data.checkinData;
+        this.multipleSelection = this.data.multiSelection
         console.log("Appointment Actions :",this.appt)
+        console.log("Appointment Selection :",this.appt.multiSelection)
+
         if (!this.data.multiSelection && this.appt.releasedQnr && this.appt.releasedQnr.length > 0 && this.appt.apptStatus !== 'Cancelled' && this.appt.apptStatus !== 'Rejected') {
             this.showQnr = true;
         }
@@ -144,6 +149,7 @@ export class AppointmentActionsComponent implements OnInit {
             this.getInternStatus();
         } else {
             this.showMsg = true;
+            this.showDelay = true;
             this.apiloading = false;
         }
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -290,6 +296,7 @@ export class AppointmentActionsComponent implements OnInit {
                 () => { }
             );
     }
+  
     rescheduleActionClicked() {
         this.action = 'reschedule';
     }
@@ -303,23 +310,27 @@ export class AppointmentActionsComponent implements OnInit {
         this.action = 'reschedule';
     }
     delayActionClicked(){
-        this.dialogRef.close();
+
+    this.dialogRef.close();
+  
         const delayAction = this.dialog.open(AdjustscheduleDelayComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass'],
             disableClose: true,
             data: {
                 qdata: this.appt,
-                uuid: this.appt.uid,
-                chekintype: 'appointment',
+               // uuid: this.appt.uid,
+                chekintype: this.multipleSelection,
                 action:'delay'
             }
         });
         delayAction.afterClosed().subscribe(result => {
-            this.dialogRef.close();
             if(result === 'reloadlist'){
-                
+           // this.provider_services.getAppointmentById(this.appt.uid)
+           // this.dialogRef.close('reload');
+          // this.dialogRef.close();
             }
+            
         });
     }
     smsCheckin() {
@@ -577,12 +588,13 @@ export class AppointmentActionsComponent implements OnInit {
         if (this.appt.providerConsumer && this.appt.providerConsumer.email || (this.appt.providerConsumer.phoneNo && this.appt.providerConsumer.phoneNo !== 'null')) {
             this.showMsg = true;
         }
-        if ((this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && this.data.timetype !== 2 && (!this.appt.virtualService) && !this.data.teleservice) {
+        if (this.data.multiSelection && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && this.data.timetype !== 2 && (!this.appt.virtualService) && !this.data.teleservice) {
             this.showStart = true;
         }
-        // if ((this.data.timetype === 1 || this.data.timetype === 3) && this.appt.virtualService && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && !this.data.teleservice) {
-        //     this.showTeleserviceStart = true;
-        // }
+        // this.status_booking = 'new' && 
+        if ((this.data.timetype === 1 || this.data.timetype === 2) && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Started' || this.appt.apptStatus === 'started')) {
+            this.showDelay = true;
+        }
         if ((this.data.timetype === 1 || this.data.timetype === 3) && (this.appt.service.serviceType === 'virtualService') && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed' || this.appt.apptStatus === 'Started') && !this.data.teleservice) {
             this.showTeleserviceStart = true;
         }

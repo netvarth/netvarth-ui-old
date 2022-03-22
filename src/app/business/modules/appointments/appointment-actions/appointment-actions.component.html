@@ -167,8 +167,9 @@
                 <div class="icon-text">Reschedule</div>
             </div>
         </div>
+        <!--   *ngIf="data.multiSelection && (appt.apptStatus == 'started' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Arrived') && data.timetype == 1 || data.timetype == 2" -->
         <div class="action-box pointer-cursor"
-            *ngIf="!data.multiSelection && (appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Arrived') && this.data.timetype === 1 || this.data.timetype === 2"
+        *ngIf="showDelay"
             (click)="delayActionClicked()">
             <div class="action-box-sub">
                 <!-- <span class="glyphicon glyphicon-hourglass"></span> -->

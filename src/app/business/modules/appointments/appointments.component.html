@@ -1239,7 +1239,7 @@
                     <span class="greenc bold font11">{{getSingleTime(appt.appmtFor[0].apptTime)}}
                     </span>
                     <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span><br>
-                    <span *ngIf="appt.isApptDelayed === true" style="color: rgb(255, 123, 0) !important;">{{getTimeMinute(appt.apptDelay)}}</span>&nbsp;
+                    <span *ngIf="appt.isApptDelayed === true && statusAction === 'new'" style="color: rgb(255, 123, 0) !important;">{{getTimeMinute(appt.apptDelay)}}</span>&nbsp;
 
                   </div>
 
@@ -1879,7 +1879,7 @@
                 <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
                   <span class="greenc bold font11">{{getSingleTime(appt.appmtFor[0].apptTime)}}</span>
                   <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span><br>
-                  <span *ngIf="appt.isApptDelayed === true" style="color: rgb(255, 123, 0) !important;">{{getTimeMinute(appt.apptDelay)}}</span>&nbsp;
+                  <span *ngIf="appt.isApptDelayed === true && statusAction === 'new'" style="color: rgb(255, 123, 0) !important;">{{getTimeMinute(appt.apptDelay)}}</span>&nbsp;
 
                 </div>
                 <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"

@@ -253,6 +253,10 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
          min =  Math.floor(time % 60);
          return 'delayed by ' +min + 'mins';
         }
+        if(time===0)
+        {
+            return '';
+        }
        
        }
     getItemQty(itemObj) {
