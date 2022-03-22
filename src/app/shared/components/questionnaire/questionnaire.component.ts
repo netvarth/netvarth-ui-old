@@ -133,6 +133,7 @@ export class QuestionnaireComponent implements OnInit {
         if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
           this.questions = this.questionnaireList.labels[0].questions;
           this.groupQuestionsBySection();
+          // this.getAnswers(this.questions, 'get');
         }
         if (this.customerDetails && this.customerDetails[0] && this.customerDetails[0].questionnaire && this.customerDetails[0].questionnaire.questionAnswers) {
           this.getAnswers(this.customerDetails[0].questionnaire.questionAnswers, 'get');
@@ -472,6 +473,7 @@ export class QuestionnaireComponent implements OnInit {
         delete this.answers[key];
       }
     });
+    console.log("Stage 2");
     Object.keys(this.uploadedFiles).forEach(key => {
       if (!this.answers[key]) {
         this.answers[key] = [];
@@ -496,6 +498,7 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
     });
+    console.log("Stage 3");
     let data = [];
     Object.keys(this.dataGridColumnsAnswerList).forEach(key => {
       let newFiled = {};
@@ -527,11 +530,12 @@ export class QuestionnaireComponent implements OnInit {
         'answer': newFiled
       });
     });
+    console.log("Stage 4");
     Object.keys(this.answers).forEach(key => {
       this.apiError[key] = [];
       let newMap = {};
       let question = this.questions.filter(quest => this.getQuestion(quest).labelName === key);
-      if (this.source === 'customer-create' || this.source === 'qnrDetails') {
+      if (this.source === 'customer-create' || this.source === 'qnrDetails' || this.source==='onetime') {
         question = question[0];
       } else {
         question = question[0].question;
@@ -557,12 +561,14 @@ export class QuestionnaireComponent implements OnInit {
       'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
       'answerLine': data
     }
+    console.log("Postdata:", postData);
     const passData = { 'answers': postData, 'files': this.selectedMessage, 'audioVideo': this.audioVideoFiles, 'filestoUpload': this.filestoUpload, 'dataGridColumnsAnswerList': this.dataGridColumnsAnswerList, 'comments': this.comments };
     if (keytype === 'inputChange') {
       this.changeHappened = true;
     }
     if (keytype === 'submit') {
       if (this.changeHappened) {
+        console.log("Result pass:", passData);
         this.submitQuestionnaire(passData);
       } else {
         if (!this.type) {

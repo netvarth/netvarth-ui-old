@@ -4,93 +4,55 @@
         <div class="panel panel-default">
             <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row " style="box-shadow: 0 1px 1px 0 rgb(0 0 0 / 20%), 0 2px 5px 0 rgb(0 0 0 / 19%);
             z-index: 999;">
-                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <div class="col-xs-12 col-sm-12 co-md-12 col-lg-12">
                     <a class="pull-left back-btn mgn-up-5" style="margin-top: 13px !important;" (click)="goBack('backyy')"><i
                             class="fa fa-arrow-left"></i></a>
                             <div class="text-left " style="margin-left: 25px !important;
                             margin-top: 4px;
                             font-size: 14px;
                             ;font-weight:bold">
-                    
-                                <span><b style="color: #133072;">{{providerName}}</b></span><br>
-                                <span  ><a style=" color: #cdc8c9 !important;font-size: 11px !important;" href="{{googleUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{placeName}}</a></span>
-                                <!-- <span class="mobile-only" ><a href="{{googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</a></span>
-                                <span class="mobile-only" ><a href="{{appointment.location?.googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{appointment.location?.place}}</a></span> -->
+                                <span><b class="header-bus-title">{{businessInfo.businessName}}</b></span><br>
+                                <span  ><a style=" color: #cdc8c9 !important;font-size: 11px !important;" href="{{businessInfo.googleUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{businessInfo.locationName}}</a></span>
                             </div>
                 </div>
-                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
+                <!-- <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
                     <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'donation'"
                         [accountId]="accountId" [customId]="customId"></app-header>
-                </div>
+                </div> -->
             </div>
             <app-common-innerloading-spinner *ngIf="loadingPaytm"></app-common-innerloading-spinner>
             <div class="panel-body flex-column-fluid hf-panel-body">
-                <div class="card card-custom no-margin">
+                <div class="card card-custom no-margin hgt-adjust">
                     <div class="card-body p-0">
                         <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
                             data-wizard-clickable="false">
-                            <div class="row justify-content-center">
-                                <div class="loading-hgt" *ngIf="loading">
-                                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                            <div [ngClass]="loggedIn ? 'row justify-content-center': ''">
+                                <div class="loading-hgt" *ngIf="!loggedIn || loading">
+                                    <app-consumer-join *ngIf="!loggedIn" (actionPerformed)="actionPerformed($event)">
+                                    </app-consumer-join>
+                                    <app-common-innerloading-spinner *ngIf="loggedIn && loading">
+                                    </app-common-innerloading-spinner>
                                 </div>
                                 <div class="col-xl-12 no-padding-small" *ngIf="!loading">
-                                    <!-- <div
-                                        class="lbl col-sm-12 col-md-5 col-lg-4 col-xs-12 col-sm-12 no-padding-small displ-none">
-                                        <div class="wizard-nav">
-                                            <div class="wizard-steps p-8 p-lg-10"
-                                                *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
-                                                <div class="wizard-step tab-selected wizard-mgn-30"
-                                                    data-wizard-type="step">
-                                                    <div class="wizard-label">
-                                                        <div class="step-icon">1</div>
-                                                        <h3 class="wizard-title mgn-lt-15">More Info</h3>
-                                                    </div>
-                                                    <span class="svg-icon svg-icon-xl wizard-arrow">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                                                            height="24px" viewBox="0 0 24 24" version="1.1">
-                                                            <g stroke="none" stroke-width="1" fill="none"
-                                                                fill-rule="evenodd">
-                                                                <polygon points="0 0 24 0 24 24 0 24" />
-                                                                <rect fill="#000000" opacity="0.3"
-                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
-                                                                    x="11" y="5" width="2" height="14" rx="1" />
-                                                                <path
-                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                    fill="#000000" fill-rule="nonzero"
-                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
-                                                            </g>
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                                <div class="wizard-step" data-wizard-type="step"
-                                                    [class.tab-selected]="bookStep=='donation'">
-                                                    <div class="wizard-label">
-                                                        <div class="step-icon">2</div>
-                                                        <h3 class="wizard-title mgn-lt-15">Payment</h3>
-                                                    </div>
-                                                    <span class="svg-icon svg-icon-xl wizard-arrow last">
-                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                                                            height="24px" viewBox="0 0 24 24" version="1.1">
-                                                            <g stroke="none" stroke-width="1" fill="none"
-                                                                fill-rule="evenodd">
-                                                                <polygon points="0 0 24 0 24 24 0 24" />
-                                                                <rect fill="#000000" opacity="0.3"
-                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
-                                                                    x="11" y="5" width="2" height="14" rx="1" />
-                                                                <path
-                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
-                                                                    fill="#000000" fill-rule="nonzero"
-                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
-                                                            </g>
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                            </div>
+                                    <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding-small right-part"
+                                        data-wizard-type="step-content" data-wizard-state="current"
+                                        *ngIf="bookStep === 'profile'">
+                                        <div class="pad-20 quest-head">
+                                            Fill the following one time information
                                         </div>
-                                        <div class="booking-img"></div>
-                                    </div> -->
+                                        <app-questionnaire [questionnaireList]="onetimeQuestionnaireList"
+                                            [questionAnswers]="oneTimeInfo" [source]="'onetime'"
+                                            (returnAnswers)="getOneTimeQuestionAnswers($event)">
+                                        </app-questionnaire>
+                                        <div
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 hf-double-btn-container">
+                                            <button type="button"
+                                                class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                (click)="goToStep('profile')">
+                                                Next
+                                            </button>
+                                        </div>
+                                    </div>
                                     <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding-small right-part"
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 'qnr'">
@@ -121,7 +83,7 @@
                                     <app-common-innerloading-spinner *ngIf="api_loading_video">
                                     </app-common-innerloading-spinner>
                                 </div>
-
+                                
                                 <div class="lbl col-sm-12 col-md-7 col-lg-14 col-xs-12  no-padding-small"
                                 data-wizard-type="step-content" data-wizard-state="current"
                                 *ngIf="bookStep === 'donation'" [ngClass]="{'highlight': api_loading_video}">

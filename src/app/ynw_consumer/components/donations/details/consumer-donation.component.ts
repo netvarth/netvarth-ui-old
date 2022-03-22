@@ -292,11 +292,11 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     from_iOS = false;
     paymentWindow: Window;
     showAdvancedSettings = false;
-     tempDonorName:any;
-      tempDonorEmail:any;
-      tempDonorPh:any;
-      tempDonorDetails:any;
-      tempErrorDonationAmmount:any
+    tempDonorName: any;
+    tempDonorEmail: any;
+    tempDonorPh: any;
+    tempDonorDetails: any;
+    tempErrorDonationAmmount: any
     oneTimeInfo: any;
     onetimeQuestionnaireList;
     constructor(public fed_service: FormMessageDisplayService,
@@ -443,7 +443,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             _this.maxsize = 1;
             _this.step = 1;
             _this.getPaymentModes();
-            _this.gets3curl();
             _this.sharedFunctionobj.getProfile().then(data => {
                 _this.setProfileInfo(data);
                 _this.getConsumerQuestionnaire().then(
@@ -486,11 +485,13 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (_this.lStorageService.getitemfromLocalStorage('ios')) {
             _this.from_iOS = true;
         }
+        _this.gets3curl();
         // _this.gets3curl();
         _this.goThroughLogin().then(
             (status) => {
                 console.log("Status:", status);
                 if (status) {
+                    _this.customer_data = _this.groupService.getitemFromGroupStorage('ynw-user');
                     _this.initDonation().then(
                         (status) => {
                             console.log("init Donation Status1:", status);
@@ -499,15 +500,15 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                                     console.log("Questions:", questions);
                                     // _this.onetimeQuestionnaireList = { "questionnaireId": "WalkinConsumer", "id": 7, "labels": [{ "transactionType": "CONSUMERCREATION", "transactionId": 0, "channel": "ANY", "questionnaireId": "WalkinConsumer", "questions": [{ "id": 18, "labelName": "General Health3", "sequnceId": "", "fieldDataType": "bool", "fieldScope": "consumer", "label": "Do you have any chronic diseases?", "labelValues": ["Yes", "No"], "billable": false, "mandatory": false, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] } }] }] };
                                     if (questions) {
-                                    _this.onetimeQuestionnaireList = questions;
-                                    if (_this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0) {
-                                        _this.bookStep = 'profile';
-                                    } else if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
-                                        _this.bookStep = 'qnr';
-                                    } else {
-                                        _this.bookStep = 'donation';
-                                    }
-                                    _this.loggedIn = true;
+                                        _this.onetimeQuestionnaireList = questions;
+                                        if (_this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0) {
+                                            _this.bookStep = 'profile';
+                                        } else if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                            _this.bookStep = 'qnr';
+                                        } else {
+                                            _this.bookStep = 'donation';
+                                        }
+                                        _this.loggedIn = true;
                                     } else {
                                         if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                             _this.bookStep = 'qnr';
@@ -610,19 +611,19 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (dnrFirst === '') {
             this.donorerror = 'Please enter the first name';
             return;
-        }  if (dnrLast === '') {
+        } if (dnrLast === '') {
             this.donorlasterror = 'Please enter the last name';
             return;
-        } 
+        }
         // else {
-            this.donorFirstName = dnrFirst;
-            this.donorLastName = dnrLast;
-            setTimeout(() => {
-                this.action = '';
-            }, 500);
-            this.closebutton.nativeElement.click();
-            this.donorName = dnrFirst + ' ' + dnrLast;
-            // this.donorName = this.donor.trim();
+        this.donorFirstName = dnrFirst;
+        this.donorLastName = dnrLast;
+        setTimeout(() => {
+            this.action = '';
+        }, 500);
+        this.closebutton.nativeElement.click();
+        this.donorName = dnrFirst + ' ' + dnrLast;
+        // this.donorName = this.donor.trim();
         // }
     }
     addPhone() {
@@ -637,17 +638,17 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (this.selected_phone === '') {
             this.phoneerror = Messages.BPROFILE_PHONENO;
             return;
-        }  if (!result) {
-            this.phoneerror ='Please enter valid phone number'// Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
+        } if (!result) {
+            this.phoneerror = 'Please enter valid phone number'// Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
             // console.log('Message',Messages.BPROFILE_PRIVACY_PHONE_INVALID)
             return;
-        } 
-if (!result1) {
+        }
+        if (!result1) {
             this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Mobile number should have 10 digits';
             return;
         }
-        
-         {
+
+        {
             this.consumerPhoneNo = this.selected_phone;
             this.userPhone = this.selected_phone;
             this.edit = true;
@@ -655,14 +656,22 @@ if (!result1) {
                 this.action = '';
             }, 500);
             this.closebutton.nativeElement.click();
-        }   
+        }
     }
     editPhone() {
         this.edit = false;
         this.action = 'phone';
         this.selected_phone = this.userPhone;
     }
-    editDonor(email: any) {
+    editDonor(email: any, name: any, phone: any) {
+        console.log('email', email)
+        console.log('donorName', name)
+        console.log('userPhone', phone)
+        // console.log('Donor first',this.donorfirst)
+        this.tempDonorName = 'name' + name;
+        this.tempDonorPh = 'phone' + phone;
+        this.tempDonorEmail = 'email' + email;
+
         this.action = 'donor';
         this.edit = false;
         this.action = 'phone';
@@ -672,33 +681,38 @@ if (!result1) {
         this.confrmshow = false;
         this.payEmail = email;
         this.payEmail1 = '';
+        // if (this.dispCustomerEmail) {
+        //     this.dispCustomerEmail = false;
+        // } else {
+        //     this.dispCustomerEmail = true;
+        // }
 
     }
-    addDonorDetails(){
-        if(this.tempDonorDetails.startsWith('f') ||this.tempDonorDetails.startsWith('l')){
+    addDonorDetails() {
+        if (this.tempDonorDetails.startsWith('f') || this.tempDonorDetails.startsWith('l')) {
             this.addDonor()
         }
-         if(this.tempDonorDetails.startsWith('p')){
-             this.addPhone()
+        if (this.tempDonorDetails.startsWith('p')) {
+            this.addPhone()
         }
-         if(this.tempDonorDetails.startsWith('e')){
+        if (this.tempDonorDetails.startsWith('e')) {
             this.addEmail()
-       }
-//        else{
-//         setTimeout(() => {
-//             this.action = '';
-//         }, 500);
-//         this.closebutton.nativeElement.click();
-//    }
-       
-        
+        }
+        //        else{
+        //         setTimeout(() => {
+        //             this.action = '';
+        //         }, 500);
+        //         this.closebutton.nativeElement.click();
+        //    }
+
+
         // this.addDonor()
         // this.addPhone()
         // this.addEmail()  
     }
-    donorDetails(donorDetails:any){
-        console.log('donorDetails...........',donorDetails)
-        this.tempDonorDetails=donorDetails
+    donorDetails(donorDetails: any) {
+        console.log('donorDetails...........', donorDetails)
+        this.tempDonorDetails = donorDetails
         // if(this.tempDonorDetails!=undefined){
         //     this.tempDonorDetails=donorDetails
         // }
@@ -861,64 +875,76 @@ if (!result1) {
         }
     }
     addDonationConsumer(post_Data, paymentWay) {
-
         const _this = this;
-        this.api_loading = true;
-
-        if (this.from_iOS) {
-            this.shared_services.generateDonationLink(this.accountId, post_Data).subscribe(
+        _this.api_loading = true;
+        if (_this.from_iOS) {
+            _this.shared_services.generateDonationLink(_this.accountId, post_Data).subscribe(
                 (paymentLinkResponse: any) => {
                     console.log("Payment Link:", paymentLinkResponse);
-                    this.uid = paymentLinkResponse['uuid'];
-                    if (this.customId) {
-                        console.log("businessid" + this.account_id);
-                        this.shared_services.addProvidertoFavourite(this.account_id)
+                    _this.uid = paymentLinkResponse['uuid'];
+                    if (_this.customId) {
+                        console.log("businessid" + _this.account_id);
+                        _this.shared_services.addProvidertoFavourite(_this.account_id)
                             .subscribe(() => {
                             });
                     }
-                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                        this.submitQuestionnaire(this.uid, post_Data).then(
-                            (status) => {
-                                if (status) {
-                                    _this.openPaymentLink(_this.customId, post_Data['service'].id, paymentLinkResponse.paylink);
-                                }
+                    _this.submitOneTimeInfo().then(
+                        (status) => {
+                            if (status) {
+                                _this.submitQuestionnaire(_this.uid, post_Data).then(
+                                    (status1) => {
+                                        if (status1) {
+                                            _this.openPaymentLink(_this.customId, post_Data['service'].id, paymentLinkResponse.paylink);
+                                        }
+                                    });
                             }
-                        );
-                    } else {
-                        this.openPaymentLink(this.customId, post_Data['service'].id, paymentLinkResponse.paylink);
-                    }
+                        }
+                    )
                 },
                 error => {
-                    this.isClickedOnce = false;
-                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    _this.isClickedOnce = false;
+                    _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
         } else {
-            const paymentWay = this.selected_payment_mode;
-            this.subs.sink = this.shared_services.addCustomerDonation(post_Data, this.account_id)
+            const paymentWay = _this.selected_payment_mode;
+            console.log("Going to call donation link:", paymentWay);
+            _this.subs.sink = _this.shared_services.addCustomerDonation(post_Data, _this.account_id)
                 .subscribe(data => {
-                    this.uid = data['uid'];
-                    if (this.customId) {
-                        console.log("businessid" + this.account_id);
-                        this.shared_services.addProvidertoFavourite(this.account_id)
+                    _this.uid = data['uid'];
+                    if (_this.customId) {
+                        console.log("businessid" + _this.account_id);
+                        _this.shared_services.addProvidertoFavourite(_this.account_id)
                             .subscribe(() => {
                             });
 
                     }
-                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                        this.submitQuestionnaire(this.uid, post_Data).then(
-                            (status) => {
-                                if (status) {
-                                    this.consumerPayment(this.uid, post_Data, paymentWay);
-                                }
+                    _this.submitOneTimeInfo().then(
+                        (status) => {
+                            if (status) {
+                                _this.submitQuestionnaire(_this.uid, post_Data).then(
+                                    (status1) => {
+                                        if (status1) {
+                                            _this.consumerPayment(_this.uid, post_Data, paymentWay);
+                                        }
+                                    });
                             }
-                        );
-                    } else {
-                        this.consumerPayment(this.uid, post_Data, paymentWay);
-                    }
+                        }
+                    )
+                    // if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    //     this.submitQuestionnaire(this.uid, post_Data).then(
+                    //         (status) => {
+                    //             if (status) {
+
+                    //             }
+                    //         }
+                    //     );
+                    // } else {
+                    //     this.consumerPayment(this.uid, post_Data, paymentWay);
+                    // }
                 },
                     error => {
-                        this.isClickedOnce = false;
-                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        _this.isClickedOnce = false;
+                        _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                     });
         }
     }
@@ -1102,27 +1128,31 @@ if (!result1) {
     goBack(type?) {
         console.log(this.bookStep);
         console.log(this.action);
-        if (this.bookStep === 'qnr') {
-            this.location.back();
-        } else {
-            if (this.action == '') {
+        if (this.action == '') {
+            if (this.bookStep === 'donation') {
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.bookStep = 'qnr';
+                } else if (this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0) {
+                    this.bookStep = 'profile';
+                } else {
+                    this.location.back();
+                }
+            } else if (this.bookStep === 'qnr') {
+                if (this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0) {
+                    this.bookStep = 'profile';
                 } else {
                     this.location.back();
                 }
             } else {
-                setTimeout(() => {
-                    this.action = '';
-                }, 500);
-                if (this.closebutton) {
-                    this.closebutton.nativeElement.click();
-                }
+                this.location.back();
             }
-            // else {
-            //     console.log("else");
-            //     this.location.back();
-            // }
+        } else {
+            setTimeout(() => {
+                this.action = '';
+            }, 500);
+            if (this.closebutton) {
+                this.closebutton.nativeElement.click();
+            }
         }
 
     }
@@ -1354,20 +1384,20 @@ if (!result1) {
     }
     isNumeric(evt) {
         console.log(evt)
-    //     var key;
-    // key = evt.charCode; 
-    // if((key > 47 && key < 58)){
-    //     return ((key > 47 && key < 58) );
-    // } else{
-    //     this.tempErrorDonationAmmount='Please enter valid ammount '
+        //     var key;
+        // key = evt.charCode; 
+        // if((key > 47 && key < 58)){
+        //     return ((key > 47 && key < 58) );
+        // } else{
+        //     this.tempErrorDonationAmmount='Please enter valid ammount '
 
-    // }
-    // if(evt.charCode<58 && evt.charCode>47 ){
-    //     this.tempErrorDonationAmmount=''
-    //     return this.sharedFunctionobj.isNumeric(evt);
-    // }else{
+        // }
+        // if(evt.charCode<58 && evt.charCode>47 ){
+        //     this.tempErrorDonationAmmount=''
+        //     return this.sharedFunctionobj.isNumeric(evt);
+        // }else{
 
-    // }
+        // }
         return this.sharedFunctionobj.isNumeric(evt);
     }
     showServiceDetail(serv, busname) {
@@ -1412,69 +1442,72 @@ if (!result1) {
     submitQuestionnaire(uuid, post_Data) {
         const _this = this;
         return new Promise(function (resolve, reject) {
-            const dataToSend: FormData = new FormData();
-            if (_this.questionAnswers.files) {
-                for (const pic of _this.questionAnswers.files) {
-                    dataToSend.append('files', pic, pic['name']);
-                }
-            }
-            const blobpost_Data = new Blob([JSON.stringify(_this.questionAnswers.answers)], { type: 'application/json' });
-            dataToSend.append('question', blobpost_Data);
-            _this.shared_services.submitDonationQuestionnaire(uuid, dataToSend, _this.account_id).subscribe((data: any) => {
-                let postData = {
-                    urls: []
-                };
-                if (data.urls && data.urls.length > 0) {
-                    for (const url of data.urls) {
-                        const file = _this.questionAnswers.filestoUpload[url.labelName][url.document];
-                        _this.provider_services.videoaudioS3Upload(file, url.url)
-                            .subscribe(() => {
-                                postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-                                if (data.urls.length === postData['urls'].length) {
-                                    _this.shared_services.consumerDonationQnrUploadStatusUpdate(uuid, _this.account_id, postData)
-                                        .subscribe((data) => {
-                                            _this.api_loading_video = true;
-                                            // this.paymentOperation(paymenttype);
-                                            // this.consumerPayment(this.uid, post_Data, paymentWay);
-                                            resolve(true);
-                                            _this.api_loading_video = false;
-                                        },
-                                            error => {
-                                                _this.isClickedOnce = false;
-                                                _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                                _this.disablebutton = false;
-                                                _this.api_loading_video = false;
-                                                resolve(false);
-                                            });
-
-                                }
-
-                            },
-                                error => {
-                                    this.isClickedOnce = false;
-                                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                    this.disablebutton = false;
-                                    this.api_loading_video = false;
-                                });
+            if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                const dataToSend: FormData = new FormData();
+                if (_this.questionAnswers.files) {
+                    for (const pic of _this.questionAnswers.files) {
+                        dataToSend.append('files', pic, pic['name']);
                     }
-                } else {
-                    // this.consumerPayment(this.uid, post_Data, paymentWay);
-                    resolve(true);
                 }
-            },
-                error => {
-                    this.isClickedOnce = false;
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                    this.disablebutton = false;
-                    this.api_loading_video = false;
-                });
+                const blobpost_Data = new Blob([JSON.stringify(_this.questionAnswers.answers)], { type: 'application/json' });
+                dataToSend.append('question', blobpost_Data);
+                _this.shared_services.submitDonationQuestionnaire(uuid, dataToSend, _this.account_id).subscribe((data: any) => {
+                    let postData = {
+                        urls: []
+                    };
+                    if (data.urls && data.urls.length > 0) {
+                        for (const url of data.urls) {
+                            const file = _this.questionAnswers.filestoUpload[url.labelName][url.document];
+                            _this.provider_services.videoaudioS3Upload(file, url.url)
+                                .subscribe(() => {
+                                    postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                                    if (data.urls.length === postData['urls'].length) {
+                                        _this.shared_services.consumerDonationQnrUploadStatusUpdate(uuid, _this.account_id, postData)
+                                            .subscribe((data) => {
+                                                _this.api_loading_video = true;
+                                                // this.paymentOperation(paymenttype);
+                                                // this.consumerPayment(this.uid, post_Data, paymentWay);
+                                                resolve(true);
+                                                _this.api_loading_video = false;
+                                            },
+                                                error => {
+                                                    _this.isClickedOnce = false;
+                                                    _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                                    _this.disablebutton = false;
+                                                    _this.api_loading_video = false;
+                                                    resolve(false);
+                                                });
+
+                                    }
+
+                                },
+                                    error => {
+                                        this.isClickedOnce = false;
+                                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                        this.disablebutton = false;
+                                        this.api_loading_video = false;
+                                    });
+                        }
+                    } else {
+                        // this.consumerPayment(this.uid, post_Data, paymentWay);
+                        resolve(true);
+                    }
+                },
+                    error => {
+                        this.isClickedOnce = false;
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                        this.disablebutton = false;
+                        this.api_loading_video = false;
+                        resolve(false);
+                    });
+            } else {
+                resolve(true);
+            }
         })
     }
     goToStep(type) {
         if (this.bookStep === 'profile') {
-            alert("Here");
-            this.getBookStep('profile');
-            // this.validateOneTimeInfo();
+            this.validateOneTimeInfo();
         }
         if (this.bookStep === 'qnr') {
             this.validateQuestionnaire();
@@ -1492,6 +1525,9 @@ if (!result1) {
             }
         }
         if (this.questionAnswers.answers) {
+
+
+
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
                 if (data.length === 0) {
                     this.bookStep = 'donation';
@@ -1508,16 +1544,27 @@ if (!result1) {
             this.oneTimeInfo = {
                 answers: {
                     answerLine: [],
-                    questionnaireId: this.questionnaireList.id
+                    questionnaireId: this.onetimeQuestionnaireList.id
                 }
             }
         }
         // this.getBookStep('profile');
+        console.log("Before Validation", this.oneTimeInfo);
         if (this.oneTimeInfo.answers) {
-            this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
-                if (data.length === 0) {
+
+            // const questions = this.oneTimeInfo.answers.answerLine.map(function (a) { return a.labelName; })
+
+            
+            // const dataToSend: FormData = new FormData();
+            // const answer = new Blob([JSON.stringify(this.oneTimeInfo.answers)], { type: 'application/json' });
+            // // const question = new Blob([JSON.stringify(questions)], { type: 'application/json' });
+            // dataToSend.append('answer', answer);
+            // dataToSend.append('question', questions);
+            // this.shared_services.validateConsumerOneTimeQuestionnaire(dataToSend, this.account_id).subscribe((data: any) => {
+                this.shared_services.validateConsumerQuestionnaire(this.oneTimeInfo.answers, this.account_id).subscribe((data: any) => {
+            // if (data.length === 0) {
                     this.getBookStep('profile');
-                }
+                // }
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
             }, error => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1544,15 +1591,17 @@ if (!result1) {
         const _this = this;
         if (status === 'success') {
             this.loggedIn = true;
+            _this.customer_data = _this.groupService.getitemFromGroupStorage('ynw-user');
             this.initDonation().then(
                 (status) => {
                     console.log("init Donation Status:", status);
                     _this.getOneTimeInfo(_this.account_id).then(
                         (questions) => {
-                            console.log("Questions:", questions);
-                            _this.onetimeQuestionnaireList = { "questionnaireId": "WalkinConsumer", "id": 7, "labels": [{ "transactionType": "CONSUMERCREATION", "transactionId": 0, "channel": "ANY", "questionnaireId": "WalkinConsumer", "questions": [{ "id": 18, "labelName": "General Health3", "sequnceId": "", "fieldDataType": "bool", "fieldScope": "consumer", "label": "Do you have any chronic diseases?", "labelValues": ["Yes", "No"], "billable": false, "mandatory": false, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] } }] }] };
-                            if (questions) {
                             _this.onetimeQuestionnaireList = questions;
+                            console.log("Questions:", questions);
+                            // _this.onetimeQuestionnaireList = { "questionnaireId": "WalkinConsumer", "id": 7, "labels": [{ "transactionType": "CONSUMERCREATION", "transactionId": 0, "channel": "ANY", "questionnaireId": "WalkinConsumer", "questions": [{ "id": 18, "labelName": "General Health3", "sequnceId": "", "fieldDataType": "bool", "fieldScope": "consumer", "label": "Do you have any chronic diseases?", "labelValues": ["Yes", "No"], "billable": false, "mandatory": false, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] } }] }] };
+                            // if (_this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels > 0) {
+
                             if (_this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0) {
                                 _this.bookStep = 'profile';
                             } else if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
@@ -1561,14 +1610,14 @@ if (!result1) {
                                 _this.bookStep = 'donation';
                             }
                             _this.loggedIn = true;
-                            } else {
-                                if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
-                                    _this.bookStep = 'qnr';
-                                } else {
-                                    _this.bookStep = 'donation';
-                                }
-                                _this.loggedIn = true;
-                            }
+                            // } else {
+                            //     if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                            //         _this.bookStep = 'qnr';
+                            //     } else {
+                            //         _this.bookStep = 'donation';
+                            //     }
+                            //     _this.loggedIn = true;
+                            // }
                             _this.loading = false;
                         }
                     )
@@ -1592,56 +1641,65 @@ if (!result1) {
     }
     getOneTimeQuestionAnswers(event) {
         this.oneTimeInfo = event;
-        console.log("OneTimeInfo:",this.oneTimeInfo);
+        console.log("OneTimeInfo:", this.oneTimeInfo);
     }
     submitOneTimeInfo() {
-        const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-        const dataToSend: FormData = new FormData();
-        if (this.oneTimeInfo.files) {
-            for (const pic of this.oneTimeInfo.files) {
-                dataToSend.append('files', pic, pic['name']);
-            }
-        }
-        const blobpost_Data = new Blob([JSON.stringify(this.oneTimeInfo.answers)], { type: 'application/json' });
-        dataToSend.append('question', blobpost_Data);
-        this.subs.sink = this.shared_services.submitCustomerOnetimeInfo(dataToSend, activeUser.id).subscribe((data: any) => {
-            let postData = {
-                urls: []
-            };
-            if (data.urls && data.urls.length > 0) {
-                for (const url of data.urls) {
-                    this.api_loading_video = true;
-                    const file = this.oneTimeInfo.filestoUpload[url.labelName][url.document];
-                    this.provider_services.videoaudioS3Upload(file, url.url)
-                        .subscribe(() => {
-                            postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-                            if (data.urls.length === postData['urls'].length) {
-                                // this.shared_services.consumerApptQnrUploadStatusUpdate(uuid, this.account_id, postData)
-                                //     .subscribe((data) => {
-                                //         this.paymentOperation(paymenttype);
-                                //     },
-                                //         error => {
-                                //             this.isClickedOnce = false;
-                                //             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                //             this.disablebutton = false;
-                                //             this.api_loading_video = false;
-                                //         });
-                            }
-                        },
-                            error => {
-                                this.isClickedOnce = false;
-                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                this.disablebutton = false;
-                                this.api_loading_video = false;
-                            });
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+            if (_this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0) {
+                const activeUser = _this.groupService.getitemFromGroupStorage('ynw-user');
+                const dataToSend: FormData = new FormData();
+                if (_this.oneTimeInfo.files) {
+                    for (const pic of _this.oneTimeInfo.files) {
+                        dataToSend.append('files', pic, pic['name']);
+                    }
                 }
+                const blobpost_Data = new Blob([JSON.stringify(_this.oneTimeInfo.answers)], { type: 'application/json' });
+                dataToSend.append('question', blobpost_Data);
+                _this.subs.sink = _this.shared_services.submitCustomerOnetimeInfo(dataToSend, activeUser.id,_this.account_id).subscribe((data: any) => {
+                    // let postData = {
+                    //     urls: []
+                    // };
+                    // if (data.urls && data.urls.length > 0) {
+                    //     for (const url of data.urls) {
+                    //         this.api_loading_video = true;
+                    //         const file = _this.oneTimeInfo.filestoUpload[url.labelName][url.document];
+                    //         _this.provider_services.videoaudioS3Upload(file, url.url)
+                    //             .subscribe(() => {
+                    //                 postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                    //                 if (data.urls.length === postData['urls'].length) {
+                    //                     this.shared_services.consumerApptQnrUploadStatusUpdate(uuid, this.account_id, postData)
+                    //                         .subscribe((data) => {
+                    //                             this.paymentOperation(paymenttype);
+                    //                         },
+                    //                             error => {
+                    //                                 this.isClickedOnce = false;
+                    //                                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    //                                 this.disablebutton = false;
+                    //                                 this.api_loading_video = false;
+                    //                             });
+                    //                 }
+                    //             },
+                    //                 error => {
+                    //                     this.isClickedOnce = false;
+                    //                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    //                     this.disablebutton = false;
+                    //                     this.api_loading_video = false;
+                    //                 });
+                    //     }
+                    // }
+                    resolve(true);
+                },
+                    error => {
+                        _this.isClickedOnce = false;
+                        _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                        _this.disablebutton = false;
+                        resolve(false);
+                        // this.api_loading_video = false;
+                    });
+            } else {
+                resolve(true);
             }
-        },
-            error => {
-                this.isClickedOnce = false;
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                this.disablebutton = false;
-                this.api_loading_video = false;
-            });
+        });
     }
 }

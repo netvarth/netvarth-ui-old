@@ -10,7 +10,7 @@
 <section #consumer_checkin class="container-fluid" [ngClass]="theme?theme:''">
     <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
     <div class="loading-hgt my-5 login-form_custom" *ngIf="!loggedIn || (loggedIn && loading)">
-        <div class="card card-custom no-margin">
+        <div class="card card-custom no-margin hgt-adjust">
             <div class="card-body p-0">
                 <app-consumer-join *ngIf="!loggedIn" (actionPerformed)="actionPerformed($event)"></app-consumer-join>
                 <app-common-innerloading-spinner *ngIf="loggedIn && loading">
@@ -20,7 +20,7 @@
     </div>
     <div class="row" *ngIf="loggedIn">
         <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch desktop-only">
-            <div class="card shadow">
+            <div class="card shadow hgt-adjust">
                 <app-booking-accountinfo [businessInfo]="businessInfo" [smallDevice]="small_device"
                     *ngIf="!small_device"></app-booking-accountinfo>
                 <div class="booking-img"></div>
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch p-1">
-            <div class="card shadow">
+            <div class="card shadow hgt-adjust">
                 <div *ngIf="!loading && selectedService">
                     <div class="p-0">
                         <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"

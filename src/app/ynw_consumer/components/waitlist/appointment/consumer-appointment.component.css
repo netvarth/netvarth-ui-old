@@ -2290,3 +2290,6 @@ box-shadow: 4px 4px 5px gainsboro;
       align-items:stretch!important;
     }
   }
+  .hgt-adjust {
+    min-height: 91vh;
+  }

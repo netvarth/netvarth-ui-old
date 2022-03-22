@@ -1140,6 +1140,10 @@ export class SharedServices {
     const url = 'consumer/questionnaire/validate' + '?account=' + accountId;
     return this.servicemeta.httpPut(url, body);
   }
+  validateConsumerOneTimeQuestionnaire(body, accountId) {
+    const url = 'consumer/questionnaire/validate/onetimequestionnaire' + '?account=' + accountId;
+    return this.servicemeta.httpPut(url, body);
+  }
   validateConsumerQuestionnaireResbumit(body, accountId) {
     const url = 'consumer/questionnaire/resubmit/validate' + '?account=' + accountId;
     return this.servicemeta.httpPut(url, body);
@@ -1150,8 +1154,8 @@ export class SharedServices {
     // {account}
     return this.servicemeta.httpGet(url);
   }
-  submitCustomerOnetimeInfo(body, userId) {
-    const url = 'consumer/questionnaire/' + userId;
+  submitCustomerOnetimeInfo(body, userId, accountId) {
+    const url = 'consumer/questionnaire/' + userId + '?account=' + accountId;
     return this.servicemeta.httpPost(url, body);
   }
 

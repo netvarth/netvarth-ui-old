@@ -52,7 +52,6 @@ const routes: Routes = [
         MatFormFieldModule,
         MatInputModule,
         ReactiveFormsModule,
-
         [RouterModule.forChild(routes)]
     ]
 })

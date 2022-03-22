@@ -9,7 +9,7 @@
 </div>
 <section #consumer_appointment class="container-fluid" [ngClass]="theme?theme:''">
     <div class="loading-hgt my-5 login-form_custom" *ngIf="!loggedIn || loading">
-        <div class="card card-custom no-margin">
+        <div class="card card-custom no-margin hgt-adjust">
             <div class="card-body p-0">
                 <app-consumer-join *ngIf="!loggedIn" (actionPerformed)="actionPerformed($event)"></app-consumer-join>
                 <app-common-innerloading-spinner *ngIf="loggedIn && loading"></app-common-innerloading-spinner>
@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch p-1" *ngIf="selectedService">
-            <div class="card shadow">
+            <div class="card shadow hgt-adjust">
                 <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
                     data-wizard-clickable="false">
                     <div class="">

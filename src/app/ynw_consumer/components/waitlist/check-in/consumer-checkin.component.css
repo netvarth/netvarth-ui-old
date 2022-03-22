@@ -2192,3 +2192,6 @@ body.modal-open {
       align-items:stretch!important;
     }
   }
+  .hgt-adjust {
+    min-height: 91vh;
+  }
