@@ -694,21 +694,12 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
          if(this.tempDonorDetails.startsWith('e')){
             this.addEmail()
        }
-//        else{
-//         setTimeout(() => {
-//             this.action = '';
-//         }, 500);
-//         this.closebutton.nativeElement.click();
-//    }
-       
-        
-        // this.addDonor()
-        // this.addPhone()
-        // this.addEmail()  
+    //    if(){}
     }
     donorDetails(donorDetails:any){
         console.log('donorDetails...........',donorDetails)
         this.tempDonorDetails=donorDetails
+        console.log('this.tempDonorDetails....',this.tempDonorDetails)
         // if(this.tempDonorDetails!=undefined){
         //     this.tempDonorDetails=donorDetails
         // }
