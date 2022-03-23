@@ -1,5 +1,6 @@
 import {Component, Inject, ViewEncapsulation} from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 export interface PricingDialogData {
   part: 'multiChannelBookings' | 'apptManager' | 'qManager' | 'webAndQR' | 'busListing' | 'privateCustomerDB' | 'teleHealth' | 'onlinePayments' |
@@ -21,10 +22,15 @@ export interface PricingDialogData {
 export class PricingContentDialog {
   part: string;
   type: string;
+  customer_label:any;
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: PricingDialogData) 
+    @Inject(MAT_DIALOG_DATA) public data: PricingDialogData,
+    private wordProcessor: WordProcessor,) 
     { 
       this.part = data.part;
       this.type = data.type;
+    }
+    ngOnInit(){
+      this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     }
 }

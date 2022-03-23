@@ -958,6 +958,7 @@ export class BranchUsersComponent implements OnInit {
         // this.apiError = '';
         this.closelocDialog();
     }
+    openGoogleMap(){}
     // getBussLoc(bussloc) {
     //     for (let i = 0; i < bussloc.length; i++) {
     //         const locations = this.locationsjson.filter(loc => loc.id === bussloc[i]);

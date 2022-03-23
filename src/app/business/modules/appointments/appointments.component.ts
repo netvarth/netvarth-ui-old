@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+
 import { ProviderSharedFuctions } from '../../functions/provider-shared-functions';
 // import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
 
@@ -2932,7 +2933,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     let multiSelection;
     if (checkin) {
       multiSelection = false;
-    } else {
+    } 
+    else {
       if (status === 'started') {
         multiSelection = this.apptStartedMultiSelection;
       } else {
@@ -2960,7 +2962,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         // this.apptMultiSelection = false;
         this.getLabel();
         this.loadApiSwitch('');
+       this.refresh();
       }
+     // this.refresh();
       this.chkSelectAppointments = false;
       this.chkStartedSelectAppointments = false;
       this.apptStartedMultiSelection = false;

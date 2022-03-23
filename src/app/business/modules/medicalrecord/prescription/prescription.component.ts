@@ -76,6 +76,7 @@ export class PrescriptionComponent implements OnInit {
   note = '';
   prescList = true;
   doctorName;
+  customer_label:any
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -98,6 +99,7 @@ export class PrescriptionComponent implements OnInit {
     this.provider_user_Id = this.medicalrecord_service.getDoctorId();
     if (!this.provider_user_Id) {
       const user = this.groupService.getitemFromGroupStorage('ynw-user');
+      this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
       this.provider_user_Id = user.id;
     }
     if (this.mrId === 0) {

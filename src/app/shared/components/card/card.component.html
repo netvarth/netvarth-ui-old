@@ -516,8 +516,11 @@
                 {{appointment.appmtDate | date: newTimeDateFormat}}</div>
             <div class="mgn-lt-5 date" *ngIf="time_type!=3">
                 <span class="greenc bold font11">{{getSingleTime(appointment.appmtFor[0].apptTime)}}</span><br>
-                <span *ngIf="appointment.isApptDelayed === true && time_type === 1 || time_type === 2" style="color: rgb(255, 123, 0) !important;">{{getTimeMinute(appointment.apptDelay)}}</span>&nbsp;        
+                <div *ngIf="appointment.isApptDelayed === true">
+               
+             <span *ngIf="appointment.isApptDelayed === true && appointment.apptDelay.length>0 && time_type === 1 || time_type === 2 && appointment.apptStatus == 'started' || appointment.apptStatus == 'Arrived' || appointment.apptStatus == 'new' || appointment.apptStatus !== 'cancelled' || appointment.apptStatus !== 'completed'" style="color: rgb(255, 123, 0) !important;">{{getTimeMinute(appointment.apptDelay)}}</span>&nbsp;        
                 </div>
+            </div>
             <div class="box1 mgn-lt-5" [class.mgn-bt-minus]="appointment.provider">
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
                     *ngIf="item.type=='appointment-dashboard' && (appointment.appmtFor[0].firstName || appointment.appmtFor[0].lastName)">

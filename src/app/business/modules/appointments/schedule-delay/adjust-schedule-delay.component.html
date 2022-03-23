@@ -144,50 +144,59 @@
 
 <section>
   <!-- class="content loc-list p-checkin ynw-common-form-nm" -->
-        <!-- class="ynw-common-form" -->
-        <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
+  <!-- class="ynw-common-form" -->
+  <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid &&
             onSubmit(amForm.value)">
-          <div class="row">
-            <div class="col-md-12 col-xs-12 col-sm-12">
-              <h5 class="text-center my-2">
-                <span aria-hidden="true" class="close pull-right mx-2" (click)="onCancel()"
-                  *ngIf="isDelay">&times;</span>
-                <span class="mt-2"> Adjust delay</span>
-                <!-- <p class="form-level-settings mx-2">{{frm_adjust_del_cap}}</p> -->
+    <div class="row">
+      <div class="col-md-12 col-xs-12 col-sm-12">
+        <h5 class="text-center my-2">
+          <span aria-hidden="true" class="close pull-right mx-2" (click)="onCancel()" *ngIf="isDelay">&times;</span>
+          <span class="mt-2"> Adjust delay</span>
+          <!-- <p class="form-level-settings mx-2">{{frm_adjust_del_cap}}</p> -->
 
-              </h5>
-              <!-- <hr> -->
+        </h5>
+        <!-- <hr> -->
 
-              <div class="card mx-2 mb-2" aria-readonly="true" style="background-color: rgb(240, 250, 247);">
-                <div class="row" >
-                  <div class="col-md-12 col-xs-12 col-sm-12 my-1">
-                    <ng-container aria-readonly="true">
-                      <p> Consumer Name:
-                        <span class="bold" aria-readonly="true"> {{apptData.appmtFor[0].firstName}}
-                          {{apptData.appmtFor[0].lastName}}</span>
-                      </p>
-                    </ng-container>
-                  </div>
-                </div>
-                <div class="row bg-secondary" >
-                  <div class="col-md-6 col-xs-12 col-sm-12">
+        <div class="card mx-2 mb-2"  aria-readonly="true" style="background-color: rgb(240, 250, 247);">
+          <div class="row" *ngIf="!chekintype">
+            <div class="col-md-12 col-xs-12 col-sm-12 my-1">
+              <ng-container aria-readonly="true">
+                <p> Consumer Name:
+                  <span class="bold" aria-readonly="true"> {{apptData.appmtFor[0].firstName}}
+                    {{apptData.appmtFor[0].lastName}}</span>
+                </p>
+              </ng-container>
+            </div>
+          </div>
+          <div class="row" *ngIf="!chekintype">
+            <div class="col-md-6 col-xs-12 col-sm-12">
 
-                    <p> Service Name:</p>
-                    <span class="bold"> {{apptData.service.name}}</span>
-                  </div>
-                  <div class="col-md-6 col-xs-12 col-sm-12">
+              <p> Service Name:</p>
+              <span class="bold"> {{apptData.service.name }}</span>
+            </div>
+            <div class="col-md-6 col-xs-12 col-sm-12">
 
-                    <p>Selected Slots:</p>
-                    <span class="bold">({{queuejson[0].apptSchedule.timeSlots[0].sTime}} -
-                      {{queuejson[0].apptSchedule.timeSlots[0].eTime}})</span>
-                  </div>
+              <p>Selected Slots:</p>
+              <!-- <span class="bold"> check_in_list ({{queuejson[0].apptSchedule.timeSlots[0].sTime}} -
+                {{queuejson[0].apptSchedule.timeSlots[0].eTime}})</span> -->
+                <span class="bold" >{{apptData.appmtTime}}</span>
 
-                </div>         
-                <div class="service-outer" *ngIf="servicesjson.length > 0 && queuejson.length == 0">
-                  <span class='no-queue-available'>No schedules available</span>
-                </div>
-                </div>
-                <!-- <div class="brd-bt no-padding mgn-bt-10 mgn-up-10" *ngIf="queuejson.length > 0">
+            </div>
+
+          </div>
+          <div class="row" *ngIf="chekintype">
+            <p>Selected Slots:</p>
+            <div class="col-md-3 col-xs-6 col-sm-6" *ngFor="let appt of apptData, let i=index">
+              <span class="bold" >{{appt.appmtTime}}</span>
+            </div>
+
+          </div>
+          <div class="service-outer" *ngIf="apptData.appmtTime == 0">
+            <span class='no-queue-available'>No slots available</span>
+          </div>
+        </div>
+
+        <!-- <div class="brd-bt no-padding mgn-bt-10 mgn-up-10" *ngIf="queuejson.length > 0">
                 <div class="row ">
                   <div class="col-md-6 col-6 mgn-bt-10">
                     <span>Total Appointments # {{today_checkins_count}}</span>
@@ -196,52 +205,53 @@
                 </div>
               </div> -->
 
-                <!-- </div>
+        <!-- </div>
               <div class="card mx-2 my-2"> fa fa-clock-o glyphicon glyphicon-time-->
-                </div>
-                <div class="card mx-2">
-                <div class="form-group my-2" *ngIf="queuejson.length > 0">
-                  <!-- <div class="row">
+      </div>
+      <div class="card mx-2">
+        <div class="form-group my-2" *ngIf="queuejson.length > 0">
+          <!-- <div class="row">
                     <div class="col-md-6 col-xs-12 col-sm-12"> -->
-                  <label class="col-form-label"> <i class="glyphicon glyphicon-time" style="color: rgb(45, 45, 109);"
-                      aria-hidden="true"></i> {{delay_cap}}</label>
-                  <ngb-timepicker [(ngModel)]="time" (keyup)="isInRange($event)" formControlName="delay">
-                  </ngb-timepicker>
-                
-                  <!-- isAddToDelay -->
-                  <mat-checkbox class="" formControlName="isAddToDelay" *ngIf="apptData.isApptDelayed === true">Add to previous delay</mat-checkbox>
-                  <!-- </div>
+          <label class="col-form-label"> <i class="glyphicon glyphicon-time" style="color: rgb(45, 45, 109);"
+              aria-hidden="true"></i> {{delay_cap}}</label>
+          <ngb-timepicker [(ngModel)]="time" (keyup)="isInRange($event)" formControlName="delay">
+          </ngb-timepicker>
+
+          <!-- isAddToDelay -->
+          <mat-checkbox class="" formControlName="isAddToDelay" *ngIf="apptData.isApptDelayed === true || chekintype">
+            Add to previous delay</mat-checkbox>
+          <!-- </div>
 
                   </div> -->
-                </div>
+        </div>
 
-                <div class="form-group inline adjustdelay" *ngIf="queuejson.length > 0">
-                  <!-- <p>{{send_message_cap}}</p> -->
-                  <mat-checkbox formControlName="send_message">Send message to patient about the delay</mat-checkbox>
+        <div class="form-group inline adjustdelay" *ngIf="queuejson.length > 0">
+          <!-- <p>{{send_message_cap}}</p> -->
+          <mat-checkbox formControlName="send_message">Send message to {{customer_label}} about the delay</mat-checkbox>
 
-                  <ng-container *ngIf="amForm.get('send_message').value === true">
+          <ng-container *ngIf="amForm.get('send_message').value === true">
 
-                    <textarea class="form-control" placeholder="Message" formControlName="message" autocomplete="off"
-                      [placeholder]="placeholder" (keyup)="setCharCount()" (focus)="setDescFocus()"
-                      (blur)="lostDescFocus()" maxlength="500"></textarea>
-                  </ng-container>
-                  <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
+            <textarea class="form-control" placeholder="Message" formControlName="message" autocomplete="off"
+              [placeholder]="placeholder" (keyup)="setCharCount()" (focus)="setDescFocus()" (blur)="lostDescFocus()"
+              maxlength="500"></textarea>
+          </ng-container>
+          <span class="max-char-length" *ngIf="isfocused">You have {{char_count}} characters remaining</span>
 
 
-                </div>
-                <div class="form-group inline" *ngIf="amForm.get('send_message').value === true">
-                  <!-- <div class="row">
+        </div>
+        <div class="form-group inline" *ngIf="amForm.get('send_message').value === true && apptData.phoneNumber">
+          <!-- <div class="row">
                     <div class="col-md-12 col-xs-12 col-sm-12"> -->
-                  <label class="col-form-label mt-2">Select Notification Mode:</label>
-                  <mat-checkbox formControlName="isSMS">Via SMS</mat-checkbox>&nbsp;
-                  <mat-checkbox formControlName="isEmail">Via Email</mat-checkbox>&nbsp;
-                  <mat-checkbox formControlName="isApp">Via App</mat-checkbox>&nbsp;
-                  <mat-checkbox formControlName="isTelegram">Telegram</mat-checkbox>
-                </div>
-                <!-- </div>
+          <label class="col-form-label mt-2">Select Notification Mode:</label>
+          <mat-checkbox formControlName="isSMS" *ngIf="apptData.phoneNumber">Via SMS</mat-checkbox>&nbsp;
+          <mat-checkbox formControlName="isEmail" *ngIf="apptData.appmtFor[0].email">Via Email</mat-checkbox>&nbsp;
+          <mat-checkbox formControlName="isApp" *ngIf="apptData.phoneNumber">Via App</mat-checkbox>&nbsp;
+          <mat-checkbox formControlName="isTelegram" *ngIf="apptData.phoneNumber">Telegram</mat-checkbox>
+        </div>
+        <!-- </div>
                 </div> -->
 
-                <!-- <div class="form-group">
+        <!-- <div class="form-group">
                   <ng-container class="example-full-width" *ngIf="amForm.get('send_message').value === true">
                     <label class="col-form-label">{{messgae_cap}}</label>
                     <textarea class="form-control" placeholder="Message" formControlName="message" autocomplete="off"
@@ -250,24 +260,23 @@
                         </textarea>
                   </ng-container>
                 </div> -->
-              </div>
-            
+      </div>
 
-          </div>
 
-          <div class="col-md-12 mgn-bt-10" style="margin-top: 15px;display: inline-flex;"
-            *ngIf="queuejson.length > 0">
-            <button (click)="onCancel()" type="button" class="cs-btn bt2 pull-right">{{ cancel_btn}}</button>&nbsp;
-            <button type="submit" mat-button [disabled]="!amForm.valid || disableButton"
-              class="cs-btn bt1 pull-right">{{save_btn}}</button>
-          </div>
-          <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
-          </app-field-error-display>
-          <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
-          </app-form-success-display>
-        </form>
+    </div>
 
-     
-   
- 
+    <div class="col-md-12 mgn-bt-10" style="margin-top: 15px;display: inline-flex;" *ngIf="queuejson.length > 0">
+      <button (click)="onCancel()" type="button" class="cs-btn bt2 pull-right">{{ cancel_btn}}</button>&nbsp;
+      <button type="submit" mat-button [disabled]="!amForm.valid || disableButton"
+        class="cs-btn bt1 pull-right">{{save_btn}}</button>
+    </div>
+    <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+    </app-field-error-display>
+    <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+    </app-form-success-display>
+  </form>
+
+
+
+
 </section>

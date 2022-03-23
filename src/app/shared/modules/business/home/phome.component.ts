@@ -12,6 +12,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { AuthService } from '../../../../shared/services/auth-service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-phome',
@@ -76,6 +77,7 @@ export class PhomeComponent implements OnInit {
   @ViewChild('mobPrefix') mobPrefix: ElementRef;
   carouselTwo;
   evnt;
+  customer_label:any;
   constructor(
     private router: Router,
     public shared_functions: SharedFunctions,
@@ -89,7 +91,8 @@ export class PhomeComponent implements OnInit {
     private snackbarService: SnackbarService,
     private titleService: Title,
     private groupService: GroupStorageService,
-    private authService: AuthService
+    private authService: AuthService,
+    private wordProcessor: WordProcessor,
   ) {
     this.titleService.setTitle('Jaldee Business Home');
     this.activateRoute.queryParams.subscribe(data => {
@@ -141,6 +144,7 @@ export class PhomeComponent implements OnInit {
     this.step = 1;
   }
   ngOnInit() {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     const a = document.getElementById("fb-root");
     if (a) {
       a.classList.add('visible_chat');
