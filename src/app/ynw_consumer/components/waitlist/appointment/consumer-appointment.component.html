@@ -782,7 +782,7 @@
                                             <h5 class="text-capitalize text-primary"><b>Select Appointment Time</b></h5>
                                         </div>
                                         <div *ngIf="freeSlots && freeSlots.length > 0" class="freeslots m-1 my-3">
-                                            <mat-chip-list>
+                                            <mat-chip-list *ngIf ="selectedService.maxBookingsAllowed === 1 && type !== 'reschedule'">
                                                 <div *ngIf="!showMoreAvailableSlots" class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                     <mat-chip *ngFor="let slot of freeSlots | slice:0:12" class="text-center"
                                                         [selected]="apptTime && slot.time === apptTime['time']"
@@ -792,8 +792,38 @@
                                                 </div>
                                                 <div *ngIf="showMoreAvailableSlots" [class.internal-scroll] = "showMoreAvailableSlots">
                                                     <mat-chip *ngFor="let slot of freeSlots" class="text-center"
-                                                        [selected]="apptTime &&  slot.time === apptTime['time']"
+                                                    [selected]="apptTime && slot.time === apptTime['time']"
+                                                    (click)="timeSelected(slot);">
+                                                        <span class="mx-auto">{{slot.displayTime}}</span>
+                                                    </mat-chip>
+                                                </div>
+                                            </mat-chip-list>
+                                            <mat-chip-list *ngIf ="type === 'reschedule'">
+                                                <div *ngIf="!showMoreAvailableSlots" class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                    <mat-chip *ngFor="let slot of freeSlots | slice:0:12" class="text-center"
+                                                        [selected]="slot[0]"
                                                         (click)="timeSelected(slot);">
+                                                        <span class="mx-auto">{{slot.displayTime}}</span>
+                                                    </mat-chip>
+                                                </div>
+                                                <div *ngIf="showMoreAvailableSlots" [class.internal-scroll] = "showMoreAvailableSlots">
+                                                    <mat-chip *ngFor="let slot of freeSlots" class="text-center"
+                                                    [selected]="apptTime && slot.time === apptTime['time']"
+                                                    (click)="timeSelected(slot);">
+                                                        <span class="mx-auto">{{slot.displayTime}}</span>
+                                                    </mat-chip>
+                                                </div>
+                                            </mat-chip-list>
+                                            <mat-chip-list selectable multiple *ngIf ="selectedService.maxBookingsAllowed >1 && type !== 'reschedule'">
+                                                <div *ngIf="!showMoreAvailableSlots" class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                    <mat-chip *ngFor="let slot of freeSlots | slice:0:12" class="text-center" #c="matChip"
+                                                        (click)="toggleSelection(c ,slot);">
+                                                        <span class="mx-auto">{{slot.displayTime}}</span>
+                                                    </mat-chip>
+                                                </div>
+                                                <div *ngIf="showMoreAvailableSlots" [class.internal-scroll] = "showMoreAvailableSlots">
+                                                    <mat-chip *ngFor="let slot of freeSlots" class="text-center" #c="matChip"
+                                                        (click)="toggleSelection(c ,slot);">
                                                         <span class="mx-auto">{{slot.displayTime}}</span>
                                                     </mat-chip>
                                                 </div>
@@ -1349,13 +1379,22 @@
                                         <div class="p-0 font-weight-bold">
                                             <h6 class="text-capitalize"><b>Your {{showCheckinButtonCaption()}} Date </b></h6>
                                         </div>
-                                        <div class="mgn-bt-10 pad-bt-10" *ngIf="selectedApptTime">
+                                        <div class="mgn-bt-10 pad-bt-10" *ngIf="selectedApptTime && selectedService.maxBookingsAllowed === 1">
                                             <h1 class="text-primary"><b><span *ngIf="!isFuturedate">Today,
                                                 </span>
                                                 <span *ngIf="isFuturedate">
                                                     {{selectedDate | date:
                                                     newDateFormat}}, </span>
                                                 <span>{{getSingleTime(selectedApptTime['time'])}}</span></b>
+                                            </h1>
+                                        </div>
+                                        <div class="mgn-bt-10 pad-bt-10" *ngIf="selectedApptsTime && selectedService.maxBookingsAllowed > 1">
+                                            <h1 class="text-primary"><b><span *ngIf="!isFuturedate">Today,
+                                                </span>
+                                                <span *ngIf="isFuturedate">
+                                                    {{selectedDate | date:
+                                                    newDateFormat}}, </span>
+                                                <span>{{selectedApptsTime}}</span></b>
                                             </h1>
                                         </div>
                                     </div>
