@@ -723,11 +723,11 @@ export class AppointmentActionsComponent implements OnInit {
     }
     // this.status_booking = 'new' &&
     if (
-      (this.data.timetype === 1 || this.data.timetype === 2) &&
+      (this.data.timetype === 1 || this.data.timetype === 2)  &&
       (this.appt.apptStatus === "Arrived" ||
         this.appt.apptStatus === "Confirmed" ||
         this.appt.apptStatus === "Started" ||
-        this.appt.apptStatus === "started")
+        this.appt.apptStatus === "started" || this.status_booking == 'new')
     ) {
       this.showDelay = true;
     }

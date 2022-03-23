@@ -286,7 +286,21 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       }
     );
   }
-
+  getTimeMinute(time){
+    let hr;
+    let min; 
+    if(time >=60){
+      hr = Math.floor(time / 60 );
+      min =  Math.floor(time % 60);
+      return 'delayed by ' + hr+ 'hr'+':'+min + 'mins';
+    }
+    if(time<60){
+     min =  Math.floor(time % 60);
+     return 'delayed by ' +min + 'mins';
+    }
+   
+   }
+   
   getWaitlistNotes(uuid) {
     this.provider_services.getProviderAppointmentNotes(uuid).subscribe(
       data => {

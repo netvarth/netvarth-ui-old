@@ -161,7 +161,7 @@
           <div class="row" *ngIf="!chekintype">
             <div class="col-md-12 col-xs-12 col-sm-12 my-1">
               <ng-container aria-readonly="true">
-                <p> Consumer Name:
+                <p> {{customer_label | capitalizeFirst}} Name:
                   <span class="bold" aria-readonly="true"> {{apptData.appmtFor[0].firstName}}
                     {{apptData.appmtFor[0].lastName}}</span>
                 </p>
@@ -171,15 +171,15 @@
           <div class="row" *ngIf="!chekintype">
             <div class="col-md-6 col-xs-12 col-sm-12">
 
-              <p> Service Name:</p>
+              <p class="mb-0"> Service Name:</p>
               <span class="bold"> {{apptData.service.name }}</span>
             </div>
             <div class="col-md-6 col-xs-12 col-sm-12">
 
-              <p>Selected Slots:</p>
+              <p class="mb-0">Selected Slots:</p>
               <!-- <span class="bold"> check_in_list ({{queuejson[0].apptSchedule.timeSlots[0].sTime}} -
                 {{queuejson[0].apptSchedule.timeSlots[0].eTime}})</span> -->
-                <span class="bold" >{{apptData.appmtTime}}</span>
+                <span class="bold" >{{getSingleTime(apptData.appmtFor[0].apptTime)}}</span>
 
             </div>
 
@@ -187,7 +187,7 @@
           <div class="row" *ngIf="chekintype">
             <p>Selected Slots:</p>
             <div class="col-md-3 col-xs-6 col-sm-6" *ngFor="let appt of apptData, let i=index">
-              <span class="bold" >{{appt.appmtTime}}</span>
+              <span class="bold" >{{getSingleTime(appt.appmtFor[0].apptTime)}}</span>
             </div>
 
           </div>
@@ -218,9 +218,14 @@
           </ngb-timepicker>
 
           <!-- isAddToDelay -->
-          <mat-checkbox class="" formControlName="isAddToDelay" *ngIf="apptData.isApptDelayed === true || chekintype">
-            Add to previous delay</mat-checkbox>
+       
+            <mat-checkbox class="" formControlName="isAddToDelay" *ngIf="apptData.isApptDelayed === true || chekintype">
+              Add to previous delay</mat-checkbox>
+ 
+             
+              
           <!-- </div>
+            
 
                   </div> -->
         </div>
