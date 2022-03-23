@@ -1142,7 +1142,7 @@ export class SharedServices {
   }
   validateConsumerOneTimeQuestionnaire(body, accountId) {
     const url = 'consumer/questionnaire/validate/onetimequestionnaire' + '?account=' + accountId;
-    return this.servicemeta.httpPut(url, body);
+    return this.servicemeta.httpPost(url, body);
   }
   validateConsumerQuestionnaireResbumit(body, accountId) {
     const url = 'consumer/questionnaire/resubmit/validate' + '?account=' + accountId;

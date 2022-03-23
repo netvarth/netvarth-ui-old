@@ -127,10 +127,8 @@
                                                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name
                                                                             </div> -->
                                                                             <div class="mobile-edit-icon">
-
                                                                                 <span style="display: flex;align-items: center;gap: 5px;"
-                                                                                    class="mgn-lt-5 phonevallabel boldmobiletext"
-                                                                                    *ngFor="let member of waitlist_for ">
+                                                                                    class="mgn-lt-5 phonevallabel boldmobiletext">
                                                                                    <div> <i style="font-size: 15px !important;"
                                                                                     class="fa fa-user-circle"></i>&nbsp;</div>
                                                                                    <div style="color: #122f71;"> {{donorName}}</div>
@@ -394,9 +392,7 @@
                                                                     <div *ngIf="sel_ser_det.description.length >=50" style="font-size: 10px;padding: 10px;" class="textChange mobile_disply">{{sel_ser_det.description | slice:0:120}}...
                                                                         <a data-target="#examplemodaldescriptio" data-toggle="modal"  aria-hidden="true" style="color: #fff !important;">See More</a>
                                                                         <!-- <i data-target="#examplemodaldescriptio" data-toggle="modal" class="fa fa-file-text" aria-hidden="true"></i> -->
-                                                                    </div>
-                                                                   
-                                                                    
+                                                                    </div>                                                                
                                                                 </div>
 
                                                                 <!----image start-->
@@ -406,34 +402,9 @@
                                                                    <div *ngIf="sel_ser_det.servicegallery.length==1">
                                                                      <img class="resImg" style="width:100%;" src="{{image.url}}" alt="Donation">
                                                                    </div>
-                                                                   <div *ngIf="sel_ser_det.servicegallery.length!=1">
-                                                                      
-                                                                     <img  class="resImg" *ngIf="i==1" (click)="openImageModalRow(image_list_popup[0])"  style="width:100%;cursor: pointer;"  src="{{sel_ser_det.servicegallery[0].url}}" alt="Donation">
-                                                                    
+                                                                   <div *ngIf="sel_ser_det.servicegallery.length!=1">                                                                      
+                                                                     <img  class="resImg" *ngIf="i==1" (click)="openImageModalRow(image_list_popup[0])"  style="width:100%;cursor: pointer;"  src="{{sel_ser_det.servicegallery[0].url}}" alt="Donation">                                                        
                                                                    </div>
-                                                                   <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" [ngClass]="{'cvr-dp-mgn': bgCover}">
-                                                                    <img alt="Profile Image" src="{{bLogo}}" id="profile-image1"
-                                                                        class="img-circle img-responsive cvr-dp pointer-cursor"
-                                                                        [ngClass]="{'cvr-dp-bdr': bgCover}"
-                                                                        (click)="galleryExists && openImageModalRow(image_list_popup[0])">
-                                                                </div>
-                                                                <div class="gal col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="galleryenabledArr.length > 0">
-                                                                    <div class="gallery-bullet centeralign pointer-cursor"
-                                                                        (click)="openImageModalRow(image_list_popup[0])">
-                                                                        <i class="fa fa-circle" *ngFor="let enable of galleryenabledArr"></i>
-                                                                        <span class="extra-count" *ngIf="tempgalleryjson.length > 5">+{{extra_img_count}}</span>
-                                                                        
-                                                                    </div>
-                                                                </div> -->
-                                                                   <!-- <div >
-                                                                    <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0"
-                                                                        [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
-                                                                        [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
-                                                                        (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
-
-                                                                   </div> -->
-                                                                  
-                                                                 
                                                                </div>
                                                             </div>
                                                             
@@ -467,39 +438,14 @@
                                                                 </button>
                                                             </div>
                                                             <!---modal for name,email,ph no start-->
-                                                            <div class="modal-body" >
-                                                                <!--notes start-->
-                                                                <!-- <div class="addnote lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding-small notes"
-                                                                    *ngIf="action=='note'">
-                                                                    <div
-                                                                        class="col-md-12 col-xs-12 col-sm-12 lnk">
-                                                                        {{sel_ser_det.consumerNoteTitle}}
-                                                                    </div>
-                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                                                        <textarea rows="10"
-                                                                            class="form-control mgn-bt-20 mgn-up-20"
-                                                                            [(ngModel)]="consumerNote"
-                                                                            #consumernote
-                                                                            (change)="handleConsumerNote(consumernote.value)"
-                                                                            maxlength="1000"></textarea>
-                                                                        <div
-                                                                            class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
-                                                                            <button mat-button
-                                                                                class="cs-btn bt1 backtocheckin"
-                                                                                (click)="goBack()">OK
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div> -->
-                                                                <!--notes end-->
+                                                            <div class="modal-body" >                                                                
                                                                 <!---edit donor name start-->
                                                                 <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding-small notes"
                                                                 *ngIf="action=='phone'|| 'donor' || 'email'">
                                                                     <div style="text-align: center;
                                                                     font-size: 12px;
                                                                     font-weight: bold;
-                                                                    padding: 10px;
-                                                                    
+                                                                    padding: 10px;                                                                    
                                                                     color: #2e2e2e;
                                                                     ">Donor Details</div>
                                                                     <div 

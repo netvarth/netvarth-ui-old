@@ -66,8 +66,9 @@
         </div>
     </div>
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
-            <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event)"
-                class="getappointmentbutton">{{buttonCaption}}</button>
+            <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event, item)"
+                class="getappointmentbutton" [class.disabled]="item['loading']" [class.spinner]="item['loading']"
+                [class.spinner-darker-success]="item['loading']" [class.spinner-center]="item['loading']">{{buttonCaption}}</button>
     </div>
 </div>
 

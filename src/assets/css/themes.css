@@ -80,7 +80,7 @@
 .heartfulness_theme1 button.next-button {
   border: 0 !important;
   border-radius: 30px !important;
-  height: 50px !important;
+  /* height: 50px !important; */
   padding: 10px 30px !important;
   color:#fff!important;
   background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box;

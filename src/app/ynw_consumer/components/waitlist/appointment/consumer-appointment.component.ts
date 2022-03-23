@@ -3216,19 +3216,19 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         // this.getBookStep('profile');
         console.log("Before Validation", this.oneTimeInfo);
         if (this.oneTimeInfo.answers) {
-            // const questions = this.oneTimeInfo.answers.answerLine.map(function (a) { return a.labelName; })
+            const questions = this.oneTimeInfo.answers.answerLine.map(function (a) { return a.labelName; })
 
             
-            // const dataToSend: FormData = new FormData();
-            // const answer = new Blob([JSON.stringify(this.oneTimeInfo.answers)], { type: 'application/json' });
-            // // const question = new Blob([JSON.stringify(questions)], { type: 'application/json' });
-            // dataToSend.append('answer', answer);
-            // dataToSend.append('question', questions);
-            // this.shared_services.validateConsumerOneTimeQuestionnaire(dataToSend, this.account_id).subscribe((data: any) => {
-            this.shared_services.validateConsumerQuestionnaire(this.oneTimeInfo.answers, this.account_id).subscribe((data: any) => {
-                // if (data.length === 0) {
+            const dataToSend: FormData = new FormData();
+            const answer = new Blob([JSON.stringify(this.oneTimeInfo.answers)], { type: 'application/json' });
+            const question = new Blob([JSON.stringify(questions)], { type: 'application/json' });
+            dataToSend.append('answer', answer);
+            dataToSend.append('question', question);
+            this.shared_services.validateConsumerOneTimeQuestionnaire(dataToSend, this.account_id).subscribe((data: any) => {
+            // this.shared_services.validateConsumerQuestionnaire(this.oneTimeInfo.answers, this.account_id).subscribe((data: any) => {
+                if (data.length === 0) {
                     this.getBookStep();
-                // }
+                }
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
             }, error => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

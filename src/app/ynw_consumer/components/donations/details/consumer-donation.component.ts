@@ -501,16 +501,16 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                                     // _this.onetimeQuestionnaireList = { "questionnaireId": "WalkinConsumer", "id": 7, "labels": [{ "transactionType": "CONSUMERCREATION", "transactionId": 0, "channel": "ANY", "questionnaireId": "WalkinConsumer", "questions": [{ "id": 18, "labelName": "General Health3", "sequnceId": "", "fieldDataType": "bool", "fieldScope": "consumer", "label": "Do you have any chronic diseases?", "labelValues": ["Yes", "No"], "billable": false, "mandatory": false, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] } }] }] };
                                     if (questions) {
                                         _this.onetimeQuestionnaireList = questions;
-                                        if (_this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0) {
+                                        if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0) {
                                             _this.bookStep = 'profile';
-                                        } else if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                        } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                             _this.bookStep = 'qnr';
                                         } else {
                                             _this.bookStep = 'donation';
                                         }
                                         _this.loggedIn = true;
                                     } else {
-                                        if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                        if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                             _this.bookStep = 'qnr';
                                         } else {
                                             _this.bookStep = 'donation';
@@ -1001,6 +1001,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.lStorageService.setitemonLocalStorage('p_src', 'c_d');
         this.subs.sink = this.shared_services.consumerPayment(payInfo)
             .subscribe((pData: any) => {
+                console.log("Payment Info:", pData);
                 this.checkIn_type = 'donations';
                 this.origin = 'consumer';
                 this.pGateway = pData.paymentGateway;
@@ -1130,15 +1131,15 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         console.log(this.action);
         if (this.action == '') {
             if (this.bookStep === 'donation') {
-                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.bookStep = 'qnr';
-                } else if (this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0) {
+                } else if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0) {
                     this.bookStep = 'profile';
                 } else {
                     this.location.back();
                 }
             } else if (this.bookStep === 'qnr') {
-                if (this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0) {
+                if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0) {
                     this.bookStep = 'profile';
                 } else {
                     this.location.back();
@@ -1180,9 +1181,9 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 break;
         }
         this.step = cstep;
-        if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
-            this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
-        }
+        // if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
+        //     this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
+        // }
     }
     showCheckinButtonCaption() {
         let caption = '';
@@ -1552,19 +1553,19 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         console.log("Before Validation", this.oneTimeInfo);
         if (this.oneTimeInfo.answers) {
 
-            // const questions = this.oneTimeInfo.answers.answerLine.map(function (a) { return a.labelName; })
+            const questions = this.oneTimeInfo.answers.answerLine.map(function (a) { return a.labelName; })
 
             
-            // const dataToSend: FormData = new FormData();
-            // const answer = new Blob([JSON.stringify(this.oneTimeInfo.answers)], { type: 'application/json' });
-            // // const question = new Blob([JSON.stringify(questions)], { type: 'application/json' });
-            // dataToSend.append('answer', answer);
-            // dataToSend.append('question', questions);
-            // this.shared_services.validateConsumerOneTimeQuestionnaire(dataToSend, this.account_id).subscribe((data: any) => {
-                this.shared_services.validateConsumerQuestionnaire(this.oneTimeInfo.answers, this.account_id).subscribe((data: any) => {
-            // if (data.length === 0) {
+            const dataToSend: FormData = new FormData();
+            const answer = new Blob([JSON.stringify(this.oneTimeInfo.answers)], { type: 'application/json' });
+            const question = new Blob([JSON.stringify(questions)], { type: 'application/json' });
+            dataToSend.append('answer', answer);
+            dataToSend.append('question', question);
+            this.shared_services.validateConsumerOneTimeQuestionnaire(dataToSend, this.account_id).subscribe((data: any) => {
+                // this.shared_services.validateConsumerQuestionnaire(this.oneTimeInfo.answers, this.account_id).subscribe((data: any) => {
+            if (data.length === 0) {
                     this.getBookStep('profile');
-                // }
+                }
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
             }, error => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1573,7 +1574,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     }
     getBookStep(curStep) {
         if (curStep === 'profile') {
-            if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+            if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                 this.bookStep = 'qnr';
             } else {
                 this.bookStep = 'donation';
@@ -1602,9 +1603,9 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                             // _this.onetimeQuestionnaireList = { "questionnaireId": "WalkinConsumer", "id": 7, "labels": [{ "transactionType": "CONSUMERCREATION", "transactionId": 0, "channel": "ANY", "questionnaireId": "WalkinConsumer", "questions": [{ "id": 18, "labelName": "General Health3", "sequnceId": "", "fieldDataType": "bool", "fieldScope": "consumer", "label": "Do you have any chronic diseases?", "labelValues": ["Yes", "No"], "billable": false, "mandatory": false, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] } }] }] };
                             // if (_this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels > 0) {
 
-                            if (_this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0) {
+                            if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0) {
                                 _this.bookStep = 'profile';
-                            } else if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                            } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                 _this.bookStep = 'qnr';
                             } else {
                                 _this.bookStep = 'donation';
@@ -1646,7 +1647,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     submitOneTimeInfo() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-            if (_this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0) {
+            if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0) {
                 const activeUser = _this.groupService.getitemFromGroupStorage('ynw-user');
                 const dataToSend: FormData = new FormData();
                 if (_this.oneTimeInfo.files) {

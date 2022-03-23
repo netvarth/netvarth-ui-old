@@ -267,7 +267,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     stopProp(event) {
         event.stopPropagation();
     }
-    cardActionPerformed(type, action, service, location, userId, event) {
+    cardActionPerformed(type, action, service, location, userId, event, item?) {
         // console.log('action...',action);
         // if(type=='checkavailability'){
         //     if(service['serviceAvailability']['nextAvailableDate']) {
@@ -294,6 +294,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         //     }
         // } 
         // else {
+            item['loading'] = true;
             event.stopPropagation();
         
             const actionObj = {};
@@ -312,6 +313,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             }
             
             this.actionPerformed.emit(actionObj);
+            
         // }
 
     
