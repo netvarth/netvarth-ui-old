@@ -239,20 +239,19 @@
                                                             <div class="pull-left"> Booking for
                                                             </div>
                                                             <a class="lnk pointer-cursoraction mgn-lt-20"
-                                                                *ngIf="selectedService.serviceType !== 'virtualService'"
                                                                 (click)="addMember()"><i class="fa fa-user-plus"></i>
                                                                 {{add_member_cap}}</a>
                                                         </div>
                                                         <app-members (memberSelected)="memberSelected($event)"
                                                             [maxSelection]="maxsize" [selectedMember]="waitlist_for"
                                                             [familyMembers]="familyMembers"
-                                                            [multiple]="multipleMembers_allowed"
-                                                            [allowSelection]="selectedService.serviceType !== 'virtualService'?true:false"
+                                                            [multiple]="multipleMembers_allowed" [allowSelection]="true"
                                                             [parentCustomer]="parentCustomer"></app-members>
 
                                                         <app-communications (setCommunications)="setCommunications"
                                                             [commObj]="commObj" [selectedService]="selectedService"
-                                                            mode="write"></app-communications>
+                                                            [mode]="'write'">
+                                                        </app-communications>
                                                     </div>
                                                 </ng-container>
                                                 <ng-container *ngIf="action=='attachment'">
@@ -525,64 +524,96 @@
                                             <app-common-innerloading-spinner *ngIf="api_loading_video">
                                             </app-common-innerloading-spinner>
                                         </div>
-                                        <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding right-part"
+
+
+                                        <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 p-1"
                                             data-wizard-type="step-content" data-wizard-state="current"
                                             *ngIf="bookStep === 4" [ngClass]="{'highlight': api_loading_video}">
-                                            <div
-                                                class="text-primary text-left m-auto text-capitalize col-md-12 col-xs-12 col-sm-12 pt-2">
-                                                <h5><b>Review and Confirm</b></h5>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                            <hr>
-                                            <div class="">
-                                                <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                                        <div
-                                                            class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding">
-                                                            <h6 class="text-dark">Booking For</h6>
-                                                        </div>
-                                                        <div class="">
-                                                            <div class="">
-                                                                <div class="">
-                                                                    <span class="text-primary service consumer-name"
-                                                                        *ngIf="waitlist_for && waitlist_for[0]">
-                                                                        {{waitlist_for[0].firstName |
-                                                                        capitalizeFirst}}
-                                                                        {{waitlist_for[0].lastName |
-                                                                        capitalizeFirst}}
-                                                                    </span>
-                                                                    <a *ngIf="type !== 'reschedule'"
-                                                                        class="pointer-cursor changeitem font-weight-bold text-capitalize px-2 py-1"
-                                                                        (click)="handleSideScreen('members')"
-                                                                        data-toggle="modal"
-                                                                        data-target="#exampleModalCenter">
-                                                                        <i class="fa fa-pencil-square-o"
-                                                                            aria-hidden="true"></i>
-                                                                    </a>
+                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10 text-left">
+                                                <div class="clearfix"></div>
+                                                <div class="text-capitalize col-md-12 col-xs-12 col-sm-12 pt-2">
+                                                    <h2><b>Review and Confirm</b></h2>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <hr />
+                                                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 check-new-group no-padding">
+                                                    <label class="question-header">Service Details</label>
+                                                    <br />
+                                                    <div class="service-group-section mgn-lt-10">
+                                                        <div class="text-capitalize">
+                                                            <div class="m-auto"
+                                                                *ngIf="selectedServiceId || type == 'waitlistreschedule'">
+                                                                <h5 class="text-primary service custom">
+                                                                    <b>{{selectedService.name}}</b>
+                                                                </h5>
+                                                                <div *ngIf="queuejson && queuejson.length != 0">
+                                                                    <h5
+                                                                        class="font-weight-bold text-primary serv-time border-style">
+                                                                        <span *ngIf="!isFuturedate"><b>Today </b></span>
+                                                                        <span *ngIf="isFuturedate"><b>{{sel_checkindate
+                                                                                | date:newDateFormat}}</b></span>
+                                                                        <span><b>{{selectedQTime}}</b></span>
+                                                                    </h5>
                                                                 </div>
-                                                                <app-communications
-                                                                    (setCommunications)="setCommunications"
-                                                                    [commObj]="commObj"
-                                                                    [selectedService]="selectedService" mode="read">
-                                                                </app-communications>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <hr />
+                                                    <label class="question-header">Booking For</label>
+                                                    <br />
+                                                    <div class="booking-for-section mgn-lt-10">
+                                                        <div class="">
+                                                            <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
+                                                                <div class="no-padding">
+                                                                    <div
+                                                                        class="col-sm-12 col-xs-12 col-md-12 no-padding">
+                                                                        <h5 class="text-primary service custom"
+                                                                            *ngIf="waitlist_for && waitlist_for[0]">
+                                                                            {{waitlist_for[0].firstName |
+                                                                            capitalizeFirst}}
+                                                                            {{waitlist_for[0].lastName |
+                                                                            capitalizeFirst}}
+                                                                            <a *ngIf="type !== 'waitlistreschedule'"
+                                                                                class="pointer-cursor changeitem font-weight-bold text-capitalize px-2 py-1"
+                                                                                (click)="handleSideScreen('members')"
+                                                                                data-toggle="modal"
+                                                                                data-target="#exampleModalCenter"><i
+                                                                                    class="fa fa-pencil-square-o"
+                                                                                    aria-hidden="true"></i>
+                                                                            </a>
+                                                                        </h5>
+                                                                    </div>
+                                                                    <div
+                                                                        class="col-sm-12 col-xs-12 col-md-12 no-padding">
+                                                                        <app-communications
+                                                                            (setCommunications)="setCommunications"
+                                                                            [commObj]="commObj" [mode]="'read'"
+                                                                            [selectedService]="selectedService">
+                                                                        </app-communications>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <hr />
                                                     <div *ngIf="!questionnaireList.labels"
                                                         class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding">
-                                                        <a #modal data-toggle="modal" data-target="#exampleModalCenter">
-                                                        </a><br>
-                                                        <span class="text-primary">Add notes/upload files
-                                                            you may have</span>
+                                                        <a #modal data-toggle="modal"
+                                                            data-target="#exampleModalCenter"></a>
+                                                        <!-- <span class="text-primary">Add notes/upload files you may have</span> -->
+                                                        <div>
+                                                            <label class="question-header">Add notes/upload files you may have</label>
+                                                        </div>
                                                         <mat-chip-list class="btns">
                                                             <mat-chip
-                                                                [class.mandatoryChip]="selectedService.consumerNoteMandatory && type != 'reschedule'"
+                                                                [class.mandatoryChip]="selectedService.consumerNoteMandatory && type != 'waitlistreschedule'"
                                                                 (click)="handleSideScreen('note');modal.click();">
                                                                 <a class="lnk action pointer-cursor"><i
                                                                         class="fa fa-file-text-o mgn-rt-5"
                                                                         aria-hidden="true"></i>{{selectedService.consumerNoteTitle}}
                                                                     <span
-                                                                        *ngIf="selectedService.consumerNoteMandatory && type != 'reschedule'">*</span></a>
+                                                                        *ngIf="selectedService.consumerNoteMandatory && type != 'waitlistreschedule'">*</span></a>
                                                             </mat-chip>
                                                             <span>
                                                                 <mat-chip
@@ -593,22 +624,22 @@
                                                                             style="display:none;" multiple
                                                                             (change)="filesSelected($event, 'close')"><i
                                                                             class="fa fa-paperclip mgn-rt-5"
-                                                                            aria-hidden="true"></i>Upload
-                                                                        File
+                                                                            aria-hidden="true"></i>Upload File
                                                                     </a>
                                                                 </mat-chip>
                                                                 <mat-chip *ngIf="getAttachLength() > 0"
                                                                     class="br-top-left-0 br-bottom-left-0 margin-left-0">
                                                                     <a class="lnk action pointer-cursor"
                                                                         (click)="viewAttachments()">
-                                                                        View
-                                                                        (<span>{{getAttachLength()}}</span>)
+                                                                        View (<span>{{getAttachLength()}}</span>)
                                                                     </a>
                                                                 </mat-chip>
                                                             </span>
                                                         </mat-chip-list>
                                                     </div>
-                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                                    <div class="clearfix"></div>
+                                                    <div
+                                                        class="coupon-section col-md-12 col-xs-12 col-sm-12 no-padding">
                                                         <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-5 no-padding"
                                                             *ngIf="(s3CouponsList.JC.length > 0) && type != 'waitlistreschedule' || (s3CouponsList.OWN.length > 0) && type != 'waitlistreschedule'">
                                                             <a class="lnk pointer-cursor action"
@@ -644,11 +675,8 @@
                                                         <div
                                                             *ngFor="let coupon of paymentDetails.proCouponList | keyvalue">
                                                             <small class="black rupee-font"
-                                                                *ngIf="coupon.value.value !== '0.0'">You
-                                                                saved
-                                                                {{coupon.value.value | currency:'&#8377;'}}
-                                                                on
-                                                                {{coupon.key}}
+                                                                *ngIf="coupon.value.value !== '0.0'">You saved {{coupon.value.value | currency:'&#8377;'}}
+                                                                on {{coupon.key}}
                                                             </small>
                                                             <small class="black"
                                                                 *ngIf="coupon.value.value === '0.0'">{{coupon.key}}
@@ -660,207 +688,162 @@
                                                                     more</small></small>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                            <hr />
-                                            <div class="card shadow-lg appointment-details-card">
-                                                <div class="text-capitalize">
-                                                    <div class="m-auto"
-                                                        *ngIf="selectedServiceId || type == 'waitlistreschedule'">
-                                                        <h5 class="text-left text-success text-capitalize service">
-                                                            <b>{{selectedService.name}}</b>
-                                                        </h5>
-                                                        <div class="" style="font-size: 1rem"
-                                                            *ngIf="selectedService.price && type != 'reschedule'">
-                                                            <p class="module-nomargin line-clamp no-margin"
-                                                                *ngIf="selectedService.description && !showmoreSpec"
-                                                                (click)="showSpec()">
-                                                                {{selectedService.description}}</p>
-                                                            <p *ngIf="showmoreSpec" (click)="showSpec()">
-                                                                {{selectedService.description}}</p>
+                                                    <div class="clearfix"></div>
+                                                    <hr />
+                                                    <div class="payment-section-details"
+                                                        *ngIf="selectedService && selectedService.isPrePayment">
+                                                        <div>
+                                                            <div class="web">
+                                                                <div class="text-left"
+                                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                                    <span *ngIf="paymentDetails.showPrice" class="ser_price no-mgn-bt bold mgn-rt-10">Service Price :
+                                                                        <span
+                                                                            class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
+                                                                            | currency:'&#8377;'}}</span></span>
+                                                                    <span class="ser_price no-mgn-bt bold">Payment required now :
+                                                                        <span
+                                                                            class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
+                                                                            ? payAmount :
+                                                                            paymentDetails.amountRequiredNow)|
+                                                                            currency:'&#8377;'}}</span></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="disply">
+                                                                <div class="text-left"
+                                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                                    <span *ngIf="paymentDetails.showPrice"
+                                                                        class="ser_price no-mgn-bt bold mgn-rt-10">Service Price :
+                                                                        <span
+                                                                            class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
+                                                                            | currency:'&#8377;'}}</span></span>
+                                                                    <span class="ser_price no-mgn-bt bold">Payment required now :
+                                                                        <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
+                                                                            ? payAmount :
+                                                                            paymentDetails.amountRequiredNow)|
+                                                                            currency:'&#8377;'}}</span></span>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="">
-                                                            <div class="callingmode mgn-lt-10"
-                                                                *ngIf="selectedService && selectedService.serviceType==='virtualService' && type !== 'waitlistreschedule'">
-                                                                <div class="mgn-bt-10 mgn-up-5">
-                                                                    <div class=""
-                                                                        *ngFor="let mode of selectedService.virtualCallingModes;let i = index">
-                                                                        <div style="visibility: hidden;">
-                                                                            {{callingModesDisplayName[mode.callingMode]}}
-                                                                        </div>
-                                                                        <div class="cal-mod-instrct pre-check-title color-grey"
-                                                                            *ngIf="mode.callingMode">
-                                                                            {{mode.instructions}}
-                                                                        </div>
+                                                        <div
+                                                            *ngIf="selectedService && selectedService.isPrePayment && paymentLength>0 && paymentDetails.amountRequiredNow > 0">
+                                                            <div class="jaldeecredit" *ngIf="jcashamount>0">
+                                                                <mat-checkbox [(ngModel)]="checkJcash"
+                                                                    (change)="changeJcashUse($event)">
+                                                                </mat-checkbox>
+                                                                Use Jaldee cash balance : <span
+                                                                    class="rupee-font">{{jcashamount|
+                                                                    currency:'&#8377;'}}</span>
+                                                            </div>
+                                                            <div class="creditleft"
+                                                                *ngIf="jcashamount>0  && (checkJcash && jcashamount < paymentDetails.amountRequiredNow)">
+                                                                Balance amount can be paid by other payment methods
+                                                            </div>
+                                                            <div class="prepayment"
+                                                                *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
+                                        ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
+                                                                <button type="button" [class.disabled]="isClickedOnce"
+                                                                    (click)="!isClickedOnce && saveCheckin('checkin')"
+                                                                    id="stepThreeConfirmButton"
+                                                                    class="next-button btn btn-primary font-weight-bold  px-12 py-4"
+                                                                    [disabled]="!checkPolicy && heartfulnessAccount">
+                                                                    <ng-container
+                                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
+                                                ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
+                                                                        Confirm
+                                                                    </ng-container>
+                                                                </button>
+                                                            </div>
+                                                            <hr />
+                                                            <div class="resPaymrntDetails"
+                                                                *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                                <label class="custom resPaymrntDetails">Select Payment
+                                                                    Mode</label>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                            <div class="text-center mx-auto no-padding"
+                                                                *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                                <ng-container *ngIf="!shownonIndianModes"
+                                                                    class="text-center mx-auto">
+                                                                    <app-payment-modes
+                                                                        [paymentModes]="indian_payment_modes"
+                                                                        (modeSelected)="indian_payment_mode_onchange($event)">
+                                                                    </app-payment-modes>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="shownonIndianModes"
+                                                                    class="text-center mx-auto">
+                                                                    <app-payment-modes [paymentModes]="non_indian_modes"
+                                                                        (modeSelected)="non_indian_modes_onchange($event)">
+                                                                    </app-payment-modes>
+                                                                </ng-container>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                            <div class="mgn-up-20 col-md-12 col-xs-12 no-padding">
+                                                                <div class="col-md-12 txt-align-center pad_link question-header"
+                                                                    *ngIf="paymentmodes && paymentmodes.internationalPay && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                                    <span [class.disabled]="paymentBtnDisabled"
+                                                                        (click)="togglepaymentMode()"
+                                                                        class="pointer-cursor">
+                                                                        <a class="refund_policy">
+                                                                            <span
+                                                                                *ngIf="!shownonIndianModes && paymentmodes && paymentmodes.internationalPay">Non
+                                                                                Indian Payment ? Click
+                                                                                here</span>
+                                                                            <span
+                                                                                *ngIf="shownonIndianModes && paymentmodes && paymentmodes.indiaPay">Indian
+                                                                                Payment ? Click
+                                                                                here</span>
+                                                                        </a>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="clearfix"></div>
+                                                                <div class="col-md-12 cancelpolicy  mgn-rt-5"
+                                                                    *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                                    <div class="pad_policy"
+                                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                                        <a data-toggle="modal"
+                                                                            data-target="#exampleModal"
+                                                                            class="refund_policy">Cancellation
+                                                                            Policy</a>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="prenotes mgn-bt-10"
-                                                                *ngIf="selectedService.preInfoEnabled">
-                                                                <div class="preinfo-title">
-                                                                    {{selectedService.preInfoTitle}}</div>
-                                                                <div>{{(readMore) ? selectedService.preInfoText :
-                                                                    selectedService.preInfoText | slice:0:200}}
-                                                                    <a class="changeitem pointer-cursor mgn-lt-5 mgn-rt-20 pull-right"
-                                                                        (click)="showText()"
-                                                                        *ngIf="selectedService.preInfoText.length > 200">
-                                                                        {{(readMore) ? 'less': 'more'}}</a>
+                                                                <div class="col-md-12 txt-align-center">
+                                                                    <button type="button"
+                                                                        class=" next-button btn btn-primary font-weight-bold text-capitalize "
+                                                                        [class.disabled]="paymentBtnDisabled"
+                                                                        *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
+                                                                        (click)="!isClickedOnce && saveCheckin('appt')">
+                                                                        Make Payment
+                                                                    </button>
                                                                 </div>
                                                             </div>
+                                                            <!-- modalbox -->
+                                                            <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                                role="dialog" aria-labelledby="exampleModalLabel"
+                                                                aria-hidden="true">
+                                                                <app-refundpolicy></app-refundpolicy>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="p-0 font-weight-bold">
-                                                    <h6 class="text-capitalize"><b>Your
-                                                            {{settingsjson.showTokenId?'Token
-                                                            ':'Checkin'}} date and time </b></h6>
-                                                </div>
-                                                <div class="" *ngIf="queuejson && queuejson.length != 0">
-                                                    <div class="">
-                                                        <h2
-                                                            class="font-weight-bold text-primary serv-time border-style">
-                                                            <span *ngIf="!isFuturedate"><b>Today, </b></span>
-                                                            <span *ngIf="isFuturedate">{{sel_checkindate | date:
-                                                                newDateFormat}},
-                                                            </span>
-                                                            <span>
-                                                                <b>{{selectedQTime}}</b>
-                                                            </span>
-                                                        </h2>
-                                                    </div>
-                                                </div>
+                                                <div class="clearfix"></div>
+                                                <hr>
                                             </div>
                                             <div class="clearfix"></div>
-                                            <div class="appointment-details-heading mt-5 px-5 py-3 font-weight-bold"
-                                                *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                <h4 class="text-capitalize">Payment Details</h4>
-                                            </div>
-                                            <div
-                                                *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                <div class="web my-5">
-                                                    <div class="textcenter"
-                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                        <span *ngIf="paymentDetails.showPrice"
-                                                            class="ser_price no-mgn-bt bold">Service Price : <span
-                                                                class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
-                                                                | currency:'&#8377;'}}</span></span>
-                                                        <span class="ser_price no-mgn-bt bold"
-                                                            style="padding: 20px !important;">Payment required now :
-                                                            <span
-                                                                class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
-                                                                ? payAmount : paymentDetails.amountRequiredNow)|
-                                                                currency:'&#8377;'}}</span></span>
-                                                    </div>
-                                                </div>
-                                                <div class="disply my-5">
-                                                    <div class="textcenter"
-                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                        <span *ngIf="paymentDetails.showPrice"
-                                                            class="ser_price no-mgn-bt bold">Service Price : <span
-                                                                class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
-                                                                | currency:'&#8377;'}}</span></span><br>
-                                                        <span class="ser_price no-mgn-bt bold"
-                                                            style="padding: 20px !important;">Payment required now :
-                                                            <span
-                                                                class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
-                                                                ? payAmount : paymentDetails.amountRequiredNow)|
-                                                                currency:'&#8377;'}}</span></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class=""
-                                                *ngIf="selectedService && selectedService.isPrePayment && paymentLength>0 && paymentDetails.amountRequiredNow > 0">
-                                                <div class="jaldeecredit" *ngIf="jcashamount>0">
-                                                    <mat-checkbox [(ngModel)]="checkJcash"
-                                                        (change)="changeJcashUse($event)"></mat-checkbox>
-                                                    Use Jaldee cash balance : <span class="rupee-font">{{jcashamount|
-                                                        currency:'&#8377;'}}</span>
-                                                </div>
-                                                <div class="creditleft"
-                                                    *ngIf="jcashamount>0  && (checkJcash && jcashamount < paymentDetails.amountRequiredNow)">
-                                                    Balance amount can be paid by other payment methods
-                                                </div>
-                                                <div class="prepayment"
-                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
-                                                        ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
-                                                    <button type="button" [class.disabled]="isClickedOnce"
-                                                        (click)="!isClickedOnce && saveCheckin('checkin')"
-                                                        id="stepThreeConfirmButton"
-                                                        class="next-button btn btn-primary font-weight-bold  px-12 py-4"
-                                                        [disabled]="!checkPolicy && heartfulnessAccount||paymentBtnDisabled">
-                                                        <ng-container
-                                                            *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
-                                                            ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
-                                                            Confirm
-                                                        </ng-container>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                            <div class="text-center mx-auto"
-                                                *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                <ng-container *ngIf="!shownonIndianModes" class="text-center mx-auto">
-                                                    <app-payment-modes [paymentModes]="indian_payment_modes"
-                                                        (modeSelected)="indian_payment_mode_onchange($event)">
-                                                    </app-payment-modes>
-                                                </ng-container>
-                                                <ng-container *ngIf="shownonIndianModes" class="text-center mx-auto">
-                                                    <app-payment-modes [paymentModes]="non_indian_modes"
-                                                        (modeSelected)="non_indian_modes_onchange($event)">
-                                                    </app-payment-modes>
-                                                </ng-container>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                            <div class="card-payment-button">
-                                                <div class="col-md-12">
-                                                    <div class="txt-align-center pad_link"
-                                                        *ngIf="paymentmodes.internationalPay && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                        <span [class.disabled]="paymentBtnDisabled"
-                                                            (click)="togglepaymentMode()" class="pointer-cursor"><a
-                                                                class="refund_policy">
-                                                                <span
-                                                                    *ngIf="!shownonIndianModes&&paymentmodes.internationalPay">Non
-                                                                    Indian Payment ? Click
-                                                                    here</span>
-                                                                <span
-                                                                    *ngIf="shownonIndianModes &&paymentmodes.indiaPay">Indian
-                                                                    Payment ? Click
-                                                                    here</span>
-                                                            </a></span>
-                                                    </div>
-                                                    <div class="cancelpolicy mgn-rt-5"
-                                                        *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                        <div class="pad_policy"
-                                                            *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                            <a data-toggle="modal" data-target="#exampleModal"
-                                                                class="refund_policy">Cancellation Policy</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="txt-align-center">
-                                                        <button type="button"
-                                                            class=" next-button btn btn-primary font-weight-bold text-capitalize "
-                                                            [class.disabled]="paymentBtnDisabled"
-                                                            *ngIf="paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                            (click)="!isClickedOnce && saveCheckin('checkin')">
-                                                            Make Payment
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                            <div class="containerpayment" style="margin:20px;"
+                                            <div class="" style="margin:20px;"
                                                 *ngIf="selectedService && selectedService.isPrePayment==false && paymentLength==0|| (paymentDetails && paymentDetails.amountRequiredNow == 0)">
-                                                <div class="prepayment-confirm">
-                                                    <button type="button" [class.disabled]="isClickedOnce"
-                                                        (click)="!isClickedOnce && saveCheckin('checkin')"
-                                                        id="stepThreeConfirmButton"
-                                                        class="next-button btn btn-primary font-weight-bold btn-1 px-12 py-4"
-                                                        [disabled]="!checkPolicy && heartfulnessAccount">
-                                                        Confirm
-                                                    </button>
-                                                </div>
+                                                <!-- <div class="prepayment-confirm"> -->
+                                                <button type="button" [class.disabled]="isClickedOnce"
+                                                    (click)="!isClickedOnce && saveCheckin('checkin')"
+                                                    id="stepThreeConfirmButton"
+                                                    class="mat-button btn btn-primary font-weight-bold"
+                                                    [disabled]="!checkPolicy && heartfulnessAccount">
+                                                    Confirm
+                                                </button>
+                                                <!-- </div> -->
                                             </div>
+                                            <ng-container *ngIf="heartfulnessAccount">
+                                                <app-privacy (approvePolicy)="policyApproved($event)"></app-privacy>
+                                            </ng-container>
                                         </div>
                                     </div>
                                 </div>
@@ -873,10 +856,10 @@
     </div>
 </section>
 <!-- Cancellation Policy Modal-->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <app-refundpolicy></app-refundpolicy>
     </div>
-</div>
+</div> -->

@@ -15,8 +15,11 @@ export class SlotPickerComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("Slots:", this.slots);
+    console.log("Selected Slot:",this.selectedSlot);
     if (!this.selectedSlot) {
       this.selectedSlot = this.slots[0];
+      this.slotSelected.emit(this.selectedSlot);
+    } else {
       this.slotSelected.emit(this.selectedSlot);
     }
   }

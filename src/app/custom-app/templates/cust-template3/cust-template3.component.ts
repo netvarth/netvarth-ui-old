@@ -5,6 +5,7 @@ import { S3UrlProcessor } from '../../../shared/services/s3-url-processor.servic
 import { CustomappService } from '../../customapp.service';
 import { SearchDetailServices } from '../../../shared/components/search-detail/search-detail-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 
 @Component({
@@ -42,6 +43,7 @@ export class CustTemplate3Component implements OnInit {
   waitlisttime_arr: any = [];
   appttime_arr: any = [];
   deptUsers: any;
+  selectedIndex;
   // @Input() templateJson;
   // userId;
   // pSource;
@@ -53,7 +55,8 @@ export class CustTemplate3Component implements OnInit {
     private s3Processor: S3UrlProcessor,
     private bookingService: BookingService,
     private dateTimeProcessor: DateTimeProcessor,
-    private searchdetailserviceobj: SearchDetailServices
+    private searchdetailserviceobj: SearchDetailServices,
+    private lStorageService: LocalStorageService
   ) {
 
   }
@@ -117,6 +120,11 @@ export class CustTemplate3Component implements OnInit {
     }
 
     this.changeLocation(this.selectedLocation);
+    if (this.lStorageService.getitemfromLocalStorage('tabIndex')) {
+      this.selectedIndex = this.lStorageService.getitemfromLocalStorage('tabIndex');
+    } else {
+      this.selectedIndex = 0;
+    }
   }
   setUserWaitTime() {
     let apptTimearr = [];
@@ -375,5 +383,8 @@ export class CustTemplate3Component implements OnInit {
     //   }
     // );
   }
-
+  onTabChanged(event) {
+    console.log("Tab Event:" , event.index);
+    this.lStorageService.setitemonLocalStorage('tabIndex', event.index);
+  }
 }

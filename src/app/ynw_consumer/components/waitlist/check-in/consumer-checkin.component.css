@@ -2195,3 +2195,39 @@ body.modal-open {
   .hgt-adjust {
     min-height: 91vh;
   }
+  .italic {
+    font-style: italic;
+  }
+
+  .question-header {
+    color: #000 !important;
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+  }
+
+  ::ng-deep  .chk-btns-div .mat-chip-list-wrapper {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    display: inline-block;
+  }
+
+  .resPaymrntDetails{
+    /* font-size: 15px; */
+    /* font-weight: bold; */
+    color: #133072;
+    /* border-radius: 5px; */
+    /* width: 26rem; */
+    /* margin: 5px; */
+  }
+
+
+
+  .mobile-donor-details {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #cdc8c9;
+  }
+  hr {
+    border-top: 1px solid #eee !important;
+}

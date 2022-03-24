@@ -92,11 +92,11 @@ export class AppointmentServicesComponent implements OnInit, OnChanges {
   }
 
   cardClicked(actionObj) {
-    if (actionObj['action'] == 'availability') {
-      this.checkAvailableSlots(actionObj);
-    } else if (actionObj['type'] === 'appt') {
+    if (actionObj['type'] === 'appt') {
       if (actionObj['action'] === 'view') {
         this.showServiceDetail(actionObj['service'], this.businessProfile.businessName);
+      } else if (actionObj['action'] === 'availability') {
+        this.checkAvailableSlots(actionObj);
       } else {
         this.appointmentClicked(actionObj['location'], actionObj['service']);
       }
@@ -119,12 +119,12 @@ export class AppointmentServicesComponent implements OnInit, OnChanges {
     // _this.authService.goThroughLogin().then(
     //   (status) => {
     //     if (status) {
-          _this.showAppointment(location, service);
-      //   } else {
-      //     const passParam = { callback: 'appointment', current_provider: current_provider };
-      //     _this.doLogin('consumer', passParam);
-      //   }
-      // });
+    _this.showAppointment(location, service);
+    //   } else {
+    //     const passParam = { callback: 'appointment', current_provider: current_provider };
+    //     _this.doLogin('consumer', passParam);
+    //   }
+    // });
   }
   showAppointment(location, service) {
     let queryParam = {
@@ -155,7 +155,14 @@ export class AppointmentServicesComponent implements OnInit, OnChanges {
       queryParam['theme'] = this.templateJson.theme;
     }
     queryParam['customId'] = this.businessProfile.accEncUid;
-
+    if (location.time) {
+      queryParam['ctime'] = location.time
+    }
+    if (location.date) {
+      queryParam['cdate'] = location.date
+      // console.log('differnt dates....', service.serviceAvailability.nextAvailableDate, location.date)
+      service.serviceAvailability.nextAvailableDate = location.date
+    }
     const dtoday = this.dateTimeProcessor.getStringFromDate_YYYYMMDD(this.dateTimeProcessor.getLocaleDateFromServer(this.serverDate));
     if (dtoday === service.serviceAvailability.nextAvailableDate) {
       queryParam['cur'] = false;

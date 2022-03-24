@@ -513,9 +513,9 @@ ul.bus-actions li a.lnk {
   /* .location-accord ul.badges {
     margin-top: 15px !important;
   } */
-  h6 {
+  /* h6 {
     font-size: 1rem!important;
-  }
+  } */
   .bus-title-content h6, .bus-title-content h3 {
     margin-bottom: 0px !important;
   }
@@ -1323,9 +1323,9 @@ height: 150px !important;
 }
 
 @media screen and (max-width: 768px) {
-  .bus-item-medium .card.card-item-n h6 {
+  /* .bus-item-medium .card.card-item-n h6 {
     font-size: 1rem!important;
-  }
+  } */
 }
 
 .bus-item-medium.div-selected-outline  .card.card-item-n{
@@ -1681,7 +1681,7 @@ body.modal-open {
 }
 .refund_policy {
   color: #3c8dbc !important;
-  font-size: 0.8rem !important;
+  font-size: 1rem !important;
 }
 .refundpol .modal-footer{
   padding: 0.5rem !important;
@@ -2062,9 +2062,8 @@ box-shadow: 4px 4px 5px gainsboro;
       border-radius: 10px;
     }  
     
-    .appointment-details-card
-    {
-      background-color: #f1faf1!important;
+    .appointment-details-card {
+      background-color: #e8ebf5 !important;
     }
   
     .internal-scroll {
@@ -2073,58 +2072,11 @@ box-shadow: 4px 4px 5px gainsboro;
       width: 100%!important;
       max-height: 200px!important;
     }
-  
-    
+
     .paymentmode{
       font-size:16px!important;
       padding:0px !important;
     }
-    /*
-    .mat-radio-button.mat-radio-checked { 
-      border-color: #1E4079 !important;
-      box-shadow: 0 0 3px 3px #1E4079!important;
-      padding-right: 10px!important;
-    }
-  
-    .time_range > .mat-radio-button.mat-radio-checked { 
-      border: #1E4079 !important;
-      box-shadow: 0 0 2px 2px #1E4079!important;
-      border-radius: 30px!important;
-      text-align: center!important;
-    }
-  
-     ::ng-deep .mat-radio-button .mat-radio-container {
-      display: none!important;
-    }
-    ::ng-deep .mat-radio-container .mat-radio-outer-circle,
-    ::ng-deep .mat-radio-container .mat-radio-inner-circle{
-      
-      display: none!important;
-    }
-    ::ng-deep .mat-radio-container .mat-radio-label{
-      display: inline;
-    } */
-  
-  /* .freeslots mat-chip
-  {
-    border: none!important;
-    border-radius: 5px!important;
-    cursor: pointer;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  .freeslots mat-chip.mat-chip-selected
-  {
-    background-color: #1e4079!important;
-    color: white!important;
-    font-weight: 900!important;
-  }
-  .freeslots mat-chip.mat-chip.mat-focus-indicator.text-center.mat-primary.mat-standard-chip
-  {
-    padding: 0!important;
-  }
-  */
-
-
   .header .fa-map-marker
   {
     font-size: 14px!important;
@@ -2157,11 +2109,6 @@ box-shadow: 4px 4px 5px gainsboro;
     {
      padding-bottom: 130px!important;
     }
-    /* .freeslots mat-chip
-    {
-    width:31%!important;
-    margin:3px!important;
-    } */
     .card.shadow
     {
       padding: 8px!important;
@@ -2247,10 +2194,7 @@ box-shadow: 4px 4px 5px gainsboro;
    .pad-10.d-flex.flex-column-fluid {
      padding-bottom: 0px!important;
  }
- /* .freeslots mat-chip
-  {
-  width:13%!important;
-  } */
+
   .back-btn-text{
     font-size: 30px!important;
     font-weight: 700;
@@ -2272,11 +2216,6 @@ box-shadow: 4px 4px 5px gainsboro;
    .pad-10.d-flex.flex-column-fluid {
      padding-bottom: 0px!important;
  }
- /* .freeslots mat-chip
-    {
-    width:13%!important;
-    margin:4px!important;
-    } */
     .back-btn-text{
       font-size: 30px!important;
       font-weight: 700;
@@ -2293,3 +2232,35 @@ box-shadow: 4px 4px 5px gainsboro;
   .hgt-adjust {
     min-height: 91vh;
   }
+  .question-header {
+    color: #000 !important;
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+  }
+
+  ::ng-deep  .chk-btns-div .mat-chip-list-wrapper {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    display: inline-block;
+  }
+
+  .resPaymrntDetails{
+    /* font-size: 15px; */
+    /* font-weight: bold; */
+    color: #133072;
+    /* border-radius: 5px; */
+    /* width: 26rem; */
+    /* margin: 5px; */
+  }
+
+
+
+  .mobile-donor-details {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #cdc8c9;
+  }
+  hr {
+    border-top: 1px solid #eee !important;
+}

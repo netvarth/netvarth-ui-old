@@ -298,9 +298,10 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         //     }
         // } 
         // else {
-            item['loading'] = true;
-            event.stopPropagation();
-        
+            if (item) {
+                item['loading'] = true;
+            }            
+            event.stopPropagation();        
             const actionObj = {};
             actionObj['type'] = type;
             actionObj['action'] = action;

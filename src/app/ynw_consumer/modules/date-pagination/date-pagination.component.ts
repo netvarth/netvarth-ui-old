@@ -26,6 +26,7 @@ export class DatePaginationComponent implements OnInit {
   previous_date_handling_btn: boolean;
 
   ngOnInit(): void {
+    console.log("Selected Date:", this.selected_date);
     this.minDate = new Date();
     this.maxDate = new Date((this.minDate.getFullYear() + 4), 12, 31);
     this.minDate = moment(this.minDate).format("YYYY-MM-DD");
@@ -48,7 +49,10 @@ export class DatePaginationComponent implements OnInit {
     this.prev_date_value_1 = this.week[today_date1.getDay()] + this.month[today_date1.getMonth()] + today_date1.getDate();
     today_date1.setDate(today_date1.getDate() - 1);
     this.prev_date_value_2 = this.week[today_date1.getDay()] + this.month[today_date1.getMonth()] + today_date1.getDate();
-    // this.date_change_event.emit(this.selected_date);
+    if (this.selected_date) {
+      this.date_change_event.emit(this.selected_date);
+    }
+
     this.date_handling_btn()
   }
 

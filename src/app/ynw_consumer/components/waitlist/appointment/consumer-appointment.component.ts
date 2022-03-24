@@ -361,8 +361,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 if (params.ctime) {
                     console.log('****************************')
                     this.selectedTime = params.ctime
-
                 }
+                // if (params.sel_date) {
+                //     this.selectedDate = params.sel_date;
+                // }
                 this.sel_loc = params.loc_id;
                 // this.locationName = params.locname;
                 // this.googleMapUrl = params.googleMapUrl;
@@ -692,7 +694,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             this.apptTime = this.freeSlots[0];
                         }
                     } else {
-                        // console.log(this.selectedTime)
+                        console.log("Selected Time:",this.selectedTime);
                         if (this.selectedTime) {
                             const appttime = this.freeSlots.filter(slot => slot.displayTime === this.selectedTime);
                             if (appttime && appttime.length > 0) {
@@ -705,8 +707,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         } else {
                             this.apptTime = this.freeSlots[0];
                         }
-
-
+                        console.log("Appt Time:", this.apptTime);
                     }
                     // this.waitlist_for[0].apptTime = this.apptTime['time'];
                 } else {
@@ -2216,6 +2217,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addApptAdvancePayment(param, post_Data)
             .subscribe(data => {
                 this.paymentDetails = data;
+                console.log("PaymentDetails:", this.paymentDetails);
             },
                 error => {
                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

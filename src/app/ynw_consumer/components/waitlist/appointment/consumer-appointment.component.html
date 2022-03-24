@@ -7,7 +7,7 @@
         </app-booking-accountinfo>
     </div>
 </div>
-<section #consumer_appointment class="container-fluid" [ngClass]="theme?theme:''">
+<section #consumer_appointment class="container-fluid consumerAppt" [ngClass]="theme?theme:''">
     <div class="loading-hgt my-5 login-form_custom" *ngIf="!loggedIn || loading">
         <div class="card card-custom no-margin hgt-adjust">
             <div class="card-body p-0">
@@ -17,100 +17,45 @@
         </div>
     </div>
     <div class="row" *ngIf="loggedIn">
-        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch desktop-only p-1">
+        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch desktop-only p-1"
+            *ngIf="!small_device">
             <div class="card shadow">
-                <app-booking-accountinfo [businessInfo]="businessInfo" [smallDevice]="small_device"
-                    *ngIf="!small_device"></app-booking-accountinfo>
+                <app-booking-accountinfo [businessInfo]="businessInfo" [smallDevice]="small_device">
+                </app-booking-accountinfo>
                 <div class="booking-img"></div>
             </div>
         </div>
-        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch p-1" *ngIf="selectedService">
+        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch p-1">
             <div class="card shadow hgt-adjust">
                 <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
                     data-wizard-clickable="false">
                     <div class="">
+                        <!-- <div class="loading-hgt" *ngIf="!questionnaireLoaded">
+                            <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                        </div> -->
+                        <!-- *ngIf="questionnaireLoaded" -->
                         <div *ngIf="!loading">
                             <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding"
                                 data-wizard-type="step-content" data-wizard-state="current" *ngIf="bookStep === 2">
-                                
-                                    <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 p-1">   
-                                        <div class="pad-20 quest-head">
-                                            Fill the following one time information
-                                        </div>
-                                        <app-questionnaire [questionnaireList]="onetimeQuestionnaireList"
-                                            [questionAnswers]="oneTimeInfo" [source]="'onetime'"
-                                            (returnAnswers)="getOneTimeQuestionAnswers($event)">
-                                        </app-questionnaire>
-                                    </div>
-                                    <!--<div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 p-1">
-                                     <div class="">
-                                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
-                                            *ngIf="hideTokenFor">
-                                            <div class="text-capitalize">
-                                                <div class="" *ngIf="selectedServiceId || type == 'waitlistreschedule'">
-                                                    <h5 class="text-left text-success text-capitalize service">
-                                                        <b>{{selectedService.name}}</b>
-                                                    </h5>
-                                                    <div class="" style="font-size: 1rem"
-                                                        *ngIf="selectedService.price && type != 'reschedule'">
-                                                        <p class="module-nomargin line-clamp no-margin"
-                                                            *ngIf="selectedService.description && !showmoreSpec"
-                                                            (click)="showSpec()">
-                                                            {{selectedService.description}}</p>
-                                                        <p *ngIf="showmoreSpec" (click)="showSpec()">
-                                                            {{selectedService.description}}</p>
-                                                    </div>
-                                                    <div class="">
-                                                        <div class="callingmode mgn-lt-10"
-                                                            *ngIf="selectedService && selectedService.serviceType==='virtualService' && type !== 'waitlistreschedule'">
-                                                            <div class="mgn-bt-10 mgn-up-5">
-                                                                <div class=""
-                                                                    *ngFor="let mode of selectedService.virtualCallingModes;let i = index">
-                                                                    <div style="visibility: hidden;">
-                                                                        {{callingModesDisplayName[mode.callingMode]}}
-                                                                    </div>
-                                                                    <div class="cal-mod-instrct pre-check-title color-grey"
-                                                                        *ngIf="mode.callingMode">
-                                                                        {{mode.instructions}}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="prenotes mgn-bt-10"
-                                                            *ngIf="selectedService.preInfoEnabled">
-                                                            <div class="preinfo-title">
-                                                                {{selectedService.preInfoTitle}}</div>
-                                                            <div>{{(readMore) ? selectedService.preInfoText :
-                                                                selectedService.preInfoText | slice:0:200}}
-                                                                <a class="changeitem pointer-cursor mgn-lt-5 mgn-rt-20 pull-right"
-                                                                    (click)="showText()"
-                                                                    *ngIf="selectedService.preInfoText.length > 200">
-                                                                    {{(readMore) ? 'less': 'more'}}</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 p-1">
+                                    <div class="">
+                                        <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 p-1">
+                                            <div class="pad-20 quest-head">
+                                                Fill the following one time information
                                             </div>
-                                            <div class="clearfix"></div>
-                                            <hr class="m-0 p-0">
-
+                                            <app-questionnaire [questionnaireList]="onetimeQuestionnaireList"
+                                                [questionAnswers]="oneTimeInfo" [source]="'onetime'"
+                                                (returnAnswers)="getOneTimeQuestionAnswers($event)">
+                                            </app-questionnaire>
                                         </div>
                                     </div>
-
-                                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
-                                        style="overflow: auto!important;overflow-x: hidden!important;">
-                                        <app-questionnaire [questionnaireList]="questionnaireList"
-                                            [questionAnswers]="questionAnswers" [source]="'consCheckin'"
-                                            [accountId]="account_id" (returnAnswers)="getOneTimeQuestionAnswers($event)">
-                                        </app-questionnaire>
-                                    </div>
-                                </div>-->
+                                </div>
                                 <div class="clearfix"></div>
                                 <hr>
                                 <div
                                     class="text-center mx-auto col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 hf-single-btn-container">
                                     <button type="button"
-                                        class="next-button btn btn-primary font-weight-bold text-capitalize px-5 py-2"
+                                        class="next-button btn btn-primary font-weight-bold text-capitalize px-5"
                                         (click)="goToStep('next')">
                                         Next
                                     </button> &nbsp;
@@ -120,15 +65,16 @@
                             <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding right-part"
                                 data-wizard-type="step-content" data-wizard-state="current" *ngIf="bookStep === 1">
                                 <div class="">
-                                    <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding">
+                                    <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
+                                        *ngIf="selectedService">
                                         <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding check-new-group">
                                             <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                                                 <div class="col-sm-12 col-xs-12 col-md-12">
                                                     <div class="no-padding"
                                                         *ngIf="selectedServiceId || type == 'reschedule'">
-                                                        <h5 class="text-left text-success text-capitalize service">
+                                                        <h3 class="text-left text-primary service custom">
                                                             <b>{{selectedService.name}}</b>
-                                                        </h5>
+                                                        </h3>
                                                         <div class="" style="font-size: 1rem;">
                                                             <p class="module-nomargin line-clamp no-margin"
                                                                 *ngIf="selectedService && selectedService.description && !showmoreSpec"
@@ -175,29 +121,24 @@
                                                 <div class="clearfix"></div>
                                                 <hr class="mt-0 pt-0">
 
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 p-1">
-                                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                                <app-date-pagination
-                                                    (date_change_event)="changed_date_value($event)"
-                                                    [selected_date]="sel_checkindate"
-                                                    [availableDates]="availableDates">
+                                                <app-date-pagination (date_change_event)="changed_date_value($event)"
+                                                    [selected_date]="sel_checkindate" [availableDates]="availableDates">
                                                 </app-date-pagination>
+
+                                                <app-slot-picker (slotSelected)="slotSelected($event)" [selectedSlot]="apptTime"
+                                                    [slots]="freeSlots" *ngIf="freeSlots && freeSlots.length > 0"
+                                                    [mode]="'appt'"></app-slot-picker>
+                                                <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mt-3 text-center"
+                                                    *ngIf="freeSlots && freeSlots.length == 0 && !api_loading1">
+                                                    <b>No slots available on selected date.Please choose other date.</b>
+                                                </div>
                                             </div>
-                                        </div>                                        
-                                            <app-slot-picker (slotSelected)="slotSelected($event)"
-                                            [slots]="freeSlots"
-                                            *ngIf="freeSlots && freeSlots.length > 0" [mode]="'appt'"></app-slot-picker>
-                                            
-                                        <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mt-3 text-center"
-                                            *ngIf="freeSlots && freeSlots.length == 0 && !api_loading1">
-                                            <b>No slots available on selected date.Please choose other date.</b>
                                         </div>
+
                                     </div>
                                     <div class="clearfix"></div>
                                     <hr>
-                                    <div *ngIf="type != 'reschedule' && !selectedService.isPrePayment"
+                                    <div *ngIf="type != 'reschedule' && selectedService && !selectedService.isPrePayment"
                                         class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between pt-10 mgn-lt-10">
                                         <button type="button"
                                             class="mx-auto text-center next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
@@ -206,7 +147,7 @@
                                             Next
                                         </button>
                                     </div>
-                                    <div *ngIf="type != 'reschedule' && selectedService.isPrePayment && questionnaireList.labels && questionnaireList.labels.length > 0"
+                                    <div *ngIf="type != 'reschedule' && selectedService && selectedService.isPrePayment && questionnaireList.labels && questionnaireList.labels.length > 0"
                                         class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between pt-10 mgn-lt-10">
                                         <button type="button"
                                             class="mx-auto text-center next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
@@ -215,7 +156,7 @@
                                             Next
                                         </button>
                                     </div>
-                                    <div *ngIf="type != 'reschedule' && selectedService.isPrePayment && !questionnaireList.labels"
+                                    <div *ngIf="type != 'reschedule' && selectedService && selectedService.isPrePayment && !questionnaireList.labels"
                                         class="mx-auto text-center col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                         <button type="button"
                                             class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
@@ -319,8 +260,7 @@
                                         </ng-container>
                                         <ng-container *ngIf="action=='note'">
                                             <app-booking-note (noteChanged)="handleConsumerNote($event)"
-                                                [selectedService]="selectedService"
-                                                [businessProfile]="businessjson"
+                                                [selectedService]="selectedService" [businessProfile]="businessjson"
                                                 [placeHolder]="note_placeholder" [note]="consumerNote">
                                             </app-booking-note>
                                         </ng-container>
@@ -403,10 +343,8 @@
                                             <!-- {{action}} -->
                                             <div class="modal-body">
                                                 <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 mgn-up-20">
-                                                    <div class="pull-left"> Booking for
-                                                    </div>
+                                                    <div class="pull-left"> Booking for </div>
                                                     <a class="lnk pointer-cursoraction mgn-lt-20"
-                                                        *ngIf="selectedService.serviceType !== 'virtualService'"
                                                         (click)="addMember()"><i class="fa fa-user-plus"></i>
                                                         {{add_member_cap}}</a>
                                                 </div>
@@ -415,15 +353,13 @@
                                                         <app-members (memberSelected)="memberSelected($event)"
                                                             [maxSelection]="maxsize" [selectedMember]="waitlist_for"
                                                             [familyMembers]="familyMembers"
-                                                            [multiple]="multipleMembers_allowed"
-                                                            [allowSelection]="selectedService.serviceType !== 'virtualService'?true:false"
+                                                            [multiple]="multipleMembers_allowed" [allowSelection]="true"
                                                             [parentCustomer]="parentCustomer">
                                                         </app-members>
 
                                                         <app-communications (setCommunications)="setCommunications"
-                                                            [commObj]="commObj" [selectedMember]="waitlist_for"
-                                                            [selectedService]="selectedService"
-                                                            [parentCustomer]="parentCustomer">
+                                                            [commObj]="commObj" [selectedService]="selectedService"
+                                                            [mode]="'write'">
                                                         </app-communications>
                                                     </ng-container>
 
@@ -446,8 +382,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                             <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding right-part"
                                 data-wizard-type="step-content" data-wizard-state="current" *ngIf="bookStep === 3">
                                 <div class="pad-20 quest-head">
@@ -456,7 +390,7 @@
                                 <app-questionnaire [questionnaireList]="questionnaireList" [source]="'consAppt'"
                                     [questionAnswers]="questionAnswers" [accountId]="account_id"
                                     (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
-<div class="d-flex flex-column-fluid width-100">
+                                <div class="d-flex flex-column-fluid width-100">
                                     <div class="col-xs-12 force_center note-pad">
                                         <div class="form-group card mgn-0">
                                             <label class="col-12 quest">Add any other notes to the provider or
@@ -476,10 +410,9 @@
                                                                 *ngIf="selectedService.consumerNoteMandatory && type != 'reschedule'">*</span></a>
                                                     </mat-chip>
                                                     <mat-chip><a class="lnk action pointer-cursor"
-                                                            (click)="imagefile1.click()"><input #imagefile1
-                                                                type="file" accept="/*;capture=camera"
-                                                                style="display:none;" multiple
-                                                                (change)="filesSelected($event, 'close')"><i
+                                                            (click)="imagefile1.click()"><input #imagefile1 type="file"
+                                                                accept="/*;capture=camera" style="display:none;"
+                                                                multiple (change)="filesSelected($event, 'close')"><i
                                                                 class="fa fa-paperclip mgn-rt-5"
                                                                 aria-hidden="true"></i>Upload
                                                             File<span
@@ -532,313 +465,305 @@
                                 [ngClass]="{'highlight': api_loading_video}">
                                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
                                     <div class="clearfix"></div>
-                                    <div
-                                        class="text-primary text-left text-capitalize col-md-12 col-xs-12 col-sm-12 pt-2">
-                                        <h5><b>Review and Confirm</b></h5>
+                                    <div class="text-capitalize col-md-12 col-xs-12 col-sm-12 pt-2">
+                                        <h2><b>Review and Confirm</b></h2>
                                     </div>
                                     <div class="clearfix"></div>
-                                    <hr>
-                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-                                        <div
-                                            class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-up-10 mgn-bt-10 no-padding">
-                                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
-                                                *ngIf="selectedService.serviceType!=='virtualService'">
-                                                <h6 class="text-dark"><b>Booking For</b></h6>
-
+                                    <hr />
+                                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 check-new-group no-padding">
+                                        <label class="question-header">Service Details</label>
+                                        <br />
+                                        <div class="service-group-section mgn-lt-10">
+                                            <div class="text-capitalize">
+                                                <div class="m-auto"
+                                                    *ngIf="selectedServiceId || type == 'waitlistreschedule'">
+                                                    <h6 class="text-primary service custom">
+                                                        <b>{{selectedService.name}}</b>
+                                                    </h6>
+                                                    <div class="" *ngIf="selectedApptTime">
+                                                        <h6 class="custom text-primary">
+                                                            <b>
+                                                                <span *ngIf="!isFuturedate">Today,</span>
+                                                                <span *ngIf="isFuturedate">{{selectedDate |
+                                                                    date:newDateFormat}}, </span>
+                                                                <span>{{getSingleTime(selectedApptTime['time'])}}</span>
+                                                            </b>
+                                                        </h6>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
-                                                *ngIf="selectedService.serviceType==='virtualService'">
-                                                <h6 class="text-dark"><b>Booking For</b></h6>
-                                            </div>
-                                            <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
-                                                <div class="card-body no-padding">
-                                                    <div class="row">
-                                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                                                            <span class="text-primary service consumer-name"
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <hr />
+                                        <label class="question-header">Booking For</label>
+                                        <br />
+                                        <div class="booking-for-section mgn-lt-10">
+                                            <div class="">
+                                                <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
+                                                    <div class="no-padding">
+                                                        <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
+                                                            <h6 class="text-primary service custom"
                                                                 *ngIf="waitlist_for && waitlist_for[0]">
                                                                 {{waitlist_for[0].firstName |
                                                                 capitalizeFirst}}
                                                                 {{waitlist_for[0].lastName |
                                                                 capitalizeFirst}}
-                                                            </span>
-                                                            <!--<a *ngIf="type !== 'reschedule' && selectedService && selectedService.serviceType!=='virtualService'"
-                                                                class="pointer-cursor changeitem font-weight-bold text-capitalize px-2 py-1"
-                                                                (click)="handleSideScreen('members')"
-                                                                data-toggle="modal" data-target="#exampleModalCenter">
-                                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                            </a>-->
+                                                                <a *ngIf="type !== 'reschedule'"
+                                                                    class="pointer-cursor changeitem font-weight-bold text-capitalize px-2 py-1"
+                                                                    (click)="handleSideScreen('members')"
+                                                                    data-toggle="modal"
+                                                                    data-target="#exampleModalCenter"><i
+                                                                        class="fa fa-pencil-square-o"
+                                                                        aria-hidden="true"></i>
+                                                                </a>
+                                                            </h6>
+                                                        </div>
+                                                        <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
+                                                            <app-communications (setCommunications)="setCommunications"
+                                                                [commObj]="commObj" [mode]="'read'"
+                                                                [selectedService]="selectedService">
+                                                            </app-communications>
                                                         </div>
                                                     </div>
-                                                    <div
-                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding lnk pt-3 text-primary">
-                                                        Status, alerts, communications will be sent to
-                                                    </div>
-                                                    <div class="clearfix"></div><br>
-                                                    <div class="contact-section">
-                                                        <i class="fa fa-volume-control-phone "></i>
-                                                        <i class="fa phon-icon"
-                                                            *ngIf="selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <hr />
+                                        <div *ngIf="!questionnaireList.labels"
+                                            class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding">
+                                            <a #modal data-toggle="modal" data-target="#exampleModalCenter"></a>
+                                            <!-- <span class="text-primary">Add notes/upload files you may have</span> -->
+                                            <div>
+                                                <label class="question-header">Add notes/upload files you may
+                                                    have</label>
+                                            </div>
+                                            <mat-chip-list class="btns">
+                                                <mat-chip
+                                                    [class.mandatoryChip]="selectedService.consumerNoteMandatory && type != 'reschedule'"
+                                                    (click)="handleSideScreen('note');modal.click();">
+                                                    <a class="lnk action pointer-cursor"><i
+                                                            class="fa fa-file-text-o mgn-rt-5"
+                                                            aria-hidden="true"></i>{{selectedService.consumerNoteTitle}}
                                                         <span
-                                                            class="mgn-lt-10 phonevallabel">&nbsp;{{commObj['communicationPhCountryCode']}}
-                                                            {{commObj['communicationPhNo']}}</span><a
-                                                            class="mgn-lt-5 lnk pointer-cursor">
+                                                            *ngIf="selectedService.consumerNoteMandatory && type != 'reschedule'">*</span></a>
+                                                </mat-chip>
+                                                <span>
+                                                    <mat-chip
+                                                        [ngClass]="{'br-top-right-0 br-bottom-right-0 margin-right-0': getAttachLength() > 0}">
+                                                        <a class="lnk action pointer-cursor"
+                                                            (click)="imagefile1.click();"><input #imagefile1 type="file"
+                                                                accept="/*;capture=camera" style="display:none;"
+                                                                multiple (change)="filesSelected($event, 'close')"><i
+                                                                class="fa fa-paperclip mgn-rt-5"
+                                                                aria-hidden="true"></i>Upload
+                                                            File
                                                         </a>
-                                                        <!-- <div class="mode-hint mgn-bt-5"
-                                                            *ngIf="selectedService && selectedService.virtualCallingModes && (selectedService.virtualCallingModes[0].callingMode === 'WhatsApp' || selectedService.virtualCallingModes[0].callingMode === 'Phone')">
-                                                            Status, alerts, communications will be sent to
-                                                        </div> -->
-                                                    </div>
-                                                    <div class="contact-section"
-                                                        *ngIf="selectedService && selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                                                        <i class="fa wtsapaud-icon wtsap-cal"
-                                                            *ngIf="selectedService.virtualServiceType === 'audioService'"></i>
-                                                        <i class="fa wtsapvid-icon" style="width: 20px;"
-                                                            *ngIf="selectedService.virtualServiceType === 'videoService'"></i>
-                                                        <span
-                                                            class="mgn-lt-10 phonevallabel">{{commObj['comWhatsappCountryCode']}}
-                                                            {{commObj['comWhatsappNo']}}</span><a
-                                                            class="mgn-lt-5 lnk pointer-cursor">
+                                                    </mat-chip>
+                                                    <mat-chip *ngIf="getAttachLength() > 0"
+                                                        class="br-top-left-0 br-bottom-left-0 margin-left-0">
+                                                        <a class="lnk action pointer-cursor"
+                                                            (click)="viewAttachments()">
+                                                            View (<span>{{getAttachLength()}}</span>)
                                                         </a>
-                                                    </div>
-                                                    <div class="contact-section">
-                                                        <div class="float-left"><i class="fa fa-envelope-o"></i></div>
-                                                        <span
-                                                            class="mgn-lt-10 emailvallabel">{{commObj['communicationEmail']}}</span>
+                                                    </mat-chip>
+                                                </span>
+                                            </mat-chip-list>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <hr/>
+                                        <div class="coupon-section col-md-12 col-xs-12 col-sm-12 no-padding"
+                                            *ngIf="(s3CouponsList.JC.length > 0) && type != 'reschedule'||(s3CouponsList.OWN.length > 0) && type != 'reschedule'">
 
-                                                        <a class="mgn-lt-5 lnk pointer-cursor"></a>
-                                                    </div>
-                                                </div>
+                                            <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-5 no-padding">
+                                                <a class="lnk pointer-cursor action"
+                                                    *ngIf="selected_coupons.length === 0" (click)="applyPromocode()"
+                                                    data-toggle="modal" data-target="#exampleModalCenter">Apply
+                                                    Coupon Code</a>
+                                                <a class="lnk pointer-cursor action" *ngIf="selected_coupons.length > 0"
+                                                    (click)="applyPromocode()" data-toggle="modal"
+                                                    data-target="#exampleModalCenter">
+                                                    Coupon code added</a>
+                                                {{selected_coupons.toString()}}
+                                            </div>
+                                            <div *ngFor="let coupon of paymentDetails.jCouponList | keyvalue"
+                                                style="text-align: initial;">
+                                                <small class="black rupee-font" *ngIf="coupon.value.value !== '0.0'">You
+                                                    saved
+                                                    {{coupon.value.value | currency:'&#8377;'}} on
+                                                    {{coupon.key}}
+                                                </small>
+                                                <small class="black" *ngIf="coupon.value.value === '0.0'">{{coupon.key}}
+                                                    will be honored if all the rules are met
+                                                    &nbsp;<small *ngIf="coupon.value.value === '0.0'"
+                                                        class="blue custId-cursor" (click)="showJCCouponNote(coupon)"
+                                                        aria-hidden="true">Know
+                                                        more</small></small>
+                                            </div>
+                                            <div *ngFor="let coupon of paymentDetails.proCouponList | keyvalue">
+                                                <small class="black rupee-font" *ngIf="coupon.value.value !== '0.0'">You
+                                                    saved
+                                                    {{coupon.value.value | currency:'&#8377;'}} on
+                                                    {{coupon.key}}
+                                                </small>
+                                                <small class="black" *ngIf="coupon.value.value === '0.0'">{{coupon.key}}
+                                                    will be honored if all the rules are met
+                                                    &nbsp;<small *ngIf="coupon.value.value === '0.0'"
+                                                        class="blue custId-cursor" (click)="showJCCouponNote(coupon)"
+                                                        aria-hidden="true">Know
+                                                        more</small></small>
+                                            </div>
+                                            <div class="changeprice" *ngIf="amountdifference > 0">
+                                                The balance amount for the rescheduled booking will be
+                                                {{amountdifference}}. Contact your provider directly
+                                                for
+                                                payment adjustments.
+                                            </div>
+                                            <div class="changeprice" *ngIf="amountdifference < 0">
+                                                Contact your provider directly for payment adjustments.
                                             </div>
                                         </div>
-                                    </div>
-                                    <!--<div class="d-flex flex-column-fluid width-100 mgn-up-20">
-                                        <div class="col-xs-12 force_center no-padding">
-                                            <div class="form-group  mgn-0">
-                                                <label class="col-12 quest no-padding">Add any other notes to the
-                                                    provider or
-                                                    upload any files for provider view
-                                                </label>
-                                                <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding">
-                                                    <a #modal data-toggle="modal" data-target="#exampleModalCenter">
-                                                    </a>
-                                                    <mat-chip-list class="btns">
-                                                        <mat-chip
-                                                            [class.mandatoryChip]="selectedService.consumerNoteMandatory && type != 'reschedule'"
-                                                            (click)="handleSideScreen('note');modal.click();">
-                                                            <a class="lnk action pointer-cursor"><i
-                                                                    class="fa fa-file-text-o mgn-rt-5"
-                                                                    aria-hidden="true"></i>{{selectedService.consumerNoteTitle}}
+                                        <div class="clearfix"></div>
+                                        <hr *ngIf="(s3CouponsList.JC.length > 0) && type != 'reschedule'||(s3CouponsList.OWN.length > 0) && type != 'reschedule'"/>
+                                        <label class="question-header" *ngIf="paymentLength>0 && paymentDetails">Payment Details</label><br/>
+                                        <div class="payment-section-details mgn-lt-10" *ngIf="paymentLength>0 && paymentDetails">
+                                            <div class="web"
+                                                *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                <div class="text-left">
+                                                    <span *ngIf="paymentDetails.showPrice"
+                                                        class="ser_price no-mgn-bt bold mgn-rt-10">Service Price : <span
+                                                            class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
+                                                            | currency:'&#8377;'}}</span></span>
+                                                    <span class="ser_price no-mgn-bt bold">Payment required now :
+                                                        <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
+                                                            ? payAmount : paymentDetails.amountRequiredNow)|
+                                                            currency:'&#8377;'}}</span></span>
+                                                </div>
+                                            </div>
+                                            <div class="disply"
+                                                *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                <div class="text-left">
+                                                    <span *ngIf="paymentDetails.showPrice"
+                                                        class="ser_price no-mgn-bt bold">Service Price : <span
+                                                            class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
+                                                            | currency:'&#8377;'}}</span></span><br>
+                                                    <span class="ser_price no-mgn-bt bold mgn-rt-10"
+                                                        >Payment required now :
+                                                        <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
+                                                            ? payAmount : paymentDetails.amountRequiredNow)|
+                                                            currency:'&#8377;'}}</span></span>
+                                                </div>
+                                            </div>
+                                            <div
+                                                *ngIf="selectedService && selectedService.isPrePayment && paymentLength>0 && paymentDetails.amountRequiredNow > 0">
+                                                <div class="jaldeecredit" *ngIf="jcashamount>0">
+                                                    <mat-checkbox [(ngModel)]="checkJcash"
+                                                        (change)="changeJcashUse($event)">
+                                                    </mat-checkbox>
+                                                    Use Jaldee cash balance : <span class="rupee-font">{{jcashamount|
+                                                        currency:'&#8377;'}}</span>
+                                                </div>
+                                                <div class="creditleft"
+                                                    *ngIf="jcashamount>0  && (checkJcash && jcashamount < paymentDetails.amountRequiredNow)">
+                                                    Balance amount can be paid by other payment methods
+                                                </div>
+
+                                                <div class="prepayment"
+                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
+                                        ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
+                                                    <button type="button" [class.disabled]="isClickedOnce"
+                                                        (click)="!isClickedOnce && saveCheckin('appt')"
+                                                        id="stepThreeConfirmButton"
+                                                        class="next-button btn btn-primary font-weight-bold  px-12 py-4"
+                                                        [disabled]="!checkPolicy && heartfulnessAccount">
+                                                        <ng-container
+                                                            *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
+                                                ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
+                                                            Confirm
+                                                        </ng-container>
+                                                    </button>
+                                                </div>
+                                                <hr *ngIf="paymentDetails" />
+                                                <div class="resPaymrntDetails"
+                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                    <label class="custom resPaymrntDetails">Select Payment Mode</label>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="text-center mx-auto no-padding"
+                                                    *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                    <ng-container *ngIf="!shownonIndianModes"
+                                                        class="text-center mx-auto">
+                                                        <app-payment-modes [paymentModes]="indian_payment_modes"
+                                                            (modeSelected)="indian_payment_mode_onchange($event)">
+                                                        </app-payment-modes>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="shownonIndianModes"
+                                                        class="text-center mx-auto">
+                                                        <app-payment-modes [paymentModes]="non_indian_modes"
+                                                            (modeSelected)="non_indian_modes_onchange($event)">
+                                                        </app-payment-modes>
+                                                    </ng-container>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="mgn-up-20 col-md-12 col-xs-12 no-padding">
+                                                    <div class="col-md-12 txt-align-center pad_link question-header"
+                                                        *ngIf="paymentmodes && paymentmodes.internationalPay && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                        <span [class.disabled]="paymentBtnDisabled"
+                                                            (click)="togglepaymentMode()" class="pointer-cursor">
+                                                            <a class="refund_policy">
                                                                 <span
-                                                                    *ngIf="selectedService.consumerNoteMandatory && type != 'reschedule'">*</span></a>
-                                                        </mat-chip>
-                                                        <mat-chip><a class="lnk action pointer-cursor"
-                                                                (click)="imagefile1.click()"><input #imagefile1
-                                                                    type="file" accept="/*;capture=camera"
-                                                                    style="display:none;" multiple
-                                                                    (change)="filesSelected($event, 'close')"><i
-                                                                    class="fa fa-paperclip mgn-rt-5"
-                                                                    aria-hidden="true"></i>Upload
-                                                                File<span
-                                                                    *ngIf="getAttachLength() > 0">&nbsp;({{getAttachLength()}})</span>
-                                                            </a></mat-chip>
-                                                    </mat-chip-list>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>-->
-                                    <div class="clearfix"></div>
-                                    <hr>
-                                    <div class="card shadow-lg appointment-details-card">
-                                        <div class="text-capitalize">
-                                            <div class="m-auto"
-                                                *ngIf="selectedServiceId || type == 'waitlistreschedule'">                                             
-                                                <h5 class="text-left text-success text-capitalize service">
-                                                    <b>{{selectedService.name}}</b>
-                                                </h5>
-                                                <div class="" style="font-size: 1rem"
-                                                    *ngIf="selectedService.price && type != 'reschedule'">
-                                                    <p class="module-nomargin line-clamp no-margin"
-                                                        *ngIf="selectedService.description && !showmoreSpec"
-                                                        (click)="showSpec()">
-                                                        {{selectedService.description}}</p>
-                                                    <p *ngIf="showmoreSpec" (click)="showSpec()">
-                                                        {{selectedService.description}}</p>
-                                                </div>
-                                                <div class="">
-                                                    <div class="callingmode mgn-lt-10"
-                                                        *ngIf="selectedService && selectedService.serviceType==='virtualService' && type !== 'waitlistreschedule'">
-                                                        <div class="mgn-bt-10 mgn-up-5">
-                                                            <div class=""
-                                                                *ngFor="let mode of selectedService.virtualCallingModes;let i = index">
-                                                                <div style="visibility: hidden;">
-                                                                    {{callingModesDisplayName[mode.callingMode]}}
-                                                                </div>
-                                                                <div class="cal-mod-instrct pre-check-title color-grey"
-                                                                    *ngIf="mode.callingMode">
-                                                                    {{mode.instructions}}
-                                                                </div>
-                                                            </div>
+                                                                    *ngIf="!shownonIndianModes && paymentmodes && paymentmodes.internationalPay">Non
+                                                                    Indian Payment ? Click
+                                                                    here</span>
+                                                                <span
+                                                                    *ngIf="shownonIndianModes && paymentmodes && paymentmodes.indiaPay">Indian
+                                                                    Payment ? Click
+                                                                    here</span>
+                                                            </a>
+                                                        </span>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-md-12 cancelpolicy  mgn-rt-5"
+                                                        *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                        <div class="pad_policy"
+                                                            *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                            <a data-toggle="modal" data-target="#exampleModal"
+                                                                class="refund_policy">Cancellation Policy</a>
                                                         </div>
                                                     </div>
-                                                    <div class="prenotes mgn-bt-10"
-                                                        *ngIf="selectedService.preInfoEnabled">
-                                                        <div class="preinfo-title">
-                                                            {{selectedService.preInfoTitle}}</div>
-                                                        <div>{{(readMore) ? selectedService.preInfoText :
-                                                            selectedService.preInfoText | slice:0:200}}
-                                                            <a class="changeitem pointer-cursor mgn-lt-5 mgn-rt-20 pull-right"
-                                                                (click)="showText()"
-                                                                *ngIf="selectedService.preInfoText.length > 200">
-                                                                {{(readMore) ? 'less': 'more'}}</a>
-                                                        </div>
+                                                    <div class="col-md-12 txt-align-center">
+                                                        <button type="button"
+                                                            class=" next-button btn btn-primary font-weight-bold text-capitalize "
+                                                            [class.disabled]="paymentBtnDisabled"
+                                                            *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
+                                                            (click)="!isClickedOnce && saveCheckin('appt')">
+                                                            Make Payment
+                                                        </button>
                                                     </div>
                                                 </div>
+                                                <!-- modalbox -->
+                                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <app-refundpolicy></app-refundpolicy>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="p-0 font-weight-bold">
-                                            <h6 class="text-capitalize"><b>Your {{showCheckinButtonCaption()}} Date </b>
-                                            </h6>
-                                        </div>
-                                        <div class="mgn-bt-10 pad-bt-10" *ngIf="selectedApptTime">
-                                            <h1 class="text-primary"><b><span *ngIf="!isFuturedate">Today,
-                                                    </span>
-                                                    <span *ngIf="isFuturedate">
-                                                        {{selectedDate | date:
-                                                        newDateFormat}}, </span>
-                                                    <span>{{getSingleTime(selectedApptTime['time'])}}</span></b>
-                                            </h1>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div class="appointment-details-heading mt-5 px-5 py-3 font-weight-bold"
-                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                    <h4 class="text-capitalize">Payment Details</h4>
-                                </div>
-                                <div>
-                                    <div class="web my-5">
-                                        <div class="textcenter"
-                                            *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-
-                                            <span *ngIf="paymentDetails.showPrice"
-                                                class="ser_price no-mgn-bt bold">Service Price : <span
-                                                    class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
-                                                    | currency:'&#8377;'}}</span></span>
-                                            <span class="ser_price no-mgn-bt bold"
-                                                style="padding: 20px !important;">Payment required now :
-                                                <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
-                                                    ? payAmount : paymentDetails.amountRequiredNow)|
-                                                    currency:'&#8377;'}}</span></span>
-                                        </div>
-                                    </div>
-                                    <div class="disply my-5">
-                                        <div class="textcenter"
-                                            *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                            <span *ngIf="paymentDetails.showPrice"
-                                                class="ser_price no-mgn-bt bold">Service Price : <span
-                                                    class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
-                                                    | currency:'&#8377;'}}</span></span><br>
-                                            <span class="ser_price no-mgn-bt bold"
-                                                style="padding: 20px !important;">Payment required now :
-                                                <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
-                                                    ? payAmount : paymentDetails.amountRequiredNow)|
-                                                    currency:'&#8377;'}}</span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- <br> -->
-                                <div class=""
-                                    *ngIf="selectedService && selectedService.isPrePayment && paymentLength>0 && paymentDetails.amountRequiredNow > 0">
-                                    <div class="jaldeecredit" *ngIf="jcashamount>0">
-                                        <mat-checkbox [(ngModel)]="checkJcash" (change)="changeJcashUse($event)">
-                                        </mat-checkbox>
-                                        Use Jaldee cash balance : <span class="rupee-font">{{jcashamount|
-                                            currency:'&#8377;'}}</span>
-                                    </div>
-                                    <div class="creditleft"
-                                        *ngIf="jcashamount>0  && (checkJcash && jcashamount < paymentDetails.amountRequiredNow)">
-                                        Balance amount can be paid by other payment methods
-                                    </div>
-                                    <div class="prepayment"
-                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
-                                        ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
-                                        <button type="button" [class.disabled]="isClickedOnce"
-                                            (click)="!isClickedOnce && saveCheckin('appt')" id="stepThreeConfirmButton"
-                                            class="next-button btn btn-primary font-weight-bold  px-12 py-4"
-                                            [disabled]="!checkPolicy && heartfulnessAccount">
-                                            <ng-container
-                                                *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
-                                                ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
-                                                Confirm
-                                            </ng-container>
-                                        </button>
-                                    </div>
-                                    <div class="text-center mx-auto no-padding"
-                                        *ngIf=" isPayment && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                        <ng-container *ngIf="!shownonIndianModes" class="text-center mx-auto">
-                                            <app-payment-modes [paymentModes]="indian_payment_modes"
-                                                (modeSelected)="indian_payment_mode_onchange($event)">
-                                            </app-payment-modes>
-                                        </ng-container>
-                                        <ng-container *ngIf="shownonIndianModes" class="text-center mx-auto">
-                                            <app-payment-modes [paymentModes]="non_indian_modes"
-                                                (modeSelected)="non_indian_modes_onchange($event)">
-                                            </app-payment-modes>
-                                        </ng-container>
-                                    </div>
-                                    <div class="mgn-up-20 col-md-12 col-xs-12 no-padding">
-                                        <div class="col-md-12 txt-align-center pad_link"
-                                            *ngIf="paymentmodes && paymentmodes.internationalPay && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                            <span [class.disabled]="paymentBtnDisabled" (click)="togglepaymentMode()"
-                                                class="pointer-cursor"><a class="refund_policy">
-                                                    <span
-                                                        *ngIf="!shownonIndianModes && paymentmodes && paymentmodes.internationalPay">Non
-                                                        Indian Payment ? Click
-                                                        here</span>
-                                                    <span
-                                                        *ngIf="shownonIndianModes && paymentmodes && paymentmodes.indiaPay">Indian
-                                                        Payment ? Click
-                                                        here</span>
-                                                </a></span>
-                                        </div>
-                                        <div class="col-md-12 cancelpolicy  mgn-rt-5"
-                                            *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                            <div class="pad_policy"
-                                                *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                <a data-toggle="modal" data-target="#exampleModal"
-                                                    class="refund_policy">Cancellation Policy</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 txt-align-center">
-                                            <button type="button"
-                                                class=" next-button btn btn-primary font-weight-bold text-capitalize "
-                                                [class.disabled]="paymentBtnDisabled"
-                                                *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                (click)="!isClickedOnce && saveCheckin('appt')">
-                                                Make Payment
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <!-- modalbox -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <app-refundpolicy></app-refundpolicy>
-                                    </div>
-                                </div>
-                                <div class="" style="margin:20px;"
+                                <div class="text-center"
                                     *ngIf="selectedService && selectedService.isPrePayment==false && paymentLength==0|| (paymentDetails && paymentDetails.amountRequiredNow == 0)">
-                                    <div class="prepayment-confirm">
-                                        <button type="button" [class.disabled]="isClickedOnce"
-                                            (click)="!isClickedOnce && saveCheckin('appt')" id="stepThreeConfirmButton"
-                                            class="next-button btn btn-primary font-weight-bold  px-12 py-4"
-                                            [disabled]="!checkPolicy && heartfulnessAccount">
-                                            Confirm
-                                        </button>
-                                    </div>
+                                    <button type="button" [class.disabled]="isClickedOnce"
+                                        (click)="!isClickedOnce && saveCheckin('appt')" id="stepThreeConfirmButton"
+                                        class="next-button btn btn-primary font-weight-bold  px-12 "
+                                        [disabled]="!checkPolicy && heartfulnessAccount">
+                                        Confirm
+                                    </button>
                                 </div>
                                 <ng-container *ngIf="heartfulnessAccount">
                                     <app-privacy (approvePolicy)="policyApproved($event)"></app-privacy>
                                 </ng-container>
+
                             </div>
                         </div>
                     </div>

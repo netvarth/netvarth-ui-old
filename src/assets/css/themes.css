@@ -67,7 +67,10 @@
   .heartfulness_theme1 .c-checkin-new  a.changeitem, .heartfulness_theme1.c-checkin-new .btns .lnk.action i {
     color:#522e5a !important
   }
-
+  .heartfulness_theme1 .default-value, .heartfulness_theme1 app-slot-picker .freeslots mat-chip.mat-chip-selected {
+    background-color: #522e5a !important;
+    color: white!important;
+}
   .heartfulness_theme1.c-checkin-new .btns .lnk.action{
     font-size: 0.8rem !important;
     color:#522e5a !important
