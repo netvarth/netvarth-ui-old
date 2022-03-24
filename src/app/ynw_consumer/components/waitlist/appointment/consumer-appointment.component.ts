@@ -328,6 +328,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     selected_slot_value;
     selectedApptsTime: string;
     selected_Schedule_id: string;
+    slot_slected: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         @Inject(MAT_DIALOG_DATA) public dialogData: any,
@@ -687,7 +688,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 for (const scheduleSlots of this.slots) {
                     this.availableSlots = scheduleSlots.availableSlots;
                     for (const freslot of this.availableSlots) {
-                        if ((freslot.noOfAvailbleSlots !== '0' && freslot.active) || (freslot.time === this.appointment.appmtTime && scheduleSlots['date'] === this.sel_checkindate)) {
+                        if ((freslot.noOfAvailbleSlots !== '0') || (freslot.time === this.appointment.appmtTime && scheduleSlots['date'] === this.sel_checkindate)) {
                             freslot['scheduleId'] = scheduleSlots['scheduleId'];
                             freslot['displayTime'] = this.getSingleTime(freslot.time);
                             this.freeSlots.push(freslot);
@@ -997,11 +998,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                 this.addCheckInConsumer(post_Data, paymenttype);
                             });
                     } else {
-                       
-                        const _this = this
-                        _this.selected_slot.forEach(function (_filter) {
-                         
-         
+                        const _this = this;
+                        console.log(this.slots)
+                        this.slot_slected.forEach(function (_filter) {
                            _this.apptTime = _filter;
                          
                             _this.waitlist_for[0]['apptTime'] = _this.apptTime['time'];
@@ -1095,7 +1094,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addCustomerAppointment(this.account_id, post_Data)
             .subscribe(data => {
                 const retData = data;
+                // if (this.selectedMessage.files.length > 0) {
+                //     this.consumerNoteAndFileSave(this.uuidList, paymenttype);
+                // }
                 this.multipleAppt(this.type, paymenttype)
+              
                 if (this.customId) {
                     const accountid = this.businessId;
                     this.shared_services.addProvidertoFavourite(accountid)
@@ -1434,12 +1437,15 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.apptdisable = false; 
         if (this.selectedService.maxBookingsAllowed > 1) {
             this.apptTime = slot;
+            const _this = this;
             if (chip.selected) {
-                this.selected_slot.push(this.apptTime);
+                _this.selected_slot.push(this.apptTime);
+                _this.slot_slected = _this.selected_slot
+                console.log(_this.selected_slot)
             }
             else {
-                const index = this.selected_slot.indexOf(slot);
-                this.selected_slot.splice(index, 1)
+                const index = _this.selected_slot.indexOf(slot);
+                _this.selected_slot.splice(index, 1)
             }
         }
     }
@@ -1767,8 +1773,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     goBack(type?) {
-        if(this.selected_slot.length >0){
-            this.selected_slot = [];
+        const _this = this;
+        if(_this.selected_slot.length >0){
+            _this.selected_slot = [];
         }
         if (type) {
             if ((this.tele_srv_stat !== 'true' && this.bookStep === 1) || (this.tele_srv_stat === 'true' && this.bookStep === 0)) {
@@ -1896,6 +1903,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
     }
     goToStep(type) {
+       
         if(this.selectedService.maxBookingsAllowed >1 && this.selected_slot.length === 0){
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('SLOT_ERROR'), { 'panelClass': 'snackbarerror' });  
             this.apptdisable = true; 
