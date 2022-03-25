@@ -817,13 +817,13 @@
                                             <mat-chip-list selectable multiple *ngIf ="selectedService.maxBookingsAllowed >1 && type !== 'reschedule'">
                                                 <div *ngIf="!showMoreAvailableSlots" class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                     <mat-chip *ngFor="let slot of freeSlots | slice:0:12" class="text-center" #c="matChip"
-                                                        (click)="toggleSelection(c ,slot);">
+                                                    (click)="slot.active ? toggleSelection(c ,slot): ''" [disabled]="!slot.active" >
                                                         <span class="mx-auto">{{slot.displayTime}}</span>
                                                     </mat-chip>
                                                 </div>
                                                 <div *ngIf="showMoreAvailableSlots" [class.internal-scroll] = "showMoreAvailableSlots">
                                                     <mat-chip *ngFor="let slot of freeSlots" class="text-center" #c="matChip"
-                                                        (click)="toggleSelection(c ,slot);">
+                                                    (click)="slot.active ? toggleSelection(c ,slot): ''" [disabled]="!slot.active" >
                                                         <span class="mx-auto">{{slot.displayTime}}</span>
                                                     </mat-chip>
                                                 </div>

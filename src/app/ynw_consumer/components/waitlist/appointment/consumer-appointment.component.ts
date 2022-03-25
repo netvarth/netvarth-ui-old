@@ -329,6 +329,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     selectedApptsTime: string;
     selected_Schedule_id: string;
     slot_slected: any;
+    isValidTime: boolean;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         @Inject(MAT_DIALOG_DATA) public dialogData: any,
@@ -677,6 +678,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
     showMoreTimeSlots() {
+        this.selected_slot = [];
         this.showMoreAvailableSlots = !this.showMoreAvailableSlots;
     }
 
@@ -687,12 +689,39 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.freeSlots = [];
                 for (const scheduleSlots of this.slots) {
                     this.availableSlots = scheduleSlots.availableSlots;
+                  console.log(this.freeSlots)
                     for (const freslot of this.availableSlots) {
-                        if ((freslot.noOfAvailbleSlots !== '0') || (freslot.time === this.appointment.appmtTime && scheduleSlots['date'] === this.sel_checkindate)) {
-                            freslot['scheduleId'] = scheduleSlots['scheduleId'];
-                            freslot['displayTime'] = this.getSingleTime(freslot.time);
-                            this.freeSlots.push(freslot);
+                        if(this.selectedService.showOnlyAvailableSlots){
+                            if ((freslot.noOfAvailbleSlots !== '0' && freslot.active || (freslot.time === this.appointment.appmtTime && scheduleSlots['date'] === this.sel_checkindate))) {
+                                freslot['scheduleId'] = scheduleSlots['scheduleId'];
+                                freslot['displayTime'] = this.getSingleTime(freslot.time);
+                                this.freeSlots.push(freslot);
+                            }  
                         }
+                        else{
+                            var today = new Date();
+                            var time = today.getHours() + ":" + today.getMinutes();
+                            var time1 = moment(this.dateTimeProcessor.convert24HourtoAmPm(time),'HH:mm a');
+                            var startTime = moment(this.getSingleTime(freslot.time),'HH:mm a');
+                                   if(time1.isBefore(startTime))
+                                   {
+                                       this.isValidTime = true;
+                                   }
+                                   else{
+                                       this.isValidTime = false; 
+                                   }
+                            if (( (scheduleSlots['date'] === this.sel_checkindate && this.isValidTime))) {
+                                freslot['scheduleId'] = scheduleSlots['scheduleId'];
+                                freslot['displayTime'] = this.getSingleTime(freslot.time);
+                                this.freeSlots.push(freslot);
+                            }
+                            else{
+                                freslot['scheduleId'] = scheduleSlots['scheduleId'];
+                                freslot['displayTime'] = this.getSingleTime(freslot.time);
+                                this.freeSlots.push(freslot);
+                            }
+                        }
+                     
                     }
                 }
                 if (this.freeSlots.length > 0) {
@@ -1043,6 +1072,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
 
     changed_date_value(data) {
+        this.selected_slot = [];
         this.date_pagination_date = data;
         this.getAvailableSlotByLocationandService(this.sel_loc, this.selectedServiceId, this.date_pagination_date, this.account_id);
     }
