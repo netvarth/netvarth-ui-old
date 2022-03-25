@@ -12,6 +12,8 @@ import { NgbTimepickerModule } from "@ng-bootstrap/ng-bootstrap";
 import { FormMessageDisplayModule } from "../../../../shared/modules/form-message-display/form-message-display.module";
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
 import { AdjustscheduleDelayComponent } from "./adjust-schedule-delay.component";
+import {NgxPaginationModule} from 'ngx-pagination';
+
 const routes: Routes = [
     {path: '', component: AdjustscheduleDelayComponent}
 ]
@@ -31,6 +33,7 @@ const routes: Routes = [
         NgbTimepickerModule,
         CapitalizeFirstPipeModule,
         FormMessageDisplayModule,
+        NgxPaginationModule,
         [RouterModule.forChild(routes)]
     ]
 })
