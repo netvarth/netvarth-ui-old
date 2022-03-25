@@ -243,6 +243,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     razorpayEnabled = false;
     interNatioanalPaid = false;
     paymentmodes: any;
+    customer_countrycode: any;
     from: string;
     indian_payment_modes: any = [];
     non_indian_modes: any = [];

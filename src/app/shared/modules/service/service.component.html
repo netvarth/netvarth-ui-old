@@ -333,6 +333,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           Show service duration
         </mat-checkbox>
       </div>
+     
       <div class="row mgn-lt-5 mgn-up-20" *ngIf="showResources">
         <section class="mgn-bt-30" *ngIf="!is_donation">
           <label style="margin-bottom: 0 !important" class="col-form-label">Number of resources</label>
@@ -360,6 +361,12 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </mat-form-field>
           </div>
         </section>
+      </div>
+      <div>
+        <mat-checkbox [checked]="showOnlyAvailableSlots" [(ngModel)]="showOnlyAvailableSlots"
+          [ngModelOptions]="{standalone: true}">
+          Show Booked Slots
+        </mat-checkbox>
       </div>
       <div class="form-group glbl-preview"
         *ngIf="(subdomainsettings.serviceBillable || !subdomainsettings.serviceBillable) && is_donation">

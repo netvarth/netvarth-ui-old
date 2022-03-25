@@ -169,7 +169,7 @@
         </div>
         <!--   *ngIf="data.multiSelection && (appt.apptStatus == 'started' || appt.apptStatus == 'Confirmed' || appt.apptStatus == 'Arrived') && data.timetype == 1 || data.timetype == 2" -->
         <div class="action-box pointer-cursor"
-        *ngIf="showDelay"
+        *ngIf="showDelay && data.timetype !== 3 && status_booking == 'new'"
             (click)="delayActionClicked()">
             <div class="action-box-sub">
                 <!-- <span class="glyphicon glyphicon-hourglass"></span> -->

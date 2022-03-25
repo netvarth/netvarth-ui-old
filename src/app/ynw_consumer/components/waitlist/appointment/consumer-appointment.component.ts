@@ -1935,40 +1935,86 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         return length;
     }
     actionCompleted() {
-        if (this.action !== 'members' && this.action !== 'addmember' && this.action !== 'note' && this.action !== 'attachment' && this.action !== 'coupons') {
-            this.selectedDate = this.date_pagination_date;
-            this.checkFutureorToday();
-            this.selectedApptTime = this.apptTime;
-            if (this.waitlist_for[0]) {
+        if (this.selectedService.maxBookingsAllowed === 1) {
+            if (this.action !== 'members' && this.action !== 'addmember' && this.action !== 'note' && this.action !== 'slotChange' && this.action !== 'attachment' && this.action !== 'coupons') {
+                this.selectedDate = this.date_pagination_date;
+                this.checkFutureorToday();
+                this.selectedApptTime = this.apptTime;
                 this.waitlist_for[0].apptTime = this.apptTime['time'];
+                if (this.type == 'reschedule' && this.appointment.service && this.appointment.service.priceDynamic) {
+                    this.subs.sink = this.shared_services.getAppointmentReschedulePricelist(this.appointment.service.id).subscribe(
+                        (list: any) => {
+                            this.pricelist = list;
+                            let oldprice;
+                            let newprice;
+                            for (let list of this.pricelist) {
+                                if (list.schedule.id == this.currentScheduleId) { // appointment scheduleid
+                                    oldprice = list.price;
+                                }
+                                if (list.schedule.id == this.selectedApptTime['scheduleId']) { // rescheduledappointment scheduleid
+                                    newprice = list.price;
+                                }
+                            }
+                            this.changePrice = newprice - oldprice;
+                            this.amountdifference = this.appointment.amountDue + this.changePrice;
+                        });
+                }
             }
-            if (this.type == 'reschedule' && this.appointment.service && this.appointment.service.priceDynamic) {
-                this.subs.sink = this.shared_services.getAppointmentReschedulePricelist(this.appointment.service.id).subscribe(
-                    (list: any) => {
-                        this.pricelist = list;
-                        let oldprice;
-                        let newprice;
-                        for (let list of this.pricelist) {
-                            if (list.schedule.id == this.currentScheduleId) { // appointment scheduleid
-                                oldprice = list.price;
-                            }
-                            if (list.schedule.id == this.selectedApptTime['scheduleId']) { // rescheduledappointment scheduleid
-                                newprice = list.price;
-                            }
-                        }
-                        this.changePrice = newprice - oldprice;
-                        this.amountdifference = this.appointment.amountDue + this.changePrice;
-                    });
+            if (this.action === 'members') {
+                this.saveMemberDetails();
+            } else if (this.action === 'addmember') {
+                this.handleSaveMember();
+            } else if (this.action === 'note' || this.action === 'slotChange' || this.action === 'attachment') {
+                this.goBack();
+            } else if (this.action === 'coupons') {
+                this.applyCoupons();
             }
         }
-        if (this.action === 'members') {
-            this.saveMemberDetails();
-        } else if (this.action === 'addmember') {
-            this.handleSaveMember();
-        } else if (this.action === 'note' || this.action === 'attachment') {
-            this.goBack();
-        } else if (this.action === 'coupons') {
-            this.applyCoupons();
+        else {
+            if (this.action !== 'members' && this.action !== 'addmember' && this.action !== 'note' && this.action !== 'slotChange' && this.action !== 'attachment' && this.action !== 'coupons') {
+                this.selectedDate = this.date_pagination_date;
+                this.checkFutureorToday();
+
+                // this.selected_slot.forEach(_filter => {
+                //     this.apptTime = _filter;
+                //     alert(JSON.stringify(this.apptTime))
+                //     save_slot = '' + this.apptTime['time'];
+                //    }); 
+                let save_slot = '';
+                this.selected_slot.forEach(function (_filter) {
+                    save_slot = save_slot + _filter.displayTime + ',';
+                });
+                save_slot = save_slot.substring(0, save_slot.length - 1)
+                this.selectedApptsTime = save_slot;
+
+                if (this.type == 'reschedule' && this.appointment.service && this.appointment.service.priceDynamic) {
+                    this.subs.sink = this.shared_services.getAppointmentReschedulePricelist(this.appointment.service.id).subscribe(
+                        (list: any) => {
+                            this.pricelist = list;
+                            let oldprice;
+                            let newprice;
+                            for (let list of this.pricelist) {
+                                if (list.schedule.id == this.currentScheduleId) { // appointment scheduleid
+                                    oldprice = list.price;
+                                }
+                                if (list.schedule.id == this.selectedApptTime['scheduleId']) { // rescheduledappointment scheduleid
+                                    newprice = list.price;
+                                }
+                            }
+                            this.changePrice = newprice - oldprice;
+                            this.amountdifference = this.appointment.amountDue + this.changePrice;
+                        });
+                }
+            }
+            if (this.action === 'members') {
+                this.saveMemberDetails();
+            } else if (this.action === 'addmember') {
+                this.handleSaveMember();
+            } else if (this.action === 'note' || this.action === 'slotChange' || this.action === 'attachment') {
+                this.goBack();
+            } else if (this.action === 'coupons') {
+                this.applyCoupons();
+            }
         }
     }
 
@@ -3295,5 +3341,16 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 resolve(true);
             }
         });
+    }
+    goBackk() {
+      
+        if (this.bookStep === 3) {
+            if(this.selected_slot.length >0){
+                this.selected_slot = [];
+            }
+            this.bookStep = 1;
+        } else {
+            this.location.back();
+        }
     }
 }

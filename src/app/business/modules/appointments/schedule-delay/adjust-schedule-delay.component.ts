@@ -80,8 +80,17 @@ export class AdjustscheduleDelayComponent implements OnInit {
   chekintype;
   isDelay;
   uuid;
-  apptData;
-
+  apptData:any;
+  // pagination: any = {
+  //   startpageval: 1,
+  //   totalCnt: 0,
+  //   perPage: 3
+  // };
+  //  config: any;
+  // filter = {
+  //   page_count: projectConstants.PERPAGING_LIMIT,
+  //   page: 1
+  // };
   constructor(
     private fb: FormBuilder,
     private route: Router,
@@ -104,6 +113,12 @@ export class AdjustscheduleDelayComponent implements OnInit {
     console.log("Appt Status :", this.chekintype);
 
     this.isDelay = this.data.action;
+    // this.config = {
+    //   itemsPerPage: 5,
+    //   currentPage: 1,
+    //   totalItems: this.apptData.length
+
+    // };
   }
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage("ynw-user");
@@ -183,6 +198,13 @@ export class AdjustscheduleDelayComponent implements OnInit {
       this.customer_label
     );
   }
+  // pageChanged(event) {
+  //   this.config.currentPage = event;
+  // }
+  // handle_pageclick(pg) {
+  //   this.pagination.startpageval = pg;
+  //   this.filter.page = pg;
+  // }
   getSingleTime(slot) {
     // console.log("Appt Time :",slot)
      const slots = slot.split('-');

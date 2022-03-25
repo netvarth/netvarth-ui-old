@@ -617,6 +617,9 @@ box-shadow: 4px 4px 5px gainsboro;
   }
 }
 @media (min-width:400px) and (max-width:765px){
+  .emailAdjust{
+    margin-left: 0px !important;
+  }
   .plMob{
     margin-left: 0px !important;
   }
@@ -685,6 +688,10 @@ box-shadow: 4px 4px 5px gainsboro;
    .serviceGalleryImg{
     padding: 0px !important;
   }
+    .resDesName{
+    line-height: 20px !important;
+    margin-left: 10px;
+  }
   .resPaymrntDetails{
     /* display: flex !important;
     justify-content: center !important;
@@ -722,11 +729,18 @@ box-shadow: 4px 4px 5px gainsboro;
   margin-left: -10px 
 }
 @media (max-width:400px) {
+  .emailAdjust{
+    margin-left: 0px !important;
+  }
   .plMob{
     margin-left: 0px !important;
   }
   .customText{
     text-align: center !important;
+  }
+    .resDesName{
+    line-height: 20px !important;
+    margin-left: 10px;
   }
   .resImg{
   height: 150px !important;
@@ -818,7 +832,8 @@ box-shadow: 4px 4px 5px gainsboro;
   border-top-left-radius: 50px ;
   border-top-right-radius: 50px ;
   border-bottom-right-radius: 50px ;
-  height: 483px ;
+  height: 450px;
+  filter: brightness(1.0);
 }
 @media (max-width:765px) and (min-width:576px){
   .mobile-donation-for-styling{

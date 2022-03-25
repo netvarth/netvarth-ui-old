@@ -159,6 +159,9 @@
                   <span>
                     {{getSingleTime(waitlist_data.appmtTime)}}
                   </span>
+                  <!-- && statusAction === 'new' -->
+                  <span *ngIf="waitlist_data.isApptDelayed === true" style="color: rgb(255, 123, 0) !important;">{{getTimeMinute(waitlist_data.apptDelay)}}</span>
+
                 </div>
               </div>
               <!-- privatenote -->
