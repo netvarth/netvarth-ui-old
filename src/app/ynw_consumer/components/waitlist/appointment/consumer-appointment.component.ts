@@ -1097,7 +1097,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 // if (this.selectedMessage.files.length > 0) {
                 //     this.consumerNoteAndFileSave(this.uuidList, paymenttype);
                 // }
-                this.multipleAppt(this.type, paymenttype)
+                // this.multipleAppt(this.type, paymenttype)
               
                 if (this.customId) {
                     const accountid = this.businessId;
@@ -3243,6 +3243,17 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
         } else {
             return false;
+        }
+    }
+    goBackk() {
+      
+        if (this.bookStep === 3) {
+            if(this.selected_slot.length >0){
+                this.selected_slot = [];
+            }
+            this.bookStep = 1;
+        } else {
+            this.location.back();
         }
     }
 }
