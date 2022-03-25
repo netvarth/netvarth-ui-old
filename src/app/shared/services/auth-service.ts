@@ -197,6 +197,10 @@ export class AuthService {
             this.shared_services.ConsumerLogin(post_data)
                 .subscribe(
                     data => {
+                        let pre_header = post_data.countryCode.split('+')[1] + "-" + post_data.loginId;
+                        if (this.lStorageService.getitemfromLocalStorage('authToken')) {
+                            this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
+                        }
                         resolve(data);
                         this.setLoginData(data, post_data, 'consumer');
                         if (moreParams === undefined) {
@@ -232,6 +236,10 @@ export class AuthService {
             this.shared_services.ConsumerLogin(post_data)
                 .subscribe(
                     data => {
+                        let pre_header = post_data.countryCode.split('+')[1] + "-" + post_data.loginId;
+                        if (this.lStorageService.getitemfromLocalStorage('authToken')) {
+                            this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
+                        }
                         resolve(data);
                         this.setLoginData(data, post_data, 'consumer');
                         // if (moreParams === undefined) {

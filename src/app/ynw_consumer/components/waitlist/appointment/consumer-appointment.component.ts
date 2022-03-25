@@ -371,7 +371,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 if (params.locname) {
                     this.businessInfo['locationName'] = params.locname;
                     this.businessInfo['googleMapUrl'] = params.googleMapUrl;
-                }
+            }
                 if (params.qid) {
                     this.sel_queue_id = params.qid;
                 }
@@ -2095,7 +2095,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.ngZone.run(() => this.router.navigate(['consumer']));
             } else {
                 let queryParams = {
-                    account_id: this.account_id,
+                    accountId: this.account_id,
                     uuid: this.trackUuid,
                     theme: this.theme
                 }
@@ -2119,7 +2119,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.ngZone.run(() => this.router.navigate(['consumer']));
         } else {
             let queryParams = {
-                account_id: this.account_id,
+                accountId: this.account_id,
                 uuid: this.trackUuid,
                 theme: this.theme
             }

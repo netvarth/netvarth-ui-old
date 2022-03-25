@@ -1257,7 +1257,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.ngZone.run(() => this.router.navigate(['consumer']));
             } else {
                 let queryParams = {
-                    account_id: this.account_id,
+                    accountId: this.account_id,
                     uuid: this.uuidList,
                     theme: this.theme
                 }
@@ -1280,7 +1280,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             this.ngZone.run(() => this.router.navigate(['consumer']));
         } else {
             let queryParams = {
-                account_id: this.account_id,
+                accountId: this.account_id,
                 uuid: this.uuidList,
                 theme: this.theme
             }
