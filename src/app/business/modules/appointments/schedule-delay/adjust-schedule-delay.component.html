@@ -160,7 +160,7 @@
       <!-- <span aria-hidden="true" class="close mx-2 mb-1 mt-1" (click)="onCancel()" *ngIf="isDelay" style="color: rgb(19, 20, 20); width: 20px !important;height: 20px !important;">&times;</span> -->
 
 
-      <h5 class="mb-0 mx-2">
+      <h5 class="mb-0 mx-2 adjustSpace">
         <span style="margin-top: 3px !important;"> Adjust delay</span>
       </h5>
       <p class="form-level-settings mb-0 mx-2 smlScreen">{{frm_adjust_del_cap}}</p>
@@ -170,7 +170,7 @@
       <hr>
       <!--  style="background-color: rgb(240, 250, 247);" -->
 
-      <div class="card mx-2 mb-0 shadow">
+      <div class="card mx-2 mb-0 shadow ">
         <div class="row" *ngIf="!chekintype">
           <div class="col-md-12 col-xs-12 col-sm-12 my-1">
             <ng-container>
@@ -184,6 +184,7 @@
           </div>
         </div>
         <div class="row" *ngIf="!chekintype">
+        
           <div class="col-md-6 col-xs-12 col-sm-12 mb-2">
 
             <p class="mb-0"> Service Name<span class="lrgScreen">:</span></p>
@@ -191,7 +192,7 @@
           </div>
           <div class="col-md-6 col-xs-12 col-sm-12 ">
 
-            <p class="mb-0">Selected Slots<span class="lrgScreen">:</span></p>
+            <p class="mb-0">Selected Slot<span class="lrgScreen">:</span></p>
             <!-- <span class="bold"> check_in_list ({{queuejson[0].apptSchedule.timeSlots[0].sTime}} -
                 {{queuejson[0].apptSchedule.timeSlots[0].eTime}})</span> -->
             <span class="bold mb-5">{{getSingleTime(apptData.appmtFor[0].apptTime)}}</span>
@@ -201,11 +202,14 @@
         </div>
         <div class="row" *ngIf="chekintype">
           <p>Selected Slots<span class="lrgScreen">:</span></p>
+          <div class="col-md-12 col-xs-6 col-sm-6 scrollOnLg scrollOnSm">
           <!-- | paginate: config; -->
-          <div class="col-md-3 col-xs-6 col-sm-6" *ngFor="let appt of apptData; let i=index">
-            <span class="bold mb-2">{{getSingleTime(appt.appmtFor[0].apptTime)}}</span>
-
+                    <div class="col-md-3 col-xs-6 col-sm-6" *ngFor="let appt of apptData; let i=index">
+            <span class="bold mb-2" >{{getSingleTime(appt.appmtFor[0].apptTime)}}</span>
           </div>
+        </div>
+
+          
           <!-- <div class="d-flex justify-content-between align-items-center flex-wrap pull-right mb-0 pageControls"
             >
             <pagination-template  #p="paginationApi" [id]="config.id"
@@ -261,7 +265,7 @@
           </div>
           <div class="col-md-4 col-xs-12 col-sm-12 col-12">
 
-            <ngb-timepicker [(ngModel)]="time" (keyup)="isInRange($event)" formControlName="delay">
+            <ngb-timepicker [(ngModel)]="time" (keyup)="isInRange($event)" formControlName="delay" style="display: flex; align-items: center; margin-left: 15px !important;">
             </ngb-timepicker>
           </div>
         </div>

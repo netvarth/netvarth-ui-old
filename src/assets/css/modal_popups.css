@@ -3725,12 +3725,36 @@
        
     }
   }
+ 
+  @media only screen and (min-width: 375px) {
+    .scrollOnSm{
+        width: 375px !important;
+        height: 110px !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+    }
+  }
   @media only screen and (min-width: 400px) {
     .smlScreen {
         display: none !important;
        
     }
+  
   }
+  @media only screen and (min-width:575px) {
+    .scrollOnLg {
+        width: 575px !important;
+        height: 150px !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+     }
+      
+  }
+  .adjustSpace{
+      margin-top: 8px !important;
+      margin-bottom:  5px !important;
+  }
+
 .adjustdelay .form-group .col-form-label {
     margin-bottom: 5px;
     padding: 0;
