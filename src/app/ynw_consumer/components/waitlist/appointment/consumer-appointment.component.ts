@@ -651,6 +651,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             consumerNoteMandatory: serv.consumerNoteMandatory,
             consumerNoteTitle: serv.consumerNoteTitle,
             maxBookingsAllowed: serv.maxBookingsAllowed,
+            showOnlyAvailableSlots: serv.showOnlyAvailableSlots,
         };
         if (serv.provider) {
             this.selectedService.provider = serv.provider;
@@ -691,7 +692,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.availableSlots = scheduleSlots.availableSlots;
                   console.log(this.freeSlots)
                     for (const freslot of this.availableSlots) {
+                      
                         if(this.selectedService.showOnlyAvailableSlots){
+                          
                             if ((freslot.noOfAvailbleSlots !== '0' && freslot.active || (freslot.time === this.appointment.appmtTime && scheduleSlots['date'] === this.sel_checkindate))) {
                                 freslot['scheduleId'] = scheduleSlots['scheduleId'];
                                 freslot['displayTime'] = this.getSingleTime(freslot.time);
@@ -699,6 +702,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             }  
                         }
                         else{
+                         
                             var today = new Date();
                             var time = today.getHours() + ":" + today.getMinutes();
                             var time1 = moment(this.dateTimeProcessor.convert24HourtoAmPm(time),'HH:mm a');
