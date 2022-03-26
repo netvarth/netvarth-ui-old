@@ -725,7 +725,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     }
                 }
                 if (this.freeSlots.length > 0) {
-                    if(this.selectedService.maxBookingsAllowed ===1){
+                    if(this.selectedService.maxBookingsAllowed ===1 && !this.selectedService.isPrePayment){
                         this.showApptTime = true;
                         const datePassed = moment(pdate, 'YYYY-MM-DD HH:mm').format();
                         if (this.appointment && this.appointment.appmtTime && datePassed === this.selectedDate) {
@@ -753,6 +753,58 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     
 
                 
+                    }
+                    else if(this.selectedService.maxBookingsAllowed ===1 && this.selectedService.isPrePayment){
+                        this.showApptTime = true;
+                        const datePassed = moment(pdate, 'YYYY-MM-DD HH:mm').format();
+                        if (this.appointment && this.appointment.appmtTime && datePassed === this.selectedDate) {
+                            const appttime = this.freeSlots.filter(slot => slot.time === this.appointment.appmtTime);
+                            if (appttime) {
+                                this.apptTime = appttime[0];
+                            } else {
+                                this.apptTime = this.freeSlots[0];
+                            }
+                        } else {
+                            if (this.selectedTime) {
+                                const appttime = this.freeSlots.filter(slot => slot.displayTime === this.selectedTime);
+                                if (appttime && appttime.length > 0) {
+                                    this.apptTime = appttime[0];
+                                } else {
+                                    this.apptTime = this.freeSlots[0];
+                                }
+                            } else {
+                                this.apptTime = this.freeSlots[0];
+                            }
+
+
+                        }
+                        this.waitlist_for[0].apptTime = this.apptTime['time'];
+                    }
+                    else if(this.selectedService.maxBookingsAllowed > 1 && this.selectedService.isPrePayment){
+                        this.showApptTime = true;
+                        const datePassed = moment(pdate, 'YYYY-MM-DD HH:mm').format();
+                        if (this.appointment && this.appointment.appmtTime && datePassed === this.selectedDate) {
+                            const appttime = this.freeSlots.filter(slot => slot.time === this.appointment.appmtTime);
+                            if (appttime) {
+                                this.apptTime = appttime[0];
+                            } else {
+                                this.apptTime = this.freeSlots[0];
+                            }
+                        } else {
+                            if (this.selectedTime) {
+                                const appttime = this.freeSlots.filter(slot => slot.displayTime === this.selectedTime);
+                                if (appttime && appttime.length > 0) {
+                                    this.apptTime = appttime[0];
+                                } else {
+                                    this.apptTime = this.freeSlots[0];
+                                }
+                            } else {
+                                this.apptTime = this.freeSlots[0];
+                            }
+
+
+                        }
+                        this.waitlist_for[0].apptTime = this.apptTime['time'];
                     }
                     }
                         
@@ -817,6 +869,113 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     confirmcheckin(type?, paymenttype?) {
         if (this.selectedService.maxBookingsAllowed === 1) {
+            // type === 'appt' && 
+            if (this.selectedService.isPrePayment && (!this.commObj['communicationEmail'] || this.commObj['communicationEmail'] === '')) {
+                const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
+                    width: '40%',
+                    panelClass: ['loginmainclass', 'popup-class'],
+                });
+                emaildialogRef.afterClosed().subscribe(result => {
+                    if (result !== '' && result !== undefined) {
+                        this.commObj['communicationEmail'] = result;
+                        this.confirmcheckin(type, paymenttype);
+                    } else {
+                        this.isClickedOnce = false;
+                        this.goBack('backy');
+                    }
+                });
+            } else {
+                if (this.waitlist_for.length !== 0) {
+                    for (const list of this.waitlist_for) {
+                        if (list.id === this.parentCustomer.id) {
+                            list['id'] = 0;
+                        }
+                    }
+                }
+                this.virtualServiceArray = {};
+                if (this.callingModes !== '') {
+                    this.is_wtsap_empty = false;
+                    if (this.selectedService.serviceType === 'virtualService') {
+                        if (this.selectedService.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.selectedService.virtualCallingModes[0].callingMode === 'Zoom') {
+                            this.virtualServiceArray[this.selectedService.virtualCallingModes[0].callingMode] = this.selectedService.virtualCallingModes[0].value;
+                        } else {
+                            this.virtualServiceArray[this.selectedService.virtualCallingModes[0].callingMode] = this.commObj['comWhatsappCountryCode'] + this.commObj['comWhatsappNo'];;
+                        }
+                    }
+                } else if (this.callingModes === '' || this.callingModes.length < 10) {
+                    if (this.selectedService.serviceType === 'virtualService') {
+                        for (const i in this.selectedService.virtualCallingModes) {
+                            if (this.selectedService.virtualCallingModes[i].callingMode === 'WhatsApp' || this.selectedService.virtualCallingModes[i].callingMode === 'Phone') {
+                                this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+                                this.is_wtsap_empty = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                const post_Data = {
+                    'schedule': {
+                        'id': this.selectedApptTime['scheduleId']
+                    },
+                    'appmtDate': this.selectedDate,
+                    'service': {
+                        'id': this.selectedServiceId,
+                        'serviceType': this.selectedService.serviceType
+                    },
+                    'consumerNote': this.consumerNote,
+                    'countryCode': this.parentCustomer.userProfile.countryCode,
+                    'phoneNumber': this.commObj['communicationPhNo'],
+                    'coupons': this.selected_coupons
+                };
+                if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
+                    post_Data['provider'] = { 'id': this.selectedUser.id };
+                } else if (this.selectedService.provider) {
+                    post_Data['provider'] = { 'id': this.selectedService.provider.id };
+                }
+                if (!this.waitlist_for[0]['apptTime']) {
+                    this.waitlist_for[0]['apptTime'] = this.selectedApptTime['time'];
+                }
+                if (this.selectedService.serviceType === 'virtualService') {
+                    for (const i in this.virtualServiceArray) {
+                        if (i === 'WhatsApp') {
+                            post_Data['virtualService'] = this.virtualServiceArray;
+                        } else if (i === 'GoogleMeet') {
+                            post_Data['virtualService'] = this.virtualServiceArray;
+                        } else if (i === 'Zoom') {
+                            post_Data['virtualService'] = this.virtualServiceArray;
+                        } else if (i === 'Phone') {
+                            post_Data['virtualService'] = this.virtualServiceArray;
+                        } else if (i === 'VideoCall') {
+                            post_Data['virtualService'] = { 'VideoCall': '' };
+                        }
+                    }
+                }
+                if (this.commObj['communicationEmail'] !== '') {
+                    this.waitlist_for[0]['email'] = this.commObj['communicationEmail'];
+                }
+                post_Data['appmtFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
+                if (this.jcashamount > 0 && this.checkJcash) {
+                    post_Data['useCredit'] = this.checkJcredit
+                    post_Data['useJcash'] = this.checkJcash
+                }
+                if (!this.is_wtsap_empty) {
+                    if (type === 'appt') {
+                        if (this.jcashamount > 0 && this.checkJcash) {
+                            this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.paymentDetails.amountRequiredNow)
+                                .subscribe(data => {
+                                    this.remainingadvanceamount = data;
+                                    this.addCheckInConsumer(post_Data, paymenttype);
+                                });
+                        } else {
+                            this.addCheckInConsumer(post_Data, paymenttype);
+                        }
+                    } else if (this.selectedService.isPrePayment) {
+                        this.addApptAdvancePayment(post_Data);
+                    }
+                }
+            }
+        }
+        else if (this.selectedService.maxBookingsAllowed > 1 && this.selectedService.isPrePayment) {
             // type === 'appt' && 
             if (this.selectedService.isPrePayment && (!this.commObj['communicationEmail'] || this.commObj['communicationEmail'] === '')) {
                 const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
@@ -1934,10 +2093,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     goToStep(type) {
        
-        if(this.selectedService.maxBookingsAllowed >1 && this.selected_slot.length === 0){
+        if(this.selectedService.maxBookingsAllowed >1 && this.selected_slot.length === 0 && !this.selectedService.isPrePayment){
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('SLOT_ERROR'), { 'panelClass': 'snackbarerror' });  
             this.apptdisable = true; 
-        }else{
+        }
+        else{
             this.apptdisable = false; 
         }
         if (this.selectedService.maxBookingsAllowed === 1) {
@@ -2188,6 +2348,41 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     actionCompleted() {
         if (this.selectedService.maxBookingsAllowed === 1) {
+            if (this.action !== 'members' && this.action !== 'addmember' && this.action !== 'note' && this.action !== 'slotChange' && this.action !== 'attachment' && this.action !== 'coupons') {
+                this.selectedDate = this.date_pagination_date;
+                this.checkFutureorToday();
+                this.selectedApptTime = this.apptTime;
+                this.waitlist_for[0].apptTime = this.apptTime['time'];
+                if (this.type == 'reschedule' && this.appointment.service && this.appointment.service.priceDynamic) {
+                    this.subs.sink = this.shared_services.getAppointmentReschedulePricelist(this.appointment.service.id).subscribe(
+                        (list: any) => {
+                            this.pricelist = list;
+                            let oldprice;
+                            let newprice;
+                            for (let list of this.pricelist) {
+                                if (list.schedule.id == this.currentScheduleId) { // appointment scheduleid
+                                    oldprice = list.price;
+                                }
+                                if (list.schedule.id == this.selectedApptTime['scheduleId']) { // rescheduledappointment scheduleid
+                                    newprice = list.price;
+                                }
+                            }
+                            this.changePrice = newprice - oldprice;
+                            this.amountdifference = this.appointment.amountDue + this.changePrice;
+                        });
+                }
+            }
+            if (this.action === 'members') {
+                this.saveMemberDetails();
+            } else if (this.action === 'addmember') {
+                this.handleSaveMember();
+            } else if (this.action === 'note' || this.action === 'slotChange' || this.action === 'attachment') {
+                this.goBack();
+            } else if (this.action === 'coupons') {
+                this.applyCoupons();
+            }
+        }
+        else if (this.selectedService.maxBookingsAllowed > 1 && this.selectedService.isPrePayment) {
             if (this.action !== 'members' && this.action !== 'addmember' && this.action !== 'note' && this.action !== 'slotChange' && this.action !== 'attachment' && this.action !== 'coupons') {
                 this.selectedDate = this.date_pagination_date;
                 this.checkFutureorToday();
