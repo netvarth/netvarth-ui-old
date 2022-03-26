@@ -1966,10 +1966,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     goBack(type?) {
-        const _this = this;
-        if(_this.selected_slot.length >0){
-            _this.selected_slot = [];
-        }
         if (type) {
             if ((this.tele_srv_stat !== 'true' && this.bookStep === 1) || (this.tele_srv_stat === 'true' && this.bookStep === 0)) {
                 this.location.back();
@@ -2096,7 +2092,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
     }
     goToStep(type) {
-       
         if(this.selectedService.maxBookingsAllowed >1 && this.selected_slot.length === 0 && !this.selectedService.isPrePayment){
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('SLOT_ERROR'), { 'panelClass': 'snackbarerror' });  
             this.apptdisable = true; 
