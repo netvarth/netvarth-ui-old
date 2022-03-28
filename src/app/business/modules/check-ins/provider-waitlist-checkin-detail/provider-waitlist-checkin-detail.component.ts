@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -18,6 +18,7 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
 import { CommunicationService } from '../../../../business/services/communication-service';
 import { BookingHistoryComponent } from '../../appointments/booking-history/booking-history.component';
+import { CommunicationPopupComponent } from '../../bookings/communication-popup/communication-popup.component';
 
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
@@ -107,6 +108,10 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   ];
   bookinghistorydialogref: any;
   booking_stat;
+  consumerBills: any = [];
+  historyvisitDetails: any;
+  small_device_display: boolean;
+  showStart: boolean = true;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -126,6 +131,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     });
     this.activated_route.queryParams.subscribe(params => {
       this.timetype = JSON.parse(params.timetype);
+      
     });
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -133,6 +139,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.checkin_upper = this.wordProcessor.firstToUpper(this.checkin_label);
     this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
     this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
+    
   }
   ngOnInit() {
     this.getPos();
@@ -155,8 +162,17 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         this.teams = data;
       });
     }
-
   }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth <= 767) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
+    }
+  }
+
   getAgent(fileName){
     //'BROWSER' || 'IOS' || 'ANDROID'
     if(fileName){
@@ -177,7 +193,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   //     browserName = browser.slice(0,8);
   //   }
   // }
-  
+      
     if(browser.includes("Android")){
       browserName = 'Android'
       return browserName.toLocaleLowerCase();
@@ -205,6 +221,30 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   
   
 }
+
+getConsumerBills() {
+  const filter = { 'providerConsumer-eq': this.waitlist_data.waitlistingFor[0].id };
+  this.provider_services.getProviderBills(filter).subscribe(data => {
+      this.consumerBills = data;
+  })
+  console.log("consumer bills called")
+}
+
+getCustomerHistoryVisit() {
+  this.provider_services.getCustomerHistoryVisit(this.waitlist_data.waitlistingFor[0].id).subscribe(
+      (data: any) => {
+          this.historyvisitDetails = data;
+      }
+  );
+}
+
+editCustomerDetails() {
+  const navigationExtras: NavigationExtras = {
+      queryParams: { action: 'edit', id: this.waitlist_data.waitlistingFor[0].id}
+  };
+  this.router.navigate(['/provider/customers/create'], navigationExtras);
+}
+
   getBookingReqFrom(browser, reqFrom) {
     let browserName = ''
     //let status;
@@ -275,7 +315,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.provider_services.getProviderWaitlistDetailById(this.waitlist_id)
       .subscribe(
         data => {
-          this.waitlist_data = data;
+          this.waitlist_data = data; 
+          this.getConsumerBills();
+          this.getCustomerHistoryVisit();
           console.log('waitlist dtata',this.waitlist_data)
           if (this.waitlist_data.questionnaires && this.waitlist_data.questionnaires.length > 0) {
             this.questionnaires = this.waitlist_data.questionnaires;
@@ -380,6 +422,23 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         );
     });
   }
+  showCommunications() {
+    console.log("communication data : ",this.waitlist_data.virtualService.WhatsApp.slice(2,));
+    this.dialog.open(CommunicationPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+        disableClose: true,
+        data: {
+            whatsappCountryCode: this.waitlist_data.countryCode,
+            whatsappNumber: this.waitlist_data.virtualService.WhatsApp.slice(2,),
+            number: this.waitlist_data.waitlistingFor[0].phoneNo,
+            customerId: this.waitlist_data.waitlistingFor[0].id,
+            email: this.waitlist_data.waitlistingFor[0].email,
+            type: 'customer'
+        }
+    });
+}
+
   getInternalStatusLog(uuid) {
     const _this = this;
     return new Promise(function (resolve, reject) {
@@ -497,8 +556,12 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     });
   }
 
-  changeWaitlistStatus() {
-    this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, 'CANCEL');
+  changeWaitlistStatus(action) {
+    if(action == "STARTED")
+    {
+      this.showStart = false;
+    }
+    this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, action);
   }
 
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {

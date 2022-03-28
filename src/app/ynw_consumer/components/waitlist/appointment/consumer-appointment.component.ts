@@ -1980,12 +1980,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 //     alert(JSON.stringify(this.apptTime))
                 //     save_slot = '' + this.apptTime['time'];
                 //    }); 
-                let save_slot = '';
-                this.selected_slot.forEach(function (_filter) {
-                    save_slot = save_slot + _filter.displayTime + ',';
-                });
-                save_slot = save_slot.substring(0, save_slot.length - 1)
-                this.selectedApptsTime = save_slot;
+                // let save_slot = '';
+                // this.selected_slot.forEach(function (_filter) {
+                //     save_slot = save_slot + _filter.displayTime + ',';
+                // });
+                // save_slot = save_slot.substring(0, save_slot.length - 1)
+                // this.selectedApptsTime = save_slot;
 
                 if (this.type == 'reschedule' && this.appointment.service && this.appointment.service.priceDynamic) {
                     this.subs.sink = this.shared_services.getAppointmentReschedulePricelist(this.appointment.service.id).subscribe(
@@ -3345,9 +3345,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     goBackk() {
       
         if (this.bookStep === 3) {
-            if(this.selected_slot.length >0){
-                this.selected_slot = [];
-            }
+            // if(this.selected_slot.length >0){
+            //     this.selected_slot = [];
+            // }
             this.bookStep = 1;
         } else {
             this.location.back();

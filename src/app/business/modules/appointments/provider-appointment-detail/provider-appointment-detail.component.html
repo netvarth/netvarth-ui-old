@@ -7,6 +7,206 @@
   </div>
 </section>
 
+<div class="content comn-cls checkin-details" *ngIf="waitlist_data">
+  <div class="col-md-12 no-padding-small">
+    <div class="row equal">
+      <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
+        <div class="rowcard card" *ngIf="api_loading">
+          <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+        </div>
+        <div class="rowcard card" *ngIf="!api_loading">
+          <div class="c-details">
+            <h2>
+              <span style="float:right;font-size: 12px!important;margin-top: 17px!important;" class="customer-action-btn pointer-cursor my-auto" (click)="gotoActions(waitlist_data)">More Actions</span>  
+            </h2>
+            <h2>
+              <span class="fa-icons"><i *ngIf="waitlist_data.service.serviceType === 'virtualService'" [class]="iconClass" class="fa-icons"></i></span>  
+              <span class="mt-1"><b>&nbsp;{{waitlist_data.service.name | capitalizeFirst}}</b></span>
+              <div class="text-light">
+                {{waitlist_data.appmtDate | date:newDateFormat}}<br>
+                <!-- {{waitlist_data.schedule.apptSchedule.timeSlots[0].sTime}} -
+                {{waitlist_data.schedule.apptSchedule.timeSlots[0].eTime}} -->
+                {{getSingleTime(waitlist_data.appmtTime)}}
+              </div>
+              
+            </h2>
+          </div>
+          <span class="loc-cls">
+            <b class="text-dark">{{spName}}</b><br>
+            <i class="fa fa-map-marker"></i>&nbsp;{{waitlist_data.location.place
+            | capitalizeFirst}}</span>
+            <span class="text-light my-0 py-0"><b>Booking Via : </b>
+                  {{getAgent(waitlist_data.requestInfo.agent) | capitalizeFirst}},
+                  {{getBookingReqFrom(waitlist_data.requestInfo.browser,waitlist_data.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
+            <span *ngIf="waitlist_data.appointmentMode" class="text-light"><b>Booking id :</b> {{waitlist_data.appointmentEncId}}</span>
+            <span *ngIf="waitlist_data.appointmentMode" class="text-light"><b>Booking Mode :</b> {{getAppointmentMode(waitlist_data.appointmentMode)}}</span>
+          <div>
+            <button *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'" (click)="changeWaitlistStatus('Started')" class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"
+            ><i class="fa fa-play" aria-hidden="true"></i> Start</button>
+            <button style="cursor: no-drop!important" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'" (click)="changeWaitlistStatus('Started')" class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"
+            ><i class="fa fa-play" aria-hidden="true"></i> Started</button>
+            <button style="cursor: no-drop!important"  *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Completed' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'" class="btn btn-info col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"
+            ><i class="fa fa-play" aria-hidden="true"></i> Completed</button>
+            <button style="cursor: no-drop!important"  *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed'  && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Cancelled'" class="btn btn-danger col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"
+            ><i class="fa fa-play" aria-hidden="true"></i> Cancelled</button>
+          </div>
+          <div class="text-center mx-auto">
+            <button class="status-btn btn btn-outline-dark my-2" (click)="addConsumerInboxMessage()"><i class="fa fa-commenting-o" aria-hidden="true"></i> Message</button>
+            <button class="status-btn btn btn-outline-dark my-2 mx-1" (click)="changeWaitlistStatus('Cancelled')"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+            <button class="status-btn btn btn-outline-dark my-2" (click)="changeWaitlistStatus('Completed')"><i class="fa fa-check" aria-hidden="true"></i> Complete</button>
+          </div>
+          
+        </div>
+      </div>
+      <div class="lbl col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small">
+        <div class="rowcard card">
+            <div class="booking-details">
+                <div class="row ">
+                  <div *ngIf="waitlist_data.appmtFor" class="user-img float-left">
+                      <img src="assets/images/avatar5.png" />
+                  </div>
+                  <div class="float-right">
+                    <a (click)="editCustomerDetails()" style="font-size:13px!important;" class="edit-btn pointer-cursor"><b>Edit Details</b></a>
+                  </div>
+                </div>
+                <span class="ml-0 pl-0" *ngIf="waitlist_data.appmtFor[0].firstName || waitlist_data.appmtFor[0].lastName">
+                  &nbsp;<b>{{waitlist_data.appmtFor[0].firstName | capitalizeFirst}}
+                    {{waitlist_data.appmtFor[0].lastName | capitalizeFirst}}</b></span>
+                <div class="booking-details-body">
+                    <div class="jaldee-id" *ngIf="waitlist_data.appointmentEncId">
+                        <i class="fa fa-id-card-o icon"></i>&nbsp;
+                        <span class="itemHead">{{customer_label | capitalizeFirst}} id : </span>
+                        <span class="itemVal">{{waitlist_data.appmtFor[0].memberJaldeeId}}</span>
+                    </div>
+                    <div class="contact-no" *ngIf="waitlist_data.phoneNumber && checkDataNull(waitlist_data.phoneNumber)">
+                        <i class="fa fa-mobile icon"></i>&nbsp;
+                        <span class="value">{{waitlist_data.countryCode}} {{waitlist_data.phoneNumber}}</span>
+                    </div>
+                    <div *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                      <i class="fa fa-whatsapp icon"></i>&nbsp;
+                      <span *ngIf=" waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                        {{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
+                      <span *ngIf=" !waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                        +{{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
+                    </div>
+                    <div class="email" *ngIf="waitlist_data.appmtFor[0].email">
+                      <div class="float-left"><i class="fa fa-envelope"></i></div>
+                      <span class="emailvallabel">&nbsp;{{ waitlist_data.appmtFor[0].email}}</span>
+                    </div>
+                    <div class="gender-and-dob">
+                        <div *ngIf="waitlist_data.appmtFor[0].dob.gender" class="gender">
+                            <span class="value">&nbsp;{{waitlist_data.appmtFor[0].dob.gender | capitalizeFirst}}</span>
+                        </div>
+                        <div class="dob" *ngIf="waitlist_data.appmtFor[0].dob">
+                            <i class="fa fa-calendar-o icon"></i>
+                            <span class="value">&nbsp;{{waitlist_data.appmtFor[0].dob | date:newDateFormat}}</span>
+                        </div>
+                    </div>
+                    <!-- <div class="stats-item" *ngIf="waitlist_data.appmtFor[0].preferredLanguage">
+                      <span class="itemHead">Language : {{waitlist_data.appmtFor[0].preferredLanguage}}</span>
+                    </div> -->
+                    <div class="location" *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].bookingLocation && (waitlist_data.appmtFor[0].bookingLocation.district || waitlist_data.appmtFor[0].bookingLocation.state)">
+                        <i class="fa fa-map-marker icon"></i>
+                        <span class="value"> {{waitlist_data.appmtFor[0].bookingLocation.district}},
+                          {{waitlist_data.appmtFor[0].bookingLocation.state}}</span>
+                    </div>
+                    <div class="mb-0">
+                      <button (click)="showCommunications()" class="btn btn-primary col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"
+                      >Communication</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
+
+
+      <div class="col-xl-12 col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small">
+        <div class="rowcard card notescard historycard card-custom data-card p-0 m-0">
+          <div class="card-header notescard-header collapsed" [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}">
+            <div>History</div>
+            <div class="mgn-lt-auto">
+              <i class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div  *ngIf="waitlist_data" class="card-body notescard-body padding-tp-10 no-padding">
+                  <div class="content comn-cls lbr no-padding-small">
+                    <div class="card" style="box-shadow: none!important;padding: 0!important;">
+                      <div class="appthistory">
+                        <ul class="c-history">
+                          <li *ngFor="let history of waitlist_history" class="{{history.appointmentStatus}}">
+                            <div class="time">{{history.date | date: newDateFormat }} {{history.time}}</div>
+                            <div class="action">{{check_in_statuses[history.appointmentStatus | capitalizeFirst]}}</div>
+                          </li>
+                        </ul>
+          
+                        <p class="no-result" *ngIf="waitlist_history.length == 0">{{no_history_found}}</p>
+                      </div>
+                    </div>
+                    <div class="card" style="box-shadow: none!important;padding: 0!important;" *ngIf="internalStatuslog && internalStatuslog.length>0">
+                      <div class="c-history-outer">
+                        <ul class="internal-history">
+                          <li class="internal-status" *ngFor="let log of internalStatuslog">
+                            <div class="time">{{log.DateTime}}</div>
+                            <div class="action">{{log.InternalStatus | capitalizeFirst}}-<span class="user">{{log.User |
+                                capitalizeFirst}}</span></div>
+                          </li>
+                        </ul>
+          
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <span *ngIf="waitlist_data && !waitlist_data.consumerNote" class="m-auto text-center">{{no_cus_notes_cap}}</span> -->
+          </div>
+        </div>
+
+        <div class="rowcard card notescard card-custom data-card p-0 m-0 mt-2">
+          <div class="card-header notescard-header collapsed" [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}">
+            <div>Notes</div>
+            <div class="mgn-lt-auto">
+              <i class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div  *ngIf="waitlist_data" class="card-body notescard-body padding-tp-10 no-padding">
+            <span *ngIf="waitlist_data && waitlist_data.consumerNote">
+              <p *ngIf="waitlist_data.consumerNote !== ''">{{waitlist_data.consumerNote}}</p>
+              <p *ngIf="waitlist_data.consumerNote === ''">{{no_cus_notes_cap}}</p>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+
+
+<div class="content comn-cls checkin-details" *ngIf="waitlist_data">
+  <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small"
+      *ngIf="waitlist_data.appmtFor && (waitlist_data.providerAccount.serviceSector.domain === 'healthCare' || waitlist_data.providerAccount.serviceSector.domain === 'veterinaryPetcare') && waitlist_data.providerAccount.serviceSubSector.subDomain !=='laboratory' && waitlist_data.providerAccount.serviceSubSector.subDomain !=='pharmacy'">
+      <app-booking-medical-records-rx [customerId]="waitlist_data.appmtFor[0].id" [source]="'customer-details'" [type]="'mr'">
+      </app-booking-medical-records-rx>
+  </div>
+  <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small"
+      *ngIf="waitlist_data.appmtFor && (waitlist_data.providerAccount.serviceSector.domain === 'healthCare' || waitlist_data.providerAccount.serviceSector.domain === 'veterinaryPetcare') && waitlist_data.providerAccount.serviceSubSector.subDomain !=='laboratory' && waitlist_data.providerAccount.serviceSubSector.subDomain !=='pharmacy'">
+      <app-booking-medical-records-rx [customerId]="waitlist_data.appmtFor[0].id" [source]="'customer-details'" [type]="'rx'">
+      </app-booking-medical-records-rx>
+  </div>
+  <div class="lbl col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small" *ngIf="waitlist_data.appmtFor">
+    <app-records-datagrid [heading]="'Bills'" [source]="'bill'" [records]="consumerBills"
+        [customerId]="waitlist_data.appmtFor[0].id" [view]="'small'">
+    </app-records-datagrid>
+  </div>
+  <div class="lbl col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small" *ngIf="waitlist_data.appmtFor">
+    <app-booking-documents [source]="'customer'" [widget]="true" [uuid]="waitlist_data.appmtFor[0].id">
+    </app-booking-documents>
+  </div>
+  
+</div>
+</div>
+
+<!-- 
+
 <section class="prov-apptDetail" *ngIf="waitlist_data">
   <div class="content comn-cls checkin-details">
     <div class="col-md-12 no-padding-small">
@@ -27,8 +227,6 @@
                 <span class="loc-cls"><i class="fa fa-map-marker"></i>&nbsp;{{waitlist_data.location.place
                   | capitalizeFirst}}</span><br>
                 <div *ngIf="waitlist_data.provider" class="mgn-up-5 sub-user-name">
-                  <!-- <span>{{waitlist_data.provider.businessName | capitalizeFirst}}
-                      </span><br> -->
                   <span>{{provider_label | capitalizeFirst}} : </span>
                   <span>{{spName}}</span>
                 </div>
@@ -42,26 +240,16 @@
                   <span> {{waitlist_data.provider.countryCode}} {{waitlist_data.provider.mobileNo}}</span>
                 </div>
               </h2>
-              <!-- Content -->
               <div class="mgn-up-10 stats-item"
                 *ngIf="waitlist_data.appmtFor[0].firstName || waitlist_data.appmtFor[0].lastName">
                 <span class="itemHead">Booking For</span>
-                <span class="itemVal">{{waitlist_data.appmtFor[0].firstName | capitalizeFirst}}
+                <span *ngIf="waitlist_data.appmtFor" class="itemVal">{{waitlist_data.appmtFor[0].firstName | capitalizeFirst}}
                   {{waitlist_data.appmtFor[0].lastName | capitalizeFirst}}
                 </span>
-                <!-- <span class="itemHead"
-                  *ngIf="waitlist_data.requestInfo.agent && waitlist_data.requestInfo.browser">Booking Via</span> -->
+    
                 <span *ngIf="waitlist_data.requestInfo.agent || waitlist_data.requestInfo.browser">
                   <span class="itemHead">Booking Via</span><br>
-                  <!-- <img src="../../../../assets/icons/icon294(Traced).png"
-                    *ngIf="getReqFrom(waitlist_data.requestInfo.browser,waitlist_data.requestInfo.agent) === 'web'"
-                    style="width: 18px !important;">
-                  <img src="../../../../assets/icons/Group482249.png"
-                    *ngIf="getReqFrom(waitlist_data.requestInfo.browser,waitlist_data.requestInfo.agent) === 'ios'"
-                    style="width: 18px !important;">
-                  <img src="../../../../assets/icons/icon295(Traced).png"
-                    *ngIf="getReqFrom(waitlist_data.requestInfo.browser,waitlist_data.requestInfo.agent) === 'android'"
-                    style="width: 18px !important;"> -->
+                  
                   {{getAgent(waitlist_data.requestInfo.agent) | capitalizeFirst}},
                   {{getBookingReqFrom(waitlist_data.requestInfo.browser,waitlist_data.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
               </div>
@@ -122,7 +310,6 @@
               </div>
 
 
-              <!-- Status,Date,Time bar -->
               <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stat-bar">
                 <div class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item pl0"
                   *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] && (waitlist_data.service.serviceType === 'virtualService' && waitlist_data.apptStatus !== 'Arrived')">
@@ -159,12 +346,8 @@
                   <span>
                     {{getSingleTime(waitlist_data.appmtTime)}}
                   </span>
-                  <!-- && statusAction === 'new' -->
-                  <span *ngIf="waitlist_data.isApptDelayed === true" style="color: rgb(255, 123, 0) !important;">{{getTimeMinute(waitlist_data.apptDelay)}}</span>
-
                 </div>
               </div>
-              <!-- privatenote -->
 
               <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stat-bar"
                 style="background-color: #f2f2f2;">
@@ -177,7 +360,6 @@
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 pnotes"
                       *ngFor="let note of waitlist_notes; let i = index">
                       <div class="note_view">
-                        <!-- <p style="float: left;">{{note.firstName}}Aparna</p> -->
                         <span class="status-label note_name"
                           *ngIf="note.firstName != '' || note.lastName != ''">{{note.firstName}}
                           {{note.lastName}}</span>
@@ -186,9 +368,6 @@
 
                         <div class="note" [innerHTML]="note.note | nl2br">
                         </div>
-                        <!-- <p style="float: right;">{{note.timeStamp | date: newDateFormat}}</p> -->
-                        <!-- <br> -->
-                        <!-- <p [innerHTML]="note.note | nl2br"></p> -->
                         <div class="result attach" *ngIf="note.attachment && note.attachment.length > 0"
                           (click)="showImagesection(i)">
                           <i class="fa fa-file-text-o" aria-hidden="true"></i> <a class="attach-link">
@@ -205,7 +384,6 @@
                   <span class="no_note" *ngIf="waitlist_notes && waitlist_notes.length == 0">{{no_pvt_notes_cap}}</span>
                 </div>
               </div>
-              <!-- View more and Less -->
               <div class="more_view mgn-up-20">
                 <span class="opt-viewmore" *ngIf="!view_more" (click)="viewMore()"><a class="fl-left">View
                     more</a></span>
@@ -213,28 +391,9 @@
                     less</a></span>
               </div>
 
-              <!-- Instructions,messages,notes -->
               <div class="more_view" *ngIf="view_more" class="mgn-up-30">
                 <mat-tab-group animationDuration="10ms" class="index-head">
-                  <!-- <mat-tab label="Private Notes" *ngIf="waitlist_data.apptStatus!=='blocked'">
-                    <span *ngIf="waitlist_notes.length > 0">
-                      <div class="pnotes" *ngFor="let note of waitlist_notes; let i = index">
-                        <p [innerHTML]="note.note | nl2br"></p>
-                        <div class="result attach" *ngIf="note.attachment && note.attachment.length > 0"
-                          (click)="showImagesection(i)">
-                          <i class="fa fa-file-text-o" aria-hidden="true"></i> <a class="attach-link">
-                            {{note.attachment.length}} Attachment(s) </a>
-                        </div>
-                        <div class="thumbnails mt10 mb10" *ngIf="showImages[i]">
-                          <a class="mg-10" target="_blank" [href]="attachment.s3path"
-                            *ngFor="let attachment of note.attachment"><img [src]="getThumbUrl(attachment)"
-                              style="width:100px; height:100px" /></a>
-                        </div>
-                        <p>{{note.timeStamp | date: newDateFormat}}</p>
-                      </div>
-                    </span>
-                    <span *ngIf="waitlist_notes.length == 0">{{no_pvt_notes_cap}}</span>
-                  </mat-tab> -->
+                  
                   <mat-tab label="Messages">
                     <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
                       (reloadApi)="getCommunicationHistory(waitlist_data.uid)">
@@ -251,7 +410,6 @@
               </div>
             </div>
           </div>
-          <!-- Questionnaire starts-->
           <div class="card" *ngIf="!api_loading && questionnaires.length > 0">
             <div class="">
               <h3 class="">
@@ -288,10 +446,9 @@
               </div>
             </ng-container>
           </div>
-          <!-- Questionnaire end-->
         </div>
 
-        <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
+        <div class="lbr no-padding-small">
           <div class="card">
             <h2>{{checkin_label |capitalizeFirst}} History</h2>
 
@@ -307,7 +464,7 @@
 
               <p class="no-result" *ngIf="waitlist_history.length == 0">{{no_history_found}}</p>
             </div>
-            <!-- <button class="mgn-bt-10" (click)="openbookinghistory()">Booking History</button> -->
+            <button class="mgn-bt-10" (click)="openbookinghistory()">Booking History</button>
           </div>
           <div class="card" *ngIf="internalStatuslog && internalStatuslog.length>0">
             <h2>Internal Status History</h2>
@@ -327,4 +484,4 @@
     </div>
   </div>
 </section>
-<div class="clearfix"></div>
+<div class="clearfix"></div> -->

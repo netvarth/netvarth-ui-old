@@ -31,7 +31,7 @@ import { BookingAccountinfoModule } from '../../../../ynw_consumer/modules/booki
 import { DatePaginationModule } from '../../../../ynw_consumer/modules/date-pagination/date-pagination.module';
 import { SlotPickerModule } from '../../../../ynw_consumer/modules/slot-picker/slot-picker.module';
 import { BookingNoteModule } from '../../../../ynw_consumer/modules/booking-note/booking-note.module';
-import { AuthenticationModule } from '../../../../shared/modules/authentication/authentication.module';
+// import { AuthenticationModule } from '../../../../shared/modules/authentication/authentication.module';
 const routes: Routes = [
     { path: '', component: ConsumerAppointmentComponent},
     { path: 'track/:id', loadChildren:()=> import('./livetrack/livetrack.module').then(m=>m.ConsumerApptLiveTrackModule) },
@@ -74,7 +74,7 @@ const routes: Routes = [
         BookingNoteModule,
         BookingAccountinfoModule,
         SlotPickerModule,
-        AuthenticationModule,
+        // AuthenticationModule,
         [RouterModule.forChild(routes)]
     ],
     schemas: [

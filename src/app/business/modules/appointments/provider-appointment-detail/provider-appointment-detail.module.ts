@@ -12,6 +12,9 @@ import { Nl2BrPipeModule } from "nl2br-pipe";
 import { InboxListModule } from "../../../../shared/modules/inbox/inbox-list/inbox-list.module";
 import { CommunicationService } from "../../../../business/services/communication-service";
 import { BookingHistoryModule } from "../booking-history/booking-history.module";
+import { BookingMedicalRecordsRXModule } from "../../bookings/booking-medical-records-rx/booking-medical-records-rx.module";
+import { BookingDocumentsModule } from "../../bookings/booking-documents/booking-documents.module";
+import { RecordsDatagridModule } from "../../bookings/records-datagrid/records-datagrid.module";
 
 const routes: Routes= [
     { path: '', component: ProviderAppointmentDetailComponent }
@@ -30,6 +33,9 @@ const routes: Routes= [
         Nl2BrPipeModule,
         BookingHistoryModule,
         InboxListModule,
+        BookingMedicalRecordsRXModule,
+        BookingDocumentsModule,
+        RecordsDatagridModule,
         [RouterModule.forChild(routes)]
     ],
     schemas: [

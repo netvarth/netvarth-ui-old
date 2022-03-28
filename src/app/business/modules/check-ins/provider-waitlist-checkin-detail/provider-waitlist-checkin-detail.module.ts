@@ -12,6 +12,10 @@ import { ProviderWaitlistCheckInDetailComponent } from "./provider-waitlist-chec
 import { RouterModule, Routes } from "@angular/router";
 import { CommunicationService } from "../../../../business/services/communication-service";
 import { BookingHistoryModule } from "../../appointments/booking-history/booking-history.module";
+import { CheckinsActionsModule } from "../checkin-actions/checkin-actions.module";
+import { BookingMedicalRecordsRXModule } from "../../bookings/booking-medical-records-rx/booking-medical-records-rx.module";
+import { BookingDocumentsModule } from "../../bookings/booking-documents/booking-documents.module";
+import { RecordsDatagridModule } from "../../bookings/records-datagrid/records-datagrid.module";
 const routes: Routes = [
     {path: '', component: ProviderWaitlistCheckInDetailComponent}
 ]
@@ -30,6 +34,10 @@ const routes: Routes = [
         Nl2BrPipeModule,
         BookingHistoryModule,
         InboxListModule,
+        CheckinsActionsModule,
+        BookingMedicalRecordsRXModule,
+        BookingDocumentsModule,
+        RecordsDatagridModule,
         [RouterModule.forChild(routes)]
     ],
     schemas: [
@@ -37,7 +45,7 @@ const routes: Routes = [
         NO_ERRORS_SCHEMA
     ],
     providers: [
-        CommunicationService
+        CommunicationService,
     ]
 })
 export class ProviderWaitlistCheckInDetailModule{}
