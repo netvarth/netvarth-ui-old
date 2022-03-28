@@ -374,6 +374,7 @@ multiUserFilter:any=[];
   @ViewChild('closebutton') closebutton;
   showattachmentDialogRef: any;
   locid: any;
+  select_location: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -531,6 +532,8 @@ multiUserFilter:any=[];
       .subscribe(
         (data: any) => {
           this.location_select = data;
+          console.log(this.location_select[0].id)
+          this.select_location = this.location_select[0].id;
         });
   }
   getInternalStatus() {
@@ -3405,6 +3408,7 @@ this.provider_services.getwaitlistTodayCount(Mfilter)
     }
   }
   createInstantQ() {
+    this.getProviderLocation();
     if (this.qAvailability.availableNow) {
       const msg = 'Make myself unavailable today from ' + this.qAvailability.timeRange.sTime + ' to ' + this.qAvailability.timeRange.eTime + ' ?';
       const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
@@ -3437,7 +3441,7 @@ this.provider_services.getwaitlistTodayCount(Mfilter)
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
-          location: this.location_select[0].id,
+          location: this.select_location,
           userId: loggedUser.id,
           instaQid: this.instaQid
         }
