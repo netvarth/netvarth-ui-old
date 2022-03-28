@@ -235,7 +235,7 @@ export const Messages = {
   'CHECKIN_SUCC_REDIRECT': 'Please wait ... You are being redirected to the Payment Gateway ...',
   'CHECKIN_ERROR': 'Sorry! an error occured',
   'SLOT_ERROR': 'Please choose atleast one slot',
-  'SLOT_SELECTION': 'Selected Slot Limit is greaterthan the maximum Booking limit',
+  'SLOT_SELECTION': 'Selected slots limit reached !',
   'CHECKIN_CANCELLED': '[waitlist] [cancelled] successfully',
   'PAYMENT_REDIRECT': 'Please wait ... You are being redirected to the Payment Gateway ...',
   'CASH_PAYMENT': 'Visit provider to pay by cash',
