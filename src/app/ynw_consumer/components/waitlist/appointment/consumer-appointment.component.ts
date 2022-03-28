@@ -2546,6 +2546,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
     }
     transactionCompleted(response, payload, accountId) {
+
         if (response.STATUS == 'TXN_SUCCESS') {
             this.paytmService.updatePaytmPay(payload, accountId)
                 .then((data) => {

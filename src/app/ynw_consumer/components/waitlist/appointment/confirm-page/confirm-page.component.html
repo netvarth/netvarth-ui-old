@@ -75,7 +75,13 @@
                                             <td *ngFor="let member of appointment.appmtFor">{{member.firstName}}
                                                 {{member.lastName}}</td>
                                         </tr>
-                                        <tr>
+                                        <tr *ngIf="appointment && appointment.service && appointment.service.maxBookingsAllowed && appointment.service.maxBookingsAllowed === 1">
+                                            <td width="48%" align="right">Appointment Time </td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td> {{appointment.appmtDate | date: newDateFormat }},
+                                                {{getSingleTime(appointment.appmtTime)}}</td>
+                                        </tr>
+                                        <tr *ngIf="appointment && appointment.service && appointment.service.maxBookingsAllowed && appointment.service.maxBookingsAllowed >1 && infoParams && infoParams.prepayment">
                                             <td width="48%" align="right">Appointment Time </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{appointment.appmtDate | date: newDateFormat }},
@@ -107,16 +113,25 @@
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{appointment.batchId}}</td>
                                         </tr>
+                                        <tr> 
+                                            <td width="40%" align="right"></td>
+                                            <td width="2%"></td>
+                                            <td> <mat-checkbox [(ngModel)]="calender">Add to calender</mat-checkbox></td>
+                                          
+                                            
+                                        </tr>
                                     </tbody>
                                 </table>
                                 <!-- <div class="book-status chkntoknappt-details"> Current status </div> -->
                                 <div style="text-align: center;" class="green mgn-up-10" *ngIf="appointment.apptStatus">
                                     Appointment {{appointment.apptStatus}}
                                 </div>
-                                <div class="txt-align-center" style="font-weight: 600;"> Check your status at:
+                                <!-- <div class="txt-align-center" style="font-weight: 600;"> Check your status at:
                                     <a href="{{path}}status/{{appointment.appointmentEncId}}" target="_blank">
                                         {{path}}status/{{appointment.appointmentEncId}}</a>
-                                </div>                               
+                                </div>   -->
+                            
+                   <!-- <full-calendar [options]="calendarOptions"></full-calendar>                             -->
                                 <div class="notes"
                                     *ngIf="appointment.service && appointment.service.postInfoEnabled && appointment.service.postInfoTitle">
                                     <div class="preinfo-title">{{appointment.service.postInfoTitle}} </div>

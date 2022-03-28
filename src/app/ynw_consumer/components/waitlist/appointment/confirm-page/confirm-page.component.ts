@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, Router ,NavigationExtras} from '@angular/router';
 import { projectConstants } from '../../../../../app.component';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
@@ -7,8 +7,17 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
-import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
-
+// import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
+import { CalendarOptions } from '@fullcalendar/angular'; // useful 
+import dayGridPlugin from '@fullcalendar/daygrid'; 
+import interactionPlugin from '@fullcalendar/interaction'; 
+import { ProviderServices } from '../../../../../../../src/app/business/services/provider-services.service';
+import { LocalStorageService } from '../../../../../../../src/app/shared/services/local-storage.service';
+FullCalendarModule.registerPlugins([ 
+  dayGridPlugin,
+  interactionPlugin
+]);
 @Component({
   selector: 'app-confirm-page',
   templateUrl: './confirm-page.component.html',
@@ -29,10 +38,15 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   accountId;
   customId;
   from: any;
+  calendarOptions: CalendarOptions;
+  calender = false;
   constructor(
     public route: ActivatedRoute, public router: Router,
+    private lStorageService: LocalStorageService,
+    public provider_services: ProviderServices,
     private shared_services: SharedServices, public sharedFunctionobj: SharedFunctions,
-    private wordProcessor: WordProcessor, private lStorageService: LocalStorageService,
+    private wordProcessor: WordProcessor,
+    // private http:HttpClient,
     private dateTimeProcessor: DateTimeProcessor) {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.subs.sink=this.route.queryParams.subscribe(
@@ -42,6 +56,8 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
          this.subs.sink= this.shared_services.getAppointmentByConsumerUUID(params.uuid, params.account_id).subscribe(
             (appt: any) => {
               this.appointment = appt;
+             
+              console.log(this.appointment);
               this.apiloading = false;
             });
         }
@@ -65,11 +81,44 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit() {
+
+      //full calendar setting and event binding
+      this.calendarOptions = {
+        initialView: 'dayGridMonth',
+        events: [{  title: 'Happy Hour',
+        location: 'The Bar, New York, NY',
+        description: 'Let\'s blow off some steam with a tall cold one!',
+        start: new Date('2022-03-28T19:00:00'),
+        end: new Date('2022-03-28T23:30:00'),
+        // an event that recurs every two weeks:
+        recurrence: {
+          frequency: 'WEEKLY',
+          interval: 2
+        }}]
+   }
+   
+  
   }
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
   okClick(appt) {
+    if(this.calender){
+      const post_data = 
+      {  'title' : this.appointment.appointmentMode,
+        'location': 'Thrissur',
+        'description': 'Appointment',
+        'start': new Date('2022-03-28T19:00:00'),
+        'end' : new Date('2022-03-28T23:30:00'),
+    }
+        // an event that recurs every two weeks:
+      this.provider_services.getGoogleAddEventToCalender(post_data , { 'Access-Control-Allow-Origin': '*',"Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT","Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"})
+      .subscribe(mapdata => {
+       console.log(mapdata)
+      });
+
+
+    }
     if (appt.service.livetrack && this.type !== 'reschedule') {
       let queryParams= {
         account_id: this.infoParams.account_id,
@@ -104,6 +153,7 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
       
     }
     this.lStorageService.setitemonLocalStorage('orderStat', false);
+    
   }
   getSingleTime(slot) {
     if (slot) {
