@@ -330,6 +330,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     selected_Schedule_id: string;
     slot_slected: any;
     isValidTime: boolean;
+    isMaximum = false;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         @Inject(MAT_DIALOG_DATA) public dialogData: any,
@@ -690,7 +691,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.freeSlots = [];
                 for (const scheduleSlots of this.slots) {
                     this.availableSlots = scheduleSlots.availableSlots;
-                  console.log(this.freeSlots)
                     for (const freslot of this.availableSlots) {
                       
                         if(this.selectedService.showOnlyAvailableSlots){
@@ -1191,7 +1191,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             });
                     } else {
                         const _this = this;
-                        console.log(this.slots)
+                      
                         this.slot_slected.forEach(function (_filter) {
                            _this.apptTime = _filter;
                          
@@ -1199,7 +1199,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         
                          
                            post_Data['appmtFor'] = JSON.parse(JSON.stringify(_this.waitlist_for));
-                           console.log(post_Data)
+                        
                             _this.addCheckInConsumer(post_Data, paymenttype);
                           
                           
@@ -1632,15 +1632,22 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.apptTime = slot;
             const _this = this;
             if (chip.selected) {
-                _this.selected_slot.push(this.apptTime);
-                _this.slot_slected = _this.selected_slot
-                console.log(_this.selected_slot)
+                if(this.selected_slot.length >= this.selectedService.maxBookingsAllowed){
+                    this.isMaximum = true;
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('SLOT_SELECTION'), { 'panelClass': 'snackbarerror' });    
+                    chip.toggleSelected();
+                }
+                else{
+                    _this.selected_slot.push(this.apptTime);
+                    _this.slot_slected = _this.selected_slot
+                }
             }
             else {
                 const index = _this.selected_slot.indexOf(slot);
                 _this.selected_slot.splice(index, 1)
             }
         }
+       
     }
     gets3curl() {
         this.api_loading1 = true;

@@ -879,7 +879,7 @@
                                                     </mat-chip>
                                                 </div>
                                             </mat-chip-list>
-                                            <mat-chip-list selectable multiple *ngIf ="selectedService.maxBookingsAllowed >1 && type !== 'reschedule' && !selectedService.isPrePayment && !selectedService.showOnlyAvailableSlots">
+                                            <mat-chip-list selectable multiple  *ngIf ="selectedService.maxBookingsAllowed >1 && type !== 'reschedule' && !selectedService.isPrePayment && !selectedService.showOnlyAvailableSlots">
                                                 <div *ngIf="!showMoreAvailableSlots" class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                     <mat-chip *ngFor="let slot of freeSlots | slice:0:12" class="text-center" #c="matChip"
                                                     (click)="slot.active ? toggleSelection(c ,slot): ''" [disabled]="!slot.active" >
