@@ -12,8 +12,8 @@
                             font-size: 14px;
                             ;font-weight:bold">
                     
-                                <span><b style="color: #133072;">{{providerName}}</b></span><br>
-                                <span  ><a style=" color: #cdc8c9 !important;font-size: 11px !important;" href="{{googleUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{placeName}}</a></span>
+                                <!-- <span><b style="color: #133072;">{{providerName}}</b></span><br> -->
+                                <!-- <span  ><a style=" color: #cdc8c9 !important;font-size: 11px !important;" href="{{googleUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{placeName}}</a></span> -->
                                 <!-- <span class="mobile-only" ><a href="{{googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{locationName}}</a></span>
                                 <span class="mobile-only" ><a href="{{appointment.location?.googleMapUrl}}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;{{appointment.location?.place}}</a></span> -->
                             </div>
@@ -286,11 +286,8 @@
                                                                                                         currency:'&#8377;'}}"
                                                                                                 [(ngModel)]="donationAmount"
                                                                                                 (keypress)=isNumeric($event)   
-                                                                                                onpaste="return false;"
-                                                                                                oncopy="return false"
-                                                                                                oncut="return false"
-                                                                                                ondrag="return false"
-                                                                                                ondrop="return false">
+                                                                                                
+                                                                                                >
                                                                                         </label>
                                                                                         
                                                                                     </div>
@@ -586,11 +583,8 @@
                                                                                [(ngModel)]="payEmail"
                                                                                autocomplete="off"
                                                                                (keyup)="resetApiErrors();showConfrmEmail()"
-                                                                               onpaste="return false;"
-                                                                               oncopy="return false"
-                                                                               oncut="return false"
-                                                                               ondrag="return false"
-                                                                               ondrop="return false" (ngModelChange)="donorDetails('email')">
+                                                                                (ngModelChange)="donorDetails('email')"
+                                                                               >
                                                                            <app-field-error-display
                                                                                [displayError]="true"
                                                                                *ngIf="emailerror != null"
@@ -612,11 +606,6 @@
                                                                                placeholder="Re-enter Email(user@xyz.com)"
                                                                                [(ngModel)]="payEmail1"
                                                                                autocomplete="off"
-                                                                               onpaste="return false;"
-                                                                               oncopy="return false"
-                                                                               oncut="return false"
-                                                                               ondrag="return false"
-                                                                               ondrop="return false"
                                                                                (keyup)="resetApiErrors()" (ngModelChange)="donorDetails('email')">
                                                                            <app-field-error-display
                                                                                [displayError]="true"
@@ -655,12 +644,7 @@
                                                                               placeholder="Email(user@xyz.com)"
                                                                               [(ngModel)]="payEmail"
                                                                               autocomplete="off"
-                                                                              (keyup)="resetApiErrors();showConfrmEmail()"
-                                                                              onpaste="return false;"
-                                                                              oncopy="return false"
-                                                                              oncut="return false"
-                                                                              ondrag="return false"
-                                                                              ondrop="return false" (ngModelChange)="donorDetails('email')">
+                                                                              (keyup)="resetApiErrors();showConfrmEmail()" (ngModelChange)="donorDetails('email')">
                                                                           <app-field-error-display
                                                                               [displayError]="true"
                                                                               *ngIf="emailerror != null"
@@ -682,11 +666,6 @@
                                                                               placeholder="Re-enter Email(user@xyz.com)"
                                                                               [(ngModel)]="payEmail1"
                                                                               autocomplete="off"
-                                                                              onpaste="return false;"
-                                                                              oncopy="return false"
-                                                                              oncut="return false"
-                                                                              ondrag="return false"
-                                                                              ondrop="return false"
                                                                               (keyup)="resetApiErrors()" (ngModelChange)="donorDetails('email')">
                                                                           <app-field-error-display
                                                                               [displayError]="true"
