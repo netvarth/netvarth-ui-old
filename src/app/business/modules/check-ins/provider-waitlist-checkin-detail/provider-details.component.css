@@ -108,11 +108,126 @@
     background: whitesmoke; 
     margin: 3px; 
 }
+
+
+
+.fa-icons
+{
+    width: 20px!important;
+}
+.customer-action-btn
+{
+    padding: 3px 10px!important;
+}
+
+.text-light
+{
+    font-size: 12px;
+    margin-top: 10px!important;
+    color: rgb(141, 135, 135)!important;
+}
+.status-btn.btn-outline-dark
+{
+    font-size: 12px!important;
+    padding: 7px!important;
+    text-align: center!important;
+    text-decoration: none!important;
+    display: inline-block!important;
+    background-color: white!important;
+    color: black!important;
+    border: 2px solid #555555!important;
+}
+.user-img img {
+    width: 80px;
+    height: 80px;
+    border-radius: 10%!important;
+    margin: 10px;
+  }
+.edit-btn
+{
+    font-size: 15px!important;
+    border-radius: 10px!important;
+    padding:5px!important;
+}
+.fa-edit
+{
+    font-size: 15px!important;
+    margin-bottom: 0%!important;
+}
+
+
+.notescard.data-card .notescard-header {
+    border-radius: 0 !important;
+    border-bottom: 1.75px solid #d0d0d0 !important;
+    font-size: 13px !important;
+    text-transform: uppercase !important;
+    color: #395789 !important;
+    font-weight: 700 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    min-height: auto !important;
+}
+
+.notescard-body {
+    padding: 12px 15px !important;
+    max-height: 280px!important;
+    height: 280px !important;
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+}
+.rowcard
+{
+    min-height: 317px!important;
+    max-height: 330px!important;
+}
+.notescard
+{
+    min-height: 130px!important;
+    max-height: 130px!important;
+}
+
+.historycard
+{
+    min-height: 190px!important;
+    max-height: 190px!important;
+}
+
+.btn .btn-primary
+{
+    background-color: #1E4079!important;
+    color: #fff!important;
+}
+
+
+
+
 @media (max-width: 750px) {
     .note_view{
         background: whitesmoke; 
-    margin: 3px; 
+        margin: 3px; 
         width: 100% !important;
         height: 100% !important;
     }
+    .user-img img {
+    margin: 0 !important;
+    float: right;
+    }
+    .rowcard
+    {
+        height: auto!important;
+    }
+    .notescard
+    {
+        margin-top: 30px!important;
+        min-height: 317px!important;
+        max-height: 317px!important;
+    }
+
+    .historycard
+    {
+        min-height: 317px!important;
+        max-height: 317px!important;
+    }
+
   }

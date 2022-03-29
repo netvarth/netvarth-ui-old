@@ -2388,4 +2388,8 @@ export class ProviderServices {
     const url = 'provider/appointment/followUp/' + uid;
     return this.servicemeta.httpGet(url);
   }
+  getProviderBills(filter = {}) {
+    const url = 'provider/bill';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
 } 
