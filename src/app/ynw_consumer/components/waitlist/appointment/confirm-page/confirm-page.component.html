@@ -81,11 +81,17 @@
                                             <td> {{appointment.appmtDate | date: newDateFormat }},
                                                 {{getSingleTime(appointment.appmtTime)}}</td>
                                         </tr>
-                                        <tr *ngIf="appointment && appointment.service && appointment.service.maxBookingsAllowed && appointment.service.maxBookingsAllowed >1 && infoParams && infoParams.prepayment">
+                                        <tr *ngIf="infoParams.prepayment && !selectedApptsTime">
                                             <td width="48%" align="right">Appointment Time </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{appointment.appmtDate | date: newDateFormat }},
                                                 {{getSingleTime(appointment.appmtTime)}}</td>
+                                        </tr>
+                                        <tr *ngIf="selectedApptsTime">
+                                            <td width="48%" align="right">Appointment Time </td>
+                                            <td width="2%">&nbsp;:&nbsp;</td>
+                                            <td> {{appointment.appmtDate | date: newDateFormat }},
+                                                {{selectedApptsTime}}</td>
                                         </tr>
                                         <tr>
                                             <td width="48%" align="right">Booking Id</td>

@@ -40,6 +40,7 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   from: any;
   calendarOptions: CalendarOptions;
   calender = false;
+  selectedApptsTime: any;
   constructor(
     public route: ActivatedRoute, public router: Router,
     private lStorageService: LocalStorageService,
@@ -66,6 +67,9 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
         }
         if (params.type) {
           this.type = params.type;
+        }
+        if (params.selectedApptsTime) {
+          this.selectedApptsTime = params.selectedApptsTime;
         }
         if (params.customId) {
           this.customId = params.customId;

@@ -1092,7 +1092,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
 
     }
-    multipleAppt(type?, paymenttype?){
+    async multipleAppt(type?, paymenttype?){
         if (this.selectedService.isPrePayment && (!this.commObj['communicationEmail'] || this.commObj['communicationEmail'] === '')) {
             const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
                 width: '40%',
@@ -1190,22 +1190,19 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                 this.addCheckInConsumer(post_Data, paymenttype);
                             });
                     } else {
-                        const _this = this;
-                      
-                        this.slot_slected.forEach(function (_filter) {
-                           _this.apptTime = _filter;
-                         
-                            _this.waitlist_for[0]['apptTime'] = _this.apptTime['time'];
-                        
-                         
-                           post_Data['appmtFor'] = JSON.parse(JSON.stringify(_this.waitlist_for));
-                        
-                            _this.addCheckInConsumer(post_Data, paymenttype);
-                          
-                          
-           
-                          });
-                        
+                         for (let i = 0; i < this.slot_slected.length; i++) {
+                            this.apptTime = this.slot_slected[i].time;
+                            this.waitlist_for[0]['apptTime'] = this.apptTime;
+                               post_Data['appmtFor'] = JSON.parse(JSON.stringify(this.waitlist_for));
+                                await this.addCheckInConsumer(post_Data, paymenttype).then();   
+                        }
+                        // const _this = this;
+                        // this.slot_slected.forEach(function (_filter) {
+                        //    _this.apptTime = _filter;
+                        //     _this.waitlist_for[0]['apptTime'] = _this.apptTime['time'];
+                        //    post_Data['appmtFor'] = JSON.parse(JSON.stringify(_this.waitlist_for));
+                        //     _this.addCheckInConsumer(post_Data, paymenttype);                         
+                        //   });                       
                     }
                 } else if (this.selectedService.isPrePayment) {
                     this.addApptAdvancePayment(post_Data);
@@ -1278,65 +1275,71 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 });
     }
     addCheckInConsumer(post_Data, paymentmodetype?) {
-        let paymenttype = this.selected_payment_mode;
-        if (this.selectedService.isPrePayment && !this.selected_payment_mode) {
-            this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
-            this.isClickedOnce = false;
-            return false;
-        }
-        this.subs.sink = this.shared_services.addCustomerAppointment(this.account_id, post_Data)
-            .subscribe(data => {
-                const retData = data;
-                // if (this.selectedMessage.files.length > 0) {
-                //     this.consumerNoteAndFileSave(this.uuidList, paymenttype);
-                // }
-                // this.multipleAppt(this.type, paymenttype)
-              
-                if (this.customId) {
-                    const accountid = this.businessId;
-                    this.shared_services.addProvidertoFavourite(accountid)
-                        .subscribe(() => {
-                        });
-
-                }
-                this.uuidList = [];
-                let parentUid;
-                Object.keys(retData).forEach(key => {
-                    if (key === '_prepaymentAmount') {
-                        this.prepayAmount = retData['_prepaymentAmount'];
-                    } else {
-                        this.trackUuid = retData[key];
-                        // this.uuidList.push(retData[key]); 
-                        if (key !== 'parent_uuid') {
-                            this.uuidList.push(retData[key]);
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+            let paymenttype = _this.selected_payment_mode;
+            if (_this.selectedService.isPrePayment && !_this.selected_payment_mode) {
+                _this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
+                _this.isClickedOnce = false;
+                return false;
+            }
+            _this.subs.sink = _this.shared_services.addCustomerAppointment(_this.account_id, post_Data)
+                .subscribe(data => {
+                    resolve(true);
+                    const retData = data;
+                    // if (this.selectedMessage.files.length > 0) {
+                    //     this.consumerNoteAndFileSave(this.uuidList, paymenttype);
+                    // }
+                    // this.multipleAppt(this.type, paymenttype)
+                  
+                    if (_this.customId) {
+                        const accountid = _this.businessId;
+                        _this.shared_services.addProvidertoFavourite(accountid)
+                            .subscribe(() => {
+                            });
+    
+                    }
+                    _this.uuidList = [];
+                    let parentUid;
+                    Object.keys(retData).forEach(key => {
+                        if (key === '_prepaymentAmount') {
+                            _this.prepayAmount = retData['_prepaymentAmount'];
+                        } else {
+                            _this.trackUuid = retData[key];
+                            // this.uuidList.push(retData[key]); 
+                            if (key !== 'parent_uuid') {
+                                _this.uuidList.push(retData[key]);
+                            }
+                        }
+                        parentUid = retData['parent_uuid'];
+                    });
+                    if (_this.selectedMessage.files.length > 0) {
+                        _this.consumerNoteAndFileSave(_this.uuidList, paymenttype);
+                    }
+                    else {
+                        if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                            _this.submitQuestionnaire(parentUid, paymenttype);
+                        } else {
+                            _this.paymentOperation(paymenttype);
                         }
                     }
-                    parentUid = retData['parent_uuid'];
-                });
-                if (this.selectedMessage.files.length > 0) {
-                    this.consumerNoteAndFileSave(this.uuidList, paymenttype);
-                }
-                else {
-                    if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                        this.submitQuestionnaire(parentUid, paymenttype);
-                    } else {
-                        this.paymentOperation(paymenttype);
+    
+                    const member = [];
+                    for (const memb of this.waitlist_for) {
+                        member.push(memb.firstName + ' ' + memb.lastName);
                     }
-                }
-
-                const member = [];
-                for (const memb of this.waitlist_for) {
-                    member.push(memb.firstName + ' ' + memb.lastName);
-                }
-            },
-                error => {
-                    this.isClickedOnce = false;
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                    // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    this.apptdisable = false;
-                    this.disablebutton = false;
-
-                });
+                },
+                    error => {
+                        resolve(false);
+                        _this.isClickedOnce = false;
+                        _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                        // this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                        _this.apptdisable = false;
+                        _this.disablebutton = false;
+    
+                    });
+        })
+       
     }
 
     addMember() {
@@ -2545,6 +2548,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
             if (this.businessId) {
                 queryParams['customId'] = this.customId;
+            }
+             if (this.selectedApptsTime) {
+                queryParams['selectedApptsTime'] = this.selectedApptsTime;
             }
             let navigationExtras: NavigationExtras = {
                 queryParams: queryParams
