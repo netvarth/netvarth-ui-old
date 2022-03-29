@@ -276,7 +276,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 10px;"
-                                        *ngIf="type == 'ADMIN'">
+                                        *ngIf="type != 'ADMIN'">
                                         <!-- *ngIf="type != 'ADMIN'" -->
                                         <div class="form-group">
                                             <mat-checkbox formControlName="privileges">
@@ -287,7 +287,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 10px;"
-                                        *ngIf="showPrvdrFields && type == 'PROVIDER' ">
+                                        *ngIf="type == 'PROVIDER' || (actionparam.type === 'edit' && type != 'ASSISTANT')">
                                         <div class="form-group">
                                             <mat-checkbox formControlName="bProfilePermitted">
                                                 Business Profile Permitted
@@ -297,7 +297,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 10px;"
-                                        *ngIf="showPrvdrFields && type == 'PROVIDER' || type == 'ADMIN'">
+                                        *ngIf="(type == 'PROVIDER' || type == 'ADMIN')  || (actionparam.type === 'edit' && type != 'ASSISTANT')">
 
                                         <div class="form-group">
                                             <mat-checkbox formControlName="showCsmrDataBase">

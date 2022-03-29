@@ -384,7 +384,6 @@ export class BranchUserDetailComponent implements OnInit {
       privileges: this.user_data.admin || false,
       bProfilePermitted: this.user_data.bProfilePermitted || false,
       showCsmrDataBase:this.user_data.showCsmrDataBase || false,
-
       postalCode: this.user_data.pincode || null,
       countryCode_whatsapp:
         this.user_data.whatsAppNum && this.user_data.whatsAppNum.countryCode
