@@ -231,6 +231,7 @@ export class CustomersListComponent implements OnInit {
             .subscribe(
               data => {
                 this.customers = data;
+                console.log("Customers :",this.customers)
                 this.apiloading = false;
                 this.loadComplete = true;
               },

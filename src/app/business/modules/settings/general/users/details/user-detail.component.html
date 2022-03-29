@@ -276,7 +276,8 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 10px;"
-                                        *ngIf="type != 'ADMIN'">
+                                        *ngIf="type == 'ADMIN'">
+                                        <!-- *ngIf="type != 'ADMIN'" -->
                                         <div class="form-group">
                                             <mat-checkbox formControlName="privileges">
                                                 Admin Privileges
@@ -286,7 +287,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 10px;"
-                                        *ngIf="showPrvdrFields">
+                                        *ngIf="showPrvdrFields && type == 'PROVIDER' ">
                                         <div class="form-group">
                                             <mat-checkbox formControlName="bProfilePermitted">
                                                 Business Profile Permitted
@@ -295,6 +296,47 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                                 create their own profile.</div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 10px;"
+                                        *ngIf="showPrvdrFields && type == 'PROVIDER' || type == 'ADMIN'">
+
+                                        <div class="form-group">
+                                            <mat-checkbox formControlName="showCsmrDataBase">
+                                                Show {{consumer_label | capitalizeFirst}}s List
+                                            </mat-checkbox>
+                                            <div class="form-level-settings">This privilege will allow the user to
+                                                create their own profile.</div>
+                                        </div>
+                                    </div>
+                                    <!-- (change)="showPatients($event)" <aside class="filterSidebar filter-sidebar  sidebar-bar" *ngIf="showPatientList" style="overflow-y: auto !important;">
+                                        <section id="filterContainer" class="sidebar sidebar-bottom  checkfilter filter-container">
+                                          <div class="filterClosebtn filter-head">
+             
+                                            <span class="filter-head-title">{{consumer_label | capitalizeFirst}}s</span>
+                                            <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right" (click)="hideUserSidebar()"
+                                             ></i>
+                                          </div>
+                                          <div class="sidebar">
+                                          <div class="col-md-12 col-sm-12 col-xs-12 sidebar-bar" style="overflow-y: scroll !important;"  *ngFor="let user of userList;">
+                                            <div *ngIf="user.firstName != undefined' && user.lastName != undefined'">
+                                              
+                                                {{(user.firstName || user.lastName) ?
+                                                    user.firstName + ' ' + user.lastName : consumer_label + ' id ' +
+                                                    user.providerConsumer.jaldeeId}}
+                                            </div>
+                                          </div>
+                                        </div>
+                                        </section>
+                                       
+                                      </aside> -->
+                                    <!-- <aside  *ngIf="showPatientList">
+                                    <div class="card">
+                                        <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px;" *ngFor="let user of userList;">
+                                          <div>
+                                              {{user.firstName + ' ' + user.lastName}}
+                                          </div>
+                                        </div>
+                                    </div>
+                                </aside> -->
                                     <div class="col-md-12 col-sm-12 col-xs-12 mgn-up-20">
                                         <h3><a class="learnmore-pointer" (click)="advancedClick()"> Additional
                                                 details</a></h3>
