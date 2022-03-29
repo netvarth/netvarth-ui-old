@@ -1140,9 +1140,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   getCounts() {
-    this.today_waitlist_count = 0;
-    this.history_waitlist_count = 0;
-    this.future_waitlist_count = 0;
+    // this.today_waitlist_count = 0;
+    // this.history_waitlist_count = 0;
+    // this.future_waitlist_count = 0;
     if (this.time_type !== 2 && this.activeSchedules.length > 0) {
       this.getFutureAppointmentsCount()
         .then(
