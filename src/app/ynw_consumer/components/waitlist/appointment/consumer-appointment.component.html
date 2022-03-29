@@ -847,8 +847,7 @@
                                                     </mat-chip>
                                                 </div>
                                             </mat-chip-list>
-                                           
-                                          {{selectedService.showOnlyAvailableSlots}}
+                                        
                                             <mat-chip-list *ngIf ="type === 'reschedule' && selectedService.showOnlyAvailableSlots">
                                                 <div *ngIf="!showMoreAvailableSlots" class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                     <mat-chip *ngFor="let slot of freeSlots | slice:0:12" class="text-center"
@@ -860,6 +859,22 @@
                                                 <div *ngIf="showMoreAvailableSlots" [class.internal-scroll] = "showMoreAvailableSlots">
                                                     <mat-chip *ngFor="let slot of freeSlots" class="text-center"
                                                     [selected]="slot.time === apptTime['time']"
+                                                    (click)="timeSelected(slot);">
+                                                        <span class="mx-auto">{{slot.displayTime}}</span>
+                                                    </mat-chip>
+                                                </div>
+                                            </mat-chip-list>
+                                            <mat-chip-list *ngIf ="type === 'reschedule' && !selectedService.showOnlyAvailableSlots">
+                                                <div *ngIf="!showMoreAvailableSlots" class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                    <mat-chip *ngFor="let slot of freeSlots | slice:0:12" class="text-center"
+                                                    [selected]="slot.time === apptTime['time']" [disabled]="!slot.active"
+                                                        (click)="timeSelected(slot);">
+                                                        <span class="mx-auto">{{slot.displayTime}}</span>
+                                                    </mat-chip>
+                                                </div>
+                                                <div *ngIf="showMoreAvailableSlots" [class.internal-scroll] = "showMoreAvailableSlots">
+                                                    <mat-chip *ngFor="let slot of freeSlots" class="text-center"
+                                                    [selected]="slot.time === apptTime['time']" [disabled]="!slot.active"
                                                     (click)="timeSelected(slot);">
                                                         <span class="mx-auto">{{slot.displayTime}}</span>
                                                     </mat-chip>
