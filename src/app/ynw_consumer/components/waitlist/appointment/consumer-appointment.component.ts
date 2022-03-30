@@ -1262,6 +1262,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         if (this.businessId) {
                             queryParams['customId'] = this.customId;
                         }
+                        if (this.selected_slot.length > 0) {
+                            queryParams['selectedApptsTime'] = this.selectedApptsTime;
+                            queryParams['selectedSlots'] = JSON.stringify(this.selected_slot);
+                        }
                         let navigationExtras: NavigationExtras = {
                             queryParams: queryParams
                         };
@@ -1611,6 +1615,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         }
                         if (this.businessId) {
                             queryParams['customId'] = this.customId;
+                        }
+                        if (this.selected_slot.length > 0) {
+                            queryParams['selectedApptsTime'] = this.selectedApptsTime;
+                            queryParams['selectedSlots'] = JSON.stringify(this.selected_slot);
                         }
                         let navigationExtras: NavigationExtras = {
                             queryParams: queryParams
@@ -2549,10 +2557,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             if (this.businessId) {
                 queryParams['customId'] = this.customId;
             }
-             if (this.selectedApptsTime) {
+            //  if (this.selectedApptsTime) {
+            //     queryParams['selectedApptsTime'] = this.selectedApptsTime;
+            // }
+            if (this.selected_slot.length > 0) {
                 queryParams['selectedApptsTime'] = this.selectedApptsTime;
-            }
-            if (this.selected_slot.length > 1) {
                 queryParams['selectedSlots'] = JSON.stringify(this.selected_slot);
             }
             let navigationExtras: NavigationExtras = {
@@ -2579,6 +2588,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         }
                         if (this.from) {
                             queryParams['isFrom'] = this.from;
+                        }
+                        if (this.selected_slot.length > 0) {
+                            queryParams['selectedApptsTime'] = this.selectedApptsTime;
+                            queryParams['selectedSlots'] = JSON.stringify(this.selected_slot);
                         }
                         let navigationExtras: NavigationExtras = {
                             queryParams: queryParams

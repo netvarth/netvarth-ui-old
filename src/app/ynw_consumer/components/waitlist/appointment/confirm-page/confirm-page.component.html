@@ -118,16 +118,22 @@
                                             <td width="48%" align="right">Batch</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{appointment.batchId}}</td>
-                                        </tr>
+                                        </tr><br>
                                         <!-- <tr> 
-                                            <td width="40%" align="right"></td>
-                                            <td width="2%"></td>
-                                            <td> <mat-checkbox [(ngModel)]="calender">Add to calender</mat-checkbox></td>
-                                          
-                                            
+                                            <td align="center"><mat-checkbox [(ngModel)]="calender">Add to calender</mat-checkbox></td>
+        
+                                        </tr>
+                                        <tr>
+                                            <td width="49%" align="right"></td>
+                                            <td width="1%"></td>
+                                            <td class="settings_info"> (Open the downloaded file to add  booking to your calendar)</td>
                                         </tr> -->
                                     </tbody>
                                 </table>
+                                <div style="text-align: center;" class=" mgn-up-10">
+                                    <mat-checkbox [(ngModel)]="calender">Add to calender</mat-checkbox><br>
+                                    <span class="settings_info" *ngIf="calender">(Open the downloaded file to add  booking to your calendar)</span>
+                                </div>
                                 <!-- <div class="book-status chkntoknappt-details"> Current status </div> -->
                                 <div style="text-align: center;" class="green mgn-up-10" *ngIf="appointment.apptStatus">
                                     Appointment {{appointment.apptStatus}}
@@ -148,10 +154,10 @@
                                     <span class="pointer-cursor hf-btn" (click)="okClick(appointment)">
                                         <strong>OK</strong></span>
                                 </div>
-                                <div class="ok-btn">
+                                <!-- <div class="ok-btn">
                                     <span class="pointer-cursor hf-btn" (click)="addToCalendar()">
                                         <strong>Add to Calendar</strong></span>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="powered-by">

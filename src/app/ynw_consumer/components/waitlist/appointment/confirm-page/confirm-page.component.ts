@@ -44,6 +44,7 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   selectedApptsTime: any;
   calendarEvents;
   selectedSlots: any;
+  businessName: any;
 
   constructor(
     public route: ActivatedRoute, public router: Router,
@@ -94,8 +95,11 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   addToCalendar() {
     const events = [];
     let eventInfo;
-      
+  
     if (this.selectedApptsTime) {
+      if(this.appointment.providerAccount && this.appointment.providerAccount.businessName){
+        this.businessName = this.appointment.providerAccount.businessName;
+      }
       console.log(this.selectedSlots);
       for (let i=0; i< this.selectedSlots.length; i++) {
         let times = this.selectedSlots[i].time.split("-");
@@ -107,23 +111,27 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
           start: startDate,
           end: endDate,
           location: this.appointment.location?.place,
-          description: 'Appointment Details',
-          summary: 'Appointment Confirmed'
+          description : 'Service provider : ' + this.businessName,
+          summary: 'Booking with - ' + this.businessName
         }
         events.push(eventInfo);
       }
     } else {
+      if(this.appointment.providerAccount && this.appointment.providerAccount.businessName){
+        this.businessName = this.appointment.providerAccount.businessName;
+      }
       let times = this.appointment.appmtTime.split("-");
       const startTime = times[0];
       const endTime = times[1];
       const startDate = new Date(this.appointment.appmtDate + 'T' + startTime);
       const endDate = new Date(this.appointment.appmtDate + 'T' + endTime);
+     
       eventInfo = {
         start: startDate,
         end: endDate,
+        description : 'Service provider : ' + this.businessName,
         location: this.appointment.location?.place,
-        description: 'Appointment Details',
-        summary: 'Appointment Confirmed'
+        summary: 'Booking with - ' + this.businessName,
       }
       events.push(eventInfo);
     }
@@ -133,19 +141,19 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   ngOnInit() {
 
       //full calendar setting and event binding
-      this.calendarOptions = {
-        initialView: 'dayGridMonth',
-        events: [{  title: 'Happy Hour',
-        location: 'The Bar, New York, NY',
-        description: 'Let\'s blow off some steam with a tall cold one!',
-        start: new Date('2022-05-26T19:00:00'),
-        end: new Date('2022-05-26T23:30:00'),
-        // an event that recurs every two weeks:
-        recurrence: {
-          frequency: 'WEEKLY',
-          interval: 2
-        }}]
-   }
+  //     this.calendarOptions = {
+  //       initialView: 'dayGridMonth',
+  //       events: [{  title: 'Happy Hour',
+  //       location: 'The Bar, New York, NY',
+  //       description: 'Let\'s blow off some steam with a tall cold one!',
+  //       start: new Date('2022-05-26T19:00:00'),
+  //       end: new Date('2022-05-26T23:30:00'),
+  //       // an event that recurs every two weeks:
+  //       recurrence: {
+  //         frequency: 'WEEKLY',
+  //         interval: 2
+  //       }}]
+  //  }
    
   
   }
@@ -154,56 +162,79 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   }
   okClick(appt) {
     if(this.calender){
-      
-      const post_data = 
-      {  'title' : this.appointment.appointmentMode,
-        'location': 'Thrissur',
-        'description': 'Appointment',
-        'start': new Date('2022-03-28T19:00:00'),
-        'end' : new Date('2022-03-28T23:30:00'),
+      this.addToCalendar();
+      // if (appt.service.livetrack && this.type !== 'reschedule') {
+      //   let queryParams= {
+      //     account_id: this.infoParams.account_id,
+      //     theme:this.theme 
+      // }
+      // if (this.customId) {
+      //   queryParams['customId'] = this.customId;
+      // }
+      // if(this.from){
+      //   queryParams['isFrom'] = this.from;
+      // }
+      // let navigationExtras: NavigationExtras = {
+      //     queryParams: queryParams
+      // };
+      // this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], navigationExtras);
+      // } else {
+      //   let queryParams= {
+      //     theme:this.theme,
+      //     accountId: this.accountId
+      //   }
+      //   if (this.customId) {
+      //       queryParams['customId'] = this.customId;
+      //   }
+      //   let navigationExtras: NavigationExtras = {
+      //       queryParams: queryParams
+      //   };
+      //   if(this.from){
+      //     this.router.navigate(['consumer']);
+      //   }else{
+      //     this.router.navigate(['consumer'], navigationExtras);
+      //   }
+        
+      // }
+      // this.lStorageService.setitemonLocalStorage('orderStat', false);
     }
-        // an event that recurs every two weeks:
-      this.provider_services.getGoogleAddEventToCalender(post_data , { 'Access-Control-Allow-Origin': '*',"Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT","Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"})
-      .subscribe(mapdata => {
-       console.log(mapdata)
-      });
-
-
-    }
-    if (appt.service.livetrack && this.type !== 'reschedule') {
-      let queryParams= {
-        account_id: this.infoParams.account_id,
-        theme:this.theme 
-    }
-    if (this.customId) {
-      queryParams['customId'] = this.customId;
-    }
-    if(this.from){
-      queryParams['isFrom'] = this.from;
-    }
-    let navigationExtras: NavigationExtras = {
-        queryParams: queryParams
-    };
-    this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], navigationExtras);
-    } else {
-      let queryParams= {
-        theme:this.theme,
-        accountId: this.accountId
+    else{
+      if (appt.service.livetrack && this.type !== 'reschedule') {
+        let queryParams= {
+          account_id: this.infoParams.account_id,
+          theme:this.theme 
       }
       if (this.customId) {
-          queryParams['customId'] = this.customId;
+        queryParams['customId'] = this.customId;
+      }
+      if(this.from){
+        queryParams['isFrom'] = this.from;
       }
       let navigationExtras: NavigationExtras = {
           queryParams: queryParams
       };
-      if(this.from){
-        this.router.navigate(['consumer']);
-      }else{
-        this.router.navigate(['consumer'], navigationExtras);
+      this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], navigationExtras);
+      } else {
+        let queryParams= {
+          theme:this.theme,
+          accountId: this.accountId
+        }
+        if (this.customId) {
+            queryParams['customId'] = this.customId;
+        }
+        let navigationExtras: NavigationExtras = {
+            queryParams: queryParams
+        };
+        if(this.from){
+          this.router.navigate(['consumer']);
+        }else{
+          this.router.navigate(['consumer'], navigationExtras);
+        }
+        
       }
-      
+      this.lStorageService.setitemonLocalStorage('orderStat', false);
     }
-    this.lStorageService.setitemonLocalStorage('orderStat', false);
+   
     
   }
   getSingleTime(slot) {
