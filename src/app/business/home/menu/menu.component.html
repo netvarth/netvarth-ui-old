@@ -67,7 +67,7 @@
           <div class="menu-submenu"><i class="menu-arrow"></i>
           </div>
         </li>
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
+        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu" *ngIf="isadminPrivilege || isShowCsmrDataBase"
           (click)="showMenuSection()">
           <a routerLink="customers" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="customer_label+'s'"><span
               class="svg-icon menu-icon">
@@ -122,7 +122,7 @@
           <div class="menu-submenu"><i class="menu-arrow"></i>
           </div>
         </li>
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"  *ngIf="isadminPrivilege || isShowCsmrDataBase"
+        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"  *ngIf="isadminPrivilege"
           (click)="showMenuSection()">
           <a routerLink="reports" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Reports'"><span
               class="svg-icon menu-icon">
