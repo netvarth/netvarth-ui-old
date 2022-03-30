@@ -1901,7 +1901,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     paywithRazorpay(pData: any) {
-        
         // 'consumer', 'appt_prepayment', this.trackUuid, this.selectedService.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId, this.from
         pData.paymentMode = this.paymentMode;
         this.razorpayService.initializePayment(pData, this.accountId, this);
