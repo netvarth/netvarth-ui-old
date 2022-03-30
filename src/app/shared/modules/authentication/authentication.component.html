@@ -1,0 +1,40 @@
+<div class="authentication">
+
+    <!-- Account Exists or not -->
+    <div  class="check-mobile-exist" *ngIf="step==1">
+        <h1>Let's Start</h1>
+        <div class="form-group mobile-no">
+            <label for="phone">Enter your Mobile Number</label>
+            <ngx-intl-tel-input [cssClass]="'custom'" [preferredCountries]="preferredCountries"
+                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                [selectFirstCountry]="false" [maxLength]="15" [phoneValidation]="true"
+                [selectedCountryISO]="selectedCountry" [separateDialCode]="separateDialCode"
+                [numberFormat]="PhoneNumberFormat.National" name="phone" [(ngModel)]="phoneNumber">
+            </ngx-intl-tel-input>
+            <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div>
+            <button class="cust-logpg-submt mgn-up-20 mat-button continue-button" type="button"
+                [disabled]="api_loading" (click)="checkAccountExists()" (keyup)="clearPhoneExists()">
+                <span *ngIf="!api_loading">Send OTP</span>
+                <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+                </app-common-innerloading-spinner>
+            </button>
+        </div>
+        
+        <div class="form-group otp" *ngIf="step===2">
+            <h1>Verification</h1>
+            <label for="phone">An OTP will be sent to {{phoneNumber}} for verification</label>
+            
+            <label for="phone">Enter OTP</label>
+            <ng-otp-input  class="bkgclr" (onInputChange)="onOtpChange($event)"  [config]="config"></ng-otp-input>
+            <!-- <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div> -->
+            <button class="cust-logpg-submt mgn-up-20 mat-button continue-button" type="button"
+                [disabled]="api_loading" (click)="checkAccountExists()" (keyup)="clearPhoneExists()">
+                <span *ngIf="!api_loading">Confirm OTP</span>
+                <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+                </app-common-innerloading-spinner>
+            </button>
+        </div>
+    </div>
+
+</div>

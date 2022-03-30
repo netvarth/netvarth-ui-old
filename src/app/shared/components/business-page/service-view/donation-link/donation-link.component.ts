@@ -5,7 +5,6 @@ import { SharedServices } from '../../../../services/shared-services';
 import { Messages } from '../../../../constants/project-messages';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { RazorpayService } from '../../../../services/razorpay.service';
-import { RazorpayprefillModel } from '../../../razorpay/razorpayprefill.model';
 import { WindowRefService } from '../../../../services/windowRef.service';
 import { Razorpaymodel } from '../../../razorpay/razorpay.model';
 import { WordProcessor } from '../../../../services/word-processor.service';
@@ -151,7 +150,6 @@ export class DonationLinkComponent implements OnInit {
     public datastorage: CommonDataStorageService,
     public _sanitizer: DomSanitizer,
     public razorpayService: RazorpayService,
-    public prefillmodel: RazorpayprefillModel,
     public winRef: WindowRefService,
     private paytmService: PaytmService,
     private cdRef: ChangeDetectorRef,
@@ -167,7 +165,7 @@ export class DonationLinkComponent implements OnInit {
     this.subs.unsubscribe();
   }
   ngOnInit() {
-    this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');          
+    this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     this.shared_services.getDonationLinkUuid(this.payId).subscribe(
       (donationInfo: any) => {
         this.initDonation(donationInfo);
@@ -191,11 +189,11 @@ export class DonationLinkComponent implements OnInit {
     this.userEmail = donationInfo.donorEmail || '';
     this.consumerPhoneNo = this.userPhone;
     this.setServiceDetails(donationInfo.service);
-    if(this.customer_countrycode == '+91'){
-        this.getPaymentModes();
+    if (this.customer_countrycode == '+91') {
+      this.getPaymentModes();
     } else {
-        this.razorpayEnabled = true;
-    }        
+      this.razorpayEnabled = true;
+    }
     this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     this.today = new Date(this.today);
     const dd = this.today.getDate();
@@ -287,7 +285,7 @@ export class DonationLinkComponent implements OnInit {
       'purpose': 'donation',
       'serviceId': this.sel_ser
     };
-    payInfo.isInternational = this.isInternatonal; 
+    payInfo.isInternational = this.isInternatonal;
     this.lStorageService.setitemonLocalStorage('uuid', uid);
     this.lStorageService.setitemonLocalStorage('acid', this.account_id);
     this.lStorageService.setitemonLocalStorage('p_src', 'c_d');
@@ -314,54 +312,48 @@ export class DonationLinkComponent implements OnInit {
   }
 
   paywithRazorpay(pData: any) {
-    this.prefillmodel.name = pData.consumerName;
-    this.prefillmodel.email = pData.ConsumerEmail;
-    this.prefillmodel.contact = pData.consumerPhoneumber;
-    this.razorModel = new Razorpaymodel(this.prefillmodel);
-    this.razorModel.key = pData.razorpayId;
-    this.razorModel.amount = pData.amount;
-    this.razorModel.order_id = pData.orderId;
-    this.razorModel.name = pData.providerName;
-    this.razorModel.description = pData.description;
-    this.razorModel.mode = this.selected_payment_mode;
-    this.isClickedOnce = false;
-    this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uid, null, this.account_id, null, null, this.customId);
+    pData.paymentMode = this.selected_payment_mode;
+    this.razorpayService.initializePayment(pData, this.accountId, this);
+    // this.prefillmodel.name = pData.consumerName;
+    // this.prefillmodel.email = pData.ConsumerEmail;
+    // this.prefillmodel.contact = pData.consumerPhoneumber;
+    // this.razorModel = new Razorpaymodel(this.prefillmodel);
+    // this.razorModel.key = pData.razorpayId;
+    // this.razorModel.amount = pData.amount;
+    // this.razorModel.order_id = pData.orderId;
+    // this.razorModel.name = pData.providerName;
+    // this.razorModel.description = pData.description;
+    // this.razorModel.mode = this.selected_payment_mode;
+    // this.isClickedOnce = false;
+    // this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uid, null, this.account_id, null, null, this.customId);
   }
   payWithPayTM(pData: any, accountId: any) {
     this.loadingPaytm = true;
     pData.paymentMode = this.selected_payment_mode;
     this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
   }
-  transactionCompleted(response, payload, accountId) {
-    if (response.STATUS == 'TXN_SUCCESS') {
-      this.paytmService.updatePaytmPay(payload, accountId)
-        .then((data) => {
-          if (data) {
-            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-            let queryParams = {
-              account_id: this.account_id,
-              uuid: this.uid,
-              "details": response
-            };
-            if (this.customId) {
-              queryParams['customId'] = this.customId;
-              if (this.lStorageService.getitemfromLocalStorage('theme')) {
-                queryParams['theme'] = this.lStorageService.getitemfromLocalStorage('theme');
-              }
-            }
-            if (this.from) {
-              queryParams['isFrom'] = this.from;
-            }
-            let navigationExtras: NavigationExtras = {
-              queryParams: queryParams
-            };
-            this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], navigationExtras));
-          }
-        },
-          error => {
-            this.snackbarService.openSnackBar("Transaction Failed", { 'panelClass': 'snackbarerror' });
-          })
-    } else if (response.STATUS == 'TXN_FAILURE') {
+  finishDonation(status, response?) {
+    if (status) {
+      this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+      let queryParams = {
+        account_id: this.account_id,
+        uuid: this.uid,
+        "details": response
+      };
+      if (this.customId) {
+        queryParams['customId'] = this.customId;
+        if (this.lStorageService.getitemfromLocalStorage('theme')) {
+          queryParams['theme'] = this.lStorageService.getitemfromLocalStorage('theme');
+        }
+      }
+      if (this.from) {
+        queryParams['isFrom'] = this.from;
+      }
+      let navigationExtras: NavigationExtras = {
+        queryParams: queryParams
+      };
+      this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], navigationExtras));
+    } else {
       this.isClickedOnce = false;
       this.loadingPaytm = false;
       this.cdRef.detectChanges();
@@ -371,6 +363,37 @@ export class DonationLinkComponent implements OnInit {
           snackBar.dismiss();
         })
       });
+    }
+  }
+  transactionCompleted(response, payload, accountId) {
+    if (response.SRC) {
+      if (response.STATUS == 'TXN_SUCCESS') {
+        this.razorpayService.updateRazorPay(payload, accountId, 'consumer')
+          .then((data) => {
+            if (data) {
+              this.finishDonation(true, response);
+            }
+          },
+            error => {
+              this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+            })
+      } else if (response.STATUS == 'TXN_FAILURE') {
+        this.finishDonation(false);
+      }
+    } else {
+      if (response.STATUS == 'TXN_SUCCESS') {
+        this.paytmService.updatePaytmPay(payload, accountId)
+          .then((data) => {
+            if (data) {
+              this.finishDonation(true, response);
+            }
+          },
+            error => {
+              this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+            })
+      } else if (response.STATUS == 'TXN_FAILURE') {
+        this.finishDonation(false);
+      }
     }
   }
   getImageSrc(mode) {

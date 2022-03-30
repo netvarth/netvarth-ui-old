@@ -364,13 +364,51 @@ export class AuthService {
      * @returns true/false
      */
     goThroughLogin() {
-        const _this = this;
-        return new Promise((resolve) => {
-            if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')) {
-                resolve(true);
-            } else {
-                resolve(false);
-            }
-        });
+        if (this.lStorageService.getitemfromLocalStorage('reqFrom')) {
+            const _this = this;
+            console.log("Entered to goThroughLogin Method");
+            return new Promise((resolve) => {
+                if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')) {
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            });
+        } else {
+            return new Promise((resolve) => {
+                const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
+                let qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+                qrusr = JSON.parse(qrusr);
+                if (qrusr && qrpw) {
+                    const data = {
+                        'countryCode': qrusr.countryCode,
+                        'loginId': qrusr.loginId,
+                        'password': qrpw,
+                        'mUniqueId': null
+                    };
+                    this.shared_services.ConsumerLogin(data).subscribe(
+                        (loginInfo: any) => {
+                            this.setLoginData(loginInfo, data, 'consumer');
+                            this.lStorageService.setitemonLocalStorage('qrp', data.password);
+                            resolve(true);
+                        },
+                        (error) => {
+                            if (error.status === 401 && error.error === 'Session already exists.') {
+                                resolve(true);
+                            } else {
+                                resolve(false);
+                            }
+                        }
+                    );
+                } else {
+                    resolve(false);
+                }
+            });
+        }
+
+
+
+
+
     }
 }

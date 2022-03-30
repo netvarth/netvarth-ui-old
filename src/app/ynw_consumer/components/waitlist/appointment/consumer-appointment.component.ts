@@ -42,9 +42,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     isTeleService;    // To know service is Virtual Service or not
     businessInfo: any = {}; // To hold Business Name, Location, Map Url etc.
     selectedUser;     // Appointment for which user/doctor
-    selectedUserId;   // Appointment for which user/doctor
+    selectedUserId;   // Appointment for which user/doctor id
     selectedServiceId;// Id of the appointment service
-    selectedDept;     // Department Id
+    selectedDept;     // Department of the selected service
+    selectedDeptId;     // Department Id of the selected service
     departmentEnabled;// Department Enabled or not
     theme;            // Selected Theme
     customId;         // To know whether req came from customapp/qr link
@@ -208,7 +209,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.selectedUserId = params.user;
                 }
                 if (params.dept) {
-                    this.selectedDept = parseInt(params.dept);
+                    this.selectedDeptId = parseInt(params.dept);
                     this.departmentEnabled = true;
                 }
                 this.isTeleService = params.tel_serv_stat;
@@ -319,7 +320,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
                 this.accountType = this.businessProfile.accountType;
                 if (this.accountType === 'BRANCH') {
-                    if (this.selectedDept) {
+                    if (this.selectedDeptId) {
                         this.getDepartments(this.businessProfile.id).then(
                             (departments) => {
                                 if (departments) {
@@ -397,7 +398,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     setDepartmentDetails(departmentId) {
-        const deptDetail = this.departments.filter(user => user.departmentId === departmentId);
+        const deptDetail = this.departments.filter(dept => dept.departmentId === departmentId);
         this.selectedDept = deptDetail[0];
     }
 
@@ -517,11 +518,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.changePhone = true;
                 }
             }
-            // else {
-            //     if (this.parentCustomer) {
-            //         this.callingModes = this.parentCustomer.userProfile.countryCode + '' + this.parentCustomer.primaryPhoneNumber;
-            //     }
-            // }
         }
     }
 
@@ -557,8 +553,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.setUserDetails(this.selectedUserId);
             }
             if (this.departmentEnabled) {
-                this.selectedDept = activeService.department;
-                this.setDepartmentDetails(this.selectedDept);
+                this.selectedDeptId = activeService.department;
+                this.setDepartmentDetails(this.selectedDeptId);
             }
 
             if (activeService.maxBookingsAllowed > 1 && this.appointmentType != 'reschedule') {

@@ -27,6 +27,7 @@ import { DatePaginationModule } from '../../../../ynw_consumer/modules/date-pagi
 import { SlotPickerModule } from '../../../../ynw_consumer/modules/slot-picker/slot-picker.module';
 import { BookingNoteModule } from '../../../../ynw_consumer/modules/booking-note/booking-note.module';
 import { BookingAccountinfoModule } from '../../../../ynw_consumer/modules/booking-accountinfo/booking-accountinfo.module';
+import { ServiceDisplayModule } from '../../../../ynw_consumer/modules/service-display/service-display.module';
 const routes: Routes = [
     { path: '', component: ConsumerCheckinComponent},
     { path: 'track/:id', loadChildren: ()=> import('./livetrack/livetrack.module').then(m=>m.ConsumerLiveTrackModule) },
@@ -64,6 +65,7 @@ const routes: Routes = [
         DatePaginationModule,
         SlotPickerModule,
         BookingNoteModule,
+        ServiceDisplayModule,
         BookingAccountinfoModule,
         [RouterModule.forChild(routes)]
     ],

@@ -300,6 +300,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     tempErrorDonationAmmount: any
     oneTimeInfo: any;
     onetimeQuestionnaireList;
+
+    providerConsumerId; // id of the selected provider consumer 
+    providerConsumerList: any = [];
+
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
         public shared_services: SharedServices,
@@ -487,7 +491,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             _this.from_iOS = true;
         }
         _this.gets3curl();
-        // _this.gets3curl();
         _this.goThroughLogin().then(
             (status) => {
                 console.log("Status:", status);
@@ -496,13 +499,13 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                     _this.initDonation().then(
                         (status) => {
                             console.log("init Donation Status1:", status);
-                            _this.getOneTimeInfo(_this.account_id).then(
+                            _this.getOneTimeInfo(_this.customer_data, _this.account_id).then(
                                 (questions) => {
                                     console.log("Questions:", questions);
                                     // _this.onetimeQuestionnaireList = { "questionnaireId": "WalkinConsumer", "id": 7, "labels": [{ "transactionType": "CONSUMERCREATION", "transactionId": 0, "channel": "ANY", "questionnaireId": "WalkinConsumer", "questions": [{ "id": 18, "labelName": "General Health3", "sequnceId": "", "fieldDataType": "bool", "fieldScope": "consumer", "label": "Do you have any chronic diseases?", "labelValues": ["Yes", "No"], "billable": false, "mandatory": false, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] } }] }] };
                                     if (questions) {
                                         _this.onetimeQuestionnaireList = questions;
-                                        if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0) {
+                                        if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
                                             _this.bookStep = 'profile';
                                         } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                             _this.bookStep = 'qnr';
@@ -677,17 +680,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.edit = false;
         this.action = 'phone';
         this.selected_phone = this.userPhone;
-
         this.action = 'email';
         this.confrmshow = false;
         this.payEmail = email;
         this.payEmail1 = '';
-        // if (this.dispCustomerEmail) {
-        //     this.dispCustomerEmail = false;
-        // } else {
-        //     this.dispCustomerEmail = true;
-        // }
-
     }
     addDonorDetails() {
         if (this.tempDonorDetails.startsWith('f') || this.tempDonorDetails.startsWith('l')) {
@@ -699,28 +695,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (this.tempDonorDetails.startsWith('e')) {
             this.addEmail()
         }
-        //        else{
-        //         setTimeout(() => {
-        //             this.action = '';
-        //         }, 500);
-        //         this.closebutton.nativeElement.click();
-        //    }
-
-
-        // this.addDonor()
-        // this.addPhone()
-        // this.addEmail()  
     }
     donorDetails(donorDetails: any) {
         console.log('donorDetails...........', donorDetails)
         this.tempDonorDetails = donorDetails
-        // if(this.tempDonorDetails!=undefined){
-        //     this.tempDonorDetails=donorDetails
-        // }
-        // else{
-        //     this.tempDonorDetails=undefined
-        // }
-
     }
     onButtonBeforeHook() {
     }
@@ -808,16 +786,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.phoneerror = '';
     }
     setServiceDetails(curservid) {
-        // let serv;
-        // for (let i = 0; i < this.servicesjson.length; i++) {
-        //     if (this.servicesjson[i].id === curservid) {
-        //         serv = this.servicesjson[i];
-        //         break;
-        //     }
-        // }
-        // this.sel_ser_det = [];
         this.sel_ser_det = this.servicesjson.filter(service => service.id === curservid)[0];
-        // this.sel_ser_det = serv;
         console.log('donation details.......', this.sel_ser_det);
         if (this.sel_ser_det && this.sel_ser_det['servicegallery']) {
             this.setAccountGallery(this.sel_ser_det.servicegallery)
@@ -931,17 +900,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                             }
                         }
                     )
-                    // if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                    //     this.submitQuestionnaire(this.uid, post_Data).then(
-                    //         (status) => {
-                    //             if (status) {
-
-                    //             }
-                    //         }
-                    //     );
-                    // } else {
-                    //     this.consumerPayment(this.uid, post_Data, paymentWay);
-                    // }
                 },
                     error => {
                         _this.isClickedOnce = false;
@@ -979,10 +937,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                     }
                 });
         }, 5000);
-        // setTimeout(() => {
-        //    
-        //     
-        // }, 5000);
     }
 
     consumerPayment(uid, post_Data, paymentWay) {
@@ -1024,30 +978,17 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     }
 
     paywithRazorpay(pData: any) {
-        this.prefillmodel.name = pData.consumerName;
-        this.prefillmodel.email = pData.ConsumerEmail;
-        this.prefillmodel.contact = pData.consumerPhoneumber;
-        this.razorModel = new Razorpaymodel(this.prefillmodel);
-        this.razorModel.key = pData.razorpayId;
-        this.razorModel.amount = pData.amount;
-        this.razorModel.order_id = pData.orderId;
-        this.razorModel.name = pData.providerName;
-        this.razorModel.description = pData.description;
-        this.razorModel.mode = this.selected_payment_mode;
-        this.isClickedOnce = false;
-        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uid, null, this.account_id, null, null, this.customId);
+        pData.paymentMode = this.selected_payment_mode;
+        this.razorpayService.initializePayment(pData, this.account_id, this);
     }
     payWithPayTM(pData: any, accountId: any) {
         this.loadingPaytm = true;
         pData.paymentMode = this.selected_payment_mode;
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
     }
-    transactionCompleted(response, payload, accountId) {
-        if (response.STATUS == 'TXN_SUCCESS') {
-            this.paytmService.updatePaytmPay(payload, accountId)
-                .then((data) => {
-                    if (data) {
-                        this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+    finishDonation(status, response?) {
+        if (status) {
+            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
                         let queryParams = {
                             account_id: this.account_id,
                             uuid: this.uid,
@@ -1066,13 +1007,13 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                             queryParams: queryParams
                         };
                         this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], navigationExtras));
-                    }
-                },
-                    error => {
-                        this.snackbarService.openSnackBar("Transaction Failed", { 'panelClass': 'snackbarerror' });
-                    })
-        } else if (response.STATUS == 'TXN_FAILURE') {
+        } else {
             this.isClickedOnce = false;
+            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+            if (this.from) {
+                this.ngZone.run(() => this.router.navigate(['consumer']));
+            } else {
+                this.isClickedOnce = false;
             this.loadingPaytm = false;
             this.cdRef.detectChanges();
             this.ngZone.run(() => {
@@ -1081,12 +1022,54 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                     snackBar.dismiss();
                 })
             });
-
-
+            }
+        }
+    }
+    transactionCompleted(response, payload, accountId) {
+        if (response.SRC) {
+            if (response.STATUS == 'TXN_SUCCESS') {
+                this.razorpayService.updateRazorPay(payload, accountId, 'consumer')
+                    .then((data) => {
+                        if (data) {
+                            this.finishDonation(true,response);
+                        }
+                    },
+                        error => {
+                            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+                        })
+            } else if (response.STATUS == 'TXN_FAILURE') {
+                this.finishDonation(false);
+            }
+        } else {
+            if (response.STATUS == 'TXN_SUCCESS') {
+                this.paytmService.updatePaytmPay(payload, accountId)
+                    .then((data) => {
+                        if (data) {
+                            this.finishDonation(true, response);
+                        }
+                    },
+                        error => {
+                            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+                        })
+            } else if (response.STATUS == 'TXN_FAILURE') {
+                this.finishDonation(false);
+            }
+        }
+        if (response.STATUS == 'TXN_SUCCESS') {
+            this.paytmService.updatePaytmPay(payload, accountId)
+                .then((data) => {
+                    if (data) {
+                        this.finishDonation(true, response)
+                    }
+                },
+                    error => {
+                        this.snackbarService.openSnackBar("Transaction Failed", { 'panelClass': 'snackbarerror' });
+                    })
+        } else if (response.STATUS == 'TXN_FAILURE') {
+            this.finishDonation(false)
         }
     }
     getImageSrc(mode) {
-
         return 'assets/images/payment-modes/' + mode + '.png';
     }
     closeloading() {
@@ -1099,7 +1082,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 snackBar.dismiss();
             })
         });
-
     }
     onReloadPage() {
         window.location.reload();
@@ -1134,13 +1116,13 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             if (this.bookStep === 'donation') {
                 if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.bookStep = 'qnr';
-                } else if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0) {
+                } else if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0 && this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
                     this.bookStep = 'profile';
                 } else {
                     this.location.back();
                 }
             } else if (this.bookStep === 'qnr') {
-                if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0) {
+                if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0 && this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
                     this.bookStep = 'profile';
                 } else {
                     this.location.back();
@@ -1182,9 +1164,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 break;
         }
         this.step = cstep;
-        // if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
-        //     this.waitlist_for.push({ id: 0, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName, apptTime: this.apptTime });
-        // }
     }
     showCheckinButtonCaption() {
         let caption = '';
@@ -1205,65 +1184,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.addmemberobj.mobile = obj.mobile || '';
         this.addmemberobj.gender = obj.gender || '';
         this.addmemberobj.dob = obj.dob || '';
-    }
-    handleSaveMember() {
-        this.resetApi();
-        let derror = '';
-        const namepattern = new RegExp(projectConstantsLocal.VALIDATOR_CHARONLY);
-        const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
-        const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
-        const blankpattern = new RegExp(projectConstantsLocal.VALIDATOR_BLANK);
-        if (!namepattern.test(this.addmemberobj.fname) || blankpattern.test(this.addmemberobj.fname)) {
-            derror = 'Please enter a valid first name';
-        }
-        if (derror === '' && (!namepattern.test(this.addmemberobj.lname) || blankpattern.test(this.addmemberobj.lname))) {
-            derror = 'Please enter a valid last name';
-        }
-        if (derror === '') {
-            if (this.addmemberobj.mobile !== '') {
-                if (!phonepattern.test(this.addmemberobj.mobile)) {
-                    derror = 'Phone number should have only numbers';
-                } else if (!phonecntpattern.test(this.addmemberobj.mobile)) {
-                    derror = 'Enter a 10 digit mobile number';
-                }
-            }
-        }
-        if (derror === '') {
-            const post_data = {
-                'userProfile': {
-                    'firstName': this.addmemberobj.fname,
-                    'lastName': this.addmemberobj.lname
-                }
-            };
-            if (this.addmemberobj.mobile !== '') {
-                post_data.userProfile['primaryMobileNo'] = this.addmemberobj.mobile;
-                post_data.userProfile['countryCode'] = '+91';
-            }
-            if (this.addmemberobj.gender !== '') {
-                post_data.userProfile['gender'] = this.addmemberobj.gender;
-            }
-            if (this.addmemberobj.dob !== '') {
-                post_data.userProfile['dob'] = this.addmemberobj.dob;
-            }
-            let fn;
-            post_data['parent'] = this.customer_data.id;
-            fn = this.shared_services.addMembers(post_data);
-            this.subs.sink = fn.subscribe(() => {
-                this.api_success = this.wordProcessor.getProjectMesssages('MEMBER_CREATED');
-                this.getFamilyMembers();
-                setTimeout(() => {
-                    this.handleGoBack(3);
-                }, projectConstants.TIMEOUT_DELAY);
-            },
-                error => {
-                    // this.api_error = error.error;
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                    // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ADDNOTE_ERROR'));
-                });
-        } else {
-            // this.api_error = derror;
-            this.snackbarService.openSnackBar(derror, { 'panelClass': 'snackbarerror' });
-        }
     }
     handleNote() {
         if (this.dispCustomernote) {
@@ -1385,21 +1305,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.payEmail1 = '';
     }
     isNumeric(evt) {
-        console.log(evt)
-        //     var key;
-        // key = evt.charCode; 
-        // if((key > 47 && key < 58)){
-        //     return ((key > 47 && key < 58) );
-        // } else{
-        //     this.tempErrorDonationAmmount='Please enter valid ammount '
-
-        // }
-        // if(evt.charCode<58 && evt.charCode>47 ){
-        //     this.tempErrorDonationAmmount=''
-        //     return this.sharedFunctionobj.isNumeric(evt);
-        // }else{
-
-        // }
         return this.sharedFunctionobj.isNumeric(evt);
     }
     showServiceDetail(serv, busname) {
@@ -1527,9 +1432,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             }
         }
         if (this.questionAnswers.answers) {
-
-
-
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
                 if (data.length === 0) {
                     this.bookStep = 'donation';
@@ -1550,22 +1452,22 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 }
             }
         }
-        // this.getBookStep('profile');
         console.log("Before Validation", this.oneTimeInfo);
         if (this.oneTimeInfo.answers) {
-
-            const questions = this.oneTimeInfo.answers.answerLine.map(function (a) { return a.labelName; })
-
-            
+            const questions = this.oneTimeInfo.answers.answerLine.map(function (a) { return a.labelName; })   
             const dataToSend: FormData = new FormData();
             const answer = new Blob([JSON.stringify(this.oneTimeInfo.answers)], { type: 'application/json' });
             const question = new Blob([JSON.stringify(questions)], { type: 'application/json' });
             dataToSend.append('answer', answer);
             dataToSend.append('question', question);
-            this.shared_services.validateConsumerOneTimeQuestionnaire(dataToSend, this.account_id).subscribe((data: any) => {
-                // this.shared_services.validateConsumerQuestionnaire(this.oneTimeInfo.answers, this.account_id).subscribe((data: any) => {
+            this.shared_services.validateConsumerOneTimeQuestionnaire(dataToSend, this.account_id,'').subscribe((data: any) => {
             if (data.length === 0) {
-                    this.getBookStep('profile');
+                this.submitOneTimeInfo().then(
+                    (status) => {
+                        if (status) {
+                            this.getBookStep('profile');
+                        }
+                    })                    
                 }
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
             }, error => {
@@ -1597,29 +1499,18 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             this.initDonation().then(
                 (status) => {
                     console.log("init Donation Status:", status);
-                    _this.getOneTimeInfo(_this.account_id).then(
+                    _this.getOneTimeInfo(_this.customer_data.id, _this.account_id).then(
                         (questions) => {
                             _this.onetimeQuestionnaireList = questions;
                             console.log("Questions:", questions);
-                            // _this.onetimeQuestionnaireList = { "questionnaireId": "WalkinConsumer", "id": 7, "labels": [{ "transactionType": "CONSUMERCREATION", "transactionId": 0, "channel": "ANY", "questionnaireId": "WalkinConsumer", "questions": [{ "id": 18, "labelName": "General Health3", "sequnceId": "", "fieldDataType": "bool", "fieldScope": "consumer", "label": "Do you have any chronic diseases?", "labelValues": ["Yes", "No"], "billable": false, "mandatory": false, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] } }] }] };
-                            // if (_this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels > 0) {
-
-                            if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0) {
+                            if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
                                 _this.bookStep = 'profile';
                             } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                 _this.bookStep = 'qnr';
                             } else {
                                 _this.bookStep = 'donation';
                             }
-                            _this.loggedIn = true;
-                            // } else {
-                            //     if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
-                            //         _this.bookStep = 'qnr';
-                            //     } else {
-                            //         _this.bookStep = 'donation';
-                            //     }
-                            //     _this.loggedIn = true;
-                            // }
+                            _this.loggedIn = true;                           
                             _this.loading = false;
                         }
                     )
@@ -1627,20 +1518,69 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             );
         }
     }
-
-    getOneTimeInfo(accountId) {
+getProviderCustomerId(member, accountId) {
+        console.log("Member:", member);
+        console.log("ProviderList:", this.providerConsumerList);
         const _this = this;
         return new Promise(function (resolve, reject) {
-            _this.shared_services.getCustomerOnetimeInfo(accountId).subscribe(
-                (questions) => {
-                    resolve(questions);
-                    // resolve({"questionnaireId":"WalkinConsumer","id":7,"proConId":0,"labels":[{"transactionType":"CONSUMERCREATION","transactionId":0,"channel":"ANY","questionnaireId":"WalkinConsumer","questions":[{"id":16,"labelName":"General Health1","sequnceId":"1","fieldDataType":"number","fieldScope":"consumer","label":"How healthy do you consider yourself on a scale of 1 to 10?","labelValues":"5.0","numberPropertie":{"start":1,"end":10,"minAnswers":1,"maxAnswers":1},"billable":false,"mandatory":true,"scopTarget":{"target":[{"targetUser":"PROVIDER"},{"targetUser":"CONSUMER"}]},"sectionName":"sectionname1","sectionOrder":0},{"id":17,"labelName":"General Health2","sequnceId":"2","fieldDataType":"plainText","fieldScope":"consumer","label":"How often do you get a health checkup?","labelValues":"Once a year","hint":"Once in 6 months, Once a year","plainTextPropertie":{"minNoOfLetter":20,"maxNoOfLetter":100},"billable":false,"mandatory":true,"scopTarget":{"target":[{"targetUser":"PROVIDER"},{"targetUser":"CONSUMER"}]},"sectionName":"sectionname1","sectionOrder":1},{"id":18,"labelName":"General Health3","sequnceId":"3","fieldDataType":"bool","fieldScope":"consumer","label":"Do you have any chronic diseases?","labelValues":["Yes","No"],"billable":false,"mandatory":false,"scopTarget":{"target":[{"targetUser":"PROVIDER"},{"targetUser":"CONSUMER"}]},"sectionName":"sectionname1","sectionOrder":1},{"id":19,"labelName":"General Health4","sequnceId":"4","fieldDataType":"plainText","fieldScope":"consumer","label":"Do you have any hereditary conditions/diseases?","labelValues":"no","hint":"Diabetes, Hemophilia","plainTextPropertie":{"minNoOfLetter":20,"maxNoOfLetter":100},"billable":false,"mandatory":true,"scopTarget":{"target":[{"targetUser":"PROVIDER"},{"targetUser":"CONSUMER"}]},"sectionName":"sectionname2","sectionOrder":2},{"id":20,"labelName":"General Health5","sequnceId":"5","fieldDataType":"plainText","fieldScope":"consumer","label":"Are you habitual to nicotine, drugs or alcohol?","labelValues":"no","hint":"Smoking, Alcohol drinking","plainTextPropertie":{"minNoOfLetter":20,"maxNoOfLetter":100},"billable":false,"mandatory":true,"scopTarget":{"target":[{"targetUser":"PROVIDER"},{"targetUser":"CONSUMER"}]},"sectionName":"sectionname2","sectionOrder":2}]}]})
-                }, () => {
-                    resolve(false);
+            const providerConsumer = _this.providerConsumerList.filter(user => user.firstName === member.firstName && user.LastName === member.LastName);
+
+            if (providerConsumer && providerConsumer.length > 0) {
+                _this.providerConsumerId = providerConsumer[0].id;
+                resolve(_this.providerConsumerId);
+            } else {
+                let memberId;
+                let parentId;
+
+                if (member.parent) {
+                    memberId = member.id;
+                    parentId = member.parent;
+                } else {
+                    memberId = 0;
+                    parentId = member.id;
+                }
+                _this.shared_services.createProviderCustomer(memberId, parentId, accountId).subscribe(
+                    (providerConsumer: any) => {
+                        _this.providerConsumerList.push(providerConsumer);
+                        resolve(providerConsumer.id);
+                    }
+                )
+            }
+        });
+    }
+    getOneTimeInfo(user, accountId) {
+        const _this = this;
+        console.log("Get one time info:", user);
+        return new Promise(function (resolve, reject) {
+            _this.getProviderCustomerId(user, accountId).then(
+                (providerConsumerId) => {
+                    _this.providerConsumerId = providerConsumerId;
+                    _this.shared_services.getProviderCustomerOnetimeInfo(providerConsumerId, accountId).subscribe(
+                        (questions) => {
+                            resolve(questions);
+                        }, () => {
+                            resolve(false);
+                        }
+                    )
                 }
             )
         })
     }
+    
+
+    // getOneTimeInfo(accountId) {
+    //     const _this = this;
+    //     const activeUser = _this.groupService.getitemFromGroupStorage('ynw-user');
+    //     return new Promise(function (resolve, reject) {
+    //         _this.shared_services.getProviderCustomerOnetimeInfo(activeUser.id, accountId).subscribe(
+    //             (questions) => {
+    //                 resolve(questions);
+    //             }, () => {
+    //                 resolve(false);
+    //             }
+    //         )
+    //     })
+    // }
     getOneTimeQuestionAnswers(event) {
         this.oneTimeInfo = event;
         console.log("OneTimeInfo:", this.oneTimeInfo);
@@ -1648,7 +1588,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     submitOneTimeInfo() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-            if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0) {
+            if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
                 const activeUser = _this.groupService.getitemFromGroupStorage('ynw-user');
                 const dataToSend: FormData = new FormData();
                 if (_this.oneTimeInfo.files) {

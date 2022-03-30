@@ -10,7 +10,6 @@ import { MatDialog } from '@angular/material/dialog';
 // import { ConsumerServices } from '../../../../ynw_consumer/services/consumer-services.service';
 import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { WindowRefService } from '../../../../shared/services/windowRef.service';
-import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.model';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
@@ -587,21 +586,25 @@ export class OrderBillComponent implements OnInit, OnDestroy {
     }
     }
 
-    paywithRazorpay(data: any) {
-        this.prefillmodel.name = data.consumerName;
-        this.prefillmodel.email = data.ConsumerEmail;
-        this.prefillmodel.contact = data.consumerPhoneumber;
-        this.razorModel = new Razorpaymodel(this.prefillmodel);
-        this.razorModel.key = data.razorpayId;
-        this.razorModel.amount = data.amount;
-        this.razorModel.order_id = data.orderId;
-        this.razorModel.name = data.providerName;
-        this.razorModel.description = data.description;
-        this.razorModel.mode=this.selected_payment_mode;
-        this.isClickedOnce = false;
-        //    this.razorModel.image = data.jaldeeLogo;
-        // this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type);
-        this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uuid, null, this.accountId);
+    paywithRazorpay(pData: any) {
+        this.isClickedOnce = true;
+        this.loadingPaytm = true;
+        pData.paymentMode = this.selected_payment_mode;
+        this.razorpayService.initializePayment(pData, this.accountId, this);
+        // this.prefillmodel.name = data.consumerName;
+        // this.prefillmodel.email = data.ConsumerEmail;
+        // this.prefillmodel.contact = data.consumerPhoneumber;
+        // this.razorModel = new Razorpaymodel(this.prefillmodel);
+        // this.razorModel.key = data.razorpayId;
+        // this.razorModel.amount = data.amount;
+        // this.razorModel.order_id = data.orderId;
+        // this.razorModel.name = data.providerName;
+        // this.razorModel.description = data.description;
+        // this.razorModel.mode=this.selected_payment_mode;
+        // this.isClickedOnce = false;
+        // //    this.razorModel.image = data.jaldeeLogo;
+        // // this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type);
+        // this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uuid, null, this.accountId);
 
     }
     payWithPayTM(pData: any, accountId: any) {
@@ -615,8 +618,19 @@ export class OrderBillComponent implements OnInit, OnDestroy {
         this.loadingPaytm = false;
         this.cdRef.detectChanges();
     }
-    transactionCompleted(response, payload, accountId) {
-        if (response.STATUS == 'TXN_FAILURE') {
+    finishTransaction(status) {
+        if (status) {
+            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+                        const navigationExtras: NavigationExtras = {
+                            queryParams: {
+                                uuid: this.uuid,
+                                //  accountId: this.accountId,
+                                type: 'order',
+                                'paidStatus': true
+                            }
+                        };
+                        this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+        } else {
             this.isClickedOnce = false;
             this.loadingPaytm = false;
             this.cdRef.detectChanges();
@@ -630,28 +644,38 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                 }
             };
             this.ngZone.run(() => this.router.navigate(['consumer', 'order', 'order-bill'], navigationExtras));
-        } else if (response.STATUS == 'TXN_SUCCESS') {
-            this.paytmService.updatePaytmPay(payload, accountId)
-                .then((data) => {
-                    if (data) {
-                        this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-                        const navigationExtras: NavigationExtras = {
-                            queryParams: {
-                                uuid: this.uuid,
-                                //  accountId: this.accountId,
-                                type: 'order',
-                                'paidStatus': true
-                            }
-                        };
-                        this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
-                    }
-                },
-                error=>{
-                    this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });  
-                })
         }
-
-        //  this.ngZone.run(() => this.router.navigate(['consumer'] ,navigationExtras));
+    }
+    transactionCompleted(response, payload, accountId) {
+        if (response.SRC) {
+            if (response.STATUS == 'TXN_SUCCESS') {
+                this.razorpayService.updateRazorPay(payload, accountId, 'consumer')
+                    .then((data) => {
+                        if (data) {
+                            this.finishTransaction(true);
+                        }
+                    },
+                        error => {
+                            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+                        })
+            } else if (response.STATUS == 'TXN_FAILURE') {
+                this.finishTransaction(false);
+            }
+        } else {
+            if (response.STATUS == 'TXN_SUCCESS') {
+                this.paytmService.updatePaytmPay(payload, accountId)
+                    .then((data) => {
+                        if (data) {
+                            this.finishTransaction(true);
+                        }
+                    },
+                        error => {
+                            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+                        })
+            } else if (response.STATUS == 'TXN_FAILURE') {
+                this.finishTransaction(false);
+            }
+        }
     }
     paytmPayment() {
         this.isClickedOnce = true;

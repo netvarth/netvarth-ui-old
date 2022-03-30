@@ -46,10 +46,10 @@ label {
   font-weight: 700 !important;
 }
 
-::ng-deep .consumer-virtual-serviceinfo-component app-field-error-display .sts-msg.error {
+/* ::ng-deep .consumer-virtual-serviceinfo-component app-field-error-display .sts-msg.error {
   font-weight: 700 !important;
   color: red !important;
-}
+} */
 
 .mat-dialog-actions button {
   margin-bottom: 0 !important;
@@ -259,10 +259,10 @@ ul.bus-actions li a.lnk {
   border: 1px solid #ddd !important;
   margin-top: 10px;
 }
-
+/* 
 .service-container {
   margin: auto;
-}
+} */
 
 .bus.card h5, p.pro-desc {
   margin-bottom: 0px !important;
@@ -1105,22 +1105,22 @@ ul.bus-actions li a.lnk {
 ul.member-ul {
   list-style: none;
 }
-.servicesdiv {
+/* .servicesdiv {
   border: 1px solid #ddd!important;
   margin-bottom: 5px;
   padding:5px !important
 }
 .servicesdiv h6 {
   margin-top: 10px;
-}
+} */
 /* .div-selected-outline {
   border: 3px solid #334b99!important;
   color: #334b99!important;
 } */
 
-.servicesdiv .img-cont {
+/* .servicesdiv .img-cont {
   width:30px !important
-}
+} */
 .pad-rt-0 {
   padding-right: 0 !important;
 }

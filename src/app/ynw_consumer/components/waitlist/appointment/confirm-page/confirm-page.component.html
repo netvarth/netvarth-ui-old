@@ -79,7 +79,9 @@
                                             <td width="48%" align="right">Appointment Time </td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{appointment.appmtDate | date: newDateFormat }},
-                                                {{getSingleTime(appointment.appmtTime)}}</td>
+                                                <span *ngIf="selectedApptsTime">{{selectedApptsTime}}</span>
+                                                <span *ngIf="!selectedApptsTime">{{getSingleTime(appointment.appmtTime)}}</span>
+                                               </td>
                                         </tr>
                                         <tr>
                                             <td width="48%" align="right">Booking Id</td>
@@ -113,7 +115,7 @@
                                 <div style="text-align: center;" class="green mgn-up-10" *ngIf="appointment.apptStatus">
                                     Appointment {{appointment.apptStatus}}
                                 </div>
-                                <div class="txt-align-center" style="font-weight: 600;"> Check your status at:
+                                <div class="txt-align-center" *ngIf="!customId" style="font-weight: 600;"> Check your status at:
                                     <a href="{{path}}status/{{appointment.appointmentEncId}}" target="_blank">
                                         {{path}}status/{{appointment.appointmentEncId}}</a>
                                 </div>                               

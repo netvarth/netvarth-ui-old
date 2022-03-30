@@ -8,7 +8,7 @@ const routes: Routes = [
     { path: 'order-history', loadChildren: () => import('./order-history/order-history.module').then(m => m.OrderHistoryModule) },
     { path: 'order-payments', loadChildren: () => import('./order-payment-details/order-payment-details.module').then(m => m.OrderPaymentDetailsModule) },
     { path: 'order-bill', loadChildren: () => import('./order-bill/order-bill.module').then(m => m.OrderBillModule) },
-    { path: 'payment', loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule) }
+    // { path: 'payment', loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule) }
   ];
 @NgModule({
     declarations: [

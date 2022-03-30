@@ -361,4 +361,25 @@ export class DateTimeProcessor {
     const dtoday = yyyy + '-' + cmon + '-' + cday;
     return dtoday;
   }
+
+  isFutureDate(serverDate, appmtDate) {
+    let today: any;
+    today = this.getToday(serverDate);
+    const dt0 = today.toLocaleString(this.REGION_LANGUAGE, { timeZone: this.TIME_ZONE_REGION });
+    const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
+    const date2 = new Date(dt2);
+    const dte0 = appmtDate.toLocaleString(this.REGION_LANGUAGE, { timeZone: this.TIME_ZONE_REGION });
+    const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
+    const datee2 = new Date(dte2);
+    if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+        return true;
+    } else {
+        return false;
+    }
+  }
+
+  getMomentDate(pdate) {
+    return moment(pdate, 'YYYY-MM-DD HH:mm').format();
+  }
+
 }

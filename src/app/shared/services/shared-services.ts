@@ -1140,8 +1140,9 @@ export class SharedServices {
     const url = 'consumer/questionnaire/validate' + '?account=' + accountId;
     return this.servicemeta.httpPut(url, body);
   }
-  validateConsumerOneTimeQuestionnaire(body, accountId) {
-    const url = 'consumer/questionnaire/validate/onetimequestionnaire' + '?account=' + accountId;
+
+  validateConsumerOneTimeQuestionnaire(body, accountId, providerConsumerId) {
+    const url = 'consumer/questionnaire/validate/onetimequestionnaire/' + providerConsumerId + '?account=' + accountId;
     return this.servicemeta.httpPost(url, body);
   }
   validateConsumerQuestionnaireResbumit(body, accountId) {
@@ -1149,11 +1150,24 @@ export class SharedServices {
     return this.servicemeta.httpPut(url, body);
   }
 
-  getCustomerOnetimeInfo(accountId) {
-    const url = 'consumer/providerCustomer/' + accountId;
-    // {account}
+  // getCustomerOnetimeInfo(accountId) {
+  //   const url = 'consumer/providerCustomer/' + accountId;
+  //   // {account}
+  //   return this.servicemeta.httpGet(url);
+  // }
+  createProviderCustomer(memberId, parentId, accountId) {
+    const url = 'consumer/familyMember/providerconsumer/' + memberId + '/' + parentId+ "?account=" + accountId;
+    return this.servicemeta.httpPost(url);
+  }
+  getProviderCustomerList(parentId, accountId) {
+    const url = 'consumer/familyMember/providerconsumer/' + parentId + "?account=" + accountId;
     return this.servicemeta.httpGet(url);
   }
+  getProviderCustomerOnetimeInfo(jaldeeId, accountId) {
+    const url = 'consumer/providerCustomer/' +jaldeeId + "?account=" + accountId;
+    return this.servicemeta.httpGet(url);
+  }
+
   submitCustomerOnetimeInfo(body, userId, accountId) {
     const url = 'consumer/questionnaire/' + userId + '?account=' + accountId;
     return this.servicemeta.httpPost(url, body);

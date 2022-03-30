@@ -1,0 +1,38 @@
+<div class="no-padding">
+    <h3 class="text-left text-primary service custom">
+        <b>{{service.name}}</b>
+    </h3>
+    <div class="" style="font-size: 1rem;">
+        <p class="module-nomargin line-clamp no-margin"
+            *ngIf="service && service.description && !showmoreSpec" (click)="showSpec()">
+            {{service.description}}
+        </p>
+        <p *ngIf="service && service.description && showmoreSpec" (click)="showSpec()">
+            {{service.description}}</p>
+    </div>
+    <div class="">
+        <div class="callingmode mgn-lt-10"
+            *ngIf="service.serviceType==='virtualService' && showVirtualInfo">
+            <div class="mgn-bt-10 mgn-up-5">
+                <div class="" *ngFor="let mode of service.virtualCallingModes;let i = index">
+                    <div style="visibility: hidden;">
+                        {{virtualModes[mode.callingMode]}}
+                    </div>
+                    <div class="cal-mod-instrct pre-check-title color-grey" *ngIf="mode.callingMode">
+                        {{mode.instructions}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="prenotes mgn-bt-10" *ngIf="service.preInfoEnabled">
+            <div class="preinfo-title">
+                {{service.preInfoTitle}}
+            </div>
+            <div>{{(readMore) ? service.preInfoText : service.preInfoText | slice:0:200}}
+                <a class="changeitem pointer-cursor mgn-lt-5 mgn-rt-20 pull-right" (click)="showText()"
+                    *ngIf="service.preInfoText.length > 200">
+                    {{(readMore) ? 'less': 'more'}}</a>
+            </div>
+        </div>
+    </div>
+</div>

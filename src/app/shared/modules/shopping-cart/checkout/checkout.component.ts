@@ -1824,18 +1824,20 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   paywithRazorpay(pData: any) {
-    this.prefillmodel.name = pData.consumerName;
-    this.prefillmodel.email = pData.ConsumerEmail;
-    this.prefillmodel.contact = pData.consumerPhoneumber;
-    this.razorModel = new Razorpaymodel(this.prefillmodel);
-    this.razorModel.key = pData.razorpayId;
-    this.razorModel.amount = pData.amount;
-    this.razorModel.order_id = pData.orderId;
-    this.razorModel.name = pData.providerName;
-    this.razorModel.mode = this.selected_payment_mode;
-    this.isClickedOnce = false;
-    this.razorModel.description = pData.description;
-    this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'order_prepayment', this.trackUuid, this.livetrack, this.account_id, this.cartDetails.advanceAmount, this.customId);
+    pData.paymentMode = this.selected_payment_mode;
+    this.razorpayService.initializePayment(pData, this.account_id, this);
+    // this.prefillmodel.name = pData.consumerName;
+    // this.prefillmodel.email = pData.ConsumerEmail;
+    // this.prefillmodel.contact = pData.consumerPhoneumber;
+    // this.razorModel = new Razorpaymodel(this.prefillmodel);
+    // this.razorModel.key = pData.razorpayId;
+    // this.razorModel.amount = pData.amount;
+    // this.razorModel.order_id = pData.orderId;
+    // this.razorModel.name = pData.providerName;
+    // this.razorModel.mode = this.selected_payment_mode;
+    // this.isClickedOnce = false;
+    // this.razorModel.description = pData.description;
+    // this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'order_prepayment', this.trackUuid, this.livetrack, this.account_id, this.cartDetails.advanceAmount, this.customId);
     // this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'checkin_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId);
 
   }
@@ -1844,46 +1846,38 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     pData.paymentMode = this.selected_payment_mode;
     this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
   }
-  transactionCompleted(response, payload, accountId) {
-    if (response.STATUS == 'TXN_SUCCESS') {
-      this.paytmService.updatePaytmPay(payload, accountId)
-        .then((data) => {
-          if (data) {
-            this.isClickedOnce = false;
-            this.lStorageService.removeitemfromLocalStorage('order_sp');
-            this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
-            this.lStorageService.removeitemfromLocalStorage('order_spId');
-            this.lStorageService.removeitemfromLocalStorage('order');
-            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-            if (this.from) {
-              let queryParams = {
-                'source': 'order',
-              };
-              let navigationExtras: NavigationExtras = {
-                queryParams: queryParams
-              }
-              this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
-            } else {
-              let queryParams = {
-                'source': 'order',
-              };
-              if (this.customId) {
-                queryParams['customId'] = this.customId;
-                queryParams['accountId'] = this.account_id;
-              }
-              let navigationExtras: NavigationExtras = {
-                queryParams: queryParams
-              }
-              this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
-            }
-          }
-        },
-          error => {
-            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-          })
 
-    } else if (response.STATUS == 'TXN_FAILURE') {
+  finishCheckout(status) {
+    if (status) {
       this.isClickedOnce = false;
+      this.lStorageService.removeitemfromLocalStorage('order_sp');
+      this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+      this.lStorageService.removeitemfromLocalStorage('order_spId');
+      this.lStorageService.removeitemfromLocalStorage('order');
+      this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+      if (this.from) {
+        let queryParams = {
+          'source': 'order',
+        };
+        let navigationExtras: NavigationExtras = {
+          queryParams: queryParams
+        }
+        this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+      } else {
+        let queryParams = {
+          'source': 'order',
+        };
+        if (this.customId) {
+          queryParams['customId'] = this.customId;
+          queryParams['accountId'] = this.account_id;
+        }
+        let navigationExtras: NavigationExtras = {
+          queryParams: queryParams
+        }
+        this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+      }
+    } else {
+        this.isClickedOnce = false;
       this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
       if (this.from) {
         let queryParams = {
@@ -1905,6 +1899,38 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           queryParams: queryParams
         }
         this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+      }
+    }
+}
+
+  transactionCompleted(response, payload, accountId) {
+    if (response.SRC) {
+      if (response.STATUS == 'TXN_SUCCESS') {
+        this.razorpayService.updateRazorPay(payload, accountId, 'consumer')
+          .then((data) => {
+            if (data) {
+              this.finishCheckout(true);
+            }
+          },
+            error => {
+              this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+            })
+      } else if (response.STATUS == 'TXN_FAILURE') {
+        this.finishCheckout(false);
+      }
+    } else {
+      if (response.STATUS == 'TXN_SUCCESS') {
+        this.paytmService.updatePaytmPay(payload, accountId)
+          .then((data) => {
+            if (data) {
+              this.finishCheckout(true);
+            }
+          },
+            error => {
+              this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+            })
+      } else if (response.STATUS == 'TXN_FAILURE') {
+        this.finishCheckout(false);
       }
     }
   }

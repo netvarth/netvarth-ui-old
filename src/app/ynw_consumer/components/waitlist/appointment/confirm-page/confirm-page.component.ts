@@ -29,6 +29,7 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   accountId;
   customId;
   from: any;
+  selectedApptsTime: any;
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public sharedFunctionobj: SharedFunctions,
@@ -45,6 +46,10 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
               this.apiloading = false;
             });
         }
+        if (params.selectedApptsTime) {
+          this.selectedApptsTime = params.selectedApptsTime;
+        }
+       
         if(params.isFrom){
           this.from = params.isFrom;
         }
