@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { RouterModule, Routes } from "@angular/router";
+import { CalendarService } from "../../../../../shared/services/calendar-service";
 import { HeaderModule } from "../../../../../shared/modules/header/header.module";
 import { LoadingSpinnerModule } from "../../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { ConfirmPageComponent } from "./confirm-page.component";
@@ -17,6 +18,9 @@ const routes: Routes = [
         MatTooltipModule
     ],
     exports:[ConfirmPageComponent],
-    declarations:[ConfirmPageComponent]
+    declarations:[ConfirmPageComponent],
+    providers: [
+        CalendarService
+    ]
 })
 export class ConsumerApptConfirmModule{}

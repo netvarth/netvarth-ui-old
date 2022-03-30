@@ -1631,9 +1631,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             if (this.customId) {
                                 queryParams['customId'] = this.customId;
                             }
+                            if (this.selectedSlots.length > 1) {
+                                queryParams['selectedApptsTime'] = this.selectedApptsTime;
+                                queryParams['selectedSlots'] = JSON.stringify(this.selectedSlots);
+                            }
                             let navigationExtras: NavigationExtras = {
                                 queryParams: queryParams
                             };
+                            
                             this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras);
                         }
                     },
@@ -1776,6 +1781,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
             if (this.selectedSlots.length > 1) {
                 queryParams['selectedApptsTime'] = this.selectedApptsTime;
+                queryParams['selectedSlots'] = JSON.stringify(this.selectedSlots);
             }
             // if (this.from) {
             //     queryParams['isFrom'] = this.from;
@@ -1925,6 +1931,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
             if (this.from) {
                 queryParams['isFrom'] = this.from;
+            }
+            if (this.selectedSlots.length > 1) {
+                queryParams['selectedApptsTime'] = this.selectedApptsTime;
+                queryParams['selectedSlots'] = JSON.stringify(this.selectedSlots);
             }
             let navigationExtras: NavigationExtras = {
                 queryParams: queryParams

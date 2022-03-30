@@ -1566,21 +1566,6 @@ getProviderCustomerId(member, accountId) {
             )
         })
     }
-    
-
-    // getOneTimeInfo(accountId) {
-    //     const _this = this;
-    //     const activeUser = _this.groupService.getitemFromGroupStorage('ynw-user');
-    //     return new Promise(function (resolve, reject) {
-    //         _this.shared_services.getProviderCustomerOnetimeInfo(activeUser.id, accountId).subscribe(
-    //             (questions) => {
-    //                 resolve(questions);
-    //             }, () => {
-    //                 resolve(false);
-    //             }
-    //         )
-    //     })
-    // }
     getOneTimeQuestionAnswers(event) {
         this.oneTimeInfo = event;
         console.log("OneTimeInfo:", this.oneTimeInfo);

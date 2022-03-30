@@ -8,13 +8,14 @@ import { WordProcessor } from '../../../../../shared/services/word-processor.ser
 import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
 import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
+import { CalendarService } from '../../../../../shared/services/calendar-service';
 
 @Component({
   selector: 'app-confirm-page',
   templateUrl: './confirm-page.component.html',
   styleUrls: ['./confirm-page.component.css']
 })
-export class ConfirmPageComponent implements OnInit,OnDestroy {
+export class ConfirmPageComponent implements OnInit, OnDestroy {
   infoParams;
   appointment: any = [];
   path = projectConstantsLocal.PATH;
@@ -24,23 +25,28 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   apiloading = false;
   provider_label;
   type = 'appt';
-  private subs=new SubSink();
+  private subs = new SubSink();
   theme: any;
   accountId;
   customId;
   from: any;
   selectedApptsTime: any;
+
+  calendarEvents;
+  selectedSlots: any;
+
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public sharedFunctionobj: SharedFunctions,
     private wordProcessor: WordProcessor, private lStorageService: LocalStorageService,
-    private dateTimeProcessor: DateTimeProcessor) {
+    private dateTimeProcessor: DateTimeProcessor,
+    private calendarService: CalendarService) {
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
-    this.subs.sink=this.route.queryParams.subscribe(
+    this.subs.sink = this.route.queryParams.subscribe(
       params => {
         this.infoParams = params;
         if (params.uuid && params.account_id) {
-         this.subs.sink= this.shared_services.getAppointmentByConsumerUUID(params.uuid, params.account_id).subscribe(
+          this.subs.sink = this.shared_services.getAppointmentByConsumerUUID(params.uuid, params.account_id).subscribe(
             (appt: any) => {
               this.appointment = appt;
               this.apiloading = false;
@@ -49,8 +55,8 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
         if (params.selectedApptsTime) {
           this.selectedApptsTime = params.selectedApptsTime;
         }
-       
-        if(params.isFrom){
+
+        if (params.isFrom) {
           this.from = params.isFrom;
         }
         if (params.type) {
@@ -60,53 +66,98 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
           this.customId = params.customId;
           this.accountId = params.account_id;
         }
+
+        if (params.selectedSlots) {
+          this.selectedSlots = JSON.parse(params.selectedSlots);
+        }
         // if(params.account_id){
-          
+
         // }
-        if(params.theme){
-          this.theme=params.theme;
+        if (params.theme) {
+          this.theme = params.theme;
         }
       });
   }
 
+  addToCalendar() {
+    const events = [];
+    let eventInfo;
+      
+    if (this.selectedApptsTime) {
+      console.log(this.selectedSlots);
+      for (let i=0; i< this.selectedSlots.length; i++) {
+        let times = this.selectedSlots[i].time.split("-");
+        const startTime = times[0];
+        const endTime = times[1];
+        const startDate = new Date(this.appointment.appmtDate + 'T' + startTime);
+        const endDate = new Date(this.appointment.appmtDate + 'T' + endTime);
+        eventInfo = {
+          start: startDate,
+          end: endDate,
+          location: this.appointment.location?.place,
+          description: 'Appointment Details',
+          summary: 'Appointment Confirmed'
+        }
+        events.push(eventInfo);
+      }
+    } else {
+      let times = this.appointment.appmtTime.split("-");
+      const startTime = times[0];
+      const endTime = times[1];
+      const startDate = new Date(this.appointment.appmtDate + 'T' + startTime);
+      const endDate = new Date(this.appointment.appmtDate + 'T' + endTime);
+      eventInfo = {
+        start: startDate,
+        end: endDate,
+        location: this.appointment.location?.place,
+        description: 'Appointment Details',
+        summary: 'Appointment Confirmed'
+      }
+      events.push(eventInfo);
+    }
+    this.calendarEvents = this.calendarService.createEvent(events);
+    this.calendarService.download('event.ics', this.calendarEvents);
+  }
+
   ngOnInit() {
   }
+
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
   okClick(appt) {
     if (appt.service.livetrack && this.type !== 'reschedule') {
-      let queryParams= {
+      let queryParams = {
         account_id: this.infoParams.account_id,
-        theme:this.theme 
-    }
-    if (this.customId) {
-      queryParams['customId'] = this.customId;
-    }
-    if(this.from){
-      queryParams['isFrom'] = this.from;
-    }
-    let navigationExtras: NavigationExtras = {
+        theme: this.theme
+      }
+      if (this.customId) {
+        queryParams['customId'] = this.customId;
+      }
+      if (this.from) {
+        queryParams['isFrom'] = this.from;
+      }
+      let navigationExtras: NavigationExtras = {
         queryParams: queryParams
-    };
-    this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], navigationExtras);
+      };
+      this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], navigationExtras);
     } else {
-      let queryParams= {
-        theme:this.theme,
+      let queryParams = {
+        theme: this.theme,
         accountId: this.accountId
       }
       if (this.customId) {
-          queryParams['customId'] = this.customId;
+        queryParams['customId'] = this.customId;
       }
       let navigationExtras: NavigationExtras = {
-          queryParams: queryParams
+        queryParams: queryParams
       };
-      if(this.from){
+      if (this.from) {
         this.router.navigate(['consumer']);
-      }else{
+      } else {
         this.router.navigate(['consumer'], navigationExtras);
       }
-      
+
     }
     this.lStorageService.setitemonLocalStorage('orderStat', false);
   }
