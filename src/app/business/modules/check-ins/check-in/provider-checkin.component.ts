@@ -35,6 +35,7 @@ export class ProviderCheckinComponent implements OnInit {
     no_services_avail_cap = Messages.NO_SER_AVAIL_CAP;
     add_change_member = Messages.ADD_CHANGE_MEMBER;
     date_cap = Messages.DATE_CAP;
+    dates_cap = Messages.DATES_CAP;
     serv_time_window_cap = Messages.SERV_TIME_WINDOW_CAP;
     enter_party_size_cap = Messages.ENTER_PARTY_SIZE;
     have_note_click_here = '';

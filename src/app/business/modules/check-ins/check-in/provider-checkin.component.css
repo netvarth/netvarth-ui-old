@@ -309,7 +309,12 @@ align-items: center;
   font-size: 25px!important;
   font-weight: bold!important;
 }
-
+.consumer-names
+{
+  color: #1E4079!important;
+  font-size: 20px!important;
+  font-weight: bold!important;
+}
 .consumer-id
 {
   color: #1E4079!important;

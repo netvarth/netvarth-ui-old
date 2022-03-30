@@ -13,3 +13,10 @@ label.gender {
 .user-create-window .ynw-common-form-nm .mob-prefix span{
     padding: 15px 10px 0px 5px !important;
 }
+.sidebar-bar .sidebar{
+    height: 500px !important;
+    overflow-y: visible !important;
+    overflow-x: hidden;
+  
+}
+

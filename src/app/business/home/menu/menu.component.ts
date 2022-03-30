@@ -40,6 +40,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   showMenu = false;
   enquiryCount;
   isadminPrivilege: any;
+  isShowCsmrDataBase:any;
   apptstatus: any;
   checkinStatus:any;
   constructor(
@@ -203,8 +204,10 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
+    console.log("User is :",user);
     this.accountType = user.accountType;
     this.isadminPrivilege = user.adminPrivilege
+    this.isShowCsmrDataBase = user.showCsmrDataBase;
     this.domain = user.sector;
     this.getGlobalSettings();
     this.getBusinessdetFromLocalstorage();

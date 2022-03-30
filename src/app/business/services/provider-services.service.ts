@@ -523,6 +523,10 @@ export class ProviderServices {
     const url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lon + '&key=' + projectConstants.GOOGLEAPIKEY + '&sensor=false';
     return this.servicemeta.httpGet(url);
   }
+  getGoogleAddEventToCalender(data ,header) {
+    const url = 'https://www.googleapis.com/auth/calendar';
+    return this.servicemeta.httpPost(url , data , header);
+  }
   getGoogleMapLocationGeometry(address) {
     const url = 'https://maps.google.com/maps/api/geocode/json?address=' + address + '&sensor=false';
     return this.servicemeta.httpGet(url);

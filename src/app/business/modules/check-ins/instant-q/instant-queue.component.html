@@ -10,7 +10,7 @@
                                 This enables you to instantly make yourself available today for consultation within the
                                 time range you choose.
                         </div>
-                        <form [formGroup]="instantQForm" novalidate (ngSubmit)="instantQForm.valid &&
+                        <form [formGroup]="instantQForm" novalidate (ngSubmit)="
                                 onSubmit(instantQForm.value)">
                                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                                 <div class="timings" *ngIf="!loading">
@@ -67,7 +67,7 @@
                                         <button type="button" class="btn cancel-button"
                                                 (click)="close()">Cancel</button>
                                         <button class="btn confirm-button"
-                                                [disabled]="!instantQForm.valid || loading">Confirm</button>
+                                                [disabled]="loading">Confirm</button>
                                 </div>
                         </form>
                 </div>

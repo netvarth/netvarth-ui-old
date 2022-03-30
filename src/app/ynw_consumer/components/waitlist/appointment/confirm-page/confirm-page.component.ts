@@ -52,23 +52,21 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
               this.apiloading = false;
             });
         }
-        if (params.selectedApptsTime) {
-          this.selectedApptsTime = params.selectedApptsTime;
-        }
-
         if (params.isFrom) {
           this.from = params.isFrom;
         }
         if (params.type) {
           this.type = params.type;
         }
+        if (params.selectedApptsTime) {
+          this.selectedApptsTime = params.selectedApptsTime;
+        }
+        if (params.selectedSlots) {
+          this.selectedSlots = JSON.parse(params.selectedSlots);
+        }
         if (params.customId) {
           this.customId = params.customId;
           this.accountId = params.account_id;
-        }
-
-        if (params.selectedSlots) {
-          this.selectedSlots = JSON.parse(params.selectedSlots);
         }
         // if(params.account_id){
 
@@ -82,8 +80,11 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
   addToCalendar() {
     const events = [];
     let eventInfo;
-      
+  
     if (this.selectedApptsTime) {
+      if(this.appointment.providerAccount && this.appointment.providerAccount.businessName){
+        this.businessName = this.appointment.providerAccount.businessName;
+      }
       console.log(this.selectedSlots);
       for (let i=0; i< this.selectedSlots.length; i++) {
         let times = this.selectedSlots[i].time.split("-");
@@ -95,28 +96,31 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
           start: startDate,
           end: endDate,
           location: this.appointment.location?.place,
-          description: 'Appointment Details',
-          summary: 'Appointment Confirmed'
+          description : 'Service provider : ' + this.businessName,
+          summary: 'Booking with - ' + this.businessName
         }
         events.push(eventInfo);
       }
     } else {
+      if(this.appointment.providerAccount && this.appointment.providerAccount.businessName){
+        this.businessName = this.appointment.providerAccount.businessName;
+      }
       let times = this.appointment.appmtTime.split("-");
       const startTime = times[0];
       const endTime = times[1];
       const startDate = new Date(this.appointment.appmtDate + 'T' + startTime);
       const endDate = new Date(this.appointment.appmtDate + 'T' + endTime);
+     
       eventInfo = {
         start: startDate,
         end: endDate,
+        description : 'Service provider : ' + this.businessName,
         location: this.appointment.location?.place,
-        description: 'Appointment Details',
-        summary: 'Appointment Confirmed'
+        summary: 'Booking with - ' + this.businessName,
       }
       events.push(eventInfo);
     }
     this.calendarEvents = this.calendarService.createEvent(events);
-    // window.open("data:text/calendar;charset=utf8;" + escape(this.calendarEvents));
     this.calendarService.download('event.ics', this.calendarEvents);
   }
 
@@ -127,40 +131,81 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
   okClick(appt) {
-    if (appt.service.livetrack && this.type !== 'reschedule') {
-      let queryParams = {
-        account_id: this.infoParams.account_id,
-        theme: this.theme
+    if(this.calender){
+      this.addToCalendar();
+      // if (appt.service.livetrack && this.type !== 'reschedule') {
+      //   let queryParams= {
+      //     account_id: this.infoParams.account_id,
+      //     theme:this.theme 
+      // }
+      // if (this.customId) {
+      //   queryParams['customId'] = this.customId;
+      // }
+      // if(this.from){
+      //   queryParams['isFrom'] = this.from;
+      // }
+      // let navigationExtras: NavigationExtras = {
+      //     queryParams: queryParams
+      // };
+      // this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], navigationExtras);
+      // } else {
+      //   let queryParams= {
+      //     theme:this.theme,
+      //     accountId: this.accountId
+      //   }
+      //   if (this.customId) {
+      //       queryParams['customId'] = this.customId;
+      //   }
+      //   let navigationExtras: NavigationExtras = {
+      //       queryParams: queryParams
+      //   };
+      //   if(this.from){
+      //     this.router.navigate(['consumer']);
+      //   }else{
+      //     this.router.navigate(['consumer'], navigationExtras);
+      //   }
+        
+      // }
+      // this.lStorageService.setitemonLocalStorage('orderStat', false);
+    }
+    else{
+      if (appt.service.livetrack && this.type !== 'reschedule') {
+        let queryParams= {
+          account_id: this.infoParams.account_id,
+          theme:this.theme 
       }
       if (this.customId) {
         queryParams['customId'] = this.customId;
       }
-      if (this.from) {
+      if(this.from){
         queryParams['isFrom'] = this.from;
       }
       let navigationExtras: NavigationExtras = {
-        queryParams: queryParams
+          queryParams: queryParams
       };
       this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], navigationExtras);
-    } else {
-      let queryParams = {
-        theme: this.theme,
-        accountId: this.accountId
-      }
-      if (this.customId) {
-        queryParams['customId'] = this.customId;
-      }
-      let navigationExtras: NavigationExtras = {
-        queryParams: queryParams
-      };
-      if (this.from) {
-        this.router.navigate(['consumer']);
       } else {
-        this.router.navigate(['consumer'], navigationExtras);
+        let queryParams= {
+          theme:this.theme,
+          accountId: this.accountId
+        }
+        if (this.customId) {
+            queryParams['customId'] = this.customId;
+        }
+        let navigationExtras: NavigationExtras = {
+            queryParams: queryParams
+        };
+        if(this.from){
+          this.router.navigate(['consumer']);
+        }else{
+          this.router.navigate(['consumer'], navigationExtras);
+        }
+        
       }
-
+      this.lStorageService.setitemonLocalStorage('orderStat', false);
     }
-    this.lStorageService.setitemonLocalStorage('orderStat', false);
+   
+    
   }
   getSingleTime(slot) {
     if (slot) {

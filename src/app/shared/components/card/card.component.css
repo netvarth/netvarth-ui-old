@@ -1196,6 +1196,9 @@ width: 150px;
     margin-right: 10px;
     float: right;
     text-align: right;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
 }
 .history .box1 {
     width: 65%;

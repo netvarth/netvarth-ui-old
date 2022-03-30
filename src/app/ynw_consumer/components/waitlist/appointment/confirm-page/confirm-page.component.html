@@ -111,6 +111,10 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <div style="text-align: center;" class=" mgn-up-10">
+                                    <mat-checkbox [(ngModel)]="calender">Add to calender</mat-checkbox><br>
+                                    <span class="settings_info" *ngIf="calender">(Open the downloaded file to add  booking to your calendar)</span>
+                                </div>
                                 <!-- <div class="book-status chkntoknappt-details"> Current status </div> -->
                                 <div style="text-align: center;" class="green mgn-up-10" *ngIf="appointment.apptStatus">
                                     Appointment {{appointment.apptStatus}}
