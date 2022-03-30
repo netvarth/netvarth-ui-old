@@ -2173,9 +2173,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 let save_slot = '';
                 _this.selected_slot.forEach(function (_filter) {
                     _this.selected_Schedule_id = _filter.scheduleId;
-                    save_slot = save_slot + _filter.displayTime + ',';
+                    save_slot = save_slot + _filter.displayTime + ',' + ' ';
                 });
-                save_slot = save_slot.substring(0, save_slot.length - 1)
+                save_slot = save_slot.substring(0, save_slot.length - 2)
                 _this.selectedApptsTime = save_slot;
                 _this.saveCheckin('next');
             }
@@ -2438,9 +2438,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 //    }); 
                 let save_slot = '';
                 this.selected_slot.forEach(function (_filter) {
-                    save_slot = save_slot + _filter.displayTime + ',';
+                    save_slot = save_slot + _filter.displayTime + ',' + ' ';
                 });
-                save_slot = save_slot.substring(0, save_slot.length - 1)
+                save_slot = save_slot.substring(0, save_slot.length - 2)
                 this.selectedApptsTime = save_slot;
 
                 if (this.type == 'reschedule' && this.appointment.service && this.appointment.service.priceDynamic) {
