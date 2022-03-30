@@ -2552,6 +2552,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
              if (this.selectedApptsTime) {
                 queryParams['selectedApptsTime'] = this.selectedApptsTime;
             }
+            if (this.selected_slot.length > 1) {
+                queryParams['selectedSlots'] = JSON.stringify(this.selected_slot);
+            }
             let navigationExtras: NavigationExtras = {
                 queryParams: queryParams
             };

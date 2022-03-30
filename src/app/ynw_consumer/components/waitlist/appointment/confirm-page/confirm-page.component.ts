@@ -14,6 +14,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction'; 
 import { ProviderServices } from '../../../../../../../src/app/business/services/provider-services.service';
 import { LocalStorageService } from '../../../../../../../src/app/shared/services/local-storage.service';
+import { CalendarService } from '../../../../../../../src/app/shared/services/calendar-service';
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
   interactionPlugin
@@ -41,10 +42,14 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   calendarOptions: CalendarOptions;
   calender = false;
   selectedApptsTime: any;
+  calendarEvents;
+  selectedSlots: any;
+
   constructor(
     public route: ActivatedRoute, public router: Router,
     private lStorageService: LocalStorageService,
     public provider_services: ProviderServices,
+    private calendarService: CalendarService,
     private shared_services: SharedServices, public sharedFunctionobj: SharedFunctions,
     private wordProcessor: WordProcessor,
     // private http:HttpClient,
@@ -71,6 +76,9 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
         if (params.selectedApptsTime) {
           this.selectedApptsTime = params.selectedApptsTime;
         }
+        if (params.selectedSlots) {
+          this.selectedSlots = JSON.parse(params.selectedSlots);
+        }
         if (params.customId) {
           this.customId = params.customId;
           this.accountId = params.account_id;
@@ -83,7 +91,45 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
         }
       });
   }
-
+  addToCalendar() {
+    const events = [];
+    let eventInfo;
+      
+    if (this.selectedApptsTime) {
+      console.log(this.selectedSlots);
+      for (let i=0; i< this.selectedSlots.length; i++) {
+        let times = this.selectedSlots[i].time.split("-");
+        const startTime = times[0];
+        const endTime = times[1];
+        const startDate = new Date(this.appointment.appmtDate + 'T' + startTime);
+        const endDate = new Date(this.appointment.appmtDate + 'T' + endTime);
+        eventInfo = {
+          start: startDate,
+          end: endDate,
+          location: this.appointment.location?.place,
+          description: 'Appointment Details',
+          summary: 'Appointment Confirmed'
+        }
+        events.push(eventInfo);
+      }
+    } else {
+      let times = this.appointment.appmtTime.split("-");
+      const startTime = times[0];
+      const endTime = times[1];
+      const startDate = new Date(this.appointment.appmtDate + 'T' + startTime);
+      const endDate = new Date(this.appointment.appmtDate + 'T' + endTime);
+      eventInfo = {
+        start: startDate,
+        end: endDate,
+        location: this.appointment.location?.place,
+        description: 'Appointment Details',
+        summary: 'Appointment Confirmed'
+      }
+      events.push(eventInfo);
+    }
+    this.calendarEvents = this.calendarService.createEvent(events);
+    this.calendarService.download('event.ics', this.calendarEvents);
+  }
   ngOnInit() {
 
       //full calendar setting and event binding
@@ -92,8 +138,8 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
         events: [{  title: 'Happy Hour',
         location: 'The Bar, New York, NY',
         description: 'Let\'s blow off some steam with a tall cold one!',
-        start: new Date('2022-03-28T19:00:00'),
-        end: new Date('2022-03-28T23:30:00'),
+        start: new Date('2022-05-26T19:00:00'),
+        end: new Date('2022-05-26T23:30:00'),
         // an event that recurs every two weeks:
         recurrence: {
           frequency: 'WEEKLY',
@@ -108,6 +154,7 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   }
   okClick(appt) {
     if(this.calender){
+      
       const post_data = 
       {  'title' : this.appointment.appointmentMode,
         'location': 'Thrissur',

@@ -11,6 +11,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import dayGridPlugin from '@fullcalendar/daygrid'; 
 import interactionPlugin from '@fullcalendar/interaction'; 
+import { CalendarService } from "../../../../../../../src/app/shared/services/calendar-service";
 FullCalendarModule.registerPlugins([ 
     dayGridPlugin,
     interactionPlugin
@@ -31,6 +32,9 @@ const routes: Routes = [
         FormsModule,
     ],
     exports:[ConfirmPageComponent],
-    declarations:[ConfirmPageComponent]
+    declarations:[ConfirmPageComponent],
+    providers: [
+        CalendarService
+    ]
 })
 export class ConsumerApptConfirmModule{}
