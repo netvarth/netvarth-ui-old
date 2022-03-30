@@ -10,6 +10,9 @@
 <section #consumer_appointment class="consumerAppt" [ngClass]="theme?theme:''"
     [ngClass]="smallDevice?'container':'container-fluid'">
     <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
+    <div  class="customLoader" *ngIf="loadingPaytm">
+        <app-common-innerloading-spinner ></app-common-innerloading-spinner>
+    </div>
     <div class="loading-hgt my-1 login-form_custom" *ngIf="!loggedIn || loadingS3">
         <div class="card card-custom no-margin hgt-adjust">
             <div class="card-body p-0">
@@ -183,6 +186,13 @@
                 <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
                     data-wizard-type="step-content" data-wizard-state="current" *ngIf="bookStep === 4"
                     [ngClass]="{'highlight': api_loading_video}">
+                    <div *ngIf="api_loading_video" class="incomplete-msg">
+                        <div style="padding: 0 30px;">
+                            Files are Uploading...
+                        </div>
+                    </div>
+                    <app-common-innerloading-spinner *ngIf="api_loading_video">
+                    </app-common-innerloading-spinner>
                     <div class="col-md-12 col-xs-12 col-sm-12  mgn-bt-10">
                         <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 check-new-group no-padding">
                             <label class="question-header">Service Details</label>
@@ -337,9 +347,9 @@
                             <div class="clearfix"></div>
                             <hr
                                 *ngIf="(s3CouponsList.JC.length > 0) && appointmentType != 'reschedule'||(s3CouponsList.OWN.length > 0) && appointmentType != 'reschedule'" />
-                            <label class="question-header" *ngIf="paymentLength>0 && paymentDetails">Payment
+                            <label class="question-header" *ngIf="appointmentType !== 'reschedule' && paymentLength>0 && paymentDetails">Payment
                                 Details</label><br />
-                            <div class="payment-section-details mgn-lt-10" *ngIf="paymentLength>0 && paymentDetails">
+                            <div class="payment-section-details mgn-lt-10" *ngIf="appointmentType !== 'reschedule' && paymentLength>0 && paymentDetails">
                                 <div class="web"
                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                     <div class="text-left">
@@ -455,29 +465,27 @@
                         </div>
                     </div>
                     <div class="clearfix"></div>
-                    <div class="text-center"
-                        *ngIf="selectedService && selectedService.isPrePayment==false && paymentLength==0|| (paymentDetails && paymentDetails.amountRequiredNow == 0)">
-                        <button type="button" [class.disabled]="isClickedOnce"
+                    <div class="text-center">
+                        <button type="button" *ngIf="appointmentType!=='reschedule' && selectedService && selectedService.isPrePayment==false && paymentLength==0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)"  
+                        [class.disabled]="isClickedOnce"
                             (click)="!isClickedOnce && confirmAppointment('appt')" id="stepThreeConfirmButton"
                             class="next-button btn btn-primary font-weight-bold  px-12 "
                             [disabled]="!checkPolicy && heartfulnessAccount">
                             Confirm
+                        </button>                        
+                        <button type="button"
+                            class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
+                            *ngIf="appointmentType === 'reschedule'"
+                            [class.disableActn]="btnClicked || !isSlotAvailable"
+                            (click)="rescheduleAppointment()">
+                            Reschedule
+                            <i class="fa fa-long-arrow-right mgn-lt-5"></i>
                         </button>
                     </div>
                     <ng-container *ngIf="heartfulnessAccount">
                         <app-privacy (approvePolicy)="policyApproved($event)"></app-privacy>
                     </ng-container>
-                </div>
-                <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding"
-                    data-wizard-type="step-content" data-wizard-state="current" *ngIf="bookStep === 4">
-                    <div *ngIf="api_loading_video" class="incomplete-msg">
-                        <div style="padding: 0 30px;">
-                            Files are Uploading...
-                        </div>
-                    </div>
-                    <app-common-innerloading-spinner *ngIf="api_loading_video">
-                    </app-common-innerloading-spinner>
-                </div>
+                </div>            
                 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -668,4 +676,5 @@
             </div>
         </div>
     </div>
+    <div class="clearfix"></div>
 </section>

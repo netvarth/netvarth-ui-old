@@ -59,6 +59,7 @@ export class PaytmService {
                         console.log("payment status ", JSON.stringify(data));
                         window['Paytm'].CheckoutJS.close();
                         referrer.transactionCompleted(data, paytm_payload, accountId);
+                        // referrer.closeloading();
                     }
                 }
             };
@@ -71,6 +72,8 @@ export class PaytmService {
                         window['Paytm'].CheckoutJS.invoke();
                     }).catch(function onError(error) {
                         console.log("error => ", error);
+                        window['Paytm'].CheckoutJS.close();
+                        referrer.closeloading();
                     });
                 });
 

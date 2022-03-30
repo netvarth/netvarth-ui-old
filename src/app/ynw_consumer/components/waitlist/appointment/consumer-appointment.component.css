@@ -2264,3 +2264,16 @@ box-shadow: 4px 4px 5px gainsboro;
   hr {
     border-top: 1px solid #eee !important;
 }
+::ng-deep .mat-snack-bar-container {
+  position: fixed !important;
+  bottom: 0 !important;
+}
+
+.customLoader {
+  position:absolute;
+  top: 50%;
+  left: 45%;
+  width:50px;
+  z-index: 100;
+  height:50px;
+}

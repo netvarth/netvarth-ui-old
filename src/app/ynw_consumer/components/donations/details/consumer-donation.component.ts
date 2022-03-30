@@ -817,7 +817,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 'id': this.customer_data.id
             },
             'providerConsumer': {
-                'id': this.customer_data.id
+                'id': this.providerConsumerId
             },
             'service': {
                 'id': this.sel_ser
@@ -1499,7 +1499,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             this.initDonation().then(
                 (status) => {
                     console.log("init Donation Status:", status);
-                    _this.getOneTimeInfo(_this.customer_data.id, _this.account_id).then(
+                    _this.getOneTimeInfo(_this.customer_data, _this.account_id).then(
                         (questions) => {
                             _this.onetimeQuestionnaireList = questions;
                             console.log("Questions:", questions);

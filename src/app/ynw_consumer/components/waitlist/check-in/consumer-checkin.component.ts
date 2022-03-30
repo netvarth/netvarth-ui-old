@@ -278,7 +278,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     selectedServiceId;// Id of the appointment service
     selectedDept;     // Department of the selected service
     selectedDeptId;     // Department Id of the selected service
-
+    paymentRequestId; // Retrying failed attempts
     constructor(public fed_service: FormMessageDisplayService,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
@@ -1081,25 +1081,26 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             };
             this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras));
         } else {
-            this.isClickedOnce = false;
-            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-            if (this.from) {
-                this.ngZone.run(() => this.router.navigate(['consumer']));
-            } else {
-                let queryParams = {
-                    accountId: this.account_id,
-                    uuid: this.uuidList,
-                    theme: this.theme
-                }
-                if (this.businessId) {
-                    queryParams['customId'] = this.customId;
-                }
+            this.closeloading();
+            // this.isClickedOnce = false;
+            // this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+            // if (this.from) {
+            //     this.ngZone.run(() => this.router.navigate(['consumer']));
+            // } else {
+            //     let queryParams = {
+            //         accountId: this.account_id,
+            //         uuid: this.uuidList,
+            //         theme: this.theme
+            //     }
+            //     if (this.businessId) {
+            //         queryParams['customId'] = this.customId;
+            //     }
 
-                let navigationExtras: NavigationExtras = {
-                    queryParams: queryParams
-                };
-                this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
-            }
+            //     let navigationExtras: NavigationExtras = {
+            //         queryParams: queryParams
+            //     };
+            //     this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+            // }
         }
     }
     transactionCompleted(response, payload, accountId) {
@@ -1137,23 +1138,23 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.loadingPaytm = false;
         this.cdRef.detectChanges();
         this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
-        if (this.from) {
-            this.ngZone.run(() => this.router.navigate(['consumer']));
-        } else {
-            let queryParams = {
-                accountId: this.account_id,
-                uuid: this.uuidList,
-                theme: this.theme
-            }
-            if (this.businessId) {
-                queryParams['customId'] = this.customId;
-            }
+        // if (this.from) {
+        //     this.ngZone.run(() => this.router.navigate(['consumer']));
+        // } else {
+        //     let queryParams = {
+        //         accountId: this.account_id,
+        //         uuid: this.uuidList,
+        //         theme: this.theme
+        //     }
+        //     if (this.businessId) {
+        //         queryParams['customId'] = this.customId;
+        //     }
 
-            let navigationExtras: NavigationExtras = {
-                queryParams: queryParams
-            };
-            this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
-        }
+        //     let navigationExtras: NavigationExtras = {
+        //         queryParams: queryParams
+        //     };
+        //     this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+        // }
     }
     showCheckinButtonCaption() {
         let caption = '';
@@ -1848,6 +1849,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.waitlistDetails.paymentMode = paymentMode;
         this.waitlistDetails.serviceId = this.selectedServiceId;
         this.waitlistDetails.isInternational = this.isInternatonal;
+
+        if (this.paymentRequestId) {
+            this.waitlistDetails['paymentRequestId'] = this.paymentRequestId;
+        }
+
         this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
         this.lStorageService.setitemonLocalStorage('acid', this.account_id);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');

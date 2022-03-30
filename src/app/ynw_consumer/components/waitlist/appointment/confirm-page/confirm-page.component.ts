@@ -116,6 +116,7 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
       events.push(eventInfo);
     }
     this.calendarEvents = this.calendarService.createEvent(events);
+    // window.open("data:text/calendar;charset=utf8;" + escape(this.calendarEvents));
     this.calendarService.download('event.ics', this.calendarEvents);
   }
 

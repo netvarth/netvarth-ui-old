@@ -10,6 +10,9 @@
 <section #consumer_checkin class="consumerCheckin" [ngClass]="theme?theme:''"
     [ngClass]="smallDevice?'container':'container-fluid'">
     <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
+    <div  class="customLoader" *ngIf="loadingPaytm">
+        <app-common-innerloading-spinner ></app-common-innerloading-spinner>
+    </div>
     <div class="loading-hgt my-1 login-form_custom" *ngIf="!loggedIn || loadingS3">
         <div class="card card-custom no-margin hgt-adjust">
             <div class="card-body p-0">
