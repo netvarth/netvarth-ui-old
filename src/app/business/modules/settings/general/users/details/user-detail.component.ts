@@ -145,6 +145,7 @@ export class BranchUserDetailComponent implements OnInit {
     if (this.actionparam.val) {
       this.userId = this.actionparam.val;
       this.getUserData();
+     // this.updateForm()
     }
     this.getProviderLocations();
     const bConfig = this.lStorageService.getitemfromLocalStorage("ynw-bconf");
