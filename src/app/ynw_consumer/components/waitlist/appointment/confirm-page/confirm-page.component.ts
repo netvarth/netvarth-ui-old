@@ -163,40 +163,40 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
   okClick(appt) {
     if(this.calender){
       this.addToCalendar();
-      // if (appt.service.livetrack && this.type !== 'reschedule') {
-      //   let queryParams= {
-      //     account_id: this.infoParams.account_id,
-      //     theme:this.theme 
-      // }
-      // if (this.customId) {
-      //   queryParams['customId'] = this.customId;
-      // }
-      // if(this.from){
-      //   queryParams['isFrom'] = this.from;
-      // }
-      // let navigationExtras: NavigationExtras = {
-      //     queryParams: queryParams
-      // };
-      // this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], navigationExtras);
-      // } else {
-      //   let queryParams= {
-      //     theme:this.theme,
-      //     accountId: this.accountId
-      //   }
-      //   if (this.customId) {
-      //       queryParams['customId'] = this.customId;
-      //   }
-      //   let navigationExtras: NavigationExtras = {
-      //       queryParams: queryParams
-      //   };
-      //   if(this.from){
-      //     this.router.navigate(['consumer']);
-      //   }else{
-      //     this.router.navigate(['consumer'], navigationExtras);
-      //   }
+      if (appt.service.livetrack && this.type !== 'reschedule') {
+        let queryParams= {
+          account_id: this.infoParams.account_id,
+          theme:this.theme 
+      }
+      if (this.customId) {
+        queryParams['customId'] = this.customId;
+      }
+      if(this.from){
+        queryParams['isFrom'] = this.from;
+      }
+      let navigationExtras: NavigationExtras = {
+          queryParams: queryParams
+      };
+      this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], navigationExtras);
+      } else {
+        let queryParams= {
+          theme:this.theme,
+          accountId: this.accountId
+        }
+        if (this.customId) {
+            queryParams['customId'] = this.customId;
+        }
+        let navigationExtras: NavigationExtras = {
+            queryParams: queryParams
+        };
+        if(this.from){
+          this.router.navigate(['consumer']);
+        }else{
+          this.router.navigate(['consumer'], navigationExtras);
+        }
         
-      // }
-      // this.lStorageService.setitemonLocalStorage('orderStat', false);
+      }
+      this.lStorageService.setitemonLocalStorage('orderStat', false);
     }
     else{
       if (appt.service.livetrack && this.type !== 'reschedule') {
