@@ -157,8 +157,11 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
       }
       
     }
+    const d = new Date();
+    let ms = d.valueOf();
+    const fileName = 'calender' + ms + '.ics'
     this.calendarEvents = this.calendarService.createEvent(events);
-    this.calendarService.download('event.ics', this.calendarEvents);
+    this.calendarService.download(fileName, this.calendarEvents);
   }
   ngOnInit() {
 
