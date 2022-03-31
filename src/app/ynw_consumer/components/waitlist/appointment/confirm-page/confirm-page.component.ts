@@ -117,23 +117,45 @@ export class ConfirmPageComponent implements OnInit,OnDestroy {
         events.push(eventInfo);
       }
     } else {
-      if(this.appointment.providerAccount && this.appointment.providerAccount.businessName){
-        this.businessName = this.appointment.providerAccount.businessName;
+      if(this.type === 'reschedule'){
+        if(this.appointment.providerAccount && this.appointment.providerAccount.businessName){
+          this.businessName = this.appointment.providerAccount.businessName;
+        }
+        let times = this.appointment.appmtTime.split("-");
+        const startTime = times[0];
+        const endTime = times[1];
+        const startDate = new Date(this.appointment.appmtDate + 'T' + startTime);
+        const endDate = new Date(this.appointment.appmtDate + 'T' + endTime);
+       
+        eventInfo = {
+          start: startDate,
+          end: endDate,
+          description : 'Booking Rescheduled , Service provider : ' + this.businessName,
+          location: this.appointment.location?.place,
+          summary: 'Booking with - ' + this.businessName,
+        }
+        events.push(eventInfo);
       }
-      let times = this.appointment.appmtTime.split("-");
-      const startTime = times[0];
-      const endTime = times[1];
-      const startDate = new Date(this.appointment.appmtDate + 'T' + startTime);
-      const endDate = new Date(this.appointment.appmtDate + 'T' + endTime);
-     
-      eventInfo = {
-        start: startDate,
-        end: endDate,
-        description : 'Service provider : ' + this.businessName,
-        location: this.appointment.location?.place,
-        summary: 'Booking with - ' + this.businessName,
+      else {
+        if(this.appointment.providerAccount && this.appointment.providerAccount.businessName){
+          this.businessName = this.appointment.providerAccount.businessName;
+        }
+        let times = this.appointment.appmtTime.split("-");
+        const startTime = times[0];
+        const endTime = times[1];
+        const startDate = new Date(this.appointment.appmtDate + 'T' + startTime);
+        const endDate = new Date(this.appointment.appmtDate + 'T' + endTime);
+       
+        eventInfo = {
+          start: startDate,
+          end: endDate,
+          description : 'Service provider : ' + this.businessName,
+          location: this.appointment.location?.place,
+          summary: 'Booking with - ' + this.businessName,
+        }
+        events.push(eventInfo);
       }
-      events.push(eventInfo);
+      
     }
     this.calendarEvents = this.calendarService.createEvent(events);
     this.calendarService.download('event.ics', this.calendarEvents);
