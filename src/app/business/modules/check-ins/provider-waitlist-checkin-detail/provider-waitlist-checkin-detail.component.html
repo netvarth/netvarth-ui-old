@@ -11,7 +11,7 @@
 <div class="content comn-cls checkin-details" *ngIf="waitlist_data">
   <div class="col-md-12 no-padding-small">
     <div class="row equal">
-      <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
+      <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small px-1">
         <div class="rowcard card" *ngIf="api_loading">
           <app-common-innerloading-spinner> </app-common-innerloading-spinner>
         </div>
@@ -31,7 +31,7 @@
             </h2>
           </div>
           <span class="loc-cls">
-            <b class="text-dark">{{spName}}</b>
+            <!-- <b class="text-dark">{{spName}}</b><br> -->
             <i class="fa fa-map-marker"></i>&nbsp;{{waitlist_data.queue.location.place | capitalizeFirst}}</span>
             <span class="text-light my-0 py-0"><b>Booking Via : </b>
               {{getAgent(waitlist_data.requestInfo.agent) | capitalizeFirst}},
@@ -56,7 +56,7 @@
           
         </div>
       </div>
-      <div class="lbl col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small">
+      <div class="lbl col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small px-1">
         <div class="rowcard card">
             <div class="booking-details">
                 <div class="row ">
@@ -119,7 +119,7 @@
 
 
 
-      <div class="col-xl-12 col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small">
+      <div class="col-xl-12 col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small px-1">
         <div class="rowcard card notescard historycard card-custom data-card p-0 m-0">
           <div class="card-header notescard-header collapsed" [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}">
             <div>History</div>
@@ -158,7 +158,7 @@
           </div>
         </div>
 
-        <div class="rowcard card notescard card-custom data-card p-0 m-0 mt-2">
+        <div class="rowcard card notescard card-custom data-card p-0 m-0 mt-2 px-1 rounded">
           <div class="card-header notescard-header collapsed" [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}">
             <div>Notes</div>
             <div class="mgn-lt-auto">
@@ -180,26 +180,29 @@
 
 
 <div class="content comn-cls checkin-details" *ngIf="waitlist_data">
-  <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small"
+  <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small px-1"
       *ngIf="waitlist_data.waitlistingFor && (waitlist_data.providerAccount.serviceSector.domain === 'healthCare' || waitlist_data.providerAccount.serviceSector.domain === 'veterinaryPetcare') && waitlist_data.providerAccount.serviceSubSector.subDomain !=='laboratory' && waitlist_data.providerAccount.serviceSubSector.subDomain !=='pharmacy'">
       <app-booking-medical-records-rx [customerId]="waitlist_data.waitlistingFor[0].id" [source]="'customer-details'" [type]="'mr'">
       </app-booking-medical-records-rx>
   </div>
-  <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small"
+  <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small px-1"
       *ngIf="waitlist_data.waitlistingFor && (waitlist_data.providerAccount.serviceSector.domain === 'healthCare' || waitlist_data.providerAccount.serviceSector.domain === 'veterinaryPetcare') && waitlist_data.providerAccount.serviceSubSector.subDomain !=='laboratory' && waitlist_data.providerAccount.serviceSubSector.subDomain !=='pharmacy'">
       <app-booking-medical-records-rx [customerId]="waitlist_data.waitlistingFor[0].id" [source]="'customer-details'" [type]="'rx'">
       </app-booking-medical-records-rx>
   </div>
-  <div class="lbl col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small" *ngIf="waitlist_data.waitlistingFor">
+  <div class="lbl col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small px-1" *ngIf="waitlist_data.waitlistingFor">
     <app-records-datagrid [heading]="'Bills'" [source]="'bill'" [records]="consumerBills"
         [customerId]="waitlist_data.waitlistingFor[0].id" [view]="'small'">
     </app-records-datagrid>
   </div>
-  <div class="lbl col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small" *ngIf="waitlist_data.waitlistingFor">
+  
+</div>
+
+<div class="content comn-cls checkin-details my-0 py-0" *ngIf="waitlist_data">
+  <div class="lbl col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small px-1 pt-0 mt-0" *ngIf="waitlist_data.waitlistingFor">
     <app-booking-documents [source]="'customer'" [widget]="true" [uuid]="waitlist_data.waitlistingFor[0].id">
     </app-booking-documents>
   </div>
-  
 </div>
 </div>
 

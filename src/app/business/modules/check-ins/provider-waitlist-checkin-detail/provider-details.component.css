@@ -178,8 +178,9 @@
 }
 .rowcard
 {
-    min-height: 317px!important;
+    min-height: 330px!important;
     max-height: 330px!important;
+    border-radius: 10px!important;
 }
 .notescard
 {
@@ -197,6 +198,10 @@
 {
     background-color: #1E4079!important;
     color: #fff!important;
+}
+.content.comn-cls .lbl .card
+{
+    margin-bottom: 10px!important;
 }
 
 
