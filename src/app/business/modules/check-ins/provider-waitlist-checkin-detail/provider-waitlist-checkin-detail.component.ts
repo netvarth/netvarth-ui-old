@@ -423,20 +423,39 @@ editCustomerDetails() {
     });
   }
   showCommunications() {
-    console.log("communication data : ",this.waitlist_data.virtualService.WhatsApp.slice(2,));
-    this.dialog.open(CommunicationPopupComponent, {
+    if(this.waitlist_data.virtualService.WhatsApp)
+    {
+      console.log("communication data : ",this.waitlist_data.virtualService.WhatsApp.slice(2,));
+      this.dialog.open(CommunicationPopupComponent, {
+          width: '50%',
+          panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+          disableClose: true,
+          data: {
+              whatsappCountryCode: this.waitlist_data.countryCode,
+              whatsappNumber: this.waitlist_data.virtualService.WhatsApp.slice(2,),
+              number: this.waitlist_data.waitlistingFor[0].phoneNo,
+              customerId: this.waitlist_data.waitlistingFor[0].id,
+              email: this.waitlist_data.waitlistingFor[0].email,
+              type: 'customer'
+          }
+      });
+    }
+    else
+    {
+      this.dialog.open(CommunicationPopupComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
         disableClose: true,
         data: {
             whatsappCountryCode: this.waitlist_data.countryCode,
-            whatsappNumber: this.waitlist_data.virtualService.WhatsApp.slice(2,),
             number: this.waitlist_data.waitlistingFor[0].phoneNo,
             customerId: this.waitlist_data.waitlistingFor[0].id,
             email: this.waitlist_data.waitlistingFor[0].email,
             type: 'customer'
         }
     });
+    }
+    
 }
 
   getInternalStatusLog(uuid) {

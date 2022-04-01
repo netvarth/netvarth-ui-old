@@ -18,6 +18,7 @@ import { DateTimeProcessor } from "../../../../shared/services/datetime-processo
 import { CommunicationService } from "../../../../business/services/communication-service";
 import { BookingHistoryComponent } from "../booking-history/booking-history.component";
 import { CommunicationPopupComponent } from "../../bookings/communication-popup/communication-popup.component";
+// import { CommunicationPopupComponent } from "../../bookings/communication-popup/communication-popup.component";
 
 @Component({
   selector: "app-provider-appointment-detail",
@@ -614,19 +615,37 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
 
 
   showCommunications() {
-    this.dialog.open(CommunicationPopupComponent, {
+    console.log("data available : ",this.waitlist_data.consumer.userProfile.whatsAppNum.number)
+    if(this.waitlist_data.consumer.userProfile.whatsAppNum.number)
+    {
+        this.dialog.open(CommunicationPopupComponent, {
+          width: '50%',
+          panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+          disableClose: true,
+          data: {
+              whatsappCountryCode: this.waitlist_data.countryCode,
+              whatsappNumber: this.waitlist_data.consumer.userProfile.whatsAppNum.number,
+              number: this.waitlist_data.phoneNumber,
+              customerId: this.waitlist_data.appmtFor[0].id,
+              email: this.waitlist_data.appmtFor[0].email,
+              type: 'customer'
+          }
+      });
+    }
+    else{
+      this.dialog.open(CommunicationPopupComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
         disableClose: true,
         data: {
             whatsappCountryCode: this.waitlist_data.countryCode,
-            whatsappNumber: this.waitlist_data.virtualService.WhatsApp.slice(2,),
             number: this.waitlist_data.phoneNumber,
             customerId: this.waitlist_data.appmtFor[0].id,
             email: this.waitlist_data.appmtFor[0].email,
             type: 'customer'
         }
     });
+    }
 }
 
 
