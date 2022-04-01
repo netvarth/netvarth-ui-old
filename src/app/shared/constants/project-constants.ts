@@ -1059,7 +1059,7 @@ export const projectConstantsLocal = {
     { value: 'mal', viewValue: 'Malayalam' },
     { value: 'tam', viewValue: 'Tamil' }
   ],
-  // UIS3PATH: "https://jaldeeuiscale.s3.ap-south-1.amazonaws.com/"
+  // UIS3PATH: "https://jaldeeuiscale.s3.ap-south-1.amazonaws.com/",
   // UIS3PATH: "https://jaldeeuitest.s3.ap-south-1.amazonaws.com/"
   UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/",
   //PATH:'https://localhost:4200/',
