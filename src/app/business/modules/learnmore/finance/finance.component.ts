@@ -3,6 +3,7 @@ import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scrol
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 @Component({
     selector: 'app-finance-learnmore',
     templateUrl: './finance.component.html'
@@ -104,16 +105,19 @@ export class FinanceComponent implements OnInit {
   showauditlog = false;
   showalert = false;
   showprofile = false;
+  customer_label:any;
   constructor(
     private activated_route: ActivatedRoute,
     private groupService: GroupStorageService,
     private _location: Location,
     private _scrollToService: ScrollToService,
+    private wordProcessor: WordProcessor,
 
   ) { }
 
   setActivePricing(item) {
     this.activePrice = item;
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
 
   ngOnInit() {

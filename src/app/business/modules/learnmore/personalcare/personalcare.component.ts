@@ -3,6 +3,7 @@ import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scrol
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 @Component({
     selector: 'app-personalcare-learnmore',
     templateUrl: './personalcare.component.html'
@@ -106,12 +107,14 @@ export class PersonalCareComponent implements OnInit {
   showauditlog = false;
   showalert = false;
   showprofile = false;
+  customer_label:any;
   
   constructor(
     private activated_route: ActivatedRoute,
     private groupService: GroupStorageService,
     private _location: Location,
-    private _scrollToService: ScrollToService
+    private _scrollToService: ScrollToService,
+    private wordProcessor: WordProcessor,
   ) { }
 
   setActivePricing(item) {
@@ -120,6 +123,7 @@ export class PersonalCareComponent implements OnInit {
 
   ngOnInit() {
    this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+   this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.domain = this.active_user.sector;
     if (this.target) {
       // this.triggerScrollTo(this.target);

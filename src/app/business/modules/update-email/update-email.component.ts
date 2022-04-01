@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProviderServices } from '../../services/provider-services.service';
+import { WordProcessor } from "../../../shared/services/word-processor.service";
 
 @Component({
   selector: 'app-update-email',
@@ -9,9 +10,13 @@ import { ProviderServices } from '../../services/provider-services.service';
 export class UpdateEmailComponent implements OnInit {
   email;
   api_error = '';
+  customer_label = "";
   constructor(public dialogRef: MatDialogRef<UpdateEmailComponent>,
     private provider_services: ProviderServices,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    private wordProcessor: WordProcessor,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      this.customer_label = this.wordProcessor.getTerminologyTerm("customer");
+     }
 
   ngOnInit() {
   }

@@ -98,6 +98,7 @@ export class InstantQueueComponent implements OnInit {
             dstart_time: [{ hour: parseInt(moment(server_date).format('HH')), minute: parseInt(moment(server_date).format('mm')) }, Validators.compose([Validators.required])],
             dend_time: [{ hour: parseInt(moment(this.toDateCaption, ['hh:mm A']).format('HH'), 10), minute: parseInt(moment(this.toDateCaption, ['hh:mm A']).format('mm'), 10) }, Validators.compose([Validators.required])]
         });
+        console.log(this.instantQForm)
         setTimeout(() => {
             this.loading = false;
         }, 500);

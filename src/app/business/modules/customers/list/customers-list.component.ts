@@ -122,6 +122,7 @@ export class CustomersListComponent implements OnInit {
     phoneerror = null;
   separateDialCode = true;
   smsdialogRef;
+  grup_custmer;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -230,6 +231,7 @@ export class CustomersListComponent implements OnInit {
             .subscribe(
               data => {
                 this.customers = data;
+                console.log("Customers :",this.customers)
                 this.apiloading = false;
                 this.loadComplete = true;
               },
@@ -517,6 +519,7 @@ export class CustomersListComponent implements OnInit {
         source: 'provider-sendAll_group',
         grup_id : this.selectedGroup.id,
         typeOfMsg: 'multiple',
+        selectedcustomersformsg : this.grup_custmer,
         terminologies: terminologies,
       } 
     });
@@ -808,6 +811,7 @@ export class CustomersListComponent implements OnInit {
       .then(
         result => {
           this.customer_count = result;
+          this.grup_custmer = result;
           api_filter = this.setPaginationFilter(api_filter);
           this.provider_services.getProviderCustomers(api_filter)
             .subscribe(

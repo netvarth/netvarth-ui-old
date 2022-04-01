@@ -166,6 +166,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     tool_code;
     priceDescription = false;
     showServiceduration = true;
+    showOnlyAvailableSlots = true;
     showPrice;
     paymentSubscription: any;
     paymentProfiles: any = [];
@@ -242,6 +243,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                     this.serviceForm.get('paymentProfileId').setValue('spDefaultBillProfile');
                                 }
                                 this.showServiceduration = this.service_data.serviceDurationEnabled;
+                                this.showOnlyAvailableSlots = this.service_data.showOnlyAvailableSlots;
                                 if(this.service_data && this.service_data.showPrice){
                                     this.showPrice = this.service_data.showPrice;
                                 }
@@ -660,7 +662,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 const duration = this.shared_service.getTimeinMin(this.duration);
                 form_data.serviceDuration = duration;
                 form_data.serviceDurationEnabled = this.showServiceduration;
-               
+                form_data.showOnlyAvailableSlots = this.showOnlyAvailableSlots;
                     form_data.showPrice = this.showPrice;
                 
                

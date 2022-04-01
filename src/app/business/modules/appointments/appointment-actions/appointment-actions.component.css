@@ -22,6 +22,11 @@
     height: 90px;
   }
 }
+.fa .fa-hourglass-star{
+  width: 40px !important;
+  height: 40px !important;
+  display: block;
+}
 @media (max-width: 520px) {
   .action-box {
     width: 100px;
@@ -30,11 +35,16 @@
   .bill-icon, .cancel-icon, .changestatus-icon, .label-icon, .mail-icon, 
   .message-icon, .notes-icon, .printer-icon, .viewdetails-icon,
   .arrived-icon, .complete-icon, .waitlistcall-icon, .start-icon, .qnr-icon,
-  .meet-icon, .phon-icon, .reschedule-icon, .mr-rx-icon, .medicalrecord-icon {
+  .meet-icon, .phon-icon, .reschedule-icon, .delay-icon, .mr-rx-icon, .medicalrecord-icon {
     width: 25px !important;
   }
   .customerdetails-icon {
     width: 20px !important;
+  }
+  .textIcon{
+    width: 40px !important;
+    height: 40px !important;
+    color: blue !important;
   }
   .action-box .zoom-icon, .action-box .wtsapaud-icon, .action-box .wtsapvid-icon {
     width: 50px !important;
@@ -195,4 +205,10 @@
     height: 38px !important;
     width: 100px !important;
   }
+  }
+
+  .appt-in-chip .mat-chip {
+    min-width: 13% ;
+    max-width: 13% ;
+    
   }

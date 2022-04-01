@@ -35,10 +35,10 @@ export class ProviderWaitlistCheckInConsumerNoteComponent implements OnInit {
       if (this.type === 'order-details') {
         this.noteTitle = 'Item Notes';
       } else {
-        this.noteTitle = 'Notes';
+        this.noteTitle = 'Notes';    this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
+
       }
     }
-    this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
 
   ngOnInit() {

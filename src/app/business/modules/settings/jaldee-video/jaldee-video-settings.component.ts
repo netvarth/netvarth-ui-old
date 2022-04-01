@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { ProviderServices } from '../../../services/provider-services.service';
+import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
     selector: 'app-jaldee-video-settings',
@@ -14,14 +15,17 @@ export class JaldeeVideoSettingsComponent implements OnInit {
     jaldeeVideoRecord_statusstr: string;
     videocredits: ArrayBuffer;
     domain: any;
+    customer_label:any;
     constructor(
         private provider_services: ProviderServices,
         private snackbarService: SnackbarService,
         private router: Router,
         private groupService: GroupStorageService,
+        private wordProcessor: WordProcessor,
     ) { }
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.domain = user.sector;
         this.getRecordingStatus().then(
             (recordStatus) => {

@@ -1,18 +1,54 @@
 
   .pay-rad{
-    width: 95px;
-    height: 95px;
+    /* width: 95px;
+    height: 95px; */
+    width: 26.5%;
+    height: 100px;
     float: left;
     border:1px solid #ddd;
-    border-radius: 20px;
+    border-radius: 10px;
     margin:5px;
     font-size: 10px;
   }
   .pay-icons {
-    width: 50%;
+    /* width: 50%; */
     height: 50px;
+    object-fit: cover !important;
+    margin-top: 5px;
   }
 
 .pay-rad.mat-radio-button.mat-radio-checked { 
-  box-shadow: 0 0 2px 2px rgb(70, 70, 233) !important;
+  /* box-shadow: 0 0 2px 2px rgb(70, 70, 233) !important; */
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 10%), 0 6px 20px 0 rgb(0 0 0 / 0%) !important;
 }
+@media (max-width: 768px) {
+  .pay-rad{
+    width: 30%;
+    height: 100%;
+  }
+  
+}
+/* @media (min-width:769px ) and (max-width: 860px)*/
+@media(min-width: 768px) and (max-width: 856px) {
+  .pay-rad{
+    width: 30%;
+    height: 120px;
+  }
+  
+}
+::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+  border-color:#93ff90 !important 
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle{
+  color:#93ff90 !important;
+  background-color:#93ff90  !important;
+  /* background-color:#fff  !important; */
+}
+
+/* ::ng-deep  .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+  background-color:#fff  !important;
+} */
+/* ::ng-deep .mat-radio-outer-circle{
+  border-radius: 0% !important;
+} */

@@ -30,7 +30,7 @@
                   <!-- <span>{{waitlist_data.provider.businessName | capitalizeFirst}}
                       </span><br> -->
                   <span>{{provider_label | capitalizeFirst}} : </span>
-                  <span>{{spName}}123</span>
+                  <span>{{spName}}</span>
                 </div>
                 <div *ngIf="waitlist_data.teamId !== 0" class="mgn-up-5 sub-user-name">
                   <span>Team : </span>
@@ -159,6 +159,9 @@
                   <span>
                     {{getSingleTime(waitlist_data.appmtTime)}}
                   </span>
+                  <!-- && statusAction === 'new' -->
+                  <span *ngIf="waitlist_data.isApptDelayed === true" style="color: rgb(255, 123, 0) !important;">{{getTimeMinute(waitlist_data.apptDelay)}}</span>
+
                 </div>
               </div>
               <!-- privatenote -->
@@ -304,7 +307,7 @@
 
               <p class="no-result" *ngIf="waitlist_history.length == 0">{{no_history_found}}</p>
             </div>
-            <!-- <button class="mgn-bt-10" (click)="openbookinghistory()">Booking History</button> -->
+            <button class="mgn-bt-10" (click)="openbookinghistory()">Booking History</button>
           </div>
           <div class="card" *ngIf="internalStatuslog && internalStatuslog.length>0">
             <h2>Internal Status History</h2>
