@@ -266,6 +266,9 @@ export class ProviderCheckinComponent implements OnInit {
     accId;
     screenWidth;
     small_device_display = false;
+    myDate:any
+    departmentName:any
+   
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -764,13 +767,17 @@ export class ProviderCheckinComponent implements OnInit {
         this.sel_checkindate = moment(new Date().toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
         this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
         const day = new Date(this.sel_checkindate).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
+        console.log('day',day)
         const ddd = new Date(day);
+        console.log('ddd',ddd)
         this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
         this.hold_sel_checkindate = this.sel_checkindate;
         const dt1 = new Date(this.sel_checkindate).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const date1 = new Date(dt1);
         const dt2 = new Date(this.todaydate).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const date2 = new Date(dt2);
+        console.log('date1.getTime()',date1.getTime())
+        console.log('date2.getTime()',date2.getTime())
         if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
             this.isFuturedate = true;
         }
@@ -871,6 +878,7 @@ export class ProviderCheckinComponent implements OnInit {
                         }
                     }
                 }
+                console.log('_this.departments',_this.departments)
                 _this.deptLength = _this.departments.length;
                 // this.selected_dept = 'None';
                 if (_this.selectDept) {
@@ -1002,6 +1010,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.phoneerror = null;
     }
     setServiceDetails(curservid) {
+        console.log(' _this.servicesjson', this.servicesjson)
         if (this.waitlist_for[0] && this.waitlist_for[0].id) {
             this.getProviderQuestionnaire();
         }
@@ -1148,8 +1157,8 @@ export class ProviderCheckinComponent implements OnInit {
         }
     }
 
-    handleQueueSelection(queue, index) {
-        this.sel_queue_indx = index;
+    handleQueueSelection(queue) {
+        // this.sel_queue_indx = index;
         this.sel_queue_id = queue.id;
         this.sel_queue_waitingmins = this.dateTimeProcessor.convertMinutesToHourMinute(queue.queueWaitingTime);
         this.sel_queue_servicetime = queue.serviceTime || '';
@@ -1180,6 +1189,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.consumerNote = vale;
     }
     handleFutureDateChange(e) {
+        console.log('eeeeeeeeeeeeee',e)
         const tdate = e.targetElement.value;
         const newdate = tdate.split('/').reverse().join('-');
         const futrDte = new Date(newdate);
@@ -1961,6 +1971,7 @@ export class ProviderCheckinComponent implements OnInit {
             });
     }
     handleDeptSelction(obj) {
+        console.log('obk',obj)
         this.users = [];
         this.queuejson = [];
         this.api_error = null;
@@ -2109,6 +2120,7 @@ export class ProviderCheckinComponent implements OnInit {
             (users: any) => {
                 // const filteredUser = users.filter(user => user.status === 'ACTIVE');
                 this.users = users;
+                console.log('users',users)
                 if(this.users.length !==0){
                     this.users.push(this.userN);
                 }
@@ -2124,6 +2136,9 @@ export class ProviderCheckinComponent implements OnInit {
                     this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
                 }
             });
+    }
+    onOptionsSelected(event){
+        console.log('onOptionsSelected',event)
     }
     handleUserSelection(user) {
         this.selectedUser = user;

@@ -3,7 +3,7 @@
   <div class="card title-gb">
     <h5 class="mgn-up-10">
       <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      {{heading}}
+      <span class="heading"> {{heading}}</span>
     </h5>
   </div>
 
@@ -234,16 +234,17 @@
         </div>
         <!-- </div> -->
       </div>
-      <div class="card" *ngIf="showCheckin && !showQuestionnaire && !showFollowup">
+      <div class="beforeCatdTwosec" *ngIf="showCheckin && !showQuestionnaire && !showFollowup">
+      <div class="card box-shadow" *ngIf="showCheckin && !showQuestionnaire && !showFollowup">
         <div class="">
-          <div class="">
+          <div class="userNameId">
             <div>
-              <div class="row">
+              <div class="row borderBtm">
                 <ul class="availer-ul pl-0" *ngIf="thirdParty === ''">
                   <ng-container *ngFor="let waitfor of waitlist_for; let i = index">
                     <li class="block-level consumer-name d-flex justify-content-start">
                       <div class="my-auto">
-                        <img src="../../../../../assets/images/avatar.png" width="60px" height="60px" class="my-auto">
+                        <img src="/assets/images/avatar.png" width="60px" height="60px" class="my-auto">
                       </div>
                       <div class="ml-3">
                         {{waitfor.firstName | capitalizeFirst}} {{waitfor.lastName | capitalizeFirst}} &nbsp; 
@@ -289,46 +290,85 @@
             </div>
           </div>
           <br>
-          <div class="col-sm-12 col-md-7 col-lg-7 no-padding">
+          <div class="lbl col-sm-12 col-md-12 col-lg-12 no-padding max-width">
             <div class="mainouter checkin-page walkin-form-fields">
               <ng-container *ngIf="!api_loading1">
-                <div class="m-0 p-0" *ngIf="filterDepart">
+                <div class="m-0 p-0 service-outer" *ngIf="filterDepart">
                   <ng-container>
+                    <span class="p-0 m-0 sel-dept">{{select_deptment_cap}}</span>
+                    <span class="required">*</span>
                     <mat-form-field *ngIf="deptLength == 1">
                       <input matInput class="inputbox" *ngFor="let dept of departments" [readonly]="true"
                         placeholder="Department" value="{{dept.departmentName | capitalizeFirst}}">
                     </mat-form-field>
                     <mat-form-field *ngIf="deptLength > 1">
-                      <span class="pb-0 mb-0 text-light" style="color: black;">{{select_deptment_cap}}</span>
-                      <mat-select class="inputbox" [ngModel]="selected_dept" #deptsel
+                      <!-- <span class="pb-0 mb-0 text-light" style="color: black;">{{select_deptment_cap}}</span> -->
+                      <mat-select class="inputbox" [ngModel]="selected_dept" #deptsel 
                         (selectionChange)="handleDeptSelction(deptsel.value)">
+                        <div class="cstmService">Custom {{select_deptment_cap }}</div>
+                          <div class="recentSch">
+                            <div class="recentScheduleText">Recently {{select_deptment_cap }}</div>
+                            <div class="recentService" style="gap:5px !important">
+                              <div>
+                                <img class="img" src="/assets/images/department.png"/>
+                              </div>
+                              {{selected_dept| json}}
+                             </div>
+                          </div>
+                          <div class="myService" >My {{select_deptment_cap }}s</div>
                         <mat-option *ngFor="let dept of departments" [value]="dept.departmentId">
-                          {{dept.departmentName | capitalizeFirst}}
+                          <div style="display:flex;gap:5px">
+                            <div>
+                              <img class="img" src="/assets/images/department.png"/>
+                            </div>
+                            <div class="selectedUser">
+                              {{dept.departmentName | capitalizeFirst}}
+                            </div>
+                           </div>
+                          
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
                   </ng-container>
                 </div>
-                <br>
-
-                <div class="" *ngIf="users.length > 0 && accountType === 'BRANCH'">
+                <div class="service-outer p-0 m-0 customBusinessName" *ngIf="users.length > 0 && accountType === 'BRANCH'">
                   <ng-container>
-                    <span class="pb-0 mb-0 text-light" style="color: black;">Select {{provider_label | capitalizeFirst}}</span>
-                    <mat-form-field *ngIf="users.length == 1" class="py-0 my-0">
+                    <span class="p-0 m-0 sel-domain-termi">Select {{provider_label | capitalizeFirst}}</span>
+                    <span class="required">*</span>
+                    <mat-form-field *ngIf="users.length == 1" >
                       <input matInput class="inputbox" *ngFor="let user of users" [readonly]="true"
                         value="{{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}">
                     </mat-form-field>
                     <mat-form-field *ngIf="users.length > 1" class="py-0 my-0">
                       <mat-select class="inputbox" [ngModel]="selected_user" #usersel
-                        (selectionChange)="handleUserSelection(usersel.value)">
-                        <mat-option *ngFor="let user of users" [value]="user">
-                          {{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}
-                        </mat-option>
+                        (selectionChange)="handleUserSelection(usersel.value)" (ngModelChange)='onOptionsSelected($event)'>
+                          <div class="cstmService">Custom {{provider_label }}</div>
+                          <div class="recentSch">
+                            <div class="recentScheduleText">Recently selected {{provider_label }}</div>
+                            <div class="recentService" style="gap:5px !important">
+                              <div>
+                                <img class="img" src="/assets/images/serviceImg.png"/>
+                              </div>
+                              <div class="selectedUser"> {{usersel.value.firstName }}</div>
+                              <div class="selectedUser"> {{usersel.value.lastName }}</div>
+                             </div>
+                          </div>
+                          <div class="myService" >My {{provider_label }}s</div>
+                          <mat-option *ngFor="let user of users" [value]="user"  >
+                           <div style="display:flex;gap:5px">
+                            <div>
+                              <img class="img" src="/assets/images/serviceImg.png"/>
+                            </div>
+                            <div class="selectedUser">
+                              {{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}
+                            </div>
+                           </div>
+                          </mat-option>
+                        
                       </mat-select>
                     </mat-form-field>
                   </ng-container>
                 </div>
-                <br>
                 <div class=""
                   *ngIf="selectedUser && selectedUser.id === 0 && accountType === 'BRANCH' && this.assignmyself">
 
@@ -361,24 +401,79 @@
                       </ng-container>
                     </span>
                     <mat-form-field *ngIf="servicesjson.length > 1">
-                      <div style="color:rgb(139, 139, 139)!important;" class="py-0 my-0">{{select_service_cap}}</div>
-                      <mat-select class="inputbox" [ngModel]="sel_ser" #servsel
+                      <span class="p-0 m-0 sel-ser">{{select_service_cap}}</span>
+                      <span class="required">*</span>
+                      <mat-select class="inputbox select-box" [ngModel]="sel_ser" #servsel
                         (selectionChange)="handleServiceSel(servsel.value)">
-                        <mat-option *ngFor="let serv of servicesjson" [value]="serv.id">
-                          <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType === 'audioService'"
-                            class="fa wtsapaud-icon"></i>
-                          <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType === 'videoService'"
-                            class="fa wtsapvid-icon"></i>
-                          <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'"
-                            class="fa zoom-icon"></i>
-                          <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'VideoCall'"
-                            class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"></i>
-                          <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'"
-                            class="fa meet-icon"></i>
-                          <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Phone'"
-                            class="fa phon-icon" aria-hidden="true"></i>
-                          <span class="dash">{{serv.name | capitalizeFirst}}</span>
-                        </mat-option>
+                        <!-- <div style="display: flex;"> -->
+                          <div class="cstmService">Custom {{select_service_cap}}</div>
+                        <!-- <div>{{select_service_cap}}</div>
+                        </div> -->
+                        <div class="recentSch">
+                          <div class="recentScheduleText">Recently {{select_service_cap}}</div>
+                          <div class="recentService" *ngIf="sel_ser_det.serviceType !== 'virtualService'">
+                            <div>
+                          <img class="physicalServiceImg" src="/assets/images/physicelService.png" />  
+                          </div>
+                            <div class="selectedUser"> {{sel_ser_det.name }}</div>
+                           </div>
+
+                           <div class="recentService" *ngIf="sel_ser_det.serviceType === 'virtualService' && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType === 'audioService'">
+                            <div class="fa wtsapaud-icon"></div>
+                            <div class="selectedUser"> {{sel_ser_det.name }}</div>
+                           </div>
+
+                           <div class="recentService" *ngIf="sel_ser_det.serviceType === 'virtualService' && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType === 'videoService'">
+                            <div class="fa wtsapvid-icon"></div>
+                            <div class="selectedUser"> {{sel_ser_det.name }}</div>
+                           </div>
+
+                           <div *ngIf="sel_ser_det.serviceType === 'virtualService' && sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom'"
+                           class="recentService">
+                            <div class="fa zoom-icon"></div>
+                            <div class="selectedUser"> {{sel_ser_det.name }}</div>
+                           </div>
+
+                           <div *ngIf="sel_ser_det.serviceType === 'virtualService' && sel_ser_det.virtualCallingModes[0].callingMode === 'VideoCall'"
+                           class="recentService">
+                            <div  class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"></div>
+                            <div class="selectedUser"> {{sel_ser_det.name }}</div>
+                           </div>
+
+                           <div *ngIf="sel_ser_det.serviceType === 'virtualService' && sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                           class="recentService">
+                            <div  class="fa meet-icon"></div>
+                            <div class="selectedUser"> {{sel_ser_det.name }}</div>
+                           </div>
+
+                           <div *ngIf="sel_ser_det.serviceType === 'virtualService' && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"
+                           class="recentService" aria-hidden="true">
+                            <div  class="fa phon-icon"></div>
+                            <div class="selectedUser"> {{sel_ser_det.name }}</div>
+                           </div>
+                        </div>
+                        <div class="myService" >My {{select_service_cap}}s</div>
+                          <mat-option  *ngFor="let serv of servicesjson" [value]="serv.id" >
+                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType === 'audioService'"
+                              class="fa wtsapaud-icon"></i>
+                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType === 'videoService'"
+                              class="fa wtsapvid-icon"></i>
+                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Zoom'"
+                              class="fa zoom-icon"></i>
+                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'VideoCall'"
+                              class="fa fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"></i>
+                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                              class="fa meet-icon"></i>
+                            <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'Phone'"
+                              class="fa phon-icon" aria-hidden="true"></i>
+                              <!-- <i *ngIf="serv.serviceType !== 'virtualService'"class="fa fa-wrench" aria-hidden="true"></i> -->
+                              <i  *ngIf="serv.serviceType !== 'virtualService'" aria-hidden="true">
+                                <img class="physicalServiceImg" src="/assets/images/physicelService.png" />  
+                                </i>
+                            <span class="dash selectedUser">{{serv.name | capitalizeFirst}}</span>
+                            <!-- <span >{{serv.serviceType}}</span> -->
+                          </mat-option>
+                       
                       </mat-select>
                     </mat-form-field>
                     <ng-container *ngIf="servicesjson.length == 0">
@@ -410,7 +505,7 @@
                           <span class="mgn-bt-10 cal-mod-edt custId-flex-form" *ngIf="showInputSection">
                             {{cuntryCode}}{{callingModes}}</span>
                           <div class="input-group-append mgn-up-2">
-                            <button *ngIf="!showInputSection" class="btn bt1 btn-primary m2" (click)="addCallingmode(i)"
+                            <button *ngIf="!showInputSection" class="btn bt1 btn-primary m2 confirmBtn" (click)="addCallingmode(i)"
                               type="button">Add</button>
                             <span class="editbt mgn-lt-20" *ngIf="showInputSection"
                               (click)="editCallingmodes(i)"></span>
@@ -425,36 +520,140 @@
               </ng-container>
               <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
             </div>
-
-            <div class="row mainouter">
-              <br>
-              <div class="date-outer flex-column col-md-5 col-lg-5 col-sm-12 col-xs-12 py-0 my-0">
-                <div class="my-0 py-0 text-light" *ngIf="!settingsjson['showTokenId']">{{checkinLabel}} {{date_cap}}</div>
-                <div class="" *ngIf="settingsjson['showTokenId']"> <br>
-                  <span class="p-0 m-0 text-light">{{dates_cap}}</span>
-                </div>
-                <div class="date-body"
-                  style="background-color: #f6f6f6 !important;border: 1px solid #f6f6f6 !important;">
-                  <span class="selected-date p-1 pt-0">
-                    <!-- <span class="icon-minus" [class.disable]="disableMinus()"
-                      (click)="calculateDate(-1)"></span>{{sel_checkindate | date: dateFormat}} -->
-                    <!-- <span class="icon-add" (click)="calculateDate(1)"></span> -->
+            <!----token time start-->
+            <div class="dateTime" >
+              <!-- <div class="date-outer p-0 m-0 walkin-form-fields-appointment ">
+                <div class="appt_date">
+                <div class="appt_date2" *ngIf="!settingsjson['showTokenId']">
+                  <div><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                  <div class="date-head">{{checkinLabel}} {{date_cap}}</div>
+              </div>
+                <div class="appt_date2" *ngIf="settingsjson['showTokenId']">
+                  <div><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                  <div class="date-head">{{date_cap}}</div>
+              </div>
+                <div class="date-body" style="background-color: #fff !important;
+                border: 1px solid #f6f6f6 !important;
+                padding: 5px;">
+                  <span class="selected-date">
+                   
                     {{sel_checkindate  | date: dateFormat}}
                   </span>
-                  <div class="form-group dt py-1">
+                  <div class="form-group dt" >
                     <div class="pickerouter">
-                      <mat-datepicker-toggle matSuffix [for]="picker">
-                      </mat-datepicker-toggle>
-                      <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
-                      <input class="form-control" type="text" [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
-                        [value]="ddate" (dateChange)="handleFutureDateChange($event)">
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
+                        </mat-datepicker>
+                        <input class="form-control" type="text" matInput
+                            [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
+                            [value]="ddate" (dateChange)="handleFutureDateChange($event)">
                     </div>
+                </div>
+                 
+                </div>
+              </div>
+              </div> -->
+
+              <div class="date-outer p-0 m-0 walkin-form-fields-appointment ">
+                <div class="appt_date">
+                  <div class="appt_date2" *ngIf="!settingsjson['showTokenId']">
+                    <div><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                    <div class="date-head">{{checkinLabel}} {{date_cap}}</div>
+                </div>
+                  <div class="appt_date2" *ngIf="settingsjson['showTokenId']">
+                    <div><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                    <div class="date-head">{{date_cap}}</div>
+                </div>
+                <div class="date-body date_body2" style="background-color: #fff !important;
+                border: 1px solid #f6f6f6 !important;
+                padding: 5px;border: none !important;">
+                    <!-- <span class="selected-date">
+                        {{sel_checkindate  | date: dateFormat}}
+                    </span>  -->
+                    <!-- <div class="form-group dt" >
+                        <div class="pickerouter">
+                            <mat-datepicker-toggle matSuffix [for]="picker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
+                            </mat-datepicker>
+                            <input class="form-control" type="text" matInput
+                                [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
+                                [value]="ddate" (dateChange)="handleFutureDateChange($event)">
+                        </div>
+                    </div> -->
+                    <div class="form-group dt matDatePicker" >
+                      <div class="pickerouter">
+                          <mat-datepicker-toggle matSuffix [for]="picker">
+                          </mat-datepicker-toggle>
+                          <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
+                          </mat-datepicker>
+                          <input class="inputbox matInputCstmClass" type="text" matInput
+                              [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
+                              [value]="ddate" (dateChange)="handleFutureDateChange($event)">
+                      </div>
                   </div>
                 </div>
+                <div class=" no-padding" style="margin-top: 10px;">
+                  <div *ngIf="queuejson.length > 0" class="freeslots"
+                    style="padding:0px !important">
+                    <div class="appt_date2">
+                      <div><i class="fa fa-clock-o" aria-hidden="true"></i></div>
+                      <div class="date-head">Time &nbsp;</div>
+                  </div>
+                    <div >
+                      <!-- <mat-form-field class="padding-0">
+                        <mat-select  class="inputbox1 p-0" [(ngModel)]="queuejson[0].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].queueSchedule.timeSlots[0]['eTime']">
+                          <mat-option (click)="handleQueueSelection(queue, i);"  *ngFor="let queue of queuejson, let i= index" [value]="queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']" >{{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
+                          queue.queueSchedule.timeSlots[0]['eTime']}}</mat-option>
+                        </mat-select>
+                      </mat-form-field> -->
+                      <mat-form-field >
+                        <mat-select class="inputbox" [(ngModel)]="queuejson[0].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].queueSchedule.timeSlots[0]['eTime']"
+                            #userapptsch  (selectionChange)="handleQueueSelection(userapptsch.value);">
+                            <div class="cstmService">Custom token schedule</div>
+                            <div class="recentSch">
+                                <div class="recentScheduleText">Recently sclected token schedule</div>
+                                <div class="recentService" style="gap:5px !important">
+                                <div>
+                                    <div><i class="fa fa-clock-o" aria-hidden="true"></i></div>
+                                </div>
+                                <div class="selectedUser">
+                                    {{queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['sTime'] + ' - ' +
+                                    queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
+                                </div>
+                                </div>
+                            </div>
+                            <div class="myService" >My token schedules</div>
+                            <mat-option *ngFor="let queue of queuejson, let i= index" [value]="queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']" >
+                            <div style="display:flex;gap:5px">
+                                <div>
+                                    <div><i class="fa fa-clock-o" aria-hidden="true"></i></div>
+                                </div>
+                                <div class="selectedUser">
+                                 {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
+                                 queue.queueSchedule.timeSlots[0]['eTime']}}
+                                </div>
+                               </div>
+                            </mat-option>
+                        </mat-select>
+                        </mat-form-field>
+  
+                      <!-- <mat-chip *ngFor="let queue of queuejson, let i= index" 
+                        [selected]="queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']"
+                        class="text-center m-1" (click)="handleQueueSelection(queue, i);"
+                        [(ngModel)]="queuejson[0].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].queueSchedule.timeSlots[0]['eTime']">
+                        <span class="m-2">{{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
+                          queue.queueSchedule.timeSlots[0]['eTime']}}</span>
+                      </mat-chip> -->
+                    </div>
+                  </div>
+  
+                </div>
 
-              </div>
-                 <br>
-              <div>
+                </div>
+            </div>
+              <!-- <div>
 
                 <ng-container *ngIf="queuejson.length == 0 && queueQryExecuted">
                   <span class='no-queue-available text-danger'
@@ -465,35 +664,23 @@
                 <ng-container *ngIf="queuejson.length > 0 && servicesjson.length == 0">
                   <span class='no-queue-available text-danger'>{{no_services_avail_cap}}</span>
                 </ng-container>
-              </div>
+              </div> -->
            
-              <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12">
-                <div *ngIf="queuejson.length > 0" class="flex-column"
-                  style="display: flex !important;align-items: center;">
-                  <br>
-                  <div>
-                    <span class="p-0 m-0 text-light">Time &nbsp;</span>
-                  </div>
-                  <div class="freeslots">
-                    <!-- <mat-form-field class="padding-0">
-                      <mat-select  class="inputbox1 p-0" [(ngModel)]="queuejson[0].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].queueSchedule.timeSlots[0]['eTime']">
-                        <mat-option (click)="handleQueueSelection(queue, i);"  *ngFor="let queue of queuejson, let i= index" [value]="queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']" >{{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
-                        queue.queueSchedule.timeSlots[0]['eTime']}}</mat-option>
-                      </mat-select>
-                    </mat-form-field> -->
+             
 
-                    <mat-chip *ngFor="let queue of queuejson, let i= index" 
-                      [selected]="queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']"
-                      class="text-center m-1" (click)="handleQueueSelection(queue, i);"
-                      [(ngModel)]="queuejson[0].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].queueSchedule.timeSlots[0]['eTime']">
-                      <span class="m-2">{{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
-                        queue.queueSchedule.timeSlots[0]['eTime']}}</span>
-                    </mat-chip>
-                  </div>
-                </div>
+            </div>
+            <!----token time end-->
+            <div>
 
-              </div>
-
+              <ng-container *ngIf="queuejson.length == 0 && queueQryExecuted">
+                <span class='no-queue-available text-danger'
+                  *ngIf="checkinLabel==='Check-In'">Check-in{{not_accepted_for_this_date}}</span>
+                <span class='no-queue-available text-danger'
+                  *ngIf="checkinLabel!=='Check-In'">{{checkinLabel}}{{not_accepted_for_this_date}}</span>
+              </ng-container>
+              <ng-container *ngIf="queuejson.length > 0 && servicesjson.length == 0">
+                <span class='no-queue-available text-danger'>{{no_services_avail_cap}}</span>
+              </ng-container>
             </div>
 
 
@@ -550,7 +737,7 @@
                   </div>
                 </div>
                 <div class="clearfix"></div><br>
-                <span class="text-primary" *ngIf="thirdParty === '' && queuejson.length > 0"><b>Please upload
+                <span class="text-primary" *ngIf="thirdParty === '' && queuejson.length > 0"><b class="uploadText">Please upload
                     Notes/Files related to your service</b></span>
                 <mat-chip-list class="btns provider-checkin" *ngIf="thirdParty === '' && queuejson.length > 0"
                   style="margin:0px!important">
@@ -745,7 +932,7 @@
               </div>
             </div>
             <div class="clearfix"></div><br>
-            <span class="my-2 text-primary" *ngIf="thirdParty === '' && queuejson.length > 0"><b>Please upload
+            <span class="my-2 text-primary" *ngIf="thirdParty === '' && queuejson.length > 0"><b class="uploadText">Please upload
                 Notes/Files related to your service</b></span>
             <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
               <!-- <mat-chip class="pro-action" (click)="handleSideScreen('members')"><a>Add /
@@ -918,7 +1105,11 @@
               <button type="button" class="btn btn-primary font-weight-bold" (click)="showQnr()"
                 [disabled]="api_loading"
                 *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">Next</button>
-              <button type="button" class="btn btn-primary font-weight-bold" (click)="saveCheckin()"
+                <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goBack()"
+                [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
+                [class.spinner-center]="api_loading" [disabled]="api_loading" [class.disabled]="api_loading"
+                *ngIf="!questionnaireList.labels">Cancel</button>
+              <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="saveCheckin()"
                 [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
                 [class.spinner-center]="api_loading" [disabled]="api_loading" [class.disabled]="api_loading"
                 *ngIf="!questionnaireList.labels">{{showCheckinButtonCaption()}}</button>
@@ -930,6 +1121,10 @@
 
 
       </div>
+      <div *ngIf="showCheckin && !showQuestionnaire && !showFollowup">
+        <img  class="imageIcon"  src="/assets/images/appt_Icon.png" />
+    </div>
+    </div>
     </div>
     <div class="card p0" *ngIf="showCheckin && !showQuestionnaire && showFollowup">
       <div class="copy locd">
@@ -1077,7 +1272,7 @@
                     <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']">
                       <mat-chip class="item" *ngFor="let queue of queuejson, let i= index"
                         [selected]="queue.id === queuejson[this.sel_queue_indx].id"
-                        (click)="handleQueueSelection(queue, i);">
+                        (click)="handleQueueSelection(queue);">
                         <span>{{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
                           queue.queueSchedule.timeSlots[0]['eTime']}}
                         </span>

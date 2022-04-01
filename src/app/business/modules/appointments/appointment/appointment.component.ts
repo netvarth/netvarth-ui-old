@@ -1105,8 +1105,8 @@ export class AppointmentComponent implements OnInit {
     //     }
     // }
 
-    handleQueueSelection(queue, index) {
-        this.sel_queue_indx = index;
+    handleQueueSelection(queue) {
+        // this.sel_queue_indx = index;
         if (queue) {
             this.sel_queue_id = queue.id;
             if (queue.timeDuration && queue.timeDuration !== 0) {
@@ -2232,7 +2232,7 @@ if(this.type === 'followup'){
                                 this.queuejson.splice(i, 1);
                             }
                         }
-                        this.handleQueueSelection(this.queuejson[0], 0);
+                        this.handleQueueSelection(this.queuejson[0]);
                     } else {
                         this.showApptTime = false;
                         this.api_loading = false;
@@ -2285,7 +2285,7 @@ else{
                         this.queuejson.splice(i, 1);
                     }
                 }
-                this.handleQueueSelection(this.queuejson[0], 0);
+                this.handleQueueSelection(this.queuejson[0]);
             } else {
                 this.showApptTime = false;
                 this.api_loading = false;
