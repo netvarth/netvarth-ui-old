@@ -374,6 +374,8 @@ selectedMultiUser:any=[]
 multiUserFilter:any=[];
   @ViewChild('closebutton') closebutton;
   showattachmentDialogRef: any;
+  locid: any;
+  select_location: any;
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -474,6 +476,7 @@ multiUserFilter:any=[];
   images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
   ngOnInit() {
     this.getProviderSettings();
+    this.getProviderLocation();
     this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
     this.titleService.setTitle('Jaldee Business - Checkins/Tokens');
     this.pagination.startpageval = this.groupService.getitemFromGroupStorage('paginationStart') || 1;
@@ -508,18 +511,11 @@ multiUserFilter:any=[];
     this.getDisplayboardCount();
     this.getPos();
     this.getLabel();
+    this.getLocationList();
+    this.getServiceList();
     if (this.active_user.accountType === 'BRANCH') {
       this.getDepartments();
-      this.getProviders().then(
-        () => {
-          this.getLocationList();
-          this.getServiceList();
-          this.refresh();
-        }
-      );
-    } else {
-      this.getLocationList();
-      this.getServiceList();
+      this.getProviders();
     }
     if (this.active_user.accountType === 'BRANCH') {
       this.getTeams().then((data) => {
@@ -530,7 +526,7 @@ multiUserFilter:any=[];
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
     });
-    this.getProviderLocation();
+  
     this.getInternalStatus();
   }
   getProviderLocation() {
@@ -538,6 +534,8 @@ multiUserFilter:any=[];
       .subscribe(
         (data: any) => {
           this.location_select = data;
+          console.log(this.location_select[0].id)
+          this.select_location = this.location_select[0].id;
         });
   }
   getInternalStatus() {
@@ -1280,6 +1278,7 @@ multiUserFilter:any=[];
                     );
                   }
                 );
+               
               }
             } else {
               self.selectLocationFromCookies(parseInt(cookie_location_id, 10));
@@ -1342,6 +1341,8 @@ multiUserFilter:any=[];
   }
   locationSelected(location) {
     this.selected_location = location;
+
+    this.getProviders();
     const _this = this;
     if (_this.selected_location) {
       _this.groupService.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
@@ -1851,7 +1852,8 @@ multiUserFilter:any=[];
       Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     }
     return new Promise((resolve) => {
-      this.provider_services.getwaitlistTodayCount(Mfilter)
+      if(this.selected_location.id){
+this.provider_services.getwaitlistTodayCount(Mfilter)
         .subscribe(
           data => {
             if (no_filter) { this.today_waitlist_count = data; }
@@ -1859,7 +1861,9 @@ multiUserFilter:any=[];
           },
           () => {
           });
-    });
+    }
+      }
+      );
   }
   getFutureWLCount(Mfilter = null) {
     const queueid = this.groupService.getitemFromGroupStorage('future_selQ');
@@ -2967,29 +2971,52 @@ multiUserFilter:any=[];
       }
     });
   }
+  // getProviders() {
+  //   alert('1')
+  //   alert(this.selected_location.id)
+  //   this.locid = this.selected_location.id;
+  //   alert(this.selected_location.id)
+  //   const _this = this;
+  //   return new Promise<void>(function (resolve) {
+  //     const apiFilter = {};
+  //     apiFilter['userType-eq'] = 'PROVIDER';
+  //     alert(this.locid + '1')  
+  //     _this.provider_services.getUsers(apiFilter).subscribe(data => {
+  //       _this.users = data;
+  //         _this.users.sort((a:any, b:any) => (a.firstName).localeCompare(b.firstName))
+  //       console.log('dataToken',data)
+  //       const tempUser = {};
+  //       tempUser['firstName'] = 'All';
+  //       tempUser['id'] = 'all';
+  //       if (_this.groupService.getitemFromGroupStorage('selectedUser')) {
+  //         _this.selectedUser = _this.groupService.getitemFromGroupStorage('selectedUser');
+  //       } else {
+  //         _this.selectedUser = tempUser;
+  //       }
+  //       resolve();
+  //     },
+  //       () => {
+  //         resolve();
+  //       });
+  //   });
+  // }
   getProviders() {
-    const _this = this;
-    return new Promise<void>(function (resolve) {
-      const apiFilter = {};
-      apiFilter['userType-eq'] = 'PROVIDER';
-      _this.provider_services.getUsers(apiFilter).subscribe(data => {
-        _this.users = data;
-        const tempUser = {};
-        tempUser['firstName'] = 'All';
-        tempUser['id'] = 'all';
-        if (_this.groupService.getitemFromGroupStorage('selectedUser')) {
-          _this.selectedUser = _this.groupService.getitemFromGroupStorage('selectedUser');
-        } else {
-          _this.selectedUser = tempUser;
-        }
-        resolve();
-      },
-        () => {
-          resolve();
-        });
+    const apiFilter = {};
+    apiFilter['userType-eq'] = 'PROVIDER';
+    apiFilter['businessLocs-eq'] = this.selected_location.id
+    this.provider_services.getUsers(apiFilter).subscribe(data => {
+      this.users = data;
+      this.users.sort((a:any, b:any) => (a.firstName).localeCompare(b.firstName))
+      const tempUser = {};
+      tempUser['firstName'] = 'All';
+      tempUser['id'] = 'all';
+      if (this.groupService.getitemFromGroupStorage('selectedUser')) {
+        this.selectedUser = this.groupService.getitemFromGroupStorage('selectedUser');
+      } else {
+        this.selectedUser = tempUser;
+      }
     });
   }
-
   getTeams() {
     const _this = this;
     return new Promise<void>(function (resolve) {
@@ -3384,6 +3411,7 @@ multiUserFilter:any=[];
     }
   }
   createInstantQ() {
+    this.getProviderLocation();
     if (this.qAvailability.availableNow) {
       const msg = 'Make myself unavailable today from ' + this.qAvailability.timeRange.sTime + ' to ' + this.qAvailability.timeRange.eTime + ' ?';
       const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
@@ -3416,7 +3444,7 @@ multiUserFilter:any=[];
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
-          location: this.location_select[0].id,
+          location: this.select_location,
           userId: loggedUser.id,
           instaQid: this.instaQid
         }

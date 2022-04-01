@@ -1729,6 +1729,7 @@ export class ProviderNotificationsComponent implements OnInit {
   }
   getOrderStatus() {
     this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
+      console.log('order',data)
       this.order_status = data.enableOrder;
     });
   }

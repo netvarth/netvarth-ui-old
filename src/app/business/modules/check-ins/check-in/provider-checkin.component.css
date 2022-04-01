@@ -30,7 +30,7 @@ align-items: center;
   color: black !important;
   text-align: center;
 }
-@media only screen and (max-width: 768px) 
+@media(max-width: 768px) 
 { 
   .displaysmall { opacity: 0 !important; }
   .orangebox {
@@ -39,9 +39,9 @@ align-items: center;
   }
   .card1
   {
-    max-width: 160px !important;
-    font-size: 10px !important;
-    margin-left: 0 !important;
+    max-width: 160px!important;
+    font-size: 10px!important;
+    margin-left: 0!important;
   }
   .card1 img
   {
@@ -122,7 +122,7 @@ align-items: center;
 
 .card1 {
   /* width: 90% !important; */
-  max-width: 220px ;
+  max-width: 220px;
   /* height: 30% !important; */
   background-color: #fff;
   color: #1E4079;
@@ -309,7 +309,12 @@ align-items: center;
   font-size: 25px!important;
   font-weight: bold!important;
 }
-
+.consumer-names
+{
+  color: #1E4079!important;
+  font-size: 20px!important;
+  font-weight: bold!important;
+}
 .consumer-id
 {
   color: #1E4079!important;
@@ -320,9 +325,9 @@ align-items: center;
   flex-direction: column!important;
   align-items: flex-start!important;
 }
+
 .freeslots mat-chip
 {
-
   border: none!important;
   border-radius: 5px!important;
   cursor: pointer;
@@ -335,10 +340,10 @@ align-items: center;
   color: white!important;
   font-weight: 900!important;
 } */
-/* .freeslots mat-chip.mat-chip.mat-focus-indicator.text-center.mat-primary.mat-standard-chip
+.freeslots mat-chip.mat-chip.mat-focus-indicator.text-center.mat-primary.mat-standard-chip
 {
-  padding: 5px;
-} */
+  padding: 0!important;
+}
 .notes,.fa-chevron-down,.fa-chevron-up,.attachment
 {
   color: #1e4079!important;

@@ -3,12 +3,18 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
 import { ProviderServices } from '../../services/provider-services.service';
+//import { ProviderServices } from '../../../ynw_provider/services/provider-services.service';
+
 import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
+
 import { ProviderSharedFuctions } from '../../functions/provider-shared-functions';
+// import { ProviderSharedFuctions } from '../../../ynw_provider/shared/functions/provider-shared-functions';
+
+
+import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { ProviderWaitlistCheckInCancelPopupComponent } from '../check-ins/provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.component';
 import { DateFormatPipe } from '../../../shared/pipes/date-format/date-format.pipe';
@@ -18,12 +24,11 @@ import { AppointmentActionsComponent } from './appointment-actions/appointment-a
 import { VoicecallDetailsSendComponent } from './voicecall-details-send/voicecall-details-send.component';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
-import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { Title } from '@angular/platform-browser';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { AttachmentPopupComponent } from '../../../../app/shared/components/attachment-popup/attachment-popup.component';
-declare let cordova: any;
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { TeleBookingService } from '../../../shared/services/tele-bookings-service';
 @Component({
   selector: 'app-appointments',
@@ -180,6 +185,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   tempActiveSchedules: any = [];
   selQidsforHistory: any = [];
   board_count = 0;
+  time = { hour: 0, minute: 0 };
+
   tomorrowDate;
   filter_date_start_min = null;
   filter_date_start_max = null;
@@ -1133,9 +1140,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   getCounts() {
-    this.today_waitlist_count = 0;
-    this.history_waitlist_count = 0;
-    this.future_waitlist_count = 0;
+    // this.today_waitlist_count = 0;
+    // this.history_waitlist_count = 0;
+    // this.future_waitlist_count = 0;
     if (this.time_type !== 2 && this.activeSchedules.length > 0) {
       this.getFutureAppointmentsCount()
         .then(
@@ -1753,9 +1760,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   setFilterForApi() {
     let api_filter = {};
     const filter = this.lStorageService.getitemfromLocalStorage('filter');
+    console.log(filter);
     if (filter) {
       api_filter = filter;
     }
+    console.log(api_filter);
     if (this.filter.first_name !== '') {
       api_filter['firstName-eq'] = this.filter.first_name;
     }
@@ -1917,10 +1926,34 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   getSingleTime(slot) {
+   // console.log("Appt Time :",slot)
     const slots = slot.split('-');
     return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
-
+  addZero(i) {
+    if (i < 10) {
+      i = '0' + i;
+    }
+    return i;
+  }
+  getTimeinMin() {
+    const time_min = this.time.hour * 60 + this.time.minute;
+    return typeof time_min === "number" ? time_min : 0;
+  }
+ getTimeMinute(time){
+  let hr;
+  let min; 
+  if(time >=60){
+    hr = Math.floor(time / 60 );
+    min =  Math.floor(time % 60);
+    return 'delayed by ' + hr+ 'hr'+':'+min + 'mins';
+  }
+  if(time<60){
+   min =  Math.floor(time % 60);
+   return 'delayed by ' +min + 'mins';
+  }
+ 
+ }
   apptClicked(type, time?) {
     if (this.schedules.length === 0) {
       this.snackbarService.openSnackBar('No active schedules', { 'panelClass': 'snackbarerror' });
@@ -1934,6 +1967,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       let serviceId;
       if (time) {
         slot = time.time;
+        console.log("Slot :",slot);
         scheduleId = time.scheduleId;
         const qfilter = this.activeSchedules.filter(q => q.id === time.scheduleId);
         if (qfilter && qfilter[0].services && qfilter[0].services.length > 0) {
@@ -2404,6 +2438,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   goCheckinDetail(checkin) {
+    console.log("Details :",checkin)
     this.lStorageService.setitemonLocalStorage('filter', this.setFilterForApi());
     if (this.time_type === 3) {
       this.groupService.setitemToGroupStorage('appthP', this.filter.page || 1);
@@ -2470,12 +2505,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           .subscribe(
             data => {
               this.historyCheckins = data;
-              // const params = [
-              //   'height=' + screen.height,
-              //   'width=' + screen.width,
-              //   'fullscreen=yes'
-              // ].join(',');
-              // const printWindow = window.open('', '', params);
+              console.log(this.historyCheckins);
+              const params = [
+                'height=' + screen.height,
+                'width=' + screen.width,
+                'fullscreen=yes'
+              ].join(',');
+              const printWindow = window.open('', '', params);
               let checkin_html = '';
               checkin_html += '<table width="100%" style="border: 1px solid #dbdbdb;">';
               checkin_html += '<td style="padding:10px;">Sl.No.</td>';
@@ -2515,17 +2551,16 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
               }
               checkin_html += '</div>';
-              cordova.plugins.printer.print(checkin_html);
-              // printWindow.document.write('<html><head><title></title>');
-              // printWindow.document.write('</head><body >');
-              // printWindow.document.write(checkin_html);
-              // printWindow.document.write('</body></html>');
-              // printWindow.moveTo(0, 0);
-              // printWindow.print();
-              // printWindow.document.close();
-              // setTimeout(() => {
-              //   printWindow.close();
-              // }, 500);
+              printWindow.document.write('<html><head><title></title>');
+              printWindow.document.write('</head><body >');
+              printWindow.document.write(checkin_html);
+              printWindow.document.write('</body></html>');
+              printWindow.moveTo(0, 0);
+              printWindow.print();
+              printWindow.document.close();
+              setTimeout(() => {
+                printWindow.close();
+              }, 500);
             });
       });
   }
@@ -2546,6 +2581,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   locationSelected(location) {
     this.selected_location = location;
+    this.getProviders();
     const _this = this;
     if (this.selected_location) {
       this.groupService.setitemToGroupStorage('provider_selected_location', this.selected_location.id);
@@ -2565,6 +2601,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   handleViewSel(view) {
     this.unassignview = false;
+    console.log("view Seslection");
+    console.log(view);
     this.activeUser = null;
     const tempUser = {};
     tempUser['firstName'] = 'All';
@@ -2576,6 +2614,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!view.userType) {
       this.initView(this.selectedView, 'reloadAPIs', 'view');
     } else {
+      console.log('i am a user');
       this.handleUserSelection(view);
     }
   }
@@ -2632,8 +2671,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   getProviders() {
     const apiFilter = {};
     apiFilter['userType-eq'] = 'PROVIDER';
+    apiFilter['businessLocs-eq'] = this.selected_location.id
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.users = data;
+      this.users.sort((a:any, b:any) => (a.firstName).localeCompare(b.firstName))
       const tempUser = {};
       tempUser['firstName'] = 'All';
       tempUser['id'] = 'all';
@@ -2675,6 +2716,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => {
       this.qloading = false;
     }, 1000);
+    console.log("TimeType:" + this.time_type);
     if (this.time_type === 1) {
       this.groupService.setitemToGroupStorage('appt_selQ', this.selQIds);
     } else if (this.time_type === 2) {
@@ -2891,7 +2933,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     let multiSelection;
     if (checkin) {
       multiSelection = false;
-    } else {
+    } 
+    else {
       if (status === 'started') {
         multiSelection = this.apptStartedMultiSelection;
       } else {
@@ -2919,7 +2962,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         // this.apptMultiSelection = false;
         this.getLabel();
         this.loadApiSwitch('');
+       this.refresh();
       }
+     // this.refresh();
       this.chkSelectAppointments = false;
       this.chkStartedSelectAppointments = false;
       this.apptStartedMultiSelection = false;
@@ -2945,6 +2990,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   onButtonAfterHook() { }
   gotoCustomerDetails(appt) {
     this.lStorageService.setitemonLocalStorage('filter', this.setFilterForApi());
+    console.log(this.setFilterForApi());
     if (appt.apptStatus !== 'blocked') {
       this.router.navigate(['/provider/customers/' + appt.appmtFor[0].id]);
     }
@@ -2953,6 +2999,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     event.stopPropagation();
   }
   addCustomerDetails(appt) {
+    console.log(appt);
     let virtualServicemode;
     let virtualServicenumber;
     if (appt.service.serviceType == 'virtualService') {
@@ -3107,6 +3154,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return age[0];
   }
   cardClicked(event) {
+    console.log(event);
     if (event.type === 'note') {
       this.showConsumerNote(event.waitlist);
     } else if (event.type === 'attachment') {

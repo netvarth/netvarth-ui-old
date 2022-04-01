@@ -365,44 +365,50 @@ export class PrintBookingDetailsComponent implements OnInit {
 
   }
   isDatagrid(question) {
-    let answerLine = question.answerLine.answer;
-    console.log("Data Checkins :",answerLine)
-    if (Object.keys(answerLine)[0] === 'dataGrid') {
-      return true;
-    } else {
-      return false;
+    if(question && question.answerLine && question.answerLine.answer){
+      let answerLine = question.answerLine.answer;
+      console.log("Data Checkins :",answerLine)
+      if (Object.keys(answerLine)[0] === 'dataGrid') {
+        return true;
+      } else {
+        return false;
+      }
     }
+  
   }
   getAnswer(question) {
-    let answerLine = question.answerLine.answer;
-    if (Object.keys(answerLine)[0] === 'fileUpload') {
-      let filesuploaded = '';
-      for (let file of answerLine.fileUpload) {
-        if (file.caption) {
-          filesuploaded += file.caption + ',';
-        } else {
-          filesuploaded += file.originalName + ',';
+    if(question && question.answerLine && question.answerLine.answer){
+      let answerLine = question.answerLine.answer;
+      if (Object.keys(answerLine)[0] === 'fileUpload') {
+        let filesuploaded = '';
+        for (let file of answerLine.fileUpload) {
+          if (file.caption) {
+            filesuploaded += file.caption + ',';
+          } else {
+            filesuploaded += file.originalName + ',';
+          }
+  
         }
-
+        return filesuploaded.substring(0, filesuploaded.length - 1);
       }
-      return filesuploaded.substring(0, filesuploaded.length - 1);
+      if (Object.keys(answerLine)[0] === 'list') {
+        let items = '';
+        for (let item of answerLine.list) {
+          items += item + ',';
+        }
+        return items.substring(0, items.length - 1);
+      }
+      if (Object.keys(answerLine)[0] === 'date') {
+        if (answerLine.date === "12:00 AM") {
+          return '';
+        }
+        else {
+          return answerLine.date;
+        }
+      }
+      return answerLine[Object.keys(answerLine)[0]];
     }
-    if (Object.keys(answerLine)[0] === 'list') {
-      let items = '';
-      for (let item of answerLine.list) {
-        items += item + ',';
-      }
-      return items.substring(0, items.length - 1);
-    }
-    if (Object.keys(answerLine)[0] === 'date') {
-      if (answerLine.date === "12:00 AM") {
-        return '';
-      }
-      else {
-        return answerLine.date;
-      }
-    }
-    return answerLine[Object.keys(answerLine)[0]];
+    
   }
 
   getinnerTableData(column) {

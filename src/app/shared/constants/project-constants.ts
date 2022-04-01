@@ -1068,5 +1068,3 @@ export const projectConstantsLocal = {
   // PATH:'https://test.jaldee.com/jaldee/'
 
 };
-
-

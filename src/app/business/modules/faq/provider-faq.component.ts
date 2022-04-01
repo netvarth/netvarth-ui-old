@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { Location } from '@angular/common';
 import { Messages } from '../../../shared/constants/project-messages';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-provider-faq',
@@ -36,12 +37,15 @@ export class ProviderFaqComponent implements  OnInit {
     }
   ];
   show = 'false';
+  customer_label:any;
   constructor(
     private _scrollToService: ScrollToService,
-    private _location: Location
+    private _location: Location,
+    private wordProcessor: WordProcessor,
   ) { }
   ngOnInit() {
     this.activeMenu = 'profile';
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
   scroll() {
   }

@@ -81,11 +81,11 @@
                     <i class="fa fa-user-plus"></i> {{customer_label | capitalizeFirst}}
                   </a>
                 </li>
-                <li class="dropdown notifications-menu" *ngIf="time_type ==1 && apis_loaded">
+                <!-- <li class="dropdown notifications-menu" *ngIf="time_type ==1 && apis_loaded">
                   <a (click)="showAdjustDelay()"
                     class="dropdown-toggle navbar-item-color bold pointer-cursor nav-cust-btn-new"
                     data-toggle="dropdown"><i class="fa fa-hourglass-start"></i> Delay</a>
-                </li>
+                </li> -->
                 <li class="dropdown customized-dd" *ngIf="time_type !==3"
                   style="margin-left: auto !important; margin-bottom: 12px !important; margin-right: 10px !important;">
                   <!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
@@ -1234,9 +1234,15 @@
                     *ngIf="time_type!=1">
                     {{appt.appmtDate | date: newTimeDateFormat}}</div>
                   <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
-                    <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
-                    <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span>
+                  
+
+                    <span class="greenc bold font11">{{getSingleTime(appt.appmtFor[0].apptTime)}}
+                    </span>
+                    <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span><br>
+                    <span *ngIf="appt.isApptDelayed === true && statusAction === 'new'" style="color: rgb(255, 123, 0) !important;">{{getTimeMinute(appt.apptDelay)}}</span>&nbsp;
+
                   </div>
+
                   <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                     class="bold pull-left mgn-lt-5 name font11" (click)="stopprop($event);gotoCustomerDetails(appt)"
                     *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName"
@@ -1871,8 +1877,10 @@
                   *ngIf="time_type!=1">
                   {{appt.appmtDate | date: newTimeDateFormat}}</div>
                 <div class="pull-left mgn-lt-5 date" *ngIf="time_type!=3">
-                  <span class="greenc bold font11">{{getSingleTime(appt.appmtTime)}}</span>
-                  <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span>
+                  <span class="greenc bold font11">{{getSingleTime(appt.appmtFor[0].apptTime)}}</span>
+                  <span *ngIf="this.selQIds.length > 1">S{{getScheduleIndex(appt.schedule.id) + 1}}</span><br>
+                  <span *ngIf="appt.isApptDelayed === true && statusAction === 'new'" style="color: rgb(255, 123, 0) !important;">{{getTimeMinute(appt.apptDelay)}}</span>&nbsp;
+
                 </div>
                 <div [matTooltipClass]="tooltipcls" [matTooltip]="customer_label | capitalizeFirst"
                   class="bold pull-left mgn-lt-5 name font11" (click)="stopprop($event);gotoCustomerDetails(appt)"
