@@ -588,13 +588,14 @@
                                 <!---appt date start-->
                                 <div class="date-outer p-0 m-0 walkin-form-fields-appointment ">
                                     <div class="appt_date">
+                                        <div>
                                         <div class="appt_date2">
                                             <div><i class="fa fa-calendar" aria-hidden="true"></i></div>
                                             <div class="date-head">Appointment {{date_cap}}</div>
                                         </div>
                                         <!-- <span class="date-head"><i class="fa fa-calendar" aria-hidden="true"></i></span>
                                         <span>Appointment {{date_cap}}</span> -->
-                                    <div class="date-body" style="background-color: #fff !important;
+                                    <div class="date-body date_body2" style="background-color: #fff !important;
                                     border: 1px solid #f6f6f6 !important;
                                     padding: 5px;">
                                         <span class="selected-date">
@@ -614,7 +615,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class=" no-padding" style="margin-top: 10px;">
+                                </div>
+                                    <div class=" no-padding timeTop" >
                                         <div class=" freeslots " *ngIf="queuejson.length > 0" style="padding:0px !important">
                                             <div class="appt_date2">
                                                 <div><i class="fa fa-clock-o" aria-hidden="true"></i></div>
@@ -631,11 +633,11 @@
                                             </mat-chip-list> -->
 
                                             <mat-form-field >
-                                                <mat-select class="inputbox" [(ngModel)]="queuejson[0].apptSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].apptSchedule.timeSlots[0]['eTime']"
+                                                <mat-select class="inputbox timeSlot" [(ngModel)]="queuejson[0].apptSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].apptSchedule.timeSlots[0]['eTime']"
                                                     #userapptsch  (selectionChange)="handleQueueSelection(userapptsch.value);">
-                                                    <div class="cstmService">Custom appointment schedule</div>
+                                                    <div class="cstmService">Custom schedule</div>
                                                     <div class="recentSch">
-                                                        <div class="recentScheduleText">Recently sclected appointment schedule</div>
+                                                        <div class="recentScheduleText">Recently sclected schedule</div>
                                                         <div class="recentService" style="gap:5px !important">
                                                         <div>
                                                             <div><i class="fa fa-clock-o" aria-hidden="true"></i></div>
@@ -646,7 +648,7 @@
                                                         </div>
                                                         </div>
                                                     </div>
-                                                    <div class="myService" >My appointment schedules</div>
+                                                    <div class="myService" >My schedules</div>
                                                     <mat-option *ngFor="let queue of queuejson, let i= index" [value]="queue.apptSchedule.timeSlots[0]['sTime'] + ' - ' + queue.apptSchedule.timeSlots[0]['eTime']" >
                                                     <div style="display:flex;gap:5px">
                                                         <div>

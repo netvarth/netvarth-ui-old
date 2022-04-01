@@ -557,6 +557,7 @@
 
               <div class="date-outer p-0 m-0 walkin-form-fields-appointment ">
                 <div class="appt_date">
+                  <div>
                   <div class="appt_date2" *ngIf="!settingsjson['showTokenId']">
                     <div><i class="fa fa-calendar" aria-hidden="true"></i></div>
                     <div class="date-head">{{checkinLabel}} {{date_cap}}</div>
@@ -568,20 +569,6 @@
                 <div class="date-body date_body2" style="background-color: #fff !important;
                 border: 1px solid #f6f6f6 !important;
                 padding: 5px;border: none !important;">
-                    <!-- <span class="selected-date">
-                        {{sel_checkindate  | date: dateFormat}}
-                    </span>  -->
-                    <!-- <div class="form-group dt" >
-                        <div class="pickerouter">
-                            <mat-datepicker-toggle matSuffix [for]="picker">
-                            </mat-datepicker-toggle>
-                            <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
-                            </mat-datepicker>
-                            <input class="form-control" type="text" matInput
-                                [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
-                                [value]="ddate" (dateChange)="handleFutureDateChange($event)">
-                        </div>
-                    </div> -->
                     <div class="form-group dt matDatePicker" >
                       <div class="pickerouter">
                           <mat-datepicker-toggle matSuffix [for]="picker">
@@ -594,7 +581,9 @@
                       </div>
                   </div>
                 </div>
-                <div class=" no-padding" style="margin-top: 10px;">
+              </div>
+
+                <div class=" no-padding timeTop"  >
                   <div *ngIf="queuejson.length > 0" class="freeslots"
                     style="padding:0px !important">
                     <div class="appt_date2">
@@ -609,11 +598,11 @@
                         </mat-select>
                       </mat-form-field> -->
                       <mat-form-field >
-                        <mat-select class="inputbox" [(ngModel)]="queuejson[0].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].queueSchedule.timeSlots[0]['eTime']"
+                        <mat-select class="inputbox timeSlot" [(ngModel)]="queuejson[0].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].queueSchedule.timeSlots[0]['eTime']"
                             #userapptsch  (selectionChange)="handleQueueSelection(userapptsch.value);">
-                            <div class="cstmService">Custom token schedule</div>
+                            <div class="cstmService">Custom  schedule</div>
                             <div class="recentSch">
-                                <div class="recentScheduleText">Recently sclected token schedule</div>
+                                <div class="recentScheduleText">Recently sclected  schedule</div>
                                 <div class="recentService" style="gap:5px !important">
                                 <div>
                                     <div><i class="fa fa-clock-o" aria-hidden="true"></i></div>
@@ -624,7 +613,7 @@
                                 </div>
                                 </div>
                             </div>
-                            <div class="myService" >My token schedules</div>
+                            <div class="myService" >My  schedules</div>
                             <mat-option *ngFor="let queue of queuejson, let i= index" [value]="queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']" >
                             <div style="display:flex;gap:5px">
                                 <div>
@@ -690,7 +679,7 @@
                 <div class="col-md-12 no-padding" *ngIf="queuejson.length > 0 && servicesjson.length > 0">
                   <div class="waitlist-button-outer no-padding">
                     <div class="showDetOuter" *ngIf="queuejson.length > 0">
-                      <div class="showDetService">
+                      <!-- <div class="showDetService">
                         <span *ngIf="calc_mode=='NoCalc'">
                           <span *ngIf="!isFuturedate">
                             <strong class="text-danger">Today
@@ -700,18 +689,18 @@
                             <strong class="text-danger">{{sel_checkindate | date: newDateFormat}}</strong>
                           </span>
                         </span>
-                      </div>
+                      </div> -->
                       <div class="queue-waitingdiv">
-                        <div class="queue-head"
+                        <!-- <div class="queue-head"
                           *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                           <strong class="text-danger">{{today_cap}} {{estimateCaption}} : </strong>
                           <span class="queue-avail-date text-danger">{{sel_queue_waitingmins}}</span>
-                        </div>
-                        <div class="queue-head"
+                        </div> -->
+                        <!-- <div class="queue-head"
                           *ngIf="settingsjson['calculationMode']!='NoCalc' || (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
                           <strong class="text-danger">{{persons_ahead_cap}}</strong>&nbsp;
                           <span class="queue-avail-date text-danger">{{sel_queue_personaahead}}</span>
-                        </div>
+                        </div> -->
                       </div>
                       <div class="queue-waitingdiv"
                         *ngIf="sel_queue_servicetime!='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
@@ -885,7 +874,7 @@
             <div class="col-md-12 no-padding" *ngIf="queuejson.length > 0 && servicesjson.length > 0">
               <div class="waitlist-button-outer no-padding">
                 <div class="showDetOuter" *ngIf="queuejson.length > 0">
-                  <div class="showDetService">
+                  <!-- <div class="showDetService">
                     <span *ngIf="calc_mode=='NoCalc'">
                       <span *ngIf="!isFuturedate">
                         <strong class="text-danger">Today
@@ -895,9 +884,9 @@
                         <strong class="text-danger">{{sel_checkindate | date: newDateFormat}}</strong>
                       </span>
                     </span>
-                  </div>
+                  </div> -->
                   <div class="queue-waitingdiv">
-                    <div class="queue-head"
+                    <!-- <div class="queue-head"
                       *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                       <strong class="text-danger">{{today_cap}} {{estimateCaption}} : </strong>
                       <span class="queue-avail-date text-danger">{{sel_queue_waitingmins}}</span>
@@ -906,7 +895,7 @@
                       *ngIf="settingsjson['calculationMode']!='NoCalc' || (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
                       <strong class="text-danger">{{persons_ahead_cap}}</strong>&nbsp;
                       <span class="queue-avail-date text-danger">{{sel_queue_personaahead}}</span>
-                    </div>
+                    </div> -->
                   </div>
                   <div class="queue-waitingdiv"
                     *ngIf="sel_queue_servicetime!='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
@@ -1289,7 +1278,7 @@
                 <div class="col-md-12" *ngIf="queuejson.length > 0 && servicesjson.length > 0">
                   <div class="waitlist-button-outer">
                     <div class="showDetOuter" *ngIf="queuejson.length > 0">
-                      <div class="showDetService">
+                      <!-- <div class="showDetService">
                         <span *ngIf="calc_mode=='NoCalc'">
                           <span *ngIf="!isFuturedate">
                             <strong>Today
@@ -1299,9 +1288,9 @@
                             <strong>{{sel_checkindate | date: newDateFormat}}</strong>
                           </span>
                         </span>
-                      </div>
+                      </div> -->
                       <div class="queue-waitingdiv">
-                        <div class="queue-head"
+                        <!-- <div class="queue-head"
                           *ngIf="sel_queue_servicetime=='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
                           <strong>{{today_cap}} {{estimateCaption}} : </strong>
                           <span class="queue-avail-date">{{sel_queue_waitingmins}}</span>
@@ -1310,7 +1299,7 @@
                           *ngIf="settingsjson['calculationMode']!='NoCalc' || (settingsjson['calculationMode']=='NoCalc' && settingsjson['showTokenId'])">
                           <strong>{{persons_ahead_cap}}</strong>&nbsp;
                           <span class="queue-avail-date">{{sel_queue_personaahead}}</span>
-                        </div>
+                        </div> -->
                       </div>
                       <div class="queue-waitingdiv"
                         *ngIf="sel_queue_servicetime!='' && settingsjson['calculationMode'] && settingsjson['calculationMode']!='NoCalc'">
