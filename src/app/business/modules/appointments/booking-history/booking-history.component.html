@@ -33,6 +33,7 @@
                     <td>{{data.statusChangedUser ? data.statusChangedUser : 'Nil'}}</td>
                     <!-- <td *ngIf="data.statusChangedMode === 'Walk-In'"> {{provider_label | capitalizeFirst}}</td>
                     <td *ngIf="data.statusChangedMode ==='Online'"> {{customer_label | capitalizeFirst}}</td> -->
+                    <td *ngIf="type == 'Token History' && data.statusChangedMode === 'OPD'"> Walk-In</td>
                     <td *ngIf="data.statusChangedMode === 'Walk-In'"> Walk-In</td>
                     <td *ngIf="data.statusChangedMode ==='Online'"> Online</td>
                     <td *ngIf="!data.statusChangedMode"> Nil</td>
