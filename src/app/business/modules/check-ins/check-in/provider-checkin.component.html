@@ -235,7 +235,7 @@
         <!-- </div> -->
       </div>
       <div class="beforeCatdTwosec" *ngIf="showCheckin && !showQuestionnaire && !showFollowup">
-      <div class="card box-shadow" *ngIf="showCheckin && !showQuestionnaire && !showFollowup">
+      <div class="card box-shadow" >
         <div class="">
           <div class="userNameId">
             <div>
@@ -246,9 +246,9 @@
                       <div class="my-auto">
                         <img src="/assets/images/avatar.png" width="60px" height="60px" class="my-auto">
                       </div>
-                      <div class="ml-3">
+                      <div class="ml-3 userName">
                         {{waitfor.firstName | capitalizeFirst}} {{waitfor.lastName | capitalizeFirst}} &nbsp; 
-                        <span *ngIf="thirdParty === '' && queuejson.length > 0 && small_device_display" (click)="openModal()">
+                        <span *ngIf="thirdParty === '' && queuejson.length > 0 " (click)="openModal()">
                           <a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                       </span>
                         <div *ngIf="jaldeeId" class="consumer-id">
@@ -260,13 +260,16 @@
                   </ng-container>
                 </ul>
               </div>
-              <div class="row">
+              <!-- <div class="row">
                 <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0 && !small_device_display">
-                  <mat-chip class="pro-action" (click)="openModal()"><a>Add /
-                      Change Member </a>
+                  <mat-chip class="pro-action" (click)="openModal()">
+                   <div class="addChngMem">
+                    <a>Add /Change Member </a>
+                    <i class="fa fa-plus clrChng" aria-hidden="true"></i>
+                   </div>
                   </mat-chip>
                 </mat-chip-list>
-              </div>
+              </div> -->
             </div>
             <div *ngIf="thirdParty !== ''" class="row">
               <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
@@ -289,7 +292,6 @@
               </div>
             </div>
           </div>
-          <br>
           <div class="lbl col-sm-12 col-md-12 col-lg-12 no-padding max-width">
             <div class="mainouter checkin-page walkin-form-fields">
               <ng-container *ngIf="!api_loading1">
@@ -305,17 +307,22 @@
                       <!-- <span class="pb-0 mb-0 text-light" style="color: black;">{{select_deptment_cap}}</span> -->
                       <mat-select class="inputbox" [ngModel]="selected_dept" #deptsel 
                         (selectionChange)="handleDeptSelction(deptsel.value)">
-                        <div class="cstmService">Custom {{select_deptment_cap }}</div>
-                          <div class="recentSch">
-                            <div class="recentScheduleText">Recently {{select_deptment_cap }}</div>
+                        <!-- <div class="cstmService">
+                         Custom {{select_deptment_cap }}
+                        </div> -->
+                          <!-- <div class="recentSch">
+                            <div class="recentScheduleText">
+                              Recently {{select_deptment_cap }}</div>
                             <div class="recentService" style="gap:5px !important">
                               <div>
                                 <img class="img" src="/assets/images/department.png"/>
                               </div>
                               {{selected_dept| json}}
+                              {{departmentName | json}}
                              </div>
-                          </div>
-                          <div class="myService" >My {{select_deptment_cap }}s</div>
+                          </div> -->
+                          <!-- <div class="myService" >
+                            My {{select_deptment_cap }}s</div> -->
                         <mat-option *ngFor="let dept of departments" [value]="dept.departmentId">
                           <div style="display:flex;gap:5px">
                             <div>
@@ -342,8 +349,8 @@
                     <mat-form-field *ngIf="users.length > 1" class="py-0 my-0">
                       <mat-select class="inputbox" [ngModel]="selected_user" #usersel
                         (selectionChange)="handleUserSelection(usersel.value)" (ngModelChange)='onOptionsSelected($event)'>
-                          <div class="cstmService">Custom {{provider_label }}</div>
-                          <div class="recentSch">
+                          <!-- <div class="cstmService">Custom {{provider_label }}</div> -->
+                          <!-- <div class="recentSch">
                             <div class="recentScheduleText">Recently selected {{provider_label }}</div>
                             <div class="recentService" style="gap:5px !important">
                               <div>
@@ -352,8 +359,8 @@
                               <div class="selectedUser"> {{usersel.value.firstName }}</div>
                               <div class="selectedUser"> {{usersel.value.lastName }}</div>
                              </div>
-                          </div>
-                          <div class="myService" >My {{provider_label }}s</div>
+                          </div> -->
+                          <!-- <div class="myService" >My {{provider_label }}s</div> -->
                           <mat-option *ngFor="let user of users" [value]="user"  >
                            <div style="display:flex;gap:5px">
                             <div>
@@ -406,10 +413,10 @@
                       <mat-select class="inputbox select-box" [ngModel]="sel_ser" #servsel
                         (selectionChange)="handleServiceSel(servsel.value)">
                         <!-- <div style="display: flex;"> -->
-                          <div class="cstmService">Custom {{select_service_cap}}</div>
+                          <!-- <div class="cstmService">Custom {{select_service_cap}}</div> -->
                         <!-- <div>{{select_service_cap}}</div>
                         </div> -->
-                        <div class="recentSch">
+                        <!-- <div class="recentSch">
                           <div class="recentScheduleText">Recently {{select_service_cap}}</div>
                           <div class="recentService" *ngIf="sel_ser_det.serviceType !== 'virtualService'">
                             <div>
@@ -451,8 +458,8 @@
                             <div  class="fa phon-icon"></div>
                             <div class="selectedUser"> {{sel_ser_det.name }}</div>
                            </div>
-                        </div>
-                        <div class="myService" >My {{select_service_cap}}s</div>
+                        </div> -->
+                        <!-- <div class="myService" >My {{select_service_cap}}s</div> -->
                           <mat-option  *ngFor="let serv of servicesjson" [value]="serv.id" >
                             <i *ngIf="serv.serviceType === 'virtualService' && serv.virtualCallingModes[0].callingMode === 'WhatsApp' && serv.virtualServiceType === 'audioService'"
                               class="fa wtsapaud-icon"></i>
@@ -568,7 +575,7 @@
                 </div>
                 <div class="date-body date_body2" style="background-color: #fff !important;
                 border: 1px solid #f6f6f6 !important;
-                padding: 5px;border: none !important;">
+                padding: 2px;border: none !important;">
                     <div class="form-group dt matDatePicker" >
                       <div class="pickerouter">
                           <mat-datepicker-toggle matSuffix [for]="picker">
@@ -599,9 +606,9 @@
                       </mat-form-field> -->
                       <mat-form-field >
                         <mat-select class="inputbox timeSlot" [(ngModel)]="queuejson[0].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].queueSchedule.timeSlots[0]['eTime']"
-                            #userapptsch  (selectionChange)="handleQueueSelection(userapptsch.value);">
-                            <div class="cstmService">Custom  schedule</div>
-                            <div class="recentSch">
+                            >
+                            <!-- <div class="cstmService">Custom  schedule</div> -->
+                            <!-- <div class="recentSch">
                                 <div class="recentScheduleText">Recently sclected  schedule</div>
                                 <div class="recentService" style="gap:5px !important">
                                 <div>
@@ -612,9 +619,9 @@
                                     queuejson[this.sel_queue_indx].queueSchedule.timeSlots[0]['eTime']}}
                                 </div>
                                 </div>
-                            </div>
-                            <div class="myService" >My  schedules</div>
-                            <mat-option *ngFor="let queue of queuejson, let i= index" [value]="queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']" >
+                            </div> -->
+                            <!-- <div class="myService" >My  schedules</div> -->
+                            <mat-option *ngFor="let queue of queuejson, let i= index" [value]="queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']" (selectionChange)="handleQueueSelection(queue, i);" >
                             <div style="display:flex;gap:5px">
                                 <div>
                                     <div><i class="fa fa-clock-o" aria-hidden="true"></i></div>
@@ -770,7 +777,7 @@
         </div>
 
         <div class="mainouter">
-          <div class="col-md-12  mgn-up-20 " *ngIf="showAction">
+          <div class="col-md-16 " *ngIf="showAction">
             <aside class="checkin-aside">
               <div class="servicefor-outer">
                 <ng-container *ngIf="action==='members'">
@@ -849,18 +856,18 @@
               </div>
              
               <ng-container *ngIf="action=='note'">
-                <div class="col-md-12 mgn-bt-20">
+                <div class="col-md-12 textarea">
                     <mat-form-field>
-                        <textarea matInput class="form-control mt-3" [(ngModel)]="consumerNote"
-                            #consumernote (change)="handleConsumerNote(consumernote.value)"
+                        <textarea rowa="10"class="form-control" [(ngModel)]="consumerNote"
+                            #consumernote (change)="handleConsumerNote(consumernote.value)"(keyup)="autoGrowTextZone($event)"
                             maxlength="1000" placeholder="{{note_placeholder}}"></textarea>
                     </mat-form-field>
-                    <div class="col-md-12 no-padding mgn-up-10 glbl-seting-heder">
-                        <button mat-button class="cs-btn bt1 backbtn mgn-rt-10"
+                    <div class="col-md-12 no-padding mgn-up-10 glbl-seting-heder noteBtn">
+                        <button mat-button class="cs-btn bt1  mgn-rt-10 cancelBtn"
                             (click)="handleGoBack(1)">
                             Cancel
                         </button>
-                        <button mat-button class="cs-btn bt1 backtocheckin"
+                        <button mat-button class="cs-btn bt1  confirmBtn"
                             (click)="handleGoBack(1)">OK
                         </button>
                     </div>
@@ -962,21 +969,27 @@
               </a>
             </div>
           </div>
-          <div class="ml-1" *ngIf="(consumerNote && notes) || (selectedMessage.files && selectedMessage.files.length > 0 && attachments)">
+          <div class=" notesMargin" *ngIf="(consumerNote && notes) || (selectedMessage.files && selectedMessage.files.length > 0 && attachments)">
             <ng-container *ngIf="consumerNote && notes" class="notes">
-              <div class="row col-md-12 mt-3">
-                <div class="col-md-7">
+              <div class="row col-md-12 mt-5 customerNote">
+                <div class="noteText">Notes description ({{currentDate | date:'MMM d, h:mm:ss a'}}) :</div>
+                <div class="col-md-12 customerNoteDetails">
                   <span class="mgn-up-5">{{consumerNote}}</span>
                 </div>
               </div>
             </ng-container>
             <div class="clearfix"></div><br>
-            <div class="mgn-up-5 mgn-lt-25"
+            <div class="mgn-up-5 uploadFile multiUploadFile"
               *ngIf="selectedMessage.files && selectedMessage.files.length > 0 && attachments">
+              <div style="display:flex;gap:10px">
+                <div> <i class="fa fa-file" aria-hidden="true"></i></div>
+                <div> Files</div>
+              </div>
               <div class="row" *ngFor="let item of selectedMessage.files; let i = index">
-                <div style="display: flex;align-items: center;justify-content:space-between;width: 100%;">
-                  <div>
-                    {{item.name}}
+                <div class="uploadFileName" >
+                  <div style="display:flex;gap:10px">
+                    <div> <i class="fa fa-file" aria-hidden="true"></i></div>
+                    <div> {{item.name}}</div>
                   </div>
                   <div>
                     <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
@@ -1095,9 +1108,9 @@
                 [disabled]="api_loading"
                 *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">Next</button>
                 <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goBack()"
-                [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
-                [class.spinner-center]="api_loading" [disabled]="api_loading" [class.disabled]="api_loading"
-                *ngIf="!questionnaireList.labels">Cancel</button>
+                *ngIf="!questionnaireList.labels" >Cancel</button>
+                <!-- [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
+                [class.spinner-center]="api_loading" [disabled]="api_loading" [class.disabled]="api_loading" -->
               <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="saveCheckin()"
                 [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
                 [class.spinner-center]="api_loading" [disabled]="api_loading" [class.disabled]="api_loading"
@@ -1110,7 +1123,7 @@
 
 
       </div>
-      <div *ngIf="showCheckin && !showQuestionnaire && !showFollowup">
+      <div>
         <img  class="imageIcon"  src="/assets/images/appt_Icon.png" />
     </div>
     </div>
@@ -1261,7 +1274,7 @@
                     <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']">
                       <mat-chip class="item" *ngFor="let queue of queuejson, let i= index"
                         [selected]="queue.id === queuejson[this.sel_queue_indx].id"
-                        (click)="handleQueueSelection(queue);">
+                        (click)="handleQueueSelection(queue,i);">
                         <span>{{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
                           queue.queueSchedule.timeSlots[0]['eTime']}}
                         </span>

@@ -268,6 +268,7 @@ export class ProviderCheckinComponent implements OnInit {
     small_device_display = false;
     myDate:any
     departmentName:any
+    currentDate
    
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
@@ -400,6 +401,7 @@ export class ProviderCheckinComponent implements OnInit {
       }
     }
     ngOnInit() {
+        this.currentDate = new Date();
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         if(user.userType == 1) {
             this.assignmyself = true;
@@ -883,9 +885,11 @@ export class ProviderCheckinComponent implements OnInit {
                 // this.selected_dept = 'None';
                 if (_this.selectDept) {
                     _this.selected_dept = _this.selectDept;
+                    _this.departmentName = _this.departments[0].departmentName;
                     resolve();
                 } else if (_this.deptLength !== 0) {
                     _this.selected_dept = _this.departments[0].departmentId;
+                    _this.departmentName = _this.departments[0].departmentName;
                     resolve();
                 } else {
                     reject();
@@ -1157,8 +1161,8 @@ export class ProviderCheckinComponent implements OnInit {
         }
     }
 
-    handleQueueSelection(queue) {
-        // this.sel_queue_indx = index;
+    handleQueueSelection(queue,index) {
+        this.sel_queue_indx = index;
         this.sel_queue_id = queue.id;
         this.sel_queue_waitingmins = this.dateTimeProcessor.convertMinutesToHourMinute(queue.queueWaitingTime);
         this.sel_queue_servicetime = queue.serviceTime || '';
@@ -1188,6 +1192,11 @@ export class ProviderCheckinComponent implements OnInit {
     handleConsumerNote(vale) {
         this.consumerNote = vale;
     }
+    autoGrowTextZone(e) {
+        console.log('textarea',e)
+        e.target.style.height = "0px";
+        e.target.style.height = (e.target.scrollHeight + 15)+"px";
+      }
     handleFutureDateChange(e) {
         console.log('eeeeeeeeeeeeee',e)
         const tdate = e.targetElement.value;
@@ -1966,6 +1975,7 @@ export class ProviderCheckinComponent implements OnInit {
                 // this.selected_dept = 'None';
                 if (this.deptLength !== 0) {
                     this.selected_dept = this.departments[0].departmentId;
+                    this.departmentName = this.departments[0].departmentName;
                     this.handleDeptSelction(this.selected_dept);
                 }
             });

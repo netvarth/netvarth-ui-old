@@ -265,6 +265,7 @@ export class AppointmentComponent implements OnInit {
     tday = new Date();
     screenWidth;
     small_device_display = false;
+    currentDate
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -426,6 +427,7 @@ export class AppointmentComponent implements OnInit {
         this.display = "none";
     }
     ngOnInit() {
+        this.currentDate = new Date();
         this.carouselOne = {
             dots: false,
             nav: true,
@@ -1105,8 +1107,8 @@ export class AppointmentComponent implements OnInit {
     //     }
     // }
 
-    handleQueueSelection(queue) {
-        // this.sel_queue_indx = index;
+    handleQueueSelection(queue,index) {
+        this.sel_queue_indx = index;
         if (queue) {
             this.sel_queue_id = queue.id;
             if (queue.timeDuration && queue.timeDuration !== 0) {
@@ -1132,6 +1134,11 @@ export class AppointmentComponent implements OnInit {
     handleConsumerNote(vale) {
         this.consumerNote = vale;
     }
+    autoGrowTextZone(e) {
+        console.log('textarea',e)
+        e.target.style.height = "0px";
+        e.target.style.height = (e.target.scrollHeight + 15)+"px";
+      }
     handleFutureDateChange(e) {
         const tdate = e.targetElement.value;
         const newdate = tdate.split('/').reverse().join('-');
@@ -2232,7 +2239,7 @@ if(this.type === 'followup'){
                                 this.queuejson.splice(i, 1);
                             }
                         }
-                        this.handleQueueSelection(this.queuejson[0]);
+                        this.handleQueueSelection(this.queuejson[0],0);
                     } else {
                         this.showApptTime = false;
                         this.api_loading = false;
@@ -2285,7 +2292,7 @@ else{
                         this.queuejson.splice(i, 1);
                     }
                 }
-                this.handleQueueSelection(this.queuejson[0]);
+                this.handleQueueSelection(this.queuejson[0],0);
             } else {
                 this.showApptTime = false;
                 this.api_loading = false;
