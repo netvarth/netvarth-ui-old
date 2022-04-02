@@ -266,6 +266,8 @@ export class AppointmentComponent implements OnInit {
     screenWidth;
     small_device_display = false;
     currentDate
+    fileSizeInKb:number=1024
+    Math = Math
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1560,7 +1562,11 @@ export class AppointmentComponent implements OnInit {
             this.api_loading_video = false;
         });
     }
+    cancelBtn(){
+        this.hideFilterSidebar();
+    }
     handleGoBack(cstep) {
+        console.log('cstep',cstep)
         this.resetApi();
         switch (cstep) {
             case 1:
@@ -2133,7 +2139,9 @@ export class AppointmentComponent implements OnInit {
                 });
     }
     filesSelected(event) {
+        console.log('event',event)
         const input = event.target.files;
+        console.log('input',input)
         if (input) {
             for (const file of input) {
                 if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {

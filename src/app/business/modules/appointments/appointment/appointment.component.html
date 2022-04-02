@@ -913,15 +913,48 @@
                         <div class="mgn-up-5 uploadFile multiUploadFile" *ngIf="selectedMessage.files && selectedMessage.files.length > 0 && attachments">
                             <div style="display:flex;gap:10px">
                                 <div> <i class="fa fa-file" aria-hidden="true"></i></div>
-                                <div> Files</div>
+                                <div> Files selected({{selectedMessage.files.length}})</div>
                               </div>
                             <div  class="row selectFile"  *ngFor="let item of selectedMessage.files; let i = index">
                             
                                 <div class="uploadFileName"  >
-                                     <div style="display:flex;gap:10px">
-                                        <div> <i class="fa fa-file" aria-hidden="true"></i></div>
+                                     <div style="display:flex;gap:10px" *ngIf="item.type==='image/jpeg'">
+                                        <div> 
+                                            <img  class="img" src="/assets/images/ImgeFileIcon/jpeg.png" />
+                                        </div>
                                         <div> {{item.name}}</div>
+                                        <div  > {{ Math.round (item.size/fileSizeInKb)}}KB</div>
                                       </div>
+                                      <div style="display:flex;gap:10px" *ngIf="item.type==='image/jpg'">
+                                        <div> 
+                                            <img class="img" src="/assets/images/ImgeFileIcon/jpg.png" />
+                                        </div>
+                                        <div> {{item.name}}</div>
+                                        <div  > {{ Math.round (item.size/fileSizeInKb)}}KB</div>
+                                      </div>
+                                      <div style="display:flex;gap:10px" *ngIf="item.type==='image/png'">
+                                        <div> 
+                                            <img  class="img" src="/assets/images/ImgeFileIcon/png.png" />
+                                        </div>
+                                        <div> {{item.name}}</div>
+                                        <div  > {{ Math.round (item.size/fileSizeInKb)}}KB</div>
+                                      </div>
+                                      <div style="display:flex;gap:10px" *ngIf="item.type==='application/pdf'">
+                                        <div> 
+                                            <img class="img" src="/assets/images/ImgeFileIcon/pdf.png" />
+                                        </div>
+                                        <div> {{item.name}}</div>
+                                        <div  > {{ Math.round (item.size/fileSizeInKb)}}KB</div>
+                                      </div>
+                                      <!-- <div style="display:flex;gap:10px" *ngIf="item.type !=='application/pdf' || 'image/png' || 'image/jpg'">
+                                        <div> 
+                                            <i class="fa fa-file" aria-hidden="true"></i>
+                                        </div>
+                                        <div> {{item.name}}</div>
+                                        <div  > {{ Math.round (item.size/fileSizeInKb)}}KB</div>
+                                      </div> -->
+                                      
+                                      
                                      <div>
                                           <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                     <mat-icon>more_vert</mat-icon>
@@ -1008,11 +1041,11 @@
                                             maxlength="1000" placeholder="{{note_placeholder}}"></textarea>
                                     </mat-form-field>
                                     <div class="col-md-12 no-padding mgn-up-10 glbl-seting-heder noteBtn">
-                                        <button mat-button class="cs-btn bt1 cancelBtn mgn-rt-10"
+                                        <button mat-button class="cs-btn bt1  mgn-rt-10 cancelBtn"
                                             (click)="handleGoBack(1)">
                                             Cancel
                                         </button>
-                                        <button mat-button class="cs-btn bt1 confirmBtn"
+                                        <button mat-button class="cs-btn bt1  confirmBtn"
                                             (click)="handleGoBack(1)">OK
                                         </button>
                                     </div>

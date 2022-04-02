@@ -269,6 +269,8 @@ export class ProviderCheckinComponent implements OnInit {
     myDate:any
     departmentName:any
     currentDate
+    fileSizeInKb:number=1024
+    Math = Math
    
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,

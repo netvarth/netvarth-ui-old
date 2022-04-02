@@ -669,7 +669,7 @@ border: none !important;
 }
 .noteBtn{
   justify-content: center;
-    margin-top: -15px !important;
+    /* margin-top: -15px !important; */
     margin-bottom: 10px !important;
 }
 .mat-form-field textarea{
@@ -764,6 +764,13 @@ border: none !important;
     margin-left: 10px;
 
 }
+
+@media only screen and (max-width: 575px){
+   .selected-date {
+    margin-left: 15px !important;
+}
+}
+
 
 
 
