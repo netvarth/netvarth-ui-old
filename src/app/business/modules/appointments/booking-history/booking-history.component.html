@@ -28,13 +28,16 @@
                     <th>Date & time</th>
                   </tr>
                   <tr *ngFor="let data of bookinghistorydetails">
-                    <td *ngIf="type != 'Token History' ">{{data.appointmentStatus}}</td>
-                    <td *ngIf="type == 'Token History' ">{{check_in_statuses[data.waitlistStatus | capitalizeFirst]}}</td>
-                    <td>{{data.userType | capitalizeFirst}} <span *ngIf="appointmentbyname">({{data.statusChangedUser}})</span> </td>
-                    <td>{{how}}</td>
+                    <td *ngIf="type != 'Token History'">{{check_in_statuses[data.appointmentStatus | capitalizeFirst]}}</td>
+                    <td *ngIf="type == 'Token History'"> {{check_in_statuses[data.waitlistStatus | capitalizeFirst]}}</td>
+                    <td>{{data.statusChangedUser ? data.statusChangedUser : 'Nil'}}</td>
+                    <!-- <td *ngIf="data.statusChangedMode === 'Walk-In'"> {{provider_label | capitalizeFirst}}</td>
+                    <td *ngIf="data.statusChangedMode ==='Online'"> {{customer_label | capitalizeFirst}}</td> -->
+                    <td *ngIf="data.statusChangedMode === 'Walk-In'"> Walk-In</td>
+                    <td *ngIf="data.statusChangedMode ==='Online'"> Online</td>
+                    <td *ngIf="!data.statusChangedMode"> Nil</td>
                     <td *ngIf="type != 'Token History' ">{{data.date | date: newDateFormat}} {{data.time}}</td>
-                    <td *ngIf="type == 'Token History' ">{{getformatedTime(data.time)| date: newTimeDateFormat }}</td>
-  
+                    <td *ngIf="type == 'Token History' ">{{getformatedTime(data.time) | date: newTimeDateFormat}}</td>
                   </tr>
               </table>
               </div>
