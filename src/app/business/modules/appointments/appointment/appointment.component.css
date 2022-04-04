@@ -560,12 +560,12 @@
     align-items: center;
     gap: 5px;
 }
-.matchipapptSlot{
+/* .matchipapptSlot{
   margin-top: -5px ;
   margin-left: 15px;
-}
+} */
 .appt-in-chip .mat-chip{
-  min-width: 17%;
+  min-width: 20%;
     max-width: 20%;
     /* display: flex;
     justify-content: center; */
@@ -587,7 +587,7 @@
 }
 .imageIcon{
   height: 600px;
-  width: 600px;
+  width: 500px;
 }
 .borderBtm{
   border-bottom: 0.752102px solid #EFEFEF !important;
@@ -739,7 +739,7 @@ border: none !important;
     border: 1px solid #f6f6f6 !important;
     border-radius: 5px;
     padding: 5px;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
     margin-left: 15px;
     margin-top: 15px;
     margin-right: 15px;
@@ -769,6 +769,18 @@ border: none !important;
    .selected-date {
     margin-left: 15px !important;
 }
+}
+
+.uploadFileImgFileName{
+  display: flex;
+  gap: 2px;
+    align-items: center;
+}
+.fileName{
+  font-weight: 500;
+    font-size: 13px;
+    text-transform: capitalize;
+    color: #707070 !important;
 }
 
 

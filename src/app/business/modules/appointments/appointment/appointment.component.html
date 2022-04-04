@@ -300,8 +300,8 @@
                     </div>
                 </div>
             </div>
-            <div class="beforeCatdTwosec">
-            <div class="card box-shadow" *ngIf="showCheckin && !showQuestionnaire && !showFollowup" >
+            <div class="beforeCatdTwosec"  *ngIf="showCheckin && !showQuestionnaire && !showFollowup">
+            <div class="card box-shadow"  >
                 <div class="">
                     <div class="userNameId">
                         <div>
@@ -902,7 +902,7 @@
                             </div>
                         </div> -->
                         <div class="row col-md-12 mt-4 customerNote">
-                            <div class="noteText">Notes description ({{currentDate | date:'MMM d, h:mm:ss a'}}) :</div>
+                            <div class="noteText">Notes description ({{currentDate | date:'MMM d, h:mm a'}}) :</div>
                             <div class="col-md-12 customerNoteDetails">
                               <span class="mgn-up-5">{{consumerNote}}</span>
                             </div>
@@ -918,33 +918,33 @@
                             <div  class="row selectFile"  *ngFor="let item of selectedMessage.files; let i = index">
                             
                                 <div class="uploadFileName"  >
-                                     <div style="display:flex;gap:10px" *ngIf="item.type==='image/jpeg'">
+                                     <div class="uploadFileImgFileName" *ngIf="item.type==='image/jpeg'">
                                         <div> 
                                             <img  class="img" src="/assets/images/ImgeFileIcon/jpeg.png" />
                                         </div>
                                         <div> {{item.name}}</div>
-                                        <div  > {{ Math.round (item.size/fileSizeInKb)}}KB</div>
+                                        <div class="fileName" > ({{ Math.round (item.size/fileSizeInKb)}}KB)</div>
                                       </div>
-                                      <div style="display:flex;gap:10px" *ngIf="item.type==='image/jpg'">
+                                      <div class="uploadFileImgFileName" *ngIf="item.type==='image/jpg'">
                                         <div> 
                                             <img class="img" src="/assets/images/ImgeFileIcon/jpg.png" />
                                         </div>
                                         <div> {{item.name}}</div>
-                                        <div  > {{ Math.round (item.size/fileSizeInKb)}}KB</div>
+                                        <div  class="fileName"> ({{ Math.round (item.size/fileSizeInKb)}}KB)</div>
                                       </div>
-                                      <div style="display:flex;gap:10px" *ngIf="item.type==='image/png'">
+                                      <div class="uploadFileImgFileName" *ngIf="item.type==='image/png'">
                                         <div> 
                                             <img  class="img" src="/assets/images/ImgeFileIcon/png.png" />
                                         </div>
                                         <div> {{item.name}}</div>
-                                        <div  > {{ Math.round (item.size/fileSizeInKb)}}KB</div>
+                                        <div  class="fileName"> ({{ Math.round (item.size/fileSizeInKb)}}KB)</div>
                                       </div>
-                                      <div style="display:flex;gap:10px" *ngIf="item.type==='application/pdf'">
+                                      <div class="uploadFileImgFileName" *ngIf="item.type==='application/pdf'">
                                         <div> 
                                             <img class="img" src="/assets/images/ImgeFileIcon/pdf.png" />
                                         </div>
                                         <div> {{item.name}}</div>
-                                        <div  > {{ Math.round (item.size/fileSizeInKb)}}KB</div>
+                                        <div  class="fileName"> ({{ Math.round (item.size/fileSizeInKb)}}KB)</div>
                                       </div>
                                       <!-- <div style="display:flex;gap:10px" *ngIf="item.type !=='application/pdf' || 'image/png' || 'image/jpg'">
                                         <div> 
@@ -1076,7 +1076,7 @@
                     <img height="380px" width="230px" class="imageIcon"  src="../../../../../assets/images/appt_Icon.png" />
                 </div> -->
             </div>
-            <div *ngIf="showCheckin && !showQuestionnaire && !showFollowup">
+            <div >
                 <img  class="imageIcon"  src="/assets/images/appt_Icon.png" />
             </div>
         </div>

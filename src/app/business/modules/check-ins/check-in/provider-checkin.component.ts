@@ -1064,6 +1064,7 @@ export class ProviderCheckinComponent implements OnInit {
             this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
                     this.queuejson = data;
+                    console.log('this.queuejson',data)
                     this.queueQryExecuted = true;
                     if (this.queuejson.length > 0) {
                         let selindx = 0;
@@ -1164,6 +1165,8 @@ export class ProviderCheckinComponent implements OnInit {
     }
 
     handleQueueSelection(queue,index) {
+        console.log('queue',queue)
+        console.log('index',index)
         this.sel_queue_indx = index;
         this.sel_queue_id = queue.id;
         this.sel_queue_waitingmins = this.dateTimeProcessor.convertMinutesToHourMinute(queue.queueWaitingTime);
