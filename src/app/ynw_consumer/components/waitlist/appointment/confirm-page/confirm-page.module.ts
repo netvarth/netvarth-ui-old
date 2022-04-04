@@ -8,15 +8,7 @@ import { HeaderModule } from "../../../../../shared/modules/header/header.module
 import { LoadingSpinnerModule } from "../../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { ConfirmPageComponent } from "./confirm-page.component";
 import { HttpClientModule } from '@angular/common/http';
-import { FullCalendarModule } from '@fullcalendar/angular'; 
 import { MatCheckboxModule } from "@angular/material/checkbox";
-import dayGridPlugin from '@fullcalendar/daygrid'; 
-import interactionPlugin from '@fullcalendar/interaction'; 
-import { CalendarService } from "../../../../../../../src/app/shared/services/calendar-service";
-FullCalendarModule.registerPlugins([ 
-    dayGridPlugin,
-    interactionPlugin
-  ]);
 const routes: Routes = [
     { path: '', component: ConfirmPageComponent }
 ];
@@ -25,7 +17,6 @@ const routes: Routes = [
         [RouterModule.forChild(routes)],
         HeaderModule,
         CommonModule,
-        FullCalendarModule,
         MatCheckboxModule,
         HttpClientModule,
         LoadingSpinnerModule,

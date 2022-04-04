@@ -1,23 +1,21 @@
+<div class="card shadow d-flex flex-row">
+    <div class="my-auto">
+        <a class="" (click)="goBack('back')"><i class="fa fa-arrow-left"></i>&emsp;</a>
+    </div>
+    <div class="text-center mx-auto" *ngIf="smallDevice">
+        <app-booking-accountinfo [businessInfo]="businessInfo" [smallDevice]="smallDevice">
+        </app-booking-accountinfo>
+    </div>
+    
+    <div class="text-left  mgn-lt-20" *ngIf="!smallDevice">
+        <app-booking-accountinfo [businessInfo]="businessInfo" [smallDevice]="!smallDevice" >
+        </app-booking-accountinfo>
+    </div>
+</div>
 <section #consumer_donation class="container no-padding cons-donate no-padding-small" [ngClass]="theme">
     <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
     <div class="content p0 loc-list p-checkin ynw-common-form-nm">
         <div class="panel panel-default">
-            <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row " style="box-shadow: 0 1px 1px 0 rgb(0 0 0 / 20%), 0 2px 5px 0 rgb(0 0 0 / 19%);
-            z-index: 999;">
-                <div class="col-xs-12 col-sm-12 co-md-12 col-lg-12">
-                    <a class="pull-left back-btn mgn-up-5" style="margin-top: 13px !important;"
-                        (click)="goBack('backyy')"><i class="fa fa-arrow-left"></i></a>
-                    <div class="text-left " style="margin-left: 25px !important;
-                            margin-top: 4px;
-                            font-size: 14px;
-                            ;font-weight:bold">
-                        <span><b class="header-bus-title">{{businessInfo.businessName}}</b></span><br>
-                        <span><a style=" color: #cdc8c9 !important;font-size: 11px !important;"
-                                href="{{businessInfo.googleUrl}}" target="_blank"><i class="fa fa-map-marker"
-                                    aria-hidden="true"></i>&nbsp;{{businessInfo.locationName}}</a></span>
-                    </div>
-                </div>               
-            </div>
             <app-common-innerloading-spinner *ngIf="loadingPaytm"></app-common-innerloading-spinner>
             <div class="panel-body flex-column-fluid hf-panel-body">
                 <div class="card card-custom no-margin hgt-adjust">
@@ -764,13 +762,13 @@
                                             <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
                                         </div>
                                         <!----payment start-->
-                                        <div style="padding: 5px !important">
+                                        <div style="padding: 5px !important" *ngIf="!from_iOS">
                                             <div class="resPaymrntDetails">Select Payment Mode</div>
                                         </div>
                                         <div
-                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between   hf-double-btn-container paymentBtn">
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 d-flex justify-content-between   hf-double-btn-container paymentBtn">
                                             <div class="clearfix"></div>
-                                            <div class="col-xs-12 no-padding-small">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12  no-padding-small" *ngIf="!from_iOS"> 
                                                 <ng-container *ngIf="!shownonIndianModes">
                                                     <app-payment-modes [paymentModes]="indian_payment_modes"
                                                         (modeSelected)="indian_payment_mode_onchange($event)">
@@ -795,15 +793,16 @@
                                                                 Payment ? Click
                                                                 here</span>
                                                         </a></span>
-                                                </div>
-                                                <div class="txt-align-center mgn-up-10">
-                                                    <button type="button"
-                                                        class="next-button btn btn-primary mobile-button-color font-weight-bold text-uppercase "
-                                                        [class.disabled]="isClickedOnce"
-                                                        (click)="!isClickedOnce && goToGateway()">
-                                                        Make Payment
-                                                    </button>
-                                                </div>
+                                                </div>                                                
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding-small txt-align-center mgn-up-20">
+                                                <button type="button"
+                                                    class="next-button btn btn-primary mobile-button-color font-weight-bold text-uppercase "
+                                                    [class.disabled]="isClickedOnce"
+                                                    (click)="!isClickedOnce && goToGateway()">
+                                                    Make Payment
+                                                </button>
                                             </div>
                                         </div>
                                         <!----payment end-->

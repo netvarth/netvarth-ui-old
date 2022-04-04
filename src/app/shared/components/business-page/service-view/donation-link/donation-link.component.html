@@ -9,11 +9,27 @@
                         <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
                             data-wizard-clickable="false">
                             <div class="row justify-content-center">
-                                <div class="loading-hgt my-5 login-form_custom" *ngIf="loading">
-                                    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+                                <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding-small right-part"
+                                    data-wizard-type="step-content" data-wizard-state="current" *ngIf="paymentStatus">
+                                    <i class="fa fa-check-circle" style="color: green;"><span
+                                            style="font-size: large;">Donation Successful</span>
+                                    </i><br>
+                                    <div style="font-size:14px;" class="ivc">
+                                        <div class="pay-det-row">
+                                            <span style="padding-right: 60px;"><b>Payment
+                                                    Gateway:</b>&nbsp;<span>{{pGateway}}</span></span>
+                                        </div>
+                                        <div class="pay-det-row">
+                                            <span><b>Payment Ref Id:</b>&nbsp;<span>{{paymentId}}</span></span>
+                                        </div>
+                                        <div class="pay-det-row">
+                                            <span><b>Transaction Id:</b>&nbsp;<span>{{orderId}}</span></span>
+                                        </div>
+                                    </div>
+                                    <hr/>
                                 </div>
                                 <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding-small right-part"
-                                    data-wizard-type="step-content" data-wizard-state="current"
+                                    data-wizard-type="step-content" data-wizard-state="current" *ngIf="!paymentStatus"
                                     [ngClass]="{'highlight': api_loading_video}">
                                     <div class="panel-body no-padding">
                                         <div class="c-outer m0">
@@ -105,43 +121,10 @@
                                                                                             <label>
                                                                                                 <span
                                                                                                     class="bold rupee-font">&#8377;{{donationAmount}}
-                                                                                            </span>
-                                                                                                <!-- <input type="text"
-                                                                                                    min="0"
-                                                                                                    class="form-control  rupee-font"
-                                                                                                    placeholder="&#8377; Enter Amount"
-                                                                                                    [(ngModel)]="donationAmount"
-                                                                                                    (keypress)=isNumeric($event)> -->
+                                                                                                </span>
                                                                                             </label>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <!-- <div class="prepay-amt mgn-bt-20">
-                                                                                        <div *ngIf="sel_ser_det"
-                                                                                            class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding red">
-                                                                                            <p class="form-level-settings applybill"
-                                                                                                *ngIf="sel_ser_det.minDonationAmount != sel_ser_det.maxDonationAmount">
-                                                                                                Minimum <span
-                                                                                                    class="bold rupee-font">
-                                                                                                    {{sel_ser_det.minDonationAmount
-                                                                                                    |
-                                                                                                    currency:'&#8377;'}}
-                                                                                                </span>
-                                                                                                Maximum <span
-                                                                                                    class="bold rupee-font">
-                                                                                                    {{sel_ser_det.maxDonationAmount
-                                                                                                    |
-                                                                                                    currency:'&#8377;'}}
-                                                                                                </span>
-                                                                                            </p>
-                                                                                            <p class="form-level-settings applybill"
-                                                                                                *ngIf="sel_ser_det.minDonationAmount == sel_ser_det.maxDonationAmount">
-                                                                                                Donation Amount
-                                                                                                <span class="bold"><i
-                                                                                                        class="fa fa-inr"></i>
-                                                                                                    {{sel_ser_det.minDonationAmount}}</span>
-                                                                                            </p>
-                                                                                        </div>
-                                                                                    </div> -->
                                                                                 </div>
                                                                             </div>
                                                                             <div class="clearfix"></div>

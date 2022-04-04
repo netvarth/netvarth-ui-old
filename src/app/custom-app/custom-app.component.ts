@@ -53,6 +53,9 @@ export class CustomAppComponent implements OnInit, OnDestroy {
       if (qparams && qparams.muid) {
         this.lStorageService.setitemonLocalStorage('mUniqueId', qparams.muid);
       }
+      if(qparams && qparams.mode) {
+        this.lStorageService.setitemonLocalStorage('ios', true);
+      }
     });
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;

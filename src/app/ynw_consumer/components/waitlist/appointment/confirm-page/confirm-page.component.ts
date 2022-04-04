@@ -31,10 +31,10 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
   customId;
   from: any;
   selectedApptsTime: any;
-
+calender = false;
   calendarEvents;
   selectedSlots: any;
-
+businessName: any;
   constructor(
     public route: ActivatedRoute, public router: Router,
     private shared_services: SharedServices, public sharedFunctionobj: SharedFunctions,

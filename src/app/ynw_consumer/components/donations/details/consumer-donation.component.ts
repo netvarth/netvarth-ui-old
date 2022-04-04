@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, OnDestroy, ViewChild, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy, ViewChild, NgZone, ChangeDetectorRef, HostListener } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -303,6 +303,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
 
     providerConsumerId; // id of the selected provider consumer 
     providerConsumerList: any = [];
+    smallDevice: boolean;
 
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder, public dialog: MatDialog,
@@ -356,6 +357,14 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 }
                 // this.action = params.action;
             });
+    }
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+        if (window.innerWidth <= 767) {
+            this.smallDevice = true;
+        } else {
+            this.smallDevice = false;
+        }
     }
     ngOnDestroy(): void {
         this.subs.unsubscribe();
@@ -925,18 +934,45 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     openPaymentLink(businessId, serviceId, paylink, userId?) {
         const _this = this;
         const url = projectConstantsLocal.PATH + businessId + "/service/" + serviceId + "/pay/" + paylink;
-        this.paymentWindow = window.open(url, "_blank");
-
+        _this.paymentWindow = window.open(url, "_blank","location=no,fullscreen=yes,toolbar=no,resizable=no;menubar=no,titlebar=no");
+    
         let easingLoop = setInterval(function () {
+            _this.paymentWindow.onbeforeunload = function(){ 
+                _this.isClickedOnce = false;
+                clearInterval(easingLoop);
+                _this.cdRef.detectChanges();
+               
+            }
+            console.log("Payment Window:");
+            console.log(_this.paymentWindow);
+            // if (!_this.paymentWindow.closed) {
+            //     clearInterval(easingLoop);
+            //     _this.isClickedOnce = false;
+            // }
             _this.isDonationSuccess(paylink).then(
                 (status) => {
                     if (status) {
                         clearInterval(easingLoop);
                         _this.paymentWindow.close();
                         _this.isClickedOnce = false;
+                        if (_this.from) {
+                            this.ngZone.run(() => _this.router.navigate(['consumer']));
+                        } else {
+                            let queryParams = {
+                                accountId: _this.accountId,
+                                theme: _this.theme
+                            }
+                            if (_this.customId) {
+                                queryParams['customId'] = _this.customId;
+                            }
+                            let navigationExtras: NavigationExtras = {
+                                queryParams: queryParams
+                            };
+                            this.ngZone.run(() => _this.router.navigate(['consumer'], navigationExtras));
+                        }
                     }
                 });
-        }, 5000);
+        }, 3000);
     }
 
     consumerPayment(uid, post_Data, paymentWay) {

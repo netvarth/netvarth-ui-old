@@ -47,8 +47,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     projectConstants = this.globalService.getGlobalConstants();
 
-    // this.lStorageService.setitemonLocalStorage('ios', true);
-
     if(projectConstants){
       return false;
     }

@@ -3,7 +3,7 @@ import { ProviderServices } from '../../../../../business/services/provider-serv
 import { SharedFunctions } from '../../../../functions/shared-functions';
 import { SharedServices } from '../../../../services/shared-services';
 import { Messages } from '../../../../constants/project-messages';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RazorpayService } from '../../../../services/razorpay.service';
 import { WindowRefService } from '../../../../services/windowRef.service';
 import { Razorpaymodel } from '../../../razorpay/razorpay.model';
@@ -137,6 +137,12 @@ export class DonationLinkComponent implements OnInit {
   disablebutton = false;
   payId: any;
   donationInfo: any;
+
+  paymentStatus = false;
+  orderId: any;
+  paymentId: any;
+
+
   constructor(
     public dialog: MatDialog,
     public shared_services: SharedServices,
@@ -310,22 +316,9 @@ export class DonationLinkComponent implements OnInit {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
-
   paywithRazorpay(pData: any) {
     pData.paymentMode = this.selected_payment_mode;
     this.razorpayService.initializePayment(pData, this.accountId, this);
-    // this.prefillmodel.name = pData.consumerName;
-    // this.prefillmodel.email = pData.ConsumerEmail;
-    // this.prefillmodel.contact = pData.consumerPhoneumber;
-    // this.razorModel = new Razorpaymodel(this.prefillmodel);
-    // this.razorModel.key = pData.razorpayId;
-    // this.razorModel.amount = pData.amount;
-    // this.razorModel.order_id = pData.orderId;
-    // this.razorModel.name = pData.providerName;
-    // this.razorModel.description = pData.description;
-    // this.razorModel.mode = this.selected_payment_mode;
-    // this.isClickedOnce = false;
-    // this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uid, null, this.account_id, null, null, this.customId);
   }
   payWithPayTM(pData: any, accountId: any) {
     this.loadingPaytm = true;
@@ -333,26 +326,39 @@ export class DonationLinkComponent implements OnInit {
     this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
   }
   finishDonation(status, response?) {
+    this.isClickedOnce = false;
+    console.log("Status:", status);
+    console.log("Response:", response);
     if (status) {
-      this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-      let queryParams = {
-        account_id: this.account_id,
-        uuid: this.uid,
-        "details": response
-      };
-      if (this.customId) {
-        queryParams['customId'] = this.customId;
-        if (this.lStorageService.getitemfromLocalStorage('theme')) {
-          queryParams['theme'] = this.lStorageService.getitemfromLocalStorage('theme');
-        }
+      this.paymentStatus = true;
+      this.loadingPaytm=false;
+      if (this.pGateway === 'RAZORPAY') {
+        this.orderId = response.razorpay_order_id;
+        this.paymentId = response.razorpay_payment_id;
+      } else {
+        this.orderId = response.ORDERID;
+        this.paymentId = response.TXNID;
       }
-      if (this.from) {
-        queryParams['isFrom'] = this.from;
-      }
-      let navigationExtras: NavigationExtras = {
-        queryParams: queryParams
-      };
-      this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], navigationExtras));
+      this.cdRef.detectChanges();
+      // this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+      // let queryParams = {
+      //   account_id: this.account_id,
+      //   uuid: this.uid,
+      //   "details": response
+      // };
+      // if (this.customId) {
+      //   queryParams['customId'] = this.customId;
+      //   if (this.lStorageService.getitemfromLocalStorage('theme')) {
+      //     queryParams['theme'] = this.lStorageService.getitemfromLocalStorage('theme');
+      //   }
+      // }
+      // if (this.from) {
+      //   queryParams['isFrom'] = this.from;
+      // }
+      // let navigationExtras: NavigationExtras = {
+      //   queryParams: queryParams
+      // };
+      // this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], navigationExtras));
     } else {
       this.isClickedOnce = false;
       this.loadingPaytm = false;
@@ -366,33 +372,36 @@ export class DonationLinkComponent implements OnInit {
     }
   }
   transactionCompleted(response, payload, accountId) {
+    const  _this = this;
+
     if (response.SRC) {
       if (response.STATUS == 'TXN_SUCCESS') {
-        this.razorpayService.updateRazorPay(payload, accountId, 'consumer')
+        _this.razorpayService.updateRazorPay(payload, accountId, 'consumer')
           .then((data) => {
             if (data) {
-              this.finishDonation(true, response);
+              _this.finishDonation(true, response);
             }
           },
             error => {
-              this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+              _this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
             })
       } else if (response.STATUS == 'TXN_FAILURE') {
-        this.finishDonation(false);
+        _this.finishDonation(false);
       }
     } else {
+
       if (response.STATUS == 'TXN_SUCCESS') {
-        this.paytmService.updatePaytmPay(payload, accountId)
+        _this.paytmService.updatePaytmPay(payload, accountId)
           .then((data) => {
             if (data) {
-              this.finishDonation(true, response);
+              _this.finishDonation(true, response);
             }
           },
             error => {
-              this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+              _this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
             })
       } else if (response.STATUS == 'TXN_FAILURE') {
-        this.finishDonation(false);
+        _this.finishDonation(false);
       }
     }
   }
