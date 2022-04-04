@@ -1088,6 +1088,7 @@ export const Messages = {
   'AUDIT_ACTION_CAP': 'Action',
   'AUDIT_SELECT_DATE_CAP': 'Select Date',
   'AUDIT_NO_LOGS_CAP': 'Sorry! No logs found',
+  'AUDIT_NO_TASKS_CAP': 'Sorry! No Tasks found',
 
   // App-ynw_provider-components-provider-waitlist-checkin-cancel-popup
   'POPUP_SELECT_REASON_CAP': 'Select a reason',

@@ -16,6 +16,7 @@ export class CrmService {
          "taskId": 1,
          "taskName": 'Task 1'
        };
+       console.log(taskList)
        return taskList.asObservable();
     }
 
