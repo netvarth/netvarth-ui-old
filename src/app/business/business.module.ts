@@ -56,6 +56,7 @@ const routes: Routes = [
         { path: 'enquiry/chat', loadChildren: () => import('./modules/inbox-list/inbox-list.module').then(m => m.BusinessInboxListModule) },
         { path: 'secure-video', loadChildren: () => import('./modules/video-call/video-call.module').then(m=>m.VideoCallModule) },
         { path: 'drive', loadChildren: () => import('./modules/jaldee-drive/jaldee-drive.module').then(m=>m.JaldeeDriveModule) },
+        { path: 'task', loadChildren: () => import('./modules/crm/tasks/tasks.module').then(m => m.TasksModule) },
       ]
     }
   ];
