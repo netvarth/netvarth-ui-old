@@ -43,7 +43,7 @@ export class AddDrugComponent implements OnInit {
   holdtaxable = false;
   file_error_msg = '';
   img_exists = false;
-  maxChars = projectConstantsLocal.VALIDATOR_MAX50;
+  maxChars = projectConstantsLocal.VALIDATOR_MAX100;
   maxCharslong = projectConstantsLocal.VALIDATOR_MAX500;
   maxNumbers = projectConstantsLocal.VALIDATOR_MAX10;
   max_num_limit = projectConstantsLocal.VALIDATOR_MAX_LAKH;

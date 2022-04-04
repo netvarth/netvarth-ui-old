@@ -475,6 +475,7 @@ multiUserFilter:any=[];
   images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
   ngOnInit() {
     this.getProviderSettings();
+    this.getProviderLocation();
     this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
     this.titleService.setTitle('Jaldee Business - Checkins/Tokens');
     this.pagination.startpageval = this.groupService.getitemFromGroupStorage('paginationStart') || 1;
@@ -524,7 +525,7 @@ multiUserFilter:any=[];
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
     });
-    this.getProviderLocation();
+  
     this.getInternalStatus();
   }
   getProviderLocation() {

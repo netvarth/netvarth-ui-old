@@ -733,7 +733,6 @@ export class AppointmentActionsComponent implements OnInit {
     }
     if (
       (this.data.timetype === 1 || this.data.timetype === 3) &&
-      this.appt.service.serviceType === "virtualService" &&
       (this.appt.apptStatus === "Arrived" ||
         this.appt.apptStatus === "Confirmed" ||
         this.appt.apptStatus === "Started") &&

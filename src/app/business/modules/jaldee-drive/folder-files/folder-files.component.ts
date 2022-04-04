@@ -155,7 +155,7 @@ export class FolderFilesComponent implements OnInit {
     console.log(this.active_user);
   }
   doSearch() {
-    this.lStorageService.removeitemfromLocalStorage('userfilter');
+    this.lStorageService.removeitemfromLocalStorage('drivefilter');
     if (this.filter.fileSize || this.filter.fileName || this.filter.fileType || this.filter.folderName || this.filter.contextId || this.selectedLanguages.length > 0 || this.selectedLocations.length > 0 || this.selectedSpecialization.length > 0) {
       this.filterapplied = true;
     } else {
@@ -170,7 +170,7 @@ export class FolderFilesComponent implements OnInit {
     let filter = this.setFilterForApi();
     if (filter) {
       console.log(filter);
-      this.lStorageService.setitemonLocalStorage('userfilter', filter);
+      this.lStorageService.setitemonLocalStorage('drivefilter', filter);
       this.provider_servicesobj.getAllFilterAttachments(filter).subscribe(
         (data: any) => {
           console.log(data);
@@ -182,7 +182,7 @@ export class FolderFilesComponent implements OnInit {
   }
   setFilterForApi() {
     let api_filter = {};
-    const filter = this.lStorageService.getitemfromLocalStorage('userfilter');
+    const filter = this.lStorageService.getitemfromLocalStorage('drivefilter');
     if (filter) {
       api_filter = filter;
       this.initFilters(filter);
@@ -254,7 +254,7 @@ export class FolderFilesComponent implements OnInit {
     console.log(this.filter_sidebar);
   }
   clearFilter() {
-    this.lStorageService.removeitemfromLocalStorage('userfilter');
+    this.lStorageService.removeitemfromLocalStorage('drivefilter');
     this.resetFilter();
     this.filterapplied = false;
     this.getfiles();

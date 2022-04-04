@@ -437,7 +437,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     let filter = this.setFilterForApi();
     if (filter) {
       console.log(filter);
-      this.lStorageService.setitemonLocalStorage('userfilter', filter);
+      this.lStorageService.setitemonLocalStorage('drivefilter', filter);
       this.provider_servicesobj.getAllFilterAttachments(filter).subscribe(
         (data: any) => {
           console.log(data);
@@ -448,7 +448,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     }
   }
   clearFilter() {
-    this.lStorageService.removeitemfromLocalStorage('userfilter');
+    this.lStorageService.removeitemfromLocalStorage('drivefilter');
     this.resetFilter();
     this.filterapplied = false;
     this.getfiles();
@@ -480,7 +480,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     this.selectedLocations = [];
   }
   doSearch() {
-    this.lStorageService.removeitemfromLocalStorage('userfilter');
+    this.lStorageService.removeitemfromLocalStorage('drivefilter');
     if (this.filter.fileSize || this.filter.fileName || this.filter.fileType || this.filter.folderName || this.filter.checkinEncId || this.selectedLanguages.length > 0 || this.selectedLocations.length > 0 || this.selectedSpecialization.length > 0) {
       this.filterapplied = true;
     } else {
@@ -501,7 +501,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   }
   setFilterForApi() {
     let api_filter = {};
-    const filter = this.lStorageService.getitemfromLocalStorage('userfilter');
+    const filter = this.lStorageService.getitemfromLocalStorage('drivefilter');
     if (filter) {
       api_filter = filter;
       this.initFilters(filter);

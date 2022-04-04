@@ -102,26 +102,51 @@ businessName: any;
         events.push(eventInfo);
       }
     } else {
-      if(this.appointment.providerAccount && this.appointment.providerAccount.businessName){
-        this.businessName = this.appointment.providerAccount.businessName;
+      if(this.type === 'reschedule'){
+        if(this.appointment.providerAccount && this.appointment.providerAccount.businessName){
+          this.businessName = this.appointment.providerAccount.businessName;
+        }
+        let times = this.appointment.appmtTime.split("-");
+        const startTime = times[0];
+        const endTime = times[1];
+        const startDate = new Date(this.appointment.appmtDate + 'T' + startTime);
+        const endDate = new Date(this.appointment.appmtDate + 'T' + endTime);
+       
+        eventInfo = {
+          start: startDate,
+          end: endDate,
+          description : 'Booking Rescheduled , Service provider : ' + this.businessName,
+          location: this.appointment.location?.place,
+          summary: 'Booking with - ' + this.businessName,
+        }
+        events.push(eventInfo);
       }
-      let times = this.appointment.appmtTime.split("-");
-      const startTime = times[0];
-      const endTime = times[1];
-      const startDate = new Date(this.appointment.appmtDate + 'T' + startTime);
-      const endDate = new Date(this.appointment.appmtDate + 'T' + endTime);
-     
-      eventInfo = {
-        start: startDate,
-        end: endDate,
-        description : 'Service provider : ' + this.businessName,
-        location: this.appointment.location?.place,
-        summary: 'Booking with - ' + this.businessName,
+      else {
+        if(this.appointment.providerAccount && this.appointment.providerAccount.businessName){
+          this.businessName = this.appointment.providerAccount.businessName;
+        }
+        let times = this.appointment.appmtTime.split("-");
+        const startTime = times[0];
+        const endTime = times[1];
+        const startDate = new Date(this.appointment.appmtDate + 'T' + startTime);
+        const endDate = new Date(this.appointment.appmtDate + 'T' + endTime);
+       
+        eventInfo = {
+          start: startDate,
+          end: endDate,
+          description : 'Service provider : ' + this.businessName,
+          location: this.appointment.location?.place,
+          summary: 'Booking with - ' + this.businessName,
+        }
+        events.push(eventInfo);
       }
-      events.push(eventInfo);
+      
     }
+    const d = new Date();
+    let ms = d.valueOf();
+    const fileName = 'calender' + ms + '.ics'
     this.calendarEvents = this.calendarService.createEvent(events);
-    this.calendarService.download('event.ics', this.calendarEvents);
+    this.calendarService.download(fileName, this.calendarEvents);
   }
 
   ngOnInit() {
@@ -133,40 +158,40 @@ businessName: any;
   okClick(appt) {
     if(this.calender){
       this.addToCalendar();
-      // if (appt.service.livetrack && this.type !== 'reschedule') {
-      //   let queryParams= {
-      //     account_id: this.infoParams.account_id,
-      //     theme:this.theme 
-      // }
-      // if (this.customId) {
-      //   queryParams['customId'] = this.customId;
-      // }
-      // if(this.from){
-      //   queryParams['isFrom'] = this.from;
-      // }
-      // let navigationExtras: NavigationExtras = {
-      //     queryParams: queryParams
-      // };
-      // this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], navigationExtras);
-      // } else {
-      //   let queryParams= {
-      //     theme:this.theme,
-      //     accountId: this.accountId
-      //   }
-      //   if (this.customId) {
-      //       queryParams['customId'] = this.customId;
-      //   }
-      //   let navigationExtras: NavigationExtras = {
-      //       queryParams: queryParams
-      //   };
-      //   if(this.from){
-      //     this.router.navigate(['consumer']);
-      //   }else{
-      //     this.router.navigate(['consumer'], navigationExtras);
-      //   }
+      if (appt.service.livetrack && this.type !== 'reschedule') {
+        let queryParams= {
+          account_id: this.infoParams.account_id,
+          theme:this.theme 
+      }
+      if (this.customId) {
+        queryParams['customId'] = this.customId;
+      }
+      if(this.from){
+        queryParams['isFrom'] = this.from;
+      }
+      let navigationExtras: NavigationExtras = {
+          queryParams: queryParams
+      };
+      this.router.navigate(['consumer', 'appointment', 'track', this.infoParams.uuid], navigationExtras);
+      } else {
+        let queryParams= {
+          theme:this.theme,
+          accountId: this.accountId
+        }
+        if (this.customId) {
+            queryParams['customId'] = this.customId;
+        }
+        let navigationExtras: NavigationExtras = {
+            queryParams: queryParams
+        };
+        if(this.from){
+          this.router.navigate(['consumer']);
+        }else{
+          this.router.navigate(['consumer'], navigationExtras);
+        }
         
-      // }
-      // this.lStorageService.setitemonLocalStorage('orderStat', false);
+      }
+      this.lStorageService.setitemonLocalStorage('orderStat', false);
     }
     else{
       if (appt.service.livetrack && this.type !== 'reschedule') {
