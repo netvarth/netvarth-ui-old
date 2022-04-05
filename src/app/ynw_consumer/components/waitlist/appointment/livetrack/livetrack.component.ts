@@ -220,7 +220,7 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit,OnDestroy {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TRACKINGCANCELDISABLED').replace('[provider_name]', this.activeWt.providerAccount.businessName));
             }
             let queryParams= {
-                account_id: this.accountId,
+                accountId: this.accountId,
                 theme:this.theme 
             }
             if (this.customId) {
@@ -332,7 +332,7 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit,OnDestroy {
     onCancel(){
         // this.router.navigate(['consumer']);
         let queryParams= {
-            account_id: this.accountId,
+            accountId: this.accountId,
             theme:this.theme 
         }
         if (this.customId) {

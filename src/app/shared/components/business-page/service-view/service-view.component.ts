@@ -146,6 +146,7 @@ export class ServiceViewComponent implements OnInit {
   showpostinfo = false;
   checkavailabilitydialogref: any;
   extra_service_img_count: number;
+  serviceType;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public shared_services: SharedServices,
@@ -164,6 +165,14 @@ export class ServiceViewComponent implements OnInit {
   //  private observer: BreakpointObserver,
     private dialog: MatDialog,
     private activaterouterobj: ActivatedRoute) {
+      this.activaterouterobj.queryParams.subscribe(qparams => {
+        if (qparams.src) {
+          this.lStorageService.setitemonLocalStorage('source', qparams.src);
+        }
+        if (qparams.type) {
+          this.serviceType = qparams.type;
+        }
+      });
   }
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -222,6 +231,8 @@ export class ServiceViewComponent implements OnInit {
       .subscribe(params => {
         this.serviceid = params.get('serid');
         this.accountEncId = params.get('id');
+
+        
         if (params.get('userEncId')) {
           this.userId = params.get('userEncId');
         } else {
@@ -614,7 +625,6 @@ export class ServiceViewComponent implements OnInit {
             }
             console.log("",_this.apptServices);
             _this.setServiceUserDetails();
-            _this.loading = false;
           },
             error => {
               _this.wordProcessor.apiErrorAutoHide(_this, error);
@@ -868,6 +878,12 @@ export class ServiceViewComponent implements OnInit {
       }
       console.log("donation" + JSON.stringify(this.donationServicesjson));
     }
+    if (this.serviceType === 'appt'  && this.apptServices && this.apptServices.length > 0){
+      this.appointmentClicked(this.selectedLocation, this.apptServices[0]);
+    } else if (this.serviceType === 'checkin' && this.wlServices && this.wlServices.length > 0) {
+      this.checkinClicked(this.selectedLocation, this.wlServices[0]);
+    }
+    this.loading = false;
   }
   setUserWaitTime() {
     let apptTimearr = [];
