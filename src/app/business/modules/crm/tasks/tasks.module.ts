@@ -9,8 +9,13 @@ import { CrmService } from "../crm.service";
 import { TasksComponent } from "./tasks.component";
 import { RouterModule, Routes } from "@angular/router";
 import { MatTabsModule } from "@angular/material/tabs";
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormMessageDisplayModule } from "../../../../shared/modules/form-message-display/form-message-display.module";
+
 const routes: Routes = [
-  { path: '', component: TasksComponent }
+  { path: '', component: TasksComponent },
+  {path:'create-task',loadChildren:()=>import('./create-task/create-task.module').then((m)=>m.CreateTaskModule)}
 ];
 @NgModule({
     imports: [
@@ -20,6 +25,9 @@ const routes: Routes = [
         MatDialogModule,
         MatTabsModule,
         CapitalizeFirstPipeModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormMessageDisplayModule,
         [RouterModule.forChild(routes)]
     ],
     exports: [TasksComponent],

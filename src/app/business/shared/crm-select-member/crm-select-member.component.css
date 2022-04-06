@@ -1,0 +1,56 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.headerText{
+    font-weight: 500;
+    font-size: 12px;
+    color: #000000;
+}
+.example-radio-button{
+    display: flex !important;
+    padding: 10px;
+    background: #f6f6f6;
+    border: 0.303983px solid #DCDCDC;
+    box-sizing: border-box;
+    border-radius: 2.65807px;
+    margin-bottom: 10px;
+}
+.allMember{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+.img{
+    height: 15px;
+    /* width: 30px; */
+}
+.cancelBtn{
+    background: #A8ABAF !important;
+  box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+  border-radius: 3.75916px !important;
+  border: 0px solid  !important;
+  margin-right: 10px !important;
+  }
+  .confirmBtn{
+    background: #0D2348 !important;
+  box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+  border-radius: 3.75916px !important;
+  border: 0px solid  !important;
+  }
+  .errorMsg{
+    color: #f24949;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  ::ng-deep .mat-radio-outer-circle{
+      /* height: 15px !important;
+      width: 15px !important; */
+  }
+  .members{
+    font-size: 12px;
+    color: #434343;
+    font-weight: 700;
+  }

@@ -1,1 +1,261 @@
-<p>create-task works!</p>
+<!-----card header start-->
+<section class="card cardBoxShadow">
+    <div class="title-gb no-padding">
+      <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
+        <span class="fa fa-arrow-left pointer-cursor" (click)="goback()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Add Task
+        <!-- <i class="fa fa-question-circle-o fa-lg fl-right" (click)="goback()"></i> -->
+      </div>
+    </div>
+  </section>
+  <!-----card header end-->
+  <br>
+  <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+  <!----task card start-->
+  <section  class="card">
+      <div class=" card bgColor">
+        <form    [formGroup]="createTaskForm">
+            <!----task title statrt-->
+            <div>
+                <div class="taskTitle">
+                  <div>Task Title</div>
+                  <div class="astericColor">*</div>
+                </div>
+                <!--input field start-->
+                <div class="fieldPadding">
+                      <!-- <label class="p-0 pb-1 m-0">Enter your third party listing site *</label> -->
+                      <input (keyup)="resetErrors()" type="text" #taskTitle (ngModelChange)="hamdleTaskTitle(taskTitle.value)"
+                  placeholder="Enter task title"class="form-control"formControlName="taskTitle"autocomplete="off" /> 
+                     
+                      <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
+                          </app-field-error-display>
+                </div>                                      
+                <!---input field end-->
+  
+            </div>
+            <!---task title end-->
+            <!----task description start-->
+           <div>
+            <div class="taskTitle">
+                <div>Task Description</div>
+                <div class="astericColor">*</div>
+              </div>
+              <!--textarea start-->
+             <div  class="fieldPadding">
+                    <textarea rowa="10" class="form-control" formControlName="taskDescription"
+                    #taskDescription (change)="handleTaskDescription(taskDescription.value)"(keyup)="autoGrowTextZone($event)"
+                    maxlength="1000" placeholder="Enter task description"></textarea>
+                    <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
+                    </app-field-error-display>  
+             </div>                           
+              <!--textarea end-->
+           </div>
+            <!-----task description end-->
+            <!--assign member start-->
+            <div>
+                <div class="taskTitle">
+                    <div>Task Assign Member</div>
+                    <div class="astericColor">*</div>
+                  </div>
+                  <!--textarea start-->
+             <div class="fieldPadding">
+                <div>
+                    <div class="form-control" style="display: flex;justify-content: space-between;">
+                        <div>{{selectMember}}</div>
+                        <div style="cursor: pointer;" (click)="selectMemberDialog(selectMember)"><i class="fa fa-user" aria-hidden="true"></i></div>
+                    </div>
+                </div>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
+                </app-field-error-display>  
+             </div>                           
+              <!--textarea end-->
+
+            </div>
+            <!---assign member end-->
+            <!--manager start-->
+            <div>
+                <div class="taskTitle">
+                    <div>Task Manager</div>
+                    <div class="astericColor">*</div>
+                  </div>
+                 <!--input field start-->
+                <div class="fieldPadding">
+                    <!-- <label class="p-0 pb-1 m-0">Enter your third party listing site *</label> -->
+                    <input (keyup)="resetErrors()" type="text" #taskManager (ngModelChange)="hamdleTaskManager(taskManager.value)"
+                placeholder="Enter task manager"class="form-control"formControlName="taskManager"autocomplete="off" /> 
+                   
+                    <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
+                        </app-field-error-display>
+              </div>                                      
+              <!---input field end-->
+
+            </div>
+            <!---manager end-->
+            <div style="display: flex;" >
+ <!---category start-->
+                <div class="lbl col-sm-8 col-md-4 col-lg-4 no-padding">
+                    <div class="taskTitle">
+                        <div>Task Category</div>
+                        <div class="astericColor">*</div>
+                      </div>
+                      <!--dropdown start-->
+                      <div class="fieldPadding">
+                                <mat-select class="form-control" placeholder="Enter Category"
+                                    #userTaskCategory formControlName="userTaskCategory" >
+                                    <mat-option *ngFor="let item of categoryList;let index=i" value="item"  (selectionChange)="handleTaskCategorySelection(userTaskCategory.value)">
+                                    <div>
+                                        {{item.category}}
+                                    </div>
+                                    </mat-option>
+                                </mat-select>
+                      </div>
+                      <!--dropdown end-->
+    
+                </div>
+                <!---category end-->
+                <!----task type start-->
+                <div class="lbl col-sm-8 col-md-4 col-lg-4 no-padding">
+                    <div class="taskTitle">
+                        <div>Task Type</div>
+                        <div class="astericColor">*</div>
+                      </div>
+                      <!--dropdown start-->
+                      <div class="fieldPadding">
+                                <mat-select class="form-control" placeholder="Enter Type"
+                                    #userTaskType formControlName="userTaskType" >
+                                    <mat-option *ngFor="let item of categoryList;let index=i" value="item"  (selectionChange)="handleTaskCategorySelection(userTaskType.value)">
+                                    <div>
+                                        {{item.category}}
+                                    </div>
+                                    </mat-option>
+                                </mat-select>
+                      </div>
+                      <!--dropdown end-->
+    
+                </div>
+                 <!----task type end-->
+            </div>
+            <!----location & status start-->
+            <div style="display: flex;" >
+                <!---location start-->
+                               <div class="lbl col-sm-8 col-md-4 col-lg-4 no-padding">
+                                   <div class="taskTitle">
+                                       <div>Location</div>
+                                       <div class="astericColor">*</div>
+                                     </div>
+                                     <div class="fieldPadding">
+                                        <input (keyup)="resetErrors()" type="text" #taskLocation (ngModelChange)="handleTaskLocation(taskLocation.value)"
+                                        placeholder="Enter task location"class="form-control"formControlName="taskLocation"autocomplete="off" /> 
+                                           
+                                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
+                                                </app-field-error-display>
+                                               
+                                     </div>
+                               </div>
+                               <!---location end-->
+                               <!----status type start-->
+                               <div class="lbl col-sm-8 col-md-4 col-lg-4 no-padding">
+                                   <div class="taskTitle">
+                                       <div>Status</div>
+                                       <div class="astericColor">*</div>
+                                     </div>
+                                     <!--dropdown start-->
+                                     <div class="fieldPadding">
+                                        <input (keyup)="resetErrors()" type="text" #taskStatus (ngModelChange)="handleTaskStatus(taskStatus.value)"
+                                        placeholder="Enter task location"class="form-control"formControlName="taskStatus"autocomplete="off" /> 
+                                           
+                                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
+                                                </app-field-error-display>
+                                     </div>
+                                     <!--dropdown end-->
+                   
+                               </div>
+                                <!----status type end-->
+                           </div>
+            <!---location & status end-->
+            <!--date & time start-->
+            <div style="display: flex;" >
+                <!---date start-->
+                               <div class="lbl col-sm-8 col-md-4 col-lg-4 no-padding">
+                                   <div class="taskTitle">
+                                       <div>Due Date</div>
+                                       <div class="astericColor">*</div>
+                                     </div>
+                                     <div class="pickerouter fieldPadding dt" style="display: flex;">
+                                        <input formControlName="taskDate" class="form-control" type="text"  matInput
+                                            [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
+                                            [value]="ddate" (dateChange)="handleDateChange($event)" placeholder="Enter Time" #taskDate>
+                                            <mat-datepicker-toggle matSuffix [for]="picker">
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
+                                            </mat-datepicker>
+                                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
+                                                </app-field-error-display>
+                                               
+                                     </div>
+                               </div>
+                               <!---date end-->
+                               <!----time start-->
+                               <div class="lbl col-sm-8 col-md-4 col-lg-4 no-padding">
+                                   <div class="taskTitle">
+                                       <div>Est Duration</div>
+                                       <div class="astericColor">*</div>
+                                     </div>
+                                     <div class="fieldPadding">
+                                        <input (keyup)="resetErrors()" type="time" #taskTime (ngModelChange)="handleTaskStatus(taskTime.value)"
+                                        placeholder="Enter Est Duration"class="form-control" formControlName="taskTime"autocomplete="off" /> 
+                                           
+                                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
+                                                </app-field-error-display>
+                                     </div>
+                   
+                               </div>
+                                <!----time end-->
+                           </div>
+            <!--date & time end-->
+            <!---priority start-->
+            <div >
+                <div class="taskTitle">
+                    <div>Priority</div>
+                    <div class="astericColor">*</div>
+                  </div>
+                  <!--dropdown start-->
+                  <div class="fieldPadding">
+                            <mat-select class="form-control" placeholder="Select Priority"
+                                #userTaskPriority formControlName="userTaskPriority" >
+                                <mat-option *ngFor="let item of categoryList;let index=i" value="item"  (selectionChange)="handleTaskCategorySelection(userTaskPriority.value)">
+                                <div>
+                                    {{item.category}}
+                                </div>
+                                </mat-option>
+                            </mat-select>
+                  </div>
+                  <!--dropdown end-->
+            </div>
+            <!---priority end-->
+            <!---cancel save btn start-->
+            <div style="text-align: center;margin-top: 15px;">
+                <ng-container >
+                    <div class=" mgn-bt-20 mgn-up-10">
+                            <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()"
+                            >Cancel</button>
+                        <button type="button" class="btn btn-primary font-weight-bold confirmBtn"  (click)="saveCreateTask()"
+                           
+                              
+                            >{{showCreateTaskButtonCaption()}}</button>
+                            <!-- [ngClass]="{
+                                'btn btn-primary font-weight-bold cancelBtn': !createTaskForm.valid,
+                                'btn btn-primary font-weight-bold confirmBtn': createTaskForm.valid
+                              }" -->
+                    </div>
+                </ng-container>
+            </div>
+
+            <!---cancel save btn end-->
+        </form>
+
+      </div>
+      
+
+  </section>
+  <!----task card end-->

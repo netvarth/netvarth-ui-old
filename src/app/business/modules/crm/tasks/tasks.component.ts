@@ -5,6 +5,7 @@ import { Messages } from '../../../../../../src/app/shared/constants/project-mes
 // import { CrmService } from '../crm.service';
 import { Location } from '@angular/common';
 import { LocalStorageService } from '../../../../../../src/app/shared/services/local-storage.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
@@ -76,7 +77,8 @@ export class TasksComponent implements OnInit {
   selectedIndex;
   constructor(
     private locationobj: Location,
-    private lStorageService: LocalStorageService
+    private lStorageService: LocalStorageService,
+    private router: Router,
     // private crmService: CrmService,
 
   ) {
@@ -223,6 +225,10 @@ export class TasksComponent implements OnInit {
   onTabChanged(event) {
     console.log("Tab Event:", event.index);
     this.lStorageService.setitemonLocalStorage('tabIndex', event.index);
+  }
+  createTask(){
+    console.log('create')
+    this.router.navigate(['provider', 'task','create-task'])
   }
 }
 
