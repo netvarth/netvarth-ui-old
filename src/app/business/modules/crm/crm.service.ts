@@ -6,6 +6,8 @@ import { ServiceMeta } from '../../../shared/services/service-meta';
   providedIn: 'root'
 })
 export class CrmService {
+  public taskToCraeteViaServiceData:any;
+  public taskActivityName:any;
 
   constructor(
     private servicemeta: ServiceMeta
@@ -65,6 +67,18 @@ export class CrmService {
       const url = 'provider/task/provider?status-eq=4';
       return this.servicemeta.httpGet(url);
     }
+    updateTask(taskId){
+      const url='provider/task/'+taskId
+      return this.servicemeta.httpPut(url,taskId);
+    }
+    addAssigneeMember(taskUid,userId){
+      const url='provider/task/'+taskUid + '/manager' + userId
+      return this.servicemeta.httpPost(url);
+    }
     // https://scale.jaldee.com/v1/rest/provider/login
+    // addDepartmentServices(data, id) {
+    //   const url = 'provider/departments/' + id + '/service';
+    //   return this.servicemeta.httpPost(url, data);
+    // }
 
 }

@@ -253,11 +253,23 @@ export class TasksComponent implements OnInit {
       }
     }
   }
-  createTask() {
+  createTask(createText:any) {
+    this.crmService.taskActivityName=createText;
     console.log('create')
     this.router.navigate(['provider', 'task', 'create-task'])
   }
   stopprop(event) {
     event.stopPropagation();
+  }
+  openEditTask(taskdata:any,editText:any){
+    this.crmService.taskToCraeteViaServiceData=taskdata
+   const newTaskData= this.crmService.taskToCraeteViaServiceData
+    setTimeout(() => {
+      this.crmService.taskActivityName=editText;
+      newTaskData;
+    this.router.navigate(['provider', 'task','create-task']);
+    }, projectConstants.TIMEOUT_DELAY);
+    console.log('taskdata....',taskdata);
+
   }
 }
