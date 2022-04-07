@@ -33,7 +33,7 @@ export class CreateTaskComponent implements OnInit {
   minDate;
   maxDate;
   ddate;
-  api_loading = false;
+  api_loading = true;
 
   //form variable start
   createTaskForm:any;
@@ -51,7 +51,11 @@ export class CreateTaskComponent implements OnInit {
   public taskDueTime:any;
   public selectedDate:any;
   public taskErrorText:any;
-  public boolenTaskError:boolean=false
+  public boolenTaskError:boolean=false;
+  public assigneeId:any;
+  public selectedTime:any;
+  public selectTaskManger:any;
+  public selectTaskMangerId:any;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -65,21 +69,24 @@ export class CreateTaskComponent implements OnInit {
      }
 
   ngOnInit(): void {
-    this.taskDueDate= new Date()
-    console.log('this.taskDueDate',this.taskDueDate)
+    this.api_loading=false
+    // this.taskDueDate= new Date()
+    // console.log('this.taskDueDate',this.taskDueDate)
     // this.taskDueTime=this.datePipe.transform(this.taskDueDate.getTime(),'h:mm a')
     // console.log('this.taskDueTime',this.taskDueTime)
     this.createTaskForm=this.createTaskFB.group({
       taskTitle:[null,[Validators.required]],
       taskDescription:[null,[Validators.required]],
       taskManager:[null],
-      userTaskCategory:[null],
-      userTaskType:[null],
-      taskLocation:[null],
+      userTaskCategory:[null,[Validators.required]],
+      userTaskType:[null,[Validators.required]],
+      taskLocation:[null,[Validators.required]],
       taskStatus:[null],
-      taskDate:[null],
+      taskDate:[null,[Validators.required]],
       taskTime:[null],
-      userTaskPriority:[null]
+      userTaskPriority:[null],
+      targetResult:[null],
+      targetPotential:[null],
     }) 
     // console.log('jjjjj',this.crmService.getMemberList())
     // const memberList = this.crmService.getMemberList()
@@ -158,11 +165,38 @@ export class CreateTaskComponent implements OnInit {
   hamdleTaskTitle(taskTitleValue){
     console.log('taskTitleValue',taskTitleValue)
     this.taskError=null
+    this.boolenTaskError=false
 
   }
   handleTaskDescription(textareaValue) {
     console.log(textareaValue)
     this.taskError=null
+    this.boolenTaskError=false
+  }
+  selectManagerDialog(handleSelectManager:any){
+    console.log('handleselectMember',handleSelectManager);
+    const dialogRef  = this.dialog.open(CrmSelectMemberComponent, {
+      width: '100%',
+      panelClass: ['popup-class', 'confirmationmainclass'],
+      data:{
+        requestType:'createtaskSelectManager',
+        header:'Assign Manager',
+        memberList: this.allMemberList,
+        assignMembername:handleSelectManager
+      }
+  })
+  dialogRef.afterClosed().subscribe((res:any)=>{
+    console.log('afterSelectPopupValue',res)
+    // this.selectMember = (res.firstName + res.lastName);
+    this.selectTaskManger=((res.firstName + res.lastName))
+    // this.userType = res.userType;
+    // this.locationName = res.locationName;
+    // this.locationId = res.bussLocations[0];
+    // this.assigneeId= res.id
+    this.selectTaskMangerId= res.id
+
+  })
+
   }
   
   selectMemberDialog(handleselectMember:any){
@@ -171,7 +205,7 @@ export class CreateTaskComponent implements OnInit {
       width: '100%',
       panelClass: ['popup-class', 'confirmationmainclass'],
       data:{
-        requestType:'createtask',
+        requestType:'createtaskSelectMember',
         header:'Assign Member',
         memberList: this.allMemberList,
         assignMembername:handleselectMember
@@ -180,9 +214,12 @@ export class CreateTaskComponent implements OnInit {
   dialogRef.afterClosed().subscribe((res:any)=>{
     console.log('afterSelectPopupValue',res)
     this.selectMember = (res.firstName + res.lastName);
+    // this.selectTaskManger=((res.firstName + res.lastName))
     this.userType = res.userType;
     this.locationName = res.locationName;
-    this.locationId = res.bussLocations[0]
+    this.locationId = res.bussLocations[0];
+    this.assigneeId= res.id
+    // this.selectTaskMangerId= res.id
 
   })
   }
@@ -219,6 +256,37 @@ export class CreateTaskComponent implements OnInit {
     this.selectedDate= date;
     console.log('date.',date)
   }
+  handleTaskEstDuration(estDuration:any){
+    console.log('estDurationb',estDuration)
+    if(estDuration<='24:00'){
+      console.log('...............gggg')
+    }
+    this.transform(estDuration)
+
+  }
+  transform(time: any): any {
+    let hour = (time.split(':'))[0]
+    let min = (time.split(':'))[1]
+    let part = hour > 24 ? 'pm' : 'am';
+    if(parseInt(hour) == 0)
+     hour = 24;
+    min = (min+'').length == 1 ? `0${min}` : min;
+    hour = hour > 24 ? hour - 24 : hour;
+    hour = (hour+'').length == 1 ? `0${hour}` : hour;
+    console.log('`${hour}:${min} ${part}`',`${hour}:${min} ${part}`);
+    if(hour<24){
+      const day:number=0;
+      this.selectedTime={ "days" : day, "hours" : hour, "minutes" : min };
+      return `${hour}:${min} ${part}`
+    }
+    
+  }
+  handleTargetResult(targetResult){
+    console.log('targetResult',targetResult)
+  }
+  handleTargetPotential(targetPotential){
+  console.log('targetPotential',targetPotential)
+  }
   showCreateTaskButtonCaption() {
     let caption = '';
     caption = 'Confirm';
@@ -226,50 +294,52 @@ export class CreateTaskComponent implements OnInit {
 }
   saveCreateTask(){
     console.log('this.locationId',this.locationId)
-    const loc=this.locationId
-    console.log('loc..',loc)
-    // console.log('this.createTaskForm.controls.userTaskPriority.value',this.createTaskForm.controls.userTaskPriority.value.id)
-    // console.log('dateformat',this.createTaskForm.controls.taskDate.value)
+    console.log('his.assigneeId',this.assigneeId);
+    console.log('this.selectedTime',this.selectedTime)
+    console.log('this.createTaskForm.controls.taskTitle.value',this.createTaskForm.controls.taskTitle.value)
     const createTaskData:any = {
       // "parentTaskId":1,
       "title":this.createTaskForm.controls.taskTitle.value,
       "description":this.createTaskForm.controls.taskDescription.value,
-      // "manager":this.createTaskForm.controls.taskManager.value,
       "userType":this.userType,
-      "category":{"id":this.createTaskForm.controls.userTaskCategory.value.id,},
-      "type":{"id":this.createTaskForm.controls.userTaskType.value.id,},
-      "status":{"id":this.createTaskForm.controls.taskStatus.value.id,},
-      
-      // "category" : { "id" : 1},
-      // "type" : { "id" : 1},
-      "location" : { "id" : this.locationId},
+      "category":{"id":this.createTaskForm.controls.userTaskCategory.value.id},
+      "type":{"id":this.createTaskForm.controls.userTaskType.value.id},
+
+      "status":{"id":this.createTaskForm.controls.taskStatus.value.id},
+      "priority":{"id":this.createTaskForm.controls.userTaskPriority.value.id},
       "dueDate" : this.selectedDate,
-      // this.selectedDate,
-      // "priority":this.createTaskForm.controls.userTaskPriority.value.id,
+      "location" : { "id" : this.locationId},
+
+      "assignee":{"id":this.assigneeId},
+      "manager":{"id":this.selectTaskMangerId},
+      "targetResult" : this.createTaskForm.controls.targetResult.value,
+      "targetPotential" : this.createTaskForm.controls.targetPotential.value,
+      "estDuration" : this.selectedTime   
     }
     console.log(createTaskData)
     console.log('this.userType',this.userType)
-    if(this.userType===('PROVIDER' || 'CONSUMER')){
+    if(this.userType===('PROVIDER' || 'CONSUMER') && (this.createTaskForm.controls.taskTitle.value!=null) && (this.createTaskForm.controls.taskDescription.value !=null)){
       this.boolenTaskError=false;
+    
       this.crmService.addTask(createTaskData).subscribe((response)=>{
-        console.log(response);
-        this.router.navigate(['provider', 'task'])
+        console.log('afterCreateList',response);
+        setTimeout(() => {
+          this.createTaskForm.reset();
+        this.router.navigate(['provider', 'task']);
+        }, projectConstants.TIMEOUT_DELAY);
+        
+
       },
       (error)=>{
         this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
       })
     }
-    else{
-      this.boolenTaskError=true;
-      this.taskErrorText='Please Select Assign Member'
 
-    }
-  
   }
    onSubmitCraeteTaskForm(){
-    console.log('taskTitle',this.createTaskForm.controls.taskTitle.value)
-    console.log('taskDescription',this.createTaskForm.controls.taskDescription.value);
-    console.log('taskManager',this.createTaskForm.controls.taskManager.value)
+    // console.log('taskTitle',this.createTaskForm.controls.taskTitle.value)
+    // console.log('taskDescription',this.createTaskForm.controls.taskDescription.value);
+    // console.log('taskManager',this.createTaskForm.controls.taskManager.value)
   }
 
 }

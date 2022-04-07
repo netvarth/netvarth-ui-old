@@ -1,4 +1,73 @@
-<section *ngIf="data.requestType==='createtask'" style="padding: 20px;">
+<section *ngIf="data.requestType==='createtaskSelectMember'" style="padding: 20px;">
+    <!-- <form [formGroup]="assignMemberForm"> -->
+        <!--header start-->
+        <div class="header">
+            <div class="headerText" >{{data.header | capitalizeFirst}}</div>
+            <div mat-dialog-close="true" style=" cursor: pointer;">
+                <mat-icon>clear</mat-icon>
+            </div>
+        </div>
+        <!--header end-->
+        <mat-dialog-content >
+            <div >
+                
+        <div>
+            <!----radio btn start-->
+            <div>
+                <mat-radio-group
+              
+                [(ngModel)]="assignMemberDetails">
+               <div>
+                <mat-radio-button class="example-radio-button" *ngFor="let assignMember of memberList" [value]="assignMember"  (change)="handleMemberSelect(assignMember,'Selected')">
+                  <div class="allMember">
+                        <div>
+                          <img class="img" [src]="getUserImg(assignMember)" />
+                        </div>
+                        <!-- <div>
+                            {{assignMember.profilePicture | json}}
+                        </div> -->
+                        <div class="members">
+                        {{assignMember.firstName}}{{assignMember.lastName}}
+                       </div>
+                       <div class="members">
+                        +{{assignMember.countryCode}}{{assignMember.mobileNo}}
+                       </div>
+                       <div class="members">
+                        {{assignMember.locationName}}
+                       </div>
+                  </div>
+                  </mat-radio-button>
+               </div>
+              </mat-radio-group>
+            </div>
+            <!----radio btn end-->
+        </div>
+            </div>
+        </mat-dialog-content>
+        <div *ngIf="errorMsg" class="errorMsg">
+            <div>{{assignMemberErrorMsg}}</div>
+        </div>
+        <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;">
+             <!---cancel save btn start-->
+             <div style="text-align: center;">
+                <ng-container >
+                    <div class=" mgn-bt-20 mgn-up-10">
+                            <button type="button" class="btn btn-primary font-weight-bold cancelBtn" 
+                            mat-dialog-close="true" >Cancel</button>
+                        <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="saveAssignMember(assignMemberDetails)"
+                            >Save</button>
+                    </div>
+                </ng-container>
+            </div>
+    
+            <!---cancel save btn end-->
+          </div>
+    <!-- </form> -->
+    
+
+</section>
+
+<section *ngIf="data.requestType==='createtaskSelectManager'" style="padding: 20px;">
     <!-- <form [formGroup]="assignMemberForm"> -->
         <!--header start-->
         <div class="header">
