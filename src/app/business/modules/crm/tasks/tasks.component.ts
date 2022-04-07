@@ -218,7 +218,6 @@ export class TasksComponent implements OnInit {
 
     // };
   }
-
   showFilterSidebar() {
     this.filter_sidebar = true;
   }

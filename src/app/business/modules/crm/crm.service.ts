@@ -53,7 +53,6 @@ export class CrmService {
       const url = 'provider/task/provider';
       return this.servicemeta.httpGet(url);
     }
-    
     getInprogressTask() {
       const url = 'provider/task/provider?status-eq=3';
       return this.servicemeta.httpGet(url);
