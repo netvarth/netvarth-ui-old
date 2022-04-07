@@ -60,11 +60,12 @@
                   <!--textarea start-->
              <div class="fieldPadding">
                 <div>
-                    <div class="form-control" style="display: flex;justify-content: space-between;">
-                        <div>{{selectMember}}</div>
-                        <div style="cursor: pointer;" (click)="selectMemberDialog(selectMember)"><i class="fa fa-user" aria-hidden="true"></i></div>
+                    <div class="form-control" style="display: flex;justify-content: space-between;"(click)="selectMemberDialog(selectMember)" >
+                        <div >{{selectMember}}</div>
+                        <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
                     </div>
                 </div>
+                <div *ngIf="boolenTaskError" style="color: #f24949 !important;">{{taskErrorText}}</div>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                 </app-field-error-display>  
              </div>                           
@@ -102,9 +103,9 @@
                       <div class="fieldPadding">
                                 <mat-select class="form-control" placeholder="Enter Category"
                                     #userTaskCategory formControlName="userTaskCategory" >
-                                    <mat-option *ngFor="let item of categoryList;let index=i" value="item"  (selectionChange)="handleTaskCategorySelection(userTaskCategory.value)">
+                                    <mat-option *ngFor="let item of categoryListData[0];let index=i" [value]="item"  (selectionChange)="handleTaskCategorySelection(userTaskCategory.value)">
                                     <div>
-                                        {{item.category}}
+                                        {{item.name}}
                                     </div>
                                     </mat-option>
                                 </mat-select>
@@ -116,16 +117,16 @@
                 <!----task type start-->
                 <div class="lbl col-sm-8 col-md-4 col-lg-4 no-padding">
                     <div class="taskTitle">
-                        <div>Task Type</div>
+                        <div>Type</div>
                         <div class="astericColor">*</div>
                       </div>
                       <!--dropdown start-->
                       <div class="fieldPadding">
                                 <mat-select class="form-control" placeholder="Enter Type"
                                     #userTaskType formControlName="userTaskType" >
-                                    <mat-option *ngFor="let item of categoryList;let index=i" value="item"  (selectionChange)="handleTaskCategorySelection(userTaskType.value)">
+                                    <mat-option *ngFor="let item of taskTypeList[0];let index=i" [value]="item"  (selectionChange)="handleTaskTypeSelection(userTaskType.value)">
                                     <div>
-                                        {{item.category}}
+                                        {{item.name}}
                                     </div>
                                     </mat-option>
                                 </mat-select>
@@ -144,9 +145,9 @@
                                        <div class="astericColor">*</div>
                                      </div>
                                      <div class="fieldPadding">
-                                        <input (keyup)="resetErrors()" type="text" #taskLocation (ngModelChange)="handleTaskLocation(taskLocation.value)"
+                                        <input (keyup)="resetErrors()" [(ngModel)]="locationName" type="text" #taskLocation (ngModelChange)="handleTaskLocation(taskLocation.value)"
                                         placeholder="Enter task location"class="form-control"formControlName="taskLocation"autocomplete="off" /> 
-                                           
+                                        <div *ngIf="boolenTaskError" style="color: #f24949 !important;">{{taskErrorText}}</div>
                                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                                                 </app-field-error-display>
                                                
@@ -161,8 +162,16 @@
                                      </div>
                                      <!--dropdown start-->
                                      <div class="fieldPadding">
-                                        <input (keyup)="resetErrors()" type="text" #taskStatus (ngModelChange)="handleTaskStatus(taskStatus.value)"
-                                        placeholder="Enter task location"class="form-control"formControlName="taskStatus"autocomplete="off" /> 
+                                        <!-- <input (keyup)="resetErrors()" type="text" #taskStatus (ngModelChange)="handleTaskStatus(taskStatus.value)"
+                                        placeholder="Enter task status"class="form-control"formControlName="taskStatus"autocomplete="off" />  -->
+                                        <mat-select class="form-control" placeholder="Enter task status"
+                                #taskStatus formControlName="taskStatus" name="item">
+                                <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item"  (selectionChange)="handleTaskStatus(taskStatus.value)">
+                                <div>
+                                    {{item.name | capitalizeFirst}}
+                                </div>
+                                </mat-option>
+                            </mat-select>
                                            
                                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                                                 </app-field-error-display>
@@ -182,9 +191,9 @@
                                        <div class="astericColor">*</div>
                                      </div>
                                      <div class="pickerouter fieldPadding dt" style="display: flex;">
-                                        <input formControlName="taskDate" class="form-control" type="text"  matInput
+                                        <input [(ngModel)]="taskDueDate" formControlName="taskDate" class="form-control" type="text"  matInput
                                             [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
-                                            [value]="ddate" (dateChange)="handleDateChange($event)" placeholder="Enter Time" #taskDate>
+                                            [value]="ddate" (dateChange)="handleDateChange($event)" placeholder="Enter Date" #taskDate>
                                             <mat-datepicker-toggle matSuffix [for]="picker">
                                             </mat-datepicker-toggle>
                                             <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
@@ -202,7 +211,7 @@
                                        <div class="astericColor">*</div>
                                      </div>
                                      <div class="fieldPadding">
-                                        <input (keyup)="resetErrors()" type="time" #taskTime (ngModelChange)="handleTaskStatus(taskTime.value)"
+                                        <input [(ngModel)]="taskDueTime" (keyup)="resetErrors()" type="time" #taskTime (ngModelChange)="handleTaskStatus(taskTime.value)"
                                         placeholder="Enter Est Duration"class="form-control" formControlName="taskTime"autocomplete="off" /> 
                                            
                                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
@@ -223,9 +232,9 @@
                   <div class="fieldPadding">
                             <mat-select class="form-control" placeholder="Select Priority"
                                 #userTaskPriority formControlName="userTaskPriority" >
-                                <mat-option *ngFor="let item of categoryList;let index=i" value="item"  (selectionChange)="handleTaskCategorySelection(userTaskPriority.value)">
+                                <mat-option *ngFor="let item of taskPriorityList[0];let index=i" [value]="item"  (selectionChange)="handleTaskPrioritySelection(userTaskPriority.value)">
                                 <div>
-                                    {{item.category}}
+                                    {{item.name}}
                                 </div>
                                 </mat-option>
                             </mat-select>
@@ -240,8 +249,6 @@
                             <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()"
                             >Cancel</button>
                         <button type="button" class="btn btn-primary font-weight-bold confirmBtn"  (click)="saveCreateTask()"
-                           
-                              
                             >{{showCreateTaskButtonCaption()}}</button>
                             <!-- [ngClass]="{
                                 'btn btn-primary font-weight-bold cancelBtn': !createTaskForm.valid,

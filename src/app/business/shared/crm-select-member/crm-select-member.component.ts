@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
+// import { FormBuilder } from '@angular/forms';
 // import { CrmService } from '../../modules/crm/crm.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
@@ -13,26 +14,34 @@ export class CrmSelectMemberComponent implements OnInit {
   public handleAssignMemberSelectText:string='';
   public assignMemberErrorMsg:string='';
   public errorMsg:boolean=false
+  public assignMemberForm:any;
 
   constructor( public dialogRef: MatDialogRef<CrmSelectMemberComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     // private crmService: CrmService,
+    // private fb: FormBuilder,
     ) {
       console.log('consdata',this.data)
+      // this.assignMemberDetails= this.data.assignMembername
+      console.log('this.assignMemberDetails',this.assignMemberDetails);
      }
     
 
   ngOnInit(): void {
-    // this.crmService.getMemberList().subscribe((data:any)=>{
-    //   console.log(data)
+    // this.assignMemberForm= this.fb.group({
+    //   member:[]
     // })
-    this.data.memberList[0].forEach((item:any)=>{
-      console.log('item',item)
-      this.memberList.push(item)
+    this.data.memberList[0].forEach((singleMember:any)=>{
+      // console.log('singleMember',singleMember)
+      this.memberList.push(singleMember)
+      // if(this.data.assignMembername ==(singleMember.firstName + singleMember.lastName) ){
+      //   this.assignMemberDetails=this.data.assignMembername 
+      // }
     })
+    console.log('this.assignMemberDetails',this.assignMemberDetails);
     console.log('this.memberList',this.memberList)
     console.log('this.data.assignMembername',this.data.assignMembername)
-    this.assignMemberDetails= this.data.assignMembername
+    // this.assignMemberDetails= this.data.assignMembername
   }
   handleMemberSelect(member,selected:string){
     this.handleAssignMemberSelectText=''
@@ -56,6 +65,14 @@ export class CrmSelectMemberComponent implements OnInit {
     }
     
 
+  }
+  getUserImg(user) {
+    if (user.profilePicture) {
+      const proImage = user.profilePicture;
+      return proImage.url;
+    } else {
+      return '../../../assets/images/avatar5.png';
+    }
   }
 
   buttonclicked(res) {
