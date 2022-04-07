@@ -5,167 +5,598 @@
       Task
       <!-- <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i> -->
     </div>
+
   </div>
+
 </section>
 <br><br>
 
 
-<section class="card">
-  <mat-tab-group dynamicHeight mat-stretch-tabs (selectedTabChange)="onTabChanged($event)"
-    [selectedIndex]="selectedIndex">
-    <mat-tab label="Total Task (20)">
-    </mat-tab>
-    <mat-tab label="In Progress (4)">
-    </mat-tab>
-    <mat-tab label="Completed (2)">
-    </mat-tab>
-    <mat-tab label="Delayed (1)">
-    </mat-tab>
-  </mat-tab-group>
-</section>
-<br><br>
-<section>
-  <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small" (click)="createTask()">
-    <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add">
-      <i class="fa-solid fa-plus"></i> Create Task</button>
-  </a>
+<section class="card col-md-12">
+  <div class="col-md-12">
+    <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small" (click)="createTask()">
+      <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add">
+        <i class="fa-solid fa-plus"></i> Create Task</button>
+    </a>
+  </div>
+  <br><br><br>
+  <div>
+    <!-- <mat-card fxLayout="row" fxLayoutGap="50px">
+      <mat-card class="child-1">1. Children</mat-card>
+      <mat-card class="child-2">2. Children</mat-card>
+      <mat-card class="child-3">3. Children</mat-card>
+  </mat-card> -->
+    <mat-tab-group dynamicHeight mat-stretch-tabs (selectedTabChange)="tabChange($event)"
+      [selectedIndex]="selectedTab - 1">
+      <mat-tab label="Total Task (0)" class="mat-tab">
 
-  <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
-  <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
-    <div class="col-md-12 no-padding-small">
-      <div class="row">
-        <div class="card p0 w-dta">
-          <div class="table-responsive dash-list">
-            <table class="table">
-              <thead>
-                <tr class="tble-filtr-tr heght">
-                  <th class="head_color">&nbsp;&nbsp;&nbsp;Task Details</th>
-                  <th class="head_color">Duration</th>
-                  <th class="head_color">Status</th>
-                  <th class="head_color">Catogory</th>
-                  <th class="head_color">Type</th>
-                  <th class="head_color">Due Date</th>
-                  <!-- <th class="filter-fx-col">
-                                        <table class="fltr-tbl">
-                                            <tr>
-                                                <td>
-                                                    <span>
-                                                        <i class="icon-filter-one" (click)="showFilterSidebar()"
-                                                            [matTooltipClass]="tooltipcls"
-                                                            [matTooltip]="filtericonTooltip"
-                                                            style="cursor: pointer;"></i>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </th> -->
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
+        <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+        <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
+          <div class="col-md-12 no-padding-small">
+            <div class="row">
+              <div class="card p0 w-dta">
+                <div class="table-responsive dash-list">
+                  <table class="table" style="background-color: white;">
+                    <thead>
+                      <tr class="tble-filtr-tr heght">
+                        <th class="head_color">&nbsp;&nbsp;&nbsp;Task Details</th>
+                        <th class="head_color">Duration</th>
+                        <th class="head_color">Status</th>
+                        <th class="head_color">Catogory</th>
+                        <th class="head_color">Type</th>
+                        <th class="head_color">Due Date</th>
+                        <th class="head_color"></th>
+                        <th class="filter-fx-col">
+                          <table class="fltr-tbl">
+                            <tr>
+                              <td>
+                                <span>
+                                  <i class="icon-filter-one" (click)="showFilterSidebar()"
+                                    [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
+                                    style="cursor: pointer;"></i>
+                                </span>
+                              </td>
+                            </tr>
+                          </table>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
 
-                  <div>
-                    <!-- <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
-                                          <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
-                                            <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
-                                              <span class="filter-head-title">Filters</span>
-                                              <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right" (click)="hideFilterSidebar()"
-                                                [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
-                                            </div>
-                                            <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
-                                            <ul class="sidebar-menu accordion" id="accordion1">
-                                             
-                                              <div class="card">
-                                                <div class="card-header">
-                                                  <h2 class="mb-0">
-                                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseId1"
-                                                      aria-expanded="false">
-                                                      <div>
-                                                        <div style="display: inline-block !important;">
-                                                          <i class="fa fa-calendar"></i>
-                                                        </div>
-                                                        <span>&nbsp;Filter by Date</span>
-                                                      </div>
-                                                      <i class="fa fa-angle-down"></i>
-                                                    </button>
-                                                  </h2>
-                                                </div>
-                                                <div id="collapseId1" class="collapse in" data-parent="#accordion1">
-                                                  <div class="card-body">
-                                                    <div class="filterTextinput filter-text-input">
-                                                        <div style="color: #374957 !important;
-                                                        font-weight: 700 !important;
-                                                        font-size: 14px !important;">From</div>
-                                                      <li class="filterli filter-li">
-                                                        <input class="filterTextbox" type="text"
-                                                    [(ngModel)]="auditStartdate" [min]="minday" [max]="maxDate"
-                                                    [matDatepicker]="picker" #Fdate 
-                                                   (dateChange)="keyPressed()" placeholder="Start date" readonly>
-                                                <mat-datepicker-toggle matSuffix [for]="picker">
-                                                </mat-datepicker-toggle>
-                                                <mat-datepicker #picker></mat-datepicker>
-                                                      </li>
-                                                    </div>
+                        <div>
+                          <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
+                            <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                              <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+                                <span class="filter-head-title">Filters</span>
+                                <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                                  (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                  [matTooltip]="'Close filter window'"></i>
+                              </div>
+                              <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
+                              <ul class="sidebar-menu accordion" id="accordion1">
 
-                                                    <div class="filterTextinput filter-text-input">
-                                                        <div style="color: #374957 !important;
-                                                        font-weight: 700 !important;
-                                                        font-size: 14px !important;">To</div>
-                                                        <li class="filterli filter-li">
-                                                            <input class="filterTextbox" type="text" [(ngModel)]="auditEnddate" [min]="endminday"
-                                                            [max]="maxDate" [matDatepicker]="picker1" #Edate 
-                                                           (dateChange)="keyPressed()" placeholder="End date" readonly>
-                                                        <mat-datepicker-toggle matSuffix [for]="picker1">
-                                                        </mat-datepicker-toggle>
-                                                        <mat-datepicker #picker1></mat-datepicker>
-                                                        </li>
-                                                      </div>
-                                                  </div>
-                                                </div>
-                                                
-                                              </div>
-                                            
-                                            </ul>
-                                          </section>
-                                          <div class="filter-footer" *ngIf="filterapplied === true">
-                                            <button class="btn reset-btn" (click)="clearFilter()">
-                                              <i class="fa fa-undo"></i>&nbsp;Reset
-                                            </button>
-                                            <button class="btn apply-btn" (click)="do_search(false)">
-                                              <i class="fa fa-check"></i>&nbsp;Apply
-                                            </button>
+                                <div class="card">
+                                  <div class="card-header">
+                                    <h2 class="mb-0">
+                                      <button class="btn btn-link" type="button" data-toggle="collapse"
+                                        data-target="#collapseId1" aria-expanded="false">
+                                        <div>
+                                          <div style="display: inline-block !important;">
+                                            <i class="fa fa-calendar"></i>
                                           </div>
-                                        </aside> -->
-                  </div>
+                                          <span>&nbsp;Filter by Date</span>
+                                        </div>
+                                        <i class="fa fa-angle-down"></i>
+                                      </button>
+                                    </h2>
+                                  </div>
+                                  <div id="collapseId1" class="collapse in" data-parent="#accordion1">
+                                    <div class="card-body">
+                                      <div class="filterTextinput filter-text-input">
+                                        <div style="color: #374957 !important;
+                                                              font-weight: 700 !important;
+                                                              font-size: 14px !important;">Due Date</div>
+                                        <li class="filterli filter-li">
+                                          <input class="filterTextbox" type="text" [(ngModel)]="dueDate" [min]="minday"
+                                            [max]="maxDate" [matDatepicker]="picker" #Fdate placeholder="Due Date"
+                                            readonly>
+                                          <mat-datepicker-toggle matSuffix [for]="picker">
+                                          </mat-datepicker-toggle>
+                                          <mat-datepicker #picker></mat-datepicker>
+                                        </li>
+                                      </div>
 
-                </tr>
-              </tbody>
-              <tbody>
-                <ng-container *ngIf="taskList.length === 0">
-                  <tr>
-                    <td class="nodatafound" colspan="5">{{no_tasks_cap}}</td>
-                  </tr>
-                </ng-container>
-                <ng-container *ngIf="taskList.length>0">
-                  <tr *ngFor="let task of taskList; let i=index">
-                    <td data-title="Task Details" class="td1">&nbsp;&nbsp;&nbsp;{{task.taskName}}</td>
-                    <td data-title="Duration" class="td3">{{task.duration}}</td>
-                    <td data-title="Status" class="td2 desc">{{task.status}}</td>
-                    <td data-title="Category" class="td4">{{task.catogory}}</td>
-                    <td data-title="Type" class="td4">{{task.type}}</td>
-                    <td data-title="Due Date" class="td4">{{task.duedate}}</td>
-                    <!-- <td class="filter-fx-col"></td> -->
-                  </tr>
-                </ng-container>
-              </tbody>
-            </table>
-            <div class="search_paging" *ngIf="taskList.length>0">
-              <app-pager [total_pages]="gettotalCnt()" [pagesize]="getperPage()" (pagerclick)="handle_pageclick($event)"
-                [curpage]="startpageval"></app-pager>
+
+                                    </div>
+                                  </div>
+
+                                </div>
+
+                              </ul>
+                            </section>
+                            <div class="filter-footer" *ngIf="filterapplied === true">
+                              <button class="btn reset-btn" (click)="clearFilter()">
+                                <i class="fa fa-undo"></i>&nbsp;Reset
+                              </button>
+                              <button class="btn apply-btn" (click)="doSearch()">
+                                <i class="fa fa-check"></i>&nbsp;Apply
+                              </button>
+                            </div>
+                          </aside>
+                        </div>
+
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <ng-container *ngIf="totalTaskList.length === 0">
+                        <tr>
+                          <td class="nodatafound" colspan="5">{{no_tasks_cap}}</td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="totalTaskList.length>0">
+                        <tr *ngFor="let task of totalTaskList; let i=index">
+                          <td data-title="Task Details" class="td1">&nbsp;&nbsp;&nbsp;{{task.title}}</td>
+                          <td data-title="Duration" class="td3">{{task.duration}}</td>
+                          <td data-title="Status" class="td2 desc">{{task.status.name}}</td>
+                          <td data-title="Category" class="td4">{{task.category.name}}</td>
+                          <td data-title="Type" class="td4">{{task.type.name}}</td>
+                          <td data-title="Due Date" class="td4">{{task.dueDate}}</td>
+                          <td>
+                            <div class="copy">
+                              <span class="">
+                                <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
+                                  (click)="stopprop($event);">
+                                  <mat-icon>more_vert</mat-icon>
+                                </button>
+                              </span>
+                              <mat-menu #appMenu="matMenu">
+                                <button mat-menu-item>
+                                  Mrak as Done
+                                </button>
+
+                              </mat-menu>
+                            </div>
+                          </td>
+                          <!-- <td class="filter-fx-col"></td> -->
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                  <div class="search_paging" *ngIf="totalTaskList.length>0">
+                    <!-- <app-pager [total_pages]="gettotalCnt()" [pagesize]="getperPage()" (pagerclick)="handle_pageclick($event)"
+                      [curpage]="startpageval"></app-pager> -->
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+
+      </mat-tab>
+      <mat-tab label="In Progress (0)">
+
+        <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+        <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
+          <div class="col-md-12 no-padding-small">
+            <div class="row">
+              <div class="card p0 w-dta">
+                <div class="table-responsive dash-list">
+                  <table class="table">
+                    <thead>
+                      <tr class="tble-filtr-tr heght">
+                        <th class="head_color">&nbsp;&nbsp;&nbsp;Task Details</th>
+                        <th class="head_color">Duration</th>
+                        <th class="head_color">Status</th>
+                        <th class="head_color">Catogory</th>
+                        <th class="head_color">Type</th>
+                        <th class="head_color">Due Date</th>
+                        <th class="filter-fx-col">
+                          <table class="fltr-tbl">
+                            <tr>
+                              <td>
+                                <span>
+                                  <i class="icon-filter-one" (click)="showFilterSidebar()"
+                                    [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
+                                    style="cursor: pointer;"></i>
+                                </span>
+                              </td>
+                            </tr>
+                          </table>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+
+                        <div>
+                          <!-- <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
+                                                <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                                                  <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+                                                    <span class="filter-head-title">Filters</span>
+                                                    <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right" (click)="hideFilterSidebar()"
+                                                      [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                                                  </div>
+                                                  <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
+                                                  <ul class="sidebar-menu accordion" id="accordion1">
+                                                   
+                                                    <div class="card">
+                                                      <div class="card-header">
+                                                        <h2 class="mb-0">
+                                                          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseId1"
+                                                            aria-expanded="false">
+                                                            <div>
+                                                              <div style="display: inline-block !important;">
+                                                                <i class="fa fa-calendar"></i>
+                                                              </div>
+                                                              <span>&nbsp;Filter by Date</span>
+                                                            </div>
+                                                            <i class="fa fa-angle-down"></i>
+                                                          </button>
+                                                        </h2>
+                                                      </div>
+                                                      <div id="collapseId1" class="collapse in" data-parent="#accordion1">
+                                                        <div class="card-body">
+                                                          <div class="filterTextinput filter-text-input">
+                                                              <div style="color: #374957 !important;
+                                                              font-weight: 700 !important;
+                                                              font-size: 14px !important;">From</div>
+                                                            <li class="filterli filter-li">
+                                                              <input class="filterTextbox" type="text"
+                                                          [(ngModel)]="auditStartdate" [min]="minday" [max]="maxDate"
+                                                          [matDatepicker]="picker" #Fdate
+                                                         (dateChange)="keyPressed()" placeholder="Start date" readonly>
+                                                      <mat-datepicker-toggle matSuffix [for]="picker">
+                                                      </mat-datepicker-toggle>
+                                                      <mat-datepicker #picker></mat-datepicker>
+                                                            </li>
+                                                          </div>
+     
+                                                          <div class="filterTextinput filter-text-input">
+                                                              <div style="color: #374957 !important;
+                                                              font-weight: 700 !important;
+                                                              font-size: 14px !important;">To</div>
+                                                              <li class="filterli filter-li">
+                                                                  <input class="filterTextbox" type="text" [(ngModel)]="auditEnddate" [min]="endminday"
+                                                                  [max]="maxDate" [matDatepicker]="picker1" #Edate
+                                                                 (dateChange)="keyPressed()" placeholder="End date" readonly>
+                                                              <mat-datepicker-toggle matSuffix [for]="picker1">
+                                                              </mat-datepicker-toggle>
+                                                              <mat-datepicker #picker1></mat-datepicker>
+                                                              </li>
+                                                            </div>
+                                                        </div>
+                                                      </div>
+                                                     
+                                                    </div>
+                                                 
+                                                  </ul>
+                                                </section>
+                                                <div class="filter-footer" *ngIf="filterapplied === true">
+                                                  <button class="btn reset-btn" (click)="clearFilter()">
+                                                    <i class="fa fa-undo"></i>&nbsp;Reset
+                                                  </button>
+                                                  <button class="btn apply-btn" (click)="do_search(false)">
+                                                    <i class="fa fa-check"></i>&nbsp;Apply
+                                                  </button>
+                                                </div>
+                                              </aside> -->
+                        </div>
+
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <ng-container *ngIf="totalInprogressList.length === 0">
+                        <tr>
+                          <td class="nodatafound" colspan="5">{{no_tasks_cap}}</td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="totalInprogressList.length>0">
+                        <tr *ngFor="let task of totalInprogressList; let i=index">
+                          <td data-title="Task Details" class="td1">&nbsp;&nbsp;&nbsp;{{task.title}}</td>
+                          <td data-title="Duration" class="td3">{{task.duration}}</td>
+                          <td data-title="Status" class="td2 desc">{{task.status.name}}</td>
+                          <td data-title="Category" class="td4">{{task.category.name}}</td>
+                          <td data-title="Type" class="td4">{{task.type.name}}</td>
+                          <td data-title="Due Date" class="td4">{{task.dueDate}}</td>
+                          <!-- <td class="filter-fx-col"></td> -->
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                  <div class="search_paging" *ngIf="totalInprogressList.length>0">
+                    <!-- <app-pager [total_pages]="gettotalCnt()" [pagesize]="getperPage()" (pagerclick)="handle_pageclick($event)"
+                      [curpage]="startpageval"></app-pager> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Completed (0)">
+
+        <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+        <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
+          <div class="col-md-12 no-padding-small">
+            <div class="row">
+              <div class="card p0 w-dta">
+                <div class="table-responsive dash-list">
+                  <table class="table">
+                    <thead>
+                      <tr class="tble-filtr-tr heght">
+                        <th class="head_color">&nbsp;&nbsp;&nbsp;Task Details</th>
+                        <th class="head_color">Duration</th>
+                        <th class="head_color">Status</th>
+                        <th class="head_color">Catogory</th>
+                        <th class="head_color">Type</th>
+                        <th class="head_color">Due Date</th>
+                        <!-- <th class="filter-fx-col">
+                                              <table class="fltr-tbl">
+                                                  <tr>
+                                                      <td>
+                                                          <span>
+                                                              <i class="icon-filter-one" (click)="showFilterSidebar()"
+                                                                  [matTooltipClass]="tooltipcls"
+                                                                  [matTooltip]="filtericonTooltip"
+                                                                  style="cursor: pointer;"></i>
+                                                          </span>
+                                                      </td>
+                                                  </tr>
+                                              </table>
+                                          </th> -->
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+
+                        <div>
+                          <!-- <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
+                                                <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                                                  <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+                                                    <span class="filter-head-title">Filters</span>
+                                                    <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right" (click)="hideFilterSidebar()"
+                                                      [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                                                  </div>
+                                                  <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
+                                                  <ul class="sidebar-menu accordion" id="accordion1">
+                                                   
+                                                    <div class="card">
+                                                      <div class="card-header">
+                                                        <h2 class="mb-0">
+                                                          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseId1"
+                                                            aria-expanded="false">
+                                                            <div>
+                                                              <div style="display: inline-block !important;">
+                                                                <i class="fa fa-calendar"></i>
+                                                              </div>
+                                                              <span>&nbsp;Filter by Date</span>
+                                                            </div>
+                                                            <i class="fa fa-angle-down"></i>
+                                                          </button>
+                                                        </h2>
+                                                      </div>
+                                                      <div id="collapseId1" class="collapse in" data-parent="#accordion1">
+                                                        <div class="card-body">
+                                                          <div class="filterTextinput filter-text-input">
+                                                              <div style="color: #374957 !important;
+                                                              font-weight: 700 !important;
+                                                              font-size: 14px !important;">From</div>
+                                                            <li class="filterli filter-li">
+                                                              <input class="filterTextbox" type="text"
+                                                          [(ngModel)]="auditStartdate" [min]="minday" [max]="maxDate"
+                                                          [matDatepicker]="picker" #Fdate
+                                                         (dateChange)="keyPressed()" placeholder="Start date" readonly>
+                                                      <mat-datepicker-toggle matSuffix [for]="picker">
+                                                      </mat-datepicker-toggle>
+                                                      <mat-datepicker #picker></mat-datepicker>
+                                                            </li>
+                                                          </div>
+     
+                                                          <div class="filterTextinput filter-text-input">
+                                                              <div style="color: #374957 !important;
+                                                              font-weight: 700 !important;
+                                                              font-size: 14px !important;">To</div>
+                                                              <li class="filterli filter-li">
+                                                                  <input class="filterTextbox" type="text" [(ngModel)]="auditEnddate" [min]="endminday"
+                                                                  [max]="maxDate" [matDatepicker]="picker1" #Edate
+                                                                 (dateChange)="keyPressed()" placeholder="End date" readonly>
+                                                              <mat-datepicker-toggle matSuffix [for]="picker1">
+                                                              </mat-datepicker-toggle>
+                                                              <mat-datepicker #picker1></mat-datepicker>
+                                                              </li>
+                                                            </div>
+                                                        </div>
+                                                      </div>
+                                                     
+                                                    </div>
+                                                 
+                                                  </ul>
+                                                </section>
+                                                <div class="filter-footer" *ngIf="filterapplied === true">
+                                                  <button class="btn reset-btn" (click)="clearFilter()">
+                                                    <i class="fa fa-undo"></i>&nbsp;Reset
+                                                  </button>
+                                                  <button class="btn apply-btn" (click)="do_search(false)">
+                                                    <i class="fa fa-check"></i>&nbsp;Apply
+                                                  </button>
+                                                </div>
+                                              </aside> -->
+                        </div>
+
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <ng-container *ngIf="totalCompletedList.length === 0">
+                        <tr>
+                          <td class="nodatafound" colspan="5">{{no_tasks_cap}}</td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="totalCompletedList.length>0">
+                        <tr *ngFor="let task of totalCompletedList; let i=index">
+                          <td data-title="Task Details" class="td1">&nbsp;&nbsp;&nbsp;{{task.title}}</td>
+                          <td data-title="Duration" class="td3">{{task.duration}}</td>
+                          <td data-title="Status" class="td2 desc">{{task.status.name}}</td>
+                          <td data-title="Category" class="td4">{{task.category.name}}</td>
+                          <td data-title="Type" class="td4">{{task.type.name}}</td>
+                          <td data-title="Due Date" class="td4">{{task.dueDate}}</td>
+                          <!-- <td class="filter-fx-col"></td> -->
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                  <div class="search_paging" *ngIf="totalCompletedList.length>0">
+                    <!-- <app-pager [total_pages]="gettotalCnt()" [pagesize]="getperPage()" (pagerclick)="handle_pageclick($event)"
+                      [curpage]="startpageval"></app-pager> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Delayed (0)">
+
+        <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+        <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
+          <div class="col-md-12 no-padding-small">
+            <div class="row">
+              <div class="card p0 w-dta">
+                <div class="table-responsive dash-list">
+                  <table class="table">
+                    <thead>
+                      <tr class="tble-filtr-tr heght">
+                        <th class="head_color">&nbsp;&nbsp;&nbsp;Task Details</th>
+                        <th class="head_color">Duration</th>
+                        <th class="head_color">Status</th>
+                        <th class="head_color">Catogory</th>
+                        <th class="head_color">Type</th>
+                        <th class="head_color">Due Date</th>
+                        <!-- <th class="filter-fx-col">
+                                              <table class="fltr-tbl">
+                                                  <tr>
+                                                      <td>
+                                                          <span>
+                                                              <i class="icon-filter-one" (click)="showFilterSidebar()"
+                                                                  [matTooltipClass]="tooltipcls"
+                                                                  [matTooltip]="filtericonTooltip"
+                                                                  style="cursor: pointer;"></i>
+                                                          </span>
+                                                      </td>
+                                                  </tr>
+                                              </table>
+                                          </th> -->
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+
+                        <div>
+                          <!-- <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
+                                                <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                                                  <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+                                                    <span class="filter-head-title">Filters</span>
+                                                    <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right" (click)="hideFilterSidebar()"
+                                                      [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                                                  </div>
+                                                  <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
+                                                  <ul class="sidebar-menu accordion" id="accordion1">
+                                                   
+                                                    <div class="card">
+                                                      <div class="card-header">
+                                                        <h2 class="mb-0">
+                                                          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseId1"
+                                                            aria-expanded="false">
+                                                            <div>
+                                                              <div style="display: inline-block !important;">
+                                                                <i class="fa fa-calendar"></i>
+                                                              </div>
+                                                              <span>&nbsp;Filter by Date</span>
+                                                            </div>
+                                                            <i class="fa fa-angle-down"></i>
+                                                          </button>
+                                                        </h2>
+                                                      </div>
+                                                      <div id="collapseId1" class="collapse in" data-parent="#accordion1">
+                                                        <div class="card-body">
+                                                          <div class="filterTextinput filter-text-input">
+                                                              <div style="color: #374957 !important;
+                                                              font-weight: 700 !important;
+                                                              font-size: 14px !important;">From</div>
+                                                            <li class="filterli filter-li">
+                                                              <input class="filterTextbox" type="text"
+                                                          [(ngModel)]="auditStartdate" [min]="minday" [max]="maxDate"
+                                                          [matDatepicker]="picker" #Fdate
+                                                         (dateChange)="keyPressed()" placeholder="Start date" readonly>
+                                                      <mat-datepicker-toggle matSuffix [for]="picker">
+                                                      </mat-datepicker-toggle>
+                                                      <mat-datepicker #picker></mat-datepicker>
+                                                            </li>
+                                                          </div>
+     
+                                                          <div class="filterTextinput filter-text-input">
+                                                              <div style="color: #374957 !important;
+                                                              font-weight: 700 !important;
+                                                              font-size: 14px !important;">To</div>
+                                                              <li class="filterli filter-li">
+                                                                  <input class="filterTextbox" type="text" [(ngModel)]="auditEnddate" [min]="endminday"
+                                                                  [max]="maxDate" [matDatepicker]="picker1" #Edate
+                                                                 (dateChange)="keyPressed()" placeholder="End date" readonly>
+                                                              <mat-datepicker-toggle matSuffix [for]="picker1">
+                                                              </mat-datepicker-toggle>
+                                                              <mat-datepicker #picker1></mat-datepicker>
+                                                              </li>
+                                                            </div>
+                                                        </div>
+                                                      </div>
+                                                     
+                                                    </div>
+                                                 
+                                                  </ul>
+                                                </section>
+                                                <div class="filter-footer" *ngIf="filterapplied === true">
+                                                  <button class="btn reset-btn" (click)="clearFilter()">
+                                                    <i class="fa fa-undo"></i>&nbsp;Reset
+                                                  </button>
+                                                  <button class="btn apply-btn" (click)="do_search(false)">
+                                                    <i class="fa fa-check"></i>&nbsp;Apply
+                                                  </button>
+                                                </div>
+                                              </aside> -->
+                        </div>
+
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <ng-container *ngIf="totalDelayedList.length === 0">
+                        <tr>
+                          <td class="nodatafound" colspan="5">{{no_tasks_cap}}</td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="totalDelayedList.length>0">
+                        <tr *ngFor="let task of totalDelayedList; let i=index">
+                          <td data-title="Task Details" class="td1">&nbsp;&nbsp;&nbsp;{{task.title}}</td>
+                          <td data-title="Duration" class="td3">{{task.duration}}</td>
+                          <td data-title="Status" class="td2 desc">{{task.status.name}}</td>
+                          <td data-title="Category" class="td4">{{task.category.name}}</td>
+                          <td data-title="Type" class="td4">{{task.type.name}}</td>
+                          <td data-title="Due Date" class="td4">{{task.dueDate}}</td>
+                          <!-- <td class="filter-fx-col"></td> -->
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                  <div class="search_paging" *ngIf="totalDelayedList.length>0">
+                    <!-- <app-pager [total_pages]="gettotalCnt()" [pagesize]="getperPage()" (pagerclick)="handle_pageclick($event)"
+                      [curpage]="startpageval"></app-pager> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
   </div>
+
 </section>

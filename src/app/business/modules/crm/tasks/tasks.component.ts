@@ -4,8 +4,12 @@ import { projectConstants } from '../../../../../../src/app/app.component';
 import { Messages } from '../../../../../../src/app/shared/constants/project-messages';
 // import { CrmService } from '../crm.service';
 import { Location } from '@angular/common';
-import { LocalStorageService } from '../../../../../../src/app/shared/services/local-storage.service';
+import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
 import { Router } from '@angular/router';
+import { SnackbarService } from '../../../../../../src/app/shared/services/snackbar.service';
+import { CrmService } from '../crm.service';
+import { WordProcessor } from '../../../../../../src/app/shared/services/word-processor.service';
+import { LocalStorageService } from '../../../../../../src/app/shared/services/local-storage.service';
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
@@ -48,14 +52,6 @@ export class TasksComponent implements OnInit {
   filterapplied;
   filter_sidebar = false;
   open_filter = false;
-  filter = {
-    date: null,
-    page_count: projectConstants.PERPAGING_LIMIT,
-    page: 1
-  };
-  filters: any = {
-    'date': false
-  };
   ackStatus = false;
   notAckStatus = false;
   startpageval;
@@ -68,20 +64,51 @@ export class TasksComponent implements OnInit {
   maxDate = new Date();
   dateFilter = false;
   auditSelAck = [];
-  auditStartdate = null;
+  dueDate = null;
   auditEnddate = null;
   holdauditSelAck = null;
   holdauditStartdate = null;
   holdauditEnddate = null;
   taskList: any = [];
-  selectedIndex;
+  totalTaskList: any = [];
+  totalInprogressList: any = [];
+  totalCompletedList: any = [];
+  totalDelayedList: any = [];
+  selectedTab;
+  filtericonTooltip = '';
+  filter = {
+    status: '',
+    category: '',
+    type: '',
+    dueDate: '',
+    pinCode: '',
+    primaryMobileNo: '',
+    employeeId: '',
+    email: '',
+    userType: '',
+    available: '',
+    page_count: projectConstants.PERPAGING_LIMIT,
+    page: 1
+
+  };
+
+  filters: any = {
+    'status': false,
+    'category': false,
+    'type': false,
+    'dueDate': false,
+  };
   constructor(
     private locationobj: Location,
+    private groupService: GroupStorageService,
+    public router: Router,
     private lStorageService: LocalStorageService,
-    private router: Router,
-    // private crmService: CrmService,
+    private wordProcessor: WordProcessor,
+    private snackbarService: SnackbarService,
+    private crmService: CrmService,
 
   ) {
+    this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
   }
 
   ngOnInit(): void {
@@ -92,82 +119,72 @@ export class TasksComponent implements OnInit {
     //     console.log(this.taskList)
     //   }
     // )
-    let tasks: any = [{
-      "taskId": 1,
-      "taskName": 'Task 1',
-      "duration": 'Completed',
-      "status": 'Completed',
-      "catogory": 'c1',
-      "type": 'Type 1',
-      "duedate": 'March 20, 2022'
-    },
-    {
-      "taskId": 1,
-      "taskName": 'Task 2',
-      "duration": '10 Days 3 hours',
-      "status": 'In Progress',
-      "catogory": 'c2',
-      "type": 'Type 1',
-      "duedate": 'March 30, 2022'
-    }];
-    this.taskList = tasks;
-    console.log(this.taskList)
-    if (this.lStorageService.getitemfromLocalStorage('tabIndex')) {
-      this.selectedIndex = this.lStorageService.getitemfromLocalStorage('tabIndex');
+    this.getTotalTask();
+
+    if (this.groupService.getitemFromGroupStorage('tabIndex')) {
+      this.selectedTab = this.groupService.getitemFromGroupStorage('tabIndex');
     } else {
-      this.selectedIndex = 0;
+      this.selectedTab = 1;
     }
-    this.do_search(true);
+    this.doSearch();
 
 
+  }
+  getTotalTask() {
+    this.crmService.getTotalTask().subscribe(
+      (data: any) => {
+        this.totalTaskList = data;
+      },
+      (error: any) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+  getInprogressTask() {
+    this.crmService.getInprogressTask().subscribe(
+      (data: any) => {
+        this.totalInprogressList = data;
+      },
+      (error: any) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+  getCompletedTask() {
+    this.crmService.getCompletedTask().subscribe(
+      (data: any) => {
+        this.totalCompletedList = data;
+      },
+      (error: any) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+  getDelayedTask() {
+    this.crmService.getDelayedTask().subscribe(
+      (data: any) => {
+        this.totalDelayedList = data;
+      },
+      (error: any) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
   }
   goback() {
     this.locationobj.back();
   }
 
 
-  do_search(pagecall, status?) {
-    this.endminday = this.auditStartdate;
-    this.auditStatus = 1;
-    if (status === 'ackStatus') {
-      if (this.ackStatus === true) {
-        if (this.auditSelAck.indexOf('true') === -1) {
-          this.auditSelAck.push('true');
-        }
-      } else {
-        this.auditSelAck.splice(this.auditSelAck.indexOf('true'), 1);
-      }
-    }
-    if (status === 'notAckStatus') {
-      if (this.notAckStatus === true) {
-        if (this.auditSelAck.indexOf('false') === -1) {
-          this.auditSelAck.push('false');
-        }
-      } else {
-        this.auditSelAck.splice(this.auditSelAck.indexOf('false'), 1);
-      }
-    }
-    if (pagecall === false) {
-      this.startpageval = 1;
-      this.holdauditSelAck = this.auditSelAck.join(',');
-      this.holdauditStartdate = this.auditStartdate;
-      this.holdauditEnddate = this.auditEnddate;
-    }
-    let startseldate = '';
-    let endseldate = '';
-
-
-    if (endseldate !== '' || startseldate !== '' || this.notAckStatus || this.ackStatus) {
+  doSearch() {
+    // this.getUsers();
+    this.lStorageService.removeitemfromLocalStorage('taskfilter');
+    if (this.filter.status || this.filter.category || this.filter.type || this.filter.dueDate) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
     }
   }
 
-  handle_pageclick(pg) {
-    this.startpageval = pg;
-    this.do_search(true);
-  }
+  // handle_pageclick(pg) {
+  //   this.startpageval = pg;
+  //   this.do_search(true);
+  // }
   getperPage() {
     return this.perPage;
   }
@@ -181,55 +198,67 @@ export class TasksComponent implements OnInit {
     this.open_filter = !this.open_filter;
   }
   clearFilter() {
+    this.lStorageService.removeitemfromLocalStorage('userfilter');
     this.resetFilter();
     this.filterapplied = false;
-    this.do_search(false);
+    // this.getUsers();
   }
   resetFilter() {
-    // this.logSeldate = '';
     this.filters = {
-      'date': false
+      'status': false,
+      'category': false,
+      'type': false,
+      'dueDate': false,
     };
-    this.auditEnddate = null;
-    this.auditStartdate = null;
-    this.auditSelAck = [];
-    this.holdauditStartdate = null;
-    this.holdauditEnddate = null;
-    this.ackStatus = false;
-    this.notAckStatus = false;
+    // this.filter = {
+    //     status: '',
+    //     category: '',
+    //     type: '',
+    //     dueDate: '',
 
+    // };
   }
-  filterClicked() {
-    this.dateFilter = !this.dateFilter;
-    if (!this.dateFilter) {
-      // this.logSeldate = '';
-      this.filters = {
-        'date': false
-      };
-      this.auditEnddate = null;
-      this.auditStartdate = null;
-      this.auditSelAck = [];
-      this.holdauditStartdate = null;
-      this.holdauditEnddate = null;
-      this.ackStatus = false;
-      this.notAckStatus = false;
-      this.do_search(false);
-    }
-  }
+
   showFilterSidebar() {
     this.filter_sidebar = true;
   }
   hideFilterSidebar() {
     this.filter_sidebar = false;
   }
-  onTabChanged(event) {
-    console.log("Tab Event:", event.index);
-    this.lStorageService.setitemonLocalStorage('tabIndex', event.index);
+  tabChange(event) {
+    console.log(event)
+    this.setTabSelection(event.index + 1);
   }
-  createTask(){
+  setTabSelection(type) {
+    this.selectedTab = type;
+    this.groupService.setitemToGroupStorage('tabIndex', this.selectedTab);
+    switch (type) {
+      case 1: {
+        this.getTotalTask();
+        break;
+      }
+      case 2: {
+        this.getInprogressTask();
+
+        break;
+      }
+      case 3: {
+        this.getCompletedTask();
+
+        break;
+      }
+      case 4: {
+        this.getDelayedTask();
+
+        break;
+      }
+    }
+  }
+  createTask() {
     console.log('create')
-    this.router.navigate(['provider', 'task','create-task'])
+    this.router.navigate(['provider', 'task', 'create-task'])
+  }
+  stopprop(event) {
+    event.stopPropagation();
   }
 }
-
-

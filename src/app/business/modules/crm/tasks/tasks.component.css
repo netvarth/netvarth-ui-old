@@ -1160,7 +1160,7 @@
             box-shadow: none;
             border: 1px solid transparent;
             margin-right: 30px !important;
-            margin-bottom: 40px !important;
+            margin-bottom: 30px !important;
             background-color: #1e4079!important;
         }
         .head_color{
@@ -1173,3 +1173,25 @@
             font-weight: 500;
             transition: all 500ms;
         }
+        .dashboard .card.w-dta .dash-list .table thead tr th {
+            padding: 20px 8px;
+        }
+        .boxshadow-style[_ngcontent-wlg-c320] {
+            box-shadow: 10px 10px 15px rgba(204,204,204,.61)!important;
+        }
+        .mat{
+            box-shadow: 20px !important;
+            background-color: yellow !important;
+            border-radius: 5px !important;
+        }
+        .mat-tab{
+            background-color: #2e752e !important;
+        }
+        .action_bt{
+            margin-top: -12px;
+            border: none !important;
+    background-color: white !important;
+        }
+        .dashboard .card.w-dta .dash-list .table tbody tr:nth-child(even) {
+            background: transparent !important;
+          }

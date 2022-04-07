@@ -12,6 +12,8 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormMessageDisplayModule } from "../../../../shared/modules/form-message-display/form-message-display.module";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatIconModule } from "@angular/material/icon";
 
 const routes: Routes = [
   { path: '', component: TasksComponent },
@@ -27,6 +29,8 @@ const routes: Routes = [
         CapitalizeFirstPipeModule,
         MatFormFieldModule,
         MatInputModule,
+        MatIconModule,
+        MatMenuModule,
         FormMessageDisplayModule,
         [RouterModule.forChild(routes)]
     ],

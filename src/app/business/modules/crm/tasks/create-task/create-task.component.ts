@@ -238,6 +238,8 @@ export class CreateTaskComponent implements OnInit {
       "userType":this.userType,
       "category":{"id":this.createTaskForm.controls.userTaskCategory.value.id,},
       "type":{"id":this.createTaskForm.controls.userTaskType.value.id,},
+      "status":{"id":this.createTaskForm.controls.taskStatus.value.id,},
+      
       // "category" : { "id" : 1},
       // "type" : { "id" : 1},
       "location" : { "id" : this.locationId},
@@ -251,6 +253,7 @@ export class CreateTaskComponent implements OnInit {
       this.boolenTaskError=false;
       this.crmService.addTask(createTaskData).subscribe((response)=>{
         console.log(response);
+        this.router.navigate(['provider', 'task'])
       },
       (error)=>{
         this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})

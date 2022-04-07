@@ -49,6 +49,23 @@ export class CrmService {
     getProviderLocations() {
       return this.servicemeta.httpGet('provider/locations');
     }
+    getTotalTask() {
+      const url = 'provider/task/provider';
+      return this.servicemeta.httpGet(url);
+    }
+    
+    getInprogressTask() {
+      const url = 'provider/task/provider?status-eq=3';
+      return this.servicemeta.httpGet(url);
+    }
+    getCompletedTask() {
+      const url = 'provider/task/provider?status-eq=5';
+      return this.servicemeta.httpGet(url);
+    }
+    getDelayedTask() {
+      const url = 'provider/task/provider?status-eq=4';
+      return this.servicemeta.httpGet(url);
+    }
     // https://scale.jaldee.com/v1/rest/provider/login
 
 }
