@@ -67,6 +67,11 @@ export class CrmService {
       const url = 'provider/task/provider?status-eq=4';
       return this.servicemeta.httpGet(url);
     }
+    getTaskDetails(taskUid)
+    {
+      const url = 'provider/task/' + taskUid;
+      return this.servicemeta.httpGet(url);
+    }
     updateTask(taskUid ,updateTaskData){
       console.log(updateTaskData)
       const url='provider/task/'+ taskUid

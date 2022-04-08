@@ -92,8 +92,8 @@
                       <span class="emailvallabel">&nbsp;{{ waitlist_data.waitlistingFor[0].email}}</span>
                     </div>
                     <div class="gender-and-dob">
-                        <div *ngIf="waitlist_data.waitlistingFor[0].dob.gender" class="gender">
-                            <span class="value">&nbsp;{{waitlist_data.waitlistingFor[0].dob.gender | capitalizeFirst}}</span>
+                        <div *ngIf="waitlist_data.waitlistingFor[0].gender" class="gender">
+                            <span class="value">&nbsp;{{waitlist_data.waitlistingFor[0].gender | capitalizeFirst}}</span>
                         </div>
                         <div class="dob" *ngIf="waitlist_data.waitlistingFor[0].dob">
                             <i class="fa fa-calendar-o icon"></i>
@@ -195,15 +195,12 @@
         [customerId]="waitlist_data.waitlistingFor[0].id" [view]="'small'">
     </app-records-datagrid>
   </div>
-  
-</div>
-
-<div class="content comn-cls checkin-details my-0 py-0" *ngIf="waitlist_data">
-  <div class="lbl col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small px-1 pt-0 mt-0" *ngIf="waitlist_data.waitlistingFor">
+  <div class="lbl col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small px-1" *ngIf="waitlist_data.waitlistingFor">
     <app-booking-documents [source]="'customer'" [widget]="true" [uuid]="waitlist_data.waitlistingFor[0].id">
     </app-booking-documents>
   </div>
 </div>
+
 </div>
 
 

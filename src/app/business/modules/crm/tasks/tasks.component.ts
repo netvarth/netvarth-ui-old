@@ -154,7 +154,6 @@ export class TasksComponent implements OnInit {
     this.crmService.getInprogressTask().subscribe(
       (data: any) => {
         this.totalInprogressList = data;
-        this.inprogressCount = this.totalInprogressList.length;
       },
       (error: any) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -273,6 +272,14 @@ export class TasksComponent implements OnInit {
       }
     }
   }
+
+  viewTask(taskUid)
+  {
+    console.log("Task id :",taskUid);
+    this.router.navigate(['/provider/viewtask/' + taskUid]);
+
+  }
+
   createTask(createText:any) {
     this.crmService.taskActivityName=createText;
     console.log('create')

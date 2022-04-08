@@ -93,9 +93,9 @@
                       <span class="emailvallabel">&nbsp;{{ waitlist_data.appmtFor[0].email}}</span>
                     </div>
                     <div class="gender-and-dob">
-                        <div *ngIf="waitlist_data.appmtFor[0].dob.gender" class="gender">
-                            <span class="value">&nbsp;{{waitlist_data.appmtFor[0].dob.gender | capitalizeFirst}}</span>
-                        </div>
+                        <!-- <div *ngIf="waitlist_data.appmtFor[0].gender" class="gender">
+                            <span class="value">&nbsp;{{waitlist_data.appmtFor[0].gender | capitalizeFirst}}</span>
+                        </div> -->
                         <div class="dob" *ngIf="waitlist_data.appmtFor[0].dob">
                             <i class="fa fa-calendar-o icon"></i>
                             <span class="value">&nbsp;{{waitlist_data.appmtFor[0].dob | date:newDateFormat}}</span>
