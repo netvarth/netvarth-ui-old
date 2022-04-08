@@ -371,6 +371,7 @@ export class CreateTaskComponent implements OnInit {
       // console.log('jjjjjjjjjjjjjjjjjjjjjjupdateeeeeeeeeeee');
       // console.log('....',this.createTaskForm.controls.taskTitle.value)
       const updateTaskData:any = {
+        //"ParentTaskUid" : 'ta_b7b309d3-9881-4b8c-9f77-896b1293e9c1-pt',
         "title":this.createTaskForm.controls.taskTitle.value,
         "description":this.createTaskForm.controls.taskDescription.value,
         "userType":this.updateUserType,
@@ -415,6 +416,7 @@ export class CreateTaskComponent implements OnInit {
     console.log('this.selectedTime',this.selectedTime)
     console.log('this.createTaskForm.controls.taskTitle.value',this.createTaskForm.controls.taskTitle.value)
     const createTaskData:any = {
+      // "ParentTaskUid" : 'ta_b7b309d3-9881-4b8c-9f77-896b1293e9c1-pt',
       "title":this.createTaskForm.controls.taskTitle.value,
       "description":this.createTaskForm.controls.taskDescription.value,
       "userType":this.userType,
