@@ -1,0 +1,65 @@
+
+/* Task Activity Styles */
+
+
+
+.c-history {
+    margin: 0 0 0 10px!important;
+    padding: 0!important;
+    position: relative!important;
+    font-weight: 500!important;
+}
+.c-history li {
+    list-style: none!important;
+    position: relative!important;
+    padding-left: 20px!important;
+    margin-bottom: 20px!important;
+}
+.c-history li .time {
+    color: #999999!important;
+    font-size: .75rem!important;
+}
+.c-history li .action {
+    font-weight: 600!important;
+    font-size: 13px!important;
+}
+.c-history li:before {
+    position: absolute!important;
+    content: ""!important;
+    width: 15px!important;
+    height: 15px!important;
+    border: 3px solid #fff!important;
+    border-radius: 20px!important;
+    background-clip: padding-box!important;
+    left: -6px!important;
+    top: 2px!important;
+}
+.c-history li.arrived:before {
+    background: #79e688!important;
+}
+.c-history li.started:before {
+    background: #4de2ff!important;
+}
+.c-history li.checkedIn:before {
+    background: #5568ff!important;
+}
+.c-history li.rescheduled:before {
+    background: #e3b022!important;
+}
+.c-history li.prepaymentPending:before {
+    background: #ffbc00!important;
+}
+.c-history li.done:before {
+    background: #0edcb8!important;
+}
+.c-history:before {
+    position: absolute!important;
+    content: ""!important;
+    border-left: 2px dashed #f2f2f2!important;
+    height: 100%!important;
+    top: 5px!important;
+}
+.c-history li.cancelled:before, .c-history li.Rejected:before,.c-history li.Cancelled:before {
+    background: #f24949;
+  }
+

@@ -1,0 +1,38 @@
+/* Connections Styles */
+
+
+
+.connection-profile-image
+{
+    font-size: 13px!important;
+    font-weight: 900!important;
+    background-color: #1E4079!important;
+    color: #fff!important;
+    border-radius: 50%!important;
+    padding: 6px 12px!important;
+    width: 60px!important;
+    height: 60px!important;
+    text-align: center!important;
+    margin: auto!important;
+}
+
+.connection-name
+{
+    font-size: 15px!important;
+    color: #000!important;
+}
+
+.connection-created
+{
+    font-size: 12px!important;
+    color: rgb(209, 202, 202)!important;
+    margin-top: 0px!important;
+    margin-left: 37px!important;
+}
+
+
+.border
+{
+    border: 1px solid rgb(240, 233, 233);
+    padding: 10px!important;
+}

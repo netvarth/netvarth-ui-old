@@ -1,15 +1,50 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ViewTaskComponent } from './view-task.component';
+import { CommonModule } from "@angular/common";
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
+import { MatDialogModule } from "@angular/material/dialog";
+import {  MatTableModule } from "@angular/material/table";
+import { CapitalizeFirstPipeModule } from "../../../../../shared/pipes/capitalize.module";
+import { LoadingSpinnerModule } from "../../../../../shared/modules/loading-spinner/loading-spinner.module";
+import { CrmService } from "../../crm.service";
+import { RouterModule, Routes } from "@angular/router";
+import { MatTabsModule } from "@angular/material/tabs";
+import { ViewTaskComponent } from "./view-task.component";
+import { MenuModule } from "../../../../../business/home/menu/menu.module";
+import { AppointmentsComponent } from "./appointments/appointments.component";
+import { TaskActivityComponent } from "./task-activity/task-activity.component";
+import { ConnectionsComponent } from "./connections/connections.component";
+import { SubtasksComponent } from "./subtasks/subtasks.component";
+import { ProviderServices } from "../../../../../business/services/provider-services.service";
 
-
+const routes: Routes = [
+  { path: '', component: ViewTaskComponent },
+];
 
 @NgModule({
   declarations: [
-    ViewTaskComponent
+    ViewTaskComponent,
+    AppointmentsComponent,
+    TaskActivityComponent,
+    ConnectionsComponent,
+    SubtasksComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    LoadingSpinnerModule,
+    MatTableModule,
+    MatDialogModule,
+    MatTabsModule,
+    CapitalizeFirstPipeModule,
+    MenuModule,
+    [RouterModule.forChild(routes)],
+    
+  ],
+  providers: [
+    CrmService,
+    ProviderServices
+  ],
+  schemas: [
+      CUSTOM_ELEMENTS_SCHEMA,
+      NO_ERRORS_SCHEMA
   ]
 })
 export class ViewTaskModule { }

@@ -57,7 +57,8 @@ const routes: Routes = [
         { path: 'secure-video', loadChildren: () => import('./modules/video-call/video-call.module').then(m=>m.VideoCallModule) },
         { path: 'drive', loadChildren: () => import('./modules/jaldee-drive/jaldee-drive.module').then(m=>m.JaldeeDriveModule) },
         { path: 'task', loadChildren: () => import('./modules/crm/tasks/tasks.module').then(m => m.TasksModule) },
-        {path:'crm-select-member',loadChildren:()=>import ('././shared/crm-select-member/crm-select-member.module').then(m=>m.CrmSelectMemberModule)}
+        {path:'crm-select-member',loadChildren:()=>import ('././shared/crm-select-member/crm-select-member.module').then(m=>m.CrmSelectMemberModule)},
+        {path:'viewtask/:id',loadChildren:()=>import ('./modules/crm/tasks/view-task/view-task.module').then(m=>m.ViewTaskModule)}
       ]
     }
   ];
