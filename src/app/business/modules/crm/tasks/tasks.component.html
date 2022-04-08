@@ -135,11 +135,11 @@
   <ng-container *ngIf="totalTaskList.length>0">
   <tr *ngFor="let task of totalTaskList; let i=index">
   <td data-title="Task Details" class="td1">&nbsp;&nbsp;&nbsp;{{task.title}}</td>
-  <td data-title="Duration" class="td3">{{task.duration}}</td>
-  <td data-title="Status" class="td2 desc">{{task.status.name}}</td>
+  <td data-title="Duration" class="td3"><span *ngIf="task.estDuration && task.estDuration.days">{{task.estDuration.days}} Days</span> <span *ngIf="task.estDuration && task.estDuration.hours">{{task.estDuration.hours}} Hours</span></td>
+  <td data-title="Status" class="td2">{{task.status.name}}</td>
   <td data-title="Category" class="td4">{{task.category.name}}</td>
   <td data-title="Type" class="td4">{{task.type.name}}</td>
-  <td data-title="Due Date" class="td4">{{task.dueDate}}</td>
+  <td data-title="Due Date" class="td4">{{task.dueDate | date:newDateFormat}}</td>
   <td>
   <div class="copy">
   <span class="">
@@ -296,10 +296,10 @@
   <tr *ngFor="let task of totalInprogressList; let i=index">
   <td data-title="Task Details" class="td1">&nbsp;&nbsp;&nbsp;{{task.title}}</td>
   <td data-title="Duration" class="td3">{{task.duration}}</td>
-  <td data-title="Status" class="td2 desc">{{task.status.name}}</td>
+  <td data-title="Status" class="td2">{{task.status.name}}</td>
   <td data-title="Category" class="td4">{{task.category.name}}</td>
   <td data-title="Type" class="td4">{{task.type.name}}</td>
-  <td data-title="Due Date" class="td4">{{task.dueDate}}</td>
+  <td data-title="Due Date" class="td4">{{task.dueDate | date:newDateFormat}}</td>
   <!-- <td class="filter-fx-col"></td> -->
   </tr>
   </ng-container>
@@ -437,10 +437,10 @@
   <tr *ngFor="let task of totalCompletedList; let i=index">
   <td data-title="Task Details" class="td1">&nbsp;&nbsp;&nbsp;{{task.title}}</td>
   <td data-title="Duration" class="td3">{{task.duration}}</td>
-  <td data-title="Status" class="td2 desc">{{task.status.name}}</td>
+  <td data-title="Status" class="td2">{{task.status.name}}</td>
   <td data-title="Category" class="td4">{{task.category.name}}</td>
   <td data-title="Type" class="td4">{{task.type.name}}</td>
-  <td data-title="Due Date" class="td4">{{task.dueDate}}</td>
+  <td data-title="Due Date" class="td4">{{task.dueDate | date:newDateFormat}}</td>
   <!-- <td class="filter-fx-col"></td> -->
   </tr>
   </ng-container>
@@ -578,10 +578,10 @@
   <tr *ngFor="let task of totalDelayedList; let i=index">
   <td data-title="Task Details" class="td1">&nbsp;&nbsp;&nbsp;{{task.title}}</td>
   <td data-title="Duration" class="td3">{{task.duration}}</td>
-  <td data-title="Status" class="td2 desc">{{task.status.name}}</td>
+  <td data-title="Status" class="td2">{{task.status.name}}</td>
   <td data-title="Category" class="td4">{{task.category.name}}</td>
   <td data-title="Type" class="td4">{{task.type.name}}</td>
-  <td data-title="Due Date" class="td4">{{task.dueDate}}</td>
+  <td data-title="Due Date" class="td4">{{task.dueDate | date:newDateFormat}}</td>
   <!-- <td class="filter-fx-col"></td> -->
   </tr>
   </ng-container>
