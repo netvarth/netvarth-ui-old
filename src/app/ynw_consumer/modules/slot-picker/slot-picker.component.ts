@@ -33,11 +33,11 @@ export class SlotPickerComponent implements OnInit {
   }
 
   processSlots(slot) {
+    const index = this.selectedSlot.indexOf(slot);
     if (this.multipleSelection) {
-      if (this.selectedSlot.length === this.multiple) {
+      if (this.selectedSlot.length === this.multiple && index===-1) {
         return false;
-      }
-      const index = this.selectedSlot.indexOf(slot);
+      }      
       if (index === -1) {
         this.selectedSlot.push(slot);
       } else {

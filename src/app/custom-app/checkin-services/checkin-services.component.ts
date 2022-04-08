@@ -71,7 +71,9 @@ export class CheckinServicesComponent implements OnInit, OnChanges {
     // } else 
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
-        this.showServiceDetail(actionObj['service'], this.businessProfile.businessName);
+        this.router.navigate([this.businessProfile.accEncUid, 'service', actionObj['service'].id]);
+        // this.showServiceDetail(actionObj['service'], this.businessProfile.businessName);
+
       } else {
         this.checkinClicked(actionObj['location'], actionObj['service']);
       }
@@ -80,7 +82,7 @@ export class CheckinServicesComponent implements OnInit, OnChanges {
     }
   }
   providerDetClicked(userId) {
-    this.router.navigate([this.businessProfile.accencUid, userId]);
+    this.router.navigate([this.businessProfile.accEncUid, userId]);
   }
   showServiceDetail(serv, busname) {
     let servData = {

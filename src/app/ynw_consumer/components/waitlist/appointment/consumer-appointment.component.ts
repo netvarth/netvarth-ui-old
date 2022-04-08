@@ -1422,10 +1422,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.payAmount = 0;
                 }
             },
-                error => {
-                    this.isClickedOnce = false;
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                });
+            error => {
+                this.isClickedOnce = false;
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
     }
     getVirtualServiceInput() {
         let virtualServiceArray = {};
@@ -1449,7 +1449,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 return { 'VideoCall': '' };
             }
         }
-
     }
 
     validateVirtualCallInfo(callingModes) {
@@ -1581,10 +1580,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                 }
                             );
                         }
-                        const member = [];
-                        for (const memb of _this.appmtFor) {
-                            member.push(memb.firstName + ' ' + memb.lastName);
-                        }
+                        // const member = [];
+                        // for (const memb of _this.appmtFor) {
+                        //     member.push(memb.firstName + ' ' + memb.lastName);
+                        // }
                     },
                         error => {
                             _this.isClickedOnce = false;
