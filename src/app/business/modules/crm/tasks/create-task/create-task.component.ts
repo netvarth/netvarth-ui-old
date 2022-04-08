@@ -144,7 +144,7 @@ export class CreateTaskComponent implements OnInit {
   //   })
   // }
   GetTime(date) {
-    var currentTime = (new Date(date))
+    var currentTime = (new Date(date.hours))
     console.log('currentTime',currentTime)
     var hours = currentTime.getHours()
     //Note: before converting into 12 hour format
@@ -364,6 +364,7 @@ export class CreateTaskComponent implements OnInit {
 }
   saveCreateTask(){
     if(this.crmService.taskActivityName!='Create'){
+      console.log('this.updateValue.taskUid',this.updateValue.taskUid)
       console.log('jjjjjjjjjjjjjjjjjjjjjjupdateeeeeeeeeeee');
       console.log('....',this.createTaskForm.controls.taskTitle.value)
       const updateTaskData:any = {
@@ -386,7 +387,7 @@ export class CreateTaskComponent implements OnInit {
       }
       if(this.updateUserType===('PROVIDER' || 'CONSUMER') && (this.createTaskForm.controls.taskTitle.value!=null) && (this.createTaskForm.controls.taskDescription.value !=null)){
         this.boolenTaskError=false;
-        this.crmService.updateTask(this.updateValue.id).subscribe((response)=>{
+        this.crmService.updateTask(this.updateValue.taskUid).subscribe((response)=>{
           console.log('afterUpdateList',response);
           setTimeout(() => {
             // this.crmService.addAssigneeMember(response.uid,this.assigneeId).subscribe((res:any)=>{

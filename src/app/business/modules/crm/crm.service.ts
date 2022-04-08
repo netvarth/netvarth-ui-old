@@ -67,9 +67,9 @@ export class CrmService {
       const url = 'provider/task/provider?status-eq=4';
       return this.servicemeta.httpGet(url);
     }
-    updateTask(taskId){
-      const url='provider/task/'+taskId
-      return this.servicemeta.httpPut(url,taskId);
+    updateTask(taskUid){
+      const url='provider/task/'+taskUid
+      return this.servicemeta.httpPut(url,taskUid);
     }
     addAssigneeMember(taskUid,userId){
       const url='provider/task/'+taskUid + '/manager' + userId
