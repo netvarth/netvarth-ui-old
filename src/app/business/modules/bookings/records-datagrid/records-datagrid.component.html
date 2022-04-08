@@ -11,18 +11,17 @@
         <div class="column operations-column">
             <div class="card">
                 <div class="card-header collapsed" *ngIf="view=='small' && heading" [attr.data-target]="'#' + heading"
-                    aria-expanded="false" [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
-                    >
+                aria-expanded="false" [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
+                [attr.data-toggle]="small_device_display ? 'collapse' : ''">
                     <div>{{getHeading()}}</div>
                     <div class="mgn-lt-auto">
                         <i class="fa fa-external-link pointer-cursor" aria-hidden="true"
                             [class.mgn-rt-20]="small_device_display"
                             *ngIf="source != 'customers' || (source == 'customers' && admin)"></i>
-                        <!-- <i class="fa fa-angle-down" *ngIf="small_device_display"></i> -->
+                        <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
                     </div>
                 </div>
-                <div class="tableBody" id="{{heading}}"
-                    >
+                <div class="tableBody" id="{{heading}}" [class.collapse]="view=='small' && heading && small_device_display" >
                     <div class="table-responsive"
                         [ngStyle]="{'height': (source == 'customers') ? '365px' : (view=='small') ? '317px' : 'auto' }">
                         <div class="inner-card add-record rounded-sm pointer-cursor" (click)="gotoAdd()"

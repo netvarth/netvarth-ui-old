@@ -112,8 +112,11 @@
                                     </tbody>
                                 </table>
                                 <div style="text-align: center;" class=" mgn-up-10">
-                                    <mat-checkbox [(ngModel)]="calender">Add to calender</mat-checkbox><br>
-                                    <span class="settings_info" *ngIf="calender">(Open the downloaded file to add  booking to your calendar)</span>
+                                    <!-- <mat-checkbox [(ngModel)]="calender"  (change)="calendarCheckEvent($event)">Add to calender</mat-checkbox><br> -->
+                                    <!-- <span class="settings_info" *ngIf="calender">(Open the downloaded file to add  booking to your calendar)</span> -->
+                                    <!-- <div *ngIf="calender">
+                                        
+                                    </div>                                     -->
                                 </div>
                                 <!-- <div class="book-status chkntoknappt-details"> Current status </div> -->
                                 <div style="text-align: center;" class="green mgn-up-10" *ngIf="appointment.apptStatus">
@@ -129,13 +132,17 @@
                                     <div [innerHTML]="appointment.service.postInfoText">
                                     </div>
                                 </div>
+                                <div class="text-center mgn-up-10">
+                                    <a href="{{calendarUrl}}" class="link cal-btn " target="_blank"><i class="fa fa-calendar"></i><span class="mgn-lt-5">Add to Calendar</span></a>
+                                </div>
                                 <div class="ok-btn">
                                     <span class="pointer-cursor hf-btn" (click)="okClick(appointment)">
-                                        <strong>OK</strong></span>
+                                        <strong>OK</strong>
+                                    </span>                                
                                 </div>
                             </div>
                         </div>
-                        <div class="powered-by">
+                        <div class="powered-by" *ngIf="!customId">
                             <div class="poweredby-text">
                                 <div class="one">powered by</div>
                                 <div class="two">

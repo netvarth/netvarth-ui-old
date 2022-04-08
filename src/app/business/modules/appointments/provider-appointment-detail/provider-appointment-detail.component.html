@@ -33,8 +33,7 @@
           </div>
           <span class="loc-cls">
             <b class="text-dark">{{spName}}</b><br>
-            <i class="fa fa-map-marker"></i>&nbsp;{{waitlist_data.location.place
-            | capitalizeFirst}}</span>
+            <i class="fa fa-map-marker"></i>&nbsp;{{waitlist_data.location.place | capitalizeFirst}}</span>
             <span class="text-light my-0 py-0"><b>Booking Via : </b>
                   {{getAgent(waitlist_data.requestInfo.agent) | capitalizeFirst}},
                   {{getBookingReqFrom(waitlist_data.requestInfo.browser,waitlist_data.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
@@ -59,9 +58,9 @@
         </div>
       </div>
       <div class="lbl col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small px-1">
-        <div class="rowcard card">
+        <div class="rowcard customer-details-card card">
             <div class="booking-details">
-                <div class="row ">
+                <div class="row">
                   <div *ngIf="waitlist_data.appmtFor" class="user-img float-left">
                       <img src="assets/images/avatar5.png" />
                   </div>
@@ -123,13 +122,17 @@
  
       <div class="col-xl-12 col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small px-1">
         <div class="rowcard card notescard historycard card-custom data-card p-0 m-0">
-          <div class="card-header notescard-header collapsed" [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}">
+          <div class="card-header notescard-header collapsed" [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
+          [attr.data-toggle]="small_device_display ? 'collapse' : ''" data-target="#history" aria-expanded="false">
             <div>History</div>
             <div class="mgn-lt-auto">
-              <i class="fa fa-external-link pointer-cursor" aria-hidden="true"></i>
+              <i class="fa fa-external-link pointer-cursor" aria-hidden="true" aria-hidden="true"
+              [class.mgn-rt-20]="small_device_display"></i>
+              <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
             </div>
           </div>
-          <div  *ngIf="waitlist_data" class="card-body notescard-body padding-tp-10 no-padding">
+          <div  *ngIf="waitlist_data" class="card-body notescard-body padding-tp-10 no-padding" [class.cardheight]="!widget" id="history"
+          [class.collapse]="widget && small_device_display">
                   <div class="content comn-cls lbr no-padding-small">
                     <div class="card" style="box-shadow: none!important;padding: 0!important;">
                       <div class="appthistory">

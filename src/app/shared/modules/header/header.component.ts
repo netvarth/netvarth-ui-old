@@ -518,11 +518,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
       const navigationExtras1: NavigationExtras = {
         queryParams: qParams
       };
-      if (this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA') {
-        this.router.navigate(['customapp',this.customId]);
+      const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+      const source = this.lStorageService.getitemfromLocalStorage('source');
+      if (source) {
+        window.location.href = source;
+        this.lStorageService.removeitemfromLocalStorage('source');
+      } else if (this.customId && reqFrom){
+        this.router.navigate(['customapp', this.customId]);
       } else {
         this.router.navigate([this.customId], navigationExtras1);
       }
+
+
+      // if (this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA') {
+      //   this.router.navigate(['customapp',this.customId]);
+      // } else {
+      //   this.router.navigate([this.customId], navigationExtras1);
+      // }
     } else {
       if (this.consumer_loggedin) {
         this.router.navigate(['/consumer']);

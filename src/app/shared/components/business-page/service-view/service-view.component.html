@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row pad-bt-10 bus-page-header">
             <div class="panel panel-default">
-                <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row">
+                <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row" *ngIf="!loading">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <a class="pull-left back-btn mgn-up-5" *ngIf="userId" (click)="goBack()"><i
                                 class="fa fa-arrow-left"></i></a>
@@ -22,8 +22,8 @@
                 <div *ngIf="bgCover" class="cvr-ht"
                     [ngStyle]="{ 'background-image': (!profileSettings || (profileSettings && profileSettings['showCoverPicture'])) ? 'url(' + bgCover + ')': ''}">
                 </div>
-                <div class="panel-body">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="panel-body" >
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="!loading">
                         <div class="col-md-2 col-xs-12 col-sm-12 col-lg-2">
                             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" [ngClass]="{'cvr-dp-mgn': bgCover}">
                                 <img alt="Profile Image" src="{{bLogo}}" id="profile-image1"
@@ -79,7 +79,7 @@
                         </div>
                     </div>
                     <br>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding"  *ngIf="!loading">
                         <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 card-outer-cont no-margin"
                             style="background-color: #1e4079;">
                             <div class="col-md-2 col-xs-3 col-sm-3 col-lg-1 no-padding card-inner-img-cont">

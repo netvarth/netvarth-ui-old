@@ -2521,12 +2521,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   gotoDetails() {
     const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
-    if (this.customId && reqFrom){
+    const source = this.lStorageService.getitemfromLocalStorage('source');
+    console.log(source);
+    if (source) {
+      window.location.href = source;
+      this.lStorageService.removeitemfromLocalStorage('source');
+    } else if (this.customId && reqFrom){
       this.router.navigate(['customapp', this.customId]);
     } else {
       this.router.navigate([this.customId]);
     }
-    
   }
   closeModal(){
     this.popUp.nativeElement.style.display = 'none';

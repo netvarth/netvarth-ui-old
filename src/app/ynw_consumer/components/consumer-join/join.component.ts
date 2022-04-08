@@ -426,8 +426,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
             login_data['token'] = this.lStorageService.getitemfromLocalStorage('authToken');
           }
           // this.dialogRef.close();
-          this.authService.consumerLogin(login_data, this.moreParams)
-            .then(
+          this.authService.consumerAppLogin(login_data).then(
               (login_info: any) => {
                 this.user_details.userProfile['firstName'] = this.loginForm.get('first_name').value;
                 this.user_details.userProfile['lastName'] = this.loginForm.get('last_name').value;

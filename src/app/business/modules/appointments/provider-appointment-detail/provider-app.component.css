@@ -229,4 +229,9 @@
         min-height: 317px!important;
         max-height: 317px!important;
     }
+
+    .rowcard.customer-details-card
+    {
+        min-height: auto!important;
+    }
   }

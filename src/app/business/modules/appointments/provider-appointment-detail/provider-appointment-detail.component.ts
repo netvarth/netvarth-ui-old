@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener } from "@angular/core";
+import { Component, OnInit, OnDestroy, HostListener, Input } from "@angular/core";
 import { Router, ActivatedRoute, NavigationExtras } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
 import { Location } from "@angular/common";
@@ -102,6 +102,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   questionnaires: any = [];
   spName: any;
   teams: any;
+  @Input() widget;
   appointmentModes = [
     { mode: "WALK_IN_APPOINTMENT", value: "Walk in " },
     { mode: "PHONE_IN_APPOINTMENT", value: "Phone in " },
@@ -148,6 +149,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.getPos();
+    this.onResize();
     this.api_loading = true;
     this.pdtype = this.groupService.getitemFromGroupStorage("pdtyp");
     if (!this.pdtype) {

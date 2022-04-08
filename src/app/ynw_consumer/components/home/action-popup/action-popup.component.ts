@@ -160,6 +160,7 @@ export class ActionPopupComponent implements OnInit {
     }
     pass_ob['source'] = 'consumer-waitlist';
     pass_ob['user_id'] = this.bookingDetails.providerAccount.id;
+    pass_ob['userId'] = this.bookingDetails.providerAccount.uniqueId;
     pass_ob['name'] = this.bookingDetails.providerAccount.businessName;
     pass_ob['typeOfMsg'] = 'single';
     if (this.type === 'appt') {

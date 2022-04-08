@@ -21,7 +21,7 @@ const routes: Routes = [
         HttpClientModule,
         LoadingSpinnerModule,
         MatTooltipModule,
-        FormsModule,
+        FormsModule
     ],
     exports:[ConfirmPageComponent],
     declarations:[ConfirmPageComponent],

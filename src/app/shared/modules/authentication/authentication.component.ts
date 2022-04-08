@@ -16,7 +16,7 @@ export class AuthenticationComponent implements OnInit {
   preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
   separateDialCode = true;
 
-  step; //
+  step: any=3; //
   api_loading;
 
   phoneExists;
@@ -25,6 +25,10 @@ export class AuthenticationComponent implements OnInit {
   dialCode: any;
   isPhoneValid: boolean;
 
+  firstName;
+  lastName;
+  password;
+  rePassword;
 
 
 
@@ -67,9 +71,11 @@ export class AuthenticationComponent implements OnInit {
         if (accountExists) {
           this.phoneExists = true;
           this.isPhoneValid = true;
+          this.step = 3;
         } else {
           this.phoneExists = false;
           this.isPhoneValid = true;
+          this.step = 2;
         }
       }
       );

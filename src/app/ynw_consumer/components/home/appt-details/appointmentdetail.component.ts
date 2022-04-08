@@ -177,7 +177,8 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
     const pass_ob = {};
     pass_ob['source'] = 'consumer-waitlist';
     pass_ob['uuid'] = this.ynwUuid;
-    pass_ob['user_id'] = this.providerId;
+    pass_ob['user_id'] = appt.providerAccount.id;
+    pass_ob['userId'] = appt.providerAccount.uniqueId;
     pass_ob['name'] = appt.providerAccount.businessName;
     pass_ob['appt'] = 'appt';
     pass_ob['typeOfMsg'] = 'single';

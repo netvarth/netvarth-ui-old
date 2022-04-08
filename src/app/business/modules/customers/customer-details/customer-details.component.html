@@ -695,13 +695,13 @@
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
 <section class="content" *ngIf="!loading && viewCustomer">
     <div class="row main-sec">
-        <div class="col-lg-8 col-md-8">
-            <div class="card card-custom gutter-b wave-success p-0 booking-details mgn-bt-20">
+        <div class="col-lg-8 col-md-8 customer-details-card">
+            <div class="card card-custom gutter-b wave-success p-0 booking-details mgn-bt-20 border-10">
                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 p-0 padding-20px border details-hgt">
                     <div class="booking-details">
                         <div class="booking-details-head">
                             <div>
-                                <h5>
+                                <h5 class="mb-2">
                                     {{customer[0].firstName | capitalizeFirst}} {{customer[0].lastName |
                                     capitalizeFirst}}
                                 </h5>
@@ -761,12 +761,12 @@
             </div>
             <div class="clearfix"></div>
         </div>
-        <div class="col-lg-4 col-md-4 no-padding-big mgn-bt-10">
-            <app-provider-inbox-list [customer]="customer[0].jaldeeConsumer" [provider]="0" [source]="'details'">
+        <!-- <div class="col-lg-4 col-md-4 no-padding-big mgn-bt-10">
+            <app-provider-inbox-list [customer]="" [provider]="0" [source]="'details'">
             </app-provider-inbox-list>
-        </div>
+        </div> -->
     </div>
-    <div class="row records-sec">
+    <div class="row records-sec pt-0">
         <div class="column">
             <app-records-datagrid [records]="historyvisitDetails" [heading]="'History'" [source]="'customer-waitlist'"
                 [showMore]="showMoreHistory" [timeType]="3" (actionPerformed)="actionPerformed($event)"
