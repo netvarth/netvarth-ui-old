@@ -64,7 +64,8 @@ export class CreateTaskComponent implements OnInit {
   public updateUserType:any;
   public updateMemberId:any;
   public updateManagerId:any;
-  public updateTaskId:any
+  public updateTaskId:any;
+  public updteLocationId:any;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -117,6 +118,7 @@ export class CreateTaskComponent implements OnInit {
         taskTime:this.updateValue.estDuration.hours
       })
       this.locationName =this.updateValue.location.name;
+      this.updteLocationId= this.updateValue.location.id
       this.taskDueDate=this.updateValue.dueDate;
       this.selectMember= this.updateValue.assignee.name;
       this.updateMemberId=this.updateValue.assignee.id;
@@ -288,7 +290,8 @@ export class CreateTaskComponent implements OnInit {
     this.locationName = res.locationName;
     this.locationId = res.bussLocations[0];
     this.assigneeId= res.id;
-    this.updateMemberId=this.assigneeId
+    this.updateMemberId=this.assigneeId;
+    this.updteLocationId= this.locationId;
     // this.selectTaskMangerId= res.id
 
   })
@@ -364,9 +367,9 @@ export class CreateTaskComponent implements OnInit {
 }
   saveCreateTask(){
     if(this.crmService.taskActivityName!='Create'){
-      console.log('this.updateValue.taskUid',this.updateValue.taskUid)
-      console.log('jjjjjjjjjjjjjjjjjjjjjjupdateeeeeeeeeeee');
-      console.log('....',this.createTaskForm.controls.taskTitle.value)
+      // console.log('this.updateValue.taskUid',this.updateValue.taskUid)
+      // console.log('jjjjjjjjjjjjjjjjjjjjjjupdateeeeeeeeeeee');
+      // console.log('....',this.createTaskForm.controls.taskTitle.value)
       const updateTaskData:any = {
         "title":this.createTaskForm.controls.taskTitle.value,
         "description":this.createTaskForm.controls.taskDescription.value,
@@ -377,7 +380,7 @@ export class CreateTaskComponent implements OnInit {
         "status":{"id":this.createTaskForm.controls.taskStatus.value},
         "priority":{"id":this.createTaskForm.controls.userTaskPriority.value},
         "dueDate" : this.datePipe.transform(this.taskDueDate,'yyyy-MM-dd'),
-        "location" : { "id" : this.updateValue.location.id},
+        "location" : { "id" : this.updteLocationId},
   
         "assignee":{"id":this.updateMemberId },
         "manager":{"id":this.updateManagerId},
