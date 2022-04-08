@@ -387,7 +387,8 @@ export class CreateTaskComponent implements OnInit {
       }
       if(this.updateUserType===('PROVIDER' || 'CONSUMER') && (this.createTaskForm.controls.taskTitle.value!=null) && (this.createTaskForm.controls.taskDescription.value !=null)){
         this.boolenTaskError=false;
-        this.crmService.updateTask(this.updateValue.taskUid).subscribe((response)=>{
+        console.log('updateTaskData',updateTaskData)
+        this.crmService.updateTask(this.updateValue.taskUid, updateTaskData).subscribe((response)=>{
           console.log('afterUpdateList',response);
           setTimeout(() => {
             // this.crmService.addAssigneeMember(response.uid,this.assigneeId).subscribe((res:any)=>{
@@ -401,7 +402,7 @@ export class CreateTaskComponent implements OnInit {
           this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
         })
       }
-      console.log('updateTaskData',updateTaskData)
+     
       console.log(' this.updateUserType', this.updateUserType)
 
     }

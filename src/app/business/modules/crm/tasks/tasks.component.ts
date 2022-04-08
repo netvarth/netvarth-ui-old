@@ -10,6 +10,8 @@ import { SnackbarService } from '../../../../../../src/app/shared/services/snack
 import { CrmService } from '../crm.service';
 import { WordProcessor } from '../../../../../../src/app/shared/services/word-processor.service';
 import { LocalStorageService } from '../../../../../../src/app/shared/services/local-storage.service';
+// import { CrmMarkasDoneComponent } from '../../../../../../src/app/business/shared/crm-markas-done/crm-markas-done.component';
+// import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
@@ -98,10 +100,12 @@ export class TasksComponent implements OnInit {
     'type': false,
     'dueDate': false,
   };
+  msg = 'Do you really want to mark as done this task? ';
   constructor(
     private locationobj: Location,
     private groupService: GroupStorageService,
     public router: Router,
+    // private dialog: MatDialog,
     private lStorageService: LocalStorageService,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
@@ -272,4 +276,25 @@ export class TasksComponent implements OnInit {
     console.log('taskdata....',taskdata);
 
   }
+  // markAsDone() {
+  //   const dialogrefd = this.dialog.open(CrmMarkasDoneComponent, {
+  //     width: '50%',
+  //     panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+  //     disableClose: true,
+  //     data: {
+  //       'message': this.msg
+  //     }
+  //   });
+  //   dialogrefd.afterClosed().subscribe(result => {
+  //     if (result) {
+  //       this.crmService.deleteCriteria().subscribe(data => {
+  //         if (data) {
+  //           this.getTotalTask();
+  //           this.snackbarService.openSnackBar('Report Deleted');
+  //         }
+  //       });
+  //     }
+  //   });
+
+  // }
 }
