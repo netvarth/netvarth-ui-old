@@ -78,6 +78,7 @@ export class TasksComponent implements OnInit {
   totalDelayedList: any = [];
   selectedTab;
   filtericonTooltip = '';
+  totalCount;
   filter = {
     status: '',
     category: '',
@@ -101,6 +102,9 @@ export class TasksComponent implements OnInit {
     'dueDate': false,
   };
   msg = 'Do you really want to mark as done this task? ';
+  inprogressCount: any;
+  completedCount: any;
+  delayedCount: any;
   constructor(
     private locationobj: Location,
     private groupService: GroupStorageService,
@@ -124,7 +128,9 @@ export class TasksComponent implements OnInit {
     //   }
     // )
     this.getTotalTask();
-
+    this.getInprogressTask();
+    this.getCompletedTask();
+    this.getDelayedTask();
     if (this.groupService.getitemFromGroupStorage('tabIndex')) {
       this.selectedTab = this.groupService.getitemFromGroupStorage('tabIndex');
     } else {
@@ -138,6 +144,7 @@ export class TasksComponent implements OnInit {
     this.crmService.getTotalTask().subscribe(
       (data: any) => {
         this.totalTaskList = data;
+        this.totalCount = this.totalTaskList.length;
       },
       (error: any) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -147,6 +154,7 @@ export class TasksComponent implements OnInit {
     this.crmService.getInprogressTask().subscribe(
       (data: any) => {
         this.totalInprogressList = data;
+        this.inprogressCount = this.totalInprogressList.length;
       },
       (error: any) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -156,6 +164,7 @@ export class TasksComponent implements OnInit {
     this.crmService.getCompletedTask().subscribe(
       (data: any) => {
         this.totalCompletedList = data;
+        this.completedCount = this.totalCompletedList.length;
       },
       (error: any) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -165,6 +174,13 @@ export class TasksComponent implements OnInit {
     this.crmService.getDelayedTask().subscribe(
       (data: any) => {
         this.totalDelayedList = data;
+       
+        if(this.totalDelayedList.length === 0){
+          this.delayedCount = 0;
+        }
+        else{
+          this.delayedCount = this.totalDelayedList.length;
+        }
       },
       (error: any) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
