@@ -216,7 +216,7 @@
                                        <div class="astericColor">*</div>
                                      </div>
                                      <div class="fieldPadding">
-                                        <input [(ngModel)]="taskDueTime" [value]="taskTime" (keyup)="resetErrors()" type="time" #taskTime (ngModelChange)="handleTaskEstDuration(taskTime.value)"
+                                        <input [(ngModel)]="taskDueTime" [value]="taskTime" (keyup)="resetErrors()"  type="time" #taskTime (ngModelChange)="handleTaskEstDuration(taskTime.value)"
                                         placeholder="Enter Est Duration"class="form-control" formControlName="taskTime"autocomplete="off" /> 
                                            
                                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">

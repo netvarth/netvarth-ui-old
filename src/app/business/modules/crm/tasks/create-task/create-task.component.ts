@@ -30,7 +30,7 @@ export class CreateTaskComponent implements OnInit {
   perPage = projectConstants.PERPAGING_LIMIT;
   apiloading = true;
   availableDates: any = [];
-  minDate;
+  minDate = new Date();
   maxDate;
   ddate;
   api_loading = true;
@@ -99,12 +99,12 @@ export class CreateTaskComponent implements OnInit {
       this.selectHeader='Update Task'
       this.updateValue=this.crmService.taskToCraeteViaServiceData;
       // this.selectTaskManger=this.updateValue.name;
-      const time: any={
-        hours:this.updateValue.estDuration.hours,minutes:this.updateValue.estDuration.minutes
-      }
-      console.log('time',time)
+      // const time: any={
+      //   hours:this.updateValue.estDuration.hours,minutes:this.updateValue.estDuration.minutes
+      // }
+      // console.log('time',time)
       console.log(' this.updateValue', this.updateValue)
-      this.GetTime(time)
+      // this.GetTime(time)
       
       this.createTaskForm.patchValue({
         taskTitle:this.updateValue.title,
@@ -145,29 +145,29 @@ export class CreateTaskComponent implements OnInit {
   //     }
   //   })
   // }
-  GetTime(date) {
-    var currentTime = (new Date(date.hours))
-    console.log('currentTime',currentTime)
-    var hours = currentTime.getHours()
-    //Note: before converting into 12 hour format
-    var suffix = '';
-    if (hours > 11) {
-        suffix += "PM";
-    } else {
-        suffix += "AM";
-    }
-    var minutes = currentTime.getMinutes()
-    if (minutes < 10) {
-        minutes = 0 + minutes
-    }
-    if (hours > 12) {
-        hours -= 12;
-    } else if (hours === 0) {
-        hours = 12;
-    }
-    var time = hours + ":" + minutes + " " + suffix;
-    return time;
-  }
+  // GetTime(date) {
+  //   var currentTime = (new Date(date.hours))
+  //   console.log('currentTime',currentTime)
+  //   var hours = currentTime.getHours()
+  //   //Note: before converting into 12 hour format
+  //   var suffix = '';
+  //   if (hours > 11) {
+  //       suffix += "PM";
+  //   } else {
+  //       suffix += "AM";
+  //   }
+  //   var minutes = currentTime.getMinutes()
+  //   if (minutes < 10) {
+  //       minutes = 0 + minutes
+  //   }
+  //   if (hours > 12) {
+  //       hours -= 12;
+  //   } else if (hours === 0) {
+  //       hours = 12;
+  //   }
+  //   var time = hours + ":" + minutes + " " + suffix;
+  //   return time;
+  // }
   getAssignMemberList(){
     this.crmService.getMemberList().subscribe((memberList:any)=>{
       console.log('memberList',memberList)
