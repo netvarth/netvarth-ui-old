@@ -955,6 +955,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                         clearInterval(easingLoop);
                         _this.paymentWindow.close();
                         _this.isClickedOnce = false;
+                        _this.cdRef.detectChanges();
                         if (_this.from) {
                             this.ngZone.run(() => _this.router.navigate(['consumer']));
                         } else {

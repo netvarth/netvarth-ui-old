@@ -75,3 +75,7 @@
     font-size: 11px!important;
 }
 }
+::ng-deep mat-datepicker-toggle button.mat-icon-button {
+  background: #eee !important;
+  border-radius: 50%;
+}

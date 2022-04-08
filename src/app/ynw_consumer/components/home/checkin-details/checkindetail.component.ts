@@ -185,7 +185,8 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
     const pass_ob = {};
     pass_ob['source'] = 'consumer-waitlist';
     pass_ob['uuid'] = this.ynwUuid;
-    pass_ob['user_id'] = this.providerId;
+    pass_ob['user_id'] = this.waitlist.providerAccount.id;
+    pass_ob['userId'] = this.waitlist.providerAccount.uniqueId;
     pass_ob['name'] = this.waitlist.providerAccount.businessName;
     pass_ob['typeOfMsg'] = 'single';
     this.addNote(pass_ob);

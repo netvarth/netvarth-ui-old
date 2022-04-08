@@ -120,7 +120,6 @@ export class CheckavailabilityComponent implements OnInit {
     timeSelected(slot, date) {
         // this.apptTime = slot;
         const slots = [slot['displayTime'], date]
-
         this.dialogRef.close(slots);
 
     }

@@ -1,6 +1,6 @@
 {
   "name": "jaldee.com",
-  "version": "1.11.6",
+  "version": "1.11.14",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -14,6 +14,7 @@
     "compodoc": "compodoc -p tsconfig.json",
     "dev-build": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng",
     "local-serve": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve -c=local --ssl true -o --ssl-key ssl/server.key --ssl-cert ssl/server.crt",
+    "localserve": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve -c=local",
     "build-prod": "npm --no-git-tag-version version patch & node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng build --configuration production --verbose"
   },
   "private": true,
@@ -60,6 +61,7 @@
     "crypto-js": "^3.1.9-1",
     "datatables.net-dt": "^1.10.20",
     "datatables.net-responsive-dt": "^2.2.3",
+    "datebook": "^7.0.8",
     "drift-zoom": "^1.4.0",
     "dropzone": "^5.7.0",
     "feather-icons": "^4.26.0",

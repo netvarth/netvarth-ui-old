@@ -382,4 +382,20 @@ export class DateTimeProcessor {
     return moment(pdate, 'YYYY-MM-DD HH:mm').format();
   }
 
+    /**
+   * 
+   * @param date 
+   * @returns 
+   */
+     transformToMMDDYYYY_(date) {
+      const server = date.toLocaleString(this.REGION_LANGUAGE, { timeZone: this.TIME_ZONE_REGION });
+      const serverdate = moment(server).format();
+      const newdate = new Date(serverdate);
+      const dd = newdate.getDate();
+      const mm = newdate.getMonth() + 1;
+      const y = newdate.getFullYear();
+      const date1 = mm + '/' + dd + '/' + y;
+      return date1;
+    }
+
 }

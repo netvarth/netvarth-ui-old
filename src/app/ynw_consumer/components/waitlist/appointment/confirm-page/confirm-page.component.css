@@ -170,3 +170,8 @@
 .green {
   color: #00cc96;
   }
+
+  .cal-btn {
+    padding:5px;
+    border:1px solid #ddd;
+  }

@@ -94,7 +94,12 @@ export class AppointmentServicesComponent implements OnInit, OnChanges {
   cardClicked(actionObj) {
     if (actionObj['type'] === 'appt') {
       if (actionObj['action'] === 'view') {
-        this.showServiceDetail(actionObj['service'], this.businessProfile.businessName);
+        // this.showServiceDetail(actionObj['service'], this.businessProfile.businessName);
+        console.log(this.businessProfile);
+        console.log(this.businessProfile.accEncUid);
+        console.log(actionObj['service']);
+        console.log(actionObj['service'].id);
+        this.router.navigate([this.businessProfile.accEncUid, 'service', actionObj['service'].id]);
       } else if (actionObj['action'] === 'availability') {
         this.checkAvailableSlots(actionObj);
       } else {
@@ -105,7 +110,7 @@ export class AppointmentServicesComponent implements OnInit, OnChanges {
     }
   }
   providerDetClicked(userId) {
-    this.router.navigate([this.businessProfile.accencUid, userId]);
+    this.router.navigate([this.businessProfile.accEncUid, userId]);
   }
   appointmentClicked(location, service: any) {
     const _this = this;

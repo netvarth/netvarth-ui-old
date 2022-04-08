@@ -44,7 +44,7 @@ a.active, a:active, a:focus, a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
+  font-weight: 500;
   margin-top: 0
 }
 
@@ -200,8 +200,8 @@ img::-moz-selection {
 }
 .mat-tab-label-content {
   color: #0e3166;
-  font-size: 15px;
-  font-weight: 600;
+  /* font-size: 15px; */
+  /* font-weight: 600; */
 }
 .mat-ink-bar {
   background-color: #0e3166 !important;
@@ -2213,11 +2213,11 @@ sup {
 .content.settings .set-otr .card .copy .hd {
   margin-bottom: 10px !important
 }
-.mat-tab-label-content {
+/* .mat-tab-label-content {
   color: #0e3166;
   font-size: 15px;
   font-weight: 600;
-}
+} */
 .mat-ink-bar {
   background-color: #0e3166 !important;
   height: 4px !important;
