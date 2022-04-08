@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
 
 @Component({
@@ -24,6 +24,13 @@ export class ConsDepartmentsComponent implements OnInit {
   cardClicked(actionObj) {
     let deptId = actionObj['userId'];
     const customId = this.lStorageService.getitemfromLocalStorage('customId');
-    this.router.navigate([customId, 'department',deptId]);
+    let queryParams = {};
+    if(this.templateJson['theme']) {
+      queryParams['theme'] = this.templateJson['theme'];
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParams
+    };
+    this.router.navigate([customId, 'department',deptId], navigationExtras);
   }
 }

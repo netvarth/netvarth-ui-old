@@ -266,6 +266,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
   loading_direct = false;
   apptSettingsJson: any = [];
   checkavailabilitydialogref: any;
+  theme: any;
   
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -336,6 +337,9 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     }
     this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA_CONSUMER;
     this.activaterouterobj.queryParams.subscribe(qparams => {
+      if(qparams.theme) {
+        this.theme = qparams.theme;
+      }
       if (qparams.src) {
         this.pSource = qparams.src;
 

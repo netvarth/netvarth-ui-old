@@ -24,7 +24,7 @@
     </div>
     <div class="clearfix"></div>
     <div class="row" *ngIf="loggedIn">
-        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch desktop-only p-1"
+        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 d-flex align-items-stretch desktop-only p-1"
             *ngIf="!smallDevice">
             <div class="card shadow" *ngIf="!loadingS3">
                 <app-booking-accountinfo [businessInfo]="businessInfo" [smallDevice]="smallDevice">
@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch p-1">
+        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 d-flex align-items-stretch p-1">
             <div class="card shadow hgt-adjust">
                 <!-- Wizard Started -->
                 <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"

@@ -24,7 +24,7 @@
     </div>
     <div class="clearfix"></div>
     <div class="row" *ngIf="loggedIn">
-        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch desktop-only" *ngIf="!smallDevice">
+        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 d-flex align-items-stretch desktop-only" *ngIf="!smallDevice">
             <div class="card shadow hgt-adjust" *ngIf="!loadingS3"> 
                 <app-booking-accountinfo [businessInfo]="businessInfo" [smallDevice]="smallDevice" *ngIf="!smallDevice">
                 </app-booking-accountinfo>
@@ -32,7 +32,7 @@
                 <div class="clearfix"></div>
             </div>
         </div>
-        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch p-1">
+        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 d-flex align-items-stretch p-1">
             <div class="card shadow hgt-adjust">
                 <div *ngIf="!loading && selectedService">
                     <div class="p-0">

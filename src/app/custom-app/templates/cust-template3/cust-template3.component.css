@@ -284,7 +284,7 @@ text-align:center;
     .cvr-ht {
       height: 100px;
       background-repeat: no-repeat;
-      background-size: 100% 250px;
+      background-size: 100% 100px;
     }
     .cvr-dp-mgn img {
         height: 100px;
@@ -308,7 +308,7 @@ text-align:center;
 
 .text-huge {font-size: 2rem; line-height: 1;}
 .text-tiny {font-size: .875rem;line-height: 1;}
-.text-small {font-size: .0.95rem;line-height: 1;}
+.text-small {font-size: 0.95rem;line-height: 1}
 .text-big{font-size: 1rem;line-height: 1;}
 
 .btn-location {
