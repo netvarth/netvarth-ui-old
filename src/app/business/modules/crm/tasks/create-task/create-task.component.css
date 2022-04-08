@@ -86,10 +86,13 @@
   }
 @media(min-width: 768px) {
     .form-control{
-        width: 50%;
+        width: 50% ;
     }
     .mat-select {
-        width: 50% !important;
+        width: 50% ;
+    }
+    .widthWebKit{
+      width: -webkit-fill-available !important;
     }
 }
 @media(max-width: 768px) {

@@ -98,16 +98,16 @@
 
             </div>
             <!---manager end-->
-            <div style="display: flex;" >
+            <div style="display: flex;gap: 5px" >
  <!---category start-->
-                <div class="lbl col-sm-8 col-md-4 col-lg-4 no-padding">
+                <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding">
                     <div class="taskTitle">
                         <div>Task Category</div>
                         <div class="astericColor">*</div>
                       </div>
                       <!--dropdown start-->
                       <div class="fieldPadding">
-                                <mat-select class="form-control" placeholder="Enter Category"
+                                <mat-select class="form-control widthWebKit" placeholder="Enter Category"
                                     #userTaskCategory formControlName="userTaskCategory" >
                                     <mat-option *ngFor="let item of categoryListData[0];let index=i" [value]="item.id"  (selectionChange)="handleTaskCategorySelection(userTaskCategory.value)">
                                     <div>
@@ -121,14 +121,14 @@
                 </div>
                 <!---category end-->
                 <!----task type start-->
-                <div class="lbl col-sm-8 col-md-4 col-lg-4 no-padding">
+                <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding">
                     <div class="taskTitle">
                         <div>Type</div>
                         <div class="astericColor">*</div>
                       </div>
                       <!--dropdown start-->
                       <div class="fieldPadding">
-                                <mat-select class="form-control" placeholder="Enter Type"
+                                <mat-select class="form-control widthWebKit" placeholder="Enter Type"
                                     #userTaskType formControlName="userTaskType" >
                                     <mat-option *ngFor="let item of taskTypeList[0];let index=i" [value]="item.id"  (selectionChange)="handleTaskTypeSelection(userTaskType.value)">
                                     <div>
@@ -143,16 +143,16 @@
                  <!----task type end-->
             </div>
             <!----location & status start-->
-            <div style="display: flex;" >
+            <div style="display: flex;gap: 5px" >
                 <!---location start-->
-                               <div class="lbl col-sm-8 col-md-4 col-lg-4 no-padding">
+                               <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding">
                                    <div class="taskTitle">
                                        <div>Location</div>
                                        <div class="astericColor">*</div>
                                      </div>
                                      <div class="fieldPadding">
                                         <input (keyup)="resetErrors()" [(ngModel)]="locationName" type="text" #taskLocation (ngModelChange)="handleTaskLocation(taskLocation.value)"
-                                        placeholder="Enter task location"class="form-control"formControlName="taskLocation"autocomplete="off" [value]="taskLocation.name" /> 
+                                        placeholder="Enter task location"class="form-control widthWebKit"formControlName="taskLocation"autocomplete="off" [value]="taskLocation.name" /> 
                                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                                                 </app-field-error-display>
                                                
@@ -160,7 +160,7 @@
                                </div>
                                <!---location end-->
                                <!----status type start-->
-                               <div class="lbl col-sm-8 col-md-4 col-lg-4 no-padding">
+                               <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding">
                                    <div class="taskTitle">
                                        <div>Status</div>
                                        <div class="astericColor">*</div>
@@ -169,7 +169,7 @@
                                      <div class="fieldPadding">
                                         <!-- <input (keyup)="resetErrors()" type="text" #taskStatus (ngModelChange)="handleTaskStatus(taskStatus.value)"
                                         placeholder="Enter task status"class="form-control"formControlName="taskStatus"autocomplete="off" />  -->
-                                        <mat-select class="form-control" placeholder="Enter task status"
+                                        <mat-select class="form-control widthWebKit" placeholder="Enter task status"
                                 #taskStatus formControlName="taskStatus" name="item">
                                 <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id"  (selectionChange)="handleTaskStatus(taskStatus.value)">
                                 <div>
@@ -188,15 +188,15 @@
                            </div>
             <!---location & status end-->
             <!--date & time start-->
-            <div style="display: flex;" >
+            <div style="display: flex;gap: 5px" >
                 <!---date start-->
-                               <div class="lbl col-sm-8 col-md-4 col-lg-4 no-padding">
+                               <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding">
                                    <div class="taskTitle">
                                        <div>Due Date</div>
                                        <div class="astericColor">*</div>
                                      </div>
                                      <div class="pickerouter fieldPadding dt" style="display: flex;">
-                                        <input [(ngModel)]="taskDueDate" formControlName="taskDate" class="form-control" type="text"  matInput
+                                        <input [(ngModel)]="taskDueDate" formControlName="taskDate" class="form-control widthWebKit" type="text"  matInput
                                             [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
                                             [value]="ddate" (dateChange)="handleDateChange($event)" placeholder="Enter Date" #taskDate>
                                             <mat-datepicker-toggle matSuffix [for]="picker">
@@ -210,18 +210,25 @@
                                </div>
                                <!---date end-->
                                <!----time start-->
-                               <div class="lbl col-sm-8 col-md-4 col-lg-4 no-padding">
+                               <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding">
                                    <div class="taskTitle">
                                        <div>Est Duration</div>
                                        <div class="astericColor">*</div>
                                      </div>
-                                     <div class="fieldPadding">
+                                     <!-- *ngIf="createBTimeField" -->
+                                     <div class="fieldPadding"  >
                                         <input [(ngModel)]="taskDueTime" [value]="taskTime" (keyup)="resetErrors()"  type="time" #taskTime (ngModelChange)="handleTaskEstDuration(taskTime.value)"
-                                        placeholder="Enter Est Duration"class="form-control" formControlName="taskTime"autocomplete="off" /> 
+                                        placeholder="Enter Est Duration"class="form-control widthWebKit" formControlName="taskTime"autocomplete="off" /> 
                                            
                                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                                                 </app-field-error-display>
                                      </div>
+                                     <!-- <div class="fieldPadding" *ngIf="updateBTimefield" >
+                                         <div class="form-control" style="display: flex !important;justify-content: space-between;align-items: center;">
+                                           <div>{{updateValue.estDuration.days}}days,{{this.updateValue.estDuration.hours}}hours,{{this.updateValue.estDuration.minutes}}minutes</div>
+                                           <div (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
+                                         </div>
+                                     </div> -->
                    
                                </div>
                                 <!----time end-->
@@ -248,23 +255,23 @@
             </div>
             <!---priority end-->
             <!---target potential & target result start-->
-            <div style="display: flex;" >
+            <div style="display: flex;gap: 5px" >
                 <!---target result start-->
-                               <div class="lbl col-sm-8 col-md-4 col-lg-4 no-padding">
+                               <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding">
                                    <div class="taskTitle">
                                        <div>Target Potential</div>
                                        <div class="astericColor">*</div>
                                      </div>
                                      <div class="fieldPadding">
                                         <input (keyup)="resetErrors()" type="text" #targetResult (ngModelChange)="handleTargetResult(targetResult.value)"
-                                        placeholder="Enter potential"class="form-control"formControlName="targetResult"autocomplete="off" /> 
+                                        placeholder="Enter potential"class="form-control widthWebKit"formControlName="targetResult"autocomplete="off" /> 
                                             
                                      </div>
                    
                                </div>
                                <!---target result end-->
                                <!----target potential start-->
-                               <div class="lbl col-sm-8 col-md-4 col-lg-4 no-padding">
+                               <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding">
                                    <div class="taskTitle">
                                        <div>Business Potential</div>
                                        <div class="astericColor">*</div>
@@ -272,7 +279,7 @@
                                      <!--dropdown start-->
                                      <div class="fieldPadding">
                                         <input (keyup)="resetErrors()" type="text" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)"
-                                        placeholder="Enter currency"class="form-control"formControlName="targetPotential"autocomplete="off" /> 
+                                        placeholder="Enter currency"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" /> 
                                                
                                      </div>
                                      <!--dropdown end-->

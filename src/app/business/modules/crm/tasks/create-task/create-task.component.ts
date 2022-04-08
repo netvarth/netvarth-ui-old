@@ -38,7 +38,7 @@ export class CreateTaskComponent implements OnInit {
   //form variable start
   createTaskForm:any;
   taskError:null;
-  selectMember:any=''
+  selectMember:any;
   public categoryListData:any=[];
   public allMemberList:any=[];
   public taskTypeList:any=[];
@@ -56,6 +56,11 @@ export class CreateTaskComponent implements OnInit {
   public selectedTime:any;
   public selectTaskManger:any;
   public selectTaskMangerId:any;
+  public createBTimeField:boolean=false;
+  public updateBTimefield:boolean=false;
+  public dayGapBtwDate:any;
+  public hour:any;
+  public minute:any;
   //update variable;
   public updateValue:any;
   public updateTitleTask:any;
@@ -66,6 +71,7 @@ export class CreateTaskComponent implements OnInit {
   public updateManagerId:any;
   public updateTaskId:any;
   public updteLocationId:any;
+  public minTime=new Date().getTime();
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -74,11 +80,14 @@ export class CreateTaskComponent implements OnInit {
      private createTaskFB: FormBuilder,
      private dialog: MatDialog, private snackbarService: SnackbarService,
      private datePipe:DatePipe
-     ) { 
-      this.router.navigate(['provider', 'task','create-task'])
+     ) 
+     { 
+      // this.router.navigate(['provider', 'task','create-task'])
      }
 
   ngOnInit(): void {
+    // this.minTime= this.datePipe.transform(new Date().getTime(),'HH:MM');
+    // console.log('minTime',this.minTime)
     // console.log('craete',this.crmService.taskActivityName)
     // console.log('edit',this.crmService.taskActivityName)
     this.api_loading=false;
@@ -97,15 +106,12 @@ export class CreateTaskComponent implements OnInit {
     }) 
     if(this.crmService.taskActivityName!='Create'){
       this.selectHeader='Update Task'
+      this.createBTimeField=false;
+      this.updateBTimefield=true;
       this.updateValue=this.crmService.taskToCraeteViaServiceData;
-      // this.selectTaskManger=this.updateValue.name;
-      // const time: any={
-      //   hours:this.updateValue.estDuration.hours,minutes:this.updateValue.estDuration.minutes
-      // }
-      // console.log('time',time)
-      console.log(' this.updateValue', this.updateValue)
-      // this.GetTime(time)
-      
+      console.log('this.updateValue',this.updateValue)
+      if(this.updateValue != undefined){
+        console.log(' this.updateValue', this.updateValue);
       this.createTaskForm.patchValue({
         taskTitle:this.updateValue.title,
         taskDescription:this.updateValue.description,
@@ -115,7 +121,7 @@ export class CreateTaskComponent implements OnInit {
         userTaskType:this.updateValue.type.id,
         taskStatus:this.updateValue.status.id,
         userTaskPriority:this.updateValue.priority.id,
-        taskTime:this.updateValue.estDuration.hours
+        // taskTime:this.updateValue.estDuration.hours
       })
       this.locationName =this.updateValue.location.name;
       this.updteLocationId= this.updateValue.location.id
@@ -125,9 +131,30 @@ export class CreateTaskComponent implements OnInit {
       this.selectTaskManger= this.updateValue.manager.name;
       this.updateManagerId= this.updateValue.manager.id
       this.updateUserType=this.updateValue.userTypeEnum;
+      // const updateTimeList= this.datePipe.transform(this.updateValue.estDuration,'d/h/mm')
+      // console.log('updateTimeList',updateTimeList)
+      // const time:any= moment(this.updateValue.estDuration)
+      // this.taskDueTime=this.datePipe.transform(time,'h:mm:ss a zzzz')
+      console.log('timeeeeeeeeee', this.taskDueTime)
+      // this.taskDueTime={
+      //   "days":this.updateValue.estDuration.days,"hours":this.updateValue.estDuration.hours,"minutes":this.updateValue.estDuration.minutes,
+      // }
+      console.log('this.taskDueTime',this.taskDueTime);
+      }
+      else{
+        this.router.navigate(['provider', 'task']);
+      }
+      // const time: any={
+      //   hours:this.updateValue.estDuration.hours,minutes:this.updateValue.estDuration.minutes
+      // }
+      // console.log('time',time)
     }
     else{
-      this.selectHeader='Add Task'
+      this.createBTimeField=true;
+      this.updateBTimefield=false;
+      this.selectHeader='Add Task';
+      this.selectMember='Select Member';
+      this.selectTaskManger='Select Task Manger'
     }
    
     this.getAssignMemberList()
@@ -137,37 +164,6 @@ export class CreateTaskComponent implements OnInit {
     this.getTaskPriorityListData()
     // this.getTotalTask()
   }
-  // getTotalTask(){
-  //   this.crmService.getTotalTask().subscribe((resp)=>{
-  //     console.log('ressssssssss',resp)
-  //     if(resp[0].id == this.updateValue.id){
-  //       this.updateTaskId=
-  //     }
-  //   })
-  // }
-  // GetTime(date) {
-  //   var currentTime = (new Date(date.hours))
-  //   console.log('currentTime',currentTime)
-  //   var hours = currentTime.getHours()
-  //   //Note: before converting into 12 hour format
-  //   var suffix = '';
-  //   if (hours > 11) {
-  //       suffix += "PM";
-  //   } else {
-  //       suffix += "AM";
-  //   }
-  //   var minutes = currentTime.getMinutes()
-  //   if (minutes < 10) {
-  //       minutes = 0 + minutes
-  //   }
-  //   if (hours > 12) {
-  //       hours -= 12;
-  //   } else if (hours === 0) {
-  //       hours = 12;
-  //   }
-  //   var time = hours + ":" + minutes + " " + suffix;
-  //   return time;
-  // }
   getAssignMemberList(){
     this.crmService.getMemberList().subscribe((memberList:any)=>{
       console.log('memberList',memberList)
@@ -325,11 +321,35 @@ export class CreateTaskComponent implements OnInit {
   }
   handleDateChange(e){
     console.log(e)
-    const date=  this.datePipe.transform(this.taskDueDate,'yyyy-MM-dd')
-    this.selectedDate= date;
-    console.log('date.',date)
+    const date1= this.datePipe.transform(this.taskDueDate,'yyyy-MM-dd');
+    this.selectedDate= date1;
+    console.log('date.',date1)
+    const date2= this.datePipe.transform(new Date(),'yyyy-MM-dd');
+    console.log('date2',date2);
+    if(date1> date2){
+      const diffBtwDate = Date.parse(date1) - Date.parse(date2);
+    const diffIndays = diffBtwDate / (1000 * 3600 * 24);
+    this.dayGapBtwDate= diffIndays
+    // console.log('diffInDays',diffIndays)
+      // console.log('selected date graeter',date1)
+    }
+    else{
+      const diffBtwDate = Date.parse(date1) - Date.parse(date2);
+      // console.log('diffBtwDate',diffBtwDate)
+    const diffIndays = diffBtwDate / (1000 * 3600 * 24);
+    this.dayGapBtwDate= diffIndays
+    // console.log('diffInDays',diffIndays);
+      // console.log('both equal');
+    }
+    
   }
   handleTaskEstDuration(estDuration:any){
+    const time= this.datePipe.transform(new Date().getTime(),'HH');
+    const timeMInute= this.datePipe.transform(new Date().getTime(),'mm');
+    console.log('time',time)
+    this.hour= time;
+    this.minute=timeMInute
+    
     console.log('estDurationb',estDuration)
     if(estDuration<='24:00'){
       console.log('...............gggg')
@@ -337,21 +357,44 @@ export class CreateTaskComponent implements OnInit {
     }
 
   }
+  openTimeField(){
+    this.createBTimeField=true;
+      this.updateBTimefield=false;
+  }
   transform(time: any): any {
     let hour = (time.split(':'))[0]
     let min = (time.split(':'))[1]
-    let part = hour > 24 ? 'pm' : 'am';
+    let part = hour > 24 ? 'am' : 'pm';
     if(parseInt(hour) == 0)
      hour = 24;
     min = (min+'').length == 1 ? `0${min}` : min;
     hour = hour > 24 ? hour - 24 : hour;
     hour = (hour+'').length == 1 ? `0${hour}` : hour;
     console.log('`${hour}:${min} ${part}`',`${hour}:${min} ${part}`);
-    if(hour<24){
-      const day:number=0;
-      this.selectedTime={ "days" : day, "hours" : hour, "minutes" : min };
+    // if(hour<24){
+      // const day:number=0;
+      if(this.dayGapBtwDate==0){
+        console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
+        this.selectedTime={ "days" : this.dayGapBtwDate, "hours" : 24-hour, "minutes" : 60-min };
+      }
+      else{
+        // if( hour >=12 && hour<24){
+        //   this.selectedTime={ "days" : this.dayGapBtwDate, "hours" :hour-this.hour, "minutes" : 60-min };
+        // }
+        console.log('this.hour',this.hour)
+        console.log('hour',hour);
+        if(this.hour >hour){
+          this.selectedTime={ "days" : this.dayGapBtwDate, "hours" :this.hour-hour, "minutes" : this.minute-min };
+          console.log('this.selectedTime1',this.selectedTime)
+        }
+        else{
+          this.selectedTime={ "days" : this.dayGapBtwDate, "hours" : hour-this.hour, "minutes" : min-this.minute };
+          console.log('this.selectedTime2',this.selectedTime)
+        }
+        // this.selectedTime={ "days" : this.dayGapBtwDate, "hours" :24- hour, "minutes" : 60-min };
+      }
       return `${hour}:${min} ${part}`
-    }
+    // }
     
   }
   handleTargetResult(targetResult){
