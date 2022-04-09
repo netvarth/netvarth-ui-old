@@ -1194,3 +1194,10 @@
         .dashboard .card.w-dta .dash-list .table tbody tr:nth-child(even) {
             background: transparent !important;
           }
+          .confirmBtn{
+            background: #0D2348 !important;
+          box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+          border-radius: 5.75916px !important;
+          border: 0px solid  !important;
+          }
+          
