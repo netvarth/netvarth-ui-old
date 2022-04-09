@@ -23,14 +23,14 @@ export class CrmSelectMemberComponent implements OnInit {
     ) {
       console.log('consdata',this.data)
       // this.assignMemberDetails= this.data.assignMembername
-      console.log('this.assignMemberDetails',this.assignMemberDetails);
+      // console.log('this.assignMemberDetails',this.assignMemberDetails);
      }
     
 
   ngOnInit(): void {
     this.data.memberList[0].forEach((singleMember:any)=>{
-      console.log('singleMember',singleMember.id)
-      console.log('this.data.assignMembername',this.data.updateAssignMemberId)
+      // console.log('singleMember',singleMember.id)
+      // console.log('this.data.assignMembername',this.data.updateAssignMemberId)
       this.memberList.push(singleMember)
       if(this.data.requestType==='createtaskSelectMember'){
         if(singleMember.id==this.data.updateAssignMemberId){
@@ -55,15 +55,15 @@ export class CrmSelectMemberComponent implements OnInit {
       }
     })
     
-    console.log('this.assignMemberDetails',this.assignMemberDetails);
-    console.log('this.memberList',this.memberList)
-    console.log('this.data.assignMembername',this.data.assignMembername);
-    console.log('updateSelectedMember',this.data.updateSelectedMember)
+    // console.log('this.assignMemberDetails',this.assignMemberDetails);
+    // console.log('this.memberList',this.memberList)
+    // console.log('this.data.assignMembername',this.data.assignMembername);
+    // console.log('updateSelectedMember',this.data.updateSelectedMember)
   }
   handleMemberSelect(member,selected:string){
     this.handleAssignMemberSelectText=''
-    console.log(selected)
-    console.log(member)
+    // console.log(selected)
+    // console.log(member)
     this.handleAssignMemberSelectText=selected;
     this.errorMsg=false
 
@@ -73,9 +73,9 @@ export class CrmSelectMemberComponent implements OnInit {
   }
   saveAssignMember(res){
     if(this.assignMemberDetails !==''){
-      console.log('response',res)
+      // console.log('response',res)
       this.errorMsg=false;
-      console.log('assignMemberDetails',this.assignMemberDetails)
+      // console.log('assignMemberDetails',this.assignMemberDetails)
       this.dialogRef.close(res)
     }
     else{
@@ -98,7 +98,7 @@ export class CrmSelectMemberComponent implements OnInit {
   }
 
   buttonclicked(res) {
-    console.log('res',res)
+    // console.log('res',res)
     this.dialogRef.close(res)
 }
 closetab(){

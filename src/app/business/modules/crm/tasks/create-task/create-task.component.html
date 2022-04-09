@@ -195,8 +195,8 @@
                                        <div>Due Date</div>
                                        <div class="astericColor">*</div>
                                      </div>
-                                     <div class="pickerouter fieldPadding dt" style="display: flex;">
-                                        <input [(ngModel)]="taskDueDate" formControlName="taskDate" class="form-control widthWebKit" type="text"  matInput
+                                     <div class="pickerouter fieldPadding dt dateWithMatDtae" >
+                                        <input [(ngModel)]="taskDueDate" formControlName="taskDate" class="form-control widthWebKit positionNameInput" type="text"  matInput
                                             [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
                                             [value]="ddate" (dateChange)="handleDateChange($event)" placeholder="Enter Date" #taskDate>
                                             <mat-datepicker-toggle matSuffix [for]="picker">
@@ -311,10 +311,12 @@
                     <div class=" mgn-bt-20 mgn-up-10">
                             <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()"
                             >Cancel</button>
-                        <button [ngClass]="{
+                        <button 
+                        
+                        [ngClass]="{
                             'btn btn-primary font-weight-bold cancelBtn': !createTaskForm.valid,
                             'btn btn-primary font-weight-bold confirmBtn': createTaskForm.valid
-                          }" [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
+                          }" [class.spinner]="api_loading" 
                           [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateTask()"
                             >{{showCreateTaskButtonCaption()}}</button>
                             
