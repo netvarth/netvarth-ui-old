@@ -3,7 +3,7 @@
         <!--header start-->
         <div class="header">
             <div class="headerText" >{{data.header | capitalizeFirst}}</div>
-            <div mat-dialog-close="true" style=" cursor: pointer;">
+            <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
                 <mat-icon>clear</mat-icon>
             </div>
         </div>
@@ -53,7 +53,7 @@
                 <ng-container >
                     <div class=" mgn-bt-20 mgn-up-10">
                             <button type="button" class="btn btn-primary font-weight-bold cancelBtn" 
-                            mat-dialog-close="true" >Cancel</button>
+                            mat-dialog-close >Cancel</button>
                         <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="saveAssignMember(assignMemberDetails)"
                             >Save</button>
                     </div>
@@ -72,7 +72,7 @@
         <!--header start-->
         <div class="header">
             <div class="headerText" >{{data.header | capitalizeFirst}}</div>
-            <div mat-dialog-close="true" style=" cursor: pointer;">
+            <div mat-dialog-close class="modal_close" tabindex="-1" style=" cursor: pointer;">
                 <mat-icon>clear</mat-icon>
             </div>
         </div>
@@ -122,7 +122,7 @@
                 <ng-container >
                     <div class=" mgn-bt-20 mgn-up-10">
                             <button type="button" class="btn btn-primary font-weight-bold cancelBtn" 
-                            mat-dialog-close="true" >Cancel</button>
+                            mat-dialog-close >Cancel</button>
                         <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="saveAssignMember(assignMemberDetails)"
                             >Save</button>
                     </div>
