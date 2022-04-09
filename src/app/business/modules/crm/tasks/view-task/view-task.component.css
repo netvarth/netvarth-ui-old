@@ -87,6 +87,11 @@
     color: #1E4079!important;
 }
 
+.fa .fa-edit
+{
+  color: lawngreen!important;
+}
+
 @keyframes colorload {
 0% {
     opacity: 0;

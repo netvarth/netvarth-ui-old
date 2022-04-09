@@ -5,7 +5,7 @@ import { Messages } from '../../../../../../../src/app/shared/constants/project-
 import { Location,DatePipe } from '@angular/common';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 // import { LocalStorageService } from '../../../../../../../src/app/shared/services/local-storage.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CrmService } from '../../crm.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
@@ -72,13 +72,15 @@ export class CreateTaskComponent implements OnInit {
   public updateManagerId:any;
   public updateTaskId:any;
   public updteLocationId:any;
+  taskUid : any;
+  taskDetails: any;
   public minTime=new Date().getTime();
   public bEstDuration:boolean=false;
   public updateAssignMemberDetailsToDialog:any;
   public updateSelectTaskMangerDetailsToDialog:any;
   public sel_loc:any;
-  public taskPriority:any;
-  public taskStatusModal:any;
+  taskStatusModal: any;
+  taskPriority: any;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -86,17 +88,27 @@ export class CreateTaskComponent implements OnInit {
      public fed_service: FormMessageDisplayService,
      private createTaskFB: FormBuilder,
      private dialog: MatDialog, private snackbarService: SnackbarService,
-     private datePipe:DatePipe,  
-    //  private groupService: GroupStorageService,
-     ) 
-     { 
-      // this.router.navigate(['provider', 'task','create-task'])
+     private datePipe:DatePipe,
+     private _Activatedroute:ActivatedRoute,
+
+     ) { 
+      //this.router.navigate(['provider', 'task','create-task'])
      }
 
   ngOnInit(): void {
     // const loc = this.groupService.getitemFromGroupStorage('loc_id');
     //     this.sel_loc = loc.id;
     //     console.log('this.sel_loc',this.sel_loc)
+
+
+    this._Activatedroute.paramMap.subscribe(params => { 
+      this.taskUid = params.get('taskid');
+      if(this.taskUid)
+      {
+        this.crmService.taskActivityName = "subTaskCreate";
+      }
+    });
+
     this.api_loading=false;
     this.createTaskForm=this.createTaskFB.group({
       taskTitle:[null,[Validators.required]],
@@ -111,7 +123,7 @@ export class CreateTaskComponent implements OnInit {
       targetResult:[null],
       targetPotential:[null],
     }) 
-    if(this.crmService.taskActivityName!='Create'){
+    if(this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate'){
       this.selectHeader='Update Task'
       this.createBTimeField=false;
       this.updateBTimefield=true;
@@ -143,11 +155,22 @@ export class CreateTaskComponent implements OnInit {
       }
     }
     else{
-      this.createBTimeField=true;
+      if(this.crmService.taskActivityName == "subTaskCreate")
+      {
+				      this.createBTimeField=true;
       this.updateBTimefield=false;
-      this.selectHeader='Add Task';
       this.selectMember='Select Member';
-      this.selectTaskManger='Select Task Manger';
+      this.selectTaskManger='Select Task Manger'
+        this.selectHeader='Add Subtask';
+      }
+      else
+      {
+		        this.createBTimeField=true;
+      this.updateBTimefield=false;
+      this.selectMember='Select Member';
+      this.selectTaskManger='Select Task Manger'
+        this.selectHeader='Add Task';
+      }
     }
     this.getAssignMemberList()
     this.getCategoryListData()
@@ -416,7 +439,7 @@ export class CreateTaskComponent implements OnInit {
   // console.log('targetPotential',targetPotential)
   }
   showCreateTaskButtonCaption() {
-    if(this.crmService.taskActivityName==='Create'){
+    if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' ){
       let caption = '';
       caption = 'Add';
       return caption;
@@ -430,7 +453,7 @@ export class CreateTaskComponent implements OnInit {
 }
   saveCreateTask(){
     this.api_loading = true;
-    if(this.crmService.taskActivityName!='Create'){
+    if(this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate'){
       // console.log('this.updateValue.taskUid',this.updateValue.taskUid)
       // console.log('jjjjjjjjjjjjjjjjjjjjjjupdateeeeeeeeeeee');
       // console.log('....',this.createTaskForm.controls.taskTitle.value)
@@ -480,7 +503,7 @@ export class CreateTaskComponent implements OnInit {
     // console.log('this.selectedTime',this.selectedTime)
     // console.log('this.createTaskForm.controls.taskTitle.value',this.createTaskForm.controls.taskTitle.value)
     const createTaskData:any = {
-      // "ParentTaskUid" : 'ta_b7b309d3-9881-4b8c-9f77-896b1293e9c1-pt',
+      "parentTaskUid" : this.taskUid,
       "title":this.createTaskForm.controls.taskTitle.value,
       "description":this.createTaskForm.controls.taskDescription.value,
       "userType":this.userType,
@@ -498,7 +521,7 @@ export class CreateTaskComponent implements OnInit {
       "targetPotential" : this.createTaskForm.controls.targetPotential.value,
       "estDuration" : this.selectedTime   
     }
-    console.log('createTaskData',createTaskData)
+    // console.log('createTaskData',createTaskData)
     // console.log('this.userType',this.userType)
     if(this.userType===('PROVIDER' || 'CONSUMER') && (this.createTaskForm.controls.taskTitle.value!=null) && (this.createTaskForm.controls.taskDescription.value !=null)){
       this.boolenTaskError=false;

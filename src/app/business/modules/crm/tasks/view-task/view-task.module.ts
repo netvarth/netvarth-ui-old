@@ -14,9 +14,11 @@ import { TaskActivityComponent } from "./task-activity/task-activity.component";
 import { ConnectionsComponent } from "./connections/connections.component";
 import { SubtasksComponent } from "./subtasks/subtasks.component";
 import { ProviderServices } from "../../../../../business/services/provider-services.service";
+import { SelectAttachmentComponent } from "./select-attachment/select-attachment.component";
 
 const routes: Routes = [
   { path: '', component: ViewTaskComponent },
+  
 ];
 
 @NgModule({
@@ -26,6 +28,7 @@ const routes: Routes = [
     TaskActivityComponent,
     ConnectionsComponent,
     SubtasksComponent,
+    SelectAttachmentComponent
   ],
   imports: [
     CommonModule,
@@ -35,6 +38,7 @@ const routes: Routes = [
     MatTabsModule,
     CapitalizeFirstPipeModule,
     MenuModule,
+    LoadingSpinnerModule,
     [RouterModule.forChild(routes)],
     
   ],

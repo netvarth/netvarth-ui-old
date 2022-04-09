@@ -18,12 +18,12 @@
         Actions <i class="fa fa-chevron-down"></i>
       </button>
       <div class="dropdown-menu">
-        <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Edit Task</span></a><br><br>
-        <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Mark as done</span></a><br><br>
-        <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Create Subtask</span></a><br><br>
-        <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Convert to loan</span></a><br><br>
+        <a class="p-3 dropdown-item"><i class="text-info fa fa-edit"></i>&nbsp;&nbsp;<span class="text-dark">Edit Task</span></a><br><br>
+        <a class="p-3 dropdown-item"><i class="text-success fa fa-check-square"></i>&nbsp;&nbsp;<span class="text-dark">Mark as done</span></a><br><br>
+        <a class="p-3 dropdown-item" (click)="createSubTask(taskUid)"><i class="text-primary fa fa-plus-square-o"></i>&nbsp;&nbsp;<span class="text-dark">Create Subtask</span></a><br><br>
+        <!-- <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Convert to loan</span></a><br><br>
         <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Create Appointment</span></a><br><br>
-        <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Edit Actions</span></a><br><br>
+        <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Edit Actions</span></a><br><br> -->
       </div>
     </div>
     <div>
@@ -90,63 +90,12 @@
             </div>
           </div>
           <hr class="my-2 py-2">
-          <div class="">
-
-            <mat-chip-list class="btns d-lg-flex justify-content-lg-center">
-              <span>
-                <mat-chip
-                    [ngClass]="{'br-top-right-0 br-bottom-right-0 margin-right-0': getAttachLength() > 0}">
-                    <a class="lnk action pointer-cursor btn btn-primary upload-file-btn text-primary" (click)="imagefile1.click();"><input
-                            #imagefile1 type="file" accept="/*;capture=camera"
-                            style="display:none;" multiple
-                            (change)="filesSelected($event, 'close')"><i
-                            class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i>Upload
-                        File<br><span class="text-dark btn-text">Add or Upload Files related to task</span>
-                    </a>
-                </mat-chip>
-                <!-- <mat-chip *ngIf="getAttachLength() > 0"
-                    class="br-top-left-0 br-bottom-left-0 margin-left-0">
-                  <a class="lnk action pointer-cursor" (click)="viewAttachments()">
-                      View (<span>{{getAttachLength()}}</span>)
-                  </a>
-                </mat-chip> -->
-              </span>
-            </mat-chip-list>
-
-
-
-
-            <ng-container>
-              <div class="modal-body">
-                <div class="img-section mgn-up-20"
-                    *ngIf="(selectedMessage.files && selectedMessage.files.length > 0)">
-                    <ul class="galul">
-                      <ng-container
-                        *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-                        <li *ngFor="let file of selectedMessage.files;let i = index ">
-                          <div class="galimg_outer">
-                              <div class="gal_img">
-                                  <img [src]="getImage(selectedMessage.base64[i], file)"
-                                      *ngIf="selectedMessage.base64[i]">
-                              </div>
-                              <div class="gal-input">
-                                  <input type="text" placeholder="Caption"
-                                      [(ngModel)]="imgCaptions[i]">
-                              </div>
-                              <div class="gal_action" (click)="deleteTempImage(i)">
-                                  <i class="fa fa-times-circle" aria-hidden="true"></i>
-                              </div>
-                          </div>
-                        </li>
-                      </ng-container>
-                    </ul>
-                </div>
-              </div>
-            </ng-container>
-            
-
-
-            
+          <div class="text-left">
+            <span>  
+              <a class="lnk action pointer-cursor btn btn-primary upload-file-btn text-primary"  (click)="uploadFiles()"><i class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i>Upload
+                  File<br><span class="text-dark btn-text">Add or Upload Files related to task</span>
+              </a>
+            </span>
           </div>
         </div>
       </div>
@@ -160,83 +109,6 @@
     </div>
   </div>
 
-
-
-
-
-
-
-
-
-
-
-
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="close-btn">
-                <button type="button" class="close" aria-label="Close" data-dismiss="modal"
-                    (click)="popupClosed()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            
-            
-            
-            <ng-container *ngIf="action=='attachment'">
-                <div class="modal-body">
-                    <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12">
-                      <mat-chip-list class="">
-                        <mat-chip>
-                          <a class="lnk pointer-cursor" (click)="imagefile.click()"><input
-                                    #imagefile type="file" accept="/*;capture=camera"
-                                    style="display:none;" multiple
-                                    (change)="filesSelected($event)"><i
-                                    class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i>Upload
-                                File
-                            </a>
-                        </mat-chip>
-                      </mat-chip-list>
-                    </div>
-                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 bold pad-top-10 mgn-up-10 mgn-bt-10"
-                        *ngIf="(selectedMessage.files && selectedMessage.files.length > 0)">
-                        Uploaded Files
-                    </div>
-                    <div class="img-section mgn-up-20"
-                        *ngIf="(selectedMessage.files && selectedMessage.files.length > 0)">
-                        <ul class="galul">
-                            <ng-container
-                                *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-                                <li *ngFor="let file of selectedMessage.files;let i = index ">
-                                    <div class="galimg_outer">
-                                        <div class="gal_img">
-                                            <img [src]="getImage(selectedMessage.base64[i], file)"
-                                                *ngIf="selectedMessage.base64[i]">
-                                        </div>
-                                        <div class="gal-input">
-                                            <input type="text" placeholder="Caption"
-                                                [(ngModel)]="imgCaptions[i]">
-                                        </div>
-                                        <div class="gal_action" (click)="deleteTempImage(i)">
-                                            <i class="fa fa-times-circle" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ng-container>
-                        </ul>
-                    </div>
-                </div>
-            </ng-container>
-            <div class="modal-footer">
-                <button type="button" class="disp-none btn btn-light-primary font-weight-bold"
-                    data-dismiss="modal" #closebutton>Cancel</button>
-                <button type="button" class="btn btn-primary font-weight-bold hf-btn"
-                    (click)="actionCompleted()">Ok</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 </section>

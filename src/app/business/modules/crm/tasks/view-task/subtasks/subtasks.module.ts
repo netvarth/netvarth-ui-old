@@ -6,7 +6,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: '', component: SubtasksComponent },
-  {path:'create-task',loadChildren:()=>import('../../create-task/create-task.module').then((m)=>m.CreateTaskModule)}
 ];
 
 @NgModule({

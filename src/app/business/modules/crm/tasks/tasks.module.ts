@@ -17,8 +17,11 @@ import { MatIconModule } from "@angular/material/icon";
 
 const routes: Routes = [
   { path: '', component: TasksComponent },
+  {path:'viewtask/:id',loadChildren:()=>import('./view-task/view-task.module').then((m)=>m.ViewTaskModule)},
+  // {path:'create-subtask/:taskid',loadChildren:()=>import('./create-task/create-task.module').then((m)=>m.CreateTaskModule),pathMatch: 'full'},
   {path:'create-task',loadChildren:()=>import('./create-task/create-task.module').then((m)=>m.CreateTaskModule)},
-  {path:'viewtask/:id',loadChildren:()=>import('./view-task/view-task.module').then((m)=>m.ViewTaskModule)}
+
+
 ];
 @NgModule({
     imports: [

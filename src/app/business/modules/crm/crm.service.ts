@@ -1,3 +1,4 @@
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ServiceMeta } from '../../../shared/services/service-meta';
@@ -8,9 +9,11 @@ import { ServiceMeta } from '../../../shared/services/service-meta';
 export class CrmService {
   public taskToCraeteViaServiceData:any;
   public taskActivityName:any;
+  
 
   constructor(
-    private servicemeta: ServiceMeta
+    private servicemeta: ServiceMeta,
+    private http: HttpClient
     ) { }
 
      getTasks() : Observable <any> {
@@ -72,6 +75,15 @@ export class CrmService {
       const url = 'provider/task/' + taskUid;
       return this.servicemeta.httpGet(url);
     }
+
+    getSubTaskDetails(taskUid)
+    {
+      const url = 'provider/task/provider';
+      return this.servicemeta.httpGet(url);
+    }
+
+
+
     updateTask(taskUid ,updateTaskData){
       console.log(updateTaskData)
       const url='provider/task/'+ taskUid
@@ -85,6 +97,22 @@ export class CrmService {
     // addDepartmentServices(data, id) {
     //   const url = 'provider/departments/' + id + '/service';
     //   return this.servicemeta.httpPost(url, data);
+    // }
+
+
+    upload(file: File): Observable<HttpEvent<any>> {
+      const formData: FormData = new FormData();
+      formData.append('file', file);
+      console.log("Form Data : ",formData)
+      const req = new HttpRequest('POST', 'provider/task/ta_64a19eb3-9561-42f9-a346-0e50cc57bb73-pt/attachment', formData, {
+        reportProgress: true,
+        responseType: 'json'
+      });
+      console.log("Form Data : ",req)
+      return this.http.request(req);
+    }
+    // getFiles(): Observable<any> {
+    //   return this.http.get(`provider/task/ta_64a19eb3-9561-42f9-a346-0e50cc57bb73-pt`);
     // }
 
 }

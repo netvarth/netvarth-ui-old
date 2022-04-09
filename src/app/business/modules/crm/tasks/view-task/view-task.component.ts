@@ -4,12 +4,12 @@ import { projectConstants } from '../../../../../../../src/app/app.component';
 import { Messages } from '../../../../../../../src/app/shared/constants/project-messages';
 // import { CrmService } from '../crm.service';
 import { Location } from '@angular/common';
-import { ActivatedRoute} from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { CrmService } from '../../crm.service';
 // import { Observable } from 'rxjs';
 // import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { SnackbarService } from '../../../../../../../src/app/shared/services/snackbar.service';
 import { MatDialog } from '@angular/material/dialog';
+import { SelectAttachmentComponent } from './select-attachment/select-attachment.component';
 @Component({
   selector: 'app-view-task',
   templateUrl: './view-task.component.html',
@@ -91,22 +91,15 @@ constructor(
   //private router: Router,
   public _location: Location,public dialog: MatDialog,
   private _Activatedroute:ActivatedRoute,
-  private snackbarService: SnackbarService,
-  //public provider_services: ProviderServices
+      private router: Router,
+
+ //public provider_services: ProviderServices
 
 ) {
 }
 
 ngOnInit(): void {
   this.api_loading = false;
-  
-  // this.crmService.getTasks().subscribe(
-  //   (tasks: any) => {
-  //     this.taskList = tasks;
-  //     console.log(this.taskList)
-  //   }
-  // )
-  
   
   this._Activatedroute.paramMap.subscribe(params => { 
     this.taskUid = params.get('id');
@@ -121,94 +114,22 @@ ngOnInit(): void {
 
 }
 
-getAttachLength() {
-  let length = this.selectedMessage.files.length;
-  return length;
-}
-
-getImage(url, file) {
-  if (file.type == 'application/pdf') {
-      return '../../../../../assets/images/pdf.png';
-  }
-  else if (file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg') {
-      return '../../../../../assets/images/audio.png';
-
-  }
-  else if (file.type == 'video/mp4' || file.type == 'video/mpeg') {
-      return '../../../../../assets/images/video.png';
-  }
-  else {
-      return url;
-  }
-}
-
-popupClosed() {
-}
-
-deleteTempImage(index) {
-  this.selectedMessage.files.splice(index, 1);
-  this.selectedMessage.base64.splice(index, 1);
-  this.selectedMessage.caption.splice(index, 1);
-  this.imgCaptions[index] = '';
-  this.fileInput.nativeElement.value = '';
-}
-
-
-actionCompleted() {
-  if (this.action === 'attachment') {
-      this.goBack();
-  }
-}
-
-filesSelected(event, type?) {
-  const input = event.target.files;
-  if (input) {
-      for (const file of input) {
-          if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
-              this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
-              return;
-          } else {
-              this.selectedMessage.files.push(file);
-              const reader = new FileReader();
-              reader.onload = (e) => {
-                  this.selectedMessage.base64.push(e.target['result']);
-              };
-              reader.readAsDataURL(file);
-              this.action = 'attachment';
-              if (this.selectedMessage.caption) {
-                  return this.imgCaptions;
-              }
-              else {
-                  return this.imgCaptions = '';
-              }
-          }
-      }
-      if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0 && input.length > 0) {
-          this.modal.nativeElement.click();
-      }
-  }
-}
-
-
-viewAttachments() {
-  this.action = 'attachment';
-  this.modal.nativeElement.click();
-}
-
-
-// uploadFiles() {
-//   this.dialog.open(SelectAttachmentsComponent, {
-//       width: '50%',
-//       panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
-//       disableClose: true,
-//       data: {
+uploadFiles() {
+  this.dialog.open(SelectAttachmentComponent, {
+      width: '80%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+      disableClose: false,
+      data: {
           
-//       }
-//   });
-// }
+      }
+  });
+}
 
 
-
+createSubTask(taskid)
+{
+  this.router.navigate(['provider', 'task','create-subtask',taskid]);
+}
 
 
 goback() {
