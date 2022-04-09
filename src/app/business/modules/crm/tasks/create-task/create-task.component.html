@@ -86,7 +86,7 @@
                 placeholder="Enter task manager"class="form-control"formControlName="taskManager"autocomplete="off" />  -->
                 <div>
                     <div  [(ngModel)]="selectTaskManger" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectManagerDialog(selectTaskManger)" >
-                        <div >{{selectTaskManger}}</div>
+                        <div>{{selectTaskManger}}</div>
                         <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
                     </div>
                 </div>
@@ -210,7 +210,7 @@
                                </div>
                                <!---date end-->
                                <!----time start-->
-                               <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding">
+                               <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding" *ngIf="bEstDuration" >
                                    <div class="taskTitle">
                                        <div>Est Duration</div>
                                        <div class="astericColor">*</div>
@@ -231,6 +231,22 @@
                                      </div> -->
                    
                                </div>
+
+                               <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding" *ngIf="updateBTimefield">
+                                <div class="taskTitle">
+                                    <div>Est Duration</div>
+                                    <div class="astericColor">*</div>
+                                  </div>
+                                  <div class="fieldPadding"  >
+                                      <div class="form-control widthWebKit" style="display: flex !important;justify-content: space-between;align-items: center;" *ngIf=" updateValue.estDuration.hours !=0">
+                                        <div>{{updateValue.estDuration.days}}(Days),{{this.updateValue.estDuration.hours}}(Hours)</div>
+                                      </div>
+                                      <div class="form-control widthWebKit" style="display: flex !important;justify-content: space-between;align-items: center;" *ngIf=" updateValue.estDuration.hours ===0">
+                                        <div>{{updateValue.estDuration.days}}(Days)</div>
+                                      </div>
+                                  </div>
+                
+                            </div>
                                 <!----time end-->
                            </div>
             <!--date & time end-->

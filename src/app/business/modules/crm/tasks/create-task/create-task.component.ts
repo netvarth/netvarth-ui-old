@@ -72,6 +72,9 @@ export class CreateTaskComponent implements OnInit {
   public updateTaskId:any;
   public updteLocationId:any;
   public minTime=new Date().getTime();
+  public bEstDuration:boolean=false;
+  public updateAssignMemberDetailsToDialog:any;
+  public updateSelectTaskMangerDetailsToDialog:any;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -131,23 +134,12 @@ export class CreateTaskComponent implements OnInit {
       this.selectTaskManger= this.updateValue.manager.name;
       this.updateManagerId= this.updateValue.manager.id
       this.updateUserType=this.updateValue.userTypeEnum;
-      // const updateTimeList= this.datePipe.transform(this.updateValue.estDuration,'d/h/mm')
-      // console.log('updateTimeList',updateTimeList)
-      // const time:any= moment(this.updateValue.estDuration)
-      // this.taskDueTime=this.datePipe.transform(time,'h:mm:ss a zzzz')
       console.log('timeeeeeeeeee', this.taskDueTime)
-      // this.taskDueTime={
-      //   "days":this.updateValue.estDuration.days,"hours":this.updateValue.estDuration.hours,"minutes":this.updateValue.estDuration.minutes,
-      // }
       console.log('this.taskDueTime',this.taskDueTime);
       }
       else{
         this.router.navigate(['provider', 'task']);
       }
-      // const time: any={
-      //   hours:this.updateValue.estDuration.hours,minutes:this.updateValue.estDuration.minutes
-      // }
-      // console.log('time',time)
     }
     else{
       this.createBTimeField=true;
@@ -248,22 +240,26 @@ export class CreateTaskComponent implements OnInit {
         requestType:'createtaskSelectManager',
         header:'Assign Manager',
         memberList: this.allMemberList,
-        assignMembername:handleSelectManager
+        assignMembername:handleSelectManager,
+        updateSelectTaskManager:this.updateSelectTaskMangerDetailsToDialog,
+        updateManagerId:this.updateManagerId,
       }
   })
   dialogRef.afterClosed().subscribe((res:any)=>{
     console.log('afterSelectPopupValue',res)
-    // this.selectMember = (res.firstName + res.lastName);
+    if(res===''){
+      console.log('Select task manager')
+      this.selectTaskManger ='Select task manager'
+
+    }
+    else{
+      this.updateSelectTaskMangerDetailsToDialog=res;
+    console.log('updateSelectTaskMangerDetailsToDialog',this.updateSelectTaskMangerDetailsToDialog)
     this.selectTaskManger=((res.firstName + res.lastName))
-    // this.userType = res.userType;
-    // this.locationName = res.locationName;
-    // this.locationId = res.bussLocations[0];
-    // this.assigneeId= res.id
     this.selectTaskMangerId= res.id;
     this.updateManagerId=this.selectTaskMangerId
-
+    }
   })
-
   }
   
   selectMemberDialog(handleselectMember:any){
@@ -275,21 +271,27 @@ export class CreateTaskComponent implements OnInit {
         requestType:'createtaskSelectMember',
         header:'Assign Member',
         memberList: this.allMemberList,
-        assignMembername:handleselectMember
+        assignMembername:handleselectMember,
+        updateSelectedMember:this.updateAssignMemberDetailsToDialog,
+        updateAssignMemberId:this.updateMemberId
       }
   })
   dialogRef.afterClosed().subscribe((res:any)=>{
-    console.log('afterSelectPopupValue',res)
+    console.log('afterSelectPopupValue',res);
+    if(res===''){
+      // console.log('Select Manager')
+      this.selectMember ='Select Manager'
+    }else{
+      this.updateAssignMemberDetailsToDialog=res;
+    console.log('this.updateAssignMemberDetailsToDialog',this.updateAssignMemberDetailsToDialog)
     this.selectMember = (res.firstName + res.lastName);
-    // this.selectTaskManger=((res.firstName + res.lastName))
     this.userType = res.userType;
     this.locationName = res.locationName;
     this.locationId = res.bussLocations[0];
     this.assigneeId= res.id;
     this.updateMemberId=this.assigneeId;
     this.updteLocationId= this.locationId;
-    // this.selectTaskMangerId= res.id
-
+    }
   })
   }
   hamdleTaskManager(taskManger){
@@ -320,6 +322,8 @@ export class CreateTaskComponent implements OnInit {
     return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
   }
   handleDateChange(e){
+    this.bEstDuration=true;
+    this.updateBTimefield=false
     console.log(e)
     const date1= this.datePipe.transform(this.taskDueDate,'yyyy-MM-dd');
     this.selectedDate= date1;
@@ -334,7 +338,7 @@ export class CreateTaskComponent implements OnInit {
       // console.log('selected date graeter',date1)
     }
     else{
-      const diffBtwDate = Date.parse(date1) - Date.parse(date2);
+      const diffBtwDate = Date.parse(date2) - Date.parse(date1);
       // console.log('diffBtwDate',diffBtwDate)
     const diffIndays = diffBtwDate / (1000 * 3600 * 24);
     this.dayGapBtwDate= diffIndays
@@ -404,9 +408,17 @@ export class CreateTaskComponent implements OnInit {
   console.log('targetPotential',targetPotential)
   }
   showCreateTaskButtonCaption() {
-    let caption = '';
-    caption = 'Confirm';
-    return caption;
+    if(this.crmService.taskActivityName==='Create'){
+      let caption = '';
+      caption = 'Add';
+      return caption;
+    }
+    else{
+      let caption = '';
+      caption = 'Update';
+      return caption;
+    }
+    
 }
   saveCreateTask(){
     if(this.crmService.taskActivityName!='Create'){

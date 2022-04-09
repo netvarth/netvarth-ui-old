@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 // import { FormBuilder } from '@angular/forms';
-// import { CrmService } from '../../modules/crm/crm.service';
+import { CrmService } from '../../modules/crm/crm.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -18,7 +18,7 @@ export class CrmSelectMemberComponent implements OnInit {
 
   constructor( public dialogRef: MatDialogRef<CrmSelectMemberComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    // private crmService: CrmService,
+    private crmService: CrmService,
     // private fb: FormBuilder,
     ) {
       console.log('consdata',this.data)
@@ -28,20 +28,37 @@ export class CrmSelectMemberComponent implements OnInit {
     
 
   ngOnInit(): void {
-    // this.assignMemberForm= this.fb.group({
-    //   member:[]
-    // })
     this.data.memberList[0].forEach((singleMember:any)=>{
-      // console.log('singleMember',singleMember)
+      console.log('singleMember',singleMember.id)
+      console.log('this.data.assignMembername',this.data.updateAssignMemberId)
       this.memberList.push(singleMember)
-      // if(this.data.assignMembername ==(singleMember.firstName + singleMember.lastName) ){
-      //   this.assignMemberDetails=this.data.assignMembername 
-      // }
+      if(this.data.requestType==='createtaskSelectMember'){
+        if(singleMember.id==this.data.updateAssignMemberId){
+          if(this.crmService.taskActivityName==='Update'){
+            this.assignMemberDetails=singleMember;
+            // this.assignMemberDetails = this.data.updateSelectedMember;
+          }
+          else{
+            this.assignMemberDetails = this.data.updateSelectedMember;
+          }
+        }
+      }
+      else if(this.data.requestType==='createtaskSelectManager'){
+        if(singleMember.id==this.data.updateManagerId){
+          if(this.crmService.taskActivityName==='Update'){
+            this.assignMemberDetails=singleMember;
+          }
+          else{
+            this.assignMemberDetails = this.data.updateSelectTaskManager;
+          }
+        }
+      }
     })
+    
     console.log('this.assignMemberDetails',this.assignMemberDetails);
     console.log('this.memberList',this.memberList)
-    console.log('this.data.assignMembername',this.data.assignMembername)
-    // this.assignMemberDetails= this.data.assignMembername
+    console.log('this.data.assignMembername',this.data.assignMembername);
+    console.log('updateSelectedMember',this.data.updateSelectedMember)
   }
   handleMemberSelect(member,selected:string){
     this.handleAssignMemberSelectText=''
@@ -55,13 +72,18 @@ export class CrmSelectMemberComponent implements OnInit {
     // console.log('memberselect',memberSelect)
   }
   saveAssignMember(res){
-    if(this.handleAssignMemberSelectText==='Selected'){
+    if(this.assignMemberDetails !==''){
       console.log('response',res)
+      this.errorMsg=false;
+      console.log('assignMemberDetails',this.assignMemberDetails)
       this.dialogRef.close(res)
     }
     else{
-      this.errorMsg=true;
-      this.assignMemberErrorMsg='Please select assign member'
+      if(this.assignMemberDetails ===''){
+        this.errorMsg=true;
+        this.assignMemberErrorMsg='Please select assign member'
+      }
+      
     }
     
 
@@ -76,6 +98,7 @@ export class CrmSelectMemberComponent implements OnInit {
   }
 
   buttonclicked(res) {
+    console.log('res',res)
     this.dialogRef.close(res)
 }
 closetab(){
