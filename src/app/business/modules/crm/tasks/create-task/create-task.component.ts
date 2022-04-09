@@ -77,6 +77,8 @@ export class CreateTaskComponent implements OnInit {
   public updateAssignMemberDetailsToDialog:any;
   public updateSelectTaskMangerDetailsToDialog:any;
   public sel_loc:any;
+  public taskPriority:any;
+  public taskStatusModal:any;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -126,7 +128,6 @@ export class CreateTaskComponent implements OnInit {
         userTaskType:this.updateValue.type.id,
         taskStatus:this.updateValue.status.id,
         userTaskPriority:this.updateValue.priority.id,
-        // taskTime:this.updateValue.estDuration.hours
       })
       this.locationName =this.updateValue.location.name;
       this.updteLocationId= this.updateValue.location.id
@@ -136,8 +137,6 @@ export class CreateTaskComponent implements OnInit {
       this.selectTaskManger= this.updateValue.manager.name;
       this.updateManagerId= this.updateValue.manager.id
       this.updateUserType=this.updateValue.userTypeEnum;
-      // console.log('taskDueDateeeee', this.taskDueDate)
-      // console.log('this.taskDueTime',this.taskDueTime);
       }
       else{
         this.router.navigate(['provider', 'task']);
@@ -148,15 +147,13 @@ export class CreateTaskComponent implements OnInit {
       this.updateBTimefield=false;
       this.selectHeader='Add Task';
       this.selectMember='Select Member';
-      this.selectTaskManger='Select Task Manger'
+      this.selectTaskManger='Select Task Manger';
     }
-   
     this.getAssignMemberList()
     this.getCategoryListData()
     this.getTaskTypeListData()
     this.getTaskStatusListData()
     this.getTaskPriorityListData()
-    // this.getTotalTask()
   }
   getAssignMemberList(){
     this.crmService.getMemberList().subscribe((memberList:any)=>{
@@ -188,8 +185,14 @@ export class CreateTaskComponent implements OnInit {
   }
   getTaskStatusListData(){
     this.crmService.getTaskStatus().subscribe((taskStatus:any)=>{
-      // console.log('taskStatus',taskStatus);
-      this.taskStatusList.push(taskStatus)
+      console.log('taskStatus',taskStatus);
+      this.taskStatusList.push(taskStatus);
+      if(this.crmService.taskActivityName==='Create'){
+        this.taskStatusModal=this.taskStatusList[0][0].id;
+      }
+      else{
+        this.taskStatusModal=this.updateValue.status.id
+      }
     },
     (error)=>{
       this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
@@ -197,8 +200,14 @@ export class CreateTaskComponent implements OnInit {
   }
   getTaskPriorityListData(){
     this.crmService.getTaskPriority().subscribe((taskPriority:any)=>{
-      // console.log('taskPriority',taskPriority);
-      this.taskPriorityList.push(taskPriority)
+      console.log('taskPriority',taskPriority);
+      this.taskPriorityList.push(taskPriority);
+      if(this.crmService.taskActivityName==='Create'){
+        this.taskPriority=this.taskPriorityList[0][0].id;
+      }else{
+        this.taskPriority=this.updateValue.priority.id;
+      }
+      console.log( this.taskPriority)
     },
     (error)=>{
       this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
@@ -308,8 +317,9 @@ export class CreateTaskComponent implements OnInit {
     // console.log('taskType',taskType)
 
   }
-  handleTaskPrioritySelection(taskPriority){
+  handleTaskPrioritySelection(taskPriority,taskPriorityText:any){
     // console.log('taskPriority',taskPriority);
+    // console.log('taskPriorityText',taskPriorityText)
     // console.log('this.createTaskForm.controls.userTaskPriority.value',this.createTaskForm.controls.userTaskPriority.value)
   }
   handleTaskLocation(taskLocation){
@@ -488,7 +498,7 @@ export class CreateTaskComponent implements OnInit {
       "targetPotential" : this.createTaskForm.controls.targetPotential.value,
       "estDuration" : this.selectedTime   
     }
-    // console.log('createTaskData',createTaskData)
+    console.log('createTaskData',createTaskData)
     // console.log('this.userType',this.userType)
     if(this.userType===('PROVIDER' || 'CONSUMER') && (this.createTaskForm.controls.taskTitle.value!=null) && (this.createTaskForm.controls.taskDescription.value !=null)){
       this.boolenTaskError=false;

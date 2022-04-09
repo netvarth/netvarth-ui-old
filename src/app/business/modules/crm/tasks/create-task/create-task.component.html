@@ -170,8 +170,8 @@
                                         <!-- <input (keyup)="resetErrors()" type="text" #taskStatus (ngModelChange)="handleTaskStatus(taskStatus.value)"
                                         placeholder="Enter task status"class="form-control"formControlName="taskStatus"autocomplete="off" />  -->
                                         <mat-select class="form-control widthWebKit" placeholder="Enter task status"
-                                #taskStatus formControlName="taskStatus" name="item">
-                                <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id"  (selectionChange)="handleTaskStatus(taskStatus.value)">
+                                #taskStatus formControlName="taskStatus" name="item" [(ngModel)]="taskStatusModal" (selectionChange)="handleTaskStatus(taskStatus.value)">
+                                <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id"  >
                                 <div>
                                     {{item.name | capitalizeFirst}}
                                 </div>
@@ -259,8 +259,8 @@
                   <!--dropdown start-->
                   <div class="fieldPadding">
                             <mat-select class="form-control" placeholder="Select Priority"
-                                #userTaskPriority formControlName="userTaskPriority" >
-                                <mat-option *ngFor="let item of taskPriorityList[0];let index=i" [value]="item.id"  (selectionChange)="handleTaskPrioritySelection(userTaskPriority.value)">
+                                #userTaskPriority formControlName="userTaskPriority"[(ngModel)]="taskPriority" (ngModelChange)="handleTaskPrioritySelection(userTaskPriority.value,'taskPriority')">
+                                <mat-option  *ngFor="let item of taskPriorityList[0];let index=i" [value]="item.id"  >
                                 <div>
                                     {{item.name}}
                                 </div>
