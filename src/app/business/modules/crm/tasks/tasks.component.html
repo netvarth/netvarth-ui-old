@@ -11,14 +11,14 @@
 </section>
 <br><br>
 <section class="card col-md-12">
-  <div class="col-md-12">
+  <div class="col-md-12 btnClass">
     <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small" (click)="createTask('Create')">
       <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
          Create Task<i class="fa fa-plus  mgn-lt-5" aria-hidden="true" ></i></button>
     </a>
   </div>
   <br><br><br>
-  <div>
+  <div class="startMatTab">
     <!-- <mat-card fxLayout="row" fxLayoutGap="50px">
   <mat-card class="child-1">1. Children</mat-card>
   <mat-card class="child-2">2. Children</mat-card>
@@ -26,7 +26,15 @@
   </mat-card> -->
     <mat-tab-group dynamicHeight mat-stretch-tabs (selectedTabChange)="tabChange($event)"
       [selectedIndex]="selectedTab - 1">
-      <mat-tab label="Total Task ({{totalCount}})" class="mat-tab">
+      <mat-tab  class="mat-tab">
+        <ng-template mat-tab-label>
+          <div>
+            <img class="img" src="/assets/images/crmImages/total task.PNG" />
+          </div>
+          <div class="totalCount">({{totalCount}})</div>
+          <div class="totalActivityName">Total Task</div>
+        </ng-template>
+        
 
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
         <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
@@ -171,6 +179,10 @@
                         (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
                     </app-pager>
                 </div>
+                  <!-- <div class="search_paging" *ngIf="totalTaskList.length>0">
+                    <app-pager [total_pages]="gettotalCnt()" [pagesize]="getperPage()" (pagerclick)="handle_pageclick($event)"
+  [curpage]="startpageval"></app-pager>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -178,8 +190,14 @@
         </div>
 
       </mat-tab>
-      <mat-tab label="In Progress ({{inprogressCount}})">
-
+      <mat-tab  class="mat-tab">
+        <ng-template mat-tab-label>
+          <div>
+            <img class="img" src="/assets/images/crmImages/handHoldingClock.PNG" />
+          </div>
+          <div class="totalCount">({{inprogressCount}})</div>
+          <div class="totalActivityName">In Progress</div>
+        </ng-template>
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
         <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
           <div class="col-md-12 no-padding-small">
@@ -338,8 +356,14 @@
           </div>
         </div>
       </mat-tab>
-      <mat-tab label="Completed ({{completedCount}})">
-
+      <mat-tab  class="mat-tab">
+        <ng-template mat-tab-label>
+          <div>
+            <img class="img" src="/assets/images/crmImages/completed.PNG" />
+          </div>
+          <div class="totalCount">({{completedCount}})</div>
+          <div class="totalActivityName">Completed</div>
+        </ng-template>
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
         <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
           <div class="col-md-12 no-padding-small">
@@ -498,7 +522,14 @@
           </div>
         </div>
       </mat-tab>
-      <mat-tab label="Delayed ({{delayedCount}})">
+      <mat-tab  class="mat-tab">
+        <ng-template mat-tab-label>
+          <div>
+            <img class="img" src="/assets/images/crmImages/deyayed.PNG" />
+          </div>
+          <div class="totalCount">({{delayedCount}})</div>
+          <div class="totalActivityName">Delayed</div>
+        </ng-template>
 
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
         <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
@@ -647,11 +678,10 @@
                       </ng-container>
                     </tbody>
                   </table>
-                  <!-- <div class="search_paging">
-                    <app-pager  [total_pages]="pagination.totalCnt"
-                    [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
-                  </app-pager>
-                  </div> -->
+                  <div class="search_paging" *ngIf="totalDelayedList.length>0">
+                    <!-- <app-pager [total_pages]="gettotalCnt()" [pagesize]="getperPage()" (pagerclick)="handle_pageclick($event)"
+  [curpage]="startpageval"></app-pager> -->
+                  </div>
                 </div>
               </div>
             </div>
