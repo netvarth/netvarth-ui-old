@@ -115,7 +115,6 @@ export class TasksComponent implements OnInit {
       this.selectedTab = 1;
     }
     this.getTotalTaskCount();
-    this.getTotalTask();
     this.getInprogressTask();
     this.getCompletedTask();
     this.getDelayedTask();
@@ -126,6 +125,7 @@ export class TasksComponent implements OnInit {
       .subscribe(
         data => {
           this.pagination.totalCnt = data;
+          this.totalCount = data;
           const pgefilter = {
             'from': 0,
             'count': this.pagination.totalCnt,
@@ -257,6 +257,12 @@ export class TasksComponent implements OnInit {
     this.groupService.setitemToGroupStorage('tabIndex', this.selectedTab);
     switch (type) {
       case 1: {
+        const pgefilter = {
+          'from': this.pagination.startpageval,
+          'count': this.pagination.totalCnt,
+        };
+        this.setPaginationFilter(pgefilter);
+        this.getTotalTask(pgefilter);
         this.getTotalTask();
         break;
       }
