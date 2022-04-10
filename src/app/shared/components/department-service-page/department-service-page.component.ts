@@ -140,6 +140,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
   orderItems: any = [];
   itemQty: number;
   activeCatalog: any;
+  isLoggedIn:boolean;
   qrdialogRef;
   wndw_path = projectConstantsLocal.PATH;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
@@ -267,6 +268,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
   apptSettingsJson: any = [];
   checkavailabilitydialogref: any;
   theme: any;
+  accountId: any;
   
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -301,7 +303,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.loc_details = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
     this.jdnTooltip = this.wordProcessor.getProjectMesssages('JDN_TOOPTIP');
-
+    
     const isMobile = {
       Android: function () {
         return navigator.userAgent.match(/Android/i);
@@ -469,7 +471,6 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     this.subscriptions.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
       null, accountS3List).subscribe(
         (accountS3s) => {
-
           if (this.userId) {
             if (accountS3s['settings']) {
               this.processS3s('settings', accountS3s['settings']);
@@ -665,6 +666,8 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     this.onlinePresence = res['onlinePresence'];
     this.customId = res['customId'];
     this.accEncUid = res['accEncUid'];
+    this.accountId = res['id'];
+    this.isLoggedIn = this.sharedFunctionobj.checkLogin();
     if (!this.userId) {
       this.api_loading = false;
       this.pageFound = true;
