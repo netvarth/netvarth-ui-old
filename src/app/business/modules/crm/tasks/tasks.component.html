@@ -166,10 +166,11 @@
                       </ng-container>
                     </tbody>
                   </table>
-                  <div class="search_paging" *ngIf="totalTaskList.length>0">
-                    <!-- <app-pager [total_pages]="gettotalCnt()" [pagesize]="getperPage()" (pagerclick)="handle_pageclick($event)"
-  [curpage]="startpageval"></app-pager> -->
-                  </div>
+                  <div class="search_paging">
+                    <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                        (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
+                    </app-pager>
+                </div>
                 </div>
               </div>
             </div>
@@ -646,10 +647,11 @@
                       </ng-container>
                     </tbody>
                   </table>
-                  <div class="search_paging" *ngIf="totalDelayedList.length>0">
-                    <!-- <app-pager [total_pages]="gettotalCnt()" [pagesize]="getperPage()" (pagerclick)="handle_pageclick($event)"
-  [curpage]="startpageval"></app-pager> -->
-                  </div>
+                  <!-- <div class="search_paging">
+                    <app-pager  [total_pages]="pagination.totalCnt"
+                    [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
+                  </app-pager>
+                  </div> -->
                 </div>
               </div>
             </div>

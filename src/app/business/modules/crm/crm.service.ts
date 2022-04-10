@@ -54,8 +54,17 @@ export class CrmService {
     getProviderLocations() {
       return this.servicemeta.httpGet('provider/locations');
     }
-    getTotalTask() {
-      const url = 'provider/task/provider';
+    // getTotalTask() {
+    //   const url = 'provider/task/provider';
+    //   return this.servicemeta.httpGet(url);
+    // }
+    
+    getTotalTask(filter = {}) {
+      const url = 'provider/task/provider'
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+    getTotalTaskCount() {
+      const url = 'provider/task/provider/count';
       return this.servicemeta.httpGet(url);
     }
     getInprogressTask() {

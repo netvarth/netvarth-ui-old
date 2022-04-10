@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { projectConstantsLocal } from '../../../../../../src/app/shared/constants/project-constants';
 import { projectConstants } from '../../../../../../src/app/app.component';
 import { Messages } from '../../../../../../src/app/shared/constants/project-messages';
-// import { CrmService } from '../crm.service';
 import { Location } from '@angular/common';
 import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
 import { Router } from '@angular/router';
@@ -17,19 +16,6 @@ import { LocalStorageService } from '../../../../../../src/app/shared/services/l
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css']
 })
-// export class TasksComponent implements OnInit {
-
-//   constructor(private crmService: CrmService) { }
-
-//   ngOnInit(): void {
-//     this.crmService.getTasks().subscribe(
-//       (tasks: any) => {
-
-//       }
-//     )
-//   }
-
-// }
 export class TasksComponent implements OnInit {
   tooltipcls = '';
   select_cap = Messages.SELECT_CAP;
@@ -56,8 +42,6 @@ export class TasksComponent implements OnInit {
   open_filter = false;
   ackStatus = false;
   notAckStatus = false;
-  startpageval;
-  totalCnt;
   domain;
   perPage = projectConstants.PERPAGING_LIMIT;
   tday = new Date();
@@ -78,7 +62,7 @@ export class TasksComponent implements OnInit {
   totalDelayedList: any = [];
   selectedTab;
   filtericonTooltip = '';
-  totalCount;
+
   filter = {
     status: '',
     category: '',
@@ -90,11 +74,12 @@ export class TasksComponent implements OnInit {
     email: '',
     userType: '',
     available: '',
-    page_count: projectConstants.PERPAGING_LIMIT,
-    page: 1
-
   };
-
+  pagination: any = {
+    startpageval: 1,
+    totalCnt: 0,
+    perPage: 10
+  };
   filters: any = {
     'status': false,
     'category': false,
@@ -102,9 +87,11 @@ export class TasksComponent implements OnInit {
     'dueDate': false,
   };
   msg = 'Do you really want to mark as done this task? ';
+  totalCount: any;
   inprogressCount: any;
   completedCount: any;
   delayedCount: any;
+  page = 1;
   constructor(
     private locationobj: Location,
     private groupService: GroupStorageService,
@@ -117,43 +104,73 @@ export class TasksComponent implements OnInit {
 
   ) {
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.api_loading = false;
-    // this.crmService.getTasks().subscribe(
-    //   (tasks: any) => {
-    //     this.taskList = tasks;
-    //     console.log(this.taskList)
-    //   }
-    // )
-    this.getTotalTask();
-    this.getInprogressTask();
-    this.getCompletedTask();
-    this.getDelayedTask();
     if (this.groupService.getitemFromGroupStorage('tabIndex')) {
       this.selectedTab = this.groupService.getitemFromGroupStorage('tabIndex');
     } else {
       this.selectedTab = 1;
     }
-    this.doSearch();
-
-
+    this.getTotalTaskCount();
+    this.getTotalTask();
+    this.getInprogressTask();
+    this.getCompletedTask();
+    this.getDelayedTask();
+    // this.doSearch();
   }
-  getTotalTask() {
-    this.crmService.getTotalTask().subscribe(
-      (data: any) => {
-        this.totalTaskList = data;
-        this.totalCount = this.totalTaskList.length;
-      },
-      (error: any) => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
+  getTotalTaskCount() {
+    this.crmService.getTotalTaskCount()
+      .subscribe(
+        data => {
+          this.pagination.totalCnt = data;
+          const pgefilter = {
+            'from': 0,
+            'count': this.pagination.totalCnt,
+          };
+          this.setPaginationFilter(pgefilter);
+          this.getTotalTask(pgefilter);
+        });
   }
+  setPaginationFilter(api_filter) {
+    api_filter['from'] = ((this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0);
+    api_filter['count'] = this.pagination.perPage;
+    return api_filter;
+  }
+  handle_pageclick(pg) {
+    this.pagination.startpageval = pg;
+    this.page = pg;
+    const pgefilter = {
+      'from': this.pagination.startpageval,
+      'count': this.pagination.totalCnt,
+    };
+    this.setPaginationFilter(pgefilter);
+    this.getTotalTask(pgefilter);
+  }
+  getTotalTask(pgefilter?) {
+    this.api_loading = true;
+    //  const filter = { 'scope-eq': 'account' };
+    this.crmService.getTotalTask(pgefilter)
+      .subscribe(
+        data => {
+          this.totalTaskList = data;
+          this.api_loading = false;
+        },
+        error => {
+          this.api_loading = false;
+          this.wordProcessor.apiErrorAutoHide(this, error);
+        }
+      );
+  }
+
   getInprogressTask() {
     this.crmService.getInprogressTask().subscribe(
       (data: any) => {
         this.totalInprogressList = data;
+        this.inprogressCount = this.totalInprogressList.length;
+
       },
       (error: any) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -169,15 +186,16 @@ export class TasksComponent implements OnInit {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
+
   getDelayedTask() {
     this.crmService.getDelayedTask().subscribe(
       (data: any) => {
         this.totalDelayedList = data;
-       
-        if(this.totalDelayedList.length === 0){
+
+        if (this.totalDelayedList.length === 0) {
           this.delayedCount = 0;
         }
-        else{
+        else {
           this.delayedCount = this.totalDelayedList.length;
         }
       },
@@ -185,13 +203,14 @@ export class TasksComponent implements OnInit {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
+
   goback() {
     this.locationobj.back();
   }
 
 
   doSearch() {
-    // this.getUsers();
+
     this.lStorageService.removeitemfromLocalStorage('taskfilter');
     if (this.filter.status || this.filter.category || this.filter.type || this.filter.dueDate) {
       this.filterapplied = true;
@@ -200,24 +219,11 @@ export class TasksComponent implements OnInit {
     }
   }
 
-  // handle_pageclick(pg) {
-  //   this.startpageval = pg;
-  //   this.do_search(true);
-  // }
-  getperPage() {
-    return this.perPage;
-  }
-  gettotalCnt() {
-    return this.totalCnt;
-  }
-  getcurpageVal() {
-    return this.startpageval;
-  }
   toggleFilter() {
     this.open_filter = !this.open_filter;
   }
   clearFilter() {
-    this.lStorageService.removeitemfromLocalStorage('userfilter');
+    this.lStorageService.removeitemfromLocalStorage('taskfilter');
     this.resetFilter();
     this.filterapplied = false;
     // this.getUsers();
@@ -244,7 +250,6 @@ export class TasksComponent implements OnInit {
     this.filter_sidebar = false;
   }
   tabChange(event) {
-    console.log(event)
     this.setTabSelection(event.index + 1);
   }
   setTabSelection(type) {
@@ -273,30 +278,26 @@ export class TasksComponent implements OnInit {
     }
   }
 
-  viewTask(taskUid)
-  {
-    console.log("Task id :",taskUid);
+  viewTask(taskUid) {
     this.router.navigate(['/provider/viewtask/' + taskUid]);
 
   }
 
-  createTask(createText:any) {
-    this.crmService.taskActivityName=createText;
-    console.log('create')
+  createTask(createText: any) {
+    this.crmService.taskActivityName = createText;
     this.router.navigate(['provider', 'task', 'create-task'])
   }
   stopprop(event) {
     event.stopPropagation();
   }
-  openEditTask(taskdata:any,editText:any){
-    this.crmService.taskToCraeteViaServiceData=taskdata
-   const newTaskData= this.crmService.taskToCraeteViaServiceData
+  openEditTask(taskdata: any, editText: any) {
+    this.crmService.taskToCraeteViaServiceData = taskdata
+    const newTaskData = this.crmService.taskToCraeteViaServiceData
     setTimeout(() => {
-      this.crmService.taskActivityName=editText;
+      this.crmService.taskActivityName = editText;
       newTaskData;
-    this.router.navigate(['provider', 'task','create-task']);
+      this.router.navigate(['provider', 'task', 'create-task']);
     }, projectConstants.TIMEOUT_DELAY);
-    console.log('taskdata....',taskdata);
 
   }
   // markAsDone() {

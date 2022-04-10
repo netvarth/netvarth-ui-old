@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormMessageDisplayModule } from "../../../../shared/modules/form-message-display/form-message-display.module";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
+import { PagerModule } from "../../../../../../src/app/shared/modules/pager/pager.module";
 
 const routes: Routes = [
   { path: '', component: TasksComponent },
@@ -26,7 +27,7 @@ const routes: Routes = [
 @NgModule({
     imports: [
         CommonModule,
-        LoadingSpinnerModule,
+        PagerModule,
         MatTableModule,
         MatDialogModule,
         MatTabsModule,
@@ -35,6 +36,7 @@ const routes: Routes = [
         MatInputModule,
         MatIconModule,
         MatMenuModule,
+        LoadingSpinnerModule,
         FormMessageDisplayModule,
         [RouterModule.forChild(routes)]
     ],
