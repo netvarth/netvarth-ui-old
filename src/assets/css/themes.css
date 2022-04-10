@@ -298,13 +298,13 @@ footer.heartfulness_theme1.bus-page-footer.site-footer .footer-bottom .footer-li
 .heartfulness_theme1 .mat-tab-label {
   color:black;
 }
-
-.mediExpat .panel, 
-.mediExpat .serv-head.service-serv-head,
+/* .mediExpat .panel, 
+.mediExpat .serv-head.service-serv-head, */
 .mediExpat mat-toolbar  {
     background: #FD7029 0% 0% no-repeat padding-box !important; 
     background-color: transparent !important; 
 }
+
 .mediExpat mat-sidenav {
   background: #FD7029 0% 0% no-repeat padding-box !important; 
 }
@@ -479,7 +479,7 @@ footer.heartfulness_theme1.bus-page-footer.site-footer .footer-bottom .footer-li
   background-color: white !important;
 }
 
-.mediExpat.content.bus-page .bus-page-header .bus-title-content .business-name, 
+/* .mediExpat.content.bus-page .bus-page-header .bus-title-content .business-name, 
 .mediExpat.content.bus-page .bus-page-header .bus-title-content .business-user-name,
 .mediExpat.content.bus-page .bus-page-header .bus-title-content .business-name, 
 .mediExpat.content.bus-page .bus-page-header .bus-title-content .business-user-name,
@@ -494,7 +494,7 @@ footer.heartfulness_theme1.bus-page-footer.site-footer .footer-bottom .footer-li
 .mediExpat ul.details.badges li
 {
 color: #fff !important;
-}
+} */
 .mediExpat.content.bus-page .bus-page-header .bus-title-content .specialization-header.question-header,
 .mediExpat.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-header,
 .mediExpat.content.bus-page .bus-page-header .bus-title-content .bus-actions .more-less-button a
@@ -502,9 +502,9 @@ color: #fff !important;
 color: #aaa !important;
 
 }
-.mediExpat.content.bus-page .bus-page-header .bus-title-content .address h6 a {
+/* .mediExpat.content.bus-page .bus-page-header .bus-title-content .address h6 a {
 color: #fff !important;
-}
+} */
 .mediExpat.content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions {
   background-color: transparent !important;
 }
