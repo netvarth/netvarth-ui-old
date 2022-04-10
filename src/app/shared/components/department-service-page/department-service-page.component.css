@@ -225,9 +225,9 @@ ul.bus-actions-horiz li {
 }
 
 @media (max-width: 500px) {
-  .panel-body {
+  /* .panel-body {
     padding: 5px !important;
-  }
+  } */
   .content .card {
     padding: 5px !important;
   }
@@ -751,6 +751,7 @@ ul.details.badges li {
 
 .panel-body {
   padding-bottom: 0px !important;
+  background-color: white;
 }
 
 .info-bar ul li:hover {
@@ -833,7 +834,6 @@ ul.details.badges li {
 .back-btn {
   margin-left: 5px;
   font-size: 1.25rem !important;
-  margin-top: -5px;
 }
 
 .service-icon {
@@ -960,36 +960,6 @@ ul.details.badges li {
 
 .bus-page .socialmedia li i.pntr:before {
   color: #ef452f;
-}
-
-/* cover foto */
-
-.bus-page .cvr-ht {
-  height: 312px;
-  background-repeat: no-repeat;
-  background-size: 100% 312px;
-}
-
-@media(max-width: 575px) {
-  .bus-page .cvr-ht {
-    height: 250px;
-    background-repeat: no-repeat;
-    background-size: 100% 250px;
-  }
-}
-
-.bus-page .cvr-dp-mgn {
-  margin-top: -80px;
-}
-
-@media (min-width: 992px) {
-  .bus-page .cvr-dp-mgn {
-    margin-top: -110px !important;
-  }
-}
-
-.bus-page .cvr-dp-bdr {
-  border: 5px solid #ffffff !important;
 }
 
 .bus-item-N {
@@ -2191,8 +2161,8 @@ img.ordericon.home {
   color: black;
   font-weight: 700 !important;
   text-align: left !important;
-  font-style: italic;
-  background-color: mintcream;
+  /* font-style: italic;
+  background-color: mintcream; */
 }
 
 /* @media (max-width: 650px) {
@@ -2273,4 +2243,44 @@ footer.bus-page-footer.site-footer .footer-bottom .footer-links.bd-pd-left {
 .morebt{
   cursor: pointer;
 color: #1572a8;
+}
+
+.cvr-ht {
+  height: 312px;
+  background-repeat: no-repeat;
+  background-size: 100% 312px;
+}
+
+ .cvr-dp-mgn {
+  margin-top: -80px;
+}
+
+/* @media (min-width: 992px) {
+  .cvr-dp-mgn {
+    margin-top: -110px !important;
+  }
+} */
+
+.cvr-dp-bdr {
+  border: 5px solid #ffffff !important;
+}
+
+.cvr-dp-mgn img {
+  height: 175px;
+  width: 175px;
+}
+
+@media(max-width: 575px) {
+  .cvr-ht {
+    height: 100px;
+    background-repeat: no-repeat;
+    background-size: 100% 100px;
+  }
+  .cvr-dp-mgn img {
+      height: 100px;
+      width: 100px;
+    }
+    .cvr-dp-mgn {
+      margin-top: -60px;
+    }
 }

@@ -1753,7 +1753,7 @@ sup {
 }
 
 .signup-form .mat-input-element, .signup-form .mat-select, .ynw-common-form .mat-input-element, .ynw-common-form .mat-select, .ynw-common-form-nm .mat-input-element, .ynw-common-form-nm .mat-select, .login-form .mat-input-element, .login-form .mat-select {
-  padding: 18px 0px 0px 5px !important;
+  padding: 18px 0px 0px 5px;
 }
 
 .ynw-common-form-nm .mat-form-field-underline {

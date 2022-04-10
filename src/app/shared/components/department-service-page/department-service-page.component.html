@@ -4,19 +4,36 @@
             <div class="bus-page-header">
                 <div class="panel panel-default no-padding">
                     <div class="panel-heading col-xs-12">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                            <a class="pull-left back-btn mgn-up-10" (click)="goBack()"><i class="fa fa-arrow-left"></i></a>
+                        </div>
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
+                            <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'pdetails'"></app-header>
+                        </div>
+                        <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                             <app-header [includedfrom]="'pdetails'" *ngIf="sharedFunctionobj.checkLogin()">
                             </app-header>
-                            <!-- <div class="view-booking" *ngIf="accountExists && !isLoggedIn">
-                            <button class="pull-right btn btn-primary dashboard-btn" (click)="dashboardClicked()">My
-                                Bookings</button>
+
                         </div> -->
+                        <div class="panel-body no-padding pad-bt-50">
+                            <div class="col-xs-12 no-padding">
+                                <div [style.background-image]="'url(' + bgCover + ')'" class="cvr-ht">
+                                </div>
+                                <div class="cvr-dp-mgn pull-left">
+                                    <img alt="Profile Image" [src]="bLogo" id="profile-image1"
+                                        class="img-circle cvr-dp pointer-cursor cvr-dp-bdr ">
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <!-- <div class="view-booking" *ngIf="accountExists && !isLoggedIn">
+                        <button class="pull-right btn btn-primary dashboard-btn" (click)="dashboardClicked()">My
+                            Bookings</button>
+                    </div> -->
                         </div>
-                    </div>
-                    <div class="panel-body no-padding pad-bt-50">
-                        <div class="row info-bar locations"
+                        <div class="clearfix"></div>
+                        <div class="col-xs-12 card info-bar locations mgn-up-10"
                             *ngIf="locationjson && locationjson.length > 0 && !api_loading && !loading && !loading_direct">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                                 <ng-container *ngFor="let sps of servicesAndProviders">
                                     <ng-container *ngIf="sps.departmentId == deptId">
                                         <h4 class="department-title p-2 d-block mgn-up-10 mgn-bt-10 dept-title-h4"
@@ -27,7 +44,7 @@
                                         <div class="bus-item-N" *ngFor="let sp of sps['departmentItems']">
                                             <app-card [item]="sp" [domain]="businessjson.serviceSector.domain"
                                                 [terminology]='terminologiesjson' [loc]="selectedLocation"
-                                                (actionPerformed)="cardClicked($event)"></app-card>
+                                                (actionPerformed)="cardClicked($event)" [theme]="theme"></app-card>
                                         </div>
                                     </ng-container>
                                 </ng-container>

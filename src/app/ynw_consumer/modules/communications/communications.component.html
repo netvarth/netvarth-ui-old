@@ -79,7 +79,7 @@
         <span class="mgn-lt-10 phonevallabel">{{commObj['comWhatsappCountryCode']}}
             {{commObj['comWhatsappNo']}}</span>
     </div>
-    <div class="contact-section text-primary">
+    <div class="contact-section text-primary" *ngIf="commObj['communicationEmail']">
         <i class="fa fa-envelope-o"></i>
         <span class="mgn-lt-10 emailvallabel">{{commObj['communicationEmail']}}</span>        
     </div>
