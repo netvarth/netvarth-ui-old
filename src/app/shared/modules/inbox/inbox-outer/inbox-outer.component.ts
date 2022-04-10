@@ -233,7 +233,12 @@ export class InboxOuterComponent implements OnInit {
       dataToSend.append('captions', blobPropdata);
       const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
       dataToSend.append('message', blobpost_Data);
-      const filter = { 'account': this.selectedUserMessages[0].accountId };
+      let filter;
+      if (!this.selectedUserMessages[0]) {
+        filter = { 'account': this.accId };
+      } else {
+        filter = { 'account': this.selectedUserMessages[0].accountId };
+      }
       this.shared_services.addConsumertoProviderNote(dataToSend, filter)
         .subscribe(
           () => {

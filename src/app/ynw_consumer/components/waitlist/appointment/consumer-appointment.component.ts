@@ -81,7 +81,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     selectedService: any; // To store selected appointment service details
     callingModes: any = []; // To store the teleservice calling mode whatsapp/jaldee video/zoom etc 
     changePhone;     // Change phone number or not
-    departments;     // departments
+    departments: any = [];     // departments
 
     allSlots;       // All slots for a particular schedule
     freeSlots: any = [];      // All available slots in custom manner
@@ -250,50 +250,61 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        const _this = this;
         this.onResize();
         this.serverDate = this.lStorageService.getitemfromLocalStorage('sysdate');
         if (this.appmtDate) {
             this.isFutureDate = this.dateTimeProcessor.isFutureDate(this.serverDate, this.appmtDate);
         }
-        this.gets3urls(); // Collecting informations from s3 businessProfile, settings etc.
-        this.slotLoaded = false;
-        if (this.selectedServiceId) { this.getPaymentModes(); }
-        this.getServicebyLocationId(this.locationId, this.appmtDate);
-        this.getSchedulesbyLocationandServiceIdavailability(this.locationId, this.selectedServiceId, this.accountId);
+        // Collecting informations from s3 businessProfile, settings etc.
+        this.gets3urls().then(
+            ()=> {
+                _this.slotLoaded = false;
+                if (_this.selectedServiceId) { _this.getPaymentModes(); }
+                _this.getServicebyLocationId(_this.locationId, _this.appmtDate);
+                _this.getSchedulesbyLocationandServiceIdavailability(_this.locationId, _this.selectedServiceId, _this.accountId);
+            }
+        );         
     }
 
     gets3urls() {
-        this.loadingS3 = true;
-        let accountS3List = 'settings,terminologies,coupon,providerCoupon,businessProfile,departmentProviders,appointmentsettings';
-        this.subs.sink = this.s3Processor.getJsonsbyTypes(this.uniqueId,
-            null, accountS3List).subscribe(
-                (accountS3s) => {
-                    // if (accountS3s['settings']) {
-                    //     this.processS3s('settings', accountS3s['settings']);
-                    // }
-                    if (accountS3s['appointmentsettings']) {
-                        this.processS3s('appointmentsettings', accountS3s['appointmentsettings']);
+        const _this = this;
+        _this.loadingS3 = true;
+        return new Promise(function(resolve,reject) {
+            let accountS3List = 'settings,terminologies,coupon,providerCoupon,businessProfile,departmentProviders,appointmentsettings';
+            _this.subs.sink = _this.s3Processor.getJsonsbyTypes(_this.uniqueId,
+                null, accountS3List).subscribe(
+                    (accountS3s) => {
+                        // if (accountS3s['settings']) {
+                        //     this.processS3s('settings', accountS3s['settings']);
+                        // }
+                        if (accountS3s['appointmentsettings']) {
+                            _this.processS3s('appointmentsettings', accountS3s['appointmentsettings']);
+                        }
+                        if (accountS3s['terminologies']) {
+                            _this.processS3s('terminologies', accountS3s['terminologies']);
+                        }
+                        if (accountS3s['coupon']) {
+                            _this.processS3s('coupon', accountS3s['coupon']);
+                        }
+                        if (accountS3s['providerCoupon']) {
+                            _this.processS3s('providerCoupon', accountS3s['providerCoupon']);
+                        }
+                        if (accountS3s['departmentProviders']) {
+                            _this.processS3s('departmentProviders', accountS3s['departmentProviders']);
+                        }
+                        if (accountS3s['businessProfile']) {
+                            _this.processS3s('businessProfile', accountS3s['businessProfile']);
+                        }
+                        _this.loadingS3 = false;
+                        resolve(true);
                     }
-                    if (accountS3s['terminologies']) {
-                        this.processS3s('terminologies', accountS3s['terminologies']);
-                    }
-                    if (accountS3s['coupon']) {
-                        this.processS3s('coupon', accountS3s['coupon']);
-                    }
-                    if (accountS3s['providerCoupon']) {
-                        this.processS3s('providerCoupon', accountS3s['providerCoupon']);
-                    }
-                    if (accountS3s['departmentProviders']) {
-                        this.processS3s('departmentProviders', accountS3s['departmentProviders']);
-                    }
-                    if (accountS3s['businessProfile']) {
-                        this.processS3s('businessProfile', accountS3s['businessProfile']);
-                    }
-                    this.loadingS3 = false;
-                }
-            );
+                );
+        })
+        
     }
     processS3s(type, res) {
+        const _this = this;
         let result = this.s3Processor.getJson(res);
         switch (type) {
             // case 'settings': {
@@ -331,9 +342,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 if (this.accountType === 'BRANCH') {
                     if (this.selectedDeptId) {
                         this.getDepartments(this.businessProfile.id).then(
-                            (departments) => {
+                            (departments:any) => {
                                 if (departments) {
-                                    this.departments = departments;
+                                    _this.departments = departments['departments'];
                                 }
                             }
                         )
@@ -366,6 +377,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
             case 'departmentProviders': {
                 let deptProviders: any = [];
+                this.users = [];
                 deptProviders = result;
                 if (!this.departmentEnabled) {
                     this.users = deptProviders;
@@ -376,6 +388,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         }
                     });
                 }
+                console.log("Users:", this.users);
                 // if (this.selectedUserId) {
                 //     this.setUserDetails(this.selectedUserId);
                 // }
@@ -407,6 +420,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     setDepartmentDetails(departmentId) {
+        console.log("Departments:", this.departments);
         const deptDetail = this.departments.filter(dept => dept.departmentId === departmentId);
         this.selectedDept = deptDetail[0];
     }

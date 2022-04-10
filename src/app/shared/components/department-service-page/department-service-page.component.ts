@@ -258,8 +258,8 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
   nonfirstCouponCount = 0;
   activeUser: any;
   checkinProviderList: any = [];
-  wlServices;
-  apptServices;
+  wlServices: any = [];
+  apptServices: any = [];
   private subscriptions = new SubSink();
   deptId;
   consumerVirtualinfo: any;
@@ -1946,7 +1946,14 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     }
   }
   providerDetClicked(userId) {
-    this.routerobj.navigate([this.accountEncId, userId]);
+    let queryParams = {};
+      if(this.theme) {
+        queryParams['theme'] = this.theme;
+      }
+      const navigationExtras: NavigationExtras = {
+        queryParams: queryParams
+      };
+    this.routerobj.navigate([this.accountEncId, userId], navigationExtras);
   }
   opencheckavail(actionObj) {
     this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
