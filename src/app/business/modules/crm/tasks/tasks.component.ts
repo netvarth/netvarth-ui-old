@@ -258,12 +258,11 @@ export class TasksComponent implements OnInit {
     switch (type) {
       case 1: {
         const pgefilter = {
-          'from': this.pagination.startpageval,
+          'from': 0,
           'count': this.pagination.totalCnt,
         };
         this.setPaginationFilter(pgefilter);
         this.getTotalTask(pgefilter);
-        this.getTotalTask();
         break;
       }
       case 2: {
