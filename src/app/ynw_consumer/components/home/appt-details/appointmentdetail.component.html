@@ -86,7 +86,7 @@
                                             <div class="each-item">
                                                 <span class="item-head">Email</span>
                                                 <span class="item-label-val">{{appt.appmtFor[0].email}}
-                                                    </span>
+                                                </span>
                                             </div>
                                             <div class="each-item"
                                                 *ngIf="appt.service.serviceType === 'virtualService'&&appt.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
@@ -150,14 +150,17 @@
                                     <div class="more_view" *ngIf="view_more" class="mgn-up-30">
                                         <mat-tab-group animationDuration="10ms" class="index-head">
                                             <mat-tab label="Instructions">
-                                                <span *ngIf="appt.service && appt.service.postInfoEnabled">
-                                                    <h6> {{appt.service.postInfoTitle}} </h6>
-                                                    <span [innerHTML]="appt.service.postInfoText">
+                                            
+                                                    <span *ngIf="appt.service && appt.service.postInfoEnabled">
+                                                        <h6> {{appt.service.postInfoTitle}} </h6>
+                                                        <span [innerHTML]="appt.service.postInfoText">
+                                                        </span>
                                                     </span>
-                                                </span>
-                                                <span *ngIf="appt.service && !appt.service.postInfoEnabled">No
-                                                    Instructions</span>
+                                                    <span class="mgn-lt-20" *ngIf="appt.service && !appt.service.postInfoEnabled">No
+                                                        Instructions</span>
+                                            
                                             </mat-tab>
+
                                             <mat-tab label="Messages">
                                                 <app-inbox-list [messages]="communication_history"
                                                     [fromsource]="'consumer-waitlist'"
@@ -173,7 +176,7 @@
                                             <mat-tab label="{{cust_notes_cap | capitalizeFirst}}">
                                                 <span
                                                     *ngIf="appt && appt.consumerNote &&  appt.consumerNote !== ''">{{appt.consumerNote}}</span>
-                                                <span
+                                                <span  class="mgn-lt-20" 
                                                     *ngIf="appt && (appt.consumerNote == '' || !appt.consumerNote)">{{no_cus_notes_cap}}</span>
                                             </mat-tab>
                                         </mat-tab-group>

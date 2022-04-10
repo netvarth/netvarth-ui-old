@@ -6519,10 +6519,10 @@ margin-top: 7px;
   width: 45px;
   margin-top: 7px;
   margin-left: 10px;
-  border: 2px solid #f5c84d;
+  /* border: 2px solid #f5c84d; */
   padding: 4px;
   border-radius: 20%;
-  background: #fcebbe54;
+  /* background: #fcebbe54; */
 }
 .consumer-dash .grid-card .consumer-reschedule-icon {
   content: url(../images/Reschedule-01-01.svg);
@@ -6692,9 +6692,9 @@ margin-top: 7px;
   font-weight: 600;
   color: blue;
 }
-.cust-book-details .mat-tab-labels {
+/* .cust-book-details .mat-tab-labels {
   background: #ffecbe;
-}
+} */
 .checkin-details .histry-font {
   font-size: 0.9rem;
 }
@@ -6849,6 +6849,9 @@ background: #fcebbea1;
   color: rgb(24 62 121);
   background: #ffefc9;
   padding: 15px;
+}
+.consumer-dash .cuA .day_hed {
+  background:#e3e7ed;
 }
 .consumer-dash .card_ico {
   border-radius: 100%;
