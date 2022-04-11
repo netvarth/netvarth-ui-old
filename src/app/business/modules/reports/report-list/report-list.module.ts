@@ -15,6 +15,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { PagerModule } from "../../../../../../src/app/shared/modules/pager/pager.module";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { ReportListComponent } from "./report-list.component";
+import { NgxPaginationModule } from "ngx-pagination";
 const routes: Routes = [
     {path: '', component: ReportListComponent}
 ]
@@ -36,6 +37,7 @@ const routes: Routes = [
         CapitalizeFirstPipeModule,
         ExportBookingReportModule,
         MatCheckboxModule,
+        NgxPaginationModule,
         [RouterModule.forChild(routes)]
     ]
 })

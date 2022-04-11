@@ -5,7 +5,7 @@ import { ServiceMeta } from '../../shared/services/service-meta';
 
 @Injectable()
 export class ProviderServices {
-    
+
   catalogPrefilledInput: any = [];
   constructor(private servicemeta: ServiceMeta) { }
   getProviderConfig() {
@@ -308,11 +308,11 @@ export class ProviderServices {
   }
   getPaymentSettings() {
     //const url = 'provider/payment/settings/';
-    const url='provider/account/settings';
+    const url = 'provider/account/settings';
     return this.servicemeta.httpGet(url);
   }
-  getBankPaymentSettings(){
-    const url='provider/payment/settings/bankInfo';
+  getBankPaymentSettings() {
+    const url = 'provider/payment/settings/bankInfo';
     return this.servicemeta.httpGet(url);
   }
   setPaymentSettings(data) {
@@ -325,7 +325,7 @@ export class ProviderServices {
   }
   setPaymentAccountSettingsForProvider(data) {
     const url = 'provider/account/settings/updateDestBank';
-    return this.servicemeta.httpPut(url,data);
+    return this.servicemeta.httpPut(url, data);
   }
   getProviderLocations() {
     return this.servicemeta.httpGet('provider/locations');
@@ -523,9 +523,9 @@ export class ProviderServices {
     const url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lon + '&key=' + projectConstants.GOOGLEAPIKEY + '&sensor=false';
     return this.servicemeta.httpGet(url);
   }
-  getGoogleAddEventToCalender(data ,header) {
+  getGoogleAddEventToCalender(data, header) {
     const url = 'https://www.googleapis.com/auth/calendar';
-    return this.servicemeta.httpPost(url , data , header);
+    return this.servicemeta.httpPost(url, data, header);
   }
   getGoogleMapLocationGeometry(address) {
     const url = 'https://maps.google.com/maps/api/geocode/json?address=' + address + '&sensor=false';
@@ -1105,7 +1105,7 @@ export class ProviderServices {
   getUserProfiles(profileIds) {
     const url = 'provider/user/providerProfiles/' + profileIds;
     return this.servicemeta.httpGet(url);
-}
+  }
   updateUserWaitlist(post_data) {
     const url = 'provider/waitlist/update';
     return this.servicemeta.httpPut(url, post_data);
@@ -1334,7 +1334,7 @@ export class ProviderServices {
     const url = 'provider/appointment/schedule/nextAvailableTime/' + scheduleid;
     return this.servicemeta.httpGet(url);
   }
-  getSlotsByLocationServiceandDate(locid, servid, pdate,accountid) {
+  getSlotsByLocationServiceandDate(locid, servid, pdate, accountid) {
     const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
@@ -2138,7 +2138,7 @@ export class ProviderServices {
     const url = 'provider/questionnaire/service/' + serviceId + '/' + channel + '/consumer/' + consumerId;
     return this.servicemeta.httpGet(url);
   }
-  getProviderorderQuestionnaire(serviceId, channel, consumerId ) {
+  getProviderorderQuestionnaire(serviceId, channel, consumerId) {
     const url = 'provider/questionnaire/order/' + serviceId + '/' + channel + '/consumer/' + consumerId;
     return this.servicemeta.httpGet(url);
   }
@@ -2334,12 +2334,12 @@ export class ProviderServices {
     const url = 'provider/appointment/unassignTeam';
     return this.servicemeta.httpPut(url, post_data);
   }
-   setpersonsWaitlistMgr(status) {
-    const url = 'provider/settings/waitlistMgr/personsAhead/' +status;
+  setpersonsWaitlistMgr(status) {
+    const url = 'provider/settings/waitlistMgr/personsAhead/' + status;
     return this.servicemeta.httpPut(url);
   }
-  getPaymentProfiles(){
-    const url='provider/payment/paymentProfiles'
+  getPaymentProfiles() {
+    const url = 'provider/payment/paymentProfiles'
     return this.servicemeta.httpGet(url);
   }
   // getPaymentGateWay(data) {
@@ -2350,44 +2350,44 @@ export class ProviderServices {
   //   const url='consumer/payment/wallet'
   //   return this.servicemeta.httpPost(url,data);  
   // }
-    changestatustoComplete(idlist,status){
-    const url = 'provider/appointment/multiStatusChange/' +status;
-    return this.servicemeta.httpPut(url,idlist);
+  changestatustoComplete(idlist, status) {
+    const url = 'provider/appointment/multiStatusChange/' + status;
+    return this.servicemeta.httpPut(url, idlist);
   }
   getAllFilterAttachments(filter?) {
     const url = 'provider/fileShare';
-    return this.servicemeta.httpGet(url,null,filter);
+    return this.servicemeta.httpGet(url, null, filter);
   }
   deleteAttachment(id) {
     const url = `provider/fileShare/${id}`;
     return this.servicemeta.httpDelete(url);
   }
-  uploadAttachments(folder_name, account_id ,body) {
-    const url = 'provider/fileShare/upload/'+ folder_name + '/' + account_id;
+  uploadAttachments(folder_name, account_id, body) {
+    const url = 'provider/fileShare/upload/' + folder_name + '/' + account_id;
     return this.servicemeta.httpPost(url, body);
   }
   // uploadAttachmentFiles(account_id ,body) {
   //   const url = 'provider/fileShare/upload/'+ account_id;
   //   return this.servicemeta.httpPost(url, body);
   // }
-  getFileStorage(){
+  getFileStorage() {
     return this.servicemeta.httpGet('provider/fileShare/storage');
   }
   getTotalFileShareCount(id) {
-    return this.servicemeta.httpGet('provider/fileShare/count/'+ id);
+    return this.servicemeta.httpGet('provider/fileShare/count/' + id);
   }
   getAllFileAttachments() {
     return this.servicemeta.httpGet('provider/fileShare/');
   }
-   changestatustowaitlistComplete(idlist,status){
-    const url = 'provider/waitlist/multiStatusChange/' +status;
-    return this.servicemeta.httpPut(url,idlist);
+  changestatustowaitlistComplete(idlist, status) {
+    const url = 'provider/waitlist/multiStatusChange/' + status;
+    return this.servicemeta.httpPut(url, idlist);
   }
-  getFollowUpWaitlist(uid){
+  getFollowUpWaitlist(uid) {
     const url = 'provider/waitlist/followUp/' + uid;
     return this.servicemeta.httpGet(url);
   }
-  getFollowUpAppt(uid){
+  getFollowUpAppt(uid) {
     const url = 'provider/appointment/followUp/' + uid;
     return this.servicemeta.httpGet(url);
   }
@@ -2396,8 +2396,31 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url, null, filter);
   }
   getReportList(filter = {}) {
-    const url = 'provider/report/status/cache/DONE,INPROGRESS,SEEN';
+    const url = 'provider/report/status/cache/DONE,INPROGRESS,NEW,SEEN';
     return this.servicemeta.httpGet(url, null, filter);
+  }
+  getTotalFilterReports(filter) {
+    if (filter === 'SEEN') {
+      const url = 'provider/report/status/cache/SEEN';
+      return this.servicemeta.httpGet(url);
+    }
+    else if (filter === 'INPROGRESS') {
+      const url = 'provider/report/status/cache/INPROGRESS';
+      return this.servicemeta.httpGet(url);
+
+    }
+    else if (filter === 'NEW') {
+      const url = 'provider/report/status/cache/NEW';
+      return this.servicemeta.httpGet(url);
+    }
+    else if (filter === 'DONE') {
+      const url = 'provider/report/status/cache/DONE';
+      return this.servicemeta.httpGet(url);
+    }
+  }
+  getTotalTaskReportCount() {
+    const url = 'provider/report/status/cache/DONE,INPROGRESS,NEW,SEEN/count';
+    return this.servicemeta.httpGet(url);
   }
   getReportListbyId(token) {
     const url = 'provider/report/status/' + token;

@@ -4,10 +4,9 @@ import { projectConstants } from '../../../../../../src/app/app.component';
 import { Messages } from '../../../../../../src/app/shared/constants/project-messages';
 import { Location } from '@angular/common';
 import { Router , NavigationExtras } from '@angular/router';
-import { SnackbarService } from '../../../../../../src/app/shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../src/app/shared/services/word-processor.service';
-import { LocalStorageService } from '../../../../../../src/app/shared/services/local-storage.service';
 import { ProviderServices } from '../../../../../../src/app/business/services/provider-services.service';
+import { LocalStorageService } from '../../../../../../src/app/shared/services/local-storage.service';
 @Component({
   selector: 'app-report-list',
   templateUrl: './report-list.component.html',
@@ -57,117 +56,198 @@ export class ReportListComponent implements OnInit {
   taskList: any = [];
   totalReportList: any = [];
   filtericonTooltip = '';
+  searchTerm: any;
+  reportCount;
+  page = 1;
+  page_count = projectConstants.PERPAGING_LIMIT;
+  pagination: any = {
+    startpageval: 1,
+    totalCnt: this.totalReportList.length,
+    perPage: 3
+  };
+  p: number = 1;
+  config: any;
+  count: number = 0;
+  apiloading = false;
   filter = {
     status: '',
-    category: '',
-    type: '',
-    dueDate: '',
-    pinCode: '',
-    primaryMobileNo: '',
-    employeeId: '',
-    email: '',
-    userType: '',
-    available: '',
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1
-
   };
-
   filters: any = {
     'status': false,
-    'category': false,
-    'type': false,
-    'dueDate': false,
   };
+  SEEN: boolean;
+  INPROGRESS: boolean;
+  DONE: boolean;
+  NEW: boolean;
   constructor(
     private locationobj: Location,
     public router: Router,
-    private provider_services: ProviderServices,
     private lStorageService: LocalStorageService,
+    private provider_services: ProviderServices,
     private wordProcessor: WordProcessor,
-    private snackbarService: SnackbarService,
   ) {
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
-  }
+    this.config = {
+      itemsPerPage: 10,
+      currentPage: 1,
+      totalItems: this.totalReportList.length
 
+    };
+  }
+  pageChanged(event) {
+    this.config.currentPage = event;
+  }
+  handle_pageclick(pg) {
+    this.pagination.startpageval = pg;
+  }
   ngOnInit(): void {
     this.api_loading = false;
     this.getTotalReports();
 
+
+  }
+
+  getTotalReports(from_oninit = false) {
+    this.api_loading = true;
+    let filter = this.setFilterForApi();
+    if (filter) {
+      console.log(filter);
+      this.lStorageService.setitemonLocalStorage('reportfilter', filter);
+      this.provider_services.getReportList(filter).subscribe(
+        (data: any) => {
+          console.log(data);
+          this.totalReportList = data
+          this.api_loading = false;
+        }
+      );
+    }
+  }
+  getTotalFilterReports(from_oninit = false) {
+    this.api_loading = true;
+    let filter = this.setFilterForApi();
+    if (filter) {
+      console.log(filter);
+      this.lStorageService.setitemonLocalStorage('reportfilter', filter);
+      this.provider_services.getTotalFilterReports(filter).subscribe(
+        (data: any) => {
+          console.log(data);
+          this.totalReportList = data;
+          this.api_loading = false;
+        }
+      );
+    }
+  }
+  setFilterForApi() {
+    let api_filter = {};
+    const filter = this.lStorageService.getitemfromLocalStorage('reportfilter');
+    if (filter) {
+      api_filter = filter;
+    }
+   
+    if (this.filter.status === 'SEEN') {
+      api_filter = this.filter.status;
+    }
+    if (this.filter.status === 'INPROGRESS') {
+      api_filter = this.filter.status;
+    }
+    if (this.filter.status === 'DONE') {
+      api_filter = this.filter.status;
+    }
+    if (this.filter.status === 'NEW') {
+      api_filter = this.filter.status;
+    }
+    return api_filter;
+  }
+  clearFilter() {
+    this.filter.status = '';
+    this.lStorageService.removeitemfromLocalStorage('reportfilter');
+    this.resetFilter();
+    this.getTotalReports();
+    this.SEEN  = false;
+    this.INPROGRESS  = false;
+    this.DONE  = false;
+    this.NEW  = false;
+  }
+  resetFilter() {
+    this.filters = {
+      'status': false,
+    };
+    this.filter = {
+      status: '',
+      page_count: projectConstants.PERPAGING_LIMIT,
+      page: 1,
+    };
+  }
+  setFilterDataCheckbox(type, value) {
+    if (type === 'status') {
+      if (value === false) {
+        this.INPROGRESS = false;
+        this.SEEN = false;
+        this.NEW = false;
+        this.DONE = false;
+        this.filter.status = ' ';
+      }
+      if (value === 'INPROGRESS') {
+        this.INPROGRESS = true;
+        this.SEEN = false;
+        this.NEW = false;
+        this.DONE = false;
+        this.filter.status = 'INPROGRESS';
+
+      }
+      else if (value === 'SEEN') {
+        this.INPROGRESS = false;
+        this.SEEN = true;
+        this.NEW = false;
+        this.DONE = false;
+        this.filter.status = 'SEEN';
+
+      }
+      else if (value === 'NEW') {
+        this.INPROGRESS = false;
+        this.SEEN = false;
+        this.NEW = true;
+        this.DONE = false;
+        this.filter.status = 'NEW';
+
+      }
+      else if (value === 'DONE') {
+        this.INPROGRESS = false;
+        this.SEEN = false;
+        this.NEW = false;
+        this.DONE = true;
+        this.filter.status = 'DONE';
+
+      }
+      else {
+        this.INPROGRESS = false;
+        this.SEEN = false;
+        this.NEW = false;
+        this.DONE = false;
+        this.filter.status = '';
+      }
+    }
     this.doSearch();
-
-
   }
-  getTotalReports() {
-    this.provider_services.getReportList().subscribe(
-      (data: any) => {
-        this.totalReportList = data;
-        console.log(this.totalReportList)
-        console.log(this.totalReportList.length)
-      },
-      (error: any) => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
-  }
- 
-
-  goback() {
-    this.locationobj.back();
-  }
-
-
   doSearch() {
-    // this.getUsers();
-    this.lStorageService.removeitemfromLocalStorage('taskfilter');
-    if (this.filter.status || this.filter.category || this.filter.type || this.filter.dueDate) {
+    this.lStorageService.removeitemfromLocalStorage('reportfilter');
+    if (this.filter.status) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
     }
   }
-
-  // handle_pageclick(pg) {
-  //   this.startpageval = pg;
-  //   this.do_search(true);
-  // }
-  getperPage() {
-    return this.perPage;
-  }
-  gettotalCnt() {
-    return this.totalCnt;
-  }
-  getcurpageVal() {
-    return this.startpageval;
-  }
-  toggleFilter() {
-    this.open_filter = !this.open_filter;
-  }
-  clearFilter() {
-    this.lStorageService.removeitemfromLocalStorage('userfilter');
-    this.resetFilter();
-    this.filterapplied = false;
-    // this.getUsers();
-  }
-  resetFilter() {
-    this.filters = {
-      'status': false,
-      'category': false,
-      'type': false,
-      'dueDate': false,
-    };
-    // this.filter = {
-    //     status: '',
-    //     category: '',
-    //     type: '',
-    //     dueDate: '',
-
-    // };
+  hideFilterSidebar() {
+    this.filter_sidebar = false;
   }
   showFilterSidebar() {
     this.filter_sidebar = true;
+    console.log(this.filter_sidebar);
   }
-  hideFilterSidebar() {
-    this.filter_sidebar = false;
+  goback() {
+    this.locationobj.back();
   }
 
   stopprop(event) {

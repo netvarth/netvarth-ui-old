@@ -214,6 +214,24 @@
                         </mat-accordion>
                         </div>
                     </div>
+                     <!-- CRM Reports -->
+                     <div class="row">
+                      <div class="card p0">
+                        <mat-accordion class="report">
+                          <mat-expansion-panel  [expanded]="true">
+                              <mat-expansion-panel-header>
+                                  <mat-panel-title class="report_title">
+                                     CRM 
+                                     <div class="width100pc" >
+                                      <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'crm'}">Create New Report</a>
+                                     </div>
+                                  </mat-panel-title>
+                              </mat-expansion-panel-header>
+                       
+                          </mat-expansion-panel>
+                      </mat-accordion>
+                      </div>
+                  </div>
       </div>
       <div class="clearfix"></div>
   </div>
