@@ -92,6 +92,9 @@ export class TasksComponent implements OnInit {
   completedCount: any;
   delayedCount: any;
   page = 1;
+  inprogress = false;
+  completed= false;
+  total= false;
   constructor(
     private locationobj: Location,
     private groupService: GroupStorageService,
@@ -115,8 +118,8 @@ export class TasksComponent implements OnInit {
       this.selectedTab = 1;
     }
     this.getTotalTaskCount();
-    this.getInprogressTask();
-    this.getCompletedTask();
+    this.getInprogressTaskCount();
+    this.getCompletedTaskCount();
     this.getDelayedTask();
     // this.doSearch();
   }
@@ -135,11 +138,19 @@ export class TasksComponent implements OnInit {
         });
   }
   setPaginationFilter(api_filter) {
-    api_filter['from'] = ((this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0);
-    api_filter['count'] = this.pagination.perPage;
-    return api_filter;
+    if(this.total){
+      api_filter['from'] = 0;
+      api_filter['count'] = this.pagination.perPage;
+      return api_filter;
+    } else{
+      api_filter['from'] = ((this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0);
+      api_filter['count'] = this.pagination.perPage;
+      return api_filter;
+    }
+    
   }
   handle_pageclick(pg) {
+    this.total = false;
     this.pagination.startpageval = pg;
     this.page = pg;
     const pgefilter = {
@@ -164,28 +175,103 @@ export class TasksComponent implements OnInit {
         }
       );
   }
-
-  getInprogressTask() {
-    this.crmService.getInprogressTask().subscribe(
+  getInprogressTaskCount() {
+    this.crmService.getInprogressTaskCount()
+      .subscribe(
+        data => {
+          this.pagination.totalCnt = data;
+          this.inprogressCount = data;
+          const pgefilter_inprogress = {
+            'from': 0,
+            'count': this.pagination.totalCnt,
+          };
+          this.setPaginationFilter_inprogress(pgefilter_inprogress);
+          this.getInprogressTask(pgefilter_inprogress);
+        });
+  }
+  setPaginationFilter_inprogress(api_filter) {
+    if(this.inprogress){
+      api_filter['from'] = 0;
+      api_filter['count'] = this.pagination.perPage;
+      return api_filter;
+    }
+    else{
+      api_filter['from'] = ((this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0);
+      api_filter['count'] = this.pagination.perPage;
+      return api_filter;
+    }
+   
+  }
+  handle_pageclick_inprogree(pg) {
+    this.inprogress = false;
+    this.pagination.startpageval = pg;
+    this.page = pg;
+    const pgefilter_inprogress = {
+      'from': this.pagination.startpageval,
+      'count': this.pagination.totalCnt,
+    };
+    this.setPaginationFilter_inprogress(pgefilter_inprogress);
+    this.getInprogressTask(pgefilter_inprogress);
+  }
+  getInprogressTask(pgefilter_inprogress?) {
+    this.crmService.getInprogressTask(pgefilter_inprogress).subscribe(
       (data: any) => {
         this.totalInprogressList = data;
-        this.inprogressCount = this.totalInprogressList.length;
 
       },
       (error: any) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
-  getCompletedTask() {
-    this.crmService.getCompletedTask().subscribe(
+  getCompletedTaskCount() {
+    this.crmService.getCompletedTaskCount()
+      .subscribe(
+        data => {
+          this.pagination.totalCnt = data;
+          this.completedCount = data;
+          const pgefilter_completed = {
+            'from': 0,
+            'count': this.pagination.totalCnt,
+          };
+          this.setPaginationFilter_completed(pgefilter_completed);
+          this.getCompletedTask(pgefilter_completed);
+        });
+  }
+  setPaginationFilter_completed(api_filter) {
+    
+    if(this.completed){
+      api_filter['from'] = 0;
+      api_filter['count'] = this.pagination.perPage;
+      return api_filter;
+    }
+    else{
+      api_filter['from'] = ((this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0);
+      api_filter['count'] = this.pagination.perPage;
+      return api_filter;
+    }
+    
+  }
+  handle_pageclick_completed(pg) {
+    this.completed = false;
+    this.pagination.startpageval = pg;
+    this.page = pg;
+    const pgefilter_completed = {
+      'from': this.pagination.startpageval,
+      'count': this.pagination.totalCnt,
+    };
+    this.setPaginationFilter_inprogress(pgefilter_completed);
+    this.getCompletedTask(pgefilter_completed);
+  }
+  getCompletedTask(pgefilter_inprogress?) {
+    this.crmService.getCompletedTask(pgefilter_inprogress).subscribe(
       (data: any) => {
         this.totalCompletedList = data;
-        this.completedCount = this.totalCompletedList.length;
       },
       (error: any) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
+
 
   getDelayedTask() {
     this.crmService.getDelayedTask().subscribe(
@@ -257,21 +343,18 @@ export class TasksComponent implements OnInit {
     this.groupService.setitemToGroupStorage('tabIndex', this.selectedTab);
     switch (type) {
       case 1: {
-        const pgefilter = {
-          'from': 0,
-          'count': this.pagination.totalCnt,
-        };
-        this.setPaginationFilter(pgefilter);
-        this.getTotalTask(pgefilter);
+        this.total = true;
+        this.getTotalTaskCount();
         break;
       }
       case 2: {
-        this.getInprogressTask();
-
+        this.inprogress = true;
+        this.getInprogressTaskCount();
         break;
       }
       case 3: {
-        this.getCompletedTask();
+        this.completed = true;
+        this.getCompletedTaskCount();
 
         break;
       }

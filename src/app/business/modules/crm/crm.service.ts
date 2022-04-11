@@ -67,12 +67,20 @@ export class CrmService {
       const url = 'provider/task/provider/count';
       return this.servicemeta.httpGet(url);
     }
-    getInprogressTask() {
+    getInprogressTask(filter = {}) {
       const url = 'provider/task/provider?status-eq=3';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+    getInprogressTaskCount() {
+      const url = 'provider/task/provider/count?status-eq=3';
       return this.servicemeta.httpGet(url);
     }
-    getCompletedTask() {
+    getCompletedTask(filter = {}) {
       const url = 'provider/task/provider?status-eq=5';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+    getCompletedTaskCount() {
+      const url = 'provider/task/provider/count?status-eq=5';
       return this.servicemeta.httpGet(url);
     }
     getDelayedTask() {
