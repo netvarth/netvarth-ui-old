@@ -10,6 +10,7 @@ import { CrmService } from '../../crm.service';
 // import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { SelectAttachmentComponent } from './select-attachment/select-attachment.component';
+import  {CrmSelectMemberComponent} from '../../../../shared/crm-select-member/crm-select-member.component'
 @Component({
   selector: 'app-view-task',
   templateUrl: './view-task.component.html',
@@ -84,6 +85,10 @@ selectedMessage = {
 
 imgCaptions: any = [];
 
+//notes variable start
+  public notesText:any;
+  public notesList:any=[]
+
 constructor(
   private locationobj: Location,
   // private lStorageService: LocalStorageService,
@@ -107,9 +112,13 @@ ngOnInit(): void {
     this.crmService.getTaskDetails(this.taskUid).subscribe(data => {
       this.taskDetails = data;
       console.log("Task Details : ",this.taskDetails);
+      // console.log('this.taskDetails.notes',this.taskDetails.notes)
+      this.taskDetails.notes.forEach((notesdata:any)=>{
+        this.notesList.push(notesdata)
+      })
+      console.log('this.notesList',this.notesList)
   })
-  });
-
+  })
 
 
 }
@@ -241,6 +250,42 @@ hideFilterSidebar() {
 goBack()
 {
   this._location.back();
+}
+
+//notes start
+openAddNoteDialog(addNoteText:any){
+  console.log('addNoteText',addNoteText);
+  const dialogRef = this.dialog.open(CrmSelectMemberComponent,{
+    width:'100%',
+    panelClass: ['popup-class', 'confirmationmainclass'],
+    data:{
+      requestType:'createUpdateNotes',
+      header:'Notes',
+      taskUid:this.taskUid,
+    }
+  })
+  dialogRef.afterClosed().subscribe((response)=>{
+    console.log('responseDataAboutNote',response);
+    this.notesText=response;
+    this.notesList.push()
+  })
+
+}
+noteView(noteDetails:any){
+  console.log('notedetails',noteDetails);
+  const dialogRef = this.dialog.open(CrmSelectMemberComponent,{
+    width:'60%',
+    panelClass: ['popup-class', 'confirmationmainclass'],
+    data:{
+      requestType:'noteDetails',
+      header:'Note Details',
+      noteDetails:noteDetails,
+    }
+  })
+  dialogRef.afterClosed().subscribe((response:any)=>{
+    console.log('response',response)
+  })
+
 }
 
 }

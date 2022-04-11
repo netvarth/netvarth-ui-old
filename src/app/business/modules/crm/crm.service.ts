@@ -110,6 +110,14 @@ export class CrmService {
       const url='provider/task/'+taskUid + '/manager' + userId
       return this.servicemeta.httpPost(url);
     }
+    addNotes(taskUid,notesData){
+      const url ='provider/task/'+taskUid+'/notes';
+      return this.servicemeta.httpPut(url,notesData)
+    }
+    getNotes(){
+      // const url = 'provider';
+      // return this.servicemeta.httpGet(url, null);
+    }
     // https://scale.jaldee.com/v1/rest/provider/login
     // addDepartmentServices(data, id) {
     //   const url = 'provider/departments/' + id + '/service';

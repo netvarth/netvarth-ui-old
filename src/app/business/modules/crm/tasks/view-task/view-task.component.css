@@ -235,3 +235,47 @@
   {
     font-size: 12px!important;
   }
+
+  /* for notes section start */
+  @media(max-width: 992px){
+    .notesSubTask{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .border{
+      margin-right: 0px !important;
+    }
+
+  }
+  .widthadd{
+    max-width: -webkit-fill-available !important;
+  }
+  @media(min-width: 1200px){
+    .widthadd{
+      max-width: 32.333333% !important;
+    }
+    .subTask{
+      width: 65.666667% !important;
+    }
+  }
+  .notesListSection{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    font-weight: 500!important;
+    font-size: 13px!important;
+    color: #4D4B4B;
+  }
+  .allNotesList{
+    padding: 10px;
+    background: #FFFFFF;
+    border: 0.450552px solid #DCDCDC;
+    box-sizing: border-box;
+    border-radius: 3.93969px;
+    margin-bottom: 5px;
+  }
+  
+ 

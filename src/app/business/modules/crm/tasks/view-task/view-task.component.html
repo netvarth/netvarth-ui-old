@@ -27,7 +27,7 @@
       </div>
     </div>
     <div>
-      <button class="btn btn-outline-primary mx-2">Add Note</button>
+      <button class="btn btn-outline-primary mx-2" (click)="openAddNoteDialog('AddNote')">Add Note</button>
     </div>
     <div>
       <button class="btn btn-outline-primary">Chat</button>
@@ -100,11 +100,30 @@
         </div>
       </div>
 
-      
-      
-      <div class="subtask-border mt-4">
-        <app-subtasks [taskid]="taskUid"></app-subtasks>
+      <div class="row d-lg-flex justify-content-lg-start notesSubTask" *ngIf="notesList.length>0">
+        <div class="border height-limit col col-md-4 col-lg-4 col-sm-12 col-xs-12 no-padding mt-2 widthadd">
+        <h4>
+          <b>Notes</b>
+        </h4>
+        <!----notes list start-->
+        <div *ngFor="let note of notesList;let i=index" class="allNotesList">
+         <div class="notesListSection">
+           Note {{i}}
+           <div>{{note.createdDate | date:'MMM d, h:mm a'}}</div>
+           <div style="cursor: pointer;"(click)="noteView(note)"><i class="fa fa-eye" aria-hidden="true"></i></div>
+         </div>
+        </div>
+        <!---notes list end-->
+        </div>
+        <div  class="subtask-border  height-limit col col-md-8 col-lg-8 col-sm-12 col-xs-12 no-padding mt-2 subTask">
+          <app-subtasks [taskid]="taskUid"></app-subtasks>
+        </div>
       </div>
+      
+      
+      <!-- <div class="subtask-border mt-4">
+        <app-subtasks [taskid]="taskUid"></app-subtasks>
+      </div> -->
      
     </div>
   </div>
