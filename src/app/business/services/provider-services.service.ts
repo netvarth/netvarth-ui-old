@@ -2396,7 +2396,7 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url, null, filter);
   }
   getReportList(filter = {}) {
-    const url = 'provider/report/status/cache/DONE,INPROGRESS,NEW,SEEN';
+    const url = 'provider/report/status/cache/DONE,INPROGRESS,NEW';
     return this.servicemeta.httpGet(url, null, filter);
   }
   getTotalFilterReports(filter) {
@@ -2419,7 +2419,7 @@ export class ProviderServices {
     }
   }
   getTotalTaskReportCount() {
-    const url = 'provider/report/status/cache/DONE,INPROGRESS,NEW,SEEN/count';
+    const url = 'provider/report/status/cache/DONE,INPROGRESS,NEW/count';
     return this.servicemeta.httpGet(url);
   }
   getReportListbyId(token) {

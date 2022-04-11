@@ -13,7 +13,7 @@ import { ExportBookingReportComponent } from '../../export-booking-report/export
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-new-report',
   templateUrl: './new-report.component.html',
@@ -157,6 +157,7 @@ export class NewReportComponent implements OnInit {
     private router: Router,
     private activated_route: ActivatedRoute,
     public shared_functions: SharedFunctions,
+    private locationobj: Location,
     private report_data_service: ReportDataService,
     private provider_services: ProviderServices,
     public dateformat: DateFormatPipe,
@@ -1095,7 +1096,8 @@ export class NewReportComponent implements OnInit {
     });
   }
   redirecToReports() {
-    this.router.navigate(['provider', 'reports']);
+    this.locationobj.back();
+    // this.router.navigate(['provider', 'reports']);
   }
   passPayloadForReportGeneration(payload) {
     this.btn_disabled = true;

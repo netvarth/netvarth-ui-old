@@ -89,7 +89,6 @@ export class TasksComponent implements OnInit {
   page = 1;
   inprogress = false;
   completed= false;
-  total= true;
   public taskStatusList:any=[];
   public categoryListData:any=[];
   public taskTypeList:any=[];
@@ -134,6 +133,7 @@ export class TasksComponent implements OnInit {
       .subscribe(
         data => {
           this.pagination.totalCnt = data;
+         
           this.totalCount = data;
           const pgefilter = {
             'from': 0,
@@ -144,15 +144,11 @@ export class TasksComponent implements OnInit {
         });
   }
   setPaginationFilter(api_filter) {
-    if(this.total){
-      api_filter['from'] = 0;
-      api_filter['count'] = this.pagination.perPage;
-      return api_filter;
-    } else{
+  
       api_filter['from'] = ((this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0);
       api_filter['count'] = this.pagination.perPage;
       return api_filter;
-    }
+    
     
   }
   handle_pageclick(pg) {
@@ -333,7 +329,6 @@ export class TasksComponent implements OnInit {
     this.groupService.setitemToGroupStorage('tabIndex', this.selectedTab);
     switch (type) {
       case 1: {
-        this.total = true;
         this.getTotalTaskCount();
         break;
       }
