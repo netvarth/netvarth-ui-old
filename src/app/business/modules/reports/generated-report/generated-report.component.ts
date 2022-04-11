@@ -99,10 +99,8 @@ export class GeneratedReportComponent implements OnInit {
         });
           this.report_dataSource = this.fo;
              if (this.fo.length === 0) {
-          alert('1')
           this.showReport = false;
         } else {
-          alert('13')
           this.showReport = true;
         }
         this.buildDataSource();
