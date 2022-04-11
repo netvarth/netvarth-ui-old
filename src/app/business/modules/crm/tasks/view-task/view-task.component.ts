@@ -267,7 +267,7 @@ openAddNoteDialog(addNoteText:any){
   dialogRef.afterClosed().subscribe((response)=>{
     console.log('responseDataAboutNote',response);
     this.notesText=response;
-    this.notesList.push()
+    // this.notesList.push()
   })
 
 }
