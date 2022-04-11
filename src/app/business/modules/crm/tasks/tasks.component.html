@@ -138,7 +138,7 @@
                         <tr *ngFor="let task of totalTaskList; let i=index" (click)="viewTask(task.taskUid)">
                           <td data-title="Task Details" class="td1">&nbsp;&nbsp;&nbsp;{{task.title}}</td>
                           <td data-title="Duration" class="td3"><span
-                              *ngIf="task.estDuration && task.estDuration.days">{{task.estDuration.days}} Days</span>
+                              *ngIf="task.estDuration && task.estDuration.days">{{task.estDuration.days}} Days</span>&nbsp;
                             <span *ngIf="task.estDuration && task.estDuration.hours">{{task.estDuration.hours}}
                               Hours</span></td>
                           <td data-title="Status" class="td2">{{task.status.name}}</td>
@@ -308,7 +308,10 @@
                       <ng-container *ngIf="totalInprogressList.length>0">
                         <tr *ngFor="let task of totalInprogressList; let i=index" (click)="viewTask(task.taskUid)">
                           <td data-title="Task Details" class="td1">&nbsp;&nbsp;&nbsp;{{task.title}}</td>
-                          <td data-title="Duration" class="td3">{{task.duration}}</td>
+                          <td data-title="Duration" class="td3"><span
+                            *ngIf="task.estDuration && task.estDuration.days">{{task.estDuration.days}} Days</span>&nbsp;
+                          <span *ngIf="task.estDuration && task.estDuration.hours">{{task.estDuration.hours}}
+                            Hours</span></td>
                           <td data-title="Status" class="td2">{{task.status.name}}</td>
                           <td data-title="Category" class="td4">{{task.category.name}}</td>
                           <td data-title="Type" class="td4">{{task.type.name}}</td>
@@ -475,7 +478,10 @@
                       <ng-container *ngIf="totalCompletedList.length>0">
                         <tr *ngFor="let task of totalCompletedList; let i=index" (click)="viewTask(task.taskUid)">
                           <td data-title="Task Details" class="td1">&nbsp;&nbsp;&nbsp;{{task.title}}</td>
-                          <td data-title="Duration" class="td3">{{task.duration}}</td>
+                          <td data-title="Duration" class="td3"><span
+                            *ngIf="task.estDuration && task.estDuration.days">{{task.estDuration.days}} Days</span>&nbsp;
+                          <span *ngIf="task.estDuration && task.estDuration.hours">{{task.estDuration.hours}}
+                            Hours</span></td>
                           <td data-title="Status" class="td2">{{task.status.name}}</td>
                           <td data-title="Category" class="td4">{{task.category.name}}</td>
                           <td data-title="Type" class="td4">{{task.type.name}}</td>
@@ -642,7 +648,10 @@
                       <ng-container *ngIf="totalDelayedList.length>0">
                         <tr *ngFor="let task of totalDelayedList; let i=index" (click)="viewTask(task.taskUid)">
                           <td data-title="Task Details" class="td1">&nbsp;&nbsp;&nbsp;{{task.title}}</td>
-                          <td data-title="Duration" class="td3">{{task.duration}}</td>
+                          <td data-title="Duration" class="td3"><span
+                            *ngIf="task.estDuration && task.estDuration.days">{{task.estDuration.days}} Days</span>&nbsp;
+                          <span *ngIf="task.estDuration && task.estDuration.hours">{{task.estDuration.hours}}
+                            Hours</span></td>
                           <td data-title="Status" class="td2">{{task.status.name}}</td>
                           <td data-title="Category" class="td4">{{task.category.name}}</td>
                           <td data-title="Type" class="td4">{{task.type.name}}</td>
