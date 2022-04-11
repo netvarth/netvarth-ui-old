@@ -1153,7 +1153,7 @@ export class NewReportComponent implements OnInit {
   generatedReport(report) {
     this.setSelectedData().then(res => {
       this.lStorageService.setitemonLocalStorage('report', JSON.stringify(report));
-      this.router.navigate(['provider', 'reports', 'generated-report']);
+      this.router.navigate(['provider', 'reports', 'report-list']);
     },
     );
   }
