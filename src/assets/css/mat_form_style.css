@@ -307,7 +307,7 @@
     font-weight: 500;
     color: #222223;
     text-overflow: ellipsis;
-    padding: 10px;
+    /* padding: 10px; */
 }
 
 .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element::-moz-placeholder {

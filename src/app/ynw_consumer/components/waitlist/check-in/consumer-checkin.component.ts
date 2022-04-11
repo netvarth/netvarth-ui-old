@@ -2320,7 +2320,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         } else {
             _this.commObj['communicationEmail'] = _this.parentCustomer.userProfile.email;
         }
-        if (parentCustomer.userProfile.whatsAppNum) {
+        if (parentCustomer.userProfile.whatsAppNum && parentCustomer.userProfile.whatsAppNum.trim() != '') {
             _this.commObj['comWhatsappNo'] = parentCustomer.userProfile.whatsAppNum.number;
             _this.commObj['comWhatsappCountryCode'] = parentCustomer.userProfile.whatsAppNum.countryCode;
         } else {

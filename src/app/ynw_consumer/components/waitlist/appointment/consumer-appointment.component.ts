@@ -1137,7 +1137,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         } else {
             _this.commObj['communicationEmail'] = _this.parentCustomer.userProfile.email;
         }
-        if (parentCustomer.userProfile.whatsAppNum && parentCustomer.userProfile.whatsAppNum != '') {
+        if (parentCustomer.userProfile.whatsAppNum && parentCustomer.userProfile.whatsAppNum.number.trim() != '') {
             _this.commObj['comWhatsappNo'] = parentCustomer.userProfile.whatsAppNum.number;
             _this.commObj['comWhatsappCountryCode'] = parentCustomer.userProfile.whatsAppNum.countryCode;
         } else {
@@ -1389,7 +1389,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.confirmAppointment(type);
                 } else {
                     this.isClickedOnce = false;
-                    // this.goBack('backy');
+                    this.goBack('backy');
                 }
             });
         } else {
@@ -1470,9 +1470,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         if (callingModes === '' || callingModes.length < 10) {
             for (const i in this.selectedService.virtualCallingModes) {
                 if (this.selectedService.virtualCallingModes[i].callingMode === 'WhatsApp' || this.selectedService.virtualCallingModes[i].callingMode === 'Phone') {
-                    this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
-                    valid = false;
-                    break;
+                    if (!this.commObj['comWhatsappNo']) {
+                        this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+                        valid = false;
+                        break;
+                    }                    
                 }
             }
         }
