@@ -22,7 +22,7 @@
                   <table class="table" style="background-color: white;">
                     <thead>
                       <tr class="tble-filtr-tr heght">
-                        <th class="head_color">&nbsp;&nbsp;&nbsp;Report ID</th>
+                        <!-- <th class="head_color">&nbsp;&nbsp;&nbsp;Report ID</th> -->
                         <th class="head_color">Name</th>
                         <th class="head_color">Date</th>
                         <th class="head_color">Status</th>
@@ -118,7 +118,7 @@
                       </ng-container>
                       <ng-container *ngIf="totalReportList.length>1">
                         <tr *ngFor="let report of totalReportList; let i=index" (click)="generatedReport(report)">
-                          <td data-title="Report ID" class="td1">&nbsp;&nbsp;&nbsp;{{report.reportToken}}</td>
+                          <!-- <td data-title="Report ID" class="td1">&nbsp;&nbsp;&nbsp;{{report.reportToken}}</td> -->
                           <td data-title="Name" class="td3">{{report.reportName}}</td>
                           <td data-title="Date" class="td2 desc">{{report.initiatedBy}}</td>
                           <td data-title="Status" class="td4">{{report.status}}</td>
