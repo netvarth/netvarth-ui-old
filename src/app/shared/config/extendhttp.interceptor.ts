@@ -208,7 +208,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         catchError((error, caught) => {
           this._handleErrors(error);
           if (error instanceof HttpErrorResponse) {
-            console.log('HttpErrorResponse:',error);
+            // console.log('HttpErrorResponse:',error);
             if (this._checkSessionExpiryErr(error)) {
               if (!this.sessionExpired) {
                 // this.shared_services.callHealth(JSON.stringify(this.loggedUrls)).subscribe();
@@ -308,7 +308,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       this.loggedUrls.shift();
     }
     this.loggedUrls.push(req);
-    console.log(JSON.stringify(req));
+    // console.log(JSON.stringify(req));
     return req;
   }
 

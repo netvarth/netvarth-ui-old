@@ -371,7 +371,7 @@ export class ProviderCheckinComponent implements OnInit {
                     (data: any) => {
                         if (data.length > 1) {
                             const customer = data.filter(member => !member.parent);
-                            this.customer_data = customer;
+                            this.customer_data = customer[0];
                             this.foundMultiConsumers = true;
                         } else {
                             this.customer_data = data[0];
@@ -536,7 +536,7 @@ export class ProviderCheckinComponent implements OnInit {
                     } else {
                         if (data.length > 1) {
                             const customer = data.filter(member => !member.parent);
-                            this.customer_data = customer;
+                            this.customer_data = customer[0];
                             this.foundMultiConsumers = true
                             // if(this.qParams['phone'] === '0000'){
                             //     this.createNew('create');
@@ -631,7 +631,7 @@ export class ProviderCheckinComponent implements OnInit {
                         } else {
                             if (data.length > 1) {
                                 const customer = data.filter(member => !member.parent);
-                                this.customer_data = customer;
+                                this.customer_data = customer[0];
                                 this.foundMultiConsumers = true;
                             } else {
                                 this.customer_data = data[0];
@@ -684,7 +684,7 @@ export class ProviderCheckinComponent implements OnInit {
                         } else {
                             if (data.length > 1) {
                                 const customer = data.filter(member => !member.parent);
-                                this.customer_data = customer;
+                                this.customer_data = customer[0];
                                 this.foundMultiConsumers = true;
                             } else {
                                 this.customer_data = data[0];
@@ -1355,7 +1355,7 @@ export class ProviderCheckinComponent implements OnInit {
                 (data: any) => {
                     if (data.length > 1) {
                         const customer = data.filter(member => !member.parent);
-                        this.customer_data = customer;
+                        this.customer_data = customer[0];
                         this.foundMultiConsumers = true;
                     } else {
                         this.customer_data = data[0];

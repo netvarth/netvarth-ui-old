@@ -365,9 +365,11 @@ export class AppointmentComponent implements OnInit {
                 if (filter) {
                     this.provider_services.getProviderCustomers(filter).subscribe(
                         (data: any) => {
+                            console.log("Data:", data);
                             if (data.length > 1) {
                                 const customer = data.filter(member => !member.parent);
-                                this.customer_data = customer;
+                                this.customer_data = customer[0];
+                                console.log("Customer:",this.customer_data);
                                 this.foundMultipleCustomers = true;
                             } else {
                                 this.customer_data = data[0];
@@ -565,8 +567,10 @@ export class AppointmentComponent implements OnInit {
                     this.createNew('create');
                 } else {
                     if (data.length > 1) {
+                        console.log("Consumer Data:", data);
                         const customer = data.filter(member => !member.parent);
-                        this.customer_data = customer;
+                        this.customer_data = customer[0];
+                        console.log("Real Customer:", this.customer_data);
                         this.foundMultipleCustomers = true;
                     } else {
                         this.customer_data = data[0];
@@ -657,7 +661,7 @@ export class AppointmentComponent implements OnInit {
                         } else {
                             if (data.length > 1) {
                                 const customer = data.filter(member => !member.parent);
-                                this.customer_data = customer;
+                                this.customer_data = customer[0];
                                 this.foundMultipleCustomers = true;
                             } else {
                                 this.customer_data = data[0];
@@ -914,15 +918,7 @@ export class AppointmentComponent implements OnInit {
         if (this.thirdParty === '') {
             this.api_loading1 = true;
             let fn;
-            // let self_obj;
             fn = this.shared_services.getProviderCustomerFamilyMembers(this.customer_data.id);
-            // self_obj = {
-            //     'userProfile': {
-            //         'id': this.customer_data.id,
-            //         'firstName': this.customer_data.firstName,
-            //         'lastName': this.customer_data.lastName
-            //     }
-            // };
             fn.subscribe(data => {
                 this.familymembers = [];
                 this.familymembers.push(this.customer_data);
@@ -1233,7 +1229,7 @@ export class AppointmentComponent implements OnInit {
                 (data: any) => {
                     if (data.length > 1) {
                         const customer = data.filter(member => !member.parent);
-                        this.customer_data = customer;
+                        this.customer_data = customer[0];
                         this.foundMultipleCustomers = true;
                     } else {
                         this.customer_data = data[0];
@@ -1268,7 +1264,7 @@ export class AppointmentComponent implements OnInit {
                         } else {
                             if (data.length > 1) {
                                 const customer = data.filter(member => !member.parent);
-                                this.customer_data = customer;
+                                this.customer_data = customer[0];
                                 this.foundMultipleCustomers = true;
                             } else {
                                 this.customer_data = data[0];
