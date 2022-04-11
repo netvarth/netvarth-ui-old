@@ -2325,7 +2325,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     if(type ==='multiUser'){
-      // console.log('users List:',this.users);
+      console.log('users List:',this.users);
       // console.log('event:',event.checked)
       // console.log(value)
       if(value === 'all'){

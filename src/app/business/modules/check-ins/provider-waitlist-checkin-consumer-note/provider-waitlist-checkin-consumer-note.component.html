@@ -1,6 +1,6 @@
 <h1 class="mat-dialog-title note-head" style="font-size: 1.2rem !important;">{{noteTitle}}
   <span *ngIf="type === 'checkin'"> from {{(checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName) ?
-    checkin.waitlistingFor[0].firstName + ' ' + checkin.waitlistingFor[0].lastName : consumer_label + ' id ' + checkin.consumer.jaldeeId}}
+    checkin.waitlistingFor[0].firstName + ' ' + (checkin.waitlistingFor[0].lastName ? checkin.waitlistingFor[0].lastName : '') : consumer_label + ' id ' + checkin.consumer.jaldeeId}}
   </span>
   <span *ngIf="type === 'appt'"> from
     {{(checkin.appmtFor[0].firstName || checkin.appmtFor[0].lastName) ? checkin.appmtFor[0].firstName + ' ' +

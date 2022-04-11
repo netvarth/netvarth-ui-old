@@ -687,6 +687,7 @@ multiUserFilter:any=[];
             }
           }
           this.allModeSelected = true;
+         
         }
       } else {
         this.allModeSelected = false;
@@ -700,6 +701,7 @@ multiUserFilter:any=[];
       if (this.apptModes.length === this.waitlistModes.length) {
         this.filter['waitlistMode'] = 'all';
         this.allModeSelected = true;
+        
       }
     }
 
@@ -870,6 +872,7 @@ multiUserFilter:any=[];
     //for multi user
     if(type ==='multiUser'){
       // console.log('users List:',this.users);
+
       // console.log('event:',event.checked)
       // console.log(value)
       if(value === 'all'){
@@ -880,6 +883,7 @@ multiUserFilter:any=[];
         
         if(event.checked){
           for (const multi of this.users) {
+            // console.log("User :",this.users);
 
             // console.log(this.multiUserFilter.indexOf(multi.id))
             if (this.multiUserFilter.indexOf(multi.id) === -1) {
