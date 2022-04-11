@@ -15,6 +15,7 @@ import { FormMessageDisplayModule } from "../../../../shared/modules/form-messag
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
 import { PagerModule } from "../../../../../../src/app/shared/modules/pager/pager.module";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 const routes: Routes = [
   { path: '', component: TasksComponent },
@@ -36,6 +37,7 @@ const routes: Routes = [
         MatInputModule,
         MatIconModule,
         MatMenuModule,
+        MatCheckboxModule,
         LoadingSpinnerModule,
         FormMessageDisplayModule,
         [RouterModule.forChild(routes)]

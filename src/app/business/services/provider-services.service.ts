@@ -2360,7 +2360,6 @@ export class ProviderServices {
   }
   deleteAttachment(id) {
     const url = `provider/fileShare/${id}`;
-    console.log("Delete Service Called :",url);
     return this.servicemeta.httpDelete(url);
   }
   uploadAttachments(folder_name, account_id ,body) {
@@ -2395,5 +2394,13 @@ export class ProviderServices {
   getProviderBills(filter = {}) {
     const url = 'provider/bill';
     return this.servicemeta.httpGet(url, null, filter);
+  }
+  getReportList(filter = {}) {
+    const url = 'provider/report/status/cache/DONE,INPROGRESS,SEEN';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+  getReportListbyId(token) {
+    const url = 'provider/report/status/' + token;
+    return this.servicemeta.httpGet(url, null);
   }
 } 

@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ReportDataService } from '../reports-data.service';
+// import { ReportDataService } from '../reports-data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { MatDialog } from '@angular/material/dialog';
 import { CriteriaDialogComponent } from './criteria-dialog/criteria-dialog.component';
 import { ExportReportService } from '../export-report.service';
-import { WordProcessor } from '../../../../shared/services/word-processor.service';
+// import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { ProviderServices } from '../../../../../../src/app/business/services/provider-services.service';
+import { WordProcessor } from '../../../../../../src/app/shared/services/word-processor.service';
 
 export class Group {
   level = 0;
@@ -37,49 +39,92 @@ export class GeneratedReportComponent implements OnInit {
   tableColums: any;
   table_header_columns: any;
   report: any = {};
+  fff;
   reducedGroups = [];
   public report_dataSource = new MatTableDataSource<any>([]);
   reprtdialogRef: any;
   hide_criteria_save = false;
   groupingColumn;
   customer_label: any;
+  token;
+  fo: any = [];
   constructor(
-    private report_data_service: ReportDataService,
+    // private report_data_service: ReportDataService,
     private router: Router,
     public dateformat: DateFormatPipe,
+    private provider_services: ProviderServices,
     private dialog: MatDialog,
     private wordProcessor: WordProcessor,
     private activated_route: ActivatedRoute,
     private exportReportService: ExportReportService
   ) {
-    this.report = this.report_data_service.getReport();
-    this.report_type = this.report.reportType.toLowerCase();
-    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    this.tableColums = this.report.reportContent.columns;
-    this.objectKeys = Object.keys;
-    this.reportCriteriaHeader = this.report.reportContent.reportHeader;
-    if (this.report.reportContent.dataHeader) {
-      this.reportConsolidatedInfo = this.report.reportContent.dataHeader;
-    }
-    this.reportHeader = this.report.reportContent;
-    Object.entries(this.tableColums).forEach(
-      ([key, value]) => this.table_header.push({ 'order': key, 'name': value })
-    );
-    this.displayedColumns = this.table_header.map(column => column.order);
     this.activated_route.queryParams.subscribe(qparams => {
-      if (qparams.reportRecreate) {
-        this.hide_criteria_save = true;
+      if (qparams.token) {
+        this.token = qparams.token;
       }
     });
+    // this.report = this.report_data_service.getReport();
+    // this.report_type = this.report.reportType.toLowerCase();
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+  
   }
   ngOnInit() {
-    this.report_dataSource = this.report.reportContent.data;
-    if (this.report.reportContent.data.length === 0) {
-      this.showReport = false;
-    } else {
-      this.showReport = true;
-    }
-    this.buildDataSource();
+    
+    console.log(this.report_dataSource)
+    
+      this.provider_services.getReportListbyId(this.token)
+        .subscribe(
+          data => {
+            this.fff = data;
+            console.log(this.fff.status)
+            console.log(this.fff.reportContent)
+            this.fo = this.fff.reportContent.data;
+            console.log(this.fo)
+           this.tableColums = this.fff.reportContent.columns;
+        console.log(this.tableColums)
+         this.objectKeys = Object.keys;
+        this.reportCriteriaHeader = this.fff.reportContent.reportHeader;
+        if (this.fff.reportContent && this.fff.reportContent.dataHeader) {
+          this.reportConsolidatedInfo = this.fff.reportContent.dataHeader;
+        }
+          this.reportHeader = this.fff.reportContent;
+        Object.entries(this.tableColums).forEach(
+          ([key, value]) => this.table_header.push({ 'order': key, 'name': value })
+        );
+        this.displayedColumns = this.table_header.map(column => column.order);
+        this.activated_route.queryParams.subscribe(qparams => {
+          if (qparams.reportRecreate) {
+            this.hide_criteria_save = true;
+          }
+        });
+          this.report_dataSource = this.fo;
+             if (this.fo.length === 0) {
+          alert('1')
+          this.showReport = false;
+        } else {
+          alert('13')
+          this.showReport = true;
+        }
+        this.buildDataSource();
+          },
+          () => { }
+        );
+       
+       
+        
+        
+        // this.report_dataSource = this.fo;
+        // alert(this.fo.length + 'this.fo')
+        // if (this.fo.length === 0) {
+        //   alert('1')
+        //   this.showReport = false;
+        // } else {
+        //   alert('13')
+        //   this.showReport = true;
+        // }
+        // this.buildDataSource();
+       
+   
   }
   replacewithTerminologies(columnname) {
     const column = columnname;
@@ -90,7 +135,7 @@ export class GeneratedReportComponent implements OnInit {
     return this.dateformat.transformToMonthlyDate(date);
   }
   buildDataSource() {
-    this.report_dataSource = this.groupBy(this.groupingColumn, this.report.reportContent.data, this.reducedGroups);
+    this.report_dataSource = this.groupBy(this.groupingColumn, this.fo, this.reducedGroups);
   }
   groupBy(column: string, data: any[], reducedGroups?: any[]) {
     if (!column) { return data; }
@@ -159,7 +204,7 @@ export class GeneratedReportComponent implements OnInit {
     });
   }
   exportReport() {
-    const reportData = this.report.reportContent.data;
+    const reportData = this.fff.reportContent.data;
     const tableHeader = this.tableColums;
     const _this = this;
     const reportResult = [];
