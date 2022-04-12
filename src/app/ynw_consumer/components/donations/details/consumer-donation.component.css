@@ -525,7 +525,7 @@ box-shadow: 4px 4px 5px gainsboro;
 .resDesName{
   line-height: 25px !important;
 }
-@media (max-width: 766px){
+@media (max-width: 768px){
   .lbl{
     flex-wrap: wrap-reverse !important;
   }
