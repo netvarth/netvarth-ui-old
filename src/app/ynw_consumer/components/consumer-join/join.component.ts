@@ -73,6 +73,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   isDesktop = true;
   private subs = new SubSink();
   screenWidth: number;
+  mode;
   constructor(
     public dialogRef: MatDialogRef<ConsumerJoinComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -105,6 +106,9 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.joinStep = true;
+    if (this.data) {
+      this.mode = this.data['mode'];
+    }
     this.selectedCountryCode = this.countryCodes[0].value;
     this.moreParams = this.data.moreparams;
     this.theme = this.data.theme;

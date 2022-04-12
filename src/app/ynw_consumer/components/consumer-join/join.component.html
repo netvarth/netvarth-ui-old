@@ -1,7 +1,7 @@
 <!-- join Section starts -->
 
-<div class="col-xs-12" >
-    <div class="col-xs-12" [ngClass]="isDesktop?'col-md-6 col-lg-6 col-sm-12 col-xs-12':'col-xs-12 col-md-12 col-sm-12 col-lg-12'">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding" >
+    <div class="col-xs-12" [ngClass]="mode !== 'dialog' ?'col-md-6 col-lg-6 col-sm-12 col-xs-12':'col-xs-12 col-md-12 col-sm-12 col-lg-12 no-padding'">
         <form [formGroup]="loginForm" class="login-form custom-login-form consumer-join-component" novalidate (ngSubmit)="loginForm.valid &&
         onSubmit(loginForm.value)" [ngClass]="theme?theme:''">
             <div class="mat-dialog-title" *ngIf="moreParams && moreParams['source'] != 'qnrlink'">
