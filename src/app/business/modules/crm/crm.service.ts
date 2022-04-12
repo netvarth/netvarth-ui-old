@@ -63,29 +63,33 @@ export class CrmService {
       const url = 'provider/task/provider'
       return this.servicemeta.httpGet(url, null, filter);
     }
-    getTotalTaskCount() {
+    getTotalTaskCount(filter) {
       const url = 'provider/task/provider/count';
-      return this.servicemeta.httpGet(url);
+      return this.servicemeta.httpGet(url, null, filter);
     }
     getInprogressTask(filter = {}) {
       const url = 'provider/task/provider?status-eq=3';
       return this.servicemeta.httpGet(url, null, filter);
     }
-    getInprogressTaskCount() {
+    getInprogressTaskCount(filter) {
       const url = 'provider/task/provider/count?status-eq=3';
-      return this.servicemeta.httpGet(url);
+      return this.servicemeta.httpGet(url, null, filter);
     }
     getCompletedTask(filter = {}) {
       const url = 'provider/task/provider?status-eq=5';
       return this.servicemeta.httpGet(url, null, filter);
     }
-    getCompletedTaskCount() {
+    getCompletedTaskCount(filter) {
       const url = 'provider/task/provider/count?status-eq=5';
-      return this.servicemeta.httpGet(url);
+      return this.servicemeta.httpGet(url, null, filter);
     }
-    getDelayedTask() {
+    getDelayedTask(filter = {}) {
       const url = 'provider/task/provider?status-eq=4';
-      return this.servicemeta.httpGet(url);
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+    getDelayedTaskCount(filter) {
+      const url = 'provider/task/provider/count?status-eq=4';
+      return this.servicemeta.httpGet(url, null, filter);
     }
     getTaskDetails(taskUid)
     {
@@ -139,5 +143,9 @@ export class CrmService {
     // getFiles(): Observable<any> {
     //   return this.http.get(`provider/task/ta_64a19eb3-9561-42f9-a346-0e50cc57bb73-pt`);
     // }
+    addProgressvalue(taskUid,progressValue , data){
+      const url ='provider/task/'+ taskUid + '/progress/' + progressValue;
+      return this.servicemeta.httpPut(url , data)
+    }
 
 }

@@ -14,9 +14,10 @@
   <div class="col-md-12 btnClass">
     <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small" (click)="createTask('Create')">
       <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
-         Create Task<i class="fa fa-plus  mgn-lt-5" aria-hidden="true" ></i></button>
+        Create Task<i class="fa fa-plus  mgn-lt-5" aria-hidden="true"></i></button>
     </a>
-    <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'crm'}">
+    <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small"
+      [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'crm'}">
       <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
         Generate Report</button>
     </a>
@@ -25,7 +26,7 @@
   <div class="startMatTab">
     <mat-tab-group dynamicHeight mat-stretch-tabs (selectedTabChange)="tabChange($event)"
       [selectedIndex]="selectedTab - 1">
-      <mat-tab  class="mat-tab">
+      <mat-tab class="mat-tab">
         <ng-template mat-tab-label>
           <div>
             <img class="img" src="/assets/images/crmImages/total task.PNG" />
@@ -33,7 +34,7 @@
           <div class="totalCount">({{totalCount}})</div>
           <div class="totalActivityName">Total Task</div>
         </ng-template>
-        
+
 
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
         <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
@@ -80,47 +81,12 @@
                               <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
                               <ul class="sidebar-menu accordion" id="accordion1">
 
+
                                 <div class="card">
                                   <div class="card-header">
                                     <h2 class="mb-0">
                                       <button class="btn btn-link" type="button" data-toggle="collapse"
-                                        data-target="#collapseId1" aria-expanded="false">
-                                        <div>
-                                          <div style="display: inline-block !important;">
-                                            <i class="fa fa-calendar"></i>
-                                          </div>
-                                          <span>&nbsp;Filter by Date</span>
-                                        </div>
-                                        <i class="fa fa-angle-down"></i>
-                                      </button>
-                                    </h2>
-                                  </div>
-                                  <div id="collapseId1" class="collapse in" data-parent="#accordion1">
-                                    <div class="card-body">
-                                      <div class="filterTextinput filter-text-input">
-                                        <div style="color: #374957 !important;
-  font-weight: 700 !important;
-  font-size: 14px !important;">Due Date</div>
-                                        <li class="filterli filter-li">
-                                          <input class="filterTextbox" type="text" [(ngModel)]="dueDate" [min]="minday"
-                                            [max]="maxDate" [matDatepicker]="picker" #Fdate placeholder="Due Date"
-                                            readonly>
-                                          <mat-datepicker-toggle matSuffix [for]="picker">
-                                          </mat-datepicker-toggle>
-                                          <mat-datepicker #picker></mat-datepicker>
-                                        </li>
-                                      </div>
-
-
-                                    </div>
-                                  </div>
-
-                                </div>
-                                <div class="card">
-                                  <div class="card-header">
-                                    <h2 class="mb-0">
-                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseStatus2"
-                                        aria-expanded="false">
+                                        data-target="#collapseStatus2" aria-expanded="false">
                                         <div>
                                           <div style="display: inline-block !important;">
                                             <i class="fa fa-circle-o-notch"></i>
@@ -137,9 +103,10 @@
                                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                         </li>
                                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                        *ngFor="let stat of taskStatusList[0];let index=i">
+                                          *ngFor="let stat of taskStatusList[0];let index=i">
                                           <mat-checkbox [checked]="statuses.indexOf(stat) !== -1"
-                                            (change)="setFilterDataCheckbox('status', stat)">
+                                            [checked]="statuses.indexOf(stat.id) !== -1"
+                                            (change)="setFilterDataCheckbox('status', stat.id)">
                                             {{stat.name}}</mat-checkbox>
                                         </li>
                                       </div>
@@ -149,8 +116,8 @@
                                 <div class="card">
                                   <div class="card-header">
                                     <h2 class="mb-0">
-                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseStatus2"
-                                        aria-expanded="false">
+                                      <button class="btn btn-link" type="button" data-toggle="collapse"
+                                        data-target="#collapseStatus2" aria-expanded="false">
                                         <div>
                                           <div style="display: inline-block !important;">
                                             <i class="fa fa-circle-o-notch"></i>
@@ -167,9 +134,10 @@
                                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                         </li>
                                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                        *ngFor="let cat of categoryListData[0];let index=i">
+                                          *ngFor="let cat of categoryListData[0];let index=i">
                                           <mat-checkbox [checked]="categories.indexOf(cat) !== -1"
-                                            (change)="setFilterDataCheckbox('category', cat)">
+                                            [checked]="categories.indexOf(cat.id) !== -1"
+                                            (change)="setFilterDataCheckbox('category', cat.id)">
                                             {{cat.name}}</mat-checkbox>
                                         </li>
                                       </div>
@@ -179,8 +147,8 @@
                                 <div class="card">
                                   <div class="card-header">
                                     <h2 class="mb-0">
-                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseStatus2"
-                                        aria-expanded="false">
+                                      <button class="btn btn-link" type="button" data-toggle="collapse"
+                                        data-target="#collapseStatus2" aria-expanded="false">
                                         <div>
                                           <div style="display: inline-block !important;">
                                             <i class="fa fa-circle-o-notch"></i>
@@ -197,20 +165,22 @@
                                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                         </li>
                                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                        *ngFor="let typ of taskTypeList[0];let index=i">
+                                          *ngFor="let typ of taskTypeList[0];let index=i">
                                           <mat-checkbox [checked]="types.indexOf(typ) !== -1"
-                                            (change)="setFilterDataCheckbox('type', typ)">
+                                            [checked]="types.indexOf(typ.id) !== -1"
+                                            (change)="setFilterDataCheckbox('type', typ.id)">
                                             {{typ.name}}</mat-checkbox>
                                         </li>
                                       </div>
                                     </div>
                                   </div>
+
                                 </div>
                                 <div class="card">
                                   <div class="card-header">
                                     <h2 class="mb-0">
-                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseId3"
-                                        aria-expanded="false">
+                                      <button class="btn btn-link" type="button" data-toggle="collapse"
+                                        data-target="#collapseId3" aria-expanded="false">
                                         <div>
                                           <div style="display: inline-block !important;">
                                             <i class="fa fa-id-badge"></i>
@@ -239,7 +209,7 @@
                               <button class="btn reset-btn" (click)="clearFilter()">
                                 <i class="fa fa-undo"></i>&nbsp;Reset
                               </button>
-                              <button class="btn apply-btn" (click)="doSearch()">
+                              <button class="btn apply-btn" (click)="getTotalTask()">
                                 <i class="fa fa-check"></i>&nbsp;Apply
                               </button>
                             </div>
@@ -289,11 +259,12 @@
                       </ng-container>
                     </tbody>
                   </table>
-                <div class="search_paging">
-                  <app-pager  [total_pages]="pagination.totalCnt"
-                  [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
-                </app-pager>
-                </div>
+                  <div class="search_paging" *ngIf="loadComplete">
+                    <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                      (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
+                    </app-pager>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -301,7 +272,7 @@
         </div>
 
       </mat-tab>
-      <mat-tab  class="mat-tab">
+      <mat-tab class="mat-tab">
         <ng-template mat-tab-label>
           <div>
             <img class="img" src="/assets/images/crmImages/handHoldingClock.PNG" />
@@ -319,20 +290,20 @@
                     <thead>
                       <tr class="tble-filtr-tr heght">
                         <th class="head_color">&nbsp;&nbsp;&nbsp;Task Details</th>
-                        <th class="head_color">Duration</th>
+                        <!-- <th class="head_color">Duration</th> -->
                         <th class="head_color">Status</th>
                         <th class="head_color">Catogory</th>
                         <th class="head_color">Type</th>
                         <th class="head_color">Due Date</th>
-                      
+
                         <th class="filter-fx-col">
                           <table class="fltr-tbl">
                             <tr>
                               <td>
                                 <span>
-                                  <i class="icon-filter-one" (click)="showFilterSidebar()"
+                                  <!-- <i class="icon-filter-one" (click)="showFilterSidebar()"
                                     [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
-                                    style="cursor: pointer;"></i>
+                                    style="cursor: pointer;"></i> -->
                                 </span>
                               </td>
                             </tr>
@@ -344,77 +315,7 @@
                       <tr>
 
                         <div>
-                          <!-- <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
-  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
-  <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
-  <span class="filter-head-title">Filters</span>
-  <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right" (click)="hideFilterSidebar()"
-  [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
-  </div>
-  <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
-  <ul class="sidebar-menu accordion" id="accordion1">
-  
-  <div class="card">
-  <div class="card-header">
-  <h2 class="mb-0">
-  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseId1"
-  aria-expanded="false">
-  <div>
-  <div style="display: inline-block !important;">
-  <i class="fa fa-calendar"></i>
-  </div>
-  <span>&nbsp;Filter by Date</span>
-  </div>
-  <i class="fa fa-angle-down"></i>
-  </button>
-  </h2>
-  </div>
-  <div id="collapseId1" class="collapse in" data-parent="#accordion1">
-  <div class="card-body">
-  <div class="filterTextinput filter-text-input">
-  <div style="color: #374957 !important;
-  font-weight: 700 !important;
-  font-size: 14px !important;">From</div>
-  <li class="filterli filter-li">
-  <input class="filterTextbox" type="text"
-  [(ngModel)]="auditStartdate" [min]="minday" [max]="maxDate"
-  [matDatepicker]="picker" #Fdate
-  (dateChange)="keyPressed()" placeholder="Start date" readonly>
-  <mat-datepicker-toggle matSuffix [for]="picker">
-  </mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
-  </li>
-  </div>
-  
-  <div class="filterTextinput filter-text-input">
-  <div style="color: #374957 !important;
-  font-weight: 700 !important;
-  font-size: 14px !important;">To</div>
-  <li class="filterli filter-li">
-  <input class="filterTextbox" type="text" [(ngModel)]="auditEnddate" [min]="endminday"
-  [max]="maxDate" [matDatepicker]="picker1" #Edate
-  (dateChange)="keyPressed()" placeholder="End date" readonly>
-  <mat-datepicker-toggle matSuffix [for]="picker1">
-  </mat-datepicker-toggle>
-  <mat-datepicker #picker1></mat-datepicker>
-  </li>
-  </div>
-  </div>
-  </div>
-  
-  </div>
-  
-  </ul>
-  </section>
-  <div class="filter-footer" *ngIf="filterapplied === true">
-  <button class="btn reset-btn" (click)="clearFilter()">
-  <i class="fa fa-undo"></i>&nbsp;Reset
-  </button>
-  <button class="btn apply-btn" (click)="do_search(false)">
-  <i class="fa fa-check"></i>&nbsp;Apply
-  </button>
-  </div>
-  </aside> -->
+
                         </div>
 
                       </tr>
@@ -460,10 +361,10 @@
                       </ng-container>
                     </tbody>
                   </table>
-                  <div class="search_paging">
-                    <app-pager  [total_pages]="pagination.totalCnt"
-                    [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick_inprogree($event)" [curpage]="pagination.startpageval">
-                  </app-pager>
+                  <div class="search_paging" *ngIf="loadComplete1">
+                    <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                      (pagerclick)="handle_pageclick_inprogress($event)" [curpage]="pagination.startpageval">
+                    </app-pager>
                   </div>
                 </div>
               </div>
@@ -471,7 +372,7 @@
           </div>
         </div>
       </mat-tab>
-      <mat-tab  class="mat-tab">
+      <mat-tab class="mat-tab">
         <ng-template mat-tab-label>
           <div>
             <img class="img" src="/assets/images/crmImages/completed.PNG" />
@@ -489,7 +390,7 @@
                     <thead>
                       <tr class="tble-filtr-tr heght">
                         <th class="head_color">&nbsp;&nbsp;&nbsp;Task Details</th>
-                        <th class="head_color">Duration</th>
+                        <!-- <th class="head_color">Duration</th> -->
                         <th class="head_color">Status</th>
                         <th class="head_color">Catogory</th>
                         <th class="head_color">Type</th>
@@ -499,92 +400,22 @@
                             <tr>
                               <td>
                                 <span>
-                                  <i class="icon-filter-one" (click)="showFilterSidebar()"
+                                  <!-- <i class="icon-filter-one" (click)="showFilterSidebar()"
                                     [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
-                                    style="cursor: pointer;"></i>
+                                    style="cursor: pointer;"></i> -->
                                 </span>
                               </td>
                             </tr>
                           </table>
                         </th>
-                      
+
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
 
                         <div>
-                          <!-- <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
-  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
-  <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
-  <span class="filter-head-title">Filters</span>
-  <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right" (click)="hideFilterSidebar()"
-  [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
-  </div>
-  <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
-  <ul class="sidebar-menu accordion" id="accordion1">
-  
-  <div class="card">
-  <div class="card-header">
-  <h2 class="mb-0">
-  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseId1"
-  aria-expanded="false">
-  <div>
-  <div style="display: inline-block !important;">
-  <i class="fa fa-calendar"></i>
-  </div>
-  <span>&nbsp;Filter by Date</span>
-  </div>
-  <i class="fa fa-angle-down"></i>
-  </button>
-  </h2>
-  </div>
-  <div id="collapseId1" class="collapse in" data-parent="#accordion1">
-  <div class="card-body">
-  <div class="filterTextinput filter-text-input">
-  <div style="color: #374957 !important;
-  font-weight: 700 !important;
-  font-size: 14px !important;">From</div>
-  <li class="filterli filter-li">
-  <input class="filterTextbox" type="text"
-  [(ngModel)]="auditStartdate" [min]="minday" [max]="maxDate"
-  [matDatepicker]="picker" #Fdate
-  (dateChange)="keyPressed()" placeholder="Start date" readonly>
-  <mat-datepicker-toggle matSuffix [for]="picker">
-  </mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
-  </li>
-  </div>
-  
-  <div class="filterTextinput filter-text-input">
-  <div style="color: #374957 !important;
-  font-weight: 700 !important;
-  font-size: 14px !important;">To</div>
-  <li class="filterli filter-li">
-  <input class="filterTextbox" type="text" [(ngModel)]="auditEnddate" [min]="endminday"
-  [max]="maxDate" [matDatepicker]="picker1" #Edate
-  (dateChange)="keyPressed()" placeholder="End date" readonly>
-  <mat-datepicker-toggle matSuffix [for]="picker1">
-  </mat-datepicker-toggle>
-  <mat-datepicker #picker1></mat-datepicker>
-  </li>
-  </div>
-  </div>
-  </div>
-  
-  </div>
-  
-  </ul>
-  </section>
-  <div class="filter-footer" *ngIf="filterapplied === true">
-  <button class="btn reset-btn" (click)="clearFilter()">
-  <i class="fa fa-undo"></i>&nbsp;Reset
-  </button>
-  <button class="btn apply-btn" (click)="do_search(false)">
-  <i class="fa fa-check"></i>&nbsp;Apply
-  </button>
-  </div>
-  </aside> -->
+
                         </div>
 
                       </tr>
@@ -630,10 +461,10 @@
                       </ng-container>
                     </tbody>
                   </table>
-                  <div class="search_paging">
-                    <app-pager  [total_pages]="pagination.totalCnt"
-                    [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick_completed($event)" [curpage]="pagination.startpageval">
-                  </app-pager>
+                  <div class="search_paging" *ngIf="loadComplete2">
+                    <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                      (pagerclick)="handle_pageclick_completed($event)" [curpage]="pagination.startpageval">
+                    </app-pager>
                   </div>
                 </div>
               </div>
@@ -641,7 +472,7 @@
           </div>
         </div>
       </mat-tab>
-      <mat-tab  class="mat-tab">
+      <mat-tab class="mat-tab">
         <ng-template mat-tab-label>
           <div>
             <img class="img" src="/assets/images/crmImages/deyayed.PNG" />
@@ -660,7 +491,7 @@
                     <thead>
                       <tr class="tble-filtr-tr heght">
                         <th class="head_color">&nbsp;&nbsp;&nbsp;Task Details</th>
-                        <th class="head_color">Duration</th>
+                        <!-- <th class="head_color">Duration</th> -->
                         <th class="head_color">Status</th>
                         <th class="head_color">Catogory</th>
                         <th class="head_color">Type</th>
@@ -670,9 +501,9 @@
                             <tr>
                               <td>
                                 <span>
-                                  <i class="icon-filter-one" (click)="showFilterSidebar()"
+                                  <!-- <i class="icon-filter-one" (click)="showFilterSidebar()"
                                     [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
-                                    style="cursor: pointer;"></i>
+                                    style="cursor: pointer;"></i> -->
                                 </span>
                               </td>
                             </tr>
@@ -684,77 +515,7 @@
                       <tr>
 
                         <div>
-                          <!-- <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
-  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
-  <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
-  <span class="filter-head-title">Filters</span>
-  <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right" (click)="hideFilterSidebar()"
-  [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
-  </div>
-  <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
-  <ul class="sidebar-menu accordion" id="accordion1">
-  
-  <div class="card">
-  <div class="card-header">
-  <h2 class="mb-0">
-  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseId1"
-  aria-expanded="false">
-  <div>
-  <div style="display: inline-block !important;">
-  <i class="fa fa-calendar"></i>
-  </div>
-  <span>&nbsp;Filter by Date</span>
-  </div>
-  <i class="fa fa-angle-down"></i>
-  </button>
-  </h2>
-  </div>
-  <div id="collapseId1" class="collapse in" data-parent="#accordion1">
-  <div class="card-body">
-  <div class="filterTextinput filter-text-input">
-  <div style="color: #374957 !important;
-  font-weight: 700 !important;
-  font-size: 14px !important;">From</div>
-  <li class="filterli filter-li">
-  <input class="filterTextbox" type="text"
-  [(ngModel)]="auditStartdate" [min]="minday" [max]="maxDate"
-  [matDatepicker]="picker" #Fdate
-  (dateChange)="keyPressed()" placeholder="Start date" readonly>
-  <mat-datepicker-toggle matSuffix [for]="picker">
-  </mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
-  </li>
-  </div>
-  
-  <div class="filterTextinput filter-text-input">
-  <div style="color: #374957 !important;
-  font-weight: 700 !important;
-  font-size: 14px !important;">To</div>
-  <li class="filterli filter-li">
-  <input class="filterTextbox" type="text" [(ngModel)]="auditEnddate" [min]="endminday"
-  [max]="maxDate" [matDatepicker]="picker1" #Edate
-  (dateChange)="keyPressed()" placeholder="End date" readonly>
-  <mat-datepicker-toggle matSuffix [for]="picker1">
-  </mat-datepicker-toggle>
-  <mat-datepicker #picker1></mat-datepicker>
-  </li>
-  </div>
-  </div>
-  </div>
-  
-  </div>
-  
-  </ul>
-  </section>
-  <div class="filter-footer" *ngIf="filterapplied === true">
-  <button class="btn reset-btn" (click)="clearFilter()">
-  <i class="fa fa-undo"></i>&nbsp;Reset
-  </button>
-  <button class="btn apply-btn" (click)="do_search(false)">
-  <i class="fa fa-check"></i>&nbsp;Apply
-  </button>
-  </div>
-  </aside> -->
+
                         </div>
 
                       </tr>
@@ -800,9 +561,10 @@
                       </ng-container>
                     </tbody>
                   </table>
-                  <div class="search_paging" *ngIf="totalDelayedList.length>0">
-                    <!-- <app-pager [total_pages]="gettotalCnt()" [pagesize]="getperPage()" (pagerclick)="handle_pageclick($event)"
-  [curpage]="startpageval"></app-pager> -->
+                  <div class="search_paging" *ngIf="loadComplete3">
+                    <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                      (pagerclick)="handle_pageclick_delayed($event)" [curpage]="pagination.startpageval">
+                    </app-pager>
                   </div>
                 </div>
               </div>
