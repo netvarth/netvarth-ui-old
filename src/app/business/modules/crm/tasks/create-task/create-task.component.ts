@@ -81,6 +81,8 @@ export class CreateTaskComponent implements OnInit {
   public sel_loc:any;
   taskStatusModal: any;
   taskPriority: any;
+  public estDurationWithDay:any;
+  public estTime:any;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -149,6 +151,7 @@ export class CreateTaskComponent implements OnInit {
       this.selectTaskManger= this.updateValue.manager.name;
       this.updateManagerId= this.updateValue.manager.id
       this.updateUserType=this.updateValue.userTypeEnum;
+      // this.taskDueTime=this.updateValue.estDuration
       }
       else{
         this.router.navigate(['provider', 'task']);
@@ -177,10 +180,18 @@ export class CreateTaskComponent implements OnInit {
     this.getTaskTypeListData()
     this.getTaskStatusListData()
     this.getTaskPriorityListData()
+    this.getLocation()
+    
+  }
+  getLocation(){
+    this.crmService.getProviderLocations().subscribe((res)=>{
+      console.log('location.........',res)
+      this.locationName= res[0].place
+    })
   }
   getAssignMemberList(){
     this.crmService.getMemberList().subscribe((memberList:any)=>{
-      // console.log('memberList',memberList)
+      console.log('memberList',memberList)
       this.allMemberList.push(memberList)
       // this.allMemberList.sort((a:any, b:any) => (a.firstName).localeCompare(b.firstName))
     },(error:any)=>{
@@ -320,7 +331,7 @@ export class CreateTaskComponent implements OnInit {
     console.log('this.updateAssignMemberDetailsToDialog',this.updateAssignMemberDetailsToDialog)
     this.selectMember = (res.firstName + res.lastName);
     this.userType = res.userType;
-    this.locationName = res.locationName;
+    // this.locationName = res.locationName;
     this.locationId = res.bussLocations[0];
     this.assigneeId= res.id;
     this.updateMemberId=this.assigneeId;
@@ -358,7 +369,9 @@ export class CreateTaskComponent implements OnInit {
   }
   handleDateChange(e){
     this.bEstDuration=true;
-    this.updateBTimefield=false
+    this.updateBTimefield=false;
+    this.createBTimeField=true;
+    
     // console.log(e)
     const date1= this.datePipe.transform(this.taskDueDate,'yyyy-MM-dd');
     this.selectedDate= date1;
@@ -388,12 +401,20 @@ export class CreateTaskComponent implements OnInit {
     // console.log('time',time)
     this.hour= time;
     this.minute=timeMInute
+    // this.taskDueTime=this.datePipe.transform(estDuration,'d:h:mm')
     
-    // console.log('estDurationb',estDuration)
+    console.log('estDurationb',estDuration)
     if(estDuration<='24:00'){
       // console.log('...............gggg')
       this.transform(estDuration)
     }
+    this.estDurationWithDay=this.taskDueTime;
+    console.log('this.estDurationWithDay',this.estDurationWithDay);
+    const estDurationDay=this.datePipe.transform(this.estDurationWithDay,'d')
+    const estDurationHour=this.datePipe.transform(this.estDurationWithDay,'h')
+    const estDurationMinurte= this.datePipe.transform(this.estDurationWithDay,'mm')
+    this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinurte };
+    console.log('estDurationDay',estDurationDay)
 
   }
   openTimeField(){
@@ -412,22 +433,22 @@ export class CreateTaskComponent implements OnInit {
     // console.log('`${hour}:${min} ${part}`',`${hour}:${min} ${part}`);
     // if(hour<24){
       // const day:number=0;
-      if(this.dayGapBtwDate==0){
-        // console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
-        this.selectedTime={ "days" : this.dayGapBtwDate, "hours" : 24-hour, "minutes" : 60-min };
-      }
-      else{
-        // console.log('this.hour',this.hour)
-        // console.log('hour',hour);
-        if(this.hour >hour){
-          this.selectedTime={ "days" : this.dayGapBtwDate, "hours" :this.hour-hour, "minutes" : this.minute-min };
-          // console.log('this.selectedTime1',this.selectedTime)
-        }
-        else{
-          this.selectedTime={ "days" : this.dayGapBtwDate, "hours" : hour-this.hour, "minutes" : min-this.minute };
-          // console.log('this.selectedTime2',this.selectedTime)
-        }
-      }
+      // if(this.dayGapBtwDate==0){
+      //   // console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
+      //   this.selectedTime={ "days" : this.dayGapBtwDate, "hours" : 24-hour, "minutes" : 60-min };
+      // }
+      // else{
+      //   // console.log('this.hour',this.hour)
+      //   // console.log('hour',hour);
+      //   if(this.hour >hour){
+      //     this.selectedTime={ "days" : this.dayGapBtwDate, "hours" :this.hour-hour, "minutes" : this.minute-min };
+      //     // console.log('this.selectedTime1',this.selectedTime)
+      //   }
+      //   else{
+      //     this.selectedTime={ "days" : this.dayGapBtwDate, "hours" : hour-this.hour, "minutes" : min-this.minute };
+      //     // console.log('this.selectedTime2',this.selectedTime)
+      //   }
+      // }
       return `${hour}:${min} ${part}`
     // }
     
@@ -474,7 +495,7 @@ export class CreateTaskComponent implements OnInit {
         "manager":{"id":this.updateManagerId},
         "targetResult" : this.createTaskForm.controls.targetResult.value,
         "targetPotential" : this.createTaskForm.controls.targetPotential.value,
-        "estDuration" : this.selectedTime   
+        "estDuration" : this.estTime    
       }
       if(this.updateUserType===('PROVIDER' || 'CONSUMER') && (this.createTaskForm.controls.taskTitle.value!=null) && (this.createTaskForm.controls.taskDescription.value !=null)){
         this.boolenTaskError=false;
@@ -482,9 +503,6 @@ export class CreateTaskComponent implements OnInit {
         this.crmService.updateTask(this.updateValue.taskUid, updateTaskData).subscribe((response)=>{
           console.log('afterUpdateList',response);
           setTimeout(() => {
-            // this.crmService.addAssigneeMember(response.uid,this.assigneeId).subscribe((res:any)=>{
-            //   console.log(res)
-            // })
             this.createTaskForm.reset();
           this.router.navigate(['provider', 'task']);
           }, projectConstants.TIMEOUT_DELAY);
@@ -519,9 +537,9 @@ export class CreateTaskComponent implements OnInit {
       "manager":{"id":this.selectTaskMangerId},
       "targetResult" : this.createTaskForm.controls.targetResult.value,
       "targetPotential" : this.createTaskForm.controls.targetPotential.value,
-      "estDuration" : this.selectedTime   
+      "estDuration" : this.estTime   
     }
-    // console.log('createTaskData',createTaskData)
+    console.log('createTaskData',createTaskData)
     // console.log('this.userType',this.userType)
     if(this.userType===('PROVIDER' || 'CONSUMER') && (this.createTaskForm.controls.taskTitle.value!=null) && (this.createTaskForm.controls.taskDescription.value !=null)){
       this.boolenTaskError=false;

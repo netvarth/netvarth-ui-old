@@ -256,6 +256,7 @@ goBack()
 openAddNoteDialog(addNoteText:any){
   console.log('addNoteText',addNoteText);
   const dialogRef = this.dialog.open(CrmSelectMemberComponent,{
+    maxWidth:'100vw',
     width:'100%',
     panelClass: ['popup-class', 'confirmationmainclass'],
     data:{

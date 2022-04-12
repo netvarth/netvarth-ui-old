@@ -13,12 +13,13 @@
   <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
   <!----task card start-->
   <section  class="card">
-      <div class=" card bgColor">
+      <div class=" card bgColor inputwithImg">
+          <div>
         <form    [formGroup]="createTaskForm">
             <!----task title statrt-->
             <div>
                 <div class="taskTitle">
-                  <div>Task Title</div>
+                  <div>Title</div>
                   <div class="astericColor">*</div>
                 </div>
                 <!--input field start-->
@@ -37,7 +38,7 @@
             <!----task description start-->
            <div>
             <div class="taskTitle">
-                <div>Task Description</div>
+                <div>Description</div>
                 <div class="astericColor">*</div>
               </div>
               <!--textarea start-->
@@ -55,7 +56,7 @@
             <!--assign member start-->
             <div>
                 <div class="taskTitle">
-                    <div>Task Assign Member</div>
+                    <div>Assign Member</div>
                     <div class="astericColor">*</div>
                   </div>
                   <!--textarea start-->
@@ -76,7 +77,7 @@
             <!--manager start-->
             <div>
                 <div class="taskTitle">
-                    <div>Task Manager</div>
+                    <div>Manager</div>
                     <div class="astericColor">*</div>
                   </div>
                  <!--input field start-->
@@ -100,9 +101,9 @@
             <!---manager end-->
             <div style="display: flex;gap: 5px" >
  <!---category start-->
-                <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding">
+                <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                     <div class="taskTitle">
-                        <div>Task Category</div>
+                        <div>Category</div>
                         <div class="astericColor">*</div>
                       </div>
                       <!--dropdown start-->
@@ -121,7 +122,7 @@
                 </div>
                 <!---category end-->
                 <!----task type start-->
-                <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding">
+                <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                     <div class="taskTitle">
                         <div>Type</div>
                         <div class="astericColor">*</div>
@@ -145,7 +146,7 @@
             <!----location & status start-->
             <div style="display: flex;gap: 5px" >
                 <!---location start-->
-                               <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding">
+                               <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                                    <div class="taskTitle">
                                        <div>Location</div>
                                        <div class="astericColor">*</div>
@@ -160,7 +161,7 @@
                                </div>
                                <!---location end-->
                                <!----status type start-->
-                               <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding">
+                               <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                                    <div class="taskTitle">
                                        <div>Status</div>
                                        <div class="astericColor">*</div>
@@ -188,9 +189,9 @@
                            </div>
             <!---location & status end-->
             <!--date & time start-->
-            <div style="display: flex;gap: 5px" >
+            <div style="display: flex;gap: 5px;flex-wrap: wrap;" >
                 <!---date start-->
-                               <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding">
+                               <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding">
                                    <div class="taskTitle">
                                        <div>Due Date</div>
                                        <div class="astericColor">*</div>
@@ -210,29 +211,30 @@
                                </div>
                                <!---date end-->
                                <!----time start-->
-                               <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding" *ngIf="bEstDuration" >
+                               <!-- *ngIf="bEstDuration" -->
+                               <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding"  >
                                    <div class="taskTitle">
                                        <div>Est Duration</div>
                                        <div class="astericColor">*</div>
                                      </div>
                                      <!-- *ngIf="createBTimeField" -->
-                                     <div class="fieldPadding"  >
-                                        <input [(ngModel)]="taskDueTime" [value]="taskTime" (keyup)="resetErrors()"  type="time" #taskTime (ngModelChange)="handleTaskEstDuration(taskTime.value)"
+                                     <div class="fieldPadding"  *ngIf="createBTimeField">
+                                        <input [(ngModel)]="taskDueTime" [value]="taskTime" (keyup)="resetErrors()"  type="datetime-local" #taskTime (ngModelChange)="handleTaskEstDuration(taskTime.value)"
                                         placeholder="Enter Est Duration"class="form-control widthWebKit" formControlName="taskTime"autocomplete="off" /> 
                                            
                                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                                                 </app-field-error-display>
                                      </div>
-                                     <!-- <div class="fieldPadding" *ngIf="updateBTimefield" >
+                                     <div class="fieldPadding" *ngIf="updateBTimefield" >
                                          <div class="form-control" style="display: flex !important;justify-content: space-between;align-items: center;">
                                            <div>{{updateValue.estDuration.days}}days,{{this.updateValue.estDuration.hours}}hours,{{this.updateValue.estDuration.minutes}}minutes</div>
                                            <div (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
                                          </div>
-                                     </div> -->
+                                     </div>
                    
                                </div>
 
-                               <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding" *ngIf="updateBTimefield">
+                               <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding" *ngIf="updateBTimefield">
                                 <div class="taskTitle">
                                     <div>Est Duration</div>
                                     <div class="astericColor">*</div>
@@ -246,7 +248,7 @@
                                       </div>
                                   </div>
                 
-                            </div>
+                            </div> -->
                                 <!----time end-->
                            </div>
             <!--date & time end-->
@@ -273,7 +275,7 @@
             <!---target potential & target result start-->
             <div style="display: flex;gap: 5px" >
                 <!---target result start-->
-                               <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding">
+                               <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding">
                                    <div class="taskTitle">
                                        <div>Target Potential</div>
                                        <div class="astericColor">*</div>
@@ -287,7 +289,7 @@
                                </div>
                                <!---target result end-->
                                <!----target potential start-->
-                               <div class="lbl col-sm-8 col-md-4 col-lg-3 no-padding">
+                               <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding">
                                    <div class="taskTitle">
                                        <div>Business Potential</div>
                                        <div class="astericColor">*</div>
@@ -295,7 +297,7 @@
                                      <!--dropdown start-->
                                      <div class="fieldPadding">
                                         <input (keyup)="resetErrors()" type="text" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)"
-                                        placeholder="Enter currency"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" /> 
+                                        placeholder="Enter(&#8377;)"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" /> 
                                                
                                      </div>
                                      <!--dropdown end-->
@@ -326,6 +328,10 @@
 
             <!---cancel save btn end-->
         </form>
+    </div>
+    <div class="imageClass">
+        <img class="taskImg" src="/assets/images/crmImages/Add tasks.png" />
+    </div>
 
       </div>
       

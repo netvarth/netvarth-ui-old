@@ -127,6 +127,14 @@ export class CrmService {
     //   const url = 'provider/departments/' + id + '/service';
     //   return this.servicemeta.httpPost(url, data);
     // }
+    taskStatusCloseDone(taskUid){
+      const url='provider/task/'+taskUid + '/status/closed';
+      return this.servicemeta.httpPut(url)
+    }
+    addTaskClosingDetails(taskUid,taskDetails){
+      const url='provider/task/'+taskUid + '/closingdetails';
+      return this.servicemeta.httpPut(url,taskDetails)
+    }
 
 
     upload(file: File): Observable<HttpEvent<any>> {

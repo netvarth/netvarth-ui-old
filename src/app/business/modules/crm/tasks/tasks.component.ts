@@ -11,6 +11,9 @@ import { WordProcessor } from '../../../../../../src/app/shared/services/word-pr
 import { LocalStorageService } from '../../../../../../src/app/shared/services/local-storage.service';
 // import { CrmMarkasDoneComponent } from '../../../../../../src/app/business/shared/crm-markas-done/crm-markas-done.component';
 // import { MatDialog } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { CrmSelectMemberComponent } from '../../../../../../src/app/business/shared/crm-select-member/crm-select-member.component';
+
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
@@ -138,7 +141,7 @@ export class TasksComponent implements OnInit {
     private locationobj: Location,
     private groupService: GroupStorageService,
     public router: Router,
-    // private dialog: MatDialog,
+    private dialog: MatDialog,
     private lStorageService: LocalStorageService,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
@@ -548,5 +551,20 @@ export class TasksComponent implements OnInit {
       this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
     })
   }
- 
+
+  openTaskCompletion(taskData:any){
+    const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
+      width:'100%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data:{
+        requestType:'taskComplete',
+        taskName:taskData,
+      }
+    });
+    dialogRef.afterClosed().subscribe((res)=>{
+      console.log(res)
+    })
+  
+  }
 }

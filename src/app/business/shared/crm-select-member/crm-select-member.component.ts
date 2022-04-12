@@ -1,9 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 // import { FormBuilder } from '@angular/forms';
 import { CrmService } from '../../modules/crm/crm.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { projectConstants } from '../../../../../src/app/app.component';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
+// import { FormBuilder } from '@angular/forms';
+// import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
+import { CrmMarkasDoneComponent } from '../../shared/crm-markas-done/crm-markas-done.component';
 
 @Component({
   selector: 'app-crm-select-member',
@@ -21,6 +25,7 @@ export class CrmSelectMemberComponent implements OnInit {
   public notesTextarea:any;
   public noteDescription:any;
   public noteDescriptionTime:any;
+  public taskDes:any;
 
 
   constructor( public dialogRef: MatDialogRef<CrmSelectMemberComponent>,
@@ -28,6 +33,11 @@ export class CrmSelectMemberComponent implements OnInit {
     private crmService: CrmService,
     // private fb: FormBuilder,
     private snackbarService: SnackbarService,
+    // private _Activatedroute:ActivatedRoute,
+      private router: Router,
+      // private createTaskFB: FormBuilder,
+      private dialog: MatDialog,
+      // private datePipe:DatePipe,
     ) {
       console.log('consdata',this.data)
       // this.assignMemberDetails= this.data.assignMembername
@@ -71,6 +81,9 @@ export class CrmSelectMemberComponent implements OnInit {
       console.log('Notews')
       this.noteDescription = this.data.noteDetails.note;
       this.noteDescriptionTime = this.data.noteDetails.createdDate;
+    }
+    if(this.data.requestType==='taskComplete'){
+      this.taskDes= this.data.taskName.title
     }
     // console.log('this.assignMemberDetails',this.assignMemberDetails);
     // console.log('this.memberList',this.memberList)
@@ -161,5 +174,39 @@ saveCreateNote(notesValue:any){
     this.errorMsg=true;
         this.assignMemberErrorMsg='Please enter some description'
   }
+}
+completeTask(){
+  console.log('this.data..',this.data)
+  console.log('this.data.taskName.taskUid',this.data.taskName.taskUid)
+  console.log('jjj')
+  if(this.data.requestType==='taskComplete'){
+    this.router.navigate(['provider', 'task',]);
+    const taskUID=this.data.taskName.taskUid
+    this.crmService.taskStatusCloseDone(taskUID).subscribe((res)=>{
+      console.log('res................',res)
+      // setTimeout(() => {
+      //   this.dialogRef.close()
+      // }, projectConstants.TIMEOUT_DELAY);
+    },
+    (error)=>{
+      this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+    }
+    )
+    const dialogRef= this.dialog.open(CrmMarkasDoneComponent,{
+      width: '85%',
+      panelClass: ['popup-class', 'confirmationmainclass'],
+      data:{
+        requestType:'taskComplete',
+        taskDetails:  this.data,
+        // taskUid:this.data.taskName.taskUid
+      }
+    })
+    dialogRef.afterClosed().subscribe((res)=>{
+      this.dialogRef.close()
+      console.log('res',res);
+    })
+
+  }
+  
 }
 }

@@ -86,10 +86,10 @@
   }
 @media(min-width: 768px) {
     .form-control{
-        width: 50% ;
+        width: 100% ;
     }
     .mat-select {
-        width: 50% ;
+        width: 100%  ;
     }
     .widthWebKit{
       width: -webkit-fill-available !important;
@@ -105,6 +105,9 @@
     .lbl{
         width: -webkit-fill-available !important;
     }
+}
+.lbl{
+  width: -webkit-fill-available !important;
 }
 /* input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -130,4 +133,18 @@ input[type=number] {
 }
 textarea {
   resize: none;
+}
+.inputwithImg{
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+}
+.taskImg{
+  height: 100%;
+  width: 100%;
+}
+@media(max-width: 768px){
+  .taskImg{
+    display: none;
+  }
 }
