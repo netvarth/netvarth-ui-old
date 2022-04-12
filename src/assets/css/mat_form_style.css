@@ -307,7 +307,7 @@
     font-weight: 500;
     color: #222223;
     text-overflow: ellipsis;
-    /* padding: 10px; */
+    padding: 18px 0px 0px 5px;
 }
 
 .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element::-moz-placeholder {
@@ -341,7 +341,7 @@
 
 .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select {
     height: 40px;
-    padding: 10px;
+    padding: 18px 0px 0px 5px;
     font-weight: normal;
     background: white;
     border-bottom: 1px solid #b6cdd8;
