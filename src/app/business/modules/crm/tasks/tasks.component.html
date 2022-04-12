@@ -244,7 +244,7 @@
                                 </button>
                               </span>
                               <mat-menu #appMenu="matMenu">
-                                <button mat-menu-item>
+                                <button mat-menu-item (click)="openTaskCompletion(task)">
                                   Mark as Done
                                 </button>
                                 <button mat-menu-item (click)="openEditTask(task,'Update')">
@@ -346,7 +346,7 @@
                                 </button>
                               </span>
                               <mat-menu #appMenu="matMenu">
-                                <button mat-menu-item>
+                                <button mat-menu-item (click)="openTaskCompletion(task)">
                                   Mark as Done
                                 </button>
                                 <button mat-menu-item (click)="openEditTask(task,'Update')">
@@ -446,7 +446,7 @@
                                 </button>
                               </span>
                               <mat-menu #appMenu="matMenu">
-                                <button mat-menu-item>
+                                <button mat-menu-item (click)="openTaskCompletion(task)">
                                   Mark as Done
                                 </button>
                                 <button mat-menu-item (click)="openEditTask(task,'Update')">
@@ -547,7 +547,9 @@
                               </span>
                               <mat-menu #appMenu="matMenu">
                                 <button mat-menu-item>
-                                  Mark as Done
+                                  <button mat-menu-item (click)="openTaskCompletion(task)">
+                                    Mrak as Done
+                                  </button>
                                 </button>
                                 <button mat-menu-item (click)="openEditTask(task,'Update')">
                                   Edit
