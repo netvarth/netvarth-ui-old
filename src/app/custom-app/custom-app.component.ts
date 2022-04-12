@@ -219,6 +219,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
         is_provider: false,
         test_account: is_test_account,
         theme: this.theme,
+        mode: 'dialog',
         moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
       }
     });

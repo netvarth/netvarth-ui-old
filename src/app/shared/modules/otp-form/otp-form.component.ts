@@ -55,6 +55,16 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   @Output() resendOtp: EventEmitter<any> = new EventEmitter();
   @Output() resendOTPEmail: EventEmitter<any> = new EventEmitter();
 
+  config = {
+    allowNumbersOnly: true,
+    length: 4,
+    inputStyles: {
+      'width': '40px',
+      'height': '40px'
+    }
+  };
+  otpEntered: any;
+
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -63,9 +73,17 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
     ) { }
 
   ngOnInit() {
+console.log("SubmitData:", this.submitdata);
+    if (this.submitdata && this.submitdata.userProfile && this.submitdata.userProfile.primaryMobileNo.startsWith('55') && this.submitdata.userProfile.countryCode === '+91') {
+      this.config.length=5;
+    } else if (this.submitdata && !this.submitdata.userProfile && this.submitdata.startsWith('55')){
+      this.config.length=5;
+    }
+
     this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
 
-    this.createForm();
+    // this.createForm();
+    // this.setMessageType();
     this.resetCounter(this.refreshTime);
     this.cronHandle = observableInterval(1000).subscribe(() => {
       if (this.resetCounterVal > 0) {
@@ -97,19 +115,43 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
     this.resetCounterVal = val;
   }
 
-  createForm() {
-    this.otp_form = this.fb.group({
-      phone_otp: ['', Validators.compose(
-        [Validators.required])]
-    });
-    // this.setMessageType();
-  }
+  // createForm() {
+  //   this.otp_form = this.fb.group({
+  //     phone_otp: ['', Validators.compose(
+  //       [Validators.required])]
+  //   });
+  //   // this.setMessageType();
+  // }
 
-  doOnOtpSubmit(value) {
+  doOnOtpSubmit(otp) {
+    console.log(otp);
+    if (otp) {
+      if (this.submitdata && this.submitdata.userProfile.primaryMobileNo.startsWith('55') && this.submitdata.userProfile.countryCode === '+91' && otp.length<5) {
+        this.api_error = 'Enter valid OTP';
+        return false;
+      } else if(otp.length < 4){
+        this.api_error = 'Enter valid OTP';
+        return false;
+      } 
+    } else {
+      this.api_error = 'Enter valid OTP';
+        return false;
+    }
+    
     this.buttonclicked = true;
-    this.retonOtpSubmit.emit(value);
+    this.retonOtpSubmit.emit(otp);
+    setTimeout(() => {
+      this.buttonclicked = false;
+    }, 500);
   }
+  /**
+   * OTP Section
+   */
 
+   onOtpChange(otp) {
+    this.otpEntered = otp;
+    this.api_error = '';
+  }
   doResetApiErrors() {
     // this.message = null;
     this.resetApiErrors.emit();
