@@ -4,7 +4,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row" *ngIf="!loading">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <a class="pull-left back-btn mgn-up-5" *ngIf="userId" (click)="goBack()"><i
+                        <a class="pull-left back-btn mgn-up-5" *ngIf="userId || back==='1'" (click)="goBack()"><i
                                 class="fa fa-arrow-left"></i></a>
                         &nbsp;
                     </div>

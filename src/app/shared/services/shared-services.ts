@@ -252,10 +252,8 @@ export class SharedServices {
     return this.servicemeta.httpGet(path);
   }
   getServicesByLocationId(locid) {
-    if (locid) {
       const url = 'consumer/waitlist/services/' + locid;
       return this.servicemeta.httpGet(url);
-    }
   }
   getProviderServicesByLocationId(locid) {
     if (locid) {

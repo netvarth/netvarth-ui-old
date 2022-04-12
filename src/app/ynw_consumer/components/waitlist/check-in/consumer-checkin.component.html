@@ -74,8 +74,8 @@
                                         <div class="clearfix"></div>
                                         <hr />                                        
                                         <div class="col-xs-12" *ngIf="selectedService">
-                                            <app-date-pagination (date_change_event)="changed_date_value($event)"
-                                                [selected_date]="sel_checkindate" [availableDates]="availableDates">
+                                            <app-date-pagination (date_change_event)="checkinDateChanged($event)"
+                                                [selected_date]="checkinDate" [availableDates]="availableDates">
                                             </app-date-pagination>
                                         </div>
                                         <div class="col-xs-12" *ngIf="queuejson && queuejson.length > 0">
@@ -103,7 +103,7 @@
                                                     <span *ngIf="personsAhead > 1">{{personsAhead}}<span>
                                                             People</span></span>
                                                     <span *ngIf="calc_mode=='NoCalc'">
-                                                        <span *ngIf="!isFuturedate">
+                                                        <span *ngIf="!isFutureDate">
                                                         </span>
                                                     </span>
                                                     <span *ngIf="serviceTime=='' && calc_mode!='NoCalc'">
@@ -111,9 +111,9 @@
                                                         <span>{{waitingTime}}</span>
                                                     </span>
                                                     <span *ngIf="serviceTime!='' && calc_mode!='NoCalc'">
-                                                        <ng-container *ngIf="isFuturedate">
+                                                        <ng-container *ngIf="isFutureDate">
                                                         </ng-container>
-                                                        <ng-container *ngIf="!isFuturedate">
+                                                        <ng-container *ngIf="!isFutureDate">
                                                             <span><span class="color-grey"> \
                                                                 </span>{{serviceTime}}</span>
                                                         </ng-container>
@@ -150,7 +150,7 @@
                                                     Next
                                                 </button>
                                             </div>
-                                            <div class="col-md-12 col-xs-12 col-sm-12">
+                                            <div class="col-md-12 col-xs-12 col-sm-12" *ngIf="queuesLoaded">
                                                 <button type="button"
                                                     class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
                                                     *ngIf="type === 'waitlistreschedule'"
@@ -485,8 +485,8 @@
                                                                 <div *ngIf="queuejson && queuejson.length != 0">
                                                                     <h6
                                                                         class="font-weight-bold text-primary serv-time border-style">
-                                                                        <span *ngIf="!isFuturedate"><b>Today </b></span>
-                                                                        <span *ngIf="isFuturedate"><b>{{sel_checkindate
+                                                                        <span *ngIf="!isFutureDate"><b>Today </b></span>
+                                                                        <span *ngIf="isFutureDate"><b>{{checkinDate
                                                                                 | date:newDateFormat}}</b></span>
                                                                         <span><b>{{selectedQTime}}</b></span>
                                                                     </h6>
@@ -686,7 +686,7 @@
                                                                 *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
                                         ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
                                                                 <button type="button" [class.disabled]="isClickedOnce"
-                                                                    (click)="!isClickedOnce && saveCheckin('checkin')"
+                                                                    (click)="!isClickedOnce && confirmcheckin('checkin')"
                                                                     id="stepThreeConfirmButton"
                                                                     class="next-button btn btn-primary font-weight-bold  px-12 py-4"
                                                                     [disabled]="!checkPolicy && heartfulnessAccount">
@@ -755,7 +755,7 @@
                                                                         class=" next-button btn btn-primary font-weight-bold text-capitalize "
                                                                         [class.disabled]="paymentBtnDisabled"
                                                                         *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
-                                                                        (click)="!isClickedOnce && saveCheckin('appt')">
+                                                                        (click)="!isClickedOnce && confirmcheckin('checkin')">
                                                                         Make Payment
                                                                     </button>
                                                                 </div>
@@ -777,7 +777,7 @@
                                                 *ngIf="selectedService && selectedService.isPrePayment==false && paymentLength==0|| (paymentDetails && paymentDetails.amountRequiredNow == 0)">
                                                 <!-- <div class="prepayment-confirm"> -->
                                                 <button type="button" [class.disabled]="isClickedOnce"
-                                                    (click)="!isClickedOnce && saveCheckin('checkin')"
+                                                    (click)="!isClickedOnce && confirmcheckin('checkin')"
                                                     id="stepThreeConfirmButton"
                                                     class="next-button btn btn-primary font-weight-bold  px-12 py-4"
                                                     [disabled]="!checkPolicy && heartfulnessAccount">
