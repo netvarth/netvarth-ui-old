@@ -179,7 +179,32 @@
                 </div>
               </div>
             </div>
-            
+            <div class="card side">
+              <div class="card-header">
+                <h2 class="mb-0">
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseBNo1"
+                    aria-expanded="false">
+                    <div>
+                      <div style="display: inline-block !important;">
+                      </div>
+                      <span>&nbsp;Token</span>
+                    </div>
+                    <i class="fa fa-angle-down"></i>
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseBNo1" class="collapse in" data-parent="#accordion1">
+                <div class="card-body">
+                  <div class="filterTextinput filter-text-input">
+                    <li class="filterli filter-li">
+                      <input type="text" id="txt_mobile" [(ngModel)]="filter.token"
+                        [ngModelOptions]="{standalone: true}"  (keyup)="keyPress()" class="filterTextbox filter-textbox"
+                        placeholder="Enter Token">
+                    </li>
+                  </div>
+                </div>
+              </div>
+            </div>
            
           </ul>
         </section>

@@ -2395,9 +2395,9 @@ export class ProviderServices {
     const url = 'provider/bill';
     return this.servicemeta.httpGet(url, null, filter);
   }
-  getReportList(filter = {}) {
+  getReportList() {
     const url = 'provider/report/status/cache/DONE,INPROGRESS,NEW';
-    return this.servicemeta.httpGet(url, null, filter);
+    return this.servicemeta.httpGet(url);
   }
   getTotalFilterReports(filter) {
     if (filter === 'SEEN') {
@@ -2415,6 +2415,10 @@ export class ProviderServices {
     }
     else if (filter === 'DONE') {
       const url = 'provider/report/status/cache/DONE';
+      return this.servicemeta.httpGet(url);
+    }
+    else{
+      const url = 'provider/report/status/cache/token/' + filter;
       return this.servicemeta.httpGet(url);
     }
   }

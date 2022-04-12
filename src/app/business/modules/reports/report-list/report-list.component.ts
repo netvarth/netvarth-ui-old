@@ -71,11 +71,14 @@ export class ReportListComponent implements OnInit {
   apiloading = false;
   filter = {
     status: '',
+    token: '',
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1
   };
   filters: any = {
     'status': false,
+    'token': false,
+    
   };
   SEEN: boolean;
   INPROGRESS: boolean;
@@ -111,18 +114,14 @@ export class ReportListComponent implements OnInit {
 
   getTotalReports(from_oninit = false) {
     this.api_loading = true;
-    let filter = this.setFilterForApi();
-    if (filter) {
-      console.log(filter);
-      this.lStorageService.setitemonLocalStorage('reportfilter', filter);
-      this.provider_services.getReportList(filter).subscribe(
+      this.provider_services.getReportList().subscribe(
         (data: any) => {
           console.log(data);
           this.totalReportList = data
           this.api_loading = false;
         }
       );
-    }
+    
   }
   getTotalFilterReports(from_oninit = false) {
     this.api_loading = true;
@@ -158,10 +157,14 @@ export class ReportListComponent implements OnInit {
     if (this.filter.status === 'NEW') {
       api_filter = this.filter.status;
     }
+    if (this.filter.token !== '') {
+      api_filter = this.filter.token;
+    }
     return api_filter;
   }
   clearFilter() {
     this.filter.status = '';
+    this.filter.token = '';
     this.lStorageService.removeitemfromLocalStorage('reportfilter');
     this.resetFilter();
     this.getTotalReports();
@@ -173,9 +176,11 @@ export class ReportListComponent implements OnInit {
   resetFilter() {
     this.filters = {
       'status': false,
+      'token': false,
     };
     this.filter = {
       status: '',
+      token: '',
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 1,
     };
@@ -231,9 +236,16 @@ export class ReportListComponent implements OnInit {
     }
     this.doSearch();
   }
+  keyPress() {
+    if (this.filter.status || this.filter.token) {
+      this.filterapplied = true;
+    } else {
+      this.filterapplied = false;
+    }
+  }
   doSearch() {
     this.lStorageService.removeitemfromLocalStorage('reportfilter');
-    if (this.filter.status) {
+    if (this.filter.status || this.filter.token) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;

@@ -40,4 +40,4 @@ const routes: Routes = [
 
   ]
 })
-export class CrmSelectMemberModule { }
+export class CrmMarkasDoneModule { }

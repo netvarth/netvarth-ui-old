@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CrmMarkasDoneComponent } from './crm-markas-done.component';
 
-import { CrmSelectMemberComponent } from './crm-select-member.component';
 
 describe('CrmSelectMemberComponent', () => {
-  let component: CrmSelectMemberComponent;
-  let fixture: ComponentFixture<CrmSelectMemberComponent>;
+  let component: CrmMarkasDoneComponent;
+  let fixture: ComponentFixture<CrmMarkasDoneComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CrmSelectMemberComponent ]
+      declarations: [ CrmMarkasDoneComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CrmSelectMemberComponent);
+    fixture = TestBed.createComponent(CrmMarkasDoneComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
