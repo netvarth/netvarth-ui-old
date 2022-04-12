@@ -44,7 +44,7 @@
                 </div>
                 <img [src]="getImageSource(file)" height="110px;" class="card-img-top" alt="...">
 
-                <div class="card-body">
+                <div class="card-body" *ngIf="file">
                   <span (click)="showFile(file)"><a href="javascript:;">{{file.originalName
                       ?file.originalName:file.uid}}</a></span>
                 </div>
@@ -71,7 +71,7 @@
                 </div>
                 <img src="assets/images/document.png" class="card-img-top" alt="..." height="110px;">
                 <div class="card-body">
-                  <span><a [href]="file.url" target="_blank" download>{{file.originalName ?
+                  <span *ngIf="file"><a [href]="file.url" target="_blank" download>{{file.originalName ?
                       file.originalName:file.uid}}</a></span>
                 </div>
               </div>

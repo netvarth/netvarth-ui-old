@@ -6,7 +6,7 @@
     </h5>
   </div>
 </section>
-
+<!-- 
 <div class="content comn-cls checkin-details" *ngIf="waitlist_data">
   <div class="col-md-12 no-padding-small">
     <div class="row equal">
@@ -24,8 +24,6 @@
               <span class="mt-1"><b>&nbsp;{{waitlist_data.service.name | capitalizeFirst}}</b></span>
               <div class="text-light">
                 {{waitlist_data.appmtDate | date:newDateFormat}}<br>
-                <!-- {{waitlist_data.schedule.apptSchedule.timeSlots[0].sTime}} -
-                {{waitlist_data.schedule.apptSchedule.timeSlots[0].eTime}} -->
                 {{getSingleTime(waitlist_data.appmtTime)}}
               </div>
               
@@ -112,17 +110,11 @@
                       <span class="emailvallabel">&nbsp;{{ waitlist_data.appmtFor[0].email}}</span>
                     </div>
                     <div class="gender-and-dob">
-                        <!-- <div *ngIf="waitlist_data.appmtFor[0].gender" class="gender">
-                            <span class="value">&nbsp;{{waitlist_data.appmtFor[0].gender | capitalizeFirst}}</span>
-                        </div> -->
                         <div class="dob" *ngIf="waitlist_data.appmtFor[0].dob">
                             <i class="fa fa-calendar-o icon"></i>
                             <span class="value">&nbsp;{{waitlist_data.appmtFor[0].dob | date:newDateFormat}}</span>
                         </div>
                     </div>
-                    <!-- <div class="stats-item" *ngIf="waitlist_data.appmtFor[0].preferredLanguage">
-                      <span class="itemHead">Language : {{waitlist_data.appmtFor[0].preferredLanguage}}</span>
-                    </div> -->
                     <div class="location" *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].bookingLocation && (waitlist_data.appmtFor[0].bookingLocation.district || waitlist_data.appmtFor[0].bookingLocation.state)">
                         <i class="fa fa-map-marker icon"></i>
                         <span class="value"> {{waitlist_data.appmtFor[0].bookingLocation.district}},
@@ -178,7 +170,6 @@
                       </div>
                     </div>
                   </div>
-                  <!-- <span *ngIf="waitlist_data && !waitlist_data.consumerNote" class="m-auto text-center">{{no_cus_notes_cap}}</span> -->
           </div>
         </div>
 
@@ -225,9 +216,9 @@
   </div>
   
 </div>
-</div>
+</div> -->
 
-<!-- 
+
 
 <section class="prov-apptDetail" *ngIf="waitlist_data">
   <div class="content comn-cls checkin-details">
@@ -470,7 +461,7 @@
           </div>
         </div>
 
-        <div class="lbr no-padding-small">
+        <div class="lbr col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small">
           <div class="card">
             <h2>{{checkin_label |capitalizeFirst}} History</h2>
 
@@ -506,4 +497,4 @@
     </div>
   </div>
 </section>
-<div class="clearfix"></div> -->
+<div class="clearfix"></div>

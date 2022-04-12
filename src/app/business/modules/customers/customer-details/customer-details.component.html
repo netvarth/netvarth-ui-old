@@ -1,4 +1,4 @@
-<section class=""
+<!-- <section class=""
     *ngIf="source !=='token' && source !=='checkin' && source !=='appointment' && source !=='appt-block' && source !== 'waitlist-block' && source !== 'clist' && !viewCustomer && !loading">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
@@ -6,12 +6,21 @@
             {{customerName}}
         </h5>
     </div>
-</section>
+</section> -->
 <section *ngIf="viewCustomer && customerAction === '' && !showMoreHistory">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
             <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{customer_label | capitalizeFirst}} details
+        </h5>
+    </div>
+</section>
+
+<section *ngIf="showMoreHistory">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {{customer_label | capitalizeFirst}} History
         </h5>
     </div>
 </section>
@@ -32,7 +41,7 @@
         </h5>
     </div>
 </section> -->
-<!-- <section>
+<section>
     <div class="content loc-list p-checkin ynw-common-form-nm">
         <div class="col-md-12 no-padding-small ">
             <div class="row">
@@ -690,8 +699,8 @@
         </div>
     </div>
     <div class="clearfix"></div>
-</section> -->
-
+</section>
+<!-- 
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
 <section class="content" *ngIf="!loading && viewCustomer">
     <div class="row main-sec">
@@ -761,10 +770,6 @@
             </div>
             <div class="clearfix"></div>
         </div>
-        <!-- <div class="col-lg-4 col-md-4 no-padding-big mgn-bt-10">
-            <app-provider-inbox-list [customer]="" [provider]="0" [source]="'details'">
-            </app-provider-inbox-list>
-        </div> -->
     </div>
     <div class="row records-sec pt-0">
         <div class="column">
@@ -831,4 +836,4 @@
             </app-booking-documents>
         </div>
     </div>
-</section>
+</section> -->

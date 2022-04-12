@@ -47,7 +47,7 @@
                 <div class="inner-card-text" *ngIf="rx.instructions!=''">Instructions: {{rx.instructions}}</div>
               </div>
             </div>
-            <div class="presc" *ngIf="prescription.prescriptionImages">
+            <div class="presc" *ngIf="prescription.prescriptionImages && prescription.prescriptionImages[0]">
               <div class="inner-card-text">{{prescription.prescriptionImages[0].originalName}}</div>
             </div>
           </div>

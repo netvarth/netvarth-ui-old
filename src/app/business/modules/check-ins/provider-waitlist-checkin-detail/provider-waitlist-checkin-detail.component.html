@@ -1,4 +1,4 @@
-<section class="">
+ <section class="">
   <div class="card title-gb">
     <h5 class="mgn-up-10">
       <span class="fa fa-arrow-left pointer-cursor" (click)="gotoPrev()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -8,6 +8,7 @@
   </div>
 </section>
 
+<!--
 <div class="content comn-cls checkin-details" *ngIf="waitlist_data">
   <div class="col-md-12 no-padding-small">
     <div class="row equal">
@@ -31,7 +32,6 @@
             </h2>
           </div>
           <span class="loc-cls">
-            <!-- <b class="text-dark">{{spName}}</b><br> -->
             <i class="fa fa-map-marker"></i>&nbsp;{{waitlist_data.queue.location.place | capitalizeFirst}}</span>
             <span class="text-light my-0 py-0"><b>Booking Via : </b>
               {{getAgent(waitlist_data.requestInfo.agent) | capitalizeFirst}},
@@ -117,9 +117,7 @@
                             <span class="value">&nbsp;{{waitlist_data.waitlistingFor[0].dob | date:newDateFormat}}</span>
                         </div>
                     </div>
-                    <!-- <div class="stats-item" *ngIf="waitlist_data.waitlistingFor[0].preferredLanguage">
-                      <span class="itemHead">Language : {{waitlist_data.waitlistingFor[0].preferredLanguage}}</span>
-                    </div> -->
+                    
                     <div class="location" *ngIf="waitlist_data.waitlistingFor && waitlist_data.waitlistingFor[0].bookingLocation && (waitlist_data.waitlistingFor[0].bookingLocation.district || waitlist_data.waitlistingFor[0].bookingLocation.state)">
                         <i class="fa fa-map-marker icon"></i>
                         <span class="value"> {{waitlist_data.waitlistingFor[0].bookingLocation.district}},
@@ -171,7 +169,6 @@
                       </div>
                     </div>
                   </div>
-                  <!-- <span *ngIf="waitlist_data && !waitlist_data.consumerNote" class="m-auto text-center">{{no_cus_notes_cap}}</span> -->
           </div>
         </div>
 
@@ -225,12 +222,12 @@
 
 
 
+ -->
 
 
 
 
 
-<!-- 
 
 
 
@@ -519,4 +516,4 @@
     </div>
   </div>
 </section>
-<div class="clearfix"></div> -->
+<div class="clearfix"></div>
