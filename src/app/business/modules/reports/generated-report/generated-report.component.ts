@@ -197,7 +197,8 @@ export class GeneratedReportComponent implements OnInit {
       width: '400px',
       disableClose: true,
       data: {
-        purpose: 'save'
+        purpose: 'save',
+        token : this.token
       }
     });
     this.reprtdialogRef.afterClosed().subscribe(result => {
