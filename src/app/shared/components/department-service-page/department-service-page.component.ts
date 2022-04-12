@@ -1991,7 +1991,15 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     console.log(actionObj);
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
-        this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
+        // this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id]);
+        let queryParam = {
+          back:1
+        }
+        const navigationExtras: NavigationExtras = {
+          queryParams: queryParam
+        };
+        this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id], navigationExtras);
+        // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
       } 
       else if(actionObj['action'] === 'availability'){
         this.opencheckavail(actionObj);
@@ -2000,7 +2008,15 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
       }
     }else if (actionObj['type'] === 'appt') {
       if (actionObj['action'] === 'view') {
-        this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
+        // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
+        // this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id]);
+        let queryParam = {
+          back:1
+        }
+        const navigationExtras: NavigationExtras = {
+          queryParams: queryParam
+        };
+        this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id], navigationExtras);
       } else if(actionObj['action'] === 'availability'){
         this.opencheckavail(actionObj);
       } else {
@@ -2008,7 +2024,15 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
       }
     } else if (actionObj['type'] === 'donation') {
       if (actionObj['action'] === 'view') {
-        this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
+        // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
+        // this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id]);
+        let queryParam = {
+          back:1
+        }
+        const navigationExtras: NavigationExtras = {
+          queryParams: queryParam
+        };
+        this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id], navigationExtras);
       } else {
         this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
       }

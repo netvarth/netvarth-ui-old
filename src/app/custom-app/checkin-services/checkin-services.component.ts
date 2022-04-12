@@ -71,7 +71,14 @@ export class CheckinServicesComponent implements OnInit, OnChanges {
     // } else 
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
-        this.router.navigate([this.businessProfile.accEncUid, 'service', actionObj['service'].id]);
+        let queryParam = {
+          back:1
+        }
+        const navigationExtras: NavigationExtras = {
+          queryParams: queryParam
+        };
+        this.router.navigate([this.businessProfile.accEncUid, 'service', actionObj['service'].id], navigationExtras);
+        // this.router.navigate([this.businessProfile.accEncUid, 'service', actionObj['service'].id]);
         // this.showServiceDetail(actionObj['service'], this.businessProfile.businessName);
 
       } else {

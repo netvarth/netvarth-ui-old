@@ -147,6 +147,8 @@ export class ServiceViewComponent implements OnInit {
   checkavailabilitydialogref: any;
   extra_service_img_count: number;
   serviceType;
+
+  back;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public shared_services: SharedServices,
@@ -275,6 +277,9 @@ export class ServiceViewComponent implements OnInit {
       console.log(qparams);
       if (qparams.source) {
         this.source = qparams.source;
+      }
+      if (qparams.back) {
+        this.back = qparams.back;
       }
     });
   }
