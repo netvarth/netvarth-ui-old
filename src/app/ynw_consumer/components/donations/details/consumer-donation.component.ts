@@ -957,7 +957,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                         _this.isClickedOnce = false;
                         _this.cdRef.detectChanges();
                         if (_this.from) {
-                            this.ngZone.run(() => _this.router.navigate(['consumer']));
+                            _this.ngZone.run(() => _this.router.navigate(['consumer']));
                         } else {
                             let queryParams = {
                                 accountId: _this.accountId,
@@ -969,7 +969,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                             let navigationExtras: NavigationExtras = {
                                 queryParams: queryParams
                             };
-                            this.ngZone.run(() => _this.router.navigate(['consumer'], navigationExtras));
+                            _this.ngZone.run(() => _this.router.navigate(['consumer'], navigationExtras));
                         }
                     }
                 });
