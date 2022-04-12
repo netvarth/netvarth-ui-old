@@ -14,16 +14,21 @@ import { MatInputModule } from '@angular/material/input';
 import { FormMessageDisplayModule } from "../../../../shared/modules/form-message-display/form-message-display.module";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
+import { PagerModule } from "../../../../../../src/app/shared/modules/pager/pager.module";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 const routes: Routes = [
   { path: '', component: TasksComponent },
+  {path:'viewtask/:id',loadChildren:()=>import('./view-task/view-task.module').then((m)=>m.ViewTaskModule)},
+  // {path:'create-subtask/:taskid',loadChildren:()=>import('./create-task/create-task.module').then((m)=>m.CreateTaskModule),pathMatch: 'full'},
   {path:'create-task',loadChildren:()=>import('./create-task/create-task.module').then((m)=>m.CreateTaskModule)},
-  {path:'viewtask/:id',loadChildren:()=>import('./view-task/view-task.module').then((m)=>m.ViewTaskModule)}
+
+
 ];
 @NgModule({
     imports: [
         CommonModule,
-        LoadingSpinnerModule,
+        PagerModule,
         MatTableModule,
         MatDialogModule,
         MatTabsModule,
@@ -32,6 +37,8 @@ const routes: Routes = [
         MatInputModule,
         MatIconModule,
         MatMenuModule,
+        MatCheckboxModule,
+        LoadingSpinnerModule,
         FormMessageDisplayModule,
         [RouterModule.forChild(routes)]
     ],

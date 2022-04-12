@@ -13,18 +13,18 @@
     <div  class="customLoader" *ngIf="loadingPaytm">
         <app-common-innerloading-spinner ></app-common-innerloading-spinner>
     </div>
-    <div class="loading-hgt my-1 login-form_custom" *ngIf="!loggedIn || loadingS3">
+    <div class="loading-hgt my-1 login-form_custom" *ngIf="!loggedIn || loadingS3 || loading || !slotLoaded">
         <div class="card card-custom no-margin hgt-adjust">
             <div class="card-body p-0">
                 <app-consumer-join *ngIf="!loggedIn" (actionPerformed)="actionPerformed($event)"></app-consumer-join>
                 <!-- <app-authentication *ngIf="!loggedIn" (actionPerformed)="actionPerformed($event)"></app-authentication> -->
-                <app-common-innerloading-spinner *ngIf="loggedIn && loadingS3"></app-common-innerloading-spinner>
+                <app-common-innerloading-spinner *ngIf="loggedIn && (loadingS3 || loading || !slotLoaded) "></app-common-innerloading-spinner>
             </div>
         </div>
     </div>
     <div class="clearfix"></div>
     <div class="row" *ngIf="loggedIn">
-        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch desktop-only p-1"
+        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 d-flex align-items-stretch desktop-only p-1"
             *ngIf="!smallDevice">
             <div class="card shadow" *ngIf="!loadingS3">
                 <app-booking-accountinfo [businessInfo]="businessInfo" [smallDevice]="smallDevice">
@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 mt-4 d-flex align-items-stretch p-1">
+        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 d-flex align-items-stretch p-1" *ngIf="!loading">
             <div class="card shadow hgt-adjust">
                 <!-- Wizard Started -->
                 <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first"
@@ -64,7 +64,7 @@
                     <!-- *ngIf="appointmentType != 'reschedule' && selectedService && !selectedService.isPrePayment" -->
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between">
                         <button type="button"
-                            class="mx-auto text-center next-button btn btn-primary font-weight-bold text-capitalize"
+                            class="mx-auto text-center next-button btn btn-primary font-weight-bold text-capitalize px-12"
                             (click)="goToStep('next');actionCompleted()" [class.disabled]="!isSlotAvailable">
                             Next
                         </button>

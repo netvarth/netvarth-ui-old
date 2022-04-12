@@ -50,8 +50,25 @@
           </div>
           <div class="text-center mx-auto">
             <button class="status-btn btn btn-outline-dark my-2" (click)="addConsumerInboxMessage()"><i class="fa fa-commenting-o" aria-hidden="true"></i> Message</button>
-            <button class="status-btn btn btn-outline-dark my-2 mx-1" (click)="changeWaitlistStatus('CANCEL')"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
-            <button class="status-btn btn btn-outline-dark my-2" (click)="changeWaitlistStatus('DONE')"><i class="fa fa-check" aria-hidden="true"></i> Complete</button>
+            <button class="status-btn btn btn-outline-dark my-2 mx-1" 
+            *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Completed'
+             && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Cancelled'" (click)="changeWaitlistStatus('CANCEL')">
+             <i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+             
+            <button class="status-btn btn btn-disabled my-2 mx-1" style="cursor: no-drop!important" 
+            *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] == 'Started' || check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] == 'Completed'
+             || check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] == 'Cancelled'">
+             <i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+
+             <button class="status-btn btn btn-disabled my-2 mx-1" style="cursor: no-drop!important" 
+            *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] == 'Started' || check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] == 'Completed'
+             || check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] == 'Cancelled'">
+             <i class="fa fa-check" aria-hidden="true"></i> Complete</button>
+
+            <button class="status-btn btn btn-outline-dark my-2" 
+            *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Completed'
+             && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Cancelled'"
+             (click)="changeWaitlistStatus('DONE')"><i class="fa fa-check" aria-hidden="true"></i> Complete</button>
           </div>
           
         </div>

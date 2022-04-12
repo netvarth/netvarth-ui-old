@@ -204,6 +204,17 @@
     margin-bottom: 10px!important;
 }
 
+.btn-disabled
+{
+    font-size: 12px!important;
+    padding: 7px!important;
+    text-align: center!important;
+    text-decoration: none!important;
+    display: inline-block!important;
+    background-color: rgb(231, 231, 231)!important;
+    color: black!important;
+    border: 1.5px solid black!important;
+}
 
 
 @media (max-width: 750px) {

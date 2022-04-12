@@ -12,7 +12,7 @@
                         <app-header *ngIf="accountIdExists && sharedFunctionobj.checkLogin()"
                             [includedfrom]="'pdetails'" [accountId]="accountId" [customId]="customId"
                             [showHeaderAction]="true"></app-header>
-                        <div class="view-booking" *ngIf="accountIdExists && !sharedFunctionobj.checkLogin()">
+                        <div class="view-booking" *ngIf="!customId && accountIdExists && !sharedFunctionobj.checkLogin()">
                             <button class="pull-right btn btn-primary dashboard-btn" (click)="dashboardClicked()">My
                                 Bookings</button>
                         </div>
@@ -25,7 +25,7 @@
                 <div class="panel-body" >
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="!loading">
                         <div class="col-md-2 col-xs-12 col-sm-12 col-lg-2">
-                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" [ngClass]="{'cvr-dp-mgn': bgCover}">
+                            <div class="" [ngClass]="{'cvr-dp-mgn': bgCover}">
                                 <img alt="Profile Image" src="{{bLogo}}" id="profile-image1"
                                     class="img-circle img-responsive cvr-dp"
                                     [ngClass]="{'cvr-dp-bdr': bgCover}"
@@ -164,7 +164,7 @@
                     <br>
                     <app-common-innerloading-spinner *ngIf="loading || loading_direct">
                     </app-common-innerloading-spinner>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding"
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10"
                         *ngIf="servicesAndProviders && servicesAndProviders.length >0 && !loading && !loading_direct">
                         <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
                             <app-card [source]="'service-view'" [item]="sp"

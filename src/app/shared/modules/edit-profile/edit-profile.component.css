@@ -126,3 +126,12 @@ font-weight: bold;
   svg {
       margin-top: -10px !important;
   }
+ 
+  ::ng-deep .picker-form-group .mat-form-field-appearance-legacy .mat-form-field-infix {
+      padding: 0 !important;
+      margin-top: -26px !important;
+  }
+
+  ::ng-deep .picker-form-group .mat-input-element,  ::ng-deep .ynw-common-form-nm .mat-input-element {
+      padding : 13px 0px 0px 0px !important;
+  }

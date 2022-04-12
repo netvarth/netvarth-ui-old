@@ -5,7 +5,7 @@ import { Image } from '@ks89/angular-modal-gallery';
   selector: 'app-picture-gallery',
   templateUrl: './picture-gallery.component.html',
   styleUrls: ['./picture-gallery.component.css'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.ShadowDom
 })
 export class PictureGalleryComponent implements OnInit {
 

@@ -2277,3 +2277,6 @@ box-shadow: 4px 4px 5px gainsboro;
   z-index: 100;
   height:50px;
 }
+.cont-outer{
+  padding-bottom: 0 !important;
+}

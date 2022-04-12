@@ -86,10 +86,13 @@
   }
 @media(min-width: 768px) {
     .form-control{
-        width: 50%;
+        width: 50% ;
     }
     .mat-select {
-        width: 50% !important;
+        width: 50% ;
+    }
+    .widthWebKit{
+      width: -webkit-fill-available !important;
     }
 }
 @media(max-width: 768px) {
@@ -111,3 +114,20 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 } */
+.positionNameInput{
+  position: relative;
+
+}
+::ng-deep .mat-datepicker-toggle{
+  position: absolute;
+}
+.dateWithMatDtae{
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+
+}
+textarea {
+  resize: none;
+}

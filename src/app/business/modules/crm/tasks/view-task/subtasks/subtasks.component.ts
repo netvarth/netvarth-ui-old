@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CrmService } from '../../../crm.service';
 
 @Component({
   selector: 'app-subtasks',
@@ -23,56 +24,23 @@ export class SubtasksComponent implements OnInit {
   auditEnddate: any;
   filterapplied: boolean;
   subTaskList: any;
-  constructor( private router: Router ) { }
+  taskDetails: any;
+  subTaskDetails: any;
+  constructor( 
+    private router: Router,
+    private crmService: CrmService,
+
+
+    ) { }
   ngOnInit(): void {
 
-    let subtasks: any = [{
-      "taskId": 1,
-      "subtaskId": 1,
-      "assignee" : "krishna",
-      "subtaskName": 'Subtask 1',
-      "duration": '9 days 2 hours',
-      "status": 'Completed',
-      "catogory": 'c1',
-      "type": 'Type 1',
-      "duedate": 'March 20, 2022'
-    },
-    {
-      "taskId": 1,
-      "subtaskId": 2,
-      "assignee" : "mani",
-      "subtaskName": 'Subtask 2',
-      "duration": '10 Days 3 hours',
-      "status": 'In Progress',
-      "catogory": 'c2',
-      "type": 'Type 1',
-      "duedate": 'March 30, 2022'
-    },
-    {
-      "taskId": 1,
-      "subtaskId": 3,
-      "assignee" : "aswin",
-      "subtaskName": 'Subtask 3',
-      "duration": '9 days 2 hours',
-      "status": 'Completed',
-      "catogory": 'c1',
-      "type": 'Type 1',
-      "duedate": 'March 20, 2022'
-    },
-    {
-      "taskId": 1,
-      "subtaskId": 4,
-      "assignee" : "athira",
-      "subtaskName": 'Subtask 4',
-      "duration": '10 Days 3 hours',
-      "status": 'In Progress',
-      "catogory": 'c2',
-      "type": 'Type 1',
-      "duedate": 'March 30, 2022'
-    }
-  ];
-    this.subTaskList = subtasks;
-    console.log("Subtask List : ",this.subTaskList);
+    this.crmService.getSubTaskDetails(this.taskid).subscribe(data => {
+      this.taskDetails = data;
+      let subTaskFilter = this.taskDetails.filter(data => data.parentTaskUid == this.taskid);
+      this.subTaskDetails = subTaskFilter;
+      console.log("Task Details : ",this.subTaskDetails);
+  })
+
   }
   
   gettotalCnt() {
@@ -128,9 +96,9 @@ export class SubtasksComponent implements OnInit {
   }
 
 
-  createSubTask()
+  createSubTask(taskid)
   {
-    this.router.navigate(['provider', 'task','create-task'])
+    this.router.navigate(['provider', 'task','create-subtask',taskid]);
   }
   
 }

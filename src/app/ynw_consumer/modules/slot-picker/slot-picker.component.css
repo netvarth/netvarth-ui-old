@@ -56,3 +56,9 @@
     .mat-chip-disabled{
       background-color: #ddd !important;
     }
+
+    .more_btn {
+      background-color:#1e4079 ;
+      color : #fff !important;
+      border:none;
+    }

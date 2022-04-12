@@ -3,7 +3,7 @@
         <h4><b>Subtasks</b></h4> 
     </div>
     <div class="pr-lg-3">
-        <a class="btn btn-primary rounded-btn" (click)="createSubTask()"><i class="fa fa-plus"></i>&nbsp;Subtask</a>
+        <a class="btn btn-primary rounded-btn" (click)="createSubTask(taskid)"><i class="fa fa-plus"></i>&nbsp;Subtask</a>
     </div>
 </div>
 
@@ -35,27 +35,28 @@
                 </tr>
             </thead>
             <tbody>
-                <ng-container *ngIf="subTaskList.length === 0">
-                <tr>
-                    <td class="nodatafound" colspan="5">No sub tasks found</td>
+                <ng-container *ngIf="subTaskDetails.length === 0">
+                <tr class="text-center mx-auto text-danger">
+                    <td class="text-center nodatafound" colspan="5">No sub tasks found</td>
                 </tr>
                 </ng-container>
                 <ng-container>
-                    <tr class="subtask-table-data" *ngFor="let subtask of subTaskList">
+                    <tr class="subtask-table-data" *ngFor="let subtask of subTaskDetails">
+                        <!-- <pre>{{subtask | json}}</pre> -->
                         <td class="head_color"><span class="text-dark">
-                            &nbsp;&nbsp;&nbsp;<b>{{subtask.subtaskName}}</b>
-                            </span><br>&nbsp;&nbsp;&nbsp;<span class="text-primary">Assigned to {{subtask.assignee}}</span>
+                            &nbsp;&nbsp;&nbsp;<b>{{subtask.title}}</b>
+                            </span><br>&nbsp;&nbsp;&nbsp;<span class="text-primary">Assigned to {{subtask.assignee.name}}</span>
                         </td>
-                        <td class="head_color">{{subtask.duration}}</td>
-                        <td class="head_color">{{subtask.status}}</td>
-                        <td class="head_color">{{subtask.catogory}}</td>
-                        <td class="head_color">{{subtask.type}}</td>
-                        <td class="head_color">{{subtask.duedate}}</td>
+                        <td class="head_color">{{subtask.estDuration['hours']}} hrs {{subtask.estDuration['minutes']}} min</td>
+                        <td class="head_color">{{subtask.status.name}}</td>
+                        <td class="head_color">{{subtask.category.name}}</td>
+                        <td class="head_color">{{subtask.type.name}}</td>
+                        <td class="head_color">{{subtask.dueDate}}</td>
                     </tr>
                 </ng-container>
             </tbody>
         </table>
-        <div class="search_paging" *ngIf="subTaskList.length>0">
+        <div class="search_paging" *ngIf="subTaskDetails.length>0">
           <app-pager [total_pages]="gettotalCnt()" [pagesize]="getperPage()" (pagerclick)="handle_pageclick($event)"
             [curpage]="startpageval"></app-pager>
         </div>

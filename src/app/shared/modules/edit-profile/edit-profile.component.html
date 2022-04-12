@@ -1,5 +1,3 @@
-
-
 <section *ngIf="curtype=='consumer'" class="container no-padding myaccount no-padding-small consumer-profile" [ngClass]="theme">
     <div class="content p0 see-pages cons-members">
 
@@ -98,9 +96,10 @@
                                                 errorMsg="{{'gender_error' | translate}}">
                                             </app-field-error-display>
                                         </div>
-                                        <div class="form-group col-md-5 col-xs-5 col-md-5 col-lg-5 no-padding picker-form-group">
-                                            <mat-form-field>
-                                                <input matInput [matDatepicker]="picker" placeholder="Date of birth"
+                                        <div class="form-group col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding picker-form-group">
+                                            <label class="form-control-label">{{'Date of Birth' | translate}}</label>
+                                            <mat-form-field class="form-control">
+                                                <input matInput [matDatepicker]="picker" 
                                                     #inputdob formControlName="dob" [max]="tday" [min]="minday"
                                                     disabled class="nofocus" tabindex="-1" readonly>
                                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -162,7 +161,7 @@
                                 <button type="submit" mat-button [disabled]="!editProfileForm.valid" class="cs-btn bt1">{{update_btn}}</button>
                             </form>
                         </div>
-                        <div class="right-menu">
+                        <div class="right-menu" *ngIf="!customId">
                             <div class="right-menu-header">{{related_links_cap}}</div>
                             <ul class="related-link">
                                 <li (click)="redirectto('change-password','consumer')" class="icon-password" *ngIf="!fromApp">

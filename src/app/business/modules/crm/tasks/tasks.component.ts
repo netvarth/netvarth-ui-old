@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { projectConstantsLocal } from '../../../../../../src/app/shared/constants/project-constants';
 import { projectConstants } from '../../../../../../src/app/app.component';
 import { Messages } from '../../../../../../src/app/shared/constants/project-messages';
-// import { CrmService } from '../crm.service';
 import { Location } from '@angular/common';
 import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
 import { Router } from '@angular/router';
@@ -17,19 +16,6 @@ import { LocalStorageService } from '../../../../../../src/app/shared/services/l
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css']
 })
-// export class TasksComponent implements OnInit {
-
-//   constructor(private crmService: CrmService) { }
-
-//   ngOnInit(): void {
-//     this.crmService.getTasks().subscribe(
-//       (tasks: any) => {
-
-//       }
-//     )
-//   }
-
-// }
 export class TasksComponent implements OnInit {
   tooltipcls = '';
   select_cap = Messages.SELECT_CAP;
@@ -56,8 +42,6 @@ export class TasksComponent implements OnInit {
   open_filter = false;
   ackStatus = false;
   notAckStatus = false;
-  startpageval;
-  totalCnt;
   domain;
   perPage = projectConstants.PERPAGING_LIMIT;
   tday = new Date();
@@ -78,33 +62,39 @@ export class TasksComponent implements OnInit {
   totalDelayedList: any = [];
   selectedTab;
   filtericonTooltip = '';
-  totalCount;
   filter = {
     status: '',
     category: '',
     type: '',
     dueDate: '',
-    pinCode: '',
-    primaryMobileNo: '',
-    employeeId: '',
-    email: '',
-    userType: '',
-    available: '',
-    page_count: projectConstants.PERPAGING_LIMIT,
-    page: 1
-
+    title: '',
   };
-
-  filters: any = {
-    'status': false,
-    'category': false,
-    'type': false,
-    'dueDate': false,
+  filters = {
+    status: false,
+    category: false,
+    type: false,
+    dueDate: false,
+    title: false,
+  };
+  pagination: any = {
+    startpageval: 1,
+    totalCnt: 0,
+    perPage: 10
   };
   msg = 'Do you really want to mark as done this task? ';
+  totalCount: any;
   inprogressCount: any;
   completedCount: any;
   delayedCount: any;
+  page = 1;
+  inprogress = false;
+  completed= false;
+  public taskStatusList:any=[];
+  public categoryListData:any=[];
+  public taskTypeList:any=[];
+  types: any = [];
+  statuses: any = [];
+  categories: any = [];
   constructor(
     private locationobj: Location,
     private groupService: GroupStorageService,
@@ -117,67 +107,182 @@ export class TasksComponent implements OnInit {
 
   ) {
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.api_loading = false;
-    // this.crmService.getTasks().subscribe(
-    //   (tasks: any) => {
-    //     this.taskList = tasks;
-    //     console.log(this.taskList)
-    //   }
-    // )
-    this.getTotalTask();
-    this.getInprogressTask();
-    this.getCompletedTask();
-    this.getDelayedTask();
     if (this.groupService.getitemFromGroupStorage('tabIndex')) {
       this.selectedTab = this.groupService.getitemFromGroupStorage('tabIndex');
     } else {
       this.selectedTab = 1;
     }
-    this.doSearch();
-
-
+    this.getTaskStatusListData();
+    this.getCategoryListData();
+    this.getTaskTypeListData();
+    this.getTotalTaskCount();
+    this.getInprogressTaskCount();
+    this.getCompletedTaskCount();
+    this.getDelayedTask();
+   
+    
+    // this.doSearch();
   }
-  getTotalTask() {
-    this.crmService.getTotalTask().subscribe(
-      (data: any) => {
-        this.totalTaskList = data;
-        this.totalCount = this.totalTaskList.length;
-      },
-      (error: any) => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
+  getTotalTaskCount() {
+    this.crmService.getTotalTaskCount()
+      .subscribe(
+        data => {
+          this.pagination.totalCnt = data;
+         
+          this.totalCount = data;
+          const pgefilter = {
+            'from': 0,
+            'count': this.pagination.totalCnt,
+          };
+          this.setPaginationFilter(pgefilter);
+          this.getTotalTask(pgefilter);
+        });
   }
-  getInprogressTask() {
-    this.crmService.getInprogressTask().subscribe(
+  setPaginationFilter(api_filter) {
+  
+      api_filter['from'] = ((this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0);
+      api_filter['count'] = this.pagination.perPage;
+      return api_filter;
+    
+    
+  }
+  handle_pageclick(pg) {
+    this.pagination.startpageval = pg;
+    this.page = pg;
+    const pgefilter = {
+      'from': this.pagination.startpageval,
+      'count': this.pagination.totalCnt,
+    };
+    this.setPaginationFilter(pgefilter);
+    this.getTotalTask(pgefilter);
+  }
+  getTotalTask(pgefilter?) {
+    this.api_loading = true;
+    //  const filter = { 'scope-eq': 'account' };
+    this.crmService.getTotalTask(pgefilter)
+      .subscribe(
+        data => {
+          this.totalTaskList = data;
+          this.api_loading = false;
+        },
+        error => {
+          this.api_loading = false;
+          this.wordProcessor.apiErrorAutoHide(this, error);
+        }
+      );
+  }
+  getInprogressTaskCount() {
+    this.crmService.getInprogressTaskCount()
+      .subscribe(
+        data => {
+          this.pagination.totalCnt = data;
+          this.inprogressCount = data;
+          const pgefilter_inprogress = {
+            'from': 0,
+            'count': this.pagination.totalCnt,
+          };
+          this.setPaginationFilter_inprogress(pgefilter_inprogress);
+          this.getInprogressTask(pgefilter_inprogress);
+        });
+  }
+  setPaginationFilter_inprogress(api_filter) {
+    if(this.inprogress){
+      api_filter['from'] = 0;
+      api_filter['count'] = this.pagination.perPage;
+      return api_filter;
+    }
+    else{
+      api_filter['from'] = ((this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0);
+      api_filter['count'] = this.pagination.perPage;
+      return api_filter;
+    }
+   
+  }
+  handle_pageclick_inprogree(pg) {
+    this.inprogress = false;
+    this.pagination.startpageval = pg;
+    this.page = pg;
+    const pgefilter_inprogress = {
+      'from': this.pagination.startpageval,
+      'count': this.pagination.totalCnt,
+    };
+    this.setPaginationFilter_inprogress(pgefilter_inprogress);
+    this.getInprogressTask(pgefilter_inprogress);
+  }
+  getInprogressTask(pgefilter_inprogress?) {
+    this.crmService.getInprogressTask(pgefilter_inprogress).subscribe(
       (data: any) => {
         this.totalInprogressList = data;
+
       },
       (error: any) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
-  getCompletedTask() {
-    this.crmService.getCompletedTask().subscribe(
+  getCompletedTaskCount() {
+    this.crmService.getCompletedTaskCount()
+      .subscribe(
+        data => {
+          this.pagination.totalCnt = data;
+          this.completedCount = data;
+          const pgefilter_completed = {
+            'from': 0,
+            'count': this.pagination.totalCnt,
+          };
+          this.setPaginationFilter_completed(pgefilter_completed);
+          this.getCompletedTask(pgefilter_completed);
+        });
+  }
+  setPaginationFilter_completed(api_filter) {
+    
+    if(this.completed){
+      api_filter['from'] = 0;
+      api_filter['count'] = this.pagination.perPage;
+      return api_filter;
+    }
+    else{
+      api_filter['from'] = ((this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0);
+      api_filter['count'] = this.pagination.perPage;
+      return api_filter;
+    }
+    
+  }
+  handle_pageclick_completed(pg) {
+    this.completed = false;
+    this.pagination.startpageval = pg;
+    this.page = pg;
+    const pgefilter_completed = {
+      'from': this.pagination.startpageval,
+      'count': this.pagination.totalCnt,
+    };
+    this.setPaginationFilter_inprogress(pgefilter_completed);
+    this.getCompletedTask(pgefilter_completed);
+  }
+  getCompletedTask(pgefilter_inprogress?) {
+    this.crmService.getCompletedTask(pgefilter_inprogress).subscribe(
       (data: any) => {
         this.totalCompletedList = data;
-        this.completedCount = this.totalCompletedList.length;
       },
       (error: any) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
+
+
   getDelayedTask() {
     this.crmService.getDelayedTask().subscribe(
       (data: any) => {
         this.totalDelayedList = data;
-       
-        if(this.totalDelayedList.length === 0){
+
+        if (this.totalDelayedList.length === 0) {
           this.delayedCount = 0;
         }
-        else{
+        else {
           this.delayedCount = this.totalDelayedList.length;
         }
       },
@@ -185,13 +290,14 @@ export class TasksComponent implements OnInit {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
   }
+
   goback() {
     this.locationobj.back();
   }
 
 
   doSearch() {
-    // this.getUsers();
+
     this.lStorageService.removeitemfromLocalStorage('taskfilter');
     if (this.filter.status || this.filter.category || this.filter.type || this.filter.dueDate) {
       this.filterapplied = true;
@@ -200,42 +306,14 @@ export class TasksComponent implements OnInit {
     }
   }
 
-  // handle_pageclick(pg) {
-  //   this.startpageval = pg;
-  //   this.do_search(true);
-  // }
-  getperPage() {
-    return this.perPage;
-  }
-  gettotalCnt() {
-    return this.totalCnt;
-  }
-  getcurpageVal() {
-    return this.startpageval;
-  }
   toggleFilter() {
     this.open_filter = !this.open_filter;
   }
   clearFilter() {
-    this.lStorageService.removeitemfromLocalStorage('userfilter');
+    this.lStorageService.removeitemfromLocalStorage('taskfilter');
     this.resetFilter();
     this.filterapplied = false;
     // this.getUsers();
-  }
-  resetFilter() {
-    this.filters = {
-      'status': false,
-      'category': false,
-      'type': false,
-      'dueDate': false,
-    };
-    // this.filter = {
-    //     status: '',
-    //     category: '',
-    //     type: '',
-    //     dueDate: '',
-
-    // };
   }
   showFilterSidebar() {
     this.filter_sidebar = true;
@@ -244,7 +322,6 @@ export class TasksComponent implements OnInit {
     this.filter_sidebar = false;
   }
   tabChange(event) {
-    console.log(event)
     this.setTabSelection(event.index + 1);
   }
   setTabSelection(type) {
@@ -252,16 +329,17 @@ export class TasksComponent implements OnInit {
     this.groupService.setitemToGroupStorage('tabIndex', this.selectedTab);
     switch (type) {
       case 1: {
-        this.getTotalTask();
+        this.getTotalTaskCount();
         break;
       }
       case 2: {
-        this.getInprogressTask();
-
+        this.inprogress = true;
+        this.getInprogressTaskCount();
         break;
       }
       case 3: {
-        this.getCompletedTask();
+        this.completed = true;
+        this.getCompletedTaskCount();
 
         break;
       }
@@ -273,31 +351,119 @@ export class TasksComponent implements OnInit {
     }
   }
 
-  viewTask(taskUid)
-  {
-    console.log("Task id :",taskUid);
+  viewTask(taskUid) {
     this.router.navigate(['/provider/viewtask/' + taskUid]);
 
   }
 
-  createTask(createText:any) {
-    this.crmService.taskActivityName=createText;
-    console.log('create')
+  createTask(createText: any) {
+    this.crmService.taskActivityName = createText;
     this.router.navigate(['provider', 'task', 'create-task'])
   }
   stopprop(event) {
     event.stopPropagation();
   }
-  openEditTask(taskdata:any,editText:any){
-    this.crmService.taskToCraeteViaServiceData=taskdata
-   const newTaskData= this.crmService.taskToCraeteViaServiceData
+  openEditTask(taskdata: any, editText: any) {
+    this.crmService.taskToCraeteViaServiceData = taskdata
+    const newTaskData = this.crmService.taskToCraeteViaServiceData
     setTimeout(() => {
-      this.crmService.taskActivityName=editText;
+      this.crmService.taskActivityName = editText;
       newTaskData;
-    this.router.navigate(['provider', 'task','create-task']);
+      this.router.navigate(['provider', 'task', 'create-task']);
     }, projectConstants.TIMEOUT_DELAY);
-    console.log('taskdata....',taskdata);
 
+  }
+  resetFilter() {
+    this.filters = {
+      status: false,
+      category: false,
+      type: false,
+      dueDate: false,
+      title: false,
+    };
+    this.filter = {
+      status: '',
+      category: '',
+      type: '',
+      dueDate: '',
+      title: '',
+    };
+  }
+  keyPressed() {
+    if (this.filter.title
+      || this.statuses.length > 0 || this.categories.length > 0 || this.types.length > 0 ) {
+      this.filterapplied = true;
+    } else {
+      this.filterapplied = false;
+    }
+  }
+  setFilterForApi() {
+    const api_filter = {};
+   
+    if (this.statuses.length > 0) {
+      api_filter['status-eq'] = this.statuses.toString();
+    }
+    if (this.types.length > 0) {
+      api_filter['type-eq'] = this.types.toString();
+    }
+    if (this.categories.length > 0) {
+      api_filter['category-eq'] = this.categories.toString();
+    }
+    if (this.filter.title !== '') {
+      api_filter['title-eq'] = this.filter.title;
+    }
+    return api_filter;
+  }
+  setFilterDataCheckbox(type, value?, event?) {
+   
+    if (type === 'status') {
+      const indx = this.statuses.indexOf(value);
+      this.statuses = [];
+      if (indx === -1) {
+        this.statuses.push(value);
+      }
+    }
+    if (type === 'type') {
+      const indx = this.types.indexOf(value);
+      this.types = [];
+      if (indx === -1) {
+        this.types.push(value);
+      }
+    }
+    if (type === 'category') {
+      const indx = this.categories.indexOf(value);
+      this.categories = [];
+      if (indx === -1) {
+        this.categories.push(value);
+      }
+    }
+   
+  }
+  getTaskStatusListData(){
+    this.crmService.getTaskStatus().subscribe((taskStatus:any)=>{
+      console.log('taskStatus',taskStatus);
+      this.taskStatusList.push(taskStatus);
+    },
+    (error)=>{
+      this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+    })
+  }
+  getCategoryListData(){
+    this.crmService.getCategoryList().subscribe((categoryList:any)=>{
+      this.categoryListData.push(categoryList)
+    },
+    (error:any)=>{
+      this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+    }
+    )
+  }
+  getTaskTypeListData(){
+    this.crmService.getTaskType().subscribe((taskTypeList:any)=>{
+      this.taskTypeList.push(taskTypeList)
+    },
+    (error:any)=>{
+      this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+    })
   }
   // markAsDone() {
   //   const dialogrefd = this.dialog.open(CrmMarkasDoneComponent, {

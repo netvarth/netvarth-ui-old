@@ -1,11 +1,16 @@
-<section class="">
+<section class="card">
   <div class="title-gb no-padding">
     <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
           Reports
     </div>
   </div>
-</section>
-<section>
+ 
+</section><br><br>
+<section class="card">  
+  <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small" [routerLink]="['/provider/reports/report-list']">
+    <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add">
+      <i class="fa-solid fa-plus"></i>View All Reports</button>
+  </a>
   <div class="content w-manager settings comn-cls">
       <div class="col-md-10 col-xs-12 col-sm-12 col-lg-6 no-padding-small">
 
@@ -210,6 +215,24 @@
                         </mat-accordion>
                         </div>
                     </div>
+                     <!-- CRM Reports -->
+                     <!-- <div class="row">
+                      <div class="card p0">
+                        <mat-accordion class="report">
+                          <mat-expansion-panel  [expanded]="true">
+                              <mat-expansion-panel-header>
+                                  <mat-panel-title class="report_title">
+                                     CRM 
+                                     <div class="width100pc" >
+                                      <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'crm'}">Create New Report</a>
+                                     </div>
+                                  </mat-panel-title>
+                              </mat-expansion-panel-header>
+                       
+                          </mat-expansion-panel>
+                      </mat-accordion>
+                      </div>
+                  </div> -->
       </div>
       <div class="clearfix"></div>
   </div>

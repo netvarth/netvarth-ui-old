@@ -1194,3 +1194,91 @@
         .dashboard .card.w-dta .dash-list .table tbody tr:nth-child(even) {
             background: transparent !important;
           }
+          .confirmBtn{
+            background: #0D2348 !important;
+          box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+          border-radius: 5.75916px !important;
+          border: 0px solid  !important;
+          }
+          @media(max-width: 768px){
+              .startMatTab{
+                  border: 1px solid #fff;
+              }
+              table{
+                display: table !important;
+                /* table-layout: fixed !important; */
+              }
+              ::ng-deep .mat-tab-labels{
+                display: flex !important;
+                flex-wrap: wrap !important;
+              }
+          }
+          ::ng-deep .mat-tab-label{
+            opacity: 1 !important;
+            border: 1px solid #F8F8F8 !important;
+            box-sizing: border-box;
+            box-shadow: 3.10268px 3.10268px 6.20535px -2.48214px rgb(136 136 136 / 25%) !important;
+            border-radius: 5.58482px !important;
+            height: 70px !important;
+            margin-right: 10px !important;
+          }
+          ::ng-deep .mat-tab-label-content{
+              gap: 10px !important;
+          }
+          .img{
+              height: 35px;
+          }
+          .totalCount{
+            font-weight: bold;
+            font-size: 15.6551px;
+            color: #22242C;
+          }
+          .totalActivityName{
+            font-weight: bold;
+            font-size: 15.4396px;
+            color: #4B4B4B;
+          }
+          ::ng-deep .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination{
+             display: none !important;     
+        }
+        @media (max-width: 599px){
+           ::ng-deep .mat-tab-label {
+                min-width: 164px !important;
+                margin-top: 10px !important;
+            }
+            .totalCount{
+                font-weight: bold;
+                font-size: 12.6551px;
+                color: #22242C;
+              }
+              .totalActivityName{
+                font-weight: bold;
+                font-size: 12.4396px;
+                color: #4B4B4B;
+              }
+              ::ng-deep .mat-ink-bar{
+                  width: 0px !important;
+              }
+              .img{
+                  height: 25px !important;
+              }
+              ::ng-deep .mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus{
+                border-bottom: 4px solid #1D3E77 !important;
+                background: #fff;
+              }
+              .btnClass{
+                  display: flex !important;
+                  justify-content: center !important;
+              }
+              .startMatTab{
+                border: 1px solid #fff;
+                margin-top: -90px;
+            }
+        }
+        ::ng-deep .mat-tab-label .mat-tab-label-content{
+            display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    /* flex-wrap: wrap !important; */
+        }

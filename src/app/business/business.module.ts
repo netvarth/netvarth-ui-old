@@ -58,7 +58,9 @@ const routes: Routes = [
         { path: 'drive', loadChildren: () => import('./modules/jaldee-drive/jaldee-drive.module').then(m=>m.JaldeeDriveModule) },
         { path: 'task', loadChildren: () => import('./modules/crm/tasks/tasks.module').then(m => m.TasksModule) },
         {path:'crm-select-member',loadChildren:()=>import ('././shared/crm-select-member/crm-select-member.module').then(m=>m.CrmSelectMemberModule)},
-        {path:'viewtask/:id',loadChildren:()=>import ('./modules/crm/tasks/view-task/view-task.module').then(m=>m.ViewTaskModule)}
+        {path:'viewtask/:id',loadChildren:()=>import ('./modules/crm/tasks/view-task/view-task.module').then(m=>m.ViewTaskModule)},
+        {path:'task/create-subtask/:taskid',loadChildren:()=>import ('./modules/crm/tasks/create-task/create-task.module').then(m=>m.CreateTaskModule)}
+
       ]
     }
   ];

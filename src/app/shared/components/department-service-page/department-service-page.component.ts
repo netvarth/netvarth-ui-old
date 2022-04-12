@@ -140,6 +140,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
   orderItems: any = [];
   itemQty: number;
   activeCatalog: any;
+  isLoggedIn:boolean;
   qrdialogRef;
   wndw_path = projectConstantsLocal.PATH;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
@@ -258,14 +259,16 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
   nonfirstCouponCount = 0;
   activeUser: any;
   checkinProviderList: any = [];
-  wlServices;
-  apptServices;
+  wlServices: any = [];
+  apptServices: any = [];
   private subscriptions = new SubSink();
   deptId;
   consumerVirtualinfo: any;
   loading_direct = false;
   apptSettingsJson: any = [];
   checkavailabilitydialogref: any;
+  theme: any;
+  accountId: any;
   
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -300,7 +303,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.loc_details = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
     this.jdnTooltip = this.wordProcessor.getProjectMesssages('JDN_TOOPTIP');
-
+    
     const isMobile = {
       Android: function () {
         return navigator.userAgent.match(/Android/i);
@@ -336,6 +339,9 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     }
     this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA_CONSUMER;
     this.activaterouterobj.queryParams.subscribe(qparams => {
+      if(qparams.theme) {
+        this.theme = qparams.theme;
+      }
       if (qparams.src) {
         this.pSource = qparams.src;
 
@@ -465,7 +471,6 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     this.subscriptions.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
       null, accountS3List).subscribe(
         (accountS3s) => {
-
           if (this.userId) {
             if (accountS3s['settings']) {
               this.processS3s('settings', accountS3s['settings']);
@@ -661,6 +666,8 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     this.onlinePresence = res['onlinePresence'];
     this.customId = res['customId'];
     this.accEncUid = res['accEncUid'];
+    this.accountId = res['id'];
+    this.isLoggedIn = this.sharedFunctionobj.checkLogin();
     if (!this.userId) {
       this.api_loading = false;
       this.pageFound = true;
@@ -1942,7 +1949,14 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     }
   }
   providerDetClicked(userId) {
-    this.routerobj.navigate([this.accountEncId, userId]);
+    let queryParams = {};
+      if(this.theme) {
+        queryParams['theme'] = this.theme;
+      }
+      const navigationExtras: NavigationExtras = {
+        queryParams: queryParams
+      };
+    this.routerobj.navigate([this.accountEncId, userId], navigationExtras);
   }
   opencheckavail(actionObj) {
     this.checkavailabilitydialogref = this.dialog.open(CheckavailabilityComponent, {
