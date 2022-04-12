@@ -73,6 +73,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   isDesktop = true;
   private subs = new SubSink();
   screenWidth: number;
+  mode;
   constructor(
     public dialogRef: MatDialogRef<ConsumerJoinComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -105,6 +106,9 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.joinStep = true;
+    if (this.data) {
+      this.mode = this.data['mode'];
+    }
     this.selectedCountryCode = this.countryCodes[0].value;
     this.moreParams = this.data.moreparams;
     this.theme = this.data.theme;
@@ -381,14 +385,15 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
       this.api_success = '';
     }, projectConstants.TIMEOUT_DELAY_LARGE6);
   }
-  onOtpSubmit(submit_data) {
+  onOtpSubmit(otp) {
+    // submit_data
     this.actionstarted = true;
     this.resetApiErrors();
-    this.subs.sink = this.shared_services.OtpSignUpConsumerValidate(submit_data.phone_otp)
+    this.subs.sink = this.shared_services.OtpSignUpConsumerValidate(otp)
       .subscribe(
         () => {
           this.actionstarted = false;
-          this.otp = submit_data.phone_otp;
+          this.otp = otp;
           // this.createForm(4);
 
           this.step = 6;
