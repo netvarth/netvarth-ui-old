@@ -1,4 +1,4 @@
-import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ServiceMeta } from '../../../shared/services/service-meta';
@@ -141,16 +141,17 @@ export class CrmService {
       const formData: FormData = new FormData();
       formData.append('file', file);
       console.log("Form Data : ",formData)
-      const req = new HttpRequest('POST', 'provider/task/ta_64a19eb3-9561-42f9-a346-0e50cc57bb73-pt/attachment', formData, {
-        reportProgress: true,
-        responseType: 'json'
-      });
-      console.log("Form Data : ",req)
-      return this.http.request(req);
+      // const req = new HttpRequest('POST', 'provider/task/ta_64a19eb3-9561-42f9-a346-0e50cc57bb73-pt/attachment', formData, {
+      //   reportProgress: true,
+      //   responseType: 'json'
+      // });
+      // console.log("Form Data : ",req)
+      return this.http.post<any>('provider/task/ta_64a19eb3-9561-42f9-a346-0e50cc57bb73-pt/attachment', formData, {
+              reportProgress: true,
+              observe: 'events'
+            });
     }
-    // getFiles(): Observable<any> {
-    //   return this.http.get(`provider/task/ta_64a19eb3-9561-42f9-a346-0e50cc57bb73-pt`);
-    // }
+    
     addProgressvalue(taskUid,progressValue , data){
       const url ='provider/task/'+ taskUid + '/progress/' + progressValue;
       return this.servicemeta.httpPut(url , data)

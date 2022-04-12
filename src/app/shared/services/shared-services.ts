@@ -1077,6 +1077,11 @@ export class SharedServices {
     const url = 'consumer/waitlist/' + uuid + '/attachment' + '?account=' + accountid;;
     return this.servicemeta.httpPost(url, body);
   }
+  addfiletotask(taskuid, body) {
+    const url = 'provider/task/' + taskuid + '/attachment';
+    return this.servicemeta.httpPost(url, body);
+  }
+
   addProviderAppointmentAttachment(uuid, body) {
     const url = 'provider/appointment/' + uuid + '/attachment';
     return this.servicemeta.httpPost(url, body);

@@ -1,16 +1,14 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { projectConstantsLocal } from '../../../../../../../src/app/shared/constants/project-constants';
 import { projectConstants } from '../../../../../../../src/app/app.component';
 import { Messages } from '../../../../../../../src/app/shared/constants/project-messages';
-// import { CrmService } from '../crm.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router} from '@angular/router';
 import { CrmService } from '../../crm.service';
-// import { Observable } from 'rxjs';
-// import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { SelectAttachmentComponent } from './select-attachment/select-attachment.component';
 import  {CrmSelectMemberComponent} from '../../../../shared/crm-select-member/crm-select-member.component'
+import { SharedServices } from '../../../../../shared/services/shared-services';
 @Component({
   selector: 'app-view-task',
   templateUrl: './view-task.component.html',
@@ -75,30 +73,18 @@ taskUid: any;
 taskDetails: any;
 
 action: any;
-@Input() modal;
-@ViewChild('imagefile') fileInput: ElementRef;
-selectedMessage = {
-  files: [],
-  base64: [],
-  caption: []
-};
-
-imgCaptions: any = [];
-
 //notes variable start
   public notesText:any;
   public notesList:any=[]
+  uploaded_attachments: any;
 
 constructor(
   private locationobj: Location,
-  // private lStorageService: LocalStorageService,
    private crmService: CrmService,
-  //private router: Router,
   public _location: Location,public dialog: MatDialog,
   private _Activatedroute:ActivatedRoute,
-      private router: Router,
-
- //public provider_services: ProviderServices
+  private router: Router,
+  public shared_services: SharedServices,
 
 ) {
 }
@@ -129,9 +115,20 @@ uploadFiles() {
       panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
       disableClose: false,
       data: {
-          
+          taskuid : this.taskUid
       }
   });
+}
+
+openEditTask(editText:any) {
+  console.log("hvbjdnskm",this.taskDetails)
+  this.crmService.taskToCraeteViaServiceData = this.taskDetails
+  const newTaskData = this.crmService.taskToCraeteViaServiceData
+  setTimeout(() => {
+    this.crmService.taskActivityName = editText;
+    newTaskData;
+    this.router.navigate(['provider', 'task', 'create-task']);
+  }, projectConstants.TIMEOUT_DELAY);
 }
 
 
@@ -288,6 +285,7 @@ noteView(noteDetails:any){
   })
 
 }
+
 
 }
 

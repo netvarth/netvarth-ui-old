@@ -13,12 +13,12 @@ import { AppointmentsComponent } from "./appointments/appointments.component";
 import { TaskActivityComponent } from "./task-activity/task-activity.component";
 import { ConnectionsComponent } from "./connections/connections.component";
 import { SubtasksComponent } from "./subtasks/subtasks.component";
-import { ProviderServices } from "../../../../../business/services/provider-services.service";
 import { SelectAttachmentComponent } from "./select-attachment/select-attachment.component";
 
 const routes: Routes = [
   { path: '', component: ViewTaskComponent },
-  
+  {path:'create-task',loadChildren:()=>import('../create-task/create-task.module').then((m)=>m.CreateTaskModule)},
+  {path:'viewtask/:id',loadChildren:()=>import('../view-task/view-task.module').then((m)=>m.ViewTaskModule)},
 ];
 
 @NgModule({
@@ -43,8 +43,7 @@ const routes: Routes = [
     
   ],
   providers: [
-    CrmService,
-    ProviderServices
+    CrmService
   ],
   schemas: [
       CUSTOM_ELEMENTS_SCHEMA,
