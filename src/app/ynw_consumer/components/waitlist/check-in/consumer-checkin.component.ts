@@ -356,7 +356,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.type = params.type;
                     this.rescheduleUserId = params.uuid;
                     // this.getRescheduleWaitlistDet();
-                }                
+                }
             }
         );
     }
@@ -386,24 +386,24 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             } else {
                 resolve([]);
             }
-           
+
         })
     }
 
-    getRescheduledInfo () {
+    getRescheduledInfo() {
         const _this = this;
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             if (!_this.rescheduleUserId) {
                 resolve(true);
             } else {
                 _this.getRescheduleWaitlistDet().then(
-                    ()=> {
+                    () => {
                         resolve(true);
                     }
                 )
             }
         })
-       
+
     }
 
     /**
@@ -432,8 +432,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (_this.checkin_date) {
             _this.isFutureDate = _this.dateTimeProcessor.isFutureDate(_this.serverDate, _this.checkin_date);
         }
-        _this.gets3urls().then(()=> {
-            _this.getRescheduledInfo().then(()=> {
+        _this.gets3urls().then(() => {
+            _this.getRescheduledInfo().then(() => {
                 if (_this.selectedServiceId) { _this.getPaymentModes(); }
                 _this.getServicesbyLocation(_this.sel_loc).then(
                     (services: any) => {
@@ -450,8 +450,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         _this.api_loading = false;
                         _this.questionnaireLoaded = true;
                     })
-                })            
-            });  
+            })
+        });
     }
 
     setQDetails(queues, qId?) {
@@ -621,7 +621,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     getRescheduleWaitlistDet() {
         const _this = this;
         _this.waitlist_for = [];
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             _this.subs.sink = _this.shared_services.getCheckinByConsumerUUID(_this.rescheduleUserId, _this.account_id).subscribe(
                 (waitlst: any) => {
                     _this.scheduledWaitlist = waitlst;
@@ -629,11 +629,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         _this.waitlist_for.push({ id: _this.scheduledWaitlist.waitlistingFor[0].id, firstName: _this.scheduledWaitlist.waitlistingFor[0].firstName, lastName: _this.scheduledWaitlist.waitlistingFor[0].lastName, phoneNo: _this.scheduledWaitlist.phoneNumber });
                         _this.wtlst_for_fname = _this.scheduledWaitlist.waitlistingFor[0].firstName;
                         _this.wtlst_for_lname = _this.scheduledWaitlist.waitlistingFor[0].lastName;
-    
+
                         _this.commObj['communicationPhNo'] = _this.scheduledWaitlist.waitlistPhoneNumber;
                         _this.commObj['communicationPhCountryCode'] = _this.scheduledWaitlist.countryCode;
                         _this.commObj['communicationEmail'] = _this.scheduledWaitlist.waitlistingFor[0]['email'];
-    
+
                         if (_this.scheduledWaitlist.waitlistingFor[0].whatsAppNum) {
                             _this.commObj['comWhatsappNo'] = _this.scheduledWaitlist.waitlistingFor[0].whatsAppNum.number;
                             _this.commObj['comWhatsappCountryCode'] = _this.scheduledWaitlist.waitlistingFor[0].whatsAppNum.countryCode;
@@ -648,12 +648,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     _this.sel_loc = _this.scheduledWaitlist.queue.location.id;
                     _this.selectedServiceId = _this.scheduledWaitlist.service.id;
                     _this.checkinDate = _this.scheduledWaitlist.date;
-                    resolve(true);                    
-                }, ()=> {
+                    resolve(true);
+                }, () => {
                     resolve(false);
                 });
         })
-        
+
     }
     rescheduleWaitlist() {
         const post_Data = {
@@ -864,7 +864,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             this.remainingadvanceamount = data;
                             // this.addCheckInConsumer(post_Data, paymenttype);
                             this.performCheckin().then(
-                                ()=> {
+                                () => {
                                     _this.paymentOperation();
                                 }
                             );
@@ -873,7 +873,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 else {
                     // this.addCheckInConsumer(post_Data, paymenttype);
                     this.performCheckin().then(
-                        ()=> {
+                        () => {
                             _this.paymentOperation();
                         }
                     );
@@ -912,9 +912,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (callingModes === '' || callingModes.length < 10) {
             for (const i in this.selectedService.virtualCallingModes) {
                 if (this.selectedService.virtualCallingModes[i].callingMode === 'WhatsApp' || this.selectedService.virtualCallingModes[i].callingMode === 'Phone') {
-                    this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
-                    valid = false;
-                    break;
+                    if (!this.commObj['comWhatsappNo']) {
+                        this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+                        valid = false;
+                        break;
+                    }
                 }
             }
         }
@@ -1552,33 +1554,33 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     gets3urls() {
         const _this = this;
         _this.loadingS3 = true;
-        return new Promise(function(resolve,reject) {
-        let accountS3List = 'settings,terminologies,coupon,providerCoupon,businessProfile,departmentProviders';
-        _this.subs.sink = _this.s3Processor.getJsonsbyTypes(_this.provider_id,
-            null, accountS3List).subscribe(
-                (accountS3s) => {
-                    if (accountS3s['settings']) {
-                        _this.processS3s('settings', accountS3s['settings']);
+        return new Promise(function (resolve, reject) {
+            let accountS3List = 'settings,terminologies,coupon,providerCoupon,businessProfile,departmentProviders';
+            _this.subs.sink = _this.s3Processor.getJsonsbyTypes(_this.provider_id,
+                null, accountS3List).subscribe(
+                    (accountS3s) => {
+                        if (accountS3s['settings']) {
+                            _this.processS3s('settings', accountS3s['settings']);
+                        }
+                        if (accountS3s['terminologies']) {
+                            _this.processS3s('terminologies', accountS3s['terminologies']);
+                        }
+                        if (accountS3s['coupon']) {
+                            _this.processS3s('coupon', accountS3s['coupon']);
+                        }
+                        if (accountS3s['providerCoupon']) {
+                            _this.processS3s('providerCoupon', accountS3s['providerCoupon']);
+                        }
+                        if (accountS3s['departmentProviders']) {
+                            _this.processS3s('departmentProviders', accountS3s['departmentProviders']);
+                        }
+                        if (accountS3s['businessProfile']) {
+                            _this.processS3s('businessProfile', accountS3s['businessProfile']);
+                        }
+                        _this.loadingS3 = false;
+                        resolve(true);
                     }
-                    if (accountS3s['terminologies']) {
-                        _this.processS3s('terminologies', accountS3s['terminologies']);
-                    }
-                    if (accountS3s['coupon']) {
-                        _this.processS3s('coupon', accountS3s['coupon']);
-                    }
-                    if (accountS3s['providerCoupon']) {
-                        _this.processS3s('providerCoupon', accountS3s['providerCoupon']);
-                    }
-                    if (accountS3s['departmentProviders']) {
-                        _this.processS3s('departmentProviders', accountS3s['departmentProviders']);
-                    }
-                    if (accountS3s['businessProfile']) {
-                        _this.processS3s('businessProfile', accountS3s['businessProfile']);
-                    }
-                    _this.loadingS3 = false;
-                    resolve(true);
-                }
-            );
+                );
         });
     }
 
@@ -1593,7 +1595,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             case 'terminologies': {
                 this.terminologiesjson = result;
                 this.wordProcessor.setTerminologies(this.terminologiesjson);
-                 this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
+                this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
                 this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
                 break;
             }
@@ -1853,13 +1855,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         });
     }
     disableButn() {
-        
-        if (this.queuesLoaded && this.checkinDate ===this.scheduledWaitlist.date  && this.scheduledWaitlist.queue && this.queuejson[this.sel_queue_indx] && this.scheduledWaitlist.queue.id === this.queuejson[this.sel_queue_indx].id) {
-            console.log("Calling Disable:",this.checkinDate ===this.scheduledWaitlist.date  && this.scheduledWaitlist.queue && this.queuejson[this.sel_queue_indx] && this.scheduledWaitlist.queue.id === this.queuejson[this.sel_queue_indx].id );
-        console.log(this.checkinDate);
-        console.log(this.scheduledWaitlist.date);
-        console.log(this.scheduledWaitlist.queue.id);
-        console.log(this.queuejson[this.sel_queue_indx].id);
+
+        if (this.queuesLoaded && this.checkinDate === this.scheduledWaitlist.date && this.scheduledWaitlist.queue && this.queuejson[this.sel_queue_indx] && this.scheduledWaitlist.queue.id === this.queuejson[this.sel_queue_indx].id) {
+            console.log("Calling Disable:", this.checkinDate === this.scheduledWaitlist.date && this.scheduledWaitlist.queue && this.queuejson[this.sel_queue_indx] && this.scheduledWaitlist.queue.id === this.queuejson[this.sel_queue_indx].id);
+            console.log(this.checkinDate);
+            console.log(this.scheduledWaitlist.date);
+            console.log(this.scheduledWaitlist.queue.id);
+            console.log(this.queuejson[this.sel_queue_indx].id);
             return true;
         } else {
             return false;
@@ -2415,7 +2417,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     actionPerformed(status) {
         const _this = this;
-        alert("ActionPerformed:" + status);
         if (status === 'success') {
             const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
             _this.initCheckin().then(

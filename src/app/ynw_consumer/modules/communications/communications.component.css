@@ -50,3 +50,10 @@
 .italic {
   font-style: italic;
 }
+/* .wtsap-cal {
+  width: 26px !important;
+  margin-left: -9px !important;
+} */
+.wtsapaud-icon {
+  margin-left: -9px !important;
+}

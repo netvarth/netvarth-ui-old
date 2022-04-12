@@ -25,7 +25,7 @@
         </div>
         <div class="mgn-bt-10 mgn-up-10-m disp-flex"
             *ngIf="selectedService && selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp'">
-            <i class="fa wtsapaud-icon wtsap-cal" *ngIf="selectedService.virtualServiceType === 'audioService'"></i>
+            <i class="fa wtsapaud-icon" *ngIf="selectedService.virtualServiceType === 'audioService'"></i>
             <i class="fa wtsapvid-icon mgn-rt-5 mgn-lt-10" style="width: 20px;margin-top: -10px"
                 *ngIf="selectedService.virtualServiceType === 'videoService'"></i>
             <div class="number-caption"> WhatsApp#</div>
@@ -73,7 +73,7 @@
     </div>
     <div class="contact-section text-primary"
         *ngIf="selectedService && selectedService.virtualCallingModes && selectedService.virtualCallingModes[0].callingMode === 'WhatsApp'">
-        <i class="fa wtsapaud-icon wtsap-cal" *ngIf="selectedService.virtualServiceType === 'audioService'"></i>
+        <i class="fa wtsapaud-icon " *ngIf="selectedService.virtualServiceType === 'audioService'"></i>
         <i class="fa wtsapvid-icon" style="width: 20px;"
             *ngIf="selectedService.virtualServiceType === 'videoService'"></i>
         <span class="mgn-lt-10 phonevallabel">{{commObj['comWhatsappCountryCode']}}
