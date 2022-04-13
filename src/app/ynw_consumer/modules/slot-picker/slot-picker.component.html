@@ -8,7 +8,7 @@
   <mat-chip-list>
     <mat-chip *ngFor="let slot of slots, let i= index" class="text-center mx-auto"
       [selected]="selectedSlot && (slot.id === selectedSlot.id)" (click)="slotPicked(slot)">
-      <span class="mx-2">
+      <span >
         {{slot.queueSchedule.timeSlots[0]['sTime'] + ' - ' + slot.queueSchedule.timeSlots[0]['eTime']}}
       </span>
     </mat-chip>
