@@ -7,6 +7,7 @@ import { ServiceMeta } from '../../shared/services/service-meta';
 export class ProviderServices {
 
   catalogPrefilledInput: any = [];
+  taskstatus: string;
   constructor(private servicemeta: ServiceMeta) { }
   getProviderConfig() {
     return this.servicemeta.httpGet('accounts/conf');

@@ -31,6 +31,7 @@ export class TaskmanagerComponent implements OnInit, OnDestroy {
   pos;
   catalog_list: any = [];
   private subscriptions = new SubSink();
+  task_status: string;
   constructor(
 
     private routerobj: Router,
@@ -46,15 +47,22 @@ export class TaskmanagerComponent implements OnInit, OnDestroy {
     this.frm_public_self_cap = Messages.FRM_LEVEL_SELF_MSG.replace('[customer]', this.customer_label);
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
+    this.getTaskStatus();
   }
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
  
   handleTaskStatus(event) {
+    if(event.checked){
+      this.task_status =  'Enable';
+    }
+    else{
+      this.task_status =  'Disable';
+    }
     const status = (event.checked) ? 'enabled' : 'disabled';
-      this.subscriptions.sink = this.provider_services.setProviderTaskStatus(event.checked).subscribe(data => {
-        this.snackbarService.openSnackBar('Order settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+      this.subscriptions.sink = this.provider_services.setProviderTaskStatus(this.task_status).subscribe(data => {
+        this.snackbarService.openSnackBar('Task settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
         this.getTaskStatus();
       }, (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
