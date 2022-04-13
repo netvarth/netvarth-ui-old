@@ -152,7 +152,7 @@
               </div>
               <!--textarea start-->
              <div  class="fieldPadding">
-                    <textarea style="width: 320px !important;" rowa="10" class="form-control" [(ngModel)]="notesTextarea"
+                    <textarea rows="10" class="form-control" [(ngModel)]="notesTextarea"
                     #taskDescription (ngModelChange)="handleNotesDescription(taskDescription.value)"(keyup)="autoGrowTextZone($event)"
                     maxlength="1000" placeholder="Enter note description"></textarea>
                     <!-- <div *ngIf="boolenTaskError">{{taskErrorText}}</div> -->
@@ -230,7 +230,7 @@
             <div style="text-align: center;">
                 <div class="almostDone">You're almost done!</div>
                 <div class="plMake">please make sure task is completed</div>
-                <div class="taskDes">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate ea vitae ab pariatur repellat? Ut quae rerum laborum dicta voluptatibus vitae debitis accusamus obcaecati at quas! Repellendus voluptatibus fugiat necessitatibus.</div>
+                <!-- <div class="taskDes">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate ea vitae ab pariatur repellat? Ut quae rerum laborum dicta voluptatibus vitae debitis accusamus obcaecati at quas! Repellendus voluptatibus fugiat necessitatibus.</div> -->
             </div>
             <div style="text-align: center;">
                 <div style="display: flex;justify-content: center;gap:5px;color: #1D3E77;">
