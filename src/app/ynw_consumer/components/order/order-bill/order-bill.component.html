@@ -268,7 +268,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="c-row two section-two"
-                                                                                    *ngIf="bill_data.customerPaidCharges>0">
+                                                                                    *ngIf="bill_data.customerPaidCharges > 0">
                                                                                     <div class="discount-row two-col">
                                                                                         <div class="name">
                                                                                             Processing Fee
@@ -478,7 +478,7 @@
                                                                             class=" next-button btn btn-primary font-weight-bold text-uppercase mt-3"
                                                                             [class.disabled]="isClickedOnce"
                                                                             *ngIf=" ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
-                                                                            (click)="!isClickedOnce && payuPayment()">
+                                                                            (click)="payuPayment()">
                                                                             Make Payment
                                                                         </button>
                                                                        

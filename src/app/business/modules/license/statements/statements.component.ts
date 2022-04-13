@@ -264,7 +264,7 @@ export class StatementsComponent implements OnInit {
         data => {
           this.payment_detail = data;
           console.log("Payment Detailes :",this.payment_detail)
-          console.log("Processing Fee :",this.payment_detail[0].customerPaidCharges)
+          console.log("Processing Fee :",this.payment_detail[0].gatewayCommission)
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

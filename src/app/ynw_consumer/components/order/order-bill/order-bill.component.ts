@@ -328,6 +328,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.bill_data = data;
+                    console.log("Order Bill Data :",this.bill_data)
                     for (let i = 0; i < this.bill_data.discount.length; i++) {
                         if (this.bill_data.discount[i].displayNote) {
                             this.discountDisplayNotes = true;

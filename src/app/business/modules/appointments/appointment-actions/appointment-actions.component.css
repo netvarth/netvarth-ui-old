@@ -11,6 +11,9 @@
   display: table;
   box-shadow: 10px 10px 15px 0px #cccccc9c;
 }
+.textColor{
+  color: #61c0dd !important;
+}
 @media (max-width: 970px) {
   .action-box {
     width: 140px;

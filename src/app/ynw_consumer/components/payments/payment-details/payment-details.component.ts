@@ -44,6 +44,7 @@ export class ConsumerPaymentDetailsComponent implements OnInit {
         this.shared_services.getConsumerPaymentById(id).subscribe(
             (payments) => {
                 this.payments = payments;
+                console.log("Payment Details :",this.payments)
                 if (this.payments.txnType === 'Donation') {
                     this.getDonations(this.payments.ynwUuid);
                 } else if (this.payments.txnType === 'Appointment') {
