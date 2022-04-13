@@ -95,7 +95,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     onetimeQuestionnaireList: any; // one time information questionaire list
     questionAnswers; // questionaire answers
     questionnaireList: any = []; // normal questionaire list
-    questionnaireLoaded; // to check questionaire loaded or not
+    questionnaireLoaded = false; // to check questionaire loaded or not
     appmtFor: any = []; // to hold the whom for appointment
     parentCustomer: any;// logged in customer
     commObj: any = {}; // communication object

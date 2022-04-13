@@ -133,3 +133,6 @@
 .ynw-common-form.otp_scr .cust-loginpge-color .verify-button.margin-bottom-20 {
     margin-bottom: 20px !important;
 }
+::ng-deep .otp-input {
+    font-size: 18px !important;
+}
