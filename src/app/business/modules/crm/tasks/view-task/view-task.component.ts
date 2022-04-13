@@ -94,7 +94,7 @@ constructor(
 
 ngOnInit(): void {
   this.api_loading = false;
-  
+  console.log("ngoninit called")
   this._Activatedroute.paramMap.subscribe(params => { 
     this.taskUid = params.get('id');
     console.log("task id : ",this.taskUid);
@@ -115,14 +115,21 @@ ngOnInit(): void {
 }
 
 uploadFiles() {
-  this.dialog.open(SelectAttachmentComponent, {
-      width: '100%',
-      panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
-      disableClose: false,
+  const dialogRef = this.dialog.open(SelectAttachmentComponent, {
+    width:'50vw',
+    panelClass: ['popup-class', 'confirmationmainclass'],
+      disableClose: true,
       data: {
           taskuid : this.taskUid
       }
   });
+  
+  dialogRef.afterClosed().subscribe(()=>{
+    setTimeout(() => {
+    this.ngOnInit();
+    }, 5000);
+  })
+
 }
 
 openEditTask(editText:any) {
@@ -282,9 +289,10 @@ openAddNoteDialog(addNoteText:any){
     }
   })
   dialogRef.afterClosed().subscribe((response)=>{
-    console.log('responseDataAboutNote',response);
     this.notesText=response;
-    // this.notesList.push()
+    setTimeout(() => {
+      this.ngOnInit();
+      }, projectConstants.TIMEOUT_DELAY);
   })
 
 }

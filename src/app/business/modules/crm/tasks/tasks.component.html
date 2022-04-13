@@ -248,25 +248,6 @@
                           <td data-title="Category" class="td4">{{task.category.name}}</td>
                           <td data-title="Type" class="td5">{{task.type.name}}</td>
                           <td data-title="Due Date" class="td6">{{task.dueDate | date:newDateFormat}}</td>
-                          <td *ngIf="task.status.name != 'Completed'">
-                            <div class="copy">
-                              <span class="">
-                                <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
-                                  (click)="stopprop($event);">
-                                  <mat-icon>more_vert</mat-icon>
-                                </button>
-                              </span>
-                              <mat-menu #appMenu="matMenu">
-                                <button mat-menu-item (click)="openTaskCompletion(task)">
-                                  Mark as Done
-                                </button>
-                                <button mat-menu-item (click)="openEditTask(task,'Update')">
-                                  Edit
-                                </button>
-
-                              </mat-menu>
-                            </div>
-                          </td>
                           <!-- <td class="filter-fx-col"></td> -->
                         </tr>
                       </ng-container>

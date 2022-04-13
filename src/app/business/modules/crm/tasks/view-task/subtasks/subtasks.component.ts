@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { projectConstants } from '../../../../../../app.component';
+import { CrmSelectMemberComponent } from '../../../../../shared/crm-select-member/crm-select-member.component';
 import { CrmService } from '../../../crm.service';
 
 @Component({
@@ -29,6 +32,8 @@ export class SubtasksComponent implements OnInit {
   constructor( 
     private router: Router,
     private crmService: CrmService,
+    private dialog: MatDialog,
+
 
 
     ) { }
@@ -100,5 +105,47 @@ export class SubtasksComponent implements OnInit {
   {
     this.router.navigate(['provider', 'task','create-subtask',taskid]);
   }
+
+
+  stopprop(event) {
+    event.stopPropagation();
+  }
+
+  openTaskCompletion(taskData:any){
+    const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
+      width:'100%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data:{
+        requestType:'taskComplete',
+        taskName:taskData,
+      }
+    });
+    dialogRef.afterClosed().subscribe((res)=>{
+      console.log(res)
+    })
+  
+  }
+
+  openEditTask(taskdata: any, editText: any) {
+    this.crmService.taskToCraeteViaServiceData = taskdata
+    const newTaskData = this.crmService.taskToCraeteViaServiceData
+    setTimeout(() => {
+      this.crmService.taskActivityName = editText;
+      newTaskData;
+      this.router.navigate(['provider', 'task', 'create-task']);
+    }, projectConstants.TIMEOUT_DELAY);
+
+  }
+
+  viewTask(taskUid,taskData:any) {
+    this.crmService.taskToCraeteViaServiceData = taskData;
+    this.router.navigate(['/provider/viewtask/' + taskUid]);
+
+  }
+  
+
+
+  
   
 }
