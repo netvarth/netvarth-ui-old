@@ -2093,26 +2093,16 @@ box-shadow: 4px 4px 5px gainsboro;
 
 
 
-
-
-
-
-
-
-
-
-
-
   @media (min-width:320px)  {
     /* smartphones, iPhone, portrait 480x320 phones */ 
     .pad-10.d-flex.flex-column-fluid 
     {
      padding-bottom: 130px!important;
     }
-    .card.shadow
+    /* .card.shadow
     {
       padding: 8px!important;
-    }
+    } */
     .back-btn-text{
       font-size: 15px!important;
       font-weight: 700;

@@ -20,7 +20,7 @@ import { AuthService } from '../../../shared/services/auth-service';
 @Component({
   selector: 'app-consumer-join',
   templateUrl: './join.component.html',
-  styleUrls: ['./join.component.scss']
+  styleUrls: ['./join.component.css']
 })
 export class ConsumerJoinComponent implements OnInit, OnDestroy {
   @Output() actionPerformed = new EventEmitter<any>();
