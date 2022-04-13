@@ -77,6 +77,7 @@ action: any;
   public notesText:any;
   public notesList:any=[]
   uploaded_attachments: any;
+  updateTaskData:any;
 
 constructor(
   private locationobj: Location,
@@ -105,7 +106,7 @@ ngOnInit(): void {
       console.log('this.notesList',this.notesList)
   })
   })
-
+  this.crmService.taskToCraeteViaServiceData = this.updateTaskData;
 
 }
 
@@ -121,14 +122,14 @@ uploadFiles() {
 }
 
 openEditTask(editText:any) {
-  // console.log("hvbjdnskm",this.taskDetails)
-  // this.crmService.taskToCraeteViaServiceData = this.taskDetails
-  // const newTaskData = this.crmService.taskToCraeteViaServiceData
-  // setTimeout(() => {
-  //   this.crmService.taskActivityName = editText;
-  //   newTaskData;
-  //   this.router.navigate(['provider', 'task', 'create-task']);
-  // }, projectConstants.TIMEOUT_DELAY);
+  console.log("hvbjdnskm",this.taskDetails)
+  this.crmService.taskToCraeteViaServiceData =  this.updateTaskData;
+  const newTaskData = this.crmService.taskToCraeteViaServiceData
+  setTimeout(() => {
+    this.crmService.taskActivityName = editText;
+    newTaskData;
+    this.router.navigate(['provider', 'task', 'create-task']);
+  }, projectConstants.TIMEOUT_DELAY);
 }
 markAsDone(taskid){
   const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
