@@ -839,12 +839,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.goBack('backy');
                 }
             });
-        } else {
-            if (this.selectedService.isPrePayment && !this.selected_payment_mode) {
-                this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
-                this.isClickedOnce = false;
-                return false;
-            }
+        } else {            
             console.log('inisdeeeeee');
             if (this.waitlist_for.length !== 0) {
                 for (const list of this.waitlist_for) {
@@ -857,6 +852,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 return false;
             }
             if (type === 'checkin') {
+                if (this.selectedService.isPrePayment && !this.selected_payment_mode) {
+                    this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
+                    this.isClickedOnce = false;
+                    return false;
+                }
                 if (this.jcashamount > 0 && this.checkJcash) {
                     this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.paymentDetails.amountRequiredNow)
                         .subscribe(data => {
@@ -1068,44 +1068,44 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         return new Promise(function (resolve, reject) {
             if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                 const dataToSend: FormData = new FormData();
-                if (this.questionAnswers.files) {
-                    for (const pic of this.questionAnswers.files) {
+                if (_this.questionAnswers.files) {
+                    for (const pic of _this.questionAnswers.files) {
                         dataToSend.append('files', pic, pic['name']);
                     }
                 }
-                const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+                const blobpost_Data = new Blob([JSON.stringify(_this.questionAnswers.answers)], { type: 'application/json' });
                 dataToSend.append('question', blobpost_Data);
-                this.subs.sink = this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, this.account_id).subscribe((data: any) => {
+                _this.subs.sink = _this.shared_services.submitConsumerWaitlistQuestionnaire(dataToSend, uuid, _this.account_id).subscribe((data: any) => {
                     let postData = {
                         urls: []
                     };
                     if (data.urls && data.urls.length > 0) {
                         for (const url of data.urls) {
-                            this.api_loading_video = true;
-                            const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
-                            this.provider_services.videoaudioS3Upload(file, url.url)
+                            _this.api_loading_video = true;
+                            const file = _this.questionAnswers.filestoUpload[url.labelName][url.document];
+                            _this.provider_services.videoaudioS3Upload(file, url.url)
                                 .subscribe(() => {
                                     postData['urls'].push({ uid: url.uid, labelName: url.labelName });
                                     if (data.urls.length === postData['urls'].length) {
-                                        this.shared_services.consumerWaitlistQnrUploadStatusUpdate(uuid, this.account_id, postData)
+                                        _this.shared_services.consumerWaitlistQnrUploadStatusUpdate(uuid, _this.account_id, postData)
                                             .subscribe((data) => {
                                                 // this.paymentOperation(paymenttype);
                                                 resolve(true);
                                             },
                                                 error => {
-                                                    this.isClickedOnce = false;
-                                                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                                    this.disablebutton = false;
-                                                    this.api_loading_video = true;
+                                                    _this.isClickedOnce = false;
+                                                    _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                                    _this.disablebutton = false;
+                                                    _this.api_loading_video = true;
                                                     resolve(false);
                                                 });
                                     }
                                 },
                                     error => {
-                                        this.isClickedOnce = false;
-                                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                        this.disablebutton = false;
-                                        this.api_loading_video = true;
+                                        _this.isClickedOnce = false;
+                                        _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                        _this.disablebutton = false;
+                                        _this.api_loading_video = true;
                                     });
                         }
                     } else {
@@ -2107,7 +2107,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         this.snackbarService.openSnackBar('Please provide ' + this.selectedService.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
                     } else {
                         this.bookStep++;
-                        // this.saveCheckin();
+                        this.confirmcheckin();
                     }
                 }
                 this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
@@ -2655,9 +2655,23 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     memberId = member.id;
                     parentId = member.parent;
                 } else {
-                    memberId = 0;
-                    parentId = member.id;
+                    const providerConsumer_parent = _this.providerConsumerList.filter(user => user.firstName === _this.activeUser.firstName && user.LastName === _this.activeUser.LastName);
+                    parentId =  providerConsumer_parent[0].id;
+                    console.log("Family Members:",  _this.familyMembers);    
+                    console.log("Member Id", member.id);            
+                    const selectedMember = _this.familyMembers.filter(memb => memb.user === member.id);
+                    console.log("Selected Member:", selectedMember);
+                    if (selectedMember && selectedMember.length > 0) {
+                        if (selectedMember[0].parent) {
+                            memberId = member.id; 
+                        } else {
+                            memberId = 0;
+                        }
+                    } else {
+                        memberId = 0;
+                    }
                 }
+                console.log("Call Started");
                 _this.shared_services.createProviderCustomer(memberId, parentId, accountId).subscribe(
                     (providerConsumer: any) => {
                         _this.providerConsumerList.push(providerConsumer);
