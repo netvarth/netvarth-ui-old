@@ -950,6 +950,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     getProviderCustomerId(member, accountId) {
         console.log("Member:", member);
         console.log("ProviderList:", this.providerConsumerList);
+        const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         const _this = this;
         return new Promise(function (resolve, reject) {
             const providerConsumer = _this.providerConsumerList.filter(user => user.firstName === member.firstName && user.LastName === member.LastName);
@@ -965,9 +966,23 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     memberId = member.id;
                     parentId = member.parent;
                 } else {
-                    memberId = 0;
-                    parentId = member.id;
+                    const providerConsumer_parent = _this.providerConsumerList.filter(user => user.firstName === activeUser.firstName && user.LastName === activeUser.LastName);
+                    parentId =  providerConsumer_parent[0].id;
+                    console.log("Family Members:",  _this.familyMembers);    
+                    console.log("Member Id", member.id);            
+                    const selectedMember = _this.familyMembers.filter(memb => memb.user === member.id);
+                    console.log("Selected Member:", selectedMember);
+                    if (selectedMember && selectedMember.length > 0) {
+                        if (selectedMember[0].parent) {
+                            memberId = member.id; 
+                        } else {
+                            memberId = 0;
+                        }
+                    } else {
+                        memberId = 0;
+                    }
                 }
+                console.log("Call Started");
                 _this.sharedServices.createProviderCustomer(memberId, parentId, accountId).subscribe(
                     (providerConsumer: any) => {
                         _this.providerConsumerList.push(providerConsumer);
@@ -1114,7 +1129,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         this.snackbarService.openSnackBar('Please provide ' + this.selectedService.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
                     } else {
                         this.bookStep++;
-                        // this.saveCheckin();
+                        this.confirmAppointment();
                     }
                 }
                 this.sharedFunctions.sendMessage({ type: 'qnrValidateError', value: data });
