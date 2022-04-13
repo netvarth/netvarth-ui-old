@@ -121,14 +121,29 @@ uploadFiles() {
 }
 
 openEditTask(editText:any) {
-  console.log("hvbjdnskm",this.taskDetails)
-  this.crmService.taskToCraeteViaServiceData = this.taskDetails
-  const newTaskData = this.crmService.taskToCraeteViaServiceData
-  setTimeout(() => {
-    this.crmService.taskActivityName = editText;
-    newTaskData;
-    this.router.navigate(['provider', 'task', 'create-task']);
-  }, projectConstants.TIMEOUT_DELAY);
+  // console.log("hvbjdnskm",this.taskDetails)
+  // this.crmService.taskToCraeteViaServiceData = this.taskDetails
+  // const newTaskData = this.crmService.taskToCraeteViaServiceData
+  // setTimeout(() => {
+  //   this.crmService.taskActivityName = editText;
+  //   newTaskData;
+  //   this.router.navigate(['provider', 'task', 'create-task']);
+  // }, projectConstants.TIMEOUT_DELAY);
+}
+markAsDone(taskid){
+  const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
+    width:'100%',
+    panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+    disableClose: true,
+    data:{
+      requestType:'taskComplete',
+      taskName:this.taskDetails,
+    }
+  });
+  dialogRef.afterClosed().subscribe((res)=>{
+    console.log(res)
+  })
+
 }
 
 
