@@ -9,6 +9,7 @@ import { ServiceMeta } from '../../../shared/services/service-meta';
 export class CrmService {
   public taskToCraeteViaServiceData:any;
   public taskActivityName:any;
+  public taskToviewViaServiceData:any;
   
 
   constructor(

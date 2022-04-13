@@ -226,7 +226,7 @@
                         </tr>
                       </ng-container>
                       <ng-container *ngIf="totalTaskList.length>0">
-                        <tr *ngFor="let task of totalTaskList; let i=index" (click)="viewTask(task.taskUid)">
+                        <tr *ngFor="let task of totalTaskList; let i=index" (click)="viewTask(task.taskUid,task)">
                          
                             <td >&nbsp; &nbsp;<circle-progress class="circle__progress" 
                               [percent]="task.progress"
@@ -345,7 +345,7 @@
                         </tr>
                       </ng-container>
                       <ng-container *ngIf="totalInprogressList.length>0">
-                        <tr *ngFor="let task of totalInprogressList; let i=index" (click)="viewTask(task.taskUid)">
+                        <tr *ngFor="let task of totalInprogressList; let i=index" (click)="viewTask(task.taskUid,task)">
                           <td data-title="Task Details" class="td1">&nbsp;&nbsp;&nbsp;{{task.title}}</td>
                           <!-- <td data-title="Duration" class="td3"><span
                             *ngIf="task.estDuration && task.estDuration.days">{{task.estDuration.days}} Days</span>&nbsp;
@@ -445,7 +445,7 @@
                         </tr>
                       </ng-container>
                       <ng-container *ngIf="totalCompletedList.length>0">
-                        <tr *ngFor="let task of totalCompletedList; let i=index" (click)="viewTask(task.taskUid)">
+                        <tr *ngFor="let task of totalCompletedList; let i=index" (click)="viewTask(task.taskUid,task)">
                           <td data-title="Task Details" class="td1">&nbsp;&nbsp;&nbsp;{{task.title}}</td>
                           <!-- <td data-title="Duration" class="td3"><span
                             *ngIf="task.estDuration && task.estDuration.days">{{task.estDuration.days}} Days</span>&nbsp;
@@ -545,7 +545,7 @@
                         </tr>
                       </ng-container>
                       <ng-container *ngIf="totalDelayedList.length>0">
-                        <tr *ngFor="let task of totalDelayedList; let i=index" (click)="viewTask(task.taskUid)">
+                        <tr *ngFor="let task of totalDelayedList; let i=index" (click)="viewTask(task.taskUid,task)">
                           <td data-title="Task Details" class="td1">&nbsp;&nbsp;&nbsp;{{task.title}}</td>
                           <!-- <td data-title="Duration" class="td3"><span
                             *ngIf="task.estDuration && task.estDuration.days">{{task.estDuration.days}} Days</span>&nbsp;

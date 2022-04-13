@@ -425,7 +425,8 @@ export class TasksComponent implements OnInit {
     }
   }
 
-  viewTask(taskUid) {
+  viewTask(taskUid,taskData:any) {
+    this.crmService.taskToCraeteViaServiceData = taskData;
     this.router.navigate(['/provider/viewtask/' + taskUid]);
 
   }
