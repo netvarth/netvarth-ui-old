@@ -99,6 +99,7 @@ ngOnInit(): void {
     this.crmService.getTaskDetails(this.taskUid).subscribe(data => {
       this.taskDetails = data;
       console.log("Task Details : ",this.taskDetails);
+      console.log('taskDetails.status',this.taskDetails.status.name)
       // console.log('this.taskDetails.notes',this.taskDetails.notes)
       this.taskDetails.notes.forEach((notesdata:any)=>{
         this.notesList.push(notesdata)

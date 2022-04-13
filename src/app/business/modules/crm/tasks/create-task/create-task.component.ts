@@ -480,8 +480,9 @@ export class CreateTaskComponent implements OnInit {
     
 }
   saveCreateTask(){
-    this.api_loading = true;
+    // this.api_loading = true;
     if(this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate'){
+      // this.api_loading = true;
       // console.log('this.updateValue.taskUid',this.updateValue.taskUid)
       // console.log('jjjjjjjjjjjjjjjjjjjjjjupdateeeeeeeeeeee');
       // console.log('....',this.createTaskForm.controls.taskTitle.value)
@@ -505,6 +506,7 @@ export class CreateTaskComponent implements OnInit {
         "estDuration" : this.estTime    
       }
       if(this.updateUserType===('PROVIDER' || 'CONSUMER') && (this.createTaskForm.controls.taskTitle.value!=null) && (this.createTaskForm.controls.taskDescription.value !=null)){
+        this.api_loading = true;
         this.boolenTaskError=false;
         console.log('updateTaskData',updateTaskData)
         this.crmService.updateTask(this.updateValue.taskUid, updateTaskData).subscribe((response)=>{
@@ -515,7 +517,11 @@ export class CreateTaskComponent implements OnInit {
           }, projectConstants.TIMEOUT_DELAY);
         },
         (error)=>{
-          this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+          setTimeout(() => {
+            this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
+            this.router.navigate(['provider', 'task']);
+          }, projectConstants.TIMEOUT_DELAY);
+          // this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
         })
       }
      
@@ -550,7 +556,7 @@ export class CreateTaskComponent implements OnInit {
     // console.log('this.userType',this.userType)
     if(this.userType===('PROVIDER' || 'CONSUMER') && (this.createTaskForm.controls.taskTitle.value!=null) && (this.createTaskForm.controls.taskDescription.value !=null)){
       this.boolenTaskError=false;
-    
+      this.api_loading = true;
       this.crmService.addTask(createTaskData).subscribe((response)=>{
         console.log('afterCreateList',response);
         setTimeout(() => {
@@ -562,7 +568,11 @@ export class CreateTaskComponent implements OnInit {
         }, projectConstants.TIMEOUT_DELAY);
       },
       (error)=>{
-        this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+        setTimeout(() => {
+          this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
+          this.router.navigate(['provider', 'task']);
+        }, projectConstants.TIMEOUT_DELAY);
+        // this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
       })
     }
     }
