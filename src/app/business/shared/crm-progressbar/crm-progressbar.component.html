@@ -1,0 +1,116 @@
+<section style="padding: 20px;">
+  <div class="header" style="justify-content: end !important;">
+    <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+      <mat-icon>clear</mat-icon>
+    </div>
+  
+  </div>
+  <mat-dialog-content>
+    <div>
+      <div >
+        <div><b>Change Progress</b></div>
+      </div>
+      <section>
+
+        <div class="container card mt-2 mx-auto">
+          <div class="col-md-12 no-padding-small" *ngIf="taskDetails">
+            <div class="row d-lg-flex justify-content-between">
+              <div class="border col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding">
+                <div class="d-flex">
+                  <div class="progress-circle progress-70">
+                    <span class="progress-bar-text">{{taskDetails.status.name}}</span>
+                  </div>
+                  <div class="ml-3">
+                    <span class="details text-dark"><b>Manager : {{taskDetails.manager.name}} </b></span><br>
+                    <span class="details text-secondary">Assigned to {{taskDetails.assignee.name}} </span><br>
+                    <span class="details text-warning">Priority : {{taskDetails.priority.name}} </span><br>
+                    <span class="details text-secondary">Due date : {{taskDetails.dueDate}} </span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div>
+              <mat-slider #gridsize (change)="updateSetting($event)" step="5" min="10" max="100" [value]="gridsize">
+              </mat-slider>
+              <div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+      <div class="fieldPadding">
+        <textarea rowa="10" class="form-control" [(ngModel)]="notesTextarea" #taskDescription
+          (ngModelChange)="handleNotesDescription(taskDescription.value)" (keyup)="autoGrowTextZone($event)"
+          maxlength="1000" placeholder="Enter note description"></textarea>
+
+      </div>
+    </div>
+
+    <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;">
+
+      <div style="text-align: center;">
+        <ng-container>
+          <div class=" mgn-bt-20 mgn-up-10">
+            <button type="button" class="btn btn-primary font-weight-bold cancelBtn" mat-dialog-close>Cancel</button>
+            <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
+              (click)="saveCreateNote()">Save</button>
+          </div>
+        </ng-container>
+      </div>
+
+
+    </div>
+    <br>
+    <section>
+      <div>
+        <div class="taskTitle">
+          <div>Previous Progress</div>
+        </div>
+        <section>
+
+          <div class="subtask-border">
+            <div class="table-responsive dash-list">
+              <table class="table">
+                <thead>
+                  <tr class="subtask-table-headings">
+                    <!-- <th class="head_color">&nbsp;&nbsp;&nbsp;Date</th>
+                    <th class="head_color">Duration</th>
+                    <th class="head_color">Status</th>
+                    <th class="head_color">Category</th>
+                    <th class="head_color">Type</th>
+                    <th class="head_color">Due Date</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngIf="previousProgressList.length === 0">
+                    <tr class="text-center mx-auto text-danger">
+                      <td class="text-center nodatafound" colspan="5">No Previous records</td>
+                    </tr>
+                  </ng-container>
+                  <ng-container>
+                    <tr class="subtask-table-data" *ngFor="let progress of previousProgressList">
+
+                      <td class="head_color">{{progress.localUserId}}</td>
+                                <td class="head_color">{{progress.date | date:newDateFormat}}</td>
+                                <td class="head_color">{{progress.category}}</td>
+                                <td class="head_color">{{progress.remarks}}</td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+
+          <div class="fieldPadding">
+
+          </div>
+
+        </section>
+      </div>
+    </section>
+  </mat-dialog-content>
+
+</section>

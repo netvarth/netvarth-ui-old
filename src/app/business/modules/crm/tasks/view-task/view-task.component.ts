@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SelectAttachmentComponent } from './select-attachment/select-attachment.component';
 import  {CrmSelectMemberComponent} from '../../../../shared/crm-select-member/crm-select-member.component'
 import { SharedServices } from '../../../../../shared/services/shared-services';
+import { CrmProgressbarComponent } from '../../../../../../../src/app/business/shared/crm-progressbar/crm-progressbar.component';
 @Component({
   selector: 'app-view-task',
   templateUrl: './view-task.component.html',
@@ -78,6 +79,7 @@ action: any;
   public notesList:any=[]
   uploaded_attachments: any;
   updateTaskData:any;
+  taskkid: any;
 
 constructor(
   private locationobj: Location,
@@ -98,6 +100,7 @@ ngOnInit(): void {
     console.log("task id : ",this.taskUid);
     this.crmService.getTaskDetails(this.taskUid).subscribe(data => {
       this.taskDetails = data;
+      this.taskkid = this.taskDetails.id
       console.log("Task Details : ",this.taskDetails);
       console.log('taskDetails.status',this.taskDetails.status.name)
       // console.log('this.taskDetails.notes',this.taskDetails.notes)
@@ -301,7 +304,22 @@ noteView(noteDetails:any){
   })
 
 }
+progressbarDialog(){
+  const dialogRef = this.dialog.open(CrmProgressbarComponent,{
+    width:'100%',
+    panelClass: ['popup-class', 'confirmationmainclass'],
+    data:{
+      details: this.taskDetails,
+      taskUid:this.taskUid,
+    }
+  })
+  dialogRef.afterClosed().subscribe((response)=>{
+    console.log('responseDataAboutNote',response);
+    this.notesText=response;
+    this.notesList.push()
+  })
 
+}
 
 }
 

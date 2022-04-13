@@ -22,6 +22,7 @@
         <a class="p-3 dropdown-item" (click)="openEditTask('Update')"><i class="text-info fa fa-edit"></i>&nbsp;&nbsp;<span class="text-dark">Edit Task</span></a><br><br>
         <a class="p-3 dropdown-item" (click)="markAsDone(taskUid)"><i class="text-success fa fa-check-square"></i>&nbsp;&nbsp;<span class="text-dark">Mark as done</span></a><br><br>
         <a class="p-3 dropdown-item" (click)="createSubTask(taskUid)"><i class="text-primary fa fa-plus-square-o"></i>&nbsp;&nbsp;<span class="text-dark">Create Subtask</span></a><br><br>
+        <a class="p-3 dropdown-item" (click)="progressbarDialog()"><i class="text-success fa fa-check-square"></i>&nbsp;&nbsp;<span class="text-dark">Change Progress</span></a><br><br>
         <!-- <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Convert to loan</span></a><br><br>
         <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Create Appointment</span></a><br><br>
         <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Edit Actions</span></a><br><br> -->
@@ -143,7 +144,11 @@
           <app-subtasks [taskid]="taskUid"></app-subtasks>
         </div>
       </div>
-      
+      <div class="row d-lg-flex justify-content-lg-start">
+        <div  class="subtask-border height-limit col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mt-2">
+          <app-activitylog [taskid]="taskkid"></app-activitylog>
+        </div>
+      </div>
       <!-- <div class="subtask-border mt-4">
         <app-subtasks [taskid]="taskUid"></app-subtasks>
       </div> -->

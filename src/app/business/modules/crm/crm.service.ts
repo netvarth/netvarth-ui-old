@@ -157,5 +157,14 @@ export class CrmService {
       const url ='provider/task/'+ taskUid + '/progress/' + progressValue;
       return this.servicemeta.httpPut(url , data)
     }
-
+    previousProgress(taskUid)
+    {
+      const url = 'provider/task/' + taskUid + '/progresslog';
+      return this.servicemeta.httpGet(url);
+    }
+    getActivitylog(taskUid)
+    {
+      const url = 'provider/task/' + taskUid + '/activity';
+      return this.servicemeta.httpGet(url);
+    }
 }

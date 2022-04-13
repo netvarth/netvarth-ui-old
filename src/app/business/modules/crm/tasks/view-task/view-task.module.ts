@@ -14,6 +14,8 @@ import { TaskActivityComponent } from "./task-activity/task-activity.component";
 import { ConnectionsComponent } from "./connections/connections.component";
 import { SubtasksComponent } from "./subtasks/subtasks.component";
 import { SelectAttachmentComponent } from "./select-attachment/select-attachment.component";
+import { MatSliderModule } from "@angular/material/slider";
+import { ActivitylogComponent } from "./activitylog/activitylog.component";
 
 const routes: Routes = [
   { path: '', component: ViewTaskComponent },
@@ -28,6 +30,7 @@ const routes: Routes = [
     TaskActivityComponent,
     ConnectionsComponent,
     SubtasksComponent,
+    ActivitylogComponent,
     SelectAttachmentComponent
   ],
   imports: [
@@ -38,6 +41,7 @@ const routes: Routes = [
     MatTabsModule,
     CapitalizeFirstPipeModule,
     MenuModule,
+    MatSliderModule,
     LoadingSpinnerModule,
     [RouterModule.forChild(routes)],
     

@@ -1,0 +1,36 @@
+<div class="d-flex justify-content-between">
+    <div class="pt-2 pl-lg-3">
+        <h4><b>Activity Log</b></h4> 
+    </div>
+</div>
+<div class="subtask-border">
+    <div class="table-responsive dash-list">
+        <table class="table">
+            <thead>
+                <tr class="subtask-table-headings">
+                    <th class="head_color">&nbsp;&nbsp;&nbsp;Date</th>
+                    <th class="head_color">Action</th>
+                    <th class="head_color">User</th>
+                  
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="activityList.length === 0">
+                <tr class="text-center mx-auto text-danger">
+                    <td class="text-center nodatafound" colspan="5">No Activitylog found</td>
+                </tr>
+                </ng-container>
+                <ng-container>
+                    <tr class="subtask-table-data" *ngFor="let act of activityList">
+                      
+                        <td class="head_color">{{act.date | date:newDateFormat}}</td>
+                        <td class="head_color">{{act.action}}</td>
+                        <td class="head_color">{{act.localUserId}}</td>
+                      
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+       
+    </div>
+</div>
