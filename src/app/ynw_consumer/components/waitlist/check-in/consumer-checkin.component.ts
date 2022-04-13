@@ -448,7 +448,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             }
                         )
                         _this.api_loading = false;
-                        _this.questionnaireLoaded = true;
+                        // _this.questionnaireLoaded = true;
                     })
             })
         });

@@ -1,12 +1,13 @@
 
 import { interval as observableInterval, Subscription } from 'rxjs';
-import { Component, OnInit, OnChanges, EventEmitter, Output, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnChanges, EventEmitter, Output, Input, OnDestroy, ViewChild } from '@angular/core';
 import { SharedServices } from '../../services/shared-services';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { Messages } from '../../constants/project-messages';
 import { TranslateService } from '@ngx-translate/core';
+import { NgOtpInputComponent } from 'ng-otp-input';
 
 @Component({
   selector: 'app-otp-form',
@@ -54,7 +55,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   @Output() resetApiErrors: EventEmitter<any> = new EventEmitter();
   @Output() resendOtp: EventEmitter<any> = new EventEmitter();
   @Output() resendOTPEmail: EventEmitter<any> = new EventEmitter();
-
+  @ViewChild(NgOtpInputComponent, { static: false}) ngOtpInput:NgOtpInputComponent;
   config = {
     allowNumbersOnly: true,
     length: 4,
@@ -126,7 +127,7 @@ console.log("SubmitData:", this.submitdata);
   doOnOtpSubmit(otp) {
     console.log(otp);
     if (otp) {
-      if (this.submitdata && this.submitdata.userProfile.primaryMobileNo.startsWith('55') && this.submitdata.userProfile.countryCode === '+91' && otp.length<5) {
+      if (this.submitdata && this.submitdata.userProfile && this.submitdata.userProfile.primaryMobileNo.startsWith('55') && this.submitdata.userProfile.countryCode === '+91' && otp.length<5) {
         this.api_error = 'Enter valid OTP';
         return false;
       } else if(otp.length < 4){
@@ -159,6 +160,7 @@ console.log("SubmitData:", this.submitdata);
   }
 
   resendOTPMobile() {
+    this.ngOtpInput.setValue(null);
     if ((this.submitdata.userProfile && this.submitdata.userProfile.countryCode === '+91') ||
       (this.type === 'forgot_password' && this.country_code === '+91') || this.type === 'change-mobile') {
       this.resendOTPEmail.emit(false);
@@ -177,6 +179,7 @@ console.log("SubmitData:", this.submitdata);
   }
 
   setResendViaEmail() {
+    this.ngOtpInput.setValue(null);
     this.resendOTPEmail.emit(true);
     this.doshowOTPEmailContainer();
     this.resetApiErrors.emit();

@@ -1273,7 +1273,9 @@ ul.service-ul li {
   vertical-align: middle;
 
 }
-
+.service-head-cont h5{
+  height: 85px;
+}
 .bus-item-N {
   border-radius: 10px !important;
   width: 32.6%;

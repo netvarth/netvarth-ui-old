@@ -9,7 +9,7 @@
           <!-- <input class="form-control number-ip-sm" matInput placeholder="Enter OTP"
               [formControl]="otp_form.controls['phone_otp']" autocomplete="off" (keypress)="removSpecChar($event)"
               maxlength="5"> -->
-          <ng-otp-input class="bkgclr" (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
+          <ng-otp-input class="bkgclr"  (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
           <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
           </app-field-error-display>
           <button type="button" mat-button class="cs-btn bt1 mgn-up-20" (click)="doOnOtpSubmit(otpEntered)"
