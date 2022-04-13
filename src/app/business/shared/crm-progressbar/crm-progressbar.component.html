@@ -24,7 +24,7 @@
                     <span class="details text-dark"><b>Manager : {{taskDetails.manager.name}} </b></span><br>
                     <span class="details text-secondary">Assigned to {{taskDetails.assignee.name}} </span><br>
                     <span class="details text-warning">Priority : {{taskDetails.priority.name}} </span><br>
-                    <span class="details text-secondary">Due date : {{taskDetails.dueDate}} </span>
+                    <span class="details text-secondary">Due date : {{taskDetails.dueDate | date:newDateFormat}} </span>
                   </div>
                 </div>
               </div>
