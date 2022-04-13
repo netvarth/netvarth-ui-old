@@ -43,8 +43,13 @@
       <div class="row d-lg-flex justify-content-between">
         <div class="border col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding">
           <div class="d-flex">
-            <div class="progress-circle progress-70">
-              <span class="progress-bar-text">{{taskDetails.status.name}}</span>
+            <div>
+              <!-- <span class="progress-bar-text">{{taskDetails.status.name}}</span> -->
+              <circle-progress class="circle__progress" [percent]="taskDetails.progress" [animation]="true"
+                              [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
+                              [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
+                              [unitsFontWeight]="'700'" [subtitle]="taskDetails.status.name" [subtitleFontSize]="'7'"
+                              [lazy]="false"></circle-progress>
             </div>
             <div class="ml-3">
               <span class="details text-dark"><b> Assigned to {{taskDetails.assignee.name}} </b></span><br>

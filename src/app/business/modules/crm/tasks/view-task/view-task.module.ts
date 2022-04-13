@@ -16,7 +16,7 @@ import { SubtasksComponent } from "./subtasks/subtasks.component";
 import { SelectAttachmentComponent } from "./select-attachment/select-attachment.component";
 import { MatSliderModule } from "@angular/material/slider";
 import { ActivitylogComponent } from "./activitylog/activitylog.component";
-
+import { NgCircleProgressModule } from "ng-circle-progress";
 const routes: Routes = [
   { path: '', component: ViewTaskComponent },
   {path:'create-task',loadChildren:()=>import('../create-task/create-task.module').then((m)=>m.CreateTaskModule)},
@@ -43,6 +43,21 @@ const routes: Routes = [
     MenuModule,
     MatSliderModule,
     LoadingSpinnerModule,
+    NgCircleProgressModule.forRoot({
+      // set defaults here
+      backgroundColor: "#e9ecef",
+      backgroundPadding: 0,
+      radius: 30,
+      space: -15,
+      maxPercent: 100,
+      unitsColor: "teal",
+      outerStrokeWidth: 1,
+      outerStrokeColor: "teal",
+      innerStrokeColor: "teal",
+      innerStrokeWidth: 1,
+      titleColor: "teal",
+      subtitleColor: "teal",
+    }),
     [RouterModule.forChild(routes)],
     
   ],
