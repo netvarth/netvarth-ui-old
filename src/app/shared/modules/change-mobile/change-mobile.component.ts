@@ -191,7 +191,7 @@ export class ChangeMobileComponent implements OnInit {
       'countryCode': this.submit_data.countryCode,
       'loginId': this.submit_data.phonenumber
     };
-    this.shared_services.verifyNewPhoneOTP(submit_data.phone_otp, post_data, this.shared_functions.isBusinessOwner('returntyp'))
+    this.shared_services.verifyNewPhoneOTP(submit_data, post_data, this.shared_functions.isBusinessOwner('returntyp'))
       .subscribe(
         () => {
           console.log(this.submit_data.phonenumber);
