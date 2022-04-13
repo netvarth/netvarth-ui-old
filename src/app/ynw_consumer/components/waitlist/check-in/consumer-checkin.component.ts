@@ -2643,7 +2643,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         const _this = this;
         return new Promise(function (resolve, reject) {
             const providerConsumer = _this.providerConsumerList.filter(user => user.firstName === member.firstName && user.LastName === member.LastName);
-
+            console.log("Provider Consumer List:", providerConsumer);
             if (providerConsumer && providerConsumer.length > 0) {
                 _this.providerConsumerId = providerConsumer[0].id;
                 resolve(_this.providerConsumerId);
@@ -2655,10 +2655,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     memberId = member.id;
                     parentId = member.parent;
                 } else {
+                    console.log("Hererer");
                     const providerConsumer_parent = _this.providerConsumerList.filter(user => user.firstName === _this.activeUser.firstName && user.LastName === _this.activeUser.LastName);
-                    parentId =  providerConsumer_parent[0].id;
                     console.log("Family Members:",  _this.familyMembers);    
-                    console.log("Member Id", member.id);            
+                    console.log("Member Id", member.id);    
+                    console.log("Parent:", providerConsumer_parent); 
+                    if (providerConsumer_parent && providerConsumer_parent.length > 0) {
+                        parentId =  providerConsumer_parent[0].id;
+                    }
                     const selectedMember = _this.familyMembers.filter(memb => memb.user === member.id);
                     console.log("Selected Member:", selectedMember);
                     if (selectedMember && selectedMember.length > 0) {
@@ -2666,9 +2670,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             memberId = member.id; 
                         } else {
                             memberId = 0;
+                            parentId = _this.activeUser.id;
                         }
                     } else {
                         memberId = 0;
+                        parentId = _this.activeUser.id;
                     }
                 }
                 console.log("Call Started");
