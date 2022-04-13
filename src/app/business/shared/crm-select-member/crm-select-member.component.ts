@@ -40,6 +40,7 @@ export class CrmSelectMemberComponent implements OnInit {
   public taskStatusList:any=[];
   public selectedStatusId:any;
   public selectedStatusUID:any;
+  public selectText:any;
 
 
 
@@ -250,17 +251,26 @@ getTaskStatusListData(){
 selectStatus(statusDetails){
   console.log('statusDetails',statusDetails)
 this.selectedStatusId= statusDetails.id
+this.selectText=''
 }
 completeTaskStatus(){
-  this.crmService.addStatus( this.selectedStatusUID,this.selectedStatusId).subscribe((response)=>{
-    console.log('response',response)
-    setTimeout(() => {
-      this.dialogRef.close()
-    }, projectConstants.TIMEOUT_DELAY);
-  },
-  (error)=>{
-    this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
-  })
+  // this.selectText=''
+  console.log('this.selectedStatusId',this.selectedStatusId)
+  if(this.selectedStatusId != undefined){
+    this.crmService.addStatus( this.selectedStatusUID,this.selectedStatusId).subscribe((response)=>{
+      console.log('response',response)
+      setTimeout(() => {
+        this.dialogRef.close()
+      }, projectConstants.TIMEOUT_DELAY);
+    },
+    (error)=>{
+      this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+    })
+  }
+  else{
+    this.selectText='Please select one status'
+  }
+  
 
 }
 }
