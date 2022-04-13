@@ -19,7 +19,8 @@ const routes: Routes = [
       { path: 'users', loadChildren: () => import('../../../business/modules/settings/general/users/users.module').then(m => m.UsersModule) },
       { path: 'q-manager', loadChildren: () => import('../../../business/modules/settings/waitlistmgr/waitlistmgr.module').then(m => m.WaitlistMgrModule) },
       { path: 'selectservice', loadChildren: () => import('../../../business/modules/settings/service-selection/service-selection.module').then(m => m.ServiceSelectionModule)},
-      { path: 'ordermanager', loadChildren: () => import('../../../business/modules/settings/ordermanager/ordermanager.module').then(m => m.OrdermanagerModule) }
+      { path: 'ordermanager', loadChildren: () => import('../../../business/modules/settings/ordermanager/ordermanager.module').then(m => m.OrdermanagerModule) },
+      { path: 'taskmanager', loadChildren: () => import('../../../business/modules/settings/taskmanager/taskmanager.module').then(m => m.TaskmanagerModule) }
 
     ]
   },
