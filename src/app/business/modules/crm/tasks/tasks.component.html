@@ -249,6 +249,28 @@
                           <td data-title="Type" class="td5">{{task.type.name}}</td>
                           <td data-title="Due Date" class="td6">{{task.dueDate | date:newDateFormat}}</td>
                           <!-- <td class="filter-fx-col"></td> -->
+                          <td *ngIf="task.status.name != 'Completed'">
+                            <div class="copy">
+                              <span class="">
+                                <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
+                                  (click)="stopprop($event);">
+                                  <mat-icon>more_vert</mat-icon>
+                                </button>
+                              </span>
+                              <mat-menu #appMenu="matMenu">
+                                <button mat-menu-item (click)="openTaskCompletion(task)" *ngIf="task.status.name !='Completed'">
+                                  <i class="text-success fa fa-check-square"></i> Mark as Done
+                                </button>
+                                <button mat-menu-item (click)="openEditTask(task,'Update')"  *ngIf="task.status.name !='Completed'">
+                                  <i class="text-info fa fa-edit"></i>Edit
+                                </button>
+                                <button mat-menu-item (click)="openDialogStatusChange(task)" >
+                                 <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
+                                </button>
+
+                              </mat-menu>
+                            </div>
+                          </td>
                         </tr>
                       </ng-container>
                     </tbody>
@@ -351,11 +373,14 @@
                                 </button>
                               </span>
                               <mat-menu #appMenu="matMenu">
-                                <button mat-menu-item (click)="openTaskCompletion(task)">
-                                  Mark as Done
+                                <button mat-menu-item (click)="openTaskCompletion(task)" *ngIf="task.status.name !='Completed'">
+                                  <i class="text-success fa fa-check-square"></i> Mark as Done
                                 </button>
-                                <button mat-menu-item (click)="openEditTask(task,'Update')">
-                                  Edit
+                                <button mat-menu-item (click)="openEditTask(task,'Update')"  *ngIf="task.status.name !='Completed'">
+                                  <i class="text-info fa fa-edit"></i>Edit
+                                </button>
+                                <button mat-menu-item (click)="openDialogStatusChange(task)" >
+                                 <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
                                 </button>
 
                               </mat-menu>
@@ -472,6 +497,18 @@
                               </mat-menu>
                             </div>
                           </td> -->
+                          <mat-menu #appMenu="matMenu">
+                            <button mat-menu-item (click)="openTaskCompletion(task)" *ngIf="task.status.name !='Completed'">
+                              <i class="text-success fa fa-check-square"></i> Mark as Done
+                            </button>
+                            <button mat-menu-item (click)="openEditTask(task,'Update')"  *ngIf="task.status.name !='Completed'">
+                              <i class="text-info fa fa-edit"></i>Edit
+                            </button>
+                            <button mat-menu-item (click)="openDialogStatusChange(task)" >
+                             <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
+                            </button>
+
+                          </mat-menu>
                           <!-- <td class="filter-fx-col"></td> -->
                         </tr>
                       </ng-container>

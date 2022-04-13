@@ -1317,3 +1317,9 @@
             font-size: 8px!important;
             color: #1E4079!important;
         }
+.imageStatus{
+    height: 16px;
+    width: 16px;
+    margin-left: -2px;
+    margin-right: 8px;
+}

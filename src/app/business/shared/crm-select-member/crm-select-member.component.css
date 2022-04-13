@@ -135,6 +135,7 @@ textarea {
     font-weight: 500;
     color: #CACACA;
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 ::ng-deep .commonpopupmainclass.confirmationmainclass .mat-dialog-actions{
   box-shadow: none !important;
@@ -146,3 +147,79 @@ textarea {
 /* textarea .form-control{
   width: 320px !important;
 } */
+.titleTask{
+  font-size: 15px;
+    font-weight: bold;
+    color: #22242C;
+}
+.assignee{
+  color: #121212;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 3px;
+}
+.manager{
+  color: #000000;
+    mix-blend-mode: normal;
+    opacity: 0.5;
+    font-size: 13px;
+    padding: 3px;
+}
+.prioprity{
+  color: #FF0000;
+  font-size: 13px;
+mix-blend-mode: normal;
+opacity: 0.5;
+padding: 3px;
+}
+.lastUpdate{
+  color: #000000;
+  font-size: 13px;
+mix-blend-mode: normal;
+opacity: 0.5;
+padding: 3px;
+}
+.currentStatus{
+  font-size: 13px;
+  color: #06D2FF;
+}
+.extStatus{
+  border: 1.05788px solid #F1F1F1;
+  padding: 20px;
+  margin-top: 10px;
+  box-shadow: 4.50201px 4.50201px 9.00403px rgba(66, 66, 66, 0.25);
+}
+.extStatus1{
+  color: #696969;
+  font-size: 13px;
+  font-weight: 600;
+}
+.extStatus2{
+  color: #696969;
+  font-size: 13px;
+  font-weight: 600;
+}
+.statusList{
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+.singleStatus{
+  padding: 20px;
+    background: #FFFFFF;
+    box-shadow: 1.05788px 0.391416px 5.28941px rgb(96 95 95 / 25%);
+    border-radius: 5.46305px;
+    width: 9rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+}
+.statusName{
+  color:  #FE9F69;;
+}
+.singleStatus:focus{
+  border: 2px solid red !important;
+}

@@ -12,6 +12,7 @@ import { CapitalizeFirstPipeModule } from "../../../shared/pipes/capitalize.modu
 import { MatRadioModule } from "@angular/material/radio";
 import {  ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from "@angular/material/icon";
+import { NgCircleProgressModule } from "ng-circle-progress";
 
 
 const routes: Routes = [
@@ -35,6 +36,21 @@ const routes: Routes = [
     MatRadioModule,
     ReactiveFormsModule,
     MatIconModule,
+    NgCircleProgressModule.forRoot({
+      // set defaults here
+      backgroundColor: "#e9ecef",
+      backgroundPadding: 2,
+      radius: 19,
+      space: -20,
+      maxPercent: 100,
+      unitsColor: "teal",
+      outerStrokeWidth: 1,
+      outerStrokeColor: "#46BD84",
+      innerStrokeColor: "#D1D2D2",
+      innerStrokeWidth: 1,
+      titleColor: "teal",
+      subtitleColor: "teal",
+    }),
     [RouterModule.forChild(routes)]
 
 

@@ -167,4 +167,9 @@ export class CrmService {
       const url = 'provider/task/' + taskUid + '/activity';
       return this.servicemeta.httpGet(url);
     }
+    addStatus(taskUid,statusId){
+      const url ='provider/task/'+taskUid+'/status/'+statusId
+      return this.servicemeta.httpPut(url)
+    }
+
 }

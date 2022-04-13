@@ -568,4 +568,19 @@ export class TasksComponent implements OnInit {
     })
   
   }
+  openDialogStatusChange(taskData:any){
+    console.log('openDialogStatusChange',taskData)
+    const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
+      width:'100%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data:{
+        requestType:'statusChange',
+        taskDetails:taskData,
+      }
+    });
+    dialogRef.afterClosed().subscribe((res:any)=>{
+      console.log('resssssssss',res);
+    })
+  }
 }

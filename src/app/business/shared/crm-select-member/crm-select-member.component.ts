@@ -26,6 +26,21 @@ export class CrmSelectMemberComponent implements OnInit {
   public noteDescription:any;
   public noteDescriptionTime:any;
   public taskDes:any;
+  //for status change variable
+  public taskDescription:any;
+  public taskTitle:any;
+  public taskProgress:any;
+  public status:any;
+  public height:any='100'
+  public assigneeName:any;
+  public managerName:any;
+  public priorityName:any;
+  public lastUpdate:any;
+  public currentStatus:any;
+  public taskStatusList:any=[];
+  public selectedStatusId:any;
+  public selectedStatusUID:any;
+
 
 
   constructor( public dialogRef: MatDialogRef<CrmSelectMemberComponent>,
@@ -84,6 +99,20 @@ export class CrmSelectMemberComponent implements OnInit {
     }
     if(this.data.requestType==='taskComplete'){
       this.taskDes= this.data.taskName.title
+    }
+    if(this.data.requestType==='statusChange'){
+      console.log('statusChangeeeeeeeee')
+      this.taskDescription= this.data.taskDetails.description;
+      this.taskTitle = this.data.taskDetails.title;
+      this.taskProgress= this.data.taskDetails.progress;
+      this.status= this.data.taskDetails.status.name;
+      this.assigneeName = this.data.taskDetails.assignee.name;
+      this.managerName= this.data.taskDetails.manager.name;
+      this.priorityName= this.data.taskDetails.priority.name;
+      this.lastUpdate = this.data.taskDetails.dueDate;
+      this.currentStatus=this.data.taskDetails.status.name;
+      this.getTaskStatusListData()
+      this.selectedStatusUID= this.data.taskDetails.taskUid
     }
     // console.log('this.assignMemberDetails',this.assignMemberDetails);
     // console.log('this.memberList',this.memberList)
@@ -208,5 +237,30 @@ completeTask(){
 
   }
   
+}
+getTaskStatusListData(){
+  this.crmService.getTaskStatus().subscribe((taskStatus:any)=>{
+    console.log('taskStatus',taskStatus);
+    this.taskStatusList.push(taskStatus);
+  },
+  (error)=>{
+    this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+  })
+}
+selectStatus(statusDetails){
+  console.log('statusDetails',statusDetails)
+this.selectedStatusId= statusDetails.id
+}
+completeTaskStatus(){
+  this.crmService.addStatus( this.selectedStatusUID,this.selectedStatusId).subscribe((response)=>{
+    console.log('response',response)
+    setTimeout(() => {
+      this.dialogRef.close()
+    }, projectConstants.TIMEOUT_DELAY);
+  },
+  (error)=>{
+    this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+  })
+
 }
 }
