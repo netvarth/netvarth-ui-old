@@ -29,9 +29,9 @@
       <mat-tab class="mat-tab">
         <ng-template mat-tab-label>
           <div>
-            <img class="img" src="/assets/images/crmImages/total task.PNG" />
+            <img class="img" src="/assets/images/crmImages/totaltask.PNG" />
           </div>
-          <div class="totalCount">({{totalCount}})</div>
+          <div class="totalCount">({{totalCount}})</div>&nbsp;
           <div class="totalActivityName">Total Task</div>
         </ng-template>
 
@@ -45,8 +45,9 @@
                   <table class="table" style="background-color: white;">
                     <thead>
                       <tr class="tble-filtr-tr heght">
-                        <th></th>
+                        <th style="width: 30px;"></th>
                         <th class="head_color">Task Details</th>
+                        <th class="head_color">Assignee</th>
                         <!-- <th class="head_color">Duration</th> -->
                         <th class="head_color">Status</th>
                         <th class="head_color">Catogory</th>
@@ -227,32 +228,26 @@
                       </ng-container>
                       <ng-container *ngIf="totalTaskList.length>0">
                         <tr *ngFor="let task of totalTaskList; let i=index" (click)="viewTask(task.taskUid,task)">
-                         
-                          <td >&nbsp; &nbsp;<circle-progress class="circle__progress" 
-                            [percent]="task.progress"
-                            [animation]="true"
-                            [animationDuration]="300"
-                            [startFromZero]="true"
-                            [showInnerStroke]="true"
-                            [titleFontSize]="'10'"
-                            [titleFontWeight]="'900'"
-                            [height]="'100'"
-                            [unitsFontSize]="'10'"
-                            [unitsFontWeight]="'700'"
-                            [subtitle]="task.status.name"
-                            [subtitleFontSize]="'7'"
-                            [lazy]="false"
-           ></circle-progress></td>
-                          
+
+                          <td>
+                            <circle-progress class="circle__progress" [percent]="task.progress" [animation]="true"
+                              [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
+                              [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
+                              [unitsFontWeight]="'700'" [subtitle]="task.status.name" [subtitleFontSize]="'7'"
+                              [lazy]="false"></circle-progress>
+                          </td>
+
                           <td data-title="Task Details" class="td1">{{task.title}}</td>
+                          <td data-title="Task Details" class="td2"><span
+                              *ngIf="task.assignee">{{task.assignee.name}}</span></td>
                           <!-- <td data-title="Duration" class="td3"><span
                               *ngIf="task.estDuration && task.estDuration.days">{{task.estDuration.days}} Days</span>&nbsp;
                             <span *ngIf="task.estDuration && task.estDuration.hours">{{task.estDuration.hours}}
                               Hours</span></td> -->
-                          <td data-title="Status" class="td2">{{task.status.name}}</td>
+                          <td data-title="Status" class="td3">{{task.status.name}}</td>
                           <td data-title="Category" class="td4">{{task.category.name}}</td>
-                          <td data-title="Type" class="td4">{{task.type.name}}</td>
-                          <td data-title="Due Date" class="td4">{{task.dueDate | date:newDateFormat}}</td>
+                          <td data-title="Type" class="td5">{{task.type.name}}</td>
+                          <td data-title="Due Date" class="td6">{{task.dueDate | date:newDateFormat}}</td>
                           <td>
                             <div class="copy">
                               <span class="">
@@ -295,7 +290,7 @@
           <div>
             <img class="img" src="/assets/images/crmImages/handHoldingClock.PNG" />
           </div>
-          <div class="totalCount">({{inprogressCount}})</div>
+          <div class="totalCount">({{inprogressCount}})</div>&nbsp;
           <div class="totalActivityName">In Progress</div>
         </ng-template>
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
@@ -307,8 +302,9 @@
                   <table class="table">
                     <thead>
                       <tr class="tble-filtr-tr heght">
-                        <th></th>
+                        <th style="width: 30px;"></th>
                         <th class="head_color">Task Details</th>
+                        <th class="head_color">Assignee</th>
                         <!-- <th class="head_color">Duration</th> -->
                         <th class="head_color">Status</th>
                         <th class="head_color">Catogory</th>
@@ -347,30 +343,24 @@
                       </ng-container>
                       <ng-container *ngIf="totalInprogressList.length>0">
                         <tr *ngFor="let task of totalInprogressList; let i=index" (click)="viewTask(task.taskUid,task)">
-                          <td >&nbsp; &nbsp;<circle-progress class="circle__progress" 
-                            [percent]="task.progress"
-                            [animation]="true"
-                            [animationDuration]="300"
-                            [startFromZero]="true"
-                            [showInnerStroke]="true"
-                            [titleFontSize]="'10'"
-                            [titleFontWeight]="'900'"
-                            [height]="'100'"
-                            [unitsFontSize]="'10'"
-                            [unitsFontWeight]="'700'"
-                            [subtitle]="task.status.name"
-                            [subtitleFontSize]="'7'"
-                            [lazy]="false"
-           ></circle-progress></td>
+                          <td>
+                            <circle-progress class="circle__progress" [percent]="task.progress" [animation]="true"
+                              [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
+                              [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
+                              [unitsFontWeight]="'700'" [subtitle]="task.status.name" [subtitleFontSize]="'7'"
+                              [lazy]="false"></circle-progress>
+                          </td>
                           <td data-title="Task Details" class="td1">{{task.title}}</td>
+                          <td data-title="Task Details" class="td2"><span
+                              *ngIf="task.assignee">{{task.assignee.name}}</span></td>
                           <!-- <td data-title="Duration" class="td3"><span
                             *ngIf="task.estDuration && task.estDuration.days">{{task.estDuration.days}} Days</span>&nbsp;
                           <span *ngIf="task.estDuration && task.estDuration.hours">{{task.estDuration.hours}}
                             Hours</span></td> -->
-                          <td data-title="Status" class="td2">{{task.status.name}}</td>
+                          <td data-title="Status" class="td3">{{task.status.name}}</td>
                           <td data-title="Category" class="td4">{{task.category.name}}</td>
-                          <td data-title="Type" class="td4">{{task.type.name}}</td>
-                          <td data-title="Due Date" class="td4">{{task.dueDate | date:newDateFormat}}</td>
+                          <td data-title="Type" class="td5">{{task.type.name}}</td>
+                          <td data-title="Due Date" class="td6">{{task.dueDate | date:newDateFormat}}</td>
                           <td>
                             <div class="copy">
                               <span class="">
@@ -411,7 +401,7 @@
           <div>
             <img class="img" src="/assets/images/crmImages/completed.PNG" />
           </div>
-          <div class="totalCount">({{completedCount}})</div>
+          <div class="totalCount">({{completedCount}})</div>&nbsp;
           <div class="totalActivityName">Completed</div>
         </ng-template>
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
@@ -423,8 +413,9 @@
                   <table class="table">
                     <thead>
                       <tr class="tble-filtr-tr heght">
-                        <th></th>
+                        <th style="width: 30px;"></th>
                         <th class="head_color">Task Details</th>
+                        <th class="head_color">Assignee</th>
                         <!-- <th class="head_color">Duration</th> -->
                         <th class="head_color">Status</th>
                         <th class="head_color">Catogory</th>
@@ -463,30 +454,24 @@
                       </ng-container>
                       <ng-container *ngIf="totalCompletedList.length>0">
                         <tr *ngFor="let task of totalCompletedList; let i=index" (click)="viewTask(task.taskUid,task)">
-                          <td >&nbsp; &nbsp;<circle-progress class="circle__progress" 
-                            [percent]="task.progress"
-                            [animation]="true"
-                            [animationDuration]="300"
-                            [startFromZero]="true"
-                            [showInnerStroke]="true"
-                            [titleFontSize]="'10'"
-                            [titleFontWeight]="'900'"
-                            [height]="'100'"
-                            [unitsFontSize]="'10'"
-                            [unitsFontWeight]="'700'"
-                            [subtitle]="task.status.name"
-                            [subtitleFontSize]="'7'"
-                            [lazy]="false"
-           ></circle-progress></td>
+                          <td>
+                            <circle-progress class="circle__progress" [percent]="task.progress" [animation]="true"
+                              [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
+                              [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
+                              [unitsFontWeight]="'700'" [subtitle]="task.status.name" [subtitleFontSize]="'7'"
+                              [lazy]="false"></circle-progress>
+                          </td>
                           <td data-title="Task Details" class="td1">{{task.title}}</td>
+                          <td data-title="Task Details" class="td2"><span
+                              *ngIf="task.assignee">{{task.assignee.name}}</span></td>
                           <!-- <td data-title="Duration" class="td3"><span
                             *ngIf="task.estDuration && task.estDuration.days">{{task.estDuration.days}} Days</span>&nbsp;
                           <span *ngIf="task.estDuration && task.estDuration.hours">{{task.estDuration.hours}}
                             Hours</span></td> -->
-                          <td data-title="Status" class="td2">{{task.status.name}}</td>
+                          <td data-title="Status" class="td3">{{task.status.name}}</td>
                           <td data-title="Category" class="td4">{{task.category.name}}</td>
-                          <td data-title="Type" class="td4">{{task.type.name}}</td>
-                          <td data-title="Due Date" class="td4">{{task.dueDate | date:newDateFormat}}</td>
+                          <td data-title="Type" class="td5">{{task.type.name}}</td>
+                          <td data-title="Due Date" class="td6">{{task.dueDate | date:newDateFormat}}</td>
                           <td>
                             <div class="copy">
                               <span class="">
@@ -522,7 +507,7 @@
           </div>
         </div>
       </mat-tab>
-     
+
       <!-- <mat-tab class="mat-tab">
         <ng-template mat-tab-label>
           <div>
