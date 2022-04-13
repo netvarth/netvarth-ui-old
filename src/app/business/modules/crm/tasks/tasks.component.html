@@ -249,7 +249,7 @@
                           <td data-title="Type" class="td5">{{task.type.name}}</td>
                           <td data-title="Due Date" class="td6">{{task.dueDate | date:newDateFormat}}</td>
                           <!-- <td class="filter-fx-col"></td> -->
-                          <td *ngIf="task.status.name != 'Completed'">
+                          <td >
                             <div class="copy">
                               <span class="">
                                 <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
@@ -364,7 +364,7 @@
                           <td data-title="Category" class="td4">{{task.category.name}}</td>
                           <td data-title="Type" class="td5">{{task.type.name}}</td>
                           <td data-title="Due Date" class="td6">{{task.dueDate | date:newDateFormat}}</td>
-                          <td *ngIf="task.status.name != 'Completed'">
+                          <td >
                             <div class="copy">
                               <span class="">
                                 <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
@@ -478,7 +478,7 @@
                           <td data-title="Category" class="td4">{{task.category.name}}</td>
                           <td data-title="Type" class="td4">{{task.type.name}}</td>
                           <td data-title="Due Date" class="td4">{{task.dueDate | date:newDateFormat}}</td>
-                          <!-- <td>
+                          <td >
                             <div class="copy">
                               <span class="">
                                 <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
@@ -487,17 +487,20 @@
                                 </button>
                               </span>
                               <mat-menu #appMenu="matMenu">
-                                <button mat-menu-item (click)="openTaskCompletion(task)">
-                                  Mark as Done
+                                <button  mat-menu-item (click)="openTaskCompletion(task)" *ngIf="task.status.name !='Completed'">
+                                  <i class="text-success fa fa-check-square"></i> Mark as Done
                                 </button>
-                                <button mat-menu-item (click)="openEditTask(task,'Update')">
-                                  Edit
+                                <button  mat-menu-item (click)="openEditTask(task,'Update')"  *ngIf="task.status.name !='Completed'">
+                                  <i class="text-info fa fa-edit"></i>Edit
+                                </button>
+                                <button mat-menu-item (click)="openDialogStatusChange(task)" >
+                                 <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
                                 </button>
 
                               </mat-menu>
                             </div>
-                          </td> -->
-                          <mat-menu #appMenu="matMenu">
+                          </td>
+                          <!-- <mat-menu #appMenu="matMenu">
                             <button mat-menu-item (click)="openTaskCompletion(task)" *ngIf="task.status.name !='Completed'">
                               <i class="text-success fa fa-check-square"></i> Mark as Done
                             </button>
@@ -508,7 +511,7 @@
                              <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
                             </button>
 
-                          </mat-menu>
+                          </mat-menu> -->
                           <!-- <td class="filter-fx-col"></td> -->
                         </tr>
                       </ng-container>
