@@ -16,7 +16,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
 import { PagerModule } from "../../../../../../src/app/shared/modules/pager/pager.module";
 import { MatCheckboxModule } from "@angular/material/checkbox";
-
+import { NgCircleProgressModule } from "ng-circle-progress";
 const routes: Routes = [
   { path: '', component: TasksComponent },
   {path:'viewtask/:id',loadChildren:()=>import('./view-task/view-task.module').then((m)=>m.ViewTaskModule)},
@@ -40,6 +40,21 @@ const routes: Routes = [
         MatCheckboxModule,
         LoadingSpinnerModule,
         FormMessageDisplayModule,
+        NgCircleProgressModule.forRoot({
+          // set defaults here
+          backgroundColor: "#e9ecef",
+          backgroundPadding: 2,
+          radius: 19,
+          space: -15,
+          maxPercent: 100,
+          unitsColor: "teal",
+          outerStrokeWidth: 1,
+          outerStrokeColor: "teal",
+          innerStrokeColor: "teal",
+          innerStrokeWidth: 1,
+          titleColor: "teal",
+          subtitleColor: "teal",
+        }),
         [RouterModule.forChild(routes)]
     ],
     exports: [TasksComponent],
