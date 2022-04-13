@@ -48,14 +48,14 @@
             <div class="form-group">
               <div _ngcontent-eec-c483="" class="d-flex justify-content-between mt-n5">
                 <label class="font-size-h6 font-weight-bolder text-dark"
-                  style="text-align: left !important;">Mobile/Email</label>
+                  style="text-align: left !important;">Employee id</label>
               </div>
               <input class="form-control  py-7 px-6 rounded-lg border-0" type="text" id="emailId"
-                formControlName="emailId" placeholder="Enter Mobile/Email" autocomplete="off" />
+                formControlName="emailId" placeholder="Enter employee id" autocomplete="off" />
               <app-field-error-display class="text-left" [displayError]="fed_service.isFieldValid(loginForm,'emailId')"
                 [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',
     {
-    'required' : 'Mobile/Email is required',
+    'required' : 'Employee id is required',
     'pattern' : 'Space not allowed'
     })">
               </app-field-error-display>
@@ -93,11 +93,11 @@
             </a>
               
             </div>
-            <div class="pb-lg-0 pb-5">
+            <!-- <div class="pb-lg-0 pb-5">
               <button *ngIf="!qParams['src']" (click)="doSignuppage()" type="button"
               class="btn btn-light-primary font-weight-bolder px-8 py-2 my-3 font-size-lg">Join as a service
               provider</button>
-            </div>
+            </div> -->
             <!--end::Action-->
           </form>
           <!--end::Form-->
