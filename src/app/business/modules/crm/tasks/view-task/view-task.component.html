@@ -46,8 +46,8 @@
               <span class="progress-bar-text">{{taskDetails.status.name}}</span>
             </div>
             <div class="ml-3">
-              <span class="details text-dark"><b>Manager : {{taskDetails.manager.name}} </b></span><br>
-              <span class="details text-secondary">Assigned to {{taskDetails.assignee.name}} </span><br>
+              <span class="details text-dark"><b> Assigned to {{taskDetails.assignee.name}} </b></span><br>
+              <span class="details text-secondary">Manager : {{taskDetails.manager.name}}</span><br>
               <span class="details text-warning">Priority : {{taskDetails.priority.name}} </span><br>
               <span class="details text-secondary">Due date : {{taskDetails.dueDate}} </span>
             </div>
@@ -78,7 +78,28 @@
           <app-task-activity></app-task-activity>
         </div>
         <div class="border height-limit col-md-4 col-lg-4 col-sm-12 col-xs-12 no-padding mt-2">
-          <app-connections [taskid]="taskUid"></app-connections>
+          <div class="d-flex justify-content-between">
+            <div>
+              <span class="card-title"><b>Notes</b></span> 
+            </div>
+            <div>
+              <span class="pointer-cursor fa fa-external-link"></span>
+            </div>
+          </div>
+          <hr class="my-2 py-2">
+          <div class="text-left">
+            <span>
+              <div class="my-2">
+                <div *ngFor="let note of taskDetails.notes;let i=index" class="allNotesList">
+                  <div class="notesListSection">
+                    Note {{i + 1}}
+                    <div>{{note.createdDate}}</div>
+                    <div style="cursor: pointer;"(click)="noteView(note)"><i class="fa fa-eye" aria-hidden="true"></i></div>
+                  </div>
+                 </div>
+              </div>
+            </span>
+          </div>
         </div>
         <div class="border height-limit col-md-4 col-lg-4 col-sm-12 col-xs-12 no-padding mt-2">
           <div class="d-flex justify-content-between">
@@ -95,7 +116,9 @@
               <button  mat-button [mat-dialog-close]="true" class="lnk action pointer-cursor btn btn-primary upload-file-btn text-primary"  (click)="uploadFiles()"><i class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i>Upload
                   File<br><span class="text-dark btn-text">Add or Upload Files related to task</span>
               </button>
-              <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12 my-2">
+              <!-- <div class="clearfix"></div><br>
+              <span class="label"><b>Uploaded Files</b></span> -->
+              <div class="my-2">
                 <div *ngFor="let attachment of taskDetails.attachments;let i=index" class="allNotesList">
                   <div class="notesListSection">
                     <div>{{attachment.originalName}}</div>
@@ -109,35 +132,10 @@
       </div>
 
       <div class="row d-lg-flex justify-content-lg-start" *ngIf="notesList">
-        <div class="border height-limit col-md-4 col-lg-4 col-sm-12 col-xs-12 no-padding mt-2">
-          <div class="d-flex justify-content-between">
-            <div>
-              <span class="card-title"><b>Notes</b></span> 
-            </div>
-            <div>
-              <span class="pointer-cursor fa fa-external-link"></span>
-            </div>
-          </div>
-          <hr class="my-2 py-2">
-          <div class="text-left">
-            <span>
-              <div class="col-sm-12 col-xs-12 chk-btns-div col-md-12 my-2">
-                <div *ngFor="let note of taskDetails.notes;let i=index" class="allNotesList">
-                  <div class="notesListSection">
-                    Note {{i + 1}}
-                    <div>{{note.createdDate}}</div>
-                    <div style="cursor: pointer;"(click)="noteView(note)"><i class="fa fa-eye" aria-hidden="true"></i></div>
-                  </div>
-                 </div>
-              </div>
-            </span>
-          </div>
-        </div>
-        <div  class="subtask-border  height-limit col col-md-8 col-lg-8 col-sm-12 col-xs-12 no-padding mt-2 subTask">
+        <div  class="subtask-border height-limit col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mt-2">
           <app-subtasks [taskid]="taskUid"></app-subtasks>
         </div>
       </div>
-      
       
       <!-- <div class="subtask-border mt-4">
         <app-subtasks [taskid]="taskUid"></app-subtasks>

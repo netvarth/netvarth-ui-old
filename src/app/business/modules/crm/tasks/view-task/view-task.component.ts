@@ -71,7 +71,6 @@ connected_with :any;
 selectedIndex;
 taskUid: any;
 taskDetails: any;
-public dataUpdate:any;
 
 action: any;
 //notes variable start
@@ -106,14 +105,13 @@ ngOnInit(): void {
       console.log('this.notesList',this.notesList)
   })
   })
-  this.dataUpdate =this.crmService.taskToCraeteViaServiceData 
 
 
 }
 
 uploadFiles() {
   this.dialog.open(SelectAttachmentComponent, {
-      width: '80%',
+      width: '100%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
       disableClose: false,
       data: {
@@ -123,14 +121,14 @@ uploadFiles() {
 }
 
 openEditTask(editText:any) {
-  console.log("hvbjdnskm",this.taskDetails)
-  this.crmService.taskToCraeteViaServiceData = this.dataUpdate
-  const newTaskData = this.crmService.taskToCraeteViaServiceData
-  setTimeout(() => {
-    this.crmService.taskActivityName = editText;
-    newTaskData;
-    this.router.navigate(['provider', 'task', 'create-task']);
-  }, projectConstants.TIMEOUT_DELAY);
+  // console.log("hvbjdnskm",this.taskDetails)
+  // this.crmService.taskToCraeteViaServiceData = this.taskDetails
+  // const newTaskData = this.crmService.taskToCraeteViaServiceData
+  // setTimeout(() => {
+  //   this.crmService.taskActivityName = editText;
+  //   newTaskData;
+  //   this.router.navigate(['provider', 'task', 'create-task']);
+  // }, projectConstants.TIMEOUT_DELAY);
 }
 markAsDone(taskid){
   const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
@@ -270,7 +268,6 @@ goBack()
 openAddNoteDialog(addNoteText:any){
   console.log('addNoteText',addNoteText);
   const dialogRef = this.dialog.open(CrmSelectMemberComponent,{
-    maxWidth:'100vw',
     width:'100%',
     panelClass: ['popup-class', 'confirmationmainclass'],
     data:{
@@ -289,7 +286,7 @@ openAddNoteDialog(addNoteText:any){
 noteView(noteDetails:any){
   console.log('notedetails',noteDetails);
   const dialogRef = this.dialog.open(CrmSelectMemberComponent,{
-    width:'60%',
+    width:'100%',
     panelClass: ['popup-class', 'confirmationmainclass'],
     data:{
       requestType:'noteDetails',
