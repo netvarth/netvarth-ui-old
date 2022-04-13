@@ -81,7 +81,7 @@ export class CrmProgressbarComponent implements OnInit {
       }
         console.log('createNoteData',this.gridsize)
       this.crmService.addProgressvalue(this.data.taskUid,this.gridsize,createNoteData).subscribe((response:any)=>{
-        console.log('response',response)
+        this.dialogRef.close()
       },
       (error)=>{
         this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})

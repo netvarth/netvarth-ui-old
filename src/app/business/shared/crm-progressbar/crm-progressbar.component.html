@@ -91,10 +91,9 @@
                   </ng-container>
                   <ng-container>
                     <tr class="subtask-table-data" *ngFor="let progress of previousProgressList">
-
-                      <td class="head_color">{{progress.localUserId}}</td>
-                                <td class="head_color">{{progress.date | date:newDateFormat}}</td>
-                                <td class="head_color">{{progress.category}}</td>
+                      <td class="head_color">{{progress.date | date:newDateFormat}}</td>
+                      <td class="head_color">{{progress.userName}}</td>
+                                <td class="head_color">{{progress.taskProgress}}%</td>
                                 <td class="head_color">{{progress.remarks}}</td>
                     </tr>
                   </ng-container>
