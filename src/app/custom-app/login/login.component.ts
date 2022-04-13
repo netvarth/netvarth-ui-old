@@ -322,11 +322,11 @@ export class LoginComponent implements OnInit {
   onOtpSubmit(submit_data) {
     this.actionstarted = true;
     this.resetApiErrors();
-    this.subs.sink = this.shared_services.OtpSignUpConsumerValidate(submit_data.phone_otp)
+    this.subs.sink = this.shared_services.OtpSignUpConsumerValidate(submit_data)
       .subscribe(
         () => {
           this.actionstarted = false;
-          this.otp = submit_data.phone_otp;
+          this.otp = submit_data;
           // this.createForm(4);
 
           this.step = 6;

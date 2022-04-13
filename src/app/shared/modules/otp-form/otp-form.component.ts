@@ -124,13 +124,13 @@ console.log("SubmitData:", this.submitdata);
   //   // this.setMessageType();
   // }
 
-  doOnOtpSubmit(otp) {
-    console.log(otp);
-    if (otp) {
-      if (this.submitdata && this.submitdata.userProfile && this.submitdata.userProfile.primaryMobileNo.startsWith('55') && this.submitdata.userProfile.countryCode === '+91' && otp.length<5) {
+  doOnOtpSubmit() {
+    console.log(this.otpEntered);
+    if (this.otpEntered) {
+      if (this.submitdata && this.submitdata.userProfile && this.submitdata.userProfile.primaryMobileNo.startsWith('55') && this.submitdata.userProfile.countryCode === '+91' && this.otpEntered.length<5) {
         this.api_error = 'Enter valid OTP';
         return false;
-      } else if(otp.length < 4){
+      } else if(this.otpEntered.length < 4){
         this.api_error = 'Enter valid OTP';
         return false;
       } 
@@ -140,7 +140,7 @@ console.log("SubmitData:", this.submitdata);
     }
     
     this.buttonclicked = true;
-    this.retonOtpSubmit.emit(otp);
+    this.retonOtpSubmit.emit(this.otpEntered);
     setTimeout(() => {
       this.buttonclicked = false;
     }, 500);
