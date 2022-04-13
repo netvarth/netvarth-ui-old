@@ -966,10 +966,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     memberId = member.id;
                     parentId = member.parent;
                 } else {
+                    console.log("Hererer");
                     const providerConsumer_parent = _this.providerConsumerList.filter(user => user.firstName === activeUser.firstName && user.LastName === activeUser.LastName);
-                    parentId =  providerConsumer_parent[0].id;
                     console.log("Family Members:",  _this.familyMembers);    
-                    console.log("Member Id", member.id);            
+                    console.log("Member Id", member.id);    
+                    console.log("Parent:", providerConsumer_parent); 
+                    if (providerConsumer_parent && providerConsumer_parent.length > 0) {
+                        parentId =  providerConsumer_parent[0].id;
+                    }
                     const selectedMember = _this.familyMembers.filter(memb => memb.user === member.id);
                     console.log("Selected Member:", selectedMember);
                     if (selectedMember && selectedMember.length > 0) {
@@ -977,9 +981,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             memberId = member.id; 
                         } else {
                             memberId = 0;
+                            parentId = activeUser.id;
                         }
                     } else {
                         memberId = 0;
+                        parentId = activeUser.id;
                     }
                 }
                 console.log("Call Started");
