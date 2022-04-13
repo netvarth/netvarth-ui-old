@@ -94,7 +94,6 @@ constructor(
 
 ngOnInit(): void {
   this.api_loading = false;
-  console.log("ngoninit called")
   this._Activatedroute.paramMap.subscribe(params => { 
     this.taskUid = params.get('id');
     console.log("task id : ",this.taskUid);
@@ -116,7 +115,7 @@ ngOnInit(): void {
 
 uploadFiles() {
   const dialogRef = this.dialog.open(SelectAttachmentComponent, {
-    width:'50vw',
+    width:'100%',
     panelClass: ['popup-class', 'confirmationmainclass'],
       disableClose: true,
       data: {
