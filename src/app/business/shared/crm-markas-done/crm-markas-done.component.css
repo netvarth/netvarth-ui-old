@@ -125,13 +125,16 @@
 }
 @media(min-width: 768px) {
   .form-control{
-    width: 268px !important;
+    width: min-content;
+  }
+  .dialogContent{
+    /* width: 75% !important; */
   }
   
 }
 @media(max-width: 768px) {
   .form-control{
-      width: 268px !important;
+      /* width: 268px !important; */
   }
   
 }
@@ -142,4 +145,9 @@ input::-webkit-inner-spin-button {
 }
 input[type=number] {
   -moz-appearance: textfield;
+}
+@media(max-width: 768px){
+  .formField{
+    display: block !important;
+  }
 }

@@ -218,14 +218,14 @@
             <mat-icon>clear</mat-icon>
         </div>
     </div>
-    <mat-dialog-content >
+    <mat-dialog-content style="padding: 0px !important;">
         <div>
             <!-- <div class="taskTitle">
                 <div>Notes Description</div>
                 <div class="astericColor">*</div>
             </div> -->
             <div style="text-align: center;">
-                <img style="width: 50%;" src="../../../../assets/images/crmImages/task completed.jpg" />
+                <img style="width: 50%;" src="/assets/images/crmImages/taskcompleted.jpg" />
             </div>
             <div style="text-align: center;">
                 <div class="almostDone">You're almost done!</div>
@@ -241,11 +241,11 @@
 
             </div>
            <!---cancel save btn start-->
-           <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;">
+           <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;padding: 0px !important;">
             <!---cancel save btn start-->
             <div style="text-align: center;">
                <ng-container >
-                   <div class=" mgn-bt-20 mgn-up-10">
+                   <div >
                            <button type="button" class="btn btn-primary font-weight-bold cancelBtn" 
                            mat-dialog-close >No</button>
                        <button type="button" class="btn btn-primary font-weight-bold confirmBtn"(click)="completeTask()"
