@@ -36,6 +36,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   donationstatus: any;
   count = 0;
   orderstatus;
+  taskStatus;
   minimizeMenu = false;
   showMenu = false;
   enquiryCount;
@@ -59,6 +60,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {
+      
         case 'messageCount':
           this.inboxUnreadCnt = message.unreadCount - this.enquiryCount;
           this.inboxCntFetched = message.messageFetched;
@@ -127,6 +129,9 @@ export class MenuComponent implements OnInit, OnDestroy {
         case 'orderStatus':
           this.orderstatus = message.orderStatus;
           break;
+          case 'taskstatus':
+            this.taskStatus = message.taskstatus;
+            break;
         case 'showmenu':
           this.showMenu = message.value;
           break;
@@ -214,6 +219,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.isAvailableNow();
     this.getProviderSettings();
     this.getOrderStatus();
+    this.getTaskStatus();
     this.getEnquiryCount();
   }
 
@@ -269,6 +275,11 @@ export class MenuComponent implements OnInit, OnDestroy {
   getOrderStatus() {
     this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
       this.orderstatus = data.enableOrder;
+    });
+  }
+  getTaskStatus() {
+    this.provider_services.getProviderTaskSettings().subscribe((data: any) => {
+      this.taskStatus = data.enableTask;
     });
   }
   minimizeSideBar() {

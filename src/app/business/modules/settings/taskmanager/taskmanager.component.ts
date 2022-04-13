@@ -6,6 +6,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SubSink } from 'subsink';
+import { SharedFunctions } from '../../../../../../src/app/shared/functions/shared-functions';
 // import { SharedFunctions } from '../../../../../../src/app/shared/functions/shared-functions';
 
 @Component({
@@ -35,7 +36,7 @@ export class TaskmanagerComponent implements OnInit, OnDestroy {
   constructor(
 
     private routerobj: Router,
-    // private shared_functions: SharedFunctions,
+    private shared_functions: SharedFunctions,
     private provider_services: ProviderServices,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
@@ -74,7 +75,7 @@ export class TaskmanagerComponent implements OnInit, OnDestroy {
     this.subscriptions.sink = this.provider_services.getProviderTaskSettings().subscribe((data: any) => {
       this.taskstatus = data.enableTask;
       this.pos_statusstr = (this.taskstatus) ? 'On' : 'Off';
-      // this.shared_functions.sendMessage({ 'ttype': 'orderStatus', orderStatus: this.orderstatus });
+      this.shared_functions.sendMessage({ 'ttype': 'taskstatus', taskstatus: this.taskstatus });
     });
   }
   
