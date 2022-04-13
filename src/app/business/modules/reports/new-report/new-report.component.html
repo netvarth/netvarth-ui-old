@@ -335,7 +335,7 @@
               <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
                 <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time Period</label>
                 <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
-                  <mat-select class="form-control" [(ngModel)]="user_timePeriod"
+                  <mat-select class="form-control" [(ngModel)]="crm_timePeriod"
                     (selectionChange)="changeTimePeriod($event)">
                     <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
                       period.displayName }}
@@ -349,7 +349,7 @@
               <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
                 <mat-form-field>
                   <mat-label>Start Date</mat-label>
-                  <input matInput [matDatepicker]="start" [max]="mxDate" [min]="minDate" [(ngModel)]="user_startDate"
+                  <input matInput [matDatepicker]="start" [max]="mxDate" [min]="minDate" [(ngModel)]="crm_startDate"
                     class="sc-t" readonly (click)="start.open()">
                   <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
                   <mat-datepicker #start></mat-datepicker>
@@ -358,7 +358,7 @@
               <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
                 <mat-form-field>
                   <mat-label>End Date</mat-label>
-                  <input matInput [matDatepicker]="end" [max]="mxDate" [min]="minDate" [(ngModel)]="user_endDate"
+                  <input matInput [matDatepicker]="end" [max]="mxDate" [min]="minDate" [(ngModel)]="crm_EndDate"
                     class="sc-t" readonly (click)="end.open()">
                   <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
                   <mat-datepicker #end></mat-datepicker>

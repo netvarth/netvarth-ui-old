@@ -80,6 +80,7 @@ export class NewReportComponent implements OnInit {
   payment_purpose: { value: string; displayName: string; }[];
   donation_timePeriod: string;
   appointment_timePeriod: string;
+  crm_timePeriod: string;
   appointment_service_id: number;
   appointment_service: string;
   donation_service_id: any;
@@ -126,6 +127,8 @@ export class NewReportComponent implements OnInit {
   donation_donorPhoneNumber: any;
   user_endDate;
   user_startDate;
+  crm_startDate;
+  crm_EndDate;
   user_timePeriod;
   user_users;
   report_criteria: any;
@@ -181,7 +184,7 @@ export class NewReportComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.payment_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
+    this.payment_timePeriod = this.crm_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.payment_modes = projectConstantsLocal.PAYMENT_MODES;
     this.payment_status = projectConstantsLocal.PAYMENT_STATUS;
@@ -313,6 +316,14 @@ export class NewReportComponent implements OnInit {
             this.hide_dateRange = false;
             this.user_startDate = res.startDate;
             this.user_endDate = res.endDate;
+          }
+        }
+        case 'crm': {
+          this.crm_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
+          if (res.dateRange === 'DATE_RANGE') {
+            this.hide_dateRange = false;
+            this.crm_startDate = res.startDate;
+            this.crm_EndDate = res.endDate;
           }
         }
       }
@@ -786,7 +797,7 @@ export class NewReportComponent implements OnInit {
       }
     } 
     else if (reportType === 'crm') {
-      if (this.appointment_timePeriod === 'DATE_RANGE' && (this.appointment_startDate === undefined || this.appointment_endDate === undefined)) {
+      if (this.crm_timePeriod === 'DATE_RANGE' && (this.crm_startDate === undefined || this.crm_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
         this.filterparams = {
@@ -832,17 +843,17 @@ export class NewReportComponent implements OnInit {
             filter[key + '-eq'] = this.filterparams[key];
           }
         }
-        if (this.appointment_timePeriod === 'DATE_RANGE') {
-          if (this.appointment_startDate === undefined || this.appointment_endDate === undefined) {
+        if (this.crm_timePeriod === 'DATE_RANGE') {
+          if (this.crm_startDate === undefined || this.crm_EndDate === undefined) {
             this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
 
           }
-          filter['date-ge'] = this.dateformat.transformTofilterDate(this.appointment_startDate);
-          filter['date-le'] = this.dateformat.transformTofilterDate(this.appointment_endDate);
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.crm_startDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.crm_EndDate);
         }
         const request_payload: any = {};
         request_payload.reportType = 'CRM_TASK';
-        request_payload.reportDateCategory = this.appointment_timePeriod;
+        request_payload.reportDateCategory = this.crm_timePeriod;
         request_payload.filter = filter;
         request_payload.responseType = 'INLINE';
         this.passPayloadForReportGeneration(request_payload);

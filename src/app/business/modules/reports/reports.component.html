@@ -216,7 +216,7 @@
                         </div>
                     </div>
                      <!-- CRM Reports -->
-                     <!-- <div class="row">
+                     <div class="row">
                       <div class="card p0">
                         <mat-accordion class="report">
                           <mat-expansion-panel  [expanded]="true">
@@ -228,11 +228,26 @@
                                      </div>
                                   </mat-panel-title>
                               </mat-expansion-panel-header>
-                       
+                              <ng-container *ngIf="crmReports.length===0">
+                                <div *ngIf="crm_criteria.length === 0" >
+                                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
+                            <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'crm'}">Create New Report</a>
+                                </div>
+                                <table  *ngIf="crm_criteria.length > 0">
+                                  <span class="savd-report">Saved Reports</span>
+                                  <tr *ngFor="let crm_cr of crm_criteria">
+                                    <td>{{crm_cr.reportName}}</td>
+                                    <td><a (click)="recreateReport(crm_cr)">Generate</a></td>
+                                    <td><a (click)="viewCriteria(crm_cr)">View</a></td>
+                                    <td><a (click)="deletCriteria(crm_cr)">Delete</a></td>
+                                  </tr>
+                                </table>
+                            </ng-container>
                           </mat-expansion-panel>
                       </mat-accordion>
                       </div>
-                  </div> -->
+                  </div>
+               
       </div>
       <div class="clearfix"></div>
   </div>
