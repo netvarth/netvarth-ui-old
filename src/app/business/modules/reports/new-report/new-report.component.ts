@@ -848,8 +848,8 @@ export class NewReportComponent implements OnInit {
             this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
 
           }
-          filter['date-ge'] = this.dateformat.transformTofilterDate(this.crm_startDate);
-          filter['date-le'] = this.dateformat.transformTofilterDate(this.crm_EndDate);
+          filter['createdDate-ge'] = this.dateformat.transformTofilterDate(this.crm_startDate);
+          filter['createdDate-le'] = this.dateformat.transformTofilterDate(this.crm_EndDate);
         }
         const request_payload: any = {};
         request_payload.reportType = 'CRM_TASK';
