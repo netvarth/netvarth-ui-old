@@ -30,8 +30,10 @@
               </div>
 
             </div>
+            <br>
             <div>
-              <mat-slider #gridsize (change)="updateSetting($event)" step="5" min="10" max="100" [value]="gridsize">
+              
+              <mat-slider #gridsize (change)="updateSetting($event)" [thumbLabel] = "gridsize"  step="5" min="10" max="100" [value]="gridsize">
               </mat-slider>
               <div>
               </div>
