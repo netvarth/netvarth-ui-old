@@ -205,6 +205,7 @@ export class GeneratedReportComponent implements OnInit {
     });
   }
   exportReport() {
+      this.report_type = this.new_report.reportType.toLowerCase();
     const reportData = this.new_report.reportContent.data;
     const tableHeader = this.tableColums;
     const _this = this;
