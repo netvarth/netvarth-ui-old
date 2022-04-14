@@ -36,6 +36,8 @@
                     <td *ngIf="type == 'Token History' && data.statusChangedMode === 'OPD'"> Walk-In</td>
                     <td *ngIf="data.statusChangedMode === 'Walk-In'"> Walk-In</td>
                     <td *ngIf="data.statusChangedMode ==='Online'"> Online</td>
+                    <td *ngIf="data.statusChangedMode ==='WEB_UI'"> Online</td>
+
                     <td *ngIf="!data.statusChangedMode"> Nil</td>
                     <td *ngIf="type != 'Token History' ">{{data.date | date: newDateFormat}} {{data.time}}</td>
                     <td *ngIf="type == 'Token History' ">{{getformatedTime(data.time) | date: newTimeDateFormat}}</td>
