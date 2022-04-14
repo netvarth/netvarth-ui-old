@@ -126,7 +126,7 @@ uploadFiles() {
   dialogRef.afterClosed().subscribe(()=>{
     setTimeout(() => {
     this.ngOnInit();
-    }, 5000);
+    }, 100);
   })
   this.getTaskDetails();
 
