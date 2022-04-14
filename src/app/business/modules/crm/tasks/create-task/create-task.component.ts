@@ -199,9 +199,6 @@ export class CreateTaskComponent implements OnInit {
   getAssignMemberList(){
     this.crmService.getMemberList().subscribe((memberList:any)=>{
       console.log('memberList',memberList)
-      // if(memberList.userType='PROVIDER'){
-        
-      // }
       this.allMemberList.push(memberList)
         // this.allMemberList.sort((a:any, b:any) => (a.firstName).localeCompare(b.firstName))
     },(error:any)=>{
@@ -231,7 +228,7 @@ export class CreateTaskComponent implements OnInit {
     this.crmService.getTaskStatus().subscribe((taskStatus:any)=>{
       console.log('taskStatus',taskStatus);
       this.taskStatusList.push(taskStatus);
-      if(this.crmService.taskActivityName==='Create'){
+      if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate'){
         this.taskStatusModal=this.taskStatusList[0][0].id;
       }
       else{
@@ -246,7 +243,7 @@ export class CreateTaskComponent implements OnInit {
     this.crmService.getTaskPriority().subscribe((taskPriority:any)=>{
       console.log('taskPriority',taskPriority);
       this.taskPriorityList.push(taskPriority);
-      if(this.crmService.taskActivityName==='Create'){
+      if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate'){
         this.taskPriority=this.taskPriorityList[0][0].id;
       }else{
         this.taskPriority=this.updateValue.priority.id;
