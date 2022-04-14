@@ -495,9 +495,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getDisplayboardCount();
     this.getLocationList();
     this.getServices();
-    if (this.active_user.accountType === 'BRANCH') {
-      this.getProviders();
-    }
+    // if (this.active_user.accountType === 'BRANCH') {
+    //   this.getProviders();
+    // }
     if (this.active_user.accountType === 'BRANCH') {
       this.getTeams().then((data) => {
         this.teams = data;
