@@ -119,6 +119,7 @@ textarea {
     border-radius: 5.73504px !important;
     box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%) !important;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;
+    margin-bottom: 5px;
 }
 .almostDone{
   font-weight: bold;

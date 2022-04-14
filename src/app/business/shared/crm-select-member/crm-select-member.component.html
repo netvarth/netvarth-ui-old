@@ -192,9 +192,12 @@
     </div>
     <mat-dialog-content >
          <!----task description start-->
-         <div class="note">
-              <div>{{noteDescription}}</div>
-           </div>
+         <div >
+            <!-- {{data| json}} -->
+            <div *ngFor="let note of allNotes[0];let index=i" class="note">
+               {{note.note }}
+            </div>
+          </div>
            <!---cancel save btn start-->
            <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;">
             <!---cancel save btn start-->

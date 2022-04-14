@@ -114,13 +114,13 @@
           </div>
         </div>
 
-        <div class="border height-limit col-md-4 col-lg-4 col-sm-12 col-xs-12 no-padding mt-2">
+        <div class="border height-limit col-md-4 col-lg-4 col-sm-12 col-xs-12 no-padding mt-2" *ngIf="taskDetails.notes.length>0">
           <div class="d-flex justify-content-between">
             <div>
               <span class="card-title"><b>Notes</b></span> 
             </div>
-            <div *ngIf="taskDetails.status.name !='Completed'">
-              <span (click)="openAddNoteDialog('AddNote')" class="pointer-cursor fa fa-external-link"></span>
+            <div>
+              <span (click)="noteView(taskDetails)" class="pointer-cursor fa fa-external-link"></span>
             </div>
           </div>
           <hr class="my-2 py-2">

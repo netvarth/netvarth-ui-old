@@ -43,6 +43,7 @@ export class CrmSelectMemberComponent implements OnInit {
   public selectText:any;
   public showHideTickMark:boolean=false;
   public statusId:any;
+  public allNotes:any=[]
 
 
 
@@ -100,6 +101,8 @@ export class CrmSelectMemberComponent implements OnInit {
     }
     if(this.data.requestType==='noteDetails'){
       console.log('Notews')
+      this.allNotes.push(this.data.noteDetails.notes)
+      console.log(' this.allNotes', this.allNotes)
       this.noteDescription = this.data.noteDetails.note;
       this.noteDescriptionTime = this.data.noteDetails.createdDate;
     }
