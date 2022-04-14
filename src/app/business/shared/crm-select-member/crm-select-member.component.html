@@ -18,9 +18,8 @@
               
                 [(ngModel)]="assignMemberDetails">
                <div>
-                <mat-radio-button  class="example-radio-button" *ngFor="let assignMember of memberList" [value]="assignMember"  (change)="handleMemberSelect(assignMember,'Selected')">
-                  <div class="allMember"  >
-                      <!-- {{assignMember.userType | json}} -->
+                <mat-radio-button class="example-radio-button" *ngFor="let assignMember of memberList" [value]="assignMember"  (change)="handleMemberSelect(assignMember,'Selected')">
+                  <div class="allMember">
                         <div>
                           <img class="img" [src]="getUserImg(assignMember)" />
                         </div>
@@ -287,7 +286,7 @@
     <!---spinner start-->
     <div style="margin-top: 10px;display: flex;gap:10px">
         <div>
-            <circle-progress class="circle__progress" [outerStrokeWidth]="9"  [radius]="40" [percent]="taskProgress" [animation]="true"
+            <circle-progress class="circle__progress" [outerStrokeWidth]="10"  [radius]="40" [percent]="taskProgress" [animation]="true"
                               [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
                               [titleFontSize]="'10'" [titleFontWeight]="'900'"  [unitsFontSize]="'10'"
                               [unitsFontWeight]="'700'" [subtitle]="status" [subtitleFontSize]="'7'"
@@ -319,15 +318,15 @@
             <mat-icon>clear</mat-icon>
         </div> -->
         <div class="currentStatus">
-            Current status : {{currentStatus}}
+            Current status:{{currentStatus}}
         </div>
 
     </div>
     <!---coming statua end-->
     <!-----external status s\tart-->
     <div class="extStatus">
-        <div class="extStatus1">External status :-</div>
-        <div class="extStatus2">External status is public and visible for your patients</div>
+        <!-- <div class="extStatus1">External status</div> -->
+        <div class="extStatus2">External Status is public and visible for your patients</div>
         <!--status start-->
        <div class="statusList">
         <div *ngFor="let status of taskStatusList[0];let index=i" class="singleStatus" (click)="selectStatus(status)">

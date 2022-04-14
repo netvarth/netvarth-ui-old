@@ -126,7 +126,7 @@ uploadFiles() {
   dialogRef.afterClosed().subscribe(()=>{
     setTimeout(() => {
     this.ngOnInit();
-    }, 100);
+    }, 5000);
   })
   this.getTaskDetails();
 
@@ -141,15 +141,15 @@ getTaskDetails(){
 })
   
 }
-openEditTask(editText:any) {
-  console.log("hvbjdnskm",this.taskDetails)
-  this.crmService.taskToCraeteViaServiceData =  this.updateTaskData;
+openEditTask(taskdata: any, editText: any) {
+  this.crmService.taskToCraeteViaServiceData = taskdata
   const newTaskData = this.crmService.taskToCraeteViaServiceData
   setTimeout(() => {
     this.crmService.taskActivityName = editText;
     newTaskData;
     this.router.navigate(['provider', 'task', 'create-task']);
   }, projectConstants.TIMEOUT_DELAY);
+
 }
 markAsDone(taskid){
   const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
@@ -354,6 +354,23 @@ progressbarDialog(){
     this.notesList.push()
   })
 
+}
+
+
+openDialogStatusChange(taskData:any){
+  console.log('openDialogStatusChange',taskData)
+  const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
+    width:'100%',
+    panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+    disableClose: true,
+    data:{
+      requestType:'statusChange',
+      taskDetails:taskData,
+    }
+  });
+  dialogRef.afterClosed().subscribe((res:any)=>{
+    console.log('resssssssss',res);
+  })
 }
 
 }

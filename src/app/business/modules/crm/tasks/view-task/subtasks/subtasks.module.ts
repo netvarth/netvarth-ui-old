@@ -4,6 +4,8 @@ import { SubtasksComponent } from './subtasks.component';
 import { PagerComponent } from 'src/app/shared/modules/pager/pager.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+
 
 const routes: Routes = [
   { path: '', component: SubtasksComponent },
@@ -11,12 +13,13 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    // SubtasksComponent,
+    SubtasksComponent,
     PagerComponent,
   ],
   imports: [
     CommonModule,
     MatMenuModule,
+    MatIconModule,
     [RouterModule.forChild(routes)]
   ]
 })

@@ -127,8 +127,8 @@ export class SubtasksComponent implements OnInit {
   
   }
 
-  openEditTask(taskdata: any, editText: any) {
-    this.crmService.taskToCraeteViaServiceData = taskdata
+  openEditTask(subtaskdata: any, editText: any) {
+    this.crmService.taskToCraeteViaServiceData = subtaskdata
     const newTaskData = this.crmService.taskToCraeteViaServiceData
     setTimeout(() => {
       this.crmService.taskActivityName = editText;
@@ -140,11 +140,25 @@ export class SubtasksComponent implements OnInit {
 
   viewTask(taskUid,taskData:any) {
     this.crmService.taskToCraeteViaServiceData = taskData;
-    this.router.navigate(['/provider/viewtask/' + taskUid]);
+    this.router.navigate(['/provider/viewsubtask/' + taskUid]);
 
   }
   
-
+  openDialogStatusChange(taskData:any){
+    console.log('openDialogStatusChange',taskData)
+    const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
+      width:'100%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data:{
+        requestType:'statusChange',
+        taskDetails:taskData,
+      }
+    });
+    dialogRef.afterClosed().subscribe((res:any)=>{
+      console.log('resssssssss',res);
+    })
+  }
 
   
   

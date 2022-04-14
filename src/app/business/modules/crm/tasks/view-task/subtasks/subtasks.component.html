@@ -41,7 +41,7 @@
                 </tr>
                 </ng-container>
                 <ng-container>
-                    <tr class="subtask-table-data" *ngFor="let subtask of subTaskDetails" (click)="viewTask(subtask.taskUid,subtask)">
+                    <tr class="subtask-table-data pointer-cursor" *ngFor="let subtask of subTaskDetails" (click)="viewTask(subtask.taskUid,subtask)">
                         <!-- <pre>{{subtask | json}}</pre> -->
                         <td class="head_color"><span class="text-dark">
                             &nbsp;&nbsp;&nbsp;<b>{{subtask.title}}</b>
@@ -51,7 +51,29 @@
                         <td class="head_color">{{subtask.status.name}}</td>
                         <td class="head_color">{{subtask.category.name}}</td>
                         <td class="head_color">{{subtask.type.name}}</td>
-                        <td class="head_color">{{subtask.dueDate}}</td>
+                        <td class="head_color">{{subtask.dueDate}}1</td>
+                        <!-- <td>
+                            <div class="copy">
+                              <span class="">
+                                <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
+                                  (click)="stopprop($event);">
+                                  <mat-icon>more_vert</mat-icon>
+                                </button>
+                              </span>
+                              <mat-menu #appMenu="matMenu">
+                                <button mat-menu-item (click)="openTaskCompletion(subtask)" *ngIf="subtask.status.name !='Completed'">
+                                  <i class="text-success fa fa-check-square"></i> Mark as Done
+                                </button>
+                                <button mat-menu-item (click)="openEditTask(subtask,'Update')"  *ngIf="subtask.status.name !='Completed'">
+                                  <i class="text-info fa fa-edit"></i>Edit
+                                </button>
+                                <button mat-menu-item (click)="openDialogStatusChange(subtask)" >
+                                 <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
+                                </button>
+
+                              </mat-menu>
+                            </div>
+                        </td> -->
                     </tr>
                 </ng-container>
             </tbody>
