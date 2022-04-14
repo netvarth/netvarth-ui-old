@@ -5,11 +5,8 @@
       Task
       <!-- <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i> -->
     </div>
-
   </div>
-
 </section>
-<br><br>
 <section class="card col-md-12">
   <div class="col-md-12 btnClass">
     <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small" (click)="createTask('Create')">
@@ -21,20 +18,20 @@
       <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
         Generate Report</button>
     </a>
-    
   </div>
- 
-  <br><br><br>
+  <div class="clearfix"></div>
   <div class="startMatTab">
     <mat-tab-group dynamicHeight mat-stretch-tabs (selectedTabChange)="tabChange($event)"
       [selectedIndex]="selectedTab - 1">
       <mat-tab class="mat-tab">
         <ng-template mat-tab-label>
-          <div>
-            <img class="img" src="/assets/images/crmImages/totaltask.PNG" />
+          <span class="tab-number"><img class="img" src="/assets/images/crmImages/totaltask.PNG" /></span>
+          <span class="tab-text">Total Task({{totalCount}})</span>
+          <!-- <div>
+           
           </div>
           <div class="totalCount">({{totalCount}})</div>&nbsp;
-          <div class="totalActivityName">Total Task</div>
+          <div class="totalActivityName">Total Task</div> -->
         </ng-template>
 
 
@@ -292,11 +289,13 @@
       </mat-tab>
       <mat-tab class="mat-tab">
         <ng-template mat-tab-label>
-          <div>
+          <span class="tab-number"><img class="img" src="/assets/images/crmImages/handHoldingClock.PNG" /></span>
+          <span class="tab-text">In Progress({{inprogressCount}})</span>
+          <!-- <div>
             <img class="img" src="/assets/images/crmImages/handHoldingClock.PNG" />
           </div>
           <div class="totalCount">({{inprogressCount}})</div>&nbsp;
-          <div class="totalActivityName">In Progress</div>
+          <div class="totalActivityName">In Progress</div> -->
         </ng-template>
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
         <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
@@ -406,11 +405,13 @@
       </mat-tab>
       <mat-tab class="mat-tab">
         <ng-template mat-tab-label>
-          <div>
+          <span class="tab-number"><img class="img" src="/assets/images/crmImages/completed.PNG" /></span>
+          <span class="tab-text">Completed({{completedCount}})</span>
+          <!-- <div>
             <img class="img" src="/assets/images/crmImages/completed.PNG" />
           </div>
           <div class="totalCount">({{completedCount}})</div>&nbsp;
-          <div class="totalActivityName">Completed</div>
+          <div class="totalActivityName">Completed</div> -->
         </ng-template>
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
         <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
