@@ -233,7 +233,7 @@
                 <!-- <div class="taskDes">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate ea vitae ab pariatur repellat? Ut quae rerum laborum dicta voluptatibus vitae debitis accusamus obcaecati at quas! Repellendus voluptatibus fugiat necessitatibus.</div> -->
             </div>
             <div style="text-align: center;">
-                <div style="display: flex;justify-content: center;gap:5px;color: #1D3E77;">
+                <div style="display: flex;justify-content: center;gap:5px;color: #1D3E77;flex-wrap: wrap;">
                     <div>Are you sure to make </div>
                     <div>{{taskDes}}</div>
                     <div> as completed?</div>
@@ -322,16 +322,17 @@
     <!---coming statua end-->
     <!-----external status s\tart-->
     <div class="extStatus">
-        <div class="extStatus1">External status</div>
-        <div class="extStatus2">External Status External status is public and visible for your patients</div>
+        <div class="extStatus1">External status :-</div>
+        <div class="extStatus2">External status is public and visible for your patients</div>
         <!--status start-->
-       <div class="statusList" >
+       <div class="statusList">
         <div *ngFor="let status of taskStatusList[0];let index=i" class="singleStatus" (click)="selectStatus(status)">
             <div class="statusName">{{status.name}}</div>
+           <div *ngIf="showHideTickMark"> <i class="fa fa-check" aria-hidden="true" *ngIf="status.id === selectedStatusId"></i></div>
         </div>
        </div>
         <!---status end-->
-        <div style="color: #f24949 !important;margin-top: 5px;">
+        <div style="color: #f24949 !important;margin-top: 10px;">
             {{selectText}}
         </div>
          <!---cancel save btn start-->

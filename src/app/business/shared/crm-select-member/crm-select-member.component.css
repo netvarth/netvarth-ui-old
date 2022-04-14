@@ -216,10 +216,17 @@ padding: 3px;
     cursor: pointer;
     display: flex;
     justify-content: center;
+    gap: 5px;
 }
 .statusName{
   color:  #FE9F69;;
 }
-.singleStatus:focus{
-  border: 2px solid red !important;
+/* .singleStatus:focus{
+  outline: none;
+} */
+.singleStatus:active{
+  /* border: 2px solid #FF0000 !important; */
+}
+.singleStatus:hover{
+  background: #F5F5F5 !important;
 }

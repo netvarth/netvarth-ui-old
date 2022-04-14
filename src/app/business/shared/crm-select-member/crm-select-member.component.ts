@@ -41,6 +41,8 @@ export class CrmSelectMemberComponent implements OnInit {
   public selectedStatusId:any;
   public selectedStatusUID:any;
   public selectText:any;
+  public showHideTickMark:boolean=false;
+  public statusId:any;
 
 
 
@@ -113,7 +115,9 @@ export class CrmSelectMemberComponent implements OnInit {
       this.lastUpdate = this.data.taskDetails.dueDate;
       this.currentStatus=this.data.taskDetails.status.name;
       this.getTaskStatusListData()
-      this.selectedStatusUID= this.data.taskDetails.taskUid
+      this.selectedStatusUID= this.data.taskDetails.taskUid;
+      this.statusId= this.data.taskDetails.status.id
+      console.log('this.statusId',this.statusId)
     }
     // console.log('this.assignMemberDetails',this.assignMemberDetails);
     // console.log('this.memberList',this.memberList)
@@ -243,12 +247,25 @@ getTaskStatusListData(){
   this.crmService.getTaskStatus().subscribe((taskStatus:any)=>{
     console.log('taskStatus',taskStatus);
     this.taskStatusList.push(taskStatus);
+    console.log('this.taskStatusList',this.taskStatusList)
+    // taskStatus.forEach((statusId)=>{
+    //   console.log('statusId',statusId)
+    //   if(statusId.id== this.statusId){
+    //     console.log(' this.showHideTickMark', this.showHideTickMark)
+    //     this.showHideTickMark=false
+    //   }else{
+    //     console.log(' this.showHideTickMarkfalse', this.showHideTickMark)
+    //     this.showHideTickMark=true
+    //   }
+    // })
+
   },
   (error)=>{
     this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
   })
 }
 selectStatus(statusDetails){
+  this.showHideTickMark=true;
   console.log('statusDetails',statusDetails)
 this.selectedStatusId= statusDetails.id
 this.selectText=''
@@ -260,7 +277,8 @@ completeTaskStatus(){
     this.crmService.addStatus( this.selectedStatusUID,this.selectedStatusId).subscribe((response)=>{
       console.log('response',response)
       setTimeout(() => {
-        this.dialogRef.close()
+        this.dialogRef.close();
+        this.showHideTickMark=false
       }, projectConstants.TIMEOUT_DELAY);
     },
     (error)=>{
