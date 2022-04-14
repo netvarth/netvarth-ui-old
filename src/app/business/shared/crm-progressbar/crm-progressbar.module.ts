@@ -14,6 +14,7 @@ import { CrmProgressbarComponent } from './crm-progressbar.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatIconModule } from '@angular/material/icon';
+import { NgCircleProgressModule } from "ng-circle-progress";
 const routes: Routes = [
   { path: '', component: CrmProgressbarComponent }
 ]
@@ -37,6 +38,21 @@ const routes: Routes = [
     MatSliderModule,
     MatProgressBarModule,
    MatIconModule,
+   NgCircleProgressModule.forRoot({
+    // set defaults here
+    backgroundColor: "#e9ecef",
+    backgroundPadding: 0,
+    radius: 30,
+    space: -15,
+    maxPercent: 100,
+    unitsColor: "teal",
+    outerStrokeWidth: 1,
+    outerStrokeColor: "teal",
+    innerStrokeColor: "teal",
+    innerStrokeWidth: 1,
+    titleColor: "teal",
+    subtitleColor: "teal",
+  }),
     [RouterModule.forChild(routes)]
   ]
 })

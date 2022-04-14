@@ -128,9 +128,19 @@ uploadFiles() {
     this.ngOnInit();
     }, 5000);
   })
+  this.getTaskDetails();
 
 }
-
+getTaskDetails(){
+  this.crmService.getTaskDetails(this.taskUid).subscribe(data => {
+    this.taskDetails = data;
+    this.taskkid = this.taskDetails.id
+    this.taskDetails.notes.forEach((notesdata:any)=>{
+      this.notesList.push(notesdata)
+    })
+})
+  
+}
 openEditTask(editText:any) {
   console.log("hvbjdnskm",this.taskDetails)
   this.crmService.taskToCraeteViaServiceData =  this.updateTaskData;
@@ -153,6 +163,7 @@ markAsDone(taskid){
   });
   dialogRef.afterClosed().subscribe((res)=>{
     console.log(res)
+    this.getTaskDetails();
   })
 
 }
@@ -307,6 +318,7 @@ noteView(noteDetails:any){
     }
   })
   dialogRef.afterClosed().subscribe((response:any)=>{
+    this.getTaskDetails();
     console.log('response',response)
   })
 
@@ -322,6 +334,7 @@ progressbarDialog(){
   })
   dialogRef.afterClosed().subscribe((response)=>{
     console.log('responseDataAboutNote',response);
+    this.getTaskDetails();
     this.notesText=response;
     this.notesList.push()
   })
