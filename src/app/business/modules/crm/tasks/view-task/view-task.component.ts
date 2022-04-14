@@ -115,7 +115,6 @@ ngOnInit(): void {
 
 uploadFiles() {
   const dialogRef = this.dialog.open(SelectAttachmentComponent, {
-    width:'100%',
     panelClass: ['popup-class', 'confirmationmainclass'],
       disableClose: true,
       data: {

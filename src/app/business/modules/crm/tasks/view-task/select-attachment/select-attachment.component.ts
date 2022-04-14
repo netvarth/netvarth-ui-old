@@ -81,6 +81,7 @@ fileInfos: Observable<any>;
   filesSelected(event, type?) {
     const input = event.target.files;
     //let taskid = this.data.taskuid;
+    console.log("input : ",input)
     if (input) {
         for (const file of input) {
             // if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {

@@ -1,90 +1,23 @@
-<!-- <div class="d-flex justify-content-between">
-    <div>
-      <span class="card-title"><b>Files</b></span> 
-    </div>
-    <div>
-      <span class="pointer-cursor fa fa-external-link"></span>
-    </div>
-  </div>
-  <hr class="my-2 py-2">
-  <div class="">
-
-    <mat-chip-list class="btns d-lg-flex justify-content-lg-center">
-      <span>
-        <mat-chip
-            [ngClass]="{'br-top-right-0 br-bottom-right-0 margin-right-0': getAttachLength() > 0}">
-            <a class="lnk action pointer-cursor btn btn-primary upload-file-btn text-primary" (click)="imagefile1.click();"><input
-                    #imagefile1 type="file" accept="/*;capture=camera"
-                    style="display:none;" multiple
-                    (change)="filesSelected($event, 'close')"><i
-                    class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i>Upload
-                File<br><span class="text-dark btn-text">Add or Upload Files related to task</span>
-            </a>
-        </mat-chip>
-      </span>
-    </mat-chip-list>
-
-
-
-
-    <ng-container>
-      <div class="modal-body">
-        <div class="img-section mgn-up-20"
-            *ngIf="(selectedMessage.files && selectedMessage.files.length > 0)">
-            <ul class="galul">
-              <ng-container
-                *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-                <li *ngFor="let file of selectedMessage.files;let i = index ">
-                  <div class="galimg_outer">
-                    <div class="gal_img">
-                        <img [src]="getImage(selectedMessage.base64[i], file)"
-                            *ngIf="selectedMessage.base64[i]">
-                    </div>
-                    <div class="gal-input">
-                        <input type="text" placeholder="Caption"
-                            [(ngModel)]="imgCaptions[i]">
-                    </div>
-                    <div class="gal_action" (click)="deleteTempImage(i)">
-                        <i class="fa fa-times-circle" aria-hidden="true"></i>
-                    </div>
-                  </div>
-                </li>
-              </ng-container>
-            </ul>
-        </div>
-      </div>
-      <pre>{{selectedMessage.files | json}}</pre>
-    </ng-container> -->
-<div class="text-center mx-auto my-2">
+<div class="text-center dialog-box-width">
     <span class="head-text"><b>Upload Files related to task</b></span>
-    <span class="head-text"><i class="fa fa-times float-right mx-2 pointer-cursor" (click)="dialogClose()"></i></span>
 </div>
 <hr class="my-0 py-0">
 <div class="container-fluid my-3" style="overflow-y: scroll!important;">
-    <!-- <div *ngFor="let progressInfo of progressInfos">
-        <span>{{ progressInfo.fileName }}</span>
-        <div class="progress">
-          <div class="progress-bar progress-bar-info progress-bar-striped"
-            role="progressbar"
-            attr.aria-valuenow="{{ progressInfo.value }}"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            [ngStyle]="{ width: progressInfo.value + '%' }" >
-            {{ progressInfo.value }}%
-          </div>
-        </div>
-      </div> -->
       <mat-chip-list class="btns">
         <mat-chip>
-          <a class="btn btn-primary"
-                (click)="imagefile.click()"><input #imagefile
-                    type="file" accept="/*;capture=camera"
-                    style="display:none;" multiple
-                    (change)="filesSelected($event)"><i
-                    class="fa fa-paperclip mgn-rt-5"
-                    aria-hidden="true"></i>Upload
-                File
-            </a>
+          <div class="file_upload_list">
+          </div>
+          <div class="choose_file">
+            <label for="choose_file" (click)="imagefile.click()">
+              <input #imagefile
+              type="file" accept="/*;capture=camera"
+              style="display:none;" multiple
+              (change)="filesSelected($event)"><i
+              class="fa fa-paperclip mgn-rt-5"
+              aria-hidden="true"></i>
+              <span>Choose Files</span>
+            </label>
+          </div>
         </mat-chip>
        </mat-chip-list> 
       <ul class="galul mt-4">
@@ -114,5 +47,7 @@
 </div>
 <hr class="my-0 py-0">
 <div class="my-2 text-right mb-2 mr-2">
-    <button class="btn btn-primary" (click)="saveFile();dialogClose()">Ok</button>
+  <button class="btn btn-warning mx-2" (click)="dialogClose()">Cancel</button>
+  <button class="btn btn-primary" (click)="saveFile();dialogClose()">Upload</button>
 </div>
+
