@@ -167,6 +167,21 @@ markAsDone(taskid){
   })
 
 }
+chnageStatus(){
+  console.log('openDialogStatusChange',this.taskDetails)
+    const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
+      width:'100%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data:{
+        requestType:'statusChange',
+        taskDetails:this.taskDetails,
+      }
+    });
+    dialogRef.afterClosed().subscribe((res:any)=>{
+      console.log('resssssssss',res);
+    })
+}
 
 
 createSubTask(taskid)
