@@ -122,11 +122,11 @@ export class CreateTaskComponent implements OnInit {
     this.createTaskForm=this.createTaskFB.group({
       taskTitle:[null,[Validators.required]],
       taskDescription:[null,[Validators.required]],
-      userTaskCategory:[null,[Validators.required]],
-      userTaskType:[null,[Validators.required]],
-      taskLocation:[null,[Validators.required]],
+      userTaskCategory:[null],
+      userTaskType:[null],
+      taskLocation:[null],
       taskStatus:[null],
-      taskDate:[null,[Validators.required]],
+      taskDate:[null],
       taskTime:[null],
       userTaskPriority:[null],
       targetResult:[null],
@@ -199,8 +199,11 @@ export class CreateTaskComponent implements OnInit {
   getAssignMemberList(){
     this.crmService.getMemberList().subscribe((memberList:any)=>{
       console.log('memberList',memberList)
+      // if(memberList.userType='PROVIDER'){
+        
+      // }
       this.allMemberList.push(memberList)
-      // this.allMemberList.sort((a:any, b:any) => (a.firstName).localeCompare(b.firstName))
+        // this.allMemberList.sort((a:any, b:any) => (a.firstName).localeCompare(b.firstName))
     },(error:any)=>{
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     })

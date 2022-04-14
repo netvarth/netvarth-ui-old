@@ -18,8 +18,9 @@
               
                 [(ngModel)]="assignMemberDetails">
                <div>
-                <mat-radio-button class="example-radio-button" *ngFor="let assignMember of memberList" [value]="assignMember"  (change)="handleMemberSelect(assignMember,'Selected')">
-                  <div class="allMember">
+                <mat-radio-button  class="example-radio-button" *ngFor="let assignMember of memberList" [value]="assignMember"  (change)="handleMemberSelect(assignMember,'Selected')">
+                  <div class="allMember"  >
+                      <!-- {{assignMember.userType | json}} -->
                         <div>
                           <img class="img" [src]="getUserImg(assignMember)" />
                         </div>

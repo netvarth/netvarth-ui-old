@@ -66,7 +66,8 @@ export class CrmSelectMemberComponent implements OnInit {
   ngOnInit(): void {
     if(this.data.requestType==='createtaskSelectMember' || this.data.requestType==='createtaskSelectManager' ){
       this.data.memberList[0].forEach((singleMember:any)=>{
-        // console.log('singleMember',singleMember.id)
+        console.log('singleMember',singleMember)
+        if(singleMember.userType==='PROVIDER'){
         // console.log('this.data.assignMembername',this.data.updateAssignMemberId)
         this.memberList.push(singleMember)
         if(this.data.requestType==='createtaskSelectMember'){
@@ -90,6 +91,8 @@ export class CrmSelectMemberComponent implements OnInit {
             }
           }
         }
+        }
+        
       })
     }
     if(this.data.requestType==='createUpdateNotes'){
