@@ -122,15 +122,15 @@ export class CreateTaskComponent implements OnInit {
     this.createTaskForm=this.createTaskFB.group({
       taskTitle:[null,[Validators.required]],
       taskDescription:[null,[Validators.required]],
-      userTaskCategory:[null],
-      userTaskType:[null],
-      taskLocation:[null],
-      taskStatus:[null],
-      taskDate:[null],
+      userTaskCategory:[null,[Validators.required]],
+      userTaskType:[null,[Validators.required]],
+      taskLocation:[null,[Validators.required]],
+      taskStatus:[null,[Validators.required]],
+      taskDate:[null,[Validators.required]],
       taskTime:[null],
-      userTaskPriority:[null],
-      targetResult:[null],
-      targetPotential:[null],
+      userTaskPriority:[null,[Validators.required]],
+      targetResult:[null,[Validators.required]],
+      targetPotential:[null,[Validators.required]],
     }) 
     if(this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate'){
       this.selectHeader='Update Task'
