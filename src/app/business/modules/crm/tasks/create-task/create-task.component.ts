@@ -16,7 +16,7 @@ import  {CrmSelectMemberComponent} from '../../../../shared/crm-select-member/cr
 // import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
-// import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 // import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
 
 @Component({
@@ -92,6 +92,7 @@ export class CreateTaskComponent implements OnInit {
      private dialog: MatDialog, private snackbarService: SnackbarService,
      private datePipe:DatePipe,
      private _Activatedroute:ActivatedRoute,
+     private groupService:GroupStorageService
 
      ) { 
       //this.router.navigate(['provider', 'task','create-task'])
@@ -101,6 +102,17 @@ export class CreateTaskComponent implements OnInit {
     // const loc = this.groupService.getitemFromGroupStorage('loc_id');
     //     this.sel_loc = loc.id;
     //     console.log('this.sel_loc',this.sel_loc)
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        console.log("User is :", user);
+        this.selectMember= user.firstName + user.lastName;
+        console.log(' this.selectMember', this.selectMember)
+        // (res.firstName + res.lastName)
+        this.assigneeId=user.id;
+        this.locationId= user.bussLocs[0]
+        if(user.userType === 1){
+          this.userType='PROVIDER'
+        }
+
 
 
     this._Activatedroute.paramMap.subscribe(params => { 
@@ -159,6 +171,7 @@ export class CreateTaskComponent implements OnInit {
       this.updateManagerId= this.updateValue.manager.id
       this.updateUserType=this.updateValue.userTypeEnum;
       // this.taskDueTime=this.updateValue.estDuration
+       this.estTime={ "days" :this.updateValue.estDuration.days, "hours" :this.updateValue.estDuration.hours, "minutes" : this.updateValue.estDuration.minutes };
       }
       else{
         this.router.navigate(['provider', 'task']);
@@ -169,7 +182,7 @@ export class CreateTaskComponent implements OnInit {
       {
 				      this.createBTimeField=true;
       this.updateBTimefield=false;
-      this.selectMember='Select Member';
+      // this.selectMember='Select Member';
       this.selectTaskManger='Select Task Manger'
         this.selectHeader='Add Subtask';
       }
@@ -177,7 +190,7 @@ export class CreateTaskComponent implements OnInit {
       {
 		        this.createBTimeField=true;
       this.updateBTimefield=false;
-      this.selectMember='Select Member';
+      // this.selectMember='Select Member';
       this.selectTaskManger='Select Task Manger'
         this.selectHeader='Add Task';
       }
