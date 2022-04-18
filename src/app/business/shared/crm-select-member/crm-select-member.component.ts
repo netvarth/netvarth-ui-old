@@ -43,6 +43,8 @@ export class CrmSelectMemberComponent implements OnInit {
   public selectText:any;
   public showHideTickMark:boolean=false;
   public statusId:any;
+  public statusChange:any;
+  public showHideTickMarkUpdate:boolean=false
   //notes variable
   public allNotes:any=[];
   //upload file variabe
@@ -127,7 +129,10 @@ export class CrmSelectMemberComponent implements OnInit {
       this.getTaskStatusListData()
       this.selectedStatusUID= this.data.taskDetails.taskUid;
       this.statusId= this.data.taskDetails.status.id
-      console.log('this.statusId',this.statusId)
+      console.log('this.statusssssssssss',this.status);
+      console.log('this.statusChange',this.statusChange)
+      this.showHideTickMarkUpdate=true;
+      this.selectedStatusId=  this.statusId;
     }
     if(this.data.requestType==='uploadFilesDesciption'){
       console.log('uploadFilesDesciption')
@@ -262,15 +267,16 @@ getTaskStatusListData(){
     console.log('taskStatus',taskStatus);
     this.taskStatusList.push(taskStatus);
     console.log('this.taskStatusList',this.taskStatusList)
-    // taskStatus.forEach((statusId)=>{
+    // this.taskStatusList[0].forEach((statusId)=>{
     //   console.log('statusId',statusId)
-    //   if(statusId.id== this.statusId){
-    //     console.log(' this.showHideTickMark', this.showHideTickMark)
-    //     this.showHideTickMark=false
-    //   }else{
-    //     console.log(' this.showHideTickMarkfalse', this.showHideTickMark)
-    //     this.showHideTickMark=true
-    //   }
+    //  if(statusId.id === this.data.taskDetails.status.id){
+    //   console.log('kkkkkkkkkkkkkkkkkkkkkkkkkk');
+    //   this.showHideTickMarkUpdate=true
+    //  }
+    //  else{
+    //    console.log('mmmmmmmmmmmmmmmmmmmmmmmmmmmmmm');
+    //    this.showHideTickMarkUpdate=false
+    //  }
     // })
 
   },
@@ -281,27 +287,52 @@ getTaskStatusListData(){
 selectStatus(statusDetails){
   this.showHideTickMark=true;
   console.log('statusDetails',statusDetails)
-this.selectedStatusId= statusDetails.id
-this.selectText=''
+  this.selectedStatusId= statusDetails.id
+  this.selectText=''
+  this.showHideTickMarkUpdate=false;
+  if(this.statusId === statusDetails.id){
+    this.selectText='Alredy updated'
+  }
+  else{
+    this.selectText=''
+  }
 }
 completeTaskStatus(){
   // this.selectText=''
   console.log('this.selectedStatusId',this.selectedStatusId)
-  if(this.selectedStatusId != undefined){
-    this.crmService.addStatus( this.selectedStatusUID,this.selectedStatusId).subscribe((response)=>{
-      console.log('response',response)
-      setTimeout(() => {
-        this.dialogRef.close();
-        this.showHideTickMark=false
-      }, projectConstants.TIMEOUT_DELAY);
-    },
-    (error)=>{
-      this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
-    })
+  if(this.statusId === this.selectedStatusId){
+    this.selectText='Alredy updated'
   }
   else{
-    this.selectText='Please select one status'
+    if(this.selectedStatusId != undefined){
+      this.crmService.addStatus( this.selectedStatusUID,this.selectedStatusId).subscribe((response)=>{
+        console.log('response',response)
+        setTimeout(() => {
+          this.dialogRef.close();
+          this.showHideTickMark=false
+        }, projectConstants.TIMEOUT_DELAY);
+      },
+      (error)=>{
+        this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+      })
+    }
+
   }
+  // if(this.selectedStatusId != undefined){
+  //   this.crmService.addStatus( this.selectedStatusUID,this.selectedStatusId).subscribe((response)=>{
+  //     console.log('response',response)
+  //     setTimeout(() => {
+  //       this.dialogRef.close();
+  //       this.showHideTickMark=false
+  //     }, projectConstants.TIMEOUT_DELAY);
+  //   },
+  //   (error)=>{
+  //     this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+  //   })
+  // }
+  // else{
+  //   this.selectText='Please select one status'
+  // }
   
 
 }
