@@ -556,14 +556,14 @@
 
 .filter-sidebar .filter-footer {
     position: absolute !important;
-    top: 44px !important;
+    top: 40px !important;
     right: 0 !important;
     width: 100% !important;
     height: 50px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-evenly !important;
-    background-color: white !important;
+    /* background-color: white !important; */
     border-bottom: 1px solid #e3e9ed !important;
     box-shadow: 0px 2px 20px -10px #bbb !important;
 }
@@ -579,7 +579,11 @@
     font-weight: 700 !important;
     font-size: 14px !important;
     line-height: 1 !important;
-    border: 0 !important;
+    /* border: 0 !important; */
+    /* background: #0D2348 !important; */
+    box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgb(30 64 121 / 15%) !important;
+    border-radius: 5.75916px !important;
+    border: 0px solid !important;
 }
 
 .filter-sidebar .filter-footer .btn.reset-btn:hover {
@@ -593,13 +597,17 @@
 }
 
 .filter-sidebar .filter-footer .btn.apply-btn {
-    background: #476073 !important;
+    /* background: #476073 !important; */
     height: 40px !important;
     color: white !important;
     font-weight: 500 !important;
     font-size: 14px !important;
     line-height: 1 !important;
-    border: 0 !important;
+    /* border: 0 !important; */
+    background: #0D2348 !important;
+    box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgb(30 64 121 / 15%) !important;
+    border-radius: 5.75916px !important;
+    border: 0px solid !important;
 }
 
 .filter-sidebar .filter-footer .btn.apply-btn:hover {
@@ -1248,9 +1256,13 @@ input[type='file'] {
     border-radius: 10px;
     box-shadow: none;
     border: 1px solid transparent;
-    margin-right: 30px !important;
-    margin-bottom: 30px !important;
+    /* margin-right: 30px !important; */
+    /* margin-bottom: 30px !important; */
     background-color: #1e4079 !important;
+    margin-right: 15px !important;
+    /* margin-bottom: 22px !important; */
+    margin-left: 5px;
+    margin-top: 0px !important;
 }
 
 .head_color {

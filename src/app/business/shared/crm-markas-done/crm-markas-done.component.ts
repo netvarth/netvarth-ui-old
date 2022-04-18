@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CrmService } from '../../modules/crm/crm.service';
 import { projectConstants } from '../../../../../src/app/app.component';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
-import {  Router } from '@angular/router';
+// import {  Router } from '@angular/router';
 
 @Component({
   selector: 'app-crm-markas-done',
@@ -33,7 +33,7 @@ export class CrmMarkasDoneComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private crmService: CrmService,
     private snackbarService: SnackbarService,
-    private router: Router,
+    // private router: Router,
     ) {
      } 
      ngOnInit() {
@@ -74,7 +74,7 @@ export class CrmMarkasDoneComponent implements OnInit {
           setTimeout(() => {
             console.log('aftercreateTaskcompleteion',response)
             this.dialogRef.close()
-          this.router.navigate(['provider', 'task']);
+          // this.router.navigate(['provider', 'task']);
           }, projectConstants.TIMEOUT_DELAY);
         },
         (error)=>{

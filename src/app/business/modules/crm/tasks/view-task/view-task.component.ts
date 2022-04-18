@@ -133,6 +133,7 @@ uploadFiles() {
 getTaskDetails(){
   this.crmService.getTaskDetails(this.taskUid).subscribe(data => {
     this.taskDetails = data;
+    // console.log('attdata',data)
     this.taskkid = this.taskDetails.id
     this.taskDetails.notes.forEach((notesdata:any)=>{
       this.notesList.push(notesdata)
@@ -317,6 +318,23 @@ openAddNoteDialog(addNoteText:any){
     setTimeout(() => {
       this.ngOnInit();
       }, projectConstants.TIMEOUT_DELAY);
+  })
+
+}
+attatchmentDialog(filesDes:any){
+  console.log('flels',filesDes);
+  const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
+    width:'100%',
+    panelClass: ['popup-class', 'confirmationmainclass'],
+    data:{
+      requestType:'uploadFilesDesciption',
+      filesDes:filesDes,
+      // header:'Notes',
+      // taskUid:this.taskUid,
+    }
+  })
+  dialogRef.afterClosed().subscribe((response:any)=>{
+    console.log('response',response)
   })
 
 }

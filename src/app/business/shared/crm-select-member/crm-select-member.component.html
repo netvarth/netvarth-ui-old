@@ -55,7 +55,7 @@
                             <button type="button" class="btn btn-primary font-weight-bold cancelBtn" 
                             mat-dialog-close >Cancel</button>
                         <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="saveAssignMember(assignMemberDetails)"
-                            >Save</button>
+                            >Assign</button>
                     </div>
                 </ng-container>
             </div>
@@ -124,7 +124,7 @@
                             <button type="button" class="btn btn-primary font-weight-bold cancelBtn" 
                             mat-dialog-close >Cancel</button>
                         <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="saveAssignMember(assignMemberDetails)"
-                            >Save</button>
+                            >Assign</button>
                     </div>
                 </ng-container>
             </div>
@@ -182,7 +182,7 @@
         <!---cancel save btn end-->
     </mat-dialog-content>
 </section>
-<section *ngIf="data.requestType==='noteDetails'" style="padding: 20px;">
+<section *ngIf="data.requestType==='noteDetails'" class="noteDetails" style="padding: 20px;">
     <div class="header">
         <div class="headerText" >{{data.header | capitalizeFirst}}</div>
         <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
@@ -297,11 +297,11 @@
                 <div class="assignee">Asignee :</div>
                 <div class="assignee">{{assigneeName}}</div>
             </div>
-            <div style="display: flex;align-items: center;gap: 5px;">
+            <div style="display: flex;align-items: center;gap: 11px;">
                 <div class="manager">Manager :</div>
                 <div class="manager">{{managerName}}</div>
             </div>
-            <div style="display: flex;align-items: center;gap: 5px;">
+            <div style="display: flex;align-items: center;gap: 27px;">
                 <div class="prioprity">Priority :</div>
                 <div class="prioprity">{{priorityName}}</div>
             </div>
@@ -318,7 +318,7 @@
             <mat-icon>clear</mat-icon>
         </div> -->
         <div class="currentStatus">
-            Current status:{{currentStatus}}
+            Current status : {{currentStatus}}
         </div>
 
     </div>
@@ -358,4 +358,60 @@
 
     <!----external status end-->
 
+</section>
+<section *ngIf="data.requestType==='uploadFilesDesciption'" style="padding: 20px;" class="uploadFile">
+    <div class="header" >
+        <div class="headerText" style="color: #22242C !important;font-size: 14px;">File details</div>
+        <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+            <mat-icon style="font-size: 16px;">clear</mat-icon>
+        </div>
+    </div>
+    <!----files des start-->
+    <mat-dialog-content>
+        <div *ngFor="let files of allFilesDes[0]" class="filesDes">
+            <div *ngIf="files.type ==='PNG'" class="fileType">
+                    <img class="imageIcon" src="/assets/images/ImgeFileIcon/png.png" />
+            </div>
+            <div *ngIf="files.type ==='docx'" class="fileType">
+                    <img class="imageIcon" src="/assets/images/ImgeFileIcon/docsWord.png" />
+            </div>
+            <div *ngIf="files.type ==='xlsx'" class="fileType">
+                    <img class="imageIcon" src="/assets/images/ImgeFileIcon/docXlsx.png" />
+            </div>
+            <div *ngIf="files.type ==='txt'" class="fileType">
+                    <img class="imageIcon" src="/assets/images/ImgeFileIcon/docTxt.png" />
+            </div>
+            <div *ngIf="files.type ==='pdf'" class="fileType">
+                    <img class="imageIcon" src="/assets/images/ImgeFileIcon/pdf.png" />
+            </div>
+            <div *ngIf="( files.type !=='pdf' &&  files.type !=='txt' &&  files.type !=='xlsx' &&  files.type !=='docx' && files.type !=='PNG'  )" class="fileType" >
+                <img class="imageIcon" src="/assets/images/ImgeFileIcon/othersFile.png" />
+            </div>
+            <div style="text-align: center;" class="filesNameSize">
+                {{files.originalName}}
+            </div>
+            <div class="filesNameSize">
+                {{files.size }}MB
+            </div>
+        </div>
+    </mat-dialog-content>
+    <!---filesdes end-->
+    <!---cancel save btn start-->
+    <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;padding: 0px !important;">
+        <!---cancel save btn start-->
+        <div style="text-align: center;">
+           <ng-container >
+               <div >
+                       <button type="button" class="btn btn-primary font-weight-bold confirmBtn" 
+                       mat-dialog-close >Cancel</button>
+                   <!-- <button type="button" class="btn btn-primary font-weight-bold confirmBtn"(click)="completeTask()"
+                       >Yes</button> -->
+               </div>
+           </ng-container>
+       </div>
+
+       <!---cancel save btn end-->
+     </div>
+
+    <!---cancel save btn end-->
 </section>

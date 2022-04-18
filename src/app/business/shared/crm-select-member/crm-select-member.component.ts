@@ -43,7 +43,11 @@ export class CrmSelectMemberComponent implements OnInit {
   public selectText:any;
   public showHideTickMark:boolean=false;
   public statusId:any;
-  public allNotes:any=[]
+  //notes variable
+  public allNotes:any=[];
+  //upload file variabe
+  allFilesDes:any=[]
+
 
 
 
@@ -124,6 +128,10 @@ export class CrmSelectMemberComponent implements OnInit {
       this.selectedStatusUID= this.data.taskDetails.taskUid;
       this.statusId= this.data.taskDetails.status.id
       console.log('this.statusId',this.statusId)
+    }
+    if(this.data.requestType==='uploadFilesDesciption'){
+      console.log('uploadFilesDesciption')
+      this.allFilesDes.push(this.data.filesDes)
     }
     // console.log('this.assignMemberDetails',this.assignMemberDetails);
     // console.log('this.memberList',this.memberList)
