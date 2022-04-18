@@ -314,7 +314,7 @@ export class CreateTaskComponent implements OnInit {
     console.log('afterSelectPopupValue',res)
     if(res===''){
       // console.log('Select task manager')
-      this.selectTaskManger ='Select task manager'
+      this.selectTaskManger = this.updateValue.manager.name;//'Select task manager'
 
     }
     else{
@@ -345,7 +345,7 @@ export class CreateTaskComponent implements OnInit {
     console.log('afterSelectPopupValue',res);
     if(res===''){
       // console.log('Select Manager')
-      this.selectMember ='Select Manager'
+      this.selectMember =  this.updateValue.assignee.name;//'Select Manager'
     }else{
       this.updateAssignMemberDetailsToDialog=res;
     console.log('this.updateAssignMemberDetailsToDialog',this.updateAssignMemberDetailsToDialog)
