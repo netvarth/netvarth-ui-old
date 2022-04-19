@@ -427,6 +427,8 @@ export class OrderBillComponent implements OnInit, OnDestroy {
     /**
      * Perform PayU Payment
      */
+
+    
     payuPayment(paymentType?) {
         this.isClickedOnce = true;
         if (this.jcashamount > 0 && this.checkJcash) {
