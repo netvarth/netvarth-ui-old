@@ -8,6 +8,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 // import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { CrmMarkasDoneComponent } from '../../shared/crm-markas-done/crm-markas-done.component';
+import { WordProcessor } from '../../../shared/services/word-processor.service';
 
 @Component({
   selector: 'app-crm-select-member',
@@ -48,7 +49,9 @@ export class CrmSelectMemberComponent implements OnInit {
   //notes variable
   public allNotes:any=[];
   //upload file variabe
-  allFilesDes:any=[]
+  public allFilesDes:any=[]
+  public  customer_label:any = '';
+  public provider_label:any=''
 
 
 
@@ -63,6 +66,7 @@ export class CrmSelectMemberComponent implements OnInit {
       // private createTaskFB: FormBuilder,
       private dialog: MatDialog,
       // private datePipe:DatePipe,
+      private wordProcessor: WordProcessor,
     ) {
       console.log('consdata',this.data)
       // this.assignMemberDetails= this.data.assignMembername
@@ -71,6 +75,8 @@ export class CrmSelectMemberComponent implements OnInit {
     
 
   ngOnInit(): void {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     if(this.data.requestType==='createtaskSelectMember' || this.data.requestType==='createtaskSelectManager' ){
       this.data.memberList[0].forEach((singleMember:any)=>{
         console.log('singleMember',singleMember)

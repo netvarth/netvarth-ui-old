@@ -287,7 +287,7 @@
     <div style="margin-top: 10px;display: flex;gap:10px">
         <div>
             <circle-progress class="circle__progress" [outerStrokeWidth]="10"  [radius]="40" [percent]="taskProgress" [animation]="true"
-                              [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
+                              [animationDuration]="1000" [startFromZero]="true" [showInnerStroke]="true"
                               [titleFontSize]="'10'" [titleFontWeight]="'900'"  [unitsFontSize]="'10'"
                               [unitsFontWeight]="'700'" [subtitle]="status" [subtitleFontSize]="'7'"
                               [lazy]="false" ></circle-progress>
@@ -326,7 +326,7 @@
     <!-----external status s\tart-->
     <div class="extStatus">
         <!-- <div class="extStatus1">External status</div> -->
-        <div class="extStatus2">External Status is public and visible for your patients</div>
+        <div class="extStatus2">External Status is public and visible for your {{customer_label}}</div>
         <!--status start-->
        <div class="statusList">
         <!-- [ngStyle]="{'background-color':status.id === data.taskDetails.status.id ? '#CACACA' : '#FFFFFF' }" -->
@@ -388,7 +388,10 @@
             <div *ngIf="files.type ==='pdf'" class="fileType">
                     <img class="imageIcon" src="/assets/images/ImgeFileIcon/pdf.png" />
             </div>
-            <div *ngIf="( files.type !=='pdf' &&  files.type !=='txt' &&  files.type !=='xlsx' &&  files.type !=='docx' && files.type !=='PNG'  )" class="fileType" >
+            <div *ngIf="files.type ==='jpg'" class="fileType">
+                    <img class="imageIcon" src="/assets/images/ImgeFileIcon/jpg.png" />
+            </div>
+            <div *ngIf="( files.type !=='pdf' &&  files.type !=='txt' &&  files.type !=='xlsx' &&  files.type !=='docx' && files.type !=='PNG' && files.type !=='jpg'  )" class="fileType" >
                 <img class="imageIcon" src="/assets/images/ImgeFileIcon/othersFile.png" />
             </div>
             <div style="text-align: center;" class="filesNameSize">
