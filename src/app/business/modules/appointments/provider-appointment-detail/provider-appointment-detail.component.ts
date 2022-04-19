@@ -114,6 +114,9 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   historyvisitDetails: any;
   small_device_display: boolean;
   action: string;
+  whatsappNumber: any;
+  mobileNumber: any;
+  email: any;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -234,6 +237,13 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
         this.waitlist_data = data;
         this.getConsumerBills();
         this.getCustomerHistoryVisit();
+        if(this.waitlist_data.virtualService)
+        {
+          this.whatsappNumber = this.waitlist_data.virtualService.WhatsApp;
+        }
+        this.mobileNumber = this.waitlist_data.phoneNumber;
+        this.email = this.waitlist_data.appmtFor[0].email;
+        console.log("communication data",this.whatsappNumber,this.mobileNumber,this.email);
         console.log("waitlist data",this.waitlist_data);
         if (
           this.waitlist_data.questionnaires &&
@@ -617,36 +627,109 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
 
 
   showCommunications() {
-    console.log("data available : ",this.waitlist_data.consumer.userProfile.whatsAppNum.number)
-    if(this.waitlist_data.consumer.userProfile.whatsAppNum.number)
+
+    if(this.whatsappNumber && this.mobileNumber && this.email)
     {
-        this.dialog.open(CommunicationPopupComponent, {
+      console.log("communication data : 1");
+      this.dialog.open(CommunicationPopupComponent, {
           width: '50%',
           panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
           disableClose: true,
           data: {
-              whatsappCountryCode: this.waitlist_data.countryCode,
-              whatsappNumber: this.waitlist_data.consumer.userProfile.whatsAppNum.number,
-              number: this.waitlist_data.phoneNumber,
+              whatsappNumber: this.whatsappNumber,
+              number: this.mobileNumber,
               customerId: this.waitlist_data.appmtFor[0].id,
-              email: this.waitlist_data.appmtFor[0].email,
+              email: this.email,
               type: 'customer'
           }
       });
     }
-    else{
+    else if(!this.whatsappNumber && this.mobileNumber == 'null' && this.email)
+    {
+      console.log("communication data : 2");
       this.dialog.open(CommunicationPopupComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
         disableClose: true,
         data: {
-            whatsappCountryCode: this.waitlist_data.countryCode,
-            number: this.waitlist_data.phoneNumber,
-            customerId: this.waitlist_data.appmtFor[0].id,
-            email: this.waitlist_data.appmtFor[0].email,
-            type: 'customer'
+          customerId: this.waitlist_data.appmtFor[0].id,
+          email: this.email,
+          type: 'customer'
         }
-    });
+      });
+    }
+    else if(!this.whatsappNumber && this.mobileNumber && !this.email)
+    {
+      console.log("communication data : 3");
+      this.dialog.open(CommunicationPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+        disableClose: true,
+        data: {
+          number: this.mobileNumber,
+          customerId: this.waitlist_data.appmtFor[0].id,
+          type: 'customer'
+        }
+      });
+    }
+    else if(!this.whatsappNumber && this.mobileNumber && this.email)
+    {
+      console.log("communication data : 4");
+      this.dialog.open(CommunicationPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+        disableClose: true,
+        data: {
+          number: this.mobileNumber,
+          email: this.email,
+          customerId: this.waitlist_data.appmtFor[0].id,
+          type: 'customer'
+        }
+      });
+    }
+    else if(this.whatsappNumber && this.mobileNumber == 'null' && !this.email)
+    {
+      console.log("communication data : 5",this.email);
+      this.dialog.open(CommunicationPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+        disableClose: true,
+        data: {
+          whatsappNumber: this.whatsappNumber,
+          customerId: this.waitlist_data.appmtFor[0].id,
+          type: 'customer'
+        }
+      });
+    }
+    else if(this.whatsappNumber && this.mobileNumber == 'null' && this.email)
+    {
+      console.log("communication data : 6");
+      this.dialog.open(CommunicationPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+        disableClose: true,
+        data: {
+          whatsappNumber: this.whatsappNumber,
+          email: this.email,
+          customerId: this.waitlist_data.appmtFor[0].id,
+          type: 'customer'
+        }
+      });
+    }
+    else if(this.whatsappNumber && this.mobileNumber && !this.email)
+    {
+      console.log("communication data : 7");
+      this.dialog.open(CommunicationPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+        disableClose: true,
+        data: {
+          whatsappNumber: this.whatsappNumber,
+          number: this.mobileNumber,
+          customerId: this.waitlist_data.appmtFor[0].id,
+          type: 'customer'
+        }
+      });
     }
 }
 

@@ -194,10 +194,11 @@
     max-height: 190px!important;
 }
 
-.btn .btn-primary
+.btn-primary
 {
     background-color: #1E4079!important;
     color: #fff!important;
+    border-color: #1E4079!important;
 }
 .content.comn-cls .lbl .card
 {
@@ -214,6 +215,10 @@
     background-color: rgb(231, 231, 231)!important;
     color: black!important;
     border: 1.5px solid black!important;
+}
+.history-notes
+{
+    margin-bottom: 3px!important;
 }
 
 
@@ -243,6 +248,10 @@
     {
         min-height: 317px!important;
         max-height: 317px!important;
+    }
+    .history-notes
+    {
+        margin-bottom: 30px!important;
     }
 
   }

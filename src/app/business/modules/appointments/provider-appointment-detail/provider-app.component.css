@@ -194,10 +194,11 @@
     max-height: 190px!important;
 }
 
-.btn .btn-primary
+.btn-primary
 {
     background-color: #1E4079!important;
     color: #fff!important;
+    border-color: #1E4079!important;
 }
 .content.comn-cls .lbl .card
 {
@@ -216,6 +217,10 @@
     border: 1.5px solid black!important;
 }
 
+.history-notes
+{
+    margin-bottom: 3px!important;
+}
 
 @media (max-width: 750px) {
     .note_view{
@@ -244,5 +249,9 @@
     .rowcard.customer-details-card
     {
         min-height: auto!important;
+    }
+    .history-notes
+    {
+        margin-bottom: 30px!important;
     }
   }

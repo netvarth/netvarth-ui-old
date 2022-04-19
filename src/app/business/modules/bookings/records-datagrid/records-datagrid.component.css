@@ -203,3 +203,9 @@ th {
 .table-responsive {
     max-height: 270px!important;
 }
+.no_data_cap
+{
+    color: #1e4079!important;
+    font-size: 20px!important;
+    font-weight: bold!important;
+}

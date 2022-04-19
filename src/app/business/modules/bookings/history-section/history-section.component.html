@@ -1,0 +1,86 @@
+<section class="" *ngIf="!widget">
+    <div class="card title-gb">
+      <h5 class="mgn-up-10">
+        <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;
+        History
+      </h5>
+    </div>
+  </section>
+  <section [class.p-4]="!widget">
+    <div class="history col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 m-0 p-0"
+      [class.widgetStyle]="widget">
+      <div class="card card-custom data-card">
+        <div class="card-header collapsed" *ngIf="widget"
+          [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
+          [attr.data-toggle]="small_device_display ? 'collapse' : ''" data-target="#history" aria-expanded="false">
+          <div>History</div>
+          <div class="mgn-lt-auto">
+            <i class="fa fa-external-link pointer-cursor" aria-hidden="true"
+              [class.mgn-rt-20]="small_device_display"></i>
+            <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
+          </div>
+        </div>
+        <div class="card-body p-3" [class.cardheight]="!widget" id="history"
+            [class.collapse]="widget && small_device_display">
+          <div class="content comn-cls lbr no-padding-small" *ngIf="source == 'checkin'">
+            <div class="card" style="box-shadow: none!important;padding: 0!important;">
+              <div class="c-history-outer">
+                <ul class="c-history">
+                  <li class="{{history.waitlistStatus}}" *ngFor="let history of waitlist_history">
+                    <div class="time">{{getformatedTime(history.time)| date: newTimeDateFormat }}</div>
+                    <div class="action">{{check_in_statuses[history.waitlistStatus | capitalizeFirst]}}</div>
+                  </li>
+                </ul>
+              
+  
+                <p class="no-result" *ngIf="waitlist_history && waitlist_history.length == 0">No History Found</p>
+              </div>
+            </div>
+            <div class="card" style="box-shadow: none!important;padding: 0!important;" *ngIf="internalStatuslog && internalStatuslog.length>0">
+              <div class="c-history-outer">
+                <ul class="internal-history">
+                  <li class="internal-status" *ngFor="let log of internalStatuslog">
+                    <div class="time">{{log.DateTime}}</div>
+                    <div class="action">{{log.InternalStatus | capitalizeFirst}}-<span class="user">{{log.User |
+                        capitalizeFirst}}</span></div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="content comn-cls lbr no-padding-small" *ngIf="source == 'appt'">
+            <div class="card" style="box-shadow: none!important;padding: 0!important;">
+              <div class="appthistory">
+                <ul class="c-history">
+                  <li *ngFor="let history of waitlist_history" class="{{history.appointmentStatus}}">
+                    <div class="time">{{history.date | date: newTimeDateFormat }} {{history.time}}</div>
+                    <div class="action">{{check_in_statuses[history.appointmentStatus | capitalizeFirst]}}</div>
+                  </li>
+                </ul>
+  
+                <p class="no-result" *ngIf="waitlist_history.length == 0">No History Found</p>
+              </div>
+            </div>
+            <div class="card" style="box-shadow: none!important;padding: 0!important;" *ngIf="internalStatuslog && internalStatuslog.length>0">
+              <div class="c-history-outer">
+                <ul class="internal-history">
+                  <li class="internal-status" *ngFor="let log of internalStatuslog">
+                    <div class="time">{{log.DateTime}}</div>
+                    <div class="action">{{log.InternalStatus | capitalizeFirst}}-<span class="user">{{log.User |
+                        capitalizeFirst}}</span></div>
+                  </li>
+                </ul>
+  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
+    [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
+    (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>

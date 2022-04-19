@@ -285,10 +285,11 @@
                                         </td>
                                     </ng-container>
                                 </tr>
-                                <div class="no-record m-auto" *ngIf="!loading && records && records.length == 0">
-                                    <div class="team-icon-action"
+                                <div class="no-record m-auto p-auto" *ngIf="!loading && records && records.length == 0">
+                                    <!-- <div class="team-icon-action"
                                         *ngIf="source != 'customers' || (source == 'customers' && admin)"></div>
-                                    <div class="qnr-icon" *ngIf="source == 'customers' && !admin"></div>
+                                    <div class="qnr-icon" *ngIf="source == 'customers' && !admin"></div> -->
+                                    <div class="no_data_cap">No Data Found</div>
                                 </div>
                             </tbody>
                         </table>

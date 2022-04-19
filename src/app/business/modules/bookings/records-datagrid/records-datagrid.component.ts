@@ -23,6 +23,7 @@ export class RecordsDatagridComponent implements OnInit {
   @Input() view;
   @Input() admin;
   @Output() actionPerformed = new EventEmitter<any>();
+  @Input() no_data_cap;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   waitlistModes = {
     WALK_IN_CHECKIN: 'Walk in Check-in',

@@ -13,6 +13,7 @@ import { VoiceConfirmComponent } from '../../customers/video-confirm/voice-confi
 })
 export class CommunicationPopupComponent implements OnInit {
   is_web = false;
+  consumer_label = this.wordProcessor.getTerminologyTerm('customer');
   notSupported;
   videocredits;
   meet_data: any = [];

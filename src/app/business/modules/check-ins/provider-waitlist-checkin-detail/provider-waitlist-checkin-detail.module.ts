@@ -16,6 +16,8 @@ import { CheckinsActionsModule } from "../checkin-actions/checkin-actions.module
 import { BookingMedicalRecordsRXModule } from "../../bookings/booking-medical-records-rx/booking-medical-records-rx.module";
 import { BookingDocumentsModule } from "../../bookings/booking-documents/booking-documents.module";
 import { RecordsDatagridModule } from "../../bookings/records-datagrid/records-datagrid.module";
+import { NotesSectionModule } from "../../bookings/notes-section/notes-section.module";
+import { HistorySectionModule } from "../../bookings/history-section/history-section.module";
 const routes: Routes = [
     {path: '', component: ProviderWaitlistCheckInDetailComponent}
 ]
@@ -38,6 +40,8 @@ const routes: Routes = [
         BookingMedicalRecordsRXModule,
         BookingDocumentsModule,
         RecordsDatagridModule,
+        NotesSectionModule,
+        HistorySectionModule,
         [RouterModule.forChild(routes)]
     ],
     schemas: [
