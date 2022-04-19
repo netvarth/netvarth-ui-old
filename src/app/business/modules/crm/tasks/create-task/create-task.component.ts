@@ -209,7 +209,8 @@ export class CreateTaskComponent implements OnInit {
   getLocation(){
     this.crmService.getProviderLocations().subscribe((res)=>{
       console.log('location.........',res)
-      this.locationName= res[0].place
+      this.locationName= res[0].place;
+      this.updteLocationId= res[0].id;
     })
   }
   getAssignMemberList(){
@@ -356,6 +357,7 @@ export class CreateTaskComponent implements OnInit {
     this.userType = res.userType;
     // this.locationName = res.locationName;
     this.locationId = res.bussLocations[0];
+    this.locationName = res.locationName;
     this.assigneeId= res.id;
     this.updateMemberId=this.assigneeId;
     this.updteLocationId= this.locationId;
