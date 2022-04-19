@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { MatDialogModule } from "@angular/material/dialog";
+import { TeleBookingService } from "../../../shared/services/tele-bookings-service";
 import { MeetingDetailsComponent } from "./meeting-details.component";
 @NgModule({
     imports: [
@@ -10,6 +11,7 @@ import { MeetingDetailsComponent } from "./meeting-details.component";
     exports: [MeetingDetailsComponent],
     declarations: [
         MeetingDetailsComponent
-    ]
+    ],
+    providers: [TeleBookingService]
 })
 export class MeetingDetailsModule {}

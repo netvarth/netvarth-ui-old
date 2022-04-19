@@ -571,10 +571,6 @@ togglepaymentMode(){
       bill_html += '</table>';
       bill_html += '	</td></tr>';
     }
-    // List<JaldeeCoupon> jCoupons = new ArrayList<>();
-    // if(bill.getjCoupon()!=null) {
-    // 	jCoupons = mapper.readValue(bill.getjCoupon().toString(), new TypeReference<List<JaldeeCoupon>>(){});
-    // }
     if (this.bill_data.jCoupon) {
       for (const [key, value] of Object.entries(this.bill_data.jCoupon)) {
         bill_html += '	<tr><td>';
@@ -657,11 +653,6 @@ togglepaymentMode(){
     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CASH_PAYMENT'));
   }
   getCouponList() {
-    // const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
-    // this.sharedfunctionObj.getS3Url()
-    //   .then(
-    //     s3Url => {
-
     this.subs.sink = this.s3Processor.getJsonsbyTypes(this.checkin.providerAccount.uniqueId,
       null, 'coupon').subscribe(
         (accountS3s) => {
@@ -670,13 +661,6 @@ togglepaymentMode(){
           }
         }
       );
-
-
-    // this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
-    //   .subscribe(res => {
-    //     this.couponList = res;
-    //   });
-    // });
   }
   checkCouponValid(couponCode) {
     let found = false;

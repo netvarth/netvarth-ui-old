@@ -17,6 +17,7 @@ import { OnlineUsersModule } from '../../online-users/online-users.module';
 import { AppointmentServicesModule } from '../../appointment-services/appointment-services.module';
 import { DonationServicesModule } from '../../donation-services/donation-services.module';
 import { CheckinServicesModule } from '../../checkin-services/checkin-services.module';
+import { BookingService } from '../../../shared/services/booking-service';
 
 const routes: Routes = [
   { path: '', component: CustTemplate3Component }
@@ -45,6 +46,7 @@ const routes: Routes = [
     CheckinServicesModule,
     RouterModule.forChild(routes)
   ],
+  providers: [BookingService],
   exports: [
     CustTemplate3Component
   ]

@@ -2,9 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { ProviderServices } from '../../../../../services/provider-services.service';
-import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { FileService } from '../../../../../../shared/services/file-service';
 @Component({
     selector: 'app-global-settings-appt',
     templateUrl: './global-settings.component.html'
@@ -56,9 +56,9 @@ export class GlobalSettingsComponent implements OnInit {
     constructor(
         private router: Router,
         private provider_services: ProviderServices,
-        private shared_Functionsobj: SharedFunctions,
         private snackbarService: SnackbarService,
-        private wordProcessor: WordProcessor
+        private wordProcessor: WordProcessor,
+        private fileService: FileService
     ) { }
     @Input() headerResult;
     url = '';
@@ -105,7 +105,7 @@ export class GlobalSettingsComponent implements OnInit {
         this.imageChanged = false;
         if (input.files && input.files[0]) {
             for (const file of input.files) {
-                this.success_error = this.shared_Functionsobj.imageValidation(file);
+                this.success_error = this.fileService.imageValidation(file);
                 if (this.success_error === true) {
                     const reader = new FileReader();
                     this.item_pic.files = input.files[0];

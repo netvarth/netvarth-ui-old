@@ -12,6 +12,8 @@ import { ConsumerCheckinBillComponent } from "./checkin-bill.component";
 import { JcCouponNoteModule } from "../../../../../shared/modules/jc-coupon-note/jc-coupon-note.module";
 import { MatRadioModule } from "@angular/material/radio";
 import { PaymentModesModule } from "../../../../../shared/modules/payment-modes/payment-modes.module";
+import { RazorpayService } from "../../../../../shared/services/razorpay.service";
+import { PaytmService } from "../../../../../shared/services/paytm.service";
 const routes: Routes = [
     { path: '', component: ConsumerCheckinBillComponent }
 ];
@@ -31,6 +33,7 @@ const routes: Routes = [
         CapitalizeFirstPipeModule
     ],
     exports:[ConsumerCheckinBillComponent],
-    declarations:[ConsumerCheckinBillComponent]
+    declarations:[ConsumerCheckinBillComponent],
+    providers: [RazorpayService, PaytmService]
 })
 export class ConsumerCheckinBillModule{}

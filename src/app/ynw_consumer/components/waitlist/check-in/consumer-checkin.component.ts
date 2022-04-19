@@ -16,10 +16,8 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
-import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
-import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
@@ -164,7 +162,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     bookStep = 1;
     locationName;
     waitlistDetails: any;
-    razorModel: Razorpaymodel;
     uuidList: any = [];
     prepayAmount;
     paymentDetails: any = [];
@@ -298,7 +295,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         private groupService: GroupStorageService,
         public _sanitizer: DomSanitizer,
         public razorpayService: RazorpayService,
-        public prefillmodel: RazorpayprefillModel,
         private dateTimeProcessor: DateTimeProcessor,
         private jaldeeTimeService: JaldeeTimeService,
         private s3Processor: S3UrlProcessor,

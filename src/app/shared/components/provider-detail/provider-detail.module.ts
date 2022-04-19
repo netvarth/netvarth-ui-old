@@ -18,6 +18,7 @@ import { ConsumerJoinModule } from "../../../ynw_consumer/components/consumer-jo
 import { ConfirmBoxModule } from "../confirm-box/confirm-box.module";
 import { QRCodeGeneratordetailModule } from "../qrcodegenerator/qrcodegeneratordetail.module";
 import { CheckavailabilityModule } from "../checkavailability/checkavaiablity.module";
+import { DomainConfigGenerator } from "../../services/domain-config-generator.service";
 
 const routes: Routes = [
     { path: '', component: ProviderDetailComponent },
@@ -40,14 +41,15 @@ const routes: Routes = [
         ConsumerJoinModule,
         ConfirmBoxModule,
         QRCodeGeneratordetailModule,
-        
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
+    ],
+    providers: [
+        DomainConfigGenerator
     ],
     exports: [ ProviderDetailComponent ],
     entryComponents:[CheckavailabilityModule,],
     declarations: [
         ProviderDetailComponent
-    
     ]
 })
 export class ProviderDetailModule {}

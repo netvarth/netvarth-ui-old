@@ -16,6 +16,7 @@ import { MeetingDetailsModule } from "../../meeting-details/meeting-details.modu
 import { ActionPopupModule } from "../action-popup/action-popup.module";
 import { GalleryModule } from "../../../../shared/modules/gallery/gallery.module";
 import { InboxListModule } from "../../../../../../src/app/shared/modules/inbox/inbox-list/inbox-list.module";
+import { TeleBookingService } from "../../../../shared/services/tele-bookings-service";
 const routes: Routes = [
     { path: '', component: CheckinDetailComponent }
 ];
@@ -43,6 +44,7 @@ const routes: Routes = [
     declarations: [
         CheckinDetailComponent
     ],
+    providers: [TeleBookingService],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA

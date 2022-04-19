@@ -8,7 +8,6 @@ import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 // import { ConsumerServices } from '../../../../ynw_consumer/services/consumer-services.service';
-import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { WindowRefService } from '../../../../shared/services/windowRef.service';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
@@ -151,7 +150,6 @@ export class OrderBillComponent implements OnInit, OnDestroy {
         private locationobj: Location,
         @Inject(DOCUMENT) public document,
         public razorpayService: RazorpayService,
-        public prefillmodel: RazorpayprefillModel,
         public winRef: WindowRefService,
         private cdRef: ChangeDetectorRef,
         private location: Location,
@@ -594,21 +592,6 @@ export class OrderBillComponent implements OnInit, OnDestroy {
         this.loadingPaytm = true;
         pData.paymentMode = this.selected_payment_mode;
         this.razorpayService.initializePayment(pData, this.accountId, this);
-        // this.prefillmodel.name = data.consumerName;
-        // this.prefillmodel.email = data.ConsumerEmail;
-        // this.prefillmodel.contact = data.consumerPhoneumber;
-        // this.razorModel = new Razorpaymodel(this.prefillmodel);
-        // this.razorModel.key = data.razorpayId;
-        // this.razorModel.amount = data.amount;
-        // this.razorModel.order_id = data.orderId;
-        // this.razorModel.name = data.providerName;
-        // this.razorModel.description = data.description;
-        // this.razorModel.mode=this.selected_payment_mode;
-        // this.isClickedOnce = false;
-        // //    this.razorModel.image = data.jaldeeLogo;
-        // // this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type);
-        // this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type, this.uuid, null, this.accountId);
-
     }
     payWithPayTM(pData: any, accountId: any) {
         this.isClickedOnce = true;
@@ -1000,28 +983,6 @@ export class OrderBillComponent implements OnInit, OnDestroy {
     
            },1000);
     }
-    //   getCouponList() {
-    //       const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
-    //       this.sharedfunctionObj.getS3Url()
-    //           .then(
-    //               s3Url => {
-    //                  this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
-    //                       .subscribe(res => {
-    //                           this.couponList.JC = res;
-    //                       });
-    //               });
-    //   }
-    //   getproviderCouponList() {
-    //     const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
-    //     this.sharedfunctionObj.getS3Url()
-    //         .then(
-    //             s3Url => {
-    //                this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
-    //                     .subscribe(res => {
-    //                         this.couponList.OWN = res;
-    //                     });
-    //             });
-    // }
     checkCouponValid(couponCode) {
         let found = false;
         for (let couponIndex = 0; couponIndex < this.couponList.JC.length; couponIndex++) {

@@ -398,4 +398,11 @@ export class DateTimeProcessor {
       return date1;
     }
 
+    getCurrentUTCdatetimestring() {
+      const curdate = new Date();
+      const cdate = new Date(Date.UTC(curdate.getUTCFullYear(), curdate.getUTCMonth(), curdate.getUTCDate(), curdate.getUTCHours(),
+        curdate.getUTCMinutes(), curdate.getUTCSeconds(), curdate.getUTCMilliseconds()));
+      return cdate.toISOString();
+    }
+
 }

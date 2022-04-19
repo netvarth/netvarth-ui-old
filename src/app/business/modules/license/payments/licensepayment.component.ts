@@ -1,7 +1,6 @@
 import { Component, Inject, ViewChild, ChangeDetectorRef, OnInit, NgZone } from '@angular/core';
 import { WindowRefService } from '../../../../shared//services/windowRef.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
@@ -57,7 +56,6 @@ export class PaymentComponent implements OnInit {
     @Inject(DOCUMENT) public document,
     public _sanitizer: DomSanitizer,
     public razorpayService: RazorpayService,
-    public prefillmodel: RazorpayprefillModel,
     public location: Location, public router: Router) {
     this.activated_route.queryParams.subscribe(qparams => {
       this.data = qparams;
@@ -169,18 +167,6 @@ export class PaymentComponent implements OnInit {
   paywithRazorpay(pData: any) {
     this.isClickedOnce = false;
     this.razorpayService.initializePayment(pData, this.accountId, this, 'provider');
-    // this.prefillmodel.name = pData.providerName;
-    // this.prefillmodel.email = pData.ConsumerEmail;
-    // this.prefillmodel.contact = pData.consumerPhoneumber;
-    // this.razorModel = new Razorpaymodel(this.prefillmodel);
-    // this.razorModel.key = pData.razorpayId;
-    // this.razorModel.amount = pData.amount;
-    // this.razorModel.order_id = pData.orderId;
-    // this.razorModel.description = pData.description;
-    // this.razorModel.name = pData.providerName;
-    // this.razorModel.mode=this.selected_payment_mode;
-    // this.razorpayService.payWithRazor(this.razorModel, this.origin);
-    // this.isClickedOnce = false;
   }
   finishTransaction(status, response?) {
     const self = this;

@@ -6,7 +6,6 @@ import { Messages } from '../../../../constants/project-messages';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RazorpayService } from '../../../../services/razorpay.service';
 import { WindowRefService } from '../../../../services/windowRef.service';
-import { Razorpaymodel } from '../../../razorpay/razorpay.model';
 import { WordProcessor } from '../../../../services/word-processor.service';
 import { PaytmService } from '../../../../services/paytm.service';
 import { projectConstantsLocal } from '../../../../constants/project-constants';
@@ -96,7 +95,6 @@ export class DonationLinkComponent implements OnInit {
   donationAmount;
   provider_id: any;
   donorName: any;
-  razorModel: Razorpaymodel;
   checkIn_type: any;
   origin: string;
   pGateway: any;

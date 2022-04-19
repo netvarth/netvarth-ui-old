@@ -1343,18 +1343,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
     this.setCheckinData(provider_data, location, location['estimatedtime_det']['cdate'], chdatereq);
   }
-  // showCheckin(locid, locname, curdate, origin?) {
-  //   const navigationExtras: NavigationExtras = {
-  //     queryParams: {
-  //       loc_id: locid,
-  //       sel_date: curdate,
-  //       cur: this.changedate_req,
-  //       unique_id: this.provider_id,
-  //       account_id: this.provider_bussiness_id
-  //      }
-  //   };
-  //   this.routerobj.navigate(['consumer', 'checkin'], navigationExtras);
-  // }
   setCheckinData(provider, location, currdate, chdatereq = false) {
     let queryParams = {
       loc_id: location.id,
@@ -1371,22 +1359,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       queryParams: queryParams
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
-    // const post_data = {
-    //   'provider_data': null,
-    //   'location_data': null,
-    //   'sel_date': currdate,
-    //   'chdatereq': chdatereq
-    // };
-    // post_data.provider_data = {
-    //   'unique_id': provider.uniqueId,
-    //   'account_id': provider.id,
-    //   'name': provider.businessName
-    // };
-    // post_data.location_data = {
-    //   'id': location.id,
-    //   'name': location.place
-    // };
-    // this.showCheckin(post_data);
   }
   gets3curl() {
     this.shared_functions.getS3Url('provider')
@@ -1400,32 +1372,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       );
   }
-  // gets the various json files based on the value of "section" parameter
-  // getbusinessprofiledetails_json(provider_id, section, modDateReq: boolean, index) {
-  //   let UTCstring = null;
-  //   if (section === 'settings' && this.fav_providers[index] && this.fav_providers[index]['settings']) {
-  //     return false;
-  //   }
-  //   if (modDateReq) {
-  //     UTCstring = this.shared_functions.getCurrentUTCdatetimestring();
-  //   }
-  //   this.subs.sink=this.shared_services.getbusinessprofiledetails_json(provider_id, this.s3url, section, UTCstring)
-  //     .subscribe(res => {
-  //       switch (section) {
-  //         case 'settings': {
-  //           this.fav_providers[index]['settings'] = res;
-  //           break;
-  //         }
-  //         case 'terminologies': {
-  //           this.terminologiesJson = res;
-  //           break;
-  //         }
-  //       }
-  //     },
-  //       error => {
-  //       }
-  //     );
-  // }
   gotoDonations() {
     this.router.navigate(['consumer', 'donations']);
   }
@@ -1691,19 +1637,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         });
   }
-
-  // getCurrentLocation() {
-  //   if (navigator) {
-  //     navigator.geolocation.getCurrentPosition(pos => {
-  //       this.lat_lng.longitude = +pos.coords.longitude;
-  //       this.lat_lng.latitude = +pos.coords.latitude;
-  //     },
-  //       error => {
-  //         this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
-  //         this.snackbarService.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
-  //       });
-  //   }
-  // }
   getCurrentLocation() {
     const _this = this;
     return new Promise(function (resolve, reject) {
@@ -2171,14 +2104,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.total_future_order = [];
     this.futureOrderslst = [];
     this.futureOrderslst_more = [];
-    // const server = this.server_date.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
-    // const serverdate = moment(server).format();
-    // const servdate = new Date(serverdate);
-    // this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
-    //  this.tDate = this.shared_functions.transformToYMDFormat(this.todayDate);
-    //   const params = {
-    //     'orderDate-gt': this.tDate
-    //   };
     this.subs.sink = this.consumer_services.getConsumerFutOrders().subscribe(data => {
       this.future_orders = data; // saving future orders
       this.total_future_order = this.future_orders;
@@ -2282,37 +2207,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             if (result === 'reloadlist') {
             }
           });
-          // this.image_list_popup_temp = [];
-          // this.image_list_popup = [];
-          // let count = 0;
-          // for (let comIndex = 0; comIndex < communications.length; comIndex++) {
-          //   const thumbPath = communications[comIndex].thumbPath;
-          //   let imagePath = thumbPath;
-          //   const caption = communications[comIndex].caption;
-          //   const description = communications[comIndex].s3path;
-          //   const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-          //   // if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-          //   //   imagePath = communications[comIndex].s3path;
-          //   // }
-          //   if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
-          //     imagePath = communications[comIndex].s3path;
-          // }
-          //   const imgobj = new Image(
-          //     count,
-          //     {
-          //       img: imagePath,
-          //       description: caption
-          //     },
-          //   );
-          //   this.image_list_popup_temp.push(imgobj);
-          //   count++;
-          // }
-          // if (count > 0) {
-          //   this.image_list_popup = this.image_list_popup_temp;
-          //   setTimeout(() => {
-          //     this.openImageModalRow(this.image_list_popup[0]);
-          //   }, 500);
-          // }
         },
         error => { }
       );
@@ -2332,37 +2226,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             if (result === 'reloadlist') {
             }
           });
-          // this.image_list_popup_temp = [];
-          // this.image_list_popup = [];
-          // let count = 0;
-          // for (let comIndex = 0; comIndex < communications.length; comIndex++) {
-          //   const thumbPath = communications[comIndex].thumbPath;
-          //   let imagePath = thumbPath;
-          //   const description = communications[comIndex].s3path;
-          //   const caption = communications[comIndex].caption;
-          //   const thumbPathExt = description.substring((description.lastIndexOf('.') + 1), description.length);
-          //   // if (this.imageAllowed.includes(thumbPathExt.toUpperCase())) {
-          //   //   imagePath = communications[comIndex].s3path;
-          //   // }
-          //   if (new RegExp(this.imageAllowed.join("|")).test(thumbPathExt.toUpperCase())) {
-          //     imagePath = communications[comIndex].s3path;
-          // }
-          //   const imgobj = new Image(
-          //     count,
-          //     {
-          //       img: imagePath,
-          //       description: caption
-          //     },
-          //   );
-          //   this.image_list_popup_temp.push(imgobj);
-          //   count++;
-          // }
-          // if (count > 0) {
-          //   this.image_list_popup = this.image_list_popup_temp;
-          //   setTimeout(() => {
-          //     this.openImageModalRow(this.image_list_popup[0]);
-          //   }, 500);
-          // }
         },
         error => { }
       );

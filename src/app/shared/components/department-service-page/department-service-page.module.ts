@@ -7,6 +7,7 @@ import { GalleryModule } from "@ks89/angular-modal-gallery";
 import { RouterModule, Routes } from "@angular/router";
 import { HeaderModule } from "../../modules/header/header.module";
 import { CheckavailabilityModule } from "../checkavailability/checkavaiablity.module";
+import { DomainConfigGenerator } from "../../services/domain-config-generator.service";
 const routes: Routes = [
     {path: '', component: DepartmentServicePageComponent}
 ];
@@ -25,6 +26,9 @@ const routes: Routes = [
     ],
     declarations:[
         DepartmentServicePageComponent
+    ],
+    providers: [
+        DomainConfigGenerator
     ]
 })
 export class DepartmentServicePageModule {}

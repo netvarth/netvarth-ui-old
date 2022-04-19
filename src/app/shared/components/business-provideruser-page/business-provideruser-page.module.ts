@@ -17,6 +17,7 @@ import { ConfirmBoxModule } from "../confirm-box/confirm-box.module";
 import { QRCodeGeneratordetailModule } from "../qrcodegenerator/qrcodegeneratordetail.module";
 import { RouterModule, Routes } from "@angular/router";
 import { CheckavailabilityModule } from "../checkavailability/checkavaiablity.module";
+import { DomainConfigGenerator } from "../../services/domain-config-generator.service";
 const routes: Routes = [
     { path: '', component: BusinessprovideruserPageComponent},
     { path: 'home', loadChildren: () => import('../business-page-home/business-page-home.module').then(m => m.BusinessPageHomeModule) },
@@ -48,6 +49,9 @@ const routes: Routes = [
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA
+    ],
+    providers: [
+        DomainConfigGenerator
     ],
     exports: [BusinessprovideruserPageComponent]
 })

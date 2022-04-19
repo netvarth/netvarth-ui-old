@@ -600,26 +600,6 @@ checkCouponExists(couponCode) {
   }
   return found;
 }
-
-
-
-getbusinessprofiledetails_json(section, modDateReq: boolean) {
-  let UTCstring = null;
-  if (modDateReq) {
-    UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-  }
-  this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-    .pipe(takeUntil(this.onDestroy$))
-    .subscribe(res => {
-      this.s3CouponsList = res;
-      if (this.s3CouponsList.length > 0) {
-        this.showCouponWB = true;
-      }
-    },
-      () => {
-      }
-    );
-}
 removeFromCart(itemObj) {
   const item = itemObj.item;
   for (const i in this.orderList) {
