@@ -8,7 +8,6 @@ import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ConsumerServices } from '../../../../../ynw_consumer/services/consumer-services.service';
-import { RazorpayprefillModel } from '../../../../../shared/components/razorpay/razorpayprefill.model';
 import { WindowRefService } from '../../../../../shared/services/windowRef.service';
 import { RazorpayService } from '../../../../../shared/services/razorpay.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
@@ -151,7 +150,6 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
         private dialog: MatDialog,
         @Inject(DOCUMENT) public document,
         public razorpayService: RazorpayService,
-        public prefillmodel: RazorpayprefillModel,
         public winRef: WindowRefService,
         private cdRef: ChangeDetectorRef,
         private location: Location,
@@ -213,22 +211,11 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
                     this.checkin = data;
                     this.provider_id = this.checkin.providerAccount.uniqueId;
                     this.gets3curl();
-                    // this.getCouponList();
-                    // this.getproviderCouponList();
                     this.getAppointmentBill();
                     this.getPrePaymentDetails();
                     this.getPaymentModes();
                     const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
                     this.customer_countrycode = credentials.countryCode;
-                    // if(this.customer_countrycode == '+91'){
-                    //     this.getPaymentModes();
-                    // } else {
-                    //     this.razorpayEnabled = true;
-                    // }
-
-                    // if (this.provider_label === 'provider') {
-
-                    // }
                 });
     }
     getBillDateandTime() {
@@ -236,7 +223,6 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
             this.billdate = this.bill_data.createdDate;
             const datearr = this.bill_data.createdDate.split(' ');
             const billdatearr = datearr[0].split('-');
-            // this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
             this.billtime = datearr[1] + ' ' + datearr[2];
             this.billdate = billdatearr[0] + '-' + billdatearr[1] + '-' + billdatearr[2];
         }
@@ -279,28 +265,7 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
                     this.processS3s('providerCoupon', accountS3s['providerCoupon']);
                 }
             });
-        // this.retval = this.sharedfunctionObj.getS3Url()
-        //     .then(
-        //         res => {
-        //             this.s3url = res;
-        //             this.getbusinessprofiledetails_json('terminologies', true);
-        //         });
     }
-    // getbusinessprofiledetails_json(section, modDateReq: boolean) {
-    //     let UTCstring = null;
-    //     if (modDateReq) {
-    //         UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
-    //     }
-    //    this.subs.sink= this.sharedServices.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-    //         .subscribe(res => {
-    //             switch (section) {
-    //                 case 'terminologies': {
-    //                     this.terminologiesjson = res;
-    //                     break;
-    //                 }
-    //             }
-    //         });
-    // }
     getTerminologyTerm(term) {
         const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
         if (this.terminologiesjson) {
@@ -401,53 +366,6 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
                 }
             );
     }
-    /**
-     * To Get Payment Modes
-     */
-    // getPaymentModes() {
-    //     this.paytmEnabled = false;
-    //     this.razorpayEnabled = false;
-    //     this.interNatioanalPaid = false;
-    //     this.sharedServices.getPaymentModesofProvider(this.accountId,this.bill_data.service.id,'billPayment')
-    //         .subscribe(
-    //             data => {
-    //               this.paymentmodes = data;
-    //               if (this.paymentmodes[0].isJaldeeBank) {
-    //                 if (this.customer_countrycode == '+91') {
-    //                     this.paytmEnabled = true;
-    //                     this.interNatioanalPaid = true;
-    //                 }
-    //                 else {
-    //                     this.razorpayEnabled = true;
-    //                 }
-    //             }
-    //              else{
-    //                 if (this.customer_countrycode == '+91') {
-    //                     for (let modes of this.paymentmodes) {
-    //                         for (let gateway of modes.payGateways) {
-    //                             if (gateway == 'PAYTM') {
-    //                                 this.paytmEnabled = true;
-    //                             }
-    //                             if (gateway == 'RAZORPAY') {
-    //                                 this.razorpayEnabled = true;
-    //                             }
-    //                         }
-    //                     }
-    //                 }
-    //                 else {
-    //                     this.razorpayEnabled = true;
-    //                 }
-    //              }
-
-    //             if(this.razorpayEnabled ||this.paytmEnabled){
-    //                 this.paymode = true;
-    //             }
-
-    //             },
-
-    //         );
-    // }
-
     indian_payment_mode_onchange(event) {
         this.selected_payment_mode = event.value;
         this.isInternatonal = false;
@@ -461,11 +379,9 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
         this.selected_payment_mode = null;
     }
     getPaymentModes() {
-
         this.sharedServices.getPaymentModesofProvider(this.accountId, 0, 'billPayment')
             .subscribe(
                 data => {
-
                     this.paymentmodes = data[0];
                     this.isPayment = true;
                     if (this.paymentmodes.indiaPay) {
@@ -536,15 +452,6 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
                                 'serviceId': 0,
                                 'isinternational': this.isInternatonal
                             };
-                            // if(paymentType == 'paytm'){
-                            //     postData.isPayTmPayment = true;
-                            //     postData.isRazorPayPayment = false;
-                            //     postData.paymentMode = "PPI";
-                            // } else {
-                            //     postData.isPayTmPayment = false;
-                            //     postData.isRazorPayPayment = true;
-                            //     postData.paymentMode = "DC";
-                            // }
                             this.sharedServices.PayByJaldeewallet(postData)
                                 .subscribe((pData: any) => {
                                     this.origin = 'consumer';
@@ -552,45 +459,10 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
                                     if (pData.isGateWayPaymentNeeded && pData.isJCashPaymentSucess) {
                                         if (this.pGateway == 'RAZORPAY') {
                                             this.paywithRazorpay(pData.response);
-
                                         } else {
                                             this.payWithPayTM(pData.response, this.accountId);
                                         }
-                                    }
-                                    // if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
-                                    //     this.pay_data.uuid = this.uuid;
-                                    //     this.pay_data.amount = this.remainingadvanceamount;
-                                    //     this.pay_data.paymentMode = 'DC';
-                                    //     this.pay_data.accountId = this.accountId;
-                                    //     this.pay_data.purpose = 'billPayment';
-                                    //     this.resetApiError();
-                                    //     if (this.pay_data.uuid != null &&
-                                    //         this.pay_data.paymentMode != null &&
-                                    //         this.pay_data.amount !== 0) {
-                                    //         this.api_success = Messages.PAYMENT_REDIRECT;
-                                    //         this.gateway_redirection = true;
-                                    //         this.subs.sink = this.sharedServices.consumerPayment(this.pay_data)
-                                    //             .subscribe(
-                                    //                 (data: any) => {
-                                    //                     this.origin = 'consumer';
-                                    //                     this.pGateway = data.paymentGateway;
-                                    //                     if (this.pGateway === 'RAZORPAY') {
-                                    //                         this.paywithRazorpay(data);
-                                    //                     } else {
-                                    //                         this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(data['response']);
-                                    //                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-                                    //                         setTimeout(() => {
-                                    //                             this.document.getElementById('payuform').submit();
-                                    //                         }, 2000);
-                                    //                     }
-                                    //                 },
-                                    //                 error => {
-                                    //                     this.resetApiError();
-                                    //                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                                    //                 }
-                                    //             );
-                                    //     }
-                                    // }
+                                    }                                    
                                 },
                                     error => {
                                         this.isClickedOnce = false;
@@ -786,20 +658,6 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
         this.loadingPaytm = true;
         pData.paymentMode = this.selected_payment_mode;
         this.razorpayService.initializePayment(pData, this.accountId, this);
-        // this.prefillmodel.name = data.consumerName;
-        // this.prefillmodel.email = data.ConsumerEmail;
-        // this.prefillmodel.contact = data.consumerPhoneumber;
-        // this.razorModel = new Razorpaymodel(this.prefillmodel);
-        // this.razorModel.key = data.razorpayId;
-        // this.razorModel.amount = data.amount;
-        // this.razorModel.order_id = data.orderId;
-        // this.razorModel.name = data.providerName;
-        // this.razorModel.description = data.description;
-        // this.razorModel.mode=this.selected_payment_mode;
-        // this.isClickedOnce=false;
-        // // this.razorModel.image = data.jaldeeLogo;
-        // this.razorpayService.payWithRazor(this.razorModel, this.origin, this.checkIn_type , this.uuid , null, this.accountId);
-
     }
 
     resetApiError() {
@@ -1094,29 +952,7 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
 
         }, 1000);
     }
-    // getCouponList() {
-    //     const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
-    //     this.sharedfunctionObj.getS3Url()
-    //         .then(
-    //             s3Url => {
-    //                 this.subs.sink=this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'coupon', UTCstring)
-    //                     .subscribe(res => {
 
-    //                         this.couponList.JC = res;
-    //                     });
-    //             });
-    // }
-    // getproviderCouponList() {
-    //     const UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
-    //     this.sharedfunctionObj.getS3Url()
-    //         .then(
-    //             s3Url => {
-    //                 this.subs.sink=this.sharedServices.getbusinessprofiledetails_json(this.checkin.providerAccount.uniqueId, s3Url, 'providerCoupon', UTCstring)
-    //                     .subscribe(res => {
-    //                         this.couponList.OWN = res;
-    //                     });
-    //             });
-    // }
     checkCouponValid(couponCode) {
         let found = false;
         for (let couponIndex = 0; couponIndex < this.couponList.JC.length; couponIndex++) {

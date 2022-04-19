@@ -15,6 +15,7 @@ import { FormMessageDisplayModule } from '../../../../../../../../shared/modules
 import { AboutmeComponent } from './aboutme.component';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { UserBprofileSearchPrimaryModule } from '../user-bprofile-search-primary/user-bprofile-search-primary.module';
+import { FileService } from '../../../../../../../../shared/services/file-service';
 const routes: Routes = [
     {path: '', component: AboutmeComponent }
 ]
@@ -38,6 +39,9 @@ const routes: Routes = [
     ],
     declarations: [
         AboutmeComponent
+    ],
+    providers: [
+        FileService
     ],
     exports: [AboutmeComponent]
 })

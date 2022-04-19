@@ -1097,28 +1097,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       this.apptTempArray = this.apptfirstArray;
     });
   }
-  // gets the various json files based on the value of "section" parameter
-  // Some of functions copied to Consumer Home also.
-  // getbusinessprofiledetails_json(section, modDateReq: boolean) {
-  //   // this.showServices = false;
-  //   // let UTCstring = null;
-  //   // if (modDateReq) {
-  //   //   UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-  //   // }
-  //   this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-  //     .subscribe((res: any) => {
-
-  //     },
-  //       (error) => {
-  //         if (section === 'businessProfile') {
-  //           this.routerobj.navigate(['/not-found']);
-  //         }
-  //         if (section === 'gallery') {
-  //           
-  //         }
-  //       }
-  //     );
-  // }
   getUserApptTime(provids_locid, waitTimearr) {
     if (provids_locid.length > 0) {
       const post_provids_locid: any = [];

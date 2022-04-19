@@ -6,6 +6,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { RouterModule, Routes } from "@angular/router";
+import { DomainConfigGenerator } from "../../services/domain-config-generator.service";
 import { BusinessPageHomeComponent } from "./business-page-home.component";
 import { ContactModule } from "./contactus/contact.module";
 import { PrivacyModule } from "./privacy/privacy.module";
@@ -31,6 +32,9 @@ const routes: Routes = [
     ],
     declarations: [
         BusinessPageHomeComponent
+    ],
+    providers: [
+        DomainConfigGenerator
     ]
 })
 export class BusinessPageHomeModule { }

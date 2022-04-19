@@ -27,6 +27,7 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { ImageTransform } from './pro-pic-popup/interfaces/index';
 import { QuestionService } from '../../../../shared/modules/dynamic-form/dynamic-form-question.service';
 import { ProviderBprofileSearchDynamicComponent } from '../../provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
+import { FileService } from '../../../../shared/services/file-service';
 // import '../../../../../assets/plugins/custom/uppy/uppy.bundle.js';
 // import '../../../../../assets/js/pages/crud/file-upload/uppy.js';
 
@@ -415,7 +416,8 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     public fed_service: FormMessageDisplayService,
     private shared_services: SharedServices,
     private qservice: QuestionService,
-    private changeDetectorRef: ChangeDetectorRef) {
+    private changeDetectorRef: ChangeDetectorRef,
+    private fileService: FileService) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_datastorage.setWeightageArray([]);
     this.maintooltip = this.wordProcessor.getProjectMesssages('BPROFILE_TOOPTIP');
@@ -1521,7 +1523,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.error_list = [];
     this.error_msg = '';
     if (file) {
-        this.success_error = this.sharedfunctionobj.imageValidation(file);
+        this.success_error = this.fileService.imageValidation(file);
         if (this.success_error === true) {
             const reader = new FileReader();
             this.item_pic.files = file;

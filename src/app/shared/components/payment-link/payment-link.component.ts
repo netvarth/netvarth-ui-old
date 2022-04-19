@@ -5,9 +5,7 @@ import { SharedServices } from '../../services/shared-services';
 import { Messages } from '../../constants/project-messages';
 import { ActivatedRoute } from '@angular/router';
 import { RazorpayService } from '../../services/razorpay.service';
-import { RazorpayprefillModel } from '../razorpay/razorpayprefill.model';
 import { WindowRefService } from '../../services/windowRef.service';
-import { Razorpaymodel } from '../razorpay/razorpay.model';
 import { WordProcessor } from '../../services/word-processor.service';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { PaytmService } from '../../services/paytm.service';
@@ -106,7 +104,6 @@ export class PaymentLinkComponent implements OnInit {
   billPaymentStatus: any;
   amountDue: any;
   origin: string;
-  razorModel: Razorpaymodel;
   checkIn_type: string;
   accountId: any;
   countryCode: any;
@@ -134,8 +131,8 @@ export class PaymentLinkComponent implements OnInit {
   isInternatonal: boolean;
   selected_payment_mode: any;
   isPayment: boolean;
-  indian_payment_modes: any=[]
-  non_indian_modes: any=[];
+  indian_payment_modes: any = []
+  non_indian_modes: any = [];
   constructor(
     public provider_services: ProviderServices,
     private activated_route: ActivatedRoute,
@@ -143,7 +140,6 @@ export class PaymentLinkComponent implements OnInit {
     public sharedServices: SharedServices,
     public razorpayService: RazorpayService,
     private paytmService: PaytmService,
-    public prefillmodel: RazorpayprefillModel,
     public winRef: WindowRefService,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
@@ -176,27 +172,27 @@ export class PaymentLinkComponent implements OnInit {
             this.businessname = this.bill_data.accountProfile.businessName;
             this.firstname = this.bill_data.billFor.firstName;
             this.netRate = this.bill_data.netRate;
-            if(this.bill_data.amountDue){
+            if (this.bill_data.amountDue) {
               this.amountDue = this.bill_data.amountDue;
               this.getPaymentModes();
             }
-        
+
             this.location = this.bill_data.accountProfile.location.place;
             this.billPaymentStatus = this.bill_data.billPaymentStatus;
             this.uuid = this.bill_data.uuid;
-           
+
             this.countryCode = this.bill_data.billFor.countryCode;
-            if(this.bill_data.service&& this.bill_data.service.length>0){
-            this.serviceId=this.bill_data.service[0].serviceId;
+            if (this.bill_data.service && this.bill_data.service.length > 0) {
+              this.serviceId = this.bill_data.service[0].serviceId;
             }
-           
-         
+
+
           }
-    
+
           if (this.bill_data && this.bill_data.accountId === 0) {
             this.razorpayEnabled = true;
           }
-         
+
           if (this.bill_data.accountProfile.providerBusinessName) {
             this.username = this.bill_data.accountProfile.providerBusinessName;
           }
@@ -236,31 +232,31 @@ export class PaymentLinkComponent implements OnInit {
       );
   }
   getPaymentModes() {
-    
-    this.serviceId=0;
-    this.sharedServices.getPaymentModesofProvider(this.accountId,this.serviceId, 'billPayment')
+
+    this.serviceId = 0;
+    this.sharedServices.getPaymentModesofProvider(this.accountId, this.serviceId, 'billPayment')
       .subscribe(
         data => {
           this.paymentmodes = data[0];
           this.isPayment = true;
           if (this.paymentmodes && this.paymentmodes.indiaPay) {
-              this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
+            this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
           }
-           if (this.paymentmodes && this.paymentmodes.internationalPay) {
-              this.non_indian_modes = this.paymentmodes.internationalBankInfo;
+          if (this.paymentmodes && this.paymentmodes.internationalPay) {
+            this.non_indian_modes = this.paymentmodes.internationalBankInfo;
 
           }
-          if(this.paymentmodes && !this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
-              this.shownonIndianModes=true;
-          }else{
-              this.shownonIndianModes=false;  
+          if (this.paymentmodes && !this.paymentmodes.indiaPay && this.paymentmodes.internationalPay) {
+            this.shownonIndianModes = true;
+          } else {
+            this.shownonIndianModes = false;
           }
 
-      },
-      error => {
+        },
+        error => {
           this.isPayment = false;
           console.log(this.isPayment);
-      }
+        }
 
       );
   }
@@ -272,7 +268,7 @@ export class PaymentLinkComponent implements OnInit {
       // this.billdate = billdatearr[2] + '/' + billdatearr[1] + '/' + billdatearr[0];
       this.billtime = datearr[1] + ' ' + datearr[2];
       this.billdate = billdatearr[0] + '-' + billdatearr[1] + '-' + billdatearr[2];
-     
+
 
     }
     if (this.bill_data.hasOwnProperty('gstNumber')) {
@@ -317,28 +313,28 @@ export class PaymentLinkComponent implements OnInit {
   indian_payment_mode_onchange(event) {
     this.selected_payment_mode = event.value;
     this.isInternatonal = false;
-}
-non_indian_modes_onchange(event) {
+  }
+  non_indian_modes_onchange(event) {
     this.selected_payment_mode = event.value;
     this.isInternatonal = true;
 
-}
-togglepaymentMode(){
-    this.shownonIndianModes=!this.shownonIndianModes;
+  }
+  togglepaymentMode() {
+    this.shownonIndianModes = !this.shownonIndianModes;
     this.selected_payment_mode = null;
-}
+  }
   goToGateway(paytype?) {
     this.isClickedOnce = true;
-  
+
     const postdata = {
       'uuid': this.genid,
       'amount': this.amountDue,
       'purpose': 'billPayment',
       'source': 'Desktop',
-      'accountId':this.accountId,
+      'accountId': this.accountId,
       'paymentMode': this.selected_payment_mode,
-      'isInternational':this.isInternatonal,
-      'serviceId':0
+      'isInternational': this.isInternatonal,
+      'serviceId': 0
     };
 
     this.provider_services.linkPayment(postdata)
@@ -358,20 +354,10 @@ togglepaymentMode(){
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
-  paywithRazorpay(data: any) {
+  paywithRazorpay(pData: any) {
     const self = this;
-    self.prefillmodel.name = data.consumerName;
-    self.prefillmodel.email = data.ConsumerEmail;
-    self.prefillmodel.contact = data.consumerPhoneumber;
-    self.razorModel = new Razorpaymodel(self.prefillmodel);
-    self.razorModel.key = data.razorpayId;
-    self.razorModel.amount = data.amount;
-    self.razorModel.order_id = data.orderId;
-    self.razorModel.name = data.providerName;
-    self.razorModel.description = data.description;
-    self.razorModel.mode=self.selected_payment_mode;
     self.isClickedOnce = false;
-    self.razorpayService.payBillWithoutCredentials(self.razorModel).then(
+    self.razorpayService.payBillWithoutCredentials(pData).then(
       (response: any) => {
         if (response !== 'failure') {
           self.paidStatus = 'true';
@@ -379,15 +365,15 @@ togglepaymentMode(){
           self.order_id = response.razorpay_order_id;
           self.payment_id = response.razorpay_payment_id;
           // this.razorpay_signature = response.razorpay_signature;
-          const razorpay_payload={
-        
-            "paymentId":response.razorpay_payment_id,
-            "orderId":response.razorpay_order_id,
-            "signature":response.razorpay_signature
-          
-        };
-        self.razorpayService.updateRazorPay(razorpay_payload,self.accountId,'consumer').then((data)=>{
-          console.log('successs');
+          const razorpay_payload = {
+
+            "paymentId": response.razorpay_payment_id,
+            "orderId": response.razorpay_order_id,
+            "signature": response.razorpay_signature
+
+          };
+          self.razorpayService.updateRazorPay(razorpay_payload, self.accountId, 'consumer').then((data) => {
+            console.log('successs');
 
           });
         } else {
@@ -399,33 +385,54 @@ togglepaymentMode(){
   payWithPayTM(pData: any, accountId: any) {
     this.isClickedOnce = true;
     this.loadingPaytm = true;
-    pData.paymentMode=this.selected_payment_mode;
+    pData.paymentMode = this.selected_payment_mode;
     this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
   }
   transactionCompleted(response, payload, accountId) {
-    if (response.STATUS == 'TXN_SUCCESS') {
-      this.paytmService.updatePaytmPay(payload, accountId)
-        .then((data) => {
-          if (data) {
-            this.paidStatus = 'true';
-            this.order_id = response.ORDERID;
-            this.payment_id = response.TXNID;
-            this.loadingPaytm = false;
-            this.cdRef.detectChanges();
-            this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-            this.ngZone.run(() => console.log('Transaction success'));
-          }
-        },
-        error=>{
-          this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-        })
-    } else if (response.STATUS == 'TXN_FAILURE') {
-      this.isClickedOnce = false;
-      this.paidStatus = 'false';
+    if (response.SRC) {
+      if (response.STATUS == 'TXN_SUCCESS') {
+        this.razorpayService.updateRazorPay(payload, accountId, 'consumer')
+          .then((data) => {
+            if (data) {
+              this.paymentCompleted(true, payload);
+            }
+          },
+            error => {
+              this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+            })
+      } else if (response.STATUS == 'TXN_FAILURE') {
+        this.paymentCompleted(false);
+      }
+    } else {
+      if (response.STATUS == 'TXN_SUCCESS') {
+        this.paytmService.updatePaytmPay(payload, accountId)
+          .then((data) => {
+            if (data) {
+              this.paymentCompleted(true, payload);
+            }
+          },
+            error => {
+              // this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+            })
+      } else if (response.STATUS == 'TXN_FAILURE') {
+        this.snackbarService.openSnackBar(response.RESPMSG, { 'panelClass': 'snackbarerror' });
+        this.paymentCompleted(false);
+      }
+    }
+  }
+  paymentCompleted(status, response?) {
+    if (status) {
+      this.paidStatus = 'true';
+      if (response) {
+      this.order_id = response.ORDERID;
+      this.payment_id = response.TXNID;
+      }
       this.loadingPaytm = false;
       this.cdRef.detectChanges();
-      this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-      this.ngZone.run(() => console.log('Transaction failed'));
+      this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+      this.ngZone.run(() => console.log('Transaction success'));
+    } else {
+      this.closeloading();
     }
   }
   closeloading() {
@@ -438,8 +445,7 @@ togglepaymentMode(){
   billview() {
     this.showbill = !this.showbill;
   }
-  getImageSrc(mode){
-    
-    return 'assets/images/payment-modes/'+mode+'.png';
+  getImageSrc(mode) {
+    return 'assets/images/payment-modes/' + mode + '.png';
   }
 }

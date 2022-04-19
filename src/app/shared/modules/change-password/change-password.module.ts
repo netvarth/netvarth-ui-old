@@ -13,6 +13,7 @@ import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { projectConstantsLocal } from '../../constants/project-constants';
+import { EqualValidatorModule } from '../../directives/equal-validator/equal-validator.module';
 export function homeHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, projectConstantsLocal.PATH+'assets/i18n/home/', '.json');
 }
@@ -25,6 +26,7 @@ export function homeHttpLoaderFactory(http: HttpClient) {
         HeaderModule,
         MatButtonModule,
         HttpClientModule,
+        EqualValidatorModule,
         TranslateModule.forChild({
           loader: {
               provide: TranslateLoader,

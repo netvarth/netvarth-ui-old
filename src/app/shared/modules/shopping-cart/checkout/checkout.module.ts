@@ -23,7 +23,9 @@ import { RouterModule, Routes } from "@angular/router";
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { PaymentModesModule } from "../../payment-modes/payment-modes.module";
 import { RefundpolicyModule } from '../../../../ynw_consumer/modules/refundpolicy/refundpolicy.module';
-import { QuestionnaireModule } from "../../../../../../src/app/shared/components/questionnaire/questionnaire.module";
+import { QuestionnaireModule } from "../../../../shared/components/questionnaire/questionnaire.module";
+import { RazorpayService } from "../../../../shared/services/razorpay.service";
+import { PaytmService } from "../../../../shared/services/paytm.service";
 const routes: Routes = [
     {path: '', component: CheckoutComponent}
 ]
@@ -57,6 +59,7 @@ const routes: Routes = [
     exports: [CheckoutComponent],
     declarations: [
         CheckoutComponent
-    ]
+    ],
+    providers: [RazorpayService, PaytmService]
 })
 export class CheckoutModule {}

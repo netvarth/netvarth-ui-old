@@ -10,19 +10,14 @@ import { CheckavailabilityModule } from '../../shared/components/checkavailabili
 import { ServiceDetailModule } from '../../shared/components/service-detail/service-detail.module';
 import { ConsumerJoinModule } from '../../ynw_consumer/components/consumer-join/join.component.module';
 import { MatDialogModule } from '@angular/material/dialog';
-// import { DonationServicesComponent } from '../donation-services/donation-services.component';
-// import { AppointmentServicesComponent } from '../appointment-services/appointment-services.component';
-// import { CheckinServicesComponent } from '../checkin-services/checkin-services.component';
 import { OrdersModule } from '../orders/orders.module';
+import { BookingService } from '../../shared/services/booking-service';
 
 
 
 @NgModule({
   declarations: [
-    ServiceDisplayComponent,
-    // DonationServicesComponent,
-    // AppointmentServicesComponent,
-    // CheckinServicesComponent
+    ServiceDisplayComponent
   ],
   imports: [
     CommonModule,
@@ -37,6 +32,7 @@ import { OrdersModule } from '../orders/orders.module';
     MatDialogModule,
     OrdersModule
   ],
+  providers: [BookingService],
   exports: [
     ServiceDisplayComponent
   ],

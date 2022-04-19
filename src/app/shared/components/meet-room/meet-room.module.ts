@@ -5,6 +5,8 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { RouterModule, Routes } from "@angular/router";
 import { RequestDialogModule } from "../../modules/request-dialog/request-dialog.module";
 import { VisualizeModule } from "../../modules/visualizer/visualize.module";
+import { MediaService } from "../../services/media-service";
+import { MeetService } from "../../services/meet-service";
 import { TwilioService } from "../../services/twilio-service";
 import { AddInboxMessagesModule } from "../add-inbox-messages/add-inbox-messages.module";
 import { MeetRoomComponent } from "./meet-room.component";
@@ -27,7 +29,9 @@ const routes: Routes = [
         MeetRoomComponent
     ],
     providers: [
-        TwilioService
+        TwilioService,
+        MeetService,
+        MediaService
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

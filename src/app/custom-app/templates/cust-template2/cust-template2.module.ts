@@ -16,6 +16,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatOptionModule } from "@angular/material/core";
 import { MatSelectModule } from "@angular/material/select";
 import { FormsModule } from "@angular/forms";
+import { DomainConfigGenerator } from "../../../shared/services/domain-config-generator.service";
 @NgModule({
     declarations: [
         CustTemplate2Component
@@ -41,6 +42,9 @@ import { FormsModule } from "@angular/forms";
         CardModule,
         TranslateModule,
         TableModule
+    ],
+    providers: [
+        DomainConfigGenerator
     ]
 })
 export class CustTemplate2Module {}

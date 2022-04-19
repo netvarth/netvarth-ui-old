@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { RouterModule, Routes } from "@angular/router";
+import { TeleBookingService } from "../../../shared/services/tele-bookings-service";
 import { CapitalizeFirstPipeModule } from "../../../shared/pipes/capitalize.module";
 import { VideoCallSharedComponent } from "./video-call.component";
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
     exports: [VideoCallSharedComponent],
     declarations: [
         VideoCallSharedComponent
-    ]
+    ],
+    providers: [TeleBookingService]
 })
 export class VideoCallModule {}

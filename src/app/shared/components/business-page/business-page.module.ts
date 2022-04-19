@@ -26,6 +26,7 @@ import { QRCodeGeneratordetailModule } from "../qrcodegenerator/qrcodegeneratord
 import { RouterModule, Routes } from "@angular/router";
 import { CheckavailabilityModule } from "../checkavailability/checkavaiablity.module";
 import { projectConstantsLocal } from "../../constants/project-constants";
+import { DomainConfigGenerator } from "../../services/domain-config-generator.service";
 // import { Checkavailability } from "../checkavailability/checkavailability.component";
 
 const routes: Routes = [
@@ -70,6 +71,9 @@ const routes: Routes = [
     ],
     declarations: [
         BusinessPageComponent,
+    ],
+    providers: [
+        DomainConfigGenerator
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

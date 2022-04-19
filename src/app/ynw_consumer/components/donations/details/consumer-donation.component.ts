@@ -11,9 +11,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { ProviderServices } from '../../../../business/services/provider-services.service';
 import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
-import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.model';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
-import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { WindowRefService } from '../../../../shared/services/windowRef.service';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -206,7 +204,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     slots;
     freeSlots: any = [];
     donorName: any;
-    razorModel: Razorpaymodel;
     checkIn_type: any;
     origin: string;
     pGateway: any;
@@ -320,7 +317,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         @Inject(DOCUMENT) public document,
         public _sanitizer: DomSanitizer,
         public razorpayService: RazorpayService,
-        public prefillmodel: RazorpayprefillModel,
         public winRef: WindowRefService,
         private location: Location,
         private s3Processor: S3UrlProcessor,

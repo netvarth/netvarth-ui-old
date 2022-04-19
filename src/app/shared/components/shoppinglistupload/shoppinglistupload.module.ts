@@ -7,6 +7,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatMenuModule } from "@angular/material/menu";
 import { FormMessageDisplayModule } from "../../modules/form-message-display/form-message-display.module";
+import { FileService } from "../../services/file-service";
 import { ShoppinglistuploadComponent } from "./shoppinglistupload.component";
 
 @NgModule({
@@ -23,6 +24,7 @@ import { ShoppinglistuploadComponent } from "./shoppinglistupload.component";
     exports: [ShoppinglistuploadComponent],
     declarations: [
         ShoppinglistuploadComponent 
-    ]
+    ],
+    providers: [FileService]
 })
 export class ShoppingListUploadModule {}

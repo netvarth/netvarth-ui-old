@@ -12,6 +12,8 @@ import { OrderBillComponent } from "./order-bill.component";
 import { HeaderModule } from "../../../../shared/modules/header/header.module";
 import { MatRadioModule } from "@angular/material/radio";
 import { PaymentModesModule } from "../../../../shared/modules/payment-modes/payment-modes.module";
+import { RazorpayService } from "../../../../shared/services/razorpay.service";
+import { PaytmService } from "../../../../shared/services/paytm.service";
 const routes: Routes= [
     {path: '', component: OrderBillComponent}
 ]
@@ -31,6 +33,7 @@ const routes: Routes= [
         [RouterModule.forChild(routes)]
     ],
     exports: [OrderBillComponent],
-    declarations: [OrderBillComponent]
+    declarations: [OrderBillComponent],
+    providers: [RazorpayService, PaytmService]
 })
 export class OrderBillModule {}

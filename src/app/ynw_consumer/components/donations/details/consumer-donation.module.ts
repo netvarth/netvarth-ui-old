@@ -23,6 +23,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {  ReactiveFormsModule } from '@angular/forms';
+import { RazorpayService } from "../../../../shared/services/razorpay.service";
+import { PaytmService } from "../../../../shared/services/paytm.service";
 const routes: Routes = [
     {path: '', component: ConsumerDonationComponent}
 ]
@@ -53,6 +55,7 @@ const routes: Routes = [
         MatInputModule,
         ReactiveFormsModule,
         [RouterModule.forChild(routes)]
-    ]
+    ],
+    providers: [RazorpayService, PaytmService]
 })
 export class ConsumerDonationModule{}

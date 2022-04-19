@@ -3,9 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 import { WindowRefService } from './windowRef.service';
 import { SharedServices } from './shared-services';
 import { SharedFunctions } from '../functions/shared-functions';
-import { Razorpaymodel } from '../components/razorpay/razorpay.model';
-import { MatDialog } from '@angular/material/dialog';
-import { RazorpayprefillModel } from '../components/razorpay/razorpayprefill.model';
 
 
 @Injectable()
@@ -18,36 +15,62 @@ export class RazorpayService {
   { method: "upi" }, { method: "wallet" }];
 
   constructor(
-    public dialog: MatDialog,
     public winRef: WindowRefService,
     public sharedServices: SharedServices,
     public shared_functions: SharedFunctions,
-    public razorpayModel: Razorpaymodel,
-    private prefillmodel: RazorpayprefillModel
+    // public razorpayModel: Razorpaymodel,
+    // private prefillmodel: RazorpayprefillModel
   ) { }
 
   changePaidStatus(value: string) {
     this.paidStatus.next(value);
   }
 
-  payBillWithoutCredentials(razorModel) {
+  payBillWithoutCredentials(pData) {
     const self = this;
-    razorModel.retry = false;
-    let selectedmode = razorModel.mode;
+
+    let prefillModel = {}
+
+    prefillModel['name'] = pData.consumerName;
+    prefillModel['email'] = pData.ConsumerEmail;
+    prefillModel['contact'] = pData.consumerPhoneumber;
+
+    let razorModel = {
+      refill: prefillModel,
+      key: pData.razorpayId,
+      amount: pData.amount,
+      currency: 'INR',
+      order_id: pData.orderId,
+      name: pData.providerName,
+      description: pData.description,
+      mode: pData.paymentMode,
+      retry: false,
+      theme: {
+        color: '#F37254'
+      },
+      modal: {
+        // We should prevent closing of the form when esc key is pressed.
+        escape: false
+      },
+      notes: {
+        // include notes if any
+      }
+    }
+    let selectedmode = pData.paymentMode;
     if (selectedmode === 'DC' || selectedmode === 'CC') {
       selectedmode = 'CARD';
     }
-
     const hiddenObject = this.paymentModes.filter((mode) => mode.method !== selectedmode.toLowerCase());
-    razorModel.config = {
+    razorModel['config'] = {
       display: {
         hide: hiddenObject
       }
     }
     return new Promise(function (resolve) {
       const options = razorModel;
-      options.handler = ((response, error) => {
-        options.response = response;
+      options['handler'] = ((response, error) => {
+        options['response'] = response;
+
         resolve(response);
       });
       const rzp = new self.winRef.nativeWindow.Razorpay(options);
@@ -86,22 +109,54 @@ export class RazorpayService {
   }
 
   initializePayment(pData: any, accountId, referrer, type?) {
-    if (type==='provider') {
-      this.prefillmodel.name = pData.providerName;
-    } else {
-      this.prefillmodel.name = pData.consumerName;
-    }
-    this.prefillmodel.email = pData.ConsumerEmail;
-    this.prefillmodel.contact = pData.consumerPhoneumber;
-    let razorModel = new Razorpaymodel(this.prefillmodel);
-    razorModel.key = pData.razorpayId;
-    razorModel.amount = pData.amount;
-    razorModel.order_id = pData.orderId;
-    razorModel.name = pData.providerName;
-    razorModel.description = pData.description;
+
+    // if (type === 'provider') {
+    //   this.prefillmodel.name = pData.providerName;
+    // } else {
+    //   this.prefillmodel.name = pData.consumerName;
+    // }
+    // this.prefillmodel.email = pData.ConsumerEmail;
+    // this.prefillmodel.contact = pData.consumerPhoneumber;
+    // let razorModel = new Razorpaymodel(this.prefillmodel);
+    // razorModel.key = pData.razorpayId;
+    // razorModel.amount = pData.amount;
+    // razorModel.order_id = pData.orderId;
+    // razorModel.name = pData.providerName;
+    // razorModel.description = pData.description;
 
     let razorInterval;
-    razorModel.retry = false;
+    // razorModel.retry = false;
+    let prefillModel = {}
+    if (type === 'provider') {
+      prefillModel['name'] = pData.providerName;
+      } else {
+        prefillModel['name'] = pData.consumerName;
+      }
+    prefillModel['name'] = pData.consumerName;
+    prefillModel['email'] = pData.ConsumerEmail;
+    prefillModel['contact'] = pData.consumerPhoneumber;
+
+    let razorModel = {
+      refill: prefillModel,
+      key: pData.razorpayId,
+      amount: pData.amount,
+      currency: 'INR',
+      order_id: pData.orderId,
+      name: pData.providerName,
+      description: pData.description,
+      mode: pData.paymentMode,
+      retry: false,
+      theme: {
+        color: '#F37254'
+      },
+      modal: {
+        // We should prevent closing of the form when esc key is pressed.
+        escape: false
+      },
+      notes: {
+        // include notes if any
+      }
+    }
     let selectedmode = pData.paymentMode;
 
     if (selectedmode === 'DC' || selectedmode === 'CC') {
@@ -122,16 +177,16 @@ export class RazorpayService {
         hide: hiddenObject
       }
     }
-    razorModel.retry = false;
-    razorModel.modal = {
-      escape: false
-    };
+    // razorModel.retry = false;
+    // razorModel.modal = {
+    //   escape: false
+    // };
     const options = razorModel;
 
     options['handler'] = ((response, error) => {
       options['response'] = response;
       console.log('orpitons.response' + JSON.stringify(options['response']));
-      
+
       const razorpay_payload = {
         "paymentId": response.razorpay_payment_id,
         "orderId": response.razorpay_order_id,

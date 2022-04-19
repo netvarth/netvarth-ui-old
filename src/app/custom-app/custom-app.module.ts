@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { HeaderModule } from "../shared/modules/header/header.module";
+import { DomainConfigGenerator } from "../shared/services/domain-config-generator.service";
 import { ConsumerJoinModule } from "../ynw_consumer/components/consumer-join/join.component.module";
 import { CustomAppComponent } from "./custom-app.component";
 import { CustomappService } from "./customapp.service";
@@ -32,7 +33,8 @@ const routes: Routes = [
         NO_ERRORS_SCHEMA
     ],
     providers: [
-        CustomappService
+        CustomappService,
+        DomainConfigGenerator
     ]
 })
 export class CustomAppModule{}

@@ -9,6 +9,7 @@ import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { projectConstantsLocal } from '../../constants/project-constants';
+import { FileReaderService } from '../../services/file-reader.service';
 export function homeHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, projectConstantsLocal.PATH+'assets/i18n/home/', '.json');
 }
@@ -29,7 +30,7 @@ export function homeHttpLoaderFactory(http: HttpClient) {
     ],
     declarations: [SearchComponent],
     exports: [SearchComponent],
-    providers: [SearchDataStorageService]
+    providers: [SearchDataStorageService, FileReaderService]
 })
 
 export class SearchModule {

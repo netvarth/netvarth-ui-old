@@ -22,6 +22,7 @@ import { GalleryModule } from '../../../../shared/modules/gallery/gallery.module
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { AddProviderWaitlistLocationsModule } from '../../add-provider-waitlist-locations/add-provider-waitlist-locations.module';
+import { FileService } from '../../../../shared/services/file-service';
 const routes: Routes = [
     { path: '', component: BProfileComponent },
     { path: '', children: [
@@ -66,7 +67,8 @@ const routes: Routes = [
         BProfileComponent
     ],
     providers: [
-        GalleryService
+        GalleryService,
+        FileService
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

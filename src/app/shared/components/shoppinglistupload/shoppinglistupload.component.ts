@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, EventEmitter, ViewChild, ElementRef } from '
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../shared/constants/project-messages';
-import { SharedFunctions } from '../../../shared/functions/shared-functions';
+import { FileService } from '../../services/file-service';
 
 @Component({
     selector: 'app-shoppinglistupload',
@@ -36,7 +36,7 @@ export class ShoppinglistuploadComponent implements OnInit {
     @ViewChild('imagefile') filed: ElementRef;
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<ShoppinglistuploadComponent>,
-        public sharedfunctionObj: SharedFunctions,
+        private fileService: FileService
     ) {
     }
     ngOnInit() {
@@ -70,7 +70,7 @@ export class ShoppinglistuploadComponent implements OnInit {
         const input = event.target.files;
         if (input) {
             for (const file of input) {
-                this.success_error = this.sharedfunctionObj.imageValidation(file);
+                this.success_error = this.fileService.imageValidation(file);
                 if (this.success_error === true) {
                     this.item_pic.files.push(file);
                     const reader = new FileReader();

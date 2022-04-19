@@ -6,6 +6,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { LoadingSpinnerModule } from "../../modules/loading-spinner/loading-spinner.module";
 import { PaymentModesModule } from "../../modules/payment-modes/payment-modes.module";
 import { CapitalizeFirstPipeModule } from "../../pipes/capitalize.module";
+import { PaytmService } from "../../services/paytm.service";
+import { RazorpayService } from "../../services/razorpay.service";
 import { PaymentLinkComponent } from "./payment-link.component";
 const routes: Routes = [
     {path: '', component: PaymentLinkComponent}
@@ -25,6 +27,7 @@ const routes: Routes = [
     ],
     declarations: [
         PaymentLinkComponent
-    ]
+    ],
+    providers: [RazorpayService, PaytmService]
 })
 export class PaymentLinkModule {}

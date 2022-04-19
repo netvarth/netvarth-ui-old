@@ -1,6 +1,5 @@
 import { Injectable, ElementRef, Renderer2, RendererFactory2 } from '@angular/core';
 import * as Video from 'twilio-video';
-import { MediaService } from './media-service';
 @Injectable({
     providedIn: 'any'
 })
@@ -26,80 +25,9 @@ export class TwilioService {
     previewTracksClone;
     btnClicked = false;
     loading = false;
-    constructor(public rendererFactory: RendererFactory2, public mediaService: MediaService) {
+    constructor(public rendererFactory: RendererFactory2) {
         this.renderer = rendererFactory.createRenderer(null, null);
     }
-    /**
-     * Function to returns all the available video inputs also set two camera devices into variables cam1Device and cam2Device
-     * @returns videoDevices - video devices available in the system
-     */
-    // loadDevices() {
-    //     const _this = this;
-    //     return new Promise(function (resolve, reject) {
-    //         let counter = 0;
-    //         navigator.mediaDevices.enumerateDevices().then(devices => {
-    //             const videoDevices = [];
-    //             let count = devices.length;
-    //             if (count > 0) {
-    //                 devices.forEach(device => {
-    //                     if (device.kind === 'videoinput') {
-    //                         if (counter === 0) {
-    //                             _this.cam1Device = device.deviceId;
-    //                             _this.selectedVideoId = device.deviceId;
-    //                         }
-    //                         if (counter === 1) {
-    //                             _this.cam2Device = device.deviceId;
-    //                         }
-    //                         videoDevices.push(device);
-    //                         counter++;
-    //                     }
-    //                     count--;
-    //                     if (count === 0) {
-    //                         resolve(videoDevices);
-    //                     }
-    //                 });
-    //             } else {
-    //                 reject([]);
-    //             }
-    //         });
-    //     })
-    // }
-    /**
-     * Method for Preview Camera before entering to the meeting room
-    */
-    // previewMedia() {
-    //     this.preview = true;
-    //     const _this = this;
-    //     _this.video = false;
-    //     _this.microphone =false;
-    //     _this.loadDevices().then(
-    //         (videoDevices: any) => {
-    //             _this.camDeviceCount = videoDevices.length;
-    //             if (_this.camDeviceCount > 0) {
-    //                 _this.selectedVideoId = _this.cam1Device;
-    //                 _this.video= true;                    
-    //                 Video.createLocalTracks({
-    //                     audio: true,
-    //                     video: { deviceId: _this.selectedVideoId }
-    //                 }).then(localTracks => {
-    //                     _this.previewTracks = localTracks;
-    //                     _this.previewTracksClone = localTracks.slice();
-    //                     localTracks.forEach(localTrack => {
-    //                         if (localTrack.kind === 'audio'){
-    //                             this.microphone= true;
-    //                         }
-    //                         _this.addPreviewTrackToDom(localTrack);
-    //                     })
-    //                 }, (error)=> {
-
-                        
-
-    //                 });
-    //             }
-    //         }
-    //     );
-    // }
-
     unmuteVideo() {
         const _this = this;
         _this.previewTracks.forEach(localTrack => {

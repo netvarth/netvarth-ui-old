@@ -5,6 +5,9 @@ import { TwilioService } from "../../services/twilio-service";
 import { LiveChatRoutingModule } from "./live-chat-routing.module";
 import { LiveChatComponent } from "./live-chat.component";
 import { RequestDialogModule } from "../request-dialog/request-dialog.module";
+import { MeetService } from "../../services/meet-service";
+import { MediaService } from "../../services/media-service";
+import { TeleBookingService } from "../../services/tele-bookings-service";
 
 @NgModule({
     declarations: [
@@ -20,7 +23,10 @@ import { RequestDialogModule } from "../request-dialog/request-dialog.module";
         LiveChatComponent
     ],
     providers: [
-        TwilioService
+        TwilioService,
+        MeetService,
+        MediaService,
+        TeleBookingService
     ]
 })
 export class LiveChatModule {}

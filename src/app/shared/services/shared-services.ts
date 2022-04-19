@@ -900,6 +900,16 @@ export class SharedServices {
     const url = 'consumer/' + mobile + '/check?countryCode=' + countryCode;
     return this.servicemeta.httpGet(url);
   }
+
+  sendConsumerOTP(body) {
+    const url = 'consumer/oauth/credential/identify';
+    return this.servicemeta.httpPost(url, body);
+  }
+  verifyConsumerOTP(otp) {
+    const url = 'consumer/oauth/otp/' + otp + '/verify';
+    return this.servicemeta.httpPost(url);
+  }
+
   isProviderAccountExists(mobile) {
     const url = 'provider/' + mobile + '/check';
     return this.servicemeta.httpGet(url);

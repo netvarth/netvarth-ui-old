@@ -16,6 +16,7 @@ import { ActionPopupModule } from "../action-popup/action-popup.module";
 import { GalleryModule } from "../../../../shared/modules/gallery/gallery.module";
 import { AddInboxMessagesModule } from "../../../../../../src/app/shared/components/add-inbox-messages/add-inbox-messages.module";
 import { InboxListModule } from "../../../../../../src/app/shared/modules/inbox/inbox-list/inbox-list.module";
+import { TeleBookingService } from "../../../../shared/services/tele-bookings-service";
 const routes: Routes = [
     { path: '', component: ApptDetailComponent }
 ];
@@ -43,6 +44,7 @@ const routes: Routes = [
     declarations: [
         ApptDetailComponent
     ],
+    providers: [TeleBookingService],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA

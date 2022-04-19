@@ -20,6 +20,7 @@ import { SignupModule } from '../../signup/signup.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 
 import { VirtualFieldsModule } from '../../../../ynw_consumer/components/virtualfields/virtualfields.module';
+import { DomainConfigGenerator } from '../../../../shared/services/domain-config-generator.service';
 const routes: Routes = [
     { path: '', component: ServiceViewComponent }
 ];
@@ -50,6 +51,9 @@ const routes: Routes = [
     ],
     exports: [
         ServiceViewComponent
+    ],
+    providers: [
+        DomainConfigGenerator
     ]
 })
 export class ServiceViewModule { }

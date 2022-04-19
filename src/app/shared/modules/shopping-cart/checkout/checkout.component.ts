@@ -24,8 +24,6 @@ import { S3UrlProcessor } from '../../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../../node_modules/subsink';
 import { DomSanitizer } from '@angular/platform-browser';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
-import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
-import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.model';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { PaytmService } from '../../../../../app/shared/services/paytm.service';
 import { JcCouponNoteComponent } from '../../jc-coupon-note/jc-coupon-note.component';
@@ -176,7 +174,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   orderDetails: any;
   pGateway: any;
   payment_popup = null;
-  razorModel: Razorpaymodel;
   livetrack: any;
   prepayAmount: any;
   customId: any; // To know the source whether the router came from Landing page or not
@@ -226,7 +223,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     public _sanitizer: DomSanitizer,
     private wordProcessor: WordProcessor,
     @Inject(DOCUMENT) public document,
-    public prefillmodel: RazorpayprefillModel,
     public razorpayService: RazorpayService,
     private ngZone: NgZone,
     private cdRef: ChangeDetectorRef,
@@ -596,32 +592,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       );
   }
-  // getJaldeeCashandCredit() {
-  //   this.shared_services.getJaldeeCashandJcredit()
-  //     .subscribe(data => {
-  //       this.checkJcash = true
-  //       this.jaldeecash = data;
-  //       this.jcashamount = this.jaldeecash.jCashAmt;
-  //       this.jcreditamount = this.jaldeecash.creditAmt;
-  //     });
-  // }
   getAmountToPay(paymentDetails) {
     this.totalamountPay = paymentDetails.advanceAmount;
-    //console.log(this.totalamountPay);
-    // let totalamountPay=paymentDetails.advanceAmount;
-    //if(this.jcashamount >0 && this.checkJcash){
-    //if(this.jcashamount>paymentDetails.advanceAmount){
-    //this.totalamountPay=this.jcashamount- paymentDetails.advanceAmount;
-    //}else{
-    // this.totalamountPay=paymentDetails.advanceAmount-this.jcashamount;
-    //}
-    //}else{
-    // this.totalamountPay=paymentDetails.advanceAmount;
-    // }
-
     return this.totalamountPay;
-    console.log(this.totalamountPay);
-
   }
   OnChangeJcash(event) {
     console.log(event.checked);
@@ -668,55 +641,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
   }
-  // gets3curl() {
-  //   this.api_loading1 = true;
-  //   this.retval = this.sharedFunctionobj.getS3Url()
-  //     .then(
-  //       res => {
-  //         this.s3url = res;
-  //         this.getbusinessprofiledetails_json('coupon', true);
-  //         this.getprovidercoupondetails_json('providerCoupon', true);
-  //         this.api_loading1 = false;
-  //       },
-  //       () => {
-  //         this.api_loading1 = false;
-  //       }
-  //     );
-  // }
-  // getbusinessprofiledetails_json(section, modDateReq: boolean) {
-  //   let UTCstring = null;
-  //   if (modDateReq) {
-  //     UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-  //   }
-  //   this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-  //     .subscribe(res => {
-  //       this.s3CouponsList.JC = res;
-  //       console.log(this.s3CouponsList.JC);
-  //       if (this.s3CouponsList.JC.length > 0) {
-  //         this.showCouponWB = true;
-  //       }
-  //     },
-  //       () => {
-  //       }
-  //     );
-  // }
-  // getprovidercoupondetails_json(section, modDateReq: boolean) {
-  //   let UTCstring = null;
-  //   if (modDateReq) {
-  //     UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-  //   }
-  //   this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-  //     .subscribe(res => {
-  //       this.s3CouponsList.OWN = res;
-  //       console.log(this.s3CouponsList.OWN);
-  //       if (this.s3CouponsList.OWN.length > 0) {
-  //         this.showCouponWB = true;
-  //       }
-  //     },
-  //       () => {
-  //       }
-  //     );
-  // }
   ngOnDestroy() {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
     this.subs.unsubscribe();
@@ -1826,20 +1750,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   paywithRazorpay(pData: any) {
     pData.paymentMode = this.selected_payment_mode;
     this.razorpayService.initializePayment(pData, this.account_id, this);
-    // this.prefillmodel.name = pData.consumerName;
-    // this.prefillmodel.email = pData.ConsumerEmail;
-    // this.prefillmodel.contact = pData.consumerPhoneumber;
-    // this.razorModel = new Razorpaymodel(this.prefillmodel);
-    // this.razorModel.key = pData.razorpayId;
-    // this.razorModel.amount = pData.amount;
-    // this.razorModel.order_id = pData.orderId;
-    // this.razorModel.name = pData.providerName;
-    // this.razorModel.mode = this.selected_payment_mode;
-    // this.isClickedOnce = false;
-    // this.razorModel.description = pData.description;
-    // this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'order_prepayment', this.trackUuid, this.livetrack, this.account_id, this.cartDetails.advanceAmount, this.customId);
-    // this.razorpayService.payWithRazor(this.razorModel, 'consumer', 'checkin_prepayment', this.trackUuid, this.sel_ser_det.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId);
-
   }
   payWithPayTM(pData: any, accountId: any) {
     this.loadingPaytm = true;

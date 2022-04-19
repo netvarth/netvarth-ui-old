@@ -22,6 +22,7 @@ import { WordProcessor } from '../../../../../../../../shared/services/word-proc
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { ImageTransform } from './interfaces/index';
 import { QuestionService } from '../../../../../../../../shared/modules/dynamic-form/dynamic-form-question.service';
+import { FileService } from '../../../../../../../../shared/services/file-service';
 @Component({
   selector: 'app-aboutme',
   templateUrl: './aboutme.component.html',
@@ -121,7 +122,8 @@ export class AboutmeComponent implements OnInit, OnDestroy {
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
     private snackbarService: SnackbarService,
-    private wordProcessor: WordProcessor
+    private wordProcessor: WordProcessor,
+    private fileService: FileService
   ) {
     this.activated_route.params.subscribe(params => {
       this.userId = params.id;
@@ -630,7 +632,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
     this.error_msg = '';
     if (input.files && input.files[0]) {
       for (const file of input.files) {
-        this.success_error = this.sharedfunctionobj.imageValidation(file);
+        this.success_error = this.fileService.imageValidation(file);
         if (this.success_error === true) {
           const reader = new FileReader();
           this.item_pic.files = input.files[0];
@@ -829,7 +831,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
       this.error_msg = '';
       if (file) {
         console.log('inside file');
-          this.success_error = this.sharedfunctionobj.imageValidation(file);
+          this.success_error = this.fileService.imageValidation(file);
           if (this.success_error === true) {
             console.log('inside success err');
               const reader = new FileReader();

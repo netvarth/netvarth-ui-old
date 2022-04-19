@@ -17,7 +17,6 @@ import { MatDialog } from "@angular/material/dialog";
 import { projectConstants } from "../../../../app.component";
 import { Messages } from "../../../../shared/constants/project-messages";
 import { ConsumerEmailComponent } from "../../../../ynw_consumer/shared/component/consumer-email/consumer-email.component";
-// import { Razorpaymodel } from "../../../../shared/components/razorpay/razorpay.model";
 import { PaytmService } from "../../../../shared/services/paytm.service";
 import { RazorpayService } from "../../../../shared/services/razorpay.service";
 import { Location } from "@angular/common";

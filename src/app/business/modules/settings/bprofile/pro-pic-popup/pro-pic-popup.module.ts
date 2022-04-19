@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { FormMessageDisplayModule } from '../../../../../shared/modules/form-message-display/form-message-display.module';
+import { FileService } from '../../../../../shared/services/file-service';
 
 @NgModule({
     imports: [
@@ -19,6 +20,9 @@ import { FormMessageDisplayModule } from '../../../../../shared/modules/form-mes
     ],
     entryComponents: [
         ProPicPopupComponent
+    ],
+    providers: [
+        FileService
     ],
     exports: [ProPicPopupComponent]
 })
