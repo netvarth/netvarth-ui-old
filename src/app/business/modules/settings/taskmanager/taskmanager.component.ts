@@ -7,6 +7,9 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SubSink } from 'subsink';
 import { SharedFunctions } from '../../../../../../src/app/shared/functions/shared-functions';
+import { ProviderDataStorageService } from '../../../../../../src/app/business/services/provider-datastorage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ShowMessageComponent } from '../../show-messages/show-messages.component';
 // import { SharedFunctions } from '../../../../../../src/app/shared/functions/shared-functions';
 
 @Component({
@@ -33,18 +36,23 @@ export class TaskmanagerComponent implements OnInit, OnDestroy {
   catalog_list: any = [];
   private subscriptions = new SubSink();
   task_status: string;
+  bProfile = null;
+  locationExists = false;
   constructor(
 
     private routerobj: Router,
     private shared_functions: SharedFunctions,
     private provider_services: ProviderServices,
     private wordProcessor: WordProcessor,
+    private provider_datastorage: ProviderDataStorageService,
     private snackbarService: SnackbarService,
+    private dialog: MatDialog,
     private groupService: GroupStorageService
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
   ngOnInit() {
+    this.getBusinessProfile();
     this.frm_public_self_cap = Messages.FRM_LEVEL_SELF_MSG.replace('[customer]', this.customer_label);
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
@@ -53,7 +61,6 @@ export class TaskmanagerComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
- 
   handleTaskStatus(event) {
     if(event.checked){
       this.task_status =  'Enable';
@@ -62,6 +69,19 @@ export class TaskmanagerComponent implements OnInit, OnDestroy {
       this.task_status =  'Disable';
     }
     const status = (event.checked) ? 'enabled' : 'disabled';
+    if (event.checked && !this.locationExists) {
+      const confirmdialogRef = this.dialog.open(ShowMessageComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          'type': 'task'
+        }
+      });
+      this.subscriptions.sink = confirmdialogRef.afterClosed().subscribe(result => {
+        this.getTaskStatus();
+      });
+    } else {
       this.subscriptions.sink = this.provider_services.setProviderTaskStatus(this.task_status).subscribe(data => {
         this.snackbarService.openSnackBar('Task settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
         this.getTaskStatus();
@@ -69,8 +89,44 @@ export class TaskmanagerComponent implements OnInit, OnDestroy {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         this.getTaskStatus();
       });
-    
+    }
   }
+  // handleTaskStatus(event) {
+  //   if (this.locationExists) {
+  //   if(event.checked){
+  //     this.task_status =  'Enable';
+  //   }
+  //   else{
+  //     this.task_status =  'Disable';
+  //   }
+  //   const status = (event.checked) ? 'enabled' : 'disabled';
+  //     this.subscriptions.sink = this.provider_services.setProviderTaskStatus(this.task_status).subscribe(data => {
+  //       this.snackbarService.openSnackBar('Task settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+  //       this.getTaskStatus();
+  //     }, (error) => {
+  //       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //       this.getTaskStatus();
+  //     });
+  //   }
+  //   else{
+  //     this.snackbarService.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
+  //   }
+    
+  // }
+  getBusinessProfile() {
+    this.provider_services.getBussinessProfile()
+        .subscribe(
+            data => {
+                this.bProfile = data;
+                if (this.bProfile.baseLocation) {
+                    this.locationExists = true;
+                } else {
+                    this.locationExists = false;
+                }
+                this.provider_datastorage.set('bProfile', data);
+
+            });
+}
   getTaskStatus() {
     this.subscriptions.sink = this.provider_services.getProviderTaskSettings().subscribe((data: any) => {
       this.taskstatus = data.enableTask;
