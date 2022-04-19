@@ -105,9 +105,12 @@ export class CreateTaskComponent implements OnInit {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
         console.log("User is :", user);
         this.selectMember= user.firstName + user.lastName;
+        this.selectTaskManger=user.firstName + user.lastName;
         console.log(' this.selectMember', this.selectMember)
+        console.log(' this.selectMember', this.selectTaskManger)
         // (res.firstName + res.lastName)
         this.assigneeId=user.id;
+        this.selectTaskMangerId=user.id;
         this.locationId= user.bussLocs[0]
         if(user.userType === 1){
           this.userType='PROVIDER'
@@ -183,7 +186,7 @@ export class CreateTaskComponent implements OnInit {
 				      this.createBTimeField=true;
       this.updateBTimefield=false;
       // this.selectMember='Select Member';
-      this.selectTaskManger='Select Task Manger'
+      // this.selectTaskManger='Select Task Manger'
         this.selectHeader='Add Subtask';
       }
       else
@@ -191,7 +194,7 @@ export class CreateTaskComponent implements OnInit {
 		        this.createBTimeField=true;
       this.updateBTimefield=false;
       // this.selectMember='Select Member';
-      this.selectTaskManger='Select Task Manger'
+      // this.selectTaskManger='Select Task Manger'
         this.selectHeader='Add Task';
       }
     }

@@ -90,7 +90,7 @@
             <div>
               <span class="card-title"><b>Files</b></span> 
             </div>
-            <div>
+            <div *ngIf="taskDetails.attachments.length>0">
               <span (click)="attatchmentDialog(taskDetails.attachments)" class="pointer-cursor fa fa-external-link"></span>
             </div>
           </div>

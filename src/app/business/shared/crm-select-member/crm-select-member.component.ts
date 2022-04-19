@@ -9,6 +9,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { Router } from '@angular/router';
 import { CrmMarkasDoneComponent } from '../../shared/crm-markas-done/crm-markas-done.component';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-crm-select-member',
@@ -67,6 +68,7 @@ export class CrmSelectMemberComponent implements OnInit {
       private dialog: MatDialog,
       // private datePipe:DatePipe,
       private wordProcessor: WordProcessor,
+      private groupService:GroupStorageService
     ) {
       console.log('consdata',this.data)
       // this.assignMemberDetails= this.data.assignMembername
@@ -77,9 +79,12 @@ export class CrmSelectMemberComponent implements OnInit {
   ngOnInit(): void {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        console.log("User is :", user);
+        // this.assignMemberDetails= (user.id);
     if(this.data.requestType==='createtaskSelectMember' || this.data.requestType==='createtaskSelectManager' ){
       this.data.memberList[0].forEach((singleMember:any)=>{
-        console.log('singleMember',singleMember)
+        // console.log('singleMember',singleMember)
         if(singleMember.userType==='PROVIDER'){
         // console.log('this.data.assignMembername',this.data.updateAssignMemberId)
         this.memberList.push(singleMember)
