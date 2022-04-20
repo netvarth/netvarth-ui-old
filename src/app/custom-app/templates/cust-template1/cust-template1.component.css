@@ -2489,9 +2489,9 @@ h2::after {
 	  opacity:1 !important;
   }
 
-  .text-huge {font-size: 2rem; line-height: 1;}
-  .text-tiny {font-size: .875rem;line-height: 1;}
-  .text-small {font-size: .0.95rem;line-height: 1;}
+  .text-huge {font-size:2rem; line-height: 1;}
+  .text-tiny {font-size:.875rem;line-height: 1;}
+  .text-small{font-size:0.95rem;line-height: 1;}
   .text-big{font-size: 1rem;line-height: 1;}
 
 

@@ -448,7 +448,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
               'maxlength' : 'Only 10 digits are allowed'})">
             </app-field-error-display>
           </div>
-          <div *ngIf="serviceForm.get('totalAmount').value > 0">
+          <div *ngIf="serviceForm.get('totalAmount') && serviceForm.get('totalAmount').value > 0">
             <mat-checkbox [checked]="showPrice" [(ngModel)]="showPrice"
               [ngModelOptions]="{standalone: true}">
               Show Service Price

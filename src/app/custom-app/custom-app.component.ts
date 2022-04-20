@@ -186,7 +186,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
 
    dashboardClicked() {
     const _this = this;
-    _this.loading = true;
+    // _this.loading = true;
     _this.authService.goThroughLogin().then(
       (status) => {
         if (status) {

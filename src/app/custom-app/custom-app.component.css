@@ -8,8 +8,11 @@
 .login-container-outer {
     height: 100vh;
 }
+.dashboard-btn {
+    color:#0e3166 !important;
+}
 .panel-default>.panel-heading {
-    background: transparent !important;
+    background: #fff !important;
     border: none !important;
     position: sticky;
     top: 0;
