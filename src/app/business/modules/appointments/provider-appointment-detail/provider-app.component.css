@@ -148,6 +148,11 @@
     font-size: 15px!important;
     border-radius: 10px!important;
     padding:5px!important;
+    border: 1px solid #1E4079!important;
+    color: #1E4079!important;
+    padding-left: 10px!important;
+    padding-right: 10px!important;
+
 }
 .fa-edit
 {
@@ -252,6 +257,16 @@
     }
     .history-notes
     {
-        margin-bottom: 30px!important;
+        margin-bottom: 1px!important;
+    }
+    .content.checkin-details
+    {
+        padding-top: 0px!important;
+        padding-bottom: 0px!important;
+    }
+    .content.comn-cls.checkin-details
+    {
+        padding-top: 10px!important;
+        padding-bottom: 0px!important;
     }
   }

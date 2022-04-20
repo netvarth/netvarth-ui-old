@@ -10,6 +10,10 @@
 <div class="content comn-cls checkin-details" *ngIf="waitlist_data">
   <div class="col-md-12 no-padding-small">
     <div class="row equal">
+      
+      
+
+
       <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small px-1">
         <div class="rowcard card" *ngIf="api_loading">
           <app-common-innerloading-spinner> </app-common-innerloading-spinner>
@@ -74,6 +78,10 @@
           
         </div>
       </div>
+
+
+
+
       <div class="lbl col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small px-1">
         <div class="rowcard customer-details-card card">
             <div class="booking-details">
@@ -122,7 +130,7 @@
                     </div>
                     <div class="mb-0">
                       <button (click)="showCommunications()" *ngIf="whatsappNumber || mobileNumber || email" class="btn btn-primary col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"
-                      >Communication</button>
+                      >Call {{customer_label | capitalizeFirst}}</button>
                     </div>
                 </div>
             </div>
@@ -138,7 +146,7 @@
         </div>
         <div class="clearfix history-notes"></div>
         <div class="card-custom data-card p-0 m-0">
-          <app-notes-section [source]="'customer'" [widget]="true" [waitlistdata]="waitlist_data">
+          <app-notes-section [source]="'customer'" [widget]="true" [waitlistdata]="waitlist_data" [waitlist_notes]="waitlist_notes">
           </app-notes-section>
         </div>
       </div>
@@ -148,7 +156,7 @@
 <div>
 
 
-<div class="content comn-cls checkin-details" *ngIf="waitlist_data && questionnaires.length == 0">
+<div class="content checkin-details" *ngIf="waitlist_data && questionnaires.length == 0">
   <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small px-1"
       *ngIf="waitlist_data.appmtFor && (waitlist_data.providerAccount.serviceSector.domain === 'healthCare' || waitlist_data.providerAccount.serviceSector.domain === 'veterinaryPetcare') && waitlist_data.providerAccount.serviceSubSector.subDomain !=='laboratory' && waitlist_data.providerAccount.serviceSubSector.subDomain !=='pharmacy'">
       <app-booking-medical-records-rx [customerId]="waitlist_data.appmtFor[0].id" [source]="'customer-details'" [type]="'mr'">
@@ -172,8 +180,8 @@
 </div>
 
 
-<div class="content checkin-details">
-  <div class="card" *ngIf="!api_loading && questionnaires.length > 0">
+<div class="content checkin-details" *ngIf="!api_loading && questionnaires.length > 0">
+  <div class="card">
     <div class="">
       <h3 class="">
         {{customer_label | capitalizeFirst}} info
