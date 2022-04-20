@@ -99,9 +99,6 @@ export class CreateTaskComponent implements OnInit {
      }
 
   ngOnInit(): void {
-    // const loc = this.groupService.getitemFromGroupStorage('loc_id');
-    //     this.sel_loc = loc.id;
-    //     console.log('this.sel_loc',this.sel_loc)
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
         console.log("User is :", user);
         this.selectMember= user.firstName + user.lastName;
@@ -188,6 +185,10 @@ export class CreateTaskComponent implements OnInit {
       // this.selectMember='Select Member';
       // this.selectTaskManger='Select Task Manger'
         this.selectHeader='Add Subtask';
+        this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd') 
+        // this.datePipe.transform(this.taskDueDate,'yyyy-MM-dd');
+        console.log(' this.taskDueDate', this.taskDueDate);
+        this.selectedDate = this.taskDueDate
       }
       else
       {
@@ -196,6 +197,10 @@ export class CreateTaskComponent implements OnInit {
       // this.selectMember='Select Member';
       // this.selectTaskManger='Select Task Manger'
         this.selectHeader='Add Task';
+        this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd') 
+        // this.datePipe.transform(this.taskDueDate,'yyyy-MM-dd');
+        console.log(' this.taskDueDate', this.taskDueDate);
+        this.selectedDate = this.taskDueDate;
       }
     }
     this.getAssignMemberList()

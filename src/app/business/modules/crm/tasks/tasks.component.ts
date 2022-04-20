@@ -567,7 +567,7 @@ export class TasksComponent implements OnInit {
       console.log('resssssssssCom',res);
        if(res==='Completed'){
         this.setTabSelection(3);
-        this.completedCount=this.completedCount+1
+        // this.completedCount=this.completedCount+1
       }
     })
   

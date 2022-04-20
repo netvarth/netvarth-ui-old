@@ -10,6 +10,7 @@ export class CrmService {
   public taskToCraeteViaServiceData:any;
   public taskActivityName:any;
   public taskToviewViaServiceData:any;
+  public subtaskToView:any;
   
 
   constructor(
