@@ -530,12 +530,7 @@
                                                                                                 placeholder="Email(user@xyz.com)"
                                                                                                 [(ngModel)]="payEmail"
                                                                                                 autocomplete="off"
-                                                                                                (keyup)="resetApiErrors();showConfrmEmail()"
-                                                                                                onpaste="return false;"
-                                                                                                oncopy="return false"
-                                                                                                oncut="return false"
-                                                                                                ondrag="return false"
-                                                                                                ondrop="return false"
+                                                                                                (keyup)="resetApiErrors();showConfrmEmail()"                                                                                                
                                                                                                 (ngModelChange)="donorDetails('email')">
                                                                                             <app-field-error-display
                                                                                                 [displayError]="true"

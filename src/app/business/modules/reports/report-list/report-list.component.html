@@ -3,7 +3,7 @@
     <h5 class="mgn-up-10">
       <span class="fa fa-arrow-left pointer-cursor" (click)="goback()">
       </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      View Reports
+        Generated Reports
     </h5>
   
   </div>
@@ -35,12 +35,12 @@
                       Name
                     </th>
                     <th style="min-width: 65px">Date</th>
-                    <th style="min-width: 45px">Status</th>
+                    <th style="min-width: 45px"> </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style="cursor: pointer;" class="py-4"
-                    *ngFor="let report of totalReportList | paginate: config;   let i= index" (click)="generatedReport(report)">
+                  <tr  class="py-4"
+                    *ngFor="let report of totalReportList | paginate: config;   let i= index" >
                    
                     <td>
                       <span class="text-dark-75 d-block ">
@@ -53,8 +53,8 @@
                       </span>
                     </td>
                     <td>
-                      <span class="text-dark-75 d-block ">
-                        {{report.status}}
+                      <span class="text-dark-75 d-block pointer-cursor normal-break" (click)="report.status !== 'In Progress'?generatedReport(report):''">
+                        <a>{{report.status !== 'In Progress'? 'View Report':''}}</a>
                       </span>
                     </td>
                    
