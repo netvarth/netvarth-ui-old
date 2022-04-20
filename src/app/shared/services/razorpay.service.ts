@@ -17,9 +17,7 @@ export class RazorpayService {
   constructor(
     public winRef: WindowRefService,
     public sharedServices: SharedServices,
-    public shared_functions: SharedFunctions,
-    // public razorpayModel: Razorpaymodel,
-    // private prefillmodel: RazorpayprefillModel
+    public shared_functions: SharedFunctions
   ) { }
 
   changePaidStatus(value: string) {
@@ -77,9 +75,6 @@ export class RazorpayService {
       rzp.open();
     });
   }
-  // payWithRazor(pData, usertype, checkin_type?, uuid?, livetrack?, account_id?, prepayment?, uuids?, from?, isfrom?) {
-
-  // }
   onReloadPage() {
     window.location.reload();
   }
@@ -109,29 +104,13 @@ export class RazorpayService {
   }
 
   initializePayment(pData: any, accountId, referrer, type?) {
-
-    // if (type === 'provider') {
-    //   this.prefillmodel.name = pData.providerName;
-    // } else {
-    //   this.prefillmodel.name = pData.consumerName;
-    // }
-    // this.prefillmodel.email = pData.ConsumerEmail;
-    // this.prefillmodel.contact = pData.consumerPhoneumber;
-    // let razorModel = new Razorpaymodel(this.prefillmodel);
-    // razorModel.key = pData.razorpayId;
-    // razorModel.amount = pData.amount;
-    // razorModel.order_id = pData.orderId;
-    // razorModel.name = pData.providerName;
-    // razorModel.description = pData.description;
-
     let razorInterval;
-    // razorModel.retry = false;
     let prefillModel = {}
     if (type === 'provider') {
       prefillModel['name'] = pData.providerName;
-      } else {
-        prefillModel['name'] = pData.consumerName;
-      }
+    } else {
+      prefillModel['name'] = pData.consumerName;
+    }
     prefillModel['name'] = pData.consumerName;
     prefillModel['email'] = pData.ConsumerEmail;
     prefillModel['contact'] = pData.consumerPhoneumber;
@@ -165,10 +144,6 @@ export class RazorpayService {
     if (selectedmode === 'NB') {
       selectedmode = 'NETBANKING';
     }
-    //   theme: {
-    //     color: '#F37254'
-    //   }
-    // };
     console.log(selectedmode);
     const hiddenObject = this.paymentModes.filter((mode) => mode.method !== selectedmode.toLowerCase());
     console.log('hideenobject' + JSON.stringify(hiddenObject));
@@ -177,12 +152,7 @@ export class RazorpayService {
         hide: hiddenObject
       }
     }
-    // razorModel.retry = false;
-    // razorModel.modal = {
-    //   escape: false
-    // };
     const options = razorModel;
-
     options['handler'] = ((response, error) => {
       options['response'] = response;
       console.log('orpitons.response' + JSON.stringify(options['response']));

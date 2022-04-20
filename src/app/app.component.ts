@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, NgZone, OnInit } from '@angular/core';
 import { GlobalService } from './shared/services/global-service';
 import {version} from './shared/constants/version';
 import { LocalStorageService } from './shared/services/local-storage.service';
 import { TranslateService } from '@ngx-translate/core';
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterEvent } from '@angular/router';
 export let projectConstants: any = {};
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   
   // not used
   title = 'app';
+  loading: boolean;
   /**
    * 
    * @param globalService 
@@ -26,8 +28,28 @@ export class AppComponent implements OnInit, AfterViewInit {
     private globalService: GlobalService,
     private lStorageService: LocalStorageService,
     public translate: TranslateService,
-  ) { }
+    private router: Router,
+    private ngZone:NgZone
+  ) {
+    
+   }
+// Shows and hides the loading spinner during RouterEvent changes
+navigationInterceptor(event: RouterEvent): void {
+  if (event instanceof NavigationStart) {
+  this.ngZone.run(() => this.loading = true);
+  }
+  if (event instanceof NavigationEnd) {
+    this.ngZone.run(() => this.loading = false);
+  }
 
+  // Set loading state to false in both of the below events to hide the spinner in case a request fails
+  if (event instanceof NavigationCancel) {
+    this.loading = false
+  }
+  if (event instanceof NavigationError) {
+    this.loading = false
+  }
+}
   /**
    * Init Method
    * if version is null or different this method clears local storage items from a list.
@@ -36,6 +58,9 @@ export class AppComponent implements OnInit, AfterViewInit {
    * 
    */
   ngOnInit() {
+    this.router.events.subscribe((e : RouterEvent) => {
+      this.navigationInterceptor(e);
+    })
     // this.lStorageService.setitemonLocalStorage('ios', true);
     // this.lStorageService.setitemonLocalStorage('authToken', 'abcd'.toString());
     let token = this.lStorageService.getitemfromLocalStorage('authToken');

@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { HeaderModule } from "../shared/modules/header/header.module";
+import { LoadingSpinnerModule } from "../shared/modules/loading-spinner/loading-spinner.module";
 import { DomainConfigGenerator } from "../shared/services/domain-config-generator.service";
 import { ConsumerJoinModule } from "../ynw_consumer/components/consumer-join/join.component.module";
 import { CustomAppComponent } from "./custom-app.component";
@@ -25,6 +26,7 @@ const routes: Routes = [
         ConsumerJoinModule,
         HeaderModule,
         LoginModule,
+        LoadingSpinnerModule,
         [RouterModule.forChild(routes)]
     ],
     exports: [CustomAppComponent],

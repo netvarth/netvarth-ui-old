@@ -56,9 +56,14 @@ export class PaytmService {
                     },
                     transactionStatus: function (data) {
                         console.log("payment status ", data);
-                        console.log("payment status ", JSON.stringify(data));
+                        console.log(paytm_payload);
+                        // console.log("payment status ", JSON.stringify(data));
                         window['Paytm'].CheckoutJS.close();
-                        referrer.transactionCompleted(data, paytm_payload, accountId);
+                        if (data) {
+                            referrer.transactionCompleted(data, paytm_payload, accountId);
+                        } else {
+                            referrer.transactionCompleted({STATUS:'TXN_SUCCESS'}, paytm_payload, accountId);
+                        }         
                         // referrer.closeloading();
                     }
                 }

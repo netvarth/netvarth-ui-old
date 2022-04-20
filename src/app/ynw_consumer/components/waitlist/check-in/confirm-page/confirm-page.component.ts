@@ -40,7 +40,6 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.subs.sink=this.route.queryParams.subscribe(
       params => {
-        // this.lStorageService.setitemonLocalStorage('inPostInfo', true);
         if (params.customId) {
           this.customId = params.customId;
           this.accountId = params.account_id;
@@ -115,7 +114,6 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
       }
     }
     this.lStorageService.setitemonLocalStorage('orderStat', false);
-    // this.lStorageService.removeitemfromLocalStorage('inPostInfo');
   }
   updateEmail() {
   }

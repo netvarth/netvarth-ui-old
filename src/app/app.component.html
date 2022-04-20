@@ -1,2 +1,5 @@
 <router-outlet></router-outlet>
 <!-- <app-common-innerloading-spinner *ngIf="showSpinner"></app-common-innerloading-spinner> -->
+<div class="d-flex loading-overlay"  *ngIf="loading">
+    <div class="loading-overlay-inner"><app-common-innerloading-spinner></app-common-innerloading-spinner></div>                    
+</div>
