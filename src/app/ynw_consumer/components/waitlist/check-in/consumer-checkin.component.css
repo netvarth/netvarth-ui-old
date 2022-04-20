@@ -2240,6 +2240,6 @@ body.modal-open {
   height:50px;
 }
 
-;:ng-deep .cont-outer{
+::ng-deep .cont-outer{
   padding-bottom: 0 !important;
 }

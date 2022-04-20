@@ -80,7 +80,7 @@
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td> {{appointment.appmtDate | date: newDateFormat }},
                                                 <span *ngIf="selectedApptsTime">{{selectedApptsTime}}</span>
-                                                <span *ngIf="!selectedApptsTime">{{getSingleTime(appointment.appmtTime)}}</span>
+                                                <span *ngIf="!selectedApptsTime && appointment.appmtTime">{{getSingleTime(appointment.appmtTime)}}</span>
                                                </td>
                                         </tr>
                                         <tr>
