@@ -21,6 +21,7 @@ import { AuthService } from '../../../services/auth-service';
   templateUrl: './provider-customlogin.component.html',
   styleUrls: ['../../../../../assets/css/pages/login/login-3.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/style.bundle.css']
 })
+
 export class ProviderCustomLoginComponent implements OnInit {
   show_jaldeegrow = true;
   mobilenumber;
@@ -59,6 +60,7 @@ export class ProviderCustomLoginComponent implements OnInit {
     private groupService: GroupStorageService,
     private authService: AuthService
   ) {
+  
     this.titleService.setTitle('Jaldee Business - Login');
     this.activateRoute.queryParams.subscribe(data => {
       this.qParams = data;
@@ -153,9 +155,10 @@ export class ProviderCustomLoginComponent implements OnInit {
     });
 
   }
+ 
 
   onSubmit(data) {
-    // console.log("onsubmit function")
+    // console.log("onsubmit function:",data)
     this.api_loading = true;
     const pN = data.emailId.trim();
     const pW = data.password;
@@ -217,7 +220,11 @@ export class ProviderCustomLoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       emailId: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_SPACE_NOT_ALLOWED)])],
       password: ['', Validators.compose([Validators.required])]
+      
     });
+    this.loginForm.get('emailId').setValue('@maben.in')
+  
+
   }
   showError() {
     this.show_error = true;
