@@ -87,7 +87,7 @@ export class AuthenticationComponent implements OnInit {
       const credentials = {
         countryCode: this.dialCode,
         loginId: loginId,
-        // accountId: this.accountId
+        accountId: this.accountId
       }
       this.subs.sink = this.sharedServices.sendConsumerOTP(credentials).subscribe(
         (response: any) => {
@@ -144,8 +144,17 @@ export class AuthenticationComponent implements OnInit {
     }
 
     this.authService.consumerAppSignup(credentials).then((response)=>{
+      const credentials = {
+        countryCode: dialCode,
+        loginId: phoneNum,
+        accountId: this.accountId
+      }
+      this.authService.consumerAppLogin(credentials).then((response)=>{
+        console.log("Login Response:", response);
+        this.lStorageService.removeitemfromLocalStorage('authorizationToken');
+        this.actionPerformed.emit('success');
+      })
       console.log("Signup Success:", response);
-      this.actionPerformed.emit('success');
     })
 
   }
@@ -177,6 +186,7 @@ export class AuthenticationComponent implements OnInit {
             this.lStorageService.setitemonLocalStorage('authorizationToken', response.token);
             this.step = 2;
           } else {
+            this.lStorageService.setitemonLocalStorage('authorizationToken', response.token);
             const credentials = {
               countryCode: this.dialCode,
               loginId: loginId,
@@ -184,6 +194,7 @@ export class AuthenticationComponent implements OnInit {
             }
             this.authService.consumerAppLogin(credentials).then((response)=>{
               console.log("Login Response:", response);
+              this.lStorageService.removeitemfromLocalStorage('authorizationToken');
               this.actionPerformed.emit('success');
             })
           }  
