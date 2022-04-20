@@ -11,6 +11,7 @@ import { Messages } from '../../../shared/constants/project-messages';
 
 
 export class ConfirmBoxComponent {
+  
   yes_btn_cap = 'YES';
   cancel_btn_cap = 'NO';
 
@@ -19,6 +20,9 @@ export class ConfirmBoxComponent {
     if (this.data.type) {
       this.yes_btn_cap = Messages.YES_BTN;
       this.cancel_btn_cap = Messages.NO_BTN;
+    }
+    if (this.data.buttonCaption) {
+      this.yes_btn_cap = this.data.buttonCaption;
     }
   }
 

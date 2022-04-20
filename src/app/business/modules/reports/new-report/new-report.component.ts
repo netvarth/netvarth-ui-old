@@ -9,11 +9,12 @@ import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
-import { ExportBookingReportComponent } from '../../export-booking-report/export-booking-report.component';
+// import { ExportBookingReportComponent } from '../../export-booking-report/export-booking-report.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
 import { Location } from '@angular/common';
+import { ConfirmBoxComponent } from '../../../../business/shared/confirm-box/confirm-box.component';
 @Component({
   selector: 'app-new-report',
   templateUrl: './new-report.component.html',
@@ -1233,27 +1234,40 @@ export class NewReportComponent implements OnInit {
     });
   }
   generatedReport(report) {
-    this.setSelectedData().then(res => {
-      this.lStorageService.setitemonLocalStorage('report', JSON.stringify(report));
-      this.router.navigate(['provider', 'reports', 'report-list']);
-    },
-    );
-  }
-
-  loadBookingQuestionaaireReport(list) {
-    const dialogRef = this.dialog.open(ExportBookingReportComponent, {
-      width: '100%',
-      panelClass: ['export-class', 'popup-class', 'commonpopupmainclass'],
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        bookingList: list,
-        criteria: this.waitlist_timePeriod
+        buttonCount:1,
+        buttonCaption: 'OK',
+        message: 'Your report generation is in progress. You can view the report once it is generated.'
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.loading = false;
+      this.setSelectedData().then(res => {
+        this.lStorageService.setitemonLocalStorage('report', JSON.stringify(report));
+      },
+      );
+      this.router.navigate(['provider', 'reports', 'report-list']);
     });
+    
   }
+
+  // loadBookingQuestionaaireReport(list) {
+  //   const dialogRef = this.dialog.open(ExportBookingReportComponent, {
+  //     width: '100%',
+  //     panelClass: ['export-class', 'popup-class', 'commonpopupmainclass'],
+  //     disableClose: true,
+  //     data: {
+  //       bookingList: list,
+  //       criteria: this.waitlist_timePeriod
+  //     }
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     this.loading = false;
+  //   });
+  // }
 
   // generateSummary(reportType) {
   //   this.loading = true;

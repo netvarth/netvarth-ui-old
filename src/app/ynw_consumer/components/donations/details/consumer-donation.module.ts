@@ -25,6 +25,7 @@ import { MatInputModule } from '@angular/material/input';
 import {  ReactiveFormsModule } from '@angular/forms';
 import { RazorpayService } from "../../../../shared/services/razorpay.service";
 import { PaytmService } from "../../../../shared/services/paytm.service";
+import { CustomerService } from "../../../../shared/services/customer.service";
 const routes: Routes = [
     {path: '', component: ConsumerDonationComponent}
 ]
@@ -56,6 +57,6 @@ const routes: Routes = [
         ReactiveFormsModule,
         [RouterModule.forChild(routes)]
     ],
-    providers: [RazorpayService, PaytmService]
+    providers: [RazorpayService, PaytmService, CustomerService]
 })
 export class ConsumerDonationModule{}

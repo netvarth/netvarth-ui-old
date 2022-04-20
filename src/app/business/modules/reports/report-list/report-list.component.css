@@ -1193,3 +1193,7 @@
         padding: 0 !important;
     }
     }
+.normal-break {
+  word-break: keep-all;
+}
+   

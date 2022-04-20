@@ -50,8 +50,15 @@
                 <label class="font-size-h6 font-weight-bolder text-dark"
                   style="text-align: left !important;">Employee id</label>
               </div>
+            
               <input class="form-control  py-7 px-6 rounded-lg border-0" type="text" id="emailId"
-                formControlName="emailId" placeholder="Enter employee id" autocomplete="off" />
+                formControlName="emailId" placeholder="Enter employee id" value="emailId" autocomplete="off" />
+                <!-- <div class="form-control py-7 px-6 rounded-lg border-0 ">
+                  <span class="input-group-text pt-1">@maben.in</span>
+                </div> -->
+                <!-- <div class="input-group-append">
+                  <span class="input-group-text">@example.com</span>
+                </div> -->
               <app-field-error-display class="text-left" [displayError]="fed_service.isFieldValid(loginForm,'emailId')"
                 [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',
     {

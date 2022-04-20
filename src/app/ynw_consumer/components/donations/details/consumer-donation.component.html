@@ -184,11 +184,11 @@
                                                                                 class="col-md-12 col-xs-12 col-sm-12 no-padding mobile-input">
                                                                                 <div style="font-size: 15px;color: #3c3c3f;
                                                                             font-weight: 700;text-align: left;margin-top: 10px;margin-left: 5px;
-                                                                            ;">{{sel_ser_det.preInfoTitle}}</div>
+                                                                            ;">{{selectedService.preInfoTitle}}</div>
                                                                                 <div
                                                                                     style="font-size: 14px;
                                                                             ;padding: 5px;text-align: left !important;">
-                                                                                    {{sel_ser_det.preInfoText}}</div>
+                                                                                    {{selectedService.preInfoText}}</div>
                                                                             </div>
                                                                             <!--pre ins end-->
                                                                             <div>
@@ -224,19 +224,15 @@
                                                                                                         <input
                                                                                                             type="number"
                                                                                                             min="0"
+                                                                                                            max="{{selectedService.maxDonationAmount?selectedService.maxDonationAmount:selectedService.minDonationAmount}}"
                                                                                                             class="form-control  rupee-font"
-                                                                                                            placeholder=" {{sel_ser_det.minDonationAmount
-                                                                                                    |
-                                                                                                    currency:'&#8377;'}} - {{sel_ser_det.maxDonationAmount
-                                                                                                        |
-                                                                                                        currency:'&#8377;'}}"
+                        placeholder="{{(selectedService.minDonationAmount === selectedService.maxDonationAmount)? (selectedService.maxDonationAmount
+                            | currency:'&#8377;':'symbol':'0.0-2') : ((selectedService.minDonationAmount
+                            | currency:'&#8377;':'symbol':'0.0-2') + ' - ' + (selectedService.maxDonationAmount
+                            | currency:'&#8377;':'symbol':'0.0-2'))}}"
                                                                                                             [(ngModel)]="donationAmount"
-                                                                                                            (keypress)=isNumeric($event)
-                                                                                                            onpaste="return false;"
-                                                                                                            oncopy="return false"
-                                                                                                            oncut="return false"
-                                                                                                            ondrag="return false"
-                                                                                                            ondrop="return false">
+                                                                                                            (input)="isValid($event); validate($event)" 
+                                                                                                            >
                                                                                                     </label>
 
                                                                                                 </div>
@@ -244,7 +240,7 @@
                                                                                             </div>
                                                                                             <div
                                                                                                 class="prepay-amt mgn-bt-20">
-                                                                                                <div *ngIf="sel_ser_det"
+                                                                                                <div *ngIf="selectedService"
                                                                                                     class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding red">
                                                                                                 </div>
                                                                                             </div>
@@ -254,7 +250,7 @@
                                                                                             <div>
                                                                                                 <textarea rows="10"
                                                                                                     style="height: 34px !important;border-radius: 5px;"
-                                                                                                    placeholder="{{sel_ser_det.consumerNoteTitle}}"
+                                                                                                    placeholder="{{selectedService.consumerNoteTitle}}"
                                                                                                     class="form-control mgn-bt-20 "
                                                                                                     [(ngModel)]="consumerNote"
                                                                                                     #consumernote
@@ -285,32 +281,32 @@
                                                                 font-weight: bold;
                                                                 color: #133072;box-shadow: 0 1px 1px 0 rgb(0 0 0 / 20%), 0 2px 5px 0 rgb(0 0 0 / 19%) ;background-color: #fff;padding: 20px;border-radius: 10px;"
                                                                                 class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5 card-title service reverseDetails">
-                                                                                <div *ngIf="sel_ser"
+                                                                                <div *ngIf="selectedServiceId"
                                                                                     class="resBgChange">
                                                                                     <div class="resDesName">
-                                                                                        {{sel_ser_det.name |
+                                                                                        {{selectedService.name |
                                                                                         capitalizeFirst}}</div>
-                                                                                    <div *ngIf="(sel_ser_det.description.length !=0 && sel_ser_det.description.length <=50)"
+                                                                                    <div *ngIf="(selectedService.description.length !=0 && selectedService.description.length <=50)"
                                                                                         style="font-size: 10px;padding: 10px;"
                                                                                         class="textChange desktop_disply">
-                                                                                        {{sel_ser_det.description}}
+                                                                                        {{selectedService.description}}
                                                                                     </div>
-                                                                                    <div *ngIf="sel_ser_det.description.length >=50"
+                                                                                    <div *ngIf="selectedService.description.length >=50"
                                                                                         style="font-size: 10px;padding: 10px;"
                                                                                         class="textChange desktop_disply">
-                                                                                        {{sel_ser_det.description}}
+                                                                                        {{selectedService.description}}
                                                                                     </div>
-                                                                                    <div *ngIf="(sel_ser_det.description.length !=0 && sel_ser_det.description.length <=50)"
+                                                                                    <div *ngIf="(selectedService.description.length !=0 && selectedService.description.length <=50)"
                                                                                         style="font-size: 10px;padding: 10px;"
                                                                                         class="textChange mobile_disply">
-                                                                                        {{sel_ser_det.description |
+                                                                                        {{selectedService.description |
                                                                                         slice:0:120}}...
                                                                                         <!-- <a data-target="#examplemodaldescriptio" data-toggle="modal"  aria-hidden="true" style="color: #fff !important;">See More</a> -->
                                                                                     </div>
-                                                                                    <div *ngIf="sel_ser_det.description.length >=50"
+                                                                                    <div *ngIf="selectedService.description.length >=50"
                                                                                         style="font-size: 10px;padding: 10px;"
                                                                                         class="textChange mobile_disply">
-                                                                                        {{sel_ser_det.description |
+                                                                                        {{selectedService.description |
                                                                                         slice:0:120}}...
                                                                                         <a data-target="#examplemodaldescriptio"
                                                                                             data-toggle="modal"
@@ -323,24 +319,24 @@
                                                                                 <!----image start-->
                                                                                 <div>
                                                                                     <div
-                                                                                        *ngFor="let image of sel_ser_det.servicegallery,let i=index">
-                                                                                        <div *ngIf="sel_ser_det.servicegallery.length>0"
+                                                                                        *ngFor="let image of selectedService.servicegallery,let i=index">
+                                                                                        <div *ngIf="selectedService.servicegallery.length>0"
                                                                                             style="padding:10px"
                                                                                             class="serviceGalleryImg">
                                                                                             <div
-                                                                                                *ngIf="sel_ser_det.servicegallery.length==1">
+                                                                                                *ngIf="selectedService.servicegallery.length==1">
                                                                                                 <img class="resImg"
                                                                                                     style="width:100%;"
                                                                                                     src="{{image.url}}"
                                                                                                     alt="Donation">
                                                                                             </div>
                                                                                             <div
-                                                                                                *ngIf="sel_ser_det.servicegallery.length!=1">
+                                                                                                *ngIf="selectedService.servicegallery.length!=1">
                                                                                                 <img class="resImg"
                                                                                                     *ngIf="i==1"
                                                                                                     (click)="openImageModalRow(image_list_popup[0])"
                                                                                                     style="width:100%;cursor: pointer;"
-                                                                                                    src="{{sel_ser_det.servicegallery[0].url}}"
+                                                                                                    src="{{selectedService.servicegallery[0].url}}"
                                                                                                     alt="Donation">
                                                                                             </div>
                                                                                         </div>
@@ -411,12 +407,12 @@
                                                                                     text-overflow: ellipsis;"
                                                                                             placeholder="Enter First name"
                                                                                             class="form-control phonenum"
-                                                                                            [(ngModel)]="donorfirst"
+                                                                                            [(ngModel)]="donorFirstName"
                                                                                             (ngModelChange)="donorDetails('firstName')" />
                                                                                         <app-field-error-display
                                                                                             [displayError]="true"
-                                                                                            *ngIf="donorerror != null"
-                                                                                            errorMsg={{donorerror}}>
+                                                                                            *ngIf="firstNameRequired != null"
+                                                                                            errorMsg={{firstNameRequired}}>
                                                                                         </app-field-error-display>
                                                                                         <div>
                                                                                             <div style="font-weight: 400 !important;color: #3f4254 !important;padding-top: 5px !important;font-size: 13px !important;margin-bottom: 0px !important;"
@@ -436,12 +432,12 @@
                                                                                 text-overflow: ellipsis;"
                                                                                             placeholder="Enter Last name"
                                                                                             class="form-control phonenum"
-                                                                                            [(ngModel)]="donorlast"
+                                                                                            [(ngModel)]="donorLastName"
                                                                                             (ngModelChange)="donorDetails('lastName')" />
                                                                                         <app-field-error-display
                                                                                             [displayError]="true"
-                                                                                            *ngIf="donorlasterror != null"
-                                                                                            errorMsg={{donorlasterror}}>
+                                                                                            *ngIf="lastNameRequired != null"
+                                                                                            errorMsg={{lastNameRequired}}>
                                                                                         </app-field-error-display>
                                                                                     </label>
                                                                                 </div>
@@ -499,8 +495,8 @@
                                                                         color: #f24949 !important;
                                                                         padding: 0px !important;
                                                                         font-weight: bold !important;"
-                                                                                            *ngIf="phoneerror!=''">
-                                                                                            {{phoneerror}}
+                                                                                            *ngIf="phoneError!=''">
+                                                                                            {{phoneError}}
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -534,12 +530,7 @@
                                                                                                 placeholder="Email(user@xyz.com)"
                                                                                                 [(ngModel)]="payEmail"
                                                                                                 autocomplete="off"
-                                                                                                (keyup)="resetApiErrors();showConfrmEmail()"
-                                                                                                onpaste="return false;"
-                                                                                                oncopy="return false"
-                                                                                                oncut="return false"
-                                                                                                ondrag="return false"
-                                                                                                ondrop="return false"
+                                                                                                (keyup)="resetApiErrors();showConfrmEmail()"                                                                                                
                                                                                                 (ngModelChange)="donorDetails('email')">
                                                                                             <app-field-error-display
                                                                                                 [displayError]="true"
@@ -664,7 +655,7 @@
                                                             width: 6rem;
                                                             border-radius: 5px !important;"
                                                                                     class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
-                                                                                    (click)="addDonorDetails()"
+                                                                                    (click)="donorDetails()"
                                                                                     type="button">{{!userEmail ?
                                                                                     'Add' : 'Save'}}</button>
                                                                             </div>
@@ -696,42 +687,42 @@
                                                                             class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding-small notes">
                                                                             <!----donor description start-->
                                                                             <div class=" mgn-up-5 input-group mobile-error c-checkin-new mobile_disply"
-                                                                                *ngIf="sel_ser">
-                                                                                <div *ngIf="sel_ser_det.description.length===0"
+                                                                                *ngIf="selectedServiceId">
+                                                                                <div *ngIf="selectedService.description.length===0"
                                                                                     class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 resMobileNum"
                                                                                     style="font-weight: bold !important;
                                                                         font-size: 15px !important;
                                                                     ;display: none;">
-                                                                                    {{sel_ser_det.name
+                                                                                    {{selectedService.name
                                                                                     |capitalizeFirst}}
 
                                                                                 </div>
-                                                                                <div *ngIf="sel_ser_det.description.length!==0"
+                                                                                <div *ngIf="selectedService.description.length!==0"
                                                                                     class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-10 resMobileNum"
                                                                                     style="font-size: 15px !important;
                                                                         font-weight: bold !important;">
-                                                                                    {{sel_ser_det.name
+                                                                                    {{selectedService.name
                                                                                     |capitalizeFirst}}
                                                                                 </div>
                                                                                 <div
                                                                                     class="col-md-12 col-xs-12 col-sm-12 resMobileNum">
-                                                                                    <div *ngIf="sel_ser"
+                                                                                    <div *ngIf="selectedServiceId"
                                                                                         class="resBgChange">
 
-                                                                                        <div *ngIf="sel_ser_det.description.length===0"
+                                                                                        <div *ngIf="selectedService.description.length===0"
                                                                                             style="color: #2e2e2e !important;
                                                                             box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
                                                                             transition: 0.3s;
                                                                             margin-bottom: 15px;font-size: 12px !important;padding: 10px !important;font-weight: bold !important;word-spacing: 5px !important;display: none;">
-                                                                                            {{sel_ser_det.description}}
+                                                                                            {{selectedService.description}}
                                                                                         </div>
 
-                                                                                        <div *ngIf="sel_ser_det.description.length!==0"
+                                                                                        <div *ngIf="selectedService.description.length!==0"
                                                                                             style="color: #2e2e2e !important;
                                                                         box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
                                                                         transition: 0.3s;
                                                                         margin-bottom: 15px;font-size: 12px !important;padding: 10px !important;font-weight: bold !important;word-spacing: 5px !important;">
-                                                                                            {{sel_ser_det.description}}
+                                                                                            {{selectedService.description}}
                                                                                         </div>
 
                                                                                     </div>
@@ -759,7 +750,6 @@
                                                 </div>
                                             </div>
                                             <div class="clearfix"></div>
-                                            <div [innerHTML]="payment_popup" #div [style.display]="'none'"></div>
                                         </div>
                                         <!----payment start-->
                                         <div style="padding: 5px !important" *ngIf="!from_iOS">

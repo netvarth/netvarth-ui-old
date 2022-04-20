@@ -1300,7 +1300,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             fn = this.customerService.addMember(post_data);
             this.subs.sink = fn.subscribe(() => {
                 this.apiSuccess = this.wordProcessor.getProjectMesssages('MEMBER_CREATED');
-                this.setConsumerFamilyMembers(this.parentCustomer);
+                this.setConsumerFamilyMembers(this.parentCustomer).then();
                 setTimeout(() => {
                     this.goBack();
                 }, projectConstants.TIMEOUT_DELAY);
@@ -2393,7 +2393,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         } else {
             _this.commObj['communicationEmail'] = _this.parentCustomer.userProfile.email;
         }
-        if (parentCustomer.userProfile.whatsAppNum && parentCustomer.userProfile.whatsAppNum.number.trim() != '') {
+        if (parentCustomer.userProfile.whatsAppNum ) {
+            // && parentCustomer.userProfile.whatsAppNum.number.trim() != ''
             _this.commObj['comWhatsappNo'] = parentCustomer.userProfile.whatsAppNum.number;
             _this.commObj['comWhatsappCountryCode'] = parentCustomer.userProfile.whatsAppNum.countryCode;
         } else {
@@ -2624,7 +2625,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         const _this = this;
         return new Promise(function (resolve, reject) {
             _this.shared_services.getProviderCustomerList(jaldeeConsumerId, accountId).subscribe(
-                (providerConsumerList) => {
+                (providerConsumerList: any) => {
                     _this.providerConsumerList = providerConsumerList;
                     resolve(true);
                 }, () => {
