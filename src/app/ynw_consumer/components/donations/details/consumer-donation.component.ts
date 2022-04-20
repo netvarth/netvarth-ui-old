@@ -297,7 +297,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 _this.parentCustomer = data;
                 console.log(_this.parentCustomer);
                 _this.setConsumerFamilyMembers(_this.parentCustomer.id).then(
-                    ()=> {
+                    () => {
                         _this.setProviderConsumerList(_this.parentCustomer.id, _this.accountId).then(
                             (status) => {
                                 _this.getConsumerQuestionnaire().then(
@@ -313,7 +313,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                         );
                     }
                 ); // Load Family Members
-                
+
 
 
 
@@ -515,16 +515,16 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             this.donorSelectedField = donorDetails;
         } else {
             if (this.donorSelectedField) {
-            if (this.donorSelectedField.startsWith('f') || this.donorSelectedField.startsWith('l')) {
-                this.addDonor()
+                if (this.donorSelectedField.startsWith('f') || this.donorSelectedField.startsWith('l')) {
+                    this.addDonor()
+                }
+                if (this.donorSelectedField.startsWith('p')) {
+                    this.addPhone()
+                }
+                if (this.donorSelectedField.startsWith('e')) {
+                    this.addEmail()
+                }
             }
-            if (this.donorSelectedField.startsWith('p')) {
-                this.addPhone()
-            }
-            if (this.donorSelectedField.startsWith('e')) {
-                this.addEmail()
-            }
-        }
         }
     }
     onButtonBeforeHook() {
@@ -1088,7 +1088,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     isNumeric(evt) {
         return this.sharedFunctionobj.isNumericwithoutdot(evt);
     }
-    isValid (evt) {
+    isValid(evt) {
         console.log(evt);
         return this.sharedFunctionobj.isValid(evt);
     }

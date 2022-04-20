@@ -295,6 +295,13 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     } else {
       req.headers.delete('tab');
     }
+    // if (this.lStorageService.getitemfromLocalStorage("authorizationToken")) {
+    //   let authToken = this.lStorageService.getitemfromLocalStorage("authorizationToken");
+    //   req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
+    // } else if (this.lStorageService.getitemfromLocalStorage('appId') && this.lStorageService.getitemfromLocalStorage('installId')) {
+    //   let authToken = this.lStorageService.getitemfromLocalStorage('appId') + '-' + this.lStorageService.getitemfromLocalStorage('installId');
+    //   req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
+    // } else 
     if(this.lStorageService.getitemfromLocalStorage('pre-header') && this.lStorageService.getitemfromLocalStorage('authToken')) {
       let authToken = this.lStorageService.getitemfromLocalStorage('pre-header') + "-" + this.lStorageService.getitemfromLocalStorage('authToken');
       req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
