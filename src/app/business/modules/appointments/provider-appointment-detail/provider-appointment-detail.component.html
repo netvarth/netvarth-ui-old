@@ -42,38 +42,38 @@
             <span *ngIf="waitlist_data.appointmentMode" class="text-light"><b>Booking id :</b> {{waitlist_data.appointmentEncId}}</span>
             <span *ngIf="waitlist_data.appointmentMode" class="text-light"><b>Booking Mode :</b> {{getAppointmentMode(waitlist_data.appointmentMode)}}</span>
           <div>
-            <button *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'" (click)="changeWaitlistStatus('Started')" class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"
-            ><i class="fa fa-play" aria-hidden="true"></i> Start</button>
-            <button style="cursor: no-drop!important" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'" class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"
-            ><i class="fa fa-play" aria-hidden="true"></i> Started</button>
-            <button style="cursor: no-drop!important"  *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Completed' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'" class="btn btn-info col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"
-            ><i class="fa fa-play" aria-hidden="true"></i> Completed</button>
-            <button style="cursor: no-drop!important"  *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed'  && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Cancelled'" class="btn btn-danger col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"
-            ><i class="fa fa-play" aria-hidden="true"></i> Cancelled</button>
+            <a *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'" (click)="changeWaitlistStatus('Started')" class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"
+            ><i class="fa fa-play" aria-hidden="true"></i> Start</a>
+            <a style="cursor: no-drop!important" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'" class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"
+            ><i class="fa fa-play" aria-hidden="true"></i> Started</a>
+            <a style="cursor: no-drop!important"  *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Completed' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'" class="btn btn-info col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"
+            ><i class="fa fa-play" aria-hidden="true"></i> Completed</a>
+            <a style="cursor: no-drop!important"  *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed'  && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Cancelled'" class="btn btn-danger col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"
+            ><i class="fa fa-play" aria-hidden="true"></i> Cancelled</a>
           </div>
           <div class="text-center mx-auto">
-            <button class="status-btn btn btn-outline-dark my-2" (click)="addConsumerInboxMessage()"><i class="fa fa-commenting-o" aria-hidden="true"></i> Message</button>
+            <a class="status-btn btn btn-outline-dark my-2" (click)="addConsumerInboxMessage()"><i class="fa fa-commenting-o" aria-hidden="true"></i> Message</a>
 
 
-            <button class="status-btn btn btn-outline-dark my-2 mx-1"
+            <a class="status-btn btn btn-outline-dark my-2 mx-1"
             *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' 
               && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'"
-             (click)="changeWaitlistStatus('Cancelled')"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+             (click)="changeWaitlistStatus('Cancelled')"><i class="fa fa-times" aria-hidden="true"></i> Cancel</a>
 
-            <button class="status-btn btn btn-disabled my-2 mx-1" style="cursor: no-drop!important" 
+            <a class="status-btn btn btn-disabled my-2 mx-1" style="cursor: no-drop!important" 
             *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Started' || check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Completed' 
             || check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Cancelled'">
-             <i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+             <i class="fa fa-times" aria-hidden="true"></i> Cancel</a>
 
-             <button class="status-btn btn btn-disabled my-2 mx-1" style="cursor: no-drop!important" 
+             <a class="status-btn btn btn-disabled my-2 mx-1" style="cursor: no-drop!important" 
              *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' || check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Completed' 
              || check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Cancelled'">
-             <i class="fa fa-check" aria-hidden="true"></i> Complete</button>
+             <i class="fa fa-check" aria-hidden="true"></i> Complete</a>
 
-            <button class="status-btn btn btn-outline-dark my-2" 
+            <a class="status-btn btn btn-outline-dark my-2" 
             *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' 
               && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'"
-            (click)="changeWaitlistStatus('Completed')"><i class="fa fa-check" aria-hidden="true"></i> Complete</button>
+            (click)="changeWaitlistStatus('Completed')"><i class="fa fa-check" aria-hidden="true"></i> Complete</a>
           </div>
           
         </div>
@@ -129,8 +129,8 @@
                           {{waitlist_data.appmtFor[0].bookingLocation.state}}</span>
                     </div>
                     <div class="mb-0">
-                      <button (click)="showCommunications()" *ngIf="whatsappNumber || mobileNumber || email" class="btn btn-primary col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"
-                      >Call {{customer_label | capitalizeFirst}}</button>
+                      <a (click)="showCommunications()" *ngIf="whatsappNumber || mobileNumber || email" class="btn btn-primary col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"
+                      >Call {{customer_label | capitalizeFirst}}</a>
                     </div>
                 </div>
             </div>
@@ -156,7 +156,7 @@
 <div>
 
 
-<div class="content checkin-details" *ngIf="waitlist_data && questionnaires.length == 0">
+<div class="content checkin-details" *ngIf="waitlist_data">
   <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small px-1"
       *ngIf="waitlist_data.appmtFor && (waitlist_data.providerAccount.serviceSector.domain === 'healthCare' || waitlist_data.providerAccount.serviceSector.domain === 'veterinaryPetcare') && waitlist_data.providerAccount.serviceSubSector.subDomain !=='laboratory' && waitlist_data.providerAccount.serviceSubSector.subDomain !=='pharmacy'">
       <app-booking-medical-records-rx [customerId]="waitlist_data.appmtFor[0].id" [source]="'customer-details'" [type]="'mr'">

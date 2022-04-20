@@ -1,7 +1,7 @@
 <section class="" *ngIf="!widget">
     <div class="card title-gb">
       <h5 class="mgn-up-10">
-        <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;
+        <span class="fa fa-arrow-left pointer-cursor text-capitalize" (click)="goBack()"></span>&nbsp;&nbsp;
         History
       </h5>
     </div>
@@ -13,7 +13,7 @@
         <div class="card-header collapsed" *ngIf="widget"
           [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
           [attr.data-toggle]="small_device_display ? 'collapse' : ''" data-target="#history" aria-expanded="false">
-          <div>History</div>
+          <div class="text-capitalize">History</div>
           <div class="mgn-lt-auto">
             <i class="fa fa-external-link pointer-cursor" aria-hidden="true"
               [class.mgn-rt-20]="small_device_display"></i>

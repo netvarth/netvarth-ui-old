@@ -152,7 +152,7 @@
 <div>
 
 
-<div class="content checkin-details" *ngIf="waitlist_data && questionnaires.length == 0">
+<div class="content checkin-details" *ngIf="waitlist_data">
   <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small px-1 py-0 my-0"
       *ngIf="waitlist_data.waitlistingFor && (waitlist_data.providerAccount.serviceSector.domain === 'healthCare' || waitlist_data.providerAccount.serviceSector.domain === 'veterinaryPetcare') && waitlist_data.providerAccount.serviceSubSector.subDomain !=='laboratory' && waitlist_data.providerAccount.serviceSubSector.subDomain !=='pharmacy'">
       <app-booking-medical-records-rx [customerId]="waitlist_data.waitlistingFor[0].id" [source]="'customer-details'" [type]="'mr'">

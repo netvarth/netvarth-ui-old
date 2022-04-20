@@ -2,7 +2,7 @@
   <div class="card card-custom data-card">
     <div class="card-header collapsed" [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
       [attr.data-toggle]="small_device_display ? 'collapse' : ''" [attr.data-target]="'#' + type" aria-expanded="false">
-      <div>{{(type == 'mr') ? 'Medical Records' : 'Prescriptions'}}</div>
+      <div class="text-capitalize">{{(type == 'mr') ? 'Medical Records' : 'Prescriptions'}}</div>
       <div class="mgn-lt-auto">
         <i (click)="gotoMrList()" class="fa fa-external-link pointer-cursor" aria-hidden="true"
           [class.mgn-rt-20]="small_device_display"></i>

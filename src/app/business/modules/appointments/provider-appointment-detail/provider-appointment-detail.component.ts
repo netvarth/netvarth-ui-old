@@ -452,7 +452,9 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       }
     );
     this.notedialogRef.afterClosed().subscribe(result => {
+      console.log("Outside If condition")
       if (result === "reloadlist") {
+        console.log("Inside If condition")
         this.getWaitlistNotes(this.waitlist_data.uid);
       }
     });
@@ -769,8 +771,8 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   }
   getSingleTime(slot) {
     const slots = slot.split("-");
-    const min = parseInt(slot[1], 10);
-    console.log("Minutes :",'delay by '+this.addZero(min) + 'mins')
+    // const min = parseInt(slot[1], 10);
+    // console.log("Minutes :",'delay by '+this.addZero(min) + 'mins')
     return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
   formatDateDisplay(dateStr) {

@@ -1,7 +1,7 @@
 <section class="" *ngIf="!view">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
-            <span class="fa fa-arrow-left pointer-cursor" (click)="gotoPrev()"></span>&nbsp;&nbsp;
+            <span class="fa fa-arrow-left pointer-cursor text-capitalize" (click)="gotoPrev()"></span>&nbsp;&nbsp;
             <span>{{heading}}</span>
         </h5>
     </div>
@@ -13,7 +13,7 @@
                 <div class="card-header collapsed" *ngIf="view=='small' && heading" [attr.data-target]="'#' + heading"
                 aria-expanded="false" [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
                 [attr.data-toggle]="small_device_display ? 'collapse' : ''">
-                    <div>{{getHeading()}}</div>
+                    <div class="text-capitalize">{{getHeading()}}</div>
                     <div class="mgn-lt-auto">
                         <i class="fa fa-external-link pointer-cursor" aria-hidden="true"
                             [class.mgn-rt-20]="small_device_display"

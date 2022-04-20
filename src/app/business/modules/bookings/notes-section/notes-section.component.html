@@ -1,7 +1,7 @@
 <section class="" *ngIf="!widget">
     <div class="card title-gb">
       <h5 class="mgn-up-10">
-        <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;
+        <span class="fa fa-arrow-left pointer-cursor text-capitalize" (click)="goBack()"></span>&nbsp;&nbsp;
         Notes
       </h5>
     </div>
@@ -13,7 +13,7 @@
         <div class="card-header collapsed" *ngIf="widget"
           [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
           [attr.data-toggle]="small_device_display ? 'collapse' : ''" data-target="#notes" aria-expanded="false">
-          <div>Notes</div>
+          <div class="text-capitalize">Notes</div>
           <div class="mgn-lt-auto">
             <i class="fa fa-external-link pointer-cursor" aria-hidden="true"
               [class.mgn-rt-20]="small_device_display"></i>
@@ -32,8 +32,8 @@
               <span class="text-primary">Private Notes</span> -->
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 pnotes" *ngFor="let note of waitlist_notes; let i = index">
               <div class="note_view">
-                <!-- <span class="status-label note_name" *ngIf="note.firstName != '' || note.lastName != ''">{{note.firstName}} {{note.lastName}}</span> -->
-                <!-- <span *ngIf="note.noteTime" class="status-label note_date">, {{note.noteTime}}</span> <span class="status-label note_date">{{note.timeStamp | date: newDateFormat}}</span>  -->
+                <span class="status-label note_name" *ngIf="note.firstName != '' || note.lastName != ''">{{note.firstName}} {{note.lastName}}</span>
+                <span *ngIf="note.noteTime" class="status-label note_date">, {{note.noteTime}}</span> <span class="status-label note_date">{{note.timeStamp | date: newDateFormat}}</span> 
                 <div class="note text-primary" [innerHTML]="note.note">
                 </div>
               
@@ -45,7 +45,7 @@
               <div class="thumbnails mt10 mb10" *ngIf="showImages[i]">
                 <a class="mg-10" target="_blank" [href]="attachment.s3path"
                   *ngFor="let attachment of note.attachment"><img [src]="getThumbUrl(attachment)"
-                    style="width:100px; height:100px" /></a>
+                    style="width:50px; height:50px" /></a>
               </div>
             </div>
             </div>
