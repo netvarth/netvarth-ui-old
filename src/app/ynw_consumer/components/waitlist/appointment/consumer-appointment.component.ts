@@ -862,7 +862,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             fn = this.customerService.addMember(post_data);
             this.subs.sink = fn.subscribe(() => {
                 this.apiSuccess = this.wordProcessor.getProjectMesssages('MEMBER_CREATED');
-                this.setConsumerFamilyMembers(this.parentCustomer);
+                this.setConsumerFamilyMembers(this.parentCustomer).then();
                 setTimeout(() => {
                     this.goBack();
                 }, projectConstants.TIMEOUT_DELAY);
@@ -1080,7 +1080,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     _this.appmtFor.push({ id: _this.parentCustomer.id, firstName: _this.parentCustomer.userProfile.firstName, lastName: _this.parentCustomer.userProfile.lastName });
                     _this.prepaymentAmount = _this.appmtFor.length * _this.selectedService.minPrePaymentAmount || 0;
                     _this.serviceCost = _this.selectedService.price;
-                    _this.setConsumerFamilyMembers(_this.parentCustomer.id); // Load Family Members
+                    _this.setConsumerFamilyMembers(_this.parentCustomer.id).then(); // Load Family Members
                     _this.setProviderConsumerList(_this.parentCustomer.id, _this.accountId).then(
                         (status) => {
                             if (!_this.questionnaireLoaded) {
