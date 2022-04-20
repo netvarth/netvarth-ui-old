@@ -140,8 +140,8 @@
         </div>
         
       </div>
-      <!-- *ngIf="tasktype==='SubTask'" -->
-      <div class="row d-lg-flex justify-content-lg-start" *ngIf="notesList">
+
+      <div class="row d-lg-flex justify-content-lg-start" *ngIf="taskType != 'SubTask'">
         <div  class="subtask-border height-limit col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mt-2">
           <app-subtasks [taskid]="taskUid"></app-subtasks>
         </div>

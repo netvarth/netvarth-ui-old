@@ -80,9 +80,8 @@ action: any;
   uploaded_attachments: any;
   updateTaskData:any;
   taskkid: any;
-  //subtask variable
-  public showHideSubtask:boolean;
-  public tasktype:any;
+  taskType: any;
+
 constructor(
   private locationobj: Location,
    private crmService: CrmService,
@@ -103,12 +102,11 @@ ngOnInit(): void {
       this.taskDetails = data;
       this.taskkid = this.taskDetails.id
       console.log("Task Details : ",this.taskDetails);
-      // console.log('this.taskDetailsthis.taskDetails',this.taskDetails.parentTaskUid);
-      // if(this.taskDetails.parentTaskUid !=''){
-      //   this.tasktype='SubTask'
-      //   console.log(' this.tasktype', this.tasktype)
-      // }
-      // console.log('taskDetails.status',this.taskDetails.status.name);
+      if(this.taskDetails.parentTaskUid)
+      {
+        this.taskType = 'SubTask';
+      }
+      console.log('taskDetails.status',this.taskDetails.status.name)
       // console.log('this.taskDetails.notes',this.taskDetails.notes)
       this.taskDetails.notes.forEach((notesdata:any)=>{
         this.notesList.push(notesdata)
