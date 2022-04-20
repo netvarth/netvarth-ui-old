@@ -73,7 +73,7 @@ export class CrmMarkasDoneComponent implements OnInit {
         this.crmService.addTaskClosingDetails( this.taskUid,afterCompleteAddTaskData).subscribe((response:any)=>{
           setTimeout(() => {
             console.log('aftercreateTaskcompleteion',response)
-            this.dialogRef.close()
+            this.dialogRef.close('Completed')
           // this.router.navigate(['provider', 'task']);
           }, projectConstants.TIMEOUT_DELAY);
         },

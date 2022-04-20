@@ -564,7 +564,11 @@ export class TasksComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe((res)=>{
-      console.log(res)
+      console.log('resssssssssCom',res);
+       if(res==='Completed'){
+        this.setTabSelection(3);
+        this.completedCount=this.completedCount+1
+      }
     })
   
   }
@@ -581,6 +585,24 @@ export class TasksComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((res:any)=>{
       console.log('resssssssss',res);
+      // this.getCompletedTask();
+      if(res==='In Progress'){
+        this.setTabSelection(2);
+        // this.inprogressCount=this.inprogressCount+1
+       
+      
+      }
+      else if(res==='Completed'){
+        this.setTabSelection(3);
+        // this.tabChange(2)
+        // this.completedCount=this.completedCount+1
+      }
+      else{
+        // this.tabChange(0)
+        this.setTabSelection(1);
+        // this.totalCount= this.totalCount+1;
+      }
+      
     })
   }
 }

@@ -6,7 +6,7 @@ import { projectConstants } from '../../../../../src/app/app.component';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 // import { FormBuilder } from '@angular/forms';
 // import { DatePipe } from '@angular/common';
-import { Router } from '@angular/router';
+// import { Router } from '@angular/router';
 import { CrmMarkasDoneComponent } from '../../shared/crm-markas-done/crm-markas-done.component';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
@@ -47,6 +47,7 @@ export class CrmSelectMemberComponent implements OnInit {
   public statusId:any;
   public statusChange:any;
   public showHideTickMarkUpdate:boolean=false
+  public selectedStatus:any;
   //notes variable
   public allNotes:any=[];
   //upload file variabe
@@ -57,13 +58,14 @@ export class CrmSelectMemberComponent implements OnInit {
 
 
 
+
   constructor( public dialogRef: MatDialogRef<CrmSelectMemberComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private crmService: CrmService,
     // private fb: FormBuilder,
     private snackbarService: SnackbarService,
     // private _Activatedroute:ActivatedRoute,
-      private router: Router,
+      // private router: Router,
       // private createTaskFB: FormBuilder,
       private dialog: MatDialog,
       // private datePipe:DatePipe,
@@ -124,6 +126,7 @@ export class CrmSelectMemberComponent implements OnInit {
       this.noteDescriptionTime = this.data.noteDetails.createdDate;
     }
     if(this.data.requestType==='taskComplete'){
+      console.log('this.data',this.data)
       this.taskDes= this.data.taskName.title
     }
     if(this.data.requestType==='statusChange'){
@@ -244,31 +247,47 @@ completeTask(){
   console.log('this.data.taskName.taskUid',this.data.taskName.taskUid)
   console.log('jjj')
   if(this.data.requestType==='taskComplete'){
-    this.router.navigate(['provider', 'task',]);
+    // this.router.navigate(['provider', 'task',]);
     const taskUID=this.data.taskName.taskUid
-    this.crmService.taskStatusCloseDone(taskUID).subscribe((res)=>{
+    console.log('kkkkkk')
+    this.crmService.taskStatusCloseDone(taskUID).subscribe((res:any)=>{
       console.log('res................',res)
       // setTimeout(() => {
       //   this.dialogRef.close()
       // }, projectConstants.TIMEOUT_DELAY);
+      const dialogRef= this.dialog.open(CrmMarkasDoneComponent,{
+        width: '85%',
+        panelClass: ['popup-class', 'confirmationmainclass'],
+        data:{
+          requestType:'taskComplete',
+          taskDetails:  this.data,
+          // taskUid:this.data.taskName.taskUid
+        }
+      })
+      dialogRef.afterClosed().subscribe((res)=>{
+        this.dialogRef.close('Completed')
+        console.log('res',res);
+      })
     },
     (error)=>{
       this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+      this.dialogRef.close()
+      
     }
     )
-    const dialogRef= this.dialog.open(CrmMarkasDoneComponent,{
-      width: '85%',
-      panelClass: ['popup-class', 'confirmationmainclass'],
-      data:{
-        requestType:'taskComplete',
-        taskDetails:  this.data,
-        // taskUid:this.data.taskName.taskUid
-      }
-    })
-    dialogRef.afterClosed().subscribe((res)=>{
-      this.dialogRef.close()
-      console.log('res',res);
-    })
+    // const dialogRef= this.dialog.open(CrmMarkasDoneComponent,{
+    //   width: '85%',
+    //   panelClass: ['popup-class', 'confirmationmainclass'],
+    //   data:{
+    //     requestType:'taskComplete',
+    //     taskDetails:  this.data,
+    //     // taskUid:this.data.taskName.taskUid
+    //   }
+    // })
+    // dialogRef.afterClosed().subscribe((res)=>{
+    //   this.dialogRef.close()
+    //   console.log('res',res);
+    // })
 
   }
   
@@ -278,18 +297,6 @@ getTaskStatusListData(){
     console.log('taskStatus',taskStatus);
     this.taskStatusList.push(taskStatus);
     console.log('this.taskStatusList',this.taskStatusList)
-    // this.taskStatusList[0].forEach((statusId)=>{
-    //   console.log('statusId',statusId)
-    //  if(statusId.id === this.data.taskDetails.status.id){
-    //   console.log('kkkkkkkkkkkkkkkkkkkkkkkkkk');
-    //   this.showHideTickMarkUpdate=true
-    //  }
-    //  else{
-    //    console.log('mmmmmmmmmmmmmmmmmmmmmmmmmmmmmm');
-    //    this.showHideTickMarkUpdate=false
-    //  }
-    // })
-
   },
   (error)=>{
     this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
@@ -299,6 +306,7 @@ selectStatus(statusDetails){
   this.showHideTickMark=true;
   console.log('statusDetails',statusDetails)
   this.selectedStatusId= statusDetails.id
+  this.status= statusDetails.name;
   this.selectText=''
   this.showHideTickMarkUpdate=false;
   if(this.statusId === statusDetails.id){
@@ -319,7 +327,7 @@ completeTaskStatus(){
       this.crmService.addStatus( this.selectedStatusUID,this.selectedStatusId).subscribe((response)=>{
         console.log('response',response)
         setTimeout(() => {
-          this.dialogRef.close();
+          this.dialogRef.close( this.status);
           this.showHideTickMark=false
         }, projectConstants.TIMEOUT_DELAY);
       },

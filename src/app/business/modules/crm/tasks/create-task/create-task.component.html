@@ -220,7 +220,7 @@
                                      <!-- *ngIf="createBTimeField" -->
                                      <!-- onfocus="(this.type='datetime-local')" onblur="if(this.value==''){this.type='text'}" -->
                                      <div class="fieldPadding"  *ngIf="createBTimeField">
-                                        <input [(ngModel)]="taskDueTime" [value]="taskTime" (keyup)="resetErrors()"  type="datetime-local" #taskTime (ngModelChange)="handleTaskEstDuration(taskTime.value)"
+                                        <input id="myPsw" [(ngModel)]="taskDueTime" [value]="taskTime" (keyup)="resetErrors()"  type="datetime-local" #taskTime (ngModelChange)="handleTaskEstDuration(taskTime.value)"
                                         placeholder="Enter Est Duration"class="form-control widthWebKit" formControlName="taskTime"autocomplete="off" /> 
                                            
                                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
