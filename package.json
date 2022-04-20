@@ -75,6 +75,7 @@
     "materialize-css": "^1.0.0",
     "moment": "^2.24.0",
     "mousetrap": "^1.6.5",
+    "ng-circle-progress": "^1.6.0",
     "ng-otp-input": "^1.8.5",
     "ng2-ckeditor": "^1.2.2",
     "ng2-search-filter": "^0.5.1",

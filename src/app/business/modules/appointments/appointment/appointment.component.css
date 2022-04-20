@@ -167,6 +167,9 @@
   /* align-items:center !important; */
   /* border-radius: 4px; */
 }
+.singleDepmt{
+  height: 35px !important;
+}
 
 /* .mob-container input {
     height:35px !important;

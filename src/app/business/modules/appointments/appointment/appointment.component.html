@@ -262,14 +262,17 @@
                         <div class="lbl col-sm-12 col-md-12 col-lg-12 no-padding max-width">
                             <div class="mainouter checkin-page walkin-form-fields-appointment">
                                 <ng-container *ngIf="!api_loading1">
-                                    <div class="service-outer p-0 m-0" *ngIf="filterDepart">
+                                    <div class="service-outer p-0 m-0 mt-2" *ngIf="filterDepart">
                                         <ng-container>
-                                            <span class="p-0 m-0 sel-dept">{{select_deptment_cap}}</span>
+                                            <span class="p-0 m-0 sel-dept mt-2" *ngIf="deptLength > 1">{{select_deptment_cap}}</span>
+                                            <span class="p-0 m-0 sel-dept mt-2" *ngIf="deptLength === 1">Department</span>
+
                                             <span class="required">*</span>
                                             <mat-form-field *ngIf="deptLength == 1">
-                                                <input class="inputbox" matInput *ngFor="let dept of departments"
-                                                    [readonly]="true" placeholder="Department"
+                                                <input class="inputbox singleDepmt" matInput *ngFor="let dept of departments"
+                                                    [readonly]="true" 
                                                     value="{{dept.departmentName | capitalizeFirst}}">
+                                                    <!-- placeholder="Department" -->
                                             </mat-form-field>
                                             <mat-form-field *ngIf="deptLength > 1">
                                                 <mat-select class="inputbox" [ngModel]="selected_dept" #deptsel
@@ -292,8 +295,10 @@
                                     <div class="service-outer p-0 m-0 customBusinessName"
                                         *ngIf="users.length > 0 && accountType === 'BRANCH'">
                                         <ng-container>
-                                            <span class="p-0 m-0 sel-domain-termi">Select {{provider_label |
+                                            <span class="p-0 m-0 sel-domain-termi" *ngIf="users.length > 1">Select {{provider_label |
                                                 capitalizeFirst}}</span>
+                                                <span class="p-0 m-0 sel-domain-termi" *ngIf="users.length === 1">{{provider_label |
+                                                    capitalizeFirst}}</span>
                                             <span class="required">*</span>
                                             <mat-form-field *ngIf="users.length == 1">
                                                 <input matInput class="inputbox" *ngFor="let user of users"
@@ -348,7 +353,7 @@
                                                 </ng-container>
                                             </span>
                                             <mat-form-field *ngIf="servicesjson.length > 1">
-                                                <span class="p-0 m-0 sel-ser">{{select_service_cap}}</span>
+                                                <span class="p-0 m-0 sel-ser mt-2">{{select_service_cap}}</span>
                                                 <span class="required">*</span>
                                                 <mat-select class="inputbox" [ngModel]="sel_ser" #servsel
                                                     (selectionChange)="handleServiceSel(servsel.value)">                                                    

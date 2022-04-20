@@ -89,8 +89,8 @@
               <mat-expansion-panel [expanded]="true">
                   <mat-expansion-panel-header>
                       <mat-panel-title class="report_title">
-                          <span *ngIf="showToken">Token</span>
-                          <span *ngIf="!showToken">Check-in</span>
+                          <span *ngIf="showToken">Tokens</span>
+                          <span *ngIf="!showToken">Tokens</span>
                           <div class="width100pc" *ngIf="token_criteria.length > 0">
                             <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'token'}">Create New Report</a>
                            </div>
