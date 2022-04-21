@@ -384,7 +384,7 @@ export class CreateTaskComponent implements OnInit {
     this.crmService.getTaskStatus().subscribe((taskStatus:any)=>{
       console.log('taskStatus',taskStatus);
       this.taskStatusList.push(taskStatus);
-      if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName!='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster'){
+      if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName==='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster'){
         this.taskStatusModal=this.taskStatusList[0][0].id;
       }
       else{
@@ -399,7 +399,7 @@ export class CreateTaskComponent implements OnInit {
     this.crmService.getTaskPriority().subscribe((taskPriority:any)=>{
       console.log('taskPriority',taskPriority);
       this.taskPriorityList.push(taskPriority);
-      if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName!='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster'){
+      if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName==='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster'){
         this.taskPriority=this.taskPriorityList[0][0].id;
       }else{
         this.taskPriority=this.updateValue.priority.id;
@@ -638,7 +638,7 @@ export class CreateTaskComponent implements OnInit {
 }
   saveCreateTask(){
     // this.api_loading = true;
-    if(this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster'){
+    if(this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' && this.crmService.taskActivityName !='CreteTaskMaster'){
       const updateTaskData:any = {
         "title":this.createTaskForm.controls.taskTitle.value,
         "description":this.createTaskForm.controls.taskDescription.value,
