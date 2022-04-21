@@ -1120,6 +1120,14 @@ export class ProviderCheckinComponent implements OnInit {
             consumerNoteMandatory: serv.consumerNoteMandatory,
             consumerNoteTitle: serv.consumerNoteTitle
         };
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        if(user.userType == 1 && !serv.provider) {
+            this.assignmyself = true;
+        }
+        else{
+            this.assignmyself = false; 
+        }
+        console.log("Service:", serv);
         this.note_placeholder = this.sel_ser_det.consumerNoteTitle;
     }
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
