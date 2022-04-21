@@ -177,7 +177,7 @@ export class CreateTaskComponent implements OnInit {
         this.router.navigate(['provider', 'task']);
       }
     }
-    else if(this.crmService.taskActivityName == "subTaskCreate")
+    else if(this.crmService.taskActivityName === "subTaskCreate")
       {
                 this.createBTimeField=true;
           this.updateBTimefield=false;
@@ -197,13 +197,13 @@ export class CreateTaskComponent implements OnInit {
           this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinurte };
           console.log('this.estTime',this.estTime);
           console.log('new Date()',new Date())
-          const taskMaster= this.crmService.taskMasterToCreateServiceData;
-          console.log('taskMaster',taskMaster);
-          this.createTaskForm.controls.taskTitle.value = taskMaster.title;
-          this.createTaskForm.controls.taskDescription.value= taskMaster.description;
-          this.createTaskForm.controls.userTaskCategory.value= taskMaster.category.id;
-          this.createTaskForm.controls.userTaskType.value= taskMaster.type.id;
-          this.createTaskForm.controls.userTaskPriority.value= taskMaster.priority.id;
+          // const taskMaster= this.crmService.taskMasterToCreateServiceData;
+          // console.log('taskMaster',taskMaster);
+          // this.createTaskForm.controls.taskTitle.value = taskMaster.title;
+          // this.createTaskForm.controls.taskDescription.value= taskMaster.description;
+          // this.createTaskForm.controls.userTaskCategory.value= taskMaster.category.id;
+          // this.createTaskForm.controls.userTaskType.value= taskMaster.type.id;
+          // this.createTaskForm.controls.userTaskPriority.value= taskMaster.priority.id;
           }
     else if(this.crmService.taskActivityName==='CreatE'){
       this.createBTimeField=true;
