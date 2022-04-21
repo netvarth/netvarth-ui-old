@@ -16,7 +16,7 @@
         <div class="rowcard card" *ngIf="api_loading">
           <app-common-innerloading-spinner> </app-common-innerloading-spinner>
         </div>
-        <div class="rowcard card" *ngIf="!api_loading">
+        <div class="rowcard card pt-0" *ngIf="!api_loading">
           <div class="c-details">
             <h2>
               <span style="float:right;font-size: 12px!important;margin-top: 17px!important;" class="customer-action-btn pointer-cursor my-auto" (click)="gotoActions(waitlist_data)">More Actions</span>  
@@ -32,8 +32,23 @@
             </h2>
           </div>
           <span class="loc-cls">
-            <span class="text-dark" *ngIf="spName">Assigned to {{spName}}</span><br> 
-            <i class="fa fa-map-marker"></i>&nbsp;{{waitlist_data.queue.location.place | capitalizeFirst}}</span>
+            <div class="d-flex justify-content-between">
+              <div *ngIf="waitlist_data.token">
+                <span class="text-dark">Token No : <b>{{waitlist_data.token}}</b></span>
+              </div>
+              <div *ngIf="spName">
+                <span class="text-dark">Assigned to <b>{{spName}}</b></span>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div *ngIf="waitlist_data.service.deptName">
+                <span class="text-dark">Department : <b>{{waitlist_data.service.deptName}}</b></span> 
+              </div>
+              <div *ngIf="waitlist_data.teamId !== 0">
+                <span class="text-dark">Team : <b>{{getUsersList(waitlist_data.teamId)}}</b></span> 
+              </div>
+            </div>
+            <a target="_blank" href="{{waitlist_data.queue.location.googleMapUrl}}"><i class="fa fa-map-marker"></i>&nbsp;{{waitlist_data.queue.location.place | capitalizeFirst}}</a></span>
             <span class="text-light my-0 py-0"><b>Booking Via : </b>
               {{getAgent(waitlist_data.requestInfo.agent) | capitalizeFirst}},
               {{getBookingReqFrom(waitlist_data.requestInfo.browser,waitlist_data.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
@@ -111,6 +126,8 @@
                     </div>
                     <div class="gender-and-dob">
                         <div *ngIf="waitlist_data.waitlistingFor[0].gender" class="gender">
+                          <i *ngIf="waitlist_data.waitlistingFor[0].gender === 'male'" class="fa fa-mars icon"></i>
+                          <i *ngIf="waitlist_data.waitlistingFor[0].gender === 'female'" class="fa fa-venus icon"></i>
                             <span class="value">&nbsp;{{waitlist_data.waitlistingFor[0].gender | capitalizeFirst}}</span>
                         </div>
                         <div class="dob" *ngIf="waitlist_data.waitlistingFor[0].dob">
@@ -178,7 +195,8 @@
   <div class="card">
     <div class="">
       <h3 class="">
-        {{customer_label | capitalizeFirst}} info
+        <!-- {{customer_label | capitalizeFirst}}  -->
+        More info
       </h3>
     </div>
     <ng-container *ngIf="questionnaires.length > 1">

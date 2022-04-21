@@ -762,8 +762,16 @@
                                 <i class="fa fa-map-marker icon"></i>
                                 <span class="value">{{customer[0].address}}</span>
                             </div>
-                            <button class="btn create-prescription-button text-capitalize" *ngIf="whatsappNumber || number || email"
+                            <div class="d-flex">
+                                <div>
+                                    <button class="btn create-prescription-button text-capitalize" *ngIf="whatsappNumber || number || email"
                                 (click)="showCommunications()">Call {{customer_label}} </button>
+                                </div>
+                                <div>
+                                    <button class="ml-2 btn create-prescription-button text-capitalize" *ngIf="whatsappNumber || number || email"
+                                (click)="showCustomerAction()">More Actions</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -792,25 +800,25 @@
                 [view]="'small'">
             </app-records-datagrid>
         </div>
-        <div class="column">
+        <div class="column" *ngIf="domain != 'finance'">
             <app-records-datagrid [records]="todayordervisitDetails" [heading]="'Todays_Order'" [source]="'order'"
                 [showMore]="showMoreorderToday" [timeType]="1" (actionPerformed)="actionPerformed($event)"
                 [view]="'small'">
             </app-records-datagrid>
         </div>
-        <div class="column">
+        <div class="column" *ngIf="domain != 'finance'">
             <app-records-datagrid [records]="futureordervisitDetails" [heading]="'Future_Order'" [source]="'order'"
                 [showMore]="showMoreorderFuture" [timeType]="2" (actionPerformed)="actionPerformed($event)"
                 [view]="'small'">
             </app-records-datagrid>
         </div>
-        <div class="column">
+        <div class="column" *ngIf="domain != 'finance'">
             <app-records-datagrid [records]="historyOrdervisitDetails" [heading]="'Order_History'" [source]="'order'"
                 [showMore]="showMoreOrderHistory" [timeType]="3" (actionPerformed)="actionPerformed($event)"
                 [view]="'small'">
             </app-records-datagrid>
         </div>
-        <div class="column">
+        <div class="column" *ngIf="domain != 'finance'">
             <app-records-datagrid [heading]="'Bills'" [source]="'bill'" [records]="consumerBills"
                 [customerId]="customer[0].id" [view]="'small'">
             </app-records-datagrid>

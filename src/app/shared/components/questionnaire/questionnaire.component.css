@@ -168,3 +168,15 @@
     overflow: hidden !important;
     white-space: nowrap !important;
 }
+
+
+@media (max-width: 750px) {
+    .normal-btn {
+        padding: 3px 10px;
+        border: none !important;
+    }
+    .edit {
+        padding: 2px 12px;
+        border-radius: 10px !important;
+    }
+}

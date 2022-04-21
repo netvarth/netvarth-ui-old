@@ -16,6 +16,7 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { CommunicationPopupComponent } from '../../bookings/communication-popup/communication-popup.component';
 // import { interval as observableInterval } from 'rxjs';
 import { SubSink } from 'subsink';
+import { CommunicationService } from '../../../../business/services/communication-service';
 @Component({
     selector: 'app-customer-details',
     templateUrl: './customer-details.component.html',
@@ -131,6 +132,7 @@ export class CustomerDetailComponent implements OnInit {
         private _location: Location, public dialog: MatDialog,
         private router: Router,
         private wordProcessor: WordProcessor,
+        private communicationService: CommunicationService,
         private dateTimeProcessor: DateTimeProcessor,
         private groupService: GroupStorageService) {
         const customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -594,5 +596,13 @@ export class CustomerDetailComponent implements OnInit {
                 type: 'customer'
             }
         });
+    }
+
+    CustomersInboxMessage() {
+        this.communicationService.ConsumerInboxMessage(this.customerDetails, 'customer-list')
+            .then(
+                () => { },
+                () => { }
+            );
     }
 }

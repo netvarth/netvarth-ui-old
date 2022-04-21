@@ -226,6 +226,9 @@
 {
     margin-bottom: 3px!important;
 }
+.content{
+    min-height: auto!important;
+}
 
 @media (max-width: 750px) {
     .note_view{

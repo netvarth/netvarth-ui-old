@@ -51,6 +51,7 @@ export class HistorySectionComponent implements OnInit {
   hasAttachment = false;
   small_device_display = false;
   newTimeDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
+  newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   check_in_statuses = projectConstantsLocal.CHECK_IN_STATUSES;
 
 
