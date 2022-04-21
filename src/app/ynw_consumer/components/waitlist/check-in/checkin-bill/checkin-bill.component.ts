@@ -237,7 +237,6 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
         }
     }
     getImageSrc(mode) {
-
         return 'assets/images/payment-modes/' + mode + '.png';
     }
     goBack() {

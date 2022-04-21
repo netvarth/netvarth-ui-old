@@ -431,7 +431,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
 
     this.subs.sink = this.galleryService.getMessage().subscribe(input => {
-      // console.log(input);
+      console.log("Reached Here:");
       if (input && input.accountId && input.uuid && input.type === 'appt') {
         // console.log(input);
         this.shared_services.addConsumerAppointmentAttachment(input.accountId, input.uuid, input.value)

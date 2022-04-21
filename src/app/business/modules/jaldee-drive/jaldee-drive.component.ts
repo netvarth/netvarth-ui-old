@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../../business/services/provider-services.service';
 import { PreviewuploadedfilesComponent } from './previewuploadedfiles/previewuploadedfiles.component';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { FileService } from '../../../shared/services/file-service';
 
 
 @Component({
@@ -192,8 +193,8 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     public location: Location,
     public dialog: MatDialog,
     private _location: Location,
-     private wordProcessor:WordProcessor
-
+     private wordProcessor:WordProcessor,
+    private fileService:FileService
   ) {
      this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
      this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -355,12 +356,15 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     this.getfiles();
   }
   getImage(url, file) {
-    if (file.type == 'application/pdf') {
-      return '../../../../../assets/images/pdf.png';
-    } else {
-      return url;
-    }
+    return this.fileService.getImage(url, file);
   }
+  // getImage(url, file) {
+  //   if (file.type == 'application/pdf') {
+  //     return '../../../../../assets/images/pdf.png';
+  //   } else {
+  //     return url;
+  //   }
+  // }
   deleteTempImage(i) {
     this.selectedMessage.files.splice(i, 1);
     this.selectedMessage.base64.splice(i, 1);

@@ -34,7 +34,8 @@ export class DonationServicesComponent implements OnInit {
         // this.showServiceDetail(actionObj['service'], this.businessProfile.businessName);
         // this.router.navigate([this.businessProfile.accEncUid, 'service', actionObj['service'].id]);
         let queryParam = {
-          back:1
+          back:1,
+          customId: this.businessProfile.accEncUid
         }
         const navigationExtras: NavigationExtras = {
           queryParams: queryParam

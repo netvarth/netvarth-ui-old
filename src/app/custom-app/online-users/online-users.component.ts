@@ -31,6 +31,7 @@ export class OnlineUsersComponent implements OnInit {
     let queryParams = {};
     if(this.templateJson['theme']) {
       queryParams['theme'] = this.templateJson['theme'];
+      queryParams['customId']= this.businessProfile.accEncUid;
     }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams

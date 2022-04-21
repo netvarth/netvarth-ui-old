@@ -35,6 +35,7 @@ import { AuthenticationModule } from '../../../../shared/modules/authentication/
 import { ServiceDisplayModule } from '../../../../ynw_consumer/modules/service-display/service-display.module';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { PaytmService } from '../../../../shared/services/paytm.service';
+import { FileService } from '../../../../shared/services/file-service';
 const routes: Routes = [
     { path: '', component: ConsumerAppointmentComponent},
     { path: 'track/:id', loadChildren:()=> import('./livetrack/livetrack.module').then(m=>m.ConsumerApptLiveTrackModule) },
@@ -88,7 +89,8 @@ const routes: Routes = [
     providers: [
         CustomerService,
         RazorpayService,
-        PaytmService
+        PaytmService,
+        FileService
     ],
     exports: [ConsumerAppointmentComponent]
 })

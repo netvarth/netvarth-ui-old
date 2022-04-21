@@ -10,6 +10,7 @@ import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.m
 import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
 // import { InboxRoutingModule } from './inbox-list-routing.module';
 import { InboxListComponent } from './inbox-list.component';
+import { FileService } from '../../../../shared/services/file-service';
 @NgModule({
     imports: [
         CommonModule,
@@ -26,6 +27,7 @@ import { InboxListComponent } from './inbox-list.component';
     declarations: [
         InboxListComponent
     ],
+    providers: [FileService],
     exports: [InboxListComponent]
 })
 export class InboxListModule {

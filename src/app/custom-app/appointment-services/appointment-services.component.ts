@@ -100,7 +100,8 @@ export class AppointmentServicesComponent implements OnInit, OnChanges {
         console.log(actionObj['service']);
         console.log(actionObj['service'].id);
         let queryParam = {
-          back:1
+          back:1,
+          customId: this.businessProfile.accEncUid
         }
         const navigationExtras: NavigationExtras = {
           queryParams: queryParam

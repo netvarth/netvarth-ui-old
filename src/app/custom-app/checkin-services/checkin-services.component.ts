@@ -72,7 +72,8 @@ export class CheckinServicesComponent implements OnInit, OnChanges {
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
         let queryParam = {
-          back:1
+          back:1,
+          customId: this.businessProfile.accEncUid
         }
         const navigationExtras: NavigationExtras = {
           queryParams: queryParam

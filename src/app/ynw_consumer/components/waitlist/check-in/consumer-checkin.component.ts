@@ -27,6 +27,7 @@ import { PaytmService } from '../../../../../app/shared/services/paytm.service';
 import { JcCouponNoteComponent } from '../../../../shared/modules/jc-coupon-note/jc-coupon-note.component';
 import { CustomerService } from '../../../../shared/services/customer.service';
 import { AuthService } from '../../../../shared/services/auth-service';
+import { FileService } from '../../../../shared/services/file-service';
 
 @Component({
     selector: 'app-consumer-checkin',
@@ -303,6 +304,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         private cdRef: ChangeDetectorRef,
         private customerService: CustomerService,
         private authService: AuthService,
+        private fileService: FileService,
         @Inject(DOCUMENT) public document
     ) {
 
@@ -2003,21 +2005,24 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
     }
     getImage(url, file) {
-        console.log("File Type :", file.type)
-        if (file.type == 'application/pdf') {
-            return './assets/images/pdf.png';
-        }
-        else if (file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg') {
-            return './assets/images/audio.png';
-
-        }
-        else if (file.type == 'video/mp4' || file.type == 'video/mpeg') {
-            return './assets/images/video.png';
-        }
-        else {
-            return url;
-        }
+        return this.fileService.getImage(url, file);
     }
+    // getImage(url, file) {
+    //     console.log("File Type :", file.type)
+    //     if (file.type == 'application/pdf') {
+    //         return './assets/images/pdf.png';
+    //     }
+    //     else if (file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg') {
+    //         return './assets/images/audio.png';
+
+    //     }
+    //     else if (file.type == 'video/mp4' || file.type == 'video/mpeg') {
+    //         return './assets/images/video.png';
+    //     }s
+    //     else {
+    //         return url;
+    //     }
+    // }
     getThumbUrl(attachment) {
         if (attachment && attachment.s3path) {
             if (attachment.s3path.indexOf('.pdf') !== -1) {

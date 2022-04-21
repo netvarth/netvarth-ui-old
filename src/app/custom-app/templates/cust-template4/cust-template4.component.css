@@ -65,27 +65,23 @@ ul#topnav li a {
 }
 
 #pageheader {
-    /* display:table;
-    width:62.5%; */
     margin:auto;
 }
 
 
 .section {
-    /* width:95%; */
-    /* border-top:1px solid #eee; */
     padding:20px;
     margin:auto;
 }
 
-.pageitem {
-    display:table;
-    width:100%;
-    margin-bottom:15px;
-    padding-top:15px;
-    text-align:center;
-}
+.text-huge {font-size:2rem; line-height: 1;}
+.text-tiny {font-size:.875rem;line-height: 1;}
+.text-small{font-size:0.95rem;line-height: 1;}
+.text-big{font-size: 1rem;line-height: 1;}
 
+.pageitem .col {
+    text-align: center;
+}
 .pageitem h1 {
     font-weight:normal;
     color:#555;
@@ -112,13 +108,13 @@ ul#topnav li a {
     /* padding:0 75px; */
     margin:0;
     font-size:18px !important;
-    line-height:150%;
+    line-height:200%;
  }
 
-
+/* 
 .col {
     display: table-cell;
-}
+} */
 
 
 .col ul#sub {

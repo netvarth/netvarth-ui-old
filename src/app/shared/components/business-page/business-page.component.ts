@@ -2321,7 +2321,14 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   providerDetClicked(userId) {
-    this.routerobj.navigate([this.accountEncId, userId]);
+    let queryParam = {
+      back:1,
+      customId: this.businessjson.accEncUid
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParam
+    };
+    this.routerobj.navigate([this.accountEncId, userId], navigationExtras);
   }
   opencheckavail(actionObj) {
     console.log("ActionObj:",actionObj);
@@ -2360,7 +2367,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
         // this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id]);
         let queryParam = {
-          back:1
+          back:1,
+          customId: this.businessjson.accEncUid
         }
         const navigationExtras: NavigationExtras = {
           queryParams: queryParam
@@ -2376,7 +2384,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       if (actionObj['action'] === 'view') {
         // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
         let queryParam = {
-          back:1
+          back:1,
+          customId: this.businessjson.accEncUid
         }
         const navigationExtras: NavigationExtras = {
           queryParams: queryParam
@@ -2394,7 +2403,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         // this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id]);
         // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
         let queryParam = {
-          back:1
+          back:1,
+          customId: this.businessjson.accEncUid
         }
         const navigationExtras: NavigationExtras = {
           queryParams: queryParam
@@ -2412,6 +2422,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         this.decrement(actionObj['service']);
       }
     } else {
+      
       this.providerDetClicked(actionObj['userId']);
     }
   }

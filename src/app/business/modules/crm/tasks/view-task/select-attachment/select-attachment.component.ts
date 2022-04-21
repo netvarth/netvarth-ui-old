@@ -7,6 +7,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { projectConstants } from '../../../../../../../../src/app/app.component';
 import { SharedServices } from '../../../../../../shared/services/shared-services';
+import { FileService } from '../../../../../../shared/services/file-service';
 // import { Router } from '@angular/router';
 
 
@@ -38,6 +39,7 @@ fileInfos: Observable<any>;
     @Inject(MAT_DIALOG_DATA) public data: any,
     private snackbarService: SnackbarService,
     public shared_services: SharedServices,
+    private fileService: FileService
     // private router: Router,
 
 
@@ -144,22 +146,24 @@ fileInfos: Observable<any>;
     });
     
   }
-
   getImage(url, file) {
-    if (file.type == 'application/pdf') {
-        return './assets/images/pdf.png';
-    }
-    else if (file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg') {
-        return './assets/images/audio.png';
-
-    }
-    else if (file.type == 'video/mp4' || file.type == 'video/mpeg') {
-        return './assets/images/video.png';
-    }
-    else {
-        return url;
-    }
+    return this.fileService.getImage(url, file);
 }
+//   getImage(url, file) {
+//     if (file.type == 'application/pdf') {
+//         return './assets/images/pdf.png';
+//     }
+//     else if (file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg') {
+//         return './assets/images/audio.png';
+
+//     }
+//     else if (file.type == 'video/mp4' || file.type == 'video/mpeg') {
+//         return './assets/images/video.png';
+//     }
+//     else {
+//         return url;
+//     }
+// }
 
 
   deleteTempImage(i) {

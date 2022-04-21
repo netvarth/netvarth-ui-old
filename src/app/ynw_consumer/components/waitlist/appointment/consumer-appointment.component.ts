@@ -21,6 +21,7 @@ import { PaytmService } from "../../../../shared/services/paytm.service";
 import { RazorpayService } from "../../../../shared/services/razorpay.service";
 import { Location } from "@angular/common";
 import { ProviderServices } from "../../../../business/services/provider-services.service";
+import { FileService } from "../../../../shared/services/file-service";
 
 @Component({
     selector: 'app-consumer-appointment',
@@ -190,7 +191,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         private ngZone: NgZone,
         private location: Location,
         private providerServices: ProviderServices,
-        private cdRef: ChangeDetectorRef
+        private cdRef: ChangeDetectorRef,
+        private fileService: FileService
     ) {
         this.subs.sink = this.activatedRoute.queryParams.subscribe(
             params => {
@@ -2086,20 +2088,23 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
     }
     getImage(url, file) {
-        if (file.type == 'application/pdf') {
-            return './assets/images/pdf.png';
-        }
-        else if (file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg') {
-            return './assets/images/audio.png';
-
-        }
-        else if (file.type == 'video/mp4' || file.type == 'video/mpeg') {
-            return './assets/images/video.png';
-        }
-        else {
-            return url;
-        }
+        return this.fileService.getImage(url, file);
     }
+    // getImage(url, file) {
+    //     if (file.type == 'application/pdf') {
+    //         return './assets/images/pdf.png';
+    //     }
+    //     else if (file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg') {
+    //         return './assets/images/audio.png';
+
+    //     }
+    //     else if (file.type == 'video/mp4' || file.type == 'video/mpeg') {
+    //         return './assets/images/video.png';
+    //     }
+    //     else {
+    //         return url;
+    //     }
+    // }
     addMember() {
         this.action = 'addmember';
         this.disable = false;

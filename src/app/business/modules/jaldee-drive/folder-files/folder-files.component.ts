@@ -11,6 +11,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { projectConstants } from '../../../../app.component';
 import { ConfirmBoxComponent } from '../../../../business/shared/confirm-box/confirm-box.component';
+import { FileService } from '../../../../shared/services/file-service';
 // import { ConfirmDeleteBoxComponent } from '../confirm-delete-box/confirm-delete-box.component';
 
 @Component({
@@ -128,6 +129,7 @@ export class FolderFilesComponent implements OnInit {
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
+    private fileService: FileService
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -641,21 +643,24 @@ export class FolderFilesComponent implements OnInit {
     }
   }
   getImage(url, file) {
-    console.log("File Type :",file.type);
-    if (file.type == 'application/pdf') {
-      return '../../../../../assets/images/pdf.png';
-    }
-    else if(file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg'){
-      return '../../../../../assets/images/audio.png';
-
-    }
-    else if(file.type == 'video/mp4' || file.type == 'video/mpeg'){
-      return '../../../../../assets/images/video.png';
-    }
-    else {
-      return url;
-    }
+    return this.fileService.getImage(url, file);
   }
+  // getImage(url, file) {
+  //   console.log("File Type :",file.type);
+  //   if (file.type == 'application/pdf') {
+  //     return '../../../../../assets/images/pdf.png';
+  //   }
+  //   else if(file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg'){
+  //     return '../../../../../assets/images/audio.png';
+
+  //   }
+  //   else if(file.type == 'video/mp4' || file.type == 'video/mpeg'){
+  //     return '../../../../../assets/images/video.png';
+  //   }
+  //   else {
+  //     return url;
+  //   }
+  // }
   onBack() {
   }
   onCancel() {

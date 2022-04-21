@@ -34,7 +34,7 @@ export class RazorpayService {
     prefillModel['contact'] = pData.consumerPhoneumber;
 
     let razorModel = {
-      refill: prefillModel,
+      prefill: prefillModel,
       key: pData.razorpayId,
       amount: pData.amount,
       currency: 'INR',
@@ -116,7 +116,7 @@ export class RazorpayService {
     prefillModel['contact'] = pData.consumerPhoneumber;
 
     let razorModel = {
-      refill: prefillModel,
+      prefill: prefillModel,
       key: pData.razorpayId,
       amount: pData.amount,
       currency: 'INR',

@@ -232,9 +232,7 @@ export class ServiceViewComponent implements OnInit {
     this.activaterouterobj.paramMap
       .subscribe(params => {
         this.serviceid = params.get('serid');
-        this.accountEncId = params.get('id');
-
-        
+        this.accountEncId = params.get('id'); 
         if (params.get('userEncId')) {
           this.userId = params.get('userEncId');
         } else {
@@ -247,7 +245,7 @@ export class ServiceViewComponent implements OnInit {
             this.getAccountIdFromEncId(_this.accountEncId).then(
               (id: any) => {
                 _this.provider_id = id;      
-                _this.customId = _this.accountEncId;
+                // _this.customId = _this.accountEncId;
                 _this.accEncUid = _this.accountEncId;     
                 _this.accountIdExists = true;      
                 _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
@@ -280,6 +278,9 @@ export class ServiceViewComponent implements OnInit {
       }
       if (qparams.back) {
         this.back = qparams.back;
+      }
+      if  (qparams.customId) {
+        this.customId = qparams.customId;
       }
     });
   }
@@ -482,9 +483,9 @@ export class ServiceViewComponent implements OnInit {
   setBusinesssProfile(res) {
     this.onlinePresence = res['onlinePresence'];
     this.accEncUid = res['accEncUid'];
-    const custID = res['customId'] ? res['customId']:res['accEncUid'];
-    this.customId = custID;
-    this.lStorageService.setitemonLocalStorage('customId', custID);
+    // const custID = res['customId'] ? res['customId']:res['accEncUid'];
+    // this.customId = custID;
+    // this.lStorageService.setitemonLocalStorage('customId', custID);
     this.lStorageService.setitemonLocalStorage('accountId', res['id']);
     if (!this.userId) {
       this.businessjson = res;
@@ -1250,7 +1251,10 @@ export class ServiceViewComponent implements OnInit {
       queryParam['dept'] = service['department'];
       queryParam['theme'] = this.theme;
     }
-    queryParam['customId'] = this.accountEncId;
+    if (this.customId) {
+      queryParam['customId'] = this.customId;
+    }
+    
     const navigationExtras: NavigationExtras = {
       queryParams: queryParam
     };
@@ -1281,7 +1285,9 @@ export class ServiceViewComponent implements OnInit {
       queryParam['dept'] = service['department'];
       queryParam['theme'] = this.theme;
     }
-    queryParam['customId'] = this.accountEncId;
+    if (this.customId) {
+      queryParam['customId'] = this.customId;
+    }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParam,
     };
@@ -1325,18 +1331,21 @@ export class ServiceViewComponent implements OnInit {
     });
   }
   showDonation(locid, curdate, service) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        loc_id: locid,
+    let queryParam = {
+      loc_id: locid,
         sel_date: curdate,
         cur: this.changedate_req,
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id,
         accountId: this.provider_bussiness_id,
         service_id: service.id,
-        theme: this.theme,
-        customId: this.accountEncId
-      }
+        theme: this.theme
+    }
+    if (this.customId) {
+      queryParam['customId'] = this.customId;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParam
     };
     this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);
   }
@@ -1439,9 +1448,10 @@ export class ServiceViewComponent implements OnInit {
       });
   }
   viewDashboard() {
-    let queryParam = {
-      'customId': this.accountEncId,
-      'accountId': this.provider_bussiness_id
+    let queryParam = {};
+    if (this.customId) {
+      queryParam ['customId'] = this.customId;
+      queryParam ['accountId'] = this.provider_bussiness_id;
     }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParam

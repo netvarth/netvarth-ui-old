@@ -30,6 +30,7 @@ import { BookingAccountinfoModule } from '../../../../ynw_consumer/modules/booki
 import { ServiceDisplayModule } from '../../../../ynw_consumer/modules/service-display/service-display.module';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { PaytmService } from '../../../../shared/services/paytm.service';
+import { FileService } from '../../../../shared/services/file-service';
 const routes: Routes = [
     { path: '', component: ConsumerCheckinComponent},
     { path: 'track/:id', loadChildren: ()=> import('./livetrack/livetrack.module').then(m=>m.ConsumerLiveTrackModule) },
@@ -78,7 +79,8 @@ const routes: Routes = [
     providers: [
         CustomerService,
         RazorpayService,
-        PaytmService
+        PaytmService,
+        FileService
     ],
     exports: [ConsumerCheckinComponent]
 })

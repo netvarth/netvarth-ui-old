@@ -17,6 +17,7 @@ import { SelectAttachmentComponent } from "./select-attachment/select-attachment
 import { MatSliderModule } from "@angular/material/slider";
 import { ActivitylogComponent } from "./activitylog/activitylog.component";
 import { NgCircleProgressModule } from "ng-circle-progress";
+import { FileService } from "../../../../../shared/services/file-service";
 const routes: Routes = [
   { path: '', component: ViewTaskComponent },
   {path:'create-task',loadChildren:()=>import('../create-task/create-task.module').then((m)=>m.CreateTaskModule)},
@@ -62,7 +63,8 @@ const routes: Routes = [
     
   ],
   providers: [
-    CrmService
+    CrmService,
+    FileService
   ],
   schemas: [
       CUSTOM_ELEMENTS_SCHEMA,
