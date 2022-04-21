@@ -1,9 +1,9 @@
 <div class="d-flex justify-content-between">
     <div class="pt-2 pl-lg-3">
-        <h4><b>Subtasks</b></h4> 
+        <h4><b>Subactivities</b></h4> 
     </div>
     <div class="pr-lg-3">
-        <a class="btn btn-primary rounded-btn" (click)="createSubTask(taskid)"><i class="fa fa-plus"></i>&nbsp;Subtask</a>
+        <a class="btn btn-primary rounded-btn" (click)="createSubTask(taskid)"><i class="fa fa-plus"></i>&nbsp;Subactivity</a>
     </div>
 </div>
 
@@ -26,7 +26,7 @@
         <table class="table">
             <thead>
                 <tr class="subtask-table-headings">
-                    <th class="head_color">&nbsp;&nbsp;&nbsp;Subtask Details</th>
+                    <th class="head_color">&nbsp;&nbsp;&nbsp;Subactivity Details</th>
                     <th class="head_color">Duration</th>
                     <th class="head_color">Status</th>
                     <th class="head_color">Category</th>
@@ -37,7 +37,7 @@
             <tbody>
                 <ng-container *ngIf="subTaskDetails.length === 0">
                 <tr class="text-center mx-auto text-danger">
-                    <td class="text-center nodatafound" colspan="5">No sub tasks found</td>
+                    <td class="text-center nodatafound" colspan="5">No subactivities found</td>
                 </tr>
                 </ng-container>
                 <ng-container>

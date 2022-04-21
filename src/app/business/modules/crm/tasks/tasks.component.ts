@@ -94,7 +94,7 @@ export class TasksComponent implements OnInit {
     totalCnt: 0,
     perPage: this.filter.page_count
   };
-  msg = 'Do you really want to mark as done this task? ';
+  msg = 'Do you really want to mark as done this activity? ';
   totalCount: any;
   inprogressCount: any;
   completedCount: any;

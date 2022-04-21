@@ -2,7 +2,7 @@
   <div class="title-gb no-padding">
     <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
       <span></span>&nbsp;&nbsp;&nbsp;
-      Task
+      Activity
       <!-- <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i> -->
     </div>
   </div>
@@ -11,7 +11,7 @@
   <div class="col-md-12 btnClass">
     <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small" (click)="createTask('Create')">
       <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
-        Create Task </button>
+        Create Activity </button>
     </a>
     <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small"
       [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'crm'}">
@@ -26,7 +26,7 @@
       <mat-tab class="mat-tab">
         <ng-template mat-tab-label>
           <span class="tab-number"><img class="img" src="/assets/images/crmImages/totaltask.PNG" /></span>
-          <span class="tab-text">Total Task({{totalCount}})</span>
+          <span class="tab-text">Total Activity({{totalCount}})</span>
           <!-- <div>
            
           </div>
@@ -45,7 +45,7 @@
                     <thead>
                       <tr class="tble-filtr-tr heght">
                         <th></th>
-                        <th class="head_color">Task Details</th>
+                        <th class="head_color">Activity Details</th>
                         <th class="head_color">Assignee</th>
                         <!-- <th class="head_color">Duration</th> -->
                         <th class="head_color">Status</th>
@@ -307,7 +307,7 @@
                     <thead>
                       <tr class="tble-filtr-tr heght">
                         <th style="width: 30px;"></th>
-                        <th class="head_color">Task Details</th>
+                        <th class="head_color">Activity Details</th>
                         <th class="head_color">Assignee</th>
                         <!-- <th class="head_color">Duration</th> -->
                         <th class="head_color">Status</th>
@@ -423,7 +423,7 @@
                     <thead>
                       <tr class="tble-filtr-tr heght">
                         <th style="width: 30px;"></th>
-                        <th class="head_color">Task Details</th>
+                        <th class="head_color">Activity Details</th>
                         <th class="head_color">Assignee</th>
                         <!-- <th class="head_color">Duration</th> -->
                         <th class="head_color">Status</th>

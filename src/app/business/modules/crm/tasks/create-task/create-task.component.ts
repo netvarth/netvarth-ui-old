@@ -145,7 +145,7 @@ export class CreateTaskComponent implements OnInit {
       targetPotential:[null,[Validators.required]],
     }) 
     if(this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE'){
-      this.selectHeader='Update Task'
+      this.selectHeader='Update Activity'
       this.createBTimeField=false;
       this.updateBTimefield=true;
       this.updateValue=this.crmService.taskToCraeteViaServiceData;
@@ -183,7 +183,7 @@ export class CreateTaskComponent implements OnInit {
           this.updateBTimefield=false;
           // this.selectMember='Select Member';
           // this.selectTaskManger='Select Task Manger'
-          this.selectHeader='Add Subtask';
+          this.selectHeader='Add Subactivity';
           this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd') 
           // this.datePipe.transform(this.taskDueDate,'yyyy-MM-dd');
           console.log(' this.taskDueDate', this.taskDueDate);
@@ -210,7 +210,7 @@ export class CreateTaskComponent implements OnInit {
       this.updateBTimefield=false;
       // this.selectMember='Select Member';
       // this.selectTaskManger='Select Task Manger'
-        this.selectHeader='Add Task';
+        this.selectHeader='Add Activity';
         this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd') 
         // this.datePipe.transform(this.taskDueDate,'yyyy-MM-dd');
         console.log(' this.taskDueDate', this.taskDueDate);
@@ -230,7 +230,7 @@ export class CreateTaskComponent implements OnInit {
       this.updateBTimefield=false;
       // this.selectMember='Select Member';
       // this.selectTaskManger='Select Task Manger'
-        this.selectHeader='Add Task';
+        this.selectHeader='Add Activity';
         this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd') 
         // this.datePipe.transform(this.taskDueDate,'yyyy-MM-dd');
         console.log(' this.taskDueDate', this.taskDueDate);
