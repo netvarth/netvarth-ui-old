@@ -137,7 +137,8 @@ export class TasksComponent implements OnInit {
   loadComplete1 = false;
   loadComplete2 = false;
   loadComplete3 = false;
-  public taskMasterList:any=[]
+  public taskMasterList:any=[];
+  public arr:any;
   constructor(
     private locationobj: Location,
     private groupService: GroupStorageService,
@@ -440,34 +441,44 @@ export class TasksComponent implements OnInit {
   }
 
   createTask(createText: any) {
-    const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
-      width:'100%',
-      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data:{
-        requestType:'taskMasterList',
-        taskMasterFullList:this.taskMasterList
+    console.log('..........',this.taskMasterList[0].length)
+    if(this.taskMasterList[0].length>0){
+      console.log('........')
+      const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
+        width:'100%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data:{
+          requestType:'taskMasterList',
+          taskMasterFullList:this.taskMasterList
+        }
+  
+      })
+      dialogRef.afterClosed().subscribe((res)=>{
+        console.log('selectTaskMaster',res);
+        const selectTaskMaster= res;
+      if(selectTaskMaster==='CreatE'){
+        this.crmService.taskActivityName = 'CreatE';
+        this.crmService.taskMasterToCreateServiceData=selectTaskMaster
+        this.router.navigate(['provider', 'task', 'create-task'])
       }
+      else if(selectTaskMaster==='Close'){
+        this.router.navigate(['provider', 'task'])
+        // this.ngOnInit()
+      }
+      else{
+        this.crmService.taskActivityName = createText;
+        this.crmService.taskMasterToCreateServiceData= selectTaskMaster;
+        this.router.navigate(['provider', 'task', 'create-task'])
+      }
+      })
+    }else{
+      console.log('kkkk')
+      this.crmService.taskActivityName = 'CreteTaskMaster'
+      this.router.navigate(['provider', 'task', 'create-task'])
+    }
 
-    })
-    dialogRef.afterClosed().subscribe((res)=>{
-      console.log('selectTaskMaster',res);
-      const selectTaskMaster= res;
-    if(selectTaskMaster==='CreatE'){
-      this.crmService.taskActivityName = 'CreatE';
-      this.crmService.taskMasterToCreateServiceData=selectTaskMaster
-      this.router.navigate(['provider', 'task', 'create-task'])
-    }
-    else if(selectTaskMaster==='Close'){
-      this.router.navigate(['provider', 'task'])
-      // this.ngOnInit()
-    }
-    else{
-      this.crmService.taskActivityName = createText;
-      this.crmService.taskMasterToCreateServiceData= selectTaskMaster;
-      this.router.navigate(['provider', 'task', 'create-task'])
-    }
-    })
+    
     // this.crmService.taskActivityName = createText;
     // this.router.navigate(['provider', 'task', 'create-task'])
   }

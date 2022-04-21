@@ -141,10 +141,10 @@ export class CreateTaskComponent implements OnInit {
       taskDate:[null,[Validators.required]],
       taskTime:[null],
       userTaskPriority:[null,[Validators.required]],
-      targetResult:[null,[Validators.required]],
-      targetPotential:[null,[Validators.required]],
+      targetResult:[null],
+      targetPotential:[null],
     }) 
-    if(this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE'){
+    if(this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' && this.crmService.taskActivityName!='CreteTaskMaster'){
       this.selectHeader='Update Activity'
       this.createBTimeField=false;
       this.updateBTimefield=true;
@@ -252,6 +252,26 @@ export class CreateTaskComponent implements OnInit {
         this.createTaskForm.controls.userTaskType.value= taskMaster.type.id;
         this.createTaskForm.controls.userTaskPriority.value= taskMaster.priority.id;
 
+    }
+    else if(this.crmService.taskActivityName==='CreteTaskMaster'){
+      this.createBTimeField=true;
+      this.updateBTimefield=false;
+      // this.selectMember='Select Member';
+      // this.selectTaskManger='Select Task Manger'
+        this.selectHeader='Add Activity';
+        this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd') 
+        // this.datePipe.transform(this.taskDueDate,'yyyy-MM-dd');
+        console.log(' this.taskDueDate', this.taskDueDate);
+        this.selectedDate = this.taskDueDate;
+        this.taskDueTime= this.datePipe.transform(new Date(),'yyyy-MM-ddTHH:mm') ;
+        console.log(' this.taskDueTime', this.taskDueTime)
+        this.estDurationWithDay=this.taskDueTime;
+        const estDurationDay=this.datePipe.transform(this.estDurationWithDay,'d')
+        const estDurationHour=this.datePipe.transform(this.estDurationWithDay,'h')
+        const estDurationMinurte= this.datePipe.transform(this.estDurationWithDay,'mm')
+        this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinurte };
+        console.log('this.estTime',this.estTime)
+        console.log('new Date()',new Date())
     }
     // else{
     //   if(this.crmService.taskActivityName == "subTaskCreate")
@@ -364,7 +384,7 @@ export class CreateTaskComponent implements OnInit {
     this.crmService.getTaskStatus().subscribe((taskStatus:any)=>{
       console.log('taskStatus',taskStatus);
       this.taskStatusList.push(taskStatus);
-      if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName!='CreatE'){
+      if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName!='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster'){
         this.taskStatusModal=this.taskStatusList[0][0].id;
       }
       else{
@@ -379,7 +399,7 @@ export class CreateTaskComponent implements OnInit {
     this.crmService.getTaskPriority().subscribe((taskPriority:any)=>{
       console.log('taskPriority',taskPriority);
       this.taskPriorityList.push(taskPriority);
-      if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName!='CreatE'){
+      if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName!='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster'){
         this.taskPriority=this.taskPriorityList[0][0].id;
       }else{
         this.taskPriority=this.updateValue.priority.id;
@@ -604,7 +624,7 @@ export class CreateTaskComponent implements OnInit {
   // console.log('targetPotential',targetPotential)
   }
   showCreateTaskButtonCaption() {
-    if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName==='CreatE' ){
+    if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName==='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster' ){
       let caption = '';
       caption = 'Add';
       return caption;
@@ -618,7 +638,7 @@ export class CreateTaskComponent implements OnInit {
 }
   saveCreateTask(){
     // this.api_loading = true;
-    if(this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE'){
+    if(this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster'){
       const updateTaskData:any = {
         "title":this.createTaskForm.controls.taskTitle.value,
         "description":this.createTaskForm.controls.taskDescription.value,
