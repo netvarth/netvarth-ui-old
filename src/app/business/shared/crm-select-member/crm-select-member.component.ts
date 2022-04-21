@@ -57,6 +57,7 @@ export class CrmSelectMemberComponent implements OnInit {
   //task master list variable 
   public taskMasterListData:any;
   public assignTaskMaster:any;
+  public newTask:any;
 
 
 
@@ -382,6 +383,9 @@ completeTaskStatus(){
         // console.log('assignMemberDetails',this.assignMemberDetails)
         this.dialogRef.close(taskMasterValue)
       }
+      else if(this.newTask==='CreatE'){
+        this.dialogRef.close('CreatE')
+      }
       else{
           this.errorMsg=true;
           this.assignMemberErrorMsg='Please select task master'
@@ -389,9 +393,13 @@ completeTaskStatus(){
       }
     }
     createTask(createText: any){
+      console.log('createText',createText)
+      this.errorMsg=false;
+      this.assignMemberErrorMsg=''
       this.crmService.taskActivityName = createText;
+      this.newTask= createText;
       // if(createText !==undefined){
-        this.dialogRef.close(createText)
+        // this.dialogRef.close(createText)
         // this.router.navigate(['provider', 'task', 'create-task'])
       // }
       // this.dialogRef.close(createText)

@@ -424,7 +424,7 @@
 </section>
 <section *ngIf="data.requestType==='taskMasterList'" style="padding: 20px;">
     <div class="header" >
-        <div class="headerText" style="color: #22242C !important;font-size: 14px;display: flex;">Select task master
+        <div class="headerText" style="color: #22242C !important;font-size: 14px;display: flex;">Select task
             <!-- <div>/</div>
             <div style="color: #22242C !important;
             font-size: 14px;
@@ -436,10 +436,10 @@
             <mat-icon style="font-size: 16px;">clear</mat-icon>
         </div>
     </div>
-    <div class="taskMasterCreate">
+    <!-- <div class="taskMasterCreate">
         <button  (click)="createTask('CreatE')" type="button" class="btn btn-primary font-weight-bold confirmBtn"
                         >Create Task</button>
-    </div>
+    </div> -->
     <!----task master list start-->
     <mat-dialog-content style="padding: 0px !important;" >
         <div >
@@ -455,8 +455,8 @@
               <div style="display: flex;flex-wrap: wrap;">
                     <!-- <div class="masterDes" > -->
                            <div class="masterDes">
-                               <div class="taskMasterFieldName" >  Title : </div>
-                          <div class="taskMaster" >{{taskMaster.title}}</div>
+                               <!-- <div class="taskMasterFieldName" >  Title : </div> -->
+                          <div class="taskMasterFieldName" >{{taskMaster.title}}</div>
                            </div>
                            
                            <!-- <div  class="masterDes" >
@@ -496,8 +496,19 @@
               </mat-radio-button>
            </div>
           </mat-radio-group>
+         
         </div>
         <!----radio btn end-->
+        <div>
+            <mat-radio-button style="margin-right: 20px;"  class="example-radio-button" (click)="createTask('CreatE')" >
+                <div style="display: flex;flex-wrap: wrap;">
+                    <div class="masterDes">
+                        <div class="taskMasterFieldName">Others</div>
+                    </div>
+                </div>
+
+            </mat-radio-button>
+        </div>
     </div>
         </div>
     </mat-dialog-content>
