@@ -54,6 +54,9 @@ export class CrmSelectMemberComponent implements OnInit {
   public allFilesDes:any=[]
   public  customer_label:any = '';
   public provider_label:any=''
+  //task master list variable 
+  public taskMasterListData:any;
+  public assignTaskMaster:any;
 
 
 
@@ -151,6 +154,11 @@ export class CrmSelectMemberComponent implements OnInit {
     if(this.data.requestType==='uploadFilesDesciption'){
       console.log('uploadFilesDesciption')
       this.allFilesDes.push(this.data.filesDes)
+    }
+    if(this.data.requestType==='taskMasterList'){
+    //  this.getTaskmaster()
+    this.taskMasterListData= this.data.taskMasterFullList[0];
+      console.log('TaskMasterList.............',this.taskMasterListData)
     }
     // console.log('this.assignMemberDetails',this.assignMemberDetails);
     // console.log('this.memberList',this.memberList)
@@ -355,4 +363,42 @@ completeTaskStatus(){
   
 
 }
+    getTaskmaster(){
+      this.crmService.getTaskMasterList().subscribe((response)=>{
+        console.log('TaskMasterList :',response);
+      })
+    }
+    handleTaskMasterSelect(taskMaster,selected:string){
+      console.log('taskMaster',taskMaster);
+      console.log('this.assignTaskMaster',this.assignTaskMaster)
+      this.errorMsg=false;
+      this.assignMemberErrorMsg=''
+    }
+    saveTaskMaster(taskMasterValue){
+      console.log('taskMasterValue',taskMasterValue)
+      if(taskMasterValue !==undefined){
+        // console.log('response',res)
+        this.errorMsg=false;
+        // console.log('assignMemberDetails',this.assignMemberDetails)
+        this.dialogRef.close(taskMasterValue)
+      }
+      else{
+          this.errorMsg=true;
+          this.assignMemberErrorMsg='Please select task master'
+        
+      }
+    }
+    createTask(createText: any){
+      this.crmService.taskActivityName = createText;
+      // if(createText !==undefined){
+        this.dialogRef.close(createText)
+        // this.router.navigate(['provider', 'task', 'create-task'])
+      // }
+      // this.dialogRef.close(createText)
+      
+    }
+    closeDialog(coseText){
+      this.dialogRef.close(coseText)
+    }
+    
 }

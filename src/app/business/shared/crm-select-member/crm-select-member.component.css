@@ -267,3 +267,37 @@ padding: 3px;
   font-weight: 600;
     font-size: 12px;
 }
+.actionBtn{
+  display: flex;justify-content: center;align-items: center;box-shadow: none !important;
+}
+.masterDes{
+  display: flex;flex-wrap: wrap;align-items: flex-start;padding: 3px;gap: 5px;
+}
+.taskMaster{
+  font-size: 12px;
+    color: #434343;
+    font-weight: 700;
+    opacity: 60%;
+    /* margin-top: 5px;
+    margin-bottom: 5px; */
+}
+.example-radio-button{
+  box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgb(30 64 121 / 15%) !important;
+    border-radius: 5.75916px !important;
+}
+.taskMasterFieldName{
+  font-weight: bold;
+    color: black;
+    font-size: 13px;
+}
+.allBtn{
+  display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+.taskMasterCreate{
+  text-align: end;
+    margin-right: 25px;
+    margin-bottom: 10px;
+}

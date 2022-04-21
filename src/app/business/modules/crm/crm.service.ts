@@ -11,6 +11,7 @@ export class CrmService {
   public taskActivityName:any;
   public taskToviewViaServiceData:any;
   public subtaskToView:any;
+  public taskMasterToCreateServiceData:any;
   
 
   constructor(
@@ -171,6 +172,10 @@ export class CrmService {
     addStatus(taskUid,statusId){
       const url ='provider/task/'+taskUid+'/status/'+statusId
       return this.servicemeta.httpPut(url)
+    }
+    getTaskMasterList(){
+      const url = 'provider/task/master';
+      return this.servicemeta.httpGet(url);
     }
 
 }

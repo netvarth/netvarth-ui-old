@@ -137,6 +137,7 @@ export class TasksComponent implements OnInit {
   loadComplete1 = false;
   loadComplete2 = false;
   loadComplete3 = false;
+  public taskMasterList:any=[]
   constructor(
     private locationobj: Location,
     private groupService: GroupStorageService,
@@ -173,6 +174,7 @@ export class TasksComponent implements OnInit {
    
     
     // this.doSearch();
+    this.getTaskmaster()
   }
   getTotalTask(from_oninit = true) {
     let filter = this.setFilterForApi();
@@ -430,10 +432,44 @@ export class TasksComponent implements OnInit {
     this.router.navigate(['/provider/viewtask/' + taskUid]);
 
   }
+  getTaskmaster(){
+    this.crmService.getTaskMasterList().subscribe((response)=>{
+      console.log('TaskMasterList :',response);
+      this.taskMasterList.push(response)
+    })
+  }
 
   createTask(createText: any) {
-    this.crmService.taskActivityName = createText;
-    this.router.navigate(['provider', 'task', 'create-task'])
+    const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
+      width:'100%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data:{
+        requestType:'taskMasterList',
+        taskMasterFullList:this.taskMasterList
+      }
+
+    })
+    dialogRef.afterClosed().subscribe((res)=>{
+      console.log('selectTaskMaster',res);
+      const selectTaskMaster= res;
+    if(selectTaskMaster==='CreatE'){
+      this.crmService.taskActivityName = 'CreatE';
+      this.crmService.taskMasterToCreateServiceData=selectTaskMaster
+      this.router.navigate(['provider', 'task', 'create-task'])
+    }
+    else if(selectTaskMaster==='Close'){
+      this.router.navigate(['provider', 'task'])
+      // this.ngOnInit()
+    }
+    else{
+      this.crmService.taskActivityName = createText;
+      this.crmService.taskMasterToCreateServiceData= selectTaskMaster;
+      this.router.navigate(['provider', 'task', 'create-task'])
+    }
+    })
+    // this.crmService.taskActivityName = createText;
+    // this.router.navigate(['provider', 'task', 'create-task'])
   }
   stopprop(event) {
     event.stopPropagation();
