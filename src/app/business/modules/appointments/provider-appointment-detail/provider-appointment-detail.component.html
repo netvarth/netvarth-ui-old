@@ -194,6 +194,23 @@
   
 </div>
 
+<div class="clearfix"></div>
+<section class="prov-apptDetail" *ngIf="waitlist_data">
+  <div class="content comn-cls checkin-details no-padding">
+        <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small mt-3">
+          <div class="card" *ngIf="api_loading">
+            <app-common-innerloading-spinner></app-common-innerloading-spinner>
+          </div>
+          <div class="card" *ngIf="!api_loading">
+            <label>Messages</label>
+            <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
+              (reloadApi)="getCommunicationHistory(waitlist_data.uid)">
+            </app-inbox-list>
+          </div>
+        </div>
+  </div>
+</section>
+
 
 <div class="content checkin-details" *ngIf="!api_loading && questionnaires.length > 0">
   <div class="card">
