@@ -1502,6 +1502,10 @@ export class ProviderCheckinComponent implements OnInit {
         if (this.selectedUser && this.selectedUser.firstName === Messages.NOUSERCAP) {
             post_Data['selfAssign'] = this.selfAssign;
         }
+        if (!this.selectedUser && this.selfAssign) {
+            const user = this.groupService.getitemFromGroupStorage('ynw-user');
+            post_Data['provider'] = { 'id': user.id};
+        }
         if (this.sel_ser_det.serviceType === 'virtualService') {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
                 if (!this.callingModes || !this.cuntryCode) {

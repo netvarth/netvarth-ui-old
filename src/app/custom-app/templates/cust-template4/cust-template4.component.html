@@ -1,13 +1,13 @@
-<div class="card no-padding" [ngClass]="templateJson.theme?templateJson.theme: ''">
-    <div id="pageheader" [innerHtml]="templateJson.headerTitle | safeHtml">
-    </div>
+<div class="card no-padding" [ngClass]="templateJson.theme?templateJson.theme: ''">    
     <div class="section">
         <div class="pageitem">
             <div class="col">
-                <img src="{{templateJson && templateJson['headerImage']?templateJson['headerImage']:''}}"><br>
+                <img src="{{templateJson && templateJson['logo']?templateJson['logo']:''}}"><br>
             </div>
         </div>
-        <div class="pageitem" [innerHtml]="templateJson.headerDescription | safeHtml">
+        <div id="pageheader" [innerHtml]="templateJson.headerTitle | safeHtml">
+        </div>
+        <div class="pageitem" [innerHtml]="templateJson.headerDescription | safeHtml" *ngIf="templateJson.headerDescription!=''">
         </div>
         <div class="pageitem col-xs-12 no-padding" *ngIf="templateJson.section1">
             <div class="col-xs-12 mgn-up-10 no-padding">

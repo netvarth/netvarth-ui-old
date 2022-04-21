@@ -158,7 +158,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 // tslint:disable-next-line:radix
                 this.locationId = parseInt(params.loc_id);
                 // this.account_id = params.account_id;
-                this.accountId = params.accountId;
+                this.accountId = params.account_id;
                 this.uniqueId = params.unique_id;
                 this.selectedServiceId = JSON.parse(params.service_id);
                 if (params.isFrom && params.isFrom == 'providerdetail') {

@@ -10,7 +10,7 @@
             </div>
             <div class="content consumer-dash" *ngIf="!api_loading">
                 <div class="c_card card c-checkins">
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12" *ngIf="!this.customId">
                         <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12">
                             <h1 class="ng-tns-c16-8 txt-align hello-msg">
                                 <span class="ng-tns-c16-8 greeting">

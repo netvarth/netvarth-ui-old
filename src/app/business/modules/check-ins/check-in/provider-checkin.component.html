@@ -173,7 +173,7 @@
         <!-- </div> -->
       </div>
       <div class="beforeCatdTwosec" *ngIf="showCheckin && !showQuestionnaire && !showFollowup">
-        <div class="card box-shadow">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 card box-shadow">
           <div class="">
             <div class="userNameId">
               <div>
@@ -277,12 +277,7 @@
                       </mat-form-field>
                     </ng-container>
                   </div>
-                  <div class="" *ngIf="accountType === 'BRANCH' && this.assignmyself ">
-                    <div class="date-head">
-                      <mat-checkbox [(ngModel)]="selfAssign"> Assign Myself</mat-checkbox>
-                    </div>
-                  </div>
-                  <div *ngIf="accountType === 'BRANCH' && this.assignmyself"><br></div>
+                  
                   <div class="service-outer mt-2 pb-0 mb-0" *ngIf="servicesjson.length > 0">
                     <ng-container>
                       <span class="one-service font-weight-bold pl-0" *ngIf="servicesjson.length == 1"
@@ -369,6 +364,11 @@
                           </div>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                  <div class="mgn-up-20" *ngIf="accountType === 'BRANCH' && this.assignmyself ">
+                    <div class="date-head">
+                      <mat-checkbox [(ngModel)]="selfAssign"> Assign Myself</mat-checkbox>
                     </div>
                   </div>
                 </ng-container>
@@ -818,7 +818,7 @@
             </ng-container>
           </div>
         </div>
-        <div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 img-align">
           <img class="imageIcon" src="/assets/images/appt_Icon.png" />
         </div>
       </div>

@@ -635,8 +635,13 @@ align-items: center;
   box-shadow: none !important;
 }
 .imageIcon{
-  height: 600px;
-  width: 600px;
+  height: auto;
+  width: 100%;
+}
+.img-align {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
  .date-outer{
   display: block;
