@@ -26,7 +26,7 @@
                 <div class="fieldPadding">
                       <!-- <label class="p-0 pb-1 m-0">Enter your third party listing site *</label> -->
                       <input (keyup)="resetErrors()" type="text" #taskTitle (ngModelChange)="hamdleTaskTitle(taskTitle.value)"
-                  placeholder="Enter task title"class="form-control"formControlName="taskTitle"autocomplete="off" [value]="taskTitle" /> 
+                  placeholder="Enter activity title"class="form-control"formControlName="taskTitle"autocomplete="off" [value]="taskTitle" /> 
                      <!-- <div *ngIf="boolenTaskError">{{taskErrorText}}</div> -->
                       <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                           </app-field-error-display>
@@ -45,7 +45,7 @@
              <div  class="fieldPadding">
                     <textarea rowa="10" class="form-control" formControlName="taskDescription"
                     #taskDescription (change)="handleTaskDescription(taskDescription.value)"(keyup)="autoGrowTextZone($event)"
-                    maxlength="1000" placeholder="Enter task description"></textarea>
+                    maxlength="1000" placeholder="Enter activity description"></textarea>
                     <!-- <div *ngIf="boolenTaskError">{{taskErrorText}}</div> -->
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                     </app-field-error-display>  
@@ -153,7 +153,7 @@
                                      </div>
                                      <div class="fieldPadding">
                                         <input (keyup)="resetErrors()" [(ngModel)]="locationName" type="text" #taskLocation (ngModelChange)="handleTaskLocation(taskLocation.value)"
-                                        placeholder="Enter task location"class="form-control widthWebKit"formControlName="taskLocation"autocomplete="off" [value]="taskLocation.name" /> 
+                                        placeholder="Enter activity location"class="form-control widthWebKit"formControlName="taskLocation"autocomplete="off" [value]="taskLocation.name" /> 
                                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                                                 </app-field-error-display>
                                                
@@ -170,7 +170,7 @@
                                      <div class="fieldPadding">
                                         <!-- <input (keyup)="resetErrors()" type="text" #taskStatus (ngModelChange)="handleTaskStatus(taskStatus.value)"
                                         placeholder="Enter task status"class="form-control"formControlName="taskStatus"autocomplete="off" />  -->
-                                        <mat-select class="form-control widthWebKit" placeholder="Enter task status"
+                                        <mat-select class="form-control widthWebKit" placeholder="Enter activity status"
                                 #taskStatus formControlName="taskStatus" name="item" [(ngModel)]="taskStatusModal" (selectionChange)="handleTaskStatus(taskStatus.value)">
                                 <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id"  >
                                 <div>
