@@ -282,7 +282,7 @@ padding: 3px;
     margin-bottom: 5px; */
 }
 .example-radio-button{
-  box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgb(30 64 121 / 15%) !important;
+  /* box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgb(30 64 121 / 15%) !important; */
     border-radius: 5.75916px !important;
 }
 .taskMasterFieldName{
