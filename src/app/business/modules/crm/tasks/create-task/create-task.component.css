@@ -143,6 +143,15 @@ textarea {
   height: 100%;
   width: 100%;
 }
+/* #time:before {
+  content:'HH:MM - ';
+  margin-right:.6em;
+  color:#9d9d9d;
+  } */
+input[type="number"],input[type="time"]{
+  width: 100px!important;
+}
+
 @media(max-width: 768px){
   .taskImg{
     display: none;

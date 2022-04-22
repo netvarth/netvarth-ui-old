@@ -39,7 +39,6 @@
            <div>
             <div class="taskTitle">
                 <div>Description</div>
-                <div class="astericColor">*</div>
               </div>
               <!--textarea start-->
              <div  class="fieldPadding">
@@ -78,7 +77,6 @@
             <div>
                 <div class="taskTitle">
                     <div>Manager</div>
-                    <div class="astericColor">*</div>
                   </div>
                  <!--input field start-->
                 <div class="fieldPadding">
@@ -164,7 +162,6 @@
                                <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                                    <div class="taskTitle">
                                        <div>Status</div>
-                                       <div class="astericColor">*</div>
                                      </div>
                                      <!--dropdown start-->
                                      <div class="fieldPadding">
@@ -194,7 +191,6 @@
                                <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding">
                                    <div class="taskTitle">
                                        <div>Due Date</div>
-                                       <div class="astericColor">*</div>
                                      </div>
                                      <div class="pickerouter fieldPadding dt dateWithMatDtae" >
                                         <input [(ngModel)]="taskDueDate" formControlName="taskDate" class="form-control widthWebKit positionNameInput" type="text"  matInput
@@ -215,12 +211,13 @@
                                <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding"  >
                                    <div class="taskTitle">
                                        <div>Est Duration</div>
-                                       <div class="astericColor">*</div>
                                      </div>
                                      <!-- *ngIf="createBTimeField" -->
                                      <!-- onfocus="(this.type='datetime-local')" onblur="if(this.value==''){this.type='text'}" -->
-                                     <div class="fieldPadding"  *ngIf="createBTimeField">
-                                        <input id="myPsw" [(ngModel)]="taskDueTime" [value]="taskTime" (keyup)="resetErrors()"  type="datetime-local" #taskTime (ngModelChange)="handleTaskEstDuration(taskTime.value)"
+                                     <div class="fieldPadding d-flex"  *ngIf="createBTimeField">
+                                        <input id="days" [(ngModel)]="taskDueDays" [value]="taskDays" (keyup)="resetErrors()"  type="number" #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
+                                        placeholder="Days"class="form-control widthWebKit" formControlName="taskDays"autocomplete="off" /> 
+                                        <input id="time" [(ngModel)]="taskDueTime" [value]="taskTime" (keyup)="resetErrors()"  type="time" #taskTime (ngModelChange)="handleTaskEstDuration(taskTime.value)"
                                         placeholder="Enter Est Duration"class="form-control widthWebKit" formControlName="taskTime"autocomplete="off" /> 
                                            
                                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
@@ -257,7 +254,6 @@
             <div >
                 <div class="taskTitle">
                     <div>Priority</div>
-                    <div class="astericColor">*</div>
                   </div>
                   <!--dropdown start-->
                   <div class="fieldPadding">
@@ -279,7 +275,6 @@
                                <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding">
                                    <div class="taskTitle">
                                        <div>Target Potential</div>
-                                       <div class="astericColor">*</div>
                                      </div>
                                      <div class="fieldPadding">
                                         <input (keyup)="resetErrors()" type="text" #targetResult (ngModelChange)="handleTargetResult(targetResult.value)"
@@ -293,7 +288,6 @@
                                <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding">
                                    <div class="taskTitle">
                                        <div>Business Potential</div>
-                                       <div class="astericColor">*</div>
                                      </div>
                                      <!--dropdown start-->
                                      <div class="fieldPadding">
