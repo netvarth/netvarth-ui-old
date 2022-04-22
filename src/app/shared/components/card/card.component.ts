@@ -6,7 +6,7 @@ import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { GroupStorageService } from '../../services/group-storage.service';
-// import { Router } from '@angular/router';
+import { Router } from '@angular/router';
 @Component({
     'selector': 'app-card',
     'templateUrl': './card.component.html',
@@ -59,7 +59,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         private datePipe: DateFormatPipe,
         private dateTimeProcessor: DateTimeProcessor,
         private groupService: GroupStorageService,
-        // private router: Router,
+        private router: Router,
         private cdref: ChangeDetectorRef) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
@@ -269,6 +269,20 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         }
         return qty;
     }
+    gotoCustomerDetailsAppt(appt, event) {
+        event.stopPropagation();
+        if (appt.apptStatus !== 'blocked') {
+          this.router.navigate(['/provider/customers/' + appt.appmtFor[0].id]);
+        }
+      }
+
+      gotoCustomerDetailsToken(waitlist, event) {
+        event.stopPropagation();
+        if (waitlist.waitlistStatus !== 'blocked') {
+          this.router.navigate(['/provider/customers/' + waitlist.waitlistingFor[0].id]);
+        }
+      }
+
     stopProp(event) {
         event.stopPropagation();
     }
@@ -456,14 +470,14 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     checkinActions(waitlist, type) {
         this.actionPerformed.emit({ waitlist: waitlist, type: type, statusAction: this.statusAction });
     }
-    // gotoDetails() {
-    //     if (this.item.type == 'checkin-dashboard') {
-    //         this.router.navigate(['provider', 'check-ins', this.waitlist.ynwUuid], { queryParams: { timetype: this.time_type } });
-    //     } else {
-    //         this.router.navigate(['provider', 'appointments', this.appointment.uid], { queryParams: { timetype: this.time_type } });
-    //     }
-    //     // setTimeout(() => { this.gotoDetails() },2000)
-    // }
+    gotoDetails() {
+        if (this.item.type == 'checkin-dashboard') {
+            this.router.navigate(['provider', 'check-ins', this.waitlist.ynwUuid], { queryParams: { timetype: this.time_type } });
+        } else {
+            this.router.navigate(['provider', 'appointments', this.appointment.uid], { queryParams: { timetype: this.time_type } });
+        }
+        // setTimeout(() => { this.gotoDetails() },2000)
+    }
     showMoreorLess(waitlist, type) {
         for (let checkin of this.checkins) {
             
