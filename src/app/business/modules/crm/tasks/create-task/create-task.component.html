@@ -166,9 +166,13 @@
                         </div>
                         <div class="fieldPadding d-flex"  *ngIf="createBTimeField">
                             <input id="days" [(ngModel)]="taskDueDays" [value]="taskDays" (keyup)="resetErrors()"  type="number" #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
-                            placeholder="Days"class="form-control widthWebKit" formControlName="taskDays"autocomplete="off" /> 
-                            <input id="time" [(ngModel)]="taskDueTime" [value]="taskTime" (keyup)="resetErrors()"  type="time" #taskTime (ngModelChange)="handleTaskEstDuration(taskTime.value)"
-                            placeholder="Enter Est Duration"class="form-control widthWebKit" formControlName="taskTime"autocomplete="off" />  
+                            placeholder="Days" class="form-control widthWebKit" formControlName="taskDays" autocomplete="off" /> 
+                            <input id="hrs" [(ngModel)]="taskDueHrs" [value]="taskHrs" (keyup)="resetErrors()"  type="number" #taskHrs (ngModelChange)="handleTaskEstDuration(taskHrs.value)"
+                            placeholder="Hours" class="form-control widthWebKit" formControlName="taskHrs" autocomplete="off" min="0" max="23"/> 
+                            <input id="min" [(ngModel)]="taskDueMin" [value]="taskMin" (keyup)="resetErrors()"  type="number" #taskMin (ngModelChange)="handleTaskEstDuration(taskMin.value)"
+                            placeholder="Minutes" class="form-control widthWebKit" formControlName="taskMin" autocomplete="off" min="0" max="59"/> 
+                            <!-- <input id="time" [(ngModel)]="taskDueTime" [value]="taskTime" (keyup)="resetErrors()"  type="time" #taskTime (ngModelChange)="handleTaskEstDuration(taskTime.value)"
+                            placeholder="Enter Est Duration"class="form-control widthWebKit" formControlName="taskTime"autocomplete="off" />   -->
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                             </app-field-error-display>
                         </div>

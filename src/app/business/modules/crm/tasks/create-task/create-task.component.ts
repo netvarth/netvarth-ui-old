@@ -52,6 +52,8 @@ export class CreateTaskComponent implements OnInit {
   public taskDueDate:any;
   public taskDueTime:any;
   public taskDueDays:any;
+  public taskDueHrs:any;
+  public taskDueMin:any;
   public selectedDate:any;
   public taskErrorText:any;
   public boolenTaskError:boolean=false;
@@ -143,8 +145,9 @@ export class CreateTaskComponent implements OnInit {
       areaName:[null],
       taskStatus:[null,[Validators.required]],
       taskDate:[null,[Validators.required]],
-      taskDays:[null],
-      taskTime:[null],
+      taskDays:[0],
+      taskHrs:[0],
+      taskMin:[0],
       userTaskPriority:[null,[Validators.required]],
       targetResult:[null],
       targetPotential:[null],
@@ -170,7 +173,9 @@ export class CreateTaskComponent implements OnInit {
       this.locationName =this.updateValue.location.name;
       this.areaName =this.updateValue.locationArea;
       this.updteLocationId= this.updateValue.location.id
-      this.taskDueDate=this.updateValue.dueDate;
+      this.taskDueDays=this.updateValue.taskDays;
+      this.taskDueHrs=this.updateValue.taskHrs;
+      this.taskDueMin=this.updateValue.taskMin;
       this.selectMember= this.updateValue.assignee.name;
       this.updateMemberId=this.updateValue.assignee.id;
       this.selectTaskManger= this.updateValue.manager.name;
@@ -594,17 +599,12 @@ export class CreateTaskComponent implements OnInit {
     //   // console.log('...............gggg')
     //   this.transform(estDuration)
     // }
-    if(this.taskDueTime == null)
-    {
-      this.taskDueTime = "0000"
-    }
+    console.log("entered")
     this.estDurationWithDay=this.taskDueDays;
-    this.estDurationWithTime=this.taskDueTime;
-    // console.log('this.estDurationWithDay',this.estDurationWithDay,this.estDurationWithTime);
     const estDurationDay=this.estDurationWithDay
-    const estDurationHour=this.taskDueTime.slice(0,2)
-    const estDurationMinurte= this.taskDueTime.slice(3,)
-    this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinurte };
+    const estDurationHour=this.taskDueHrs
+    const estDurationMinute= this.taskDueMin
+    this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinute };
     console.log('estDurationDay',this.estTime)
 
   }
