@@ -83,7 +83,7 @@ export class TaskmanagerComponent implements OnInit, OnDestroy {
       });
     } else {
       this.subscriptions.sink = this.provider_services.setProviderTaskStatus(this.task_status).subscribe(data => {
-        this.snackbarService.openSnackBar('Task settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('Activity settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
         this.getTaskStatus();
       }, (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

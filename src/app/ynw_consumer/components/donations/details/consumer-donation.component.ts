@@ -757,21 +757,21 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                         _this.paymentWindow.close();
                         _this.isClickedOnce = false;
                         _this.cdRef.detectChanges();
-                        if (_this.from) {
-                            _this.ngZone.run(() => _this.router.navigate(['consumer']));
-                        } else {
-                            let queryParams = {
-                                accountId: _this.accountId,
-                                theme: _this.theme
-                            }
-                            if (_this.customId) {
-                                queryParams['customId'] = _this.customId;
-                            }
-                            let navigationExtras: NavigationExtras = {
-                                queryParams: queryParams
-                            };
-                            _this.ngZone.run(() => _this.router.navigate(['consumer'], navigationExtras));
+                        // if (_this.from) {
+                        //     _this.ngZone.run(() => _this.router.navigate(['consumer']));
+                        // } else {
+                        let queryParams = {
+                            accountId: _this.accountId,
+                            theme: _this.theme
                         }
+                        if (_this.customId) {
+                            queryParams['customId'] = _this.customId;
+                        }
+                        let navigationExtras: NavigationExtras = {
+                            queryParams: queryParams
+                        };
+                        _this.ngZone.run(() => _this.router.navigate(['consumer'], navigationExtras));
+                        // }
                     }
                 });
         }, 3000);

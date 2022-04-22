@@ -388,7 +388,7 @@ completeTaskStatus(){
       }
       else{
           this.errorMsg=true;
-          this.assignMemberErrorMsg='Please select task master'
+          this.assignMemberErrorMsg='Please select activity template'
         
       }
     }
