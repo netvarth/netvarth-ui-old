@@ -14,6 +14,10 @@ import { AppointmentServicesModule } from '../../appointment-services/appointmen
 import { DonationServicesModule } from '../../donation-services/donation-services.module';
 import { CheckinServicesModule } from '../../checkin-services/checkin-services.module';
 import { BookingService } from '../../../shared/services/booking-service';
+import { ConsumerJoinModule } from '../../../ynw_consumer/components/consumer-join/join.component.module';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AddInboxMessagesModule } from '../../../shared/components/add-inbox-messages/add-inbox-messages.module';
+import { MatButtonModule } from '@angular/material/button';
 
 const routes: Routes = [
   { path: '', component: CustTemplate4Component }
@@ -36,6 +40,10 @@ const routes: Routes = [
     AppointmentServicesModule,
     DonationServicesModule,
     CheckinServicesModule,
+    ConsumerJoinModule,
+    MatDialogModule,
+    MatButtonModule,
+    AddInboxMessagesModule,
     RouterModule.forChild(routes)
   ],
   exports: [

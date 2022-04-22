@@ -85,7 +85,7 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
       }
       const startDate = new Date(this.appointment.appmtDate);
       config = {
-        title: 'Booking with - ' + this.businessName,
+        title: this.businessName + ' - ' + this.appointment.service.name,
         location: this.appointment.location?.place,
         description: 'Time Slots: ' + this.selectedApptsTime,
         start: startDate
@@ -105,7 +105,7 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
         const startDate = new Date(this.appointment.appmtDate + 'T' + startTime);
         const endDate = new Date(this.appointment.appmtDate + 'T' + endTime);
         config = {
-          title: 'Booking Rescheduled , Service provider : ' + this.businessName,
+          title:  this.businessName + ' - ' + this.appointment.service.name,
           location: this.appointment.location?.place,
           description: 'Service provider : ' + this.businessName,
           start: startDate,
@@ -125,7 +125,7 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
         const startDate = new Date(this.appointment.appmtDate + 'T' + startTime);
         const endDate = new Date(this.appointment.appmtDate + 'T' + endTime);
         config = {
-          title: 'Booking with - ' + this.businessName,
+          title:  this.businessName + ' - ' + this.appointment.service.name,
           location: this.appointment.location?.place,
           description: 'Service provider : ' + this.businessName,
           start: startDate,

@@ -13,7 +13,8 @@ export class OnlineUsersComponent implements OnInit {
   @Input() templateJson;
   @Input() users;
   @Input() businessProfile;
-
+  @Input() cardType;
+  
   constructor(private router: Router) {
     console.log(this.businessProfile);
    }

@@ -45,7 +45,8 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 card-timings-cont">
+    
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 card-timings-cont" *ngIf="cardType!=='card_1'">
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="item.type=='donation'">
             <p class="card-text donationAmount no-padding mgn-lt-10">
                 <span class="rupee-font bold">Donate <i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>
@@ -186,10 +187,6 @@
     </div>
 </div>
 
-
-
-
-
 <div *ngIf="item.type=='catalog' || item.type=='item'">
     <div [id]="'item-' + service.itemId" class="card booking-card pointer-cursor order items height-301"
         [class.disabled]="service['status'] && service['status']=='INACTIVE' || (!service.isStockAvailable && item.type=='item')"
@@ -286,7 +283,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 card-timings-cont">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 card-timings-cont" *ngIf="cardType!='card_1'">
             <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding" *ngIf="user.apptTime && user.apptTime.caption && user.apptTime.availableSchedule.availableDate === todayDate">
                 <div class="no-padding card-head-grey">{{user.apptTime.caption}}</div>
                 <h6 class="no-padding">{{user.apptTime.date}}</h6>
@@ -389,7 +386,8 @@
 </div>
 
 <ng-container *ngIf="item.type=='checkin-dashboard' || item.type=='appt-dashboard'">
-    <div class="col-xs-12 col-sm-12 no-padding" (click)="gotoDetails()" [class.history]="time_type==3">
+    <!-- (click)="gotoDetails()" -->
+    <div class="col-xs-12 col-sm-12 no-padding"  [class.history]="time_type==3">
         
         <div class="main-sec">
             <div class="token" *ngIf="time_type!==3 && waitlist.token && !waitlist.provider">
@@ -400,8 +398,7 @@
             </div>
             <div class="box1 mgn-lt-5" [class.mgn-bt-minus]="waitlist.provider">
                 
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name" 
-                (click)="gotoCustomerDetailsToken(waitlist)"
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
                     *ngIf="item.type=='checkin-dashboard' && (waitlist.waitlistingFor[0].firstName || waitlist.waitlistingFor[0].lastName)">
                     {{waitlist.waitlistingFor[0].firstName}}
                     {{waitlist.waitlistingFor[0].lastName}} 
@@ -515,7 +512,8 @@
     </div>
 </ng-container>
 <ng-container *ngIf="type=='appointment-dashboard'">
-    <div class="col-xs-12 col-sm-12 no-padding mgn-lt-5" (click)="gotoDetails()" [class.history]="time_type==3">
+    <!-- (click)="gotoDetails()" -->
+    <div class="col-xs-12 col-sm-12 no-padding mgn-lt-5"  [class.history]="time_type==3">
         <div class="main-sec">
             <div class="date mgn-lt-5" *ngIf="time_type!=1">
                 {{appointment.appmtDate | date: newTimeDateFormat}}</div>
@@ -527,8 +525,7 @@
                 </div>
             </div>
             <div class="box1 mgn-lt-5" [class.mgn-bt-minus]="appointment.provider">
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name" 
-                (click)="gotoCustomerDetailsAppt(appointment)"
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
                     *ngIf="item.type=='appointment-dashboard' && (appointment.appmtFor[0].firstName || appointment.appmtFor[0].lastName)">
                     {{appointment.appmtFor[0].firstName}}
                     {{appointment.appmtFor[0].lastName}}

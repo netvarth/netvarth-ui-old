@@ -357,6 +357,7 @@ export class PaymentLinkComponent implements OnInit {
   paywithRazorpay(pData: any) {
     const self = this;
     self.isClickedOnce = false;
+    pData.paymentMode = this.selected_payment_mode;
     self.razorpayService.payBillWithoutCredentials(pData).then(
       (response: any) => {
         if (response !== 'failure') {

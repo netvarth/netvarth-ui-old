@@ -14,7 +14,7 @@ export class ConsDepartmentsComponent implements OnInit {
   @Input() templateJson;
   @Input() businessProfile;
   @Input() departments;
-
+  @Input() cardType;
   constructor(private router: Router,
     private lStorageService: LocalStorageService) { }
 

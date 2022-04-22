@@ -192,10 +192,13 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
         this.canceldisabled = false;
     }
     getImage(url, file) {
-        if (file.type == 'application/pdf') {
-          return './assets/images/pdf.png';
-        } else {
-          return url;
-        }
-      }
+        return this.fileService.getImage(url, file);
+    }
+//     getImage(url, file) {
+//         if (file.type == 'application/pdf') {
+//           return './assets/images/pdf.png';
+//         } else {
+//           return url;
+//         }
+//       }
 }

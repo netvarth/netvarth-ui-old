@@ -91,7 +91,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   s3url;
   retval;
   kwdet: any = [];
-  provider_id;
   provider_bussiness_id;
   settingsjson: any = [];
   businessjson: any = [];
@@ -279,7 +278,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   deliveryCharge = 0;
   nextAvailableTime;
   customId: any;
-  accEncUid: any;
+  // accEncUid: any;
   accountEncId: string;
   userEncId: string;
   nonfirstCouponCount = 0;
@@ -308,6 +307,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   provideraccEncUid: any;
   checkavailabilitydialogref: any;
   searchEnabled;
+  uniqueId: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -389,7 +389,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.api_loading = true;
     this.accountIdExists = false;
     this.userId = null;
-    this.provider_id = null;
+    this.uniqueId = null;
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     this.setSystemDate();
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
@@ -481,13 +481,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               this.domainList = domainConfig;
               this.getAccountIdFromEncId(this.accountEncId).then(
                 (id: any) => {
-                  _this.provider_id = id;
+                  _this.uniqueId = id;
                   _this.customId = _this.accountEncId;
-                  _this.accEncUid = _this.accountEncId;
+                  // _this.accEncUid = _this.accountEncId;
                   _this.accountIdExists = true;
                   _this.getproviderBprofileDetails().then(
                     () => {
-                      _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
+                      _this.domainConfigService.getUIAccountConfig(_this.uniqueId).subscribe(
                         (uiconfig: any) => {
                           if (uiconfig['pwaEnabled']) {
                             _this.pwaEnabled = true;
@@ -498,37 +498,37 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                           if (uiconfig['iosApp']) {
                             _this.iosConfig = true;
                             if (uiconfig['iosApp']['icon-180']) {
-                              document.getElementById('apple_touch_icon').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['icon-180']['src']);
+                              document.getElementById('apple_touch_icon').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.uniqueId + '/' + uiconfig['iosApp']['icon-180']['src']);
                             }
                             if (uiconfig['iosApp']['screen-1242x2208']) {
-                              document.getElementById('screen_1242x2208').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-1242x2208']['src']);
+                              document.getElementById('screen_1242x2208').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.uniqueId + '/' + uiconfig['iosApp']['screen-1242x2208']['src']);
                             }
                             if (uiconfig['iosApp']['screen-1242x2688']) {
-                              document.getElementById('screen_1242x2688').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-1242x2688']['src']);
+                              document.getElementById('screen_1242x2688').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.uniqueId + '/' + uiconfig['iosApp']['screen-1242x2688']['src']);
                             }
                             if (uiconfig['iosApp']['screen-828x1792']) {
-                              document.getElementById('screen_828x1792').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-828x1792']['src']);
+                              document.getElementById('screen_828x1792').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.uniqueId + '/' + uiconfig['iosApp']['screen-828x1792']['src']);
                             }
                             if (uiconfig['iosApp']['screen-1125x2436']) {
-                              document.getElementById('screen_1125x2436').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-1125x2436']['src']);
+                              document.getElementById('screen_1125x2436').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.uniqueId + '/' + uiconfig['iosApp']['screen-1125x2436']['src']);
                             }
                             if (uiconfig['iosApp']['screen-750x1334']) {
-                              document.getElementById('screen_750x1334').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-750x1334']['src']);
+                              document.getElementById('screen_750x1334').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.uniqueId + '/' + uiconfig['iosApp']['screen-750x1334']['src']);
                             }
                             if (uiconfig['iosApp']['screen-640x1136']) {
-                              document.getElementById('screen_640x1136').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-640x1136']['src']);
+                              document.getElementById('screen_640x1136').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.uniqueId + '/' + uiconfig['iosApp']['screen-640x1136']['src']);
                             }
                             if (uiconfig['iosApp']['screen-1668x2388']) {
-                              document.getElementById('screen_1668x2388').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-1668x2388']['src']);
+                              document.getElementById('screen_1668x2388').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.uniqueId + '/' + uiconfig['iosApp']['screen-1668x2388']['src']);
                             }
                             if (uiconfig['iosApp']['screen-2048x2732']) {
-                              document.getElementById('screen_2048x2732').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-2048x2732']['src']);
+                              document.getElementById('screen_2048x2732').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.uniqueId + '/' + uiconfig['iosApp']['screen-2048x2732']['src']);
                             }
                             if (uiconfig['iosApp']['screen-1668x2224']) {
-                              document.getElementById('screen_1668x2224').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-1668x2224']['src']);
+                              document.getElementById('screen_1668x2224').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.uniqueId + '/' + uiconfig['iosApp']['screen-1668x2224']['src']);
                             }
                             if (uiconfig['iosApp']['screen-1536x2048']) {
-                              document.getElementById('screen_1536x2048').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.provider_id + '/' + uiconfig['iosApp']['screen-1536x2048']['src']);
+                              document.getElementById('screen_1536x2048').setAttribute('href', projectConstantsLocal.UIS3PATH + _this.uniqueId + '/' + uiconfig['iosApp']['screen-1536x2048']['src']);
                             }
                           }
                           if (uiconfig['terms']) {
@@ -575,7 +575,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     const self = this;
     return new Promise(function (resolve, reject) {
       let accountS3List = 'businessProfile';
-      self.subscriptions.sink = self.s3Processor.getJsonsbyTypes(self.provider_id,
+      self.subscriptions.sink = self.s3Processor.getJsonsbyTypes(self.uniqueId,
         null, accountS3List).subscribe(
           (accountS3s: any) => {
             self.searchEnabled = accountS3s.businessProfile.enableSearch;
@@ -640,7 +640,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.customAppIOSPopup.nativeElement.style.display = 'none';
     // const appPopupDisplayed = this.lStorageService.getitemfromLocalStorage('a_dsp');
-    // if (!appPopupDisplayed && this.provider_id !== 152877) {
+    // if (!appPopupDisplayed && this.uniqueId !== 152877) {
     //   this.popUp.nativeElement.style.display = 'block';
     // } else {
     //   this.popUp.nativeElement.style.display = 'none';
@@ -702,7 +702,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       accountS3List += ',businessProfile,virtualFields,services,apptServices,apptServices,donationServices,departmentProviders,gallery' //gallery
     }
 
-    this.subscriptions.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
+    this.subscriptions.sink = this.s3Processor.getJsonsbyTypes(this.uniqueId,
       null, accountS3List).subscribe(
         (accountS3s) => {
 
@@ -725,7 +725,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             if (accountS3s['providerCoupon']) {
               this.processS3s('providerCoupon', accountS3s['providerCoupon']);
             }
-            this.s3Processor.getJsonsbyTypes(this.provider_id, this.userId, userS3List).subscribe(
+            this.s3Processor.getJsonsbyTypes(this.uniqueId, this.userId, userS3List).subscribe(
               (userS3s) => {
                 if (userS3s['providerBusinessProfile']) {
                   this.processS3s('providerBusinessProfile', userS3s['providerBusinessProfile']);
@@ -905,13 +905,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.customId = custID;
     this.lStorageService.setitemonLocalStorage('customId', custID);
     this.lStorageService.setitemonLocalStorage('accountId', res['id']);
-    this.accEncUid = res['accEncUid'];
+    // this.accEncUid = res['accEncUid'];
     if (!this.userId) {
       this.api_loading = false;
       this.pageFound = true;
       this.socialMedialist = [];
       this.businessjson = res;
-      this.businessId = this.accEncUid;
+      // this.businessId = this.accEncUid;
       this.accountId = this.businessjson.id;
       this.businessName = this.businessjson.businessName;
       this.popupforCustomApp.nativeElement.style.display = 'none';
@@ -929,9 +929,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           this.customAppIOSPopup.nativeElement.style.display = 'block';
         }
       }
-      // const path = this.customAppSerice.getManifest(res, projectConstantsLocal.UIS3PATH + this.provider_id, projectConstantsLocal.PATH);
+      // const path = this.customAppSerice.getManifest(res, projectConstantsLocal.UIS3PATH + this.uniqueId, projectConstantsLocal.PATH);
       if (this.pwaEnabled) {
-        const path = projectConstantsLocal.UIS3PATH + this.provider_id + '/manifest.json';
+        const path = projectConstantsLocal.UIS3PATH + this.uniqueId + '/manifest.json';
         document.getElementById('dynamic_manifest_url').setAttribute('href', path);
         this.btnInstallApp = document.getElementById("btnInstallCustomApp");
       }
@@ -1441,7 +1441,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   changeLocation(loc) {
     console.log("fgf" + JSON.stringify(loc));
     this.selectedLocation = loc;
-    this.generateServicesAndDoctorsForLocation(this.provider_id, this.selectedLocation.id);
+    this.generateServicesAndDoctorsForLocation(this.uniqueId, this.selectedLocation.id);
 
   }
 
@@ -1613,7 +1613,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     return image ? images.indexOf(image) : -1;
   }
   getServicesByDepartment(dept) {
-    this.routerobj.navigate(['searchdetail', this.provider_id, dept.departmentId], { queryParams: { source: 'business' } });
+    this.routerobj.navigate(['searchdetail', this.uniqueId, dept.departmentId], { queryParams: { source: 'business' } });
   }
   backtoDetails() {
     this.locationobj.back();
@@ -2009,7 +2009,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       googleMapUrl: gMapUrl,
       sel_date: curdate,
       cur: this.changedate_req,
-      unique_id: this.provider_id,
+      unique_id: this.uniqueId,
       account_id: this.provider_bussiness_id,
       user: this.userId,
       service_id: service.id,
@@ -2037,7 +2037,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       locname: locname,
       googleMapUrl: gMapUrl,
       cur: this.changedate_req,
-      unique_id: this.provider_id,
+      unique_id: this.uniqueId,
       account_id: this.provider_bussiness_id,
       user: this.userId,
       futureAppt: this.futureAllowed,
@@ -2222,7 +2222,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         loc_id: locid,
         sel_date: curdate,
         cur: this.changedate_req,
-        unique_id: this.provider_id,
+        unique_id: this.uniqueId,
         account_id: this.provider_bussiness_id,
         accountId: this.provider_bussiness_id,
         service_id: service.id,
@@ -2321,14 +2321,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   providerDetClicked(userId) {
-    let queryParam = {
-      back:1,
-      customId: this.businessjson.accEncUid
-    }
-    const navigationExtras: NavigationExtras = {
-      queryParams: queryParam
-    };
-    this.routerobj.navigate([this.accountEncId, userId], navigationExtras);
+    this.routerobj.navigate([this.accountEncId, userId]);
   }
   opencheckavail(actionObj) {
     console.log("ActionObj:",actionObj);
@@ -2368,12 +2361,17 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         // this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id]);
         let queryParam = {
           back:1,
-          customId: this.businessjson.accEncUid
+          customId: this.accountEncId
         }
         const navigationExtras: NavigationExtras = {
           queryParams: queryParam
         };
-        this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id], navigationExtras);
+        if (this.userId) {
+          this.router.navigate([this.accountEncId, this.userEncId,  'service', actionObj['service'].id], navigationExtras);
+        } else {
+          this.router.navigate([this.accountEncId, 'service', actionObj['service'].id], navigationExtras);
+        }
+        // this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id], navigationExtras);
       } 
       else if(actionObj['action'] === 'availability'){
         this.opencheckavail(actionObj);
@@ -2385,12 +2383,17 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
         let queryParam = {
           back:1,
-          customId: this.businessjson.accEncUid
+          customId: this.accountEncId
         }
         const navigationExtras: NavigationExtras = {
           queryParams: queryParam
         };
-        this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id], navigationExtras);
+        if (this.userId) {
+          this.router.navigate([this.accountEncId, this.userEncId,  'service', actionObj['service'].id], navigationExtras);
+        } else {
+          this.router.navigate([this.accountEncId, 'service', actionObj['service'].id], navigationExtras);
+        }
+        
         // this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id]);
       } 
       else if(actionObj['action'] === 'availability'){
@@ -2404,12 +2407,17 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
         let queryParam = {
           back:1,
-          customId: this.businessjson.accEncUid
+          customId: this.accountEncId
         }
         const navigationExtras: NavigationExtras = {
           queryParams: queryParam
         };
-        this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id], navigationExtras);
+        if (this.userId) {
+          this.router.navigate([this.accountEncId, this.userEncId,  'service', actionObj['service'].id], navigationExtras);
+        } else {
+          this.router.navigate([this.accountEncId, 'service', actionObj['service'].id], navigationExtras);
+        }
+        // this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id], navigationExtras);
       } else {
         this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
       }
@@ -2422,7 +2430,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         this.decrement(actionObj['service']);
       }
     } else {
-      
       this.providerDetClicked(actionObj['userId']);
     }
   }
@@ -2838,12 +2845,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       // const navigationExtras: NavigationExtras = {
       //   queryParams: {
       //     account_id: this.provider_bussiness_id,
-      //     unique_id: this.provider_id,
+      //     unique_id: this.uniqueId,
       //   }
       // };
       let queryParam = {
         account_id: this.provider_bussiness_id,
-        unique_id: this.provider_id,
+        unique_id: this.uniqueId,
       };
       queryParam['customId'] = this.accountEncId;
       const navigationExtras: NavigationExtras = {
@@ -2869,7 +2876,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         item: JSON.stringify(item),
         providerId: this.provider_bussiness_id,
         showpric: this.activeCatalog.showPrice,
-        unique_id: this.provider_id
+        unique_id: this.uniqueId
       }
 
     };
@@ -2952,7 +2959,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         queryParams: {
 
           providerId: this.provider_bussiness_id,
-          unique_id: this.provider_id,
+          unique_id: this.uniqueId,
         }
 
       };
@@ -2989,7 +2996,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     let navigationExtras: NavigationExtras = {
       queryParams: { 'target': selectedItem }
     };
-    this.router.navigate([this.accEncUid, 'home'], navigationExtras);
+    this.router.navigate([this.accountEncId, 'home'], navigationExtras);
   }
   dashboardClicked() {
     const _this = this;

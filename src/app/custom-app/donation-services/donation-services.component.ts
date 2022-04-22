@@ -16,6 +16,7 @@ export class DonationServicesComponent implements OnInit {
   @Input() templateJson;
   @Input() businessProfile;
   @Input() donationServices;
+  @Input() cardType;
   servicedialogRef: any;
 
   constructor(
