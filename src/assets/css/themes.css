@@ -558,7 +558,7 @@ footer.mediExpat.bus-page-footer.site-footer .footer-bottom .footer-links.bd-pd-
   color:black;
 }
 
-.theme4 .mat-button, .theme4 .getappointmentbutton, .theme4 button.next-button {
+.theme4 .mat-button, .theme4 .getappointmentbutton, .theme4 button.next-button,.theme4.custom-login-form .go-back {
   background: linear-gradient(45deg, rgb(22, 37, 75,1) 0%, rgb(22, 37, 75,1) 100%) !important;
   border:none !important;
   color: #fff;
