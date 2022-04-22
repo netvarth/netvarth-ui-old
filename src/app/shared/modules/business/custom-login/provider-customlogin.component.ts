@@ -174,7 +174,7 @@ export class ProviderCustomLoginComponent implements OnInit {
         return;
       }
     }
-    const loginId = pN;
+    const loginId = pN + '@maben.in';
     const post_data = {
       'countryCode': this.selectedCountryCode,
       'loginId': loginId,
@@ -191,6 +191,7 @@ export class ProviderCustomLoginComponent implements OnInit {
           const encrypted = this.shared_services.set(this.password, projectConstantsLocal.KEY);
           this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
           this.lStorageService.setitemonLocalStorage('bpwd', data.password);
+          this.lStorageService.setitemonLocalStorage('maben',true);
           if (this.qParams && this.qParams['src']) {
             if (this.qParams['src'] && this.lStorageService.getitemfromLocalStorage(this.qParams['src'])) {
               this.router.navigateByUrl(this.lStorageService.getitemfromLocalStorage(this.qParams['src']));
@@ -222,7 +223,7 @@ export class ProviderCustomLoginComponent implements OnInit {
       password: ['', Validators.compose([Validators.required])]
       
     });
-    this.loginForm.get('emailId').setValue('@maben.in')
+    // this.loginForm.get('emailId').setValue('@maben.in')
   
 
   }

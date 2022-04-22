@@ -121,13 +121,18 @@ export class AuthService {
     logoutFromJaldee() {
         const promise = new Promise<void>((resolve, reject) => {
             const isProvider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
+            const isCustomProvider = this.lStorageService.getitemfromLocalStorage('maben');
             console.log("isProvider:" + isProvider);
             const customId = this.lStorageService.getitemfromLocalStorage('customId');
             const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
             if (isProvider === 'true') {
                 this.providerLogout().then(
                     () => {
-                        this.router.navigate(['business', 'login']);
+                        if (isCustomProvider) {
+                            this.router.navigate(['business', 'maben', 'login']);
+                        } else {
+                            this.router.navigate(['business', 'login']);
+                        }                        
                         resolve();
                     }
                 )
