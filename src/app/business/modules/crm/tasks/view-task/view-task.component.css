@@ -2,6 +2,9 @@
 {
     border-radius: 10px!important;
 }
+.dropdown-menu {
+  width: 200px!important;
+}
 .height-limit
 {
     height: 250px!important;

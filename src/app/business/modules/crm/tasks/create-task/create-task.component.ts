@@ -47,6 +47,7 @@ export class CreateTaskComponent implements OnInit {
   public taskPriorityList:any=[];
   public userType:any;
   public locationName:any;
+  public areaName:any;
   public locationId:any;
   public taskDueDate:any;
   public taskDueTime:any;
@@ -139,6 +140,7 @@ export class CreateTaskComponent implements OnInit {
       userTaskCategory:[null,[Validators.required]],
       userTaskType:[null,[Validators.required]],
       taskLocation:[null,[Validators.required]],
+      areaName:[null],
       taskStatus:[null,[Validators.required]],
       taskDate:[null,[Validators.required]],
       taskDays:[null],
@@ -166,6 +168,7 @@ export class CreateTaskComponent implements OnInit {
         userTaskPriority:this.updateValue.priority.id,
       })
       this.locationName =this.updateValue.location.name;
+      this.areaName =this.updateValue.locationArea;
       this.updteLocationId= this.updateValue.location.id
       this.taskDueDate=this.updateValue.dueDate;
       this.selectMember= this.updateValue.assignee.name;
@@ -675,6 +678,8 @@ export class CreateTaskComponent implements OnInit {
         "priority":{"id":this.createTaskForm.controls.userTaskPriority.value},
         "dueDate" : this.datePipe.transform(this.taskDueDate,'yyyy-MM-dd'),
         "location" : { "id" : this.updteLocationId},
+        "locationArea" : this.createTaskForm.controls.areaName.value,
+
   
         "assignee":{"id":this.updateMemberId },
         "manager":{"id":this.updateManagerId},
@@ -719,7 +724,7 @@ export class CreateTaskComponent implements OnInit {
       "priority":{"id":this.createTaskForm.controls.userTaskPriority.value},
       "dueDate" : this.selectedDate,
       "location" : { "id" : this.locationId},
-
+      "locationArea":this.areaName,
       "assignee":{"id":this.assigneeId},
       "manager":{"id":this.selectTaskMangerId},
       "targetResult" : this.createTaskForm.controls.targetResult.value,
