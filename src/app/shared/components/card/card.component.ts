@@ -268,6 +268,19 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         }
         return qty;
     }
+    gotoCustomerDetailsAppt(appt) {
+        if (appt.apptStatus !== 'blocked') {
+          this.router.navigate(['/provider/customers/' + appt.appmtFor[0].id]);
+        }
+      }
+
+      gotoCustomerDetailsToken(waitlist) {
+       
+        if (waitlist.waitlistStatus !== 'blocked') {
+          this.router.navigate(['/provider/customers/' + waitlist.waitlistingFor[0].id]);
+        }
+      }
+
     stopProp(event) {
         event.stopPropagation();
     }

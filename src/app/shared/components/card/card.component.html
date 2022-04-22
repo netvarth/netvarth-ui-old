@@ -400,7 +400,8 @@
             </div>
             <div class="box1 mgn-lt-5" [class.mgn-bt-minus]="waitlist.provider">
                 
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name" 
+                (click)="gotoCustomerDetailsToken(waitlist)"
                     *ngIf="item.type=='checkin-dashboard' && (waitlist.waitlistingFor[0].firstName || waitlist.waitlistingFor[0].lastName)">
                     {{waitlist.waitlistingFor[0].firstName}}
                     {{waitlist.waitlistingFor[0].lastName}} 
@@ -526,7 +527,8 @@
                 </div>
             </div>
             <div class="box1 mgn-lt-5" [class.mgn-bt-minus]="appointment.provider">
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name" 
+                (click)="gotoCustomerDetailsAppt(appointment)"
                     *ngIf="item.type=='appointment-dashboard' && (appointment.appmtFor[0].firstName || appointment.appmtFor[0].lastName)">
                     {{appointment.appmtFor[0].firstName}}
                     {{appointment.appmtFor[0].lastName}}
