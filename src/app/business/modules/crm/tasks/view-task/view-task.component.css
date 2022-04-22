@@ -21,6 +21,10 @@
     border-radius: 50%!important;
     padding: 7px 8px!important;
 }
+.location-name
+{
+  font-size: 12px!important;
+}
 .container
 {
     width: 95%!important;

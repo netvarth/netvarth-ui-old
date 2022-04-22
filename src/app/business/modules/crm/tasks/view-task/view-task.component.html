@@ -12,6 +12,11 @@
 
 <section class="container card mt-4 mx-auto" *ngIf="taskDetails">
   <h3>{{taskDetails.title}}</h3>
+  <div class="text-primary location-name mb-2">
+    <i *ngIf="taskDetails.locationArea || taskDetails.location.name" class="fa fa-map-marker"></i>&nbsp;
+    <span *ngIf="taskDetails.locationArea">{{taskDetails.locationArea}},</span>
+    <span *ngIf="taskDetails.location.name">{{taskDetails.location.name}}</span>
+  </div>
   <div class="d-flex" *ngIf="taskDetails.status.name != 'Completed'">
     <div class="dropdown">
       <button class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
