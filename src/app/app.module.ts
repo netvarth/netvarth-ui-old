@@ -57,19 +57,12 @@ import { ForceDialogModule } from './shared/components/force-dialog/force-dialog
 // import { Device } from '@ionic-native/device/ngx';
 // import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { ChunkErrorHandler } from './shared/modules/error-handler/chunk-error-handler';
-import { FullCalendarModule } from '@fullcalendar/angular'; 
-import dayGridPlugin from '@fullcalendar/daygrid'; 
-import interactionPlugin from '@fullcalendar/interaction'; 
 export function init_app(globalService: GlobalService) {
   return () => globalService.load();
 }
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { projectConstantsLocal } from './shared/constants/project-constants';
-FullCalendarModule.registerPlugins([ 
-  dayGridPlugin,
-  interactionPlugin
-]);
 export function HttpLoaderFactory(http: HttpClient) {
   if (projectConstants) {
     return new TranslateHttpLoader(http, projectConstantsLocal.PATH + 'assets/i18n/home/', '.json');
@@ -91,7 +84,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     DateFormatPipeModule,
     MatSnackBarModule,
     ForceDialogModule,
-    FullCalendarModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
