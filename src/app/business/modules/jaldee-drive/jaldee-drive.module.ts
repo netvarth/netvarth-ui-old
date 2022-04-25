@@ -9,6 +9,7 @@ import { PreviewuploadedfilesModule } from './previewuploadedfiles/previewupload
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
  import { CapitalizeFirstPipeModule } from "../../../shared/pipes/capitalize.module";
+import { FileService } from '../../../shared/services/file-service';
 
 const routes: Routes = [
   { path: '', component: JaldeeDriveComponent },
@@ -30,6 +31,9 @@ const routes: Routes = [
     CapitalizeFirstPipeModule,
     [RouterModule.forChild(routes)],
   ],
-  exports: [JaldeeDriveComponent]
+  exports: [JaldeeDriveComponent],
+  providers: [
+    FileService
+  ]
 })
 export class JaldeeDriveModule { }

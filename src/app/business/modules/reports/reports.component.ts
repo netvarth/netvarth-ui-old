@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { ReportDataService } from './reports-data.service';
 import { ProviderServices } from '../../services/provider-services.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,11 +18,13 @@ import { GroupStorageService } from '../../../shared/services/group-storage.serv
 export class ReportsComponent implements OnInit {
   msg = 'Do you really want to delete this report ? ';
   order_criteria: any[];
+  crm_criteria: any[];
   appointmentReports = [];
   donationReports = [];
   paymentReports = [];
   checkinReports = [];
   orderReports = [];
+  crmReports = [];
   settings: any = [];
   showToken = false;
   criteria_list;
@@ -73,6 +75,7 @@ export class ReportsComponent implements OnInit {
     this.criteria_list = '';
     this.appt_criteria = [];
     this.order_criteria = [];
+    this.crm_criteria = [];
     this.payment_criteria = [];
     this.token_criteria = [];
     this.donation_criteria = [];
@@ -98,6 +101,10 @@ export class ReportsComponent implements OnInit {
           }
           case 'ORDER': {
             this.order_criteria.push(this.criteria_list[i]);
+            break;
+          }
+          case 'CRM_TASK': {
+            this.crm_criteria.push(this.criteria_list[i]);
             break;
           }
         }
@@ -165,19 +172,29 @@ export class ReportsComponent implements OnInit {
     // });
   }
 
-  recreateReport(data) {
-    const request_payload: any = {};
-    request_payload.reportType = data.reportType;
-    request_payload.reportDateCategory = data.reportDateCategory;
-    request_payload.filter = data.reportCriteria;
-    request_payload.responseType = 'INLINE';
-    this.generateReportByCriteria(request_payload).then(res => {
-      this.generatedReport(res);
-    },
-      (error) => {
-        this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-      });
+  // recreateReport(data) {
+  //   const request_payload: any = {};
+  //   request_payload.reportType = data.reportType;
+  //   request_payload.reportDateCategory = data.reportDateCategory;
+  //   request_payload.filter = data.reportCriteria;
+  //   request_payload.responseType = 'INLINE';
+  //   this.generateReportByCriteria(request_payload).then(res => {
+  //     this.generatedReport(res);
+  //   },
+  //     (error) => {
+  //       this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+  //     });
 
+  // }
+  recreateReport(data) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        token: data.reportToken
+      }
+    };
+      // this.lStorageService.setitemonLocalStorage('report', JSON.stringify(report));
+      this.router.navigate(['provider', 'reports', 'generated-report'] , navigationExtras);
+ 
   }
   generateReportByCriteria(payload) {
     return new Promise((resolve, reject) => {

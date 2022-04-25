@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Component, OnInit, OnDestroy, HostListener, Input } from "@angular/core";
+import { Router, ActivatedRoute, NavigationExtras } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
 import { Location } from "@angular/common";
 import { SharedFunctions } from "../../../../shared/functions/shared-functions";
@@ -17,6 +17,8 @@ import { SnackbarService } from "../../../../shared/services/snackbar.service";
 import { DateTimeProcessor } from "../../../../shared/services/datetime-processor.service";
 import { CommunicationService } from "../../../../business/services/communication-service";
 import { BookingHistoryComponent } from "../booking-history/booking-history.component";
+import { CommunicationPopupComponent } from "../../bookings/communication-popup/communication-popup.component";
+// import { CommunicationPopupComponent } from "../../bookings/communication-popup/communication-popup.component";
 
 @Component({
   selector: "app-provider-appointment-detail",
@@ -100,6 +102,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   questionnaires: any = [];
   spName: any;
   teams: any;
+  @Input() widget;
   appointmentModes = [
     { mode: "WALK_IN_APPOINTMENT", value: "Walk in " },
     { mode: "PHONE_IN_APPOINTMENT", value: "Phone in " },
@@ -107,6 +110,13 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   ];
   bookinghistorydialogref: any;
   statusList: any;
+  consumerBills: any = [];
+  historyvisitDetails: any;
+  small_device_display: boolean;
+  action: string;
+  whatsappNumber: any;
+  mobileNumber: any;
+  email: any;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -142,6 +152,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.getPos();
+    this.onResize();
     this.api_loading = true;
     this.pdtype = this.groupService.getitemFromGroupStorage("pdtyp");
     if (!this.pdtype) {
@@ -160,6 +171,18 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       });
     }
   }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth <= 767) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
+    }
+  }
+
+
   ngOnDestroy() {
     if (this.sendmsgdialogRef) {
       this.sendmsgdialogRef.close();
@@ -181,6 +204,30 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       }
     );
   }
+
+  editCustomerDetails() {
+    const navigationExtras: NavigationExtras = {
+        queryParams: { action: 'edit', id: this.waitlist_data.appmtFor[0].id}
+    };
+    this.router.navigate(['/provider/customers/create'], navigationExtras);
+  }
+
+  getConsumerBills() {
+    const filter = { 'providerConsumer-eq': this.waitlist_data.appmtFor[0].id };
+    this.provider_services.getProviderBills(filter).subscribe(data => {
+        this.consumerBills = data;
+    })
+    console.log("consumer bills called")
+  }
+  
+  getCustomerHistoryVisit() {
+    this.provider_services.getCustomerHistoryVisit(this.waitlist_data.appmtFor[0].id).subscribe(
+        (data: any) => {
+            this.historyvisitDetails = data;
+        }
+    );
+  }
+
   checkDataNull(value) {
     return value.trim() !== "";
   }
@@ -188,7 +235,16 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     this.provider_services.getAppointmentById(this.waitlist_id).subscribe(
       data => {
         this.waitlist_data = data;
-        console.log("Waitlist Data :",this.waitlist_data)
+        this.getConsumerBills();
+        this.getCustomerHistoryVisit();
+        if(this.waitlist_data.virtualService)
+        {
+          this.whatsappNumber = this.waitlist_data.virtualService.WhatsApp;
+        }
+        this.mobileNumber = this.waitlist_data.phoneNumber;
+        this.email = this.waitlist_data.appmtFor[0].email;
+        console.log("communication data",this.whatsappNumber,this.mobileNumber,this.email);
+        console.log("waitlist data",this.waitlist_data);
         if (
           this.waitlist_data.questionnaires &&
           this.waitlist_data.questionnaires.length > 0
@@ -241,7 +297,6 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
         // this.getTimeSlots();
         if (this.waitlist_data.appmtTime) {
           this.apptTime = this.waitlist_data.appmtTime;
-          console.log("Appointment Time :",this.apptTime);
         }
         const waitlist_date = new Date(this.waitlist_data.date);
         this.today.setHours(0, 0, 0, 0);
@@ -351,9 +406,6 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
             his.waitlistId === uuid.replace("h_", "")
           ) {
             this.communication_history.push(his);
-            console.log("Communication History :",this.communication_history.push(his))
-
-            console.log("History :",this.dateTimeProcessor.convertMinutesToHourMinute(this.communication_history[0].timeStamp))
           }
         }
         this.sortMessages();
@@ -400,19 +452,26 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       }
     );
     this.notedialogRef.afterClosed().subscribe(result => {
+      console.log("Outside If condition")
       if (result === "reloadlist") {
+        console.log("Inside If condition")
         this.getWaitlistNotes(this.waitlist_data.uid);
       }
     });
   }
 
-  changeWaitlistStatus() {
+  changeWaitlistStatus(action) {
     this.provider_shared_functions.changeWaitlistStatus(
       this,
       this.waitlist_data,
-      "Cancelled",
+      action,
       "appt"
     );
+  }
+
+  changeWaitlistStatusAction() {
+    this.action = 'status';
+    console.log(this.action);
   }
 
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {
@@ -534,6 +593,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     this.showEditView = false;
     this.esttime = "";
   }
+  
   saveClicked(esttime) {
     if (esttime) {
       this.provider_services
@@ -566,6 +626,115 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   cancelUpdation() {
     this.editAppntTime = false;
   }
+
+
+  showCommunications() {
+
+    if(this.whatsappNumber && this.mobileNumber && this.email)
+    {
+      console.log("communication data : 1");
+      this.dialog.open(CommunicationPopupComponent, {
+          width: '50%',
+          panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+          disableClose: true,
+          data: {
+              whatsappNumber: this.whatsappNumber,
+              number: this.mobileNumber,
+              customerId: this.waitlist_data.appmtFor[0].id,
+              email: this.email,
+              type: 'customer'
+          }
+      });
+    }
+    else if(!this.whatsappNumber && this.mobileNumber == 'null' && this.email)
+    {
+      console.log("communication data : 2");
+      this.dialog.open(CommunicationPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+        disableClose: true,
+        data: {
+          customerId: this.waitlist_data.appmtFor[0].id,
+          email: this.email,
+          type: 'customer'
+        }
+      });
+    }
+    else if(!this.whatsappNumber && this.mobileNumber && !this.email)
+    {
+      console.log("communication data : 3");
+      this.dialog.open(CommunicationPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+        disableClose: true,
+        data: {
+          number: this.mobileNumber,
+          customerId: this.waitlist_data.appmtFor[0].id,
+          type: 'customer'
+        }
+      });
+    }
+    else if(!this.whatsappNumber && this.mobileNumber && this.email)
+    {
+      console.log("communication data : 4");
+      this.dialog.open(CommunicationPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+        disableClose: true,
+        data: {
+          number: this.mobileNumber,
+          email: this.email,
+          customerId: this.waitlist_data.appmtFor[0].id,
+          type: 'customer'
+        }
+      });
+    }
+    else if(this.whatsappNumber && this.mobileNumber == 'null' && !this.email)
+    {
+      console.log("communication data : 5",this.email);
+      this.dialog.open(CommunicationPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+        disableClose: true,
+        data: {
+          whatsappNumber: this.whatsappNumber,
+          customerId: this.waitlist_data.appmtFor[0].id,
+          type: 'customer'
+        }
+      });
+    }
+    else if(this.whatsappNumber && this.mobileNumber == 'null' && this.email)
+    {
+      console.log("communication data : 6");
+      this.dialog.open(CommunicationPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+        disableClose: true,
+        data: {
+          whatsappNumber: this.whatsappNumber,
+          email: this.email,
+          customerId: this.waitlist_data.appmtFor[0].id,
+          type: 'customer'
+        }
+      });
+    }
+    else if(this.whatsappNumber && this.mobileNumber && !this.email)
+    {
+      console.log("communication data : 7");
+      this.dialog.open(CommunicationPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+        disableClose: true,
+        data: {
+          whatsappNumber: this.whatsappNumber,
+          number: this.mobileNumber,
+          customerId: this.waitlist_data.appmtFor[0].id,
+          type: 'customer'
+        }
+      });
+    }
+}
+
 
   saveApptTime(time) {
     this.provider_services
@@ -602,8 +771,8 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   }
   getSingleTime(slot) {
     const slots = slot.split("-");
-    const min = parseInt(slot[1], 10);
-    console.log("Minutes :",'delay by '+this.addZero(min) + 'mins')
+    // const min = parseInt(slot[1], 10);
+    // console.log("Minutes :",'delay by '+this.addZero(min) + 'mins')
     return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
   formatDateDisplay(dateStr) {
@@ -651,8 +820,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
         return browserName.toLocaleLowerCase();
     
       }
-     // "Mozilla/5.0 (X11; CrOS aarch64 14388.61.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.107 Safari/537.36"
-      if(browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("Linux") || browser.includes("CrOS") || browser.includes("AppleWebKit")){
+      if(browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("iPhone")){
         browserName = 'Web'
         return browserName.toLocaleLowerCase();
     

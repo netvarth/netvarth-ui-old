@@ -10,6 +10,7 @@ import { RouterModule, Routes } from "@angular/router";
 import {NgxPaginationModule} from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter'; // import ng2search pipe module
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
+import { FileService } from "../../../../shared/services/file-service";
 
 
 const routes: Routes = [
@@ -34,6 +35,9 @@ const routes: Routes = [
     ],
     declarations: [
         FolderFilesComponent
+    ],
+    providers: [
+        FileService
     ]
 })
 export class FolderFileModule {}

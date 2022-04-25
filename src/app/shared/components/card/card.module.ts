@@ -7,6 +7,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { LoadingSpinnerModule } from '../../modules/loading-spinner/loading-spinner.module';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatMenuModule,
         MatIconModule,
         MatButtonModule,
-        MatTooltipModule
+        MatTooltipModule,
+        LoadingSpinnerModule
     ],
     exports: [
         CardComponent

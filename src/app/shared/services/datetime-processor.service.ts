@@ -338,4 +338,71 @@ export class DateTimeProcessor {
   getLocaleDateFromServer(serverDate) {
     return new Date(serverDate.split(' ')[0]).toLocaleString(this.REGION_LANGUAGE, { timeZone: this.TIME_ZONE_REGION })
   }
+
+  getToday(serverDate) {
+    let today: any;
+    today = new Date(serverDate.split(' ')[0]).toLocaleString(this.REGION_LANGUAGE, { timeZone: this.TIME_ZONE_REGION });
+    today = new Date(today);
+    const dd = today.getDate();
+    const mm = today.getMonth() + 1; // January is 0!
+    const yyyy = today.getFullYear();
+    let cday = '';
+    if (dd < 10) {
+      cday = '0' + dd;
+    } else {
+      cday = '' + dd;
+    }
+    let cmon;
+    if (mm < 10) {
+      cmon = '0' + mm;
+    } else {
+      cmon = '' + mm;
+    }
+    const dtoday = yyyy + '-' + cmon + '-' + cday;
+    return dtoday;
+  }
+
+  isFutureDate(serverDate, appmtDate) {
+    let today: any;
+    today = this.getToday(serverDate);
+    const dt0 = today.toLocaleString(this.REGION_LANGUAGE, { timeZone: this.TIME_ZONE_REGION });
+    const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
+    const date2 = new Date(dt2);
+    const dte0 = appmtDate.toLocaleString(this.REGION_LANGUAGE, { timeZone: this.TIME_ZONE_REGION });
+    const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
+    const datee2 = new Date(dte2);
+    if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
+        return true;
+    } else {
+        return false;
+    }
+  }
+
+  getMomentDate(pdate) {
+    return moment(pdate, 'YYYY-MM-DD HH:mm').format();
+  }
+
+    /**
+   * 
+   * @param date 
+   * @returns 
+   */
+     transformToMMDDYYYY_(date) {
+      const server = date.toLocaleString(this.REGION_LANGUAGE, { timeZone: this.TIME_ZONE_REGION });
+      const serverdate = moment(server).format();
+      const newdate = new Date(serverdate);
+      const dd = newdate.getDate();
+      const mm = newdate.getMonth() + 1;
+      const y = newdate.getFullYear();
+      const date1 = mm + '/' + dd + '/' + y;
+      return date1;
+    }
+
+    getCurrentUTCdatetimestring() {
+      const curdate = new Date();
+      const cdate = new Date(Date.UTC(curdate.getUTCFullYear(), curdate.getUTCMonth(), curdate.getUTCDate(), curdate.getUTCHours(),
+        curdate.getUTCMinutes(), curdate.getUTCSeconds(), curdate.getUTCMilliseconds()));
+      return cdate.toISOString();
+    }
+
 }

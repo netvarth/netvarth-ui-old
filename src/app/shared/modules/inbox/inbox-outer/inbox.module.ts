@@ -9,6 +9,7 @@ import { HeaderModule } from '../../header/header.module';
 import { LoadingSpinnerModule } from '../../loading-spinner/loading-spinner.module';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { InboxServices } from '../inbox.service';
+import { FileService } from '../../../../shared/services/file-service';
 const routes: Routes = [
   { path: '', component: InboxOuterComponent}
 ];
@@ -29,7 +30,8 @@ const routes: Routes = [
     ],
     exports: [InboxOuterComponent],
     providers: [
-      InboxServices
+      InboxServices,
+      FileService
     ]
 })
 export class InboxModule {

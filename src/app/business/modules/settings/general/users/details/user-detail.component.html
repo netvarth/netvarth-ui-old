@@ -290,7 +290,7 @@ onSubmit(userForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                     <div class="col-md-6 col-sm-6 col-xs-12" style="margin-top: 10px;"
                                        >
                                         <!-- *ngIf="type != 'ADMIN'"  || 'ASSISTANT') || *ngIf="(actionparam.type !== 'edit' && (type != 'ADMIN' || type != 'ASSISTANT') || (actionparam.type !=='view' && (type != 'ADMIN' || type != 'ASSISTANT'))) "-->
-                                        <div class="form-group"  *ngIf="showPrvdrFields && provider_label">
+                                        <div class="form-group"  *ngIf="type != 'ADMIN' && (provider_label || type == 'ASSISTANT')">
                                             <!-- && (actionparam.type !== 'edit' || actionparam.type === 'edit') -->
                                             <mat-checkbox formControlName="privileges">
                                                 Admin Privileges

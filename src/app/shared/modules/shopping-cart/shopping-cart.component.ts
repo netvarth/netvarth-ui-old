@@ -320,19 +320,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
                     this.api_loading1 = false;
                 }
             );
-    // this.api_loading1 = true;
-    // this.retval = this.sharedFunctionobj.getS3Url()
-    //   .then(
-    //     res => {
-    //       this.s3url = res;
-    //       this.getbusinessprofiledetails_json('coupon', true);
-    //       this.getprovidercoupondetails_json('providerCoupon', true);
-    //       this.api_loading1 = false;
-    //     },
-    //     () => {
-    //       this.api_loading1 = false;
-    //     }
-    //   );
   }
   processS3s(type, res) {
     let result = this.s3Processor.getJson(res);
@@ -426,40 +413,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   applyPromocode() {
     this.action = 'coupons';
   }
-  // getbusinessprofiledetails_json(section, modDateReq: boolean) {
-  //   let UTCstring = null;
-  //   if (modDateReq) {
-  //     UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-  //   }
-  //   this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-  //     .subscribe(res => {
-  //       this.s3CouponsList.JC = res;
-  //       console.log(this.s3CouponsList.JC);
-  //       if (this.s3CouponsList.JC.length > 0) {
-  //         this.showCouponWB = true;
-  //       }
-  //     },
-  //       () => {
-  //       }
-  //     );
-  // }
-  // getprovidercoupondetails_json(section, modDateReq: boolean) {
-  //   let UTCstring = null;
-  //   if (modDateReq) {
-  //     UTCstring = this.sharedFunctionobj.getCurrentUTCdatetimestring();
-  //   }
-  //   this.shared_services.getbusinessprofiledetails_json(this.provider_id, this.s3url, section, UTCstring)
-  //     .subscribe(res => {
-  //       this.s3CouponsList.OWN = res;
-  //       console.log(this.s3CouponsList.OWN);
-  //       if (this.s3CouponsList.OWN.length > 0) {
-  //         this.showCouponWB = true;
-  //       }
-  //     },
-  //       () => {
-  //       }
-  //     );
-  // }
   removeFromCart(itemObj) {
     const item = itemObj.item;
     for (const i in this.orderList) {

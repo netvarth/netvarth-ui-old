@@ -30,21 +30,11 @@ import { SnackbarService } from './shared/services/snackbar.service';
 import { ErrorMessagingService } from './shared/services/error-message.service';
 import { AuthService } from './shared/services/auth-service';
 import { CommonDataStorageService } from './shared/services/common-datastorage.service';
-import { MeetService } from './shared/services/meet-service';
 import { DateTimeProcessor } from './shared/services/datetime-processor.service';
-import { DomainConfigGenerator } from './shared/services/domain-config-generator.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { JaldeeTimeService } from './shared/services/jaldee-time-service';
-import { FileService } from './shared/services/file-service';
-import { LivetrackService } from './shared/services/livetrack-service';
-import { TeleBookingService } from './shared/services/tele-bookings-service';
-import { BookingService } from './shared/services/booking-service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { ConsumerAuthService } from './shared/services/consumer-auth-service';
-import { MediaService } from './shared/services/media-service';
-import { FileReaderService } from './shared/services/file-reader.service';
-import { PaytmService } from './shared/services/paytm.service';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { ProviderServices } from './business/services/provider-services.service';
@@ -64,15 +54,12 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { projectConstantsLocal } from './shared/constants/project-constants';
 export function HttpLoaderFactory(http: HttpClient) {
-  if (projectConstants) {
-    return new TranslateHttpLoader(http, projectConstantsLocal.PATH + 'assets/i18n/home/', '.json');
-  }
+  return new TranslateHttpLoader(http, projectConstantsLocal.PATH + 'assets/i18n/home/', '.json');
 }
 
 @NgModule({
   declarations: [
-    AppComponent,
-    EqualValidator
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -109,49 +96,35 @@ export function HttpLoaderFactory(http: HttpClient) {
     AuthGuardHome,
     AuthGuardLogin,
     ServiceMeta,
-    Razorpaymodel,
-    RazorpayprefillModel,
-    
     WindowRefService,
-    PaytmService,
-    RazorpayService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ExtendHttpInterceptor,
       multi: true
     },
     AuthService,
-    ConsumerAuthService,
-    FileReaderService,
     SharedServices,
     GlobalService,
     SharedFunctions,
     FormMessageDisplayService,
     ErrorMessagingService,
     ProviderDataStorageService,
-    ShareService,
+    // ShareService,
     SessionStorageService,
     LocalStorageService,
     GroupStorageService,
     WordProcessor,
     DateTimeProcessor,
-    DomainConfigGenerator,
     SnackbarService,
     GroupStorageService,
-    MeetService,
     JaldeeTimeService,
-    FileService,
-    LivetrackService,
-    TeleBookingService,
-    BookingService,
-    MediaService,
     Title,
     CommonDataStorageService,
     {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices,Injector]},
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS },
+    { provide: MAT_DATE_FORMATS, useValue: projectConstantsLocal.MY_DATE_FORMATS },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: MatDialogRef, useValue: {} },
     { provide: MAT_DIALOG_DATA, useValue: [] }

@@ -565,10 +565,12 @@
                             All</mat-checkbox>
                         </li>
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize" *ngFor="let multiUser of users">
+                          <span *ngIf="multiUser.admin === true">
                           <mat-checkbox class="filter-checkbox"
                             [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
                             (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)" >
                             {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
+                            </span>
                         </li>
                       </div>
                     </div>
@@ -1089,8 +1091,8 @@
                                 [matTooltip]="'Attachment included'" class="pull-left cnote  pointer-cursor mgn-rt-10"
                                 *ngIf="apptByTimeSlot[appt.time][0].hasAttachment"><i style="font-size: 20px;"
                                   class="material-icons">attach_file</i></span> -->
-                          <span (click)="stopprop($event);showAttachments(appt)" [matTooltip]="'Attachment included'"
-                            class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="appt.hasAttachment"><i
+                          <span (click)="stopprop($event);showAttachments(apptByTimeSlot[appt.time][0])" [matTooltip]="'Attachment included'"
+                            class="pull-left cnote  pointer-cursor mgn-rt-10" *ngIf="apptByTimeSlot[appt.time][0].hasAttachment"><i
                               style="font-size: 20px;" class="material-icons">attach_file</i></span>
                         </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
@@ -1809,10 +1811,12 @@
                               All</mat-checkbox>
                           </li>
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize" *ngFor="let multiUser of users">
+                            <span *ngIf="multiUser.admin === true">
                             <mat-checkbox class="filter-checkbox"
                               [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
                               (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)" >
                               {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
+                            </span>
                           </li>
                         </div>
                       </div>
@@ -2522,10 +2526,12 @@
                               All</mat-checkbox>
                           </li>
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize" *ngFor="let multiUser of users">
+                            <span *ngIf="multiUser.admin === true">
                             <mat-checkbox class="filter-checkbox"
                               [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
                               (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)" >
                               {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
+                              </span>
                           </li>
                         </div>
                       </div>

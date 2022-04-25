@@ -19,7 +19,7 @@
         </div>
         <div id="reportGenerated">
           <hr width="100%">
-          <h5 style="text-align:center">{{reportHeader.reportName }}</h5>
+          <!-- <h5 style="text-align:center">{{reportHeader.reportName }}</h5> -->
           <hr width="100%">
           <!-- Criteria Header-->
           <ng-container *ngIf="showReport">
@@ -59,7 +59,7 @@
                   <br>
                 </label>
               </div>
-              <div class="col col-md-5 col-sm-6 col-lg-5  col-xs-12 clearfix" *ngIf="report.reportContent.dataHeader">
+              <div class="col col-md-5 col-sm-6 col-lg-5  col-xs-12 clearfix" *ngIf="new_report.reportContent.dataHeader">
                 <ng-container *ngFor="let key of objectKeys(reportConsolidatedInfo)">
                   <label class="col-lg-8 col-sm-8 col-md-8 col-xs-8 col-form-label">{{key}} &nbsp; </label>
                   <label
@@ -72,7 +72,7 @@
               <hr width="100%">
             </div>
             <!-- Data-->
-            <div class="box" *ngIf="report.reportContent.data.length > 0">
+            <div class="box" *ngIf="report_view.length > 0">
               <div class="box-body table-container table-responsive mat-elevation-z8">
                 <ng-container class="col-md-6">
                   <mat-list>
@@ -115,7 +115,7 @@
               </div>
             </div>
           </ng-container>
-          <div *ngIf="report.reportContent.data.length===0" style="text-align:center">
+          <div *ngIf="report_view.length===0" style="text-align:center">
             <b> No Records Found</b>
           </div>
         </div>

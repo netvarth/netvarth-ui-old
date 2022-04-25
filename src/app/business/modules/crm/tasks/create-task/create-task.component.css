@@ -1,0 +1,184 @@
+.cardBoxShadow{
+    border-radius: 0!important;
+    box-shadow: 0 4px 4px rgba(0,0,0,.16)!important;
+}
+.taskTitle{
+    display: flex;
+    align-items: center;
+    grid-gap: 5px;
+    gap: 5px;
+    font-weight: 400;
+    font-size: 12px;
+    color: rgb(109, 108, 108);
+}
+.card{
+  background: #FFFFFF;
+    box-shadow: 1px 4px 10px rgb(179 179 179 / 25%) !important;
+    border-radius: 2px;
+}
+.astericColor{
+    color: #f24949 !important;
+}
+.bgColor{
+    background-color: #fff;
+}
+.form-control{
+    background-color: #f6f6f6!important;
+    display: block;
+    width: 100%;
+    height: 35px;
+    padding: 6px 12px!important;
+    font-size: 14px !important;
+    line-height: 1.42857143!important;
+    color: #555!important;
+    background-image: none !important;
+    background: #F1F1F1 !important;
+    border-radius: 5.73504px !important;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%) !important;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;
+}
+.fieldPadding{
+    padding: 5px;
+}
+.textarea{
+    background: #f5f5f5;
+      border-radius: 10px;
+  }
+  ::ng-deep .mat-form-field textarea{
+    margin-top: 0px !important;
+    border-radius: 5px !important;
+      transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;
+      box-shadow: inset 0 1px 1px rgba(0,0,0,.08)!important;
+  }
+::ng-deep .form-control:focus {
+    border: 3px solid #96d3e2 !important;
+  }
+  ::ng-deep .mat-select-arrow {
+    transform: rotate(0deg) !important;
+  }
+  
+  ::ng-deep .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+    transform: rotate(-180deg) !important;
+  }
+  ::ng-deep .form-group .pickerouter .mat-datepicker-toggle button{
+    height: auto !important;
+      background: #B2B2B2 !important;
+  
+  }
+  .cancelBtn{
+    background: #A8ABAF !important;
+  box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+  border-radius: 3.75916px !important;
+  border: 0px solid  !important;
+  margin-right: 10px !important;
+  padding: 6px 10px;
+  color: #fff;
+  font-weight: bold;
+    font-size: 14px;
+  }
+  .confirmBtn{
+    background: #0D2348 !important;
+  box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+  border-radius: 3.75916px !important;
+  border: 0px solid  !important;
+  padding: 6px 12px;
+  color: #fff;
+  }
+@media(min-width: 768px) {
+    .form-control{
+        width: 100% ;
+    }
+    .mat-select {
+        width: 100%  ;
+    }
+    .widthWebKit{
+      width: -webkit-fill-available !important;
+    }
+}
+@media(max-width: 768px) {
+    .form-control{
+        width: 100%;
+    }
+    .mat-select {
+        width: 100% !important;
+    }
+    .lbl{
+        width: -webkit-fill-available !important;
+    }
+}
+.lbl{
+  width: -webkit-fill-available !important;
+}
+/* input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+} */
+.positionNameInput{
+  position: relative;
+
+}
+::ng-deep .mat-datepicker-toggle{
+  position: absolute;
+}
+.dateWithMatDtae{
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+
+}
+textarea {
+  resize: none;
+}
+.inputwithImg{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.taskImg{
+  height: 100%;
+  width: 100%;
+}
+/* #time:before {
+  content:'HH:MM - ';
+  margin-right:.6em;
+  color:#9d9d9d;
+  } */
+input[type="number"],input[type="time"]{
+  width: 100px!important;
+}
+.group-head
+{
+  font-size: 15px!important;
+  font-weight: bold!important;
+  
+}
+.bggrey
+{
+  background-color: #f8f8f8!important;
+  padding: 15px!important;
+  border-radius: 10px!important;
+}
+
+@media(max-width: 768px){
+  .taskImg{
+    display: none;
+  }
+  input[type="number"],input[type="time"]{
+    width: 80px!important;
+  }
+}
+/* input[type="datetime-local"]:before {
+  content: attr(placeholder) !important;
+  color: #aaa;
+  margin-right: 0.5em;
+}
+input[type="datetime-local"]:focus:before,
+input[type="datetime-local"]:valid:before {
+  content: "";
+} */
+

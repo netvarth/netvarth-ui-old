@@ -1,0 +1,88 @@
+<h1 class="mat-dialog-title pad-20 no-margin">
+    Communication
+    <button mat-dialog-close class="modal_close black" tabindex="-1" (click)="dialogClose()"><i class="fa fa-window-close"
+        aria-hidden="true"></i></button>
+  </h1>
+  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 communication">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 comm-box" *ngIf="data.number || data.email">
+      <div class="">
+        <div class="disp-flex">
+          <div class="flx_8 video-head">
+            <span class="jvideo-icon"></span>
+          </div>
+          <div class="videoname">
+            Jaldee Video Call
+          </div>
+        </div>
+        <div class="disp-flex video">
+          <label>Remaining minutes : <span class="bold">
+              {{videocredits}}</span>
+          </label>
+        </div>
+        <ul>
+          <li>Inbuilt video technology
+          </li>
+          <li>Personal number will stay secure and not be revealed
+          </li>
+        </ul>
+        <div class="startBt">
+          <button type="button" class="action-button" (click)="gotoMeet()">
+            Launch Meeting
+          </button>
+        </div>
+      </div>
+      <div class="powered-by">
+        <div class="poweredby-text">
+          Recommended
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 comm-box mgn-up-20" *ngIf="data.whatsappNumber">
+      <div class="disp-flex mgn-bt-10">
+        <div class="flx_8 whsp-head">
+          <span class="wtsapvid-icon"></span>
+        </div>
+        <div class="videoname">
+          Whatsapp Video Call
+        </div>
+      </div>
+      <div class="disp-flex whatsp">
+        <label> Whatsapp # : <span class="bold">
+            +
+          <!-- {{data.whatsappCountryCode}}  -->
+            {{data.whatsappNumber}}</span></label>
+      </div>
+      <ul>
+        <li>Your number will be revealed to your {{consumer_label}} through this
+        </li>
+        <li>Not Inbuilt technology
+        </li>
+      </ul>
+      <div *ngIf="is_web">
+        <div class="custmer-font-wght">
+          <span class="custom-red">
+            {{notSupported}}</span>
+        </div>
+      </div>
+      <div class="startBt" *ngIf="!is_web">
+        <button type="button" class="action-button" (click)="amReady()">
+          Launch Meeting
+        </button>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 comm-box mgn-up-20" *ngIf="data.number">
+      <div class="disp-flex">
+        <div class="flx_8 whsp-head">
+          <span class="phon-icon"></span>
+        </div>
+        <div class="videoname">
+          Voice Call
+        </div>
+      </div>
+      <div class="startBt">
+        <button type="button" class="action-button" (click)="voiceCallConfirm()">
+          Launch Meeting
+        </button>
+      </div>
+    </div>
+  </div>

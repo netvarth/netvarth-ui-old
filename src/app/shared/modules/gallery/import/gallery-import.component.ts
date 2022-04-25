@@ -4,6 +4,7 @@ import { GalleryService } from '../galery-service';
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { FileService } from '../../../../shared/services/file-service';
 
 
 @Component({
@@ -42,7 +43,8 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<GalleryImportComponent>,
         public sharedfunctionObj: SharedFunctions,
-        public galleryService: GalleryService
+        public galleryService: GalleryService,
+        private fileService: FileService
     ) {
         if(this.data.accountId){
            this.accountId= this.data.accountId;
@@ -100,7 +102,7 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
         this.error_list = [];
         if (input.files) {
             for (const file of input.files) {
-                this.success_error = this.sharedfunctionObj.imageValidation(file , this.source_id);
+                this.success_error = this.fileService.imageValidation(file , this.source_id);
                 if (this.success_error === true) {
                     this.item_pic.files.push(file);
                     const reader = new FileReader();
@@ -190,10 +192,13 @@ export class GalleryImportComponent implements OnInit, OnChanges, OnDestroy {
         this.canceldisabled = false;
     }
     getImage(url, file) {
-        if (file.type == 'application/pdf') {
-          return '../../../../../assets/images/pdf.png';
-        } else {
-          return url;
-        }
-      }
+        return this.fileService.getImage(url, file);
+    }
+//     getImage(url, file) {
+//         if (file.type == 'application/pdf') {
+//           return './assets/images/pdf.png';
+//         } else {
+//           return url;
+//         }
+//       }
 }

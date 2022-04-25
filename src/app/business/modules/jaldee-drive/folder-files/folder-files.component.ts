@@ -11,6 +11,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { projectConstants } from '../../../../app.component';
 import { ConfirmBoxComponent } from '../../../../business/shared/confirm-box/confirm-box.component';
+import { FileService } from '../../../../shared/services/file-service';
 // import { ConfirmDeleteBoxComponent } from '../confirm-delete-box/confirm-delete-box.component';
 
 @Component({
@@ -128,6 +129,7 @@ export class FolderFilesComponent implements OnInit {
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
+    private fileService: FileService
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -155,7 +157,7 @@ export class FolderFilesComponent implements OnInit {
     console.log(this.active_user);
   }
   doSearch() {
-    this.lStorageService.removeitemfromLocalStorage('userfilter');
+    this.lStorageService.removeitemfromLocalStorage('drivefilter');
     if (this.filter.fileSize || this.filter.fileName || this.filter.fileType || this.filter.folderName || this.filter.contextId || this.selectedLanguages.length > 0 || this.selectedLocations.length > 0 || this.selectedSpecialization.length > 0) {
       this.filterapplied = true;
     } else {
@@ -170,7 +172,7 @@ export class FolderFilesComponent implements OnInit {
     let filter = this.setFilterForApi();
     if (filter) {
       console.log(filter);
-      this.lStorageService.setitemonLocalStorage('userfilter', filter);
+      this.lStorageService.setitemonLocalStorage('drivefilter', filter);
       this.provider_servicesobj.getAllFilterAttachments(filter).subscribe(
         (data: any) => {
           console.log(data);
@@ -182,7 +184,7 @@ export class FolderFilesComponent implements OnInit {
   }
   setFilterForApi() {
     let api_filter = {};
-    const filter = this.lStorageService.getitemfromLocalStorage('userfilter');
+    const filter = this.lStorageService.getitemfromLocalStorage('drivefilter');
     if (filter) {
       api_filter = filter;
       this.initFilters(filter);
@@ -254,7 +256,7 @@ export class FolderFilesComponent implements OnInit {
     console.log(this.filter_sidebar);
   }
   clearFilter() {
-    this.lStorageService.removeitemfromLocalStorage('userfilter');
+    this.lStorageService.removeitemfromLocalStorage('drivefilter');
     this.resetFilter();
     this.filterapplied = false;
     this.getfiles();
@@ -641,21 +643,24 @@ export class FolderFilesComponent implements OnInit {
     }
   }
   getImage(url, file) {
-    console.log("File Type :",file.type);
-    if (file.type == 'application/pdf') {
-      return '../../../../../assets/images/pdf.png';
-    }
-    else if(file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg'){
-      return '../../../../../assets/images/audio.png';
-
-    }
-    else if(file.type == 'video/mp4' || file.type == 'video/mpeg'){
-      return '../../../../../assets/images/video.png';
-    }
-    else {
-      return url;
-    }
+    return this.fileService.getImage(url, file);
   }
+  // getImage(url, file) {
+  //   console.log("File Type :",file.type);
+  //   if (file.type == 'application/pdf') {
+  //     return '../../../../../assets/images/pdf.png';
+  //   }
+  //   else if(file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg'){
+  //     return '../../../../../assets/images/audio.png';
+
+  //   }
+  //   else if(file.type == 'video/mp4' || file.type == 'video/mpeg'){
+  //     return '../../../../../assets/images/video.png';
+  //   }
+  //   else {
+  //     return url;
+  //   }
+  // }
   onBack() {
   }
   onCancel() {

@@ -192,6 +192,7 @@ export class ProviderCheckinComponent implements OnInit {
     customerid: any;
     callingMode;
     virtualServiceArray;
+    foundMultiConsumers = false;
     callingModes: any = [];
     showInputSection = false;
     callingModesDisplayName = projectConstants.CALLING_MODES;
@@ -266,6 +267,12 @@ export class ProviderCheckinComponent implements OnInit {
     accId;
     screenWidth;
     small_device_display = false;
+    myDate:any
+    departmentName:any
+    currentDate
+    fileSizeInKb:number=1024
+    Math = Math
+   
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -365,8 +372,10 @@ export class ProviderCheckinComponent implements OnInit {
                         if (data.length > 1) {
                             const customer = data.filter(member => !member.parent);
                             this.customer_data = customer[0];
+                            this.foundMultiConsumers = true;
                         } else {
                             this.customer_data = data[0];
+                            this.foundMultiConsumers = false;
                         }
                         if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
                             this.countryCode = this.customer_data.countryCode;
@@ -397,6 +406,7 @@ export class ProviderCheckinComponent implements OnInit {
       }
     }
     ngOnInit() {
+        this.currentDate = new Date();
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         if(user.userType == 1) {
             this.assignmyself = true;
@@ -527,11 +537,13 @@ export class ProviderCheckinComponent implements OnInit {
                         if (data.length > 1) {
                             const customer = data.filter(member => !member.parent);
                             this.customer_data = customer[0];
+                            this.foundMultiConsumers = true
                             // if(this.qParams['phone'] === '0000'){
                             //     this.createNew('create');
                             // }
                         } else {
                             this.customer_data = data[0];
+                            this.foundMultiConsumers = false
 
                         }
                         this.jaldeeId = this.customer_data.jaldeeId;
@@ -620,8 +632,10 @@ export class ProviderCheckinComponent implements OnInit {
                             if (data.length > 1) {
                                 const customer = data.filter(member => !member.parent);
                                 this.customer_data = customer[0];
+                                this.foundMultiConsumers = true;
                             } else {
                                 this.customer_data = data[0];
+                                this.foundMultiConsumers = false;
                             }
                             this.jaldeeId = this.customer_data.jaldeeId;
                             if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
@@ -648,6 +662,64 @@ export class ProviderCheckinComponent implements OnInit {
                 );
         }
     }
+
+
+
+
+
+    searchCustomerById(customer_id) {
+        console.log(customer_id)
+        if (!customer_id) {
+            this.emptyFielderror = true;
+        } else {
+            this.qParams = {};
+            this.create_new = false;
+            let post_data = {};
+            post_data['or=jaldeeId-eq'] = customer_id + ',firstName-eq=' + customer_id;
+            this.provider_services.getCustomer(post_data)
+                .subscribe(
+                    (data: any) => {
+                        if (data.length === 0) {
+                            this.createNew('create');
+                        } else {
+                            if (data.length > 1) {
+                                const customer = data.filter(member => !member.parent);
+                                this.customer_data = customer[0];
+                                this.foundMultiConsumers = true;
+                            } else {
+                                this.customer_data = data[0];
+                                this.foundMultiConsumers = false;
+                            }
+                            this.jaldeeId = this.customer_data.jaldeeId;
+                            if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                                this.countryCode = this.customer_data.countryCode;
+                            } else {
+                                this.countryCode = '+91';
+                            }
+                            if (this.source === 'waitlist-block') {
+                                this.showBlockHint = true;
+                                if (this.showtoken) {
+                                    this.heading = 'Confirm your Token';
+                                } else {
+                                    this.heading = 'Confirm your Check-in';
+                                }
+                            } else {
+                                this.getFamilyMembers();
+                                this.initCheckIn();
+                            }
+                        }
+                    },
+                    error => {
+                        this.wordProcessor.apiErrorAutoHide(this, error);
+                    }
+                );
+        }
+    }
+
+
+
+
+
     openthirdpopup(domain,showOther,customer_label) {
         this.thirdpartyoptions = this.dialog.open(ThirdpartypopupComponent, {
             width: '80%',
@@ -764,13 +836,17 @@ export class ProviderCheckinComponent implements OnInit {
         this.sel_checkindate = moment(new Date().toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION })).format(projectConstants.POST_DATE_FORMAT);
         this.minDate = this.sel_checkindate; // done to set the min date in the calendar view
         const day = new Date(this.sel_checkindate).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
+        console.log('day',day)
         const ddd = new Date(day);
+        console.log('ddd',ddd)
         this.ddate = new Date(ddd.getFullYear() + '-' + this.dateTimeProcessor.addZero(ddd.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(ddd.getDate()));
         this.hold_sel_checkindate = this.sel_checkindate;
         const dt1 = new Date(this.sel_checkindate).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const date1 = new Date(dt1);
         const dt2 = new Date(this.todaydate).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
         const date2 = new Date(dt2);
+        console.log('date1.getTime()',date1.getTime())
+        console.log('date2.getTime()',date2.getTime())
         if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
             this.isFuturedate = true;
         }
@@ -871,13 +947,16 @@ export class ProviderCheckinComponent implements OnInit {
                         }
                     }
                 }
+                console.log('_this.departments',_this.departments)
                 _this.deptLength = _this.departments.length;
                 // this.selected_dept = 'None';
                 if (_this.selectDept) {
                     _this.selected_dept = _this.selectDept;
+                    _this.departmentName = _this.departments[0].departmentName;
                     resolve();
                 } else if (_this.deptLength !== 0) {
                     _this.selected_dept = _this.departments[0].departmentId;
+                    _this.departmentName = _this.departments[0].departmentName;
                     resolve();
                 } else {
                     reject();
@@ -1002,6 +1081,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.phoneerror = null;
     }
     setServiceDetails(curservid) {
+        console.log(' _this.servicesjson', this.servicesjson)
         if (this.waitlist_for[0] && this.waitlist_for[0].id) {
             this.getProviderQuestionnaire();
         }
@@ -1040,6 +1120,14 @@ export class ProviderCheckinComponent implements OnInit {
             consumerNoteMandatory: serv.consumerNoteMandatory,
             consumerNoteTitle: serv.consumerNoteTitle
         };
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        if(user.userType == 1 && !serv.provider) {
+            this.assignmyself = true;
+        }
+        else{
+            this.assignmyself = false; 
+        }
+        console.log("Service:", serv);
         this.note_placeholder = this.sel_ser_det.consumerNoteTitle;
     }
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
@@ -1148,7 +1236,7 @@ export class ProviderCheckinComponent implements OnInit {
         }
     }
 
-    handleQueueSelection(queue, index) {
+    handleQueueSelection(queue,index) {
         this.sel_queue_indx = index;
         this.sel_queue_id = queue.id;
         this.sel_queue_waitingmins = this.dateTimeProcessor.convertMinutesToHourMinute(queue.queueWaitingTime);
@@ -1179,7 +1267,13 @@ export class ProviderCheckinComponent implements OnInit {
     handleConsumerNote(vale) {
         this.consumerNote = vale;
     }
+    autoGrowTextZone(e) {
+        console.log('textarea',e)
+        e.target.style.height = "0px";
+        e.target.style.height = (e.target.scrollHeight + 15)+"px";
+      }
     handleFutureDateChange(e) {
+        console.log('eeeeeeeeeeeeee',e)
         const tdate = e.targetElement.value;
         const newdate = tdate.split('/').reverse().join('-');
         const futrDte = new Date(newdate);
@@ -1270,8 +1364,10 @@ export class ProviderCheckinComponent implements OnInit {
                     if (data.length > 1) {
                         const customer = data.filter(member => !member.parent);
                         this.customer_data = customer[0];
+                        this.foundMultiConsumers = true;
                     } else {
                         this.customer_data = data[0];
+                        this.foundMultiConsumers = false;
                     }
                     this.jaldeeId = this.customer_data.jaldeeId;
                     if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
@@ -1405,6 +1501,10 @@ export class ProviderCheckinComponent implements OnInit {
         }
         if (this.selectedUser && this.selectedUser.firstName === Messages.NOUSERCAP) {
             post_Data['selfAssign'] = this.selfAssign;
+        }
+        if (!this.selectedUser && this.selfAssign) {
+            const user = this.groupService.getitemFromGroupStorage('ynw-user');
+            post_Data['provider'] = { 'id': user.id};
         }
         if (this.sel_ser_det.serviceType === 'virtualService') {
             if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
@@ -1956,11 +2056,13 @@ export class ProviderCheckinComponent implements OnInit {
                 // this.selected_dept = 'None';
                 if (this.deptLength !== 0) {
                     this.selected_dept = this.departments[0].departmentId;
+                    this.departmentName = this.departments[0].departmentName;
                     this.handleDeptSelction(this.selected_dept);
                 }
             });
     }
     handleDeptSelction(obj) {
+        console.log('obk',obj)
         this.users = [];
         this.queuejson = [];
         this.api_error = null;
@@ -2109,6 +2211,7 @@ export class ProviderCheckinComponent implements OnInit {
             (users: any) => {
                 // const filteredUser = users.filter(user => user.status === 'ACTIVE');
                 this.users = users;
+                console.log('users',users)
                 if(this.users.length !==0){
                     this.users.push(this.userN);
                 }
@@ -2124,6 +2227,9 @@ export class ProviderCheckinComponent implements OnInit {
                     this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
                 }
             });
+    }
+    onOptionsSelected(event){
+        console.log('onOptionsSelected',event)
     }
     handleUserSelection(user) {
         this.selectedUser = user;

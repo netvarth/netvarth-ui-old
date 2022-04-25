@@ -2,12 +2,12 @@ import { Component, Inject, OnInit, EventEmitter, OnChanges, ViewChild, ElementR
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../../../../shared/constants/project-messages';
-import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../services/provider-services.service';
 import { Router } from '@angular/router';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { SubSink } from 'subsink';
+import { FileService } from '../../../../../../shared/services/file-service';
 
 
 @Component({
@@ -43,11 +43,11 @@ export class AddcatalogimageComponent implements OnInit, OnChanges, OnDestroy {
     private subscriptions = new SubSink();
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<AddcatalogimageComponent>,
-        public sharedfunctionObj: SharedFunctions,
         private provider_services: ProviderServices,
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
         private router: Router,
+        private fileService: FileService
     ) {
 
     }
@@ -80,7 +80,7 @@ export class AddcatalogimageComponent implements OnInit, OnChanges, OnDestroy {
         const input = event.target.files;
         if (input) {
             for (const file of input) {
-                this.success_error = this.sharedfunctionObj.imageValidation(file);
+                this.success_error = this.fileService.imageValidation(file);
                 if (this.success_error === true) {
                     this.item_pic.files.push(file);
                     const reader = new FileReader();

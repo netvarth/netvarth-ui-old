@@ -11,6 +11,7 @@ import { LoadingSpinnerModule } from '../../../shared/modules/loading-spinner/lo
 import { BusinessInboxListComponent } from './inbox-list.component';
 import { RouterModule, Routes } from '@angular/router';
 import { InboxServices } from '../../../shared/modules/inbox/inbox.service';
+import { FileService } from '../../../shared/services/file-service';
 const routes: Routes = [
     { path: '', component: BusinessInboxListComponent}
 ];
@@ -30,7 +31,7 @@ const routes: Routes = [
     declarations: [
         BusinessInboxListComponent
     ],
-    providers: [InboxServices],
+    providers: [InboxServices, FileService],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA

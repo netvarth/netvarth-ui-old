@@ -1,0 +1,72 @@
+.fa-times {
+    color: black !important;
+    cursor: pointer;
+}
+.communication {
+    padding: 20px;
+    height: 80vh;
+    overflow: scroll;
+}
+.communication .comm-box {
+    box-shadow: 0 0 5px 0 rgb(0 0 0 / 10%), 0 0 5px 0 rgb(0 0 0 / 10%) !important;
+    padding: 20px;
+    border-radius: 0.42rem;
+}
+.communication .powered-by {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 120px;
+    height: 105px;
+    overflow: hidden;
+}
+.communication .poweredby-text {
+    position: relative;
+    top: 21px;
+    left: -20px;
+    width: 210px;
+    padding: 10px 0;
+    font-weight: bold;
+    text-align: center;
+    background-color: #2c4289!important;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    -webkit-transition: all 0.1s ease-in;
+    transition: all 0.1s ease-in;
+    color: white;
+    font-size: 10px;
+    text-transform: uppercase
+}
+.communication .custom-red {
+    color: red !important;
+    font-weight: 700 !important;
+}
+
+.communication .action-button {
+    color: #1E4079 !important;
+    background-color: white !important;
+    border: 1px solid #1E4079 !important;
+    font-weight: 700 !important;
+    padding: 5px 30px !important;
+    font-size: 12px !important;
+    text-transform: uppercase !important;
+    border-radius: 5px;
+}
+.communication .action-button:hover {
+    color: white !important;
+    background: #1E4079 !important;
+    font-weight: 500 !important;
+}
+.communication .startBt {
+    margin-top: 20px;
+}
+.videoname {
+    margin: auto 15px;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+.communication .wtsapvid-icon,
+.communication .phon-icon {
+    width: 45px !important;
+}

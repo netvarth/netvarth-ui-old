@@ -10,6 +10,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { FileService } from '../../../../../../shared/services/file-service';
 // const routes: Routes = [
 //     { path: '', component: GlobalSettingsComponent}
 // ];
@@ -30,6 +31,9 @@ import { MatOptionModule } from '@angular/material/core';
         LoadingSpinnerModule,
         CapitalizeFirstPipeModule,
         // [RouterModule.forChild(routes)]
+    ],
+    providers: [
+        FileService
     ],
     exports: [GlobalSettingsComponent]
 })

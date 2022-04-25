@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../../business/services/provider-services.service';
 import { PreviewuploadedfilesComponent } from './previewuploadedfiles/previewuploadedfiles.component';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { FileService } from '../../../shared/services/file-service';
 
 
 @Component({
@@ -192,8 +193,8 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     public location: Location,
     public dialog: MatDialog,
     private _location: Location,
-     private wordProcessor:WordProcessor
-
+     private wordProcessor:WordProcessor,
+    private fileService:FileService
   ) {
      this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
      this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -355,12 +356,15 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     this.getfiles();
   }
   getImage(url, file) {
-    if (file.type == 'application/pdf') {
-      return '../../../../../assets/images/pdf.png';
-    } else {
-      return url;
-    }
+    return this.fileService.getImage(url, file);
   }
+  // getImage(url, file) {
+  //   if (file.type == 'application/pdf') {
+  //     return '../../../../../assets/images/pdf.png';
+  //   } else {
+  //     return url;
+  //   }
+  // }
   deleteTempImage(i) {
     this.selectedMessage.files.splice(i, 1);
     this.selectedMessage.base64.splice(i, 1);
@@ -437,7 +441,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     let filter = this.setFilterForApi();
     if (filter) {
       console.log(filter);
-      this.lStorageService.setitemonLocalStorage('userfilter', filter);
+      this.lStorageService.setitemonLocalStorage('drivefilter', filter);
       this.provider_servicesobj.getAllFilterAttachments(filter).subscribe(
         (data: any) => {
           console.log(data);
@@ -448,7 +452,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     }
   }
   clearFilter() {
-    this.lStorageService.removeitemfromLocalStorage('userfilter');
+    this.lStorageService.removeitemfromLocalStorage('drivefilter');
     this.resetFilter();
     this.filterapplied = false;
     this.getfiles();
@@ -480,7 +484,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     this.selectedLocations = [];
   }
   doSearch() {
-    this.lStorageService.removeitemfromLocalStorage('userfilter');
+    this.lStorageService.removeitemfromLocalStorage('drivefilter');
     if (this.filter.fileSize || this.filter.fileName || this.filter.fileType || this.filter.folderName || this.filter.checkinEncId || this.selectedLanguages.length > 0 || this.selectedLocations.length > 0 || this.selectedSpecialization.length > 0) {
       this.filterapplied = true;
     } else {
@@ -501,7 +505,7 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   }
   setFilterForApi() {
     let api_filter = {};
-    const filter = this.lStorageService.getitemfromLocalStorage('userfilter');
+    const filter = this.lStorageService.getitemfromLocalStorage('drivefilter');
     if (filter) {
       api_filter = filter;
       this.initFilters(filter);

@@ -567,10 +567,12 @@
                         </li>
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                           *ngFor="let multiUser of users">
+                          <span *ngIf="multiUser.admin === true">
                           <mat-checkbox class="filter-checkbox"
                             [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
                             (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)">
                             {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
+                          </span>
                         </li>
                       </div>
                     </div>
@@ -1535,10 +1537,12 @@
                           </li>
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                             *ngFor="let multiUser of users">
+                            <span *ngIf="multiUser.admin === true">
                             <mat-checkbox class="filter-checkbox"
                               [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
                               (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)">
                               {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
+                            </span>
                           </li>
                         </div>
                       </div>
@@ -2335,10 +2339,12 @@
                           </li>
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                             *ngFor="let multiUser of users">
+                            <span *ngIf="multiUser.admin === true">
                             <mat-checkbox class="filter-checkbox"
                               [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
                               (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)">
                               {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
+                            </span>
                           </li>
                         </div>
                       </div>

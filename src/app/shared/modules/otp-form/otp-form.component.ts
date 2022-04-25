@@ -1,12 +1,13 @@
 
 import { interval as observableInterval, Subscription } from 'rxjs';
-import { Component, OnInit, OnChanges, EventEmitter, Output, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnChanges, EventEmitter, Output, Input, OnDestroy, ViewChild } from '@angular/core';
 import { SharedServices } from '../../services/shared-services';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { Messages } from '../../constants/project-messages';
 import { TranslateService } from '@ngx-translate/core';
+import { NgOtpInputComponent } from 'ng-otp-input';
 
 @Component({
   selector: 'app-otp-form',
@@ -54,6 +55,16 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   @Output() resetApiErrors: EventEmitter<any> = new EventEmitter();
   @Output() resendOtp: EventEmitter<any> = new EventEmitter();
   @Output() resendOTPEmail: EventEmitter<any> = new EventEmitter();
+  @ViewChild(NgOtpInputComponent, { static: false}) ngOtpInput:NgOtpInputComponent;
+  config = {
+    allowNumbersOnly: true,
+    length: 4,
+    inputStyles: {
+      'width': '40px',
+      'height': '40px'
+    }
+  };
+  otpEntered: any;
 
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
@@ -63,9 +74,17 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
     ) { }
 
   ngOnInit() {
+console.log("SubmitData:", this.submitdata);
+    if (this.submitdata && this.submitdata.userProfile && this.submitdata.userProfile.primaryMobileNo.startsWith('55') && this.submitdata.userProfile.countryCode === '+91') {
+      this.config.length=5;
+    } else if (this.submitdata && !this.submitdata.userProfile && this.submitdata.startsWith('55')){
+      this.config.length=5;
+    }
+
     this.translate.use(JSON.parse(localStorage.getItem('translatevariable'))) 
 
-    this.createForm();
+    // this.createForm();
+    // this.setMessageType();
     this.resetCounter(this.refreshTime);
     this.cronHandle = observableInterval(1000).subscribe(() => {
       if (this.resetCounterVal > 0) {
@@ -97,19 +116,43 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
     this.resetCounterVal = val;
   }
 
-  createForm() {
-    this.otp_form = this.fb.group({
-      phone_otp: ['', Validators.compose(
-        [Validators.required])]
-    });
-    // this.setMessageType();
-  }
+  // createForm() {
+  //   this.otp_form = this.fb.group({
+  //     phone_otp: ['', Validators.compose(
+  //       [Validators.required])]
+  //   });
+  //   // this.setMessageType();
+  // }
 
-  doOnOtpSubmit(value) {
+  doOnOtpSubmit() {
+    console.log(this.otpEntered);
+    if (this.otpEntered) {
+      if (this.submitdata && this.submitdata.userProfile && this.submitdata.userProfile.primaryMobileNo.startsWith('55') && this.submitdata.userProfile.countryCode === '+91' && this.otpEntered.length<5) {
+        this.api_error = 'Enter valid OTP';
+        return false;
+      } else if(this.otpEntered.length < 4){
+        this.api_error = 'Enter valid OTP';
+        return false;
+      } 
+    } else {
+      this.api_error = 'Enter valid OTP';
+        return false;
+    }
+    
     this.buttonclicked = true;
-    this.retonOtpSubmit.emit(value);
+    this.retonOtpSubmit.emit(this.otpEntered);
+    setTimeout(() => {
+      this.buttonclicked = false;
+    }, 500);
   }
+  /**
+   * OTP Section
+   */
 
+   onOtpChange(otp) {
+    this.otpEntered = otp;
+    this.api_error = '';
+  }
   doResetApiErrors() {
     // this.message = null;
     this.resetApiErrors.emit();
@@ -117,6 +160,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   resendOTPMobile() {
+    this.ngOtpInput.setValue(null);
     if ((this.submitdata.userProfile && this.submitdata.userProfile.countryCode === '+91') ||
       (this.type === 'forgot_password' && this.country_code === '+91') || this.type === 'change-mobile') {
       this.resendOTPEmail.emit(false);
@@ -135,6 +179,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   setResendViaEmail() {
+    this.ngOtpInput.setValue(null);
     this.resendOTPEmail.emit(true);
     this.doshowOTPEmailContainer();
     this.resetApiErrors.emit();

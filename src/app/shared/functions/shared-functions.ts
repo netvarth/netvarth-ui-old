@@ -8,8 +8,6 @@ import { DateFormatPipe } from '../pipes/date-format/date-format.pipe';
 import { ProviderServices } from '../../business/services/provider-services.service';
 import { GroupStorageService } from '../services/group-storage.service';
 import { LocalStorageService } from '../services/local-storage.service';
-import { FileService } from '../services/file-service';
-import { projectConstants } from '../../../app/app.component';
 import { AuthService } from '../services/auth-service';
 @Injectable()
 
@@ -25,7 +23,6 @@ export class SharedFunctions {
     public dateformat: DateFormatPipe,
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,
-    private fileService: FileService,
     private authService: AuthService
   ) { }
 
@@ -59,14 +56,6 @@ export class SharedFunctions {
     }
     return is_business_owner;
   }
-
-  public getCurrentUTCdatetimestring() {
-    const curdate = new Date();
-    const cdate = new Date(Date.UTC(curdate.getUTCFullYear(), curdate.getUTCMonth(), curdate.getUTCDate(), curdate.getUTCHours(),
-      curdate.getUTCMinutes(), curdate.getUTCSeconds(), curdate.getUTCMilliseconds()));
-    return cdate.toISOString();
-  }
-
   public showlogoicon(logo, moreparams?) {
     if (logo == null || logo === '') {
       return '../../assets/images/no_image_icon.png';
@@ -306,36 +295,6 @@ export class SharedFunctions {
     return 'â‚¹' + ' ' + price.toFixed(2);;
   }
 
-  imageValidation(file, source?) {
-    let file_types;
-    if (source === 'attachment' || source === 'consumerimages') {
-      //file_types = this.fileService.getSupportedFormats('file');
-      file_types = projectConstants.FILETYPES_UPLOAD;
-      console.log("tpe1"+file_types);
-    } else {
-      file_types = projectConstants.IMAGE_FORMATS;
-      //file_types = this.fileService.getSupportedFormats('image');
-    }
-    const image_max_size = this.fileService.getMaximumImageSize();
-    const error = [];
-    console.log(file_types);
-    let is_error = false;
-    if (!file.type || (file.type && file_types.indexOf(file.type) === -1)) {
-      error['type'] = true;
-      is_error = true;
-    }
-    if (file.size && file.size > image_max_size) {
-      error['size'] = true;
-      is_error = true;
-    }
-    if (is_error === false) {
-      return true;
-    } else {
-      return error;
-    }
-  }
-
-
   fileValidation(file) {
     const image_max_size = 15000000;
     const error = [];
@@ -477,15 +436,6 @@ export class SharedFunctions {
   checkIsInteger(val) {
     return /^\d*$/.test(val);
   }
-
-  // repeatFunction(ob) {
-  //   setInterval(
-  //     () => {
-  //       ob.repeatFunctions();
-  //     }, projectConstants.INTERVAL_TIME
-  //   );
-  // }
-
   getminutesOfDay(m) {
     return parseInt(m.minute, 10) + parseInt(m.hour, 10) * 60;
   }
@@ -977,26 +927,6 @@ export class SharedFunctions {
         sidebar.setAttribute('style', 'overflow:auto;height:' + height);
       }
     }, 500);
-  }
-
-  getBase64Image() {
-    const promise = new Promise(function (resolve, reject) {
-      const img = new Image();
-      // To prevent: "Uncaught SecurityError: Failed to execute 'toDataURL' on 'HTMLCanvasElement': Tainted canvases may not be exported."
-      img.crossOrigin = 'Anonymous';
-      img.onload = function () {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0);
-        const dataURL = canvas.toDataURL('image/png');
-        resolve(dataURL.replace(/^data:image\/(png|jpg|jpeg|pdf);base64,/, ''));
-      };
-      img.src = '../../../../assets/images/jaldee-logo.png';
-    });
-
-    return promise;
   }
 
   b64toBlob(b64Data) {

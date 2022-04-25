@@ -30,12 +30,14 @@ export class BookingHistoryComponent implements OnInit {
     ) {
       //console.log(data)
       this.bookinghistorydetails=data.details;
-      console.log(this.bookinghistorydetails)
+      console.log("bookinghistorydetails :",this.bookinghistorydetails)
       this.booking_history_uuid = data.uuid
       this.appointmentby=data.appointmentby;
       console.log(this.appointmentby)
       this.how=data.bookingmode;
       this.type=data.type;
+      console.log("Modes and Type :",this.how,this.type)
+
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
 

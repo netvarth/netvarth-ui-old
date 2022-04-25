@@ -12,6 +12,7 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { ActivatedRoute } from '@angular/router';
+import { FileService } from '../../../../shared/services/file-service';
 
 @Component({
   selector: 'app-inbox-outer',
@@ -74,6 +75,7 @@ export class InboxOuterComponent implements OnInit {
     private location: Location, private snackbarService: SnackbarService,
     public shared_services: SharedServices,
     private dateTimeProcessor: DateTimeProcessor,
+    private fileService: FileService,
     private activaterouterobj: ActivatedRoute) {
     this.activaterouterobj.queryParams.subscribe(qparams => {
       if (qparams.accountId) {
@@ -233,7 +235,12 @@ export class InboxOuterComponent implements OnInit {
       dataToSend.append('captions', blobPropdata);
       const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
       dataToSend.append('message', blobpost_Data);
-      const filter = { 'account': this.selectedUserMessages[0].accountId };
+      let filter;
+      if (!this.selectedUserMessages[0]) {
+        filter = { 'account': this.accId };
+      } else {
+        filter = { 'account': this.selectedUserMessages[0].accountId };
+      }
       this.shared_services.addConsumertoProviderNote(dataToSend, filter)
         .subscribe(
           () => {
@@ -293,11 +300,12 @@ export class InboxOuterComponent implements OnInit {
     }
   }
   getImage(url, file) {
-    if (file.type == 'application/pdf') {
-      return '../../../../assets/images/pdf.png';
-    } else {
-      return url;
-    }
+      return this.fileService.getImage(url, file);
+    // if (file.type == 'application/pdf') {
+    //   return './assets/images/pdf.png';
+    // } else {
+    //   return url;
+    // }
   }
   showChatSection() {
     this.showChat = !this.showChat;

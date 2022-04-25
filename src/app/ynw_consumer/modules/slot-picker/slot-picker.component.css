@@ -1,0 +1,64 @@
+
+  .freeslots mat-chip {
+    border: none!important;
+    border-radius: 5px!important;
+    cursor: pointer;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  
+  .freeslots mat-chip.mat-chip-selected {
+    background-color: #1e4079;
+    color: white;
+    font-weight: 900!important;
+  }
+  /* .freeslots mat-chip.mat-chip.mat-focus-indicator.text-center.mat-primary.mat-standard-chip {
+    padding: 0!important;
+  } */
+  @media (min-width:320px)  {
+    .freeslots.appt mat-chip {
+      width:30% !important;
+      margin: 3px 5px 10px 3px !important;
+      padding: 5px;
+    }
+    .freeslots.token mat-chip {
+      /* width:48%; */
+      font-size: 0.79rem !important;
+      margin:3px!important;
+    }
+  }
+
+  @media (min-width:1025px) { 
+    /* .freeslots .token mat-chip{
+    width:30%!important;
+    } */
+    .freeslots.appt mat-chip {
+      width: 14% !important;
+  }
+  }
+  @media (min-width:1281px) {
+    .freeslots mat-chip {
+    width:20% !important;
+    margin:4px !important;
+    }
+    .freeslots.appt mat-chip {
+      width: 14% !important;
+  }
+  }
+  
+  .mat-chip.mat-standard-chip.mat-primary  {
+      color: #1E4079;
+      background-color: white;
+      border: 1px solid #1E4079;
+    }
+    .mat-chip-selected {
+      color: green;
+    }
+    .mat-chip-disabled{
+      background-color: #ddd !important;
+    }
+
+    .more_btn {
+      background-color:#1e4079 ;
+      color : #fff !important;
+      border:none;
+    }

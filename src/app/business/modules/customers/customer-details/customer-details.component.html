@@ -1,4 +1,4 @@
-<section class=""
+<!-- <section class=""
     *ngIf="source !=='token' && source !=='checkin' && source !=='appointment' && source !=='appt-block' && source !== 'waitlist-block' && source !== 'clist' && !viewCustomer && !loading">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
@@ -6,7 +6,7 @@
             {{customerName}}
         </h5>
     </div>
-</section>
+</section> -->
 <section *ngIf="viewCustomer && customerAction === '' && !showMoreHistory">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
@@ -15,7 +15,18 @@
         </h5>
     </div>
 </section>
-<section *ngIf="customerAction === 'inbox'">
+
+<section *ngIf="showMoreHistory">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {{customer_label | capitalizeFirst}} History
+        </h5>
+    </div>
+</section>
+
+
+<!-- <section *ngIf="customerAction === 'inbox'">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
             <span class="fa fa-arrow-left pointer-cursor"
@@ -23,16 +34,22 @@
             Communication history
         </h5>
     </div>
-</section>
-<section *ngIf="showMoreHistory && customerAction === ''">
+</section> -->
+<!-- <section *ngIf="showMoreHistory && customerAction === ''">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
             <span class="fa fa-arrow-left pointer-cursor" (click)="showHistory()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             History
         </h5>
     </div>
-</section>
-<section>
+</section> -->
+
+
+
+
+
+
+<!-- <section>
     <div class="content loc-list p-checkin ynw-common-form-nm">
         <div class="col-md-12 no-padding-small ">
             <div class="row">
@@ -634,9 +651,7 @@
                                                     class="consumer-dash consumer-appthistory"> <i
                                                         class="electronic-icon" [matTooltip]="'Electronic Delivery'"
                                                         aria-hidden="true"></i> </td>
-                                                <!-- <td class="consumer-dash consumer-appthistory"> <i class="fa fa-circle-o"  [matTooltip]="'Order'" aria-hidden="true"></i>
-                                                    
-                                                </td> -->
+                                                
                                                 <td> {{visit.orderDate | date: newDateFormat}}
                                                     <div *ngIf="visit.orderNumber">Order#
                                                         {{visit.orderNumber}} </div>
@@ -692,4 +707,155 @@
         </div>
     </div>
     <div class="clearfix"></div>
+</section> -->
+
+
+
+
+
+
+
+<app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+<section class="content" *ngIf="!loading && viewCustomer">
+    <div class="row main-sec">
+        <div class="col-lg-8 col-md-8 customer-details-card">
+            <div class="card card-custom gutter-b wave-success p-0 booking-details mgn-bt-20 border-10">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 p-0 padding-20px border details-hgt">
+                    <div class="booking-details">
+                        <div class="booking-details-head">
+                            <div>
+                                <h5 class="mb-2">
+                                    {{customer[0].firstName | capitalizeFirst}} {{customer[0].lastName |
+                                    capitalizeFirst}}
+                                </h5>
+                                <a (click)="editCustomerDetails()">Edit Details</a>
+                            </div>
+                        </div>
+                        <div class="user-img">
+                            <img src="assets/images/avatar5.png" />
+                        </div>
+                        <div class="booking-details-body">
+                            <div class="jaldee-id" *ngIf="customer[0].jaldeeId">
+                                <i class="fa fa-id-card-o icon"></i>
+                                <span class="value">{{customer_label}} Id: {{customer[0].jaldeeId}}</span>
+                            </div>
+                            <div class="contact-no" *ngIf="customer[0].phoneNo && customer[0].phoneNo.trim() != ''">
+                                <i class="fa fa-mobile icon"></i>
+                                <span class="value">{{customer[0].countryCode}} {{customer[0].phoneNo}}</span>
+                            </div>
+                            <div class="email" *ngIf="customer[0].email">
+                                <i class="fa fa-envelope icon"></i>
+                                <span class="value">{{customer[0].email}}</span>
+                            </div>
+                            <div class="gender-and-dob">
+                                <div *ngIf="customer[0].gender" class="gender">
+                                    <i *ngIf="customer[0].gender === 'male'" class="fa fa-mars icon"></i>
+                                    <i *ngIf="customer[0].gender === 'female'" class="fa fa-venus icon"></i>
+                                    <span class="value">{{customer[0].gender | capitalizeFirst}}</span>
+                                </div>
+                                <div class="dob" *ngIf="customer[0].dob">
+                                    <i class="fa fa-calendar-o icon"></i>
+                                    <span class="value">{{customer[0].dob | date: newDateFormat}}</span>
+                                </div>
+                            </div>
+                            <div class="location" *ngIf="customer[0].address">
+                                <i class="fa fa-map-marker icon"></i>
+                                <span class="value">{{customer[0].address}}</span>
+                            </div>
+                            <div class="d-flex">
+                                <div>
+                                    <button class="btn create-prescription-button text-capitalize" *ngIf="whatsappNumber || number || email"
+                                (click)="showCommunications()">Call {{customer_label}} </button>
+                                </div>
+                                <div>
+                                    <button class="ml-2 btn create-prescription-button text-capitalize" *ngIf="whatsappNumber || number || email"
+                                (click)="showCustomerAction()">More Actions</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cards-div">
+                <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mgn-bt-20 no-padding prt-10">
+                    <app-records-datagrid [records]="todayvisitDetails" [heading]="'Today'"
+                        [source]="'customer-waitlist'" [timeType]="1" [showMore]="showMoreToday"
+                        (actionPerformed)="actionPerformed($event)" [view]="'small'">
+                    </app-records-datagrid>
+                </div>
+                <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mgn-bt-20 no-padding plt-10">
+                    <app-records-datagrid [records]="futurevisitDetails" [heading]="'Future'"
+                        [source]="'customer-waitlist'" [timeType]="2" [showMore]="showMoreFuture"
+                        (actionPerformed)="actionPerformed($event)" [view]="'small'">
+                    </app-records-datagrid>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="row records-sec pt-0">
+        <div class="column">
+            <app-records-datagrid [records]="historyvisitDetails" [heading]="'History'" [source]="'customer-waitlist'"
+                [showMore]="showMoreHistory" [timeType]="3" (actionPerformed)="actionPerformed($event)"
+                [view]="'small'">
+            </app-records-datagrid>
+        </div>
+        <div class="column" *ngIf="domain != 'finance'">
+            <app-records-datagrid [records]="todayordervisitDetails" [heading]="'Todays_Order'" [source]="'order'"
+                [showMore]="showMoreorderToday" [timeType]="1" (actionPerformed)="actionPerformed($event)"
+                [view]="'small'">
+            </app-records-datagrid>
+        </div>
+        <div class="column" *ngIf="domain != 'finance'">
+            <app-records-datagrid [records]="futureordervisitDetails" [heading]="'Future_Order'" [source]="'order'"
+                [showMore]="showMoreorderFuture" [timeType]="2" (actionPerformed)="actionPerformed($event)"
+                [view]="'small'">
+            </app-records-datagrid>
+        </div>
+        <div class="column" *ngIf="domain != 'finance'">
+            <app-records-datagrid [records]="historyOrdervisitDetails" [heading]="'Order_History'" [source]="'order'"
+                [showMore]="showMoreOrderHistory" [timeType]="3" (actionPerformed)="actionPerformed($event)"
+                [view]="'small'">
+            </app-records-datagrid>
+        </div>
+        <div class="column" *ngIf="domain != 'finance'">
+            <app-records-datagrid [heading]="'Bills'" [source]="'bill'" [records]="consumerBills"
+                [customerId]="customer[0].id" [view]="'small'">
+            </app-records-datagrid>
+        </div>
+        <div class="column"
+            *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
+            <app-booking-medical-records-rx [customerId]="customer[0].id" [source]="'customer-details'" [type]="'mr'">
+            </app-booking-medical-records-rx>
+        </div>
+        <div class="column"
+            *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
+            <app-booking-medical-records-rx [customerId]="customer[0].id" [source]="'customer-details'" [type]="'rx'">
+            </app-booking-medical-records-rx>
+        </div>
+        <div class="column" *ngIf="customer[0].questionnaires && customer[0].questionnaires.length > 0">
+            <div class="card">
+                <div class="card-header collapsed"
+                    [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
+                    [attr.data-toggle]="small_device_display ? 'collapse' : ''" data-target="#info"
+                    aria-expanded="false">
+                    <div>More {{customer_label}} info</div>
+                    <div class="mgn-lt-auto">
+                        <i (click)="gotoQnr()" class="fa fa-external-link pointer-cursor" aria-hidden="true"
+                            [class.mgn-rt-20]="small_device_display"></i>
+                        <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
+                    </div>
+                </div>
+                <div class="qnr-hgt" id="info" [class.collapse]="small_device_display">
+                    <app-questionnaire-list-popup [source]="'customer-details'" [uid]="customer[0].id"
+                        [type]="'details'" [waitlist_data]="customer">
+                    </app-questionnaire-list-popup>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="column">
+            <app-booking-documents [source]="'customer'" [widget]="true" [uuid]="customer[0].id">
+            </app-booking-documents>
+        </div> -->
+    </div>
 </section>

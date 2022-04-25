@@ -1,0 +1,17 @@
+.loading-overlay {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 100000;
+    background-color: rgb(242, 242, 242);
+    background-color: rgba(242, 242, 242, 0.9);
+    overflow-x: hidden;
+    transition: 0.5s;   
+    top: 0;
+    opacity: 0.7;
+}
+.loading-overlay-inner{
+    top: 45%;
+    left: 45%;
+    position: fixed;
+}

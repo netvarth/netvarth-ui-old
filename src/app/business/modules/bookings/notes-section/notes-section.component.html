@@ -1,0 +1,59 @@
+<section class="" *ngIf="!widget">
+    <div class="card title-gb">
+      <h5 class="mgn-up-10">
+        <span class="fa fa-arrow-left pointer-cursor text-capitalize" (click)="goBack()"></span>&nbsp;&nbsp;
+        Notes
+      </h5>
+    </div>
+  </section>
+  <section [class.p-4]="!widget">
+    <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 m-0 p-0"
+      [class.widgetStyle]="widget">
+      <div class="card card-custom data-card">
+        <div class="card-header collapsed" *ngIf="widget"
+          [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
+          [attr.data-toggle]="small_device_display ? 'collapse' : ''" data-target="#notes" aria-expanded="false">
+          <div class="text-capitalize">Notes</div>
+          <div class="mgn-lt-auto">
+            <i class="fa fa-external-link pointer-cursor" aria-hidden="true"
+              [class.mgn-rt-20]="small_device_display"></i>
+            <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
+          </div>
+        </div>
+        <div class="card-body p-3" [class.cardheight]="!widget" id="notes"
+          [class.collapse]="widget && small_device_display">
+          <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+          <span *ngIf="waitlistdata && waitlistdata.consumerNote">
+            <p *ngIf="waitlistdata.consumerNote !== ''">{{waitlistdata.consumerNote}}</p>
+            <p *ngIf="waitlistdata.consumerNote === ''">No Notes Found</p>
+          </span>
+          <span *ngIf="waitlist_notes && waitlist_notes.length > 0">
+              <!-- <hr>
+              <span class="text-primary">Private Notes</span> -->
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 pnotes" *ngFor="let note of waitlist_notes; let i = index">
+              <div class="note_view">
+                <span class="status-label note_name" *ngIf="note.firstName != '' || note.lastName != ''">{{note.firstName}} {{note.lastName}}</span>
+                <span *ngIf="note.noteTime" class="status-label note_date">, {{note.noteTime}}</span> <span class="status-label note_date">{{note.timeStamp | date: newDateFormat}}</span> 
+                <div class="note text-primary" [innerHTML]="note.note">
+                </div>
+              
+              <div class="result attach" *ngIf="note.attachment && note.attachment.length > 0"
+                (click)="showImagesection(i)">
+                <i class="fa fa-file-text-o" aria-hidden="true"></i> <a class="attach-link">
+                  {{note.attachment.length}} Attachment(s) </a>
+              </div>
+              <div class="thumbnails mt10 mb10" *ngIf="showImages[i]">
+                <a class="mg-10" target="_blank" [href]="attachment.s3path"
+                  *ngFor="let attachment of note.attachment"><img [src]="getThumbUrl(attachment)"
+                    style="width:50px; height:50px" /></a>
+              </div>
+            </div>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
+    [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
+    (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>

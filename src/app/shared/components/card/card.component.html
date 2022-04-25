@@ -3,7 +3,7 @@
 
 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" [ngClass]="theme?theme:''"
     *ngIf="((service && service.serviceAvailability) || item.type=='donation') && !source">
-    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding pointer-cursor card-outer-cont" (click)="cardActionPerformed(item.type, 'availability', service, loc, null, $event)">
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding pointer-cursor card-outer-cont" (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)">
         <div class="col-md-9 col-xs-9 col-sm-9 col-lg-9 ">
             <h5 class="line-clamp-ln2 mgn-bt-5"
                 [ngClass]="{'no-padding':service.serviceType && service.serviceType == 'virtualService'}">{{service.name
@@ -45,8 +45,8 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 card-timings-cont">
-        
+    
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 card-timings-cont" *ngIf="cardType!=='card_1'">
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="item.type=='donation'">
             <p class="card-text donationAmount no-padding mgn-lt-10">
                 <span class="rupee-font bold">Donate <i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>
@@ -56,7 +56,8 @@
         </div>
         <div [ngClass]="(timings&&personsAheadText)?'col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding':'col-sm-12 col-xs-12 col-md-12 col-lg-12 no-padding'">
             <div class="no-padding card-head-grey" *ngIf="timings">{{timingCaption}}</div>
-            <h6 class="no-padding " *ngIf="timings">{{timings}}<i class="pointer-cursor seemore-link" *ngIf="item.type==='appt'" (click)="cardActionPerformed(item.type, 'availability', service, loc, null, $event)">, see more...</i>
+            <h6 class="no-padding " *ngIf="timings">{{timings}}
+                <!-- <i class="pointer-cursor seemore-link" *ngIf="item.type==='appt'" (click)="cardActionPerformed(item.type, 'availability', service, loc, null, $event)">, see more...</i> -->
                 <!-- <i class="fa fa-calendar pointer-cursor" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)"></i> -->
             </h6>
         </div>
@@ -66,8 +67,9 @@
         </div>
     </div>
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
-            <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event)"
-                class="getappointmentbutton">{{buttonCaption}}</button>
+            <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event, item)"
+                class="getappointmentbutton" [class.disabled]="item['loading']" [class.spinner]="item['loading']"
+                [class.spinner-darker-success]="item['loading']" [class.spinner-center]="item['loading']">{{buttonCaption}}</button>
     </div>
 </div>
 
@@ -83,11 +85,12 @@
         </div>
         <div [ngClass]="(timings&&personsAheadText)?'col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding':'col-sm-12 col-xs-12 col-md-12 col-lg-12 no-padding'">
             <div class="no-padding card-head-grey" *ngIf="timings">{{timingCaption}}</div>
-            <h6 class="no-padding " *ngIf="timings">{{timings}}<i class="pointer-cursor seemore-link" *ngIf="item.type==='appt'" (click)="cardActionPerformed(item.type, 'availability', service, loc, null, $event)">, see more...</i>
+            <h6 class="no-padding " *ngIf="timings">{{timings}}
+                <!-- <i class="pointer-cursor seemore-link" *ngIf="item.type==='appt'" (click)="cardActionPerformed(item.type, 'availability', service, loc, null, $event)">, see more...</i> -->
                 <!-- <i class="fa fa-calendar poin" (click)="cardActionPerformed('checkavailability', null, service, loc, null, $event)"></i> -->
             </h6>
         </div>
-        <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding" [ngClass]="timings?'bord-left':''">
+        <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6" [ngClass]="timings?'bord-left':''">
             <div class="no-padding card-head-grey" *ngIf="personsAheadText">{{personsAheadCaption}}</div>
             <h6 class="no-padding" *ngIf="personsAheadText">{{personsAheadText}}</h6>
         </div>
@@ -183,10 +186,6 @@
         </div>
     </div>
 </div>
-
-
-
-
 
 <div *ngIf="item.type=='catalog' || item.type=='item'">
     <div [id]="'item-' + service.itemId" class="card booking-card pointer-cursor order items height-301"
@@ -284,7 +283,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 card-timings-cont">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 card-timings-cont" *ngIf="cardType!='card_1'">
             <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding" *ngIf="user.apptTime && user.apptTime.caption && user.apptTime.availableSchedule.availableDate === todayDate">
                 <div class="no-padding card-head-grey">{{user.apptTime.caption}}</div>
                 <h6 class="no-padding">{{user.apptTime.date}}</h6>
@@ -321,8 +320,11 @@
                 </p> 
             </div>
             <div class="col-md-3 col-xs-3 col-sm-3 col-lg-3 no-padding card-inner-img-cont">
-                <div class="img-circle">
+                <div class="img-circle"  *ngIf="domain == 'religiousPriests'">
                     <img class="img-responsive" src="assets/images/hindu-temple-clipart.jpg" alt="Profile Pic">
+                </div>
+                <div class="img-circle"  *ngIf="domain == 'healthCare'">
+                    <img class="img-responsive" src="assets/images/health-dept.png" alt="Profile Pic">
                 </div>
             </div>
         </div>
@@ -384,7 +386,8 @@
 </div>
 
 <ng-container *ngIf="item.type=='checkin-dashboard' || item.type=='appt-dashboard'">
-    <div class="col-xs-12 col-sm-12 no-padding" (click)="gotoDetails()" [class.history]="time_type==3">
+    <!--  -->
+    <div class="col-xs-12 col-sm-12 no-padding"  [class.history]="time_type==3" (click)="gotoDetails()">
         
         <div class="main-sec">
             <div class="token" *ngIf="time_type!==3 && waitlist.token && !waitlist.provider">
@@ -395,7 +398,8 @@
             </div>
             <div class="box1 mgn-lt-5" [class.mgn-bt-minus]="waitlist.provider">
                 
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name" 
+                (click)="gotoCustomerDetailsToken(waitlist, $event)"
                     *ngIf="item.type=='checkin-dashboard' && (waitlist.waitlistingFor[0].firstName || waitlist.waitlistingFor[0].lastName)">
                     {{waitlist.waitlistingFor[0].firstName}}
                     {{waitlist.waitlistingFor[0].lastName}} 
@@ -521,7 +525,8 @@
                 </div>
             </div>
             <div class="box1 mgn-lt-5" [class.mgn-bt-minus]="appointment.provider">
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name" 
+                (click)="gotoCustomerDetailsAppt(appointment, $event)"
                     *ngIf="item.type=='appointment-dashboard' && (appointment.appmtFor[0].firstName || appointment.appmtFor[0].lastName)">
                     {{appointment.appmtFor[0].firstName}}
                     {{appointment.appmtFor[0].lastName}}

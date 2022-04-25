@@ -1,0 +1,70 @@
+
+
+h1.custom, h2.custom, h3.custom, h4.custom, h5.custom, h6.custom {
+    margin-bottom: 0.5rem !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+  }
+  
+  h1.custom {
+    font-size: 2rem !important;
+  }
+  
+  @media (max-width: 1200px) {
+    h1.custom {
+      font-size: calc(1.325rem + 0.9vw)  !important;
+    }
+  }
+  
+  h2.custom {
+    font-size: 1.75rem  !important;
+  }
+  
+  @media (max-width: 1200px) {
+    h2.custom {
+      font-size: calc(1.3rem + 0.6vw)  !important;
+    }
+  }
+  
+  h3.custom {
+    font-size: 1.5rem  !important;
+  }
+  
+  @media (max-width: 1200px) {
+    h3.custom {
+      font-size: calc(1.275rem + 0.3vw) !important;
+    }
+  }
+  
+  h4.custom {
+    font-size: 1.35rem  !important;
+  }
+  
+  @media (max-width: 1200px) {
+    h4.custom {
+      font-size: calc(1.26rem + 0.12vw)  !important;
+    }
+  }
+  
+  h5.custom {
+    font-size: 1.25rem  !important;
+  }
+  
+  h6.custom {
+    font-size: 1.175rem  !important;
+  }
+
+  body {
+    letter-spacing: 0px !important;
+  }
+
+  .mat-tab-label-content {
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+  }
+  .mat-tab-label {
+    opacity: 1 !important;
+  }
+  .mat-tab-label-active .mat-tab-label-content {
+    font-weight: 600 !important;
+  }

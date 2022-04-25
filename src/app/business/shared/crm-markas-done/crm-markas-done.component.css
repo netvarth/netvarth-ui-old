@@ -1,0 +1,153 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.headerText{
+    font-weight: 500;
+    font-size: 13px;
+    color: #000000;
+}
+.example-radio-button{
+    display: flex !important;
+    padding: 10px;
+    background: #f6f6f6;
+    border: 0.303983px solid #DCDCDC;
+    box-sizing: border-box;
+    border-radius: 2.65807px;
+    margin-bottom: 10px;
+}
+.allMember{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.img{
+    height: 30px;
+    /* width: 30px; */
+}
+.cancelBtn{
+    background: #A8ABAF !important;
+  box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+  border-radius: 3.75916px !important;
+  border: 0px solid  !important;
+  margin-right: 10px !important;
+  }
+  .confirmBtn{
+    background: #0D2348 !important;
+  box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+  border-radius: 3.75916px !important;
+  border: 0px solid  !important;
+  }
+  .errorMsg{
+    color: #f24949;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  ::ng-deep .mat-radio-outer-circle{
+      /* height: 15px !important;
+      width: 15px !important; */
+  }
+  .members{
+    font-size: 12px;
+    color: #434343;
+    font-weight: 700;
+  }
+  ::ng-deep .mat-dialog-container{
+    width: max-content !important;
+  }
+  ::ng-deep .confirmationmainclass{
+    justify-content: space-around !important;
+  }
+  .taskDes{
+    font-size: 13px;
+      font-weight: 500;
+      color: #CACACA;
+      margin-top: 10px;
+  }
+  .taskComplete{
+    color: #22242C;
+    font-size: 15px;
+    font-weight: bold;
+
+  }
+  .info{
+    display: flex;
+    justify-content: left;
+    gap: 5px;
+    color: #1D3E77;
+    flex-wrap: wrap;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 10px;
+  }
+  .taskTitle{
+    display: flex;
+    align-items: center;
+    grid-gap: 5px;
+    gap: 5px;
+    font-weight: 400;
+    font-size: 12px;
+    color: #949191;
+}
+.astericColor{
+  color: #f24949 !important;
+}
+.fieldPadding{
+  padding: 5px;
+}
+.form-control{
+  background-color: #f6f6f6!important;
+  display: block;
+  width: 100%;
+  height: 35px;
+  padding: 6px 12px!important;
+  font-size: 14px !important;
+  line-height: 1.42857143!important;
+  color: #555!important;
+  background-image: none !important;
+  background: #F1F1F1 !important;
+  border-radius: 5.73504px !important;
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%) !important;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;
+}
+::ng-deep .form-control:focus {
+  border: 3px solid #96d3e2 !important;
+}
+.formField{
+  display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+@media(min-width: 768px) {
+  .form-control{
+    width: min-content;
+  }
+  .dialogContent{
+    /* width: 75% !important; */
+  }
+  
+}
+@media(max-width: 768px) {
+  .form-control{
+      /* width: 268px !important; */
+  }
+  
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+@media(max-width: 768px){
+  .formField{
+    display: block !important;
+  }
+}
