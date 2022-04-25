@@ -14,6 +14,7 @@ import { KeyValue } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { FileService } from '../../../shared/services/file-service';
 
 @Component({
   selector: 'app-provider-inbox-list',
@@ -97,6 +98,7 @@ export class BusinessInboxListComponent implements OnInit, OnDestroy {
     public wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private dateTimeProcessor: DateTimeProcessor,
+    private fileService: FileService,
     private router: Router, private activateRoute: ActivatedRoute) {
     this.activateRoute.queryParams.subscribe(params => {
       this.qParams = params;
@@ -303,12 +305,15 @@ export class BusinessInboxListComponent implements OnInit, OnDestroy {
     }
   }
   getImage(url, file) {
-    if (file.type == 'application/pdf') {
-      return '../../../assets/images/pdf.png';
-    } else {
-      return url;
-    }
-  }
+    return this.fileService.getImage(url, file);
+}
+  // getImage(url, file) {
+  //   if (file.type == 'application/pdf') {
+  //     return '../../../assets/images/pdf.png';
+  //   } else {
+  //     return url;
+  //   }
+  // }
   generateCustomInbox(messages: any) {
     let inboxList = [];
     let senderName;

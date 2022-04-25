@@ -364,7 +364,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   yesterdayDate;
   bussLocs: any = [];
   locId;
-  location_select: any = [];
+  // location_select: any = [];
   internalStats: any = [];
   showMore= false;
   
@@ -476,7 +476,7 @@ multiUserFilter:any=[];
   images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
   ngOnInit() {
     this.getProviderSettings();
-    this.getProviderLocation();
+    // this.getProviderLocation();
     this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
     this.titleService.setTitle('Jaldee Business - Checkins/Tokens');
     this.pagination.startpageval = this.groupService.getitemFromGroupStorage('paginationStart') || 1;
@@ -515,9 +515,7 @@ multiUserFilter:any=[];
     this.getServiceList();
     if (this.active_user.accountType === 'BRANCH') {
       this.getDepartments();
-      this.getProviders();
-    }
-    if (this.active_user.accountType === 'BRANCH') {
+      // this.getProviders();
       this.getTeams().then((data) => {
         this.teams = data;
       });
@@ -529,15 +527,15 @@ multiUserFilter:any=[];
   
     this.getInternalStatus();
   }
-  getProviderLocation() {
-    this.provider_services.getProviderLocations()
-      .subscribe(
-        (data: any) => {
-          this.location_select = data;
-          console.log(this.location_select[0].id)
-          this.select_location = this.location_select[0].id;
-        });
-  }
+  // getProviderLocation() {
+  //   this.provider_services.getProviderLocations()
+  //     .subscribe(
+  //       (data: any) => {
+  //         // this.location_select = data;
+  //         // console.log(this.location_select[0].id)
+  //         this.select_location = data[0].id;
+  //       });
+  // }
   getInternalStatus() {
     this.provider_services.getInternalStatus()
       .subscribe(
@@ -688,6 +686,7 @@ multiUserFilter:any=[];
             }
           }
           this.allModeSelected = true;
+         
         }
       } else {
         this.allModeSelected = false;
@@ -701,6 +700,7 @@ multiUserFilter:any=[];
       if (this.apptModes.length === this.waitlistModes.length) {
         this.filter['waitlistMode'] = 'all';
         this.allModeSelected = true;
+        
       }
     }
 
@@ -871,6 +871,7 @@ multiUserFilter:any=[];
     //for multi user
     if(type ==='multiUser'){
       // console.log('users List:',this.users);
+
       // console.log('event:',event.checked)
       // console.log(value)
       if(value === 'all'){
@@ -881,6 +882,7 @@ multiUserFilter:any=[];
         
         if(event.checked){
           for (const multi of this.users) {
+            // console.log("User :",this.users);
 
             // console.log(this.multiUserFilter.indexOf(multi.id))
             if (this.multiUserFilter.indexOf(multi.id) === -1) {
@@ -2750,7 +2752,6 @@ this.provider_services.getwaitlistTodayCount(Mfilter)
                 else {
                   name = 'Nil';
                 }
-
                 checkin_html += '<tr style="line-height:20px;padding:10px">';
                 checkin_html += '<td style="padding:10px">' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
                 checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].date).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.historyCheckins[i].checkInTime + '</td>';
@@ -3411,7 +3412,7 @@ this.provider_services.getwaitlistTodayCount(Mfilter)
     }
   }
   createInstantQ() {
-    this.getProviderLocation();
+    // this.getProviderLocation();
     if (this.qAvailability.availableNow) {
       const msg = 'Make myself unavailable today from ' + this.qAvailability.timeRange.sTime + ' to ' + this.qAvailability.timeRange.eTime + ' ?';
       const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
@@ -3439,12 +3440,13 @@ this.provider_services.getwaitlistTodayCount(Mfilter)
     } else {
       const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
       this.locId = this.groupService.getitemFromGroupStorage('provider_selected_location');
+      // location: this.select_location
       this.instantdialogRef = this.dialog.open(InstantQueueComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
         data: {
-          location: this.select_location,
+          location: this.locId,
           userId: loggedUser.id,
           instaQid: this.instaQid
         }

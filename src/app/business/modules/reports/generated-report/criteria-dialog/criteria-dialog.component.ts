@@ -20,6 +20,7 @@ export class CriteriaDialogComponent implements OnInit {
   for_view = false;
   api_success = false;
   api_error = false;
+  token;
   constructor(
     private report_data_service: ReportDataService,
     private provider_services: ProviderServices,
@@ -41,6 +42,9 @@ export class CriteriaDialogComponent implements OnInit {
       {
         this.for_view = false;
       }
+      if(this.data.token){
+        this.token = this.data.token;
+      }
     // if (this.data.content) {
     //   this.for_view = true;
     // } else {
@@ -53,6 +57,7 @@ export class CriteriaDialogComponent implements OnInit {
     this.api_error = false;
     if (this.criteria_name && this.criteria_name.trim() !== '') {
       this.report_criteria_ip['reportName'] = this.criteria_name;
+      this.report_criteria_ip['reportToken'] = this.token;
       this.provider_services.saveReportCriteria(this.report_criteria_ip).subscribe(data => {
         this.api_success = true;
         this.api_success_msg = 'Report saved successfully';

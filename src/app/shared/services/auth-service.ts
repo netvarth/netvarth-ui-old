@@ -124,13 +124,18 @@ export class AuthService {
     logoutFromJaldee() {
         const promise = new Promise<void>((resolve, reject) => {
             const isProvider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
+            const isCustomProvider = this.lStorageService.getitemfromLocalStorage('maben');
             console.log("isProvider:" + isProvider);
             const customId = this.lStorageService.getitemfromLocalStorage('customId');
             const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
             if (isProvider === 'true') {
                 this.providerLogout().then(
                     () => {
-                        this.router.navigate(['business', 'login']);
+                        if (isCustomProvider) {
+                            this.router.navigate(['business', 'maben', 'login']);
+                        } else {
+                            this.router.navigate(['business', 'login']);
+                        }                        
                         resolve();
                     }
                 )
@@ -200,6 +205,10 @@ export class AuthService {
             this.shared_services.ConsumerLogin(post_data)
                 .subscribe(
                     data => {
+                        let pre_header = post_data.countryCode.split('+')[1] + "-" + post_data.loginId;
+                        if (this.lStorageService.getitemfromLocalStorage('authToken')) {
+                            this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
+                        }
                         resolve(data);
                         this.setLoginData(data, post_data, 'consumer');
                         if (moreParams === undefined) {
@@ -235,6 +244,10 @@ export class AuthService {
             this.shared_services.ConsumerLogin(post_data)
                 .subscribe(
                     data => {
+                        let pre_header = post_data.countryCode.split('+')[1] + "-" + post_data.loginId;
+                        if (this.lStorageService.getitemfromLocalStorage('authToken')) {
+                            this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
+                        }
                         resolve(data);
                         this.setLoginData(data, post_data, 'consumer');
                         // if (moreParams === undefined) {
@@ -359,13 +372,87 @@ export class AuthService {
      * @returns true/false
      */
     goThroughLogin() {
-        const _this = this;
-        return new Promise((resolve) => {
-            if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')) {
-                resolve(true);
-            } else {
-                resolve(false);
-            }
+        if (this.lStorageService.getitemfromLocalStorage('reqFrom')) {
+            const _this = this;
+            console.log("Entered to goThroughLogin Method");
+            return new Promise((resolve) => {
+                if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')) {
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            });
+        } else {
+            return new Promise((resolve) => {
+                const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
+                let qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+                qrusr = JSON.parse(qrusr);
+                if (qrusr && qrpw) {
+                    const data = {
+                        'countryCode': qrusr.countryCode,
+                        'loginId': qrusr.loginId,
+                        'password': qrpw,
+                        'mUniqueId': null
+                    };
+                    this.shared_services.ConsumerLogin(data).subscribe(
+                        (loginInfo: any) => {
+                            this.setLoginData(loginInfo, data, 'consumer');
+                            this.lStorageService.setitemonLocalStorage('qrp', data.password);
+                            resolve(true);
+                        },
+                        (error) => {
+                            if (error.status === 401 && error.error === 'Session already exists.') {
+                                resolve(true);
+                            } else {
+                                resolve(false);
+                            }
+                        }
+                    );
+                } else {
+                    resolve(false);
+                }
+            });
+        }
+    }
+
+    consumerAppSignup(post_data) {
+        // post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
+        this.sendMessage({ ttype: 'main_loading', action: true });
+        const promise = new Promise((resolve, reject) => {
+            this.shared_services.signUpConsumer(post_data)
+                .subscribe(
+                    data => {
+                        // let pre_header = post_data.countryCode.split('+')[1] + "-" + post_data.loginId;
+                        // if (this.lStorageService.getitemfromLocalStorage('authToken')) {
+                        //     this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
+                        // }
+                       
+                        this.setLoginData(data, post_data, 'consumer');
+                        resolve(data);
+                        // if (moreParams === undefined) {
+                        //     this.router.navigate(['/consumer']);
+                        // } else {
+                        //     if (moreParams['bypassDefaultredirection'] === 1) {
+                        //         // const mtemp = '1';
+                        //     } else {
+                        //         this.router.navigate(['/consumer']);
+                        //     }
+                        // }
+                    },
+                    error => {
+                        this.sendMessage({ ttype: 'main_loading', action: false });
+                        if (error.status === 401) {
+                            // Not registred consumer or session alredy exists
+                            reject(error);
+                            // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
+                        } else {
+                            if (error.error && typeof (error.error) === 'object') {
+                                error.error = this.API_ERROR;
+                            }
+                            reject(error);
+                        }
+                    });
         });
+        return promise;
     }
 }

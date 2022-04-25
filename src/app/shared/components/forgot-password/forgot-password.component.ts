@@ -134,10 +134,10 @@ export class ForgotPasswordComponent {
   onOtpSubmit(submit_data) {
     this.resetApiErrors();
     const type = (this.is_provider === 'true') ? 'provider' : 'consumer';
-    this.shared_services.OtpValidate(type, submit_data.phone_otp)
+    this.shared_services.OtpValidate(type, submit_data)
       .subscribe(
         () => {
-          this.otp = submit_data.phone_otp;
+          this.otp = submit_data;
           this.createForm(3);
         },
         error => {

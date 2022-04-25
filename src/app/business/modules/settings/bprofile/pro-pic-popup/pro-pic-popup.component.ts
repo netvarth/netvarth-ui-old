@@ -9,6 +9,7 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 import { ImageTransform } from './interfaces/index';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { FileService } from '../../../../../shared/services/file-service';
 // import { UserDataStorageService } from './../../general/users/settings/user-datastorage.service';
 
 
@@ -45,6 +46,7 @@ export class ProPicPopupComponent implements OnInit {
         private snackbarService: SnackbarService,
         private provider_datastorage: ProviderDataStorageService,
         // private user_datastorage: UserDataStorageService,
+        private fileService: FileService,
         @Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<ProPicPopupComponent>) {
 
@@ -152,7 +154,7 @@ export class ProPicPopupComponent implements OnInit {
         this.savedisabled = true;
         if (file) {
             this.img_save_caption = 'Uploading .. ';
-            this.success_error = this.sharedfunctionobj.imageValidation(file);
+            this.success_error = this.fileService.imageValidation(file);
             if (this.success_error === true) {
                 const reader = new FileReader();
                 this.item_pic.files = file;

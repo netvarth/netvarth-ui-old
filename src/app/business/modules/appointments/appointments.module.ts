@@ -26,6 +26,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
 import { FormsModule } from '@angular/forms';
 import { BookingHistoryModule } from '../../shared/booking-history/booking-history.module';
+import { TeleBookingService } from '../../../shared/services/tele-bookings-service';
 const routes: Routes = [
     { path: '', component: AppointmentsComponent },
     {
@@ -81,5 +82,6 @@ const routes: Routes = [
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA
       ],
+      providers: [TeleBookingService]
 })
 export class AppointmentsModule { }

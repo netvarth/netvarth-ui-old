@@ -1,0 +1,303 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.headerText{
+    font-weight: 700;
+    font-size: 13px;
+    color: #000000;
+}
+.example-radio-button{
+    display: flex !important;
+    padding: 10px;
+    background: #f6f6f6;
+    border: 0.303983px solid #DCDCDC;
+    box-sizing: border-box;
+    border-radius: 2.65807px;
+    margin-bottom: 10px;
+}
+.allMember{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.img{
+    height: 30px;
+    /* width: 30px; */
+}
+.cancelBtn{
+    background: #A8ABAF !important;
+  box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+  border-radius: 3.75916px !important;
+  border: 0px solid  !important;
+  margin-right: 10px !important;
+  }
+  .confirmBtn{
+    background: #0D2348 !important;
+  box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+  border-radius: 3.75916px !important;
+  border: 0px solid  !important;
+  }
+  .errorMsg{
+    color: #f24949;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  ::ng-deep .mat-radio-outer-circle{
+      /* height: 15px !important;
+      width: 15px !important; */
+  }
+  .members{
+    font-size: 12px;
+    color: #434343;
+    font-weight: 700;
+  }
+  ::ng-deep .mat-dialog-container{
+    width: max-content !important;
+  }
+  ::ng-deep .confirmationmainclass{
+    justify-content: space-around !important;
+  }
+  .taskTitle{
+    display: flex;
+    align-items: center;
+    grid-gap: 5px;
+    gap: 5px;
+    font-weight: 500;
+    font-size: 13px;
+    color: #000000;
+}
+.astericColor{
+  color: #f24949 !important;
+}
+.fieldPadding{
+  padding: 5px;
+}
+
+.form-control{
+  background-color: #f6f6f6!important;
+  display: block;
+  width: 250px;
+  height: 100px;
+  padding: 6px 12px!important;
+  font-size: 14px !important;
+  line-height: 1.42857143!important;
+  color: #555!important;
+  background-image: none !important;
+  background: #F1F1F1 !important;
+  border-radius: 5.73504px !important;
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%) !important;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;
+}
+::ng-deep .form-control:focus {
+  border: 3px solid #96d3e2 !important;
+}
+textarea {
+  resize: none;
+}
+.textarea{
+  background: #f5f5f5;
+    border-radius: 10px;
+}
+::ng-deep .mat-form-field textarea{
+  margin-top: 0px !important;
+  border-radius: 5px !important;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.08)!important;
+}
+.note{
+  padding: 6px 12px!important;
+    font-size: 14px !important;
+    line-height: 1.42857143!important;
+    color: #555!important;
+    background-image: none !important;
+    background: #F1F1F1 !important;
+    border-radius: 5.73504px !important;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%) !important;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;
+    margin-bottom: 5px;
+}
+.almostDone{
+  font-weight: bold;
+    font-size: 15px;
+    color: #22242C;
+}
+.plMake{
+  font-size: 13px;
+    font-weight: 500;
+    color: #68696C;
+}
+.taskDes{
+  font-size: 13px;
+    font-weight: 500;
+    color: #CACACA;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+::ng-deep .commonpopupmainclass.confirmationmainclass .mat-dialog-actions{
+  box-shadow: none !important;
+  /* padding: 0px !important; */
+}
+::ng-deep .mat-dialog-content{
+  /* max-height: fit-content */
+}
+/* textarea .form-control{
+  width: 320px !important;
+} */
+.titleTask{
+  font-size: 15px;
+    font-weight: bold;
+    color: #22242C;
+}
+.assignee{
+  color: #121212;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 3px;
+}
+.manager{
+  color: #000000;
+    mix-blend-mode: normal;
+    opacity: 0.5;
+    font-size: 13px;
+    padding: 3px;
+}
+.prioprity{
+  color: #FF0000;
+  font-size: 13px;
+mix-blend-mode: normal;
+opacity: 0.5;
+padding: 3px;
+}
+.lastUpdate{
+  color: #000000;
+  font-size: 13px;
+mix-blend-mode: normal;
+opacity: 0.5;
+padding: 3px;
+}
+.currentStatus{
+  font-size: 13px;
+  color: #06D2FF;
+  letter-spacing: 1px;
+}
+.extStatus{
+  border: 1.05788px solid #F1F1F1;
+  padding: 20px;
+  margin-top: 10px;
+  box-shadow: 4.50201px 4.50201px 9.00403px rgba(66, 66, 66, 0.25);
+}
+.extStatus1{
+  color: #696969;
+  font-size: 13px;
+  font-weight: 600;
+}
+.extStatus2{
+  color: #696969;
+  font-size: 13px;
+  font-weight: 600;
+}
+.statusList{
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+.singleStatus{
+  padding: 20px;
+    background: #FFFFFF;
+    box-shadow: 1.05788px 0.391416px 5.28941px rgb(96 95 95 / 25%);
+    border-radius: 5.46305px;
+    width: 9rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+.statusName{
+  color:  #FE9F69;;
+}
+/* .singleStatus:focus{
+  outline: none;
+} */
+.singleStatus:active{
+  /* border: 2px solid #FF0000 !important; */
+}
+.singleStatus:hover{
+  background: #F5F5F5 !important;
+}
+.noteDetails{
+  width: 21rem;
+}
+@media(max-width: 768px){
+  .noteDetails{
+    width: 21rem;
+  }
+  .uploadFile{
+    width: 100% !important;
+  }
+}
+.filesDes{
+  margin-bottom: 10px;
+  padding: 6px 12px!important;
+    font-size: 14px !important;
+    line-height: 1.42857143!important;
+    background: #F1F1F1 !important;
+    border-radius: 5.73504px !important;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;
+    display: flex;
+  justify-content: space-between;
+  grid-gap: 10px;
+  gap: 10px;
+  align-items: center;
+}
+.uploadFile{
+  /* width: 31rem; */
+}
+.imageIcon{
+  width: 25px;
+}
+.filesNameSize{
+  font-weight: 600;
+    font-size: 12px;
+}
+.actionBtn{
+  display: flex;justify-content: center;align-items: center;box-shadow: none !important;
+}
+.masterDes{
+  display: flex;flex-wrap: wrap;align-items: flex-start;padding: 3px;gap: 5px;
+}
+.taskMaster{
+  font-size: 12px;
+    color: #434343;
+    font-weight: 700;
+    opacity: 60%;
+    /* margin-top: 5px;
+    margin-bottom: 5px; */
+}
+.example-radio-button{
+  /* box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgb(30 64 121 / 15%) !important; */
+    border-radius: 5.75916px !important;
+}
+.taskMasterFieldName{
+  font-weight: bold;
+    color: black;
+    font-size: 11px;
+}
+.allBtn{
+  display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+.taskMasterCreate{
+  text-align: end;
+    margin-right: 25px;
+    margin-bottom: 10px;
+}

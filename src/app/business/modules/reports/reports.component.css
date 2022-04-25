@@ -13,3 +13,11 @@ table {
     font-weight: 550;
   
 }
+.btn {
+    border-radius: 10px;
+    box-shadow: none;
+    border: 1px solid transparent;
+    margin-right: 90px !important;
+    margin-bottom: 30px !important;
+    background-color: #1e4079!important;
+}

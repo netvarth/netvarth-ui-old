@@ -1,14 +1,11 @@
 import { Component, Inject, ViewChild, ChangeDetectorRef, OnInit, NgZone } from '@angular/core';
 import { WindowRefService } from '../../../../shared//services/windowRef.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { RazorpayprefillModel } from '../../../../shared/components/razorpay/razorpayprefill.model';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { Razorpaymodel } from '../../../../shared/components/razorpay/razorpay.model';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
-import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { projectConstantsLocal } from '../../../../../../src/app/shared/constants/project-constants';
@@ -50,8 +47,7 @@ export class PaymentComponent implements OnInit {
     private cdRef: ChangeDetectorRef,
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
-    private provider_services:ProviderServices,
-    private lStorageService: LocalStorageService,
+    private provider_services: ProviderServices,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
     private paytmService: PaytmService,
@@ -60,7 +56,6 @@ export class PaymentComponent implements OnInit {
     @Inject(DOCUMENT) public document,
     public _sanitizer: DomSanitizer,
     public razorpayService: RazorpayService,
-    public prefillmodel: RazorpayprefillModel,
     public location: Location, public router: Router) {
     this.activated_route.queryParams.subscribe(qparams => {
       this.data = qparams;
@@ -85,76 +80,78 @@ export class PaymentComponent implements OnInit {
   getPaymentModes() {
 
     this.provider_services.getPaymentModes()
-        .subscribe(
-            data => {
-                this.paymentmodes = data[0];
-                this.isPayment = true;
-                if (this.paymentmodes.indiaPay) {
-                    this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
-                }
-                 if (this.paymentmodes.internationalPay) {
-                    this.non_indian_modes = this.paymentmodes.internationalBankInfo;
+      .subscribe(
+        data => {
+          this.paymentmodes = data[0];
+          this.isPayment = true;
+          if (this.paymentmodes.indiaPay) {
+            this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
+          }
+          if (this.paymentmodes.internationalPay) {
+            this.non_indian_modes = this.paymentmodes.internationalBankInfo;
 
-                }
-                if(!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay){
-                    this.shownonIndianModes=true;
-                }else{
-                    this.shownonIndianModes=false;  
-                }
+          }
+          if (!this.paymentmodes.indiaPay && this.paymentmodes.internationalPay) {
+            this.shownonIndianModes = true;
+          } else {
+            this.shownonIndianModes = false;
+          }
 
-            },
-            error => {
-                this.isPayment = false;
-                console.log(this.isPayment);
-            }
+        },
+        error => {
+          this.isPayment = false;
+          console.log(this.isPayment);
+        }
 
 
-        );
-}
-indian_payment_mode_onchange(event) {
+      );
+  }
+  indian_payment_mode_onchange(event) {
     this.selected_payment_mode = event.value;
     this.isInternatonal = false;
 
 
 
-}
-non_indian_modes_onchange(event) {
+  }
+  non_indian_modes_onchange(event) {
     this.selected_payment_mode = event.value;
     this.isInternatonal = true;
 
 
 
-}
-getImageSrc(mode){
-  return 'assets/images/payment-modes/'+mode+'.png';
-}
-togglepaymentMode(){
-    this.shownonIndianModes=!this.shownonIndianModes;
+  }
+  getImageSrc(mode) {
+    return 'assets/images/payment-modes/' + mode + '.png';
+  }
+  togglepaymentMode() {
+    this.shownonIndianModes = !this.shownonIndianModes;
     this.selected_payment_mode = null;
-}
+  }
 
   makeFailedPayment() {
-this.waitlistDetails.isInternational=this.isInternatonal;
-this.waitlistDetails.paymentMode=this.selected_payment_mode;
-this.waitlistDetails.serviceId=0;
+    this.waitlistDetails.isInternational = this.isInternatonal;
+    this.waitlistDetails.paymentMode = this.selected_payment_mode;
+    this.waitlistDetails.serviceId = 0;
     this.shared_services.providerPayment(this.waitlistDetails)
       .subscribe((pData: any) => {
         this.origin = 'provider';
         this.pGateway = pData.paymentGateway;
+        pData.paymentMode = this.selected_payment_mode;
+
         if (this.pGateway === 'RAZORPAY') {
           this.paywithRazorpay(pData);
         } else {
           if (pData['response']) {
-            this.lStorageService.setitemonLocalStorage('p_src', 'p_lic');
-            this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
-            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
-            pData.paymentMode=this.selected_payment_mode;
+            // this.lStorageService.setitemonLocalStorage('p_src', 'p_lic');
+            // this.payment_popup = this._sanitizer.bypassSecurityTrustHtml(pData['response']);
+            // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC_REDIRECT'));
+
             setTimeout(() => {
               // if (paymentMode === 'DC') {
               //   this.document.getElementById('payuform').submit();
               // } else {
-                this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this.accountId, this);
-             // }
+              this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this.accountId, this);
+              // }
             }, 2000);
           } else {
             this.isClickedOnce = false;
@@ -168,42 +165,56 @@ this.waitlistDetails.serviceId=0;
         });
   }
   paywithRazorpay(pData: any) {
-    this.prefillmodel.name = pData.providerName;
-    this.prefillmodel.email = pData.ConsumerEmail;
-    this.prefillmodel.contact = pData.consumerPhoneumber;
-    this.razorModel = new Razorpaymodel(this.prefillmodel);
-    this.razorModel.key = pData.razorpayId;
-    this.razorModel.amount = pData.amount;
-    this.razorModel.order_id = pData.orderId;
-    this.razorModel.description = pData.description;
-    this.razorModel.name = pData.providerName;
-    this.razorModel.mode=this.selected_payment_mode;
-    this.razorpayService.payWithRazor(this.razorModel, this.origin);
     this.isClickedOnce = false;
+    this.razorpayService.initializePayment(pData, this.accountId, this, 'provider');
   }
-  transactionCompleted(response, payload, accountId) {
+  finishTransaction(status, response?) {
     const self = this;
-    if (response.STATUS == 'TXN_SUCCESS') {
-      self.paytmService.updatePaytmPayForProvider(payload)
-        .then((data) => {
-          if (data) {
-            self.paidStatus = 'true';
-            self.order_id = response.ORDERID;
-            self.payment_id = response.TXNID;
-            self.cdRef.detectChanges();
-            self.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-            self.ngZone.run(() => console.log('Transaction success'));
-          }
-        },
-        error=>{
-          self.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' }); 
-        })
-    } else if (response.STATUS == 'TXN_FAILURE') {
+    if (status) {
+      self.paidStatus = 'true';
+      self.order_id = response.ORDERID;
+      self.payment_id = response.TXNID;
+      self.cdRef.detectChanges();
+      self.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+      self.ngZone.run(() => console.log('Transaction success'));
+    } else {
       self.isClickedOnce = false;
       self.paidStatus = 'false';
       self.cdRef.detectChanges();
       self.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
       self.ngZone.run(() => console.log('Transaction failed'));
+    }
+  }
+  transactionCompleted(response, payload, accountId) {
+    const self = this;
+    if (response.SRC) {
+      if (response.STATUS == 'TXN_SUCCESS') {
+        this.razorpayService.updateRazorPay(payload, accountId, 'provider')
+          .then((data) => {
+            if (data) {
+              this.finishTransaction(true, response);
+            }
+          },
+            error => {
+              this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+            })
+      } else if (response.STATUS == 'TXN_FAILURE') {
+        this.finishTransaction(false);
+      }
+    } else {
+      if (response.STATUS == 'TXN_SUCCESS') {
+        self.paytmService.updatePaytmPayForProvider(payload)
+          .then((data) => {
+            if (data) {
+              this.finishTransaction(true, response);
+            }
+          },
+            error => {
+              self.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+            })
+      } else if (response.STATUS == 'TXN_FAILURE') {
+        this.finishTransaction(false);
+      }
     }
   }
   closeloading() {

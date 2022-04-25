@@ -9,6 +9,9 @@ import { LoadingSpinnerModule } from "../../../shared/modules/loading-spinner/lo
 import { TwilioService } from "../../../shared/services/twilio-service";
 import { MeetingRoomComponent } from "./meeting-room.component";
 import { RequestDialogModule } from "../../../shared/modules/request-dialog/request-dialog.module";
+import { MeetService } from "../../../shared/services/meet-service";
+import { MediaService } from "../../../shared/services/media-service";
+import { TeleBookingService } from "../../../shared/services/tele-bookings-service";
 const routes: Routes = [
     { path: '', component: MeetingRoomComponent}
 ]
@@ -30,7 +33,10 @@ const routes: Routes = [
         MeetingRoomComponent
     ],
     providers: [
-        TwilioService
+        TwilioService,
+        MeetService,
+        MediaService,
+        TeleBookingService
     ]
 })
 export class MeetingRoomModule {}

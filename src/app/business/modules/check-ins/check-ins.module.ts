@@ -29,6 +29,7 @@ import { ApplyLabelModule } from './apply-label/apply-label.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgbCarouselModule} from '@ng-bootstrap/ng-bootstrap';
 import { BookingHistoryModule } from '../../shared/booking-history/booking-history.module';
+import { TeleBookingService } from '../../../shared/services/tele-bookings-service';
 // import {NgbCarousel} from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -85,6 +86,7 @@ const routes: Routes = [
     declarations: [
         CheckInsComponent,
     ],
+    providers: [TeleBookingService],
     exports: [CheckInsComponent]
 })
 export class CheckinsModule { }

@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -18,6 +18,7 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
 import { CommunicationService } from '../../../../business/services/communication-service';
 import { BookingHistoryComponent } from '../../appointments/booking-history/booking-history.component';
+import { CommunicationPopupComponent } from '../../bookings/communication-popup/communication-popup.component';
 
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
@@ -107,6 +108,13 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   ];
   bookinghistorydialogref: any;
   booking_stat;
+  consumerBills: any = [];
+  historyvisitDetails: any;
+  small_device_display: boolean;
+  showStart: boolean = true;
+  whatsappNumber: any;
+  mobileNumber: any;
+  email: any;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -126,6 +134,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     });
     this.activated_route.queryParams.subscribe(params => {
       this.timetype = JSON.parse(params.timetype);
+      
     });
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -133,6 +142,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.checkin_upper = this.wordProcessor.firstToUpper(this.checkin_label);
     this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
     this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
+    
   }
   ngOnInit() {
     this.getPos();
@@ -155,8 +165,17 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         this.teams = data;
       });
     }
-
   }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth <= 767) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
+    }
+  }
+
   getAgent(fileName){
     //'BROWSER' || 'IOS' || 'ANDROID'
     if(fileName){
@@ -177,7 +196,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   //     browserName = browser.slice(0,8);
   //   }
   // }
-  
+      
     if(browser.includes("Android")){
       browserName = 'Android'
       return browserName.toLocaleLowerCase();
@@ -205,6 +224,30 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   
   
 }
+
+getConsumerBills() {
+  const filter = { 'providerConsumer-eq': this.waitlist_data.waitlistingFor[0].id };
+  this.provider_services.getProviderBills(filter).subscribe(data => {
+      this.consumerBills = data;
+  })
+  console.log("consumer bills called")
+}
+
+getCustomerHistoryVisit() {
+  this.provider_services.getCustomerHistoryVisit(this.waitlist_data.waitlistingFor[0].id).subscribe(
+      (data: any) => {
+          this.historyvisitDetails = data;
+      }
+  );
+}
+
+editCustomerDetails() {
+  const navigationExtras: NavigationExtras = {
+      queryParams: { action: 'edit', id: this.waitlist_data.waitlistingFor[0].id}
+  };
+  this.router.navigate(['/provider/customers/create'], navigationExtras);
+}
+
   getBookingReqFrom(browser, reqFrom) {
     let browserName = ''
     //let status;
@@ -276,6 +319,14 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       .subscribe(
         data => {
           this.waitlist_data = data;
+          if(this.waitlist_data.virtualService)
+          {
+            this.whatsappNumber = this.waitlist_data.virtualService.WhatsApp;
+          }
+          this.mobileNumber = this.waitlist_data.waitlistingFor[0].phoneNo;
+          this.email = this.waitlist_data.waitlistingFor[0].email;
+          this.getConsumerBills();
+          this.getCustomerHistoryVisit();
           console.log('waitlist dtata',this.waitlist_data)
           if (this.waitlist_data.questionnaires && this.waitlist_data.questionnaires.length > 0) {
             this.questionnaires = this.waitlist_data.questionnaires;
@@ -380,6 +431,112 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         );
     });
   }
+  showCommunications() {
+    if(this.whatsappNumber && this.mobileNumber && this.email)
+    {
+      console.log("communication data : 1");
+      this.dialog.open(CommunicationPopupComponent, {
+          width: '50%',
+          panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+          disableClose: true,
+          data: {
+              whatsappNumber: this.whatsappNumber,
+              number: this.mobileNumber,
+              customerId: this.waitlist_data.waitlistingFor[0].id,
+              email: this.email,
+              type: 'customer'
+          }
+      });
+    }
+    else if(!this.whatsappNumber && this.mobileNumber == 'null' && this.email)
+    {
+      console.log("communication data : 2");
+      this.dialog.open(CommunicationPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+        disableClose: true,
+        data: {
+          customerId: this.waitlist_data.waitlistingFor[0].id,
+          email: this.email,
+          type: 'customer'
+        }
+      });
+    }
+    else if(!this.whatsappNumber && this.mobileNumber && !this.email)
+    {
+      console.log("communication data : 3");
+      this.dialog.open(CommunicationPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+        disableClose: true,
+        data: {
+          number: this.mobileNumber,
+          customerId: this.waitlist_data.waitlistingFor[0].id,
+          type: 'customer'
+        }
+      });
+    }
+    else if(!this.whatsappNumber && this.mobileNumber && this.email)
+    {
+      console.log("communication data : 4");
+      this.dialog.open(CommunicationPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+        disableClose: true,
+        data: {
+          number: this.mobileNumber,
+          email: this.email,
+          customerId: this.waitlist_data.waitlistingFor[0].id,
+          type: 'customer'
+        }
+      });
+    }
+    else if(this.whatsappNumber && this.mobileNumber == 'null' && !this.email)
+    {
+      console.log("communication data : 5",this.email);
+      this.dialog.open(CommunicationPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+        disableClose: true,
+        data: {
+          whatsappNumber: this.whatsappNumber,
+          customerId: this.waitlist_data.waitlistingFor[0].id,
+          type: 'customer'
+        }
+      });
+    }
+    else if(this.whatsappNumber && this.mobileNumber == 'null' && this.email)
+    {
+      console.log("communication data : 6");
+      this.dialog.open(CommunicationPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+        disableClose: true,
+        data: {
+          whatsappNumber: this.whatsappNumber,
+          email: this.email,
+          customerId: this.waitlist_data.waitlistingFor[0].id,
+          type: 'customer'
+        }
+      });
+    }
+    else if(this.whatsappNumber && this.mobileNumber && !this.email)
+    {
+      console.log("communication data : 7");
+      this.dialog.open(CommunicationPopupComponent, {
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+        disableClose: true,
+        data: {
+          whatsappNumber: this.whatsappNumber,
+          number: this.mobileNumber,
+          customerId: this.waitlist_data.waitlistingFor[0].id,
+          type: 'customer'
+        }
+      });
+    }
+}
+
   getInternalStatusLog(uuid) {
     const _this = this;
     return new Promise(function (resolve, reject) {
@@ -497,8 +654,12 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     });
   }
 
-  changeWaitlistStatus() {
-    this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, 'CANCEL');
+  changeWaitlistStatus(action) {
+    if(action == "STARTED")
+    {
+      this.showStart = false;
+    }
+    this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, action);
   }
 
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {

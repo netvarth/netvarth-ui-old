@@ -23,6 +23,7 @@ const routes: Routes = [
   { path: '', component: ReportsComponent },
   { path: '', children: [
       { path: 'new-report', loadChildren: ()=> import('./new-report/new-report.module').then(m=>m.NewReportModule)},
+      { path: 'report-list', loadChildren: ()=> import('./report-list/report-list.module').then(m=>m.ReportListModule)},
       { path: 'user-report', loadChildren: ()=> import('./user-report/user-report.module').then(m=>m.UserReportModule)},
       { path: 'user-details', loadChildren: ()=> import('./user-report/user-detail-report/user-detail-report.module').then(m=>m.UserDetailReportModule)},   
       { path: 'service', loadChildren: ()=> import('./service-selection/service-selection.module').then(m=>m.ServiceSelectionModule)},

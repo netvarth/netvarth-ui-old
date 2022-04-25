@@ -252,10 +252,8 @@ export class SharedServices {
     return this.servicemeta.httpGet(path);
   }
   getServicesByLocationId(locid) {
-    if (locid) {
       const url = 'consumer/waitlist/services/' + locid;
       return this.servicemeta.httpGet(url);
-    }
   }
   getProviderServicesByLocationId(locid) {
     if (locid) {
@@ -843,6 +841,9 @@ export class SharedServices {
   addCustomerDonation(postData, accountid) {
     return this.servicemeta.httpPost('consumer/donation?account=' + accountid, postData);
   }
+  donationViaLink(postData) {
+    return this.servicemeta.httpPost('consumer/payment/paylink/donation', postData);
+  }
   getDonationByConsumerUUID(uuid, accountid) {
     const url = 'consumer/donation/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
@@ -858,6 +859,14 @@ export class SharedServices {
   getConsumerDonationServices(accountid) {
     const url = 'consumer/donation/services?account=' + accountid;
     return this.servicemeta.httpGet(url);
+  }
+  generateDonationLink(accountid, data) {
+    const url = 'consumer/payment/generate/paylink?account=' + accountid;
+    return this.servicemeta.httpPost(url,data);
+  }
+  getDonationLinkUuid(uuid) {
+      const url = 'consumer/payment/paylink/donation/' + uuid;
+      return this.servicemeta.httpGet(url);
   }
   getCheckinbyEncId(encId) {
     const url = 'consumer/waitlist/enc/' + encId;
@@ -891,6 +900,16 @@ export class SharedServices {
     const url = 'consumer/' + mobile + '/check?countryCode=' + countryCode;
     return this.servicemeta.httpGet(url);
   }
+
+  sendConsumerOTP(body) {
+    const url = 'consumer/oauth/credential/identify';
+    return this.servicemeta.httpPost(url, body);
+  }
+  verifyConsumerOTP(otp) {
+    const url = 'consumer/oauth/otp/' + otp + '/verify';
+    return this.servicemeta.httpPost(url);
+  }
+
   isProviderAccountExists(mobile) {
     const url = 'provider/' + mobile + '/check';
     return this.servicemeta.httpGet(url);
@@ -1059,6 +1078,11 @@ export class SharedServices {
     const url = 'consumer/waitlist/' + uuid + '/attachment' + '?account=' + accountid;;
     return this.servicemeta.httpPost(url, body);
   }
+  addfiletotask(taskuid, body) {
+    const url = 'provider/task/' + taskuid + '/attachment';
+    return this.servicemeta.httpPost(url, body);
+  }
+
   addProviderAppointmentAttachment(uuid, body) {
     const url = 'provider/appointment/' + uuid + '/attachment';
     return this.servicemeta.httpPost(url, body);
@@ -1120,10 +1144,41 @@ export class SharedServices {
     const url = 'consumer/questionnaire/validate' + '?account=' + accountId;
     return this.servicemeta.httpPut(url, body);
   }
+
+  validateConsumerOneTimeQuestionnaire(body, accountId, providerConsumerId) {
+    const url = 'consumer/questionnaire/validate/onetimequestionnaire/' + providerConsumerId + '?account=' + accountId;
+    return this.servicemeta.httpPost(url, body);
+  }
   validateConsumerQuestionnaireResbumit(body, accountId) {
     const url = 'consumer/questionnaire/resubmit/validate' + '?account=' + accountId;
     return this.servicemeta.httpPut(url, body);
   }
+
+  // getCustomerOnetimeInfo(accountId) {
+  //   const url = 'consumer/providerCustomer/' + accountId;
+  //   // {account}
+  //   return this.servicemeta.httpGet(url);
+  // }
+  createProviderCustomer(memberId, parentId, accountId) {
+    const url = 'consumer/familyMember/providerconsumer/' + memberId + '/' + parentId+ "?account=" + accountId;
+    return this.servicemeta.httpPost(url);
+  }
+  getProviderCustomerList(parentId, accountId) {
+    const url = 'consumer/familyMember/providerconsumer/' + parentId + "?account=" + accountId;
+    return this.servicemeta.httpGet(url);
+  }
+  getProviderCustomerOnetimeInfo(jaldeeId, accountId) {
+    const url = 'consumer/providerCustomer/' +jaldeeId + "?account=" + accountId;
+    return this.servicemeta.httpGet(url);
+  }
+
+  submitCustomerOnetimeInfo(body, userId, accountId) {
+    const url = 'consumer/questionnaire/' + userId + '?account=' + accountId;
+    return this.servicemeta.httpPost(url, body);
+  }
+
+
+
   getLocationsByPincode(pinCode) {
     const url = 'provider/account/settings/locations/' + pinCode;
     return this.servicemeta.httpGet(url);

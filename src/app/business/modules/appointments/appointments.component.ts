@@ -495,9 +495,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getDisplayboardCount();
     this.getLocationList();
     this.getServices();
-    if (this.active_user.accountType === 'BRANCH') {
-      this.getProviders();
-    }
+    // if (this.active_user.accountType === 'BRANCH') {
+    //   this.getProviders();
+    // }
     if (this.active_user.accountType === 'BRANCH') {
       this.getTeams().then((data) => {
         this.teams = data;
@@ -1926,7 +1926,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   getSingleTime(slot) {
-   // console.log("Appt Time :",slot)
+    console.log("Appt Time :",slot)
     const slots = slot.split('-');
     return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
@@ -2325,7 +2325,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     if(type ==='multiUser'){
-      // console.log('users List:',this.users);
+      console.log('users List:',this.users);
       // console.log('event:',event.checked)
       // console.log(value)
       if(value === 'all'){

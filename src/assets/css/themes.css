@@ -29,7 +29,10 @@
     /* color: #fff !important; */
   }
   .heartfulness_theme1 .bus-item-N, .heartfulness_theme1 h3, .heartfulness_theme1 mat-label,
-  .heartfulness_theme1 .right-menu-header, .heartfulness_theme1 .back-btn i{ 
+  .heartfulness_theme1 .consumer-join-component mat-label,
+  .heartfulness_theme1 .mat-tab-label-content,
+  .heartfulness_theme1 .right-menu-header, .heartfulness_theme1 .back-btn i,
+  .heartfulness_theme1 b.header-bus-title{ 
     color: #fff !important;
   }
   .heartfulness_theme1 .serv-head.service-serv-head, .heartfulness_theme1 .mat-tab-label,
@@ -64,7 +67,10 @@
   .heartfulness_theme1 .c-checkin-new  a.changeitem, .heartfulness_theme1.c-checkin-new .btns .lnk.action i {
     color:#522e5a !important
   }
-
+  .heartfulness_theme1 .default-value, .heartfulness_theme1 app-slot-picker .freeslots mat-chip.mat-chip-selected {
+    background-color: #522e5a !important;
+    color: white!important;
+}
   .heartfulness_theme1.c-checkin-new .btns .lnk.action{
     font-size: 0.8rem !important;
     color:#522e5a !important
@@ -77,7 +83,7 @@
 .heartfulness_theme1 button.next-button {
   border: 0 !important;
   border-radius: 30px !important;
-  height: 50px !important;
+  /* height: 50px !important; */
   padding: 10px 30px !important;
   color:#fff!important;
   background: transparent radial-gradient(closest-side at 6% 0%, #E7B7C8 0%, #8D42A2CC 100%) 0% 0% no-repeat padding-box;
@@ -292,13 +298,13 @@ footer.heartfulness_theme1.bus-page-footer.site-footer .footer-bottom .footer-li
 .heartfulness_theme1 .mat-tab-label {
   color:black;
 }
-
-.mediExpat .panel, 
-.mediExpat .serv-head.service-serv-head,
+/* .mediExpat .panel, 
+.mediExpat .serv-head.service-serv-head, */
 .mediExpat mat-toolbar  {
     background: #FD7029 0% 0% no-repeat padding-box !important; 
     background-color: transparent !important; 
 }
+
 .mediExpat mat-sidenav {
   background: #FD7029 0% 0% no-repeat padding-box !important; 
 }
@@ -468,36 +474,14 @@ footer.heartfulness_theme1.bus-page-footer.site-footer .footer-bottom .footer-li
 .mediExpat.c-checkin-new .panel-heading i.fa.fa-arrow-left {
   color: white !important;
 }
-
 .mediExpat.c-checkin-new .hf-panel-body {
   background-color: white !important;
-}
-
-.mediExpat.content.bus-page .bus-page-header .bus-title-content .business-name, 
-.mediExpat.content.bus-page .bus-page-header .bus-title-content .business-user-name,
-.mediExpat.content.bus-page .bus-page-header .bus-title-content .business-name, 
-.mediExpat.content.bus-page .bus-page-header .bus-title-content .business-user-name,
-.mediExpat.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1
-.mediExpat .question-value1, .question-valuearr,
-.mediExpat.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1,
-.mediExpat.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-value1 .more,
-.mediExpat.content.bus-page .bus-page-header .bus-title-content .specialization-value.question-value1,
-.mediExpat.content.bus-page .bus-page-header .bus-title-content .showmoresec .question-main-outer .question-value1,
-.mediExpat.content.bus-page .bus-page-header .bus-title-content .showmoresec .question-main-outer .question-valuearr .virtual-field-ul .vfield-row,
-.mediExpat.content.bus-page .bus-page-header .bus-title-content.showmoresec .question-main-outer .question-value1 .badges li
-.mediExpat ul.details.badges li
-{
-color: #fff !important;
 }
 .mediExpat.content.bus-page .bus-page-header .bus-title-content .specialization-header.question-header,
 .mediExpat.content.bus-page .bus-page-header .bus-title-content .about .question-outer .question-header,
 .mediExpat.content.bus-page .bus-page-header .bus-title-content .bus-actions .more-less-button a
 {
 color: #aaa !important;
-
-}
-.mediExpat.content.bus-page .bus-page-header .bus-title-content .address h6 a {
-color: #fff !important;
 }
 .mediExpat.content.bus-page .bus-page-header .bus-title-content .bus-actions-small-devices .bus-actions {
   background-color: transparent !important;
@@ -572,4 +556,17 @@ footer.mediExpat.bus-page-footer.site-footer .footer-bottom .footer-links.bd-pd-
 
 .mediExpat .mat-tab-label {
   color:black;
+}
+
+.theme4 .mat-button, .theme4 .getappointmentbutton, .theme4 button.next-button,.theme4.custom-login-form .go-back {
+  background: linear-gradient(45deg, rgb(22, 37, 75,1) 0%, rgb(22, 37, 75,1) 100%) !important;
+  border:none !important;
+  color: #fff;
+}
+.theme4 .mat-button, .theme4 button.next-button {
+  border-radius: 10px !important;
+}
+.theme4 h5 {
+  color: #946394 !important;
+  font-weight: bold !important;
 }

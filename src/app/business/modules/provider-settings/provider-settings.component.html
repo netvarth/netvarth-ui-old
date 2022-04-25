@@ -360,6 +360,40 @@
                         </div>
                     </div>
                 </div>
+                 <!--Jaldee TaskManager-->
+                 <div class="col-md-6 col-lg-4 col-12 no-padding-small">
+                    <!-- Widget: user widget style 1 -->
+                    <div class="box box-widget widget-user-2">
+                        <div class="widget-user-header bg-blue">
+                            <h4 (click)="redirecTo('taskmanager')" class="pointer-cursor"
+                                [matTooltipClass]="tooltipcls" [matTooltip]="ordermanagertooltip">
+                                <div class="disp-flex">
+                                   CRM
+                                    <i class="fa fa-gears mgn-lt-auto"></i>
+                                </div>
+                                <div class="head-hint">Activity management system</div>
+                            </h4>
+                        </div>
+                        <div class="box-footer no-padding">
+                            <ul class="nav nav-stacked set-block-3">
+                                <li (click)="redirecTo('taskmanager')">
+                                    <a class="pointer-cursor">
+                                        <span class="lnk setings">Activity Manager
+                                            <span class="pull-right">
+                                                {{taskstatusstr}} </span></span>
+                                        <!-- <p class="settings_info" *ngIf="taskstatus">
+                                            {{custs_name|capitalizeFirst}}<strong> can</strong> place orders </p> -->
+                                       
+                                    </a>
+                                </li>
+                                
+                               
+                                
+                                 
+                            </ul>
+                        </div>
+                    </div>
+                </div>
                 <!-- General -->
                 <div class="col-md-6 col-lg-4 col-12  no-padding-small ">
                     <!-- Widget: user widget style 1 -->

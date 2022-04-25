@@ -1,0 +1,62 @@
+<div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 p-0 m-0 mrx">
+  <div class="card card-custom data-card">
+    <div class="card-header collapsed" [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
+      [attr.data-toggle]="small_device_display ? 'collapse' : ''" [attr.data-target]="'#' + type" aria-expanded="false">
+      <div class="text-capitalize">{{(type == 'mr') ? 'Medical Records' : 'Prescriptions'}}</div>
+      <div class="mgn-lt-auto">
+        <i (click)="gotoMrList()" class="fa fa-external-link pointer-cursor" aria-hidden="true"
+          [class.mgn-rt-20]="small_device_display"></i>
+        <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
+      </div>
+    </div>
+    <div class="card-body padding-tp-10 no-padding" *ngIf="!loading" id="{{type}}"
+      [class.collapse]="small_device_display">
+      <div>
+        <div class="add-record rounded-sm pointer-cursor" (click)="gotoMrDetails('add')" *ngIf="showAddRecord()">
+          <a class="inner-card-heading">
+            Add Record
+          </a>
+          <div class="inner-card-text">
+            Diagnosis, Alergies, Prescription, etc.
+          </div>
+        </div>
+        <ng-container *ngIf="type == 'mr'">
+          <div class="inner-card rounded-sm pointer-cursor" *ngFor="let mr of mrList" (click)="gotoMrDetails(mr)"
+            [class.wtlstmr]="waitlistmr[0] && waitlistmr[0].uuid==mr.uuid">
+            <a class="inner-card-heading">
+              {{mr.mrNumber ? mr.mrNumber : ''}}
+            </a>
+            <div class="inner-card-text">
+              {{mr.mrCreatedDate ? mr.mrCreatedDate : ''}}
+            </div>
+            <div class="inner-card-text">
+              {{(mr.service && mr.service.name) ? mr.service.name : ''}}
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="type == 'rx'">
+          <div class="rx-card rounded-sm pointer-cursor no-padding" *ngFor="let prescription of rxList"
+            (click)="gotoMrDetails(prescription)"
+            [class.wtlstmr]="waitlistmr[0] && waitlistmr[0].uuid==prescription.uuid">
+            <div *ngIf="prescription.prescriptions.prescriptionsList.length > 0">
+              <div class="presc" *ngFor="let rx of prescription.prescriptions.prescriptionsList">
+                <div class="inner-card-text" *ngIf="rx.medicine_name!=''">Medicine: {{rx.medicine_name}}</div>
+                <div class="inner-card-text" *ngIf="rx.duration!=''">Duration(days): {{rx.duration}}</div>
+                <div class="inner-card-text" *ngIf="rx.dosage!=''">Dosage: {{rx.dosage}}</div>
+                <div class="inner-card-text" *ngIf="rx.frequency!=''">Frequency : {{rx.frequency}}</div>
+                <div class="inner-card-text" *ngIf="rx.instructions!=''">Instructions: {{rx.instructions}}</div>
+              </div>
+            </div>
+            <div class="presc" *ngIf="prescription.prescriptionImages && prescription.prescriptionImages[0]">
+              <div class="inner-card-text">{{prescription.prescriptionImages[0].originalName}}</div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="card-body padding-tp-10 no-padding" *ngIf="loading" id="{{type}}"
+      [class.collapse]="small_device_display">
+      <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+    </div>
+  </div>
+</div>

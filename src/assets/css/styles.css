@@ -3217,7 +3217,7 @@ body { font-size: 1rem !important}
 }
 
 .paysettings-tab .mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label .mat-tab-label-content {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: normal;
     color: #999999;
     font-weight: 500;
@@ -9318,9 +9318,9 @@ body { font-size: 1rem !important}
     }
 }
 
-.content.comn-cls .lbl .card {
+/* .content.comn-cls .lbl .card {
     margin-bottom: 30px;
-}
+} */
 
 .content.comn-cls .lbl .card .c-details {
     font-size: .875rem;

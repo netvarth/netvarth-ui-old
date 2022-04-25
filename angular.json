@@ -45,6 +45,7 @@
               "src/assets/css/custom_style.css",
               "./node_modules/intl-tel-input/build/css/intlTelInput.css",
               "src/assets/third-party/Admin-LTE/css/_all-skins.css",
+              "src/assets/css/font_size.css",
               "src/assets/css/style.css",
               "src/assets/css/p_app.css"
             ],
@@ -71,15 +72,16 @@
             "extractLicenses": false,
             "buildOptimizer": false,
             "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true
+            "optimization": true,
+            "namedChunks": false,
+            "aot": true
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "maximumWarning": "20kb"
                 }
               ],
               "optimization": true,
@@ -173,7 +175,7 @@
           }
         },
         "ionic-cordova-serve": {
-          "builder": "@ionic/angular-toolkit:cordova-serve",
+          "builder": "@ionic/cordova-builders:cordova-serve",
           "options": {
             "cordovaBuildTarget": "jaldeeprovider:ionic-cordova-build",
             "devServerTarget": "jaldeeprovider:serve"
@@ -186,7 +188,7 @@
           }
         },
         "ionic-cordova-build": {
-          "builder": "@ionic/angular-toolkit:cordova-build",
+          "builder": "@ionic/cordova-builders:cordova-build",
           "options": {
             "browserTarget": "jaldeeprovider:build"
           },

@@ -211,28 +211,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subs.unsubscribe();
   }
-  // gets3curl() {
-  //   return new Promise<void>((resolve, reject) => {
-  //     this.sharedfunctionObj.getS3Url('provider')
-  //       .then(
-  //         res => {
-  //           let UTCstring = null;
-  //           UTCstring = this.sharedfunctionObj.getCurrentUTCdatetimestring();
-  //           this.shared_services.getbusinessprofiledetails_json(this.data.user_id, res, 'terminologies', UTCstring)
-  //             .subscribe(termi => {
-  //               this.terminologies = termi;
-  //               resolve();
-  //             },
-  //               () => {
-  //                 reject();
-  //               });
-  //         },
-  //         () => {
-  //           reject();
-  //         }
-  //       );
-  //   });
-  // }
   setLabel() {
     this.api_loading = false;
     let provider_label = this.receiver_name;

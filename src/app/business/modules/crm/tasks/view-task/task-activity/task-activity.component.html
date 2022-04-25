@@ -1,0 +1,19 @@
+<div class="d-flex justify-content-between">
+    <div>
+        <span class="card-title"><b>Activity</b></span> 
+    </div>
+    <div>
+        <span class="pointer-cursor fa fa-external-link"></span>
+    </div>
+</div>
+<hr class="my-2 py-2">
+
+<div class="">
+    <ul class="c-history">
+        <li class="{{history.waitlistStatus}}" *ngFor="let history of waitlist_history">
+        <div class="time">{{getformatedTime(history.time) | date: newTimeDateFormat}}</div>
+        <div class="action">{{history.waitlistStatus | capitalizeFirst}}</div>
+        </li>
+    </ul>
+    <p class="no-result" *ngIf="waitlist_history && waitlist_history.length == 0"><b>No Activity Found</b></p>
+</div>

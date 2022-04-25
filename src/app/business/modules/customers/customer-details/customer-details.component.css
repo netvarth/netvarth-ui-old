@@ -1,53 +1,229 @@
-.btn-grn{
-    background: #00cc96 !important;
+.booking-details .booking-details-head h5 {
+  color: #797979 !important;
+  font-weight: 700 !important;
+  font-size: 1.6rem !important;
+  margin-bottom: 0px !important;
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  display: inline-block !important;
+  width: calc(100% - 85px) !important;
+  white-space: nowrap !important;
+  text-transform: capitalize !important;
+}
+
+.booking-details .booking-details-head a {
+  color: #305084 !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  width: 85px !important;
+  text-align: right !important;
+  float: right !important;
+  height: 20px !important;
+  line-height: 20px !important;
+}
+
+.booking-details .booking-details-head .value {
+  font-size: 0.85rem !important;
+  color: #797979 !important;
+  font-weight: 500 !important;
+}
+
+.booking-details-body i.icon {
+  font-family: 'FontAwesome' !important;
+  font-weight: 500 !important;
+  color: #28a1ac !important;
+  width: 20px !important;
+  display: inline-flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-right: 5px !important;
+  font-size: 15px;
+}
+
+.booking-details-body i.icon.fa.fa-map-marker {
+  font-size: 17px !important;
+}
+
+.booking-details-body i.icon.fa.fa-mobile {
+  font-size: 25px !important;
+}
+
+.booking-details-body .value {
+  font-size: 1rem !important;
+  color: #797979 !important;
+  font-weight: 500 !important;
+  text-transform: capitalize !important;
+}
+
+.booking-details-body .email .value {
+  text-transform: none !important;
+}
+
+.booking-details-body .gender-and-dob {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  flex-wrap: wrap !important;
+}
+
+.booking-details-body .gender-and-dob .gender {
+  margin-right: 30px !important;
+}
+
+.booking-details-body .gender-and-dob .gender i.icon.fa.fa-mars {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+
+.booking-details-body .gender-and-dob .gender i.icon.fa.fa-venus {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+
+.booking-details-body .available-records {
+  margin-top: 8px !important;
+}
+
+.booking-details-body .available-records .head {
+  font-size: 0.7rem !important;
+  font-weight: 700 !important;
+  color: #8e8e8e !important;
+  text-transform: uppercase !important;
+}
+
+.booking-details-body .available-records .value {
+  font-size: 0.775rem !important;
+  color: #8e8e8e !important;    
+}
+.padding-20px {
+  padding: 10px 20px !important;
+}
+.user-img img {
+  width: 100px;
+  height: 100px;
+  border-radius: 0.42rem;
+  margin-bottom: 10px;
+}
+.booking-details .booking-details-head {
+  margin-bottom: 0px !important;
+}
+@media (min-width: 992px) {
+  .details-hgt {
+    height: 211px;
   }
-  .btn-red{
-    background: #f24949 !important;
+}
+.records-sec .rece-act {
+  padding: 0 15px;
+}
+.records-sec {
+  padding: 0 7px;
+}
+.records-sec .column {
+  width: 50% !important;
+  float: left;
+  padding: 10px;
+}
+
+@media (max-width: 767px) {
+  .records-sec .column {
+      width: 100% !important;
   }
-  .btn-orange{
-    background: orange !important;
+  .column,.customer-details-card
+  {
+    padding-left: 0px!important;
+    padding-right: 0px!important;
   }
-.txt-trans-none{
-    text-transform: none !important;
+
 }
-.centeralign  .fa{
-  width:20px !important;
+@media only screen and (min-width: 576px) {
+  .no-padding-big {
+    padding: 0 !important;
+  }
+  .user-img img {
+    margin: 0 !important;
+    float: right;
+  }
+  
+  
 }
-.pad-15 {
-  padding: 15px !important;
+
+.qnr-hgt {
+  overflow: auto !important;
+  height: 317px !important;
+  padding: 10px 0;
 }
-.txt-color{
-  color: rgb(60 141 188) !important;
+.card-header {
+  border-radius: calc(0.5rem - 1px) calc(0.5rem - 1px) 0 0 !important;
+  border-bottom: 1.75px solid #d0d0d0 !important;
+  font-size: 13px !important;
+  text-transform: uppercase !important;
+  color: #395789 !important;
+  font-weight: 700 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
 }
-.cs-btn {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 0;
-    text-align: center;
-    vertical-align: middle;
-    touch-action: manipulation;
-    cursor: pointer;
-    border: none;
-    white-space: nowrap;
-    outline: 0;
-    padding: 10px 40px;
-    font-size: inherit;
-    line-height: 1.4;
-    -moz-user-select: none;
-    z-index: 2;
+.records-sec .card {
+  border-radius: 10px !important;
+  border: 1.75px solid #d0d0d0 !important;
+  /* box-shadow: 0 0 10px 0 rgb(183 192 206 / 20%) !important; */
+  padding: 0px !important;
 }
-.bt1 {
-    background: #00aef2;
-    border-radius: 3px;
-    background-clip: padding-box;
-    height: 40px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    text-transform: uppercase;
-    color: #fff;
-    font-size: .875rem;
-    padding-left: 30px;
-    padding-right: 30px;
-    line-height: inherit;
-    transition: all 300ms;
+.main-sec {
+  padding: 0 7px !important;
+}
+@media (min-width: 767px) {
+  .prt-10 {
+    padding-right: 10px !important;
+  }
+  .plt-10 {
+    padding-left: 10px !important;
+  }
+}
+/* .main-sec .card.card-custom {
+  box-shadow: 5px 3px 10px rgb(0 0 0 / 20%) !important;
+} */
+.card .card-header i {
+  color: #395789 !important;
+  font-family: 'FontAwesome' !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+}
+.booking-details-body button.btn.create-prescription-button {
+    border: 1px solid #1E4079 !important;
+    margin-top: 10px !important;
+    display: block !important;
+    padding: 6px 10px !important;
+    color: #1E4079 !important;
+    text-transform: uppercase !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    width: 80% !important;
+    min-width: 140px !important;
+    max-width: 300px !important;
+    background-color: white !important;
+    border-radius: 5px;
+}
+.booking-details-body button.btn.create-prescription-button:hover {
+    background-color: #1E4079 !important;
+    color: white !important;
+    font-weight: 500 !important;
+}
+.card-header i.fa.fa-angle-down {
+  transition: 0.70s !important;
+  transform: rotate(180deg) !important;
+}
+.card-header.collapsed i.fa.fa-angle-down {
+  transition: 0.70s !important;
+  transform: rotate(0deg) !important;
+} 
+.collapse.in {
+  display: block !important;
+}
+.border-10
+{
+  border-radius: 10px!important;
 }

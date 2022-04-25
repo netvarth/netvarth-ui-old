@@ -1,0 +1,15 @@
+<div class="d-flex justify-content-between">
+    <div>
+        <span class="card-title"><b>Connected With</b></span> 
+    </div>
+    <div>
+        <span class="pointer-cursor fa fa-external-link"></span>
+    </div>
+</div>
+<hr class="my-2 py-2">
+<div class="" *ngFor="let connection of connected_with">
+    <span class="connection-profile-image my-0 py-0">{{connection.name[0]}}</span>
+    <span class="connection-name my-0 py-0 ml-2">{{connection.name}}</span><br>
+    <span class="connection-created my-0 py-0">Created {{connection.created_at}}</span>
+    <hr class="my-0 py-0 mb-1 py-1">
+</div>

@@ -27,6 +27,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() theme;
     @Input() teams;
     @Input() source;
+    @Input() cardType;
     // @Input() pos;
     @Input() statusAction;
     service: any;
@@ -268,10 +269,24 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         }
         return qty;
     }
+    gotoCustomerDetailsAppt(appt, event) {
+        event.stopPropagation();
+        if (appt.apptStatus !== 'blocked') {
+          this.router.navigate(['/provider/customers/' + appt.appmtFor[0].id]);
+        }
+      }
+
+      gotoCustomerDetailsToken(waitlist, event) {
+        event.stopPropagation();
+        if (waitlist.waitlistStatus !== 'blocked') {
+          this.router.navigate(['/provider/customers/' + waitlist.waitlistingFor[0].id]);
+        }
+      }
+
     stopProp(event) {
         event.stopPropagation();
     }
-    cardActionPerformed(type, action, service, location, userId, event) {
+    cardActionPerformed(type, action, service, location, userId, event, item?) {
         // console.log('action...',action);
         // if(type=='checkavailability'){
         //     if(service['serviceAvailability']['nextAvailableDate']) {
@@ -298,8 +313,10 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         //     }
         // } 
         // else {
-            event.stopPropagation();
-        
+            if (item) {
+                item['loading'] = true;
+            }            
+            event.stopPropagation();        
             const actionObj = {};
             actionObj['type'] = type;
             actionObj['action'] = action;
@@ -316,6 +333,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             }
             
             this.actionPerformed.emit(actionObj);
+            
         // }
 
     

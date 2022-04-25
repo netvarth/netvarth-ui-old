@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
-import { ProviderServices } from '../../../services/provider-services.service';
+import { ProviderServices } from "../../../../business/services/provider-services.service";
 import { Messages } from '../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
@@ -13,11 +13,14 @@ import { CustomerActionsComponent } from '../customer-actions/customer-actions.c
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { CommunicationPopupComponent } from '../../bookings/communication-popup/communication-popup.component';
 // import { interval as observableInterval } from 'rxjs';
 import { SubSink } from 'subsink';
+import { CommunicationService } from '../../../../business/services/communication-service';
 @Component({
     selector: 'app-customer-details',
-    templateUrl: './customer-details.component.html'
+    templateUrl: './customer-details.component.html',
+    styleUrls: ['./customer-details.component.css']
 })
 export class CustomerDetailComponent implements OnInit {
     dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
@@ -75,6 +78,7 @@ export class CustomerDetailComponent implements OnInit {
     ordervisitDetails: any = [];
     todayordervisitDetails: any = [];
     futureordervisitDetails: any = [];
+    historyOrdervisitDetails: any = [];
     customerAction = '';
     waitlistModes = {
         WALK_IN_CHECKIN: 'Walk in Check-in',
@@ -98,6 +102,7 @@ export class CustomerDetailComponent implements OnInit {
     showMoreFuture = false;
     showMoreToday = false;
     showMoreHistory = false;
+    showMoreOrderHistory = false;
     showMoreorderFuture = false;
     showMoreorderToday = false;
     selectedDetailsforMsg: any = [];
@@ -106,6 +111,8 @@ export class CustomerDetailComponent implements OnInit {
     subdomain;
     showToken;
     questionnaireList: any = [];
+    historyorderVisitDetailsArray: any = [];
+    consumerBills: any = [];
     showQuestionnaire = false;
     subs = new SubSink();
     refreshTime = 10;
@@ -113,6 +120,10 @@ export class CustomerDetailComponent implements OnInit {
     meetingStatus: string;
     showEndBt: boolean;
     showRejoinBt: boolean;
+    small_device_display = false;
+    whatsappCountryCode: any;
+    whatsappNumber: any;
+    number: any;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -121,6 +132,7 @@ export class CustomerDetailComponent implements OnInit {
         private _location: Location, public dialog: MatDialog,
         private router: Router,
         private wordProcessor: WordProcessor,
+        private communicationService: CommunicationService,
         private dateTimeProcessor: DateTimeProcessor,
         private groupService: GroupStorageService) {
         const customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -157,6 +169,7 @@ export class CustomerDetailComponent implements OnInit {
                             this.getCustomers(this.customerId).then(
                                 (customer) => {
                                     this.customer = customer;
+                                    this.getConsumerBills();
                                     console.log("Customer Details :",this.customer)
                                     this.customerName = this.customer[0].firstName;
                                     this.viewCustomer = true;
@@ -176,13 +189,45 @@ export class CustomerDetailComponent implements OnInit {
         );
 
     }
+    // getCustomers(customerId) {
+    //     const _this = this;
+    //     const filter = { 'id-eq': customerId };
+    //     return new Promise(function (resolve, reject) {
+    //         _this.provider_services.getProviderCustomers(filter)
+    //             .subscribe(
+    //                 data => {
+    //                     resolve(data);
+    //                 },
+    //                 () => {
+    //                     reject();
+    //                 }
+    //             );
+    //     });
+    // }
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+        const screenWidth = window.innerWidth;
+        if (screenWidth <= 767) {
+            this.small_device_display = true;
+        } else {
+            this.small_device_display = false;
+        }
+    }
     getCustomers(customerId) {
         const _this = this;
         const filter = { 'id-eq': customerId };
         return new Promise(function (resolve, reject) {
             _this.provider_services.getProviderCustomers(filter)
                 .subscribe(
-                    data => {
+                    (data: any) => {
+                        if (data[0].whatsAppNum) {
+                            _this.whatsappCountryCode = data[0].whatsAppNum.countryCode;
+                            _this.whatsappNumber = data[0].whatsAppNum.number;
+                        }
+                        if (data[0].phoneNo && data[0].phoneNo.trim() !== '') {
+                            _this.number = data[0].countryCode + ' ' + data[0].phoneNo;
+                        }
+                        _this.email = data[0].email;
                         resolve(data);
                     },
                     () => {
@@ -192,7 +237,7 @@ export class CustomerDetailComponent implements OnInit {
         });
     }
     ngOnInit() {
-        this.getCustomerQnr();
+        // this.getCustomerQnr();
     }
     onCancel() {
         if (this.source === 'checkin' || this.source === 'token') {
@@ -262,10 +307,12 @@ export class CustomerDetailComponent implements OnInit {
         this.provider_services.getCustomerOrderVisit(this.customerId).subscribe(
             (data: any) => {
                 this.ordervisitDetails = data;
-                this.todayorderVisitDetailsArray = data.todayOrders;
-                this.todayordervisitDetails = this.todayorderVisitDetailsArray.slice(0, 5);
-                this.futureorderVisitDetailsArray = data.futureOrders;
-                this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);
+                this.todayorderVisitDetailsArray = this.todayordervisitDetails = data.todayOrders;
+                // this.todayordervisitDetails = this.todayorderVisitDetailsArray.slice(0, 5);
+                this.futureorderVisitDetailsArray = this.futureordervisitDetails = data.futureOrders;
+                // this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);
+                this.historyorderVisitDetailsArray = this.historyOrdervisitDetails = data.historyOrders;
+                // this.historyOrdervisitDetails = this.historyorderVisitDetailsArray.slice(0, 5);
                 this.loading = false;
             }
         );
@@ -448,6 +495,9 @@ export class CustomerDetailComponent implements OnInit {
         } else if (type === 'future') {
             this.futureordervisitDetails = this.futureorderVisitDetailsArray;
             this.showMoreorderFuture = true;
+        } else {
+            this.historyOrdervisitDetails = this.historyorderVisitDetailsArray;
+            this.showMoreOrderHistory = true;
         }
     }
     showorderLess(type) {
@@ -457,6 +507,9 @@ export class CustomerDetailComponent implements OnInit {
         } else if (type === 'future') {
             this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);
             this.showMoreorderFuture = false;
+        } else {
+            this.historyOrdervisitDetails = this.historyorderVisitDetailsArray.slice(0, 5);
+            this.showMoreOrderHistory = false;
         }
     }
     getSingleTime(slot) {
@@ -474,5 +527,82 @@ export class CustomerDetailComponent implements OnInit {
     }
     showQnr() {
         this.showQuestionnaire = !this.showQuestionnaire;
+    }
+    editCustomerDetails() {
+        const navigationExtras: NavigationExtras = {
+            queryParams: { action: 'edit', id: this.customer[0].id }
+        };
+        this.router.navigate(['/provider/customers/create'], navigationExtras);
+    }
+
+    actionPerformed(event) {
+        if (event.type === 'details') {
+            this.gotoCustomerDetail(event.record, event.timeType);
+        } else if (event.type === 'more') {
+            if (event.heading === 'Today') {
+                this.showMore('today');
+            } else if (event.heading === 'Future') {
+                this.showMore('future');
+            } else if (event.heading === 'Todays Order') {
+                this.showorderMore('today');
+            } else if (event.heading === 'Future Order') {
+                this.showorderMore('future');
+            } else if (event.heading === 'Order History') {
+                this.showorderMore('history');
+            } else {
+                this.showMore('history');
+            }
+        } else if (event.type === 'less') {
+            if (event.heading === 'Today') {
+                this.showLess('today');
+            } else if (event.heading === 'Future') {
+                this.showLess('future');
+            } else if (event.heading === 'Todays Order') {
+                this.showorderLess('today');
+            } else if (event.heading === 'Future Order') {
+                this.showorderLess('future');
+            } else if (event.heading === 'Order History') {
+                this.showorderLess('history');
+            } else {
+                this.showLess('history');
+            }
+        }
+    }
+
+
+    getConsumerBills() {
+        const filter = { 'providerConsumer-eq': this.customer[0].id };
+        this.provider_services.getProviderBills(filter).subscribe(data => {
+            this.consumerBills = data;
+        })
+    }
+
+    gotoQnr() {
+        this.router.navigate(['provider', 'customers', this.customer[0].id, 'questionnaires'], { queryParams: { uid: this.customer[0].id, source: 'customer-details' } });
+    }
+
+
+    showCommunications() {
+        this.dialog.open(CommunicationPopupComponent, {
+            width: '50%',
+            panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+            disableClose: true,
+            data: {
+                whatsappCountryCode: this.whatsappCountryCode,
+                whatsappNumber: this.whatsappNumber,
+                number: this.number,
+                customerId: this.customerId,
+                email: this.email,
+                type: 'customer'
+            }
+        });
+    }
+
+    CustomersInboxMessage() {
+        this.communicationService.ConsumerInboxMessage(this.customerDetails, 'customer-list')
+            .then(
+                () => { },
+                () => { }
+            );
     }
 }

@@ -19,6 +19,7 @@ import { AddInboxMessagesModule } from "../../../../shared/components/add-inbox-
 import { CommunicationService } from "../../../../business/services/communication-service";
 import { FormsModule } from "@angular/forms";
 import { ProviderWaitlistCheckInCancelModule } from "../provider-waitlist-checkin-cancel-popup/provider-waitlist-checkin-cancel-popup.module";
+import { TeleBookingService } from "../../../../shared/services/tele-bookings-service";
 
 @NgModule({
     imports: [
@@ -48,7 +49,8 @@ import { ProviderWaitlistCheckInCancelModule } from "../provider-waitlist-checki
         CheckinActionsComponent
     ],
     providers: [
-        CommunicationService
+        CommunicationService,
+        TeleBookingService
     ]
 })
 export class CheckinsActionsModule {}

@@ -180,13 +180,14 @@ export class AdjustqueueDelayComponent implements OnInit {
     this.route.navigate(['provider', 'check-ins']);
   }
   setDescFocus() {
-    this.isfocused = true;
+   // this.isfocused = true;
     this.char_count = this.max_char_count - this.amForm.get('message').value.length;
   }
   lostDescFocus() {
     this.isfocused = false;
   }
   setCharCount() {
+    this.isfocused = true;
     this.char_count = this.max_char_count - this.amForm.get('message').value.length;
   }
   getDefaultMessages() {
@@ -386,7 +387,7 @@ export class AdjustqueueDelayComponent implements OnInit {
             // this.api_success = this.wordProcessor.getProjectMesssages('ADD_DELAY');
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ADD_DELAY'), { 'panelclass': 'snackbarerror' });
             // this.closePopup('reloadlist');
-            this.route.navigate(['check-ins']);
+            this.route.navigate(["provider", "check-ins"]);
 
           } else {
             // this.api_success = this.wordProcessor.getProjectMesssages('ADD_DELAY_NO_MSG');
@@ -395,6 +396,7 @@ export class AdjustqueueDelayComponent implements OnInit {
           }
           setTimeout(() => {
             this.disableButton = false;
+            this.route.navigate(["provider", "check-ins"]);
           }, projectConstants.TIMEOUT_DELAY_LARGE);
         },
         error => {

@@ -1,0 +1,86 @@
+<div class="d-flex justify-content-between">
+    <div class="pt-2 pl-lg-3">
+        <h4><b>Subactivities</b></h4> 
+    </div>
+    <div class="pr-lg-3">
+        <a class="btn btn-primary rounded-btn" (click)="createSubTask(taskid)"><i class="fa fa-plus"></i>&nbsp;Subactivity</a>
+    </div>
+</div>
+
+<!-- <circle-progress class="circle__progress"
+        [percent]="90"
+        [animation]="true"
+        [animationDuration]="300"
+        [startFromZero]="true"
+        [showInnerStroke]="true"
+        [titleFontSize]="'28'"
+        [titleFontWeight]="'900'"
+        [unitsFontSize]="'28'"
+        [unitsFontWeight]="'900'"
+        [subtitle]="'Progress'"
+        [subtitleFontSize]="'12'"
+        [lazy]="false"
+></circle-progress> -->
+<div class="subtask-border">
+    <div class="table-responsive dash-list">
+        <table class="table">
+            <thead>
+                <tr class="subtask-table-headings">
+                    <th class="head_color">&nbsp;&nbsp;&nbsp;Subactivity Details</th>
+                    <th class="head_color">Duration</th>
+                    <th class="head_color">Status</th>
+                    <th class="head_color">Category</th>
+                    <th class="head_color">Type</th>
+                    <th class="head_color">Due Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="subTaskDetails.length === 0">
+                <tr class="text-center mx-auto text-danger">
+                    <td class="text-center nodatafound" colspan="5">No subactivities found</td>
+                </tr>
+                </ng-container>
+                <ng-container>
+                    <tr class="subtask-table-data pointer-cursor" *ngFor="let subtask of subTaskDetails" (click)="viewTask(subtask.taskUid,subtask)">
+                        <!-- <pre>{{subtask | json}}</pre> -->
+                        <td class="head_color"><span class="text-dark">
+                            &nbsp;&nbsp;&nbsp;<b>{{subtask.title}}</b>
+                            </span><br>&nbsp;&nbsp;&nbsp;<span class="text-primary">Assigned to {{subtask.assignee.name}}</span>
+                        </td>
+                        <td class="head_color">{{subtask.estDuration['hours']}} hrs {{subtask.estDuration['minutes']}} min</td>
+                        <td class="head_color">{{subtask.status.name}}</td>
+                        <td class="head_color">{{subtask.category.name}}</td>
+                        <td class="head_color">{{subtask.type.name}}</td>
+                        <td class="head_color">{{subtask.dueDate}}1</td>
+                        <!-- <td>
+                            <div class="copy">
+                              <span class="">
+                                <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
+                                  (click)="stopprop($event);">
+                                  <mat-icon>more_vert</mat-icon>
+                                </button>
+                              </span>
+                              <mat-menu #appMenu="matMenu">
+                                <button mat-menu-item (click)="openTaskCompletion(subtask)" *ngIf="subtask.status.name !='Completed'">
+                                  <i class="text-success fa fa-check-square"></i> Mark as Done
+                                </button>
+                                <button mat-menu-item (click)="openEditTask(subtask,'Update')"  *ngIf="subtask.status.name !='Completed'">
+                                  <i class="text-info fa fa-edit"></i>Edit
+                                </button>
+                                <button mat-menu-item (click)="openDialogStatusChange(subtask)" >
+                                 <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
+                                </button>
+
+                              </mat-menu>
+                            </div>
+                        </td> -->
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+        <div class="search_paging" *ngIf="subTaskDetails.length>0">
+          <app-pager [total_pages]="gettotalCnt()" [pagesize]="getperPage()" (pagerclick)="handle_pageclick($event)"
+            [curpage]="startpageval"></app-pager>
+        </div>
+    </div>
+</div>

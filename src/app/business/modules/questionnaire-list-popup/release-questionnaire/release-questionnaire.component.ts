@@ -55,6 +55,7 @@ export class ReleaseQuestionnaireComponent implements OnInit {
     this.email = this.data.isEmail;
     console.log('data' + JSON.stringify(this.data))
     if (this.data.source === 'appt') {
+      console.log("Appmt Data :", this.data)
       this.countryCode = this.data.waitlist_data.providerConsumer.countryCode.split('+')[1];
       if ((this.data.isEmail || this.data.isPhone) && this.data.waitlist_data.consumer) {
         this.pushnotify = true;
@@ -68,6 +69,7 @@ export class ReleaseQuestionnaireComponent implements OnInit {
       }
     }
     else if(this.data.source === 'order'){
+      console.log("Order Data :",this.data)
       this.countryCode = this.data.waitlist_data.countryCode.split('+')[1];
       if ((this.data.isEmail || this.data.isPhone) && this.data.waitlist_data.jaldeeConsumer) {
         this.pushnotify = true;
@@ -102,6 +104,12 @@ export class ReleaseQuestionnaireComponent implements OnInit {
     const slots = slot.split('-');
     return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
+  getSingleOrderTime(slot){
+    const slots = slot.split('AM||PM||-');
+    console.log("Order Time :",slots);
+    return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
+  }
+
   getTelegramChatId() {
     if(this.data.source === 'appt'){
       this.phone = this.data.waitlist_data.providerConsumer.phoneNo;

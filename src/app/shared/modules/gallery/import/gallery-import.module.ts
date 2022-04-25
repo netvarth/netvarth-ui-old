@@ -6,6 +6,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatMenuModule } from "@angular/material/menu";
+import { FileService } from "../../../../shared/services/file-service";
 import { FormMessageDisplayModule } from "../../form-message-display/form-message-display.module";
 import { GalleryImportComponent } from "./gallery-import.component";
 
@@ -21,6 +22,9 @@ import { GalleryImportComponent } from "./gallery-import.component";
         MatMenuModule,
         MatIconModule,
         FormMessageDisplayModule
+    ],
+    providers: [
+        FileService
     ]
 })
 export class GalleryImportModule {}

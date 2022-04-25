@@ -1,0 +1,535 @@
+<section *ngIf="data.requestType==='createtaskSelectMember'" style="padding: 20px;">
+    <!-- <form [formGroup]="assignMemberForm"> -->
+        <!--header start-->
+        <div class="header">
+            <div class="headerText" >{{data.header | capitalizeFirst}}</div>
+            <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+                <mat-icon>clear</mat-icon>
+            </div>
+        </div>
+        <!--header end-->
+        <mat-dialog-content style="max-height: 75vh!important" >
+            <div >
+                
+        <div>
+            <!----radio btn start-->
+            <div>
+                <mat-radio-group
+              
+                [(ngModel)]="assignMemberDetails">
+               <div>
+                <mat-radio-button class="example-radio-button" *ngFor="let assignMember of memberList" [value]="assignMember"  (change)="handleMemberSelect(assignMember,'Selected')">
+                  <div class="allMember">
+                        <div>
+                          <img class="img" [src]="getUserImg(assignMember)" />
+                        </div>
+                        <!-- <div>
+                            {{assignMember.profilePicture | json}}
+                        </div> -->
+                        <div class="members">
+                        {{assignMember.firstName}}{{assignMember.lastName}}
+                       </div>
+                       <div class="members">
+                        +{{assignMember.countryCode}}{{assignMember.mobileNo}}
+                       </div>
+                       <div class="members">
+                        {{assignMember.locationName}}
+                       </div>
+                  </div>
+                  </mat-radio-button>
+               </div>
+              </mat-radio-group>
+            </div>
+            <!----radio btn end-->
+        </div>
+            </div>
+        </mat-dialog-content>
+        <div *ngIf="errorMsg" class="errorMsg">
+            <div>{{assignMemberErrorMsg}}</div>
+        </div>
+        <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;">
+             <!---cancel save btn start-->
+             <div style="text-align: center;">
+                <ng-container >
+                    <div class=" mgn-bt-20 mgn-up-10">
+                            <button type="button" class="btn btn-primary font-weight-bold cancelBtn" 
+                            mat-dialog-close >Cancel</button>
+                        <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="saveAssignMember(assignMemberDetails)"
+                            >Assign</button>
+                    </div>
+                </ng-container>
+            </div>
+    
+            <!---cancel save btn end-->
+          </div>
+    <!-- </form> -->
+    
+
+</section>
+
+<section *ngIf="data.requestType==='createtaskSelectManager'" style="padding: 20px;">
+    <!-- <form [formGroup]="assignMemberForm"> -->
+        <!--header start-->
+        <div class="header">
+            <div class="headerText" >{{data.header | capitalizeFirst}}</div>
+            <div mat-dialog-close class="modal_close" tabindex="-1" style=" cursor: pointer;">
+                <mat-icon>clear</mat-icon>
+            </div>
+        </div>
+        <!--header end-->
+        <mat-dialog-content style="max-height: 75vh!important" >
+            <div >
+                
+        <div>
+            <!----radio btn start-->
+            <div>
+                <mat-radio-group
+              
+                [(ngModel)]="assignMemberDetails">
+               <div>
+                <mat-radio-button class="example-radio-button" *ngFor="let assignMember of memberList" [value]="assignMember"  (change)="handleMemberSelect(assignMember,'Selected')">
+                  <div class="allMember">
+                        <div>
+                          <img class="img" [src]="getUserImg(assignMember)" />
+                        </div>
+                        <!-- <div>
+                            {{assignMember.profilePicture | json}}
+                        </div> -->
+                        <div class="members">
+                        {{assignMember.firstName}}{{assignMember.lastName}}
+                       </div>
+                       <div class="members">
+                        +{{assignMember.countryCode}}{{assignMember.mobileNo}}
+                       </div>
+                       <div class="members">
+                        {{assignMember.locationName}}
+                       </div>
+                  </div>
+                  </mat-radio-button>
+               </div>
+              </mat-radio-group>
+            </div>
+            <!----radio btn end-->
+        </div>
+            </div>
+        </mat-dialog-content>
+        <div *ngIf="errorMsg" class="errorMsg">
+            <div>{{assignMemberErrorMsg}}</div>
+        </div>
+        <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;">
+             <!---cancel save btn start-->
+             <div style="text-align: center;">
+                <ng-container >
+                    <div class=" mgn-bt-20 mgn-up-10">
+                            <button type="button" class="btn btn-primary font-weight-bold cancelBtn" 
+                            mat-dialog-close >Cancel</button>
+                        <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="saveAssignMember(assignMemberDetails)"
+                            >Assign</button>
+                    </div>
+                </ng-container>
+            </div>
+    
+            <!---cancel save btn end-->
+          </div>
+    <!-- </form> -->
+    
+
+</section>
+
+<section *ngIf="data.requestType==='createUpdateNotes'" style="padding: 20px;">
+    <div class="header" style="justify-content: end !important;">
+        <!-- <div class="headerText" >{{data.header | capitalizeFirst}}</div> -->
+        <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+            <mat-icon>clear</mat-icon>
+        </div>
+    </div>
+    <mat-dialog-content >
+        <!----task description start-->
+        <div>
+            <div class="taskTitle">
+                <div>Notes Description</div>
+                <div class="astericColor">*</div>
+              </div>
+              <!--textarea start-->
+             <div  class="fieldPadding">
+                    <textarea rows="10" class="form-control" [(ngModel)]="notesTextarea"
+                    #taskDescription (ngModelChange)="handleNotesDescription(taskDescription.value)"(keyup)="autoGrowTextZone($event)"
+                    maxlength="1000" placeholder="Enter note description"></textarea>
+                    <!-- <div *ngIf="boolenTaskError">{{taskErrorText}}</div> -->
+             </div>                           
+              <!--textarea end-->
+           </div>
+           <div *ngIf="errorMsg" class="errorMsg">
+            <div>{{assignMemberErrorMsg}}</div>
+            </div>
+           <!---cancel save btn start-->
+           <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;">
+            <!---cancel save btn start-->
+            <div style="text-align: center;">
+               <ng-container >
+                   <div class=" mgn-bt-20 mgn-up-10">
+                           <button type="button" class="btn btn-primary font-weight-bold cancelBtn" 
+                           mat-dialog-close >Cancel</button>
+                       <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="saveCreateNote(notesTextarea)"
+                           >Save</button>
+                   </div>
+               </ng-container>
+           </div>
+   
+           <!---cancel save btn end-->
+         </div>
+
+        <!---cancel save btn end-->
+    </mat-dialog-content>
+</section>
+<section *ngIf="data.requestType==='noteDetails'" class="noteDetails" style="padding: 20px;">
+    <div class="header">
+        <div class="headerText" >{{data.header | capitalizeFirst}}</div>
+        <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+            <mat-icon>clear</mat-icon>
+        </div>
+    </div>
+    <mat-dialog-content >
+         <!----task description start-->
+         <div >
+            <!-- {{data| json}} -->
+            <div *ngFor="let note of allNotes[0];let index=i" class="note">
+               {{note.note }}
+            </div>
+          </div>
+           <!---cancel save btn start-->
+           <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;">
+            <!---cancel save btn start-->
+            <div style="text-align: center;">
+               <ng-container >
+                   <div class=" mgn-bt-20 mgn-up-10">
+                           <button type="button" class="btn btn-primary font-weight-bold confirmBtn" 
+                           mat-dialog-close >Cancel</button>
+                   </div>
+               </ng-container>
+           </div>
+   
+           <!---cancel save btn end-->
+         </div>
+
+    </mat-dialog-content>
+</section>
+<section *ngIf="data.requestType==='taskComplete'" style="padding: 20px;">
+    <div class="header" style="justify-content: end !important;">
+        <!-- <div class="headerText" >{{data.header | capitalizeFirst}}</div> -->
+        <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+            <mat-icon>clear</mat-icon>
+        </div>
+    </div>
+    <mat-dialog-content style="padding: 0px !important;">
+        <div>
+            <!-- <div class="taskTitle">
+                <div>Notes Description</div>
+                <div class="astericColor">*</div>
+            </div> -->
+            <div style="text-align: center;">
+                <img style="width: 50%;" src="/assets/images/crmImages/taskcompleted.jpg" />
+            </div>
+            <div style="text-align: center;">
+                <div class="almostDone">You're almost done!</div>
+                <div class="taskDes">Confirm activity completion!</div>
+                <!-- <div class="taskDes">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate ea vitae ab pariatur repellat? Ut quae rerum laborum dicta voluptatibus vitae debitis accusamus obcaecati at quas! Repellendus voluptatibus fugiat necessitatibus.</div> -->
+            </div>
+            <div style="text-align: center;">
+                <div style="display: flex;justify-content: center;gap:5px;color: #1D3E77;flex-wrap: wrap;">
+                    <div>Are you sure to make </div>
+                    <div>{{taskDes}}</div>
+                    <div> as completed?</div>
+                </div>
+
+            </div>
+           <!---cancel save btn start-->
+           <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;padding: 0px !important;">
+            <!---cancel save btn start-->
+            <div style="text-align: center;">
+               <ng-container >
+                   <div >
+                           <button type="button" class="btn btn-primary font-weight-bold cancelBtn" 
+                           mat-dialog-close >No</button>
+                       <button type="button" class="btn btn-primary font-weight-bold confirmBtn"(click)="completeTask()"
+                           >Yes</button>
+                   </div>
+               </ng-container>
+           </div>
+   
+           <!---cancel save btn end-->
+         </div>
+
+        <!---cancel save btn end-->
+
+        </div>
+
+    </mat-dialog-content>
+</section>
+<section *ngIf="data.requestType==='statusChange'" style="padding: 20px;">
+    <div class="header" >
+        <div class="headerText" style="color: #22242C !important;font-size: 18px;">Change Status</div>
+        <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+            <mat-icon>clear</mat-icon>
+        </div>
+    </div>
+    <!---task des start-->
+    <div>
+        <div class="taskDes">{{taskDescription}}</div>
+    </div>
+    <!---task des end-->
+    <!--task name start-->
+    <div class="titleTask">
+        <div>{{taskTitle}}</div>
+    </div>
+    <!---task name end-->
+    <!---spinner start-->
+    <div style="margin-top: 10px;display: flex;gap:10px">
+        <div>
+            <circle-progress class="circle__progress" [outerStrokeWidth]="10"  [radius]="40" [percent]="taskProgress" [animation]="true"
+                              [animationDuration]="1000" [startFromZero]="true" [showInnerStroke]="true"
+                              [titleFontSize]="'10'" [titleFontWeight]="'900'"  [unitsFontSize]="'10'"
+                              [unitsFontWeight]="'700'" [subtitle]="status" [subtitleFontSize]="'7'"
+                              [lazy]="false" ></circle-progress>
+        </div>
+        <div>
+            <div style="display: flex;align-items: center;gap: 5px;">
+                <div class="assignee">Asignee :</div>
+                <div class="assignee">{{assigneeName}}</div>
+            </div>
+            <div style="display: flex;align-items: center;gap: 11px;">
+                <div class="manager">Manager :</div>
+                <div class="manager">{{managerName}}</div>
+            </div>
+            <div style="display: flex;align-items: center;gap: 27px;">
+                <div class="prioprity">Priority :</div>
+                <div class="prioprity">{{priorityName}}</div>
+            </div>
+            <!-- <div style="display: flex;align-items: center;gap: 5px;">
+                <div class="lastUpdate">Last updated on</div>
+                <div class="lastUpdate">{{lastUpdate}}</div>
+            </div> -->
+        </div>
+    </div>
+    <!---spinner end-->
+    <!----current status start-->
+    <div style="display: flex;justify-content: flex-start;">
+        <!-- <div>
+            <mat-icon>clear</mat-icon>
+        </div> -->
+        <div class="currentStatus">
+            Current status : {{currentStatus}}
+        </div>
+
+    </div>
+    <!---coming statua end-->
+    <!-----external status s\tart-->
+    <div class="extStatus">
+        <!-- <div class="extStatus1">External status</div> -->
+        <div class="extStatus2">External Status is public and visible for your {{customer_label}}</div>
+        <!--status start-->
+       <div class="statusList">
+        <!-- [ngStyle]="{'background-color':status.id === data.taskDetails.status.id ? '#CACACA' : '#FFFFFF' }" -->
+        <div *ngFor="let status of taskStatusList[0];let index=i" class="singleStatus" (click)="selectStatus(status)">
+            <div class="statusName">{{status.name}}</div>
+            <div *ngIf="data.taskDetails.status.name">
+                <div *ngIf="status.id === data.taskDetails.status.id" > <i *ngIf="showHideTickMarkUpdate" class="fa fa-check" aria-hidden="true"></i></div>
+            </div>
+           <div  *ngIf="status.id === selectedStatusId"> <i *ngIf="showHideTickMark" class="fa fa-check" aria-hidden="true" ></i></div>
+        </div>
+       </div>
+        <!---status end-->
+        <div style="color: #f24949 !important;margin-top: 10px;">
+            {{selectText}}
+        </div>
+         <!---cancel save btn start-->
+         <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;padding: 0px !important;">
+            <!---cancel save btn start-->
+            <div style="text-align: center;">
+               <ng-container >
+                   <div >
+                           <button type="button" class="btn btn-primary font-weight-bold cancelBtn" 
+                           mat-dialog-close >No</button>
+                       <button type="button" class="btn btn-primary font-weight-bold confirmBtn"(click)="completeTaskStatus()"
+                           >Yes</button>
+                   </div>
+               </ng-container>
+           </div>
+   
+           <!---cancel save btn end-->
+         </div>
+    </div>
+
+    <!----external status end-->
+
+</section>
+<section *ngIf="data.requestType==='uploadFilesDesciption'" style="padding: 20px;" class="uploadFile">
+    <div class="header" >
+        <div class="headerText" style="color: #22242C !important;font-size: 14px;">File details</div>
+        <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+            <mat-icon style="font-size: 16px;">clear</mat-icon>
+        </div>
+    </div>
+    <!----files des start-->
+    <mat-dialog-content>
+        <div *ngFor="let files of allFilesDes[0]" class="filesDes">
+            <div *ngIf="files.type ==='PNG'" class="fileType">
+                    <img class="imageIcon" src="/assets/images/ImgeFileIcon/png.png" />
+            </div>
+            <div *ngIf="files.type ==='docx'" class="fileType">
+                    <img class="imageIcon" src="/assets/images/ImgeFileIcon/docsWord.png" />
+            </div>
+            <div *ngIf="files.type ==='xlsx'" class="fileType">
+                    <img class="imageIcon" src="/assets/images/ImgeFileIcon/docXlsx.png" />
+            </div>
+            <div *ngIf="files.type ==='txt'" class="fileType">
+                    <img class="imageIcon" src="/assets/images/ImgeFileIcon/docTxt.png" />
+            </div>
+            <div *ngIf="files.type ==='pdf'" class="fileType">
+                    <img class="imageIcon" src="/assets/images/ImgeFileIcon/pdf.png" />
+            </div>
+            <div *ngIf="files.type ==='jpg'" class="fileType">
+                    <img class="imageIcon" src="/assets/images/ImgeFileIcon/jpg.png" />
+            </div>
+            <div *ngIf="( files.type !=='pdf' &&  files.type !=='txt' &&  files.type !=='xlsx' &&  files.type !=='docx' && files.type !=='PNG' && files.type !=='jpg'  )" class="fileType" >
+                <img class="imageIcon" src="/assets/images/ImgeFileIcon/othersFile.png" />
+            </div>
+            <div style="text-align: center;" class="filesNameSize">
+                {{files.originalName}}
+            </div>
+            <div class="filesNameSize">
+                {{files.size }}MB
+            </div>
+        </div>
+    </mat-dialog-content>
+    <!---filesdes end-->
+    <!---cancel save btn start-->
+    <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;padding: 0px !important;">
+        <!---cancel save btn start-->
+        <div style="text-align: center;">
+           <ng-container >
+               <div >
+                       <button type="button" class="btn btn-primary font-weight-bold confirmBtn" 
+                       mat-dialog-close >Cancel</button>
+                   <!-- <button type="button" class="btn btn-primary font-weight-bold confirmBtn"(click)="completeTask()"
+                       >Yes</button> -->
+               </div>
+           </ng-container>
+       </div>
+
+       <!---cancel save btn end-->
+     </div>
+
+    <!---cancel save btn end-->
+</section>
+<section *ngIf="data.requestType==='taskMasterList'" style="padding: 20px;">
+    <div class="header" >
+        <div class="headerText" style="color: #22242C !important;font-size: 14px;display: flex;">Select activity
+            <!-- <div>/</div>
+            <div style="color: #22242C !important;
+            font-size: 14px;
+            font-weight: 700;">Create Task </div>
+           ( <div><mat-icon>add</mat-icon></div>) -->
+        </div>
+       
+        <div style=" cursor: pointer;"  (click)="closeDialog('Close')">
+            <mat-icon style="font-size: 16px;">clear</mat-icon>
+        </div>
+    </div>
+    <!-- <div class="taskMasterCreate">
+        <button  (click)="createTask('CreatE')" type="button" class="btn btn-primary font-weight-bold confirmBtn"
+                        >Create Task</button>
+    </div> -->
+    <!----task master list start-->
+    <mat-dialog-content style="padding: 0px !important;" >
+        <div >
+            
+    <div>
+        <!----radio btn start-->
+        <div >
+            <mat-radio-group
+          
+            [(ngModel)]="assignTaskMaster">
+           <div >
+            <mat-radio-button  class="example-radio-button" *ngFor="let taskMaster of taskMasterListData" [value]="taskMaster"  (change)="handleTaskMasterSelect(taskMaster,'Selected')">
+              <div style="display: flex;flex-wrap: wrap;">
+                    <!-- <div class="masterDes" > -->
+                           <div class="masterDes">
+                               <!-- <div class="taskMasterFieldName" >  Title : </div> -->
+                          <div class="taskMasterFieldName" >{{taskMaster.title}}</div>
+                           </div>
+                           
+                           <!-- <div  class="masterDes" >
+                               <div class="taskMasterFieldName">Description : </div>
+                            <div class="taskMaster">{{taskMaster.description}}</div>
+                           </div> -->
+                    <!-- </div> -->
+                   <!-- <div class="masterDes"> -->
+                    <!-- <div class="masterDes" >
+                        <div class="taskMasterFieldName">
+                            Status : 
+                        </div>
+                     <div class="taskMaster">
+                        {{taskMaster.status}}
+                     </div>
+                       </div> -->
+                       <!-- <div class="masterDes" >
+                           <div class="taskMasterFieldName">
+                            Priority :
+                           </div>
+                      <div class="taskMaster">
+                        {{taskMaster.priority.name}}
+                      </div>
+                       </div> -->
+                   <!-- </div> -->
+                   <!-- <div class="masterDes"> -->
+                    <!-- <div class="masterDes" >
+                        <div class="taskMasterFieldName">Category :</div>
+                       <div class="taskMaster"> {{taskMaster.category.name}}</div>
+                       </div> -->
+                       <!-- <div class="masterDes" >
+                        <div class="taskMasterFieldName"> Name :</div>
+                        <div class="taskMaster">{{taskMaster.type.name}}</div>
+                       </div> -->
+                   <!-- </div> -->
+              </div>
+              </mat-radio-button>
+           </div>
+          </mat-radio-group>
+         
+        </div>
+        <!----radio btn end-->
+        <div>
+            <mat-radio-button style="margin-right: 20px;"  class="example-radio-button" (click)="createTask('CreatE')" >
+                <div style="display: flex;flex-wrap: wrap;">
+                    <div class="masterDes">
+                        <div class="taskMasterFieldName">Others</div>
+                    </div>
+                </div>
+
+            </mat-radio-button>
+        </div>
+    </div>
+        </div>
+    </mat-dialog-content>
+    <div *ngIf="errorMsg" class="errorMsg">
+        <div>{{assignMemberErrorMsg}}</div>
+    </div>
+    <div mat-dialog-actions class="actionBtn" style="display: flex;justify-content: center;align-items: center;" >
+         <!---cancel save btn start-->
+         <div style="text-align: center;">
+            <ng-container >
+                <div>
+                        <button type="button" class="btn btn-primary font-weight-bold cancelBtn" 
+                         (click)="closeDialog('Close')" >Cancel</button>
+                    <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="saveTaskMaster(assignTaskMaster)"
+                        >Ok</button>
+                </div>
+            </ng-container>
+        </div>
+
+        <!---cancel save btn end-->
+      </div>
+    <!----task master list end-->
+
+</section>

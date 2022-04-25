@@ -111,12 +111,12 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let file of uploadlist; let i = index;">
-                    <td data-title="File" class="pointlist" *ngIf="file.type === '.pdf'">
+                    <td data-title="File" class="pointlist" *ngIf="file.type === '.pdf'&& file">
                       <a [href]="file.url" download><i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;<u
                           style="color: #3c8dbc; ">{{file.originalName}}</u></a>
                     </td>
                     <td data-title="File" class="pointlist"
-                      *ngIf="file.type == '.png'|| file.type == '.jpg' ||file.type == '.PNG'|| file.type == '.jpeg' ">
+                      *ngIf="file && file.type == '.png'|| file.type == '.jpg' ||file.type == '.PNG'|| file.type == '.jpeg' ">
                       <img alt="{{file.originalName}}" src="{{file.url}}" id="prescription-image1"
                         style="width: 25px; height:25px;" class=" img-responsive pointer-cursor"
                         (click)="openImageModalRow(image_list_popup[0])">

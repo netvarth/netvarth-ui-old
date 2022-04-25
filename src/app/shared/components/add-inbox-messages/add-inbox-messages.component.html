@@ -1,6 +1,6 @@
 
 <form [formGroup]="amForm" class="ynw-common-form" [class.addinboxstyle]="isBusinessOwner=='false'" novalidate 
-    (keyup)="resetApiErrors()">
+    (keyup)="resetApiErrors()" [ngClass]="this.data.theme">
     <h1 class="mat-dialog-title">{{title}}
         <button #queue mat-dialog-close class="modal_close">
             <i class="fa fa-window-close" aria-hidden="true"></i>
