@@ -9,13 +9,12 @@ import { RouterModule, Routes } from "@angular/router";
 import { MatTabsModule } from "@angular/material/tabs";
 import { ViewLeadComponent } from "./view-lead.component";
 import { MenuModule } from "../../../../../business/home/menu/menu.module";
-import { AppointmentsComponent } from "./appointments/appointments.component";
-import { LeadActivityComponent } from "./lead-activity/lead-activity.component";
-import { ConnectionsComponent } from "./connections/connections.component";
-import { SubleadsComponent } from "./subleads/subleads.component";
-import { SelectAttachmentComponent } from "./select-attachment/select-attachment.component";
+// import { AppointmentsComponent } from "./appointments/appointments.component";
+// import { LeadActivityComponent } from "./lead-activity/lead-activity.component";
+// import { ConnectionsComponent } from "./connections/connections.component";
+// import { SelectAttachmentComponent } from "./select-attachment/select-attachment.component";
 import { MatSliderModule } from "@angular/material/slider";
-import { ActivitylogComponent } from "./activitylog/activitylog.component";
+// import { ActivitylogComponent } from "./activitylog/activitylog.component";
 import { NgCircleProgressModule } from "ng-circle-progress";
 import { FileService } from "../../../../../shared/services/file-service";
 const routes: Routes = [
@@ -27,12 +26,12 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     ViewLeadComponent,
-    AppointmentsComponent,
-    LeadActivityComponent,
-    ConnectionsComponent,
-    SubleadsComponent,
-    ActivitylogComponent,
-    SelectAttachmentComponent
+    // AppointmentsComponent,
+    // LeadActivityComponent,
+    // ConnectionsComponent,
+    // SubleadsComponent,
+    // ActivitylogComponent,
+    // SelectAttachmentComponent
   ],
   imports: [
     CommonModule,
