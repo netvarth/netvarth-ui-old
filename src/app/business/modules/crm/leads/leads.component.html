@@ -1,1 +1,646 @@
-<p>leads works!</p>
+<section class="card">
+    <div class="title-gb no-padding">
+      <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
+        <span></span>&nbsp;&nbsp;&nbsp;
+        Lead
+        <!-- <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i> -->
+      </div>
+    </div>
+  </section>
+  <section class="card col-md-12">
+    <div class="col-md-12 btnClass">
+      <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small" (click)="createLead('Create')">
+        <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
+         <i class="fa fa-plus"></i>&nbsp;Create Lead </button>
+      </a>
+    </div>
+    <div class="clearfix"></div>
+    <div class="startMatTab">
+      <mat-tab-group dynamicHeight mat-stretch-tabs (selectedTabChange)="tabChange($event)"
+        [selectedIndex]="selectedTab - 1">
+        <mat-tab class="mat-tab">
+          <ng-template mat-tab-label>
+            <span class="tab-number"><img class="img" src="/assets/images/crmImages/totaltask.PNG" /></span>
+            <span class="tab-text">Total Lead({{totalCount}})</span>
+            <!-- <div>
+             
+            </div>
+            <div class="totalCount">({{totalCount}})</div>&nbsp;
+            <div class="totalLeadName">Total Lead</div> -->
+          </ng-template>
+  
+  
+          <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+          <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
+            <div class="col-md-12 no-padding-small">
+              <div class="row">
+                <div class="card p0 w-dta">
+                  <div class="table-responsive dash-list">
+                    <table class="table" style="background-color: white;">
+                      <thead>
+                        <tr class="tble-filtr-tr heght">
+                          <th></th>
+                          <th class="head_color">Lead Details</th>
+                          <th class="head_color">Assignee</th>
+                          <!-- <th class="head_color">Duration</th> -->
+                          <th class="head_color">Status</th>
+                          <th class="head_color">Catogory</th>
+                          <th class="head_color">Type</th>
+                          <th class="head_color">Due Date</th>
+                          <th class="filter-fx-col">
+                            <table class="fltr-tbl">
+                              <tr>
+                                <td>
+                                  <span>
+                                    <i class="icon-filter-one" (click)="showFilterSidebar()"
+                                      [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
+                                      style="cursor: pointer;"></i>
+                                  </span>
+                                </td>
+                              </tr>
+                            </table>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+  
+                          <div>
+                            <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
+                              <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                                <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+                                  <span class="filter-head-title">Filters</span>
+                                  <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                                    (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                    [matTooltip]="'Close filter window'"></i>
+                                </div>
+                                <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
+                                <ul class="sidebar-menu accordion" id="accordion1">
+  
+  
+                                  <div class="card">
+                                    <div class="card-header">
+                                      <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                          data-target="#collapseStatus2" aria-expanded="false">
+                                          <div>
+                                            <div style="display: inline-block !important;">
+                                              <i class="fa fa-circle-o-notch"></i>
+                                            </div>
+                                            <span>&nbsp;Status</span>
+                                          </div>
+                                          <i class="fa fa-angle-down"></i>
+                                        </button>
+                                      </h2>
+                                    </div>
+                                    <div id="collapseStatus2" class="collapse in" data-parent="#accordion2">
+                                      <div class="card-body">
+                                        <div class="filter-checkbox-input">
+                                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                          </li>
+                                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                            *ngFor="let stat of leadStatusList[0];let index=i">
+                                            <mat-checkbox [checked]="statuses.indexOf(stat) !== -1"
+                                              [checked]="statuses.indexOf(stat.id) !== -1"
+                                              (change)="setFilterDataCheckbox('status', stat.id)">
+                                              {{stat.name}}</mat-checkbox>
+                                          </li>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="card">
+                                    <div class="card-header">
+                                      <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                          data-target="#collapseCategory3" aria-expanded="false">
+                                          <div>
+                                            <div style="display: inline-block !important;">
+                                              <i class="fa fa-circle-o-notch"></i>
+                                            </div>
+                                            <span>&nbsp;Category</span>
+                                          </div>
+                                          <i class="fa fa-angle-down"></i>
+                                        </button>
+                                      </h2>
+                                    </div>
+                                    <div id="collapseCategory3" class="collapse in" data-parent="#accordion2">
+                                      <div class="card-body">
+                                        <div class="filter-checkbox-input">
+                                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                          </li>
+                                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                            *ngFor="let cat of categoryListData[0];let index=i">
+                                            <mat-checkbox [checked]="categories.indexOf(cat) !== -1"
+                                              [checked]="categories.indexOf(cat.id) !== -1"
+                                              (change)="setFilterDataCheckbox('category', cat.id)">
+                                              {{cat.name}}</mat-checkbox>
+                                          </li>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="card">
+                                    <div class="card-header">
+                                      <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                          data-target="#collapseType3" aria-expanded="false">
+                                          <div>
+                                            <div style="display: inline-block !important;">
+                                              <i class="fa fa-circle-o-notch"></i>
+                                            </div>
+                                            <span>&nbsp;Type</span>
+                                          </div>
+                                          <i class="fa fa-angle-down"></i>
+                                        </button>
+                                      </h2>
+                                    </div>
+                                    <div id="collapseType3" class="collapse in" data-parent="#accordion2">
+                                      <div class="card-body">
+                                        <div class="filter-checkbox-input">
+                                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                          </li>
+                                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                            *ngFor="let typ of leadTypeList[0];let index=i">
+                                            <mat-checkbox [checked]="types.indexOf(typ) !== -1"
+                                              [checked]="types.indexOf(typ.id) !== -1"
+                                              (change)="setFilterDataCheckbox('type', typ.id)">
+                                              {{typ.name}}</mat-checkbox>
+                                          </li>
+                                        </div>
+                                      </div>
+                                    </div>
+  
+                                  </div>
+                                  <!-- <div class="card">
+                                    <div class="card-header">
+                                      <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                          data-target="#collapseId3" aria-expanded="false">
+                                          <div>
+                                            <div style="display: inline-block !important;">
+                                              <i class="fa fa-id-badge"></i>
+                                            </div>
+                                            <span>&nbsp;Title</span>
+                                          </div>
+                                          <i class="fa fa-angle-down"></i>
+                                        </button>
+                                      </h2>
+                                    </div>
+                                    <div id="collapseId3" class="collapse in" data-parent="#accordion3">
+                                      <div class="card-body">
+                                        <div class="filterTextinput filter-text-input">
+                                          <li class="filterli filter-li">
+                                            <input type="text" autocomplete="off" [(ngModel)]="filter.title"
+                                              class="filterTextbox filter-textbox" (keyup)="keyPressed()"
+                                              placeholder="Enter Lead Title">
+                                          </li>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div> -->
+                                </ul>
+                              </section>
+                              <div class="filter-footer mt-1 mx-auto text-center" *ngIf="filterapplied === true">
+                                <button class="btn reset-btn mt-4" (click)="clearFilter()">
+                                  <i class="fa fa-undo"></i>&nbsp;Reset
+                                </button>
+                                <button class="btn apply-btn" (click)="getTotalLead()">
+                                  <i class="fa fa-check"></i>&nbsp;Apply
+                                </button>
+                              </div>
+                            </aside>
+                          </div>
+  
+                        </tr>
+                      </tbody>
+                      <tbody>
+                        <ng-container *ngIf="totalLeadList.length === 0">
+                          <tr>
+                            <td class="nodatafound" colspan="5">{{no_leads_cap}}</td>
+                          </tr>
+                        </ng-container>
+                        <ng-container *ngIf="totalLeadList.length>0">
+                          <tr *ngFor="let lead of totalLeadList; let i=index" (click)="viewLead(lead.leadUid,lead)">
+  
+                            <td>
+                              <circle-progress class="circle__progress" [percent]="lead.progress" [animation]="true"
+                                [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
+                                [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
+                                [unitsFontWeight]="'700'" [subtitle]="lead.status.name" [subtitleFontSize]="'7'"
+                                [lazy]="false"></circle-progress>
+                            </td>
+  
+                            <td data-title="Lead Details" class="td1">{{lead.title}}</td>
+                            <td data-title="Lead Details" class="td2"><span
+                                *ngIf="lead.assignee">{{lead.assignee.name}}</span></td>
+                            <!-- <td data-title="Duration" class="td3"><span
+                                *ngIf="lead.estDuration && lead.estDuration.days">{{lead.estDuration.days}} Days</span>&nbsp;
+                              <span *ngIf="lead.estDuration && lead.estDuration.hours">{{lead.estDuration.hours}}
+                                Hours</span></td> -->
+                            <td data-title="Status" class="td3">{{lead.status.name}}</td>
+                            <td data-title="Category" class="td4">{{lead.category.name}}</td>
+                            <td data-title="Type" class="td5">{{lead.type.name}}</td>
+                            <td data-title="Due Date" class="td6">{{lead.dueDate | date:newDateFormat}}</td>
+                            <!-- <td class="filter-fx-col"></td> -->
+                            <td >
+                              <div class="copy">
+                                <span class="">
+                                  <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
+                                    (click)="stopprop($event);">
+                                    <mat-icon>more_vert</mat-icon>
+                                  </button>
+                                </span>
+                                <mat-menu #appMenu="matMenu">
+                                  <button mat-menu-item (click)="openLeadCompletion(lead)" *ngIf="lead.status.name !='Completed'">
+                                    <i class="text-success fa fa-check-square"></i> Mark as Done
+                                  </button>
+                                  <button mat-menu-item (click)="openEditLead(lead,'Update')"  *ngIf="lead.status.name !='Completed'">
+                                    <i class="text-info fa fa-edit"></i>Edit
+                                  </button>
+                                  <button mat-menu-item (click)="openDialogStatusChange(lead)" >
+                                   <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
+                                  </button>
+  
+                                </mat-menu>
+                              </div>
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                    <div class="search_paging" *ngIf="loadComplete">
+                      <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                        (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
+                      </app-pager>
+                    </div>
+  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+        </mat-tab>
+        <mat-tab class="mat-tab">
+          <ng-template mat-tab-label>
+            <span class="tab-number"><img class="img" src="/assets/images/crmImages/handHoldingClock.PNG" /></span>
+            <span class="tab-text">In Progress({{inprogressCount}})</span>
+            <!-- <div>
+              <img class="img" src="/assets/images/crmImages/handHoldingClock.PNG" />
+            </div>
+            <div class="totalCount">({{inprogressCount}})</div>&nbsp;
+            <div class="totalLeadName">In Progress</div> -->
+          </ng-template>
+          <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+          <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
+            <div class="col-md-12 no-padding-small">
+              <div class="row">
+                <div class="card p0 w-dta">
+                  <div class="table-responsive dash-list">
+                    <table class="table">
+                      <thead>
+                        <tr class="tble-filtr-tr heght">
+                          <th style="width: 30px;"></th>
+                          <th class="head_color">Lead Details</th>
+                          <th class="head_color">Assignee</th>
+                          <!-- <th class="head_color">Duration</th> -->
+                          <th class="head_color">Status</th>
+                          <th class="head_color">Catogory</th>
+                          <th class="head_color">Type</th>
+                          <th class="head_color">Due Date</th>
+  
+                          <th class="filter-fx-col">
+                            <table class="fltr-tbl">
+                              <tr>
+                                <td>
+                                  <span>
+                                    <!-- <i class="icon-filter-one" (click)="showFilterSidebar()"
+                                      [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
+                                      style="cursor: pointer;"></i> -->
+                                  </span>
+                                </td>
+                              </tr>
+                            </table>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+  
+                          <div>
+  
+                          </div>
+  
+                        </tr>
+                      </tbody>
+                      <tbody>
+                        <ng-container *ngIf="totalInprogressList.length === 0">
+                          <tr>
+                            <td class="nodatafound" colspan="5">{{no_leads_cap}}</td>
+                          </tr>
+                        </ng-container>
+                        <ng-container *ngIf="totalInprogressList.length>0">
+                          <tr *ngFor="let lead of totalInprogressList; let i=index" (click)="viewLead(lead.leadUid,lead)">
+                            <td>
+                              <circle-progress class="circle__progress" [percent]="lead.progress" [animation]="true"
+                                [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
+                                [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
+                                [unitsFontWeight]="'700'" [subtitle]="lead.status.name" [subtitleFontSize]="'7'"
+                                [lazy]="false"></circle-progress>
+                            </td>
+                            <td data-title="Lead Details" class="td1">{{lead.title}}</td>
+                            <td data-title="Lead Details" class="td2"><span
+                                *ngIf="lead.assignee">{{lead.assignee.name}}</span></td>
+                            <!-- <td data-title="Duration" class="td3"><span
+                              *ngIf="lead.estDuration && lead.estDuration.days">{{lead.estDuration.days}} Days</span>&nbsp;
+                            <span *ngIf="lead.estDuration && lead.estDuration.hours">{{lead.estDuration.hours}}
+                              Hours</span></td> -->
+                            <td data-title="Status" class="td3">{{lead.status.name}}</td>
+                            <td data-title="Category" class="td4">{{lead.category.name}}</td>
+                            <td data-title="Type" class="td5">{{lead.type.name}}</td>
+                            <td data-title="Due Date" class="td6">{{lead.dueDate | date:newDateFormat}}</td>
+                            <td >
+                              <div class="copy">
+                                <span class="">
+                                  <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
+                                    (click)="stopprop($event);">
+                                    <mat-icon>more_vert</mat-icon>
+                                  </button>
+                                </span>
+                                <mat-menu #appMenu="matMenu">
+                                  <button mat-menu-item (click)="openLeadCompletion(lead)" *ngIf="lead.status.name !='Completed'">
+                                    <i class="text-success fa fa-check-square"></i> Mark as Done
+                                  </button>
+                                  <button mat-menu-item (click)="openEditLead(lead,'Update')"  *ngIf="lead.status.name !='Completed'">
+                                    <i class="text-info fa fa-edit"></i>Edit
+                                  </button>
+                                  <button mat-menu-item (click)="openDialogStatusChange(lead)" >
+                                   <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
+                                  </button>
+  
+                                </mat-menu>
+                              </div>
+                            </td>
+                            <!-- <td class="filter-fx-col"></td> -->
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                    <div class="search_paging" *ngIf="loadComplete1">
+                      <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                        (pagerclick)="handle_pageclick_inprogress($event)" [curpage]="pagination.startpageval">
+                      </app-pager>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab class="mat-tab">
+          <ng-template mat-tab-label>
+            <span class="tab-number"><img class="img" src="/assets/images/crmImages/completed.PNG" /></span>
+            <span class="tab-text">Completed({{completedCount}})</span>
+            <!-- <div>
+              <img class="img" src="/assets/images/crmImages/completed.PNG" />
+            </div>
+            <div class="totalCount">({{completedCount}})</div>&nbsp;
+            <div class="totalLeadName">Completed</div> -->
+          </ng-template>
+          <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+          <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
+            <div class="col-md-12 no-padding-small">
+              <div class="row">
+                <div class="card p0 w-dta">
+                  <div class="table-responsive dash-list">
+                    <table class="table">
+                      <thead>
+                        <tr class="tble-filtr-tr heght">
+                          <th style="width: 30px;"></th>
+                          <th class="head_color">Lead Details</th>
+                          <th class="head_color">Assignee</th>
+                          <!-- <th class="head_color">Duration</th> -->
+                          <th class="head_color">Status</th>
+                          <th class="head_color">Catogory</th>
+                          <th class="head_color">Type</th>
+                          <th class="head_color">Due Date</th>
+                          <th class="filter-fx-col">
+                            <table class="fltr-tbl">
+                              <tr>
+                                <td>
+                                  <span>
+                                    <!-- <i class="icon-filter-one" (click)="showFilterSidebar()"
+                                      [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
+                                      style="cursor: pointer;"></i> -->
+                                  </span>
+                                </td>
+                              </tr>
+                            </table>
+                          </th>
+  
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+  
+                          <div>
+  
+                          </div>
+  
+                        </tr>
+                      </tbody>
+                      <tbody>
+                        <ng-container *ngIf="totalCompletedList.length === 0">
+                          <tr>
+                            <td class="nodatafound" colspan="5">{{no_leads_cap}}</td>
+                          </tr>
+                        </ng-container>
+                        <ng-container *ngIf="totalCompletedList.length>0">
+                          <tr *ngFor="let lead of totalCompletedList; let i=index" (click)="viewLead(lead.leadUid,lead)">
+                            <td>
+                              <circle-progress class="circle__progress" [percent]="lead.progress" [animation]="true"
+                                [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
+                                [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
+                                [unitsFontWeight]="'700'" [subtitle]="lead.status.name" [subtitleFontSize]="'7'"
+                                [lazy]="false"></circle-progress>
+                            </td>
+                            <td data-title="Lead Details" class="td1">{{lead.title}}</td>
+                            <td data-title="Lead Details" class="td2"><span
+                                *ngIf="lead.assignee">{{lead.assignee.name}}</span></td>
+                            <!-- <td data-title="Duration" class="td3"><span
+                              *ngIf="lead.estDuration && lead.estDuration.days">{{lead.estDuration.days}} Days</span>&nbsp;
+                            <span *ngIf="lead.estDuration && lead.estDuration.hours">{{lead.estDuration.hours}}
+                              Hours</span></td> -->
+                            <td data-title="Status" class="td2">{{lead.status.name}}</td>
+                            <td data-title="Category" class="td4">{{lead.category.name}}</td>
+                            <td data-title="Type" class="td4">{{lead.type.name}}</td>
+                            <td data-title="Due Date" class="td4">{{lead.dueDate | date:newDateFormat}}</td>
+                            <td >
+                              <div class="copy">
+                                <span class="">
+                                  <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
+                                    (click)="stopprop($event);">
+                                    <mat-icon>more_vert</mat-icon>
+                                  </button>
+                                </span>
+                                <mat-menu #appMenu="matMenu">
+                                  <button  mat-menu-item (click)="openLeadCompletion(lead)" *ngIf="lead.status.name !='Completed'">
+                                    <i class="text-success fa fa-check-square"></i> Mark as Done
+                                  </button>
+                                  <button  mat-menu-item (click)="openEditLead(lead,'Update')"  *ngIf="lead.status.name !='Completed'">
+                                    <i class="text-info fa fa-edit"></i>Edit
+                                  </button>
+                                  <button mat-menu-item (click)="openDialogStatusChange(lead)" >
+                                   <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
+                                  </button>
+  
+                                </mat-menu>
+                              </div>
+                            </td>
+                            <!-- <mat-menu #appMenu="matMenu">
+                              <button mat-menu-item (click)="openLeadCompletion(lead)" *ngIf="lead.status.name !='Completed'">
+                                <i class="text-success fa fa-check-square"></i> Mark as Done
+                              </button>
+                              <button mat-menu-item (click)="openEditLead(lead,'Update')"  *ngIf="lead.status.name !='Completed'">
+                                <i class="text-info fa fa-edit"></i>Edit
+                              </button>
+                              <button mat-menu-item (click)="openDialogStatusChange(lead)" >
+                               <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
+                              </button>
+  
+                            </mat-menu> -->
+                            <!-- <td class="filter-fx-col"></td> -->
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                    <div class="search_paging" *ngIf="loadComplete2">
+                      <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                        (pagerclick)="handle_pageclick_completed($event)" [curpage]="pagination.startpageval">
+                      </app-pager>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+  
+        <!-- <mat-tab class="mat-tab">
+          <ng-template mat-tab-label>
+            <div>
+              <img class="img" src="/assets/images/crmImages/deyayed.PNG" />
+            </div>
+            <div class="totalCount">({{delayedCount}})</div>
+            <div class="totalLeadName">Delayed</div>
+          </ng-template>
+  
+          <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+          <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
+            <div class="col-md-12 no-padding-small">
+              <div class="row">
+                <div class="card p0 w-dta">
+                  <div class="table-responsive dash-list">
+                    <table class="table">
+                      <thead>
+                        <tr class="tble-filtr-tr heght">
+                          <th></th>
+                          <th class="head_color">Lead Details</th>
+                      
+                          <th class="head_color">Status</th>
+                          <th class="head_color">Catogory</th>
+                          <th class="head_color">Type</th>
+                          <th class="head_color">Due Date</th>
+                          <th class="filter-fx-col">
+                            <table class="fltr-tbl">
+                              <tr>
+                                <td>
+                                  <span>
+                                    
+                                  </span>
+                                </td>
+                              </tr>
+                            </table>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+  
+                          <div>
+  
+                          </div>
+  
+                        </tr>
+                      </tbody>
+                      <tbody>
+                        <ng-container *ngIf="totalDelayedList.length === 0">
+                          <tr>
+                            <td class="nodatafound" colspan="5">{{no_leads_cap}}</td>
+                          </tr>
+                        </ng-container>
+                        <ng-container *ngIf="totalDelayedList.length>0">
+                          <tr *ngFor="let lead of totalDelayedList; let i=index" (click)="viewLead(lead.leadUid,lead)">
+                            <td >&nbsp; &nbsp;<circle-progress class="circle__progress" 
+                              [percent]="lead.progress"
+                              [animation]="true"
+                              [animationDuration]="300"
+                              [startFromZero]="true"
+                              [showInnerStroke]="true"
+                              [titleFontSize]="'10'"
+                              [titleFontWeight]="'900'"
+                              [height]="'100'"
+                              [unitsFontSize]="'10'"
+                              [unitsFontWeight]="'700'"
+                              [subtitle]="lead.status.name"
+                              [subtitleFontSize]="'7'"
+                              [lazy]="false"
+             ></circle-progress></td>
+                            <td data-title="Lead Details" class="td1">{{lead.title}}</td>
+                          
+                            <td data-title="Status" class="td2">{{lead.status.name}}</td>
+                            <td data-title="Category" class="td4">{{lead.category.name}}</td>
+                            <td data-title="Type" class="td4">{{lead.type.name}}</td>
+                            <td data-title="Due Date" class="td4">{{lead.dueDate | date:newDateFormat}}</td>
+                            <td>
+                              <div class="copy">
+                                <span class="">
+                                  <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
+                                    (click)="stopprop($event);">
+                                    <mat-icon>more_vert</mat-icon>
+                                  </button>
+                                </span>
+                                <mat-menu #appMenu="matMenu">
+                                  <button mat-menu-item>
+                                    <button mat-menu-item (click)="openLeadCompletion(lead)">
+                                      Mrak as Done
+                                    </button>
+                                  </button>
+                                  <button mat-menu-item (click)="openEditLead(lead,'Update')">
+                                    Edit
+                                  </button>
+  
+                                </mat-menu>
+                              </div>
+                            </td>
+                            
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                    <div class="search_paging" *ngIf="loadComplete3">
+                      <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                        (pagerclick)="handle_pageclick_delayed($event)" [curpage]="pagination.startpageval">
+                      </app-pager>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab> -->
+      </mat-tab-group>
+    </div>
+  
+  </section>

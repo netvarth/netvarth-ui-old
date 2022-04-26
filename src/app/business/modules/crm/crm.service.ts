@@ -8,10 +8,13 @@ import { ServiceMeta } from '../../../shared/services/service-meta';
 })
 export class CrmService {
   public taskToCraeteViaServiceData:any;
+  public leadToCraeteViaServiceData:any;
+  public leadActivityName:any;
   public taskActivityName:any;
   public taskToviewViaServiceData:any;
   public subtaskToView:any;
   public taskMasterToCreateServiceData:any;
+  public leadMasterToCreateServiceData:any;
   
 
   constructor(
@@ -48,11 +51,30 @@ export class CrmService {
       const url ='provider/task/priority';
       return this.servicemeta.httpGet(url, null);
     }
+
+
+    getLeadType(){
+      const url ='provider/lead/type';
+      return this.servicemeta.httpGet(url, null);
+    }
+
+    getLeadStatus(){
+      const url ='provider/lead/status';
+      return this.servicemeta.httpGet(url, null);
+    }
+    getLeadPriority(){
+      const url ='provider/lead/priority';
+      return this.servicemeta.httpGet(url, null);
+    }
     // addMembers(data) {
     //   return this.servicemeta.httpPost('provider/familyMember', data);
     // }
     addTask(data){
       return this.servicemeta.httpPost('provider/task', data);
+    }
+
+    addLead(data){
+      return this.servicemeta.httpPost('provider/lead', data);
     }
     getProviderLocations() {
       return this.servicemeta.httpGet('provider/locations');
@@ -66,18 +88,40 @@ export class CrmService {
       const url = 'provider/task/provider'
       return this.servicemeta.httpGet(url, null, filter);
     }
+    getTotalLead(filter = {}) {
+      const url = 'provider/lead/'
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+
     getTotalTaskCount(filter) {
       const url = 'provider/task/provider/count';
       return this.servicemeta.httpGet(url, null, filter);
     }
+
+    getTotalLeadCount(filter) {
+      const url = 'provider/lead/count';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+
     getInprogressTask(filter = {}) {
       const url = 'provider/task/provider?status-eq=3';
       return this.servicemeta.httpGet(url, null, filter);
     }
+
+    getInprogressLead(filter = {}) {
+      const url = 'provider/lead?status-eq=3';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+
     getInprogressTaskCount(filter) {
       const url = 'provider/task/provider/count?status-eq=3';
       return this.servicemeta.httpGet(url, null, filter);
     }
+    getInprogressLeadCount(filter) {
+      const url = 'provider/lead/count?status-eq=3';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+
     getCompletedTask(filter = {}) {
       const url = 'provider/task/provider?status-eq=5';
       return this.servicemeta.httpGet(url, null, filter);
@@ -100,6 +144,31 @@ export class CrmService {
       return this.servicemeta.httpGet(url);
     }
 
+
+
+
+    getCompletedLead(filter = {}) {
+      const url = 'provider/lead?status-eq=5';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+    getCompletedLeadCount(filter) {
+      const url = 'provider/lead/count?status-eq=5';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+    getDelayedLead(filter = {}) {
+      const url = 'provider/lead?status-eq=4';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+    getDelayedLeadCount(filter) {
+      const url = 'provider/lead/count?status-eq=4';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+    getLeadDetails(leadUid)
+    {
+      const url = 'provider/lead/' + leadUid;
+      return this.servicemeta.httpGet(url);
+    }
+
     getSubTaskDetails(taskUid)
     {
       const url = 'provider/task/provider';
@@ -112,6 +181,13 @@ export class CrmService {
       console.log(updateTaskData)
       const url='provider/task/'+ taskUid
       return this.servicemeta.httpPut(url, updateTaskData);
+    }
+
+
+    updateLead(leadUid ,updateLeadData){
+      console.log(updateLeadData)
+      const url='provider/task/'+ leadUid
+      return this.servicemeta.httpPut(url, updateLeadData);
     }
     addAssigneeMember(taskUid,userId){
       const url='provider/task/'+taskUid + '/manager' + userId
@@ -175,6 +251,11 @@ export class CrmService {
     }
     getTaskMasterList(){
       const url = 'provider/task/master';
+      return this.servicemeta.httpGet(url);
+    }
+
+    getLeadMasterList(){
+      const url = 'provider/lead/master';
       return this.servicemeta.httpGet(url);
     }
 
