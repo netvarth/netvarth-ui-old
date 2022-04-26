@@ -8,7 +8,8 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 @Component({
     selector: 'app-notifications',
-    templateUrl: './notifications.component.html'
+    templateUrl: './notifications.component.html',
+    styleUrls:['./notifications.component.css']
 })
 export class NotificationsComponent implements OnInit {
     smsGlobalStatus;

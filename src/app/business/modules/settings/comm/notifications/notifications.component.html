@@ -2,7 +2,7 @@
     <div class="card title-gb">
         <h5 class="mgn-up-10">
             <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Notifications
+            Communications and Notifications
         </h5>
     </div>
 </section>
@@ -11,22 +11,83 @@
         <div class="col-md-12 no-padding-small">
             <div class="row">
                 <div class="card p0 ynw-common-form-nm jdn-pg">
-                    <div class="paysettings-tab col-md-6 col-xs-12 col-sm-12 no-padding">
+                    <div class="paysettings-tab col-md-6 col-xs-12 col-sm-12 ">
                         <div class=" col-md-12 col-xs-12 col-sm-12 mgn-up-20 ">
-                            <label style="display: flex">Send Notifications&nbsp;&nbsp;
+                            <div class="black bold h5">
+                                <!-- <i class="fa fa-bell-o fa-sm" aria-hidden="true"></i> -->
+                                <img src="../../../../../../../assets/images/Bell.png" class="notif-ring">
+                                &nbsp;Notifications &nbsp;
+                                <mat-slide-toggle class="example-margin" [(ngModel)]="notificationStatus"
+                                (change)="handlenotificationSettings($event)">
+                            </mat-slide-toggle>
+                            </div>
+                            <div class="form-level-settings mgn-lt-20 mgn-up-10"> patient and doctor
+                                notification settings<a class="learnmore-pointer" id="customer-help"
+                                    (click)="learnmore_clicked('notifications', $event)">Learn
+                                    More</a></div>
+                            <div class="form-level-settings mgn-lt-20 mgn-up-10">
+                                Send Notifications&nbsp;&nbsp;
+                                <mat-slide-toggle class="example-margin" id="send-noti" [(ngModel)]="notificationStatus"
+                                    (change)="handlenotificationSettings($event)">
+                                </mat-slide-toggle>
+                            </div>
+                            <div class="form-level-settings mgn-lt-20">
+                                Enable SMS Notifications&nbsp;&nbsp;<mat-slide-toggle class="example-margin" id="send-noti" [(ngModel)]="notificationStatus"
+                                (change)="handlenotificationSettings($event)">
+                            </mat-slide-toggle>
+                            </div>
+                            <div class="form-level-settings mgn-lt-20 mgn-up-20 text-primary mgn-bt-20">
+                                <label style="display: flex;font-weight: bold;">Remaining SMS Credits: <span style="color: dodgerblue; font-weight: bold;">
+                                    &nbsp;{{smsCredits}}</span> </label>
+                                <ul class="info-lst serviceadd-info">
+                                    <li style="color:dodgerblue;">{{genrl_notification_cap}} <a class="pointlist" matTooltip="Go to Add-ons"
+                                            routerLink="/provider/license/addons">Jaldee Messaging ADD-ON.</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="container mgn-lt-20 mgn-up-50">
+                                <div class="row d-flex border">
+                                    <div class="doc-notification-card col-sm-8 col-md-4 col-lg-4 m-2">
+                                        <div class="notification-img">
+                                            <img src="../../../../../../../assets/images/doctor.png" alt="doctor.png" />
+                                        </div>
+                                        <div class="red-border"></div>
+                                        <div class="notification-body">
+                                            <p class="text-danger bold p-0">{{provdr_domain_name|capitalizeFirst}} Notifications                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="pat-notification-card col-sm-8 col-md-4 col-lg-4 m-2">
+                                        <div class="notification-img"> 
+                                            <img src="../../../../../../../assets/images/patient.png" alt="patient.png" />
+                                        </div>
+                                        <div class="green-border"></div>
+                                        <div class="notification-body">
+                                            <p class="text-success bold p-0">{{cust_domain_name|capitalizeFirst}} Notifications</p>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col text-danger bold">
+                                        {{provdr_domain_name|capitalizeFirst}} Notifications
+                                    </div>
+                                    <div class="col text-success bold">
+                                        {{cust_domain_name|capitalizeFirst}} Notifications
+                                    </div> -->
+                                </div>
+
+                            </div>
+                            <!-- <label style="display: flex">Send Notifications&nbsp;&nbsp;
                                 <mat-slide-toggle class="example-margin" [(ngModel)]="notificationStatus"
                                     (change)="handlenotificationSettings($event)">
                                 </mat-slide-toggle>
-                            </label>
+                            </label> -->
                         </div>
-                        <div class=" col-md-12 col-xs-12 col-sm-12 mgn-up-20 ">
+                        <!-- <div class=" col-md-12 col-xs-12 col-sm-12 mgn-up-20 ">
                             <label style="display: flex">Enable SMS Notifications&nbsp;&nbsp;
                                 <mat-slide-toggle class="example-margin" [(ngModel)]="smsGlobalStatus"
                                     (change)="handleGlobalSMSSettings($event)">
                                 </mat-slide-toggle>
                             </label>
-                        </div>
-                        <div class=" col-md-12 col-xs-12 col-sm-12 mgn-up-20 " style="padding-bottom: 10px;">
+                        </div> -->
+                        <!-- <div class=" col-md-12 col-xs-12 col-sm-12 mgn-up-20 " style="padding-bottom: 10px;">
                             <label style="display: flex">Remaining SMS Credits: <span class="bold">
                                     &nbsp;{{smsCredits}}</span> </label>
                             <ul class="info-lst serviceadd-info">
@@ -34,11 +95,11 @@
                                         routerLink="/provider/license/addons">Jaldee Messaging ADD-ON.</a>
                                 </li>
                             </ul>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoConsumer()">
                         <h2>{{cust_domain_name|capitalizeFirst}}</h2>
@@ -47,8 +108,8 @@
                                 More</a></span>
                     </span>
                 </div>
-            </div>
-            <div class="row">
+            </div> -->
+            <!-- <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoProvider()"
                         *ngIf="sub_domain == ('hospital'|| 'dentalHosp' ||'alternateMedicineHosp'||'veterinaryhospital' || 'hoslisticHealth' )&& accountType == 'BRANCH' && isMultilevel">
@@ -65,7 +126,7 @@
                                 More</a></span>
                     </span>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="clearfix"></div>
     </div>
