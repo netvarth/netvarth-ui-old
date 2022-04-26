@@ -2390,7 +2390,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
      * Set communication parameters
      * @param parentCustomer logged in customer
      */
-    initCommunications(parentCustomer) {
+     initCommunications(parentCustomer) {
         console.log("initCommunications", parentCustomer);
         const _this = this;
         if (parentCustomer.userProfile.email) {
@@ -2398,8 +2398,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         } else {
             _this.commObj['communicationEmail'] = _this.parentCustomer.userProfile.email;
         }
-        if (parentCustomer.userProfile.whatsAppNum ) {
-            // && parentCustomer.userProfile.whatsAppNum.number.trim() != ''
+        if (parentCustomer.userProfile.whatsAppNum && parentCustomer.userProfile.whatsAppNum.number.trim() != '') {
             _this.commObj['comWhatsappNo'] = parentCustomer.userProfile.whatsAppNum.number;
             _this.commObj['comWhatsappCountryCode'] = parentCustomer.userProfile.whatsAppNum.countryCode;
         } else {

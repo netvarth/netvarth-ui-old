@@ -627,8 +627,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div>
-                                                    <hr *ngIf="(s3CouponsList.JC.length > 0) && type != 'waitlistreschedule'||(s3CouponsList.OWN.length > 0) && type != 'waitlistreschedule'" />
-                                                    <div class="payment-section-details"
+                                                    <hr  />
+                                                    <hr
+                                                    *ngIf="(s3CouponsList.JC.length > 0) && type != 'waitlistreschedule'||(s3CouponsList.OWN.length > 0) && type != 'waitlistreschedule'" />
+                            <label class="question-header" *ngIf="type != 'waitlistreschedule' && paymentLength>0 && paymentDetails">Payment
+                                Details</label><br />
+                                                    <div class="payment-section-details mgn-lt-10"
                                                         *ngIf="selectedService && selectedService.isPrePayment">
                                                         <div>
                                                             <div class="web">
@@ -636,7 +640,7 @@
                                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                                     <span *ngIf="paymentDetails.showPrice"
                                                                         class="ser_price no-mgn-bt bold mgn-rt-10">Service
-                                                                        Price :
+                                                                        Price :ss
                                                                         <span
                                                                             class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
                                                                             | currency:'&#8377;'}}</span></span>
@@ -654,7 +658,7 @@
                                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
                                                                     <span *ngIf="paymentDetails.showPrice"
                                                                         class="ser_price no-mgn-bt bold mgn-rt-10">Service
-                                                                        Price :
+                                                                        Price :bgg
                                                                         <span
                                                                             class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
                                                                             | currency:'&#8377;'}}</span></span>

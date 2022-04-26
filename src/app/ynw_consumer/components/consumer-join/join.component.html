@@ -22,14 +22,14 @@
 
 
                 <h1 class="mgn-bt-20">Let's Start</h1>
-                <div class="form-group mobile-no">
+                <div class="form-group mobile-no" >
                     <mat-label for="phone">Enter your Mobile Number</mat-label>
                     <ngx-intl-tel-input [cssClass]="'custom'" [preferredCountries]="preferredCountries"
                         [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
                         [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
                         [selectFirstCountry]="false" [maxLength]="15" [phoneValidation]="true"
                         [selectedCountryISO]="selectedCountry" [separateDialCode]="separateDialCode"
-                        [numberFormat]="PhoneNumberFormat.National" name="phone" formControlName="phone">
+                        [numberFormat]="PhoneNumberFormat.National" name="phone" formControlName="phone" (keypress)="resetPhone()">
                     </ngx-intl-tel-input>
                     <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div>
                 </div>

@@ -249,9 +249,11 @@ export class InboxOuterComponent implements OnInit {
 
             this.scrollDone = false;
             this.replyMsg = null;
-            this.getInboxMessages();
             this.clearImg();
             this.sendMessageCompleted = true;
+            setTimeout(() => {
+              this.getInboxMessages();
+            }, 500);            
           },
           error => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

@@ -688,6 +688,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     appointmentDateChanged(appmtDate) {
+        console.log("In Appointment Date Changed Method:", appmtDate);
         this.selectedSlots = [];
         this.appmtDate = appmtDate;
         this.isFutureDate = this.dateTimeProcessor.isFutureDate(this.serverDate, this.appmtDate);

@@ -162,6 +162,9 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   clearPhoneExists() {
     this.phoneExists = false;
   }
+  resetPhone() {
+    this.phoneError = null;
+  }
   onSubmit(data) {
     console.log(data);
     console.log(this.data);

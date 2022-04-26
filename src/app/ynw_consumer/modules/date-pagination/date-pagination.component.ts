@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import * as moment from 'moment';
+import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 
 @Component({
   selector: 'app-date-pagination',
@@ -24,13 +25,16 @@ export class DatePaginationComponent implements OnInit {
   prev_date_value_1: string;
   prev_date_value_2: string;
   previous_date_handling_btn: boolean;
+  constructor(private dateTimeProcessor: DateTimeProcessor) {
+
+  }
 
   ngOnInit(): void {
-    console.log("Selected Date:", this.selected_date);
+    // console.log("Selected Date:", this.selected_date);
     this.minDate = new Date();
     this.maxDate = new Date((this.minDate.getFullYear() + 4), 12, 31);
     this.minDate = moment(this.minDate).format("YYYY-MM-DD");
-    console.log(this.minDate);
+    // console.log(this.minDate);
     this.previous_date_handling_btn = false;
     // if (this.type == "waitlistreschedule") {
     //   this.sel_checkindate = this.hold_checkindate
@@ -57,10 +61,12 @@ export class DatePaginationComponent implements OnInit {
   }
 
   next_date(n) {
+    console.log("Selected Date:", this.selected_date);
     let tommorow = new Date(this.selected_date);
+    console.log("Tommorow Date:", this.selected_date);
     tommorow.setDate(tommorow.getDate() + n);
     this.default_value = this.week[tommorow.getDay()] + this.month[tommorow.getMonth()] + tommorow.getDate();
-    this.selected_date = new Date(tommorow).toISOString().slice(0, 10);
+    this.selected_date = this.dateTimeProcessor.getStringFromDate_YYYYMMDD(new Date(tommorow));
     // this.selectedDate = this.sel_checkindate;
     tommorow.setDate(tommorow.getDate() + 1);
     this.next_date_value = this.week[tommorow.getDay()] + this.month[tommorow.getMonth()] + tommorow.getDate();
@@ -74,6 +80,7 @@ export class DatePaginationComponent implements OnInit {
     this.prev_date_value_1 = this.week[tommorow.getDay()] + this.month[tommorow.getMonth()] + tommorow.getDate();
     tommorow.setDate(tommorow.getDate() - 1);
     this.prev_date_value_2 = this.week[tommorow.getDay()] + this.month[tommorow.getMonth()] + tommorow.getDate();
+    console.log("Result Date:", this.selected_date);
     this.date_change_event.emit(this.selected_date);
     this.date_handling_btn()
   }
@@ -100,9 +107,10 @@ export class DatePaginationComponent implements OnInit {
 
   date_value_changed() {
     this.next_date(0);
-    this.date_change_event.emit(this.selected_date);
-    // this.selectedDate = this.sel_checkindate;
-    this.date_handling_btn();
+    // console.log("Date changed:", this.selected_date);
+    // this.date_change_event.emit(this.selected_date);
+    // // this.selectedDate = this.sel_checkindate;
+    // this.date_handling_btn();
   }
 
   date_handling_btn() {

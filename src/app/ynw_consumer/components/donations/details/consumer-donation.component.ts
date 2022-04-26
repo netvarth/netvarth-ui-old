@@ -658,6 +658,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         const _this = this;
         _this.api_loading = true;
         if (_this.from_iOS) {
+            delete post_Data['providerConsumer'];
             _this.sharedServices.generateDonationLink(_this.accountId, post_Data).subscribe(
                 (paymentLinkResponse: any) => {
                     console.log("Payment Link:", paymentLinkResponse);
