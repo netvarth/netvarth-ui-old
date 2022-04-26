@@ -139,6 +139,25 @@ export class TasksComponent implements OnInit {
   loadComplete3 = false;
   public taskMasterList:any=[];
   public arr:any;
+  public taskMasterDuplicate:any=[];
+  public taskMasterDescxription:any=[];
+  public taskMasterOtherJSON:any=[
+    {
+      // account: 126859,
+      attachments: [],
+      category: {id: 1, name: 'N/A'},
+      description: "General Task For Employees",
+      estDuration: {days: 0, hours: 0, minutes: 0},
+      id: 1,
+      notes: [],
+      // parentTaskId: 0,
+      priority: {id: 1, name: 'Low'},
+      status: "Enable",
+      templateName: "General Template 1",
+      title: "Others",
+      type: {id: 1, name: 'N/A'}
+    }
+  ]
   constructor(
     private locationobj: Location,
     private groupService: GroupStorageService,
@@ -434,13 +453,52 @@ export class TasksComponent implements OnInit {
 
   }
   getTaskmaster(){
-    this.crmService.getTaskMasterList().subscribe((response)=>{
+    this.crmService.getTaskMasterList().subscribe((response:any)=>{
       console.log('TaskMasterList :',response);
       this.taskMasterList.push(response)
+      // response.forEach((item:any,index)=>{
+      //   console.log('item',item)
+      //   this.taskMasterDescxription= [{
+      //     "account":response[index].account,
+      //      "attachments":response[index].attachments,
+      //      "category":{
+      //        "id":response[index].category.id,
+      //        "name":response[index].category.name
+      //      },
+      //      "description":response[index].description,
+      //      "estDuration":{
+      //        "days": response[index].estDuration.days,
+      //        "hours": response[index].estDuration.hours,
+      //        "minutes":response[index].estDuration.minutes
+      //      },
+      //      "id":response[index].id,
+      //      "notes":response[index].notes,
+      //      "parentTaskId": response[index].parentTaskId,
+      //      "priority":{
+      //        "id":response[index].priority.id,
+      //        "name":response[index].priority.name
+      //      },
+      //      "status":response[index].status,
+      //      "templateName":response[index].templateName,
+      //      "title":response[index].title,
+      //      "type":{
+      //        "id":response[index].type.id,
+      //        "name":response[index].type.name
+      //      }
+      //    }]
+      //   //  console.log('objArray',objArray)
+         
+      // })
+      // const objArray2=[{
+      //   "other":'Othger'
+      // }]
+      // this.taskMasterDuplicate.push(...this.taskMasterDescxription,...objArray2)
     })
+    
   }
 
   createTask(createText: any) {
+    // console.log('this.taskMasterDuplicate',this.taskMasterDuplicate)
     console.log('..........',this.taskMasterList[0].length)
     if(this.taskMasterList[0].length>0){
       console.log('........')
@@ -450,7 +508,8 @@ export class TasksComponent implements OnInit {
         disableClose: true,
         data:{
           requestType:'taskMasterList',
-          taskMasterFullList:this.taskMasterList
+          taskMasterFullList:this.taskMasterList,
+          taskMasterOtherList:this.taskMasterOtherJSON,
         }
   
       })
@@ -460,6 +519,7 @@ export class TasksComponent implements OnInit {
       if(selectTaskMaster==='CreatE'){
         this.crmService.taskActivityName = 'CreatE';
         this.crmService.taskMasterToCreateServiceData=selectTaskMaster
+        console.log('mm')
         this.router.navigate(['provider', 'task', 'create-task'])
       }
       else if(selectTaskMaster==='Close'){
@@ -469,6 +529,7 @@ export class TasksComponent implements OnInit {
       else{
         this.crmService.taskActivityName = createText;
         this.crmService.taskMasterToCreateServiceData= selectTaskMaster;
+        console.log('l.....................')
         this.router.navigate(['provider', 'task', 'create-task'])
       }
       })

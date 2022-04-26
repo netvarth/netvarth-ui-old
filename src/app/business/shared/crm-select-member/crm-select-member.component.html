@@ -451,7 +451,7 @@
           
             [(ngModel)]="assignTaskMaster">
            <div >
-            <mat-radio-button  class="example-radio-button" *ngFor="let taskMaster of taskMasterListData" [value]="taskMaster"  (change)="handleTaskMasterSelect(taskMaster,'Selected')">
+            <mat-radio-button  class="example-radio-button" *ngFor="let taskMaster of taskMasterListData" [value]="taskMaster"  (change)="handleTaskMasterSelect(taskMaster,$event)">
               <div style="display: flex;flex-wrap: wrap;">
                     <!-- <div class="masterDes" > -->
                            <div class="masterDes">
@@ -500,14 +500,16 @@
         </div>
         <!----radio btn end-->
         <div>
-            <mat-radio-button style="margin-right: 20px;"  class="example-radio-button" (click)="createTask('CreatE')" >
+            <mat-radio-group [(ngModel)]="taskMasterOther" >
+            <mat-radio-button style="margin-right: 20px;"  class="example-radio-button" (click)="createTask('CreatE',$event)" *ngFor="let item of taskMasterOtherJsonList" [value]="item">
                 <div style="display: flex;flex-wrap: wrap;">
                     <div class="masterDes">
-                        <div class="taskMasterFieldName">Others</div>
+                        <div class="taskMasterFieldName">{{item.title }}</div>
                     </div>
                 </div>
 
             </mat-radio-button>
+        </mat-radio-group>
         </div>
     </div>
         </div>
@@ -522,7 +524,7 @@
                 <div>
                         <button type="button" class="btn btn-primary font-weight-bold cancelBtn" 
                          (click)="closeDialog('Close')" >Cancel</button>
-                    <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="saveTaskMaster(assignTaskMaster)"
+                    <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="saveTaskMaster(assignTaskMaster,taskMasterOther)"
                         >Ok</button>
                 </div>
             </ng-container>
