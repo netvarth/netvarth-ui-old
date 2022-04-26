@@ -20,6 +20,7 @@ export class ActivitylogComponent implements OnInit {
   ngOnInit(): void {
     this.crmService.getActivitylog(this.taskid).subscribe(data => {
       this.activityList = data;
+      console.log('activityList',this.activityList)
   })
 
   }
