@@ -164,7 +164,7 @@
                         <div class="taskTitle">
                             <div>Est Duration</div>
                         </div>
-                        <div class="fieldPadding d-flex" style="gap: 5px;"  *ngIf="createBTimeField" >
+                        <div class="fieldPadding d-flex" style="gap: 5px;flex-wrap: nowrap;"  *ngIf="createBTimeField" >
                             <input id="days" [(ngModel)]="taskDueDays" [value]="taskDays" (keyup)="resetErrors()"  type="number" #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
                             placeholder="Days" class="form-control widthWebKit" formControlName="taskDays"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0"/> 
                             <input id="hrs" [(ngModel)]="taskDueHrs" [value]="taskHrs" (keyup)="resetErrors()"  type="number" #taskHrs (ngModelChange)="handleTaskEstDuration(taskHrs.value)"

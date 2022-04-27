@@ -19,41 +19,89 @@
         <div class="rowcard card pt-0" *ngIf="!api_loading">
           <div class="c-details">
             <h2>
-              <span style="float:right;font-size: 12px!important;margin-top: 17px!important;" class="customer-action-btn pointer-cursor my-auto" (click)="gotoActions(waitlist_data)">More Actions</span>  
+              <span class="customer-action-btn pointer-cursor my-auto moreAction" (click)="gotoActions(waitlist_data)">
+                <div>
+                  <img width="10px" src="/assets/images/tokenDetailsIcon/more.png" />
+                </div>
+                More Actions</span>  
             </h2>
-            <h2>
-              <span class="fa-icons"><i *ngIf="waitlist_data.service.serviceType === 'virtualService'" [class]="iconClass" class="fa-icons"></i></span>  
-              <span class="mt-1"><b>&nbsp;{{waitlist_data.service.name | capitalizeFirst}}</b></span>
-              <div class="text-light">
-                {{waitlist_data.date | date:newDateFormat}}<br>
-                {{waitlist_data.queue.queueStartTime}} - {{waitlist_data.queue.queueEndTime}}
+            <h2 class="service">
+              <span class="fa-icons"><i *ngIf="waitlist_data.service.serviceType === 'virtualService'" [class]="iconClass" ></i></span>  
+              <span class="serviceName"><b>&nbsp;{{waitlist_data.service.name | capitalizeFirst}}</b></span>
+              <div class="map">
+                <a style="color: #979797 !important;display: flex;align-items: center;gap: 5px;" target="_blank" href="{{waitlist_data.queue.location.googleMapUrl}}">
+                  <!-- <i class="fa fa-map-marker"></i>&nbsp; -->
+                  <div>
+                    <img width="20px" src="/assets/images/tokenDetailsIcon/gMap.png" />
+                  </div>
+                  {{waitlist_data.queue.location.place | capitalizeFirst}}</a>
               </div>
-              
+              <div style="display: flex;margin-top: 5px;gap: 5px;align-items: center">
+                <div>
+                  <img width="20px" src="/assets/images/tokenDetailsIcon/dateTimeIcon.png" />
+                </div>
+                <div class="text-light" style="color: #979797 !important;">
+                  {{waitlist_data.date | date:newDateFormat}}
+                </div>
+                <div class="text-light" style="color: #979797 !important;">
+                 ( {{waitlist_data.queue.queueStartTime}} - {{waitlist_data.queue.queueEndTime}})
+                </div>
+              </div>
             </h2>
           </div>
           <span class="loc-cls">
-            <div class="d-flex justify-content-between">
-              <div *ngIf="waitlist_data.token">
-                <span class="text-dark">Token No : <b>{{waitlist_data.token}}</b></span>
+            <div>
+              <div *ngIf="waitlist_data.token" style="display: flex;gap: 5px;align-items: center">
+                <!-- <div>
+                  <img width="20px" src="/assets/images/tokenDetailsIcon/tokenNo.png" />
+                </div> -->
+                <span class="text-dark" style="font-size:12px">Token No : <b>{{waitlist_data.token}}</b></span>
               </div>
-              <div *ngIf="spName">
-                <span class="text-dark">Assigned to <b>{{spName}}</b></span>
-              </div>
-            </div>
-            <div class="d-flex justify-content-between">
-              <div *ngIf="waitlist_data.service.deptName">
-                <span class="text-dark">Department : <b>{{waitlist_data.service.deptName}}</b></span> 
-              </div>
-              <div *ngIf="waitlist_data.teamId !== 0">
-                <span class="text-dark">Team : <b>{{getUsersList(waitlist_data.teamId)}}</b></span> 
+              <div *ngIf="spName"  style="display: flex;gap: 5px;align-items: center;margin-top: 5px;">
+                <!-- <div>
+                  <img width="20px" src="/assets/images/tokenDetailsIcon/assignedTo.png" />
+                </div> -->
+                <span style="font-size:12px" class="text-dark">Assigned to <b>{{spName}}</b></span>
               </div>
             </div>
-            <a target="_blank" href="{{waitlist_data.queue.location.googleMapUrl}}"><i class="fa fa-map-marker"></i>&nbsp;{{waitlist_data.queue.location.place | capitalizeFirst}}</a></span>
-            <span class="text-light my-0 py-0"><b>Booking Via : </b>
+            <div >
+              <div *ngIf="waitlist_data.service.deptName" style="display: flex;gap: 5px;align-items: center;margin-top: 5px;">
+                <!-- <div>
+                  <img width="20px" src="/assets/images/department.png" />
+              </div> -->
+                <span style="font-size:12px" class="text-dark">Department : <b>{{waitlist_data.service.deptName}}</b></span> 
+              </div>
+              <div *ngIf="waitlist_data.teamId !== 0" style="display: flex;gap: 5px;align-items: center;margin-top: 5px;" >
+                <!-- <div>
+                  <img width="20px" src="/assets/images/tokenDetailsIcon/teamIcon.png" />
+              </div> -->
+                <span style="font-size:12px" class="text-dark">Team : <b>{{getUsersList(waitlist_data.teamId)}}</b></span> 
+              </div>
+            </div>
+            <!-- <div class="map">
+              <a target="_blank" href="{{waitlist_data.queue.location.googleMapUrl}}"><i class="fa fa-map-marker"></i>&nbsp;{{waitlist_data.queue.location.place | capitalizeFirst}}</a>
+            </div> -->
+          </span>
+          <div style="display: flex;gap: 5px;align-items: center;margin-top: 5px;">
+            <!-- <div>
+              <img width="20px" src="/assets/images/tokenDetailsIcon/phoneBrowser.png" />
+            </div> -->
+            <span class="text-light"><b>Booking Via : </b>
               {{getAgent(waitlist_data.requestInfo.agent) | capitalizeFirst}},
               {{getBookingReqFrom(waitlist_data.requestInfo.browser,waitlist_data.requestInfo.bookingReqFrom) | capitalizeFirst}}</span>
+          </div>
+          <div style="display: flex;gap: 5px;align-items: center;margin-top: 5px;">
+            <!-- <div>
+              <img width="20px" src="/assets/images/tokenDetailsIcon/bookingId.png" />
+            </div> -->
             <span *ngIf="waitlist_data.waitlistMode" class="text-light"><b>Booking id :</b> {{waitlist_data.checkinEncId}}</span>
+          </div>
+          <div style="display: flex;gap: 5px;align-items: center;margin-top: 5px;">
+            <!-- <div>
+              <img width="20px" src="/assets/images/tokenDetailsIcon/bookingMode.png" />
+            </div> -->
             <span *ngIf="waitlist_data.waitlistMode" class="text-light"><b>Booking Mode :</b> {{getWaitListMode(waitlist_data.waitlistMode)}}</span>
+          </div>
           <div>
             <a *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Cancelled'" (click)="changeWaitlistStatus('STARTED')" class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"
             ><i class="fa fa-play" aria-hidden="true"></i> Start</a>
@@ -65,23 +113,23 @@
             ><i class="fa fa-play" aria-hidden="true"></i> Cancelled</a>
           </div>
           <div class="text-center mx-auto">
-            <a class="status-btn btn btn-outline-dark my-2" (click)="addConsumerInboxMessage()"><i class="fa fa-commenting-o" aria-hidden="true"></i> Message</a>
-            <a class="status-btn btn btn-outline-dark my-2 mx-1" 
+            <a class="status-btn btn btn-outline-dark my-2 serviceBtnName" (click)="addConsumerInboxMessage()"><i class="fa fa-commenting-o" aria-hidden="true"></i> Message</a>
+            <a class="status-btn btn btn-outline-dark my-2 mx-1 serviceBtnName" 
             *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Completed'
              && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Cancelled'" (click)="changeWaitlistStatus('CANCEL')">
              <i class="fa fa-times" aria-hidden="true"></i> Cancel</a>
              
-            <a class="status-btn btn btn-disabled my-2 mx-1" style="cursor: no-drop!important" 
+            <a class="status-btn btn btn-disabled my-2 mx-1 serviceBtnName" style="cursor: no-drop!important" 
             *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] == 'Started' || check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] == 'Completed'
              || check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] == 'Cancelled'">
              <i class="fa fa-times" aria-hidden="true"></i> Cancel</a>
 
-             <a class="status-btn btn btn-disabled my-2 mx-1" style="cursor: no-drop!important" 
+             <a class="status-btn btn btn-disabled my-2 mx-1 serviceBtnName" style="cursor: no-drop!important" 
             *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Started' || check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] == 'Completed'
              || check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] == 'Cancelled'">
              <i class="fa fa-check" aria-hidden="true"></i> Complete</a>
 
-            <a class="status-btn btn btn-outline-dark my-2" 
+            <a class="status-btn btn btn-outline-dark my-2 serviceBtnName" 
             *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] == 'Started' && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Completed'
              && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Cancelled'"
              (click)="changeWaitlistStatus('DONE')"><i class="fa fa-check" aria-hidden="true"></i> Complete</a>
@@ -91,33 +139,52 @@
       </div>
       <div class="lbl col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small px-1">
         <div class="rowcard card">
-            <div class="booking-details">
-                <div class="row ">
+            <div >
+                <div >
                   <div *ngIf="waitlist_data.waitlistingFor" class="user-img float-left">
                       <img src="assets/images/avatar5.png" />
                   </div>
+                  <span class="ml-0 pl-0" *ngIf="waitlist_data.waitlistingFor[0].firstName || waitlist_data.waitlistingFor[0].lastName">
+                    &nbsp;<b>{{waitlist_data.waitlistingFor[0].firstName | capitalizeFirst}}
+                      {{waitlist_data.waitlistingFor[0].lastName | capitalizeFirst}}</b></span>
                   <div class="float-right">
-                    <a (click)="editCustomerDetails()" style="font-size:13px!important;" class="edit-btn pointer-cursor"><b>Edit Details</b></a>
+                    <a (click)="editCustomerDetails()"  class="edit-btn pointer-cursor"><i class="fa fa-pencil-square-o" aria-hidden="true" style="margin-right: 10px;color: #8D9094;"></i><b style="color: #8D9094;">Edit Details</b></a>
                   </div>
                 </div>
-                <span class="ml-0 pl-0" *ngIf="waitlist_data.waitlistingFor[0].firstName || waitlist_data.waitlistingFor[0].lastName">
+                <!-- <span class="ml-0 pl-0" *ngIf="waitlist_data.waitlistingFor[0].firstName || waitlist_data.waitlistingFor[0].lastName">
                   &nbsp;<b>{{waitlist_data.waitlistingFor[0].firstName | capitalizeFirst}}
-                    {{waitlist_data.waitlistingFor[0].lastName | capitalizeFirst}}</b></span>
+                    {{waitlist_data.waitlistingFor[0].lastName | capitalizeFirst}}</b></span> -->
                 <div class="booking-details-body">
-                    <div class="jaldee-id" *ngIf="waitlist_data.checkinEncId">
+                    <!-- <div class="jaldee-id customerDetails" *ngIf="waitlist_data.checkinEncId">
                         <i class="fa fa-id-card-o icon"></i>&nbsp;
-                        <span class="itemHead">{{customer_label | capitalizeFirst}} id : </span>
-                        <span class="itemVal">{{waitlist_data.waitlistingFor[0].memberJaldeeId}}</span>
+                        <div>
+                          <img width="20px" src="/assets/images/tokenDetailsIcon/idCardIcon.png" />
+                        </div>
+                        <span class="itemHead cusHead">{{customer_label | capitalizeFirst}} id : </span>
+                        <span class="itemVal cusHead">{{waitlist_data.waitlistingFor[0].memberJaldeeId}}</span>
+                    </div> -->
+                    <div style="display: flex;gap: 5px;align-items: center;margin-top: 5px;">
+                      <div>
+                        <img width="20px" src="/assets/images/tokenDetailsIcon/idCardIcon.png" />
+                      </div>
+                      <span class="itemHead cusHead">{{customer_label | capitalizeFirst}} id : </span>
+                      <span class="itemVal cusHead">{{waitlist_data.waitlistingFor[0].memberJaldeeId}}</span>
                     </div>
-                    <div class="contact-no" *ngIf="waitlist_data.phoneNumber && checkDataNull(waitlist_data.phoneNumber)">
-                        <i class="fa fa-mobile icon"></i>&nbsp;
+                    <div class="contact-no customerDetails" *ngIf="waitlist_data.phoneNumber && checkDataNull(waitlist_data.phoneNumber)">
+                        <!-- <i class="fa fa-mobile icon"></i>&nbsp; -->
+                        <div>
+                          <img width="30px" src="/assets/images/tokenDetailsIcon/contactNoIcon.png" />
+                        </div>
                         <span class="value">{{waitlist_data.countryCode}} {{waitlist_data.phoneNumber}}</span>
                     </div>
-                    <div *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
-                      <i class="fa fa-whatsapp icon"></i>&nbsp;
-                      <span *ngIf=" waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                    <div class="customerDetails" *ngIf="waitlist_data.service.serviceType === 'virtualService' && waitlist_data.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                      <!-- <i class="fa fa-whatsapp icon"></i>&nbsp; -->
+                      <div>
+                          <img width="20px" src="/assets/images/tokenDetailsIcon/whatsappIcon.png" />
+                        </div>
+                      <span class="cusHead" *ngIf=" waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode].startsWith('+')">
                         {{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
-                      <span *ngIf=" !waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode].startsWith('+')">
+                      <span class="cusHead" *ngIf=" !waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode].startsWith('+')">
                         +{{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
                     </div>
                     <div class="email" *ngIf="waitlist_data.waitlistingFor[0].email">

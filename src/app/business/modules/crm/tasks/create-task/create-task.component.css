@@ -182,3 +182,6 @@ input[type="datetime-local"]:valid:before {
   content: "";
 } */
 
+::ng-deep .mat-select-value{
+  font-weight: 500 !important;
+}
