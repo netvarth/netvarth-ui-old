@@ -20,7 +20,7 @@
                       <div>Title</div>
                       <div class="astericColor">*</div>
                     </div>
-                    <div class="fieldPadding">
+                    <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.title && taskMasterData.title.iseditable)}">
                         <input (keyup)="resetErrors()" type="text" #taskTitle (ngModelChange)="hamdleTaskTitle(taskTitle.value)"
                             placeholder="Enter activity title"class="form-control"formControlName="taskTitle"autocomplete="off"   [readonly]="!(taskMasterData && taskMasterData.title && taskMasterData.title.iseditable)" [value]="taskTitle" /> 
                         <app-field-error-display 
@@ -32,7 +32,7 @@
                     <div class="taskTitle">
                         <div>Description</div>
                     </div>
-                    <div  class="fieldPadding">
+                    <div  class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.description && taskMasterData.description.iseditable)}">
                         <textarea rowa="10" class="form-control" formControlName="taskDescription"
                             #taskDescription (change)="handleTaskDescription(taskDescription.value)"(keyup)="autoGrowTextZone($event)"
                             maxlength="1000" placeholder="Enter activity description"  [readonly]="!(taskMasterData && taskMasterData.description && taskMasterData.description.iseditable)">
@@ -47,7 +47,7 @@
                             <div>Category</div>
                             <div class="astericColor">*</div>
                         </div>
-                        <div class="fieldPadding">
+                        <div class="fieldPadding"  [ngClass]="{'highlight': !(taskMasterData && taskMasterData.category && taskMasterData.category.iseditable)}">
                         <mat-select class="form-control widthWebKit" placeholder="Enter Category" [disabled]="!(taskMasterData && taskMasterData.category && taskMasterData.category.iseditable)"
                             #userTaskCategory formControlName="userTaskCategory" >
                             <mat-option *ngFor="let item of categoryListData[0];let index=i" [value]="item.id"  (selectionChange)="handleTaskCategorySelection(userTaskCategory.value)" >
@@ -63,7 +63,7 @@
                             <div>Type</div>
                             <div class="astericColor">*</div>
                         </div>
-                        <div class="fieldPadding">
+                        <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.type && taskMasterData.type.iseditable)}">
                         <mat-select class="form-control widthWebKit" placeholder="Enter Type" [disabled]="!(taskMasterData && taskMasterData.type && taskMasterData.type.iseditable)"
                             #userTaskType formControlName="userTaskType" >
                             <mat-option *ngFor="let item of taskTypeList[0];let index=i" [value]="item.id"  (selectionChange)="handleTaskTypeSelection(userTaskType.value)">
@@ -164,7 +164,7 @@
                         <div class="taskTitle">
                             <div>Est Duration</div>
                         </div>
-                        <div class="fieldPadding d-flex" style="gap: 5px;flex-wrap: nowrap;"  *ngIf="createBTimeField" >
+                        <div class="fieldPadding d-flex" style="gap: 5px;flex-wrap: nowrap;"  *ngIf="createBTimeField" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)}">
                             <input id="days" [(ngModel)]="taskDueDays" [value]="taskDays" (keyup)="resetErrors()"  type="number" #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
                             placeholder="Days" class="form-control widthWebKit" formControlName="taskDays"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0"/> 
                             <input id="hrs" [(ngModel)]="taskDueHrs" [value]="taskHrs" (keyup)="resetErrors()"  type="number" #taskHrs (ngModelChange)="handleTaskEstDuration(taskHrs.value)"
@@ -204,7 +204,7 @@
                     <div class="taskTitle">
                         <div>Priority</div>
                     </div>
-                    <div class="fieldPadding">
+                    <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.priority && taskMasterData.priority.iseditable)}">
                         <mat-select class="form-control" placeholder="Select Priority" [disabled]="!(taskMasterData && taskMasterData.priority && taskMasterData.priority.iseditable)"
                             #userTaskPriority formControlName="userTaskPriority"[(ngModel)]="taskPriority" (ngModelChange)="handleTaskPrioritySelection(userTaskPriority.value,'taskPriority')">
                             <mat-option  *ngFor="let item of taskPriorityList[0];let index=i" [value]="item.id"  >
@@ -249,7 +249,7 @@
                         <div class="taskTitle">
                             <div>Target Potential</div>
                         </div>
-                        <div class="fieldPadding">
+                        <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.targetResult && taskMasterData.targetResult.iseditable)}">
                             <input (keyup)="resetErrors()" type="text" #targetResult (ngModelChange)="handleTargetResult(targetResult.value)"
                             placeholder="Enter potential"class="form-control widthWebKit"formControlName="targetResult"  [readonly]="!(taskMasterData && taskMasterData.targetResult && taskMasterData.targetResult.iseditable)" autocomplete="off" /> 
                         </div>
@@ -259,7 +259,7 @@
                         <div class="taskTitle">
                             <div>Business Potential</div>
                         </div>
-                        <div class="fieldPadding">
+                        <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.targetPotential && taskMasterData.targetPotential.iseditable)}">
                             <input (keyup)="resetErrors()" type="text" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)"   [readonly]="!(taskMasterData && taskMasterData.targetPotential && taskMasterData.targetPotential.iseditable)"
                                 placeholder="Enter(&#8377;)"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
                         </div>
@@ -545,7 +545,7 @@
                         <div class="taskTitle">
                             <div>Business Potential</div>
                         </div>
-                        <div class="fieldPadding">
+                        <div class="fieldPadding" >
                             <input (keyup)="resetErrors()" type="text" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)" 
                                 placeholder="Enter(&#8377;)"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
                         </div>
