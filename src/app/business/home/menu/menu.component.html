@@ -66,14 +66,14 @@
           <div class="menu-submenu"><i class="menu-arrow"></i>
           </div>
         </li>
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"> 
+        <!-- <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"> 
           <a routerLink="lead" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Lead'"
             (click)="showMenuSection()"><span class="svg-icon menu-icon">
               <i class="fa fa-user"></i>
             </span><span class="menu-text">Lead</span><i class="menu-arrow"></i></a>
           <div class="menu-submenu"><i class="menu-arrow"></i>
           </div>
-        </li>
+        </li> -->
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
           (click)="showMenuSection()" *ngIf="donationstatus">
           <a routerLink="donations" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Donations'"><span
