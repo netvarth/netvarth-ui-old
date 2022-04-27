@@ -894,19 +894,19 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 this.finishDonation(false);
             }
         }
-        if (response.STATUS == 'TXN_SUCCESS') {
-            this.paytmService.updatePaytmPay(payload, accountId)
-                .then((data) => {
-                    if (data) {
-                        this.finishDonation(true, response)
-                    }
-                },
-                    error => {
-                        this.snackbarService.openSnackBar("Transaction Failed", { 'panelClass': 'snackbarerror' });
-                    })
-        } else if (response.STATUS == 'TXN_FAILURE') {
-            this.finishDonation(false)
-        }
+        // if (response.STATUS == 'TXN_SUCCESS') {
+        //     this.paytmService.updatePaytmPay(payload, accountId)
+        //         .then((data) => {
+        //             if (data) {
+        //                 this.finishDonation(true, response)
+        //             }
+        //         },
+        //             error => {
+        //                 this.snackbarService.openSnackBar("Transaction Failed", { 'panelClass': 'snackbarerror' });
+        //             })
+        // } else if (response.STATUS == 'TXN_FAILURE') {
+        //     this.finishDonation(false)
+        // }
     }
     getImageSrc(mode) {
         return 'assets/images/payment-modes/' + mode + '.png';
