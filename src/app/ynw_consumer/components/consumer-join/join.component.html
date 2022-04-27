@@ -29,7 +29,7 @@
                         [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
                         [selectFirstCountry]="false" [maxLength]="15" [phoneValidation]="true"
                         [selectedCountryISO]="selectedCountry" [separateDialCode]="separateDialCode"
-                        [numberFormat]="PhoneNumberFormat.National" name="phone" formControlName="phone" (keypress)="resetPhone()">
+                        [numberFormat]="PhoneNumberFormat.National" name="phone" formControlName="phone" (keydown)="resetPhone()">
                     </ngx-intl-tel-input>
                     <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div>
                 </div>

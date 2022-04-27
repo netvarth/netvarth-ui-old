@@ -164,6 +164,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   }
   resetPhone() {
     this.phoneError = null;
+    this.resetApiErrors();
   }
   onSubmit(data) {
     console.log(data);
