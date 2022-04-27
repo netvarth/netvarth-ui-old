@@ -188,8 +188,8 @@
 }
 .rowcard
 {
-    min-height: 370px!important;
-    max-height: 370px!important;
+    min-height: 330px!important;
+    max-height: 330px!important;
     border-radius: 10px!important;
 }
 .notescard
@@ -206,9 +206,9 @@
 
 .btn-primary
 {
-    background-color: #1E4079!important;
+    /* background-color: #1E4079!important;
     color: #fff!important;
-    border-color: #1E4079!important;
+    border-color: #1E4079!important; */
 }
 .content.comn-cls .lbl .card
 {
@@ -245,7 +245,9 @@
     }
     .rowcard
     {
-        height: auto!important;
+        /* height: auto!important; */
+        min-height: 100%!important;
+        max-height: 100%!important;
     }
     .notescard
     {
@@ -322,11 +324,24 @@
         margin-top: 25px;
     }
     .cusHead{
-    color: #8A8D90 !important;
-    font-size: 14px !important;
+    color: #2e2e2e !important;
+    font-size: 12px !important;
     }
     .customerDetails{
         display: flex;
     align-items: center;
     gap: 5px;
+    margin-top: 5px;
+    }
+    .confirmBtn {
+        background: #0D2348 !important;
+        box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+        border-radius: 5.75916px !important;
+        border: 0px solid !important;
+    }
+    .callingBtn{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 5px;
     }

@@ -173,7 +173,7 @@
                     <div class="contact-no customerDetails" *ngIf="waitlist_data.phoneNumber && checkDataNull(waitlist_data.phoneNumber)">
                         <!-- <i class="fa fa-mobile icon"></i>&nbsp; -->
                         <div>
-                          <img width="30px" src="/assets/images/tokenDetailsIcon/contactNoIcon.png" />
+                          <img width="20px" src="/assets/images/tokenDetailsIcon/contactNoIcon.png" />
                         </div>
                         <span class="value">{{waitlist_data.countryCode}} {{waitlist_data.phoneNumber}}</span>
                     </div>
@@ -187,30 +187,48 @@
                       <span class="cusHead" *ngIf=" !waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode].startsWith('+')">
                         +{{ waitlist_data.virtualService[waitlist_data.service.virtualCallingModes[0].callingMode]}}</span>
                     </div>
-                    <div class="email" *ngIf="waitlist_data.waitlistingFor[0].email">
-                      <div class="float-left"><i class="fa fa-envelope"></i></div>
-                      <span class="emailvallabel">&nbsp;{{ waitlist_data.waitlistingFor[0].email}}</span>
+                    <div class=" customerDetails" *ngIf="waitlist_data.waitlistingFor[0].email">
+                      <!-- <div class="float-left"> -->
+                        <div>
+                          <img width="20px" src="/assets/images/tokenDetailsIcon/email.png" />
+                        </div>
+                      <!-- </div> -->
+                      <span class="cusHead" >&nbsp;{{ waitlist_data.waitlistingFor[0].email}}</span>
                     </div>
                     <div class="gender-and-dob">
-                        <div *ngIf="waitlist_data.waitlistingFor[0].gender" class="gender">
-                          <i *ngIf="waitlist_data.waitlistingFor[0].gender === 'male'" class="fa fa-mars icon"></i>
-                          <i *ngIf="waitlist_data.waitlistingFor[0].gender === 'female'" class="fa fa-venus icon"></i>
-                            <span class="value">&nbsp;{{waitlist_data.waitlistingFor[0].gender | capitalizeFirst}}</span>
+                        <div *ngIf="waitlist_data.waitlistingFor[0].gender" class="gender customerDetails">
+                          <!-- <i *ngIf="waitlist_data.waitlistingFor[0].gender === 'male'" class="fa fa-mars icon"></i>
+                          <i *ngIf="waitlist_data.waitlistingFor[0].gender === 'female'" class="fa fa-venus icon"></i> -->
+                          <div *ngIf="waitlist_data.waitlistingFor[0].gender === 'female'">
+                            <img width="20px" src="/assets/images/tokenDetailsIcon/femaleGendar.png" />
+                          </div>
+                          <div *ngIf="waitlist_data.waitlistingFor[0].gender === 'male'">
+                            <img width="20px" src="/assets/images/tokenDetailsIcon/maleGendar.png" />
+                          </div>
+                            <span class="value cusHead">&nbsp;{{waitlist_data.waitlistingFor[0].gender | capitalizeFirst}}</span>
                         </div>
-                        <div class="dob" *ngIf="waitlist_data.waitlistingFor[0].dob">
-                            <i class="fa fa-calendar-o icon"></i>
-                            <span class="value">&nbsp;{{waitlist_data.waitlistingFor[0].dob | date:newDateFormat}}</span>
+                        <div class="dob customerDetails" *ngIf="waitlist_data.waitlistingFor[0].dob">
+                            <!-- <i class="fa fa-calendar-o icon"></i> -->
+                            <div>
+                              <img width="20px" src="/assets/images/tokenDetailsIcon/dob.png" />
+                            </div>
+                            <span class="value cusHead">&nbsp;{{waitlist_data.waitlistingFor[0].dob | date:newDateFormat}}</span>
                         </div>
                     </div>
                     
-                    <div class="location" *ngIf="waitlist_data.waitlistingFor && waitlist_data.waitlistingFor[0].bookingLocation && (waitlist_data.waitlistingFor[0].bookingLocation.district || waitlist_data.waitlistingFor[0].bookingLocation.state)">
-                        <i class="fa fa-map-marker icon"></i>
-                        <span class="value"> {{waitlist_data.waitlistingFor[0].bookingLocation.district}},
+                    <div class="location  customerDetails" *ngIf="waitlist_data.waitlistingFor && waitlist_data.waitlistingFor[0].bookingLocation && (waitlist_data.waitlistingFor[0].bookingLocation.district || waitlist_data.waitlistingFor[0].bookingLocation.state)">
+                        <!-- <i class="fa fa-map-marker icon"></i> -->
+                        <div>
+                          <img width="20px" src="/assets/images/tokenDetailsIcon/location.png" />
+                        </div>
+                        <span class="value cusHead"> {{waitlist_data.waitlistingFor[0].bookingLocation.district}},
                           {{waitlist_data.waitlistingFor[0].bookingLocation.state}}</span>
                     </div>
-                    <div class="mb-0">
-                      <a (click)="showCommunications()" *ngIf="whatsappNumber || mobileNumber || email" class="text-capitalize btn btn-primary col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"
+                    <div class="callingBtn">
+                      <a (click)="showCommunications()" *ngIf="whatsappNumber || mobileNumber || email" class="text-capitalize btn btn-primary col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2 confirmBtn"
                       >Call {{customer_label}}</a>
+                      <!-- <a (click)="showCommunications()" *ngIf="whatsappNumber || mobileNumber || email" class="text-capitalize btn btn-primary col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2 confirmBtn"
+                      >{{customer_label}} notes</a> -->
                     </div>
                 </div>
             </div>
