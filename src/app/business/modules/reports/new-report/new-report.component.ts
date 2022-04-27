@@ -142,6 +142,9 @@ export class NewReportComponent implements OnInit {
   user: string;
   user_id: any;
   loading = false;
+
+  isQuestionaire = false;
+
   @ViewChild('selectIntStatus') selectIntStatus: MatSelect;
   @ViewChild('select') select: MatSelect;
   @ViewChild('apptStatusSelect') apptStatusSelect: MatSelect;
@@ -211,6 +214,16 @@ export class NewReportComponent implements OnInit {
 
 
     if (this.report_type === 'token' || this.report_type === 'appointment') {
+      this.provider_services.getAllQuestionnaire().subscribe(
+        (questionaires: any)=> {
+          let questionairesList = questionaires.filter(questionaire => questionaire.transactionType !=='CONSUMERCREATION');
+          console.log("Count:", questionairesList);
+          if (questionairesList.length > 0) {
+            this.isQuestionaire = true;
+            console.log("IsQuestionaire:", this.isQuestionaire);
+          }
+        }
+      )
         this.provider_services.getInternalStatus()
           .subscribe(
             (data: any) => {

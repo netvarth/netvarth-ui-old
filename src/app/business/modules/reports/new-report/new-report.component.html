@@ -320,7 +320,7 @@
             <div class="text-center">
               <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
                 (click)="generateReport('appointment');"> Generate Report </button>&nbsp;
-              <button type="button" [class.disabled]="loading" [class.spinner]="loading"
+              <button type="button" [class.disabled]="loading" [class.spinner]="loading" *ngIf="isQuestionaire"
                 [class.spinner-darker-success]="loading" [class.spinner-center]="loading"
                 class="btn  btn-primary btn-lg" (click)="generateSummary('appointment')">
                 Generate Questionnaire Report</button>
@@ -520,7 +520,7 @@
             <div class="text-center">
               <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
                 (click)="generateReport('token');"> <span class=""></span>Generate Report </button>&nbsp;&nbsp;&nbsp;
-              <button type="button" [class.disabled]="loading" [class.spinner]="loading"
+              <button type="button" [class.disabled]="loading" [class.spinner]="loading" *ngIf="isQuestionaire"
                 [class.spinner-darker-success]="loading" [class.spinner-center]="loading"
                 class="btn  btn-primary btn-lg" (click)="generateSummary('token')">
                 Generate Questionnaire Report</button>

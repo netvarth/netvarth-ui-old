@@ -39,7 +39,7 @@
                                                     Gateway</span>
                                                 <span class="waitlist_for">
                                                     {{payments.paymentGateway}}</span></div>
-                                            <div class="item"><span class="ttle">Processing Fee</span>
+                                            <div class="item" *ngIf="payments.customerPaidCharges>0"><span class="ttle">Processing Fee</span>
                                                 <span class="waitlist_for rupee-font">
                                                     {{payments.customerPaidCharges |
                                                     currency:'&#8377; ' }}</span>
