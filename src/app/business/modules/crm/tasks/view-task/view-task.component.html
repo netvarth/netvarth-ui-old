@@ -34,7 +34,7 @@
       </div>
     </div>
     <div>
-      <button class="btn btn-outline-primary mx-2" (click)="openAddNoteDialog('AddNote')">Add Note</button>
+      <button class="btn btn-outline-primary mx-2" (click)="openAddNoteDialog('AddNote')">Add Remarks</button>
     </div>
     <!-- <div>
       <button class="btn btn-outline-primary">Chat</button>
@@ -122,7 +122,7 @@
         <div class="border height-limit col-md-4 col-lg-4 col-sm-12 col-xs-12 no-padding mt-2" *ngIf="taskDetails.notes.length>0">
           <div class="d-flex justify-content-between">
             <div>
-              <span class="card-title"><b>Notes</b></span> 
+              <span class="card-title"><b>Remarks</b></span> 
             </div>
             <div>
               <span (click)="noteView(taskDetails)" class="pointer-cursor fa fa-external-link"></span>
