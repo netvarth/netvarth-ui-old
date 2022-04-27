@@ -24,7 +24,7 @@
       </button>
       <div class="dropdown-menu">
         <a class="p-3 dropdown-item" (click)="openEditTask(taskDetails,'Update')"><i class="text-info fa fa-edit"></i>&nbsp;&nbsp;<span class="text-dark">Edit Activity</span></a><br><br>
-        <a class="p-3 dropdown-item" (click)="markAsDone(taskUid)"><i class="text-success fa fa-check-square"></i>&nbsp;&nbsp;<span class="text-dark">Mark as done</span></a><br><br>
+        <!-- <a class="p-3 dropdown-item" (click)="markAsDone(taskUid)"><i class="text-success fa fa-check-square"></i>&nbsp;&nbsp;<span class="text-dark">Mark as done</span></a><br><br> -->
         <a class="p-3 dropdown-item" (click)="createSubTask(taskUid)"><i class="text-primary fa fa-plus-square-o"></i>&nbsp;&nbsp;<span class="text-dark">Create Subactivity</span></a><br><br>
         <a class="p-3 dropdown-item" (click)="progressbarDialog()"><i class='fa fa-spinner green-color'></i>&nbsp;&nbsp;<span class="text-dark">Change Progress</span></a><br><br>
         <a class="p-3 dropdown-item" (click)="openDialogStatusChange(taskDetails)"><i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;&nbsp;<span class="text-dark">Change Status</span></a><br><br>
@@ -35,6 +35,9 @@
     </div>
     <div>
       <button class="btn btn-outline-primary mx-2" (click)="openAddNoteDialog('AddNote')">Add Remarks</button>
+    </div>
+    <div>
+      <button class="btn btn-outline-primary mx-2" (click)="markAsDone(taskUid)">Mark as done</button>
     </div>
     <!-- <div>
       <button class="btn btn-outline-primary">Chat</button>
