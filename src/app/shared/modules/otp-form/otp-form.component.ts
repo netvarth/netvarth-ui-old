@@ -77,6 +77,8 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
 console.log("SubmitData:", this.submitdata);
     if (this.submitdata && this.submitdata.userProfile && this.submitdata.userProfile.primaryMobileNo.startsWith('55') && this.submitdata.userProfile.countryCode === '+91') {
       this.config.length=5;
+    } else if (this.submitdata && !this.submitdata.userProfile && this.submitdata.phonenumber && this.submitdata.phonenumber.startsWith('55')){
+      this.config.length=5;
     } else if (this.submitdata && !this.submitdata.userProfile && this.submitdata.startsWith('55')){
       this.config.length=5;
     }

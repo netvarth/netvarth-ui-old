@@ -10,6 +10,7 @@
           <!-- <input class="form-control number-ip-sm" matInput placeholder="Enter OTP"
               [formControl]="otp_form.controls['phone_otp']" autocomplete="off" (keypress)="removSpecChar($event)"
               maxlength="5"> -->
+          <mat-label  *ngIf="submitdata && (!submitdata.userProfile || submitdata.phonenumber)">Enter OTP Received</mat-label>
           <ng-otp-input class="bkgclr"  (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
           <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
           </app-field-error-display>
@@ -20,6 +21,7 @@
           errorMsg="{{'OTP_msg' | translate}}">
           </app-field-error-display> -->
         </div>
+        <div class="clearfix"></div>
       </div>
     </mat-dialog-content>
     <mat-dialog-actions *ngIf="!consumerlogin">
@@ -41,7 +43,7 @@
       <div class="mat-dialog-content" style="padding: 0 0 20px 0 !important;">
         <div class="form-group otp-field">
           <mat-label *ngIf="submitdata && submitdata.userProfile">{{otp_mobile}}</mat-label>
-          <mat-label  *ngIf="submitdata && !submitdata.userProfile">Enter OTP Received</mat-label>
+          <mat-label  *ngIf="submitdata && (!submitdata.userProfile || submitdata.phonenumber)">Enter OTP Received</mat-label>
           <ng-otp-input class="bkgclr" (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
           <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
           </app-field-error-display>

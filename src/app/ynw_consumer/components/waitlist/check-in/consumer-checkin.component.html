@@ -640,7 +640,7 @@
                                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                                     <span *ngIf="paymentDetails.showPrice"
                                                                         class="ser_price no-mgn-bt bold mgn-rt-10">Service
-                                                                        Price :ss
+                                                                        Price :
                                                                         <span
                                                                             class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
                                                                             | currency:'&#8377;'}}</span></span>
@@ -658,7 +658,7 @@
                                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
                                                                     <span *ngIf="paymentDetails.showPrice"
                                                                         class="ser_price no-mgn-bt bold mgn-rt-10">Service
-                                                                        Price :bgg
+                                                                        Price :
                                                                         <span
                                                                             class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
                                                                             | currency:'&#8377;'}}</span></span>
