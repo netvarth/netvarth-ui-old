@@ -138,10 +138,10 @@ export class CreateTaskComponent implements OnInit {
 
     this.api_loading=false;
     this.createTaskForm=this.createTaskFB.group({
-      taskTitle:[null,[Validators.required]],
+      taskTitle:[null],
       taskDescription:[null],
-      userTaskCategory:[null,[Validators.required]],
-      userTaskType:[null,[Validators.required]],
+      userTaskCategory:[null],
+      userTaskType:[null],
       taskLocation:[null,[Validators.required]],
       areaName:[null],
       taskStatus:[null,[Validators.required]],
@@ -149,7 +149,7 @@ export class CreateTaskComponent implements OnInit {
       taskDays:[0],
       taskHrs:[0],
       taskMin:[0],
-      userTaskPriority:[null,[Validators.required]],
+      userTaskPriority:[null],
       targetResult:[null],
       targetPotential:[null],
     }) 
