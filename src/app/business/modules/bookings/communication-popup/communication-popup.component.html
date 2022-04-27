@@ -47,10 +47,17 @@
         </div>
       </div>
       <div class="disp-flex whatsp">
-        <label> Whatsapp # : <span class="bold">
-            +
+        <label> Whatsapp # : 
+          <span class="bold">
           <!-- {{data.whatsappCountryCode}}  -->
-            {{data.whatsappNumber}}</span></label>
+          <span class="cusHead" *ngIf="!data.whatsappNumber.startsWith('+')">
+           +{{ data.whatsappNumber}}</span>
+            <span class="cusHead" *ngIf="data.whatsappNumber.startsWith('+')">
+              {{ data.whatsappNumber}}</span>
+
+          </span>
+          
+          </label>
       </div>
       <ul>
         <li>Your number will be revealed to your {{consumer_label}} through this

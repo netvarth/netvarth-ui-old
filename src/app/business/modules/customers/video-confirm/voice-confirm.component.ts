@@ -31,6 +31,7 @@ export class VoiceConfirmComponent {
     }
     this.customerId = data.customerId;
     this.customer = data.customer;
+    console.log('data.customer;',data)
     // this.phone = this.customer[0].phoneNumber;
     // this.countrycode = this.customer[0].countryCode;
   }
