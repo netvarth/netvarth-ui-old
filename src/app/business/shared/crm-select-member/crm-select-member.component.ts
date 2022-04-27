@@ -58,9 +58,6 @@ export class CrmSelectMemberComponent implements OnInit {
   public taskMasterListData:any;
   public assignTaskMaster:any;
   public newTask:any;
-  public taskMasterOther:any;
-  public taskMasterOtherJsonList:any;
- 
 
 
 
@@ -163,9 +160,6 @@ export class CrmSelectMemberComponent implements OnInit {
     //  this.getTaskmaster()
     this.taskMasterListData= this.data.taskMasterFullList[0];
       console.log('TaskMasterList.............',this.taskMasterListData)
-      this.taskMasterOtherJsonList= this.data.taskMasterOtherList;
-      console.log('TaskMasterListOther.............',this.taskMasterOtherJsonList)
-
     }
     // console.log('this.assignMemberDetails',this.assignMemberDetails);
     // console.log('this.memberList',this.memberList)
@@ -375,34 +369,20 @@ completeTaskStatus(){
         console.log('TaskMasterList :',response);
       })
     }
-    handleTaskMasterSelect(taskMaster,event){
+    handleTaskMasterSelect(taskMaster,selected:string){
       console.log('taskMaster',taskMaster);
-      this.assignTaskMaster= taskMaster
-      // if(this.assignTaskMaster === undefined || null || 'Create'){
-      //   this.taskMasterOther=''
-      // }
-      // else{
-      //   this.taskMasterOther !=''
-      // }
+      console.log('this.assignTaskMaster',this.assignTaskMaster)
       this.errorMsg=false;
       this.assignMemberErrorMsg=''
-      
     }
-    saveTaskMaster(taskMasterValue,taskMasterOtherValue){
+    saveTaskMaster(taskMasterValue){
       console.log('taskMasterValue',taskMasterValue)
-      console.log('taskMasterOtherValue',taskMasterOtherValue)
       if(taskMasterValue !==undefined){
         // console.log('response',res)
         this.errorMsg=false;
         // console.log('assignMemberDetails',this.assignMemberDetails)
         this.dialogRef.close(taskMasterValue)
       }
-      
-      // else if(taskMasterOtherValue !== undefined ){
-      //   console.log('........................')
-      //   this.errorMsg=false;
-      //   this.dialogRef.close(taskMasterOtherValue)
-      // }
       else if(this.newTask==='CreatE'){
         this.dialogRef.close('CreatE')
       }
@@ -412,21 +392,16 @@ completeTaskStatus(){
         
       }
     }
-    createTask(createText: any,event){
+    createTask(createText: any){
       console.log('createText',createText)
-      console.log('taskMasterOther',this.taskMasterOther)
-      this.taskMasterOther= createText
-      this.crmService.taskActivityName = 'CreatE';
-      this.newTask= createText;
-      // if(this.taskMasterOther === undefined || null || 'CreatE'){
-      //   this.assignTaskMaster=''
-      // }else{
-      //   this.assignTaskMaster !=''
-      // }
-      console.log('this.newTask',  this.newTask)
       this.errorMsg=false;
       this.assignMemberErrorMsg=''
-      
+      this.crmService.taskActivityName = createText;
+      this.newTask= createText;
+      // if(createText !==undefined){
+        // this.dialogRef.close(createText)
+        // this.router.navigate(['provider', 'task', 'create-task'])
+      // }
       // this.dialogRef.close(createText)
       
     }

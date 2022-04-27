@@ -451,12 +451,12 @@
           
             [(ngModel)]="assignTaskMaster">
            <div >
-            <mat-radio-button  class="example-radio-button" *ngFor="let taskMaster of taskMasterListData" [value]="taskMaster"  (change)="handleTaskMasterSelect(taskMaster,$event)">
+            <mat-radio-button  class="example-radio-button" *ngFor="let taskMaster of taskMasterListData" [value]="taskMaster"  (change)="handleTaskMasterSelect(taskMaster,'Selected')">
               <div style="display: flex;flex-wrap: wrap;">
                     <!-- <div class="masterDes" > -->
                            <div class="masterDes">
                                <!-- <div class="taskMasterFieldName" >  Title : </div> -->
-                          <div class="taskMasterFieldName" >{{taskMaster.title.value}}</div>
+                          <div class="taskMasterFieldName" >{{taskMaster.templateName}}</div>
                            </div>
                            
                            <!-- <div  class="masterDes" >
@@ -500,16 +500,14 @@
         </div>
         <!----radio btn end-->
         <div>
-            <mat-radio-group [(ngModel)]="taskMasterOther" >
-            <mat-radio-button style="margin-right: 20px;"  class="example-radio-button" (click)="createTask('CreatE',$event)" *ngFor="let item of taskMasterOtherJsonList" [value]="item">
+            <mat-radio-button style="margin-right: 20px;"  class="example-radio-button" (click)="createTask('CreatE')" >
                 <div style="display: flex;flex-wrap: wrap;">
                     <div class="masterDes">
-                        <div class="taskMasterFieldName">{{item.title }}</div>
+                        <div class="taskMasterFieldName">Others</div>
                     </div>
                 </div>
 
             </mat-radio-button>
-        </mat-radio-group>
         </div>
     </div>
         </div>
@@ -524,7 +522,7 @@
                 <div>
                         <button type="button" class="btn btn-primary font-weight-bold cancelBtn" 
                          (click)="closeDialog('Close')" >Cancel</button>
-                    <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="saveTaskMaster(assignTaskMaster,taskMasterOther)"
+                    <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="saveTaskMaster(assignTaskMaster)"
                         >Ok</button>
                 </div>
             </ng-container>
