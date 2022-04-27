@@ -23,7 +23,7 @@
     background-color: #fff;
 }
 .form-control{
-    background-color: #f6f6f6!important;
+    /* background-color: #f6f6f6!important; */
     display: block;
     width: 100%;
     height: 35px;
@@ -32,7 +32,7 @@
     line-height: 1.42857143!important;
     color: #555!important;
     background-image: none !important;
-    background: #F1F1F1 !important;
+    /* background: #F1F1F1 !important; */
     border-radius: 5.73504px !important;
     box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%) !important;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;
