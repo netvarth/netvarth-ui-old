@@ -41,34 +41,37 @@
               <mat-slider #gridsize (change)="updateSetting($event)" [thumbLabel] = "gridsize"  step="5" min="10" max="100" [value]="gridsize">
               </mat-slider>
               <div>
+                <div class="fieldPadding">
+                  <textarea rowa="10" class="form-control" [(ngModel)]="notesTextarea" #taskDescription
+                    (ngModelChange)="handleNotesDescription(taskDescription.value)" (keyup)="autoGrowTextZone($event)"
+                    maxlength="1000" placeholder="Enter note description"></textarea>
+          
+                </div>
+
               </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-      <div class="fieldPadding">
-        <textarea rowa="10" class="form-control" [(ngModel)]="notesTextarea" #taskDescription
-          (ngModelChange)="handleNotesDescription(taskDescription.value)" (keyup)="autoGrowTextZone($event)"
-          maxlength="1000" placeholder="Enter note description"></textarea>
-
-      </div>
-    </div>
-
-    <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;">
+               <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;">
 
       <div style="text-align: center;">
         <ng-container>
           <div class=" mgn-bt-20 mgn-up-10">
             <button type="button" class="btn btn-primary font-weight-bold cancelBtn" mat-dialog-close>Cancel</button>
             <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
-              (click)="saveCreateNote()">Save</button>
+              (click)="saveProgress()" [disabled]="btndisble">Save</button>
           </div>
         </ng-container>
       </div>
 
 
     </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+     
+    </div>
+
+   
     <br>
     <section>
       <div>

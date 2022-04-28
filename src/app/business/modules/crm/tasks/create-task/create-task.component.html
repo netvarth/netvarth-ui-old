@@ -77,24 +77,24 @@
                 </div>
     
                 <div style="display: flex;gap: 5px" >
-                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding"  *ngIf="taskMasterData && taskMasterData.location && taskMasterData.location.isvisible">
                         <div class="taskTitle">
                             <div>Location</div>
                             <div class="astericColor">*</div>
                         </div>
-                        <div class="fieldPadding">
+                        <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.location && taskMasterData.location.iseditable)}">
                             <input (keyup)="resetErrors()" [(ngModel)]="locationName" type="text" #taskLocation (ngModelChange)="handleTaskLocation(taskLocation.value)"
-                            placeholder="Enter activity location"class="form-control widthWebKit"formControlName="taskLocation"autocomplete="off" [value]="taskLocation.name" /> 
+                            placeholder="Enter activity location"class="form-control widthWebKit"formControlName="taskLocation"autocomplete="off" [readonly]="!(taskMasterData && taskMasterData.location && taskMasterData.location.iseditable)" [value]="taskLocation.name" /> 
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                             </app-field-error-display>    
                         </div>
                     </div>
-                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding"  *ngIf="taskMasterData && taskMasterData.locationArea && taskMasterData.locationArea.isvisible">
                         <div class="taskTitle">
                             <div>Area</div>
                         </div>
-                        <div class="fieldPadding">
-                            <input (keyup)="resetErrors()" [(ngModel)]="areaName" type="text"
+                        <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.locationArea && taskMasterData.locationArea.iseditable)}">
+                            <input (keyup)="resetErrors()" [(ngModel)]="areaName" type="text" [readonly]="!(taskMasterData && taskMasterData.locationArea && taskMasterData.locationArea.iseditable)"
                             placeholder="Enter activity area"class="form-control widthWebKit"formControlName="areaName" autocomplete="off" /> 
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                             </app-field-error-display>    
@@ -106,12 +106,12 @@
 
             <span class="group-head">Select Activity Assignee and Manager</span><br>
             <div class="bggrey my-2">
-                <div>
+                <div *ngIf="taskMasterData && taskMasterData.assignee && taskMasterData.assignee.isvisible">
                     <div class="taskTitle">
                         <div>Assign Member</div>
                         <div class="astericColor">*</div>
                     </div>
-                    <div class="fieldPadding">
+                    <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.assignee && taskMasterData.assignee.iseditable)}">
                         <div>
                             <div [(ngModel)]="selectMember" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectMemberDialog(selectMember)" >
                                 <div >{{selectMember}}</div>
@@ -122,11 +122,11 @@
                         </app-field-error-display>  
                     </div>                           
                 </div>
-                <div>
+                <div *ngIf="taskMasterData && taskMasterData.manager && taskMasterData.manager.isvisible">
                     <div class="taskTitle">
                         <div>Manager</div>
                     </div>
-                    <div class="fieldPadding">
+                    <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.manager && taskMasterData.manager.iseditable)}">
                         <div>
                             <div  [(ngModel)]="selectTaskManger" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectManagerDialog(selectTaskManger)" >
                                 <div>{{selectTaskManger}}</div>
@@ -143,12 +143,12 @@
             <span class="group-head">Activity Date and Other Info</span><br>
             <div class="bggrey my-2">
                 <div style="display: flex;gap: 5px;flex-wrap: wrap;" >
-                    <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding">
+                    <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding" *ngIf="taskMasterData && taskMasterData.dueDate && taskMasterData.dueDate.isvisible">
                         <div class="taskTitle">
                             <div>Due Date</div>
                         </div>
                         <div class="pickerouter fieldPadding dt dateWithMatDtae" >
-                            <input [(ngModel)]="taskDueDate" formControlName="taskDate" class="form-control widthWebKit positionNameInput" type="text"  matInput
+                            <input [(ngModel)]="taskDueDate" formControlName="taskDate" class="form-control widthWebKit positionNameInput" type="text"  [ngClass]="{'highlight': !(taskMasterData && taskMasterData.dueDate && taskMasterData.dueDate.iseditable)}" matInput
                                 [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
                                 [value]="ddate" (dateChange)="handleDateChange($event)" placeholder="Enter Date" #taskDate>
                             <mat-datepicker-toggle matSuffix [for]="picker">
@@ -248,12 +248,12 @@
             
             <div class="bggrey my-2">
                 <div style="display: flex;gap: 5px" >
-                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding" *ngIf="taskMasterData && taskMasterData.status && taskMasterData.status.isvisible"> 
                         <div class="taskTitle">
                             <div>Status</div>
                         </div>
-                        <div class="fieldPadding">
-                            <mat-select class="form-control widthWebKit" placeholder="Enter activity status"
+                        <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.status && taskMasterData.status.iseditable)}">
+                            <mat-select class="form-control widthWebKit" placeholder="Enter activity status" [disabled]="!(taskMasterData && taskMasterData.status && taskMasterData.status.iseditable)"
                                 #taskStatus formControlName="taskStatus" name="item" [(ngModel)]="taskStatusModal" (selectionChange)="handleTaskStatus(taskStatus.value)">
                                 <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id"  >
                                     <div>

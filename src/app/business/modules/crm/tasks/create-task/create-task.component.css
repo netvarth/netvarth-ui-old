@@ -187,8 +187,8 @@ input[type="datetime-local"]:valid:before {
 }
 
 .highlight{
-  background: #c7c0c06e !important;
+  background: #f8f8f8f8!important;
   cursor: not-allowed !important;
-  opacity: 0.2;
+  opacity: 0.5;
   pointer-events: none !important;
 }
