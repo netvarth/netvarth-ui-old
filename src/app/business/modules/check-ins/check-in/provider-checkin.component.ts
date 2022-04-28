@@ -1266,6 +1266,13 @@ export class ProviderCheckinComponent implements OnInit {
     }
     handleConsumerNote(vale) {
         this.consumerNote = vale;
+        if(this.consumerNote != '')
+        {
+            return this.consumerNote;
+        }
+        else{
+            return '';
+        }
     }
     autoGrowTextZone(e) {
         console.log('textarea',e)
@@ -1710,6 +1717,8 @@ export class ProviderCheckinComponent implements OnInit {
             this.api_loading_video = false;
         });
     }
+
+
     handleGoBack(cstep) {
         this.resetApi();
         switch (cstep) {
@@ -1727,9 +1736,10 @@ export class ProviderCheckinComponent implements OnInit {
                             this.note_cap = 'Add Note / Delivery address';
                         } else {
                             this.note_cap = 'Add Note';
-                        }
+                        } 
                     }
                 }
+                
                 break;
             case 2:
                 if (this.calc_mode === 'NoCalc' && this.settingsjson.showTokenId) {
@@ -1748,6 +1758,27 @@ export class ProviderCheckinComponent implements OnInit {
                 this.addmemberobj.gender = '';
                 this.addmemberobj.dob = '';
                 this.addmemberobj.jaldeeid = '';
+               // this.consumerNote = '';
+                break;
+                case 4 : 
+                 this.hideFilterSidebar();
+                if (this.action === 'note') {
+                    if (this.consumerNote === '') {
+                        if (this.domain === '') {
+                            this.note_cap = '';
+                        } else {
+                            this.note_cap = '';
+                        }
+                    } else {
+                        if (this.domain === '') {
+                            this.note_cap = '';
+                            this.consumerNote = ''
+                        } else {
+                            this.note_cap = '';
+                            this.consumerNote = ''
+                        } 
+                    }
+                };
                 break;
         }
         this.step = cstep;

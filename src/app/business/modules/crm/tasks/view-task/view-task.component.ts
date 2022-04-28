@@ -350,7 +350,7 @@ noteView(noteDetails:any){
     panelClass: ['popup-class', 'confirmationmainclass'],
     data:{
       requestType:'noteDetails',
-      header:'Note Details',
+      header:'Remarks Details',
       noteDetails:noteDetails,
     }
   })

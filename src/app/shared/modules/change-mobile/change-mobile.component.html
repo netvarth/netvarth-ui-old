@@ -51,7 +51,7 @@
               <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
               </app-form-success-display>
             </div>
-            <div class="right-menu">
+            <div class="right-menu" *ngIf="!fromApp">
               <div class="right-menu-header">{{related_links_cap}}</div>
               <ul class="related-link">
                 <li (click)="redirectto('profile', 'consumer')" class="icon-profile">{{user_profile_cap}}</li>

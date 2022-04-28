@@ -1,1 +1,162 @@
-<p>view-lead works!</p>
+<section class="card">
+    <div class="title-gb no-padding">
+      <div class="dash-head text-primary">
+        <span class="fa fa-arrow-left pointer-cursor border-cirlce" (click)="goBack()"></span>&nbsp;
+        Lead Overview
+      </div>
+    </div>
+    
+  </section>
+  
+  
+  
+  <section class="container card mt-4 mx-auto" *ngIf="leadDetails">
+    <h3>{{leadDetails.title}}</h3>
+    <div class="text-primary location-name mb-2">
+      <i *ngIf="leadDetails.locationArea || leadDetails.location.name" class="fa fa-map-marker"></i>&nbsp;
+      <span *ngIf="leadDetails.locationArea">{{leadDetails.locationArea}},</span>
+      <span *ngIf="leadDetails.location.name">{{leadDetails.location.name}}</span>
+    </div>
+    <div class="d-flex" *ngIf="leadDetails.status.name != 'Completed'">
+      <div class="dropdown">
+        <button class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
+          Actions <i class="fa fa-chevron-down"></i>
+        </button>
+        <div class="dropdown-menu">
+          <a class="p-3 dropdown-item" (click)="openEditLead(leadDetails,'Update')"><i class="text-info fa fa-edit"></i>&nbsp;&nbsp;<span class="text-dark">Edit Lead</span></a><br><br>
+          <a class="p-3 dropdown-item" (click)="markAsDone(leadUid)"><i class="text-success fa fa-check-square"></i>&nbsp;&nbsp;<span class="text-dark">Mark as done</span></a><br><br>
+          <a class="p-3 dropdown-item" (click)="progressbarDialog()"><i class='fa fa-spinner green-color'></i>&nbsp;&nbsp;<span class="text-dark">Change Progress</span></a><br><br>
+          <a class="p-3 dropdown-item" (click)="openDialogStatusChange(leadDetails)"><i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;&nbsp;<span class="text-dark">Change Status</span></a><br><br>
+          <!-- <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Convert to loan</span></a><br><br>
+          <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Create Appointment</span></a><br><br>
+          <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Edit Actions</span></a><br><br> -->
+        </div>
+      </div>
+      <div>
+        <button class="btn btn-outline-primary mx-2" (click)="openAddNoteDialog('AddNote')">Add Note</button>
+      </div>
+      <!-- <div>
+        <button class="btn btn-outline-primary">Chat</button>
+      </div> -->
+    </div>
+  </section>
+   
+  <section>
+    <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+    <div class="container card mt-2 mx-auto" *ngIf="!api_loading">
+      <div class="col-md-12 no-padding-small" *ngIf="leadDetails">
+        <div class="row d-lg-flex justify-content-between">
+          <div class="border col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding">
+            <div class="d-flex">
+              <div>
+                <!-- <span class="progress-bar-text">{{leadDetails.status.name}}</span> -->
+                <circle-progress class="circle__progress" [percent]="leadDetails.progress" [animation]="true"
+                                [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
+                                [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
+                                [unitsFontWeight]="'700'" [subtitle]="leadDetails.status.name" [subtitleFontSize]="'7'"
+                                [lazy]="false"></circle-progress>
+              </div>
+              <div class="ml-3">
+                <span class="details text-dark"><b> Assigned to {{leadDetails.assignee.name}} </b></span><br>
+                <span class="details text-secondary">Manager : {{leadDetails.manager.name}}</span><br>
+                <span class="details text-warning">Priority : {{leadDetails.priority.name}} </span><br>
+                <span class="details text-secondary">Due date : {{leadDetails.dueDate | date:newDateFormat}} </span>
+              </div>
+            </div>
+            <div class="lead-description">
+              {{leadDetails.description}}
+            </div>
+          </div>
+          
+          <!-- <div class="border col-md-5 col-lg-5 col-sm-12 col-xs-12 no-padding">
+            <div class="d-flex justify-content-between">
+              <div>
+                <span class="card-title"><b>Appointments</b></span> 
+              </div>
+              <div>
+                <span class="pointer-cursor fa fa-external-link"></span>
+              </div>
+            </div>
+            <hr class="my-2 py-2">
+            <div class="m-auto text-center">
+              <app-appointments></app-appointments>
+            </div>
+          </div> -->
+        </div>
+        
+        <div class="row d-lg-flex justify-content-lg-start">
+          <!-- <div class="border height-limit col-md-4 col-lg-4 col-sm-12 col-xs-12 no-padding mt-2">
+            <app-lead-Lead></app-lead-Lead>
+          </div> -->
+  
+          <div class="border height-limit col-md-4 col-lg-4 col-sm-12 col-xs-12 no-padding mt-2">
+            <div class="d-flex justify-content-between">
+              <div>
+                <span class="card-title"><b>Files</b></span> 
+              </div>
+              <div *ngIf="leadDetails.attachments.length>0">
+                <span (click)="attatchmentDialog(leadDetails.attachments)" class="pointer-cursor fa fa-external-link"></span>
+              </div>
+            </div>
+            <hr class="my-2 py-2">
+            <div class="text-left">
+              <span>  
+                <a  mat-button [mat-dialog-close]="true" class="lnk action pointer-cursor btn btn-primary upload-file-btn text-primary"  (click)="uploadFiles()"><i class="fa fa-paperclip mgn-rt-5" aria-hidden="true"></i>Upload
+                    File<br><span class="text-dark btn-text">Add or Upload Files related to Lead</span>
+                </a>
+                <!-- <div class="clearfix"></div><br>
+                <span class="label"><b>Uploaded Files</b></span> -->
+                <div class="my-2">
+                  <div *ngFor="let attachment of leadDetails.attachments;let i=index" class="allNotesList">
+                    <div class="notesListSection">
+                      <div class="text-primary">{{attachment.originalName}}<br><span class="label"><b>File Type : </b>{{attachment.type}} &nbsp;&nbsp;&nbsp;<b>Size : </b>{{attachment.size}} MB</span></div>
+                      <a style="cursor: pointer;" href="{{attachment.s3path}}" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                    </div>
+                   </div>
+                </div>
+              </span>
+            </div>
+          </div>
+  
+          <div class="border height-limit col-md-4 col-lg-4 col-sm-12 col-xs-12 no-padding mt-2" *ngIf="leadDetails.notes.length>0">
+            <div class="d-flex justify-content-between">
+              <div>
+                <span class="card-title"><b>Notes</b></span> 
+              </div>
+              <div>
+                <span (click)="noteView(leadDetails)" class="pointer-cursor fa fa-external-link"></span>
+              </div>
+            </div>
+            <hr class="my-2 py-2">
+            <div class="text-left">
+              <span>
+                <div class="my-2">
+                  <div *ngFor="let note of leadDetails.notes;let i=index" class="allNotesList">
+                    <div class="notesListSection">
+                      {{note.note}}
+                      <!-- <div>{{note.createdDate}}</div> -->
+                      <!-- <div style="cursor: pointer;"(click)="noteView(note)"><i class="fa fa-eye" aria-hidden="true"></i></div> -->
+                    </div>
+                   </div>
+                </div>
+              </span>
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="row d-lg-flex justify-content-lg-start">
+          <div  class="sublead-border height-limit col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mt-2">
+            <app-Leadlog [leadid]="leadkid"></app-Leadlog>
+          </div>
+        </div>
+        <!-- <div class="sublead-border mt-4">
+          <app-subleads [leadid]="leadUid"></app-subleads>
+        </div> -->
+       
+      </div>
+    </div>
+  
+  
+  
+  </section>

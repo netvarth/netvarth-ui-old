@@ -16,7 +16,7 @@ const routes: Routes = [
     { path: 'meet/:id', loadChildren: () => import('./shared/components/meet-room/meet-room.module').then(m => m.MeetRoomModule) },
     { path: 'meeting/provider/:id', loadChildren: () => import('./business/shared/meeting-room/meeting-room.module').then(m => m.MeetingRoomModule) },
     { path: 'maintenance', loadChildren: () => import('./shared/modules/maintenance/maintenance.module').then(m => m.MaintenanceModule) },
-    { path: 'userchange', loadChildren: () => import('./shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) }
+    { path: 'userchange', loadChildren: () => import('./shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
     { path: 'provider/viewtask/:id', loadChildren: () => import('./business/modules/crm/tasks/view-task/view-task.module').then(m => m.ViewTaskModule) },
     {path:'task/create-subtask/:taskid',loadChildren:()=>import ('./business/modules/crm/tasks/create-task/create-task.module').then(m=>m.CreateTaskModule)}
 ];

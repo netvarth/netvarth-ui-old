@@ -1,1 +1,298 @@
-<p>create-lead works!</p>
+<!-----card header start-->
+<section class="card cardBoxShadow">
+    <div class="title-gb no-padding">
+        <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="goback()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {{selectHeader}}
+        </div>
+    </div>
+</section>
+<br>
+<app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+<section  class="card">
+    <div class=" card bgColor inputwithImg">
+        <div>
+        <form [formGroup]="createLeadForm">
+            <span class="group-head">{{selectHeader}} Details</span><br>
+            <div class="bggrey my-2">
+                <div>
+                    <div class="leadTitle">
+                      <div>Title</div>
+                      <div class="astericColor">*</div>
+                    </div>
+                    <div class="fieldPadding">
+                        <input (keyup)="resetErrors()" type="text" #leadTitle (ngModelChange)="hamdleLeadTitle(leadTitle.value)"
+                            placeholder="Enter Lead title"class="form-control"formControlName="leadTitle"autocomplete="off" [value]="leadTitle" /> 
+                        <app-field-error-display
+                            [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                        </app-field-error-display>
+                    </div>                                      
+                </div>
+                <div>
+                    <div class="leadTitle">
+                        <div>Description</div>
+                    </div>
+                    <div  class="fieldPadding">
+                        <textarea rowa="10" class="form-control" formControlName="leadDescription"
+                            #leadDescription (change)="handleLeadDescription(leadDescription.value)"(keyup)="autoGrowTextZone($event)"
+                            maxlength="1000" placeholder="Enter Lead description">
+                        </textarea>
+                        <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                        </app-field-error-display>  
+                    </div>
+                </div>
+                <div style="display: flex;gap: 5px" >
+                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                        <div class="leadTitle">
+                            <div>Category</div>
+                            <div class="astericColor">*</div>
+                        </div>
+                        <div class="fieldPadding">
+                        <mat-select class="form-control widthWebKit" placeholder="Enter Category"
+                            #userLeadCategory formControlName="userLeadCategory" >
+                            <mat-option *ngFor="let item of categoryListData[0];let index=i" [value]="item.id"  (selectionChange)="handleLeadCategorySelection(userLeadCategory.value)">
+                                <div>
+                                    {{item.name}}
+                                </div>
+                            </mat-option>
+                        </mat-select>
+                        </div>
+                    </div>
+                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                        <div class="leadTitle">
+                            <div>Type</div>
+                            <div class="astericColor">*</div>
+                        </div>
+                        <div class="fieldPadding">
+                        <mat-select class="form-control widthWebKit" placeholder="Enter Type"
+                            #userLeadType formControlName="userLeadType" >
+                            <mat-option *ngFor="let item of leadTypeList[0];let index=i" [value]="item.id"  (selectionChange)="handleLeadTypeSelection(userLeadType.value)">
+                                <div>
+                                    {{item.name}}
+                                </div>
+                            </mat-option>
+                        </mat-select>
+                        </div>    
+                    </div>
+                </div>
+    
+                <div style="display: flex;gap: 5px" >
+                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                        <div class="leadTitle">
+                            <div>Location</div>
+                            <div class="astericColor">*</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <input (keyup)="resetErrors()" [(ngModel)]="locationName" type="text" #leadLocation (ngModelChange)="handleLeadLocation(leadLocation.value)"
+                            placeholder="Enter Lead location"class="form-control widthWebKit"formControlName="leadLocation"autocomplete="off" [value]="leadLocation.name" /> 
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>    
+                        </div>
+                    </div>
+                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                        <div class="leadTitle">
+                            <div>Area</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <input (keyup)="resetErrors()" [(ngModel)]="areaName" type="text"
+                            placeholder="Enter Lead area"class="form-control widthWebKit"formControlName="areaName" autocomplete="off" /> 
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <span class="group-head">Select Lead Assignee and Manager</span><br>
+            <div class="bggrey my-2">
+                <div>
+                    <div class="leadTitle">
+                        <div>Assign Member</div>
+                        <div class="astericColor">*</div>
+                    </div>
+                    <div class="fieldPadding">
+                        <div>
+                            <div [(ngModel)]="selectMember" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectMemberDialog(selectMember)" >
+                                <div >{{selectMember}}</div>
+                                <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
+                            </div>
+                        </div>
+                        <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                        </app-field-error-display>  
+                    </div>                           
+                </div>
+                <div>
+                    <div class="leadTitle">
+                        <div>Manager</div>
+                    </div>
+                    <div class="fieldPadding">
+                        <div>
+                            <div  [(ngModel)]="selectLeadManger" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectManagerDialog(selectLeadManger)" >
+                                <div>{{selectLeadManger}}</div>
+                                <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
+                            </div>
+                        </div>
+                        <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                        </app-field-error-display>
+                    </div>                                     
+                </div>
+            </div>
+
+            
+            <span class="group-head">Lead Date and Other Info</span><br>
+            <div class="bggrey my-2">
+                <div style="display: flex;gap: 5px;flex-wrap: wrap;" >
+                    <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding">
+                        <div class="leadTitle">
+                            <div>Due Date</div>
+                        </div>
+                        <div class="pickerouter fieldPadding dt dateWithMatDtae" >
+                            <input [(ngModel)]="leadDueDate" formControlName="leadDate" class="form-control widthWebKit positionNameInput" type="text"  matInput
+                                [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
+                                [value]="ddate" (dateChange)="handleDateChange($event)" placeholder="Enter Date" #leadDate>
+                            <mat-datepicker-toggle matSuffix [for]="picker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
+                            </mat-datepicker>
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>       
+                        </div>
+                    </div>
+                
+                    <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding"  >
+                        <div class="leadTitle">
+                            <div>Est Duration</div>
+                        </div>
+                        <div class="fieldPadding d-flex"  *ngIf="createBTimeField">
+                            <input id="days" [(ngModel)]="leadDueDays" [value]="leadDays" (keyup)="resetErrors()"  type="number" #leadDays (ngModelChange)="handleLeadEstDuration(leadDays.value)"
+                            placeholder="Days" class="form-control widthWebKit" formControlName="leadDays" autocomplete="off" /> 
+                            <input id="hrs" [(ngModel)]="leadDueHrs" [value]="leadHrs" (keyup)="resetErrors()"  type="number" #leadHrs (ngModelChange)="handleLeadEstDuration(leadHrs.value)"
+                            placeholder="Hours" class="form-control widthWebKit" formControlName="leadHrs" autocomplete="off" min="0" max="23"/> 
+                            <input id="min" [(ngModel)]="leadDueMin" [value]="leadMin" (keyup)="resetErrors()"  type="number" #leadMin (ngModelChange)="handleLeadEstDuration(leadMin.value)"
+                            placeholder="Minutes" class="form-control widthWebKit" formControlName="leadMin" autocomplete="off" min="0" max="59"/> 
+                            <!-- <input id="time" [(ngModel)]="leadDueTime" [value]="leadTime" (keyup)="resetErrors()"  type="time" #leadTime (ngModelChange)="handleLeadEstDuration(leadTime.value)"
+                            placeholder="Enter Est Duration"class="form-control widthWebKit" formControlName="leadTime"autocomplete="off" />   -->
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>
+                        </div>
+                        <div class="fieldPadding" *ngIf="updateBTimefield" >
+                            <div class="form-control" style="display: flex !important;justify-content: space-between;align-items: center;">
+                                <div>{{updateValue.estDuration.days}}days,{{this.updateValue.estDuration.hours}}hours,{{this.updateValue.estDuration.minutes}}minutes</div>
+                                <div (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding" *ngIf="updateBTimefield">
+                <div class="leadTitle">
+                    <div>Est Duration</div>
+                    <div class="astericColor">*</div>
+                    </div>
+                    <div class="fieldPadding"  >
+                        <div class="form-control widthWebKit" style="display: flex !important;justify-content: space-between;align-items: center;" *ngIf=" updateValue.estDuration.hours !=0">
+                        <div>{{updateValue.estDuration.days}}(Days),{{this.updateValue.estDuration.hours}}(Hours)</div>
+                        </div>
+                        <div class="form-control widthWebKit" style="display: flex !important;justify-content: space-between;align-items: center;" *ngIf=" updateValue.estDuration.hours ===0">
+                        <div>{{updateValue.estDuration.days}}(Days)</div>
+                        </div>
+                    </div>
+    
+                </div> -->
+                
+                <div>
+                    <div class="leadTitle">
+                        <div>Priority</div>
+                    </div>
+                    <div class="fieldPadding">
+                        <mat-select class="form-control" placeholder="Select Priority"
+                            #userLeadPriority formControlName="userLeadPriority"[(ngModel)]="leadPriority" (ngModelChange)="handleLeadPrioritySelection(userLeadPriority.value,'leadPriority')">
+                            <mat-option  *ngFor="let item of leadPriorityList[0];let index=i" [value]="item.id"  >
+                                <div>
+                                    {{item.name}}
+                                </div>
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+            </div>
+
+
+
+            
+            
+            <div class="bggrey my-2">
+                <div style="display: flex;gap: 5px" >
+                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                        <div class="leadTitle">
+                            <div>Status</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <mat-select class="form-control widthWebKit" placeholder="Enter Lead status"
+                                #leadStatus formControlName="leadStatus" name="item" [(ngModel)]="leadStatusModal" (selectionChange)="handleLeadStatus(leadStatus.value)">
+                                <mat-option *ngFor="let item of leadStatusList[0];let index=i" [value]="item.id"  >
+                                    <div>
+                                        {{item.name | capitalizeFirst}}
+                                    </div>
+                                </mat-option>
+                            </mat-select>
+                                
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>
+                        </div>
+                    </div>
+                </div>
+    
+                
+                <div style="display: flex;gap: 5px" >
+                    <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding">
+                        <div class="leadTitle">
+                            <div>Target Potential</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <input (keyup)="resetErrors()" type="text" #targetResult (ngModelChange)="handleTargetResult(targetResult.value)"
+                            placeholder="Enter potential"class="form-control widthWebKit"formControlName="targetResult"autocomplete="off" /> 
+                        </div>
+                    </div>
+                                   
+                    <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding">
+                        <div class="leadTitle">
+                            <div>Business Potential</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <input (keyup)="resetErrors()" type="text" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)"
+                                placeholder="Enter(&#8377;)"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
+                        </div>
+                    </div>               
+                </div>
+            </div>
+
+
+
+            <div style="text-align: center;margin-top: 15px;">
+                <ng-container >
+                    <div class=" mgn-bt-20 mgn-up-10">
+                        <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()"
+                            >Cancel
+                        </button>
+                        <button
+                            [ngClass]="{
+                                'btn btn-primary font-weight-bold cancelBtn': !createLeadForm.valid,
+                                'btn btn-primary font-weight-bold confirmBtn': createLeadForm.valid
+                            }" [class.spinner]="api_loading" 
+                            [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateLead()"
+                                >{{showCreateLeadButtonCaption()}}
+                        </button>
+                    </div>
+                </ng-container>
+            </div>
+        </form>
+    </div>
+        <div class="imageClass">
+            <img class="leadImg" src="/assets/images/crmImages/Addtasks.png" />
+        </div>
+    </div>
+      
+
+</section>
+

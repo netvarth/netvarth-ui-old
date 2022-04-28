@@ -293,6 +293,10 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.showMenu = false;
     this.shared_functions.sendMessage({ ttype: 'showmenu', value: this.showMenu });
   }
+  showLeadSection() {
+    this.showMenu = false;
+    this.shared_functions.sendMessage({ ttype: 'showmenu', value: this.showMenu });
+  }
   getEnquiryCount() {
     const providerId = 0;
     this.provider_services.getProviderUnreadCount('ENQUIRY', providerId).subscribe(data => {

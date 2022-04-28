@@ -546,6 +546,7 @@ export class CheckinActionsComponent implements OnInit {
         });
         addnotedialogRef.afterClosed().subscribe(result => {
             this.dialogRef.close('reload');
+            
         });
     }
     changeWaitlistStatus(action) {

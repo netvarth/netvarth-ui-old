@@ -19,7 +19,10 @@
 
 <div style="text-align:center" class="disply">
   <div mat-dialog-content class="col-md-12 col-sm-12 col-xs-12 msg">
-    <span>Are you sure you want start a voice call with {{customer}}</span>
+    <span class="cusHead" *ngIf="data.customer.startsWith('+')">
+      <span>Are you sure you want start a voice call with</span> {{ data.customer}}</span>
+      <span class="cusHead" *ngIf="!data.customer.startsWith('+')">
+        <span>Are you sure you want start a voice call with</span> +{{ data.customer}}</span>
       <div  class="modal-dialog-bt bt">
         <button tabindex="2" mat-dialog-close class="cs-btn bt1" (click)="voiceCall()">YES</button>&nbsp;&nbsp;
           <button tabindex="2" mat-dialog-close class="cs-btn bt1" (click)="onClick()">NO</button>
@@ -38,7 +41,11 @@
         <img class="image" src="./assets/images/voiceCall.png" alt="Basic Plus">
       </div>&nbsp;
       <div class="col-md-8 col-sm-8 col-xs-8 msg">
-        <span>Are you sure you want start a voice call with {{customer}}</span>
+        <!-- <span>Are you sure you want start a voice call with</span> -->
+        <span class="cusHead" *ngIf="data.customer.startsWith('+')">
+          <span>Are you sure you want start a voice call with</span> {{ data.customer}}</span>
+          <span class="cusHead" *ngIf="!data.customer.startsWith('+')">
+            <span>Are you sure you want start a voice call with</span> +{{ data.customer}}</span>
         <div  class="modal-dialog-bt bt">
           <button tabindex="2" mat-dialog-close class="cs-btn bt1" (click)="voiceCall()">YES</button>&nbsp;&nbsp;
           <button tabindex="2" mat-dialog-close class="cs-btn bt1" (click)="onClick()">NO</button>

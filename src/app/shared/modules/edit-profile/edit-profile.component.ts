@@ -111,8 +111,8 @@ export class EditProfileComponent implements OnInit {
       dob: [''],
       email: [''],
       email1: [''],
-      countryCode_whtsap: [''],
-      countryCode_telegram: [''],
+      countryCode_whtsap: ['+91'],
+      countryCode_telegram: ['+91'],
       whatsappnumber: [''],
       telegramnumber: [''],
     });
@@ -147,7 +147,7 @@ export class EditProfileComponent implements OnInit {
             this.phonenoHolder = data['userProfile']['primaryMobileNo'] || '';
             console.log(this.phonenoHolder);
             this.countryCode = data['userProfile']['countryCode'] || '';
-            if (data['userProfile']['whatsAppNum']) {
+            if (data['userProfile']['whatsAppNum'] && data['userProfile']['whatsAppNum']['number'].trim()!='') {
               this.editProfileForm.patchValue({
                 countryCode_whtsap: data['userProfile']['whatsAppNum']['countryCode'],
                 whatsappnumber: data['userProfile']['whatsAppNum']['number'],

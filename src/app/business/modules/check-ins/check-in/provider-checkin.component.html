@@ -585,7 +585,7 @@
                         maxlength="1000" placeholder="{{note_placeholder}}"></textarea>
                     </mat-form-field>
                     <div class="col-md-12 no-padding mgn-up-10 glbl-seting-heder noteBtn">
-                      <button mat-button class="cs-btn bt1  mgn-rt-10 cancelBtn" (click)="handleGoBack(1)">
+                      <button mat-button class="cs-btn bt1  mgn-rt-10 cancelBtn" (click)="handleGoBack(4)">
                         Cancel
                       </button>
                       <button mat-button class="cs-btn bt1  confirmBtn" (click)="handleGoBack(1)">OK
@@ -947,7 +947,7 @@
                     *ngIf="checkinLabel==='Check-In'">Check-in{{not_accepted_for_this_date}}</span>
                   <span class='no-queue-available'
                     *ngIf="checkinLabel!=='Check-In'">{{checkinLabel}}{{not_accepted_for_this_date}}</span>
-                </ng-container>s
+                </ng-container>
               </div>
             </ng-container>
             <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
@@ -1086,7 +1086,7 @@
                       placeholder="{{note_placeholder}}"></textarea>
                   </mat-form-field>
                   <div class="col-md-12 no-padding mgn-up-10 glbl-seting-heder">
-                    <button mat-button class="cs-btn bt1 backbtn mgn-rt-10" (click)="handleGoBack(1)">
+                    <button mat-button class="cs-btn bt1 backbtn mgn-rt-10" (click)="handleGoBack(4)">
                       Cancel
                     </button>
                     <button mat-button class="cs-btn bt1 backtocheckin" (click)="handleGoBack(1)">OK
