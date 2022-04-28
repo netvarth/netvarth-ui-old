@@ -1083,6 +1083,11 @@ export class SharedServices {
     return this.servicemeta.httpPost(url, body);
   }
 
+  addfiletolead(leaduid, body) {
+    const url = 'provider/lead/' + leaduid + '/attachment';
+    return this.servicemeta.httpPost(url, body);
+  }
+
   addProviderAppointmentAttachment(uuid, body) {
     const url = 'provider/appointment/' + uuid + '/attachment';
     return this.servicemeta.httpPost(url, body);

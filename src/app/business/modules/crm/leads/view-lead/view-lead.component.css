@@ -1,0 +1,314 @@
+.card
+{
+    border-radius: 10px!important;
+}
+.dropdown-menu {
+  width: 200px!important;
+}
+.height-limit
+{
+    height: 250px!important;
+    overflow-y: scroll!important;
+}
+.text-primary
+{
+    color: #1E4079!important;
+}
+.border-cirlce
+{
+    background-color: #1E4079!important;
+    color: #fff!important;
+    border-radius: 50%!important;
+    padding: 7px 8px!important;
+}
+.location-name
+{
+  font-size: 12px!important;
+}
+.container
+{
+    width: 95%!important;
+}
+.fa.fa-chevron-down
+{
+    font-size: 10px!important;
+}
+.btn.btn-outline-primary
+{
+    font-size: 12px!important;
+    width: 100px!important;
+}
+
+
+/* Circular Progress Bar */
+
+.progress-circle {
+    position: relative;
+    display: inline-block;
+    margin: 0.5rem;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #ebebeb; }
+  
+  .progress-circle:after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    -webkit-animation: colorload 2s;
+    animation: colorload 2s; 
+}
+  
+  .progress-circle span {
+    font-size: 0.6rem;
+    color: #8b8b8b;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: block;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    margin-left: -30px;
+    margin-top: -30px;
+    text-align: center;
+    border-radius: 50%;
+    background: #fff;
+    z-index: 1; }
+  
+  .progress-circle span:after {
+    content: "";
+    font-weight: 600;
+    color: #8b8b8b; 
+}
+
+.progress-circle.progress-70:after {
+    background-image: linear-gradient(-18deg, #ebebeb 50%, transparent 50%, transparent), linear-gradient(270deg, #1E4079 50%, #ebebeb 50%, #ebebeb); 
+}
+
+.progress-bar-text
+{
+    font-size: 8px!important;
+    color: #1E4079!important;
+}
+
+.fa .fa-edit
+{
+  color: lawngreen!important;
+}
+
+@keyframes colorload {
+0% {
+    opacity: 0;
+    transform: rotate(0deg); }
+100% {
+    opacity: 1;
+    transform: rotate(360deg); } 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.details.text-secondary
+{
+    color: rgb(131, 128, 128)!important;
+    font-size: 12px!important;
+}
+.details.text-warning
+{
+    color: rgb(219, 153, 30)!important;
+    font-size: 12px!important;
+}
+.details.text-dark
+{
+    font-size: 15px!important;
+}
+
+.task-description
+{
+    color: rgb(167, 161, 161)!important;
+    font-size: 15px!important;
+}
+
+.border
+{
+    border: 1px solid rgb(240, 233, 233);
+    padding: 10px!important;
+    margin-right: 10px!important;
+}
+
+.subtask-border
+{
+    border: 1px solid rgb(240, 233, 233);
+    padding: 10px!important;
+}
+
+
+
+
+
+
+
+
+
+.progress-bar {
+    padding: 0!important;
+  }
+  .progress {
+    width: 50px!important;
+  }
+  #fileInput {
+    position: absolute!important;
+    cursor: pointer!important;
+    z-index: 10!important;
+    opacity: 0!important;
+    height: 100%!important;
+    left: 0px!important;
+    top: 0px!important;
+  }
+  .mat-toolbar-single-row {
+    height: auto !important;
+    background: transparent!important;
+    padding: 0!important;
+  }
+  .mat-toolbar-single-row button {
+    width: 100px!important;
+  }
+  .mat-form-field {
+    width: 100%!important;
+  }
+  .message {
+    background-color: #ddd!important;
+    padding: 15px!important;
+    color: #333!important;
+    border: #aaa solid 1px!important;
+    border-radius: 4px!important;
+    margin-bottom: 10px!important;
+  }
+
+
+
+  .img-section img {
+    width: 70px!important;
+    height: 70px!important;
+    cursor: auto!important;
+  }
+  .galul {
+    margin: 0!important;
+    padding: 0!important;
+    list-style: none!important;
+  }
+  .galul li {
+    float: left!important;
+  }
+  .galimg_outer {
+    position: relative!important;
+    padding: 5px 10px 10px 5px!important;
+  }
+  .gal-input input {
+    width: 70px!important;    
+    font-size: .7rem!important;
+  }
+  .gal_action {
+    position: absolute!important;
+    top: -5px!important;
+    right: -3px!important;
+    background: rgba(0,0,0,.5)!important;
+    width: 15px!important;
+    height: 15px!important;
+    text-align: center!important;
+    border-radius: 50%!important;
+    cursor: pointer!important;
+  }
+
+  .upload-file-btn
+  {
+    width: 300px!important;
+    color: #1E4079!important;
+    background-color: #fff!important;
+    text-align: left!important;
+  }
+  .btn-text
+  {
+    font-size: 12px!important;
+  }
+
+  /* for notes section start */
+  @media(max-width: 992px){
+    .notesSubTask{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .border{
+      margin-right: 0px !important;
+    }
+
+  }
+  .widthadd{
+    max-width: -webkit-fill-available !important;
+  }
+  @media(min-width: 1200px){
+    .widthadd{
+      max-width: 32.333333% !important;
+    }
+    .subTask{
+      width: 65.666667% !important;
+    }
+  }
+  .notesListSection{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    font-weight: 500!important;
+    font-size: 13px!important;
+    color: #4D4B4B;
+  }
+  .allNotesList{
+    padding: 10px;
+    background: #FFFFFF;
+    border: 0.450552px solid #DCDCDC;
+    box-sizing: border-box;
+    border-radius: 3.93969px;
+    margin-bottom: 5px;
+  }
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 180px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
+}
+.imageStatus{
+  height: 16px;
+  width: 16px;
+  margin-left: -2px;
+  margin-right: 8px;
+}
+  
+ 

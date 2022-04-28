@@ -88,6 +88,7 @@ export class CreateTaskComponent implements OnInit {
   public estDurationWithDay:any;
   public estTime:any;
   estDurationWithTime: any;
+  taskMasterData: any;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -137,10 +138,10 @@ export class CreateTaskComponent implements OnInit {
 
     this.api_loading=false;
     this.createTaskForm=this.createTaskFB.group({
-      taskTitle:[null,[Validators.required]],
+      taskTitle:[null],
       taskDescription:[null],
-      userTaskCategory:[null,[Validators.required]],
-      userTaskType:[null,[Validators.required]],
+      userTaskCategory:[null],
+      userTaskType:[null],
       taskLocation:[null,[Validators.required]],
       areaName:[null],
       taskStatus:[null,[Validators.required]],
@@ -148,7 +149,7 @@ export class CreateTaskComponent implements OnInit {
       taskDays:[0],
       taskHrs:[0],
       taskMin:[0],
-      userTaskPriority:[null,[Validators.required]],
+      userTaskPriority:[null],
       targetResult:[null],
       targetPotential:[null],
     }) 
@@ -272,11 +273,14 @@ export class CreateTaskComponent implements OnInit {
         console.log('this.estTime',this.estTime)
         console.log('new Date()',new Date())
         const taskMaster= this.crmService.taskMasterToCreateServiceData;
+        this.taskMasterData = this.crmService.taskMasterToCreateServiceData;
         console.log('taskMaster',taskMaster);
-        this.createTaskForm.controls.taskTitle.value = taskMaster.title;
-        this.createTaskForm.controls.taskDescription.value= taskMaster.description;
-        this.createTaskForm.controls.userTaskCategory.value= taskMaster.category.id;
-        this.createTaskForm.controls.userTaskType.value= taskMaster.type.id;
+        this.createTaskForm.controls.taskTitle.value = taskMaster.title.value;
+        if(taskMaster.description && taskMaster.description && taskMaster.description.value){
+          this.createTaskForm.controls.taskDescription.value= taskMaster.description.value;
+        }
+        this.createTaskForm.controls.userTaskCategory.value= taskMaster.category.value.id;
+        this.createTaskForm.controls.userTaskType.value= taskMaster.type.value.id;
         this.createTaskForm.controls.userTaskPriority.value= taskMaster.priority.id;
 
     }

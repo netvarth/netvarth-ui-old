@@ -108,16 +108,17 @@
     background: whitesmoke; 
     margin: 3px; 
 }
-
-
-
-.fa-icons
-{
-    width: 20px!important;
-}
 .customer-action-btn
 {
-    padding: 3px 10px!important;
+    padding: 8px 10px!important;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px !important;
+    font-weight: 700;
+    color: #8D9094 !important;
+    border: 0.8009px solid #C1C2C2 !important;
+    border-radius: 3.2036px !important;
 }
 
 .text-light
@@ -135,23 +136,25 @@
     display: inline-block!important;
     background-color: white!important;
     color: black!important;
-    border: 2px solid #555555!important;
+    border: 2px solid #555555;
 }
 .user-img img {
-    width: 80px;
-    height: 80px;
+    width: 40px;
+    height: 40px;
     border-radius: 10%!important;
-    margin: 10px;
+    /* margin: 10px; */
   }
 .edit-btn
 {
-    font-size: 15px!important;
-    border-radius: 10px!important;
+    font-size: 13px!important;
+    /* border-radius: 10px!important; */
     padding:5px!important;
-    border: 1px solid #1E4079!important;
+    /* border: 1px solid #1E4079!important; */
     color: #1E4079!important;
     padding-left: 10px!important;
     padding-right: 10px!important;
+    border: 0.8009px solid #C1C2C2 !important;
+    border-radius: 3.2036px !important;
 
 }
 .fa-edit
@@ -203,9 +206,9 @@
 
 .btn-primary
 {
-    background-color: #1E4079!important;
+    /* background-color: #1E4079!important;
     color: #fff!important;
-    border-color: #1E4079!important;
+    border-color: #1E4079!important; */
 }
 .content.comn-cls .lbl .card
 {
@@ -242,7 +245,9 @@
     }
     .rowcard
     {
-        height: auto!important;
+        /* height: auto!important; */
+        min-height: 100%!important;
+        max-height: 100%!important;
     }
     .notescard
     {
@@ -275,4 +280,68 @@
     margin-bottom: 10px!important;
     }
   }
+  .serviceName{
+    /* display: flex; */
+    /* margin-left: -5px; */
+    margin-top:10px !important;
+    font-size: 14px;
+    color: #333436;
+  }
+  .service{
+     margin-bottom: 5px !important;
+  }
+  .moreAction{
+    float: right;
+    margin-top: 17px!important;
+    /* background: #119BFF; */
+    border-radius: 4.5833px;
+    /* font-size: 15px !important; */
+  }
 
+    .text-light
+        {
+            font-size: 12px;
+            margin-top: 5px!important;
+            color: rgb(141, 135, 135)!important;
+        }
+        .fa-icons
+        {
+            /* margin-left: -5px; */
+            /* padding: 10px;
+    background: #F8F8F8;
+    mix-blend-mode: normal; */
+        }
+    .map{
+        margin-top: 5px;
+        font-size: 12px;
+    color: #979797 !important;
+    }
+    .serviceBtnName{
+    border: 0.911392px solid rgba(0, 0, 0, 0.8) !important;
+    border-radius: 3.39914px !important;
+    }
+    .booking-details-body{
+        margin-top: 25px;
+    }
+    .cusHead{
+    color: #2e2e2e !important;
+    font-size: 12px !important;
+    }
+    .customerDetails{
+        display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 5px;
+    }
+    .confirmBtn {
+        background: #0D2348 !important;
+        box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+        border-radius: 5.75916px !important;
+        border: 0px solid !important;
+    }
+    .callingBtn{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 5px;
+    }

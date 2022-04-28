@@ -147,14 +147,14 @@
         <!----task description start-->
         <div>
             <div class="taskTitle">
-                <div>Notes Description</div>
+                <div>Remarks Description</div>
                 <div class="astericColor">*</div>
               </div>
               <!--textarea start-->
              <div  class="fieldPadding">
                     <textarea rows="10" class="form-control" [(ngModel)]="notesTextarea"
                     #taskDescription (ngModelChange)="handleNotesDescription(taskDescription.value)"(keyup)="autoGrowTextZone($event)"
-                    maxlength="1000" placeholder="Enter note description"></textarea>
+                    maxlength="1000" placeholder="Enter remarks description"></textarea>
                     <!-- <div *ngIf="boolenTaskError">{{taskErrorText}}</div> -->
              </div>                           
               <!--textarea end-->
@@ -456,7 +456,7 @@
                     <!-- <div class="masterDes" > -->
                            <div class="masterDes">
                                <!-- <div class="taskMasterFieldName" >  Title : </div> -->
-                          <div class="taskMasterFieldName" >{{taskMaster.title}}</div>
+                          <div class="taskMasterFieldName" >{{taskMaster.templateName}}</div>
                            </div>
                            
                            <!-- <div  class="masterDes" >

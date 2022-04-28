@@ -136,6 +136,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       this.timetype = JSON.parse(params.timetype);
       
     });
+    this.getWaitlistDetail();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
@@ -145,6 +146,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     
   }
   ngOnInit() {
+   this.getWaitlistDetail()
     this.getPos();
     // this.getDisplayboardCount();
     this.api_loading = true;
@@ -154,7 +156,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     }
     this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
     if (this.waitlist_id) {
-      // this.getWaitlistDetail();
+       this.getWaitlistDetail();
       this.getProviderSettings();
     } else {
       this.goBack();
@@ -175,6 +177,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       this.small_device_display = false;
     }
   }
+ 
 
   getAgent(fileName){
     //'BROWSER' || 'IOS' || 'ANDROID'
@@ -328,6 +331,7 @@ editCustomerDetails() {
           this.getConsumerBills();
           this.getCustomerHistoryVisit();
           console.log('waitlist dtata',this.waitlist_data)
+          this.getWaitlistNotes(this.waitlist_data.ynwUuid);
           if (this.waitlist_data.questionnaires && this.waitlist_data.questionnaires.length > 0) {
             this.questionnaires = this.waitlist_data.questionnaires;
           }
@@ -646,9 +650,10 @@ editCustomerDetails() {
     this.notedialogRef.afterClosed().subscribe(result => {
       console.log("result ..",result)
       if (result === 'reloadlist') {
-        // this.getWaitlistNotes();
+        //this.getWaitlistNotes();
         console.log("dialog box losed")
-        this.getWaitlistNotes(this.waitlist_data.ynwUuid);
+        this.getWaitlistNotes(checkin.ynwUuid);
+      
 
       }
     });

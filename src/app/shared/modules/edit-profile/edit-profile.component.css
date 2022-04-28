@@ -135,3 +135,7 @@ font-weight: bold;
   ::ng-deep .picker-form-group .mat-input-element,  ::ng-deep .ynw-common-form-nm .mat-input-element {
       padding : 13px 0px 0px 0px !important;
   }
+.link {
+    font-weight: 700;
+    text-decoration: underline;
+}

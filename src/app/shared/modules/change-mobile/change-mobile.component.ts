@@ -52,6 +52,7 @@ export class ChangeMobileComponent implements OnInit {
   accountId: any;
   customId: any;
   theme: any;
+  fromApp: boolean;
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -71,6 +72,7 @@ export class ChangeMobileComponent implements OnInit {
       }
       if (qparams && qparams.customId) {
         this.customId = qparams.customId;
+        this.fromApp = true;
       }
       if(qparams && qparams.theme) {
         this.theme = qparams.theme;
