@@ -1659,6 +1659,26 @@ export class AppointmentComponent implements OnInit {
                 this.addmemberobj.dob = '';
                 this.addmemberobj.jaldeeid = '';
                 break;
+                case 4 : 
+                this.hideFilterSidebar();
+               if (this.action === 'note') {
+                   if (this.consumerNote === '') {
+                       if (this.domain === '') {
+                           this.note_cap = '';
+                       } else {
+                           this.note_cap = '';
+                       }
+                   } else {
+                       if (this.domain === '') {
+                           this.note_cap = '';
+                           this.consumerNote = ''
+                       } else {
+                           this.note_cap = '';
+                           this.consumerNote = ''
+                       } 
+                   }
+               };
+               break;
         }
         this.step = cstep;
         // if (this.waitlist_for.length === 0) { // if there is no members selected, then default to self
