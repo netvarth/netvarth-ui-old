@@ -478,7 +478,7 @@
                                                                             class=" next-button btn btn-primary font-weight-bold text-uppercase mt-3"
                                                                             [class.disabled]="isClickedOnce"
                                                                             *ngIf=" ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))"
-                                                                            (click)="payuPayment()">
+                                                                            (click)="!isClickedOnce && payuPayment()">
                                                                             Make Payment
                                                                         </button>
                                                                        

@@ -480,7 +480,8 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                             .subscribe((pData: any) => {
                                 this.origin = 'consumer';
                                 this.pGateway = pData.paymentGateway;
-                                if (pData.isGateWayPaymentNeeded && pData.isJCashPaymentSucess) {
+                                
+                                if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
                                     if(this.pGateway == 'RAZORPAY'){
                                         this.paywithRazorpay(pData.response);
                                        
@@ -561,7 +562,9 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                         (data: any) => {
                             this.origin = 'consumer';
                             this.pGateway = data.paymentGateway;
-                            if (this.pGateway === 'RAZORPAY') {
+                            console.log("Gatway :",this.pGateway)
+                        //RAZORPAY
+                            if (this.pGateway !== 'PAYTM') {
                                 this.paywithRazorpay(data);
                             } else {
                                 this.payWithPayTM(data, this.accountId);

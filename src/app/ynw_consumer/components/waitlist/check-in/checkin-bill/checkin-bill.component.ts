@@ -472,15 +472,22 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                                 .subscribe((pData: any) => {
                                     this.origin = 'consumer';
                                     console.log(pData)
-                                    if (pData.isGateWayPaymentNeeded && pData.isJCashPaymentSucess) {
-                                        if (pData.response.paymentGateway == 'PAYTM') {
-
+                                    if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
+                                        if (pData.paymentGateway == 'PAYTM') {
                                             this.payWithPayTM(pData.response, this.accountId);
                                         } else {
-
                                             this.paywithRazorpay(pData.response);
                                         }
                                     }
+                                    // if (pData.isGateWayPaymentNeeded && pData.isJCashPaymentSucess) {
+                                    //     if (pData.response.paymentGateway == 'PAYTM') {
+
+                                    //         this.payWithPayTM(pData.response, this.accountId);
+                                    //     } else {
+
+                                    //         this.paywithRazorpay(pData.response);
+                                    //     }
+                                    // }
                                 },
                                     error => {
                                         this.isClickedOnce = false;
