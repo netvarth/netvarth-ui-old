@@ -135,7 +135,7 @@ textarea {
   resize: none;
 }
 .inputwithImg{
-  display: flex;
+  /* display: flex; */
   justify-content: space-between;
   align-items: flex-start;
 }

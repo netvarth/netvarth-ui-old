@@ -182,6 +182,7 @@ export class CreateTaskComponent implements OnInit {
       this.selectTaskManger= this.updateValue.manager.name;
       this.updateManagerId= this.updateValue.manager.id
       this.updateUserType=this.updateValue.userTypeEnum;
+      this.taskDueDate = this.updateValue.dueDate
       // this.taskDueTime=this.updateValue.estDuration
        this.estTime={ "days" :this.updateValue.estDuration.days, "hours" :this.updateValue.estDuration.hours, "minutes" : this.updateValue.estDuration.minutes };
       }
@@ -193,58 +194,29 @@ export class CreateTaskComponent implements OnInit {
       {
                 this.createBTimeField=true;
           this.updateBTimefield=false;
-          // this.selectMember='Select Member';
-          // this.selectTaskManger='Select Task Manger'
           this.selectHeader='Add Subactivity';
           this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd') 
-          // this.datePipe.transform(this.taskDueDate,'yyyy-MM-dd');
           console.log(' this.taskDueDate', this.taskDueDate);
           this.selectedDate = this.taskDueDate;
-          // this.taskDueTime= this.datePipe.transform(new Date(),'yyyy-MM-ddTHH:mm') ;
           this.taskDueTime = "0000"
-          // console.log(' this.taskDueTime', this.taskDueTime)
-          // this.estDurationWithDay=this.taskDueTime;
-          // const estDurationDay=this.datePipe.transform(this.estDurationWithDay,'d')
-          // const estDurationHour=this.datePipe.transform(this.estDurationWithDay,'h')
-          // const estDurationMinurte= this.datePipe.transform(this.estDurationWithDay,'mm')
-          // this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinurte };
-          // console.log('this.estTime',this.estTime);
-          // console.log('new Date()',new Date())
-
           this.estDurationWithDay=this.taskDueDays;
           this.estDurationWithTime=this.taskDueTime;
-          // console.log('this.estDurationWithDay',this.estDurationWithDay,this.estDurationWithTime);
           const estDurationDay=this.estDurationWithDay
           const estDurationHour=this.taskDueTime.slice(0,2)
           const estDurationMinurte= this.taskDueTime.slice(3,)
           this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinurte };
           console.log('estDurationDay',this.estTime)
 
-          // const taskMaster= this.crmService.taskMasterToCreateServiceData;
-          // console.log('taskMaster',taskMaster);
-          // this.createTaskForm.controls.taskTitle.value = taskMaster.title;
-          // this.createTaskForm.controls.taskDescription.value= taskMaster.description;
-          // this.createTaskForm.controls.userTaskCategory.value= taskMaster.category.id;
-          // this.createTaskForm.controls.userTaskType.value= taskMaster.type.id;
-          // this.createTaskForm.controls.userTaskPriority.value= taskMaster.priority.id;
           }
     else if(this.crmService.taskActivityName==='CreatE'){
       this.createBTimeField=true;
       this.updateBTimefield=false;
-      // this.selectMember='Select Member';
-      // this.selectTaskManger='Select Task Manger'
         this.selectHeader='Add Activity';
         this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd') 
-        // this.datePipe.transform(this.taskDueDate,'yyyy-MM-dd');
         console.log(' this.taskDueDate', this.taskDueDate);
         this.selectedDate = this.taskDueDate;
         this.taskDueTime= '0000' ;
         console.log(' this.taskDueTime', this.taskDueTime)
-        // this.estDurationWithDay=this.taskDueTime;
-        // const estDurationDay=this.datePipe.transform(this.estDurationWithDay,'d')
-        // const estDurationHour=this.datePipe.transform(this.estDurationWithDay,'h')
-        // const estDurationMinurte= this.datePipe.transform(this.estDurationWithDay,'mm')
-        // this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinurte };
         this.estDurationWithDay=this.taskDueDays;
         this.estDurationWithTime=this.taskDueTime;
         const estDurationDay=this.estDurationWithDay
@@ -263,18 +235,18 @@ export class CreateTaskComponent implements OnInit {
         // this.datePipe.transform(this.taskDueDate,'yyyy-MM-dd');
         console.log(' this.taskDueDate', this.taskDueDate);
         this.selectedDate = this.taskDueDate;
-        this.taskDueTime= "0000" ;
+        this.taskDueTime= '0000' ;
         console.log(' this.taskDueTime', this.taskDueTime)
-        this.estDurationWithDay=this.taskDueTime;
-        const estDurationDay=this.datePipe.transform(this.estDurationWithDay,'d')
-        const estDurationHour=this.datePipe.transform(this.estDurationWithDay,'h')
-        const estDurationMinurte= this.datePipe.transform(this.estDurationWithDay,'mm')
+        this.estDurationWithDay=this.taskDueDays;
+        this.estDurationWithTime=this.taskDueTime;
+        const estDurationDay=this.estDurationWithDay
+        const estDurationHour=this.taskDueTime.slice(0,2)
+        const estDurationMinurte= this.taskDueTime.slice(3,)
         this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinurte };
         console.log('this.estTime',this.estTime)
-        console.log('new Date()',new Date())
         const taskMaster= this.crmService.taskMasterToCreateServiceData;
         this.taskMasterData = this.crmService.taskMasterToCreateServiceData;
-        console.log('taskMaster',taskMaster);
+        console.log('taskMasterCreate',taskMaster);
         this.createTaskForm.controls.taskTitle.value = taskMaster.title.value;
         if(taskMaster.description && taskMaster.description && taskMaster.description.value){
           this.createTaskForm.controls.taskDescription.value= taskMaster.description.value;
@@ -738,8 +710,9 @@ export class CreateTaskComponent implements OnInit {
     console.log('createTaskData',createTaskData)
     console.log('this.userType',this.userType)
     if(this.userType===('PROVIDER' || 'CONSUMER') && (this.createTaskForm.controls.taskTitle.value!=null)){
-      // this.boolenTaskError=false;
-      // this.api_loading = true;
+      console.log('...................kl')
+      this.boolenTaskError=false;
+      this.api_loading = true;
       console.log("1")
       this.crmService.addTask(createTaskData).subscribe((response)=>{
         console.log('afterCreateList',response);

@@ -165,12 +165,37 @@
                             <div>Est Duration</div>
                         </div>
                         <div class="fieldPadding d-flex" style="gap: 5px;flex-wrap: nowrap;"  *ngIf="createBTimeField" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)}">
+                            <!-- <div style="display: flex;">
+                                <div>
+                                    <input id="days" [(ngModel)]="taskDueDays" [value]="taskDays" (keyup)="resetErrors()"  type="number" #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
+                                placeholder="Days" class="form-control widthWebKit" formControlName="taskDays"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0"/>
+                                </div>
+                                <div>Days</div>
+                            </div> -->
                             <input id="days" [(ngModel)]="taskDueDays" [value]="taskDays" (keyup)="resetErrors()"  type="number" #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
-                            placeholder="Days" class="form-control widthWebKit" formControlName="taskDays"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0"/> 
+                                placeholder="Days" class="form-control widthWebKit" formControlName="taskDays"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0"/>
+                            <!-- <div style="display: flex;">
+                                <div>
+                                    <input id="hrs" [(ngModel)]="taskDueHrs" [value]="taskHrs" (keyup)="resetErrors()"  type="number" #taskHrs (ngModelChange)="handleTaskEstDuration(taskHrs.value)"
+                            placeholder="Hours" class="form-control widthWebKit" formControlName="taskHrs"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0" max="23"/>
+                                </div>
+                                <div> Hours </div>
+                            </div> -->
                             <input id="hrs" [(ngModel)]="taskDueHrs" [value]="taskHrs" (keyup)="resetErrors()"  type="number" #taskHrs (ngModelChange)="handleTaskEstDuration(taskHrs.value)"
-                            placeholder="Hours" class="form-control widthWebKit" formControlName="taskHrs"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0" max="23"/> 
+                            placeholder="Hours" class="form-control widthWebKit" formControlName="taskHrs"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0" max="23"/>
+                            <!-- <div style="display: flex;">
+                                <div>
+                                    <input id="min" [(ngModel)]="taskDueMin" [value]="taskMin" (keyup)="resetErrors()"  type="number" #taskMin (ngModelChange)="handleTaskEstDuration(taskMin.value)"
+                                    placeholder="Minutes" class="form-control widthWebKit" formControlName="taskMin"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0" max="59"/>
+                                </div>
+                                <div>
+                                    Minutes 
+                                </div>
+                            </div> -->
                             <input id="min" [(ngModel)]="taskDueMin" [value]="taskMin" (keyup)="resetErrors()"  type="number" #taskMin (ngModelChange)="handleTaskEstDuration(taskMin.value)"
-                            placeholder="Minutes" class="form-control widthWebKit" formControlName="taskMin"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0" max="59"/> 
+                                    placeholder="Minutes" class="form-control widthWebKit" formControlName="taskMin"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0" max="59"/>
+                           
+                          
                             <!-- <input id="time" [(ngModel)]="taskDueTime" [value]="taskTime" (keyup)="resetErrors()"  type="time" #taskTime (ngModelChange)="handleTaskEstDuration(taskTime.value)"
                             placeholder="Enter Est Duration"class="form-control widthWebKit" formControlName="taskTime"autocomplete="off" />   -->
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
@@ -288,9 +313,9 @@
             </div>
         </form>
     </div>
-        <div class="imageClass">
+        <!-- <div class="imageClass">
             <img class="taskImg" src="/assets/images/crmImages/Addtasks.png" />
-        </div>
+        </div> -->
     </div>
       
 
@@ -574,9 +599,9 @@
             </div>
         </form>
     </div>
-        <div class="imageClass">
+        <!-- <div class="imageClass">
             <img class="taskImg" src="/assets/images/crmImages/Addtasks.png" />
-        </div>
+        </div> -->
     </div>
       
 
