@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { projectConstantsLocal } from '../../../../../../../../src/app/shared/constants/project-constants';
 import { projectConstants } from '../../../../../../app.component';
 import { CrmSelectMemberComponent } from '../../../../../shared/crm-select-member/crm-select-member.component';
 import { CrmService } from '../../../crm.service';
@@ -29,6 +30,7 @@ export class SubtasksComponent implements OnInit {
   subTaskList: any;
   taskDetails: any;
   subTaskDetails: any;
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   constructor( 
     private router: Router,
     private crmService: CrmService,
