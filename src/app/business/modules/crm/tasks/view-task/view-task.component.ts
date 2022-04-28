@@ -81,7 +81,6 @@ action: any;
   updateTaskData:any;
   taskkid: any;
   taskType: any;
-
 constructor(
   private locationobj: Location,
    private crmService: CrmService,
@@ -91,7 +90,7 @@ constructor(
   public shared_services: SharedServices,
 
 ) {
-}
+}   
 
 ngOnInit(): void {
   this.api_loading = false;
@@ -321,7 +320,8 @@ openAddNoteDialog(addNoteText:any){
   dialogRef.afterClosed().subscribe((response)=>{
     this.notesText=response;
     setTimeout(() => {
-      this.ngOnInit();
+      // this.ngOnInit();
+      this.getTaskDetails();
       }, projectConstants.TIMEOUT_DELAY);
   })
 
@@ -392,6 +392,10 @@ openDialogStatusChange(taskData:any){
   });
   dialogRef.afterClosed().subscribe((res:any)=>{
     console.log('resssssssss',res);
+    this.getTaskDetails();
+    // if(res === 'Cancelled'){
+    //   console.log('kkk')
+    // }
   })
 }
 
