@@ -1355,10 +1355,10 @@ input[type='file'] {
     .img {
         height: 25px !important;
     }
-    .btnClass {
-        display: flex !important;
-        justify-content: center !important;
-    }
+}
+.btnClass {
+    display: flex !important;
+    justify-content: flex-end !important;
 }
 
 svg {

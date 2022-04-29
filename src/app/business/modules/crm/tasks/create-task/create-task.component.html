@@ -95,7 +95,7 @@
                         </div>
                         <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.locationArea && taskMasterData.locationArea.iseditable)}">
                             <input (keyup)="resetErrors()" [(ngModel)]="areaName" type="text" [readonly]="!(taskMasterData && taskMasterData.locationArea && taskMasterData.locationArea.iseditable)"
-                            placeholder="Enter area"class="form-control widthWebKit"formControlName="areaName" autocomplete="off" /> 
+                            placeholder=""class="form-control widthWebKit"formControlName="areaName" autocomplete="off" /> 
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                             </app-field-error-display>    
                         </div>
@@ -193,7 +193,12 @@
                         </div>
                         <div class="fieldPadding" *ngIf="updateBTimefield" >
                             <div class="form-control" style="display: flex !important;justify-content: space-between;align-items: center;">
-                                <div>{{updateValue.estDuration.days}}days,{{this.updateValue.estDuration.hours}}hours,{{this.updateValue.estDuration.minutes}}minutes</div>
+                                <!-- <div>{{updateValue.estDuration.days}}days,{{this.updateValue.estDuration.hours}}hours,{{this.updateValue.estDuration.minutes}}minutes</div> -->
+                                <div style="display: flex;gap: 5px;align-items: center;">
+                                    <div>{{updateValue.estDuration.days}}days,</div>
+                                    <div>{{this.updateValue.estDuration.hours}}hours,</div>
+                                    <div>{{this.updateValue.estDuration.minutes}}minutes</div>
+                                </div>
                                 <div (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
                             </div>
                         </div>
@@ -399,7 +404,7 @@
                         </div>
                         <div class="fieldPadding">
                             <input (keyup)="resetErrors()" [(ngModel)]="areaName" type="text"
-                            placeholder="Enter area"class="form-control widthWebKit"formControlName="areaName" autocomplete="off" /> 
+                            placeholder=""class="form-control widthWebKit"formControlName="areaName" autocomplete="off" /> 
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                             </app-field-error-display>    
                         </div>
@@ -497,7 +502,12 @@
                         </div>
                         <div class="fieldPadding" *ngIf="updateBTimefield" >
                             <div class="form-control" style="display: flex !important;justify-content: space-between;align-items: center;">
-                                <div>{{updateValue.estDuration.days}}days,{{this.updateValue.estDuration.hours}}hours,{{this.updateValue.estDuration.minutes}}minutes</div>
+                                <!-- <div>{{updateValue.estDuration.days}}days,{{this.updateValue.estDuration.hours}}hours,{{this.updateValue.estDuration.minutes}}minutes</div> -->
+                                <div style="display: flex;gap: 5px;align-items: center;">
+                                    <div>{{updateValue.estDuration.days}}days,</div>
+                                    <div>{{this.updateValue.estDuration.hours}}hours,</div>
+                                    <div>{{this.updateValue.estDuration.minutes}}minutes</div>
+                                </div>
                                 <div (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
                             </div>
                         </div>
@@ -550,7 +560,10 @@
                             <mat-select class="form-control widthWebKit" placeholder="Enter activity status"
                                 #taskStatus formControlName="taskStatus" name="item" [(ngModel)]="taskStatusModal" (selectionChange)="handleTaskStatus(taskStatus.value)">
                                 <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id"  >
-                                    <div>
+                                    <!-- <div>
+                                        {{item.name | capitalizeFirst}}
+                                    </div> -->
+                                    <div [ngStyle]="{'color': getColor(item.name)}">
                                         {{item.name | capitalizeFirst}}
                                     </div>
                                 </mat-option>

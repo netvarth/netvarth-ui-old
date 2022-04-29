@@ -26,8 +26,8 @@
         <table class="table">
             <thead>
                 <tr class="subtask-table-headings">
-                    <th class="head_color">&nbsp;&nbsp;&nbsp;Subactivity Details</th>
-                    <!-- <th class="head_color">Duration</th> -->
+                    <th class="head_color">&nbsp;&nbsp;&nbsp;Name</th>
+                    <th class="head_color">Assigned To</th>
                     <th class="head_color">Status</th>
                     <th class="head_color">Category</th>
                     <th class="head_color">Type</th>
@@ -44,10 +44,10 @@
                     <tr class="subtask-table-data pointer-cursor" *ngFor="let subtask of subTaskDetails" (click)="viewTask(subtask.taskUid,subtask)">
                         <!-- <pre>{{subtask | json}}</pre> -->
                         <td class="head_color"><span class="text-dark">
-                            &nbsp;&nbsp;&nbsp;<b>{{subtask.title}}</b>
-                            </span><br>&nbsp;&nbsp;&nbsp;<span class="text-primary">Assigned to {{subtask.assignee.name}}</span>
+                            &nbsp;&nbsp;&nbsp;<b>{{subtask.title}}</b></span>
+                            <!-- </span><br>&nbsp;&nbsp;&nbsp;<span class="text-primary">Assigned to {{subtask.assignee.name}}</span> -->
                         </td>
-                        <!-- <td class="head_color">{{subtask.estDuration['hours']}} hrs {{subtask.estDuration['minutes']}} min</td> -->
+                        <td class="head_color">{{subtask.assignee.name}}</td>
                         <td class="head_color">{{subtask.status.name}}</td>
                         <td class="head_color">{{subtask.category.name}}</td>
                         <td class="head_color">{{subtask.type.name}}</td>
