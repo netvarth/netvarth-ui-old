@@ -11,7 +11,7 @@
 <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
 <section  class="card" *ngIf="taskMasterData">
     <div class=" card bgColor inputwithImg">
-        <div>
+        <div class="noImg">
         <form [formGroup]="createTaskForm">
             <span class="group-head">{{selectHeader}} Details</span><br>
             <div class="bggrey my-2">
@@ -322,7 +322,7 @@
 </section>
 <section  class="card" *ngIf="!taskMasterData">
     <div class=" card bgColor inputwithImg">
-        <div>
+        <div class="noImg">
         <form [formGroup]="createTaskForm">
             <span class="group-head">{{selectHeader}} Details</span><br>
             <div class="bggrey my-2">
