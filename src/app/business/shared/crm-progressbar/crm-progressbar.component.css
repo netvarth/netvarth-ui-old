@@ -334,8 +334,8 @@ input[type=number] {
 }
 .btn-primary
 {
-    background-color: #1E4079!important;
-    border-color: #1E4079!important;
+    /* background-color: #1E4079!important;
+    border-color: #1E4079!important; */
 }
 .text-primary
 {

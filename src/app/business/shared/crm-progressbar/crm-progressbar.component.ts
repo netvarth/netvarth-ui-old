@@ -26,6 +26,7 @@ export class CrmProgressbarComponent implements OnInit {
   gridsize;
   progress: any;
   ddd: string;
+  btndisble = true;
   previousProgressList:any=[];
   constructor( public dialogRef: MatDialogRef<CrmProgressbarComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -43,6 +44,12 @@ export class CrmProgressbarComponent implements OnInit {
     console.log('consdata',this.data.details)
     this.taskDetails = this.data.details
     this.previousProgress();
+    if(this.gridsize === undefined){
+     this.btndisble = true;
+    }
+    else{
+      this.btndisble = false;
+    }
   }
   previousProgress(){
     this.crmService.previousProgress(this.taskDetails.id).subscribe((response:any)=>{
@@ -54,6 +61,12 @@ export class CrmProgressbarComponent implements OnInit {
   }
   updateSetting(event) {
     this.gridsize = event.value;
+    if(this.gridsize === undefined){
+      this.btndisble = true;
+     }
+     else{
+       this.btndisble = false;
+     }
     this.ddd = JSON.stringify(this.gridsize)
   }
   autoGrowTextZone(e) {
@@ -71,7 +84,7 @@ export class CrmProgressbarComponent implements OnInit {
       this.assignMemberErrorMsg='Please enter some description'
     }
   }
-  saveCreateNote(){
+  saveProgress(){
     console.log(this.gridsize)
       console.log('this.notesTextarea',this.notesTextarea);
       this.errorMsg=false;

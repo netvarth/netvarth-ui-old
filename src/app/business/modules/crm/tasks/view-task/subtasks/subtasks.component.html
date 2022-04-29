@@ -27,7 +27,7 @@
             <thead>
                 <tr class="subtask-table-headings">
                     <th class="head_color">&nbsp;&nbsp;&nbsp;Subactivity Details</th>
-                    <th class="head_color">Duration</th>
+                    <!-- <th class="head_color">Duration</th> -->
                     <th class="head_color">Status</th>
                     <th class="head_color">Category</th>
                     <th class="head_color">Type</th>
@@ -47,11 +47,11 @@
                             &nbsp;&nbsp;&nbsp;<b>{{subtask.title}}</b>
                             </span><br>&nbsp;&nbsp;&nbsp;<span class="text-primary">Assigned to {{subtask.assignee.name}}</span>
                         </td>
-                        <td class="head_color">{{subtask.estDuration['hours']}} hrs {{subtask.estDuration['minutes']}} min</td>
+                        <!-- <td class="head_color">{{subtask.estDuration['hours']}} hrs {{subtask.estDuration['minutes']}} min</td> -->
                         <td class="head_color">{{subtask.status.name}}</td>
                         <td class="head_color">{{subtask.category.name}}</td>
                         <td class="head_color">{{subtask.type.name}}</td>
-                        <td class="head_color">{{subtask.dueDate}}1</td>
+                        <td class="head_color">{{subtask.dueDate | date:newDateFormat}}</td>
                         <!-- <td>
                             <div class="copy">
                               <span class="">
