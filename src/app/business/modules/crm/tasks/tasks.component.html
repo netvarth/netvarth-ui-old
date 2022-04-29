@@ -9,16 +9,19 @@
 </section>
 <section class="card col-md-12">
   <div class="col-md-12 btnClass">
-    <!-- <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small" (click)="createTask('Create')">
-      <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
-        Create Activity </button>
-    </a>
-    <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small"
-      [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'crm'}">
-      <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
-        Generate Report</button>
-    </a> -->
-    <a [matTooltipClass]="tooltipcls"
+    <div class="webDisplay">
+      <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small" (click)="createTask('Create')">
+        <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
+          Create Activity </button>
+      </a>
+      <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small"
+        [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'crm'}">
+        <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
+          Generate Report</button>
+      </a>
+    </div>
+    <div class="mobileDisplay">
+      <a [matTooltipClass]="tooltipcls"
           class="navbar-item-color bold pointer-cursor mgn-lt-5">
             <button type="button"   [matMenuTriggerFor]="appMenu" class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn"> 
               Actions  
@@ -42,6 +45,7 @@
                 </button>
             </mat-menu>
           </a>
+    </div>
   </div>
   <div class="clearfix"></div>
   <div class="startMatTab">
