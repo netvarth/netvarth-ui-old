@@ -380,6 +380,33 @@ export class CreateTaskComponent implements OnInit {
       this.updteLocationId= res[0].id;
     })
   }
+
+  
+  getColor(status){
+    if(status){
+    if(status === 'New'){
+      return 'blue'
+    }
+    else if(status === 'Assigned'){
+      return 'pink';
+    }
+    else if(status === 'In Progress'){
+      return 'yellow';
+    }
+    else if(status === 'Cancelled'){
+      return 'red';
+    }
+    else if(status === 'Suspended'){
+      return 'orange';
+    }
+    else if(status === 'Completed'){
+      return 'green';
+    }
+    else{
+      return 'black'
+    }
+  }
+}
   getAssignMemberList(){
     this.crmService.getMemberList().subscribe((memberList:any)=>{
       console.log('memberList',memberList)

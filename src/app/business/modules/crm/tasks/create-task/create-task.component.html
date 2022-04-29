@@ -246,7 +246,7 @@
                             <mat-select class="form-control widthWebKit" placeholder="Enter activity status" [disabled]="!(taskMasterData && taskMasterData.status && taskMasterData.status.iseditable)"
                                 #taskStatus formControlName="taskStatus" name="item" [(ngModel)]="taskStatusModal" (selectionChange)="handleTaskStatus(taskStatus.value)">
                                 <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id"  >
-                                    <div>
+                                    <div [ngStyle]="{'color': getColor(item.name)}">
                                         {{item.name | capitalizeFirst}}
                                     </div>
                                 </mat-option>
