@@ -6,6 +6,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { TeleBookingService } from "../../../shared/services/tele-bookings-service";
 import { CapitalizeFirstPipeModule } from "../../../shared/pipes/capitalize.module";
 import { VideoCallSharedComponent } from "./video-call.component";
+import { TeleServiceConfirmBoxModule } from "../teleservice/teleservice-confirm-box/teleservice-confirm-box.module";
 const routes: Routes = [
     { path: '', component: VideoCallSharedComponent}
 ]
@@ -15,6 +16,7 @@ const routes: Routes = [
         MatGridListModule,
         CommonModule,
         CapitalizeFirstPipeModule,
+        TeleServiceConfirmBoxModule,
         [RouterModule.forChild(routes)]
     ],
     exports: [VideoCallSharedComponent],
