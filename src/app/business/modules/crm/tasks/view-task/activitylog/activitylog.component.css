@@ -57,4 +57,20 @@
     {
         margin: 0!important;
     }
+    td{
+        white-space: normal !important;
+      }
   }
+
+  table tbody {
+    display: block  !important;
+    max-height: 150px !important;
+    overflow-y: scroll  !important;
+  }
+  
+  table thead, table tbody tr {
+    display: table  !important;
+    width: 100%  !important;
+    table-layout: fixed  !important;
+  }
+  

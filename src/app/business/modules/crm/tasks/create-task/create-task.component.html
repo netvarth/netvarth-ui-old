@@ -22,7 +22,7 @@
                     </div>
                     <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.title && taskMasterData.title.iseditable)}">
                         <input (keyup)="resetErrors()" type="text" #taskTitle (ngModelChange)="hamdleTaskTitle(taskTitle.value)"
-                            placeholder="Enter activity title"class="form-control"formControlName="taskTitle"autocomplete="off"   [readonly]="!(taskMasterData && taskMasterData.title && taskMasterData.title.iseditable)" [value]="taskTitle" /> 
+                            placeholder="Enter activity name"class="form-control"formControlName="taskTitle"autocomplete="off"   [readonly]="!(taskMasterData && taskMasterData.title && taskMasterData.title.iseditable)" [value]="taskTitle" /> 
                         <app-field-error-display 
                             [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                         </app-field-error-display>
@@ -328,7 +328,7 @@
                     </div>
                     <div class="fieldPadding">
                         <input (keyup)="resetErrors()" type="text" #taskTitle (ngModelChange)="hamdleTaskTitle(taskTitle.value)" (ngModelChange)="removeEmoji(taskTitle.value,$event)"
-                            placeholder="Enter activity title"class="form-control"formControlName="taskTitle"autocomplete="off" [value]="taskTitle" /> 
+                            placeholder="Enter activity name"class="form-control"formControlName="taskTitle"autocomplete="off" [value]="taskTitle" /> 
                         <app-field-error-display 
                             [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                         </app-field-error-display>

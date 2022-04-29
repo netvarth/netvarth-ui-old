@@ -173,10 +173,11 @@ input[type="number"],input[type="time"]{
     margin-right: 0px !important;
   }
   input[type="number"],input[type="time"]{
-    width: 12rem;
+    width: 13rem;
   }
   .estField{
     width: -webkit-fill-available;
+    gap: 10px;
   }
 
 }

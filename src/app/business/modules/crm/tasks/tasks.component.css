@@ -1427,3 +1427,17 @@ svg {
 ::ng-deep.mat-tab-label-active .mat-tab-label-content{ 
     font-weight: bold !important;
 }
+.mobileDisplay{
+    display: none;
+}
+.webDisplay{
+    display: block;
+}
+@media (max-width: 767px){
+    .mobileDisplay{
+        display: block;
+    }
+    .webDisplay{
+        display: none;
+    }
+}
