@@ -172,8 +172,17 @@ input[type="number"],input[type="time"]{
     margin-right: 0px !important;
   }
   input[type="number"],input[type="time"]{
-    /* width: 80px!important; */
+    width: 12rem;
   }
+  .estField{
+    width: -webkit-fill-available;
+  }
+
+}
+.timeField{
+  font-weight: bold;
+    font-size: 12px;
+    color: #2e2e2e;
 }
 /* input[type="datetime-local"]:before {
   content: attr(placeholder) !important;
@@ -197,4 +206,10 @@ input[type="datetime-local"]:valid:before {
 }
 .noImg{
   margin-right: 10rem;
+}
+.estField{
+  display: flex;align-items: center;gap: 5px;
+  box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+  padding: 10px;
+  /* width: -webkit-fill-available; */
 }

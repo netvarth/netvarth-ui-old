@@ -160,44 +160,34 @@
                         </div>
                     </div>
                 
-                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding" *ngIf="taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.isvisible" >
+                    <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding" *ngIf="taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.isvisible" >
                         <div class="taskTitle">
                             <div>Est Duration</div>
                         </div>
-                        <div class="fieldPadding d-flex" style="gap: 5px;flex-wrap: nowrap;"  *ngIf="createBTimeField" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)}">
-                            <!-- <div style="display: flex;">
+                        <div class="fieldPadding d-flex" style="gap: 5px;flex-wrap: wrap;"  *ngIf="createBTimeField" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)}">
+                            <div class="estField">
                                 <div>
                                     <input id="days" [(ngModel)]="taskDueDays" [value]="taskDays" (keyup)="resetErrors()"  type="number" #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
                                 placeholder="Days" class="form-control widthWebKit" formControlName="taskDays"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0"/>
                                 </div>
-                                <div>Days</div>
-                            </div> -->
-                            <input id="days" [(ngModel)]="taskDueDays" [value]="taskDays" (keyup)="resetErrors()"  type="number" #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
-                                placeholder="Days" class="form-control widthWebKit" formControlName="taskDays"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0"/>
-                            <!-- <div style="display: flex;">
+                                <div class="timeField">Days</div>
+                            </div>
+                            <div class="estField">
                                 <div>
                                     <input id="hrs" [(ngModel)]="taskDueHrs" [value]="taskHrs" (keyup)="resetErrors()"  type="number" #taskHrs (ngModelChange)="handleTaskEstDuration(taskHrs.value)"
                             placeholder="Hours" class="form-control widthWebKit" formControlName="taskHrs"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0" max="23"/>
                                 </div>
-                                <div> Hours </div>
-                            </div> -->
-                            <input id="hrs" [(ngModel)]="taskDueHrs" [value]="taskHrs" (keyup)="resetErrors()"  type="number" #taskHrs (ngModelChange)="handleTaskEstDuration(taskHrs.value)"
-                            placeholder="Hours" class="form-control widthWebKit" formControlName="taskHrs"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0" max="23"/>
-                            <!-- <div style="display: flex;">
+                                <div class="timeField"> Hours </div>
+                            </div>
+                            <div class="estField">
                                 <div>
                                     <input id="min" [(ngModel)]="taskDueMin" [value]="taskMin" (keyup)="resetErrors()"  type="number" #taskMin (ngModelChange)="handleTaskEstDuration(taskMin.value)"
                                     placeholder="Minutes" class="form-control widthWebKit" formControlName="taskMin"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0" max="59"/>
                                 </div>
-                                <div>
+                                <div class="timeField">
                                     Minutes 
                                 </div>
-                            </div> -->
-                            <input id="min" [(ngModel)]="taskDueMin" [value]="taskMin" (keyup)="resetErrors()"  type="number" #taskMin (ngModelChange)="handleTaskEstDuration(taskMin.value)"
-                                    placeholder="Minutes" class="form-control widthWebKit" formControlName="taskMin"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0" max="59"/>
-                           
-                          
-                            <!-- <input id="time" [(ngModel)]="taskDueTime" [value]="taskTime" (keyup)="resetErrors()"  type="time" #taskTime (ngModelChange)="handleTaskEstDuration(taskTime.value)"
-                            placeholder="Enter Est Duration"class="form-control widthWebKit" formControlName="taskTime"autocomplete="off" />   -->
+                            </div>
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                             </app-field-error-display>
                         </div>
@@ -478,15 +468,30 @@
                         <div class="taskTitle">
                             <div>Est Duration</div>
                         </div>
-                        <div class="fieldPadding d-flex" style="gap: 5px;"  *ngIf="createBTimeField" >
-                            <input id="days" [(ngModel)]="taskDueDays" [value]="taskDays" (keyup)="resetErrors()"  type="number" #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
-                            placeholder="Days" class="form-control widthWebKit" formControlName="taskDays"  autocomplete="off" min="0"/> 
-                            <input id="hrs" [(ngModel)]="taskDueHrs" [value]="taskHrs" (keyup)="resetErrors()"  type="number" #taskHrs (ngModelChange)="handleTaskEstDuration(taskHrs.value)"
-                            placeholder="Hours" class="form-control widthWebKit" formControlName="taskHrs"  autocomplete="off" min="0" max="23"/> 
-                            <input id="min" [(ngModel)]="taskDueMin" [value]="taskMin" (keyup)="resetErrors()"  type="number" #taskMin (ngModelChange)="handleTaskEstDuration(taskMin.value)"
-                            placeholder="Minutes" class="form-control widthWebKit" formControlName="taskMin"  autocomplete="off" min="0" max="59"/> 
-                            <!-- <input id="time" [(ngModel)]="taskDueTime" [value]="taskTime" (keyup)="resetErrors()"  type="time" #taskTime (ngModelChange)="handleTaskEstDuration(taskTime.value)"
-                            placeholder="Enter Est Duration"class="form-control widthWebKit" formControlName="taskTime"autocomplete="off" />   -->
+                        <div class="fieldPadding d-flex" style="gap: 5px;flex-wrap: wrap;"  *ngIf="createBTimeField" >
+                            <div class="estField">
+                                <div>
+                                    <input id="days" [(ngModel)]="taskDueDays" [value]="taskDays" (keyup)="resetErrors()"  type="number" #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
+                                placeholder="Days" class="form-control widthWebKit" formControlName="taskDays"   autocomplete="off" min="0"/>
+                                </div>
+                                <div class="timeField">Days</div>
+                            </div>
+                            <div class="estField">
+                                <div>
+                                    <input id="hrs" [(ngModel)]="taskDueHrs" [value]="taskHrs" (keyup)="resetErrors()"  type="number" #taskHrs (ngModelChange)="handleTaskEstDuration(taskHrs.value)"
+                            placeholder="Hours" class="form-control widthWebKit" formControlName="taskHrs"   autocomplete="off" min="0" max="23"/>
+                                </div>
+                                <div class="timeField"> Hours </div>
+                            </div>
+                            <div class="estField">
+                                <div>
+                                    <input id="min" [(ngModel)]="taskDueMin" [value]="taskMin" (keyup)="resetErrors()"  type="number" #taskMin (ngModelChange)="handleTaskEstDuration(taskMin.value)"
+                                    placeholder="Minutes" class="form-control widthWebKit" formControlName="taskMin"   autocomplete="off" min="0" max="59"/>
+                                </div>
+                                <div class="timeField">
+                                    Minutes 
+                                </div>
+                            </div>
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                             </app-field-error-display>
                         </div>
