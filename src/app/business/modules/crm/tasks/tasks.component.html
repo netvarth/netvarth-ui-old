@@ -24,12 +24,12 @@
       <a [matTooltipClass]="tooltipcls"
           class="navbar-item-color bold pointer-cursor mgn-lt-5">
             <button type="button"   [matMenuTriggerFor]="appMenu" class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn"> 
-              Actions  
+              Actions <img height="20px" src="/assets/images/crmImages/downarrow.png" /> 
             </button>
             <mat-menu #appMenu="matMenu">
                 <button mat-menu-item  (click)="createTask('Create')" data-toggle="modal" data-target="#exampleModalCenter">
                   <span>
-                    <img height="20px" src="/assets/images/crmImages/craeteActivity.png"/>
+                    <img height="20px" width="25px" src="/assets/images/crmImages/craeteActivity.png"/>
                   </span>
                  <span style="font-weight: 500;">
                   Create Activity 
