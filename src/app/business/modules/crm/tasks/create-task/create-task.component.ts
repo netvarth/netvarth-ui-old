@@ -391,7 +391,7 @@ export class CreateTaskComponent implements OnInit {
       return 'pink';
     }
     else if(status === 'In Progress'){
-      return 'yellow';
+      return '#fcce2b';
     }
     else if(status === 'Cancelled'){
       return 'red';
