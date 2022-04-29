@@ -207,6 +207,7 @@ export class TasksComponent implements OnInit {
             .subscribe(
               data => {
                 this.totalTaskList = data;
+                console.log("Task List :",this.totalTaskList)
                 this.totalTaskList = this.totalTaskList.filter(obj => !obj.parentTaskId);
                 this.loadComplete = true;
               },
@@ -222,6 +223,35 @@ export class TasksComponent implements OnInit {
         }
       );
   } 
+
+
+  getColor(status){
+    if(status){
+    if(status === 'New'){
+      return 'blue'
+    }
+    else if(status === 'Assigned'){
+      return 'pink';
+    }
+    else if(status === 'In Progress'){
+      return 'yellow';
+    }
+    else if(status === 'Cancelled'){
+      return 'red';
+    }
+    else if(status === 'Suspended'){
+      return 'orange';
+    }
+    else if(status === 'Completed'){
+      return 'green';
+    }
+    else{
+      return 'black'
+    }
+  }
+}
+   // return this.totalTaskList.status.name === 'New' ? 'red' : 'green';}
+
   getTotalTaskCount(filter) {
     return new Promise((resolve, reject) => {
       this.crmService.getTotalTaskCount(filter)
