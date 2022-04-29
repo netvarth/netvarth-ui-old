@@ -693,7 +693,9 @@ body { font-size: 1rem !important}
 }
 
 .bt1.reddelete, .bt2.reddelete, .bt3.reddelete, .bt4.reddelete, .bt5.reddelete, .bt6.reddelete, .bt7.reddelete, .bt8.reddelete {
-    background: #f24949;
+    /* background: #f24949; */
+    background: #08b363;
+
 }
 
 .bt1.reddelete:hover, .bt2.reddelete:hover, .bt3.reddelete:hover, .bt4.reddelete:hover, .bt5.reddelete:hover, .bt6.reddelete:hover, .bt7.reddelete:hover, .bt8.reddelete:hover {

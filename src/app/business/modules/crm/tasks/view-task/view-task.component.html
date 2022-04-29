@@ -12,6 +12,9 @@
 
 <section class="container card mt-4 mx-auto" *ngIf="taskDetails">
   <h3>{{taskDetails.title}}</h3>
+  <div class="task-description mb-2">
+    {{taskDetails.description}}
+  </div>
   <div class="text-primary location-name mb-2">
     <i *ngIf="taskDetails.locationArea || taskDetails.location.name" class="fa fa-map-marker"></i>&nbsp;
     <span *ngIf="taskDetails.locationArea">{{taskDetails.locationArea}},</span>
@@ -67,9 +70,9 @@
               <span class="details text-secondary">Due date : {{taskDetails.dueDate | date:newDateFormat}} </span>
             </div>
           </div>
-          <div class="task-description">
+          <!-- <div class="task-description">
             {{taskDetails.description}}
-          </div>
+          </div> -->
         </div>
         
         <!-- <div class="border col-md-5 col-lg-5 col-sm-12 col-xs-12 no-padding">
