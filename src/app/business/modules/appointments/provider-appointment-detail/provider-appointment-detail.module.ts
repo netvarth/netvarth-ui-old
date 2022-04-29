@@ -17,6 +17,8 @@ import { BookingDocumentsModule } from "../../bookings/booking-documents/booking
 import { RecordsDatagridModule } from "../../bookings/records-datagrid/records-datagrid.module";
 import { NotesSectionModule } from "../../bookings/notes-section/notes-section.module";
 import { HistorySectionModule } from "../../bookings/history-section/history-section.module";
+import { CommunicationPopupModule } from "../../bookings/communication-popup/communication-popup.module";
+import { AppointmentActionsModule } from "../appointment-actions/appointment-actions.module";
 
 const routes: Routes= [
     { path: '', component: ProviderAppointmentDetailComponent }
@@ -40,6 +42,8 @@ const routes: Routes= [
         RecordsDatagridModule,
         NotesSectionModule,
         HistorySectionModule,
+        CommunicationPopupModule,
+        AppointmentActionsModule,
         [RouterModule.forChild(routes)]
     ],
     schemas: [

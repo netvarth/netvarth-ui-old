@@ -6,6 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
+import { VoiceConfirmModule } from '../../customers/video-confirm/voice-confirm.module';
 
 @NgModule({
   declarations: [CommunicationPopupComponent],
@@ -15,7 +16,8 @@ import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner
     MatIconModule,
     CapitalizeFirstPipeModule,
     MatTooltipModule,
-    LoadingSpinnerModule
+    LoadingSpinnerModule,
+    VoiceConfirmModule
   ],
   exports: [CommunicationPopupComponent]
 })
