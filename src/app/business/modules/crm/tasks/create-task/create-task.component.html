@@ -332,11 +332,12 @@
                       <div class="astericColor">*</div>
                     </div>
                     <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" type="text" #taskTitle (ngModelChange)="hamdleTaskTitle(taskTitle.value)"
+                        <input (keyup)="resetErrors()" type="text" #taskTitle (ngModelChange)="hamdleTaskTitle(taskTitle.value)" (ngModelChange)="removeEmoji(taskTitle.value,$event)"
                             placeholder="Enter activity title"class="form-control"formControlName="taskTitle"autocomplete="off" [value]="taskTitle" /> 
                         <app-field-error-display 
                             [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                         </app-field-error-display>
+                        <div *ngIf="bErrormsg" style="color: #f24949 !important;font-size: 12px;">{{errorMsgAny}}</div>
                     </div>                                      
                 </div>
                 <div>
@@ -348,7 +349,7 @@
                             #taskDescription (change)="handleTaskDescription(taskDescription.value)"(keyup)="autoGrowTextZone($event)"
                             maxlength="1000" placeholder="Enter activity description">
                         </textarea>
-                        <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
+                        <app-field-error-display [displayError]="true" style="color: #f24949 !important;font-size: 12px;" *ngIf="taskError" errorMsg="{{taskError}}">
                         </app-field-error-display>  
                     </div>
                 </div>
@@ -360,14 +361,15 @@
                         </div>
                         <div class="fieldPadding">
                         <mat-select class="form-control widthWebKit" placeholder="Enter Category"
-                            #userTaskCategory formControlName="userTaskCategory" >
-                            <mat-option *ngFor="let item of categoryListData[0];let index=i" [value]="item.id"  (selectionChange)="handleTaskCategorySelection(userTaskCategory.value)" >
+                            #userTaskCategory formControlName="userTaskCategory" (selectionChange)="handleTaskCategorySelection(userTaskCategory.value)" >
+                            <mat-option *ngFor="let item of categoryListData[0];let index=i" [value]="item.id"  (ngModelChange)="handleTaskCategorySelection(userTaskCategory.value)" >
                                 <div>
                                     {{item.name}}
                                 </div>
                             </mat-option>
                         </mat-select>
                         </div>
+                        <div *ngIf="bErrormsgCategory" style="color: #f24949 !important;font-size: 12px;">{{errorMsgAnyCategory}}</div>
                     </div>
                     <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                         <div class="taskTitle">
@@ -376,14 +378,15 @@
                         </div>
                         <div class="fieldPadding">
                         <mat-select class="form-control widthWebKit" placeholder="Enter Type"
-                            #userTaskType formControlName="userTaskType" >
-                            <mat-option *ngFor="let item of taskTypeList[0];let index=i" [value]="item.id"  (selectionChange)="handleTaskTypeSelection(userTaskType.value)">
+                            #userTaskType formControlName="userTaskType" (selectionChange)="handleTaskTypeSelection(userTaskType.value)">
+                            <mat-option *ngFor="let item of taskTypeList[0];let index=i" [value]="item.id"  (ngModelChange)="handleTaskTypeSelection(userTaskType.value)">
                                 <div>
                                     {{item.name}}
                                 </div>
                             </mat-option>
                         </mat-select>
-                        </div>    
+                        </div>  
+                        <div *ngIf="bErrormsgType" style="color: #f24949 !important;font-size: 12px;">{{errorMsgAnyType}}</div>  
                     </div>
                 </div>
     
