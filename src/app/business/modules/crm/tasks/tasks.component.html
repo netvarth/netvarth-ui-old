@@ -258,10 +258,10 @@
                               </span>
                               <mat-menu #appMenu="matMenu">
                                 <button mat-menu-item (click)="openTaskCompletion(task)" *ngIf="task.status.name !='Completed'">
-                                  <i class="text-success fa fa-check-square"></i> Mark as Done
+                                  <img class="imageStatus" src="/assets/images/crmImages/mark.png" />Mark as Done
                                 </button>
                                 <button mat-menu-item (click)="openEditTask(task,'Update')"  *ngIf="task.status.name !='Completed'">
-                                  <i class="text-info fa fa-edit"></i>Edit
+                                  <img class="imageStatus" src="/assets/images/crmImages/edit.png" />Edit
                                 </button>
                                 <button mat-menu-item (click)="openDialogStatusChange(task)" >
                                  <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
@@ -375,10 +375,10 @@
                               </span>
                               <mat-menu #appMenu="matMenu">
                                 <button mat-menu-item (click)="openTaskCompletion(task)" *ngIf="task.status.name !='Completed'">
-                                  <i class="text-success fa fa-check-square"></i> Mark as Done
+                                  <img class="imageStatus" src="/assets/images/crmImages/mark.png" /> Mark as Done
                                 </button>
                                 <button mat-menu-item (click)="openEditTask(task,'Update')"  *ngIf="task.status.name !='Completed'">
-                                  <i class="text-info fa fa-edit"></i>Edit
+                                   <img class="imageStatus" src="/assets/images/crmImages/edit.png" />Edit
                                 </button>
                                 <button mat-menu-item (click)="openDialogStatusChange(task)" >
                                  <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
@@ -491,10 +491,10 @@
                               </span>
                               <mat-menu #appMenu="matMenu">
                                 <button  mat-menu-item (click)="openTaskCompletion(task)" *ngIf="task.status.name !='Completed'">
-                                  <i class="text-success fa fa-check-square"></i> Mark as Done
+                                  <img class="imageStatus" src="/assets/images/crmImages/mark.png" /> Mark as Done
                                 </button>
                                 <button  mat-menu-item (click)="openEditTask(task,'Update')"  *ngIf="task.status.name !='Completed'">
-                                  <i class="text-info fa fa-edit"></i>Edit
+                                  <img class="imageStatus" src="/assets/images/crmImages/edit.png" />Edit
                                 </button>
                                 <button mat-menu-item (click)="openDialogStatusChange(task)" >
                                  <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
@@ -505,7 +505,7 @@
                           </td>
                           <!-- <mat-menu #appMenu="matMenu">
                             <button mat-menu-item (click)="openTaskCompletion(task)" *ngIf="task.status.name !='Completed'">
-                              <i class="text-success fa fa-check-square"></i> Mark as Done
+                             <img class="imageStatus" src="/assets/images/crmImages/mark.png" /> Mark as Done
                             </button>
                             <button mat-menu-item (click)="openEditTask(task,'Update')"  *ngIf="task.status.name !='Completed'">
                               <i class="text-info fa fa-edit"></i>Edit
