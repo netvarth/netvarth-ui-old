@@ -95,7 +95,7 @@
                         </div>
                         <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.locationArea && taskMasterData.locationArea.iseditable)}">
                             <input (keyup)="resetErrors()" [(ngModel)]="areaName" type="text" [readonly]="!(taskMasterData && taskMasterData.locationArea && taskMasterData.locationArea.iseditable)"
-                            placeholder="Enter activity area"class="form-control widthWebKit"formControlName="areaName" autocomplete="off" /> 
+                            placeholder="Enter area"class="form-control widthWebKit"formControlName="areaName" autocomplete="off" /> 
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                             </app-field-error-display>    
                         </div>
@@ -409,7 +409,7 @@
                         </div>
                         <div class="fieldPadding">
                             <input (keyup)="resetErrors()" [(ngModel)]="areaName" type="text"
-                            placeholder="Enter activity area"class="form-control widthWebKit"formControlName="areaName" autocomplete="off" /> 
+                            placeholder="Enter area"class="form-control widthWebKit"formControlName="areaName" autocomplete="off" /> 
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                             </app-field-error-display>    
                         </div>

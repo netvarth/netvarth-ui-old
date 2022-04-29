@@ -131,6 +131,15 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     private provider_shared_functions: ProviderSharedFuctions) {
     this.activated_route.params.subscribe(params => {
       this.waitlist_id = params.id;
+      // this.provider_services.getProviderWaitlistNotesnew(this.waitlist_id)
+      // .subscribe(
+      //   data => {
+      //     this.waitlist_notes = data;
+         
+      //   },
+      //   () => {
+      //   }
+      // );
     });
     this.activated_route.queryParams.subscribe(params => {
       this.timetype = JSON.parse(params.timetype);
@@ -146,7 +155,36 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     
   }
   ngOnInit() {
-   this.getWaitlistDetail()
+    // this.provider_services.getProviderWaitlistDetailById(this.waitlist_id)
+    //   .subscribe(
+    //     data => {
+    //       this.waitlist_data = data;
+    //       this.provider_services.getProviderWaitlistNotesnew(this.waitlist_id)
+    //       .subscribe(
+    //         data => {
+    //           this.waitlist_notes = data;
+             
+    //         },
+    //         () => {
+    //           //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+    //         }
+    //       );
+    //     })
+
+    // this.activated_route.paramMap.subscribe(params => { 
+    //   this.waitlist_id = params.get('id');
+    // this.provider_services.getProviderWaitlistNotesnew(this.waitlist_id)
+    // .subscribe(
+    //   data => {
+    //     this.waitlist_notes = data;
+       
+    //   },
+    //   () => {
+    //     //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+    //   }
+    // );
+    // })
+  // this.getWaitlistDetail()
     this.getPos();
     // this.getDisplayboardCount();
     this.api_loading = true;
@@ -156,7 +194,17 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     }
     this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
     if (this.waitlist_id) {
-       this.getWaitlistDetail();
+     //  this.getWaitlistDetail();
+     this.provider_services.getProviderWaitlistNotesnew(this.waitlist_id)
+     .subscribe(
+       data => {
+         this.waitlist_notes = data;
+         console.log("Data got :",this.waitlist_notes)
+       },
+       () => {
+         //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
+       }
+     );
       this.getProviderSettings();
     } else {
       this.goBack();

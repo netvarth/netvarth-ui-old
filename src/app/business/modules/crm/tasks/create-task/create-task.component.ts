@@ -684,12 +684,12 @@ export class CreateTaskComponent implements OnInit {
   showCreateTaskButtonCaption() {
     if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName==='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster' ){
       let caption = '';
-      caption = 'Add';
+      caption = 'Save';
       return caption;
     }
     else{
       let caption = '';
-      caption = 'Update';
+      caption = 'Save';
       return caption;
     }
     

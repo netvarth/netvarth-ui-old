@@ -46,6 +46,7 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
     
   ) {
     this.checkin_id = this.data.checkin_id || null;
+    console.log("CheckinID :",this.checkin_id);
     this.message = this.data.message;
     this.source = this.data.source;
     if (!this.checkin_id) {
@@ -96,13 +97,15 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
         .subscribe(
           () => {
             this.api_success = this.wordProcessor.getProjectMesssages('PROVIDER_NOTE_ADD');
-            // this.provider_services.getAppointmentById(this.checkin_id)
-            // this.provider_services.getProviderAppointmentNotes(this.checkin_id)
 
+            this.provider_services.getProviderAppointmentNotes(this.checkin_id)
 
             setTimeout(() => 
             {
               console.log("entered")
+
+             this.provider_services.getProviderAppointmentNotes(this.checkin_id)
+
               this.dialogRef.close('reloadlist');
             }, projectConstants.TIMEOUT_DELAY);
           },
@@ -118,12 +121,20 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
           () => {
             this.api_success = this.wordProcessor.getProjectMesssages('PROVIDER_NOTE_ADD');
            // this.provider_services.getAppointmentById(this.checkin_id)
-          //  this.provider_services.getProviderAppointmentNotes(this.checkin_id)
+           this.provider_services.getProviderWaitlistDetailById(this.checkin_id).subscribe((res)=>{
+            console.log("rrrrespone :",res)
+
+           })
 
             setTimeout(() => {
               // console.log("enter123")
-              
+            
               this.dialogRef.close('reloadlist');
+              
+              this.provider_services.getProviderWaitlistDetailById(this.checkin_id).subscribe((res)=>{
+                console.log("Respone :",res)
+              })
+              console.log("Service Called :",this.provider_services.getProviderWaitlistNotes(this.checkin_id))
             }, projectConstants.TIMEOUT_DELAY);
           },
           error => {
