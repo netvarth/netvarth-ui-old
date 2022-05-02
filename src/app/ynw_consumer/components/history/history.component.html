@@ -24,7 +24,7 @@
                                     <thead>
                                         <tr>
                                             <th class="th3">{{date_cap}} & {{'Time' | translate}}</th>
-                                            <th class="th1">{{service_provider_cap}}</th>
+                                            <th class="th1"  *ngIf="!customId">{{service_provider_cap}}</th>
                                             <th *ngIf="!showOrderHist" class="th2">{{location_cap}}</th>
                                             <th *ngIf="showOrderHist"> {{ 'Order for' | translate}}</th>
                                             <th *ngIf="!showOrderHist">{{'Service for' | translate}} </th>
@@ -49,7 +49,7 @@
                                                             {{his_wait.queue.queueEndTime}}</span>
                                                     </div>
                                                 </td>
-                                                <td data-title="Service Provider"
+                                                <td data-title="Service Provider" *ngIf="!customId"
                                                     (click)="providerDetail(his_wait.providerAccount)"
                                                     class="td1 provider-name pointer-cursor">
                                                     <span
@@ -128,7 +128,7 @@
                                                             {{his_wait.schedule.apptSchedule.timeSlots[0].eTime}}</span>
                                                     </div>
                                                 </td>
-                                                <td data-title="Service Provider"
+                                                <td data-title="Service Provider"  *ngIf="!customId"
                                                     (click)="providerDetail(his_wait.providerAccount)"
                                                     class="td1 provider-name pointer-cursor">
                                                     <span
@@ -216,7 +216,7 @@
                                                             {{his_wait.timeSlot.eTime}}</ng-container></span>
                                                     </div>
                                                 </td>
-                                                <td data-title="Service Provider"
+                                                <td data-title="Service Provider"  *ngIf="!customId"
                                                     (click)="providerDetail(his_wait.providerAccount)"
                                                     class="td1 provider-name pointer-cursor">
                                                     <span
@@ -257,8 +257,6 @@
                                                     </mat-menu>
                                                 </td>
                                             </ng-container>
-
-
                                         </tr>
                                     </tbody>
                                 </table>
