@@ -14562,4 +14562,7 @@ pointer-events: none !important;
   .consumer-profile .picker-form-group svg {
     margin-top: -10px;
   }
-  
+  .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select.categoryfield{
+    height: 40px !important;
+    padding: 10px 0 0 15px !important;
+  }

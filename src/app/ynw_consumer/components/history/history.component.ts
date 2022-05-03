@@ -247,24 +247,34 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
         }
       );
   }
-  viewOrderBill(order, type,) {
+  viewOrderBill(order, type) {
+    let queryParams = {
+      uuid: order.uid,
+      accountId: order.providerAccount.id,
+      type: 'order',
+      'paidStatus': false
+    }
+    if (this.customId) {
+      // queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        uuid: order.uid,
-        accountId: order.providerAccount.id,
-        type: 'order',
-        'paidStatus': false
-      }
+      queryParams: queryParams      
     };
     this.router.navigate(['consumer', 'order', 'order-bill'], navigationExtras);
   }
   viewBill(checkin, bill_data) {
+    let queryParams = {
+      uuid: checkin.ynwUuid,
+      accountId: checkin.providerAccount.id,
+      source: 'history'
+    }
+    if (this.customId) {
+      // queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        uuid: checkin.ynwUuid,
-        accountId: checkin.providerAccount.id,
-        source: 'history'
-      }
+      queryParams: queryParams
     };
     this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras);
   }
@@ -380,12 +390,17 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
     });
   }
   viewApptBill(checkin, bill_data) {
+    let queryParams = {
+      uuid: checkin.uid,
+      accountId: checkin.providerAccount.id,
+      source: 'history'
+    }
+    if (this.customId) {
+      // queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        uuid: checkin.uid,
-        accountId: checkin.providerAccount.id,
-        source: 'history'
-      }
+      queryParams: queryParams
     };
     this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras);
   }

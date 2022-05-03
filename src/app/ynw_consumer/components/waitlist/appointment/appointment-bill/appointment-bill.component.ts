@@ -141,6 +141,7 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
     isPayment: boolean;
     indian_payment_modes: any;
     non_indian_modes: any;
+    customId: any;
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
@@ -166,6 +167,9 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
             params => {
                 if (params.accountId) {
                     this.accountId = params.accountId;
+                }
+                if(params.customId) {
+                    this.customId =params.customId;
                 }
                 if (params.paidStatus) {
                     this.paidStatus = params.paidStatus;
@@ -428,7 +432,15 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
                                 this.wallet = data;
                                 if (!this.wallet.isGateWayPaymentNeeded && this.wallet.isJCashPaymentSucess) {
                                     this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-                                    this.router.navigate(['consumer']);
+                                    let queryParams = {};
+                                    if (this.customId) {
+                                    queryParams['customId'] = this.customId;
+                                    queryParams['accountId'] = this.accountId;
+                                    }
+                                    let navigationExtras: NavigationExtras = {
+                                    queryParams: queryParams
+                                    };
+                                    this.router.navigate(['consumer'],navigationExtras);
                                 }
                             },
                                 error => {
@@ -547,16 +559,22 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
     finishTransaction(status) {
         if (status) {
             this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-            const navigationExtras: NavigationExtras = {
-                queryParams: {
-                    uuid: this.uuid,
-                    type: 'appointment',
-                    'paidStatus': true
+            let queryParams = {};
+                if (this.customId) {
+                queryParams['customId'] = this.customId;
+                queryParams['accountId'] = this.accountId;
                 }
-            };
+                
             if (this.checkIn_type === 'appt_historybill') {
-                this.ngZone.run(() => this.router.navigate(['consumer', 'history'], { queryParams: { 'is_orderShow': 'false' } }));
+                queryParams['is_orderShow'] = 'false';
+                this.ngZone.run(() => this.router.navigate(['consumer', 'history'], { queryParams: queryParams }));
             } else {
+                queryParams['uuid'] = this.uuid;
+                queryParams['type'] ='appointment';
+                queryParams['paidStatus'] =true;
+                let navigationExtras: NavigationExtras = {
+                    queryParams: queryParams
+                };
                 this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
             }
         } else {
@@ -565,22 +583,32 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
             this.cdRef.detectChanges();
             this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
             if (this.checkIn_type === 'appt_historybill') {
-                const navigationExtras: NavigationExtras = {
-                    queryParams: {
-                        uuid: this.uuid,
+                let queryParams = {
+                    uuid: this.uuid,
                         accountId: this.accountId,
                         source: 'history'
-                    }
+                };
+                if (this.customId) {
+                queryParams['customId'] = this.customId;
+                // queryParams['accountId'] = this.accountId;
+                }
+                let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
                 };
                 this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras));
             } else {
-                const navigationExtras: NavigationExtras = {
-                    queryParams: {
-                        uuid: this.uuid,
+                let queryParams = {
+                    uuid: this.uuid,
                         accountId: this.accountId,
                         type: 'appointment',
                         'paidStatus': false
-                    }
+                };
+                if (this.customId) {
+                queryParams['customId'] = this.customId;
+                // queryParams['accountId'] = this.accountId;
+                }
+                let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
                 };
                 this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras));
             }
@@ -599,7 +627,7 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
                         }
                     },
                         error => {
-                            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+                            // this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
                         })
             } else if (response.STATUS == 'TXN_FAILURE') {
                 this.finishTransaction(false);
@@ -613,7 +641,7 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
                         }
                     },
                         error => {
-                            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+                            // this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
                         })
             } else if (response.STATUS == 'TXN_FAILURE') {
                 this.finishTransaction(false);
@@ -947,7 +975,15 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
     cashPayment() {
         this.snackbarService.openSnackBar('Visit ' + this.getTerminologyTerm('provider') + ' to pay by cash');
         setTimeout(() => {
-            this.ngZone.run(() => this.router.navigate(['consumer']));
+            let queryParams = {};
+            if (this.customId) {
+            queryParams['customId'] = this.customId;
+            queryParams['accountId'] = this.accountId;
+            }
+            let navigationExtras: NavigationExtras = {
+            queryParams: queryParams
+            };
+            this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
             console.log('redirect to consumer');
 
         }, 1000);

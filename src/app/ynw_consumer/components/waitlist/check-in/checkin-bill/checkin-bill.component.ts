@@ -139,6 +139,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
     shownonIndianModes: boolean;
     selected_payment_mode: any;
     isInternatonal: boolean;
+    customId: any;
     constructor(private consumer_services: ConsumerServices,
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
@@ -165,6 +166,9 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
             params => {
                 if (params.accountId) {
                     this.accountId = params.accountId;
+                }
+                if(params.customId) {
+                    this.customId =params.customId;
                 }
                 if (params.paidStatus) {
                     this.paidStatus = params.paidStatus;

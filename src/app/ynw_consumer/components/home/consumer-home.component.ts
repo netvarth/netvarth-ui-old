@@ -243,8 +243,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   chatId: any;
   showTeleBt = false;
   tele_popUp;
-  onlyVirtualItemsPresent=false;
-  @ViewChild('popupforApp') popUp:ElementRef;
+  onlyVirtualItemsPresent = false;
+  @ViewChild('popupforApp') popUp: ElementRef;
   showattachmentDialogRef: MatDialogRef<unknown, any>;
   theme: any;
   fromApp = false;
@@ -316,36 +316,34 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA') {
+    if (this.lStorageService.getitemfromLocalStorage('reqFrom') === 'cuA') {
       this.fromApp = true;
     }
-    this.translate.use(JSON.parse(localStorage.getItem('translatevariable')))  
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable')));
 
     // console.log(this.bookingStatusClasses);
     this.usr_details = this.groupService.getitemFromGroupStorage('ynw-user');
     this.login_details = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
     this.tele_popUp = this.lStorageService.getitemfromLocalStorage('showTelePop');
     let login = JSON.parse(this.login_details);
-    if(login.countryCode.startsWith('+')){
+
+    if (login && login.countryCode && login.countryCode.startsWith('+')){
       this.countryCode = login.countryCode.substring(1);
-    }
-    this.shared_services.consumertelegramChat(this.countryCode,login.loginId)
-     .subscribe(
-         data => { 
-           this.chatId = data; 
-           if(this.chatId === null){
+      this.shared_services.consumertelegramChat(this.countryCode, login.loginId).subscribe(
+        data => {
+          this.chatId = data;
+          if (this.chatId === null) {
             this.showTeleBt = true;
-            if(this.tele_popUp){
+            if (this.tele_popUp) {
               this.popUp.nativeElement.style.display = 'block';
               this.lStorageService.removeitemfromLocalStorage('showTelePop');
             }
-
-           }
-         },
-         (error) => {
-            
-         }
-     );
+          }
+        },
+        (error) => {
+        }
+      );
+    }
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.locationholder = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
     let stat;
@@ -463,10 +461,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     });
   }
-  getOrderPaidBill(orderBill){
-    if(orderBill.bill && orderBill.bill.amountPaid){
+  getOrderPaidBill(orderBill) {
+    if (orderBill.bill && orderBill.bill.amountPaid) {
       return orderBill.amountPaid;
-    }else{
+    } else {
       return orderBill.advanceAmountPaid;
     }
 
@@ -515,8 +513,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       queryParams['accountId'] = this.accountId;
       queryParams['customId'] = this.customId;
     }
-    queryParams['uuid']=waitlist.ynwUuid;
-    queryParams['providerId']=waitlist.providerAccount.id;
+    queryParams['uuid'] = waitlist.ynwUuid;
+    queryParams['providerId'] = waitlist.providerAccount.id;
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams
     };
@@ -528,8 +526,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       queryParams['accountId'] = this.accountId;
       queryParams['customId'] = this.customId;
     }
-    queryParams['uuid']=apptlist.uid;
-    queryParams['providerId']=apptlist.providerAccount.id;
+    queryParams['uuid'] = apptlist.uid;
+    queryParams['providerId'] = apptlist.providerAccount.id;
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams
     };
@@ -1206,10 +1204,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       type: 'reschedule',
       account_id: apptlist.providerAccount.id,
       unique_id: apptlist.providerAccount.uniqueId,
-      service_id:apptlist.service.id
+      service_id: apptlist.service.id
     }
     if (this.customId) {
-      queryParams['customId']=this.customId;
+      queryParams['customId'] = this.customId;
     }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams
@@ -1222,11 +1220,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       type: 'waitlistreschedule',
       account_id: waitlist.providerAccount.id,
       unique_id: waitlist.providerAccount.uniqueId,
-      service_id:waitlist.service.id
-    
+      service_id: waitlist.service.id
+
     }
     if (this.customId) {
-      queryParams['customId']=this.customId;
+      queryParams['customId'] = this.customId;
     }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams
@@ -1317,9 +1315,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     // console.log('order');
     // event.stopPropagation();
     if (this.customId) {
-      if (this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA') {
-        this.router.navigate(['customapp',this.customId]);
-      } else{
+      if (this.lStorageService.getitemfromLocalStorage('reqFrom') === 'cuA') {
+        this.router.navigate(['customapp', this.customId]);
+      } else {
         this.router.navigate([this.customId]);
       }
     } else {
@@ -1353,7 +1351,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       tel_serv_stat: provider.virtulServiceStatus
     }
     if (this.customId) {
-      queryParams['customId']=this.customId;
+      queryParams['customId'] = this.customId;
     }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams
@@ -1435,19 +1433,19 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   recheckwaitlistCounters() {
     if (this.waitlists && this.waitlists.length > 0) {
-    for (let i = 0; i < this.waitlists.length; i++) {
-      if (this.waitlists[i].estimated_autocounter) {
-        if (this.waitlists[i].estimated_timeinmins > 0) {
-          this.waitlists[i].estimated_timeinmins = (this.waitlists[i].estimated_timeinmins - 1);
-          if (this.waitlists[i].estimated_timeinmins === 0) {
-            this.waitlists[i].estimated_time = 'Now';
-          } else {
-            this.waitlists[i].estimated_time = this.dateTimeProcessor.convertMinutesToHourMinute(this.waitlists[i].estimated_timeinmins);
+      for (let i = 0; i < this.waitlists.length; i++) {
+        if (this.waitlists[i].estimated_autocounter) {
+          if (this.waitlists[i].estimated_timeinmins > 0) {
+            this.waitlists[i].estimated_timeinmins = (this.waitlists[i].estimated_timeinmins - 1);
+            if (this.waitlists[i].estimated_timeinmins === 0) {
+              this.waitlists[i].estimated_time = 'Now';
+            } else {
+              this.waitlists[i].estimated_time = this.dateTimeProcessor.convertMinutesToHourMinute(this.waitlists[i].estimated_timeinmins);
+            }
           }
         }
       }
     }
-  }
   }
   btnJoinVideoClicked(checkin, event) {
     event.stopPropagation();
@@ -2055,20 +2053,20 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,
       data: {
-        accencUid: checkin.prescShortUrl?checkin.prescShortUrl:checkin.prescUrl
+        accencUid: checkin.prescShortUrl ? checkin.prescShortUrl : checkin.prescUrl
       }
     });
   }
   // Order Functions
-  isPhysicalItemsPresent(orderItems){
+  isPhysicalItemsPresent(orderItems) {
     let physical_item_present = true;
     const virtualItems = orderItems.filter(orderitem => orderitem.itemType === 'VIRTUAL')
     if (virtualItems.length > 0 && orderItems.length === virtualItems.length) {
       physical_item_present = false;
-      this.onlyVirtualItemsPresent=true;
+      this.onlyVirtualItemsPresent = true;
       console.log('virtual only');
     }
-    return physical_item_present; 
+    return physical_item_present;
 
   }
   getTdyOrder() {
@@ -2082,7 +2080,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     };
     this.subs.sink = this.consumer_services.getConsumerOrders(params).subscribe(data => {
       this.orders = data; // saving todays orders
-      console.log('orders'+JSON.stringify(this.orders));
+      console.log('orders' + JSON.stringify(this.orders));
       this.total_tdy_order = this.orders;
       if (data) {
         this.getFutureOrder();
@@ -2389,13 +2387,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (source) {
       window.location.href = source;
       this.lStorageService.removeitemfromLocalStorage('source');
-    } else if (this.customId && reqFrom){
+    } else if (this.customId && reqFrom) {
       this.router.navigate(['customapp', this.customId]);
     } else {
       this.router.navigate([this.customId]);
     }
   }
-  closeModal(){
+  closeModal() {
     this.popUp.nativeElement.style.display = 'none';
   }
 

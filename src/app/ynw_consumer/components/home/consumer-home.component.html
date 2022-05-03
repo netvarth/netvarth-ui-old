@@ -12,7 +12,7 @@
                 <div class="c_card card c-checkins">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12" *ngIf="!this.customId">
                         <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12">
-                            <h1 class="ng-tns-c16-8 txt-align hello-msg">
+                            <h1 class="ng-tns-c16-8 txt-align hello-msg" *ngIf="usr_details">
                                 <span class="ng-tns-c16-8 greeting">
                                     Hello {{usr_details.userName}} !
                                 </span> <br>
@@ -256,11 +256,6 @@
                                                 <span class="sp_name"
                                                     (click)="providerDetail(oder.providerAccount,$event)">
                                                     {{oder.providerAccount.businessName || '' | capitalizeFirst}}</span>
-                                                <!-- <div class="userName">
-                                                    <i class="fa fa-user for"></i>
-                                                    {{oder.orderFor.firstName}}
-                                                    {{oder.orderFor.lastName}}
-                                                </div> -->
                                                 <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}}
                                                     <ng-container *ngIf="oder.orderTimeWindow && oder.orderTimeWindow.timeSlots[0]">,
                                                     {{oder.orderTimeWindow.timeSlots[0].sTime}} -
@@ -497,11 +492,6 @@
                                                     {{oder.orderTimeWindow.timeSlots[0].sTime}} -
                                                     {{oder.orderTimeWindow.timeSlots[0].eTime}}
                                                 </ng-container></div>
-                                                <!-- <div class="userName">
-                                                    <i class="fa fa-user for"></i>
-                                                    {{oder.orderFor.firstName}}
-                                                    {{oder.orderFor.lastName}}
-                                                </div> -->
                                                 <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
                                                         class="ordr_no">Qty</span>&nbsp;&nbsp;&nbsp;
                                                     <span>{{oder.totalItemQuantity}}</span>

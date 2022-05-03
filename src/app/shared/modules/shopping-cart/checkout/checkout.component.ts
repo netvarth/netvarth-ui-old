@@ -1150,6 +1150,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         let queryParams = {
           'source': 'order'
         }
+        if (this.customId) {
+          queryParams['customId'] = this.customId;
+          queryParams['accountId'] = this.account_id;
+        }
         let navigationExtras: NavigationExtras = {
           queryParams: queryParams
         };
@@ -1823,7 +1827,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           },
             error => {
-              this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+              // this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
             })
       } else if (response.STATUS == 'TXN_FAILURE') {
         this.finishCheckout(false);
@@ -1837,7 +1841,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           },
             error => {
-              this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+              // this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
             })
       } else if (response.STATUS == 'TXN_FAILURE') {
         this.finishCheckout(false);
@@ -1851,7 +1855,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadingPaytm = false;
     this.cdRef.detectChanges();
     // this.ngZone.run(() => this.router.navigate(['consumer']));
-    this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+    // this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
   }
   getQuestionAnswers(event) {
     this.questionAnswers = event;

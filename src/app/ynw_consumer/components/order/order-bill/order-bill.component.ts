@@ -138,6 +138,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
     indian_payment_modes: any;
     non_indian_modes: any;
     provider_label = ''
+    customId: any;
     constructor(
         public consumer_checkin_history_service: CheckInHistoryServices,
         public sharedfunctionObj: SharedFunctions,
@@ -167,13 +168,15 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                     this.accountId = params.accountId;
                     console.log(this.accountId);
                 }
+                if(params.customId) {
+                    this.customId =params.customId;
+                }
                 if (params.paidStatus) {
                     this.paidStatus = params.paidStatus;
                 }
                 if (params.uuid) {
                     this.uuid = params.uuid;
                     console.log(this.uuid);
-
                 }
                 if (params.source) {
                     this.source = params.source;
@@ -452,7 +455,16 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                                 this.wallet = data;
                                 if (!this.wallet.isGateWayPaymentNeeded && this.wallet.isJCashPaymentSucess) {
                                     this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-                                    this.router.navigate(['consumer']);
+
+                                    let queryParams = {};
+                                      if (this.customId) {
+                                        queryParams['customId'] = this.customId;
+                                        queryParams['accountId'] = this.accountId;
+                                      }
+                                      let navigationExtras: NavigationExtras = {
+                                        queryParams: queryParams
+                                      };
+                                    this.router.navigate(['consumer'], navigationExtras);
                                 }
                             },
                                 error => {
@@ -610,27 +622,37 @@ export class OrderBillComponent implements OnInit, OnDestroy {
     finishTransaction(status) {
         if (status) {
             this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-                        const navigationExtras: NavigationExtras = {
-                            queryParams: {
-                                uuid: this.uuid,
-                                //  accountId: this.accountId,
-                                type: 'order',
-                                'paidStatus': true
-                            }
-                        };
-                        this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+                let queryParams = {
+                    uuid: this.uuid,
+                    //  accountId: this.accountId,
+                    type: 'order',
+                    'paidStatus': true
+                };
+                if (this.customId) {
+                queryParams['customId'] = this.customId;
+                queryParams['accountId'] = this.accountId;
+                }
+                let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+                };
+                this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
         } else {
             this.isClickedOnce = false;
             this.loadingPaytm = false;
             this.cdRef.detectChanges();
             this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-            const navigationExtras: NavigationExtras = {
-                queryParams: {
-                    uuid: this.uuid,
-                    accountId: this.accountId,
-                    type: 'order',
-                    'paidStatus': false
-                }
+            let queryParams = {
+                uuid: this.uuid,
+                accountId: this.accountId,
+                type: 'order',
+                'paidStatus': false
+            };
+            if (this.customId) {
+            queryParams['customId'] = this.customId;
+            queryParams['accountId'] = this.accountId;
+            }
+            let navigationExtras: NavigationExtras = {
+            queryParams: queryParams
             };
             this.ngZone.run(() => this.router.navigate(['consumer', 'order', 'order-bill'], navigationExtras));
         }
@@ -981,7 +1003,15 @@ export class OrderBillComponent implements OnInit, OnDestroy {
         this.snackbarService.openSnackBar(`Visit ${this.provider_label} to ${this.selected_payment_mode}
         `);
         setTimeout(()=>{
-            this.ngZone.run(() => this.router.navigate(['consumer'] ));
+            let queryParams = {};
+            if (this.customId) {
+            queryParams['customId'] = this.customId;
+            queryParams['accountId'] = this.accountId;
+            }
+            let navigationExtras: NavigationExtras = {
+            queryParams: queryParams
+            };
+            this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras ));
             console.log('redirect to consumer');
     
            },1000);

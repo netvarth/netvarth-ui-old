@@ -300,14 +300,15 @@
     font-weight: 500;
 }
 
-.mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element {
+.mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element,
+.mat-dialog-container .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select {
     background: white;
     border-bottom: 1px solid #b6cdd8;
     font-size: 0.875rem;
     font-weight: 500;
     color: #222223;
     text-overflow: ellipsis;
-    padding: 18px 0px 0px 5px;
+    padding: 18px 0px 0px 5px !important;
 }
 
 .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element::-moz-placeholder {

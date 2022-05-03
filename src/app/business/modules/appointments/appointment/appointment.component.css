@@ -323,14 +323,14 @@
   color: #1e4079!important;
   font-size: 13px!important;
 }
-.categoryfield
-{
-  height: 40px!important;
+.mat-select.categoryfield {
+  height: 40px !important;
+  padding: 10px !important;
 }
-.mat-select
+/* .mat-select
 {
   padding: 0!important;
-}
+} */
 .provider-checkin .mat-chip-list-wrapper .mat-standard-chip {
   margin: 2px!important;
 }
