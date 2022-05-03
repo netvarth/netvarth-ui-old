@@ -319,7 +319,7 @@ selectStatus(statusDetails){
   this.selectText=''
   this.showHideTickMarkUpdate=false;
   if(this.statusId === statusDetails.id){
-    this.selectText='Alredy updated'
+    this.selectText='Allredy updated'
   }
   else{
     this.selectText=''
@@ -329,7 +329,7 @@ completeTaskStatus(){
   // this.selectText=''
   console.log('this.selectedStatusId',this.selectedStatusId)
   if(this.statusId === this.selectedStatusId){
-    this.selectText='Alredy updated'
+    this.selectText='Allredy updated'
   }
   else{
     if(this.selectedStatusId != undefined){

@@ -158,6 +158,29 @@ export class TasksComponent implements OnInit {
       type: {id: 1, name: 'N/A'}
     }
   ]
+  public statusFilter:any;
+  public statusFilterJSON:any=[
+    {
+      statusId:1,
+      status:'TotalTask'
+    },
+    {
+      statusId:2,
+      status:'InProgress'
+    },
+    {
+      statusId:1,
+      status:'Completed'
+    }
+
+]
+  public bInprogressTask:boolean=false;
+  public bCompltedTask:boolean=false;
+  public bTotalTask:boolean=true;
+  public bNewTask:boolean=false;
+  public newTaskCount:any;
+  public totalNewTaskList:any=[]
+
   constructor(
     private locationobj: Location,
     private groupService: GroupStorageService,
@@ -195,6 +218,94 @@ export class TasksComponent implements OnInit {
     
     // this.doSearch();
     this.getTaskmaster()
+  }
+  handleTaskStatus(statusValue:any,statusText,statusFilter){
+    console.log('statusValue',statusValue);
+    console.log('statusValue',statusText);
+    console.log('statusFilter',statusFilter)
+    console.log('this.taskStatusList',this.taskStatusList)
+    if(statusValue===3){
+      this.bInprogressTask=true;
+      this.bCompltedTask=false;
+      this.bTotalTask=false;
+      this.bNewTask=false
+      this.getInprogressTask()
+    }
+    else if(statusValue===5){
+      this.bCompltedTask=true;
+      this.bInprogressTask=false;
+      this.bTotalTask=false
+      this.bNewTask=false
+      this.getCompletedTask()
+    }
+    else if(statusValue===4){
+      this.bNewTask=true;
+      this.bTotalTask=false;
+      this.bCompltedTask=false;
+      this.bInprogressTask=false;
+      // this.getNewTaskDetails()
+
+    }
+
+    else{
+      this.bTotalTask=true;
+      this.bCompltedTask=false;
+      this.bInprogressTask=false;
+      this.bNewTask=false
+      this.getTotalTask()
+
+    }
+    // if(statusValue)
+    // this.taskStatusList.forEach((status:any)=>{
+    //   console.log(status.id)
+    //   if(status.id = statusValue+1){
+    //     const b =this.getInprogressTask()
+    //     console.log('b',b)
+    //   }
+    // })
+  }
+  getNewTaskCountDetails(filter){
+    // return new Promise((resolve, reject) => {
+    //   this.crmService.getNewTaskCount(filter)
+    //     .subscribe(
+    //       data => {
+    //         this.pagination.totalCnt = data;
+    //         this.newTaskCount = this.pagination.totalCnt;
+    //         resolve(data);
+    //       },
+    //       error => {
+    //         reject(error);
+    //       }
+    //     );
+    // });
+
+  }
+  getNewTaskDetails(from_oninit=true){
+    let filter = this.setFilterForApi();
+    this.getNewTaskCountDetails(filter)
+      // .then(
+      //   result => {
+      //     if (from_oninit) { this.newTaskCount = result; }
+      //     filter = this.setPaginationCompletedFilter(filter);
+      //     this.crmService.getNewTask(filter)
+      //       .subscribe(
+      //         data => {
+      //           console.log('new',data)
+      //           this.totalNewTaskList = data;
+      //           this.totalNewTaskList = this.totalNewTaskList.filter(obj => !obj.parentTaskId);
+      //           this.loadComplete2 = true;
+      //         },
+      //         error => {
+      //           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      //           this.loadComplete2 = true;
+             
+      //         }
+      //       );
+      //   },
+      //   error => {
+      //     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      //   }
+      // );
   }
   getTotalTask(from_oninit = true) {
     let filter = this.setFilterForApi();
@@ -278,6 +389,7 @@ export class TasksComponent implements OnInit {
     this.getTotalTask();
   }
   getInprogressTask(from_oninit = true) {
+    console.log('from_oninit',from_oninit)
     let filter = this.setFilterForApi();
     this.getInprogressTaskCount(filter)
       .then(
@@ -287,6 +399,7 @@ export class TasksComponent implements OnInit {
           this.crmService.getInprogressTask(filter)
             .subscribe(
               data => {
+                console.log('data',data)
                 this.totalInprogressList = data;
                 this.totalInprogressList = this.totalInprogressList.filter(obj => !obj.parentTaskId);
                 this.loadComplete1 = true;
@@ -453,10 +566,12 @@ export class TasksComponent implements OnInit {
     this.filter_sidebar = false;
   }
   tabChange(event) {
+    console.log('event.index + 1',event.index + 1)
     this.setTabSelection(event.index + 1);
   }
   setTabSelection(type) {
     this.selectedTab = type;
+    console.log('this.selectedTab',this.selectedTab)
     this.groupService.setitemToGroupStorage('tabIndex', this.selectedTab);
     switch (type) {
       case 1: {

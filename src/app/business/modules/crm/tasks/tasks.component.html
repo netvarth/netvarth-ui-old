@@ -9,6 +9,23 @@
 </section>
 <section class="card col-md-12">
   <div class="col-md-12 btnClass">
+     <!----mat tab change to mat select start-->
+    <div class="statusSelectDiv"> 
+      <!-- <div class="taskTitle">
+          <div>Status</div>
+      </div> -->
+      <!-- <div class="fieldPadding">
+          <mat-select class="form-control" placeholder="Select status" 
+              #userTaskStatus [(ngModel)]="statusFilter"  (ngModelChange)="handleTaskStatus(userTaskStatus.value,'taskStatus',statusFilter)">
+              <mat-option   *ngFor="let stat of taskStatusList[0];let index=i" [value]="stat.id" >
+                  <div>
+                      {{stat.name }}
+                  </div>
+              </mat-option>
+          </mat-select>
+      </div> -->
+  </div>
+  <!----mat tab change to mat select end-->
     <div class="webDisplay">
       <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small" (click)="createTask('Create')">
         <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
@@ -52,6 +69,8 @@
     <mat-tab-group dynamicHeight mat-stretch-tabs (selectedTabChange)="tabChange($event)"
       [selectedIndex]="selectedTab - 1">
       <mat-tab class="mat-tab">
+        <!----total task start-->
+        <!-- <div *ngIf="bTotalTask"> -->
         <ng-template mat-tab-label>
           <span class="tab-number"><img class="img" src="/assets/images/crmImages/totaltask.PNG" /></span>
           <span class="tab-text">Total Activity({{totalCount}})</span>
@@ -61,8 +80,6 @@
           <div class="totalCount">({{totalCount}})</div>&nbsp;
           <div class="totalActivityName">Total Task</div> -->
         </ng-template>
-
-
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
         <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
           <div class="col-md-12 no-padding-small">
@@ -313,9 +330,13 @@
             </div>
           </div>
         </div>
+      <!-- </div> -->
+        <!---total task end-->
 
       </mat-tab>
       <mat-tab class="mat-tab">
+        <!----inprogress task start-->
+        <!-- <div *ngIf="bInprogressTask"> -->
         <ng-template mat-tab-label>
           <span class="tab-number"><img class="img" src="/assets/images/crmImages/handHoldingClock.PNG" /></span>
           <span class="tab-text">In Progress({{inprogressCount}})</span>
@@ -430,9 +451,13 @@
             </div>
           </div>
         </div>
+      <!-- </div> -->
+        <!----inprogress task end-->
       </mat-tab>
       <mat-tab class="mat-tab">
-        <ng-template mat-tab-label>
+        <!----completed task start-->
+        <!-- <div *ngIf="bCompltedTask"> -->
+                  <ng-template mat-tab-label>
           <span class="tab-number"><img class="img" src="/assets/images/crmImages/completed.PNG" /></span>
           <span class="tab-text">Completed({{completedCount}})</span>
           <!-- <div>
@@ -558,14 +583,17 @@
             </div>
           </div>
         </div>
+      <!-- </div> -->
+       <!----completed task end-->
       </mat-tab>
-
-      <!-- <mat-tab class="mat-tab">
+      <!---delayed start--->
+      <!-- <mat-tab class="mat-tab"> -->
+        <!-- <div *ngIf="bNewTask">
         <ng-template mat-tab-label>
           <div>
             <img class="img" src="/assets/images/crmImages/deyayed.PNG" />
           </div>
-          <div class="totalCount">({{delayedCount}})</div>
+          <div class="totalCount">({{newTaskCount}})</div>
           <div class="totalActivityName">Delayed</div>
         </ng-template>
 
@@ -608,13 +636,13 @@
                       </tr>
                     </tbody>
                     <tbody>
-                      <ng-container *ngIf="totalDelayedList.length === 0">
+                      <ng-container *ngIf="totalNewTaskList.length === 0">
                         <tr>
                           <td class="nodatafound" colspan="5">{{no_tasks_cap}}</td>
                         </tr>
                       </ng-container>
-                      <ng-container *ngIf="totalDelayedList.length>0">
-                        <tr *ngFor="let task of totalDelayedList; let i=index" (click)="viewTask(task.taskUid,task)">
+                      <ng-container *ngIf="totalNewTaskList.length>0">
+                        <tr *ngFor="let task of totalNewTaskList; let i=index" (click)="viewTask(task.taskUid,task)">
                           <td >&nbsp; &nbsp;<circle-progress class="circle__progress" 
                             [percent]="task.progress"
                             [animation]="true"
@@ -672,7 +700,9 @@
             </div>
           </div>
         </div>
-      </mat-tab> -->
+      </div> -->
+        <!---delayed end--->
+      <!-- </mat-tab> -->
     </mat-tab-group>
   </div>
 

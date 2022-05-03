@@ -17,6 +17,10 @@ import { MatIconModule } from "@angular/material/icon";
 import { PagerModule } from "../../../../../../src/app/shared/modules/pager/pager.module";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { NgCircleProgressModule } from "ng-circle-progress";
+import { FormsModule } from "@angular/forms";
+import { MatSelectModule } from "@angular/material/select";
+import { MatOptionModule } from "@angular/material/core";
+import { MatDatepickerModule } from "@angular/material/datepicker";
 const routes: Routes = [
   { path: '', component: TasksComponent },
   {path:'viewtask/:id',loadChildren:()=>import('./view-task/view-task.module').then((m)=>m.ViewTaskModule)},
@@ -40,6 +44,10 @@ const routes: Routes = [
         MatCheckboxModule,
         LoadingSpinnerModule,
         FormMessageDisplayModule,
+        FormsModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatDatepickerModule,
         NgCircleProgressModule.forRoot({
           // set defaults here
           backgroundColor: "#e9ecef",

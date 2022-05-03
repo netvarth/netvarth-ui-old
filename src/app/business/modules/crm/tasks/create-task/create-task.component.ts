@@ -7,7 +7,7 @@ import { FormMessageDisplayService } from '../../../../../shared/modules/form-me
 // import { LocalStorageService } from '../../../../../../../src/app/shared/services/local-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CrmService } from '../../crm.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import  {CrmSelectMemberComponent} from '../../../../shared/crm-select-member/crm-select-member.component'
@@ -95,6 +95,7 @@ export class CreateTaskComponent implements OnInit {
   public errorMsgAnyCategory:string=''
   public bErrormsgType:boolean=false;
   public errorMsgAnyType:string=''
+  public activityTitle:any;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -138,7 +139,7 @@ export class CreateTaskComponent implements OnInit {
     //   this.taskUid = params.get('taskid');
     //   if(this.taskUid)
     //   {
-    //     this.crmService.taskActivityName = "Update";
+    //     this.crmService.taskActivityName = "subTaskEdit";
     //   }
     // });
 
@@ -148,7 +149,7 @@ export class CreateTaskComponent implements OnInit {
       taskDescription:[null],
       userTaskCategory:[null],
       userTaskType:[null],
-      taskLocation:[null,[Validators.required]],
+      taskLocation:[null],
       areaName:[null],
       taskStatus:[null],
       taskDate:[null],
@@ -160,6 +161,7 @@ export class CreateTaskComponent implements OnInit {
       targetPotential:[null],
     }) 
     if(this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' && this.crmService.taskActivityName!='CreteTaskMaster'){
+      // console.log('this.crmService.taskActivityName',this.crmService.taskActivityName)
       this.selectHeader='Update Activity'
       this.createBTimeField=false;
       this.updateBTimefield=true;
@@ -209,6 +211,7 @@ export class CreateTaskComponent implements OnInit {
           this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd') 
           console.log(' this.taskDueDate', this.taskDueDate);
           this.selectedDate = this.taskDueDate;
+          this.activityTitle='Enter subactivity title'
           // this.taskDueTime = "0000"
           // this.estDurationWithDay=this.taskDueDays;
           // this.estDurationWithTime=this.taskDueTime;
@@ -231,6 +234,7 @@ export class CreateTaskComponent implements OnInit {
         this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd') 
         console.log(' this.taskDueDate', this.taskDueDate);
         this.selectedDate = this.taskDueDate;
+        this.activityTitle='Enter activity title'
         // this.taskDueTime= '0000' ;
         // console.log(' this.taskDueTime', this.taskDueTime)
         // this.estDurationWithDay=this.taskDueDays;
@@ -247,8 +251,10 @@ export class CreateTaskComponent implements OnInit {
         console.log('this.estTime',this.estTime)
     }
     else if(this.crmService.taskActivityName==='Create'){
+      console.log('this.crmService.taskActivityName',this.crmService.taskActivityName)
       this.createBTimeField=true;
       this.updateBTimefield=false;
+      this.activityTitle='Enter activity title'
       // this.selectMember='Select Member';
       // this.selectTaskManger='Select Task Manger'
         this.selectHeader='Create Activity';
@@ -287,6 +293,7 @@ export class CreateTaskComponent implements OnInit {
       // this.selectMember='Select Member';
       // this.selectTaskManger='Select Task Manger'
         this.selectHeader='Create Activity';
+        this.activityTitle='Enter activity title'
         this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd') 
         // this.datePipe.transform(this.taskDueDate,'yyyy-MM-dd');
         console.log(' this.taskDueDate', this.taskDueDate);
