@@ -85,7 +85,7 @@ export class CrmService {
     // }
     
     getTotalTask(filter = {}) {
-      const url = 'provider/task/provider'
+      const url = 'provider/task/provider?isSubTask-eq=false'
       return this.servicemeta.httpGet(url, null, filter);
     }
     getTotalLead(filter = {}) {
@@ -94,7 +94,7 @@ export class CrmService {
     }
 
     getTotalTaskCount(filter) {
-      const url = 'provider/task/provider/count';
+      const url = 'provider/task/provider/count?isSubTask-eq=false';
       return this.servicemeta.httpGet(url, null, filter);
     }
 
@@ -104,7 +104,7 @@ export class CrmService {
     }
 
     getInprogressTask(filter = {}) {
-      const url = 'provider/task/provider?status-eq=3';
+      const url = 'provider/task/provider?status-eq=3&&isSubTask-eq=false';
       return this.servicemeta.httpGet(url, null, filter);
     }
 
@@ -114,7 +114,7 @@ export class CrmService {
     }
 
     getInprogressTaskCount(filter) {
-      const url = 'provider/task/provider/count?status-eq=3';
+      const url = 'provider/task/provider/count?status-eq=3&&isSubTask-eq=false';
       return this.servicemeta.httpGet(url, null, filter);
     }
     getInprogressLeadCount(filter) {
@@ -123,11 +123,11 @@ export class CrmService {
     }
 
     getCompletedTask(filter = {}) {
-      const url = 'provider/task/provider?status-eq=5';
+      const url = 'provider/task/provider?status-eq=5&&isSubTask-eq=false';
       return this.servicemeta.httpGet(url, null, filter);
     }
     getCompletedTaskCount(filter) {
-      const url = 'provider/task/provider/count?status-eq=5';
+      const url = 'provider/task/provider/count?status-eq=5&&isSubTask-eq=false';
       return this.servicemeta.httpGet(url, null, filter);
     }
     getDelayedTask(filter = {}) {
