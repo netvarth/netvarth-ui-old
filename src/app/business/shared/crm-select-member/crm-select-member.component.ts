@@ -65,6 +65,7 @@ export class CrmSelectMemberComponent implements OnInit {
   handleAssigncustomerSelectText: string;
   customerErrorMsg: string;
   assignCustomerDetails: string;
+  viewStatusList:any=[];
 
 
 
@@ -391,7 +392,9 @@ getTaskStatusListData(){
   this.crmService.getTaskStatus().subscribe((taskStatus:any)=>{
     console.log('taskStatus',taskStatus);
     this.taskStatusList.push(taskStatus);
-    console.log('this.taskStatusList',this.taskStatusList)
+    console.log('dfff' + JSON.stringify(this.taskStatusList))
+    this.viewStatusList = taskStatus.filter(view => view.name !== this.status);
+    console.log('this.taskStatusList',this.viewStatusList)
   },
   (error)=>{
     this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
@@ -422,7 +425,7 @@ selectStatus(statusDetails){
     this.selectText='Already updated'
   }
   else{
-    this.selectText=''
+    this.selectText= ''
   }
 }
 completeTaskStatus(){

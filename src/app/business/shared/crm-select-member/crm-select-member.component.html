@@ -421,7 +421,7 @@
         <!--status start-->
        <div class="statusList">
         <!-- [ngStyle]="{'background-color':status.id === data.taskDetails.status.id ? '#CACACA' : '#FFFFFF' }" -->
-        <div *ngFor="let status of taskStatusList[0];let index=i" class="singleStatus" (click)="selectStatus(status)">
+        <div *ngFor="let status of viewStatusList;let index=i" class="singleStatus" (click)="selectStatus(status)">
             <div class="statusName">{{status.name}}</div>
             <div *ngIf="data.taskDetails.status.name">
                 <div *ngIf="status.id === data.taskDetails.status.id" > <i *ngIf="showHideTickMarkUpdate" class="fa fa-check" aria-hidden="true"></i></div>
