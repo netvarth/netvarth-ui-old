@@ -5,8 +5,7 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
 import { projectConstantsLocal } from '../../constants/project-constants';
-import { GroupStorageService } from '../../services/group-storage.service';
-import { Router } from '@angular/router';
+// import { Router } from '@angular/router';
 @Component({
     'selector': 'app-card',
     'templateUrl': './card.component.html',
@@ -23,7 +22,6 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() type;
     @Input() time_type;
     @Input() allLabels;
-    @Input() checkins;
     @Input() theme;
     @Input() teams;
     @Input() source;
@@ -50,7 +48,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     selectedUser;
     selQIds: any = [];
     qualification;
-    disablecheckavailabilitybutton=false;
+    disablecheckavailabilitybutton = false;
     tooltipcls = '';
 
     constructor(
@@ -58,54 +56,26 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         private wordProcessor: WordProcessor,
         private datePipe: DateFormatPipe,
         private dateTimeProcessor: DateTimeProcessor,
-        private groupService: GroupStorageService,
-        private router: Router,
+        // private router: Router,
         private cdref: ChangeDetectorRef) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
 
     ngOnInit() {
-        if (this.type == 'appointment-dashboard') {
-            this.appointment = this.item;
-            console.log("Appointment :",this.appointment)
-        }
-        if (this.type) {
             this.item.type = this.type;
-        }
-        if (this.item.type == 'checkin-dashboard') {
-            if (this.groupService.getitemFromGroupStorage('selectedUser')) {
-                this.selectedUser = this.groupService.getitemFromGroupStorage('selectedUser');
-            }
-            if (this.time_type === 2 && this.groupService.getitemFromGroupStorage('future_selQ')) {
-                this.selQIds = this.groupService.getitemFromGroupStorage('future_selQ');
-
-            } else if (this.time_type === 1 && this.groupService.getitemFromGroupStorage('selQ')) {
-                this.selQIds = this.groupService.getitemFromGroupStorage('selQ');
-            } else if (this.time_type === 3 && this.groupService.getitemFromGroupStorage('history_selQ')) {
-                this.selQIds = this.groupService.getitemFromGroupStorage('history_selQ');
-
-            }
-        } else {
-            if (this.groupService.getitemFromGroupStorage('appt-selectedUser')) {
-                this.selectedUser = this.groupService.getitemFromGroupStorage('appt-selectedUser');
-            }
-            if (this.time_type === 2 && this.groupService.getitemFromGroupStorage('appt_future_selQ')) {
-                this.selQIds = this.groupService.getitemFromGroupStorage('appt_future_selQ');
-            } else if (this.time_type === 1 && this.groupService.getitemFromGroupStorage('appt_selQ')) {
-                this.selQIds = this.groupService.getitemFromGroupStorage('appt_selQ');
-            } else if (this.time_type === 3 && this.groupService.getitemFromGroupStorage('appt_history_selQ')) {
-                this.selQIds = this.groupService.getitemFromGroupStorage('appt_history_selQ');
-            }
-        }
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.todayDate = this.datePipe.transformTofilterDate(new Date());
         switch (this.item.type) {
+            case 'appointment-dashboard': 
+                    this.appointment = this.item;
+                    this.appointment['displayTime'] = this.getSingleTime(this.appointment.appmtFor[0].apptTime);
+                this.appointment['delay'] = this.getTimeMinute(this.appointment.apptDelay);
+                    break;
             case 'waitlist':
                 this.service = this.item.item;
                 if (this.service.serviceAvailability['personAhead'] >= 0) {
                     this.personsAheadCaption = "People in line";
                     this.personsAheadText = this.service.serviceAvailability['personAhead'];
-                    // this.personsAheadText = 'People in line : ' + this.service.serviceAvailability['personAhead']; 
                 }
                 if (this.service.serviceAvailability['showToken']) {
                 } else {
@@ -118,7 +88,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                     } else {
                         this.timingCaption = 'Est Wait Time';
                         this.timings = this.getTimeToDisplay(this.service.serviceAvailability['queueWaitingTime']);
-                    } 
+                    }
                 }
                 break;
             case 'appt':
@@ -159,107 +129,40 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 this.user = this.item.item;
                 break;
         }
-        console.log('waitlist...',this.waitlist)
-       // console.log("Request Info :",this.waitlist.requestInfo)
+        console.log('waitlist...', this.waitlist)
     }
     getServiceName(serviceName) {
         let name = '';
         if (serviceName.length > 12) {
-          name = serviceName.substring(0, 12) + '...';
+            name = serviceName.substring(0, 12) + '...';
         } else {
-          name = serviceName;
+            name = serviceName;
         }
         return name;
-      }
-      
-    //   getReqFrom(browser,agent) {
-    //     let browserName = ''
-    //      if(browser){
-    //     if(browser === "WEB_UI"){
-    //     browserName = browser.slice(0, 3);
-    //     }
-    //     if(browser === 'WEB_LINK'){
-    //       browserName = 'IOS'
-    //     }
-    //     if(browser){
-    //      if(browser.length >8){
-    //       browserName = browser.slice(0,8);
-    //     }
-    //   }
-    
-    //     return browserName.toLocaleLowerCase();
-    //   }
-    //   if(browser === undefined && agent === "BROWSER"){
-    //     browserName = 'web'
-    //     return browserName;
-    //   }
-        
-      
-      
-    // }
-    
-    //   getBookingReqFrom(browser) {
-    //     let browserName = ''
-    //      if(browser){
-    //     if(browser === "WEB_UI"){
-    //     browserName = browser.slice(0, 3);
-    //     }
-    //     if(browser === 'WEB_LINK'){
-    //       browserName = 'IOS'
-    //     }
-    //     if(browser){
-    //      if(browser.length >8){
-    //       browserName = browser.slice(0,8);
-    //     }
-    //   }
-    
-    //     return browserName.toLocaleLowerCase();
-    //   }
-     
-    // }
-    //   getRequestedFrom(browser,reqFrom){
-    //     let browserName = ''
-    //     if(browser){
-    //     browserName = browser.slice(0, 3);
-    //     }
-    //     if(browser === 'WEB_LINK'){
-    //       browserName = 'IOS'
-    //     }
-    //     if(browser){
-    //      if(browser.length >8){
-    //       browserName = browser.slice(0,8);
-    //     }
-    //   }
-    
-    //     return reqFrom.toLocaleLowerCase() + ', ' + browserName.toLocaleLowerCase();
-    //   }
-    
+    }
+
     ngOnChanges() {
-        // this.itemQty = this.quantity;
-        // this.cdref.detectChanges();
-        // console.log(this.extras);
     }
     ngAfterViewChecked() {
         this.cdref.detectChanges();
     }
-    getTimeMinute(time){
+    getTimeMinute(time) {
         let hr;
-        let min; 
-        if(time >=60){
-          hr = Math.floor(time / 60 );
-          min =  Math.floor(time % 60);
-          return 'delayed by ' + hr+ 'hr'+':'+min + 'mins';
+        let min;
+        if (time >= 60) {
+            hr = Math.floor(time / 60);
+            min = Math.floor(time % 60);
+            return 'delayed by ' + hr + 'hr' + ':' + min + 'mins';
         }
-        if(time<60){
-         min =  Math.floor(time % 60);
-         return 'delayed by ' +min + 'mins';
+        if (time < 60) {
+            min = Math.floor(time % 60);
+            return 'delayed by ' + min + 'mins';
         }
-        if(time===0)
-        {
+        if (time === 0) {
             return '';
         }
-       
-       }
+
+    }
     getItemQty(itemObj) {
         const item = itemObj.item;
         const orderList = this.extras;
@@ -269,74 +172,45 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         }
         return qty;
     }
-    gotoCustomerDetailsAppt(appt, event) {
-        event.stopPropagation();
-        if (appt.apptStatus !== 'blocked') {
-          this.router.navigate(['/provider/customers/' + appt.appmtFor[0].id]);
-        }
-      }
+    // gotoCustomerDetailsAppt(appt, event) {
+    //     event.stopPropagation();
+    //     if (appt.apptStatus !== 'blocked') {
+    //         this.router.navigate(['/provider/customers/' + appt.appmtFor[0].id]);
+    //     }
+    // }
 
-      gotoCustomerDetailsToken(waitlist, event) {
-        event.stopPropagation();
-        if (waitlist.waitlistStatus !== 'blocked') {
-          this.router.navigate(['/provider/customers/' + waitlist.waitlistingFor[0].id]);
-        }
-      }
+    // gotoCustomerDetailsToken(waitlist, event) {
+    //     event.stopPropagation();
+    //     if (waitlist.waitlistStatus !== 'blocked') {
+    //         this.router.navigate(['/provider/customers/' + waitlist.waitlistingFor[0].id]);
+    //     }
+    // }
 
     stopProp(event) {
         event.stopPropagation();
     }
     cardActionPerformed(type, action, service, location, userId, event, item?) {
-        // console.log('action...',action);
-        // if(type=='checkavailability'){
-        //     if(service['serviceAvailability']['nextAvailableDate']) {
-        //         event.stopPropagation();
-        //         const actionObj = {};
-        //         actionObj['type'] = type;
-        //         actionObj['action'] = action;
-        //         if (service) {
-        //             actionObj['service'] = service;
-        //         }
-              
-        //         if (location) {
-        //             actionObj['location'] = location;
-        //         }
-               
-        //         if (userId) {
-        //             actionObj['userId'] = userId;
-        //         }
-                
-        //         this.actionPerformed.emit(actionObj);
-        //     } 
-        //     else {
-        //         this.disablecheckavailabilitybutton = true
-        //     }
-        // } 
-        // else {
-            if (item) {
-                item['loading'] = true;
-            }            
-            event.stopPropagation();        
-            const actionObj = {};
-            actionObj['type'] = type;
-            actionObj['action'] = action;
-            if (service) {
-                actionObj['service'] = service;
-            }
-          
-            if (location) {
-                actionObj['location'] = location;
-            }
-           
-            if (userId) {
-                actionObj['userId'] = userId;
-            }
-            
-            this.actionPerformed.emit(actionObj);
-            
-        // }
+        event.stopPropagation();
+        const actionObj = {};
+        if (item) {
+            item['loading'] = true;
+            actionObj['item'] = item;
+        }
+        actionObj['type'] = type;
+        actionObj['action'] = action;
+        if (service) {
+            actionObj['service'] = service;
+        }
 
-    
+        if (location) {
+            actionObj['location'] = location;
+        }
+        if (userId) {
+            actionObj['userId'] = userId;
+        }
+        //if (item)
+        
+        this.actionPerformed.emit(actionObj);
     }
     showConsumerNote(item) {
         this.noteClicked.emit(item);
@@ -470,42 +344,19 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     checkinActions(waitlist, type) {
         this.actionPerformed.emit({ waitlist: waitlist, type: type, statusAction: this.statusAction });
     }
-    gotoDetails() {
-        if (this.item.type == 'checkin-dashboard') {
-            this.router.navigate(['provider', 'check-ins', this.waitlist.ynwUuid], { queryParams: { timetype: this.time_type } });
-        } else {
-            this.router.navigate(['provider', 'appointments', this.appointment.uid], { queryParams: { timetype: this.time_type } });
-        }
-        // setTimeout(() => { this.gotoDetails() },2000)
-    }
-    showMoreorLess(waitlist, type) {
-        for (let checkin of this.checkins) {
-            
-            checkin.show = false;
-        }
-        if (type === 'more') {
-            const index = this.checkins.indexOf(waitlist);
-            this.checkins[index].show = true;
-        }
-    }
-    showDetails(waitlist) {
-        const currentcheckin = this.checkins.filter(checkin => checkin.ynwUuid === waitlist.ynwUuid);
-        if (currentcheckin[0].show) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    // gotoDetails() {
+    //     if (this.item.type == 'checkin-dashboard') {
+    //         this.router.navigate(['provider', 'check-ins', this.waitlist.ynwUuid], { queryParams: { timetype: this.time_type } });
+    //     } else {
+    //         this.router.navigate(['provider', 'appointments', this.appointment.uid], { queryParams: { timetype: this.time_type } });
+    //     }
+    // }
     getAge(age) {
         age = age.split(',');
         return age[0];
     }
-    getScheduleIndex(id) {
-        // const filterSchedule = this.activeSchedules.filter(sch => sch.id === id);
-        // return this.activeSchedules.indexOf(filterSchedule[0]);
-    }
-    getUsersList(teamid){
-       const userObject =  this.teams.filter(user => parseInt(user.id) === teamid); 
-       return userObject[0].name;
+    getUsersList(teamid) {
+        const userObject = this.teams.filter(user => parseInt(user.id) === teamid);
+        return userObject[0].name;
     }
 }

@@ -119,7 +119,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     futurecheckin_date: null,
     age: 'all',
     gender: 'all',
-    multiUser:'all',
+    multiUser: 'all',
   }; // same in resetFilter Fn
   filters = {
     first_name: false,
@@ -141,7 +141,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     location_id: false,
     age: false,
     gender: false,
-    multiUser:false,
+    multiUser: false,
   };
   filter_date_start_min = null;
   filter_date_start_max = null;
@@ -168,7 +168,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   checkin_label = '';
   start_label = '';
   no_future_checkins = '';
-  changeText:boolean;
+  changeText: boolean;
   pagination: any = {
     startpageval: 1,
     totalCnt: 0,
@@ -365,12 +365,12 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   locId;
   // location_select: any = [];
   internalStats: any = [];
-  showMore= false;
-  
-//multi user variable start
-allServiceSelectedMultiUser=false
-selectedMultiUser:any=[]
-multiUserFilter:any=[];
+  showMore = false;
+
+  //multi user variable start
+  allServiceSelectedMultiUser = false
+  selectedMultiUser: any = []
+  multiUserFilter: any = [];
   @ViewChild('closebutton') closebutton;
   showattachmentDialogRef: any;
   locid: any;
@@ -523,7 +523,7 @@ multiUserFilter:any=[];
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
     });
-  
+
     this.getInternalStatus();
   }
   // getProviderLocation() {
@@ -580,63 +580,63 @@ multiUserFilter:any=[];
   // getAgent(fileName){
   //   return fileName.toLocaleLowerCase();
   // }
-//   getReqFrom(browser,agent) {
-//     let browserName = ''
-//      if(browser){
- 
-//   if(browser.includes("Android")){
-//     browserName = 'Android'
-//     return browserName.toLocaleLowerCase();
+  //   getReqFrom(browser,agent) {
+  //     let browserName = ''
+  //      if(browser){
 
-//   }
-//   if(browser.includes("iPhone")){
-//     browserName = 'IOS'
-//     return browserName.toLocaleLowerCase();
+  //   if(browser.includes("Android")){
+  //     browserName = 'Android'
+  //     return browserName.toLocaleLowerCase();
 
-//   }
-//   if(browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("iPhone")){
-//     browserName = 'Web'
-//     return browserName.toLocaleLowerCase();
+  //   }
+  //   if(browser.includes("iPhone")){
+  //     browserName = 'IOS'
+  //     return browserName.toLocaleLowerCase();
 
-//   }
- 
+  //   }
+  //   if(browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("iPhone")){
+  //     browserName = 'Web'
+  //     return browserName.toLocaleLowerCase();
 
-//    }
-//   if(browser === undefined && agent === "BROWSER"){
-//     browserName = 'web'
-//     return browserName;
-//   }
-    
-  
-  
-// }
-//   getBookingReqFrom(browser) {
-//     let browserName = ''
-//     if(browser){
-      
-//   }
-
-//     return browserName.toLocaleLowerCase();
-//   }
-//   getRequestedFrom(browser,reqFrom){
-//     let browserName = ''
-//     if(browser){
-//     browserName = browser.slice(0, 3);
-//     }
-//     if(browser === 'WEB_LINK'){
-//       browserName = 'IOS'
-//     }
-//     if(browser){
-//      if(browser.length >8){
-//       browserName = browser.slice(0,8);
-//     }
-//   }
-
-//     return reqFrom.toLocaleLowerCase() + ', ' + browserName.toLocaleLowerCase();
-//   }
+  //   }
 
 
-  showText(){
+  //    }
+  //   if(browser === undefined && agent === "BROWSER"){
+  //     browserName = 'web'
+  //     return browserName;
+  //   }
+
+
+
+  // }
+  //   getBookingReqFrom(browser) {
+  //     let browserName = ''
+  //     if(browser){
+
+  //   }
+
+  //     return browserName.toLocaleLowerCase();
+  //   }
+  //   getRequestedFrom(browser,reqFrom){
+  //     let browserName = ''
+  //     if(browser){
+  //     browserName = browser.slice(0, 3);
+  //     }
+  //     if(browser === 'WEB_LINK'){
+  //       browserName = 'IOS'
+  //     }
+  //     if(browser){
+  //      if(browser.length >8){
+  //       browserName = browser.slice(0,8);
+  //     }
+  //   }
+
+  //     return reqFrom.toLocaleLowerCase() + ', ' + browserName.toLocaleLowerCase();
+  //   }
+
+
+  showText() {
     this.showMore = true;
   }
   setLabelFilter(label, event) {
@@ -685,7 +685,7 @@ multiUserFilter:any=[];
             }
           }
           this.allModeSelected = true;
-         
+
         }
       } else {
         this.allModeSelected = false;
@@ -699,7 +699,7 @@ multiUserFilter:any=[];
       if (this.apptModes.length === this.waitlistModes.length) {
         this.filter['waitlistMode'] = 'all';
         this.allModeSelected = true;
-        
+
       }
     }
 
@@ -868,18 +868,18 @@ multiUserFilter:any=[];
       }
     }
     //for multi user
-    if(type ==='multiUser'){
+    if (type === 'multiUser') {
       // console.log('users List:',this.users);
 
       // console.log('event:',event.checked)
       // console.log(value)
-      if(value === 'all'){
+      if (value === 'all') {
         // console.log('all1')
-        this.multiUserFilter=[];
+        this.multiUserFilter = [];
 
-        this.allServiceSelectedMultiUser=false;
-        
-        if(event.checked){
+        this.allServiceSelectedMultiUser = false;
+
+        if (event.checked) {
           for (const multi of this.users) {
             // console.log("User :",this.users);
 
@@ -889,9 +889,9 @@ multiUserFilter:any=[];
             }
           }
           // console.log('multiuserFilter:',this.multiUserFilter);
-          this.allServiceSelectedMultiUser=true;
+          this.allServiceSelectedMultiUser = true;
         }
-      }else{
+      } else {
         this.allServiceSelectedMultiUser = false;
         const indx = this.multiUserFilter.indexOf(value);
         // console.log(indx)
@@ -902,7 +902,7 @@ multiUserFilter:any=[];
           this.multiUserFilter.splice(indx, 1);
           // console.log(this.multiUserFilter)
         }
-        
+
       }
       // console.log(this.multiUserFilter.length)
       // console.log(this.users.length)
@@ -1279,7 +1279,7 @@ multiUserFilter:any=[];
                     );
                   }
                 );
-               
+
               }
             } else {
               self.selectLocationFromCookies(parseInt(cookie_location_id, 10));
@@ -1538,7 +1538,7 @@ multiUserFilter:any=[];
                 _this.appt_list = data;
                 _this.appt_list.map(function (appt) {
                   // checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode])
-                  if (appt.service.virtualCallingModes && (appt.service.virtualCallingModes[0].callingMode==='Phone' || appt.service.virtualCallingModes[0].callingMode==='WhatsApp') && appt.virtualService[appt.service.virtualCallingModes[0].callingMode]) {
+                  if (appt.service.virtualCallingModes && (appt.service.virtualCallingModes[0].callingMode === 'Phone' || appt.service.virtualCallingModes[0].callingMode === 'WhatsApp') && appt.virtualService[appt.service.virtualCallingModes[0].callingMode]) {
                     appt.whatsApp_PhNumber = _this.teleService.getTeleNumber(appt.virtualService[appt.service.virtualCallingModes[0].callingMode]);
                   }
                   return appt;
@@ -1551,7 +1551,7 @@ multiUserFilter:any=[];
                 }
                 _this.setCounts(this.appt_list);
                 _this.check_in_filtered_list = this.getActiveAppointments(this.todayAppointments, this.statusAction);
-                console.log("Active Today :",this.check_in_filtered_list)
+                console.log("Active Today :", this.check_in_filtered_list)
                 _this.startedCheckins = this.getActiveAppointments(this.todayAppointments, 'started');
                 _this.loading = false;
               },
@@ -1617,7 +1617,7 @@ multiUserFilter:any=[];
                 let appts = data;
                 appts.map(function (appt) {
                   // checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode])
-                  if (appt.service.virtualCallingModes && (appt.service.virtualCallingModes[0].callingMode==='Phone' || appt.service.virtualCallingModes[0].callingMode==='WhatsApp') && appt.virtualService[appt.service.virtualCallingModes[0].callingMode]) {
+                  if (appt.service.virtualCallingModes && (appt.service.virtualCallingModes[0].callingMode === 'Phone' || appt.service.virtualCallingModes[0].callingMode === 'WhatsApp') && appt.virtualService[appt.service.virtualCallingModes[0].callingMode]) {
                     appt.whatsApp_PhNumber = _this.teleService.getTeleNumber(appt.virtualService[appt.service.virtualCallingModes[0].callingMode]);
                   }
                   return appt;
@@ -1677,7 +1677,7 @@ multiUserFilter:any=[];
               console.log("Checkin List:", _this.appt_list);
               _this.appt_list.map(function (appt) {
                 // checkin.virtualService[checkin.service.virtualCallingModes[0].callingMode])
-                if (appt.service.virtualCallingModes && (appt.service.virtualCallingModes[0].callingMode==='Phone' || appt.service.virtualCallingModes[0].callingMode==='WhatsApp') && appt.virtualService[appt.service.virtualCallingModes[0].callingMode]) {
+                if (appt.service.virtualCallingModes && (appt.service.virtualCallingModes[0].callingMode === 'Phone' || appt.service.virtualCallingModes[0].callingMode === 'WhatsApp') && appt.virtualService[appt.service.virtualCallingModes[0].callingMode]) {
                   appt.whatsApp_PhNumber = _this.teleService.getTeleNumber(appt.virtualService[appt.service.virtualCallingModes[0].callingMode]);
                 }
                 return appt;
@@ -1853,18 +1853,18 @@ multiUserFilter:any=[];
       Mfilter['waitlistStatus-neq'] = 'prepaymentPending,failed';
     }
     return new Promise((resolve) => {
-      if(this.selected_location.id){
-this.provider_services.getwaitlistTodayCount(Mfilter)
-        .subscribe(
-          data => {
-            if (no_filter) { this.today_waitlist_count = data; }
-            resolve(data);
-          },
-          () => {
-          });
-    }
+      if (this.selected_location.id) {
+        this.provider_services.getwaitlistTodayCount(Mfilter)
+          .subscribe(
+            data => {
+              if (no_filter) { this.today_waitlist_count = data; }
+              resolve(data);
+            },
+            () => {
+            });
       }
-      );
+    }
+    );
   }
   getFutureWLCount(Mfilter = null) {
     const queueid = this.groupService.getitemFromGroupStorage('future_selQ');
@@ -2093,8 +2093,8 @@ this.provider_services.getwaitlistTodayCount(Mfilter)
     this.allLabelSelected = false;
     this.allQSelected = false;
     this.allLocationSelected = false;
-    this.multiUserFilter=[];
-    this.allServiceSelectedMultiUser=false;
+    this.multiUserFilter = [];
+    this.allServiceSelectedMultiUser = false;
   }
   setFilterdobMaxMin() {
     this.filter_dob_start_max = new Date();
@@ -2158,7 +2158,7 @@ this.provider_services.getwaitlistTodayCount(Mfilter)
     if (this.filterService.length > 0 && this.filter.service !== 'all') {
       api_filter['service-eq'] = this.filterService.toString();
     }
-    if(this.multiUserFilter.length >0 && this.filter.multiUser !== 'all' ){
+    if (this.multiUserFilter.length > 0 && this.filter.multiUser !== 'all') {
       api_filter['provider-eq'] = this.multiUserFilter.toString();
     }
     if (this.apptStatuses.length > 0 && this.filter.waitlist_status !== 'all') {
@@ -2244,7 +2244,7 @@ this.provider_services.getwaitlistTodayCount(Mfilter)
       this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.checkinEncId || this.filter.patientId || this.filter.multiUser !=='all' || this.filter.service !== 'all' || this.filter.location != 'all'
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.checkinEncId || this.filter.patientId || this.filter.multiUser !== 'all' || this.filter.service !== 'all' || this.filter.location != 'all'
       || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.internalStatus !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== ''
       || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allServiceSelectedMultiUser || this.allApptStatusSelected
@@ -2280,7 +2280,7 @@ this.provider_services.getwaitlistTodayCount(Mfilter)
       queue: false,
       location: false,
       service: false,
-      multiUser:false,
+      multiUser: false,
       waitlist_status: false,
       payment_status: false,
       internalStatus: false,
@@ -2302,7 +2302,7 @@ this.provider_services.getwaitlistTodayCount(Mfilter)
       queue: 'all',
       location: 'all',
       service: 'all',
-      multiUser:'all',
+      multiUser: 'all',
       waitlist_status: 'all',
       payment_status: 'all',
       waitlistMode: 'all',
@@ -2616,7 +2616,7 @@ this.provider_services.getwaitlistTodayCount(Mfilter)
     if (!this.filters[type]) {
       if (type === 'check_in_start_date' || type === 'check_in_end_date' || type === 'check_in_date') {
         this.filter[type] = null;
-      } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'location' || type === 'waitlistMode' || type === 'internalStatus'|| type==='multiUser') {
+      } else if (type === 'payment_status' || type === 'service' || type === 'queue' || type === 'location' || type === 'waitlistMode' || type === 'internalStatus' || type === 'multiUser') {
         this.filter[type] = 'all';
       } else if (type === 'waitlist_status') {
         this.statusMultiCtrl = [];
@@ -2934,10 +2934,10 @@ this.provider_services.getwaitlistTodayCount(Mfilter)
       this.maxday = this.yesterdayDate;
     }
     this.labelSelection();
-    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.checkinEncId || this.filter.patientId||this.filter.multiUser !=='all' || this.filter.service !== 'all' || this.filter.location != 'all'
+    if (this.filter.first_name || this.filter.last_name || this.filter.phone_number || this.filter.countrycode || this.filter.checkinEncId || this.filter.patientId || this.filter.multiUser !== 'all' || this.filter.service !== 'all' || this.filter.location != 'all'
       || this.filter.queue !== 'all' || this.filter.payment_status !== 'all' || this.filter.waitlistMode !== 'all' || this.filter.internalStatus !== 'all' || this.filter.check_in_start_date
       || this.filter.check_in_end_date || this.filter.check_in_date || this.filter.age !== 'all' || this.filter.gender !== 'all' || this.filter.waitlist_status !== 'all' || this.labelFilterData !== ''
-      || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected||this.allServiceSelectedMultiUser || this.allApptStatusSelected
+      || this.allAgeSlected || this.allGenderSlected || this.allServiceSelected || this.allServiceSelectedMultiUser || this.allApptStatusSelected
       || this.allPayStatusSelected || this.allModeSelected || this.allStatusSelected || this.allLabelSelected || this.allQSelected || this.allLocationSelected) {
       this.filterapplied = true;
     } else {
@@ -3005,7 +3005,7 @@ this.provider_services.getwaitlistTodayCount(Mfilter)
     apiFilter['businessLocs-eq'] = this.selected_location.id
     this.provider_services.getUsers(apiFilter).subscribe(data => {
       this.users = data;
-      this.users.sort((a:any, b:any) => (a.firstName).localeCompare(b.firstName))
+      this.users.sort((a: any, b: any) => (a.firstName).localeCompare(b.firstName))
       const tempUser = {};
       tempUser['firstName'] = 'All';
       tempUser['id'] = 'all';
@@ -3256,7 +3256,7 @@ this.provider_services.getwaitlistTodayCount(Mfilter)
     });
     actiondialogRef.afterClosed().subscribe(data => {
       if (data === 'reload') {
-     
+
         this.getLabel();
         this.loadApiSwitch('');
       }
@@ -3367,6 +3367,15 @@ this.provider_services.getwaitlistTodayCount(Mfilter)
     }
   }
   cardClicked(event) {
+    if (event.type === 'checkin-dashboard') {
+      if (event.action === 'view') {
+        this.router.navigate(['provider', 'check-ins', event.item.ynwUuid], { queryParams: { timetype: this.time_type } });
+      } else {
+        if (event.item.waitlistStatus !== 'blocked') {
+          this.router.navigate(['/provider/customers/' + event.item.waitlistingFor[0].id]);
+        }
+      }
+    }
     if (event.type === 'note') {
       this.showConsumerNote(event.waitlist);
     } else if (event.type === 'attachment') {

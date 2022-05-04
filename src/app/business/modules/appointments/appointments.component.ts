@@ -2991,8 +2991,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return age[0];
   }
   cardClicked(event) {
-    console.log(event);
-    if (event.type === 'note') {
+    if (event.type === 'appointment-dashboard') {
+      if (event.action === 'view') {
+        this.router.navigate(['provider', 'appointments', event.item.uid], { queryParams: { timetype: this.time_type } });
+      } else {
+        if (event.item.apptStatus !== 'blocked') {
+          this.router.navigate(['/provider/customers/' + event.item.appmtFor[0].id]);
+        }
+      }
+    } else if (event.type === 'note') {
       this.showConsumerNote(event.waitlist);
     } else if (event.type === 'attachment') {
       this.showAttachments(event.waitlist);
