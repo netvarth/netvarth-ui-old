@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, Output, EventEmitter, HostListener, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
@@ -24,6 +24,7 @@ import { AuthService } from '../../../shared/services/auth-service';
 })
 export class ConsumerJoinComponent implements OnInit, OnDestroy {
   @Output() actionPerformed = new EventEmitter<any>();
+  @Input() userType;
   mobile_no_cap = Messages.MOBILE_NUMBER_CAP;
   mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
   password_cap = Messages.PASSWORD_CAP;
@@ -106,6 +107,9 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.joinStep = true;
+    if (this.userType) {
+      
+    }
     if (this.data) {
       this.mode = this.data['mode'];
     }
@@ -201,7 +205,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     };
     this.sessionStorageService.removeitemfromSessionStorage('tabId');
     this.api_loading = true;
-    if (this.data.type === 'provider') {
+    if (this.data.type === 'provider' || this.userType=== 'provider') {
       post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
       this.sessionStorageService.clearSessionStorage();
       this.authService.providerLogin(post_data)

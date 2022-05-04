@@ -1,8 +1,10 @@
-<section class="container cons-inbox no-padding qnr-link"
-    [class.success-width]="!isBusinessOwner && (qParams.type || qnrStatus !== 'released' || waitlistStatus == 'cancelled')">
+<section class="container cons-inbox no-padding qnr-link" >
+    <!-- [class.success-width]="!isBusinessOwner && (qParams.type || qnrStatus !== 'released' || waitlistStatus == 'cancelled')" -->
     <div class="comn-cls m0 p0">
         <div class="panel-default">
-            <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+            <app-consumer-join *ngIf="!loggedIn" [userType]="userType" (actionPerformed)="actionPerformed($event)"></app-consumer-join>
+
+            <app-common-innerloading-spinner *ngIf="loggedIn && loading"></app-common-innerloading-spinner>
             <div class="panel-body no-padding"
                 *ngIf="!loading && ((!qParams.type && qnrStatus === 'released' && waitlistStatus != 'cancelled') || isBusinessOwner)">
                 <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 card">
@@ -95,6 +97,13 @@
                 <div class="success-desc">
                     You do not seem to have access to open the link. Contact {{waitlist.providerAccount.businessName}}
                     directly for any concerns.
+                </div>
+            </div>
+            <div class="success-sec"
+                *ngIf="!isPermitted">
+                <i class="fa fa-ban red" aria-hidden="true"></i>
+                <div class="success-desc">
+                    You do not seem to have access to open the link. Contact directly for any concerns.
                 </div>
             </div>
         </div>

@@ -245,7 +245,7 @@ export class ServiceViewComponent implements OnInit {
             this.getAccountIdFromEncId(_this.accountEncId).then(
               (id: any) => {
                 _this.provider_id = id;      
-                // _this.customId = _this.accountEncId;
+                _this.customId = _this.accountEncId;
                 _this.accEncUid = _this.accountEncId;     
                 _this.accountIdExists = true;      
                 _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
