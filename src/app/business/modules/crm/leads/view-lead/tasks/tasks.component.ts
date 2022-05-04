@@ -43,7 +43,7 @@ export class TasksComponent implements OnInit {
 
     this.crmService.getLeadTaskDetails(this.taskid).subscribe(data => {
       this.taskDetails = data;
-      let LeadTaskFilter = this.taskDetails.filter(data => data.parentTaskUid == this.taskid);
+      let LeadTaskFilter = this.taskDetails.filter(data => data.originUid == this.taskid);
       this.LeadTaskDetails = LeadTaskFilter;
       console.log("Task Details : ",this.LeadTaskDetails);
   })

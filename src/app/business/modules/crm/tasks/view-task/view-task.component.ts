@@ -101,7 +101,7 @@ ngOnInit(): void {
       this.taskDetails = data;
       this.taskkid = this.taskDetails.id
       console.log("Task Details : ",this.taskDetails);
-      if(this.taskDetails.parentTaskUid)
+      if(this.taskDetails.originUid)
       {
         this.taskType = 'SubTask';
       }

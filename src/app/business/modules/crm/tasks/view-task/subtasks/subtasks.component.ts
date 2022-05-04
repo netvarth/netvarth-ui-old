@@ -43,7 +43,7 @@ export class SubtasksComponent implements OnInit {
 
     this.crmService.getSubTaskDetails(this.taskid).subscribe(data => {
       this.taskDetails = data;
-      let subTaskFilter = this.taskDetails.filter(data => data.parentTaskUid == this.taskid);
+      let subTaskFilter = this.taskDetails.filter(data => data.originUid == this.taskid);
       this.subTaskDetails = subTaskFilter;
       console.log("Task Details : ",this.subTaskDetails);
   })

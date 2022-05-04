@@ -797,7 +797,7 @@ export class CreateTaskComponent implements OnInit {
     }
     else{
     const createTaskData:any = {
-      "parentTaskUid" : this.taskUid,
+      "originUid" : this.taskUid,
       "title":this.createTaskForm.controls.taskTitle.value,
       "description":this.createTaskForm.controls.taskDescription.value,
       "userType":this.userType,
