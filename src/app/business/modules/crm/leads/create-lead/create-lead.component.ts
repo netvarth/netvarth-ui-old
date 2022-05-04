@@ -61,6 +61,7 @@ export class CreateLeadComponent implements OnInit {
   public selectedTime:any;
   public selectLeadManger:any;
   public selectLeadMangerId:any;
+  public selectLeadCustomer:any;
   public createBTimeField:boolean=false;
   public updateBTimefield:boolean=false;
   public dayGapBtwDate:any;
@@ -88,6 +89,7 @@ export class CreateLeadComponent implements OnInit {
   public estDurationWithDay:any;
   public estTime:any;
   estDurationWithTime: any;
+  customer: any;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -136,6 +138,7 @@ export class CreateLeadComponent implements OnInit {
 
     this.api_loading=false;
     this.createLeadForm=this.createLeadFB.group({
+      id:[null],
       leadTitle:[null,[Validators.required]],
       leadDescription:[null],
       userLeadCategory:[null,[Validators.required]],
@@ -143,13 +146,8 @@ export class CreateLeadComponent implements OnInit {
       leadLocation:[null,[Validators.required]],
       areaName:[null],
       leadStatus:[null,[Validators.required]],
-      leadDate:[null,[Validators.required]],
-      leadDays:[0],
-      leadHrs:[0],
-      leadMin:[0],
-      userLeadPriority:[null,[Validators.required]],
-      targetResult:[null],
-      targetPotential:[null],
+      customer_id : [null],
+      userLeadPriority:[null,[Validators.required]]
     }) 
     if(this.crmService.leadActivityName!='Create' && this.crmService.leadActivityName!='subLeadCreate' && this.crmService.leadActivityName!='CreatE' && this.crmService.leadActivityName!='CreteLeadMaster'){
       this.selectHeader='Update Lead'
@@ -159,29 +157,25 @@ export class CreateLeadComponent implements OnInit {
       console.log('this.updateValue',this.updateValue)
       if(this.updateValue != undefined){
         console.log(' this.updateValue', this.updateValue);
+        console.log("this.updateValue.id",this.updateValue.id)
+
       this.createLeadForm.patchValue({
+        id : this.updateValue.id,
         leadTitle:this.updateValue.title,
         leadDescription:this.updateValue.description,
-        targetPotential:this.updateValue.targetPotential,
-        targetResult:this.updateValue.targetResult,
         userLeadCategory:this.updateValue.category.id,
         userLeadType:this.updateValue.type.id,
         leadStatus:this.updateValue.status.id,
         userLeadPriority:this.updateValue.priority.id,
       })
       this.locationName =this.updateValue.location.name;
-      this.areaName =this.updateValue.locationArea;
       this.updteLocationId= this.updateValue.location.id
-      this.leadDueDays=this.updateValue.leadDays;
-      this.leadDueHrs=this.updateValue.leadHrs;
-      this.leadDueMin=this.updateValue.leadMin;
       this.selectMember= this.updateValue.assignee.name;
       this.updateMemberId=this.updateValue.assignee.id;
       this.selectLeadManger= this.updateValue.manager.name;
       this.updateManagerId= this.updateValue.manager.id
-      this.updateUserType=this.updateValue.userTypeEnum;
-      // this.leadDueTime=this.updateValue.estDuration
-       this.estTime={ "days" :this.updateValue.estDuration.days, "hours" :this.updateValue.estDuration.hours, "minutes" : this.updateValue.estDuration.minutes };
+      this.updateUserType= "PROVIDER";
+      this.customer=this.updateValue.customer.id;
       }
       else{
         this.router.navigate(['provider', 'lead']);
@@ -221,6 +215,7 @@ export class CreateLeadComponent implements OnInit {
         const estDurationHour=this.datePipe.transform(this.estDurationWithDay,'h')
         const estDurationMinurte= this.datePipe.transform(this.estDurationWithDay,'mm')
         this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinurte };
+        this.customer = { "id" :  25050},
         console.log('this.estTime',this.estTime)
         console.log('new Date()',new Date())
         const leadMaster= this.crmService.leadMasterToCreateServiceData;
@@ -249,6 +244,7 @@ export class CreateLeadComponent implements OnInit {
         const estDurationHour=this.datePipe.transform(this.estDurationWithDay,'h')
         const estDurationMinurte= this.datePipe.transform(this.estDurationWithDay,'mm')
         this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinurte };
+        this.customer = { "id" :  25050};
         console.log('this.estTime',this.estTime)
         console.log('new Date()',new Date())
     }
@@ -261,9 +257,9 @@ export class CreateLeadComponent implements OnInit {
     // this.getLeadmaster()
   }
   getLeadmaster(){
-    this.crmService.getLeadMasterList().subscribe((response)=>{
-      console.log('LeadMasterList :',response);
-    })
+    // this.crmService.getLeadMasterList().subscribe((response)=>{
+    //   console.log('LeadMasterList :',response);
+    // })
   }
   getLocation(){
     this.crmService.getProviderLocations().subscribe((res)=>{
@@ -282,7 +278,7 @@ export class CreateLeadComponent implements OnInit {
     })
   }
   getCategoryListData(){
-    this.crmService.getCategoryList().subscribe((categoryList:any)=>{
+    this.crmService.getLeadCategoryList().subscribe((categoryList:any)=>{
       // console.log('category',categoryList);
       this.categoryListData.push(categoryList)
     },
@@ -423,6 +419,8 @@ export class CreateLeadComponent implements OnInit {
     }
   })
   }
+
+  
   hamdleLeadManager(leadManger){
     // console.log(leadManger)
   }
@@ -559,34 +557,29 @@ export class CreateLeadComponent implements OnInit {
   saveCreateLead(){
     // this.api_loading = true;
     if(this.crmService.leadActivityName!='Create' && this.crmService.leadActivityName!='subLeadCreate' && this.crmService.leadActivityName!='CreatE' && this.crmService.leadActivityName !='CreteLeadMaster'){
-      console.log("est time update data : ",this.estTime  )
       const updateLeadData:any = {
+        "id":this.updateValue.id,
+        "uid":this.updateValue.uid,
         "title":this.createLeadForm.controls.leadTitle.value,
         "description":this.createLeadForm.controls.leadDescription.value,
-        "userType":this.updateUserType,
         "category":{"id":this.createLeadForm.controls.userLeadCategory.value},
         "type":{"id":this.createLeadForm.controls.userLeadType.value},
-  
         "status":{"id":this.createLeadForm.controls.leadStatus.value},
         "priority":{"id":this.createLeadForm.controls.userLeadPriority.value},
-        "dueDate" : this.datePipe.transform(this.leadDueDate,'yyyy-MM-dd'),
         "location" : { "id" : this.updteLocationId},
-        "locationArea" : this.createLeadForm.controls.areaName.value,
-
-  
         "assignee":{"id":this.updateMemberId },
         "manager":{"id":this.updateManagerId},
-        "targetResult" : this.createLeadForm.controls.targetResult.value,
-        "targetPotential" : this.createLeadForm.controls.targetPotential.value,
-        "estDuration" : this.estTime    
+        "customer" : {"id":this.customer}
+   
       }
       console.log('updateLeadData',updateLeadData)
-      if(this.updateUserType===('PROVIDER' || 'CONSUMER') && (this.createLeadForm.controls.leadTitle.value!=null)){
+      console.log('updateUserType',this.updateUserType)
+      if(this.createLeadForm.controls.leadTitle.value!=null){
         // this.api_loading = true;
         console.log("2")
         this.boolenLeadError=false;
         console.log('updateLeadData',updateLeadData)
-        this.crmService.updateLead(this.updateValue.leadUid, updateLeadData).subscribe((response)=>{
+        this.crmService.updateLead(this.updateValue.uid, updateLeadData).subscribe((response)=>{
           console.log('afterUpdateList',response);
           setTimeout(() => {
             this.createLeadForm.reset();
@@ -612,17 +605,13 @@ export class CreateLeadComponent implements OnInit {
       "userType":this.userType,
       "category":{"id":this.createLeadForm.controls.userLeadCategory.value},
       "type":{"id":this.createLeadForm.controls.userLeadType.value},
-
       "status":{"id":this.createLeadForm.controls.leadStatus.value},
       "priority":{"id":this.createLeadForm.controls.userLeadPriority.value},
-      "dueDate" : this.selectedDate,
       "location" : { "id" : this.locationId},
-      "locationArea":this.areaName,
+      // "locationArea":this.areaName,
       "assignee":{"id":this.assigneeId},
       "manager":{"id":this.selectLeadMangerId},
-      "targetResult" : this.createLeadForm.controls.targetResult.value,
-      "targetPotential" : this.createLeadForm.controls.targetPotential.value,
-      "estDuration" : this.estTime   
+      "customer" : {"id" :  this.createLeadForm.controls.customer_id.value}
     }
     console.log('createLeadData',createLeadData)
     console.log('this.userType',this.userType)

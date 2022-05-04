@@ -30,8 +30,7 @@ selectedFiles: FileList;
 progressInfos = [];
 message = '';
 fileInfos: Observable<any>;
-  action: string;
-  
+  action: string;  
   constructor(
     public _location: Location,
     public dialogRef: MatDialogRef<SelectAttachmentComponent>,
@@ -122,7 +121,17 @@ fileInfos: Observable<any>;
   saveFile()
   {
     const _this = this;
-    let taskid = this.data.taskuid;
+    console.log("The data is : ",this.data)
+    if(this.data.source = "Lead")
+    {
+      var id = this.data.leaduid;
+      console.log("This is Lead id : ",id)
+    }
+    else
+    {
+      var id = this.data.taskuid;
+      console.log("This is Task id : ",id)
+    }
     return new Promise(function (resolve, reject) {
         const dataToSend: FormData = new FormData();
         const captions = {};
@@ -137,7 +146,7 @@ fileInfos: Observable<any>;
         const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
         dataToSend.append('captions', blobPropdata);
 
-        _this.sendWLAttachment(taskid,dataToSend).then(
+        _this.sendWLAttachment(id,dataToSend).then(
             () => {
                         resolve(true);
                     }
@@ -173,19 +182,41 @@ fileInfos: Observable<any>;
     this.imgCaptions[i] = '';
 }
 
-  sendWLAttachment(taskUid, dataToSend) {
+  sendWLAttachment(Uid, dataToSend) {
     const _this = this;
+    console.log("Data Testing",this.data)
+    if(this.data.source == "Task")
+    {
     return new Promise(function (resolve, reject) {
-        _this.shared_services.addfiletotask(taskUid, dataToSend).subscribe(
-            () => {
-                resolve(true);
-                console.log("Sending Attachment Success")
-            }, (error) => {
-                reject(error);
-                console.log("Sending Attachment Fail")
-                this.snackbarService.openSnackBar('Please select atleast one file to upload', { 'panelClass': 'snackbarerror' });
-            });
+        _this.shared_services.addfiletotask(Uid, dataToSend).subscribe(
+          () => {
+              resolve(true);
+              console.log("Sending Attachment Success")
+          }, (error) => {
+              reject(error);
+              console.log("Sending Attachment Fail")
+              this.snackbarService.openSnackBar('Please select atleast one file to upload', { 'panelClass': 'snackbarerror' });
+          });
+      
+        
     });
+  }
+  else
+  {
+    return new Promise(function (resolve, reject) {
+      _this.shared_services.addfiletolead(Uid, dataToSend).subscribe(
+        () => {
+            resolve(true);
+            console.log("Sending Attachment Success")
+        }, (error) => {
+            reject(error);
+            console.log("Sending Attachment Fail")
+            this.snackbarService.openSnackBar('Please select atleast one file to upload', { 'panelClass': 'snackbarerror' });
+        });
+    
+      
+  });
+  }
   }
 
 

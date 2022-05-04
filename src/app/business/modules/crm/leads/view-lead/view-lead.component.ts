@@ -6,10 +6,10 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router} from '@angular/router';
 import { CrmService } from '../../crm.service';
 import { MatDialog } from '@angular/material/dialog';
-import { SelectAttachmentComponent } from './select-attachment/select-attachment.component';
 import  {CrmSelectMemberComponent} from '../../../../shared/crm-select-member/crm-select-member.component'
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { CrmProgressbarComponent } from '../../../../../../../src/app/business/shared/crm-progressbar/crm-progressbar.component';
+import { SelectAttachmentComponent } from '../../tasks/view-task/select-attachment/select-attachment.component';
 @Component({
   selector: 'app-view-lead',
   templateUrl: './view-lead.component.html',
@@ -123,6 +123,7 @@ uploadFiles() {
     panelClass: ['popup-class', 'confirmationmainclass'],
       disableClose: true,
       data: {
+          source: "Lead",
           leaduid : this.leadUid
       }
   });
@@ -314,6 +315,7 @@ openAddNoteDialog(addNoteText:any){
     panelClass: ['popup-class', 'confirmationmainclass'],
     data:{
       requestType:'createUpdateNotes',
+      source:"Lead",
       header:'Notes',
       leadUid:this.leadUid,
     }
@@ -379,6 +381,22 @@ progressbarDialog(){
 }
 
 
+// openDialogStatusChange(leadData:any){
+//   console.log('openDialogStatusChange',leadData)
+//   const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
+//     width:'100%',
+//     panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+//     disableClose: true,
+//     data:{
+//       requestType:'statusChange',
+//       leadDetails:leadData,
+//     }
+//   });
+//   dialogRef.afterClosed().subscribe((res:any)=>{
+//     console.log('resssssssss',res);
+//   })
+// }
+
 openDialogStatusChange(leadData:any){
   console.log('openDialogStatusChange',leadData)
   const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
@@ -386,7 +404,7 @@ openDialogStatusChange(leadData:any){
     panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
     disableClose: true,
     data:{
-      requestType:'statusChange',
+      requestType:'LeadstatusChange',
       leadDetails:leadData,
     }
   });
@@ -394,6 +412,7 @@ openDialogStatusChange(leadData:any){
     console.log('resssssssss',res);
   })
 }
+
 
 }
 

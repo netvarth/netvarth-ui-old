@@ -3,7 +3,7 @@ import { projectConstantsLocal } from '../../../../../../../../src/app/shared/co
 import { CrmService } from '../../../crm.service';
 
 @Component({
-  selector: 'app-activitylog',
+  selector: 'app-leadlog',
   templateUrl: './activitylog.component.html',
   styleUrls: ['./activitylog.component.css']
 })

@@ -24,8 +24,7 @@
         </button>
         <div class="dropdown-menu">
           <a class="p-3 dropdown-item" (click)="openEditLead(leadDetails,'Update')"><i class="text-info fa fa-edit"></i>&nbsp;&nbsp;<span class="text-dark">Edit Lead</span></a><br><br>
-          <a class="p-3 dropdown-item" (click)="markAsDone(leadUid)"><i class="text-success fa fa-check-square"></i>&nbsp;&nbsp;<span class="text-dark">Mark as done</span></a><br><br>
-          <a class="p-3 dropdown-item" (click)="progressbarDialog()"><i class='fa fa-spinner green-color'></i>&nbsp;&nbsp;<span class="text-dark">Change Progress</span></a><br><br>
+          <!-- <a class="p-3 dropdown-item" (click)="progressbarDialog()"><i class='fa fa-spinner green-color'></i>&nbsp;&nbsp;<span class="text-dark">Change Progress</span></a><br><br> -->
           <a class="p-3 dropdown-item" (click)="openDialogStatusChange(leadDetails)"><i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;&nbsp;<span class="text-dark">Change Status</span></a><br><br>
           <!-- <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Convert to loan</span></a><br><br>
           <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Create Appointment</span></a><br><br>
@@ -60,7 +59,6 @@
                 <span class="details text-dark"><b> Assigned to {{leadDetails.assignee.name}} </b></span><br>
                 <span class="details text-secondary">Manager : {{leadDetails.manager.name}}</span><br>
                 <span class="details text-warning">Priority : {{leadDetails.priority.name}} </span><br>
-                <span class="details text-secondary">Due date : {{leadDetails.dueDate | date:newDateFormat}} </span>
               </div>
             </div>
             <div class="lead-description">
@@ -147,11 +145,14 @@
 
         <div class="row d-lg-flex justify-content-lg-start">
           <div  class="sublead-border height-limit col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mt-2">
-            <app-Leadlog [leadid]="leadkid"></app-Leadlog>
+            <app-tasks [leadid]="leadkid"></app-tasks>
           </div>
         </div>
-        <!-- <div class="sublead-border mt-4">
-          <app-subleads [leadid]="leadUid"></app-subleads>
+
+        <!-- <div class="row d-lg-flex justify-content-lg-start">
+          <div  class="sublead-border height-limit col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mt-2">
+            <app-leadlog [leadid]="leadkid"></app-leadlog>
+          </div>
         </div> -->
        
       </div>

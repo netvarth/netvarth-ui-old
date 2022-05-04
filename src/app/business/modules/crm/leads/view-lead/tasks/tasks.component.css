@@ -1,0 +1,60 @@
+.btn-primary
+{
+    background-color: #1E4079!important;
+    border-color: #1E4079!important;
+}
+.text-primary
+{
+    color: #1E4079!important;
+}
+.rounded-btn
+{
+    border-radius: 15px!important;
+}
+.subtask-border
+{
+    border: 1px solid rgb(240, 233, 233);
+    padding: 10px!important;
+    border-radius: 10px!important;
+    margin:15px 20px !important;
+}
+
+.subtask-table-headings th
+{
+    font-size: 14px!important;
+    color: #1E4079!important;
+}
+
+.subtask-table-data td
+{
+    font-size: 12px!important;
+    color: #888!important;
+    padding-top: 25px!important;
+}
+
+
+
+
+
+::-webkit-scrollbar {
+    width: 0.3em;
+    height: 0.3em
+}
+::-webkit-scrollbar-button {
+    background: #ccc
+}
+::-webkit-scrollbar-track-piece {
+    background: #eee
+}
+::-webkit-scrollbar-thumb {
+    background: #888
+}
+
+
+
+@media (max-width: 767px) {
+    .subtask-border
+    {
+        margin: 0!important;
+    }
+  }

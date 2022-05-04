@@ -40,6 +40,7 @@ export class CrmSelectMemberComponent implements OnInit {
   public lastUpdate:any;
   public currentStatus:any;
   public taskStatusList:any=[];
+  public leadStatusList:any=[];
   public selectedStatusId:any;
   public selectedStatusUID:any;
   public selectText:any;
@@ -58,6 +59,12 @@ export class CrmSelectMemberComponent implements OnInit {
   public taskMasterListData:any;
   public assignTaskMaster:any;
   public newTask:any;
+  leadDescription: any;
+  leadTitle: any;
+  leadProgress: any;
+  handleAssigncustomerSelectText: string;
+  customerErrorMsg: string;
+  assignCustomerDetails: string;
 
 
 
@@ -88,7 +95,7 @@ export class CrmSelectMemberComponent implements OnInit {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         console.log("User is :", user);
         // this.assignMemberDetails= (user.id);
-    if(this.data.requestType==='createtaskSelectMember' || this.data.requestType==='createtaskSelectManager' ){
+    if(this.data.requestType==='createtaskSelectMember' || this.data.requestType==='createtaskSelectManager' || this.data.requestType==='createleadSelectMember' || this.data.requestType==='createleadSelectManager' ){
       this.data.memberList[0].forEach((singleMember:any)=>{
         // console.log('singleMember',singleMember)
         if(singleMember.userType==='PROVIDER'){
@@ -112,6 +119,24 @@ export class CrmSelectMemberComponent implements OnInit {
             }
             else{
               this.assignMemberDetails = this.data.updateSelectTaskManager;
+            }
+          }
+        }
+        }
+        
+      })
+    }
+    if(this.data.requestType==='createleadSelectCustomer'){
+      this.data.memberList[0].forEach((singleMember:any)=>{
+        if(singleMember.userType==='PROVIDER'){
+        this.memberList.push(singleMember)
+        if(this.data.requestType==='createtaskSelectMember'){
+          if(singleMember.id==this.data.updateAssignMemberId){
+            if(this.crmService.taskActivityName==='Update'){
+              this.assignCustomerDetails=singleMember;
+            }
+            else{
+              this.assignCustomerDetails = this.data.updateSelectedMember;
             }
           }
         }
@@ -152,19 +177,33 @@ export class CrmSelectMemberComponent implements OnInit {
       this.showHideTickMarkUpdate=true;
       this.selectedStatusId=  this.statusId;
     }
+    else if(this.data.requestType==='LeadstatusChange'){
+      console.log('LeadstatusChangeeeeeeeee')
+      this.leadDescription= this.data.leadDetails.description;
+      this.leadTitle = this.data.leadDetails.title;
+      this.leadProgress= this.data.leadDetails.progress;
+      this.status= this.data.leadDetails.status.name;
+      this.assigneeName = this.data.leadDetails.assignee.name;
+      this.managerName= this.data.leadDetails.manager.name;
+      this.priorityName= this.data.leadDetails.priority.name;
+      this.lastUpdate = this.data.leadDetails.dueDate;
+      this.currentStatus=this.data.leadDetails.status.name;
+      this.getLeadStatusListData()
+      this.selectedStatusUID= this.data.leadDetails.uid;
+      this.statusId= this.data.leadDetails.status.id
+      console.log('this.statusssssssssss',this.status);
+      console.log('this.statusChange',this.statusChange)
+      this.showHideTickMarkUpdate=true;
+      this.selectedStatusId=  this.statusId;
+    }
     if(this.data.requestType==='uploadFilesDesciption'){
       console.log('uploadFilesDesciption')
       this.allFilesDes.push(this.data.filesDes)
     }
     if(this.data.requestType==='taskMasterList'){
-    //  this.getTaskmaster()
     this.taskMasterListData= this.data.taskMasterFullList[0];
       console.log('TaskMasterList.............',this.taskMasterListData)
     }
-    // console.log('this.assignMemberDetails',this.assignMemberDetails);
-    // console.log('this.memberList',this.memberList)
-    // console.log('this.data.assignMembername',this.data.assignMembername);
-    // console.log('updateSelectedMember',this.data.updateSelectedMember)
   }
   handleMemberSelect(member,selected:string){
     this.handleAssignMemberSelectText=''
@@ -174,6 +213,17 @@ export class CrmSelectMemberComponent implements OnInit {
     this.errorMsg=false
 
   }
+
+
+  handleCustomerSelect(member,selected:string){
+    this.handleAssigncustomerSelectText=''
+    this.handleAssigncustomerSelectText=selected;
+    this.errorMsg=false
+
+  }
+
+
+
   isChecked(memberSelect){
     // console.log('memberselect',memberSelect)
   }
@@ -194,6 +244,28 @@ export class CrmSelectMemberComponent implements OnInit {
     
 
   }
+
+
+
+  saveAssignCustomer(res){
+    console.log("Saved customer details : ",res)
+    if(this.assignCustomerDetails !==''){
+      this.errorMsg=false;
+      this.dialogRef.close(res)
+    }
+    else{
+      if(this.assignCustomerDetails ===''){
+        this.errorMsg=true;
+        this.customerErrorMsg='Please select customer'
+      }
+      
+    }
+    
+
+  }
+
+
+
   getUserImg(user) {
     if (user.profilePicture) {
       const proImage = user.profilePicture;
@@ -235,15 +307,29 @@ saveCreateNote(notesValue:any){
       "note" :this.notesTextarea
     }
       console.log('createNoteData',createNoteData)
-    this.crmService.addNotes(this.data.taskUid,createNoteData).subscribe((response:any)=>{
-      console.log('response',response)
-      setTimeout(() => {
-        this.dialogRef.close(notesValue)
-      }, projectConstants.TIMEOUT_DELAY);
-    },
-    (error)=>{
-      this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
-    })
+    if(this.data.source == "Lead")
+    {
+      this.crmService.addLeadNotes(this.data.leadUid,createNoteData).subscribe((response:any)=>{
+        console.log('response',response)
+        setTimeout(() => {
+          this.dialogRef.close(notesValue)
+        }, projectConstants.TIMEOUT_DELAY);
+      },
+      (error)=>{
+        this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+      })
+    }
+    else{
+      this.crmService.addNotes(this.data.taskUid,createNoteData).subscribe((response:any)=>{
+        console.log('response',response)
+        setTimeout(() => {
+          this.dialogRef.close(notesValue)
+        }, projectConstants.TIMEOUT_DELAY);
+      },
+      (error)=>{
+        this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+      })
+    }
     
   }
   else{
@@ -311,6 +397,20 @@ getTaskStatusListData(){
     this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
   })
 }
+
+getLeadStatusListData()
+{
+  this.crmService.getLeadStatus().subscribe((leadStatus:any)=>{
+    console.log('leadStatus',leadStatus);
+    this.leadStatusList.push(leadStatus);
+    console.log('this.leadStatusList',this.leadStatusList)
+  },
+  (error)=>{
+    this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+  })
+}
+
+
 selectStatus(statusDetails){
   this.showHideTickMark=true;
   console.log('statusDetails',statusDetails)
@@ -319,7 +419,7 @@ selectStatus(statusDetails){
   this.selectText=''
   this.showHideTickMarkUpdate=false;
   if(this.statusId === statusDetails.id){
-    this.selectText='Allredy updated'
+    this.selectText='Already updated'
   }
   else{
     this.selectText=''
@@ -329,7 +429,7 @@ completeTaskStatus(){
   // this.selectText=''
   console.log('this.selectedStatusId',this.selectedStatusId)
   if(this.statusId === this.selectedStatusId){
-    this.selectText='Allredy updated'
+    this.selectText='Already updated'
   }
   else{
     if(this.selectedStatusId != undefined){
@@ -364,7 +464,36 @@ completeTaskStatus(){
   
 
 }
-    getTaskmaster(){
+
+completeLeadStatus(){
+  console.log('this.selectedStatusId',this.selectedStatusId)
+  if(this.statusId === this.selectedStatusId){
+    this.selectText='Alredy updated'
+  }
+  else{
+    if(this.selectedStatusId != undefined){
+      this.crmService.addLeadStatus( this.selectedStatusUID,this.selectedStatusId).subscribe((response)=>{
+        console.log('response',response)
+        setTimeout(() => {
+          this.dialogRef.close( this.status);
+          this.showHideTickMark=false
+        }, projectConstants.TIMEOUT_DELAY);
+      },
+      (error)=>{
+        this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+      })
+    }
+
+  }
+  
+
+}
+
+
+
+
+
+getTaskmaster(){
       this.crmService.getTaskMasterList().subscribe((response)=>{
         console.log('TaskMasterList :',response);
       })

@@ -437,10 +437,10 @@ export class LeadsComponent implements OnInit {
 
   }
   getLeadmaster(){
-    this.crmService.getLeadMasterList().subscribe((response)=>{
-      console.log('LeadMasterList :',response);
-      this.leadMasterList.push(response)
-    })
+    // this.crmService.getLeadMasterList().subscribe((response)=>{
+    //   console.log('LeadMasterList :',response);
+    //   this.leadMasterList.push(response)
+    // })
   }
 
   createLead(createText: any) {
@@ -628,7 +628,7 @@ export class LeadsComponent implements OnInit {
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data:{
-        requestType:'statusChange',
+        requestType:'LeadstatusChange',
         leadDetails:leadData,
       }
     });

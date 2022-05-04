@@ -79,6 +79,37 @@
                 <div style="display: flex;gap: 5px" >
                     <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                         <div class="leadTitle">
+                            <div>Customer</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <input (keyup)="resetErrors()" [(ngModel)]="customer" type="text"
+                            placeholder="Enter Customer Id" class="form-control widthWebKit" formControlName="customer_id" autocomplete="off" /> 
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>    
+                        </div>
+                    </div>
+
+                    <!-- <div  class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                        <div class="leadTitle">
+                            <div>Customer</div>
+                            <div class="astericColor">*</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <div>
+                                <div [(ngModel)]="selectCustomer" class="form-control" style="display: flex;justify-content: space-between;" (click)="selectCustomerDialog(selectCustomer)" >
+                                    <div >{{selectCustomer}}</div>
+                                    <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
+                                </div>
+                            </div>
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>  
+                        </div>                           
+                    </div> -->
+
+
+
+                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                        <div class="leadTitle">
                             <div>Location</div>
                             <div class="astericColor">*</div>
                         </div>
@@ -89,7 +120,7 @@
                             </app-field-error-display>    
                         </div>
                     </div>
-                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                    <!-- <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                         <div class="leadTitle">
                             <div>Area</div>
                         </div>
@@ -99,7 +130,11 @@
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
                             </app-field-error-display>    
                         </div>
-                    </div>
+                    </div> -->
+
+
+                    
+
                 </div>
             </div>
 
@@ -140,10 +175,10 @@
             </div>
 
             
-            <span class="group-head">Lead Date and Other Info</span><br>
+            <span class="group-head">Other Info</span><br>
             <div class="bggrey my-2">
                 <div style="display: flex;gap: 5px;flex-wrap: wrap;" >
-                    <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding">
+                    <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding">
                         <div class="leadTitle">
                             <div>Due Date</div>
                         </div>
@@ -158,9 +193,9 @@
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
                             </app-field-error-display>       
                         </div>
-                    </div>
+                    </div> -->
                 
-                    <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding"  >
+                    <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding"  >
                         <div class="leadTitle">
                             <div>Est Duration</div>
                         </div>
@@ -171,8 +206,6 @@
                             placeholder="Hours" class="form-control widthWebKit" formControlName="leadHrs" autocomplete="off" min="0" max="23"/> 
                             <input id="min" [(ngModel)]="leadDueMin" [value]="leadMin" (keyup)="resetErrors()"  type="number" #leadMin (ngModelChange)="handleLeadEstDuration(leadMin.value)"
                             placeholder="Minutes" class="form-control widthWebKit" formControlName="leadMin" autocomplete="off" min="0" max="59"/> 
-                            <!-- <input id="time" [(ngModel)]="leadDueTime" [value]="leadTime" (keyup)="resetErrors()"  type="time" #leadTime (ngModelChange)="handleLeadEstDuration(leadTime.value)"
-                            placeholder="Enter Est Duration"class="form-control widthWebKit" formControlName="leadTime"autocomplete="off" />   -->
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
                             </app-field-error-display>
                         </div>
@@ -182,7 +215,7 @@
                                 <div (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding" *ngIf="updateBTimefield">
                 <div class="leadTitle">
@@ -244,27 +277,7 @@
                 </div>
     
                 
-                <div style="display: flex;gap: 5px" >
-                    <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding">
-                        <div class="leadTitle">
-                            <div>Target Potential</div>
-                        </div>
-                        <div class="fieldPadding">
-                            <input (keyup)="resetErrors()" type="text" #targetResult (ngModelChange)="handleTargetResult(targetResult.value)"
-                            placeholder="Enter potential"class="form-control widthWebKit"formControlName="targetResult"autocomplete="off" /> 
-                        </div>
-                    </div>
-                                   
-                    <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding">
-                        <div class="leadTitle">
-                            <div>Business Potential</div>
-                        </div>
-                        <div class="fieldPadding">
-                            <input (keyup)="resetErrors()" type="text" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)"
-                                placeholder="Enter(&#8377;)"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
-                        </div>
-                    </div>               
-                </div>
+                
             </div>
 
 

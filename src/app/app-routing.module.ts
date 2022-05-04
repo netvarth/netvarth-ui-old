@@ -38,6 +38,7 @@ const routes: Routes = [
     { path: ':id/department/:deptId', loadChildren: () => import('./shared/components/department-service-page/department-service-page.module').then(m => m.DepartmentServicePageModule) },
     { path: 'provideruser/:id', loadChildren: () => import('./shared/components/business-provideruser-page/business-provideruser-page.module').then(m => m.BusinessprovideruserPageModule) },
     { path: 'provider/viewtask/:id', loadChildren: () => import('./business/modules/crm/tasks/view-task/view-task.module').then(m => m.ViewTaskModule) },
+    { path: 'provider/viewlead/:id', loadChildren: () => import('./business/modules/crm/leads/view-lead/view-lead.module').then(m => m.ViewLeadModule) },
     {path:'task/create-subtask/:taskid',loadChildren:()=>import ('./business/modules/crm/tasks/create-task/create-task.module').then(m=>m.CreateTaskModule)}
 
 ];

@@ -1,4 +1,4 @@
-<section *ngIf="data.requestType==='createtaskSelectMember'" style="padding: 20px;">
+<section *ngIf="data.requestType==='createtaskSelectMember' || data.requestType==='createleadSelectMember'" style="padding: 20px;">
     <!-- <form [formGroup]="assignMemberForm"> -->
         <!--header start-->
         <div class="header">
@@ -67,7 +67,7 @@
 
 </section>
 
-<section *ngIf="data.requestType==='createtaskSelectManager'" style="padding: 20px;">
+<section *ngIf="data.requestType==='createtaskSelectManager' || data.requestType==='createleadSelectManager'" style="padding: 20px;">
     <!-- <form [formGroup]="assignMemberForm"> -->
         <!--header start-->
         <div class="header">
@@ -135,6 +135,82 @@
     
 
 </section>
+
+
+
+
+
+
+<section *ngIf="data.requestType==='createleadSelectCustomer'" style="padding: 20px;">
+        <div class="header">
+            <div class="headerText" >{{data.header | capitalizeFirst}}</div>
+            <div mat-dialog-close class="modal_close" tabindex="-1" style=" cursor: pointer;">
+                <mat-icon>clear</mat-icon>
+            </div>
+        </div>
+        <mat-dialog-content style="max-height: 75vh!important" >
+            <div >
+                
+        <div>
+            <div>
+                <mat-radio-group
+              
+                [(ngModel)]="assignCustomerDetails">
+               <div>
+                <mat-radio-button class="example-radio-button" *ngFor="let assignCustomer of memberList" [value]="assignCustomer"  (change)="handleCustomerSelect(assignCustomer,'Selected')">
+                  <div class="allCustomer">
+                        <div>
+                          <img class="img" [src]="getUserImg(assignCustomer)" />
+                        </div>
+                        <!-- <div>
+                            {{assignMember.profilePicture | json}}
+                        </div> -->
+                        <div class="members">
+                        {{assignCustomer.firstName}}{{assignCustomer.lastName}}
+                       </div>
+                       <div class="members">
+                        +{{assignCustomer.countryCode}}{{assignCustomer.mobileNo}}
+                       </div>
+                       <div class="members">
+                        {{assignCustomer.locationName}}
+                       </div>
+                  </div>
+                  </mat-radio-button>
+               </div>
+              </mat-radio-group>
+            </div>
+            <!----radio btn end-->
+        </div>
+            </div>
+        </mat-dialog-content>
+        <div *ngIf="errorMsg" class="errorMsg">
+            <div>{{customerErrorMsg}}</div>
+        </div>
+        <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;">
+             <!---cancel save btn start-->
+             <div style="text-align: center;">
+                <ng-container >
+                    <div class=" mgn-bt-20 mgn-up-10">
+                            <button type="button" class="btn btn-primary font-weight-bold cancelBtn" 
+                            mat-dialog-close >Cancel</button>
+                        <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="saveAssignCustomer(assignCustomerDetails)"
+                            >Assign</button>
+                    </div>
+                </ng-container>
+            </div>
+    
+            <!---cancel save btn end-->
+          </div>
+    <!-- </form> -->
+    
+
+</section>
+
+
+
+
+
+
 
 <section *ngIf="data.requestType==='createUpdateNotes'" style="padding: 20px;">
     <div class="header" style="justify-content: end !important;">
@@ -266,6 +342,21 @@
 
     </mat-dialog-content>
 </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <section *ngIf="data.requestType==='statusChange'" style="padding: 20px;">
     <div class="header" >
         <div class="headerText" style="color: #22242C !important;font-size: 18px;">Change Status</div>
@@ -363,6 +454,127 @@
     <!----external status end-->
 
 </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Lead Status Change  -->
+
+
+
+
+
+
+<section *ngIf="data.requestType==='LeadstatusChange'" style="padding: 20px;">
+    <div class="header" >
+        <div class="headerText" style="color: #22242C !important;font-size: 18px;">Change Status</div>
+        <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+            <mat-icon>clear</mat-icon>
+        </div>
+    </div>
+    <!---task des start-->
+    <div>
+        <div class="taskDes">{{leadDescription}}</div>
+    </div>
+    <!---task des end-->
+    <!--task name start-->
+    <div class="titleTask">
+        <div>{{leadTitle}}</div>
+    </div>
+    <!---task name end-->
+    <!---spinner start-->
+    <div style="margin-top: 10px;display: flex;gap:10px">
+        <div>
+            <circle-progress class="circle__progress" [outerStrokeWidth]="10"  [radius]="40" [percent]="taskProgress" [animation]="true"
+                              [animationDuration]="1000" [startFromZero]="true" [showInnerStroke]="true"
+                              [titleFontSize]="'10'" [titleFontWeight]="'900'"  [unitsFontSize]="'10'"
+                              [unitsFontWeight]="'700'" [subtitle]="status" [subtitleFontSize]="'7'"
+                              [lazy]="false" ></circle-progress>
+        </div>
+        <div>
+            <div style="display: flex;align-items: center;gap: 5px;">
+                <div class="assignee">Asignee :</div>
+                <div class="assignee">{{assigneeName}}</div>
+            </div>
+            <div style="display: flex;align-items: center;gap: 11px;">
+                <div class="manager">Manager :</div>
+                <div class="manager">{{managerName}}</div>
+            </div>
+            <div style="display: flex;align-items: center;gap: 27px;">
+                <div class="prioprity">Priority :</div>
+                <div class="prioprity">{{priorityName}}</div>
+            </div>
+            <!-- <div style="display: flex;align-items: center;gap: 5px;">
+                <div class="lastUpdate">Last updated on</div>
+                <div class="lastUpdate">{{lastUpdate}}</div>
+            </div> -->
+        </div>
+    </div>
+    <!---spinner end-->
+    <!----current status start-->
+    <div style="display: flex;justify-content: flex-start;">
+        <!-- <div>
+            <mat-icon>clear</mat-icon>
+        </div> -->
+        <div class="currentStatus">
+            Current status : {{currentStatus}}
+        </div>
+
+    </div>
+    <!---coming statua end-->
+    <!-----external status s\tart-->
+    <div class="extStatus">
+        <!-- <div class="extStatus1">External status</div> -->
+        <div class="extStatus2">External Status is public and visible for your {{customer_label}}</div>
+        <!--status start-->
+       <div class="statusList">
+        <!-- [ngStyle]="{'background-color':status.id === data.taskDetails.status.id ? '#CACACA' : '#FFFFFF' }" -->
+        <div *ngFor="let status of leadStatusList[0];let index=i" class="singleStatus" (click)="selectStatus(status)">
+            <div class="statusName">{{status.name}}</div>
+            <div *ngIf="data.leadDetails.status.name">
+                <div *ngIf="status.id === data.leadDetails.status.id" > <i *ngIf="showHideTickMarkUpdate" class="fa fa-check" aria-hidden="true"></i></div>
+            </div>
+           <div  *ngIf="status.id === selectedStatusId"> <i *ngIf="showHideTickMark" class="fa fa-check" aria-hidden="true" ></i></div>
+        </div>
+       </div>
+        <!---status end-->
+        <div style="color: #f24949 !important;margin-top: 10px;">
+            {{selectText}}
+        </div>
+         <!---cancel save btn start-->
+         <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;padding: 0px !important;">
+            <!---cancel save btn start-->
+            <div style="text-align: center;">
+               <ng-container >
+                   <div >
+                           <button type="button" class="btn btn-primary font-weight-bold cancelBtn" 
+                           mat-dialog-close >No</button>
+                       <button type="button" class="btn btn-primary font-weight-bold confirmBtn"(click)="completeLeadStatus()"
+                           >Yes</button>
+                   </div>
+               </ng-container>
+           </div>
+   
+           <!---cancel save btn end-->
+         </div>
+    </div>
+
+    <!----external status end-->
+
+</section>
+
+
+
+
 <section *ngIf="data.requestType==='uploadFilesDesciption'" style="padding: 20px;" class="uploadFile">
     <div class="header" >
         <div class="headerText" style="color: #22242C !important;font-size: 14px;">File details</div>

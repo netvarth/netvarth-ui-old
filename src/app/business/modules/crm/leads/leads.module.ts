@@ -19,6 +19,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { NgCircleProgressModule } from "ng-circle-progress";
 const routes: Routes = [
   { path: '', component: LeadsComponent },
+  {path:'viewlead/:id',loadChildren:()=>import('./view-lead/view-lead.module').then((m)=>m.ViewLeadModule)},
   {path:'create-lead',loadChildren:()=>import('./create-lead/create-lead.module').then((m)=>m.CreateLeadModule)},
 ];
 @NgModule({
