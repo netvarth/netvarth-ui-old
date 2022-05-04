@@ -319,7 +319,7 @@ export class TasksComponent implements OnInit {
               data => {
                 this.totalTaskList = data;
                 console.log("Task List :",this.totalTaskList)
-                this.totalTaskList = this.totalTaskList.filter(obj => !obj.parentTaskId);
+                this.totalTaskList = this.totalTaskList.filter(obj => !obj.originId);
                 this.loadComplete = true;
               },
               error => {
@@ -401,7 +401,7 @@ export class TasksComponent implements OnInit {
               data => {
                 console.log('data',data)
                 this.totalInprogressList = data;
-                this.totalInprogressList = this.totalInprogressList.filter(obj => !obj.parentTaskId);
+                this.totalInprogressList = this.totalInprogressList.filter(obj => !obj.originId);
                 this.loadComplete1 = true;
               },
               error => {
@@ -452,7 +452,7 @@ export class TasksComponent implements OnInit {
             .subscribe(
               data => {
                 this.totalCompletedList = data;
-                this.totalCompletedList = this.totalCompletedList.filter(obj => !obj.parentTaskId);
+                this.totalCompletedList = this.totalCompletedList.filter(obj => !obj.originId);
                 this.loadComplete2 = true;
               },
               error => {
