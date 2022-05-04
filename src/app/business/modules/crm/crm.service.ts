@@ -118,7 +118,7 @@ export class CrmService {
     }
 
     getInprogressTaskCount(filter) {
-      const url = 'provider/task/provider/count?status-eq=3';
+      const url = 'provider/task/provider/count?status-eq=3&&isSubTask-eq=false';
       return this.servicemeta.httpGet(url, null, filter);
     }
     getInprogressLeadCount(filter) {
