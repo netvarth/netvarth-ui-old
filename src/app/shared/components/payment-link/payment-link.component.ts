@@ -425,8 +425,9 @@ export class PaymentLinkComponent implements OnInit {
     if (status) {
       this.paidStatus = 'true';
       if (response) {
-      this.order_id = response.ORDERID;
-      this.payment_id = response.TXNID;
+
+      this.order_id = response.orderId;
+      this.payment_id = response.paymentId;
       }
       this.loadingPaytm = false;
       this.cdRef.detectChanges();

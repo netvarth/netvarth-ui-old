@@ -18,7 +18,7 @@ export class PaytmService {
         const paymentModesHidden=this.paymentModes.filter(obj=>obj!==pData.paymentMode);
         const paytm_payload = {
 
-            "paymentId": pData.orderId,
+            "paymentId": pData.txnid,
             "orderId": pData.orderId,
             "siganature": response.signature
 
