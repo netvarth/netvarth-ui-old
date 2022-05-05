@@ -121,8 +121,8 @@ fileInfos: Observable<any>;
   saveFile()
   {
     const _this = this;
-    console.log("The data is : ",this.data)
-    if(this.data.source = "Lead")
+    console.log("The data is : ",this.data.source)
+    if(this.data.source == "Lead")
     {
       var id = this.data.leaduid;
       console.log("This is Lead id : ",id)
@@ -184,8 +184,8 @@ fileInfos: Observable<any>;
 
   sendWLAttachment(Uid, dataToSend) {
     const _this = this;
-    console.log("Data Testing",this.data)
-    if(this.data.source == "Task")
+    console.log("Data Testing",this.data.source)
+    if(this.data.source != "Lead")
     {
     return new Promise(function (resolve, reject) {
         _this.shared_services.addfiletotask(Uid, dataToSend).subscribe(
@@ -194,7 +194,7 @@ fileInfos: Observable<any>;
               console.log("Sending Attachment Success")
           }, (error) => {
               reject(error);
-              console.log("Sending Attachment Fail")
+              console.log("Sending Task Attachment Fail")
               this.snackbarService.openSnackBar('Please select atleast one file to upload', { 'panelClass': 'snackbarerror' });
           });
       
@@ -210,7 +210,7 @@ fileInfos: Observable<any>;
             console.log("Sending Attachment Success")
         }, (error) => {
             reject(error);
-            console.log("Sending Attachment Fail")
+            console.log("Sending Lead Attachment Fail")
             this.snackbarService.openSnackBar('Please select atleast one file to upload', { 'panelClass': 'snackbarerror' });
         });
     

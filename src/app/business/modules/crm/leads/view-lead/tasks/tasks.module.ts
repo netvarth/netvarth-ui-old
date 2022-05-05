@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [
   { path: '', component: TasksComponent },
-  {path:'create-task/:id',loadChildren:()=>import('../../../tasks/create-task/create-task.module').then((m)=>m.CreateTaskModule)},
+  // {path:'create-task/:id',loadChildren:()=>import('../../../tasks/create-task/create-task.module').then((m)=>m.CreateTaskModule)},
 
 ];
 

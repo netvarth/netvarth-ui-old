@@ -169,6 +169,10 @@ input[type="number"],input[type="time"]{
   input[type="number"],input[type="time"]{
     width: 80px!important;
   }
+  .inputwithImg
+  {
+    width: 100%!important;
+  }
 }
 /* input[type="datetime-local"]:before {
   content: attr(placeholder) !important;

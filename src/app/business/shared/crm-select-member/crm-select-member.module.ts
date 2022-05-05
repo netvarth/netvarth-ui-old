@@ -13,7 +13,7 @@ import { MatRadioModule } from "@angular/material/radio";
 import {  ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from "@angular/material/icon";
 import { NgCircleProgressModule } from "ng-circle-progress";
-
+import { FilterPipe } from './filter.pipe';
 
 const routes: Routes = [
   { path: '', component: CrmSelectMemberComponent }
@@ -21,7 +21,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    CrmSelectMemberComponent
+    CrmSelectMemberComponent,
+    FilterPipe
   ],
   exports: [CrmSelectMemberComponent],
   imports: [

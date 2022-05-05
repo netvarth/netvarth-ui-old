@@ -17,6 +17,8 @@ import  {CrmSelectMemberComponent} from '../../../../shared/crm-select-member/cr
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { ProviderServices } from '../../../../../../../src/app/business/services/provider-services.service';
+// import { DateTimeProcessor } from '../../../../../../../src/app/shared/services/datetime-processor.service';
 // import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
 
 @Component({
@@ -35,9 +37,26 @@ export class CreateLeadComponent implements OnInit {
   public maxDate:any;
   public ddate:any;
   public api_loading:any= true;
-
+  showCustomers = false;
+  filter = {
+    first_name: '',
+    jaldeeid: '',
+    last_name: '',
+    date: null,
+    mobile: '',
+    countrycode:'',
+    email: '',
+    page_count: projectConstants.PERPAGING_LIMIT,
+    page: 1
+  };
+  pagination: any = {
+    startpageval: 1,
+    totalCnt: 0,
+    perPage: this.filter.page_count
+  };
   //form variable start
   public createLeadForm:any;
+  filteredCustomers:any;
   public leadError:null;
   public selectMember:any;
   public categoryListData:any=[];
@@ -67,6 +86,7 @@ export class CreateLeadComponent implements OnInit {
   public dayGapBtwDate:any;
   public hour:any;
   public minute:any;
+  customer_count: any = 0;
   //update variable;
   public updateValue:any;
   public updateTitleLead:any;
@@ -90,16 +110,21 @@ export class CreateLeadComponent implements OnInit {
   public estTime:any;
   estDurationWithTime: any;
   customer: any;
+  customers: any = [];
+  loadComplete: boolean;
+  selectLeadCustomerId: any;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
+    private provider_services: ProviderServices,
      private crmService: CrmService,
      public fed_service: FormMessageDisplayService,
      private createLeadFB: FormBuilder,
      private dialog: MatDialog, private snackbarService: SnackbarService,
      private datePipe:DatePipe,
      private _Activatedroute:ActivatedRoute,
-     private groupService:GroupStorageService
+     private groupService:GroupStorageService,
+    //  private dateTimeProcessor: DateTimeProcessor
 
      ) { 
       //this.router.navigate(['provider', 'lead','create-lead'])
@@ -174,7 +199,8 @@ export class CreateLeadComponent implements OnInit {
       this.selectLeadManger= this.updateValue.manager.name;
       this.updateManagerId= this.updateValue.manager.id
       this.updateUserType= "PROVIDER";
-      this.createLeadForm.controls.customer_id.setValue(this.updateValue.customer.id);
+      this.selectLeadCustomer = this.updateValue.customer.name;
+      this.selectLeadCustomerId = this.updateValue.customer.id;
       }
       else{
         this.router.navigate(['provider', 'lead']);
@@ -214,7 +240,7 @@ export class CreateLeadComponent implements OnInit {
         const estDurationHour=this.datePipe.transform(this.estDurationWithDay,'h')
         const estDurationMinurte= this.datePipe.transform(this.estDurationWithDay,'mm')
         this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinurte };
-        this.customer = { "id" :  this.createLeadForm.controls.customer_id},
+        this.customer = { "id" :  this.selectLeadCustomerId},
         console.log('this.estTime',this.estTime)
         console.log('new Date()',new Date())
         const leadMaster= this.crmService.leadMasterToCreateServiceData;
@@ -240,7 +266,7 @@ export class CreateLeadComponent implements OnInit {
         const estDurationHour=this.datePipe.transform(this.estDurationWithDay,'h')
         const estDurationMinurte= this.datePipe.transform(this.estDurationWithDay,'mm')
         this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinurte };
-        this.customer = { "id" :  this.createLeadForm.controls.customer_id};
+        this.customer = { "id" :  this.selectLeadCustomerId};
         console.log('this.estTime',this.estTime)
         console.log('new Date()',new Date())
     }
@@ -250,6 +276,7 @@ export class CreateLeadComponent implements OnInit {
     this.getLeadStatusListData()
     this.getLeadPriorityListData()
     this.getLocation()
+    this.getCustomersList()
     // this.getLeadmaster()
   }
   getLeadmaster(){
@@ -385,6 +412,41 @@ export class CreateLeadComponent implements OnInit {
     }
   })
   }
+
+
+
+
+
+
+
+
+  selectCustomerDialog(handleSelectManager:any){
+    const dialogRef  = this.dialog.open(CrmSelectMemberComponent, {
+      width: '100%',
+      panelClass: ['popup-class', 'confirmationmainclass'],
+      data:{
+        requestType:'createleadSelectCustomer',
+        header:'Select Customer',
+        memberList: this.customers,
+        assignMembername:handleSelectManager,
+        updateSelectLeadManager:this.updateSelectLeadMangerDetailsToDialog,
+        updateManagerId:this.updateManagerId,
+      }
+  })
+  dialogRef.afterClosed().subscribe((res:any)=>{
+    console.log('afterSelectPopupValue',res)
+    if(res===''){
+      this.selectLeadCustomer = this.updateValue.manager.name;//'Select lead manager'
+    }
+    else{
+    this.updateSelectLeadMangerDetailsToDialog=res;
+    this.selectLeadCustomer=((res.firstName + res.lastName));
+    this.selectLeadCustomerId= res.id;
+    this.updateManagerId=this.selectLeadMangerId;
+    }
+  })
+  }
+
   
   selectMemberDialog(handleselectMember:any){
     // console.log('handleselectMember',handleselectMember)
@@ -444,6 +506,115 @@ export class CreateLeadComponent implements OnInit {
   }
   handleLeadLocation(leadLocation){
     // console.log(leadLocation)
+  }
+
+  getCustomersListCount(filter) {
+    return new Promise((resolve, reject) => {
+      this.provider_services.getProviderCustomersCount(filter)
+        .subscribe(
+          data => {
+            this.pagination.totalCnt = data;
+            console.log("Customers Count : ",this.pagination.totalCnt)
+            this.customer_count = this.pagination.totalCnt;
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+  }
+
+
+
+  getCustomersList(from_oninit = true) {
+    this.apiloading = true;
+    this.customers = [];
+    let filter = this.setFilterForApi();
+    this.getCustomersListCount(filter)
+      .then(
+        result => {
+          if (from_oninit) { this.customer_count = result; }
+          // if (!this.showCustomers) {
+          //   filter = this.setPaginationFilter(filter);
+          // }
+          this.provider_services.getProviderCustomers(filter)
+            .subscribe(
+              data => {
+                this.customers = data;
+                console.log("Customers :",this.customers)
+                this.apiloading = false;
+                this.loadComplete = true;
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.apiloading = false;
+                this.loadComplete = true;
+              }
+            );
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+
+  setPaginationFilter(api_filter) {
+    // if (this.customer_count <= 10) {
+    //   this.pagination.startpageval = 1;
+    // }
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
+  }
+
+  setFilterForApi() {
+    const api_filter = {};
+    if (this.filter.first_name !== '') {
+      api_filter['firstName-eq'] = this.filter.first_name;
+    }
+    if (this.filter.jaldeeid !== '') {
+      api_filter['or=jaldeeId-eq'] = this.filter.jaldeeid + ',Mrid-eq=' + this.filter.jaldeeid;
+    }
+    if (this.filter.last_name !== '') {
+      api_filter['lastName-eq'] = this.filter.last_name;
+    }
+    // if (this.filter.date != null) {
+    //   api_filter['dob-eq'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.date);
+    // }
+    // if (this.filter.email !== '') {
+    //   api_filter['email-eq'] = this.filter.email;
+    // }
+    // if (this.filter.mobile !== '') {
+    //   const pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
+    //   const mval = pattern.test(this.filter.mobile);
+    //   if (mval) {
+    //     api_filter['phoneNo-eq'] = this.filter.mobile;
+    //   } else {
+    //     this.filter.mobile = '';
+    //   }
+    // }
+    // if(this.filter.countrycode !== ''){
+    //   api_filter['countryCode-eq'] = this.filter.countrycode;
+    // }
+    return api_filter;
+  }
+
+
+
+
+
+
+
+
+
+
+
+  
+  handleCustomer(leadCustomer){
+    console.log("leadCustomer",leadCustomer)
+    this.filter.first_name=leadCustomer;
+    this.getCustomersList()
 
   }
   handleLeadStatus(leadStatus){
@@ -482,18 +653,6 @@ export class CreateLeadComponent implements OnInit {
     
   }
   handleLeadEstDuration(estDuration:any){
-    // const time= this.datePipe.transform(new Date().getTime(),'HH');
-    // const timeMInute= this.datePipe.transform(new Date().getTime(),'mm');
-    // // console.log('time',time)
-    // this.hour= time;
-    // this.minute=timeMInute
-    // // this.leadDueTime=this.datePipe.transform(estDuration,'d:h:mm')
-    
-    // console.log('estDurationb',estDuration)
-    // if(estDuration<='24:00'){
-    //   // console.log('...............gggg')
-    //   this.transform(estDuration)
-    // }
     console.log("entered")
     this.estDurationWithDay=this.leadDueDays;
     const estDurationDay=this.estDurationWithDay
@@ -573,7 +732,7 @@ export class CreateLeadComponent implements OnInit {
         "location" : { "id" : this.updteLocationId},
         "assignee":{"id":this.updateMemberId },
         "manager":{"id":this.updateManagerId},
-        "customer" : {"id":this.createLeadForm.controls.customer_id.value}
+        "customer" : {"id":this.selectLeadCustomerId}
    
       }
       console.log('updateLeadData',updateLeadData)
@@ -615,7 +774,7 @@ export class CreateLeadComponent implements OnInit {
       // "locationArea":this.areaName,
       "assignee":{"id":this.assigneeId},
       "manager":{"id":this.selectLeadMangerId},
-      "customer" : {"id" :  this.createLeadForm.controls.customer_id.value}
+      "customer" : {"id" :  this.selectLeadCustomerId}
     }
     console.log('createLeadData',createLeadData)
     console.log('this.userType',this.userType)

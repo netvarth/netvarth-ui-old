@@ -152,13 +152,32 @@ export class CrmService {
 
 
     getCompletedLead(filter = {}) {
-      const url = 'provider/lead?status-eq=5';
+      const url = 'provider/lead?status-eq=10';
       return this.servicemeta.httpGet(url, null, filter);
     }
     getCompletedLeadCount(filter) {
-      const url = 'provider/lead/count?status-eq=5';
+      const url = 'provider/lead/count?status-eq=10';
       return this.servicemeta.httpGet(url, null, filter);
     }
+
+    getFailedLead(filter = {}) {
+      const url = 'provider/lead?status-eq=9';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+    getFailedLeadCount(filter) {
+      const url = 'provider/lead/count?status-eq=9';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+
+    getTransferredLead(filter = {}) {
+      const url = 'provider/lead?status-eq=11';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+    getTransferredLeadCount(filter) {
+      const url = 'provider/lead/count?status-eq=11';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+
     getDelayedLead(filter = {}) {
       const url = 'provider/lead?status-eq=4';
       return this.servicemeta.httpGet(url, null, filter);

@@ -139,6 +139,11 @@ export class LeadsComponent implements OnInit {
   loadComplete3 = false;
   public leadMasterList:any=[];
   public arr:any;
+  FailedCount: any;
+  totalFailedList: any;
+  TransferredCount: any;
+  totalTransferredList: any;
+  loadComplete4: boolean;
   constructor(
     private locationobj: Location,
     private groupService: GroupStorageService,
@@ -168,13 +173,8 @@ export class LeadsComponent implements OnInit {
     this.getInprogressLead();
     this.getCompletedLead();
     this.getDelayedLead();
-    
-    // this.getInprogressLeadCount();
-    // this.getCompletedLeadCount();
-    // this.getDelayedLead();
-   
-    
-    // this.doSearch();
+    this.getFailedLead();
+    this.getTransferredLead();
     this.getLeadmaster()
   }
   getTotalLead(from_oninit = true) {
@@ -280,6 +280,14 @@ export class LeadsComponent implements OnInit {
     this.filter.page = pg;
     this.getInprogressLead();
   }
+
+
+  handle_pageclick_Transferred(pg) {
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getTransferredLead();
+  }
+
   getCompletedLead(from_oninit = true) {
     let filter = this.setFilterForApi();
     this.getCompletedLeadCount(filter)
@@ -320,16 +328,126 @@ export class LeadsComponent implements OnInit {
         );
     });
   }
+
+
+
+
+  getFailedLead(from_oninit = true) {
+    let filter = this.setFilterForApi();
+    this.getFailedLeadCount(filter)
+      .then(
+        result => {
+          if (from_oninit) { this.FailedCount = result; }
+          filter = this.setPaginationFailedFilter(filter);
+          console.log("Failed List data 1")
+          this.crmService.getFailedLead(filter)
+            .subscribe(
+              data => {
+                this.totalFailedList = data;
+                this.loadComplete3 = true;
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.loadComplete3 = true;
+             
+              }
+            );
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getFailedLeadCount(filter) {
+    return new Promise((resolve, reject) => {
+      this.crmService.getFailedLeadCount(filter)
+        .subscribe(
+          data => {
+            this.pagination.totalCnt = data;
+            this.FailedCount = this.pagination.totalCnt;
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+  }
+
   setPaginationCompletedFilter(api_filter) {
     api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
     api_filter['count'] = this.filter.page_count;
     return api_filter;
   }
+
+
+  getTransferredLead(from_oninit = true) {
+    let filter = this.setFilterForApi();
+    this.getTransferredLeadCount(filter)
+      .then(
+        result => {
+          if (from_oninit) { this.TransferredCount = result; }
+          filter = this.setPaginationTransferredFilter(filter);
+          console.log("Transferred List data 1")
+          this.crmService.getTransferredLead(filter)
+            .subscribe(
+              data => {
+                this.totalTransferredList = data;
+                this.loadComplete4 = true;
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.loadComplete4 = true;
+             
+              }
+            );
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getTransferredLeadCount(filter) {
+    return new Promise((resolve, reject) => {
+      this.crmService.getTransferredLeadCount(filter)
+        .subscribe(
+          data => {
+            this.pagination.totalCnt = data;
+            this.TransferredCount = this.pagination.totalCnt;
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+  }
+
+  setPaginationTransferredFilter(api_filter) {
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
+  }
+
+  setPaginationFailedFilter(api_filter) {
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
+  }
+
   handle_pageclick_completed(pg) {
     this.pagination.startpageval = pg;
     this.filter.page = pg;
     this.getCompletedLead();
   }
+
+  handle_pageclick_failed(pg) {
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getFailedLead();
+  }
+
+
   getDelayedLead(from_oninit = true) {
     let filter = this.setFilterForApi();
     this.getDelayedLeadCount(filter)
@@ -424,8 +542,11 @@ export class LeadsComponent implements OnInit {
         break;
       }
       case 4: {
-        this.getDelayedLead();
-
+        this.getFailedLead();
+        break;
+      }
+      case 5: {
+        this.getTransferredLead();
         break;
       }
     }
@@ -585,7 +706,7 @@ export class LeadsComponent implements OnInit {
     })
   }
   getCategoryListData(){
-    this.crmService.getCategoryList().subscribe((categoryList:any)=>{
+    this.crmService.getLeadCategoryList().subscribe((categoryList:any)=>{
       this.categoryListData.push(categoryList)
     },
     (error:any)=>{
@@ -636,20 +757,19 @@ export class LeadsComponent implements OnInit {
       console.log('resssssssss',res);
       // this.getCompletedLead();
       if(res==='In Progress'){
-        this.setTabSelection(2);
-        // this.inprogressCount=this.inprogressCount+1
-       
-      
+        this.setTabSelection(2);      
       }
-      else if(res==='Completed'){
+      else if(res==='Success'){
         this.setTabSelection(3);
-        // this.tabChange(2)
-        // this.completedCount=this.completedCount+1
+      }
+      else if(res==='Failed'){
+        this.setTabSelection(4);
+      }
+      else if(res==='Transferred'){
+        this.setTabSelection(5);
       }
       else{
-        // this.tabChange(0)
         this.setTabSelection(1);
-        // this.totalCount= this.totalCount+1;
       }
       
     })

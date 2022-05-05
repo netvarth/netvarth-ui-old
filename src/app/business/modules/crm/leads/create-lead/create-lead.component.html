@@ -77,17 +77,7 @@
                 </div>
     
                 <div style="display: flex;gap: 5px" >
-                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                        <div class="leadTitle">
-                            <div>Customer</div>
-                        </div>
-                        <div class="fieldPadding">
-                            <input (keyup)="resetErrors()" type="text"
-                            placeholder="Enter Customer Id" class="form-control widthWebKit" formControlName="customer_id" autocomplete="off" /> 
-                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                            </app-field-error-display>    
-                        </div>
-                    </div>
+                    
 
                     <!-- <div  class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                         <div class="leadTitle">
@@ -172,6 +162,39 @@
                         </app-field-error-display>
                     </div>                                     
                 </div>
+            </div>
+
+
+            <span class="group-head">Customer Info</span><br>
+            <div class="bggrey my-2">
+                <!-- <div>
+                    <div class="leadTitle">
+                        <div>Customer</div>
+                    </div>
+                    <div class="fieldPadding">
+                        <input (keyup)="resetErrors()" type="text"
+                        placeholder="Enter Customer Id" class="form-control widthWebKit" formControlName="customer_id" autocomplete="off" #customer (ngModelChange)="handleCustomer(customer.value)"/> 
+                        <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                        </app-field-error-display>    
+                    </div>
+                </div> -->
+                <div>
+                        <div class="leadTitle">
+                            <div>Customer</div>
+                            <div class="astericColor">*</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <div>
+                                <div [formControlName]="selectLeadCustomer" class="form-control" style="display: flex;justify-content: space-between;" (click)="selectCustomerDialog(selectLeadCustomer)" >
+                                    <div >{{selectLeadCustomer}}</div>
+                                    <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
+                                </div>
+                            </div>
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>  
+                        </div>                           
+                    </div>
+                
             </div>
 
             

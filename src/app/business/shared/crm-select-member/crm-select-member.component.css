@@ -47,10 +47,10 @@
     font-size: 12px;
     font-weight: 500;
   }
-  ::ng-deep .mat-radio-outer-circle{
+  /* ::ng-deep .mat-radio-outer-circle{ */
       /* height: 15px !important;
       width: 15px !important; */
-  }
+  /* } */
   .members{
     font-size: 12px;
     color: #434343;
@@ -142,9 +142,9 @@ textarea {
   box-shadow: none !important;
   /* padding: 0px !important; */
 }
-::ng-deep .mat-dialog-content{
+/* ::ng-deep .mat-dialog-content{ */
   /* max-height: fit-content */
-}
+/* } */
 /* textarea .form-control{
   width: 320px !important;
 } */
@@ -214,7 +214,7 @@ padding: 3px;
     background: #FFFFFF;
     box-shadow: 1.05788px 0.391416px 5.28941px rgb(96 95 95 / 25%);
     border-radius: 5.46305px;
-    width: 9rem;
+    width: 8rem;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -226,9 +226,9 @@ padding: 3px;
 /* .singleStatus:focus{
   outline: none;
 } */
-.singleStatus:active{
+/* .singleStatus:active{ */
   /* border: 2px solid #FF0000 !important; */
-}
+/* } */
 .singleStatus:hover{
   background: #F5F5F5 !important;
 }
@@ -257,9 +257,9 @@ padding: 3px;
   gap: 10px;
   align-items: center;
 }
-.uploadFile{
+/* .uploadFile{ */
   /* width: 31rem; */
-}
+/* } */
 .imageIcon{
   width: 25px;
 }

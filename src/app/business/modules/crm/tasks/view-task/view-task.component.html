@@ -67,7 +67,8 @@
               <span class="details text-dark"><b> Assigned to {{taskDetails.assignee.name}} </b></span><br>
               <span class="details text-secondary">Manager : {{taskDetails.manager.name}}</span><br>
               <span class="details text-warning">Priority : {{taskDetails.priority.name}} </span><br>
-              <span class="details text-secondary">Due date : {{taskDetails.dueDate | date:newDateFormat}} </span>
+              <span class="details text-secondary">Due date : {{taskDetails.dueDate | date:newDateFormat}} </span><br>
+              <span class="details text-dark" *ngIf="taskDetails.actualResult"><b>Actual Result : <span class="text-success">{{taskDetails.actualResult}}</span> </b></span>
             </div>
           </div>
           <!-- <div class="task-description">

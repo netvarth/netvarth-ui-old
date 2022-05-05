@@ -1366,6 +1366,33 @@ svg {
     width: 100px !important;
 }
 
+
+
+.Unassigned
+  {
+    color: #0000FF!important;
+  }
+  .Success
+  {
+    color:#008000!important;
+  }
+  .Progress
+  {
+    color:#FCD445!important;
+  }
+  .Assigned
+  {
+    color:#f594f5!important;
+  }
+  .Failed
+  {
+    color: rgb(223, 71, 71)!important;
+  }
+  .Transferred
+  {
+    color:#4D4B4B!important;
+  }
+
 .progress-circle span {
     font-size: 0.6rem;
     color: #8b8b8b;
@@ -1384,6 +1411,9 @@ svg {
     z-index: 1;
 }
 
+span.tab-text.ng-star-inserted {
+    padding: 0 10px!important;
+}
 .progress-circle span:after {
     content: "";
     font-weight: 600;

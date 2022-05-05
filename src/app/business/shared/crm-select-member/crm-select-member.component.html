@@ -153,33 +153,23 @@
                 
         <div>
             <div>
+                <div class="form-group mb-4">
+                    <input class="form-control" type="text" [(ngModel)]="searchtext" placeholder="Search">
+                  </div>
                 <mat-radio-group
-              
                 [(ngModel)]="assignCustomerDetails">
-               <div>
-                <mat-radio-button class="example-radio-button" *ngFor="let assignCustomer of memberList" [value]="assignCustomer"  (change)="handleCustomerSelect(assignCustomer,'Selected')">
+               <div *ngFor="let assignCustomer of memberList | filter: searchtext">
+                <mat-radio-button class="example-radio-button" *ngIf="assignCustomer.firstName || assignCustomer.lastName" [value]="assignCustomer"  (change)="handleCustomerSelect(assignCustomer,'Selected')">
                   <div class="allCustomer">
-                        <div>
-                          <img class="img" [src]="getUserImg(assignCustomer)" />
-                        </div>
-                        <!-- <div>
-                            {{assignMember.profilePicture | json}}
-                        </div> -->
                         <div class="members">
-                        {{assignCustomer.firstName}}{{assignCustomer.lastName}}
-                       </div>
-                       <div class="members">
-                        +{{assignCustomer.countryCode}}{{assignCustomer.mobileNo}}
-                       </div>
-                       <div class="members">
-                        {{assignCustomer.locationName}}
+                        <span *ngIf="assignCustomer.firstName">{{assignCustomer.firstName}}</span>
+                        <span *ngIf="assignCustomer.lastName">{{assignCustomer.lastName}}</span>
                        </div>
                   </div>
                   </mat-radio-button>
                </div>
               </mat-radio-group>
             </div>
-            <!----radio btn end-->
         </div>
             </div>
         </mat-dialog-content>
@@ -194,7 +184,7 @@
                             <button type="button" class="btn btn-primary font-weight-bold cancelBtn" 
                             mat-dialog-close >Cancel</button>
                         <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="saveAssignCustomer(assignCustomerDetails)"
-                            >Assign</button>
+                            >Select</button>
                     </div>
                 </ng-container>
             </div>
@@ -421,7 +411,7 @@
         <!--status start-->
        <div class="statusList">
         <!-- [ngStyle]="{'background-color':status.id === data.taskDetails.status.id ? '#CACACA' : '#FFFFFF' }" -->
-        <div *ngFor="let status of viewStatusList;let index=i" class="singleStatus" (click)="selectStatus(status)">
+        <div *ngFor="let status of taskStatusList[0];let index=i" class="singleStatus" (click)="selectStatus(status)">
             <div class="statusName">{{status.name}}</div>
             <div *ngIf="data.taskDetails.status.name">
                 <div *ngIf="status.id === data.taskDetails.status.id" > <i *ngIf="showHideTickMarkUpdate" class="fa fa-check" aria-hidden="true"></i></div>

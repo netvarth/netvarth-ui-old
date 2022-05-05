@@ -66,6 +66,7 @@ export class CrmSelectMemberComponent implements OnInit {
   customerErrorMsg: string;
   assignCustomerDetails: string;
   viewStatusList:any=[];
+  searchtext:any;
 
 
 
@@ -128,22 +129,25 @@ export class CrmSelectMemberComponent implements OnInit {
       })
     }
     if(this.data.requestType==='createleadSelectCustomer'){
-      this.data.memberList[0].forEach((singleMember:any)=>{
-        if(singleMember.userType==='PROVIDER'){
-        this.memberList.push(singleMember)
-        if(this.data.requestType==='createtaskSelectMember'){
-          if(singleMember.id==this.data.updateAssignMemberId){
-            if(this.crmService.taskActivityName==='Update'){
-              this.assignCustomerDetails=singleMember;
-            }
-            else{
-              this.assignCustomerDetails = this.data.updateSelectedMember;
-            }
-          }
-        }
-        }
+
+      // this.data.memberList[0].forEach((singleMember:any)=>{
         
-      })
+      //   this.memberList.push(singleMember)
+      //   if(this.data.requestType==='createleadSelectCustomer'){
+      //     if(singleMember.id==this.data.updateAssignMemberId){
+      //       if(this.crmService.taskActivityName==='Update'){
+      //         this.assignCustomerDetails=singleMember;
+      //       }
+      //       else{
+      //         this.assignCustomerDetails = this.data.updateSelectedMember;
+      //       }
+      //     }
+      //   }
+        
+        
+      // })
+      this.memberList = this.data.memberList
+      console.log("customermemberlist",this.memberList)
     }
     if(this.data.requestType==='createUpdateNotes'){
       console.log('createUpdateNotes');
