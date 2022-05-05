@@ -1,6 +1,5 @@
 <!-- Card -->
 <!-- ***START OF NEW CARD*** -->
-
 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" [ngClass]="theme?theme:''"
     *ngIf="((service && service.serviceAvailability) || item.type=='donation') && !source">
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding pointer-cursor card-outer-cont"
@@ -97,9 +96,6 @@
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
         <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event)"
             class="getappointmentbutton ">{{buttonCaption}}</button>
-
-
-
     </div>
 </div>
 <div *ngIf="item.type=='pitem'">
@@ -475,14 +471,14 @@
         </div>
     </div>
 </ng-container>
-<ng-container *ngIf="type=='appointment-dashboard'">
+<ng-container *ngIf="item.type=='appointment-dashboard'">
     <!-- (click)="gotoDetails()" -->
     <div class="col-xs-12 col-sm-12 no-padding mgn-lt-5" (click)="cardActionPerformed(item.type, 'view', null, null, null, $event, item)"  [class.history]="time_type==3">
         <div class="main-sec">
             <div class="date mgn-lt-5" *ngIf="time_type!=1">
                 {{appointment.appmtDate | date: newTimeDateFormat}}</div>
             <div class="mgn-lt-5 date" *ngIf="time_type!=3">
-                <span class="greenc bold font11">{{getSingleTime(appointment.appmtFor[0].apptTime)}}</span><br>
+                <span class="greenc bold font11">{{appointment.displayTime}}</span><br>
                 <div *ngIf="appointment.isApptDelayed === true">
 
                     <span

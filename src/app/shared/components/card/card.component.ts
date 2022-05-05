@@ -5,7 +5,6 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
 import { projectConstantsLocal } from '../../constants/project-constants';
-// import { Router } from '@angular/router';
 @Component({
     'selector': 'app-card',
     'templateUrl': './card.component.html',
@@ -56,13 +55,14 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         private wordProcessor: WordProcessor,
         private datePipe: DateFormatPipe,
         private dateTimeProcessor: DateTimeProcessor,
-        // private router: Router,
         private cdref: ChangeDetectorRef) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
 
     ngOnInit() {
+        if (this.type) {
             this.item.type = this.type;
+        }
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.todayDate = this.datePipe.transformTofilterDate(new Date());
         switch (this.item.type) {

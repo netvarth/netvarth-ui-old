@@ -359,7 +359,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.routerobj.navigate(['status/new']);
   }
   providerLinkClicked() {
-    this.routerobj.navigate(['/business/healthcare']);
+    this.routerobj.navigate(['/business/login']);
   }
   openVivoCampPage() {
     // console.log('Click')
