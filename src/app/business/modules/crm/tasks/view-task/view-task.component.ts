@@ -81,6 +81,7 @@ action: any;
   updateTaskData:any;
   taskkid: any;
   taskType: any;
+  changeAction = false;
 constructor(
   private locationobj: Location,
    private crmService: CrmService,
@@ -169,6 +170,7 @@ markAsDone(taskid){
   dialogRef.afterClosed().subscribe((res)=>{
     console.log(res)
     this.getTaskDetails();
+    this.changeAction = true;
   })
 
 }

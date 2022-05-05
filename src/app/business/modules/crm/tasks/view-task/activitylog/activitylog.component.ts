@@ -9,6 +9,7 @@ import { CrmService } from '../../../crm.service';
 })
 export class ActivitylogComponent implements OnInit {
   @Input() taskid;
+  @Input() action;
   activityList:any=[];
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   constructor( 
@@ -17,14 +18,21 @@ export class ActivitylogComponent implements OnInit {
 
 
     ) { }
+    ngOnChanges(){
+      if(this.action){
+        this.getActivitylog();
+      }
+    }
   ngOnInit(): void {
+    this.getActivitylog();
+
+  }
+  getActivitylog(){
     this.crmService.getActivitylog(this.taskid).subscribe(data => {
       this.activityList = data;
       console.log('activityList',this.activityList)
   })
-
   }
-  
-
 
 }
+
