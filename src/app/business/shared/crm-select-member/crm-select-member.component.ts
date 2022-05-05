@@ -326,6 +326,7 @@ saveCreateNote(notesValue:any){
         setTimeout(() => {
           this.dialogRef.close(notesValue)
         }, projectConstants.TIMEOUT_DELAY);
+        this.snackbarService.openSnackBar('Remarks added successfully');
       },
       (error)=>{
         this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
