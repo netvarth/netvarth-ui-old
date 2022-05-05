@@ -10,8 +10,8 @@
 <br>
 <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
 <section  class="card">
-    <div class=" card bgColor inputwithImg">
-        <div>
+    <div class=" card bgColor">
+        <div class="inputwithImg">
         <form [formGroup]="createLeadForm">
             <span class="group-head">{{selectHeader}} Details</span><br>
             <div class="bggrey my-2">
@@ -82,7 +82,7 @@
                             <div>Customer</div>
                         </div>
                         <div class="fieldPadding">
-                            <input (keyup)="resetErrors()" [(ngModel)]="customer" type="text"
+                            <input (keyup)="resetErrors()" type="text"
                             placeholder="Enter Customer Id" class="form-control widthWebKit" formControlName="customer_id" autocomplete="off" /> 
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
                             </app-field-error-display>    
@@ -114,8 +114,8 @@
                             <div class="astericColor">*</div>
                         </div>
                         <div class="fieldPadding">
-                            <input (keyup)="resetErrors()" [(ngModel)]="locationName" type="text" #leadLocation (ngModelChange)="handleLeadLocation(leadLocation.value)"
-                            placeholder="Enter Lead location"class="form-control widthWebKit"formControlName="leadLocation"autocomplete="off" [value]="leadLocation.name" /> 
+                            <input (keyup)="resetErrors()"  type="text" #leadLocation (ngModelChange)="handleLeadLocation(leadLocation.value)"
+                            placeholder="Enter Lead location"class="form-control widthWebKit" formControlName="leadLocation" autocomplete="off" [value]="leadLocation.name" /> 
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
                             </app-field-error-display>    
                         </div>
@@ -148,7 +148,7 @@
                     </div>
                     <div class="fieldPadding">
                         <div>
-                            <div [(ngModel)]="selectMember" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectMemberDialog(selectMember)" >
+                            <div [formControlName]="selectMember" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectMemberDialog(selectMember)" >
                                 <div >{{selectMember}}</div>
                                 <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
                             </div>
@@ -163,7 +163,7 @@
                     </div>
                     <div class="fieldPadding">
                         <div>
-                            <div  [(ngModel)]="selectLeadManger" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectManagerDialog(selectLeadManger)" >
+                            <div  [formControlName]="selectLeadManger" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectManagerDialog(selectLeadManger)" >
                                 <div>{{selectLeadManger}}</div>
                                 <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
                             </div>
@@ -239,7 +239,7 @@
                     </div>
                     <div class="fieldPadding">
                         <mat-select class="form-control" placeholder="Select Priority"
-                            #userLeadPriority formControlName="userLeadPriority"[(ngModel)]="leadPriority" (ngModelChange)="handleLeadPrioritySelection(userLeadPriority.value,'leadPriority')">
+                            #userLeadPriority formControlName="userLeadPriority" (ngModelChange)="handleLeadPrioritySelection(userLeadPriority.value,'leadPriority')">
                             <mat-option  *ngFor="let item of leadPriorityList[0];let index=i" [value]="item.id"  >
                                 <div>
                                     {{item.name}}
@@ -262,7 +262,7 @@
                         </div>
                         <div class="fieldPadding">
                             <mat-select class="form-control widthWebKit" placeholder="Enter Lead status"
-                                #leadStatus formControlName="leadStatus" name="item" [(ngModel)]="leadStatusModal" (selectionChange)="handleLeadStatus(leadStatus.value)">
+                                #leadStatus formControlName="leadStatus" name="item"  (selectionChange)="handleLeadStatus(leadStatus.value)">
                                 <mat-option *ngFor="let item of leadStatusList[0];let index=i" [value]="item.id"  >
                                     <div>
                                         {{item.name | capitalizeFirst}}
@@ -301,9 +301,9 @@
             </div>
         </form>
     </div>
-        <div class="imageClass">
+        <!-- <div class="imageClass">
             <img class="leadImg" src="/assets/images/crmImages/Addtasks.png" />
-        </div>
+        </div> -->
     </div>
       
 

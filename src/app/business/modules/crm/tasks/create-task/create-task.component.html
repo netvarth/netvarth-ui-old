@@ -83,8 +83,8 @@
                             <div class="astericColor">*</div>
                         </div>
                         <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.location && taskMasterData.location.iseditable)}">
-                            <input (keyup)="resetErrors()" [(ngModel)]="locationName" type="text" #taskLocation (ngModelChange)="handleTaskLocation(taskLocation.value)"
-                            placeholder="Enter activity location"class="form-control widthWebKit"formControlName="taskLocation"autocomplete="off" [readonly]="!(taskMasterData && taskMasterData.location && taskMasterData.location.iseditable)" [value]="taskLocation.name" /> 
+                            <input (keyup)="resetErrors()" type="text" #taskLocation (ngModelChange)="handleTaskLocation(taskLocation.value)"
+                            placeholder="Enter activity location"class="form-control widthWebKit" formControlName="taskLocation"autocomplete="off" [readonly]="!(taskMasterData && taskMasterData.location && taskMasterData.location.iseditable)" [value]="taskLocation.name" /> 
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                             </app-field-error-display>    
                         </div>
@@ -94,8 +94,8 @@
                             <div>Area</div>
                         </div>
                         <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.locationArea && taskMasterData.locationArea.iseditable)}">
-                            <input (keyup)="resetErrors()" [(ngModel)]="areaName" type="text" [readonly]="!(taskMasterData && taskMasterData.locationArea && taskMasterData.locationArea.iseditable)"
-                            placeholder=""class="form-control widthWebKit"formControlName="areaName" autocomplete="off" /> 
+                            <input (keyup)="resetErrors()" type="text" [readonly]="!(taskMasterData && taskMasterData.locationArea && taskMasterData.locationArea.iseditable)"
+                            placeholder=""class="form-control widthWebKit" formControlName="areaName" autocomplete="off" /> 
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                             </app-field-error-display>    
                         </div>
@@ -113,7 +113,7 @@
                     </div>
                     <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.assignee && taskMasterData.assignee.iseditable)}">
                         <div>
-                            <div [(ngModel)]="selectMember" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectMemberDialog(selectMember)" >
+                            <div formControlName="selectMember" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectMemberDialog(selectMember)" >
                                 <div >{{selectMember}}</div>
                                 <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
                             </div>
@@ -128,7 +128,7 @@
                     </div>
                     <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.manager && taskMasterData.manager.iseditable)}">
                         <div>
-                            <div  [(ngModel)]="selectTaskManger" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectManagerDialog(selectTaskManger)" >
+                            <div  formControlName="selectTaskManger" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectManagerDialog(selectTaskManger)" >
                                 <div>{{selectTaskManger}}</div>
                                 <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
                             </div>
@@ -148,7 +148,7 @@
                             <div>Due Date</div>
                         </div>
                         <div class="pickerouter fieldPadding dt dateWithMatDtae" >
-                            <input [(ngModel)]="taskDueDate" formControlName="taskDate" class="form-control widthWebKit positionNameInput" type="text"  [ngClass]="{'highlight': !(taskMasterData && taskMasterData.dueDate && taskMasterData.dueDate.iseditable)}" matInput
+                            <input formControlName="taskDate" class="form-control widthWebKit positionNameInput" type="text"  [ngClass]="{'highlight': !(taskMasterData && taskMasterData.dueDate && taskMasterData.dueDate.iseditable)}" matInput
                                 [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
                                 [value]="ddate" (dateChange)="handleDateChange($event)" placeholder="Enter Date" #taskDate>
                             <mat-datepicker-toggle matSuffix [for]="picker">
@@ -167,21 +167,21 @@
                         <div class="fieldPadding d-flex" style="gap: 5px;flex-wrap: wrap;"  *ngIf="createBTimeField" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)}">
                             <div class="estField">
                                 <div>
-                                    <input id="days" [(ngModel)]="taskDueDays" [value]="taskDays" (keyup)="resetErrors()"  type="number" #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
+                                    <input id="days" [value]="taskDays" (keyup)="resetErrors()"  type="number" #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
                                 placeholder="Days" class="form-control widthWebKit" formControlName="taskDays"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0"/>
                                 </div>
                                 <div class="timeField">Days</div>
                             </div>
                             <div class="estField">
                                 <div>
-                                    <input id="hrs" [(ngModel)]="taskDueHrs" [value]="taskHrs" (keyup)="resetErrors()"  type="number" #taskHrs (ngModelChange)="handleTaskEstDuration(taskHrs.value)"
+                                    <input id="hrs" [value]="taskHrs" (keyup)="resetErrors()"  type="number" #taskHrs (ngModelChange)="handleTaskEstDuration(taskHrs.value)"
                             placeholder="Hours" class="form-control widthWebKit" formControlName="taskHrs"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0" max="23"/>
                                 </div>
                                 <div class="timeField"> Hours </div>
                             </div>
                             <div class="estField">
                                 <div>
-                                    <input id="min" [(ngModel)]="taskDueMin" [value]="taskMin" (keyup)="resetErrors()"  type="number" #taskMin (ngModelChange)="handleTaskEstDuration(taskMin.value)"
+                                    <input id="min" [value]="taskMin" (keyup)="resetErrors()"  type="number" #taskMin (ngModelChange)="handleTaskEstDuration(taskMin.value)"
                                     placeholder="Minutes" class="form-control widthWebKit" formControlName="taskMin"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0" max="59"/>
                                 </div>
                                 <div class="timeField">
@@ -226,7 +226,7 @@
                     </div>
                     <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.priority && taskMasterData.priority.iseditable)}">
                         <mat-select class="form-control" placeholder="Select Priority" [disabled]="!(taskMasterData && taskMasterData.priority && taskMasterData.priority.iseditable)"
-                            #userTaskPriority formControlName="userTaskPriority"[(ngModel)]="taskPriority" (ngModelChange)="handleTaskPrioritySelection(userTaskPriority.value,'taskPriority')">
+                            #userTaskPriority formControlName="userTaskPriority" (ngModelChange)="handleTaskPrioritySelection(userTaskPriority.value,'taskPriority')">
                             <mat-option  *ngFor="let item of taskPriorityList[0];let index=i" [value]="item.id"  >
                                 <div>
                                     {{item.name}}
@@ -249,7 +249,7 @@
                         </div>
                         <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.status && taskMasterData.status.iseditable)}">
                             <mat-select class="form-control widthWebKit" placeholder="Enter activity status" [disabled]="!(taskMasterData && taskMasterData.status && taskMasterData.status.iseditable)"
-                                #taskStatus formControlName="taskStatus" name="item" [(ngModel)]="taskStatusModal" (selectionChange)="handleTaskStatus(taskStatus.value)">
+                                #taskStatus formControlName="taskStatus" name="item"  (selectionChange)="handleTaskStatus(taskStatus.value)">
                                 <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id"  >
                                     <div [ngStyle]="{'color': getColor(item.name)}">
                                         {{item.name | capitalizeFirst}}
@@ -392,8 +392,8 @@
                             <div class="astericColor">*</div>
                         </div>
                         <div class="fieldPadding">
-                            <input (keyup)="resetErrors()" [(ngModel)]="locationName" type="text" #taskLocation (ngModelChange)="handleTaskLocation(taskLocation.value)"
-                            placeholder="Enter activity location"class="form-control widthWebKit"formControlName="taskLocation"autocomplete="off" [value]="taskLocation.name" /> 
+                            <input (keyup)="resetErrors()"  type="text" #taskLocation (ngModelChange)="handleTaskLocation(taskLocation.value)"
+                            placeholder="Enter activity location"class="form-control widthWebKit" formControlName="taskLocation" autocomplete="off" [value]="taskLocation.name" /> 
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                             </app-field-error-display>    
                         </div>
@@ -403,7 +403,7 @@
                             <div>Area</div>
                         </div>
                         <div class="fieldPadding">
-                            <input (keyup)="resetErrors()" [(ngModel)]="areaName" type="text"
+                            <input (keyup)="resetErrors()" type="text"
                             placeholder=""class="form-control widthWebKit"formControlName="areaName" autocomplete="off" /> 
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                             </app-field-error-display>    
@@ -422,7 +422,7 @@
                     </div>
                     <div class="fieldPadding">
                         <div>
-                            <div [(ngModel)]="selectMember" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectMemberDialog(selectMember)" >
+                            <div [formControlName]="selectMember" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectMemberDialog(selectMember)" >
                                 <div >{{selectMember}}</div>
                                 <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
                             </div>
@@ -437,7 +437,7 @@
                     </div>
                     <div class="fieldPadding">
                         <div>
-                            <div  [(ngModel)]="selectTaskManger" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectManagerDialog(selectTaskManger)" >
+                            <div  [formControlName]="selectTaskManger" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectManagerDialog(selectTaskManger)" >
                                 <div>{{selectTaskManger}}</div>
                                 <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
                             </div>
@@ -457,7 +457,7 @@
                             <div>Due Date</div>
                         </div>
                         <div class="pickerouter fieldPadding dt dateWithMatDtae" >
-                            <input [(ngModel)]="taskDueDate" formControlName="taskDate" class="form-control widthWebKit positionNameInput" type="text"  matInput
+                            <input  formControlName="taskDate" class="form-control widthWebKit positionNameInput" type="text"  matInput
                                 [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
                                 [value]="ddate" (dateChange)="handleDateChange($event)" placeholder="Enter Date" #taskDate>
                             <mat-datepicker-toggle matSuffix [for]="picker">
@@ -476,21 +476,21 @@
                         <div class="fieldPadding d-flex" style="gap: 5px;flex-wrap: wrap;"  *ngIf="createBTimeField" >
                             <div class="estField">
                                 <div>
-                                    <input id="days" [(ngModel)]="taskDueDays" [value]="taskDays" (keyup)="resetErrors()"  type="number" #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
+                                    <input id="days" [value]="taskDays" (keyup)="resetErrors()"  type="number" #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
                                 placeholder="Days" class="form-control widthWebKit" formControlName="taskDays"   autocomplete="off" min="0"/>
                                 </div>
                                 <div class="timeField">Days</div>
                             </div>
                             <div class="estField">
                                 <div>
-                                    <input id="hrs" [(ngModel)]="taskDueHrs" [value]="taskHrs" (keyup)="resetErrors()"  type="number" #taskHrs (ngModelChange)="handleTaskEstDuration(taskHrs.value)"
+                                    <input id="hrs" [value]="taskHrs" (keyup)="resetErrors()"  type="number" #taskHrs (ngModelChange)="handleTaskEstDuration(taskHrs.value)"
                             placeholder="Hours" class="form-control widthWebKit" formControlName="taskHrs"   autocomplete="off" min="0" max="23"/>
                                 </div>
                                 <div class="timeField"> Hours </div>
                             </div>
                             <div class="estField">
                                 <div>
-                                    <input id="min" [(ngModel)]="taskDueMin" [value]="taskMin" (keyup)="resetErrors()"  type="number" #taskMin (ngModelChange)="handleTaskEstDuration(taskMin.value)"
+                                    <input id="min" [value]="taskMin" (keyup)="resetErrors()"  type="number" #taskMin (ngModelChange)="handleTaskEstDuration(taskMin.value)"
                                     placeholder="Minutes" class="form-control widthWebKit" formControlName="taskMin"   autocomplete="off" min="0" max="59"/>
                                 </div>
                                 <div class="timeField">
@@ -535,7 +535,7 @@
                     </div>
                     <div class="fieldPadding">
                         <mat-select class="form-control" placeholder="Select Priority"
-                            #userTaskPriority formControlName="userTaskPriority"[(ngModel)]="taskPriority" (ngModelChange)="handleTaskPrioritySelection(userTaskPriority.value,'taskPriority')">
+                            #userTaskPriority formControlName="userTaskPriority" (ngModelChange)="handleTaskPrioritySelection(userTaskPriority.value,'taskPriority')">
                             <mat-option  *ngFor="let item of taskPriorityList[0];let index=i" [value]="item.id" >
                                 <div>
                                     {{item.name}}
@@ -558,7 +558,7 @@
                         </div>
                         <div class="fieldPadding">
                             <mat-select class="form-control widthWebKit" placeholder="Enter activity status"
-                                #taskStatus formControlName="taskStatus" name="item" [(ngModel)]="taskStatusModal" (selectionChange)="handleTaskStatus(taskStatus.value)">
+                                #taskStatus formControlName="taskStatus" name="item"  (selectionChange)="handleTaskStatus(taskStatus.value)">
                                 <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id"  >
                                     <!-- <div>
                                         {{item.name | capitalizeFirst}}

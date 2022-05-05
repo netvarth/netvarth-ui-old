@@ -65,6 +65,7 @@ const routes: Routes = [
         {path:'task/create-subtask/:taskid',loadChildren:()=>import ('./modules/crm/tasks/create-task/create-task.module').then(m=>m.CreateTaskModule)},
         {path:'crm-markas-done',loadChildren:()=>import ('././shared/crm-markas-done/crm-markas-done.module').then(m=>m.CrmMarkasDoneModule)},
         {path:'viewsubtask/:id',loadChildren:()=>import ('./modules/crm/tasks/view-task/view-task.module').then(m=>m.ViewTaskModule)},
+        {path:'create-task/:id',loadChildren:()=>import ('./modules/crm/tasks/view-task/view-task.module').then(m=>m.ViewTaskModule)},
 
       ]
     }

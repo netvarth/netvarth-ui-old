@@ -149,9 +149,9 @@ textarea {
   margin-right:.6em;
   color:#9d9d9d;
   } */
-input[type="number"],input[type="time"]{
+/* input[type="number"],input[type="time"]{ */
   /* width: 100px!important; */
-}
+/* } */
 .group-head
 {
   font-size: 15px!important;

@@ -100,12 +100,7 @@ ngOnInit(): void {
     console.log("lead id : ",this.leadUid);
     this.crmService.getLeadDetails(this.leadUid).subscribe(data => {
       this.leadDetails = data;
-      this.leadkid = this.leadDetails.id
-      console.log("Lead Details : ",this.leadDetails);
-      if(this.leadDetails.parentLeadUid)
-      {
-        this.leadType = 'SubLead';
-      }
+      this.leadkid = this.leadDetails.uid
       console.log('leadDetails.status',this.leadDetails.status.name)
       // console.log('this.leadDetails.notes',this.leadDetails.notes)
       this.leadDetails.notes.forEach((notesdata:any)=>{

@@ -135,9 +135,7 @@ textarea {
   resize: none;
 }
 .inputwithImg{
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  width: 80%!important;
 }
 .leadImg{
   height: 100%;

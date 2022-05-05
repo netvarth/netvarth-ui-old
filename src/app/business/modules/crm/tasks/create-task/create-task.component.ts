@@ -156,6 +156,8 @@ export class CreateTaskComponent implements OnInit {
       taskDays:[0],
       taskHrs:[0],
       taskMin:[0],
+      selectMember:[null],
+      selectTaskManger:[null],
       userTaskPriority:[null],
       targetResult:[null],
       targetPotential:[null],
@@ -169,7 +171,7 @@ export class CreateTaskComponent implements OnInit {
       console.log('this.updateValue',this.updateValue)
       if(this.updateValue != undefined){
         console.log(' this.updateValue', this.updateValue);
-      this.createTaskForm.patchValue({
+        this.createTaskForm.patchValue({
         taskTitle:this.updateValue.title,
         taskDescription:this.updateValue.description,
         targetPotential:this.updateValue.targetPotential,
@@ -180,17 +182,17 @@ export class CreateTaskComponent implements OnInit {
         userTaskPriority:this.updateValue.priority.id,
       })
       this.locationName =this.updateValue.location.name;
-      this.areaName =this.updateValue.locationArea;
+      this.createTaskForm.controls.areaName.value =this.updateValue.locationArea;
       this.updteLocationId= this.updateValue.location.id
       this.taskDueDays=this.updateValue.taskDays;
       this.taskDueHrs=this.updateValue.taskHrs;
       this.taskDueMin=this.updateValue.taskMin;
-      this.selectMember= this.updateValue.assignee.name;
+      this.selectMember = this.updateValue.assignee.name;
       this.updateMemberId=this.updateValue.assignee.id;
       this.selectTaskManger= this.updateValue.manager.name;
       this.updateManagerId= this.updateValue.manager.id
       this.updateUserType=this.updateValue.userTypeEnum;
-      this.taskDueDate = this.updateValue.dueDate
+      this.createTaskForm.controls.taskDate.value = this.updateValue.dueDate
       // this.taskDueTime=this.updateValue.estDuration
       this.taskDueDays= this.updateValue.estDuration.days;
         this.taskDueHrs= this.updateValue.estDuration.hours;
@@ -205,45 +207,28 @@ export class CreateTaskComponent implements OnInit {
     }
     else if(this.crmService.taskActivityName === "subTaskCreate")
       {
-                this.createBTimeField=true;
+          this.createBTimeField=true;
           this.updateBTimefield=false;
           this.selectHeader='Create Subactivity';
           this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd') 
           console.log(' this.taskDueDate', this.taskDueDate);
           this.selectedDate = this.taskDueDate;
           this.activityTitle='Enter subactivity title'
-          // this.taskDueTime = "0000"
-          // this.estDurationWithDay=this.taskDueDays;
-          // this.estDurationWithTime=this.taskDueTime;
-          // const estDurationDay=this.estDurationWithDay
-          // const estDurationHour=this.taskDueTime.slice(0,2)
-          // const estDurationMinurte= this.taskDueTime.slice(3,)
-          // this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinurte };
-          // console.log('estDurationDay',this.estTime)
           this.taskDueDays= 0;
-        this.taskDueHrs= 0;
-        this.taskDueMin= 0;
-        this.estTime={ "days" :0, "hours" :0, "minutes" : 0 };
-        console.log('this.estTime',this.estTime)
+          this.taskDueHrs= 0;
+          this.taskDueMin= 0;
+          this.estTime={ "days" :0, "hours" :0, "minutes" : 0 };
+          console.log('this.estTime',this.estTime)
 
           }
-    else if(this.crmService.taskActivityName==='CreatE'){
-      this.createBTimeField=true;
-      this.updateBTimefield=false;
+      else if(this.crmService.taskActivityName==='CreatE'){
+        this.createBTimeField=true;
+        this.updateBTimefield=false;
         this.selectHeader='Create Activity';
         this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd') 
         console.log(' this.taskDueDate', this.taskDueDate);
         this.selectedDate = this.taskDueDate;
-        this.activityTitle='Enter activity title'
-        // this.taskDueTime= '0000' ;
-        // console.log(' this.taskDueTime', this.taskDueTime)
-        // this.estDurationWithDay=this.taskDueDays;
-        // this.estDurationWithTime=this.taskDueTime;
-        // const estDurationDay=this.estDurationWithDay
-        // const estDurationHour=this.taskDueTime.slice(0,2)
-        // const estDurationMinurte= this.taskDueTime.slice(3,)
-        // this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinurte };
-        // console.log('this.estTime',this.estTime)
+        this.activityTitle='Enter activity title';
         this.taskDueDays= 0;
         this.taskDueHrs= 0;
         this.taskDueMin= 0;
@@ -255,22 +240,12 @@ export class CreateTaskComponent implements OnInit {
       this.createBTimeField=true;
       this.updateBTimefield=false;
       this.activityTitle='Enter activity title'
-      // this.selectMember='Select Member';
-      // this.selectTaskManger='Select Task Manger'
         this.selectHeader='Create Activity';
-        this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd') 
-        // this.datePipe.transform(this.taskDueDate,'yyyy-MM-dd');
+        this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd')
         console.log(' this.taskDueDate', this.taskDueDate);
-        this.selectedDate = this.taskDueDate;
-        // this.taskDueTime= '0000' ;
-        // console.log(' this.taskDueTime', this.taskDueTime)
-        // this.estDurationWithDay=this.taskDueDays;
-        // this.estDurationWithTime=this.taskDueTime;
-        // const estDurationDay=this.estDurationWithDay
-        // const estDurationHour=this.taskDueTime.slice(0,2)
-        // const estDurationMinurte= this.taskDueTime.slice(3,)
-        // this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinurte };
-        // console.log('this.estTime',this.estTime)
+        console.log("Data : ",this.createTaskForm.controls.taskDate)
+        this.createTaskForm.controls.taskDate.setValue(this.taskDueDate);
+        console.log(this.createTaskForm.controls.taskDate)
         const taskMaster= this.crmService.taskMasterToCreateServiceData;
         this.taskMasterData = this.crmService.taskMasterToCreateServiceData;
         console.log('taskMasterCreate',taskMaster);
@@ -288,16 +263,13 @@ export class CreateTaskComponent implements OnInit {
 
     }
     else if(this.crmService.taskActivityName==='CreteTaskMaster'){
-      this.createBTimeField=true;
-      this.updateBTimefield=false;
-      // this.selectMember='Select Member';
-      // this.selectTaskManger='Select Task Manger'
+        this.createBTimeField=true;
+        this.updateBTimefield=false;
         this.selectHeader='Create Activity';
         this.activityTitle='Enter activity title'
-        this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd') 
-        // this.datePipe.transform(this.taskDueDate,'yyyy-MM-dd');
+        this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd')
         console.log(' this.taskDueDate', this.taskDueDate);
-        this.selectedDate = this.taskDueDate;
+        this.createTaskForm.controls.taskDate.setValue(this.taskDueDate);
         this.taskDueTime= "0000" ;
         console.log(' this.taskDueTime', this.taskDueTime)
         this.estDurationWithDay=this.taskDueTime;
@@ -383,7 +355,7 @@ export class CreateTaskComponent implements OnInit {
   getLocation(){
     this.crmService.getProviderLocations().subscribe((res)=>{
       console.log('location.........',res)
-      this.locationName= res[0].place;
+      this.createTaskForm.controls.taskLocation.setValue(res[0].place);
       this.updteLocationId= res[0].id;
     })
   }
@@ -447,10 +419,12 @@ export class CreateTaskComponent implements OnInit {
       console.log('taskStatus',taskStatus);
       this.taskStatusList.push(taskStatus);
       if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName==='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster'){
-        this.taskStatusModal=this.taskStatusList[0][0].id;
+        this.createTaskForm.controls.taskStatus.setValue(this.taskStatusList[0][0].id);
+        // this.taskStatusModal=this.taskStatusList[0][0].id;
       }
       else{
-        this.taskStatusModal=this.updateValue.status.id
+        this.createTaskForm.controls.taskStatus.setValue(this.updateValue.status.id);
+        // this.taskStatusModal=this.updateValue.status.id
       }
     },
     (error)=>{
@@ -462,9 +436,11 @@ export class CreateTaskComponent implements OnInit {
       console.log('taskPriority',taskPriority);
       this.taskPriorityList.push(taskPriority);
       if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName==='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster'){
-        this.taskPriority=this.taskPriorityList[0][0].id;
+        this.createTaskForm.controls.userTaskPriority.setValue(this.taskPriorityList[0][0].id);
+        // this.taskPriority=this.taskPriorityList[0][0].id;
       }else{
-        this.taskPriority=this.updateValue.priority.id;
+        this.createTaskForm.controls.userTaskPriority.setValue(this.updateValue.priority.id);
+        // this.taskPriority=this.updateValue.priority.id;
       }
       console.log( this.taskPriority)
     },
@@ -590,8 +566,13 @@ export class CreateTaskComponent implements OnInit {
     this.userType = res.userType;
     // this.locationName = res.locationName;
     this.locationId = res.bussLocations[0];
-    this.locationName = res.locationName;
+    console.log('this.updateAssignMemberDetailsToDialog',res)
+    if(res.place)
+    {
+      this.createTaskForm.controls.taskLocation.setValue(res.place);
+    }
     this.assigneeId= res.id;
+    console.log('this.assigneeid',res.id)
     this.updateMemberId=this.assigneeId;
     this.updteLocationId= this.locationId;
     }
@@ -760,7 +741,7 @@ export class CreateTaskComponent implements OnInit {
   
         "status":{"id":this.createTaskForm.controls.taskStatus.value},
         "priority":{"id":this.createTaskForm.controls.userTaskPriority.value},
-        "dueDate" : this.datePipe.transform(this.taskDueDate,'yyyy-MM-dd'),
+        "dueDate" : this.datePipe.transform(this.createTaskForm.controls.taskDate.value,'yyyy-MM-dd'),
         "location" : { "id" : this.updteLocationId},
         "locationArea" : this.createTaskForm.controls.areaName.value,
 
@@ -806,9 +787,9 @@ export class CreateTaskComponent implements OnInit {
 
       "status":{"id":this.createTaskForm.controls.taskStatus.value},
       "priority":{"id":this.createTaskForm.controls.userTaskPriority.value},
-      "dueDate" : this.selectedDate,
+      "dueDate" : this.datePipe.transform(this.createTaskForm.controls.taskDate.value,'yyyy-MM-dd'),
       "location" : { "id" : this.locationId},
-      "locationArea":this.areaName,
+      "locationArea":this.createTaskForm.controls.areaName.value,
       "assignee":{"id":this.assigneeId},
       "manager":{"id":this.selectTaskMangerId},
       "targetResult" : this.createTaskForm.controls.targetResult.value,
