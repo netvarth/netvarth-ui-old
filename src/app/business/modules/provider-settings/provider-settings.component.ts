@@ -829,8 +829,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         this.routerobj.navigate(['provider', 'settings', 'general', 'holidays']);
         break;
       case 'notifications':
-        // this.routerobj.navigate(['provider', 'settings', 'comm', 'notifications']);
-        this.routerobj.navigate(['provider', 'settings', 'comm'], { queryParams: { type: 'notification' } });
+        this.routerobj.navigate(['provider', 'settings', 'comm', 'notifications']);
+        // this.routerobj.navigate(['provider', 'settings', 'comm'], { queryParams: { type: 'notification' } });
         break;
       case 'saleschannel':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'saleschannel']);

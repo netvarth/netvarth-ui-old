@@ -8,9 +8,12 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 @Component({
     selector: 'app-notifications',
-    templateUrl: './notifications.component.html'
+    templateUrl: './notifications.component.html',
+    styleUrls:['./notifications.component.css']
 })
 export class NotificationsComponent implements OnInit {
+    virtualCallingMode_status: any;
+    virtualCallingMode_statusstr: string;
     smsGlobalStatus;
     notificationStatus;
     smsGlobalStatusStr;
@@ -134,5 +137,26 @@ export class NotificationsComponent implements OnInit {
     }
     goBack() {
         this.router.navigate(['provider', 'settings', 'comm']);
+    }
+    getGlobalSettingsStatus() {
+        this.provider_services.getGlobalSettings().subscribe(
+            (data: any) => {
+                this.virtualCallingMode_status = data.virtualService;
+                this.virtualCallingMode_statusstr = (this.virtualCallingMode_status) ? 'On' : 'Off';
+            });
+    }
+    handle_virtualCallingModeStatus(event) {
+        const is_VirtualCallingMode = (event.checked) ? 'Enable' : 'Disable';
+        this.provider_services.setVirtualCallingMode(is_VirtualCallingMode)
+            .subscribe(
+                () => {
+                    this.snackbarService.openSnackBar('Teleservice ' + is_VirtualCallingMode + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.getGlobalSettingsStatus();
+                },
+                error => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    this.getGlobalSettingsStatus();
+                }
+            );
     }
 }
