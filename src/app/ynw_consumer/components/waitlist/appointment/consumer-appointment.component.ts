@@ -1179,7 +1179,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         } else {
             _this.commObj['communicationEmail'] = _this.parentCustomer.userProfile.email;
         }
-        if (parentCustomer.userProfile.whatsAppNum && parentCustomer.userProfile.whatsAppNum.number.trim() != '') {
+        if (parentCustomer.userProfile.whatsAppNum && parentCustomer.userProfile.whatsAppNum.number && parentCustomer.userProfile.whatsAppNum.number.trim() != '') {
             _this.commObj['comWhatsappNo'] = parentCustomer.userProfile.whatsAppNum.number;
             _this.commObj['comWhatsappCountryCode'] = parentCustomer.userProfile.whatsAppNum.countryCode;
         } else {
@@ -2038,6 +2038,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     transactionCompleted(response, payload, accountId) {
+        console.log("Response:", response);
         if (response.SRC) {
             if (response.STATUS == 'TXN_SUCCESS') {
                 this.razorpayService.updateRazorPay(payload, accountId, 'consumer')
@@ -2193,6 +2194,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.btnClicked = false;
         this.loadingPaytm = false;
         this.cdRef.detectChanges();
-        // this.snackbarService.openSnackBar('Payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('Payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+        return false;
     }
 }

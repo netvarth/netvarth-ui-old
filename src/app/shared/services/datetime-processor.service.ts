@@ -274,6 +274,7 @@ export class DateTimeProcessor {
    * @returns 
    */
   transformToYMDFormat(date) {
+    console.log("In transformToYMDFormat:", date);
     const server = date.toLocaleString(this.REGION_LANGUAGE, { timeZone: this.TIME_ZONE_REGION });
     const serverdate = moment(server).format();
     const newdate = new Date(serverdate);

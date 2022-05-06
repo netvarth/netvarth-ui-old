@@ -66,7 +66,7 @@ export class ServiceViewComponent implements OnInit {
   image_list_popup: any = [];
   serviceGalleryPopup: any = [];
   busname: any;
-  serviceid: string;
+  serviceid: any;
   accountEncId: string;
   provider_id: any;
   userId: string;
@@ -232,6 +232,7 @@ export class ServiceViewComponent implements OnInit {
     this.activaterouterobj.paramMap
       .subscribe(params => {
         this.serviceid = params.get('serid');
+        console.log("SEReer:", this.serviceid);
         this.accountEncId = params.get('id'); 
         if (params.get('userEncId')) {
           this.userId = params.get('userEncId');
@@ -575,6 +576,7 @@ export class ServiceViewComponent implements OnInit {
   }
   generateServicesAndDoctorsForLocation(providerId, locationId) {
     const _this = this;
+    console.log("Service Id Passed:", this.serviceid);
     _this.loading = true;
     _this.getWaitlistServices(locationId)
       .then((wlServices: any) => {
@@ -884,10 +886,19 @@ export class ServiceViewComponent implements OnInit {
       }
       console.log("donation" + JSON.stringify(this.donationServicesjson));
     }
+    console.log("ServiceIDdd:",this.serviceid);
     if (this.serviceType === 'appt'  && this.apptServices && this.apptServices.length > 0){
-      this.appointmentClicked(this.selectedLocation, this.apptServices[0]);
+      console.log("ApptServices List");
+      console.log(this.apptServices);
+      let activeService = this.apptServices.filter(service => service.id == this.serviceid)[0];
+      console.log(activeService);
+      this.appointmentClicked(this.selectedLocation, activeService);
     } else if (this.serviceType === 'checkin' && this.wlServices && this.wlServices.length > 0) {
-      this.checkinClicked(this.selectedLocation, this.wlServices[0]);
+      console.log("CheckinServices List");
+      console.log(this.wlServices);
+      let activeService = this.wlServices.filter(service => service.id == this.serviceid)[0];
+      console.log(activeService);
+      this.checkinClicked(this.selectedLocation, activeService);
     }
     this.loading = false;
   }

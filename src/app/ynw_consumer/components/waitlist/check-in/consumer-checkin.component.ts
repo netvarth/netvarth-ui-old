@@ -1217,7 +1217,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     closeloading() {
         this.loadingPaytm = false;
         this.cdRef.detectChanges();
-        // this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+        return false;
         // if (this.from) {
         //     this.ngZone.run(() => this.router.navigate(['consumer']));
         // } else {
@@ -2398,7 +2399,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         } else {
             _this.commObj['communicationEmail'] = _this.parentCustomer.userProfile.email;
         }
-        if (parentCustomer.userProfile.whatsAppNum && parentCustomer.userProfile.whatsAppNum.number.trim() != '') {
+        if (parentCustomer.userProfile.whatsAppNum && parentCustomer.userProfile.whatsAppNum.number && parentCustomer.userProfile.whatsAppNum.number.trim() != '') {
             _this.commObj['comWhatsappNo'] = parentCustomer.userProfile.whatsAppNum.number;
             _this.commObj['comWhatsappCountryCode'] = parentCustomer.userProfile.whatsAppNum.countryCode;
         } else {
