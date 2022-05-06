@@ -362,6 +362,7 @@ progressbarDialog(){
     width:'100%',
     panelClass: ['popup-class', 'confirmationmainclass'],
     data:{
+      source : "Lead",
       details: this.leadDetails,
       leadUid:this.leadUid,
     }

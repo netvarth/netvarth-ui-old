@@ -52,12 +52,25 @@ export class CrmProgressbarComponent implements OnInit {
     }
   }
   previousProgress(){
-    this.crmService.previousProgress(this.taskDetails.id).subscribe((response:any)=>{
-      this.previousProgressList = response
-    },
-    (error)=>{
-      this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
-    })
+    if(this.data.source != "Lead")
+    {
+      this.crmService.previousProgress(this.taskDetails.id).subscribe((response:any)=>{
+        this.previousProgressList = response
+      },
+      (error)=>{
+        this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+      })
+    }
+    else
+    {
+      this.crmService.previousLeadProgress(this.taskDetails.id).subscribe((response:any)=>{
+        this.previousProgressList = response
+      },
+      (error)=>{
+        this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+      })
+    }
+    
   }
   updateSetting(event) {
     this.gridsize = event.value;

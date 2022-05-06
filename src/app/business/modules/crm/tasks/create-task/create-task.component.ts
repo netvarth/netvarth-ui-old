@@ -112,6 +112,7 @@ export class CreateTaskComponent implements OnInit {
      }
 
   ngOnInit(): void {
+    console.log("this.crmService.taskActivityName1",this.crmService.taskActivityName);
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
         console.log("User is :", user);
         this.selectMember= user.firstName + user.lastName;
@@ -235,7 +236,7 @@ export class CreateTaskComponent implements OnInit {
         this.estTime={ "days" :0, "hours" :0, "minutes" : 0 };
         console.log('this.estTime',this.estTime)
     }
-    else if(this.crmService.taskActivityName==='Create'){
+    else if(this.crmService.taskActivityName =='Create'){
       console.log('this.crmService.taskActivityName',this.crmService.taskActivityName)
       this.createBTimeField=true;
       this.updateBTimefield=false;

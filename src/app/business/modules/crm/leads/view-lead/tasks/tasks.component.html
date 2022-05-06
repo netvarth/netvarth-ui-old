@@ -21,45 +21,24 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- <ng-container *ngIf="subTaskDetails.length === 0">
+                <ng-container *ngIf="LeadTaskDetails.length == 0">
                 <tr class="text-center mx-auto text-danger">
-                    <td class="text-center nodatafound" colspan="5">No subactivities found</td>
+                    <td class="text-center nodatafound" colspan="5">No Lead activities found</td>
                 </tr>
-                </ng-container> -->
-                <ng-container>
+                </ng-container>
+                <ng-container *ngIf="LeadTaskDetails.length > 0">
                     <tr class="subtask-table-data pointer-cursor" *ngFor="let task of LeadTaskDetails" (click)="viewTask(task.taskUid,task)">
                         <!-- <pre>{{subtask | json}}</pre> -->
                         <td class="head_color"><span class="text-dark">
                             &nbsp;&nbsp;&nbsp;<b>{{task.title}}</b></span>
                             <!-- </span><br>&nbsp;&nbsp;&nbsp;<span class="text-primary">Assigned to {{subtask.assignee.name}}</span> -->
                         </td>
-                        <td class="head_color">Name</td>
-                        <td class="head_color">Status</td>
-                        <td class="head_color">Category</td>
-                        <td class="head_color">Type</td>
-                        <td class="head_color">Duedate</td>
-                        <!-- <td>
-                            <div class="copy">
-                              <span class="">
-                                <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
-                                  (click)="stopprop($event);">
-                                  <mat-icon>more_vert</mat-icon>
-                                </button>
-                              </span>
-                              <mat-menu #appMenu="matMenu">
-                                <button mat-menu-item (click)="openTaskCompletion(subtask)" *ngIf="subtask.status.name !='Completed'">
-                                  <i class="text-success fa fa-check-square"></i> Mark as Done
-                                </button>
-                                <button mat-menu-item (click)="openEditTask(subtask,'Update')"  *ngIf="subtask.status.name !='Completed'">
-                                  <i class="text-info fa fa-edit"></i>Edit
-                                </button>
-                                <button mat-menu-item (click)="openDialogStatusChange(subtask)" >
-                                 <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
-                                </button>
-
-                              </mat-menu>
-                            </div>
-                        </td> -->
+                        <td class="head_color" *ngIf="task.assignee">{{task.assignee.name}}</td>
+                        <td class="head_color" *ngIf="task.status">{{task.status.name}}</td>
+                        <td class="head_color" *ngIf="task.category">{{task.category.name}}</td>
+                        <td class="head_color" *ngIf="task.type">{{task.type.name}}</td>
+                        <td class="head_color" *ngIf="task.dueDate">{{task.dueDate}}</td>
+                        
                     </tr>
                 </ng-container>
             </tbody>

@@ -276,6 +276,13 @@ export class CrmService {
       const url = 'provider/task/' + taskUid + '/progresslog';
       return this.servicemeta.httpGet(url);
     }
+
+    previousLeadProgress(taskUid)
+    {
+      const url = 'provider/lead/' + taskUid + '/progresslog';
+      return this.servicemeta.httpGet(url);
+    }
+
     getActivitylog(taskUid)
     {
       const url = 'provider/task/' + taskUid + '/activity';
