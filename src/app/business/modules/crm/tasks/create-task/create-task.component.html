@@ -295,11 +295,8 @@
                         <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()"
                             >Cancel
                         </button>
-                        <button
-                            [ngClass]="{
-                                'btn btn-primary font-weight-bold cancelBtn': !createTaskForm.valid,
-                                'btn btn-primary font-weight-bold confirmBtn': createTaskForm.valid
-                            }" [class.spinner]="api_loading" 
+                        <button class="btn btn-primary font-weight-bold confirmBtn"
+                            [class.spinner]="api_loading" 
                             [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateTask()"
                                 >{{showCreateTaskButtonCaption()}}
                         </button>
@@ -608,10 +605,7 @@
                             >Cancel
                         </button>
                         <button 
-                            [ngClass]="{
-                                'btn btn-primary font-weight-bold cancelBtn': !createTaskForm.valid,
-                                'btn btn-primary font-weight-bold confirmBtn': createTaskForm.valid
-                            }" [class.spinner]="api_loading" 
+                            class="btn btn-primary font-weight-bold confirmBtn" [class.spinner]="api_loading" 
                             [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateTask()"
                                 >{{showCreateTaskButtonCaption()}}
                         </button>

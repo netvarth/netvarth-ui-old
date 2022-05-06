@@ -179,7 +179,14 @@ export class TasksComponent implements OnInit {
   public bTotalTask:boolean=true;
   public bNewTask:boolean=false;
   public newTaskCount:any;
-  public totalNewTaskList:any=[]
+  public totalNewTaskList:any=[];
+  public bAssignedTask:boolean=false;
+  public assignedTaskList:any=[];
+  public canceledTaskList:any=[];
+  public bCancelledTask:boolean=false;
+  public bSuspendedTask:boolean=false;
+  public suspendedTaskList:any=[];
+  public inProgressListData:any=[]
 
   constructor(
     private locationobj: Location,
@@ -198,26 +205,23 @@ export class TasksComponent implements OnInit {
 
   ngOnInit() {
     this.api_loading = false;
-    if (this.groupService.getitemFromGroupStorage('tabIndex')) {
-      this.selectedTab = this.groupService.getitemFromGroupStorage('tabIndex');
-    } else {
-      this.selectedTab = 1;
-    }
+    // if (this.groupService.getitemFromGroupStorage('tabIndex')) {
+    //   this.selectedTab = this.groupService.getitemFromGroupStorage('tabIndex');
+    // } else {
+    //   this.selectedTab = 1;
+    // }
+    
     this.getTaskStatusListData();
     this.getCategoryListData();
     this.getTaskTypeListData();
     this.getTotalTask();
     this.getInprogressTask();
     this.getCompletedTask();
-    this.getDelayedTask();
-    
-    // this.getInprogressTaskCount();
-    // this.getCompletedTaskCount();
-    // this.getDelayedTask();
-   
-    
-    // this.doSearch();
     this.getTaskmaster()
+    this.getNewTask()
+    this.getAssignedTask()
+    this.getCancelledTask()
+    this.getSuspendedTask()
   }
   handleTaskStatus(statusValue:any,statusText,statusFilter){
     console.log('statusValue',statusValue);
@@ -228,84 +232,120 @@ export class TasksComponent implements OnInit {
       this.bInprogressTask=true;
       this.bCompltedTask=false;
       this.bTotalTask=false;
-      this.bNewTask=false
+      this.bNewTask=false;
+      this.bAssignedTask=false;
+      this.bCancelledTask=false;
+      this.bSuspendedTask=false;
       this.getInprogressTask()
+      // this.getInprogressTaskData()
     }
     else if(statusValue===5){
       this.bCompltedTask=true;
       this.bInprogressTask=false;
       this.bTotalTask=false
-      this.bNewTask=false
+      this.bNewTask=false;
+      this.bAssignedTask=false;
+      this.bCancelledTask=false;
+      this.bSuspendedTask=false;
       this.getCompletedTask()
     }
-    else if(statusValue===4){
+    else if(statusValue===1){
       this.bNewTask=true;
       this.bTotalTask=false;
       this.bCompltedTask=false;
       this.bInprogressTask=false;
-      // this.getNewTaskDetails()
-
+      this.bAssignedTask=false;
+      this.bCancelledTask=false;
+      this.bSuspendedTask=false;
+      this.getNewTask()
     }
-
+    else if(statusValue===2){
+      this.bAssignedTask=true;
+      this.bNewTask=false;
+      this.bTotalTask=false;
+      this.bCompltedTask=false;
+      this.bInprogressTask=false;
+      this.bCancelledTask=false;
+      this.bSuspendedTask=false;
+      this.getAssignedTask()
+    }
+    else if(statusValue===4){
+      this.bCancelledTask=true;
+      this.bAssignedTask=false;
+      this.bNewTask=false;
+      this.bTotalTask=false;
+      this.bCompltedTask=false;
+      this.bInprogressTask=false;
+      this.bSuspendedTask=false;
+      this.getCancelledTask()
+    }
+    else if(statusValue===12){
+      this.bCancelledTask=false;
+      this.bAssignedTask=false;
+      this.bNewTask=false;
+      this.bTotalTask=false;
+      this.bCompltedTask=false;
+      this.bInprogressTask=false;
+      this.bSuspendedTask=true;
+      this.getSuspendedTask()
+    }
     else{
+      this.bCancelledTask=false;
+      this.bAssignedTask=false;
+      this.bNewTask=false;
       this.bTotalTask=true;
       this.bCompltedTask=false;
       this.bInprogressTask=false;
-      this.bNewTask=false
+      this.bSuspendedTask=false;
       this.getTotalTask()
-
     }
-    // if(statusValue)
-    // this.taskStatusList.forEach((status:any)=>{
-    //   console.log(status.id)
-    //   if(status.id = statusValue+1){
-    //     const b =this.getInprogressTask()
-    //     console.log('b',b)
-    //   }
-    // })
   }
-  getNewTaskCountDetails(filter){
-    // return new Promise((resolve, reject) => {
-    //   this.crmService.getNewTaskCount(filter)
-    //     .subscribe(
-    //       data => {
-    //         this.pagination.totalCnt = data;
-    //         this.newTaskCount = this.pagination.totalCnt;
-    //         resolve(data);
-    //       },
-    //       error => {
-    //         reject(error);
-    //       }
-    //     );
-    // });
+  getInprogressTaskData(from_oninit=true){
+    this.inProgressListData=[]
+    this.totalTaskList.forEach((element:any)=>{
+      if(element.status.name==='In Progress'){
+        this.inProgressListData.push(element);
+      }
+    })
 
   }
-  getNewTaskDetails(from_oninit=true){
-    let filter = this.setFilterForApi();
-    this.getNewTaskCountDetails(filter)
-      // .then(
-      //   result => {
-      //     if (from_oninit) { this.newTaskCount = result; }
-      //     filter = this.setPaginationCompletedFilter(filter);
-      //     this.crmService.getNewTask(filter)
-      //       .subscribe(
-      //         data => {
-      //           console.log('new',data)
-      //           this.totalNewTaskList = data;
-      //           this.totalNewTaskList = this.totalNewTaskList.filter(obj => !obj.parentTaskId);
-      //           this.loadComplete2 = true;
-      //         },
-      //         error => {
-      //           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      //           this.loadComplete2 = true;
-             
-      //         }
-      //       );
-      //   },
-      //   error => {
-      //     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      //   }
-      // );
+  getNewTask(from_oninit=true){
+    this.totalNewTaskList=[]
+    this.totalTaskList.forEach((element:any)=>{
+      if(element.status.name==='New'){
+        this.totalNewTaskList.push(element);
+      }
+    })
+  }
+  getAssignedTask(from_oninit=true){
+    this.assignedTaskList=[]
+    this.totalTaskList.forEach((element:any)=>{
+       console.log('element:.',element)
+      if(element.status.name ==='Assigned'){
+        this.assignedTaskList.push(element);
+      }
+      console.log('this.assignedTaskList',this.assignedTaskList)
+    })
+  }
+  getCancelledTask(from_oninit = true){
+    this.canceledTaskList=[]
+    this.totalTaskList.forEach((element:any)=>{
+      console.log('element:.',element)
+     if(element.status.name ==='Cancelled'){
+       this.canceledTaskList.push(element);
+     }
+     console.log('this.canceledTaskList',this.canceledTaskList)
+   })
+  }
+  getSuspendedTask(from_oninit=true){
+    this.suspendedTaskList=[]
+    this.totalTaskList.forEach((element:any)=>{
+      console.log('element:.',element)
+     if(element.status.name ==='Suspended'){
+       this.suspendedTaskList.push(element);
+     }
+     console.log('this.suspendedTaskList',this.suspendedTaskList)
+   })
   }
   getTotalTask(from_oninit = true) {
     let filter = this.setFilterForApi();
@@ -319,6 +359,10 @@ export class TasksComponent implements OnInit {
               data => {
                 this.totalTaskList = data;
                 console.log("Task List :",this.totalTaskList)
+                this.getNewTask()
+                this.getAssignedTask()
+                this. getCancelledTask()
+                this. getSuspendedTask()
                 this.totalTaskList = this.totalTaskList.filter(obj => !obj.originId);
                 this.loadComplete = true;
               },
@@ -334,6 +378,7 @@ export class TasksComponent implements OnInit {
         }
       );
   } 
+ 
 
 
   getColor(status){
@@ -541,6 +586,27 @@ export class TasksComponent implements OnInit {
     this.pagination.startpageval = pg;
     this.filter.page = pg;
     this.getDelayedTask();
+  }
+  handle_pageclick_assigned(pg) {
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getAssignedTask();
+  }
+  handle_pageclick_New(pg){
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getNewTask();
+  }
+  handle_pageclick_cancelled(pg){
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getCancelledTask();
+  }
+  handle_pageclick_suspended(pg){
+    this.pagination.startpageval=pg;
+    this.filter.page = pg;
+    this.getSuspendedTask()
+
   }
   goback() {
     this.locationobj.back();
@@ -842,22 +908,25 @@ export class TasksComponent implements OnInit {
     dialogRef.afterClosed().subscribe((res:any)=>{
       console.log('resssssssss',res);
       // this.getCompletedTask();
-      if(res==='In Progress'){
-        this.setTabSelection(2);
-        // this.inprogressCount=this.inprogressCount+1
-       
-      
+      if(res==='In Progress' ||res==='Completed' || res==='Assigned' || res==='New' || res === 'Cancelled' || res === 'Suspended' ){
+        // this.getInprogressTask();
+        this.ngOnInit()
       }
-      else if(res==='Completed'){
-        this.setTabSelection(3);
-        // this.tabChange(2)
-        // this.completedCount=this.completedCount+1
-      }
-      else{
-        // this.tabChange(0)
-        this.setTabSelection(1);
-        // this.totalCount= this.totalCount+1;
-      }
+      // else if(res==='Completed'){
+      //   this.ngOnInit()
+      // }
+      // else if(res==='Assigned'){
+      //   this.ngOnInit()
+      // }
+      // else if(res === 'New'){
+      //   this.ngOnInit()
+      // }
+      // else if( res === 'Cancelled'){
+      //   this.ngOnInit()
+      // }
+      // else if( res ==='Suspended'){
+      //   this.ngOnInit()
+      // }
       
     })
   }

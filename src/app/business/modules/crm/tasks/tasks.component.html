@@ -14,16 +14,61 @@
       <!-- <div class="taskTitle">
           <div>Status</div>
       </div> -->
-      <!-- <div class="fieldPadding">
-          <mat-select class="form-control" placeholder="Select status" 
+      <div class="fieldPadding">
+          <mat-select class="form-control" placeholder="Task {{totalCount}}" 
               #userTaskStatus [(ngModel)]="statusFilter"  (ngModelChange)="handleTaskStatus(userTaskStatus.value,'taskStatus',statusFilter)">
               <mat-option   *ngFor="let stat of taskStatusList[0];let index=i" [value]="stat.id" >
-                  <div>
-                      {{stat.name }}
+                  <div *ngIf="stat.name==='New'"class="statusImg">
+                    <div>
+                      <img  width="25px" src="./assets/images/crmImages/new.png" />
+                    </div>
+                     <div>
+                      {{stat.name }} ({{totalNewTaskList.length}})
+                     </div>
                   </div>
-              </mat-option>
+                  <div *ngIf="stat.name==='Assigned'" class="statusImg">
+                    <div>
+                      <img  width="25px" src="./assets/images/tokenDetailsIcon/assignedTo.png" />
+                    </div>
+                    <div>
+                      {{stat.name }} ({{assignedTaskList.length}})
+                    </div>
+                </div>
+                <div *ngIf="stat.name==='In Progress'" class="statusImg">
+                  <div>
+                    <img  width="25px" src="./assets/images/crmImages/inProgress2.png" />
+                  </div>
+                  <div>
+                    {{stat.name }} ( {{inprogressCount}})
+                  </div>
+              </div>
+                <div *ngIf="stat.name==='Cancelled'" class="statusImg">
+                  <div>
+                    <img  width="25px" src="./assets/images/crmImages/cancelled.png" />
+                  </div>
+                 <div>
+                  {{stat.name }} ({{canceledTaskList.length}})
+                 </div>
+              </div>
+              <div *ngIf="stat.name==='Completed'" class="statusImg">
+                <div>
+                  <img  width="25px" src="./assets/images/crmImages/completed2.png" />
+                </div>
+                <div>
+                  {{stat.name }} ({{completedCount}})
+                </div>
+            </div>
+            <div *ngIf="stat.name==='Suspended'" class="statusImg">
+              <div>
+                <img  width="25px" src="./assets/images/crmImages/suspended.png" />
+              </div>
+             <div>
+              {{stat.name }} ({{suspendedTaskList.length}})
+             </div>
+          </div>
+        </mat-option>
           </mat-select>
-      </div> -->
+      </div>
   </div>
   <!----mat tab change to mat select end-->
     <div class="webDisplay">
@@ -66,19 +111,14 @@
   </div>
   <div class="clearfix"></div>
   <div class="startMatTab">
-    <mat-tab-group dynamicHeight mat-stretch-tabs (selectedTabChange)="tabChange($event)"
-      [selectedIndex]="selectedTab - 1">
-      <mat-tab class="mat-tab">
+    <!-- <mat-tab-group dynamicHeight mat-stretch-tabs (selectedTabChange)="tabChange($event)"
+      [selectedIndex]="selectedTab - 1"> -->
+      <!-- <mat-tab class="mat-tab"> -->
         <!----total task start-->
-        <!-- <div *ngIf="bTotalTask"> -->
+        <div *ngIf="bTotalTask">
         <ng-template mat-tab-label>
           <span class="tab-number"><img class="img" src="/assets/images/crmImages/totaltask.PNG" /></span>
           <span class="tab-text">Total Activity({{totalCount}})</span>
-          <!-- <div>
-           
-          </div>
-          <div class="totalCount">({{totalCount}})</div>&nbsp;
-          <div class="totalActivityName">Total Task</div> -->
         </ng-template>
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
         <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
@@ -319,24 +359,24 @@
                       </ng-container>
                     </tbody>
                   </table>
-                  <div class="search_paging" *ngIf="loadComplete">
-                    <app-pager *ngIf="pagination.totalCnt != 0" [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                  <div class="search_paging" *ngIf="pagination.totalCnt>0">
+                    <!-- {{pagination.totalCnt}} -->
+                    <app-pager  [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                       (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
                     </app-pager>
                   </div>
-
                 </div>
               </div>
             </div>
           </div>
         </div>
-      <!-- </div> -->
+      </div>
         <!---total task end-->
 
-      </mat-tab>
-      <mat-tab class="mat-tab">
+      <!-- </mat-tab> -->
+      <!-- <mat-tab class="mat-tab"> -->
         <!----inprogress task start-->
-        <!-- <div *ngIf="bInprogressTask"> -->
+        <div *ngIf="bInprogressTask">
         <ng-template mat-tab-label>
           <span class="tab-number"><img class="img" src="/assets/images/crmImages/handHoldingClock.PNG" /></span>
           <span class="tab-text">In Progress({{inprogressCount}})</span>
@@ -441,7 +481,7 @@
                       </ng-container>
                     </tbody>
                   </table>
-                  <div class="search_paging" *ngIf="loadComplete1">
+                  <div class="search_paging" *ngIf="pagination.totalCnt>10" >
                     <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                       (pagerclick)="handle_pageclick_inprogress($event)" [curpage]="pagination.startpageval">
                     </app-pager>
@@ -451,12 +491,12 @@
             </div>
           </div>
         </div>
-      <!-- </div> -->
+      </div>
         <!----inprogress task end-->
-      </mat-tab>
-      <mat-tab class="mat-tab">
+      <!-- </mat-tab> -->
+      <!-- <mat-tab class="mat-tab"> -->
         <!----completed task start-->
-        <!-- <div *ngIf="bCompltedTask"> -->
+        <div *ngIf="bCompltedTask">
                   <ng-template mat-tab-label>
           <span class="tab-number"><img class="img" src="/assets/images/crmImages/completed.PNG" /></span>
           <span class="tab-text">Completed({{completedCount}})</span>
@@ -573,7 +613,7 @@
                       </ng-container>
                     </tbody>
                   </table>
-                  <div class="search_paging" *ngIf="loadComplete2">
+                  <div class="search_paging" *ngIf="pagination.totalCnt>10">
                     <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                       (pagerclick)="handle_pageclick_completed($event)" [curpage]="pagination.startpageval">
                     </app-pager>
@@ -583,19 +623,19 @@
             </div>
           </div>
         </div>
-      <!-- </div> -->
+      </div>
        <!----completed task end-->
-      </mat-tab>
-      <!---delayed start--->
+      <!-- </mat-tab> -->
+      <!---newtask start--->
       <!-- <mat-tab class="mat-tab"> -->
-        <!-- <div *ngIf="bNewTask">
-        <ng-template mat-tab-label>
+        <div *ngIf="bNewTask">
+        <!-- <ng-template mat-tab-label>
           <div>
             <img class="img" src="/assets/images/crmImages/deyayed.PNG" />
           </div>
           <div class="totalCount">({{newTaskCount}})</div>
           <div class="totalActivityName">Delayed</div>
-        </ng-template>
+        </ng-template> -->
 
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
         <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
@@ -672,7 +712,7 @@
                                   <mat-icon>more_vert</mat-icon>
                                 </button>
                               </span>
-                              <mat-menu #appMenu="matMenu">
+                              <!-- <mat-menu #appMenu="matMenu">
                                 <button mat-menu-item>
                                   <button mat-menu-item (click)="openTaskCompletion(task)">
                                     Mrak as Done
@@ -680,6 +720,18 @@
                                 </button>
                                 <button mat-menu-item (click)="openEditTask(task,'Update')">
                                   Edit
+                                </button>
+
+                              </mat-menu> -->
+                              <mat-menu #appMenu="matMenu">
+                                <button mat-menu-item (click)="openTaskCompletion(task)">
+                                  <img class="imageStatus" src="/assets/images/crmImages/mark.png" />Mark as Done
+                                </button>
+                                <button mat-menu-item (click)="openEditTask(task,'Update')">
+                                  <img class="imageStatus" src="/assets/images/crmImages/edit.png" />Edit
+                                </button>
+                                <button mat-menu-item (click)="openDialogStatusChange(task)" >
+                                 <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
                                 </button>
 
                               </mat-menu>
@@ -690,9 +742,9 @@
                       </ng-container>
                     </tbody>
                   </table>
-                  <div class="search_paging" *ngIf="loadComplete3">
+                  <div class="search_paging" *ngIf="totalNewTaskList.length >10">
                     <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-                      (pagerclick)="handle_pageclick_delayed($event)" [curpage]="pagination.startpageval">
+                      (pagerclick)="handle_pageclick_New($event)" [curpage]="pagination.startpageval">
                     </app-pager>
                   </div>
                 </div>
@@ -700,10 +752,390 @@
             </div>
           </div>
         </div>
-      </div> -->
-        <!---delayed end--->
+      </div>
+        <!---newtask end--->
       <!-- </mat-tab> -->
-    </mat-tab-group>
+      <!-----assigned start-->
+      <div *ngIf="bAssignedTask">
+        <!-- <ng-template mat-tab-label>
+          <div>
+            <img class="img" src="/assets/images/crmImages/deyayed.PNG" />
+          </div>
+          <div class="totalCount">({{newTaskCount}})</div>
+          <div class="totalActivityName">Delayed</div>
+        </ng-template> -->
+
+        <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+        <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
+          <div class="col-md-12 no-padding-small">
+            <div class="row">
+              <div class="card p0 w-dta">
+                <div class="table-responsive dash-list">
+                  <table class="table">
+                    <thead>
+                      <tr class="tble-filtr-tr heght">
+                        <th></th>
+                        <th class="head_color">Task Details</th>
+                    
+                        <th class="head_color">Status</th>
+                        <th class="head_color">Catogory</th>
+                        <th class="head_color">Type</th>
+                        <th class="head_color">Due Date</th>
+                        <th class="filter-fx-col">
+                          <table class="fltr-tbl">
+                            <tr>
+                              <td>
+                                <span>
+                                  
+                                </span>
+                              </td>
+                            </tr>
+                          </table>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+
+                        <div>
+
+                        </div>
+
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <ng-container *ngIf="assignedTaskList.length === 0">
+                        <tr>
+                          <td class="nodatafound" colspan="5">{{no_tasks_cap}}</td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="assignedTaskList.length>0">
+                        <tr *ngFor="let task of assignedTaskList; let i=index" (click)="viewTask(task.taskUid,task)">
+                          <td >&nbsp; &nbsp;<circle-progress class="circle__progress" 
+                            [percent]="task.progress"
+                            [animation]="true"
+                            [animationDuration]="300"
+                            [startFromZero]="true"
+                            [showInnerStroke]="true"
+                            [titleFontSize]="'10'"
+                            [titleFontWeight]="'900'"
+                            [height]="'100'"
+                            [unitsFontSize]="'10'"
+                            [unitsFontWeight]="'700'"
+                            [subtitle]="task.status.name"
+                            [subtitleFontSize]="'7'"
+                            [lazy]="false"
+           ></circle-progress></td>
+                          <td data-title="Task Details" class="td1">{{task.title}}</td>
+                        
+                          <td data-title="Status" class="td2">{{task.status.name}}</td>
+                          <td data-title="Category" class="td4">{{task.category.name}}</td>
+                          <td data-title="Type" class="td4">{{task.type.name}}</td>
+                          <td data-title="Due Date" class="td4">{{task.dueDate | date:newDateFormat}}</td>
+                          <td>
+                            <div class="copy">
+                              <span class="">
+                                <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
+                                  (click)="stopprop($event);">
+                                  <mat-icon>more_vert</mat-icon>
+                                </button>
+                              </span>
+                              <!-- <mat-menu #appMenu="matMenu">
+                                <button mat-menu-item>
+                                  <button mat-menu-item (click)="openTaskCompletion(task)">
+                                    Mrak as Done
+                                  </button>
+                                </button>
+                                <button mat-menu-item (click)="openEditTask(task,'Update')">
+                                  Edit
+                                </button>
+
+                              </mat-menu> -->
+                              <mat-menu #appMenu="matMenu">
+                                <button mat-menu-item (click)="openTaskCompletion(task)">
+                                  <img class="imageStatus" src="/assets/images/crmImages/mark.png" />Mark as Done
+                                </button>
+                                <button mat-menu-item (click)="openEditTask(task,'Update')">
+                                  <img class="imageStatus" src="/assets/images/crmImages/edit.png" />Edit
+                                </button>
+                                <button mat-menu-item (click)="openDialogStatusChange(task)" >
+                                 <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
+                                </button>
+
+                              </mat-menu>
+                            </div>
+                          </td>
+                          
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                  <div class="search_paging" *ngIf="assignedTaskList.length>10">
+                    <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                      (pagerclick)="handle_pageclick_assigned($event)" [curpage]="pagination.startpageval">
+                    </app-pager>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!---assigned end-->
+      <!----CancelledTask start-->
+      <div *ngIf="bCancelledTask">
+        <!-- <ng-template mat-tab-label>
+          <div>
+            <img class="img" src="/assets/images/crmImages/deyayed.PNG" />
+          </div>
+          <div class="totalCount">({{newTaskCount}})</div>
+          <div class="totalActivityName">Delayed</div>
+        </ng-template> -->
+        <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+        <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
+          <div class="col-md-12 no-padding-small">
+            <div class="row">
+              <div class="card p0 w-dta">
+                <div class="table-responsive dash-list">
+                  <table class="table">
+                    <thead>
+                      <tr class="tble-filtr-tr heght">
+                        <th></th>
+                        <th class="head_color">Task Details</th>
+                    
+                        <th class="head_color">Status</th>
+                        <th class="head_color">Catogory</th>
+                        <th class="head_color">Type</th>
+                        <th class="head_color">Due Date</th>
+                        <th class="filter-fx-col">
+                          <table class="fltr-tbl">
+                            <tr>
+                              <td>
+                                <span>
+                                  
+                                </span>
+                              </td>
+                            </tr>
+                          </table>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+
+                        <div>
+
+                        </div>
+
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <ng-container *ngIf="canceledTaskList.length === 0">
+                        <tr>
+                          <td class="nodatafound" colspan="5">{{no_tasks_cap}}</td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="canceledTaskList.length>0">
+                        <tr *ngFor="let task of canceledTaskList; let i=index" (click)="viewTask(task.taskUid,task)">
+                          <td >&nbsp; &nbsp;<circle-progress class="circle__progress" 
+                            [percent]="task.progress"
+                            [animation]="true"
+                            [animationDuration]="300"
+                            [startFromZero]="true"
+                            [showInnerStroke]="true"
+                            [titleFontSize]="'10'"
+                            [titleFontWeight]="'900'"
+                            [height]="'100'"
+                            [unitsFontSize]="'10'"
+                            [unitsFontWeight]="'700'"
+                            [subtitle]="task.status.name"
+                            [subtitleFontSize]="'7'"
+                            [lazy]="false"
+           ></circle-progress></td>
+                          <td data-title="Task Details" class="td1">{{task.title}}</td>
+                        
+                          <td data-title="Status" class="td2">{{task.status.name}}</td>
+                          <td data-title="Category" class="td4">{{task.category.name}}</td>
+                          <td data-title="Type" class="td4">{{task.type.name}}</td>
+                          <td data-title="Due Date" class="td4">{{task.dueDate | date:newDateFormat}}</td>
+                          <td>
+                            <div class="copy">
+                              <span class="">
+                                <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
+                                  (click)="stopprop($event);">
+                                  <mat-icon>more_vert</mat-icon>
+                                </button>
+                              </span>
+                              <!-- <mat-menu #appMenu="matMenu">
+                                <button mat-menu-item>
+                                  <button mat-menu-item (click)="openTaskCompletion(task)">
+                                    Mrak as Done
+                                  </button>
+                                </button>
+                                <button mat-menu-item (click)="openEditTask(task,'Update')">
+                                  Edit
+                                </button>
+
+                              </mat-menu> -->
+                              <mat-menu #appMenu="matMenu">
+                                <button mat-menu-item (click)="openTaskCompletion(task)">
+                                  <img class="imageStatus" src="/assets/images/crmImages/mark.png" />Mark as Done
+                                </button>
+                                <button mat-menu-item (click)="openEditTask(task,'Update')">
+                                  <img class="imageStatus" src="/assets/images/crmImages/edit.png" />Edit
+                                </button>
+                                <button mat-menu-item (click)="openDialogStatusChange(task)" >
+                                 <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
+                                </button>
+
+                              </mat-menu>
+                            </div>
+                          </td>
+                          
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                  <div class="search_paging" *ngIf="canceledTaskList.length >10">
+                    <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                      (pagerclick)="handle_pageclick_cancelled($event)" [curpage]="pagination.startpageval">
+                    </app-pager>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!----cancelledf task end-->
+      <!----suspended task start-->
+      <div *ngIf="bSuspendedTask">
+        <!-- <ng-template mat-tab-label>
+          <div>
+            <img class="img" src="/assets/images/crmImages/deyayed.PNG" />
+          </div>
+          <div class="totalCount">({{newTaskCount}})</div>
+          <div class="totalActivityName">Delayed</div>
+        </ng-template> -->
+        <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+        <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
+          <div class="col-md-12 no-padding-small">
+            <div class="row">
+              <div class="card p0 w-dta">
+                <div class="table-responsive dash-list">
+                  <table class="table">
+                    <thead>
+                      <tr class="tble-filtr-tr heght">
+                        <th></th>
+                        <th class="head_color">Task Details</th>
+                    
+                        <th class="head_color">Status</th>
+                        <th class="head_color">Catogory</th>
+                        <th class="head_color">Type</th>
+                        <th class="head_color">Due Date</th>
+                        <th class="filter-fx-col">
+                          <table class="fltr-tbl">
+                            <tr>
+                              <td>
+                                <span>
+                                  
+                                </span>
+                              </td>
+                            </tr>
+                          </table>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+
+                        <div>
+
+                        </div>
+
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <ng-container *ngIf="suspendedTaskList.length === 0">
+                        <tr>
+                          <td class="nodatafound" colspan="5">{{no_tasks_cap}}</td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="suspendedTaskList.length>0">
+                        <tr *ngFor="let task of suspendedTaskList; let i=index" (click)="viewTask(task.taskUid,task)">
+                          <td >&nbsp; &nbsp;<circle-progress class="circle__progress" 
+                            [percent]="task.progress"
+                            [animation]="true"
+                            [animationDuration]="300"
+                            [startFromZero]="true"
+                            [showInnerStroke]="true"
+                            [titleFontSize]="'10'"
+                            [titleFontWeight]="'900'"
+                            [height]="'100'"
+                            [unitsFontSize]="'10'"
+                            [unitsFontWeight]="'700'"
+                            [subtitle]="task.status.name"
+                            [subtitleFontSize]="'7'"
+                            [lazy]="false"
+           ></circle-progress></td>
+                          <td data-title="Task Details" class="td1">{{task.title}}</td>
+                        
+                          <td data-title="Status" class="td2">{{task.status.name}}</td>
+                          <td data-title="Category" class="td4">{{task.category.name}}</td>
+                          <td data-title="Type" class="td4">{{task.type.name}}</td>
+                          <td data-title="Due Date" class="td4">{{task.dueDate | date:newDateFormat}}</td>
+                          <td>
+                            <div class="copy">
+                              <span class="">
+                                <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
+                                  (click)="stopprop($event);">
+                                  <mat-icon>more_vert</mat-icon>
+                                </button>
+                              </span>
+                              <!-- <mat-menu #appMenu="matMenu">
+                                <button mat-menu-item>
+                                  <button mat-menu-item (click)="openTaskCompletion(task)">
+                                    Mrak as Done
+                                  </button>
+                                </button>
+                                <button mat-menu-item (click)="openEditTask(task,'Update')">
+                                  Edit
+                                </button>
+
+                              </mat-menu> -->
+                              <mat-menu #appMenu="matMenu">
+                                <button mat-menu-item (click)="openTaskCompletion(task)">
+                                  <img class="imageStatus" src="/assets/images/crmImages/mark.png" />Mark as Done
+                                </button>
+                                <button mat-menu-item (click)="openEditTask(task,'Update')">
+                                  <img class="imageStatus" src="/assets/images/crmImages/edit.png" />Edit
+                                </button>
+                                <button mat-menu-item (click)="openDialogStatusChange(task)" >
+                                 <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
+                                </button>
+
+                              </mat-menu>
+                            </div>
+                          </td>
+                          
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                  <div class="search_paging"*ngIf="suspendedTaskList.length >10" >
+                    <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                      (pagerclick)="handle_pageclick_suspended($event)" [curpage]="pagination.startpageval">
+                    </app-pager>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!----suspended task end-->
+    <!-- </mat-tab-group> -->
   </div>
 
 </section>

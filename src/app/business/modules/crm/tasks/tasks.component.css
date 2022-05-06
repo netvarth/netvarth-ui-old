@@ -1447,6 +1447,9 @@ svg {
     .form-control{
         width: 100%  !important;
     }
+    .btnClass{
+        padding-left: 0px !important;
+    }
 
 }
 .taskTitle{
@@ -1461,7 +1464,7 @@ svg {
 .form-control{
     /* background-color: #f6f6f6!important; */
     display: block;
-    width: 70%;
+    width: 50%;
     height: 35px;
     padding: 6px 12px!important;
     font-size: 14px !important;
@@ -1485,4 +1488,9 @@ svg {
 }
 .form-control:focus{
     border: 1.23426px solid #F8F8F8 !important;
+}
+.statusImg{
+    display: flex;
+    gap: 5px;
+    align-items: center;
 }
