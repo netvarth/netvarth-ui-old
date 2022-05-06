@@ -44,7 +44,7 @@
                                                 <span>{{donation.service.name}}</span>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr *ngIf="donation.customerPaidCharges > 0">
                                             <td width="48%" align="right">Processing fee</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>
                                             <td class="rupee-font">

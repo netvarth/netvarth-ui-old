@@ -174,7 +174,7 @@
                                                     (reloadApi)="getCommunicationHistory()"></app-inbox-list>
                                             </mat-tab> -->
                                             <mat-tab label="{{cust_notes_cap | capitalizeFirst}}">
-                                                <span
+                                                <span class="mgn-lt-20" 
                                                     *ngIf="appt && appt.consumerNote &&  appt.consumerNote !== ''">{{appt.consumerNote}}</span>
                                                 <span  class="mgn-lt-20" 
                                                     *ngIf="appt && (appt.consumerNote == '' || !appt.consumerNote)">{{no_cus_notes_cap}}</span>
