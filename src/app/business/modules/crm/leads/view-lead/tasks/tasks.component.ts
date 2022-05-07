@@ -61,18 +61,12 @@ export class TasksComponent implements OnInit {
     
     
 
-  this.crmService.getLeadDetails(this.leadid).subscribe(data => {
-    this.leadDetails = data;
-    console.log("Lead Details : ",this.leadDetails);
-    this.crmService.getLeadTaskDetails(this.taskid).subscribe(data => {
+    this.crmService.getLeadTaskDetails(this.leadid).subscribe(data => {
       this.taskDetails = data;
-      if (this.leadDetails && this.leadDetails.tasks) {
-      let LeadTaskFilter = this.taskDetails.filter(data => this.leadDetails.tasks.includes(data.taskUid));
-      this.LeadTaskDetails = LeadTaskFilter;
+      // let LeadTaskFilter = this.taskDetails.filter(data => this.leadDetails.tasks.includes(data.taskUid));
+      this.LeadTaskDetails = this.taskDetails;
       console.log("Task Details : ",this.LeadTaskDetails);
-    }
     })
-})
 
 
 
