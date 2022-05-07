@@ -188,7 +188,6 @@ export class TasksComponent implements OnInit {
   public suspendedTaskList:any=[];
   public inProgressListData:any=[];
   public totalActivity:any='Select activity';
-  public bShowHideBTn:boolean=true
 
   constructor(
     private locationobj: Location,
@@ -827,12 +826,10 @@ export class TasksComponent implements OnInit {
           console.log("Task List :",this.totalTaskList)
           this.totalTaskList = this.totalTaskList.filter(obj => !obj.originId);
           this.loadComplete = true;
-          this.bShowHideBTn=false
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           this.loadComplete = true;
-         this.bShowHideBTn=true
        
         }
       );
@@ -934,7 +931,7 @@ export class TasksComponent implements OnInit {
     dialogRef.afterClosed().subscribe((res)=>{
       console.log('resssssssssCom',res);
        if(res==='Completed'){
-        this.setTabSelection(3);
+        this.ngOnInit()
         // this.completedCount=this.completedCount+1
       }
     })

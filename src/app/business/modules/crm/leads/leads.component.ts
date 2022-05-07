@@ -144,6 +144,18 @@ export class LeadsComponent implements OnInit {
   TransferredCount: any;
   totalTransferredList: any;
   loadComplete4: boolean;
+  public bTransferredLead:boolean=false;
+  public bFailedLead:boolean=false;
+  public bSucessLead:boolean=false;
+  public bInProgressLead:boolean=false;
+  public bTotalLead:boolean=true;
+  public statusFilter:any;
+  public assignedLeadList:any=[]
+  public bUnassigned:boolean=false
+  public bAssigned:boolean=false;
+  public UnassignedLeadList:any=[]
+  public sucessListLead:any=[]
+  public totalActivity:any='Select activity';
   constructor(
     private locationobj: Location,
     private groupService: GroupStorageService,
@@ -176,6 +188,9 @@ export class LeadsComponent implements OnInit {
     this.getFailedLead();
     this.getTransferredLead();
     this.getLeadmaster()
+    this.getUnassignedLead()
+    this.getAssignedLead()
+    this.getSucessListLead()
   }
   getTotalLead(from_oninit = true) {
     let filter = this.setFilterForApi();
@@ -191,6 +206,12 @@ export class LeadsComponent implements OnInit {
             .subscribe(
               data => {
                 this.totalLeadList = data;
+                this.getUnassignedLead()
+                this.getAssignedLead()
+                this.getSucessListLead()
+                this.getTransferredLead()
+                this.getFailedLead()
+                this.getInprogressLead()
                 this.loadComplete = true;
               },
               error => {
@@ -328,7 +349,36 @@ export class LeadsComponent implements OnInit {
         );
     });
   }
-
+  getUnassignedLead(){
+    this.UnassignedLeadList=[]
+    this.totalLeadList.forEach((unassigned)=>{
+      if(unassigned.status.name ==='Unassigned'){
+        this.UnassignedLeadList.push(unassigned)
+      }
+      
+    })
+  }
+  getAssignedLead(){
+    this.assignedLeadList=[]
+    this.totalLeadList.forEach((assigned)=>{
+      // console.log('assigned',assigned)
+      if(assigned.status.name ==='Assigned'){
+        this.assignedLeadList.push(assigned)
+      }
+      
+    })
+  }
+  getSucessListLead(){
+    this.sucessListLead=[]
+    this.totalLeadList.forEach((Success)=>{
+      console.log('Success',Success)
+      if(Success.status.name ==='Success'){
+        this.sucessListLead.push(Success)
+      }
+      console.log('this.sucessListLead',this.sucessListLead)
+      
+    })
+  }
 
 
 
@@ -497,6 +547,16 @@ export class LeadsComponent implements OnInit {
     this.pagination.startpageval = pg;
     this.filter.page = pg;
     this.getDelayedLead();
+  }
+  handle_pageclick_Unassigned(pg){
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getUnassignedLead();
+  }
+  handle_pageclick_ASsigned(pg){
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getAssignedLead();
   }
   goback() {
     this.locationobj.back();
@@ -696,10 +756,112 @@ export class LeadsComponent implements OnInit {
     this.filterapplied = false;
     this.getTotalLead();
   }
+  handleLeadStatus(statusValue:any,statusText,statusFilter){
+    console.log('statusValue',statusValue);
+    console.log('statusValue',statusText);
+    console.log('statusFilter',statusFilter)
+    console.log('this.leadStatusList',this.leadStatusList)
+    if(statusValue===6){
+      this.bUnassigned=true;
+      this.bTransferredLead=false
+      this.bFailedLead=false;
+      this.bSucessLead=false;
+      this.bInProgressLead=false;
+      this.bTotalLead=false;
+      this.bAssigned=false;
+      this.getUnassignedLead()
+    }
+    else if(statusValue===7){
+      this.bUnassigned=false;
+      this.bTransferredLead=false
+      this.bFailedLead=false;
+      this.bSucessLead=false;
+      this.bInProgressLead=false;
+      this.bTotalLead=false;
+      this.bAssigned=true
+      this.getAssignedLead()
+      
+    }
+    else if(statusValue===8){
+      this.bUnassigned=false;
+      this.bTransferredLead=false
+      this.bFailedLead=false;
+      this.bSucessLead=false;
+      this.bInProgressLead=true;
+      this.bTotalLead=false;
+      this.bAssigned=false;
+      this.getInprogressLead()
+      
+    }
+    else if(statusValue===9){
+      this.bUnassigned=false;
+      this.bTransferredLead=false
+      this.bFailedLead=true;
+      this.bSucessLead=false;
+      this.bInProgressLead=false;
+      this.bTotalLead=false;
+      this.bAssigned=false;
+      this.getFailedLead()
+      
+    }
+    else if(statusValue===10){
+      this.bUnassigned=false;
+      this.bTransferredLead=false
+      this.bFailedLead=false;
+      this.bSucessLead=true;
+      this.bInProgressLead=false;
+      this.bTotalLead=false;
+      this.bAssigned=false
+      this.getCompletedLead();
+      
+      
+    }
+    else if(statusValue===11){
+      this.bUnassigned=false;
+      this.bTransferredLead=true
+      this.bFailedLead=false;
+      this.bSucessLead=false;
+      this.bInProgressLead=false;
+      this.bTotalLead=false;
+      this.bAssigned=false
+      this.getTransferredLead()
+    }
+    else{
+      this.bUnassigned=false;
+      this.bTransferredLead=false
+      this.bFailedLead=false;
+      this.bSucessLead=false;
+      this.bInProgressLead=false;
+      this.bTotalLead=true;
+      this.bAssigned=false
+      this.getTotalLead()
+      
+    }
+  }
   getLeadStatusListData(){
     this.crmService.getLeadStatus().subscribe((leadStatus:any)=>{
       console.log('leadStatus',leadStatus);
-      this.leadStatusList.push(leadStatus);
+      this.leadStatusList.push({
+        id:0,   name:'Total Activity',image:'./assets/images/crmImages/total.png',
+      },
+      {
+        id: 6, name: 'Unassigned',image:'./assets/images/crmImages/unassigned.png',
+      },
+      {
+        id: 7, name: 'Assigned',image:'./assets/images/tokenDetailsIcon/assignedTo.png',
+      },
+      {
+        id: 8, name: 'In Progress',image:'./assets/images/crmImages/inProgress2.png',
+      },
+      {
+        id: 9, name: 'Failed',image:'./assets/images/crmImages/cancelled.png',
+      },
+      {
+        id: 10, name: 'Success',image:'./assets/images/crmImages/completed2.png',
+      },
+      {
+        id: 11, name: 'Transferred',image:'./assets/images/crmImages/transferred.png',
+      },);
     },
     (error)=>{
       this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
@@ -736,7 +898,7 @@ export class LeadsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((res)=>{
       console.log('resssssssssCom',res);
        if(res==='Completed'){
-        this.setTabSelection(3);
+        this.getCompletedLead()
         // this.completedCount=this.completedCount+1
       }
     })
@@ -757,19 +919,25 @@ export class LeadsComponent implements OnInit {
       console.log('resssssssss',res);
       // this.getCompletedLead();
       if(res==='In Progress'){
-        this.setTabSelection(2);      
+        this.ngOnInit()   
       }
       else if(res==='Success'){
-        this.setTabSelection(3);
+        this.ngOnInit()
       }
       else if(res==='Failed'){
-        this.setTabSelection(4);
+        this.ngOnInit()
       }
       else if(res==='Transferred'){
-        this.setTabSelection(5);
+        this.ngOnInit()
+      }
+      else if(res === 'Unassigned'){
+        this.ngOnInit()
+      }
+      else if(res === 'Assigned'){
+        this.ngOnInit()
       }
       else{
-        this.setTabSelection(1);
+        this.ngOnInit()
       }
       
     })

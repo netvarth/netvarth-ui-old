@@ -245,46 +245,6 @@
                 
             </div>
 
-
-
-
-
-
-
-
-
-            <span class="group-head">Customer Info</span><br>
-            <div class="bggrey my-2">
-                <!-- <div>
-                    <div class="leadTitle">
-                        <div>Customer</div>
-                    </div>
-                    <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" type="text"
-                        placeholder="Enter Customer Id" class="form-control widthWebKit" formControlName="customer_id" autocomplete="off" #customer (ngModelChange)="handleCustomer(customer.value)"/> 
-                        <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                        </app-field-error-display>    
-                    </div>
-                </div> -->
-                <div>
-                    <div class="leadTitle">
-                        <div>Customer</div>
-                        <div class="astericColor">*</div>
-                    </div>
-                    <div class="fieldPadding">
-                        <div>
-                            <div [formControlName]="selectLeadCustomer" class="form-control" style="display: flex;justify-content: space-between;" (click)="selectCustomerDialog(selectLeadCustomer)" >
-                                <div >{{selectLeadCustomer}}</div>
-                                <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
-                            </div>
-                        </div>
-                        <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                        </app-field-error-display>  
-                    </div>                           
-                </div>
-                
-            </div>
-
             
             <span class="group-head">Other Info</span><br>
             <div class="bggrey my-2">

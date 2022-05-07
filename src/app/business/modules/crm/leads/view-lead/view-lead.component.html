@@ -147,7 +147,7 @@
                    
                       <div class="notesListSection" style="cursor: pointer;" (click)="goCheckinDetail(token.waitlistUid)">
                         <span class="pull-left mgn-lt-5 date circle-token bold">{{token.token}}</span>
-                        <div class="text-primary">{{token.waitlistEncId}}<br><span class="label"><b>Created By : {{token.createdByName}}</b></span></div>
+                        <div class="text-primary" *ngIf="token.consumerName">{{token.consumerName}}<br><span class="label"><b>Created By : {{token.createdByName}}</b></span></div>
                        
                       </div>
                     
@@ -186,9 +186,7 @@
               </span>
             </div>
           </div>
-          
         </div>
-
         <div class="row d-lg-flex justify-content-lg-start">
           <div  class="sublead-border  col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mt-2">
             <app-tasks [leadid]="leadkid"></app-tasks>

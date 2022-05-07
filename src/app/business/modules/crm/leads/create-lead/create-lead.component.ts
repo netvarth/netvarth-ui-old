@@ -1,4 +1,4 @@
-import { Component, OnInit ,OnDestroy} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { projectConstantsLocal } from '../../../../../../../src/app/shared/constants/project-constants';
 import { projectConstants } from '../../../../../../../src/app/app.component';
 import { Messages } from '../../../../../../../src/app/shared/constants/project-messages';
@@ -28,7 +28,7 @@ import { Subject } from 'rxjs';
   templateUrl: './create-lead.component.html',
   styleUrls: ['./create-lead.component.css']
 })
-export class CreateLeadComponent implements OnInit , OnDestroy{
+export class CreateLeadComponent implements OnInit{
   
   public tooltipcls:any= '';
   public select_cap:any= Messages.SELECT_CAP;
@@ -151,9 +151,9 @@ export class CreateLeadComponent implements OnInit , OnDestroy{
      ) { 
       //this.router.navigate(['provider', 'lead','create-lead'])
      }
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
+  // ngOnDestroy(): void {
+  //   throw new Error('Method not implemented.');
+  // }
 
   ngOnInit(): void {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -771,8 +771,9 @@ export class CreateLeadComponent implements OnInit , OnDestroy{
           console.log('afterUpdateList',response);
           setTimeout(() => {
             this.createLeadForm.reset();
-          this.router.navigate(['provider', 'lead']);
+          // this.router.navigate(['provider', 'lead']);
           }, projectConstants.TIMEOUT_DELAY);
+          this.router.navigate(['provider', 'lead']);
         },
         (error)=>{
           setTimeout(() => {
@@ -926,7 +927,6 @@ export class CreateLeadComponent implements OnInit , OnDestroy{
               }
 
             }
-
           },
           error => {
             this.wordProcessor.apiErrorAutoHide(this, error);
@@ -934,7 +934,6 @@ export class CreateLeadComponent implements OnInit , OnDestroy{
         );
     }
   }
-  
   createNew(){
     const dialogRef  = this.dialog.open(CrmSelectMemberComponent, {
       width: '100%',
