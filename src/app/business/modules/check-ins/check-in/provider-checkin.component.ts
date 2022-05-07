@@ -887,6 +887,77 @@ export class ProviderCheckinComponent implements OnInit {
             this.getQueuesbyLocationandServiceId(this.sel_loc, this.servId, this.sel_checkindate, this.accId);
             this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.servId, this.accId);
         }
+        else if(this.lead_type === 'lead'){
+            this.getWaitlistMgr().then(
+                () => {
+                    _this.setTerminologyLabels();
+                    _this.getBussinessProfileApi()
+                        .then(
+                            (data: any) => {
+                                _this.account_id = data.id;
+                                _this.accountType = data.accountType;
+                                _this.domain = data.serviceSector.domain;
+                                _this.getPartysizeDetails(_this.domain, data.serviceSubSector.subDomain);
+                                if (_this.domain === 'foodJoints') {
+                                    _this.have_note_click_here = Messages.PLACE_ORDER_CLICK_HERE;
+                                    _this.note_placeholder = 'Item No Item Name Item Quantity';
+                                    _this.note_cap = 'Add Note / Delivery address';
+                                } else {
+                                    _this.have_note_click_here = Messages.HAVE_NOTE_CLICK_HERE_CAP;
+                                    _this.note_placeholder = 'Add Note';
+                                    _this.note_cap = 'Add Note';
+                                }
+                                _this.shared_services.getProviderServicesByLocationId(_this.sel_loc).subscribe(
+                                    (services: any) => {
+                                        // _this.servicesjson = services;
+                                        // _this.serviceslist = services;
+                                        if (_this.thirdParty === '' && !_this.customer_data.phoneNo && !_this.customer_data.email) {
+                                            _this.servicesjson = [];
+                                            _this.serviceslist = [];
+                                            for (let i = 0; i < services.length; i++) {
+                                                if (services[i].serviceType !== 'virtualService') {
+                                                    _this.servicesjson.push(services[i]);
+                                                    _this.serviceslist.push(services[i]);
+                                                }
+                                            }
+                                        } else {
+                                            _this.servicesjson = services;
+                                            _this.serviceslist = services;
+                                        }
+                                        // this.sel_ser_det = [];
+                                        if (_this.servicesjson.length > 0) {
+                                            //     this.sel_ser = this.servicesjson[0].id; // set the first service id to the holding variable
+                                            //     this.setServiceDetails(this.sel_ser); // setting the details of the first service to the holding variable
+                                            //     this.getQueuesbyLocationandServiceId(locid, this.sel_ser, pdate, this.account_id);
+                                            if (this.accountType === 'BRANCH') {
+                                                _this.initDepartments(_this.account_id).then(
+                                                    () => {
+                                                        _this.handleDeptSelction(_this.selected_dept);
+                                                    },
+                                                    () => {
+                                                        this.getAvailableUsers();
+                                                        // this.getAllUsers();
+                                                        // this.getServicebyLocationId(this.sel_loc, this.sel_checkindate);
+                                                    }
+                                                );
+                                            } else {
+                                                this.sel_ser = this.servicesjson[0].id;
+                                                this.setServiceDetails(this.sel_ser);
+                                                this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
+                                                this.getQueuesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
+                                            }
+                                        }
+                                        //     this.api_loading1 = false;
+                                        // },
+                                        //     () => {
+                                        //         this.api_loading1 = false;
+                                        //         this.sel_ser = '';
+                                        //     });
+                                    });
+                            }
+                        );
+                });
+        }
         else{
             this.getWaitlistMgr().then(
                 () => {
@@ -1112,6 +1183,9 @@ export class ProviderCheckinComponent implements OnInit {
     setServiceDetails(curservid) {
         console.log(' _this.servicesjson', this.servicesjson)
         if (this.waitlist_for[0] && this.waitlist_for[0].id) {
+            this.getProviderQuestionnaire();
+        }
+        else if (this.lead_type === 'lead') {
             this.getProviderQuestionnaire();
         }
         let serv;
@@ -2760,7 +2834,13 @@ export class ProviderCheckinComponent implements OnInit {
         let consumerId;
         if (this.showBlockHint) {
             consumerId = this.customer_data.id;
-        } else {
+        } 
+        else if(this.lead_type === 'lead'){
+            console.log(JSON.stringify(this.cusDetails[0]))
+            consumerId = this.cusDetails[0].id;
+            this.channel = 'WALKIN';
+        }
+        else {
             consumerId = this.waitlist_for[0].id;
         }
         this.providerService.getProviderQuestionnaire(this.sel_ser, consumerId, this.channel).subscribe(data => {
@@ -2772,6 +2852,16 @@ export class ProviderCheckinComponent implements OnInit {
                 } else {
                     this.confirmWaitlistBlockPopup();
                 }
+            }
+            else if(this.lead_type === 'lead'){
+                if (this.showBlockHint) {
+                if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    this.showQuestionnaire = true;
+                    this.heading = 'More Info';
+                } else {
+                    this.confirmWaitlistBlockPopup();
+                }
+            }
             }
         });
     }
