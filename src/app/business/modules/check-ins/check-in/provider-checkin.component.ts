@@ -278,6 +278,7 @@ export class ProviderCheckinComponent implements OnInit {
     cusDetails: any = [];
     lead_id: any;
     lead_uid: any;
+    partentUid: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -1859,6 +1860,7 @@ export class ProviderCheckinComponent implements OnInit {
                     //  retUuid = retData[key];
                     this.trackUuid = retData[key];
                     parentUid = retData['parent_uuid'];
+                    this.partentUid = parentUid
                 });
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.submitQuestionnaire(parentUid);
@@ -1906,6 +1908,7 @@ export class ProviderCheckinComponent implements OnInit {
                     //  retUuid = retData[key];
                     this.trackUuid = retData[key];
                     parentUid = retData['parent_uuid'];
+                    this.partentUid = parentUid
                 });
                 if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                     this.submitQuestionnaire(parentUid);
@@ -1933,61 +1936,131 @@ export class ProviderCheckinComponent implements OnInit {
         }
     }
     submitQuestionnaire(uuid) {
-        const dataToSend: FormData = new FormData();
-        // if (this.questionAnswers.files) {
-        //     for (const pic of this.questionAnswers.files) {
-        //         dataToSend.append('files', pic['name']);
-        //     }
-        // }
-        const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
-        dataToSend.append('question', blobpost_Data);
-        this.providerService.submitProviderWaitlistQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
-            let postData = {
-                urls: []
-            };
-            if (data.urls && data.urls.length > 0) {
-                for (const url of data.urls) {
-                    this.api_loading_video = true;
-                    const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
-                    this.provider_services.videoaudioS3Upload(file, url.url)
-                        .subscribe(() => {
-                            postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-                            if (data.urls.length === postData['urls'].length) {
-                                this.provider_services.providerWaitlistQnrUploadStatusUpdate(uuid, postData)
-                                    .subscribe((data) => {
-                                        if (this.settingsjson.showTokenId) {
-                                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
-                                        } else {
-                                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
-                                        }
-                                        this.router.navigate(['provider', 'check-ins']);
-                                    },
-                                        error => {
-                                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                            this.api_loading = false;
-                                            this.api_loading_video = false;
-                                        });
-                            }
-                        },
-                            error => {
-                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                this.api_loading = false;
-                                this.api_loading_video = false;
-                            });
-                }
-            } else {
-                if (this.settingsjson.showTokenId) {
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+        if(this.lead_type === 'lead'){
+            const dataToSend: FormData = new FormData();
+            // if (this.questionAnswers.files) {
+            //     for (const pic of this.questionAnswers.files) {
+            //         dataToSend.append('files', pic['name']);
+            //     }
+            // }
+            const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+            dataToSend.append('question', blobpost_Data);
+            this.providerService.submitProviderWaitlistQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
+                let postData = {
+                    urls: []
+                };
+                if (data.urls && data.urls.length > 0) {
+                    for (const url of data.urls) {
+                        this.api_loading_video = true;
+                        const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
+                        this.provider_services.videoaudioS3Upload(file, url.url)
+                            .subscribe(() => {
+                                postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                                if (data.urls.length === postData['urls'].length) {
+                                    this.provider_services.providerWaitlistQnrUploadStatusUpdate(uuid, postData)
+                                        .subscribe((data) => {
+                                            if (this.settingsjson.showTokenId) {
+                                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+                                            } else {
+                                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
+                                            }
+                                            this.provider_services.WaitlistLead(this.lead_uid, this.partentUid)
+                                            .subscribe((data) => {
+                                               
+                                            });
+                                            this.router.navigate(['provider', 'check-ins']);
+                                        },
+                                            error => {
+                                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                                this.api_loading = false;
+                                                this.api_loading_video = false;
+                                            });
+                                }
+                            },
+                                error => {
+                                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                    this.api_loading = false;
+                                    this.api_loading_video = false;
+                                });
+                    }
                 } else {
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
+                    if (this.settingsjson.showTokenId) {
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+                    } else {
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
+                    }
+                    this.provider_services.WaitlistLead(this.lead_uid, this.partentUid)
+                    .subscribe((data) => {
+                       
+                    });
+                    this.router.navigate(['provider', 'check-ins']);
                 }
-                this.router.navigate(['provider', 'check-ins']);
-            }
-        }, error => {
-            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-            this.api_loading = false;
-            this.api_loading_video = false;
-        });
+            }, error => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                this.api_loading = false;
+                this.api_loading_video = false;
+            });
+        }
+        else{
+            const dataToSend: FormData = new FormData();
+            // if (this.questionAnswers.files) {
+            //     for (const pic of this.questionAnswers.files) {
+            //         dataToSend.append('files', pic['name']);
+            //     }
+            // }
+            const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+            dataToSend.append('question', blobpost_Data);
+            this.providerService.submitProviderWaitlistQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
+                let postData = {
+                    urls: []
+                };
+                if (data.urls && data.urls.length > 0) {
+                    for (const url of data.urls) {
+                        this.api_loading_video = true;
+                        const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
+                        this.provider_services.videoaudioS3Upload(file, url.url)
+                            .subscribe(() => {
+                                postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                                if (data.urls.length === postData['urls'].length) {
+                                    this.provider_services.providerWaitlistQnrUploadStatusUpdate(uuid, postData)
+                                        .subscribe((data) => {
+                                            if (this.settingsjson.showTokenId) {
+                                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+                                            } else {
+                                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
+                                            }
+                                          
+                                            this.router.navigate(['provider', 'check-ins']);
+                                        },
+                                            error => {
+                                                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                                this.api_loading = false;
+                                                this.api_loading_video = false;
+                                            });
+                                }
+                            },
+                                error => {
+                                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                    this.api_loading = false;
+                                    this.api_loading_video = false;
+                                });
+                    }
+                } else {
+                    if (this.settingsjson.showTokenId) {
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+                    } else {
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
+                    }
+                    
+                    this.router.navigate(['provider', 'check-ins']);
+                }
+            }, error => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                this.api_loading = false;
+                this.api_loading_video = false;
+            });
+        }
+       
     }
 
 
