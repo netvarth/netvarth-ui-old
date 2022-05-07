@@ -9,77 +9,93 @@
 </section>
 <br>
 <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
-<section  class="card">
+<section class="card"  *ngIf="leadMasterData" >
     <div class=" card bgColor">
         <div class="inputwithImg">
-        <form [formGroup]="createLeadForm">
-            <span class="group-head">{{selectHeader}} Details</span><br>
-            <div class="bggrey my-2">
-                <div>
-                    <div class="leadTitle">
-                      <div>Title</div>
-                      <div class="astericColor">*</div>
+            <form [formGroup]="createLeadForm">
+                <span class="group-head">{{selectHeader}} Details</span><br>
+                <div class="bggrey my-2">
+                    <div *ngIf="leadMasterData && leadMasterData.title && leadMasterData.title.isvisible">
+                        <div class="leadTitle">
+                            <div>Title</div>
+                            <div class="astericColor">*</div>
+                        </div>
+                        <div class="fieldPadding"
+                            [ngClass]="{'highlight': !(leadMasterData && leadMasterData.title && leadMasterData.title.iseditable)}">
+                            <input (keyup)="resetErrors()" type="text" #leadTitle
+                                (ngModelChange)="hamdleLeadTitle(leadTitle.value)" placeholder="Enter Lead title"
+                                class="form-control" formControlName="leadTitle" autocomplete="off"
+                                [readonly]="!(leadMasterData && leadMasterData.title && leadMasterData.title.iseditable)"
+                                [value]="leadTitle" />
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                                *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>
+                        </div>
                     </div>
-                    <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" type="text" #leadTitle (ngModelChange)="hamdleLeadTitle(leadTitle.value)"
-                            placeholder="Enter Lead title"class="form-control"formControlName="leadTitle"autocomplete="off" [value]="leadTitle" /> 
-                        <app-field-error-display
-                            [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                        </app-field-error-display>
-                    </div>                                      
-                </div>
-                <div>
-                    <div class="leadTitle">
-                        <div>Description</div>
-                    </div>
-                    <div  class="fieldPadding">
-                        <textarea rowa="10" class="form-control" formControlName="leadDescription"
-                            #leadDescription (change)="handleLeadDescription(leadDescription.value)"(keyup)="autoGrowTextZone($event)"
-                            maxlength="1000" placeholder="Enter Lead description">
+                    <div *ngIf="leadMasterData && leadMasterData.description && leadMasterData.description.isvisible">
+                        <div class="leadTitle">
+                            <div>Description</div>
+                        </div>
+                        <div class="fieldPadding"
+                            [ngClass]="{'highlight': !(leadMasterData && leadMasterData.description && leadMasterData.description.iseditable)}">
+                            <textarea rowa="10" class="form-control" formControlName="leadDescription" #leadDescription
+                                (change)="handleLeadDescription(leadDescription.value)"
+                                (keyup)="autoGrowTextZone($event)"
+                                [readonly]="!(leadMasterData && leadMasterData.description && leadMasterData.description.iseditable)"
+                                maxlength="1000" placeholder="Enter Lead description">
                         </textarea>
-                        <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                        </app-field-error-display>  
-                    </div>
-                </div>
-                <div style="display: flex;gap: 5px" >
-                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                        <div class="leadTitle">
-                            <div>Category</div>
-                            <div class="astericColor">*</div>
-                        </div>
-                        <div class="fieldPadding">
-                        <mat-select class="form-control widthWebKit" placeholder="Enter Category"
-                            #userLeadCategory formControlName="userLeadCategory" >
-                            <mat-option *ngFor="let item of categoryListData[0];let index=i" [value]="item.id"  (selectionChange)="handleLeadCategorySelection(userLeadCategory.value)">
-                                <div>
-                                    {{item.name}}
-                                </div>
-                            </mat-option>
-                        </mat-select>
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                                *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>
                         </div>
                     </div>
-                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                        <div class="leadTitle">
-                            <div>Type</div>
-                            <div class="astericColor">*</div>
+                    <div style="display: flex;gap: 5px">
+                        <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding"
+                            *ngIf="leadMasterData && leadMasterData.category && leadMasterData.category.isvisible">
+                            <div class="leadTitle">
+                                <div>Category</div>
+                                <div class="astericColor">*</div>
+                            </div>
+                            <div class="fieldPadding"
+                                [ngClass]="{'highlight': !(leadMasterData && leadMasterData.category && leadMasterData.category.iseditable)}">
+                                <mat-select class="form-control widthWebKit" placeholder="Enter Category"
+                                    [disabled]="!(leadMasterData && leadMasterData.category && leadMasterData.category.iseditable)"
+                                    #userLeadCategory formControlName="userLeadCategory">
+                                    <mat-option *ngFor="let item of categoryListData[0];let index=i" [value]="item.id"
+                                        (selectionChange)="handleLeadCategorySelection(userLeadCategory.value)">
+                                        <div>
+                                            {{item.name}}
+                                        </div>
+                                    </mat-option>
+                                </mat-select>
+                            </div>
                         </div>
-                        <div class="fieldPadding">
-                        <mat-select class="form-control widthWebKit" placeholder="Enter Type"
-                            #userLeadType formControlName="userLeadType" >
-                            <mat-option *ngFor="let item of leadTypeList[0];let index=i" [value]="item.id"  (selectionChange)="handleLeadTypeSelection(userLeadType.value)">
-                                <div>
-                                    {{item.name}}
-                                </div>
-                            </mat-option>
-                        </mat-select>
-                        </div>    
+                        <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding"
+                            *ngIf="leadMasterData && leadMasterData.type && leadMasterData.type.isvisible">
+                            <div class="leadTitle">
+                                <div>Type</div>
+                                <div class="astericColor">*</div>
+                            </div>
+                            <div class="fieldPadding"
+                                [ngClass]="{'highlight': !(leadMasterData && leadMasterData.type && leadMasterData.type.iseditable)}">
+                                <mat-select class="form-control widthWebKit" placeholder="Enter Type"
+                                    [disabled]="!(leadMasterData && leadMasterData.type && leadMasterData.type.iseditable)"
+                                    #userLeadType formControlName="userLeadType">
+                                    <mat-option *ngFor="let item of leadTypeList[0];let index=i" [value]="item.id"
+                                        (selectionChange)="handleLeadTypeSelection(userLeadType.value)">
+                                        <div>
+                                            {{item.name}}
+                                        </div>
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
                     </div>
-                </div>
-    
-                <div style="display: flex;gap: 5px" >
-                    
 
-                    <!-- <div  class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                    <div style="display: flex;gap: 5px">
+
+
+                        <!-- <div  class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                         <div class="leadTitle">
                             <div>Customer</div>
                             <div class="astericColor">*</div>
@@ -98,19 +114,25 @@
 
 
 
-                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                        <div class="leadTitle">
-                            <div>Location</div>
-                            <div class="astericColor">*</div>
+                        <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding"
+                            *ngIf="leadMasterData && leadMasterData.location && leadMasterData.location.isvisible">
+                            <div class="leadTitle">
+                                <div>Location</div>
+                                <div class="astericColor">*</div>
+                            </div>
+                            <div class="fieldPadding"
+                                [ngClass]="{'highlight': !(leadMasterData && leadMasterData.location && leadMasterData.location.iseditable)}">
+                                <input (keyup)="resetErrors()" type="text" #leadLocation
+                                    (ngModelChange)="handleLeadLocation(leadLocation.value)"
+                                    [readonly]="!(leadMasterData && leadMasterData.location && leadMasterData.location.iseditable)"
+                                    placeholder="Enter Lead location" class="form-control widthWebKit"
+                                    formControlName="leadLocation" autocomplete="off" [value]="leadLocation.name" />
+                                <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                                    *ngIf="leadError" errorMsg="{{leadError}}">
+                                </app-field-error-display>
+                            </div>
                         </div>
-                        <div class="fieldPadding">
-                            <input (keyup)="resetErrors()"  type="text" #leadLocation (ngModelChange)="handleLeadLocation(leadLocation.value)"
-                            placeholder="Enter Lead location"class="form-control widthWebKit" formControlName="leadLocation" autocomplete="off" [value]="leadLocation.name" /> 
-                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                            </app-field-error-display>    
-                        </div>
-                    </div>
-                    <!-- <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                        <!-- <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                         <div class="leadTitle">
                             <div>Area</div>
                         </div>
@@ -123,50 +145,58 @@
                     </div> -->
 
 
-                    
-
-                </div>
-            </div>
 
 
-            <span class="group-head">Select Lead Assignee and Manager</span><br>
-            <div class="bggrey my-2">
-                <div>
-                    <div class="leadTitle">
-                        <div>Assign Member</div>
-                        <div class="astericColor">*</div>
                     </div>
-                    <div class="fieldPadding">
-                        <div>
-                            <div [formControlName]="selectMember" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectMemberDialog(selectMember)" >
-                                <div >{{selectMember}}</div>
-                                <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
-                            </div>
-                        </div>
-                        <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                        </app-field-error-display>  
-                    </div>                           
                 </div>
-                <div>
+
+
+                <span class="group-head">Select Lead Assignee and Manager</span><br>
+                <div class="bggrey my-2">
+                    <div *ngIf="leadMasterData && leadMasterData.assignee && leadMasterData.assignee.isvisible">
+                        <div class="leadTitle">
+                            <div>Assign Member</div>
+                            <div class="astericColor">*</div>
+                        </div>
+                        <div class="fieldPadding"
+                            [ngClass]="{'highlight': !(leadMasterData && leadMasterData.assignee && leadMasterData.assignee.iseditable)}">
+                            <div>
+                                <div [formControlName]="selectMember" class="form-control"
+                                    style="display: flex;justify-content: space-between;"
+                                    (click)="selectMemberDialog(selectMember)">
+                                    <div>{{selectMember}}</div>
+                                    <div style="cursor: pointer;"><i class="fa fa-user" aria-hidden="true"></i></div>
+                                </div>
+                            </div>
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                                *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>
+                        </div>
+                    </div>
+                    <div *ngIf="leadMasterData && leadMasterData.manager && leadMasterData.manager.isvisible"></div>
                     <div class="leadTitle">
                         <div>Manager</div>
                     </div>
-                    <div class="fieldPadding">
+                    <div class="fieldPadding"
+                        [ngClass]="{'highlight': !(leadMasterData && leadMasterData.manager && leadMasterData.manager.iseditable)}">
                         <div>
-                            <div  [formControlName]="selectLeadManger" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectManagerDialog(selectLeadManger)" >
+                            <div [formControlName]="selectLeadManger" class="form-control"
+                                style="display: flex;justify-content: space-between;"
+                                (click)="selectManagerDialog(selectLeadManger)">
                                 <div>{{selectLeadManger}}</div>
-                                <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
+                                <div style="cursor: pointer;"><i class="fa fa-user" aria-hidden="true"></i></div>
                             </div>
                         </div>
-                        <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                        <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                            *ngIf="leadError" errorMsg="{{leadError}}">
                         </app-field-error-display>
-                    </div>                                     
+                    </div>
                 </div>
-            </div>
+       
 
-            <span class="group-head">Customer Info</span><br>
-            <div class="bggrey my-2">
-                <!-- <div>
+        <span class="group-head">Customer Info</span><br>
+        <div class="bggrey my-2">
+            <!-- <div>
                     <div class="leadTitle">
                         <div>Customer</div>
                     </div>
@@ -177,79 +207,81 @@
                         </app-field-error-display>    
                     </div>
                 </div> -->
-                <div>
-                        <div class="leadTitle" *ngIf="!hideSearch">
-                            <div>Customer</div>
-                            <div class="astericColor">*</div>
-                        </div>
-                        <div class="fieldPadding">
-                            <div>
-                                <!-- <div [formControlName]="selectLeadCustomer" class="form-control" style="display: flex;justify-content: space-between;" (click)="selectCustomerDialog(selectLeadCustomer)" >
+            <div>
+                <div class="leadTitle" *ngIf="!hideSearch">
+                    <div>Customer</div>
+                    <div class="astericColor">*</div>
+                </div>
+                <div class="fieldPadding">
+                    <div>
+                        <!-- <div [formControlName]="selectLeadCustomer" class="form-control" style="display: flex;justify-content: space-between;" (click)="selectCustomerDialog(selectLeadCustomer)" >
                                     <div >{{selectLeadCustomer}}</div>
                                     <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
                                 </div> -->
-                                <div class="disp-flex" *ngIf="!hideSearch">
-                                    <input type="text" [(ngModel)]="search_input"  [ngModelOptions]="{standalone: true}" 
-                                        class="leadTitle"
-                                        name="search" placeholder={{searchby}} />
-                                    <button type="button" class="btn btn-primary ml-3 px-8 py-1" (click)="
+                        <div class="disp-flex" *ngIf="!hideSearch">
+                            <input type="text" [(ngModel)]="search_input" [ngModelOptions]="{standalone: true}"
+                                class="leadTitle" name="search" placeholder={{searchby}} />
+                            <button type="button" class="btn btn-primary ml-3 px-8 py-1" (click)="
                                       searchCustomer()"> Find </button>
-                                </div>
-                            </div>
-                            <div>
-                               <br>
-                                <div class="disp-flex" *ngIf="!hideSearch">
-                                    <a> 
-                                        <span  (click)="createNew()"><u>Create Customer</u></span>  
-                                    </a>
-                                    
-                                </div>
-                            </div>
-                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                            </app-field-error-display>  
-                        </div>      
-                        <div class="bggrey my-2" *ngIf="hideSearch">
-                            <div class="webDisplay">
-                                <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small" (click)="search()">
-                                  <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
-                                   Search Again </button>
-                                </a>
-                               
-                              </div>
-                            <div style="display: flex;gap: 5px;flex-wrap: wrap;" >
-                                {{customer_data.firstName}} {{customer_data.lastName}} 
-                            </div>
-                           
-                            
-                            <div>
-                                <div class="leadTitle"  *ngIf="customer_data.jaldeeId">
-                                    <i class="fa fa-id-card-o icon"></i>
-                                   <span>{{customer_label}} id : {{customer_data.jaldeeId}}</span>
-                                </div>
-                                <div class="leadTitle"  *ngIf="customer_data.phoneNo">
-                                    <i class="fa fa-mobile icon"></i>
-                                    <span>{{customer_data.phoneNo}}</span>
-                                   
-                                </div>
-                                <div class="leadTitle"  *ngIf="customer_data.email">
-                                    <i class="fa fa-envelope icon"></i>
-                                  <span>{{customer_data.email}}</span>
-                                </div>
-                               
-                                <div class="fieldPadding">
-                                  
-                                </div>
-                            </div>
-                        </div>                     
+                        </div>
                     </div>
-                
+                    <div>
+                        <br>
+                        <div class="disp-flex" *ngIf="!hideSearch">
+                            <a>
+                                <span (click)="createNew()"><u>Create Customer</u></span>
+                            </a>
+
+                        </div>
+                    </div>
+                    <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                        errorMsg="{{leadError}}">
+                    </app-field-error-display>
+                </div>
+                <div class="bggrey my-2" *ngIf="hideSearch">
+                    <div class="webDisplay">
+                        <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small"
+                            (click)="search()">
+                            <button mat-flat-button
+                                class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
+                                Search Again </button>
+                        </a>
+
+                    </div>
+                    <div style="display: flex;gap: 5px;flex-wrap: wrap;">
+                        {{customer_data.firstName}} {{customer_data.lastName}}
+                    </div>
+
+
+                    <div>
+                        <div class="leadTitle" *ngIf="customer_data.jaldeeId">
+                            <i class="fa fa-id-card-o icon"></i>
+                            <span>{{customer_label}} id : {{customer_data.jaldeeId}}</span>
+                        </div>
+                        <div class="leadTitle" *ngIf="customer_data.phoneNo">
+                            <i class="fa fa-mobile icon"></i>
+                            <span>{{customer_data.phoneNo}}</span>
+
+                        </div>
+                        <div class="leadTitle" *ngIf="customer_data.email">
+                            <i class="fa fa-envelope icon"></i>
+                            <span>{{customer_data.email}}</span>
+                        </div>
+
+                        <div class="fieldPadding">
+
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            
-            <span class="group-head">Other Info</span><br>
-            <div class="bggrey my-2">
-                <div style="display: flex;gap: 5px;flex-wrap: wrap;" >
-                    <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding">
+        </div>
+
+
+        <span class="group-head">Other Info</span><br>
+        <div class="bggrey my-2">
+            <div style="display: flex;gap: 5px;flex-wrap: wrap;">
+                <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding">
                         <div class="leadTitle">
                             <div>Due Date</div>
                         </div>
@@ -265,8 +297,8 @@
                             </app-field-error-display>       
                         </div>
                     </div> -->
-                
-                    <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding"  >
+
+                <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding"  >
                         <div class="leadTitle">
                             <div>Est Duration</div>
                         </div>
@@ -287,8 +319,8 @@
                             </div>
                         </div>
                     </div> -->
-                </div>
-                <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding" *ngIf="updateBTimefield">
+            </div>
+            <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding" *ngIf="updateBTimefield">
                 <div class="leadTitle">
                     <div>Est Duration</div>
                     <div class="astericColor">*</div>
@@ -303,80 +335,477 @@
                     </div>
     
                 </div> -->
-                
-                <div>
+
+            <div *ngIf="leadMasterData && leadMasterData.priority && leadMasterData.priority.isvisible">
+                <div class="leadTitle">
+                    <div>Priority</div>
+                </div>
+                <div class="fieldPadding"
+                    [ngClass]="{'highlight': !(leadMasterData && leadMasterData.priority && leadMasterData.priority.iseditable)}">
+                    <mat-select class="form-control" placeholder="Select Priority"
+                        [disabled]="!(leadMasterData && leadMasterData.priority && leadMasterData.priority.iseditable)"
+                        #userLeadPriority formControlName="userLeadPriority"
+                        (ngModelChange)="handleLeadPrioritySelection(userLeadPriority.value,'leadPriority')">
+                        <mat-option *ngFor="let item of leadPriorityList[0];let index=i" [value]="item.id">
+                            <div>
+                                {{item.name}}
+                            </div>
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="bggrey my-2">
+            <div style="display: flex;gap: 5px"
+                *ngIf="leadMasterData && leadMasterData.status && leadMasterData.status.isvisible">
+                <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                     <div class="leadTitle">
-                        <div>Priority</div>
+                        <div>Status</div>
                     </div>
-                    <div class="fieldPadding">
-                        <mat-select class="form-control" placeholder="Select Priority"
-                            #userLeadPriority formControlName="userLeadPriority" (ngModelChange)="handleLeadPrioritySelection(userLeadPriority.value,'leadPriority')">
-                            <mat-option  *ngFor="let item of leadPriorityList[0];let index=i" [value]="item.id"  >
+                    <div class="fieldPadding"
+                        [ngClass]="{'highlight': !(leadMasterData && leadMasterData.status && leadMasterData.status.iseditable)}">
+                        <mat-select class="form-control widthWebKit" placeholder="Enter Lead status"
+                            [disabled]="!(leadMasterData && leadMasterData.status && leadMasterData.status.iseditable)"
+                            #leadStatus formControlName="leadStatus" name="item"
+                            (selectionChange)="handleLeadStatus(leadStatus.value)">
+                            <mat-option *ngFor="let item of leadStatusList[0];let index=i" [value]="item.id">
                                 <div>
-                                    {{item.name}}
+                                    {{item.name | capitalizeFirst}}
                                 </div>
                             </mat-option>
                         </mat-select>
+
+                        <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                            *ngIf="leadError" errorMsg="{{leadError}}">
+                        </app-field-error-display>
                     </div>
                 </div>
             </div>
 
 
 
-            
-            
-            <div class="bggrey my-2">
-                <div style="display: flex;gap: 5px" >
-                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+        </div>
+
+
+
+        <div style="text-align: center;margin-top: 15px;">
+            <ng-container>
+                <div class=" mgn-bt-20 mgn-up-10">
+                    <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()">Cancel
+                    </button>
+                    <button [ngClass]="{
+                                'btn btn-primary font-weight-bold cancelBtn': !createLeadForm.valid,
+                                'btn btn-primary font-weight-bold confirmBtn': createLeadForm.valid
+                            }" [class.spinner]="api_loading" [class.disabled]="api_loading"
+                        [class.spinner-center]="api_loading" type="button"
+                        (click)="saveCreateLead()">{{showCreateLeadButtonCaption()}}
+                    </button>
+                </div>
+            </ng-container>
+        </div>
+        </form>
+    </div>
+    <!-- <div class="imageClass">
+            <img class="leadImg" src="/assets/images/crmImages/Addtasks.png" />
+        </div> -->
+    </div>
+
+
+</section>
+
+
+
+<section class="card" *ngIf="!leadMasterData">
+    <div class=" card bgColor">
+        <div class="inputwithImg">
+            <form [formGroup]="createLeadForm">
+                <span class="group-head">{{selectHeader}} Details</span><br>
+                <div class="bggrey my-2">
+                    <div>
                         <div class="leadTitle">
-                            <div>Status</div>
+                            <div>Title</div>
+                            <div class="astericColor">*</div>
                         </div>
                         <div class="fieldPadding">
-                            <mat-select class="form-control widthWebKit" placeholder="Enter Lead status"
-                                #leadStatus formControlName="leadStatus" name="item"  (selectionChange)="handleLeadStatus(leadStatus.value)">
-                                <mat-option *ngFor="let item of leadStatusList[0];let index=i" [value]="item.id"  >
-                                    <div>
-                                        {{item.name | capitalizeFirst}}
-                                    </div>
-                                </mat-option>
-                            </mat-select>
-                                
+                            <input (keyup)="resetErrors()" type="text" #leadTitle
+                                (ngModelChange)="hamdleLeadTitle(leadTitle.value)" placeholder="Enter Lead title"
+                                class="form-control" formControlName="leadTitle" autocomplete="off"
+                                [value]="leadTitle" />
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                                *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="leadTitle">
+                            <div>Description</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <textarea rowa="10" class="form-control" formControlName="leadDescription" #leadDescription
+                                (change)="handleLeadDescription(leadDescription.value)"
+                                (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                                placeholder="Enter Lead description">
+                        </textarea>
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                                *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>
+                        </div>
+                    </div>
+                    <div style="display: flex;gap: 5px">
+                        <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                            <div class="leadTitle">
+                                <div>Category</div>
+                                <div class="astericColor">*</div>
+                            </div>
+                            <div class="fieldPadding">
+                                <mat-select class="form-control widthWebKit" placeholder="Enter Category"
+                                    #userLeadCategory formControlName="userLeadCategory">
+                                    <mat-option *ngFor="let item of categoryListData[0];let index=i" [value]="item.id"
+                                        (selectionChange)="handleLeadCategorySelection(userLeadCategory.value)">
+                                        <div>
+                                            {{item.name}}
+                                        </div>
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                        <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                            <div class="leadTitle">
+                                <div>Type</div>
+                                <div class="astericColor">*</div>
+                            </div>
+                            <div class="fieldPadding">
+                                <mat-select class="form-control widthWebKit" placeholder="Enter Type" #userLeadType
+                                    formControlName="userLeadType">
+                                    <mat-option *ngFor="let item of leadTypeList[0];let index=i" [value]="item.id"
+                                        (selectionChange)="handleLeadTypeSelection(userLeadType.value)">
+                                        <div>
+                                            {{item.name}}
+                                        </div>
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex;gap: 5px">
+
+
+                        <!-- <div  class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                        <div class="leadTitle">
+                            <div>Customer</div>
+                            <div class="astericColor">*</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <div>
+                                <div [(ngModel)]="selectCustomer" class="form-control" style="display: flex;justify-content: space-between;" (click)="selectCustomerDialog(selectCustomer)" >
+                                    <div >{{selectCustomer}}</div>
+                                    <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
+                                </div>
+                            </div>
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>  
+                        </div>                           
+                    </div> -->
+
+
+
+                        <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                            <div class="leadTitle">
+                                <div>Location</div>
+                                <div class="astericColor">*</div>
+                            </div>
+                            <div class="fieldPadding">
+                                <input (keyup)="resetErrors()" type="text" #leadLocation
+                                    (ngModelChange)="handleLeadLocation(leadLocation.value)"
+                                    placeholder="Enter Lead location" class="form-control widthWebKit"
+                                    formControlName="leadLocation" autocomplete="off" [value]="leadLocation.name" />
+                                <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                                    *ngIf="leadError" errorMsg="{{leadError}}">
+                                </app-field-error-display>
+                            </div>
+                        </div>
+                        <!-- <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                        <div class="leadTitle">
+                            <div>Area</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <input (keyup)="resetErrors()" [(ngModel)]="areaName" type="text"
+                            placeholder="Enter Lead area"class="form-control widthWebKit"formControlName="areaName" autocomplete="off" /> 
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>    
+                        </div>
+                    </div> -->
+
+
+
+
+                    </div>
+                </div>
+
+
+                <span class="group-head">Select Lead Assignee and Manager</span><br>
+                <div class="bggrey my-2">
+                    <div>
+                        <div class="leadTitle">
+                            <div>Assign Member</div>
+                            <div class="astericColor">*</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <div>
+                                <div [formControlName]="selectMember" class="form-control"
+                                    style="display: flex;justify-content: space-between;"
+                                    (click)="selectMemberDialog(selectMember)">
+                                    <div>{{selectMember}}</div>
+                                    <div style="cursor: pointer;"><i class="fa fa-user" aria-hidden="true"></i></div>
+                                </div>
+                            </div>
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                                *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="leadTitle">
+                            <div>Manager</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <div>
+                                <div [formControlName]="selectLeadManger" class="form-control"
+                                    style="display: flex;justify-content: space-between;"
+                                    (click)="selectManagerDialog(selectLeadManger)">
+                                    <div>{{selectLeadManger}}</div>
+                                    <div style="cursor: pointer;"><i class="fa fa-user" aria-hidden="true"></i></div>
+                                </div>
+                            </div>
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                                *ngIf="leadError" errorMsg="{{leadError}}">
                             </app-field-error-display>
                         </div>
                     </div>
                 </div>
+
+                <span class="group-head">Customer Info</span><br>
+                <div class="bggrey my-2">
+                    <!-- <div>
+                    <div class="leadTitle">
+                        <div>Customer</div>
+                    </div>
+                    <div class="fieldPadding">
+                        <input (keyup)="resetErrors()" type="text"
+                        placeholder="Enter Customer Id" class="form-control widthWebKit" formControlName="customer_id" autocomplete="off" #customer (ngModelChange)="handleCustomer(customer.value)"/> 
+                        <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                        </app-field-error-display>    
+                    </div>
+                </div> -->
+                    <div>
+                        <div class="leadTitle" *ngIf="!hideSearch">
+                            <div>Customer</div>
+                            <div class="astericColor">*</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <div>
+                                <!-- <div [formControlName]="selectLeadCustomer" class="form-control" style="display: flex;justify-content: space-between;" (click)="selectCustomerDialog(selectLeadCustomer)" >
+                                    <div >{{selectLeadCustomer}}</div>
+                                    <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
+                                </div> -->
+                                <div class="disp-flex" *ngIf="!hideSearch">
+                                    <input type="text" [(ngModel)]="search_input" [ngModelOptions]="{standalone: true}"
+                                        class="leadTitle" name="search" placeholder={{searchby}} />
+                                    <button type="button" class="btn btn-primary ml-3 px-8 py-1" (click)="
+                                      searchCustomer()"> Find </button>
+                                </div>
+                            </div>
+                            <div>
+                                <br>
+                                <div class="disp-flex" *ngIf="!hideSearch">
+                                    <a>
+                                        <span (click)="createNew()"><u>Create Customer</u></span>
+                                    </a>
+
+                                </div>
+                            </div>
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                                *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>
+                        </div>
+                        <div class="bggrey my-2" *ngIf="hideSearch">
+                            <div class="webDisplay">
+                                <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small"
+                                    (click)="search()">
+                                    <button mat-flat-button
+                                        class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
+                                        Search Again </button>
+                                </a>
+
+                            </div>
+                            <div style="display: flex;gap: 5px;flex-wrap: wrap;">
+                                {{customer_data.firstName}} {{customer_data.lastName}}
+                            </div>
+
+
+                            <div>
+                                <div class="leadTitle" *ngIf="customer_data.jaldeeId">
+                                    <i class="fa fa-id-card-o icon"></i>
+                                    <span>{{customer_label}} id : {{customer_data.jaldeeId}}</span>
+                                </div>
+                                <div class="leadTitle" *ngIf="customer_data.phoneNo">
+                                    <i class="fa fa-mobile icon"></i>
+                                    <span>{{customer_data.phoneNo}}</span>
+
+                                </div>
+                                <div class="leadTitle" *ngIf="customer_data.email">
+                                    <i class="fa fa-envelope icon"></i>
+                                    <span>{{customer_data.email}}</span>
+                                </div>
+
+                                <div class="fieldPadding">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <span class="group-head">Other Info</span><br>
+                <div class="bggrey my-2">
+                    <div style="display: flex;gap: 5px;flex-wrap: wrap;">
+                        <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding">
+                        <div class="leadTitle">
+                            <div>Due Date</div>
+                        </div>
+                        <div class="pickerouter fieldPadding dt dateWithMatDtae" >
+                            <input [(ngModel)]="leadDueDate" formControlName="leadDate" class="form-control widthWebKit positionNameInput" type="text"  matInput
+                                [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
+                                [value]="ddate" (dateChange)="handleDateChange($event)" placeholder="Enter Date" #leadDate>
+                            <mat-datepicker-toggle matSuffix [for]="picker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
+                            </mat-datepicker>
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>       
+                        </div>
+                    </div> -->
+
+                        <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding"  >
+                        <div class="leadTitle">
+                            <div>Est Duration</div>
+                        </div>
+                        <div class="fieldPadding d-flex"  *ngIf="createBTimeField">
+                            <input id="days" [(ngModel)]="leadDueDays" [value]="leadDays" (keyup)="resetErrors()"  type="number" #leadDays (ngModelChange)="handleLeadEstDuration(leadDays.value)"
+                            placeholder="Days" class="form-control widthWebKit" formControlName="leadDays" autocomplete="off" /> 
+                            <input id="hrs" [(ngModel)]="leadDueHrs" [value]="leadHrs" (keyup)="resetErrors()"  type="number" #leadHrs (ngModelChange)="handleLeadEstDuration(leadHrs.value)"
+                            placeholder="Hours" class="form-control widthWebKit" formControlName="leadHrs" autocomplete="off" min="0" max="23"/> 
+                            <input id="min" [(ngModel)]="leadDueMin" [value]="leadMin" (keyup)="resetErrors()"  type="number" #leadMin (ngModelChange)="handleLeadEstDuration(leadMin.value)"
+                            placeholder="Minutes" class="form-control widthWebKit" formControlName="leadMin" autocomplete="off" min="0" max="59"/> 
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>
+                        </div>
+                        <div class="fieldPadding" *ngIf="updateBTimefield" >
+                            <div class="form-control" style="display: flex !important;justify-content: space-between;align-items: center;">
+                                <div>{{updateValue.estDuration.days}}days,{{this.updateValue.estDuration.hours}}hours,{{this.updateValue.estDuration.minutes}}minutes</div>
+                                <div (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
+                            </div>
+                        </div>
+                    </div> -->
+                    </div>
+                    <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding" *ngIf="updateBTimefield">
+                <div class="leadTitle">
+                    <div>Est Duration</div>
+                    <div class="astericColor">*</div>
+                    </div>
+                    <div class="fieldPadding"  >
+                        <div class="form-control widthWebKit" style="display: flex !important;justify-content: space-between;align-items: center;" *ngIf=" updateValue.estDuration.hours !=0">
+                        <div>{{updateValue.estDuration.days}}(Days),{{this.updateValue.estDuration.hours}}(Hours)</div>
+                        </div>
+                        <div class="form-control widthWebKit" style="display: flex !important;justify-content: space-between;align-items: center;" *ngIf=" updateValue.estDuration.hours ===0">
+                        <div>{{updateValue.estDuration.days}}(Days)</div>
+                        </div>
+                    </div>
     
-                
-                
-            </div>
+                </div> -->
+
+                    <div>
+                        <div class="leadTitle">
+                            <div>Priority</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <mat-select class="form-control" placeholder="Select Priority" #userLeadPriority
+                                formControlName="userLeadPriority"
+                                (ngModelChange)="handleLeadPrioritySelection(userLeadPriority.value,'leadPriority')">
+                                <mat-option *ngFor="let item of leadPriorityList[0];let index=i" [value]="item.id">
+                                    <div>
+                                        {{item.name}}
+                                    </div>
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+                </div>
 
 
 
-            <div style="text-align: center;margin-top: 15px;">
-                <ng-container >
-                    <div class=" mgn-bt-20 mgn-up-10">
-                        <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()"
-                            >Cancel
-                        </button>
-                        <button
-                            [ngClass]="{
+
+
+                <div class="bggrey my-2">
+                    <div style="display: flex;gap: 5px">
+                        <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                            <div class="leadTitle">
+                                <div>Status</div>
+                            </div>
+                            <div class="fieldPadding">
+                                <mat-select class="form-control widthWebKit" placeholder="Enter Lead status" #leadStatus
+                                    formControlName="leadStatus" name="item"
+                                    (selectionChange)="handleLeadStatus(leadStatus.value)">
+                                    <mat-option *ngFor="let item of leadStatusList[0];let index=i" [value]="item.id">
+                                        <div>
+                                            {{item.name | capitalizeFirst}}
+                                        </div>
+                                    </mat-option>
+                                </mat-select>
+
+                                <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                                    *ngIf="leadError" errorMsg="{{leadError}}">
+                                </app-field-error-display>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+
+                <div style="text-align: center;margin-top: 15px;">
+                    <ng-container>
+                        <div class=" mgn-bt-20 mgn-up-10">
+                            <button type="button" class="btn btn-primary font-weight-bold cancelBtn"
+                                (click)="goback()">Cancel
+                            </button>
+                            <button [ngClass]="{
                                 'btn btn-primary font-weight-bold cancelBtn': !createLeadForm.valid,
                                 'btn btn-primary font-weight-bold confirmBtn': createLeadForm.valid
-                            }" [class.spinner]="api_loading" 
-                            [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateLead()"
-                                >{{showCreateLeadButtonCaption()}}
-                        </button>
-                    </div>
-                </ng-container>
-            </div>
-        </form>
-    </div>
+                            }" [class.spinner]="api_loading" [class.disabled]="api_loading"
+                                [class.spinner-center]="api_loading" type="button"
+                                (click)="saveCreateLead()">{{showCreateLeadButtonCaption()}}
+                            </button>
+                        </div>
+                    </ng-container>
+                </div>
+            </form>
+        </div>
         <!-- <div class="imageClass">
             <img class="leadImg" src="/assets/images/crmImages/Addtasks.png" />
         </div> -->
     </div>
-      
+
 
 </section>
-

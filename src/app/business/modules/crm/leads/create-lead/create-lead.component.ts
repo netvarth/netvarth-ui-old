@@ -134,6 +134,7 @@ export class CreateLeadComponent implements OnInit{
   customer_email: any;
   search_input: any;
   hideSearch = false;
+  leadMasterData: any;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -269,12 +270,12 @@ export class CreateLeadComponent implements OnInit{
         console.log('this.estTime',this.estTime)
         console.log('new Date()',new Date())
         const leadMaster= this.crmService.leadMasterToCreateServiceData;
-        console.log('leadMaster',leadMaster);
-        // this.createLeadForm.controls.leadTitle.value = leadMaster.title;
-        // this.createLeadForm.controls.leadDescription.value= leadMaster.description;
-        // this.createLeadForm.controls.userLeadCategory.value= leadMaster.category.id;
-        // this.createLeadForm.controls.userLeadType.value= leadMaster.type.id;
-        // this.createLeadForm.controls.userLeadPriority.value= leadMaster.priority.id;
+        this.leadMasterData = this.crmService.leadMasterToCreateServiceData;
+        this.createLeadForm.controls.leadTitle.value = leadMaster.title.value;
+        this.createLeadForm.controls.leadDescription.value= leadMaster.description.value;
+        this.createLeadForm.controls.userLeadCategory.value= leadMaster.category.value.id;
+        this.createLeadForm.controls.userLeadType.value= leadMaster.type.value.id;
+        this.createLeadForm.controls.userLeadPriority.value= leadMaster.priority.id;
 
     }
     else if(this.crmService.leadActivityName==='CreteLeadMaster'){

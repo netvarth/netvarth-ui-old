@@ -304,8 +304,8 @@ export class CrmService {
     }
 
     getLeadMasterList(){
-      // const url = 'provider/lead/master';
-      // return this.servicemeta.httpGet(url);
+      const url = 'provider/lead/master?originFrom-eq=None&&isSubTask-eq=false';
+      return this.servicemeta.httpGet(url);
     }
     createProviderCustomer(data) {
       const url = 'provider/customers';

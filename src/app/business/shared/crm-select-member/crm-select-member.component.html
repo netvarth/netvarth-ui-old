@@ -745,6 +745,117 @@
 
 </section>
 
+<section *ngIf="data.requestType==='leadMasterList'" style="padding: 20px;">
+    <div class="header">
+        <div class="headerText" style="color: #22242C !important;font-size: 14px;display: flex;">Select Activity
+            <!-- <div>/</div>
+            <div style="color: #22242C !important;
+            font-size: 14px;
+            font-weight: 700;">Create Task </div>
+           ( <div><mat-icon>add</mat-icon></div>) -->
+        </div>
+
+        <div style=" cursor: pointer;" (click)="closeDialog('Close')">
+            <mat-icon style="font-size: 16px;">clear</mat-icon>
+        </div>
+    </div>
+    <!-- <div class="taskMasterCreate">
+        <button  (click)="createTask('CreatE')" type="button" class="btn btn-primary font-weight-bold confirmBtn"
+                        >Create Task</button>
+    </div> -->
+    <!----task master list start-->
+    <mat-dialog-content style="padding: 0px !important;">
+        <div>
+
+            <div>
+                <!----radio btn start-->
+                <div>
+                    <mat-radio-group [(ngModel)]="assignLeadMaster">
+                        <div>
+                            <mat-radio-button class="example-radio-button" *ngFor="let leadMaster of leadMasterListData"
+                                [value]="leadMaster" (change)="handleleadMasterSelect(leadMaster,'Selected')">
+                                <div style="display: flex;flex-wrap: wrap;">
+                                    <!-- <div class="masterDes" > -->
+                                    <div class="masterDes">
+                                        <!-- <div class="taskMasterFieldName" >  Title : </div> -->
+                                        <div class="taskMasterFieldName">{{leadMaster.templateName}}</div>
+                                    </div>
+
+                                    <!-- <div  class="masterDes" >
+                               <div class="taskMasterFieldName">Description : </div>
+                            <div class="taskMaster">{{taskMaster.description}}</div>
+                           </div> -->
+                                    <!-- </div> -->
+                                    <!-- <div class="masterDes"> -->
+                                    <!-- <div class="masterDes" >
+                        <div class="taskMasterFieldName">
+                            Status : 
+                        </div>
+                     <div class="taskMaster">
+                        {{taskMaster.status}}
+                     </div>
+                       </div> -->
+                                    <!-- <div class="masterDes" >
+                           <div class="taskMasterFieldName">
+                            Priority :
+                           </div>
+                      <div class="taskMaster">
+                        {{taskMaster.priority.name}}
+                      </div>
+                       </div> -->
+                                    <!-- </div> -->
+                                    <!-- <div class="masterDes"> -->
+                                    <!-- <div class="masterDes" >
+                        <div class="taskMasterFieldName">Category :</div>
+                       <div class="taskMaster"> {{taskMaster.category.name}}</div>
+                       </div> -->
+                                    <!-- <div class="masterDes" >
+                        <div class="taskMasterFieldName"> Name :</div>
+                        <div class="taskMaster">{{taskMaster.type.name}}</div>
+                       </div> -->
+                                    <!-- </div> -->
+                                </div>
+                            </mat-radio-button>
+                        </div>
+                    </mat-radio-group>
+
+                </div>
+                <!----radio btn end-->
+                <div>
+                    <mat-radio-button style="margin-right: 20px;" class="example-radio-button"
+                        (click)="createTask('CreatE')">
+                        <div style="display: flex;flex-wrap: wrap;">
+                            <div class="masterDes">
+                                <div class="taskMasterFieldName">Others</div>
+                            </div>
+                        </div>
+
+                    </mat-radio-button>
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <div *ngIf="errorMsg" class="errorMsg">
+        <div>{{assignMemberErrorMsg}}</div>
+    </div>
+    <div mat-dialog-actions class="actionBtn" style="display: flex;justify-content: center;align-items: center;">
+        <!---cancel save btn start-->
+        <div style="text-align: center;">
+            <ng-container>
+                <div>
+                    <button type="button" class="btn btn-primary font-weight-bold cancelBtn"
+                        (click)="closeDialog('Close')">Cancel</button>
+                    <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
+                        (click)="saveLeadMaster(assignLeadMaster)">Okay</button>
+                </div>
+            </ng-container>
+        </div>
+
+        <!---cancel save btn end-->
+    </div>
+    <!----task master list end-->
+
+</section>
 <section *ngIf="data.requestType==='createCustomer'" style="padding: 20px;">
 
     <div class="header">
