@@ -143,9 +143,9 @@
                 <!-- <div class="clearfix"></div><br>
                 <span class="label"><b>Uploaded Files</b></span> -->
                 <div class="my-2" *ngIf="leadTokens.length >0">
-                  <div *ngFor="let token of leadTokens;let i=index" class="allNotesList">
+                  <div *ngFor="let token of leadTokens;let i=index" class="allNotesList" >
                    
-                      <div class="notesListSection" style="cursor: pointer;">
+                      <div class="notesListSection" style="cursor: pointer;" (click)="goCheckinDetail(token.waitlistUid)">
                         <span class="pull-left mgn-lt-5 date circle-token bold">{{token.token}}</span>
                         <div class="text-primary">{{token.waitlistEncId}}<br><span class="label"><b>Created By : {{token.createdByName}}</b></span></div>
                        

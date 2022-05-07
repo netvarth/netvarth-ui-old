@@ -118,12 +118,11 @@ ngOnInit(): void {
   })
   this.crmService.leadToCraeteViaServiceData = this.updateLeadData;
  
-  // this.activated_route.queryParams.subscribe(qparams => {
-  //   if (qparams.parentUid) {
-  //       this.parentUid = qparams.parentUid;
-  //       this.getLeadToken()
-  //   }
-  // });
+  this._Activatedroute.queryParams.subscribe(qparams => {
+    if (qparams.parentUid) {
+        this.parentUid = qparams.parentUid;
+    }
+  });
 }
 
 uploadFiles() {
@@ -446,6 +445,9 @@ getLeadToken(){
     this.leadTokens = data;
   
 })
+}
+goCheckinDetail(id){
+  this.router.navigate(['provider', 'check-ins', id]);
 }
 
 }
