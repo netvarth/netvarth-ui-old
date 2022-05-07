@@ -853,6 +853,9 @@ export class TasksComponent implements OnInit {
       console.log('taskStatus',taskStatus);
       this.taskStatusList.push(
         {
+          id:0,   name:'Total Activity',image:'./assets/images/crmImages/total.png',
+        },
+        {
           id: 1, name: 'New',image:'./assets/images/crmImages/new.png',
         },
         {
@@ -870,9 +873,6 @@ export class TasksComponent implements OnInit {
         {
           id: 12, name: 'Suspended',image:'./assets/images/crmImages/suspended.png',
         },
-        {
-          id:0,   name:'Total Activity',image:'./assets/images/crmImages/total.png',
-        }
         );
     },
     (error)=>{

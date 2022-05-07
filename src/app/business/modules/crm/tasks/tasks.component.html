@@ -18,7 +18,16 @@
           <mat-select class="form-control" placeholder="Total activity({{totalCount}})" 
               #userTaskStatus [(ngModel)]="statusFilter"  (ngModelChange)="handleTaskStatus(userTaskStatus.value,'taskStatus',statusFilter)">
               <mat-option   *ngFor="let stat of taskStatusList;let index=i" [value]="stat.id" >
-                  <div *ngIf="stat.name==='New'"class="statusImg">
+                <div *ngIf="stat.name==='Total Activity'" class="statusImg">
+                  <div>
+                    <img width="25px" [src]="stat.image"/>
+                   </div>
+                   <div>{{stat.name }}</div>
+                  <div>
+                    ({{totalCount}})
+                  </div>
+              </div>  
+                <div *ngIf="stat.name==='New'"class="statusImg">
                     <div>
                       <img width="25px" [src]="stat.image"/>
                      </div>
@@ -70,15 +79,6 @@
                 ({{suspendedTaskList.length}})
               </div>
           </div>
-          <div *ngIf="stat.name==='Total Activity'" class="statusImg">
-            <div>
-              <img width="25px" [src]="stat.image"/>
-             </div>
-             <div>{{stat.name }}</div>
-            <div>
-              ({{totalCount}})
-            </div>
-        </div>
         </mat-option>
           </mat-select>
       </div>
