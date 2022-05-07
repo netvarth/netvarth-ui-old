@@ -1464,7 +1464,7 @@ svg {
 .form-control{
     /* background-color: #f6f6f6!important; */
     display: block;
-    width: 50%;
+    width: 35%;
     height: 35px;
     padding: 6px 12px!important;
     font-size: 14px !important;
@@ -1497,3 +1497,6 @@ svg {
 ::ng-deep .mat-select-placeholder{
     color: rgba(0, 0, 0, 0.87) !important;
 }
+td{
+    white-space: normal !important;
+  }

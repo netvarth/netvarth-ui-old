@@ -186,7 +186,9 @@ export class TasksComponent implements OnInit {
   public bCancelledTask:boolean=false;
   public bSuspendedTask:boolean=false;
   public suspendedTaskList:any=[];
-  public inProgressListData:any=[]
+  public inProgressListData:any=[];
+  public totalActivity:any='Select activity';
+  public bShowHideBTn:boolean=true
 
   constructor(
     private locationobj: Location,
@@ -815,9 +817,31 @@ export class TasksComponent implements OnInit {
     return api_filter;
   }
   setFilterDataCheckbox(type, value?, event?) {
+    console.log('type',type)
+    console.log('value',value)
+    if(value===0 && this.statuses.indexOf(value) === -1){
+      this.crmService.getTotalTask()
+      .subscribe(
+        data => {
+          this.totalTaskList = data;
+          console.log("Task List :",this.totalTaskList)
+          this.totalTaskList = this.totalTaskList.filter(obj => !obj.originId);
+          this.loadComplete = true;
+          this.bShowHideBTn=false
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.loadComplete = true;
+         this.bShowHideBTn=true
+       
+        }
+      );
+    }
    
     if (type === 'status') {
       const indx = this.statuses.indexOf(value);
+      console.log('indx',indx)
+      
       this.statuses = [];
       if (indx === -1) {
         this.statuses.push(value);
