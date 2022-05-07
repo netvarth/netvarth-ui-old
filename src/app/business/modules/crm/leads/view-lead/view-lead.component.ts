@@ -328,7 +328,7 @@ openAddNoteDialog(addNoteText:any){
     data:{
       requestType:'createUpdateNotes',
       source:"Lead",
-      header:'Notes',
+      header:'Remarks',
       leadUid:this.leadUid,
     }
   })
