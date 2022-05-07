@@ -548,6 +548,16 @@ export class LeadsComponent implements OnInit {
     this.filter.page = pg;
     this.getDelayedLead();
   }
+  handle_pageclick_Unassigned(pg){
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getUnassignedLead();
+  }
+  handle_pageclick_ASsigned(pg){
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getAssignedLead();
+  }
   goback() {
     this.locationobj.back();
   }
@@ -835,7 +845,7 @@ export class LeadsComponent implements OnInit {
         id:0,   name:'Total Activity',image:'./assets/images/crmImages/total.png',
       },
       {
-        id: 6, name: 'Unassigned',image:'./assets/images/crmImages/new.png',
+        id: 6, name: 'Unassigned',image:'./assets/images/crmImages/unassigned.png',
       },
       {
         id: 7, name: 'Assigned',image:'./assets/images/tokenDetailsIcon/assignedTo.png',
@@ -850,7 +860,7 @@ export class LeadsComponent implements OnInit {
         id: 10, name: 'Success',image:'./assets/images/crmImages/completed2.png',
       },
       {
-        id: 11, name: 'Transferred',image:'./assets/images/crmImages/suspended.png',
+        id: 11, name: 'Transferred',image:'./assets/images/crmImages/transferred.png',
       },);
     },
     (error)=>{

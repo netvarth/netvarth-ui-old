@@ -158,7 +158,7 @@
                                           <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                           </li>
                                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
-                                            *ngFor="let stat of leadStatusList[0];let index=i">
+                                            *ngFor="let stat of leadStatusList;let index=i">
                                             <mat-checkbox [checked]="statuses.indexOf(stat) !== -1"
                                               [checked]="statuses.indexOf(stat.id) !== -1"
                                               (change)="setFilterDataCheckbox('status', stat.id)">
@@ -365,9 +365,9 @@
                               <tr>
                                 <td>
                                   <span>
-                                    <!-- <i class="icon-filter-one" (click)="showFilterSidebar()"
+                                    <i class="icon-filter-one" (click)="showFilterSidebar()"
                                       [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
-                                      style="cursor: pointer;"></i> -->
+                                      style="cursor: pointer;"></i>
                                   </span>
                                 </td>
                               </tr>
@@ -379,7 +379,150 @@
                         <tr>
   
                           <div>
+                            <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
+                              <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                                <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+                                  <span class="filter-head-title">Filters</span>
+                                  <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                                    (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                    [matTooltip]="'Close filter window'"></i>
+                                </div>
+                                <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
+                                <ul class="sidebar-menu accordion" id="accordion1">
   
+  
+                                  <!-- <div class="card">
+                                    <div class="card-header">
+                                      <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                          data-target="#collapseStatus2" aria-expanded="false">
+                                          <div>
+                                            <div style="display: inline-block !important;">
+                                              <i class="fa fa-circle-o-notch"></i>
+                                            </div>
+                                            <span>&nbsp;Status</span>
+                                          </div>
+                                          <i class="fa fa-angle-down"></i>
+                                        </button>
+                                      </h2>
+                                    </div>
+                                    <div id="collapseStatus2" class="collapse in" data-parent="#accordion2">
+                                      <div class="card-body">
+                                        <div class="filter-checkbox-input">
+                                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                          </li>
+                                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                            *ngFor="let stat of leadStatusList;let index=i">
+                                            <mat-checkbox [checked]="statuses.indexOf(stat) !== -1"
+                                              [checked]="statuses.indexOf(stat.id) !== -1"
+                                              (change)="setFilterDataCheckbox('status', stat.id)">
+                                              {{stat.name}}</mat-checkbox>
+                                          </li>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div> -->
+                                  <div class="card">
+                                    <div class="card-header">
+                                      <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                          data-target="#collapseCategory3" aria-expanded="false">
+                                          <div>
+                                            <div style="display: inline-block !important;">
+                                              <i class="fa fa-circle-o-notch"></i>
+                                            </div>
+                                            <span>&nbsp;Category</span>
+                                          </div>
+                                          <i class="fa fa-angle-down"></i>
+                                        </button>
+                                      </h2>
+                                    </div>
+                                    <div id="collapseCategory3" class="collapse in" data-parent="#accordion2">
+                                      <div class="card-body">
+                                        <div class="filter-checkbox-input">
+                                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                          </li>
+                                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                            *ngFor="let cat of categoryListData[0];let index=i">
+                                            <mat-checkbox [checked]="categories.indexOf(cat) !== -1"
+                                              [checked]="categories.indexOf(cat.id) !== -1"
+                                              (change)="setFilterDataCheckbox('category', cat.id)">
+                                              {{cat.name}}</mat-checkbox>
+                                          </li>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="card">
+                                    <div class="card-header">
+                                      <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                          data-target="#collapseType3" aria-expanded="false">
+                                          <div>
+                                            <div style="display: inline-block !important;">
+                                              <i class="fa fa-circle-o-notch"></i>
+                                            </div>
+                                            <span>&nbsp;Type</span>
+                                          </div>
+                                          <i class="fa fa-angle-down"></i>
+                                        </button>
+                                      </h2>
+                                    </div>
+                                    <div id="collapseType3" class="collapse in" data-parent="#accordion2">
+                                      <div class="card-body">
+                                        <div class="filter-checkbox-input">
+                                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                          </li>
+                                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                            *ngFor="let typ of leadTypeList[0];let index=i">
+                                            <mat-checkbox [checked]="types.indexOf(typ) !== -1"
+                                              [checked]="types.indexOf(typ.id) !== -1"
+                                              (change)="setFilterDataCheckbox('type', typ.id)">
+                                              {{typ.name}}</mat-checkbox>
+                                          </li>
+                                        </div>
+                                      </div>
+                                    </div>
+  
+                                  </div>
+                                  <!-- <div class="card">
+                                    <div class="card-header">
+                                      <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                          data-target="#collapseId3" aria-expanded="false">
+                                          <div>
+                                            <div style="display: inline-block !important;">
+                                              <i class="fa fa-id-badge"></i>
+                                            </div>
+                                            <span>&nbsp;Title</span>
+                                          </div>
+                                          <i class="fa fa-angle-down"></i>
+                                        </button>
+                                      </h2>
+                                    </div>
+                                    <div id="collapseId3" class="collapse in" data-parent="#accordion3">
+                                      <div class="card-body">
+                                        <div class="filterTextinput filter-text-input">
+                                          <li class="filterli filter-li">
+                                            <input type="text" autocomplete="off" [(ngModel)]="filter.title"
+                                              class="filterTextbox filter-textbox" (keyup)="keyPressed()"
+                                              placeholder="Enter Lead Title">
+                                          </li>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div> -->
+                                </ul>
+                              </section>
+                              <div class="filter-footer mt-1 mx-auto text-center" *ngIf="filterapplied === true">
+                                <button class="btn reset-btn mt-4" (click)="clearFilter()">
+                                  <i class="fa fa-undo"></i>&nbsp;Reset
+                                </button>
+                                <button class="btn apply-btn" (click)="getInprogressLead()">
+                                  <i class="fa fa-check"></i>&nbsp;Apply
+                                </button>
+                              </div>
+                            </aside>
                           </div>
   
                         </tr>
@@ -474,9 +617,9 @@
                               <tr>
                                 <td>
                                   <span>
-                                    <!-- <i class="icon-filter-one" (click)="showFilterSidebar()"
+                                    <i class="icon-filter-one" (click)="showFilterSidebar()"
                                       [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
-                                      style="cursor: pointer;"></i> -->
+                                      style="cursor: pointer;"></i>
                                   </span>
                                 </td>
                               </tr>
@@ -489,7 +632,150 @@
                         <tr>
   
                           <div>
+                            <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
+                              <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                                <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+                                  <span class="filter-head-title">Filters</span>
+                                  <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                                    (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                    [matTooltip]="'Close filter window'"></i>
+                                </div>
+                                <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
+                                <ul class="sidebar-menu accordion" id="accordion1">
   
+  
+                                  <!-- <div class="card">
+                                    <div class="card-header">
+                                      <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                          data-target="#collapseStatus2" aria-expanded="false">
+                                          <div>
+                                            <div style="display: inline-block !important;">
+                                              <i class="fa fa-circle-o-notch"></i>
+                                            </div>
+                                            <span>&nbsp;Status</span>
+                                          </div>
+                                          <i class="fa fa-angle-down"></i>
+                                        </button>
+                                      </h2>
+                                    </div>
+                                    <div id="collapseStatus2" class="collapse in" data-parent="#accordion2">
+                                      <div class="card-body">
+                                        <div class="filter-checkbox-input">
+                                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                          </li>
+                                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                            *ngFor="let stat of leadStatusList;let index=i">
+                                            <mat-checkbox [checked]="statuses.indexOf(stat) !== -1"
+                                              [checked]="statuses.indexOf(stat.id) !== -1"
+                                              (change)="setFilterDataCheckbox('status', stat.id)">
+                                              {{stat.name}}</mat-checkbox>
+                                          </li>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div> -->
+                                  <div class="card">
+                                    <div class="card-header">
+                                      <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                          data-target="#collapseCategory3" aria-expanded="false">
+                                          <div>
+                                            <div style="display: inline-block !important;">
+                                              <i class="fa fa-circle-o-notch"></i>
+                                            </div>
+                                            <span>&nbsp;Category</span>
+                                          </div>
+                                          <i class="fa fa-angle-down"></i>
+                                        </button>
+                                      </h2>
+                                    </div>
+                                    <div id="collapseCategory3" class="collapse in" data-parent="#accordion2">
+                                      <div class="card-body">
+                                        <div class="filter-checkbox-input">
+                                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                          </li>
+                                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                            *ngFor="let cat of categoryListData[0];let index=i">
+                                            <mat-checkbox [checked]="categories.indexOf(cat) !== -1"
+                                              [checked]="categories.indexOf(cat.id) !== -1"
+                                              (change)="setFilterDataCheckbox('category', cat.id)">
+                                              {{cat.name}}</mat-checkbox>
+                                          </li>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="card">
+                                    <div class="card-header">
+                                      <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                          data-target="#collapseType3" aria-expanded="false">
+                                          <div>
+                                            <div style="display: inline-block !important;">
+                                              <i class="fa fa-circle-o-notch"></i>
+                                            </div>
+                                            <span>&nbsp;Type</span>
+                                          </div>
+                                          <i class="fa fa-angle-down"></i>
+                                        </button>
+                                      </h2>
+                                    </div>
+                                    <div id="collapseType3" class="collapse in" data-parent="#accordion2">
+                                      <div class="card-body">
+                                        <div class="filter-checkbox-input">
+                                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                          </li>
+                                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                            *ngFor="let typ of leadTypeList[0];let index=i">
+                                            <mat-checkbox [checked]="types.indexOf(typ) !== -1"
+                                              [checked]="types.indexOf(typ.id) !== -1"
+                                              (change)="setFilterDataCheckbox('type', typ.id)">
+                                              {{typ.name}}</mat-checkbox>
+                                          </li>
+                                        </div>
+                                      </div>
+                                    </div>
+  
+                                  </div>
+                                  <!-- <div class="card">
+                                    <div class="card-header">
+                                      <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                          data-target="#collapseId3" aria-expanded="false">
+                                          <div>
+                                            <div style="display: inline-block !important;">
+                                              <i class="fa fa-id-badge"></i>
+                                            </div>
+                                            <span>&nbsp;Title</span>
+                                          </div>
+                                          <i class="fa fa-angle-down"></i>
+                                        </button>
+                                      </h2>
+                                    </div>
+                                    <div id="collapseId3" class="collapse in" data-parent="#accordion3">
+                                      <div class="card-body">
+                                        <div class="filterTextinput filter-text-input">
+                                          <li class="filterli filter-li">
+                                            <input type="text" autocomplete="off" [(ngModel)]="filter.title"
+                                              class="filterTextbox filter-textbox" (keyup)="keyPressed()"
+                                              placeholder="Enter Lead Title">
+                                          </li>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div> -->
+                                </ul>
+                              </section>
+                              <div class="filter-footer mt-1 mx-auto text-center" *ngIf="filterapplied === true">
+                                <button class="btn reset-btn mt-4" (click)="clearFilter()">
+                                  <i class="fa fa-undo"></i>&nbsp;Reset
+                                </button>
+                                <button class="btn apply-btn" (click)="getCompletedLead()">
+                                  <i class="fa fa-check"></i>&nbsp;Apply
+                                </button>
+                              </div>
+                            </aside>
                           </div>
   
                         </tr>
@@ -595,6 +881,9 @@
                               <tr>
                                 <td>
                                   <span>
+                                    <i class="icon-filter-one" (click)="showFilterSidebar()"
+                                      [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
+                                      style="cursor: pointer;"></i>
                                   </span>
                                 </td>
                               </tr>
@@ -607,7 +896,150 @@
                         <tr>
   
                           <div>
+                            <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
+                              <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                                <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+                                  <span class="filter-head-title">Filters</span>
+                                  <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                                    (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                    [matTooltip]="'Close filter window'"></i>
+                                </div>
+                                <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
+                                <ul class="sidebar-menu accordion" id="accordion1">
   
+  
+                                  <!-- <div class="card">
+                                    <div class="card-header">
+                                      <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                          data-target="#collapseStatus2" aria-expanded="false">
+                                          <div>
+                                            <div style="display: inline-block !important;">
+                                              <i class="fa fa-circle-o-notch"></i>
+                                            </div>
+                                            <span>&nbsp;Status</span>
+                                          </div>
+                                          <i class="fa fa-angle-down"></i>
+                                        </button>
+                                      </h2>
+                                    </div>
+                                    <div id="collapseStatus2" class="collapse in" data-parent="#accordion2">
+                                      <div class="card-body">
+                                        <div class="filter-checkbox-input">
+                                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                          </li>
+                                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                            *ngFor="let stat of leadStatusList;let index=i">
+                                            <mat-checkbox [checked]="statuses.indexOf(stat) !== -1"
+                                              [checked]="statuses.indexOf(stat.id) !== -1"
+                                              (change)="setFilterDataCheckbox('status', stat.id)">
+                                              {{stat.name}}</mat-checkbox>
+                                          </li>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div> -->
+                                  <div class="card">
+                                    <div class="card-header">
+                                      <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                          data-target="#collapseCategory3" aria-expanded="false">
+                                          <div>
+                                            <div style="display: inline-block !important;">
+                                              <i class="fa fa-circle-o-notch"></i>
+                                            </div>
+                                            <span>&nbsp;Category</span>
+                                          </div>
+                                          <i class="fa fa-angle-down"></i>
+                                        </button>
+                                      </h2>
+                                    </div>
+                                    <div id="collapseCategory3" class="collapse in" data-parent="#accordion2">
+                                      <div class="card-body">
+                                        <div class="filter-checkbox-input">
+                                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                          </li>
+                                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                            *ngFor="let cat of categoryListData[0];let index=i">
+                                            <mat-checkbox [checked]="categories.indexOf(cat) !== -1"
+                                              [checked]="categories.indexOf(cat.id) !== -1"
+                                              (change)="setFilterDataCheckbox('category', cat.id)">
+                                              {{cat.name}}</mat-checkbox>
+                                          </li>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="card">
+                                    <div class="card-header">
+                                      <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                          data-target="#collapseType3" aria-expanded="false">
+                                          <div>
+                                            <div style="display: inline-block !important;">
+                                              <i class="fa fa-circle-o-notch"></i>
+                                            </div>
+                                            <span>&nbsp;Type</span>
+                                          </div>
+                                          <i class="fa fa-angle-down"></i>
+                                        </button>
+                                      </h2>
+                                    </div>
+                                    <div id="collapseType3" class="collapse in" data-parent="#accordion2">
+                                      <div class="card-body">
+                                        <div class="filter-checkbox-input">
+                                          <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                          </li>
+                                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                            *ngFor="let typ of leadTypeList[0];let index=i">
+                                            <mat-checkbox [checked]="types.indexOf(typ) !== -1"
+                                              [checked]="types.indexOf(typ.id) !== -1"
+                                              (change)="setFilterDataCheckbox('type', typ.id)">
+                                              {{typ.name}}</mat-checkbox>
+                                          </li>
+                                        </div>
+                                      </div>
+                                    </div>
+  
+                                  </div>
+                                  <!-- <div class="card">
+                                    <div class="card-header">
+                                      <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                                          data-target="#collapseId3" aria-expanded="false">
+                                          <div>
+                                            <div style="display: inline-block !important;">
+                                              <i class="fa fa-id-badge"></i>
+                                            </div>
+                                            <span>&nbsp;Title</span>
+                                          </div>
+                                          <i class="fa fa-angle-down"></i>
+                                        </button>
+                                      </h2>
+                                    </div>
+                                    <div id="collapseId3" class="collapse in" data-parent="#accordion3">
+                                      <div class="card-body">
+                                        <div class="filterTextinput filter-text-input">
+                                          <li class="filterli filter-li">
+                                            <input type="text" autocomplete="off" [(ngModel)]="filter.title"
+                                              class="filterTextbox filter-textbox" (keyup)="keyPressed()"
+                                              placeholder="Enter Lead Title">
+                                          </li>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div> -->
+                                </ul>
+                              </section>
+                              <div class="filter-footer mt-1 mx-auto text-center" *ngIf="filterapplied === true">
+                                <button class="btn reset-btn mt-4" (click)="clearFilter()">
+                                  <i class="fa fa-undo"></i>&nbsp;Reset
+                                </button>
+                                <button class="btn apply-btn" (click)="getFailedLead()">
+                                  <i class="fa fa-check"></i>&nbsp;Apply
+                                </button>
+                              </div>
+                            </aside>
                           </div>
   
                         </tr>
@@ -693,6 +1125,9 @@
                             <tr>
                               <td>
                                 <span>
+                                  <i class="icon-filter-one" (click)="showFilterSidebar()"
+                                    [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
+                                    style="cursor: pointer;"></i>
                                 </span>
                               </td>
                             </tr>
@@ -705,7 +1140,150 @@
                       <tr>
 
                         <div>
+                          <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
+                            <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                              <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+                                <span class="filter-head-title">Filters</span>
+                                <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                                  (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                  [matTooltip]="'Close filter window'"></i>
+                              </div>
+                              <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
+                              <ul class="sidebar-menu accordion" id="accordion1">
 
+
+                                <!-- <div class="card">
+                                  <div class="card-header">
+                                    <h2 class="mb-0">
+                                      <button class="btn btn-link" type="button" data-toggle="collapse"
+                                        data-target="#collapseStatus2" aria-expanded="false">
+                                        <div>
+                                          <div style="display: inline-block !important;">
+                                            <i class="fa fa-circle-o-notch"></i>
+                                          </div>
+                                          <span>&nbsp;Status</span>
+                                        </div>
+                                        <i class="fa fa-angle-down"></i>
+                                      </button>
+                                    </h2>
+                                  </div>
+                                  <div id="collapseStatus2" class="collapse in" data-parent="#accordion2">
+                                    <div class="card-body">
+                                      <div class="filter-checkbox-input">
+                                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                        </li>
+                                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                          *ngFor="let stat of leadStatusList;let index=i">
+                                          <mat-checkbox [checked]="statuses.indexOf(stat) !== -1"
+                                            [checked]="statuses.indexOf(stat.id) !== -1"
+                                            (change)="setFilterDataCheckbox('status', stat.id)">
+                                            {{stat.name}}</mat-checkbox>
+                                        </li>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div> -->
+                                <div class="card">
+                                  <div class="card-header">
+                                    <h2 class="mb-0">
+                                      <button class="btn btn-link" type="button" data-toggle="collapse"
+                                        data-target="#collapseCategory3" aria-expanded="false">
+                                        <div>
+                                          <div style="display: inline-block !important;">
+                                            <i class="fa fa-circle-o-notch"></i>
+                                          </div>
+                                          <span>&nbsp;Category</span>
+                                        </div>
+                                        <i class="fa fa-angle-down"></i>
+                                      </button>
+                                    </h2>
+                                  </div>
+                                  <div id="collapseCategory3" class="collapse in" data-parent="#accordion2">
+                                    <div class="card-body">
+                                      <div class="filter-checkbox-input">
+                                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                        </li>
+                                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                          *ngFor="let cat of categoryListData[0];let index=i">
+                                          <mat-checkbox [checked]="categories.indexOf(cat) !== -1"
+                                            [checked]="categories.indexOf(cat.id) !== -1"
+                                            (change)="setFilterDataCheckbox('category', cat.id)">
+                                            {{cat.name}}</mat-checkbox>
+                                        </li>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="card">
+                                  <div class="card-header">
+                                    <h2 class="mb-0">
+                                      <button class="btn btn-link" type="button" data-toggle="collapse"
+                                        data-target="#collapseType3" aria-expanded="false">
+                                        <div>
+                                          <div style="display: inline-block !important;">
+                                            <i class="fa fa-circle-o-notch"></i>
+                                          </div>
+                                          <span>&nbsp;Type</span>
+                                        </div>
+                                        <i class="fa fa-angle-down"></i>
+                                      </button>
+                                    </h2>
+                                  </div>
+                                  <div id="collapseType3" class="collapse in" data-parent="#accordion2">
+                                    <div class="card-body">
+                                      <div class="filter-checkbox-input">
+                                        <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                        </li>
+                                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                          *ngFor="let typ of leadTypeList[0];let index=i">
+                                          <mat-checkbox [checked]="types.indexOf(typ) !== -1"
+                                            [checked]="types.indexOf(typ.id) !== -1"
+                                            (change)="setFilterDataCheckbox('type', typ.id)">
+                                            {{typ.name}}</mat-checkbox>
+                                        </li>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                                <!-- <div class="card">
+                                  <div class="card-header">
+                                    <h2 class="mb-0">
+                                      <button class="btn btn-link" type="button" data-toggle="collapse"
+                                        data-target="#collapseId3" aria-expanded="false">
+                                        <div>
+                                          <div style="display: inline-block !important;">
+                                            <i class="fa fa-id-badge"></i>
+                                          </div>
+                                          <span>&nbsp;Title</span>
+                                        </div>
+                                        <i class="fa fa-angle-down"></i>
+                                      </button>
+                                    </h2>
+                                  </div>
+                                  <div id="collapseId3" class="collapse in" data-parent="#accordion3">
+                                    <div class="card-body">
+                                      <div class="filterTextinput filter-text-input">
+                                        <li class="filterli filter-li">
+                                          <input type="text" autocomplete="off" [(ngModel)]="filter.title"
+                                            class="filterTextbox filter-textbox" (keyup)="keyPressed()"
+                                            placeholder="Enter Lead Title">
+                                        </li>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div> -->
+                              </ul>
+                            </section>
+                            <div class="filter-footer mt-1 mx-auto text-center" *ngIf="filterapplied === true">
+                              <button class="btn reset-btn mt-4" (click)="clearFilter()">
+                                <i class="fa fa-undo"></i>&nbsp;Reset
+                              </button>
+                              <button class="btn apply-btn" (click)="getTransferredLead()">
+                                <i class="fa fa-check"></i>&nbsp;Apply
+                              </button>
+                            </div>
+                          </aside>
                         </div>
 
                       </tr>
@@ -792,6 +1370,9 @@
                                 <tr>
                                   <td>
                                     <span>
+                                      <i class="icon-filter-one" (click)="showFilterSidebar()"
+                                        [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
+                                        style="cursor: pointer;"></i>
                                     </span>
                                   </td>
                                 </tr>
@@ -804,7 +1385,150 @@
                           <tr>
     
                             <div>
+                              <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
+                                <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                                  <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+                                    <span class="filter-head-title">Filters</span>
+                                    <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                                      (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                      [matTooltip]="'Close filter window'"></i>
+                                  </div>
+                                  <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
+                                  <ul class="sidebar-menu accordion" id="accordion1">
     
+    
+                                    <!-- <div class="card">
+                                      <div class="card-header">
+                                        <h2 class="mb-0">
+                                          <button class="btn btn-link" type="button" data-toggle="collapse"
+                                            data-target="#collapseStatus2" aria-expanded="false">
+                                            <div>
+                                              <div style="display: inline-block !important;">
+                                                <i class="fa fa-circle-o-notch"></i>
+                                              </div>
+                                              <span>&nbsp;Status</span>
+                                            </div>
+                                            <i class="fa fa-angle-down"></i>
+                                          </button>
+                                        </h2>
+                                      </div>
+                                      <div id="collapseStatus2" class="collapse in" data-parent="#accordion2">
+                                        <div class="card-body">
+                                          <div class="filter-checkbox-input">
+                                            <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                            </li>
+                                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                              *ngFor="let stat of leadStatusList;let index=i">
+                                              <mat-checkbox [checked]="statuses.indexOf(stat) !== -1"
+                                                [checked]="statuses.indexOf(stat.id) !== -1"
+                                                (change)="setFilterDataCheckbox('status', stat.id)">
+                                                {{stat.name}}</mat-checkbox>
+                                            </li>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div> -->
+                                    <div class="card">
+                                      <div class="card-header">
+                                        <h2 class="mb-0">
+                                          <button class="btn btn-link" type="button" data-toggle="collapse"
+                                            data-target="#collapseCategory3" aria-expanded="false">
+                                            <div>
+                                              <div style="display: inline-block !important;">
+                                                <i class="fa fa-circle-o-notch"></i>
+                                              </div>
+                                              <span>&nbsp;Category</span>
+                                            </div>
+                                            <i class="fa fa-angle-down"></i>
+                                          </button>
+                                        </h2>
+                                      </div>
+                                      <div id="collapseCategory3" class="collapse in" data-parent="#accordion2">
+                                        <div class="card-body">
+                                          <div class="filter-checkbox-input">
+                                            <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                            </li>
+                                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                              *ngFor="let cat of categoryListData[0];let index=i">
+                                              <mat-checkbox [checked]="categories.indexOf(cat) !== -1"
+                                                [checked]="categories.indexOf(cat.id) !== -1"
+                                                (change)="setFilterDataCheckbox('category', cat.id)">
+                                                {{cat.name}}</mat-checkbox>
+                                            </li>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="card">
+                                      <div class="card-header">
+                                        <h2 class="mb-0">
+                                          <button class="btn btn-link" type="button" data-toggle="collapse"
+                                            data-target="#collapseType3" aria-expanded="false">
+                                            <div>
+                                              <div style="display: inline-block !important;">
+                                                <i class="fa fa-circle-o-notch"></i>
+                                              </div>
+                                              <span>&nbsp;Type</span>
+                                            </div>
+                                            <i class="fa fa-angle-down"></i>
+                                          </button>
+                                        </h2>
+                                      </div>
+                                      <div id="collapseType3" class="collapse in" data-parent="#accordion2">
+                                        <div class="card-body">
+                                          <div class="filter-checkbox-input">
+                                            <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                            </li>
+                                            <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                              *ngFor="let typ of leadTypeList[0];let index=i">
+                                              <mat-checkbox [checked]="types.indexOf(typ) !== -1"
+                                                [checked]="types.indexOf(typ.id) !== -1"
+                                                (change)="setFilterDataCheckbox('type', typ.id)">
+                                                {{typ.name}}</mat-checkbox>
+                                            </li>
+                                          </div>
+                                        </div>
+                                      </div>
+    
+                                    </div>
+                                    <!-- <div class="card">
+                                      <div class="card-header">
+                                        <h2 class="mb-0">
+                                          <button class="btn btn-link" type="button" data-toggle="collapse"
+                                            data-target="#collapseId3" aria-expanded="false">
+                                            <div>
+                                              <div style="display: inline-block !important;">
+                                                <i class="fa fa-id-badge"></i>
+                                              </div>
+                                              <span>&nbsp;Title</span>
+                                            </div>
+                                            <i class="fa fa-angle-down"></i>
+                                          </button>
+                                        </h2>
+                                      </div>
+                                      <div id="collapseId3" class="collapse in" data-parent="#accordion3">
+                                        <div class="card-body">
+                                          <div class="filterTextinput filter-text-input">
+                                            <li class="filterli filter-li">
+                                              <input type="text" autocomplete="off" [(ngModel)]="filter.title"
+                                                class="filterTextbox filter-textbox" (keyup)="keyPressed()"
+                                                placeholder="Enter Lead Title">
+                                            </li>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div> -->
+                                  </ul>
+                                </section>
+                                <div class="filter-footer mt-1 mx-auto text-center" *ngIf="filterapplied === true">
+                                  <button class="btn reset-btn mt-4" (click)="clearFilter()">
+                                    <i class="fa fa-undo"></i>&nbsp;Reset
+                                  </button>
+                                  <button class="btn apply-btn" (click)="getUnassignedLead()">
+                                    <i class="fa fa-check"></i>&nbsp;Apply
+                                  </button>
+                                </div>
+                              </aside>
                             </div>
     
                           </tr>
@@ -858,7 +1582,7 @@
                       </table>
                       <div class="search_paging" *ngIf="loadComplete4">
                         <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-                          (pagerclick)="handle_pageclick_Transferred($event)" [curpage]="pagination.startpageval">
+                          (pagerclick)="handle_pageclick_Unassigned($event)" [curpage]="pagination.startpageval">
                         </app-pager>
                       </div>
                     </div>
@@ -893,6 +1617,9 @@
                                   <tr>
                                     <td>
                                       <span>
+                                        <i class="icon-filter-one" (click)="showFilterSidebar()"
+                                          [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
+                                          style="cursor: pointer;"></i>
                                       </span>
                                     </td>
                                   </tr>
@@ -905,7 +1632,150 @@
                             <tr>
       
                               <div>
+                                <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
+                                  <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                                    <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+                                      <span class="filter-head-title">Filters</span>
+                                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                                        (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                        [matTooltip]="'Close filter window'"></i>
+                                    </div>
+                                    <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
+                                    <ul class="sidebar-menu accordion" id="accordion1">
       
+      
+                                      <!-- <div class="card">
+                                        <div class="card-header">
+                                          <h2 class="mb-0">
+                                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                              data-target="#collapseStatus2" aria-expanded="false">
+                                              <div>
+                                                <div style="display: inline-block !important;">
+                                                  <i class="fa fa-circle-o-notch"></i>
+                                                </div>
+                                                <span>&nbsp;Status</span>
+                                              </div>
+                                              <i class="fa fa-angle-down"></i>
+                                            </button>
+                                          </h2>
+                                        </div>
+                                        <div id="collapseStatus2" class="collapse in" data-parent="#accordion2">
+                                          <div class="card-body">
+                                            <div class="filter-checkbox-input">
+                                              <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                              </li>
+                                              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                                *ngFor="let stat of leadStatusList;let index=i">
+                                                <mat-checkbox [checked]="statuses.indexOf(stat) !== -1"
+                                                  [checked]="statuses.indexOf(stat.id) !== -1"
+                                                  (change)="setFilterDataCheckbox('status', stat.id)">
+                                                  {{stat.name}}</mat-checkbox>
+                                              </li>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div> -->
+                                      <div class="card">
+                                        <div class="card-header">
+                                          <h2 class="mb-0">
+                                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                              data-target="#collapseCategory3" aria-expanded="false">
+                                              <div>
+                                                <div style="display: inline-block !important;">
+                                                  <i class="fa fa-circle-o-notch"></i>
+                                                </div>
+                                                <span>&nbsp;Category</span>
+                                              </div>
+                                              <i class="fa fa-angle-down"></i>
+                                            </button>
+                                          </h2>
+                                        </div>
+                                        <div id="collapseCategory3" class="collapse in" data-parent="#accordion2">
+                                          <div class="card-body">
+                                            <div class="filter-checkbox-input">
+                                              <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                              </li>
+                                              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                                *ngFor="let cat of categoryListData[0];let index=i">
+                                                <mat-checkbox [checked]="categories.indexOf(cat) !== -1"
+                                                  [checked]="categories.indexOf(cat.id) !== -1"
+                                                  (change)="setFilterDataCheckbox('category', cat.id)">
+                                                  {{cat.name}}</mat-checkbox>
+                                              </li>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="card">
+                                        <div class="card-header">
+                                          <h2 class="mb-0">
+                                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                              data-target="#collapseType3" aria-expanded="false">
+                                              <div>
+                                                <div style="display: inline-block !important;">
+                                                  <i class="fa fa-circle-o-notch"></i>
+                                                </div>
+                                                <span>&nbsp;Type</span>
+                                              </div>
+                                              <i class="fa fa-angle-down"></i>
+                                            </button>
+                                          </h2>
+                                        </div>
+                                        <div id="collapseType3" class="collapse in" data-parent="#accordion2">
+                                          <div class="card-body">
+                                            <div class="filter-checkbox-input">
+                                              <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                              </li>
+                                              <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                                *ngFor="let typ of leadTypeList[0];let index=i">
+                                                <mat-checkbox [checked]="types.indexOf(typ) !== -1"
+                                                  [checked]="types.indexOf(typ.id) !== -1"
+                                                  (change)="setFilterDataCheckbox('type', typ.id)">
+                                                  {{typ.name}}</mat-checkbox>
+                                              </li>
+                                            </div>
+                                          </div>
+                                        </div>
+      
+                                      </div>
+                                      <!-- <div class="card">
+                                        <div class="card-header">
+                                          <h2 class="mb-0">
+                                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                              data-target="#collapseId3" aria-expanded="false">
+                                              <div>
+                                                <div style="display: inline-block !important;">
+                                                  <i class="fa fa-id-badge"></i>
+                                                </div>
+                                                <span>&nbsp;Title</span>
+                                              </div>
+                                              <i class="fa fa-angle-down"></i>
+                                            </button>
+                                          </h2>
+                                        </div>
+                                        <div id="collapseId3" class="collapse in" data-parent="#accordion3">
+                                          <div class="card-body">
+                                            <div class="filterTextinput filter-text-input">
+                                              <li class="filterli filter-li">
+                                                <input type="text" autocomplete="off" [(ngModel)]="filter.title"
+                                                  class="filterTextbox filter-textbox" (keyup)="keyPressed()"
+                                                  placeholder="Enter Lead Title">
+                                              </li>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div> -->
+                                    </ul>
+                                  </section>
+                                  <div class="filter-footer mt-1 mx-auto text-center" *ngIf="filterapplied === true">
+                                    <button class="btn reset-btn mt-4" (click)="clearFilter()">
+                                      <i class="fa fa-undo"></i>&nbsp;Reset
+                                    </button>
+                                    <button class="btn apply-btn" (click)="getAssignedLead()">
+                                      <i class="fa fa-check"></i>&nbsp;Apply
+                                    </button>
+                                  </div>
+                                </aside>
                               </div>
       
                             </tr>
@@ -959,7 +1829,7 @@
                         </table>
                         <div class="search_paging" *ngIf="loadComplete4">
                           <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-                            (pagerclick)="handle_pageclick_Transferred($event)" [curpage]="pagination.startpageval">
+                            (pagerclick)="handle_pageclick_ASsigned($event)" [curpage]="pagination.startpageval">
                           </app-pager>
                         </div>
                       </div>
