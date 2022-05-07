@@ -935,7 +935,6 @@ export class CreateLeadComponent implements OnInit{
         );
     }
   }
-  
   createNew(){
     const dialogRef  = this.dialog.open(CrmSelectMemberComponent, {
       width: '100%',
