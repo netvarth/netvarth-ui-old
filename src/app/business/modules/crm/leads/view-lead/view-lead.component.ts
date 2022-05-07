@@ -106,6 +106,7 @@ ngOnInit(): void {
     
       this.leadDetails = data;
       this.leadkid = this.leadDetails.uid
+      this.api_loading = false;
       this.getLeadToken();
     
       console.log('leadDetails.status',this.leadDetails.status.name)
@@ -136,6 +137,7 @@ uploadFiles() {
   });
   
   dialogRef.afterClosed().subscribe(()=>{
+    this.api_loading = true;
     setTimeout(() => {
     this.ngOnInit();
     }, 5000);
