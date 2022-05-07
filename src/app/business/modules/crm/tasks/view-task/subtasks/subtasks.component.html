@@ -35,7 +35,7 @@
                 </tr>
             </thead>
             <tbody>
-                <ng-container *ngIf="subTaskDetails.length === 0">
+                <ng-container *ngIf="subTaskDetails && subTaskDetails.length === 0">
                 <tr class="text-center mx-auto text-danger">
                     <td class="text-center nodatafound" colspan="5">No subactivities found</td>
                 </tr>
@@ -78,7 +78,7 @@
                 </ng-container>
             </tbody>
         </table>
-        <div class="search_paging" *ngIf="subTaskDetails.length>0">
+        <div class="search_paging" *ngIf="subTaskDetails && subTaskDetails.length>0">
           <app-pager [total_pages]="gettotalCnt()" [pagesize]="getperPage()" (pagerclick)="handle_pageclick($event)"
             [curpage]="startpageval"></app-pager>
         </div>

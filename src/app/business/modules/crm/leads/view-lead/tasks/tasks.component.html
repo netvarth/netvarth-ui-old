@@ -21,12 +21,12 @@
                 </tr>
             </thead>
             <tbody>
-                <ng-container *ngIf="LeadTaskDetails.length == 0">
+                <ng-container *ngIf="LeadTaskDetails && LeadTaskDetails.length == 0">
                 <tr class="text-center mx-auto text-danger">
                     <td class="text-center nodatafound" colspan="5">No Lead activities found</td>
                 </tr>
                 </ng-container>
-                <ng-container *ngIf="LeadTaskDetails.length > 0">
+                <ng-container *ngIf="LeadTaskDetails && LeadTaskDetails.length > 0">
                     <tr class="subtask-table-data pointer-cursor" *ngFor="let task of LeadTaskDetails" (click)="viewTask(task.taskUid,task)">
                         <!-- <pre>{{subtask | json}}</pre> -->
                         <td class="head_color"><span class="text-dark">

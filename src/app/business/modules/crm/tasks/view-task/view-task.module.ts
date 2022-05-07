@@ -13,11 +13,11 @@ import { AppointmentsComponent } from "./appointments/appointments.component";
 import { TaskActivityComponent } from "./task-activity/task-activity.component";
 import { ConnectionsComponent } from "./connections/connections.component";
 import { SubtasksComponent } from "./subtasks/subtasks.component";
-import { SelectAttachmentComponent } from "./select-attachment/select-attachment.component";
 import { MatSliderModule } from "@angular/material/slider";
 import { ActivitylogComponent } from "./activitylog/activitylog.component";
 import { NgCircleProgressModule } from "ng-circle-progress";
 import { FileService } from "../../../../../shared/services/file-service";
+import { SelectAttachmentModule } from "./select-attachment/select-attachment.module";
 const routes: Routes = [
   { path: '', component: ViewTaskComponent },
   {path:'create-task',loadChildren:()=>import('../create-task/create-task.module').then((m)=>m.CreateTaskModule)},
@@ -31,8 +31,7 @@ const routes: Routes = [
     TaskActivityComponent,
     ConnectionsComponent,
     SubtasksComponent,
-    ActivitylogComponent,
-    SelectAttachmentComponent
+    ActivitylogComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +42,7 @@ const routes: Routes = [
     CapitalizeFirstPipeModule,
     MenuModule,
     MatSliderModule,
-    LoadingSpinnerModule,
+    SelectAttachmentModule,
     NgCircleProgressModule.forRoot({
       // set defaults here
       backgroundColor: "#e9ecef",

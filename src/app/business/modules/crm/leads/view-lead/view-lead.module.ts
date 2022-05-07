@@ -18,6 +18,7 @@ import { MatSliderModule } from "@angular/material/slider";
 import { NgCircleProgressModule } from "ng-circle-progress";
 import { FileService } from "../../../../../shared/services/file-service";
 import { TasksComponent } from "./tasks/tasks.component";
+import { SelectAttachmentModule } from "../../tasks/view-task/select-attachment/select-attachment.module";
 const routes: Routes = [
   { path: '', component: ViewLeadComponent },
   {path:'create-lead',loadChildren:()=>import('../create-lead/create-lead.module').then((m)=>m.CreateLeadModule)},
@@ -46,6 +47,7 @@ const routes: Routes = [
     MenuModule,
     MatSliderModule,
     LoadingSpinnerModule,
+    SelectAttachmentModule,
     NgCircleProgressModule.forRoot({
       // set defaults here
       backgroundColor: "#e9ecef",

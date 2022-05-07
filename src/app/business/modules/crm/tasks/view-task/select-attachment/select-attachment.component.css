@@ -170,3 +170,7 @@
     }
 
   }
+
+  ::ng-deep .select-attachment .mat-chip.mat-standard-chip {
+	  background-color: #fff !important;
+  }

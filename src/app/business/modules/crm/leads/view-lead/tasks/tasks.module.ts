@@ -1,12 +1,12 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TasksComponent } from './Tasks.component';
 import { PagerComponent } from '../../../../../../../../src/app/shared/modules/pager/pager.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { FileService } from '../../../../../../../../src/app/shared/services/file-service';
 import { CrmService } from '../../../crm.service';
+import { TasksComponent } from './tasks.component';
 
 
 const routes: Routes = [

@@ -34,7 +34,7 @@ export class TasksComponent implements OnInit {
   sampledata = ["task_08e5555d-527a-477a-8fff-ecd221122882-pt","task_29ea8468-7558-4ac3-bca4-7cfe070d8f7b-pt"]
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   leadDetails: any;
-  taskMasterList: any;
+  taskMasterList: any  = [];
   public taskMasterOtherJSON:any=[
     {
       // account: 126859,
@@ -55,10 +55,7 @@ export class TasksComponent implements OnInit {
   constructor( 
     private router: Router,
     private crmService: CrmService,
-    private dialog: MatDialog,
-
-
-
+    private dialog: MatDialog
     ) { }
   ngOnInit(): void {
     
@@ -67,18 +64,18 @@ export class TasksComponent implements OnInit {
   this.crmService.getLeadDetails(this.leadid).subscribe(data => {
     this.leadDetails = data;
     console.log("Lead Details : ",this.leadDetails);
-    console.log('this.leadDetails.leadMasterId',this.leadDetails.id)
+    this.crmService.getLeadTaskDetails(this.taskid).subscribe(data => {
+      this.taskDetails = data;
+      if (this.leadDetails && this.leadDetails.tasks) {
+      let LeadTaskFilter = this.taskDetails.filter(data => this.leadDetails.tasks.includes(data.taskUid));
+      this.LeadTaskDetails = LeadTaskFilter;
+      console.log("Task Details : ",this.LeadTaskDetails);
+    }
+    })
 })
 
-// console.log('this.leadDetails.leadMasterId',this.leadDetails.id)
-// console.log('this.leadid',this.leadid)
-this.crmService.getLeadTaskDetails(this.leadDetails.id).subscribe(data => {
-  this.taskDetails = data;
-  console.log("Task Details : ",this.taskDetails);
-  let LeadTaskFilter = this.taskDetails.filter(data => this.leadDetails.tasks.includes(data.taskUid));
-  this.LeadTaskDetails = LeadTaskFilter;
-  console.log("Task Details : ",this.LeadTaskDetails);
-})
+
+
 this.getTaskmaster()
 
   }
@@ -240,7 +237,4 @@ this.getTaskmaster()
       console.log('resssssssss',res);
     })
   }
-
-  
-  
 }
