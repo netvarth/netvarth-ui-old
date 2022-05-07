@@ -1,5 +1,7 @@
 <div class="text-center dialog-box-width">
-    <span class="head-text"><b>Upload files related to activity</b></span>
+  <span class="head-text" ngIf="data.source === 'Lead'"><b>Upload files related to lead</b></span>
+
+    <span class="head-text" ngIf="data.source === 'Task'"><b>Upload files related to activity</b></span>
 </div>
 <hr class="my-0 py-0">
 <div class="container-fluid my-3" style="overflow-y: scroll!important;">

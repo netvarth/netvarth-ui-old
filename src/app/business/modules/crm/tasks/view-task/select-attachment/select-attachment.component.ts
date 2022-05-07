@@ -23,6 +23,7 @@ export class SelectAttachmentComponent implements OnInit {
   };
   imgCaptions: any = [];
 
+  source:any;
   selectedFiles: FileList;
   progressInfos = [];
   message = "";
@@ -38,9 +39,14 @@ export class SelectAttachmentComponent implements OnInit {
     private fileService: FileService
   ) // private router: Router,
 
-  {}
+  { 
+    this.source = this.data.source
+    console.log("Source Type :",this.source)
+  }
 
   ngOnInit(): void {
+
+   
     // this.fileInfos = this.uploadService.getFiles();
   }
 
@@ -144,7 +150,7 @@ export class SelectAttachmentComponent implements OnInit {
         type: "application/json"
       });
       dataToSend.append("captions", blobPropdata);
-      _this.sendWLAttachment(id, dataToSend).then(() => {
+      _this.sendWLAttachment(id, dataToSend).then(() => {                                                                         
         resolve(true);
       });
     });

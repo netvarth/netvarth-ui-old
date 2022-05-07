@@ -93,7 +93,7 @@ export class ViewTaskComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.api_loading = true;
+   this.api_loading = false;
     this._Activatedroute.paramMap.subscribe(params => {
       this.taskUid = params.get("id");
       console.log("task id : ", this.taskUid);
