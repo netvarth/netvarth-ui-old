@@ -47,16 +47,16 @@
                             </div>
                             <div class="container mgn-lt-20 mgn-up-50">
                                 <div class="row d-flex border">
-                                    <div class="doc-notification-card col-sm-8 col-md-4 col-lg-4 m-2">
+                                    <!-- <div class="doc-notification-card col-sm-8 col-md-4 col-lg-4 m-2">
                                         <div class="notification-img">
                                             <img src="../../../../../../../assets/images/doctor.png" alt="doctor.png" />
                                         </div>
                                         <div class="red-border"></div>
-                                        <div class="notification-body">
-                                            <p class="text-danger bold p-0">{{provdr_domain_name|capitalizeFirst}} Notifications                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="pat-notification-card col-sm-8 col-md-4 col-lg-4 m-2">
+                                        <div class="notification-body b-link" (click)="gotoProvider()" *ngIf="sub_domain == ('hospital'||'dentalHosp'||'alternateMedicineHosp'||'veterinaryhospital'||'hoslisticHealth') && accountType == 'BRANCH' && isMultilevel">
+                                            <p class="text-danger bold p-0">{{provdr_domain_name|capitalizeFirst}} Notifications </p>
+                                        </div>  
+                                    </div> -->
+                                    <!-- <div class="pat-notification-card col-sm-8 col-md-4 col-lg-4 m-2">
                                         <div class="notification-img"> 
                                             <img src="../../../../../../../assets/images/patient.png" alt="patient.png" />
                                         </div>
@@ -64,7 +64,7 @@
                                         <div class="notification-body">
                                             <p class="text-success bold p-0">{{cust_domain_name|capitalizeFirst}} Notifications</p>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <!-- <div class="col text-danger bold">
                                         {{provdr_domain_name|capitalizeFirst}} Notifications
                                     </div>
@@ -94,7 +94,7 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="row">
+            <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoConsumer()">
                         <h2>{{cust_domain_name|capitalizeFirst}}</h2>
@@ -103,8 +103,8 @@
                                 More</a></span>
                     </span>
                 </div>
-            </div> -->
-            <!-- <div class="row">
+            </div>
+            <div class="row">
                 <div class="card p0">
                     <span class="b-link" (click)="gotoProvider()"
                         *ngIf="sub_domain == ('hospital'|| 'dentalHosp' ||'alternateMedicineHosp'||'veterinaryhospital' || 'hoslisticHealth' )&& accountType == 'BRANCH' && isMultilevel">
@@ -121,7 +121,7 @@
                                 More</a></span>
                     </span>
                 </div>
-            </div> -->
+            </div>
         </div>
         <div class="clearfix"></div>
     </div>
