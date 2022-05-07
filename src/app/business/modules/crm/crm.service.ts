@@ -199,9 +199,9 @@ export class CrmService {
     }
 
 
-    getLeadTaskDetails(taskUid)
+    getLeadTaskDetails(leadId)
     {
-      const url = 'provider/task/provider';
+      const url = 'provider/task/provider?originFrom-eq=Lead&originId-eq='+leadId ;
       return this.servicemeta.httpGet(url);
     }
 

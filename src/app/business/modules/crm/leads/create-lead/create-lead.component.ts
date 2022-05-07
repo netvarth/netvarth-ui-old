@@ -135,6 +135,7 @@ export class CreateLeadComponent implements OnInit{
   search_input: any;
   hideSearch = false;
   leadMasterData: any;
+  leadId:any;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -270,12 +271,16 @@ export class CreateLeadComponent implements OnInit{
         console.log('this.estTime',this.estTime)
         console.log('new Date()',new Date())
         const leadMaster= this.crmService.leadMasterToCreateServiceData;
-        this.leadMasterData = this.crmService.leadMasterToCreateServiceData;
-        this.createLeadForm.controls.leadTitle.value = leadMaster.title.value;
-        this.createLeadForm.controls.leadDescription.value= leadMaster.description.value;
-        this.createLeadForm.controls.userLeadCategory.value= leadMaster.category.value.id;
-        this.createLeadForm.controls.userLeadType.value= leadMaster.type.value.id;
-        this.createLeadForm.controls.userLeadPriority.value= leadMaster.priority.id;
+        console.log('leadMaster',leadMaster)
+        if(leadMaster !=undefined){
+          this.leadId=leadMaster.id
+          this.leadMasterData = this.crmService.leadMasterToCreateServiceData;
+          this.createLeadForm.controls.leadTitle.value = leadMaster.title.value;
+          this.createLeadForm.controls.leadDescription.value= leadMaster.description.value;
+          this.createLeadForm.controls.userLeadCategory.value= leadMaster.category.value.id;
+          this.createLeadForm.controls.userLeadType.value= leadMaster.type.value.id;
+          this.createLeadForm.controls.userLeadPriority.value= leadMaster.priority.id;
+        }
 
     }
     else if(this.crmService.leadActivityName==='CreteLeadMaster'){
@@ -801,7 +806,8 @@ export class CreateLeadComponent implements OnInit{
       // "locationArea":this.areaName,
       "assignee":{"id":this.assigneeId},
       "manager":{"id":this.selectLeadMangerId},
-      "customer" : {"id" :  this.customer_data.id}
+      "customer" : {"id" :  this.customer_data.id},
+      "leadMasterId":this.leadId
     }
     console.log('createLeadData',createLeadData)
     console.log('this.userType',this.userType)
