@@ -1523,3 +1523,15 @@ span.tab-text.ng-star-inserted {
 td{
     white-space: normal !important;
   }
+  .lead{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0px !important;
+  }
+  .fieldPadding{
+      padding-left: 15px;
+  }
+  .filterBtn{
+    float: right;margin-top: -30px;
+  }

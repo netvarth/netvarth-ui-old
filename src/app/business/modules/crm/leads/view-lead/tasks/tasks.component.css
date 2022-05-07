@@ -64,7 +64,15 @@
         margin: 0!important;
     }
     td{
-        white-space: normal !important;
+        /* white-space: normal !important; */
+      }
+      tr{
+        display: block !important;
+      }
+      table thead, table tbody tr {
+        /* display: block  !important; */
+        width: 100%  !important;
+        table-layout: fixed  !important;
       }
   }
 

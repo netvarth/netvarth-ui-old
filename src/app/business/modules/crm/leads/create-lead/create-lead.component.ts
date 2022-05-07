@@ -350,7 +350,7 @@ export class CreateLeadComponent implements OnInit{
       console.log('leadStatus',leadStatus);
       this.leadStatusList.push(leadStatus);
       if(this.crmService.leadActivityName==='Create' || this.crmService.leadActivityName==='subLeadCreate' || this.crmService.leadActivityName==='CreatE' || this.crmService.leadActivityName==='CreteLeadMaster'){
-        this.createLeadForm.controls.leadStatus.setValue(this.leadStatusList[0][0].id)
+        this.createLeadForm.controls.leadStatus.setValue(this.leadStatusList[0][1].id)
         // this.leadStatusModal=this.leadStatusList[0][0].id;
       }
       else{
