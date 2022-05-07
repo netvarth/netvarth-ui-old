@@ -476,16 +476,20 @@
             <mat-icon>clear</mat-icon>
         </div>
     </div>
-    <!---task des start-->
-    <div>
-        <div class="taskDes">{{leadDescription}}</div>
-    </div>
-    <!---task des end-->
+  
     <!--task name start-->
     <div class="titleTask">
         <div>{{leadTitle}}</div>
     </div>
-    <!---task name end-->
+      <!---task name end-->
+        <!---task des start-->
+   
+    
+     <div>
+        <div class="taskDes">{{leadDescription}}</div>
+    </div>
+
+  <!---task des end-->
     <!---spinner start-->
     <div style="margin-top: 10px;display: flex;gap:10px">
         <div>
@@ -897,7 +901,7 @@
                     <div class="fieldPadding">
                         <input [(ngModel)]="phoneNoValue" type="tel" #phoneNo
                             (ngModelChange)="hamdlephoneNo(phoneNoValue)" placeholder="Enter Phone Number"
-                            class="form-controls" autocomplete="off" [value]="phoneNoValue" />
+                            class="form-controls" autocomplete="off" minlength="10" maxlength="10" [value]="phoneNoValue" />
                     </div>
                 </div>
                 <div>
