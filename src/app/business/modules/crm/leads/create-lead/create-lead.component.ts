@@ -897,9 +897,10 @@ export class CreateLeadComponent implements OnInit{
               this.createNew();
             } else {
               if (data.length > 1) {
-                const customer = data.filter(member => !member.parent);
-                this.customer_data = customer[0];
-              } else {
+                // const customer = data.filter(member => !member.parent);
+                this.customer_data = data[0];
+                this.hideSearch = true;
+              }else {
                 this.customer_data = data[0];
                 if(this.customer_data){
                   this.hideSearch = true;
