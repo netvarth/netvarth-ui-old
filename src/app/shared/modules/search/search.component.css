@@ -101,6 +101,7 @@
   color: darkslategray !important;
   font-weight: 700 !important;
   margin-top: 0 !important;
+  margin-left: 0px !important;
 }
 
 .tp-srch .sa-dm mat-form-field {

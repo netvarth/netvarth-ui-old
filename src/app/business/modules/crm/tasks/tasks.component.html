@@ -147,7 +147,7 @@
                         <th class="head_color">Assignee</th>
                         <!-- <th class="head_color">Duration</th> -->
                         <th class="head_color">Status</th>
-                        <th class="head_color">Catogory</th>
+                        <th class="head_color">Category</th>
                         <th class="head_color">Type</th>
                         <th class="head_color">Due Date</th>
                         <th class="filter-fx-col">
@@ -327,7 +327,7 @@
                         </tr>
                       </ng-container>
                       <ng-container *ngIf="totalTaskList.length>0">
-                        <tr *ngFor="let task of totalTaskList; let i=index" (click)="viewTask(task.taskUid,task)">
+                        <tr *ngFor="let task of totalTaskList; let i=index" class="pointer-cursor" (click)="viewTask(task.taskUid,task)">
 
                           <td>
                             <circle-progress class="circle__progress" [percent]="task.progress" [animation]="true"
@@ -411,7 +411,7 @@
                         <th class="head_color">Assignee</th>
                         <!-- <th class="head_color">Duration</th> -->
                         <th class="head_color">Status</th>
-                        <th class="head_color">Catogory</th>
+                        <th class="head_color">Category</th>
                         <th class="head_color">Type</th>
                         <th class="head_color">Due Date</th>
 
@@ -589,7 +589,7 @@
                         </tr>
                       </ng-container>
                       <ng-container *ngIf="totalInprogressList.length>0">
-                        <tr *ngFor="let task of totalInprogressList; let i=index" (click)="viewTask(task.taskUid,task)">
+                        <tr *ngFor="let task of totalInprogressList; let i=index" class="pointer-cursor"  (click)="viewTask(task.taskUid,task)">
                           <td>
                             <circle-progress class="circle__progress" [percent]="task.progress" [animation]="true"
                               [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
@@ -674,7 +674,7 @@
                         <th class="head_color">Assignee</th>
                         <!-- <th class="head_color">Duration</th> -->
                         <th class="head_color">Status</th>
-                        <th class="head_color">Catogory</th>
+                        <th class="head_color">Category</th>
                         <th class="head_color">Type</th>
                         <th class="head_color">Due Date</th>
                         <th class="filter-fx-col">
@@ -852,7 +852,7 @@
                         </tr>
                       </ng-container>
                       <ng-container *ngIf="totalCompletedList.length>0">
-                        <tr *ngFor="let task of totalCompletedList; let i=index" (click)="viewTask(task.taskUid,task)">
+                        <tr *ngFor="let task of totalCompletedList; let i=index" class="pointer-cursor" (click)="viewTask(task.taskUid,task)">
                           <td>
                             <circle-progress class="circle__progress" [percent]="task.progress" [animation]="true"
                               [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
@@ -947,7 +947,7 @@
                         <th class="head_color">Task Details</th>
                     
                         <th class="head_color">Status</th>
-                        <th class="head_color">Catogory</th>
+                        <th class="head_color">Category</th>
                         <th class="head_color">Type</th>
                         <th class="head_color">Due Date</th>
                         <th class="filter-fx-col">
@@ -1124,7 +1124,7 @@
                         </tr>
                       </ng-container>
                       <ng-container *ngIf="totalNewTaskList.length>0">
-                        <tr *ngFor="let task of totalNewTaskList; let i=index" (click)="viewTask(task.taskUid,task)">
+                        <tr *ngFor="let task of totalNewTaskList; let i=index" class="pointer-cursor" (click)="viewTask(task.taskUid,task)">
                           <td >&nbsp; &nbsp;<circle-progress class="circle__progress" 
                             [percent]="task.progress"
                             [animation]="true"
@@ -1220,7 +1220,7 @@
                         <th class="head_color">Task Details</th>
                     
                         <th class="head_color">Status</th>
-                        <th class="head_color">Catogory</th>
+                        <th class="head_color">Category</th>
                         <th class="head_color">Type</th>
                         <th class="head_color">Due Date</th>
                         <th class="filter-fx-col">
@@ -1397,7 +1397,7 @@
                         </tr>
                       </ng-container>
                       <ng-container *ngIf="assignedTaskList.length>0">
-                        <tr *ngFor="let task of assignedTaskList; let i=index" (click)="viewTask(task.taskUid,task)">
+                        <tr *ngFor="let task of assignedTaskList; let i=index" class="pointer-cursor" (click)="viewTask(task.taskUid,task)">
                           <td >&nbsp; &nbsp;<circle-progress class="circle__progress" 
                             [percent]="task.progress"
                             [animation]="true"
@@ -1492,7 +1492,7 @@
                         <th class="head_color">Task Details</th>
                     
                         <th class="head_color">Status</th>
-                        <th class="head_color">Catogory</th>
+                        <th class="head_color">Category</th>
                         <th class="head_color">Type</th>
                         <th class="head_color">Due Date</th>
                         <th class="filter-fx-col">
@@ -1669,7 +1669,7 @@
                         </tr>
                       </ng-container>
                       <ng-container *ngIf="canceledTaskList.length>0">
-                        <tr *ngFor="let task of canceledTaskList; let i=index" (click)="viewTask(task.taskUid,task)">
+                        <tr *ngFor="let task of canceledTaskList; let i=index" class="pointer-cursor" (click)="viewTask(task.taskUid,task)">
                           <td >&nbsp; &nbsp;<circle-progress class="circle__progress" 
                             [percent]="task.progress"
                             [animation]="true"
@@ -1763,7 +1763,7 @@
                         <th class="head_color">Task Details</th>
                     
                         <th class="head_color">Status</th>
-                        <th class="head_color">Catogory</th>
+                        <th class="head_color">Category</th>
                         <th class="head_color">Type</th>
                         <th class="head_color">Due Date</th>
                         <th class="filter-fx-col">
@@ -1940,7 +1940,7 @@
                         </tr>
                       </ng-container>
                       <ng-container *ngIf="suspendedTaskList.length>0">
-                        <tr *ngFor="let task of suspendedTaskList; let i=index" (click)="viewTask(task.taskUid,task)">
+                        <tr *ngFor="let task of suspendedTaskList; let i=index" class="pointer-cursor" (click)="viewTask(task.taskUid,task)">
                           <td >&nbsp; &nbsp;<circle-progress class="circle__progress" 
                             [percent]="task.progress"
                             [animation]="true"

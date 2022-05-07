@@ -18,12 +18,15 @@
         </div>
         <div class="rowcard card pt-0" *ngIf="!api_loading">
           <div class="c-details">
-            <h2>
+            <!-- <h2>
               <span class="customer-action-btn pointer-cursor my-auto moreAction" (click)="gotoActions(waitlist_data)">
                 <div>
                   <img width="10px" src="/assets/images/tokenDetailsIcon/more.png" />
                 </div>
                 More Actions</span>  
+            </h2> -->
+            <h2>
+              <span style="float:right;font-size: 12px!important;margin-top: 17px!important;" class="customer-action-btn pointer-cursor my-auto" (click)="gotoActions(waitlist_data)">More Actions</span>  
             </h2>
             <h2 class="service">
               <span class="fa-icons"><i *ngIf="waitlist_data.service.serviceType === 'virtualService'" [class]="iconClass" ></i></span>  
@@ -147,8 +150,13 @@
                   <span class="ml-0 pl-0" *ngIf="waitlist_data.waitlistingFor[0].firstName || waitlist_data.waitlistingFor[0].lastName">
                     &nbsp;<b>{{waitlist_data.waitlistingFor[0].firstName | capitalizeFirst}}
                       {{waitlist_data.waitlistingFor[0].lastName | capitalizeFirst}}</b></span>
+                  <!-- <div class="float-right">
+                    <a (click)="editCustomerDetails()"  class="edit-btn pointer-cursor">
+                      <i class="fa fa-pencil-square-o" aria-hidden="true" style="margin-right: 10px;color: #8D9094;"></i>
+                      <b style="color: #8D9094;">Edit Details</b></a>
+                  </div> -->
                   <div class="float-right">
-                    <a (click)="editCustomerDetails()"  class="edit-btn pointer-cursor"><i class="fa fa-pencil-square-o" aria-hidden="true" style="margin-right: 10px;color: #8D9094;"></i><b style="color: #8D9094;">Edit Details</b></a>
+                    <a (click)="editCustomerDetails()" style="font-size:13px!important;" class="edit-btn pointer-cursor"><b>Edit Details</b></a>
                   </div>
                 </div>
                 <!-- <span class="ml-0 pl-0" *ngIf="waitlist_data.waitlistingFor[0].firstName || waitlist_data.waitlistingFor[0].lastName">

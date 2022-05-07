@@ -884,7 +884,7 @@ export class BranchUsersComponent implements OnInit {
         this.showcheckbox = true;
         this.addlocationcheck = true;
         this.showusers = true;
-        // this.getProviderLocations();
+        //this.getProviderLocations();
     }
     getProviderLocations() {
         const _this = this;

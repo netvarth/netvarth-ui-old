@@ -255,6 +255,7 @@ export class CustomersListComponent implements OnInit {
   showCustomerAction(customer) {
     const cust = [];
     cust.push(customer)
+    console.log("Patient Detailssss: ",customer)
     const notedialogRef = this.dialog.open(CustomerActionsComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],

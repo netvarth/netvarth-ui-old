@@ -735,7 +735,9 @@ export const projectConstantsLocal = {
     'video/mpeg',
     'audio/mpeg',
     'audio/mp3',
-    'audio/ogg'
+    'audio/ogg',
+    'docx',
+    'doc'
   ],
   MRFILETYPES_UPLOAD: [
     'image/jpg',
@@ -752,7 +754,9 @@ export const projectConstantsLocal = {
     'video/mpeg',
     'audio/mpeg',
     'audio/mp3',
-    'audio/ogg'
+    'audio/ogg',
+    'docx',
+    'doc'
   ],
   LIVETRACK_CONST: {
     'KILOMETER': 'km'

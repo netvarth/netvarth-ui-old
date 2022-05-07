@@ -259,7 +259,7 @@ getJaldeeVideoCredits() {
   this.provider_services.getJaldeeVideoRecording()
   .subscribe(
     (data) => {
-      console.log(data)
+      console.log("Video Status :",data)
      this.videocredits = data;
     }
   );

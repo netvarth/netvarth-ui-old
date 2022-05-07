@@ -48,6 +48,7 @@ export class WlCardComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
   ngOnChanges() {
+    console.log("Bookings :",this.booking)
     if (this.booking.releasedQnr && this.booking.releasedQnr.length > 0 && this.booking.waitlistStatus !== 'cancelled') {
       const releasedQnrs = this.booking.releasedQnr.filter(qnr => qnr.status === 'released');
       if (releasedQnrs.length > 0) {
@@ -128,6 +129,7 @@ export class WlCardComponent implements OnInit, OnChanges {
       this.showReceiptBtn = true;
     }
     if (this.booking.amountPaid) {
+      console.log("Booking Amount :",this.booking)
       this.showPaidInfo = true;
     }
   }

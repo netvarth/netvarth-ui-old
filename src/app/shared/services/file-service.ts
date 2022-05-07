@@ -29,7 +29,9 @@ export class FileService {
     'audio/mp3',
     'audio/ogg',
     'application/vnd.ms-excel',
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'docx',
+    'doc'
   ];
 
   imageSize = 15000000;
@@ -90,6 +92,10 @@ export class FileService {
   }
   getImage(url, file) {
     console.log("File Type :", file.type)
+    
+    
+    console.log("File Name :", file.name.includes('docx'))
+
     if (file.type == 'application/pdf') {
       return './assets/images/pdf.png';
     } if (file.type == 'application/vnd.ms-excel' || file.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
@@ -100,6 +106,9 @@ export class FileService {
     }
     else if (file.type == 'video/mp4' || file.type == 'video/mpeg') {
       return './assets/images/video.png';
+    }
+    else if (file.name.includes('docx') || file.name.includes('doc')) {
+      return './assets/images/ImgeFileIcon/docTxt.png';
     }
     else {
       return url;

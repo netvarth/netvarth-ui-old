@@ -68,6 +68,7 @@ export class NotesSectionComponent implements OnInit {
                 this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
                 this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
                 this.getAttachments();
+              
               },
               error => {
                 this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
@@ -81,6 +82,7 @@ export class NotesSectionComponent implements OnInit {
                 this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
                 this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
                 this.getAttachments();
+               
               },
               error => {
                 this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });

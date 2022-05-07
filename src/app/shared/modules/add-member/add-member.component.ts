@@ -55,14 +55,15 @@ export class AddMemberComponent implements OnInit {
     public translate: TranslateService,
   ) {
     if (data.type === 'edit') {
-      console.log(data);
+      console.log("Member Data",data);
       this.firstname = data.member.userProfile.firstName || '';
       this.lastname = data.member.userProfile.lastName || '';
       this.mobile = data.member.userProfile.primaryMobileNo || '';
       this.gender = data.member.userProfile.gender || '';
       this.dob = data.member.userProfile.dob || '';
       this.dobholder = data.member.userProfile.dob || '';
-this.email=data.member.userProfile.email || '';
+     this.email=data.member.userProfile.email || '';
+     console.log("Email Updated :",this.email);
       if(data.member.userProfile.whatsAppNum){
         this.countryCode_whtsap=data.member.userProfile.whatsAppNum.countryCode;
         this.whatsappnumber=data.member.userProfile.whatsAppNum.number;
@@ -72,10 +73,10 @@ this.email=data.member.userProfile.email || '';
         this.countryCode_telegram=data.member.userProfile.telegramNum.countryCode;
         this.telegramnumber=data.member.userProfile.telegramNum.number;
       }
-      if(data.member.userProfile.email){
-        this.email=data.member.userProfile.email;
+      // if(data.member.userProfile.email){
+      //   this.email=data.member.userProfile.email;
         
-      }
+      // }
     }
   }
 
