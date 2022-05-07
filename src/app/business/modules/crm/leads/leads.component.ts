@@ -155,7 +155,7 @@ export class LeadsComponent implements OnInit {
   public bAssigned:boolean=false;
   public UnassignedLeadList:any=[]
   public sucessListLead:any=[]
-  public totalActivity:any='Total activity';
+  public totalActivity:any='Total leads';
   constructor(
     private locationobj: Location,
     private groupService: GroupStorageService,
@@ -212,6 +212,7 @@ export class LeadsComponent implements OnInit {
                 this.getTransferredLead()
                 this.getFailedLead()
                 this.getInprogressLead()
+                this.totalLeadList = this.totalLeadList.filter(obj => !obj.originId);
                 this.loadComplete = true;
               },
               error => {

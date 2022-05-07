@@ -315,9 +315,9 @@
                                   <!-- <button mat-menu-item (click)="openLeadCompletion(lead)" *ngIf="lead.status.name !='Completed'">
                                     <i class="text-success fa fa-check-square"></i> Mark as Done
                                   </button> -->
-                                  <button mat-menu-item (click)="openEditLead(lead,'Update')"  *ngIf="lead.status.name !='Completed'">
+                                  <!-- <button mat-menu-item (click)="openEditLead(lead,'Update')"  *ngIf="lead.status.name !='Completed'">
                                     <i class="text-info fa fa-edit"></i>Edit
-                                  </button>
+                                  </button> -->
                                   <button mat-menu-item (click)="openDialogStatusChange(lead)" >
                                    <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
                                   </button>
@@ -334,7 +334,7 @@
                         (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
                       </app-pager>
                     </div> -->
-                    <div class="search_paging" *ngIf="pagination.totalCnt>0">
+                    <div *ngIf="pagination.totalCnt>0">
                       <!-- {{pagination.totalCnt}} -->
                       <app-pager  [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                         (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
@@ -573,9 +573,9 @@
                                   <!-- <button mat-menu-item (click)="openLeadCompletion(lead)" *ngIf="lead.status.name !='Completed'">
                                     <i class="text-success fa fa-check-square"></i> Mark as Done
                                   </button> -->
-                                  <button mat-menu-item (click)="openEditLead(lead,'Update')"  *ngIf="lead.status.name !='Completed'">
+                                  <!-- <button mat-menu-item (click)="openEditLead(lead,'Update')"  *ngIf="lead.status.name !='Completed'">
                                     <i class="text-info fa fa-edit"></i>Edit
-                                  </button>
+                                  </button> -->
                                   <button mat-menu-item (click)="openDialogStatusChange(lead)" >
                                    <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
                                   </button>
@@ -826,9 +826,9 @@
                                   <!-- <button  mat-menu-item (click)="openLeadCompletion(lead)" *ngIf="lead.status.name !='Completed'">
                                     <i class="text-success fa fa-check-square"></i> Mark as Done
                                   </button> -->
-                                  <button  mat-menu-item (click)="openEditLead(lead,'Update')"  *ngIf="lead.status.name !='Completed'">
+                                  <!-- <button  mat-menu-item (click)="openEditLead(lead,'Update')"  *ngIf="lead.status.name !='Completed'">
                                     <i class="text-info fa fa-edit"></i>Edit
-                                  </button>
+                                  </button> -->
                                   <button mat-menu-item (click)="openDialogStatusChange(lead)" >
                                    <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
                                   </button>
@@ -1083,9 +1083,9 @@
                                   </button>
                                 </span>
                                 <mat-menu #appMenu="matMenu">
-                                  <button  mat-menu-item (click)="openEditLead(lead,'Update')"  *ngIf="lead.status.name !='Completed'">
+                                  <!-- <button  mat-menu-item (click)="openEditLead(lead,'Update')"  *ngIf="lead.status.name !='Completed'">
                                     <i class="text-info fa fa-edit"></i>Edit
-                                  </button>
+                                  </button> -->
                                   <button mat-menu-item (click)="openDialogStatusChange(lead)" >
                                    <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
                                   </button>
@@ -1327,9 +1327,9 @@
                                 </button>
                               </span>
                               <mat-menu #appMenu="matMenu">
-                                <button  mat-menu-item (click)="openEditLead(lead,'Update')"  *ngIf="lead.status.name !='Completed'">
+                                <!-- <button  mat-menu-item (click)="openEditLead(lead,'Update')"  *ngIf="lead.status.name !='Completed'">
                                   <i class="text-info fa fa-edit"></i>Edit
-                                </button>
+                                </button> -->
                                 <button mat-menu-item (click)="openDialogStatusChange(lead)" >
                                  <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
                                 </button>
@@ -1572,9 +1572,9 @@
                                     </button>
                                   </span>
                                   <mat-menu #appMenu="matMenu">
-                                    <button  mat-menu-item (click)="openEditLead(lead,'Update')"  *ngIf="lead.status.name !='Completed'">
+                                    <!-- <button  mat-menu-item (click)="openEditLead(lead,'Update')"  *ngIf="lead.status.name !='Completed'">
                                       <i class="text-info fa fa-edit"></i>Edit
-                                    </button>
+                                    </button> -->
                                     <button mat-menu-item (click)="openDialogStatusChange(lead)" >
                                      <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
                                     </button>
@@ -1819,9 +1819,9 @@
                                       </button>
                                     </span>
                                     <mat-menu #appMenu="matMenu">
-                                      <button  mat-menu-item (click)="openEditLead(lead,'Update')"  *ngIf="lead.status.name !='Completed'">
+                                      <!-- <button  mat-menu-item (click)="openEditLead(lead,'Update')"  *ngIf="lead.status.name !='Completed'">
                                         <i class="text-info fa fa-edit"></i>Edit
-                                      </button>
+                                      </button> -->
                                       <button mat-menu-item (click)="openDialogStatusChange(lead)" >
                                        <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
                                       </button>
