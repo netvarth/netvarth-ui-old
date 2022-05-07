@@ -99,7 +99,7 @@
                     <table class="table" style="background-color: white;">
                       <thead>
                         <tr class="tble-filtr-tr heght">
-                          <th></th>
+                          <!-- <th></th> -->
                           <th class="head_color">Lead Details</th>
                           <th class="head_color">Assignee</th>
                           <!-- <th class="head_color">Duration</th> -->
@@ -281,13 +281,13 @@
                         </ng-container>
                         <ng-container *ngIf="totalLeadList.length>0">
                           <tr *ngFor="let lead of totalLeadList; let i=index" (click)="viewLead(lead.uid,lead)">
-                            <td>
+                            <!-- <td>
                               <circle-progress class="circle__progress" [percent]="lead.progress" [animation]="true"
                                 [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
                                 [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
                                 [unitsFontWeight]="'700'" [subtitle]="lead.status.name" [subtitleFontSize]="'7'"
                                 [lazy]="false"></circle-progress>
-                            </td>
+                            </td> -->
   
                             <td data-title="Lead Details" class="td1">{{lead.title}}</td>
                             <td data-title="Lead Details" class="td2"><span
@@ -352,7 +352,7 @@
                     <table class="table">
                       <thead>
                         <tr class="tble-filtr-tr heght">
-                          <th style="width: 30px;"></th>
+                          <!-- <th style="width: 30px;"></th> -->
                           <th class="head_color">Lead Details</th>
                           <th class="head_color">Assignee</th>
                           <!-- <th class="head_color">Duration</th> -->
@@ -535,13 +535,13 @@
                         </ng-container>
                         <ng-container *ngIf="totalInprogressList.length>0">
                           <tr *ngFor="let lead of totalInprogressList; let i=index" (click)="viewLead(lead.uid,lead)">
-                            <td>
+                            <!-- <td>
                               <circle-progress class="circle__progress" [percent]="lead.progress" [animation]="true"
                                 [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
                                 [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
                                 [unitsFontWeight]="'700'" [subtitle]="lead.status.name" [subtitleFontSize]="'7'"
                                 [lazy]="false"></circle-progress>
-                            </td>
+                            </td> -->
                             <td data-title="Lead Details" class="td1">{{lead.title}}</td>
                             <td data-title="Lead Details" class="td2"><span
                                 *ngIf="lead.assignee">{{lead.assignee.name}}</span></td>
@@ -605,7 +605,7 @@
                     <table class="table">
                       <thead>
                         <tr class="tble-filtr-tr heght">
-                          <th style="width: 30px;"></th>
+                          <!-- <th style="width: 30px;"></th> -->
                           <th class="head_color">Lead Details</th>
                           <th class="head_color">Assignee</th>
                           <!-- <th class="head_color">Duration</th> -->
@@ -788,13 +788,13 @@
                         </ng-container>
                         <ng-container *ngIf="totalCompletedList.length>0">
                           <tr *ngFor="let lead of totalCompletedList; let i=index" (click)="viewLead(lead.uid,lead)">
-                            <td>
+                            <!-- <td>
                               <circle-progress class="circle__progress" [percent]="lead.progress" [animation]="true"
                                 [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
                                 [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
                                 [unitsFontWeight]="'700'" [subtitle]="lead.status.name" [subtitleFontSize]="'7'"
                                 [lazy]="false"></circle-progress>
-                            </td>
+                            </td> -->
                             <td data-title="Lead Details" class="td1">{{lead.title}}</td>
                             <td data-title="Lead Details" class="td2"><span
                                 *ngIf="lead.assignee">{{lead.assignee.name}}</span></td>
@@ -870,7 +870,7 @@
                     <table class="table">
                       <thead>
                         <tr class="tble-filtr-tr heght">
-                          <th style="width: 30px;"></th>
+                          <!-- <th style="width: 30px;"></th> -->
                           <th class="head_color">Lead Details</th>
                           <th class="head_color">Assignee</th>
                           <th class="head_color">Status</th>
@@ -1052,13 +1052,13 @@
                         </ng-container>
                         <ng-container *ngIf="totalFailedList && totalFailedList.length>0">
                           <tr *ngFor="let lead of totalFailedList; let i=index" (click)="viewLead(lead.uid,lead)">
-                            <td>
+                            <!-- <td>
                               <circle-progress class="circle__progress" [percent]="lead.progress" [animation]="true"
                                 [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
                                 [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
                                 [unitsFontWeight]="'700'" [subtitle]="lead.status.name" [subtitleFontSize]="'7'"
                                 [lazy]="false"></circle-progress>
-                            </td>
+                            </td> -->
                             <td data-title="Lead Details" class="td1">{{lead.title}}</td>
                             <td data-title="Lead Details" class="td2"><span
                                 *ngIf="lead.assignee">{{lead.assignee.name}}</span></td>
@@ -1114,7 +1114,7 @@
                   <table class="table">
                     <thead>
                       <tr class="tble-filtr-tr heght">
-                        <th style="width: 30px;"></th>
+                        <!-- <th style="width: 30px;"></th> -->
                         <th class="head_color">Lead Details</th>
                         <th class="head_color">Assignee</th>
                         <th class="head_color">Status</th>
@@ -1296,13 +1296,13 @@
                       </ng-container>
                       <ng-container *ngIf="totalTransferredList && totalTransferredList.length>0">
                         <tr *ngFor="let lead of totalTransferredList; let i=index" (click)="viewLead(lead.uid,lead)">
-                          <td>
+                          <!-- <td>
                             <circle-progress class="circle__progress" [percent]="lead.progress" [animation]="true"
                               [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
                               [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
                               [unitsFontWeight]="'700'" [subtitle]="lead.status.name" [subtitleFontSize]="'7'"
                               [lazy]="false"></circle-progress>
-                          </td>
+                          </td> -->
                           <td data-title="Lead Details" class="td1">{{lead.title}}</td>
                           <td data-title="Lead Details" class="td2"><span
                               *ngIf="lead.assignee">{{lead.assignee.name}}</span></td>
@@ -1359,7 +1359,7 @@
                       <table class="table">
                         <thead>
                           <tr class="tble-filtr-tr heght">
-                            <th style="width: 30px;"></th>
+                            <!-- <th style="width: 30px;"></th> -->
                             <th class="head_color">Lead Details</th>
                             <th class="head_color">Assignee</th>
                             <th class="head_color">Status</th>
@@ -1541,13 +1541,13 @@
                           </ng-container>
                           <ng-container *ngIf="UnassignedLeadList && UnassignedLeadList.length>0">
                             <tr *ngFor="let lead of UnassignedLeadList; let i=index" (click)="viewLead(lead.uid,lead)">
-                              <td>
+                              <!-- <td>
                                 <circle-progress class="circle__progress" [percent]="lead.progress" [animation]="true"
                                   [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
                                   [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
                                   [unitsFontWeight]="'700'" [subtitle]="lead.status.name" [subtitleFontSize]="'7'"
                                   [lazy]="false"></circle-progress>
-                              </td>
+                              </td> -->
                               <td data-title="Lead Details" class="td1">{{lead.title}}</td>
                               <td data-title="Lead Details" class="td2"><span
                                   *ngIf="lead.assignee">{{lead.assignee.name}}</span></td>
@@ -1606,7 +1606,7 @@
                         <table class="table">
                           <thead>
                             <tr class="tble-filtr-tr heght">
-                              <th style="width: 30px;"></th>
+                              <!-- <th style="width: 30px;"></th> -->
                               <th class="head_color">Lead Details</th>
                               <th class="head_color">Assignee</th>
                               <th class="head_color">Status</th>
@@ -1788,13 +1788,13 @@
                             </ng-container>
                             <ng-container *ngIf="assignedLeadList && assignedLeadList.length>0">
                               <tr *ngFor="let lead of assignedLeadList; let i=index" (click)="viewLead(lead.uid,lead)">
-                                <td>
+                                <!-- <td>
                                   <circle-progress class="circle__progress" [percent]="lead.progress" [animation]="true"
                                     [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
                                     [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
                                     [unitsFontWeight]="'700'" [subtitle]="lead.status.name" [subtitleFontSize]="'7'"
                                     [lazy]="false"></circle-progress>
-                                </td>
+                                </td> -->
                                 <td data-title="Lead Details" class="td1">{{lead.title}}</td>
                                 <td data-title="Lead Details" class="td2"><span
                                     *ngIf="lead.assignee">{{lead.assignee.name}}</span></td>
