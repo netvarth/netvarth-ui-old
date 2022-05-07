@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SelectAttachmentComponent } from './select-attachment.component';
 import { FormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { MatChipsModule } from '@angular/material/chips';
   imports: [
     CommonModule,
     FormsModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDialogModule
   ],
   // providers: [
   //   FileService
