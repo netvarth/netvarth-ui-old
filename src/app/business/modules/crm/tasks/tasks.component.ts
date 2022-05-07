@@ -851,7 +851,29 @@ export class TasksComponent implements OnInit {
   getTaskStatusListData(){
     this.crmService.getTaskStatus().subscribe((taskStatus:any)=>{
       console.log('taskStatus',taskStatus);
-      this.taskStatusList.push(taskStatus);
+      this.taskStatusList.push(
+        {
+          id: 1, name: 'New',image:'./assets/images/crmImages/new.png',
+        },
+        {
+          id: 2, name: 'Assigned',image:'./assets/images/tokenDetailsIcon/assignedTo.png',
+        },
+        {
+          id: 3, name: 'In Progress',image:'./assets/images/crmImages/inProgress2.png',
+        },
+        {
+          id: 4, name: 'Cancelled',image:'./assets/images/crmImages/cancelled.png',
+        },
+        {
+          id: 5, name: 'Completed',image:'./assets/images/crmImages/completed2.png',
+        },
+        {
+          id: 12, name: 'Suspended',image:'./assets/images/crmImages/suspended.png',
+        },
+        {
+          id:0,   name:'Total Activity',image:'./assets/images/crmImages/total.png',
+        }
+        );
     },
     (error)=>{
       this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})

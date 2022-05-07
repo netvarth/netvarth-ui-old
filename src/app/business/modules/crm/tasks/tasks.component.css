@@ -1494,3 +1494,6 @@ svg {
     gap: 5px;
     align-items: center;
 }
+::ng-deep .mat-select-placeholder{
+    color: rgba(0, 0, 0, 0.87) !important;
+}
