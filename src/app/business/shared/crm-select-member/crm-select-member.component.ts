@@ -10,6 +10,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { CrmMarkasDoneComponent } from '../../shared/crm-markas-done/crm-markas-done.component';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crm-select-member',
@@ -78,6 +79,7 @@ export class CrmSelectMemberComponent implements OnInit {
 
   constructor( public dialogRef: MatDialogRef<CrmSelectMemberComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    public router: Router,
     private crmService: CrmService,
     // private fb: FormBuilder,
     private snackbarService: SnackbarService,
@@ -525,7 +527,9 @@ getTaskmaster(){
         this.dialogRef.close(taskMasterValue)
       }
       else if(this.newTask==='CreatE'){
+        // this.router.navigate(['provider', 'task', 'create-task'])
         this.dialogRef.close('CreatE')
+        
       }
       else{
           this.errorMsg=true;
@@ -552,10 +556,11 @@ getTaskmaster(){
     createCustomer(){
       if(this.data.requestType==='createCustomer'){
         const afterCompleteAddData:any = {
-          "firstName":this.firstNameValue,
-          "lastName":this.lastNameValue,
-          "phoneNo":this.phoneNoValue,
-          "email":this.emailValue
+          "firstName": this.firstNameValue,
+          "lastName": this.lastNameValue,
+          "phoneNo": this.phoneNoValue,
+          "email": this.emailValue,
+          "countryCode": '+91',
         }
         console.log('afterCompleteAddTaskData',afterCompleteAddData)
         this.crmService.createProviderCustomer(afterCompleteAddData).subscribe((response:any)=>{
