@@ -307,5 +307,13 @@ export class CrmService {
       // const url = 'provider/lead/master';
       // return this.servicemeta.httpGet(url);
     }
+    createProviderCustomer(data) {
+      const url = 'provider/customers';
+      return this.servicemeta.httpPost(url, data);
+    }
+    getLeadTokens(leadUid){
+      const url = 'provider/lead/' + leadUid + '/waitlist';
+      return this.servicemeta.httpGet(url);
+    }
 
 }

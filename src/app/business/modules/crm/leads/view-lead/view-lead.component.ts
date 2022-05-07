@@ -3,13 +3,14 @@ import { projectConstantsLocal } from '../../../../../../../src/app/shared/const
 import { projectConstants } from '../../../../../../../src/app/app.component';
 import { Messages } from '../../../../../../../src/app/shared/constants/project-messages';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router , NavigationExtras} from '@angular/router';
 import { CrmService } from '../../crm.service';
 import { MatDialog } from '@angular/material/dialog';
 import  {CrmSelectMemberComponent} from '../../../../shared/crm-select-member/crm-select-member.component'
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { CrmProgressbarComponent } from '../../../../../../../src/app/business/shared/crm-progressbar/crm-progressbar.component';
 import { SelectAttachmentComponent } from '../../tasks/view-task/select-attachment/select-attachment.component';
+import { ProviderServices } from '../../../../../../../src/app/business/services/provider-services.service';
 @Component({
   selector: 'app-view-lead',
   templateUrl: './view-lead.component.html',
@@ -81,10 +82,13 @@ action: any;
   updateLeadData:any;
   leadkid: any;
   leadType: any;
-
+  cusDetails:any=[]
+  leadTokens:any=[]
+  parentUid: any;
 constructor(
   private locationobj: Location,
    private crmService: CrmService,
+   private provider_services: ProviderServices,
   public _location: Location,public dialog: MatDialog,
   private _Activatedroute:ActivatedRoute,
   private router: Router,
@@ -99,8 +103,11 @@ ngOnInit(): void {
     this.leadUid = params.get('id');
     console.log("lead id : ",this.leadUid);
     this.crmService.getLeadDetails(this.leadUid).subscribe(data => {
+    
       this.leadDetails = data;
       this.leadkid = this.leadDetails.uid
+      this.getLeadToken();
+    
       console.log('leadDetails.status',this.leadDetails.status.name)
       // console.log('this.leadDetails.notes',this.leadDetails.notes)
       this.leadDetails.notes.forEach((notesdata:any)=>{
@@ -110,7 +117,13 @@ ngOnInit(): void {
   })
   })
   this.crmService.leadToCraeteViaServiceData = this.updateLeadData;
-
+ 
+  // this.activated_route.queryParams.subscribe(qparams => {
+  //   if (qparams.parentUid) {
+  //       this.parentUid = qparams.parentUid;
+  //       this.getLeadToken()
+  //   }
+  // });
 }
 
 uploadFiles() {
@@ -136,9 +149,12 @@ getLeadDetails(){
     this.leadDetails = data;
     // console.log('attdata',data)
     this.leadkid = this.leadDetails.id
-    this.leadDetails.notes.forEach((notesdata:any)=>{
-      this.notesList.push(notesdata)
-    })
+    if(this.leadDetails.notes.length>0){
+      this.leadDetails.notes.forEach((notesdata:any)=>{
+        this.notesList.push(notesdata)
+      })
+    }
+   
 })
   
 }
@@ -408,7 +424,29 @@ openDialogStatusChange(leadData:any){
     console.log('resssssssss',res);
   })
 }
-
+createToken(){
+  const filter = { 'id-eq': this.leadDetails.customer.id };
+  this.provider_services.getCustomer(filter).subscribe(data => {
+    this.cusDetails = data;
+    // console.log('attdata',data)
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        details: this.cusDetails[0].id,
+        lead_type: 'lead',
+        lead_id : this.leadDetails.id,
+        lead_uid : this.leadDetails.uid
+      }
+    };
+      this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+     
+})
+}
+getLeadToken(){
+  this.crmService.getLeadTokens(this.leadDetails.uid).subscribe(data => {
+    this.leadTokens = data;
+  
+})
+}
 
 }
 

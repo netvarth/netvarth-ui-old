@@ -301,3 +301,21 @@ padding: 3px;
     margin-right: 25px;
     margin-bottom: 10px;
 }
+.form-controls{
+  background-color: #f6f6f6!important;
+  display: block;
+  width: 100%;
+  height: 35px;
+  padding: 6px 12px!important;
+  font-size: 14px !important;
+  line-height: 1.42857143!important;
+  color: #555!important;
+  background-image: none !important;
+  background: #F1F1F1 !important;
+  border-radius: 5.73504px !important;
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%) !important;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;
+}
+::ng-deep .form-control:focus {
+  border: 3px solid #96d3e2 !important;
+}

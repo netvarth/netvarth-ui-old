@@ -2439,4 +2439,8 @@ export class ProviderServices {
     const url = 'provider/account/settings';
     return this.servicemeta.httpGet(url);
   }
+  WaitlistLead(uid , uuid) {
+    const url = 'provider/lead/' + uid + '/waitlist/' + uuid;
+    return this.servicemeta.httpPut(url);
+  }
 } 

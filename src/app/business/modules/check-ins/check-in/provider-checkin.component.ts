@@ -257,6 +257,7 @@ export class ProviderCheckinComponent implements OnInit {
     followup_uuid;
     type;
     showFollowup = false;
+    showLeadSection = false;
     firstname;
     lastname;
     custId;
@@ -272,7 +273,11 @@ export class ProviderCheckinComponent implements OnInit {
     currentDate
     fileSizeInKb:number=1024
     Math = Math
-   
+    lead_type: any;
+    cusDetails_id;
+    cusDetails: any = [];
+    lead_id: any;
+    lead_uid: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -295,6 +300,30 @@ export class ProviderCheckinComponent implements OnInit {
         this.activated_route.queryParams.subscribe(qparams => {
             if (qparams.source) {
                 this.source = qparams.source;
+            }
+            if (qparams.details) {
+                this.cusDetails_id = qparams.details;
+                const filter = { 'id-eq': this.cusDetails_id };
+                this.provider_services.getCustomer(filter).subscribe(data => {
+                  this.cusDetails = data;
+                  this.showLeadSection = true;
+                  // console.log('attdata',data)
+                 
+              })
+            }
+            if (qparams.lead_id) {
+                this.lead_id = qparams.lead_id;
+            }
+            if (qparams.lead_uid) {
+                this.lead_uid = qparams.lead_uid;
+            }
+            
+            if (qparams.lead_type) {
+                this.lead_type = qparams.lead_type;
+                if(this.lead_type === 'lead'){
+                 
+                    this.initCheckIn();
+                }
             }
             if (qparams.followup_uuid) {
                 this.followup_uuid = qparams.followup_uuid;
@@ -808,7 +837,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.otherThirdParty = '';
         this.waitlist_for = [];
         if (this.thirdParty === '') {
-            if (this.type !== 'followup') {
+            if (this.type !== 'followup' && this.lead_type !== 'lead') {
                 this.waitlist_for.push({ id: this.customer_data.id, firstName: this.customer_data.firstName, lastName: this.customer_data.lastName });
             }
         }
@@ -1393,7 +1422,6 @@ export class ProviderCheckinComponent implements OnInit {
             
                 this.waitlist_for.push({ id: this.cusId, firstName: this.cusfirstname, lastName: this.cuslastname });
             
-        
             const post_Data = {
                 'queue': {
                     'id': this.sel_queue_id
@@ -1453,6 +1481,129 @@ export class ProviderCheckinComponent implements OnInit {
             }
 
         }
+        else if(this.lead_type === 'lead'){
+            this.waitlist_for.push({ id: this.cusDetails[0].id, firstName: this.cusDetails[0].firstName, lastName: this.cusDetails[0].lastName });
+           
+            // const waitlistarr = [];
+                  // for (let i = 0; i < this.waitlist_for.length; i++) {
+                  //     waitlistarr.push({ id: this.waitlist_for[i].id });
+                  // }
+                  this.is_wtsap_empty = false;
+                  // if (this.waitlist_for.length !== 0) {
+                  //     for (const list of this.waitlist_for) {
+                  //         if (list.id === this.customer_data.id) {
+                  //             list['id'] = 0;
+                  //         }
+                  //     }
+                  // }
+                  this.virtualServiceArray = {};
+                  // for (let i = 0; i < this.callingModes.length; i++) {
+                  if (this.callingModes !== '' && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes.length > 0) {
+                      if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
+                          this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
+                      } else if (!this.thirdParty) {
+                          if (this.cuntryCode) {
+                              if (this.cuntryCode.includes('+')) {
+                                  this.cuntryCode = this.cuntryCode.slice(1);
+                              }
+                          }
+                          this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.cuntryCode + '' + this.callingModes;
+          
+                      } else {
+                          const thirdparty_countrycode = '91';
+                          this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = thirdparty_countrycode + '' + this.callingModes;
+                      }
+                  }
+                  // }
+                 
+                
+                  const post_Data = {
+                      'queue': {
+                          'id': this.sel_queue_id
+                      },
+                      'date': this.sel_checkindate,
+                      'service': {
+                          'id': this.sel_ser,
+                          'serviceType': this.sel_ser_det.serviceType
+                      },
+                      'consumerNote': this.consumerNote,
+                      'countryCode': this.countryCode,
+                      // 'waitlistingFor': JSON.parse(JSON.stringify(waitlistarr))
+                      'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for)),
+                      'waitlistMode': this.checkinType,
+                      'lead': {
+                        'id': this.lead_id,
+                      }
+                      
+                      
+                      
+                  };
+                  if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
+                      post_Data['provider'] = { 'id': this.selectedUser.id };
+                  }
+                  if (this.selectedUser && this.selectedUser.firstName === Messages.NOUSERCAP) {
+                      post_Data['selfAssign'] = this.selfAssign;
+                  }
+                  if (!this.selectedUser && this.selfAssign) {
+                      const user = this.groupService.getitemFromGroupStorage('ynw-user');
+                      post_Data['provider'] = { 'id': user.id};
+                  }
+                  if (this.sel_ser_det.serviceType === 'virtualService') {
+                      if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
+                          if (!this.callingModes || !this.cuntryCode) {
+                              this.snackbarService.openSnackBar('Please enter a valid number to contact you', { 'panelClass': 'snackbarerror' });
+                              this.is_wtsap_empty = true;
+                          }
+                      }
+                      //   post_Data['virtualService'] = this.virtualServiceArray;
+                      for (const i in this.virtualServiceArray) {
+                          if (i === 'WhatsApp') {
+                              post_Data['virtualService'] = this.virtualServiceArray;
+                          } else if (i === 'GoogleMeet') {
+                              post_Data['virtualService'] = this.virtualServiceArray;
+                          } else if (i === 'Zoom') {
+                              post_Data['virtualService'] = this.virtualServiceArray;
+                          } else if (i === 'Phone') {
+                              post_Data['virtualService'] = this.virtualServiceArray;
+                          } else {
+                              post_Data['virtualService'] = { 'VideoCall': '' };
+                          }
+                          //  else {
+                          //     post_Data['virtualService'] = {};
+                          // }
+                      }
+                  }
+                  if (this.apptTime) {
+                      post_Data['appointmentTime'] = this.apptTime;
+                  }
+                  // if (this.selectedMessage.files.length > 0 && this.consumerNote === '') {
+                  //     // this.api_error = this.wordProcessor.getProjectMesssages('ADDNOTE_ERROR');
+                  //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('ADDNOTE_ERROR'), { 'panelClass': 'snackbarerror' });
+                  // }
+                  if (this.partySizeRequired) {
+                      this.holdenterd_partySize = this.enterd_partySize;
+                      post_Data['partySize'] = Number(this.holdenterd_partySize);
+                  }
+                  if (this.api_error === null) {
+                      post_Data['consumer'] = { id: this.cusDetails[0].id };
+                      post_Data['ignorePrePayment'] = true;
+                      if (!this.is_wtsap_empty) {
+                          if (this.thirdParty === '') {
+                              if (this.waitlist_for.length === 0) {
+                                  this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages('Please select atleast one member'), { 'panelClass': 'snackbarerror' });
+                              } else {
+                                  if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                                      this.validateQnr(post_Data);
+                                  } else {
+                                      this.addCheckInProvider(post_Data);
+                                  }
+                              }
+                          } else {
+                              this.addWaitlistBlock(post_Data);
+                          }
+                      }
+                  }
+                  }
         else{
   // const waitlistarr = [];
         // for (let i = 0; i < this.waitlist_for.length; i++) {
@@ -1622,6 +1773,53 @@ export class ProviderCheckinComponent implements OnInit {
                         this.waitlist_for = [];
                         this.api_loading = false;
                     });
+        }
+        else if(this.lead_type === 'lead'){
+            this.api_loading = true;
+        this.shared_services.addProviderCheckin(post_Data)
+            .subscribe((data) => {
+                const retData = data;
+                // let retUuid;
+                let parentUid;
+                Object.keys(retData).forEach(key => {
+                    //  retUuid = retData[key];
+                    this.trackUuid = retData[key];
+                    parentUid = retData['parent_uuid'];
+                });
+                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                    this.submitQuestionnaire(parentUid);
+                } else {
+                    this.provider_services.WaitlistLead(this.lead_uid, parentUid)
+                    .subscribe((data) => {
+                       
+                    });
+                    const navigationExtras: NavigationExtras = {
+                        queryParams: {
+                            parentUid: retData['parent_uuid'],
+                         
+                        }
+                      };
+                    this.router.navigate(['provider', 'viewlead' , this.lead_uid], navigationExtras);
+                    if (this.settingsjson.showTokenId) {
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('TOKEN_GENERATION'));
+                    } else {
+                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_SUCC'));
+                    }
+                }
+                if (this.selectedMessage.files.length > 0) {
+                    this.consumerNoteAndFileSave(parentUid);
+                }
+                this.showCheckin = false;
+                this.searchForm.reset();
+                // this.router.navigate(['provider', 'check-ins']);
+
+            },
+                error => {
+                    // this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.waitlist_for = [];
+                    this.api_loading = false;
+                });
         }
         else{
             this.api_loading = true;

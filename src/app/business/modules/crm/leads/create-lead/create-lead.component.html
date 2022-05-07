@@ -164,6 +164,94 @@
                 </div>
             </div>
 
+            <span class="group-head">Customer Info</span><br>
+            <div class="bggrey my-2">
+                <!-- <div>
+                    <div class="leadTitle">
+                        <div>Customer</div>
+                    </div>
+                    <div class="fieldPadding">
+                        <input (keyup)="resetErrors()" type="text"
+                        placeholder="Enter Customer Id" class="form-control widthWebKit" formControlName="customer_id" autocomplete="off" #customer (ngModelChange)="handleCustomer(customer.value)"/> 
+                        <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                        </app-field-error-display>    
+                    </div>
+                </div> -->
+                <div>
+                        <div class="leadTitle" *ngIf="!hideSearch">
+                            <div>Customer</div>
+                            <div class="astericColor">*</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <div>
+                                <!-- <div [formControlName]="selectLeadCustomer" class="form-control" style="display: flex;justify-content: space-between;" (click)="selectCustomerDialog(selectLeadCustomer)" >
+                                    <div >{{selectLeadCustomer}}</div>
+                                    <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
+                                </div> -->
+                                <div class="disp-flex" *ngIf="!hideSearch">
+                                    <input type="text" [(ngModel)]="search_input"  [ngModelOptions]="{standalone: true}" 
+                                        class="leadTitle"
+                                        name="search" placeholder={{searchby}} />
+                                    <button type="button" class="btn btn-primary ml-3 px-8 py-1" (click)="
+                                      searchCustomer()"> Find </button>
+                                </div>
+                            </div>
+                            <div>
+                               <br>
+                                <div class="disp-flex" *ngIf="!hideSearch">
+                                    <a> 
+                                        <span  (click)="createNew()"><u>Create Customer</u></span>  
+                                    </a>
+                                    
+                                </div>
+                            </div>
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
+                            </app-field-error-display>  
+                        </div>      
+                        <div class="bggrey my-2" *ngIf="hideSearch">
+                            <div class="webDisplay">
+                                <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small" (click)="search()">
+                                  <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
+                                   Search Again </button>
+                                </a>
+                               
+                              </div>
+                            <div style="display: flex;gap: 5px;flex-wrap: wrap;" >
+                                {{customer_data.firstName}} {{customer_data.lastName}} 
+                            </div>
+                           
+                            
+                            <div>
+                                <div class="leadTitle"  *ngIf="customer_data.jaldeeId">
+                                    <i class="fa fa-id-card-o icon"></i>
+                                   <span>{{customer_label}} id : {{customer_data.jaldeeId}}</span>
+                                </div>
+                                <div class="leadTitle"  *ngIf="customer_data.phoneNo">
+                                    <i class="fa fa-mobile icon"></i>
+                                    <span>{{customer_data.phoneNo}}</span>
+                                   
+                                </div>
+                                <div class="leadTitle"  *ngIf="customer_data.email">
+                                    <i class="fa fa-envelope icon"></i>
+                                  <span>{{customer_data.email}}</span>
+                                </div>
+                               
+                                <div class="fieldPadding">
+                                  
+                                </div>
+                            </div>
+                        </div>                     
+                    </div>
+                
+            </div>
+
+
+
+
+
+
+
+
 
             <span class="group-head">Customer Info</span><br>
             <div class="bggrey my-2">

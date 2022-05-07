@@ -123,7 +123,42 @@
               </span>
             </div>
           </div>
-  
+          <div class="border height-limit col-md-4 col-lg-4 col-sm-12 col-xs-12 no-padding mt-2">
+            <div class="d-flex justify-content-between">
+              <div class="my-auto">
+                <span class="card-title"><b>Token</b></span> 
+              </div>
+              <div>
+                <a mat-button [mat-dialog-close]="true" class="lnk action pointer-cursor btn btn-primary upload-file-btn text-primary"  (click)="createToken()"><i class="fa fa-plus" aria-hidden="true"></i>
+                  Token
+                </a>
+              </div>
+              <!-- <div *ngIf="leadDetails.attachments.length>0">
+                <span (click)="attatchmentDialog(leadDetails.attachments)" class="pointer-cursor fa fa-external-link"></span>
+              </div> -->
+            </div>
+            <hr class="my-2 py-2">
+            <div class="text-left">
+              <span>
+                <!-- <div class="clearfix"></div><br>
+                <span class="label"><b>Uploaded Files</b></span> -->
+                <div class="my-2" *ngIf="leadTokens.length >0">
+                  <div *ngFor="let token of leadTokens;let i=index" class="allNotesList">
+                   
+                      <div class="notesListSection" style="cursor: pointer;">
+                        <span class="pull-left mgn-lt-5 date circle-token bold">{{token.token}}</span>
+                        <div class="text-primary">{{token.waitlistEncId}}<br><span class="label"><b>Created By : {{token.createdByName}}</b></span></div>
+                       
+                      </div>
+                    
+                   </div>
+                </div>
+                <div class="text-center text-primary" *ngIf="leadTokens.length == 0">
+                  <span>No Records Found</span>
+                </div>
+              </span>
+            </div>
+          </div>
           <div class="border height-limit col-md-4 col-lg-4 col-sm-12 col-xs-12 no-padding mt-2" *ngIf="leadDetails.notes.length>0">
             <div class="d-flex justify-content-between">
               <div>

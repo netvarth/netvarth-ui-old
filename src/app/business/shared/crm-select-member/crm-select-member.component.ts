@@ -67,7 +67,11 @@ export class CrmSelectMemberComponent implements OnInit {
   assignCustomerDetails: string;
   viewStatusList:any=[];
   searchtext:any;
-
+  public firstNameValue:any;
+  public lastNameValue:any;
+  public phoneNoValue:any;
+  public emailValue:any;
+  
 
 
 
@@ -545,5 +549,38 @@ getTaskmaster(){
     closeDialog(coseText){
       this.dialogRef.close(coseText)
     }
+    createCustomer(){
+      if(this.data.requestType==='createCustomer'){
+        const afterCompleteAddData:any = {
+          "firstName":this.firstNameValue,
+          "lastName":this.lastNameValue,
+          "phoneNo":this.phoneNoValue,
+          "email":this.emailValue
+        }
+        console.log('afterCompleteAddTaskData',afterCompleteAddData)
+        this.crmService.createProviderCustomer(afterCompleteAddData).subscribe((response:any)=>{
+          setTimeout(() => {
+            console.log('aftercreateTaskcompleteion',response)
+            this.dialogRef.close(response)
+          // this.router.navigate(['provider', 'task']);
+          }, projectConstants.TIMEOUT_DELAY);
+        },
+        (error)=>{
+          this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+        })
+      }
+    }
+    hamdlefirstName(resValue){
+      
+    }
+    hamdlelastName(value){
+     
+    }
+    hamdlephoneNo(resValue){
     
+    }
+    hamdleemail(resValue){
+    
+    }
 }
+

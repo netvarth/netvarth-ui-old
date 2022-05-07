@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,OnDestroy} from '@angular/core';
 import { projectConstantsLocal } from '../../../../../../../src/app/shared/constants/project-constants';
 import { projectConstants } from '../../../../../../../src/app/app.component';
 import { Messages } from '../../../../../../../src/app/shared/constants/project-messages';
@@ -18,15 +18,18 @@ import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { ProviderServices } from '../../../../../../../src/app/business/services/provider-services.service';
+import { WordProcessor } from '../../../../../../../src/app/shared/services/word-processor.service';
 // import { DateTimeProcessor } from '../../../../../../../src/app/shared/services/datetime-processor.service';
 // import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
-
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-create-lead',
   templateUrl: './create-lead.component.html',
   styleUrls: ['./create-lead.component.css']
 })
-export class CreateLeadComponent implements OnInit {
+export class CreateLeadComponent implements OnInit , OnDestroy{
+  
   public tooltipcls:any= '';
   public select_cap:any= Messages.SELECT_CAP;
   public newDateFormat:any= projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
@@ -38,6 +41,7 @@ export class CreateLeadComponent implements OnInit {
   public ddate:any;
   public api_loading:any= true;
   showCustomers = false;
+  private onDestroy$: Subject<void> = new Subject<void>();
   filter = {
     first_name: '',
     jaldeeid: '',
@@ -113,6 +117,23 @@ export class CreateLeadComponent implements OnInit {
   customers: any = [];
   loadComplete: boolean;
   selectLeadCustomerId: any;
+  customer_label: any;
+  searchby = '';
+  form_data: any;
+  emptyFielderror = false;
+  create_new = false;
+  qParams: {};
+  prefillnewCustomerwithfield = '';
+  customer_data: any;
+  show_customer = false;
+  create_customer = false;
+  disabledNextbtn = true;
+  jaldeeId: any;
+  formMode: string;
+  countryCode;
+  customer_email: any;
+  search_input: any;
+  hideSearch = false;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -122,6 +143,7 @@ export class CreateLeadComponent implements OnInit {
      private createLeadFB: FormBuilder,
      private dialog: MatDialog, private snackbarService: SnackbarService,
      private datePipe:DatePipe,
+     private wordProcessor: WordProcessor,
      private _Activatedroute:ActivatedRoute,
      private groupService:GroupStorageService,
     //  private dateTimeProcessor: DateTimeProcessor
@@ -129,6 +151,9 @@ export class CreateLeadComponent implements OnInit {
      ) { 
       //this.router.navigate(['provider', 'lead','create-lead'])
      }
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnInit(): void {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -143,8 +168,8 @@ export class CreateLeadComponent implements OnInit {
         if(user.userType === 1){
           this.userType='PROVIDER'
         }
-
-
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.searchby = 'Search by ' + this.customer_label + ' id/name/email/phone number';
 
     this._Activatedroute.paramMap.subscribe(params => { 
       this.leadUid = params.get('leadid');
@@ -240,7 +265,7 @@ export class CreateLeadComponent implements OnInit {
         const estDurationHour=this.datePipe.transform(this.estDurationWithDay,'h')
         const estDurationMinurte= this.datePipe.transform(this.estDurationWithDay,'mm')
         this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinurte };
-        this.customer = { "id" :  this.selectLeadCustomerId},
+        // this.customer = { "id" :  this.customer_data.id},
         console.log('this.estTime',this.estTime)
         console.log('new Date()',new Date())
         const leadMaster= this.crmService.leadMasterToCreateServiceData;
@@ -266,7 +291,7 @@ export class CreateLeadComponent implements OnInit {
         const estDurationHour=this.datePipe.transform(this.estDurationWithDay,'h')
         const estDurationMinurte= this.datePipe.transform(this.estDurationWithDay,'mm')
         this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinurte };
-        this.customer = { "id" :  this.selectLeadCustomerId};
+        // this.customer = { "id" :  this.selectLeadCustomerId};
         console.log('this.estTime',this.estTime)
         console.log('new Date()',new Date())
     }
@@ -732,7 +757,7 @@ export class CreateLeadComponent implements OnInit {
         "location" : { "id" : this.updteLocationId},
         "assignee":{"id":this.updateMemberId },
         "manager":{"id":this.updateManagerId},
-        "customer" : {"id":this.selectLeadCustomerId}
+        "customer" : {"id":this.customer_data.id}
    
       }
       console.log('updateLeadData',updateLeadData)
@@ -774,7 +799,7 @@ export class CreateLeadComponent implements OnInit {
       // "locationArea":this.areaName,
       "assignee":{"id":this.assigneeId},
       "manager":{"id":this.selectLeadMangerId},
-      "customer" : {"id" :  this.selectLeadCustomerId}
+      "customer" : {"id" :  this.customer_data.id}
     }
     console.log('createLeadData',createLeadData)
     console.log('this.userType',this.userType)
@@ -801,4 +826,142 @@ export class CreateLeadComponent implements OnInit {
    onSubmitCraeteLeadForm(){
   }
 
+  
+  searchCustomer() {
+    this.emptyFielderror = false;
+    if (this.search_input && this.search_input === '') {
+      this.emptyFielderror = true;
+    }
+
+    else {
+      this.qParams = {};
+      let mode = 'id';
+      this.form_data = null;
+      let post_data = {};
+      const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+      const isEmail = emailPattern.test(this.search_input);
+      if (isEmail) {
+        mode = 'email';
+        this.prefillnewCustomerwithfield = 'email';
+      } else {
+        const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+        const isNumber = phonepattern.test(this.search_input);
+        const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+        const isCount10 = phonecntpattern.test(this.search_input);
+        if (isNumber && isCount10) {
+          mode = 'phone';
+          this.prefillnewCustomerwithfield = 'phone';
+        } 
+        else if (isNumber && this.search_input.length >7) {
+          mode = 'phone';
+          this.prefillnewCustomerwithfield = 'phone';
+        } else if (isNumber && this.search_input.length <7 ) {
+          mode = 'id';
+          this.prefillnewCustomerwithfield = 'id';
+        }
+      }
+     
+
+      switch (mode) {
+        case 'phone':
+          post_data = {
+            'phoneNo-eq': this.search_input
+          };
+          this.qParams['phone'] = this.search_input;
+          break;
+        case 'email':
+          post_data = {
+            'email-eq': this.search_input
+          };
+          this.qParams['email'] = this.search_input;
+          break;
+        case 'id':
+          post_data['or=jaldeeId-eq'] = this.search_input + ',firstName-eq=' + this.search_input;
+          // post_data = {
+          //   'jaldeeId-eq': form_data.search_input
+          // };
+          break;
+      }
+
+      this.provider_services.getCustomer(post_data)
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe(
+          (data: any) => {
+            this.customer_data = [];
+            if (data.length === 0) {
+              this.show_customer = false;
+              this.create_customer = true;
+
+              this.createNew();
+            } else {
+              if (data.length > 1) {
+                const customer = data.filter(member => !member.parent);
+                this.customer_data = customer[0];
+              } else {
+                this.customer_data = data[0];
+                if(this.customer_data){
+                  this.hideSearch = true;
+                }
+              }
+              this.disabledNextbtn = false;
+              this.jaldeeId = this.customer_data.jaldeeId;
+              this.show_customer = true;
+              this.create_customer = false;
+           
+              this.formMode = data.type;
+              if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                this.countryCode = this.customer_data.countryCode;
+              } else {
+                this.countryCode = '+91';
+              }
+              if (this.customer_data.email && this.customer_data.email !== 'null') {
+                this.customer_email = this.customer_data.email;
+              }
+
+              if (this.customer_data.jaldeeId && this.customer_data.jaldeeId !== 'null') {
+                this.jaldeeId = this.customer_data.jaldeeId;
+              }
+              if (this.customer_data.firstName && this.customer_data.firstName !== 'null') {
+                this.jaldeeId = this.customer_data.firstName;
+              }
+
+            }
+
+          },
+          error => {
+            this.wordProcessor.apiErrorAutoHide(this, error);
+          }
+        );
+    }
+  }
+  
+  createNew(){
+    const dialogRef  = this.dialog.open(CrmSelectMemberComponent, {
+      width: '100%',
+      panelClass: ['popup-class', 'confirmationmainclass'],
+      data:{
+        requestType:'createCustomer',
+        header:'Select Customer',
+      }
+  })
+  dialogRef.afterClosed().subscribe((res:any)=>{
+    console.log('afterSelectPopupValue',res)
+    if(res=== ''){
+      this.hideSearch = false;
+    }else{
+      const filter = { 'id-eq': res };
+      this.provider_services.getCustomer(filter).subscribe((response:any)=>{
+        this.customer_data = response[0];
+        this.hideSearch = true;
+      },
+      (error)=>{
+        this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+      })
+    }
+   
+  })
+  }
+  search(){
+    this.hideSearch = false;
+  }
 }
