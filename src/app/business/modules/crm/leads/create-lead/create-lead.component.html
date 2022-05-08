@@ -108,8 +108,8 @@
                                 </div>
                             </div>
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                            </app-field-error-display>  
-                        </div>                           
+                            </app-field-error-display>
+                        </div>
                     </div> -->
 
 
@@ -138,9 +138,9 @@
                         </div>
                         <div class="fieldPadding">
                             <input (keyup)="resetErrors()" [(ngModel)]="areaName" type="text"
-                            placeholder="Enter Lead area"class="form-control widthWebKit"formControlName="areaName" autocomplete="off" /> 
+                            placeholder="Enter Lead area"class="form-control widthWebKit"formControlName="areaName" autocomplete="off" />
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                            </app-field-error-display>    
+                            </app-field-error-display>
                         </div>
                     </div> -->
 
@@ -192,7 +192,7 @@
                         </app-field-error-display>
                     </div>
                 </div>
-       
+
 
         <span class="group-head">Customer Info</span><br>
         <div class="bggrey my-2">
@@ -202,9 +202,9 @@
                     </div>
                     <div class="fieldPadding">
                         <input (keyup)="resetErrors()" type="text"
-                        placeholder="Enter Customer Id" class="form-control widthWebKit" formControlName="customer_id" autocomplete="off" #customer (ngModelChange)="handleCustomer(customer.value)"/> 
+                        placeholder="Enter Customer Id" class="form-control widthWebKit" formControlName="customer_id" autocomplete="off" #customer (ngModelChange)="handleCustomer(customer.value)"/>
                         <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                        </app-field-error-display>    
+                        </app-field-error-display>
                     </div>
                 </div> -->
             <div>
@@ -218,19 +218,24 @@
                                     <div >{{selectLeadCustomer}}</div>
                                     <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
                                 </div> -->
-                        <div class="disp-flex" *ngIf="!hideSearch">
+                        <div class="customerInfo" *ngIf="!hideSearch">
                             <input type="text" [(ngModel)]="search_input" [ngModelOptions]="{standalone: true}"
-                                class="leadTitle" name="search" placeholder={{searchby}} />
-                            <button type="button" class="btn btn-primary ml-3 px-8 py-1" (click)="
+                                class="form-control" name="search" placeholder={{searchby}} />
+                            <button type="button"  class="btn confirmBtn  px-8 py-1" (click)="
                                       searchCustomer()"> Find </button>
                         </div>
                     </div>
                     <div>
                         <br>
                         <div class="disp-flex" *ngIf="!hideSearch">
-                            <a>
+                            <!-- <a>
                                 <span (click)="createNew()"><u>Create Customer</u></span>
-                            </a>
+                            </a> -->
+                            <button type="button" class="btn confirmBtnCustomerInfo px-8 py-1" (click)="createNew()">
+                              <span>
+                                <img class="customImg" src="./assets/images/crmImages/Group 28024.png"/>
+                              </span>
+                              Create Customer </button>
 
                         </div>
                     </div>
@@ -294,7 +299,7 @@
                             <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
                             </mat-datepicker>
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                            </app-field-error-display>       
+                            </app-field-error-display>
                         </div>
                     </div> -->
 
@@ -304,11 +309,11 @@
                         </div>
                         <div class="fieldPadding d-flex"  *ngIf="createBTimeField">
                             <input id="days" [(ngModel)]="leadDueDays" [value]="leadDays" (keyup)="resetErrors()"  type="number" #leadDays (ngModelChange)="handleLeadEstDuration(leadDays.value)"
-                            placeholder="Days" class="form-control widthWebKit" formControlName="leadDays" autocomplete="off" /> 
+                            placeholder="Days" class="form-control widthWebKit" formControlName="leadDays" autocomplete="off" />
                             <input id="hrs" [(ngModel)]="leadDueHrs" [value]="leadHrs" (keyup)="resetErrors()"  type="number" #leadHrs (ngModelChange)="handleLeadEstDuration(leadHrs.value)"
-                            placeholder="Hours" class="form-control widthWebKit" formControlName="leadHrs" autocomplete="off" min="0" max="23"/> 
+                            placeholder="Hours" class="form-control widthWebKit" formControlName="leadHrs" autocomplete="off" min="0" max="23"/>
                             <input id="min" [(ngModel)]="leadDueMin" [value]="leadMin" (keyup)="resetErrors()"  type="number" #leadMin (ngModelChange)="handleLeadEstDuration(leadMin.value)"
-                            placeholder="Minutes" class="form-control widthWebKit" formControlName="leadMin" autocomplete="off" min="0" max="59"/> 
+                            placeholder="Minutes" class="form-control widthWebKit" formControlName="leadMin" autocomplete="off" min="0" max="59"/>
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
                             </app-field-error-display>
                         </div>
@@ -333,7 +338,7 @@
                         <div>{{updateValue.estDuration.days}}(Days)</div>
                         </div>
                     </div>
-    
+
                 </div> -->
 
             <div *ngIf="leadMasterData && leadMasterData.priority && leadMasterData.priority.isvisible">
@@ -509,8 +514,8 @@
                                 </div>
                             </div>
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                            </app-field-error-display>  
-                        </div>                           
+                            </app-field-error-display>
+                        </div>
                     </div> -->
 
 
@@ -536,9 +541,9 @@
                         </div>
                         <div class="fieldPadding">
                             <input (keyup)="resetErrors()" [(ngModel)]="areaName" type="text"
-                            placeholder="Enter Lead area"class="form-control widthWebKit"formControlName="areaName" autocomplete="off" /> 
+                            placeholder="Enter Lead area"class="form-control widthWebKit"formControlName="areaName" autocomplete="off" />
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                            </app-field-error-display>    
+                            </app-field-error-display>
                         </div>
                     </div> -->
 
@@ -598,9 +603,9 @@
                     </div>
                     <div class="fieldPadding">
                         <input (keyup)="resetErrors()" type="text"
-                        placeholder="Enter Customer Id" class="form-control widthWebKit" formControlName="customer_id" autocomplete="off" #customer (ngModelChange)="handleCustomer(customer.value)"/> 
+                        placeholder="Enter Customer Id" class="form-control widthWebKit" formControlName="customer_id" autocomplete="off" #customer (ngModelChange)="handleCustomer(customer.value)"/>
                         <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                        </app-field-error-display>    
+                        </app-field-error-display>
                     </div>
                 </div> -->
                     <div>
@@ -614,19 +619,24 @@
                                     <div >{{selectLeadCustomer}}</div>
                                     <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
                                 </div> -->
-                                <div class="disp-flex" *ngIf="!hideSearch">
+                                <div class="customerInfo" *ngIf="!hideSearch">
                                     <input type="text" [(ngModel)]="search_input" [ngModelOptions]="{standalone: true}"
-                                        class="leadTitle" name="search" placeholder={{searchby}} />
-                                    <button type="button" class="btn btn-primary ml-3 px-8 py-1" (click)="
+                                    class="form-control"name="search" placeholder={{searchby}} />
+                                    <button type="button" class="btn confirmBtn  px-8 py-1" (click)="
                                       searchCustomer()"> Find </button>
                                 </div>
                             </div>
                             <div>
                                 <br>
                                 <div class="disp-flex" *ngIf="!hideSearch">
-                                    <a>
+                                    <!-- <a>
                                         <span (click)="createNew()"><u>Create Customer</u></span>
-                                    </a>
+                                    </a> -->
+                                    <button  type="button" class="btn confirmBtnCustomerInfo  px-8 py-1" (click)="createNew()"> 
+                                      <span>
+                                        <img class="customImg" src="./assets/images/crmImages/Group 28024.png"/>
+                                      </span>
+                                      Create Customer </button>
 
                                 </div>
                             </div>
@@ -690,7 +700,7 @@
                             <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
                             </mat-datepicker>
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                            </app-field-error-display>       
+                            </app-field-error-display>
                         </div>
                     </div> -->
 
@@ -700,11 +710,11 @@
                         </div>
                         <div class="fieldPadding d-flex"  *ngIf="createBTimeField">
                             <input id="days" [(ngModel)]="leadDueDays" [value]="leadDays" (keyup)="resetErrors()"  type="number" #leadDays (ngModelChange)="handleLeadEstDuration(leadDays.value)"
-                            placeholder="Days" class="form-control widthWebKit" formControlName="leadDays" autocomplete="off" /> 
+                            placeholder="Days" class="form-control widthWebKit" formControlName="leadDays" autocomplete="off" />
                             <input id="hrs" [(ngModel)]="leadDueHrs" [value]="leadHrs" (keyup)="resetErrors()"  type="number" #leadHrs (ngModelChange)="handleLeadEstDuration(leadHrs.value)"
-                            placeholder="Hours" class="form-control widthWebKit" formControlName="leadHrs" autocomplete="off" min="0" max="23"/> 
+                            placeholder="Hours" class="form-control widthWebKit" formControlName="leadHrs" autocomplete="off" min="0" max="23"/>
                             <input id="min" [(ngModel)]="leadDueMin" [value]="leadMin" (keyup)="resetErrors()"  type="number" #leadMin (ngModelChange)="handleLeadEstDuration(leadMin.value)"
-                            placeholder="Minutes" class="form-control widthWebKit" formControlName="leadMin" autocomplete="off" min="0" max="59"/> 
+                            placeholder="Minutes" class="form-control widthWebKit" formControlName="leadMin" autocomplete="off" min="0" max="59"/>
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
                             </app-field-error-display>
                         </div>
@@ -729,7 +739,7 @@
                         <div>{{updateValue.estDuration.days}}(Days)</div>
                         </div>
                     </div>
-    
+
                 </div> -->
 
                     <div>

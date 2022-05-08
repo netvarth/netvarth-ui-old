@@ -21,7 +21,7 @@
           <mat-select class="form-control" placeholder="{{totalActivity}}({{totalCount}})"
               #userTaskStatus [(ngModel)]="statusFilter"  (ngModelChange)="handleLeadStatus(userTaskStatus.value,'taskStatus',statusFilter)">
               <mat-option   *ngFor="let stat of leadStatusList;let index=i" [value]="stat.id" >
-                <div *ngIf="stat.name==='Total Activity'" class="statusImg">
+                <div *ngIf="stat.name==='Total Lead'" class="statusImg">
                   <div>
                     <img width="25px" [src]="stat.image"/>
                    </div>

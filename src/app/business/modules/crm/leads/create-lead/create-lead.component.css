@@ -56,14 +56,14 @@
   ::ng-deep .mat-select-arrow {
     transform: rotate(0deg) !important;
   }
-  
+
   ::ng-deep .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
     transform: rotate(-180deg) !important;
   }
   ::ng-deep .form-group .pickerouter .mat-datepicker-toggle button{
     height: auto !important;
       background: #B2B2B2 !important;
-  
+
   }
   .cancelBtn{
     background: #A8ABAF !important;
@@ -153,7 +153,7 @@ input[type="number"],input[type="time"]{
 {
   font-size: 15px!important;
   font-weight: bold!important;
-  
+
 }
 .bggrey
 {
@@ -195,4 +195,22 @@ input[type="datetime-local"]:valid:before {
   cursor: not-allowed !important;
   opacity: 0.5;
   pointer-events: none !important;
+}
+.customerInfo{
+display:flex;
+justify-content: space-between;
+align-items: center;
+gap:5px;
+}
+.customImg{
+  width:20px;
+}
+.confirmBtnCustomerInfo{
+  background: #E5E5E5 !important;
+    box-shadow: none !important;
+    font-weight: 500;
+    color: #1D3E77;
+  border-radius: 3.75916px !important;
+  border: 0px solid  !important;
+  padding: 6px 12px;
 }

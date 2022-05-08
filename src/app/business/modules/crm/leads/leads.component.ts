@@ -843,7 +843,7 @@ export class LeadsComponent implements OnInit {
     this.crmService.getLeadStatus().subscribe((leadStatus:any)=>{
       console.log('leadStatus',leadStatus);
       this.leadStatusList.push({
-        id:0,   name:'Total Activity',image:'./assets/images/crmImages/total.png',
+        id:0,   name:'Total Lead',image:'./assets/images/crmImages/total.png',
       },
       {
         id: 6, name: 'Unassigned',image:'./assets/images/crmImages/unassigned.png',
