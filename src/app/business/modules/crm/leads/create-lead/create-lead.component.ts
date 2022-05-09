@@ -171,8 +171,8 @@ export class CreateLeadComponent implements OnInit{
         if(user.userType === 1){
           this.userType='PROVIDER'
         }
-        // console.log('this.innerWidth = window.innerWidth;',this.innerWidth = window.innerWidth)
-        // console.log('this.innerWidth ',this.innerWidth )
+        console.log('this.innerWidth = window.innerWidth;',this.innerWidth = window.innerWidth)
+        console.log('this.innerWidth ',this.innerWidth )
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         if(this.innerWidth<=768){
           this.placeholderTruncate(this.customer_label)
@@ -327,7 +327,8 @@ export class CreateLeadComponent implements OnInit{
     }
     console.log('value.substring(0, 4)',value.substring(0, 4))
     const labelTerm = value.substring(0, 4)
-    this.searchby = 'Search by ' + labelTerm+ ' id/name/email/phone number';
+    console.log('labelTerm',labelTerm)
+    this.searchby = 'Enter by ' + labelTerm+ ' id/name/tele #';
     console.log(' this.searchby', this.searchby)
     return `${value.substring(0, 4)}`;
   }
