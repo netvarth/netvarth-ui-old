@@ -178,7 +178,7 @@ export class CreateLeadComponent implements OnInit{
           this.placeholderTruncate(this.customer_label)
         }
         else{
-          this.searchby = 'Search by ' + this.customer_label + ' id/name/email/phone number';
+          this.searchby = 'Enter ' + this.customer_label + ' id/name/email/phone number';
         }
         
 
@@ -328,7 +328,7 @@ export class CreateLeadComponent implements OnInit{
     console.log('value.substring(0, 4)',value.substring(0, 4))
     const labelTerm = value.substring(0, 4)
     console.log('labelTerm',labelTerm)
-    this.searchby = 'Enter by ' + labelTerm+ ' id/name/tele #';
+    this.searchby = 'Enter ' + labelTerm+ ' id/name/phone #';
     console.log(' this.searchby', this.searchby)
     return `${value.substring(0, 4)}`;
   }
