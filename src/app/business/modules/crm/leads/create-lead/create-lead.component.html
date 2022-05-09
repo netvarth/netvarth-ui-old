@@ -13,8 +13,8 @@
     <div class=" card bgColor">
         <div class="inputwithImg">
             <form [formGroup]="createLeadForm">
-                <span class="group-head">{{selectHeader}} Details</span><br>
-                <div class="bggrey my-2">
+                <span class="group-head" *ngIf="(leadMasterData && leadMasterData.title && leadMasterData.title.isvisible)|| (leadMasterData && leadMasterData.description && leadMasterData.description.isvisible)||(leadMasterData && leadMasterData.category && leadMasterData.category.isvisible)||(leadMasterData && leadMasterData.type && leadMasterData.type.isvisible)||(leadMasterData && leadMasterData.location && leadMasterData.location.isvisible)">{{selectHeader}} Details</span><br>
+                <div class="bggrey my-2" *ngIf="(leadMasterData && leadMasterData.title && leadMasterData.title.isvisible)||(leadMasterData && leadMasterData.description && leadMasterData.description.isvisible)||(leadMasterData && leadMasterData.category && leadMasterData.category.isvisible)||(leadMasterData && leadMasterData.type && leadMasterData.type.isvisible)||(leadMasterData && leadMasterData.location && leadMasterData.location.isvisible)">
                     <div *ngIf="leadMasterData && leadMasterData.title && leadMasterData.title.isvisible">
                         <div class="leadTitle">
                             <div>Title</div>
@@ -151,8 +151,8 @@
                 </div>
 
 
-                <span class="group-head">Select Lead Assignee and Manager</span><br>
-                <div class="bggrey my-2">
+                <span class="group-head" *ngIf="(leadMasterData && leadMasterData.assignee && leadMasterData.assignee.isvisible) || (leadMasterData && leadMasterData.manager && leadMasterData.manager.isvisible)">Select Lead Assignee and Manager</span><br>
+                <div class="bggrey my-2" *ngIf="(leadMasterData && leadMasterData.assignee && leadMasterData.assignee.isvisible) || (leadMasterData && leadMasterData.manager && leadMasterData.manager.isvisible)">
                     <div *ngIf="leadMasterData && leadMasterData.assignee && leadMasterData.assignee.isvisible">
                         <div class="leadTitle">
                             <div>Assign Member</div>
@@ -173,7 +173,7 @@
                             </app-field-error-display>
                         </div>
                     </div>
-                    <div *ngIf="leadMasterData && leadMasterData.manager && leadMasterData.manager.isvisible"></div>
+                    <div *ngIf="leadMasterData && leadMasterData.manager && leadMasterData.manager.isvisible">
                     <div class="leadTitle">
                         <div>Manager</div>
                     </div>
@@ -191,6 +191,7 @@
                             *ngIf="leadError" errorMsg="{{leadError}}">
                         </app-field-error-display>
                     </div>
+                </div>
                 </div>
 
 
@@ -283,8 +284,8 @@
         </div>
 
 
-        <span class="group-head">Other Info</span><br>
-        <div class="bggrey my-2">
+        <span class="group-head" *ngIf="(leadMasterData && leadMasterData.priority && leadMasterData.priority.isvisible) || (leadMasterData && leadMasterData.status && leadMasterData.status.isvisible)">Other Info</span><br>
+        <div class="bggrey my-2" *ngIf="leadMasterData && leadMasterData.priority && leadMasterData.priority.isvisible">
             <div style="display: flex;gap: 5px;flex-wrap: wrap;">
                 <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding">
                         <div class="leadTitle">
@@ -365,7 +366,7 @@
 
 
 
-        <div class="bggrey my-2">
+        <div class="bggrey my-2"  *ngIf="leadMasterData && leadMasterData.status && leadMasterData.status.isvisible">
             <div style="display: flex;gap: 5px"
                 *ngIf="leadMasterData && leadMasterData.status && leadMasterData.status.isvisible">
                 <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
