@@ -30,6 +30,8 @@ export class FileService {
     'audio/ogg',
     'application/vnd.ms-excel',
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     'docx',
     'doc'
   ];
@@ -98,18 +100,17 @@ export class FileService {
 
     if (file.type == 'application/pdf') {
       return './assets/images/pdf.png';
-    } if (file.type == 'application/vnd.ms-excel' || file.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+    } else if (file.type == 'application/vnd.ms-excel' || file.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
       return './assets/images/xls.png';
     } else if (file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg') {
       return './assets/images/audio.png';
-
-    }
-    else if (file.type == 'video/mp4' || file.type == 'video/mpeg') {
+    } else if (file.type == 'video/mp4' || file.type == 'video/mpeg') {
       return './assets/images/video.png';
-    }
-    else if (file.name.includes('docx') || file.name.includes('doc')) {
+    } else if (file.type == 'application/msword' || file.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+      return './assets/images/ImgeFileIcon/wordDocsBgWhite.jpg';
+    } else if (file.name.includes('docx') || file.name.includes('doc')) {
       return './assets/images/ImgeFileIcon/docTxt.png';
-    }
+    } 
     else {
       return url;
     }

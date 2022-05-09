@@ -631,7 +631,7 @@ export class DisplayboardDetailComponent implements OnInit {
                     this.colLength = this.boardData['queueSet']['fieldList'].length
                     this.selectedBoardData[j] = this.boardData['queueSet']['fieldList'][j];
                     // console.log("selectedBoardData ", this.selectedBoardData);
-                    console.log("Board Data", this.selectedBoardData[j]);
+                    console.log("Board Dataff", this.selectedBoardData[j]);
 
                 }
 

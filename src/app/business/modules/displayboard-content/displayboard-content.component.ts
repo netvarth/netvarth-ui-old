@@ -149,7 +149,7 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         this.provider_services.getDisplayboardById_Type(this.layout_id, this.type).subscribe(
             (displayboard_data: any) => {
                 this.displayboardDetails = displayboard_data;
-                if (displayboard_data.isContainer) {
+                if (displayboard_data.isContainer) {                    
                     this.inputStatusboards = displayboard_data.containerData;
                     this.showIndex = 0;
                     this.isContainer = true;
@@ -231,6 +231,11 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             });
     }
     getStatusboard(boardObj) {
+        this.blogo = "";
+        this.bLogoWidth = "";
+        this.bLogoHeight = "";
+        this.qBoardTitle="";
+        this.qBoardFooter="";
         if (boardObj.sbId) {
             this.roomName = '';
             this.api_loading = true;

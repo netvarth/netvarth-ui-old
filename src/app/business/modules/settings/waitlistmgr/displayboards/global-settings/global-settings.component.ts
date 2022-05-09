@@ -5,6 +5,7 @@ import { ProviderServices } from '../../../../../services/provider-services.serv
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { FileService } from '../../../../../../shared/services/file-service';
+import { S3UrlProcessor } from '../../../../../../shared/services/s3-url-processor.service';
 
 
 @Component({
@@ -60,7 +61,8 @@ export class GlobalSettingsComponent implements OnInit {
         private provider_services: ProviderServices,
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
-        private fileService: FileService
+        private fileService: FileService,
+        private s3Processor: S3UrlProcessor
     ) { }
     @Input() headerResult;
     url = '';
@@ -79,16 +81,17 @@ export class GlobalSettingsComponent implements OnInit {
             this.onlyHeader = true;
             this.provider_services.getDisplayboardWaitlist(this.headerResult).subscribe(data => {
                 this.displayboard_data = data;
+                console.log("BoardData:", this.displayboard_data);
                 if (this.displayboard_data['headerSettings']) {
                     this.headerSettings['title1'] = this.displayboard_data['headerSettings']['title1'];
                 }
                 if (this.displayboard_data['footerSettings'] && this.displayboard_data['footerSettings']['title1']) {
                     this.footerSettings['title1'] = this.displayboard_data['footerSettings']['title1'];
                 }
-                if (this.displayboard_data.logoSettings) {
-                    if (this.displayboard_data.logoSettings.logo) {
+                if (this.displayboard_data['logoSettings']) {
+                    if (this.displayboard_data['logoSettings']['logo']) {
                         this.is_image = true;
-                        const logoObj = JSON.parse(this.displayboard_data.logoSettings.logo);
+                        const logoObj = this.s3Processor.getJson(this.displayboard_data.logoSettings.logo);
                         this.qboardLogo = logoObj['url'];
                     }
                     this.position = this.displayboard_data.logoSettings['position'];

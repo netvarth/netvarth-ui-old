@@ -196,7 +196,7 @@
     font-weight: 500;
     color: #222223;
     text-overflow: ellipsis;
-    padding: 10px;
+    /* padding: 10px; */
 }
 
 .form-group input[type="text"]:focus, .form-group input[type="email"]:focus, .form-group input[type="password"]:focus, .form-group input[type="file"]:focus, .form-group textarea:focus, .form-group .form-control:focus, .form-check input[type="text"]:focus, .form-check input[type="email"]:focus, .form-check input[type="password"]:focus, .form-check input[type="file"]:focus, .form-check textarea:focus, .form-check .form-control:focus {
