@@ -64,10 +64,10 @@
                               [lazy]="false"></circle-progress>
             </div>
             <div class="ml-3">
-              <span class="details text-dark" *ngIf="taskDetails.assignee"><b> Assigned to {{taskDetails.assignee.name}} </b></span><br>
-              <span class="details text-secondary"  *ngIf="taskDetails.manager">Manager : {{taskDetails.manager.name}}</span><br>
-              <span class="details text-warning" *ngIf="taskDetails.priority">Priority : {{taskDetails.priority.name}} </span><br>
-              <span class="details text-secondary">Due date : {{taskDetails.dueDate | date:newDateFormat}} </span><br>
+              <span class="details text-dark" *ngIf="taskDetails.assignee.name"><b> Assigned to {{taskDetails.assignee.name}} </b></span><br>
+              <span class="details text-secondary" *ngIf="taskDetails.manager.name">Manager : {{taskDetails.manager.name}}</span><br>
+              <span class="details text-warning" *ngIf="taskDetails.priority.name">Priority : {{taskDetails.priority.name}} </span><br>
+              <span class="details text-secondary" *ngIf="taskDetails.dueDate">Due date : {{taskDetails.dueDate | date:newDateFormat}} </span><br>
               <span class="details text-dark" *ngIf="taskDetails.actualResult"><b>Actual Result : <span class="text-success">{{taskDetails.actualResult}}</span> </b></span>
             </div>
           </div>

@@ -227,7 +227,7 @@
                     <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.priority && taskMasterData.priority.iseditable)}">
                         <mat-select class="form-control" placeholder="Select Priority" [disabled]="!(taskMasterData && taskMasterData.priority && taskMasterData.priority.iseditable)"
                             #userTaskPriority formControlName="userTaskPriority" (ngModelChange)="handleTaskPrioritySelection(userTaskPriority.value,'taskPriority')">
-                            <mat-option  *ngFor="let item of taskPriorityList[0];let index=i" [value]="item.id"  >
+                            <mat-option  *ngFor="let item of taskPriorityList[0];let index=i" [value]="item.id">
                                 <div>
                                     {{item.name}}
                                 </div>
@@ -589,7 +589,7 @@
                             <div>Business Potential</div>
                         </div>
                         <div class="fieldPadding" >
-                            <input (keyup)="resetErrors()" type="text" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)" 
+                            <input (keyup)="resetErrors()" type="number" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)" 
                                 placeholder="Enter(&#8377;)"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
                         </div>
                     </div>               

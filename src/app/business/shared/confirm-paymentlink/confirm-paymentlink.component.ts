@@ -13,7 +13,8 @@ import { AddproviderAddonComponent } from '../../modules/add-provider-addons/add
 
 @Component({
   selector: 'app-confirm-paymentlink',
-  templateUrl: './confirm-paymentlink.component.html'
+  templateUrl: './confirm-paymentlink.component.html',
+  styleUrls: ['./confirm-paymentlink.component.css']
 })
 
 export class ConfirmPaymentLinkComponent implements OnInit {
