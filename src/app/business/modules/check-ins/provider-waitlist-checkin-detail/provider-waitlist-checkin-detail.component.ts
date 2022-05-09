@@ -188,6 +188,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.getPos();
     // this.getDisplayboardCount();
     this.api_loading = true;
+    this.getWaitlistNotes(this.waitlist_id)
     this.pdtype = this.groupService.getitemFromGroupStorage('pdtyp');
     if (!this.pdtype) {
       this.pdtype = 1;
@@ -963,6 +964,8 @@ editCustomerDetails() {
     actiondialogRef.afterClosed().subscribe(data => {
       // console.log("data....",data);
       this.getProviderSettings();
+      
+      
     });
   }
   showImagesection(index) {

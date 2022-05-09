@@ -966,12 +966,12 @@ export class CustomersListComponent implements OnInit {
       return false;
     }
   }
-  getCustomer(customer){
-    if (customer.firstName || customer.lastName) {
-          const name = (customer.firstName? customer.firstName : '') + ' ' + (customer.lastName? customer.lastName : '') ;
-          return name;
-    } else {
-      return '—';
-    }
-  }
+  // getCustomer(customer){
+  //   if (customer.firstName || customer.lastName) {
+  //         const name = (customer.firstName? customer.firstName : '') + ' ' + (customer.lastName? customer.lastName : '') ;
+  //         return name;
+  //   } else {
+  //     return '—';
+  //   }
+  // }
 }

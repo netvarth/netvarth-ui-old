@@ -60,11 +60,11 @@
                 </div> -->
                 <span class="text-dark" style="font-size:12px">Token No : <b>{{waitlist_data.token}}</b></span>
               </div>
-              <div *ngIf="spName"  style="display: flex;gap: 5px;align-items: center;margin-top: 5px;">
+              <div *ngIf="waitlist_data.provider"  style="display: flex;gap: 5px;align-items: center;margin-top: 5px;">
                 <!-- <div>
                   <img width="20px" src="/assets/images/tokenDetailsIcon/assignedTo.png" />
                 </div> -->
-                <span style="font-size:12px" class="text-dark">Assigned to <b>{{spName}}</b></span>
+                <span style="font-size:12px" class="text-dark">Assigned to <b>{{waitlist_data.provider.businessName ? waitlist_data.provider.businessName : waitlist_data.provider.firstName + ' ' + waitlist_data.provider.lastName}}</b></span>
               </div>
             </div>
             <div >

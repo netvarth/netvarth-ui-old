@@ -366,10 +366,14 @@
                         </div>
                         <div>
                           <span class="text-dark-75 text-hover-primary mb-1 cust-name">
-                              {{getCustomer(customer) | capitalizeFirst}}
+                              <!-- {{getCustomer(customer) | capitalizeFirst}} -->
+                              {{(customer.firstName | capitalizeFirst) ? (customer.firstName | capitalizeFirst) : ''}} {{(customer.lastName | capitalizeFirst) ? (customer.lastName | capitalizeFirst) : '-'}}
                               <!-- {{customer.firstName | capitalizeFirst ? customer.firstName | capitalizeFirst : '' }}
                               {{customer.lastName | capitalizeFirst ? customer.firstName | capitalizeFirst :  ''}} -->
                             </span>
+                            <!-- <span class="text-dark-75 text-hover-primary mb-1 cust-name" *ngIf="customer.firstName && customer.lastName === undefined">
+                              {{'-'}}                    
+                             </span> -->
                           <div>
                             <span *ngFor="let label of customer.label | keyvalue"
                               [class.appliedLabel]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>

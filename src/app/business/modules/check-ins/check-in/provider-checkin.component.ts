@@ -2444,6 +2444,9 @@ export class ProviderCheckinComponent implements OnInit {
         this.api_error = null;
         this.selected_dept = obj;
         this.servicesjson = this.serviceslist;
+        
+
+        console.log
         if (this.filterDepart) {
             const filter = {
                 'deptId-eq': obj,
@@ -2865,6 +2868,7 @@ export class ProviderCheckinComponent implements OnInit {
             this.heading = 'Create a Token';
         } else {
             this.heading = 'Create a Check-in';
+            this.router.navigate(['provider', 'check-ins']);
         }
     }
     getQueuesbyLocationandServiceIdavailability(locid, servid, accountid) {

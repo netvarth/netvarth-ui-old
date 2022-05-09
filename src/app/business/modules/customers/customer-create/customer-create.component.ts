@@ -295,7 +295,7 @@ export class CustomerCreateComponent implements OnInit {
             this.getCustomers(this.customerId).then(customer => {
               this.customer = customer;
               console.log("Date Getting here :", this.customer);
-              this.customerName = this.customer[0].firstName;
+              this.customerName = this.customer[0].firstName + ' ' + this.customer[0].lastName;
               if (this.action === "edit") {
                 this.viewCustomer = false;
                 this.createForm();
