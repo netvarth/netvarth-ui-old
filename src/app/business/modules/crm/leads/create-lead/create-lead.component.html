@@ -213,7 +213,7 @@
                     <div>Customer</div>
                     <div class="astericColor">*</div>
                 </div>
-                <div class="fieldPadding">
+                <div class="fieldPadding" *ngIf=" !hideSearch">
                     <div>
                         <!-- <div [formControlName]="selectLeadCustomer" class="form-control" style="display: flex;justify-content: space-between;" (click)="selectCustomerDialog(selectLeadCustomer)" >
                                     <div >{{selectLeadCustomer}}</div>
@@ -222,8 +222,14 @@
                         <div class="customerInfo" *ngIf="!hideSearch">
                             <input type="text" [(ngModel)]="search_input" [ngModelOptions]="{standalone: true}"
                                 class="form-control" name="search" placeholder={{searchby}} />
-                            <button type="button"  class="btn confirmBtn  px-8 py-1" (click)="
-                                      searchCustomer()"> Find </button>
+                                <div class="webDisplay">
+                                    <button type="button" class="btn confirmBtnFind" (click)="
+                                    searchCustomer()">Search<i style="color:#fff;margin-left: 5px;" class="fa fa-search"></i> </button>
+                                </div>
+                                  <div class="mobileDisplay">
+                                      <button type="button" class="btn confirmBtnFindMObile" (click)="
+                                      searchCustomer()"><i style="color:#fff;" class="fa fa-search"></i> </button>
+                                    </div>
                         </div>
                     </div>
                     <div>
@@ -245,7 +251,7 @@
                     </app-field-error-display>
                 </div>
                 <div class="bggrey my-2" *ngIf="hideSearch">
-                    <div class="webDisplay">
+                    <!-- <div>
                         <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small"
                             (click)="search()">
                             <button mat-flat-button
@@ -253,12 +259,10 @@
                                 Search Again </button>
                         </a>
 
-                    </div>
+                    </div> -->
                     <div style="display: flex;gap: 5px;flex-wrap: wrap;">
                         {{customer_data.firstName}} {{customer_data.lastName}}
                     </div>
-
-
                     <div>
                         <div class="leadTitle" *ngIf="customer_data.jaldeeId">
                             <i class="fa fa-id-card-o icon"></i>
@@ -277,6 +281,15 @@
                         <div class="fieldPadding">
 
                         </div>
+                    </div>
+                    <div>
+                        <a class="navbar-item-color bold pointer-cursor disp-none-small"
+                            (click)="search()">
+                            <button mat-flat-button
+                                class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
+                                Search Again </button>
+                        </a>
+
                     </div>
                 </div>
             </div>
@@ -614,7 +627,7 @@
                             <div>Customer</div>
                             <div class="astericColor">*</div>
                         </div>
-                        <div class="fieldPadding">
+                        <div class="fieldPadding" *ngIf="!hideSearch">
                             <div>
                                 <!-- <div [formControlName]="selectLeadCustomer" class="form-control" style="display: flex;justify-content: space-between;" (click)="selectCustomerDialog(selectLeadCustomer)" >
                                     <div >{{selectLeadCustomer}}</div>
@@ -623,8 +636,14 @@
                                 <div class="customerInfo" *ngIf="!hideSearch">
                                     <input type="text" [(ngModel)]="search_input" [ngModelOptions]="{standalone: true}"
                                     class="form-control"name="search" placeholder={{searchby}} />
-                                    <button type="button" class="btn confirmBtn  px-8 py-1" (click)="
-                                      searchCustomer()"> Find </button>
+                                    <div class="webDisplay">
+                                        <button type="button" class="btn confirmBtnFind" (click)="
+                                        searchCustomer()">Search<i style="color:#fff;margin-left: 5px;" class="fa fa-search"></i> </button>
+                                    </div>
+                                      <div class="mobileDisplay">
+                                          <button type="button" class="btn confirmBtnFindMObile" (click)="
+                                          searchCustomer()"><i style="color:#fff;" class="fa fa-search"></i> </button>
+                                        </div>
                                 </div>
                             </div>
                             <div>
@@ -646,7 +665,7 @@
                             </app-field-error-display>
                         </div>
                         <div class="bggrey my-2" *ngIf="hideSearch">
-                            <div class="webDisplay">
+                            <!-- <div >
                                 <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small"
                                     (click)="search()">
                                     <button mat-flat-button
@@ -654,7 +673,7 @@
                                         Search Again </button>
                                 </a>
 
-                            </div>
+                            </div> -->
                             <div style="display: flex;gap: 5px;flex-wrap: wrap;">
                                 {{customer_data.firstName}} {{customer_data.lastName}}
                             </div>
@@ -678,6 +697,15 @@
                                 <div class="fieldPadding">
 
                                 </div>
+                            </div>
+                            <div >
+                                <a class="navbar-item-color bold pointer-cursor disp-none-small"
+                                    (click)="search()">
+                                    <button mat-flat-button
+                                        class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
+                                        Search Again </button>
+                                </a>
+
                             </div>
                         </div>
                     </div>
