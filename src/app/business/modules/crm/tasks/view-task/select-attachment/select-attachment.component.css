@@ -149,9 +149,9 @@
 	color: #1E4079;
 }
 
-.choose_file label:hover span{
+/* .choose_file label:hover span{
 	text-decoration: underline;
-}
+} */
 
 .fa-paperclip
 {
@@ -170,7 +170,9 @@
     }
 
   }
-
-  ::ng-deep .select-attachment .mat-chip.mat-standard-chip {
-	  background-color: #fff !important;
-  }
+  .select-attachment .mat-chip.mat-standard-chip{
+	background-color: transparent !important;
+}
+  .mat-chip.mat-standard-chip::after {
+    background: transparent;
+}

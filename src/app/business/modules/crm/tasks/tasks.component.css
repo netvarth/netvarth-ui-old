@@ -855,7 +855,7 @@ a:active {
 
 a:hover {
     color: #FC436B;
-    text-decoration: underline;
+    /* text-decoration: underline; */
 }
 
 /* img {padding:5px; border-radius: 50%;

@@ -31,7 +31,6 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    CommonModule,
         LoadingSpinnerModule,
         MatTooltipModule,
         MatCheckboxModule,
