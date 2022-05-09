@@ -14,9 +14,6 @@
     </div>
     <!----mat tab change to mat select start-->
     <div class="statusSelectDiv"> 
-      <!-- <div class="taskTitle">
-          <div>Status</div>
-      </div> -->
       <div class="fieldPadding" >
           <mat-select class="form-control" placeholder="{{totalActivity}}({{totalCount}})"
               #userTaskStatus [(ngModel)]="statusFilter"  (ngModelChange)="handleLeadStatus(userTaskStatus.value,'taskStatus',statusFilter)">
@@ -588,7 +585,7 @@
                         </ng-container>
                       </tbody>
                     </table>
-                    <div class="search_paging" *ngIf="loadComplete1">
+                    <div class="search_paging" *ngIf="inprogressCount >10">
                       <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                         (pagerclick)="handle_pageclick_inprogress($event)" [curpage]="pagination.startpageval">
                       </app-pager>
@@ -853,7 +850,7 @@
                         </ng-container>
                       </tbody>
                     </table>
-                    <div class="search_paging" *ngIf="loadComplete2">
+                    <div class="search_paging" *ngIf="completedCount>10">
                       <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                         (pagerclick)="handle_pageclick_completed($event)" [curpage]="pagination.startpageval">
                       </app-pager>
@@ -1097,7 +1094,7 @@
                         </ng-container>
                       </tbody>
                     </table>
-                    <div class="search_paging" *ngIf="loadComplete3">
+                    <div class="search_paging" *ngIf="FailedCount>10">
                       <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                         (pagerclick)="handle_pageclick_failed($event)" [curpage]="pagination.startpageval">
                       </app-pager>
@@ -1341,7 +1338,7 @@
                       </ng-container>
                     </tbody>
                   </table>
-                  <div class="search_paging" *ngIf="loadComplete4">
+                  <div class="search_paging" *ngIf="TransferredCount>10">
                     <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                       (pagerclick)="handle_pageclick_Transferred($event)" [curpage]="pagination.startpageval">
                     </app-pager>
@@ -1586,7 +1583,7 @@
                           </ng-container>
                         </tbody>
                       </table>
-                      <div class="search_paging" *ngIf="loadComplete4">
+                      <div class="search_paging" *ngIf="UnassignedLeadList.length >10">
                         <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                           (pagerclick)="handle_pageclick_Unassigned($event)" [curpage]="pagination.startpageval">
                         </app-pager>
@@ -1833,7 +1830,7 @@
                             </ng-container>
                           </tbody>
                         </table>
-                        <div class="search_paging" *ngIf="loadComplete4">
+                        <div class="search_paging" *ngIf=" assignedLeadList.length>10">
                           <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                             (pagerclick)="handle_pageclick_ASsigned($event)" [curpage]="pagination.startpageval">
                           </app-pager>

@@ -206,13 +206,13 @@ export class LeadsComponent implements OnInit {
             .subscribe(
               data => {
                 this.totalLeadList = data;
+                this.totalLeadList = this.totalLeadList.filter(obj => !obj.originId);
                 this.getUnassignedLead()
                 this.getAssignedLead()
                 this.getSucessListLead()
                 this.getTransferredLead()
                 this.getFailedLead()
                 this.getInprogressLead()
-                this.totalLeadList = this.totalLeadList.filter(obj => !obj.originId);
                 this.loadComplete = true;
               },
               error => {
@@ -510,11 +510,11 @@ export class LeadsComponent implements OnInit {
             .subscribe(
               data => {
                 this.totalDelayedList = data;
-                this.loadComplete3 = true;
+                // this.loadComplete3 = true;
               },
               error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                this.loadComplete3 = true;
+                // this.loadComplete3 = true;
              
               }
             );

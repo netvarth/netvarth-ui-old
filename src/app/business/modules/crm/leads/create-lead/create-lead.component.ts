@@ -136,6 +136,7 @@ export class CreateLeadComponent implements OnInit{
   hideSearch = false;
   leadMasterData: any;
   leadId:any;
+  public innerWidth:any;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -170,8 +171,16 @@ export class CreateLeadComponent implements OnInit{
         if(user.userType === 1){
           this.userType='PROVIDER'
         }
+        // console.log('this.innerWidth = window.innerWidth;',this.innerWidth = window.innerWidth)
+        // console.log('this.innerWidth ',this.innerWidth )
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-        this.searchby = 'Search by ' + this.customer_label + ' id/name/email/phone number';
+        if(this.innerWidth<=768){
+          this.placeholderTruncate(this.customer_label)
+        }
+        else{
+          this.searchby = 'Search by ' + this.customer_label + ' id/name/email/phone number';
+        }
+        
 
     this._Activatedroute.paramMap.subscribe(params => { 
       this.leadUid = params.get('leadid');
@@ -309,6 +318,18 @@ export class CreateLeadComponent implements OnInit{
     this.getLocation()
     this.getCustomersList()
     // this.getLeadmaster()
+  }
+  placeholderTruncate(value: string, completeWords = true,) {
+    let lastindex = 4;
+    if (completeWords) {
+      lastindex = value.substring(0, 4).lastIndexOf(' ');
+      console.log('lastindex',lastindex)
+    }
+    console.log('value.substring(0, 4)',value.substring(0, 4))
+    const labelTerm = value.substring(0, 4)
+    this.searchby = 'Search by ' + labelTerm+ ' id/name/email/phone number';
+    console.log(' this.searchby', this.searchby)
+    return `${value.substring(0, 4)}`;
   }
   getLeadmaster(){
     // this.crmService.getLeadMasterList().subscribe((response)=>{

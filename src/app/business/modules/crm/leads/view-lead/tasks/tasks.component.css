@@ -68,22 +68,17 @@
       }
       tr{
         display: block !important;
+        border-bottom: 1px solid #f4f4f4;
       }
-      table thead, table tbody tr {
-        /* display: block  !important; */
-        width: 100%  !important;
-        table-layout: fixed  !important;
-      }
-  }
-
-  table tbody {
-    display: block  !important;
-    max-height: 150px !important;
-    overflow-y: scroll  !important;
-  }
-  
-  table thead, table tbody tr {
-    display: table  !important;
+      /* table thead, table tbody tr {
     width: 100%  !important;
     table-layout: fixed  !important;
+  } */
+  }
+  tr{
+    /* display: block !important; */
+    border-bottom: 1px solid #f4f4f4;
+  }
+  thead{
+    border-bottom: 1px solid #f4f4f4 !important;
   }
