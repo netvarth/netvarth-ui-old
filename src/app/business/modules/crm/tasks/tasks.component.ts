@@ -331,11 +331,11 @@ export class TasksComponent implements OnInit {
   getCancelledTask(from_oninit = true){
     this.canceledTaskList=[]
     this.totalTaskList.forEach((element:any)=>{
-      console.log('element:.',element)
+      // console.log('element:.',element)
      if(element.status.name ==='Cancelled'){
        this.canceledTaskList.push(element);
      }
-     console.log('this.canceledTaskList',this.canceledTaskList)
+    //  console.log('this.canceledTaskList',this.canceledTaskList)
    })
   }
   getSuspendedTask(from_oninit=true){

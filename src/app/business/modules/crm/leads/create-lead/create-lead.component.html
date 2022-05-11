@@ -168,7 +168,8 @@
                 <div class="fieldPadding" *ngIf=" !hideSearch">
                     <div>
                         <div class="customerInfo" *ngIf="!hideSearch">
-                            <input type="text" [(ngModel)]="search_input" [ngModelOptions]="{standalone: true}"
+                            <!-- [ngModelOptions]="{standalone: true}" [(ngModel)]="search_input"-->
+                            <input type="text" formControlName="customerDetails"
                                 class="form-control" name="search" placeholder={{searchby}} />
                                 <div class="webDisplay">
                                     <button type="button" class="btn confirmBtnFind" (click)="
@@ -216,7 +217,7 @@
                             <span>{{customer_data.email}}</span>
                         </div>
                     </div>
-                    <div>
+                    <div style="margin-top:5px;">
                         <a class="navbar-item-color bold pointer-cursor disp-none-small"
                             (click)="search()">
                             <button mat-flat-button
@@ -501,7 +502,7 @@
                                     <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
                                 </div> -->
                                 <div class="customerInfo" *ngIf="!hideSearch">
-                                    <input type="text" [(ngModel)]="search_input" [ngModelOptions]="{standalone: true}"
+                                    <input type="text" formControlName="customerDetails"
                                     class="form-control"name="search" placeholder={{searchby}} />
                                     <div class="webDisplay">
                                         <button type="button" class="btn confirmBtnFind" (click)="

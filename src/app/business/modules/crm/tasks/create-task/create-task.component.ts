@@ -479,7 +479,7 @@ export class CreateTaskComponent implements OnInit {
         this.errorMsgAny=''
       }else{
         this.bErrormsg=true;
-        this.errorMsgAny='Please enter activity name'
+        this.errorMsgAny='Please enter title'
       }
     // }
     
@@ -859,7 +859,7 @@ export class CreateTaskComponent implements OnInit {
         //   this.errorMsgAnyType='Please select type';
         if(this.createTaskForm.controls.taskTitle.value === null){
           this.bErrormsg=true;
-        this.errorMsgAny='Please enter activity name';
+        this.errorMsgAny='Please enter title';
         }else if(this.createTaskForm.controls.userTaskCategory.value === null){
           this.bErrormsgCategory=true;
           this.errorMsgAnyCategory='Please select category'
