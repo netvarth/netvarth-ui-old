@@ -13,146 +13,108 @@
     <div class=" card bgColor">
         <div class="inputwithImg">
             <form [formGroup]="createLeadForm">
-                <span class="group-head" *ngIf="(leadMasterData && leadMasterData.title && leadMasterData.title.isvisible)|| (leadMasterData && leadMasterData.description && leadMasterData.description.isvisible)||(leadMasterData && leadMasterData.category && leadMasterData.category.isvisible)||(leadMasterData && leadMasterData.type && leadMasterData.type.isvisible)||(leadMasterData && leadMasterData.location && leadMasterData.location.isvisible)">{{selectHeader}} Details</span><br>
-                <div class="bggrey my-2" *ngIf="(leadMasterData && leadMasterData.title && leadMasterData.title.isvisible)||(leadMasterData && leadMasterData.description && leadMasterData.description.isvisible)||(leadMasterData && leadMasterData.category && leadMasterData.category.isvisible)||(leadMasterData && leadMasterData.type && leadMasterData.type.isvisible)||(leadMasterData && leadMasterData.location && leadMasterData.location.isvisible)">
-                    <div *ngIf="leadMasterData && leadMasterData.title && leadMasterData.title.isvisible">
-                        <div class="leadTitle">
-                            <div>Title</div>
-                            <div class="astericColor">*</div>
-                        </div>
-                        <div class="fieldPadding"
-                            [ngClass]="{'highlight': !(leadMasterData && leadMasterData.title && leadMasterData.title.iseditable)}">
-                            <input (keyup)="resetErrors()" type="text" #leadTitle
-                                (ngModelChange)="hamdleLeadTitle(leadTitle.value)" placeholder="Enter Lead title"
-                                class="form-control" formControlName="leadTitle" autocomplete="off"
-                                [readonly]="!(leadMasterData && leadMasterData.title && leadMasterData.title.iseditable)"
-                                [value]="leadTitle" />
-                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
-                                *ngIf="leadError" errorMsg="{{leadError}}">
-                            </app-field-error-display>
-                        </div>
-                    </div>
-                    <div *ngIf="leadMasterData && leadMasterData.description && leadMasterData.description.isvisible">
-                        <div class="leadTitle">
-                            <div>Description</div>
-                        </div>
-                        <div class="fieldPadding"
-                            [ngClass]="{'highlight': !(leadMasterData && leadMasterData.description && leadMasterData.description.iseditable)}">
-                            <textarea rowa="10" class="form-control" formControlName="leadDescription" #leadDescription
-                                (change)="handleLeadDescription(leadDescription.value)"
-                                (keyup)="autoGrowTextZone($event)"
-                                [readonly]="!(leadMasterData && leadMasterData.description && leadMasterData.description.iseditable)"
-                                maxlength="1000" placeholder="Enter Lead description">
-                        </textarea>
-                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
-                                *ngIf="leadError" errorMsg="{{leadError}}">
-                            </app-field-error-display>
-                        </div>
-                    </div>
-                    <div style="display: flex;gap: 5px">
-                        <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding"
-                            *ngIf="leadMasterData && leadMasterData.category && leadMasterData.category.isvisible">
+                <div *ngIf="(leadMasterData && leadMasterData.title && leadMasterData.title.isvisible)|| (leadMasterData && leadMasterData.description && leadMasterData.description.isvisible)||(leadMasterData && leadMasterData.category && leadMasterData.category.isvisible)||(leadMasterData && leadMasterData.type && leadMasterData.type.isvisible) || (leadMasterData && leadMasterData.location && leadMasterData.location.isvisible)">
+                    <span class="group-head" >{{selectHeader}} Details</span><br>
+                    <div class="bggrey my-2" >
+                        <div *ngIf="leadMasterData && leadMasterData.title && leadMasterData.title.isvisible">
                             <div class="leadTitle">
-                                <div>Category</div>
+                                <div>Title</div>
                                 <div class="astericColor">*</div>
                             </div>
                             <div class="fieldPadding"
-                                [ngClass]="{'highlight': !(leadMasterData && leadMasterData.category && leadMasterData.category.iseditable)}">
-                                <mat-select class="form-control widthWebKit" placeholder="Enter Category"
-                                    [disabled]="!(leadMasterData && leadMasterData.category && leadMasterData.category.iseditable)"
-                                    #userLeadCategory formControlName="userLeadCategory">
-                                    <mat-option *ngFor="let item of categoryListData[0];let index=i" [value]="item.id"
-                                        (selectionChange)="handleLeadCategorySelection(userLeadCategory.value)">
-                                        <div>
-                                            {{item.name}}
-                                        </div>
-                                    </mat-option>
-                                </mat-select>
-                            </div>
-                        </div>
-                        <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding"
-                            *ngIf="leadMasterData && leadMasterData.type && leadMasterData.type.isvisible">
-                            <div class="leadTitle">
-                                <div>Type</div>
-                                <div class="astericColor">*</div>
-                            </div>
-                            <div class="fieldPadding"
-                                [ngClass]="{'highlight': !(leadMasterData && leadMasterData.type && leadMasterData.type.iseditable)}">
-                                <mat-select class="form-control widthWebKit" placeholder="Enter Type"
-                                    [disabled]="!(leadMasterData && leadMasterData.type && leadMasterData.type.iseditable)"
-                                    #userLeadType formControlName="userLeadType">
-                                    <mat-option *ngFor="let item of leadTypeList[0];let index=i" [value]="item.id"
-                                        (selectionChange)="handleLeadTypeSelection(userLeadType.value)">
-                                        <div>
-                                            {{item.name}}
-                                        </div>
-                                    </mat-option>
-                                </mat-select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="display: flex;gap: 5px">
-
-
-                        <!-- <div  class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                        <div class="leadTitle">
-                            <div>Customer</div>
-                            <div class="astericColor">*</div>
-                        </div>
-                        <div class="fieldPadding">
-                            <div>
-                                <div [(ngModel)]="selectCustomer" class="form-control" style="display: flex;justify-content: space-between;" (click)="selectCustomerDialog(selectCustomer)" >
-                                    <div >{{selectCustomer}}</div>
-                                    <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
-                                </div>
-                            </div>
-                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                            </app-field-error-display>
-                        </div>
-                    </div> -->
-
-
-
-                        <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding"
-                            *ngIf="leadMasterData && leadMasterData.location && leadMasterData.location.isvisible">
-                            <div class="leadTitle">
-                                <div>Location</div>
-                                <div class="astericColor">*</div>
-                            </div>
-                            <div class="fieldPadding"
-                                [ngClass]="{'highlight': !(leadMasterData && leadMasterData.location && leadMasterData.location.iseditable)}">
-                                <input (keyup)="resetErrors()" type="text" #leadLocation
-                                    (ngModelChange)="handleLeadLocation(leadLocation.value)"
-                                    [readonly]="!(leadMasterData && leadMasterData.location && leadMasterData.location.iseditable)"
-                                    placeholder="Enter Lead location" class="form-control widthWebKit"
-                                    formControlName="leadLocation" autocomplete="off" [value]="leadLocation.name" />
+                                [ngClass]="{'highlight': !(leadMasterData && leadMasterData.title && leadMasterData.title.iseditable)}">
+                                <input (keyup)="resetErrors()" type="text" #leadTitle
+                                    (ngModelChange)="hamdleLeadTitle(leadTitle.value)" placeholder="Enter Lead title"
+                                    class="form-control" formControlName="leadTitle" autocomplete="off"
+                                    [readonly]="!(leadMasterData && leadMasterData.title && leadMasterData.title.iseditable)"
+                                    [value]="leadTitle" />
                                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                                     *ngIf="leadError" errorMsg="{{leadError}}">
                                 </app-field-error-display>
                             </div>
                         </div>
-                        <!-- <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                        <div class="leadTitle">
-                            <div>Area</div>
+                        <div *ngIf="leadMasterData && leadMasterData.description && leadMasterData.description.isvisible">
+                            <div class="leadTitle">
+                                <div>Description</div>
+                            </div>
+                            <div class="fieldPadding"
+                                [ngClass]="{'highlight': !(leadMasterData && leadMasterData.description && leadMasterData.description.iseditable)}">
+                                <textarea rowa="10" class="form-control" formControlName="leadDescription" #leadDescription
+                                    (change)="handleLeadDescription(leadDescription.value)"
+                                    (keyup)="autoGrowTextZone($event)"
+                                    [readonly]="!(leadMasterData && leadMasterData.description && leadMasterData.description.iseditable)"
+                                    maxlength="1000" placeholder="Enter Lead description">
+                            </textarea>
+                                <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                                    *ngIf="leadError" errorMsg="{{leadError}}">
+                                </app-field-error-display>
+                            </div>
                         </div>
-                        <div class="fieldPadding">
-                            <input (keyup)="resetErrors()" [(ngModel)]="areaName" type="text"
-                            placeholder="Enter Lead area"class="form-control widthWebKit"formControlName="areaName" autocomplete="off" />
-                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                            </app-field-error-display>
+                        <div style="display: flex;gap: 5px">
+                            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding"*ngIf="leadMasterData && leadMasterData.category && leadMasterData.category.isvisible">
+                                <div class="leadTitle">
+                                    <div>Category</div>
+                                    <div class="astericColor">*</div>
+                                </div>
+                                <div class="fieldPadding"
+                                    [ngClass]="{'highlight': !(leadMasterData && leadMasterData.category && leadMasterData.category.iseditable)}">
+                                    <mat-select class="form-control widthWebKit" placeholder="Enter Category"
+                                        [disabled]="!(leadMasterData && leadMasterData.category && leadMasterData.category.iseditable)"
+                                        #userLeadCategory formControlName="userLeadCategory">
+                                        <mat-option *ngFor="let item of categoryListData[0];let index=i" [value]="item.id"
+                                            (selectionChange)="handleLeadCategorySelection(userLeadCategory.value)">
+                                            <div>
+                                                {{item.name}}
+                                            </div>
+                                        </mat-option>
+                                    </mat-select>
+                                </div>
+                            </div>
+                            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding"*ngIf="leadMasterData && leadMasterData.type && leadMasterData.type.isvisible">
+                                <div class="leadTitle">
+                                    <div>Type</div>
+                                    <div class="astericColor">*</div>
+                                </div>
+                                <div class="fieldPadding"
+                                    [ngClass]="{'highlight': !(leadMasterData && leadMasterData.type && leadMasterData.type.iseditable)}">
+                                    <mat-select class="form-control widthWebKit" placeholder="Enter Type"
+                                        [disabled]="!(leadMasterData && leadMasterData.type && leadMasterData.type.iseditable)"
+                                        #userLeadType formControlName="userLeadType">
+                                        <mat-option *ngFor="let item of leadTypeList[0];let index=i" [value]="item.id"
+                                            (selectionChange)="handleLeadTypeSelection(userLeadType.value)">
+                                            <div>
+                                                {{item.name}}
+                                            </div>
+                                        </mat-option>
+                                    </mat-select>
+                                </div>
+                            </div>
                         </div>
-                    </div> -->
-
-
-
-
+    
+                        <div style="display: flex;gap: 5px">
+                            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding"*ngIf="leadMasterData && leadMasterData.location && leadMasterData.location.isvisible">
+                                <div class="leadTitle">
+                                    <div>Location</div>
+                                    <div class="astericColor">*</div>
+                                </div>
+                                <div class="fieldPadding"
+                                    [ngClass]="{'highlight': !(leadMasterData && leadMasterData.location && leadMasterData.location.iseditable)}">
+                                    <input (keyup)="resetErrors()" type="text" #leadLocation
+                                        (ngModelChange)="handleLeadLocation(leadLocation.value)"
+                                        [readonly]="!(leadMasterData && leadMasterData.location && leadMasterData.location.iseditable)"
+                                        placeholder="Enter Lead location" class="form-control widthWebKit"
+                                        formControlName="leadLocation" autocomplete="off" [value]="leadLocation.name" />
+                                    <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                                        *ngIf="leadError" errorMsg="{{leadError}}">
+                                    </app-field-error-display>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-
-                <span class="group-head" *ngIf="(leadMasterData && leadMasterData.assignee && leadMasterData.assignee.isvisible) || (leadMasterData && leadMasterData.manager && leadMasterData.manager.isvisible)">Select Lead Assignee and Manager</span><br>
-                <div class="bggrey my-2" *ngIf="(leadMasterData && leadMasterData.assignee && leadMasterData.assignee.isvisible) || (leadMasterData && leadMasterData.manager && leadMasterData.manager.isvisible)">
+                <div *ngIf="(leadMasterData && leadMasterData.assignee && leadMasterData.assignee.isvisible) || (leadMasterData && leadMasterData.manager && leadMasterData.manager.isvisible)">
+                    <span class="group-head" >Select Lead Assignee and Manager</span><br>
+                <div class="bggrey my-2" >
                     <div *ngIf="leadMasterData && leadMasterData.assignee && leadMasterData.assignee.isvisible">
                         <div class="leadTitle">
                             <div>Assign Member</div>
@@ -193,21 +155,11 @@
                     </div>
                 </div>
                 </div>
+                </div>
 
-
-        <span class="group-head">Customer Info</span><br>
+        <div *ngIf="leadMasterData">
+            <span class="group-head">Customer Info</span><br>
         <div class="bggrey my-2">
-            <!-- <div>
-                    <div class="leadTitle">
-                        <div>Customer</div>
-                    </div>
-                    <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" type="text"
-                        placeholder="Enter Customer Id" class="form-control widthWebKit" formControlName="customer_id" autocomplete="off" #customer (ngModelChange)="handleCustomer(customer.value)"/>
-                        <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                        </app-field-error-display>
-                    </div>
-                </div> -->
             <div>
                 <div class="leadTitle" *ngIf="!hideSearch">
                     <div>Customer</div>
@@ -215,10 +167,6 @@
                 </div>
                 <div class="fieldPadding" *ngIf=" !hideSearch">
                     <div>
-                        <!-- <div [formControlName]="selectLeadCustomer" class="form-control" style="display: flex;justify-content: space-between;" (click)="selectCustomerDialog(selectLeadCustomer)" >
-                                    <div >{{selectLeadCustomer}}</div>
-                                    <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
-                                </div> -->
                         <div class="customerInfo" *ngIf="!hideSearch">
                             <input type="text" [(ngModel)]="search_input" [ngModelOptions]="{standalone: true}"
                                 class="form-control" name="search" placeholder={{searchby}} />
@@ -251,15 +199,6 @@
                     </app-field-error-display>
                 </div>
                 <div class="bggrey my-2" *ngIf="hideSearch">
-                    <!-- <div>
-                        <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small"
-                            (click)="search()">
-                            <button mat-flat-button
-                                class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
-                                Search Again </button>
-                        </a>
-
-                    </div> -->
                     <div style="display: flex;gap: 5px;flex-wrap: wrap;">
                         {{customer_data.firstName}} {{customer_data.lastName}}
                     </div>
@@ -271,15 +210,10 @@
                         <div class="leadTitle" *ngIf="customer_data.phoneNo">
                             <i class="fa fa-mobile icon"></i>
                             <span>{{customer_data.phoneNo}}</span>
-
                         </div>
                         <div class="leadTitle" *ngIf="customer_data.email">
                             <i class="fa fa-envelope icon"></i>
                             <span>{{customer_data.email}}</span>
-                        </div>
-
-                        <div class="fieldPadding">
-
                         </div>
                     </div>
                     <div>
@@ -295,66 +229,10 @@
             </div>
 
         </div>
-
-
-        <span class="group-head" *ngIf="(leadMasterData && leadMasterData.priority && leadMasterData.priority.isvisible) || (leadMasterData && leadMasterData.status && leadMasterData.status.isvisible)">Other Info</span><br>
-        <div class="bggrey my-2" *ngIf="leadMasterData && leadMasterData.priority && leadMasterData.priority.isvisible">
-            <div style="display: flex;gap: 5px;flex-wrap: wrap;">
-                <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding">
-                        <div class="leadTitle">
-                            <div>Due Date</div>
-                        </div>
-                        <div class="pickerouter fieldPadding dt dateWithMatDtae" >
-                            <input [(ngModel)]="leadDueDate" formControlName="leadDate" class="form-control widthWebKit positionNameInput" type="text"  matInput
-                                [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
-                                [value]="ddate" (dateChange)="handleDateChange($event)" placeholder="Enter Date" #leadDate>
-                            <mat-datepicker-toggle matSuffix [for]="picker">
-                            </mat-datepicker-toggle>
-                            <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
-                            </mat-datepicker>
-                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                            </app-field-error-display>
-                        </div>
-                    </div> -->
-
-                <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding"  >
-                        <div class="leadTitle">
-                            <div>Est Duration</div>
-                        </div>
-                        <div class="fieldPadding d-flex"  *ngIf="createBTimeField">
-                            <input id="days" [(ngModel)]="leadDueDays" [value]="leadDays" (keyup)="resetErrors()"  type="number" #leadDays (ngModelChange)="handleLeadEstDuration(leadDays.value)"
-                            placeholder="Days" class="form-control widthWebKit" formControlName="leadDays" autocomplete="off" />
-                            <input id="hrs" [(ngModel)]="leadDueHrs" [value]="leadHrs" (keyup)="resetErrors()"  type="number" #leadHrs (ngModelChange)="handleLeadEstDuration(leadHrs.value)"
-                            placeholder="Hours" class="form-control widthWebKit" formControlName="leadHrs" autocomplete="off" min="0" max="23"/>
-                            <input id="min" [(ngModel)]="leadDueMin" [value]="leadMin" (keyup)="resetErrors()"  type="number" #leadMin (ngModelChange)="handleLeadEstDuration(leadMin.value)"
-                            placeholder="Minutes" class="form-control widthWebKit" formControlName="leadMin" autocomplete="off" min="0" max="59"/>
-                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError" errorMsg="{{leadError}}">
-                            </app-field-error-display>
-                        </div>
-                        <div class="fieldPadding" *ngIf="updateBTimefield" >
-                            <div class="form-control" style="display: flex !important;justify-content: space-between;align-items: center;">
-                                <div>{{updateValue.estDuration.days}}days,{{this.updateValue.estDuration.hours}}hours,{{this.updateValue.estDuration.minutes}}minutes</div>
-                                <div (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
-                            </div>
-                        </div>
-                    </div> -->
-            </div>
-            <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding" *ngIf="updateBTimefield">
-                <div class="leadTitle">
-                    <div>Est Duration</div>
-                    <div class="astericColor">*</div>
-                    </div>
-                    <div class="fieldPadding"  >
-                        <div class="form-control widthWebKit" style="display: flex !important;justify-content: space-between;align-items: center;" *ngIf=" updateValue.estDuration.hours !=0">
-                        <div>{{updateValue.estDuration.days}}(Days),{{this.updateValue.estDuration.hours}}(Hours)</div>
-                        </div>
-                        <div class="form-control widthWebKit" style="display: flex !important;justify-content: space-between;align-items: center;" *ngIf=" updateValue.estDuration.hours ===0">
-                        <div>{{updateValue.estDuration.days}}(Days)</div>
-                        </div>
-                    </div>
-
-                </div> -->
-
+        </div>
+        <div *ngIf="(leadMasterData && leadMasterData.priority && leadMasterData.priority.isvisible) || (leadMasterData && leadMasterData.status && leadMasterData.status.isvisible)">
+            <span class="group-head" >Other Info</span><br>
+            <div class="bggrey my-2">
             <div *ngIf="leadMasterData && leadMasterData.priority && leadMasterData.priority.isvisible">
                 <div class="leadTitle">
                     <div>Priority</div>
@@ -373,15 +251,9 @@
                     </mat-select>
                 </div>
             </div>
-        </div>
-
-
-
-
-
-        <div class="bggrey my-2"  *ngIf="leadMasterData && leadMasterData.status && leadMasterData.status.isvisible">
-            <div style="display: flex;gap: 5px"
-                *ngIf="leadMasterData && leadMasterData.status && leadMasterData.status.isvisible">
+            </div>
+            <div class="bggrey my-2">
+            <div style="display: flex;gap: 5px"*ngIf="leadMasterData && leadMasterData.status && leadMasterData.status.isvisible">
                 <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                     <div class="leadTitle">
                         <div>Status</div>
@@ -405,13 +277,8 @@
                     </div>
                 </div>
             </div>
-
-
-
+            </div>
         </div>
-
-
-
         <div style="text-align: center;margin-top: 15px;">
             <ng-container>
                 <div class=" mgn-bt-20 mgn-up-10">

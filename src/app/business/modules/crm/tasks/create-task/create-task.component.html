@@ -13,7 +13,7 @@
     <div class=" card bgColor inputwithImg">
         <div class="noImg">
         <form [formGroup]="createTaskForm">
-            <span class="group-head">{{selectHeader}} Details</span><br>
+            <span class="group-head" *ngIf="(taskMasterData && taskMasterData.title && taskMasterData.title.isvisible)|| (taskMasterData && taskMasterData.description && taskMasterData.description.isvisible)||(taskMasterData && taskMasterData.category && taskMasterData.category.isvisible)||(taskMasterData && taskMasterData.type && taskMasterData.type.isvisible)||(taskMasterData && taskMasterData.location && taskMasterData.location.isvisible)">{{selectHeader}} Details</span><br>
             <div class="bggrey my-2">
                 <div *ngIf="taskMasterData && taskMasterData.title && taskMasterData.title.isvisible" >
                     <div class="taskTitle">
@@ -104,7 +104,7 @@
             </div>
 
 
-            <span class="group-head">Select Activity Assignee and Manager</span><br>
+            <span class="group-head" *ngIf="(taskMasterData && taskMasterData.assignee && taskMasterData.assignee.isvisible)|| (taskMasterData && taskMasterData.manager && taskMasterData.manager.isvisible)">Select Activity Assignee and Manager</span><br>
             <div class="bggrey my-2">
                 <div *ngIf="taskMasterData && taskMasterData.assignee && taskMasterData.assignee.isvisible">
                     <div class="taskTitle">
@@ -140,7 +140,7 @@
             </div>
 
             
-            <span class="group-head">Activity Date and Other Info</span><br>
+            <span class="group-head" *ngIf="(taskMasterData && taskMasterData.dueDate && taskMasterData.dueDate.isvisible)|| (taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.isvisible)||(taskMasterData && taskMasterData.priority && taskMasterData.priority.isvisible)">Activity Date and Other Info</span><br>
             <div class="bggrey my-2">
                 <div style="display: flex;gap: 5px;flex-wrap: wrap;" >
                     <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding" *ngIf="taskMasterData && taskMasterData.dueDate && taskMasterData.dueDate.isvisible">
@@ -204,22 +204,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding" *ngIf="updateBTimefield">
-                <div class="taskTitle">
-                    <div>Est Duration</div>
-                    <div class="astericColor">*</div>
-                    </div>
-                    <div class="fieldPadding"  >
-                        <div class="form-control widthWebKit" style="display: flex !important;justify-content: space-between;align-items: center;" *ngIf=" updateValue.estDuration.hours !=0">
-                        <div>{{updateValue.estDuration.days}}(Days),{{this.updateValue.estDuration.hours}}(Hours)</div>
-                        </div>
-                        <div class="form-control widthWebKit" style="display: flex !important;justify-content: space-between;align-items: center;" *ngIf=" updateValue.estDuration.hours ===0">
-                        <div>{{updateValue.estDuration.days}}(Days)</div>
-                        </div>
-                    </div>
-    
-                </div> -->
-                
                 <div *ngIf="taskMasterData && taskMasterData.priority && taskMasterData.priority.isvisible"> 
                     <div class="taskTitle">
                         <div>Priority</div>
@@ -241,7 +225,7 @@
 
             
             
-            <div class="bggrey my-2">
+            <div class="bggrey my-2" *ngIf="(taskMasterData && taskMasterData.status && taskMasterData.status.isvisible)|| (taskMasterData && taskMasterData.targetResult && taskMasterData.targetResult.isvisible)||(taskMasterData && taskMasterData.targetPotential && taskMasterData.targetPotential.isvisible)">
                 <div style="display: flex;gap: 5px" >
                     <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding" *ngIf="taskMasterData && taskMasterData.status && taskMasterData.status.isvisible"> 
                         <div class="taskTitle">
