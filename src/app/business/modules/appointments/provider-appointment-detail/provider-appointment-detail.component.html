@@ -38,8 +38,8 @@
               <div *ngIf="waitlist_data.token">
                 <span class="text-dark">Token No : {{waitlist_data.token}}</span>
               </div>
-              <div *ngIf="spName">
-                <span class="text-dark">Assigned to {{spName}}</span>
+              <div *ngIf="waitlist_data.provider">
+                <span class="text-dark">Assigned to {{waitlist_data.provider.businessName ? waitlist_data.provider.businessName : waitlist_data.provider.firstName + ' ' + waitlist_data.provider.lastName}}</span>
               </div>
             </div>
             <div class="d-flex justify-content-between">

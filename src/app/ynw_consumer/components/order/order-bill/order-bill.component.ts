@@ -183,7 +183,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                 }
                 this.getWaitlist();
                 if (this.source === 'history') {
-                    this.checkIn_type = 'checkin_historybill';
+                    this.checkIn_type = 'order';
                 }
                 if (params.type) {
                     this.checkIn_type = params.type;
@@ -619,42 +619,105 @@ export class OrderBillComponent implements OnInit, OnDestroy {
         this.loadingPaytm = false;
         this.cdRef.detectChanges();
     }
+    // finishTransactions(status) {
+    //     if (status) {
+    //         this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
+    //             let queryParams = {
+    //                 uuid: this.uuid,
+    //                 //  accountId: this.accountId,
+    //                 type: 'order',
+    //                 'paidStatus': true
+    //             };
+    //             if (this.customId) {
+    //             queryParams['customId'] = this.customId;
+    //             queryParams['accountId'] = this.accountId;
+    //             }
+    //             let navigationExtras: NavigationExtras = {
+    //             queryParams: queryParams
+    //             };
+    //             if (this.checkIn_type === 'order') {
+    //                 this.ngZone.run(() => this.router.navigate(['consumer', 'history'], { queryParams: { 'is_orderShow': 'false' } }));
+    //             } else {
+    //                 this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+    //             }
+    //             // this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+    //     } else {
+    //         this.isClickedOnce = false;
+    //         this.loadingPaytm = false;
+    //         this.cdRef.detectChanges();
+    //         this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+           
+    //         if (this.checkIn_type === 'order') {
+    //             const navigationExtras: NavigationExtras = {
+    //                 queryParams: {
+    //                     uuid: this.uuid,
+    //                     accountId: this.accountId,
+    //                     source: 'history'
+    //                 }
+    //             };
+    //             this.ngZone.run(() => this.router.navigate(['consumer', 'order', 'bill'], navigationExtras));
+    //         }
+    //         else{
+    //         let queryParams = {
+    //             uuid: this.uuid,
+    //             accountId: this.accountId,
+    //             type: 'order',
+    //             'paidStatus': false
+    //         };
+    //         if (this.customId) {
+    //         queryParams['customId'] = this.customId;
+    //         queryParams['accountId'] = this.accountId;
+    //         }
+    //         let navigationExtras: NavigationExtras = {
+    //         queryParams: queryParams
+    //         };
+    //         this.ngZone.run(() => this.router.navigate(['consumer', 'order', 'order-bill'], navigationExtras));
+    //     }
+    // }
+    // }
+
+
     finishTransaction(status) {
         if (status) {
             this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
-                let queryParams = {
+            const navigationExtras: NavigationExtras = {
+                queryParams: {
                     uuid: this.uuid,
                     //  accountId: this.accountId,
                     type: 'order',
                     'paidStatus': true
-                };
-                if (this.customId) {
-                queryParams['customId'] = this.customId;
-                queryParams['accountId'] = this.accountId;
                 }
-                let navigationExtras: NavigationExtras = {
-                queryParams: queryParams
-                };
+            };
+            if (this.checkIn_type === 'order') {
+                this.ngZone.run(() => this.router.navigate(['consumer', 'history'], { queryParams: { 'is_orderShow': 'true' } }));
+            } else {
                 this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
+            }
         } else {
             this.isClickedOnce = false;
             this.loadingPaytm = false;
             this.cdRef.detectChanges();
             this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-            let queryParams = {
-                uuid: this.uuid,
-                accountId: this.accountId,
-                type: 'order',
-                'paidStatus': false
-            };
-            if (this.customId) {
-            queryParams['customId'] = this.customId;
-            queryParams['accountId'] = this.accountId;
+            if (this.checkIn_type === 'order') {
+                const navigationExtras: NavigationExtras = {
+                    queryParams: {
+                        uuid: this.uuid,
+                        accountId: this.accountId,
+                        source: 'history'
+                    }
+                };
+                this.ngZone.run(() => this.router.navigate(['consumer', 'order', 'bill'], navigationExtras));
+            } else {
+                const navigationExtras: NavigationExtras = {
+                    queryParams: {
+                        uuid: this.uuid,
+                        accountId: this.accountId,
+                        type: 'order',
+                        'paidStatus': false
+                    }
+                };
+                this.ngZone.run(() => this.router.navigate(['consumer', 'order', 'bill'], navigationExtras));
             }
-            let navigationExtras: NavigationExtras = {
-            queryParams: queryParams
-            };
-            this.ngZone.run(() => this.router.navigate(['consumer', 'order', 'order-bill'], navigationExtras));
         }
     }
     transactionCompleted(response, payload, accountId) {

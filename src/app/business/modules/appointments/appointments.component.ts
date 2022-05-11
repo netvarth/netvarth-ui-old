@@ -1375,6 +1375,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             .subscribe(
               (data: any) => {
                 _this.appt_list = data;
+                console.log("Todays Appt :",_this.appt_list)
                 _this.appt_list.map(function (appt) {
                   if (appt.service.virtualCallingModes && (appt.service.virtualCallingModes[0].callingMode === 'Phone' || appt.service.virtualCallingModes[0].callingMode === 'WhatsApp') && appt.virtualService[appt.service.virtualCallingModes[0].callingMode]) {
                     appt.whatsApp_PhNumber = _this.teleService.getTeleNumber(appt.virtualService[appt.service.virtualCallingModes[0].callingMode]);
@@ -1801,7 +1802,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   getSingleTime(slot) {
-    console.log("Appt Time :", slot)
+    // console.log("Appt Time :", slot)
     const slots = slot.split('-');
     return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
   }
@@ -3012,6 +3013,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Promise<void>(function (resolve) {
       _this.provider_services.getTeamGroup().subscribe(data => {
         _this.teams = data;
+        console.log("Teams :",  _this.teams)
       },
         () => {
           resolve();
@@ -3019,8 +3021,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getUsersList(teamid) {
+    // const userObject = this.teams.filter(user => parseInt(user.id) === teamid);
+    // return userObject[0].name;
     const userObject = this.teams.filter(user => parseInt(user.id) === teamid);
-    return userObject[0].name;
+    //console.log("Assigned Team :", userObject)
+    if(userObject){
+    if (userObject[0] && userObject[0].name) {
+      return userObject[0].name;
+    }
+  }
   }
   gotoUnassign() {
     this.unassignview = true;

@@ -93,7 +93,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     private lStorageService: LocalStorageService,
     private localStorageService: LocalStorageService
   ) {
-    console.log(this.data);
+    console.log("Add Info Data : ",this.data);
     this.isBusinessOwner = this.localStorageService.getitemfromLocalStorage('isBusinessOwner');
     console.log(this.isBusinessOwner);
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');

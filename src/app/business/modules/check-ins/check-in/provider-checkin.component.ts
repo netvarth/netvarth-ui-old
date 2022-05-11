@@ -1512,6 +1512,7 @@ export class ProviderCheckinComponent implements OnInit {
                 'waitlistingFor': JSON.parse(JSON.stringify(this.waitlist_for)),
                 'waitlistMode': this.checkinType
             };
+            
             if (this.follow_up_Details.provider && this.follow_up_Details.provider.id) {
                 post_Data['provider'] = { 'id': this.follow_up_Details.provider.id };
             }
