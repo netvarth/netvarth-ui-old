@@ -74,7 +74,7 @@ export class CrmSelectMemberComponent implements OnInit {
   public lastNameValue:any;
   public phoneNoValue:any;
   public emailValue:any;
-  
+  public selectTemplateLength:any;
 
 
 
@@ -216,6 +216,8 @@ export class CrmSelectMemberComponent implements OnInit {
     if(this.data.requestType==='taskMasterList'){
     this.taskMasterListData= this.data.taskMasterFullList[0];
       console.log('TaskMasterList.............',this.taskMasterListData)
+      // this.selectTemplateLength= this.taskMasterListData.templateName.length;
+      // console.log('selectTemplateLength',this.selectTemplateLength)
     }
     if(this.data.requestType==='leadMasterList'){
       this.leadMasterListData= this.data.leadMasterFullList[0];
@@ -518,14 +520,14 @@ getTaskmaster(){
         console.log('TaskMasterList :',response);
       })
     }
-    handleTaskMasterSelect(leadMaster,selected:string){
-      console.log('leadMaster',leadMaster);
-      // console.log('this.assignTaskMaster',this.assignTaskMaster)
-      this.errorMsg=false;
-      this.assignMemberErrorMsg=''
-    }
-    handleleadMasterSelect(taskMaster,selected:string){
+    handleTaskMasterSelect(taskMaster,selected:string){
       console.log('taskMaster',taskMaster);
+      // console.log('this.assignTaskMaster',this.assignTaskMaster)
+      // this.errorMsg=false;
+      // this.assignMemberErrorMsg=''
+    }
+    handleleadMasterSelect(leadMaster,selected:string){
+      console.log('leadMaster',leadMaster);
       // console.log('this.assignLeadMaster',this.assignLeadMaster)
       this.errorMsg=false;
       this.assignMemberErrorMsg=''
@@ -534,20 +536,22 @@ getTaskmaster(){
       console.log('taskMasterValue',taskMasterValue)
       if(taskMasterValue !==undefined){
         // console.log('response',res)
-        this.errorMsg=false;
+        // this.errorMsg=false;
         // console.log('assignMemberDetails',this.assignMemberDetails)
         this.dialogRef.close(taskMasterValue)
+        // this.router.navigate(['provider', 'task', 'create-task'])
       }
       else if(this.newTask==='CreatE'){
         // this.router.navigate(['provider', 'task', 'create-task'])
         this.dialogRef.close('CreatE')
+        // this.router.navigate(['provider', 'task', 'create-task'])
         
       }
-      else{
-          this.errorMsg=true;
-          this.assignMemberErrorMsg='Please select activity template'
+      // else{
+      //     this.errorMsg=true;
+      //     this.assignMemberErrorMsg='Please select activity template'
         
-      }
+      // }
     }
     saveLeadMaster(leadMasterValue){
       console.log('leadMasterValue',leadMasterValue)
@@ -574,10 +578,10 @@ getTaskmaster(){
       this.assignMemberErrorMsg=''
       this.crmService.taskActivityName = createText;
       this.newTask= createText;
-      // if(createText !==undefined){
-        // this.dialogRef.close(createText)
-        // this.router.navigate(['provider', 'task', 'create-task'])
-      // }
+      if(createText !==undefined){
+        this.dialogRef.close(createText)
+        this.router.navigate(['provider', 'task', 'create-task'])
+      }
       // this.dialogRef.close(createText)
       
     }

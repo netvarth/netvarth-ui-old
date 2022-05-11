@@ -235,6 +235,7 @@ export class CreateTaskComponent implements OnInit {
         this.taskDueMin= 0;
         this.estTime={ "days" :0, "hours" :0, "minutes" : 0 };
         console.log('this.estTime',this.estTime)
+        this.createTaskForm.controls.taskDate.setValue(this.taskDueDate);
     }
     else if(this.crmService.taskActivityName =='Create'){
       console.log('this.crmService.taskActivityName',this.crmService.taskActivityName)

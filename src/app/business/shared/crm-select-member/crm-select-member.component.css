@@ -319,3 +319,36 @@ padding: 3px;
 ::ng-deep .form-control:focus {
   border: 3px solid #96d3e2 !important;
 }
+.singleTempalte{
+  padding: 8px;
+  background: #FFFFFF;
+  box-shadow: 1.05788px 0.391416px 5.28941px rgb(96 95 95 / 25%);
+  border-radius: 5.46305px;
+  width: 11rem;
+  cursor: pointer;
+  height: 5rem;
+}
+.templateList{
+  display: flex;
+  /* justify-content: space-between;
+  align-items: center; */
+  flex-wrap: wrap;
+  grid-gap: 10px;
+  gap: 10px;
+  margin-top: 10px;
+}
+@media(max-width: 768px){
+  .templateList{
+    justify-content: space-between
+  /* align-items: center; */
+  }
+  .singleTempalte{
+    width: 10rem;
+    height: 6rem;
+  }
+}
+.templateName{
+  font-size: 12px;
+    font-weight: 500;
+    color: #1e4079;
+}

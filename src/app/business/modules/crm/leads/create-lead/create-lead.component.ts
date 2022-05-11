@@ -178,7 +178,7 @@ export class CreateLeadComponent implements OnInit{
           this.placeholderTruncate(this.customer_label)
         }
         else{
-          this.searchby = 'Enter ' + this.customer_label + ' id/name/email/phone number';
+          this.searchby = 'Search by ' + this.customer_label + ' id/name/email/phone number';
         }
         
 
