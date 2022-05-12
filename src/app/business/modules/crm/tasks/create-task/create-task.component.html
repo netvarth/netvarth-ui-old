@@ -35,7 +35,7 @@
                     <div  class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.description && taskMasterData.description.iseditable)}">
                         <textarea rowa="10" class="form-control" formControlName="taskDescription"
                             #taskDescription (change)="handleTaskDescription(taskDescription.value)"(keyup)="autoGrowTextZone($event)"
-                            maxlength="1000" placeholder="Enter activity description"  [readonly]="!(taskMasterData && taskMasterData.description && taskMasterData.description.iseditable)">
+                            maxlength="1000" placeholder="{{activityDescription}}"  [readonly]="!(taskMasterData && taskMasterData.description && taskMasterData.description.iseditable)">
                         </textarea>
                         <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                         </app-field-error-display>  
@@ -322,7 +322,7 @@
                     <div  class="fieldPadding">
                         <textarea rowa="10" class="form-control" formControlName="taskDescription"
                             #taskDescription (change)="handleTaskDescription(taskDescription.value)"(keyup)="autoGrowTextZone($event)"
-                            maxlength="1000" placeholder="Enter activity description">
+                            maxlength="1000" placeholder="{{activityDescription}}">
                         </textarea>
                         <app-field-error-display [displayError]="true" style="color: #f24949 !important;font-size: 12px;" *ngIf="taskError" errorMsg="{{taskError}}">
                         </app-field-error-display>  

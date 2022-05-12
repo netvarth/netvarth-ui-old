@@ -96,6 +96,7 @@ export class CreateTaskComponent implements OnInit {
   public bErrormsgType:boolean=false;
   public errorMsgAnyType:string=''
   public activityTitle:any;
+  public activityDescription:any;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -223,6 +224,7 @@ export class CreateTaskComponent implements OnInit {
           console.log(' this.taskDueDate', this.taskDueDate);
           this.selectedDate = this.taskDueDate;
           this.activityTitle='Enter subactivity title'
+          this.activityDescription='Enter subactivity description'
           this.createTaskForm.controls.taskDays.value= 0,
         this.createTaskForm.controls.taskHrs.value= 0
         this.createTaskForm.controls.taskMin.value= 0
@@ -256,6 +258,7 @@ export class CreateTaskComponent implements OnInit {
         console.log(' this.taskDueDate', this.taskDueDate);
         this.selectedDate = this.taskDueDate;
         this.activityTitle='Enter activity title';
+        this.activityDescription='Enter activity description'
         this.createTaskForm.controls.taskDays.value= 0,
         this.createTaskForm.controls.taskHrs.value= 0
         this.createTaskForm.controls.taskMin.value= 0
@@ -285,7 +288,8 @@ export class CreateTaskComponent implements OnInit {
       }) 
       this.createBTimeField=true;
       this.updateBTimefield=false;
-      this.activityTitle='Enter activity title'
+      this.activityTitle='Enter activity title';
+      this.activityDescription='Enter activity description'
         this.selectHeader='Create Activity';
         this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd')
         console.log(' this.taskDueDate', this.taskDueDate);
@@ -333,7 +337,8 @@ export class CreateTaskComponent implements OnInit {
         this.createBTimeField=true;
         this.updateBTimefield=false;
         this.selectHeader='Create Activity';
-        this.activityTitle='Enter activity title'
+        this.activityTitle='Enter activity title';
+        this.activityDescription='Enter activity description'
         this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd')
         console.log(' this.taskDueDate', this.taskDueDate);
         this.createTaskForm.controls.taskDate.setValue(this.taskDueDate);

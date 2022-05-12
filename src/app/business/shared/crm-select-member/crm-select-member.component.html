@@ -645,7 +645,7 @@
         <!-- [ngStyle]="{'background-color':status.id === data.taskDetails.status.id ? '#CACACA' : '#FFFFFF' }" -->
         <div *ngFor="let taskMaster of taskMasterListData;let index=i" class="singleTempalte"
               (click)="saveTaskMaster(taskMaster)">
-            <div style="display: flex;justify-content: space-between;align-items: center;gap: 5px;" >
+            <div style="display: flex;justify-content: space-between;align-items: center;" >
                 <div >
                     <div class="templateName">{{taskMaster.templateName}}</div>
                     <div class="templateName">{{taskMaster.description.value}}</div>
@@ -728,7 +728,7 @@
     <div class="templateList">
         <div *ngFor="let leadMaster of leadMasterListData;let index=i" class="singleTempalte"
               (click)="saveLeadMaster(leadMaster)">
-            <div style="display: flex;justify-content: space-between;align-items: center;gap: 5px;" >
+            <div style="display: flex;justify-content: space-between;align-items: center;" >
                 <div >
                     <div class="templateName">{{leadMaster.templateName}}</div>
                     <div class="templateName">{{leadMaster.description.value}}</div>

@@ -719,7 +719,7 @@ export class TasksComponent implements OnInit {
       console.log('........')
       const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
         width:'100%',
-        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+        panelClass: ['commonpopupmainclassTemplate'],
         disableClose: true,
         data:{
           requestType:'taskMasterList',
