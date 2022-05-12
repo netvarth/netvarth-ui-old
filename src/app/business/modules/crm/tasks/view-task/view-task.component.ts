@@ -6,6 +6,7 @@ import { Location } from "@angular/common";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CrmService } from "../../crm.service";
 import { MatDialog } from "@angular/material/dialog";
+import { SnackbarService } from "../../../../../shared/services/snackbar.service";
 import { SelectAttachmentComponent } from "./select-attachment/select-attachment.component";
 import { CrmSelectMemberComponent } from "../../../../shared/crm-select-member/crm-select-member.component";
 import { SharedServices } from "../../../../../shared/services/shared-services";
@@ -89,7 +90,8 @@ export class ViewTaskComponent implements OnInit {
     public dialog: MatDialog,
     private _Activatedroute: ActivatedRoute,
     private router: Router,
-    public shared_services: SharedServices
+    public shared_services: SharedServices,
+    private snackbarService: SnackbarService,
   ) {}
 
   ngOnInit(): void {
@@ -132,6 +134,7 @@ export class ViewTaskComponent implements OnInit {
       this.api_loading = true;
       setTimeout(() => {
         this.ngOnInit();
+        this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { 'panelClass': 'snackbarnormal' });
       }, 5000);
     });
 
