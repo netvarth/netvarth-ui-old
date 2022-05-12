@@ -7,7 +7,7 @@ import { FormMessageDisplayService } from '../../../../../shared/modules/form-me
 // import { LocalStorageService } from '../../../../../../../src/app/shared/services/local-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CrmService } from '../../crm.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder,Validators } from '@angular/forms';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import  {CrmSelectMemberComponent} from '../../../../shared/crm-select-member/crm-select-member.component'
@@ -117,35 +117,51 @@ export class CreateTaskComponent implements OnInit {
         console.log("User is :", user);
         this.selectMember= user.firstName + user.lastName;
         this.selectTaskManger=user.firstName + user.lastName;
-        console.log(' this.selectMember', this.selectMember)
-        console.log(' this.selectMember', this.selectTaskManger)
-        // (res.firstName + res.lastName)
+        // console.log(' this.selectMember', this.selectMember)
+        // console.log(' this.selectMember', this.selectTaskManger)
         this.assigneeId=user.id;
         this.selectTaskMangerId=user.id;
         this.locationId= user.bussLocs[0]
         if(user.userType === 1){
           this.userType='PROVIDER'
         }
-
-
-
-    this._Activatedroute.paramMap.subscribe(params => { 
+      this._Activatedroute.paramMap.subscribe(params => { 
       this.taskUid = params.get('taskid');
       if(this.taskUid)
       {
         this.crmService.taskActivityName = "subTaskCreate";
       }
     });
-    // this._Activatedroute.paramMap.subscribe(params => { 
+     // this._Activatedroute.paramMap.subscribe(params => { 
     //   this.taskUid = params.get('taskid');
     //   if(this.taskUid)
     //   {
     //     this.crmService.taskActivityName = "subTaskEdit";
     //   }
     // });
-
+    
     this.api_loading=false;
-    this.createTaskForm=this.createTaskFB.group({
+    // this.createTaskForm=this.createTaskFB.group({
+    //   taskTitle:[null],
+    //   taskDescription:[null],
+    //   userTaskCategory:[null],
+    //   userTaskType:[null],
+    //   taskLocation:[null],
+    //   areaName:[null],
+    //   taskStatus:[null],
+    //   taskDate:[null],
+    //   taskDays:[0],
+    //   taskHrs:[0],
+    //   taskMin:[0],
+    //   selectMember:[null],
+    //   selectTaskManger:[null],
+    //   userTaskPriority:[null],
+    //   targetResult:[null],
+    //   targetPotential:[null],
+    // }) 
+    if(this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' && this.crmService.taskActivityName!='CreteTaskMaster'){
+      console.log('this.crmService.taskActivityName',this.crmService.taskActivityName)
+      this.createTaskForm=this.createTaskFB.group({
       taskTitle:[null],
       taskDescription:[null],
       userTaskCategory:[null],
@@ -154,17 +170,15 @@ export class CreateTaskComponent implements OnInit {
       areaName:[null],
       taskStatus:[null],
       taskDate:[null],
-      taskDays:[0],
-      taskHrs:[0],
-      taskMin:[0],
+      taskDays:[null],
+      taskHrs:[null],
+      taskMin:[null],
       selectMember:[null],
       selectTaskManger:[null],
       userTaskPriority:[null],
       targetResult:[null],
       targetPotential:[null],
     }) 
-    if(this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' && this.crmService.taskActivityName!='CreteTaskMaster'){
-      // console.log('this.crmService.taskActivityName',this.crmService.taskActivityName)
       this.selectHeader='Update Activity'
       this.createBTimeField=false;
       this.updateBTimefield=true;
@@ -184,30 +198,42 @@ export class CreateTaskComponent implements OnInit {
       })
       this.locationName =this.updateValue.location.name;
       this.createTaskForm.controls.areaName.value =this.updateValue.locationArea;
-      this.updteLocationId= this.updateValue.location.id
-      this.taskDueDays=this.updateValue.taskDays;
-      this.taskDueHrs=this.updateValue.taskHrs;
-      this.taskDueMin=this.updateValue.taskMin;
+      this.updteLocationId= this.updateValue.location.id,
+      this.createTaskForm.controls.taskDays.value= this.updateValue.estDuration.days,
+      this.createTaskForm.controls.taskHrs.value= this.updateValue.estDuration.hours,
+      this.createTaskForm.controls.taskMin.value= this.updateValue.estDuration.minutes,
       this.selectMember = this.updateValue.assignee.name;
       this.updateMemberId=this.updateValue.assignee.id;
       this.selectTaskManger= this.updateValue.manager.name;
       this.updateManagerId= this.updateValue.manager.id
       this.updateUserType=this.updateValue.userTypeEnum;
       this.createTaskForm.controls.taskDate.value = this.updateValue.dueDate
-      // this.taskDueTime=this.updateValue.estDuration
-      this.taskDueDays= this.updateValue.estDuration.days;
-        this.taskDueHrs= this.updateValue.estDuration.hours;
-        this.taskDueMin=this.updateValue.estDuration.minutes;
-        this.estTime={ "days" :this.updateValue.estDuration.days, "hours" :this.updateValue.estDuration.hours, "minutes" : this.updateValue.estDuration.minutes };
-        console.log('this.estTime',this.estTime)
-      //  this.estTime={ "days" :this.updateValue.estDuration.days, "hours" :this.updateValue.estDuration.hours, "minutes" : this.updateValue.estDuration.minutes };
+      this.estTime={ "days" :this.updateValue.estDuration.days, "hours" :this.updateValue.estDuration.hours, "minutes" : this.updateValue.estDuration.minutes };
+      console.log('this.estTime',this.estTime)
       }
       else{
         this.router.navigate(['provider', 'task']);
       }
     }
     else if(this.crmService.taskActivityName === "subTaskCreate")
-      {
+      {this.createTaskForm=this.createTaskFB.group({
+        taskTitle:[null,[Validators.required]],
+        taskDescription:[null],
+        userTaskCategory:[null,[Validators.required]],
+        userTaskType:[null,[Validators.required]],
+        taskLocation:[null],
+        areaName:[null],
+        taskStatus:[null],
+        taskDate:[null],
+        taskDays:[null],
+        taskHrs:[null],
+        taskMin:[null],
+        selectMember:[null],
+        selectTaskManger:[null],
+        userTaskPriority:[null],
+        targetResult:[null],
+        targetPotential:[null],
+      }) 
           this.createBTimeField=true;
           this.updateBTimefield=false;
           this.selectHeader='Create Subactivity';
@@ -215,14 +241,33 @@ export class CreateTaskComponent implements OnInit {
           console.log(' this.taskDueDate', this.taskDueDate);
           this.selectedDate = this.taskDueDate;
           this.activityTitle='Enter subactivity title'
-          this.taskDueDays= 0;
-          this.taskDueHrs= 0;
-          this.taskDueMin= 0;
-          this.estTime={ "days" :0, "hours" :0, "minutes" : 0 };
-          console.log('this.estTime',this.estTime)
+          this.createTaskForm.controls.taskDays.value= 0,
+        this.createTaskForm.controls.taskHrs.value= 0
+        this.createTaskForm.controls.taskMin.value= 0
+        this.estTime={ "days" :this.createTaskForm.controls.taskDays.value, "hours" :this.createTaskForm.controls.taskHrs.value, "minutes" : this.createTaskForm.controls.taskMin.value };
+        console.log('this.estTime',this.estTime);
+        this.createTaskForm.controls.taskDate.setValue(this.taskDueDate);
 
           }
       else if(this.crmService.taskActivityName==='CreatE'){
+        this.createTaskForm=this.createTaskFB.group({
+          taskTitle:[null,[Validators.required]],
+          taskDescription:[null],
+          userTaskCategory:[null,[Validators.required]],
+          userTaskType:[null,[Validators.required]],
+          taskLocation:[null],
+          areaName:[null],
+          taskStatus:[null],
+          taskDate:[null],
+          taskDays:[null],
+          taskHrs:[null],
+          taskMin:[null],
+          selectMember:[null],
+          selectTaskManger:[null],
+          userTaskPriority:[null],
+          targetResult:[null],
+          targetPotential:[null],
+        }) 
         this.createBTimeField=true;
         this.updateBTimefield=false;
         this.selectHeader='Create Activity';
@@ -230,15 +275,36 @@ export class CreateTaskComponent implements OnInit {
         console.log(' this.taskDueDate', this.taskDueDate);
         this.selectedDate = this.taskDueDate;
         this.activityTitle='Enter activity title';
-        this.taskDueDays= 0;
-        this.taskDueHrs= 0;
-        this.taskDueMin= 0;
-        this.estTime={ "days" :0, "hours" :0, "minutes" : 0 };
+        // this.taskDueDays= 0;
+        // this.taskDueHrs= 0;
+        // this.taskDueMin= 0;
+        this.createTaskForm.controls.taskDays.value= 0,
+        this.createTaskForm.controls.taskHrs.value= 0
+        this.createTaskForm.controls.taskMin.value= 0
+        this.estTime={ "days" :this.createTaskForm.controls.taskDays.value, "hours" :this.createTaskForm.controls.taskHrs.value, "minutes" : this.createTaskForm.controls.taskMin.value };
         console.log('this.estTime',this.estTime)
         this.createTaskForm.controls.taskDate.setValue(this.taskDueDate);
     }
     else if(this.crmService.taskActivityName =='Create'){
       console.log('this.crmService.taskActivityName',this.crmService.taskActivityName)
+      this.createTaskForm=this.createTaskFB.group({
+        taskTitle:[null],
+        taskDescription:[null],
+        userTaskCategory:[null],
+        userTaskType:[null],
+        taskLocation:[null],
+        areaName:[null],
+        taskStatus:[null],
+        taskDate:[null],
+        taskDays:[null],
+        taskHrs:[null],
+        taskMin:[null],
+        selectMember:[null],
+        selectTaskManger:[null],
+        userTaskPriority:[null],
+        targetResult:[null],
+        targetPotential:[null],
+      }) 
       this.createBTimeField=true;
       this.updateBTimefield=false;
       this.activityTitle='Enter activity title'
@@ -258,13 +324,34 @@ export class CreateTaskComponent implements OnInit {
         this.createTaskForm.controls.userTaskCategory.value= taskMaster.category.value.id;
         this.createTaskForm.controls.userTaskType.value= taskMaster.type.value.id;
         this.createTaskForm.controls.userTaskPriority.value= taskMaster.priority.id;
-        this.taskDueDays= taskMaster.estDuration.value.days;
-        this.taskDueHrs= taskMaster.estDuration.value.hours;
-        this.taskDueMin= taskMaster.estDuration.value.minutes;
+        // this.taskDueDays= taskMaster.estDuration.value.days;
+        // this.taskDueHrs= taskMaster.estDuration.value.hours;
+        // this.taskDueMin= taskMaster.estDuration.value.minutes;
+        this.createTaskForm.controls.taskDays.value=  taskMaster.estDuration.value.days,
+      this.createTaskForm.controls.taskHrs.value=  taskMaster.estDuration.value.hours,
+      this.createTaskForm.controls.taskMin.value=  taskMaster.estDuration.value.minutes,
         this.estTime={ "days" :taskMaster.estDuration.value.days, "hours" :taskMaster.estDuration.value.hours, "minutes" : taskMaster.estDuration.value.minutes };
 
     }
     else if(this.crmService.taskActivityName==='CreteTaskMaster'){
+      this.createTaskForm=this.createTaskFB.group({
+      taskTitle:[null],
+      taskDescription:[null],
+      userTaskCategory:[null],
+      userTaskType:[null],
+      taskLocation:[null],
+      areaName:[null],
+      taskStatus:[null],
+      taskDate:[null],
+      taskDays:[null],
+      taskHrs:[null],
+      taskMin:[null],
+      selectMember:[null],
+      selectTaskManger:[null],
+      userTaskPriority:[null],
+      targetResult:[null],
+      targetPotential:[null],
+    }) 
         this.createBTimeField=true;
         this.updateBTimefield=false;
         this.selectHeader='Create Activity';
@@ -655,23 +742,11 @@ export class CreateTaskComponent implements OnInit {
     
   }
   handleTaskEstDuration(estDuration:any){
-    // const time= this.datePipe.transform(new Date().getTime(),'HH');
-    // const timeMInute= this.datePipe.transform(new Date().getTime(),'mm');
-    // // console.log('time',time)
-    // this.hour= time;
-    // this.minute=timeMInute
-    // // this.taskDueTime=this.datePipe.transform(estDuration,'d:h:mm')
-    
-    // console.log('estDurationb',estDuration)
-    // if(estDuration<='24:00'){
-    //   // console.log('...............gggg')
-    //   this.transform(estDuration)
-    // }
     console.log("entered")
     this.estDurationWithDay=this.taskDueDays;
-    const estDurationDay=this.estDurationWithDay
-    const estDurationHour=this.taskDueHrs
-    const estDurationMinute= this.taskDueMin
+    const estDurationDay=this.createTaskForm.controls.taskDays.value
+    const estDurationHour=this.createTaskForm.controls.taskHrs.value
+    const estDurationMinute= this.createTaskForm.controls.taskMin.value
     this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinute };
     console.log('estDurationDay',this.estTime)
 

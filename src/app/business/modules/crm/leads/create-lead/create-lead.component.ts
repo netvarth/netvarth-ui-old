@@ -264,11 +264,8 @@ export class CreateLeadComponent implements OnInit{
     else if(this.crmService.leadActivityName==='Create'){
       this.createBTimeField=true;
       this.updateBTimefield=false;
-      // this.selectMember='Select Member';
-      // this.selectLeadManger='Select Lead Manger'
         this.selectHeader='Add Lead';
         this.leadDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd') 
-        // this.datePipe.transform(this.leadDueDate,'yyyy-MM-dd');
         console.log(' this.leadDueDate', this.leadDueDate);
         this.selectedDate = this.leadDueDate;
         this.leadDueTime= "0000" ;

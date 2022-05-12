@@ -339,7 +339,7 @@ padding: 3px;
 }
 @media(max-width: 768px){
   .templateList{
-    justify-content: space-between
+    justify-content: space-evenly;
   /* align-items: center; */
   }
   .singleTempalte{

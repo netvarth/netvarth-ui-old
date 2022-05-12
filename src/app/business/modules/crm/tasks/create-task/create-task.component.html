@@ -193,13 +193,12 @@
                         </div>
                         <div class="fieldPadding" *ngIf="updateBTimefield" >
                             <div class="form-control" style="display: flex !important;justify-content: space-between;align-items: center;">
-                                <!-- <div>{{updateValue.estDuration.days}}days,{{this.updateValue.estDuration.hours}}hours,{{this.updateValue.estDuration.minutes}}minutes</div> -->
                                 <div style="display: flex;gap: 5px;align-items: center;">
                                     <div>{{updateValue.estDuration.days}}days,</div>
                                     <div>{{this.updateValue.estDuration.hours}}hours,</div>
                                     <div>{{this.updateValue.estDuration.minutes}}minutes</div>
                                 </div>
-                                <div (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
+                                <div style="cursor: pointer;" (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
                             </div>
                         </div>
                     </div>
@@ -264,7 +263,7 @@
                             <div>Business Potential</div>
                         </div>
                         <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.targetPotential && taskMasterData.targetPotential.iseditable)}">
-                            <input (keyup)="resetErrors()" type="text" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)"   [readonly]="!(taskMasterData && taskMasterData.targetPotential && taskMasterData.targetPotential.iseditable)"
+                            <input  min="0" (keyup)="resetErrors()" type="text" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)"   [readonly]="!(taskMasterData && taskMasterData.targetPotential && taskMasterData.targetPotential.iseditable)"
                                 placeholder="Enter(&#8377;)"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
                         </div>
                     </div>               
@@ -489,7 +488,7 @@
                                     <div>{{this.updateValue.estDuration.hours}}hours,</div>
                                     <div>{{this.updateValue.estDuration.minutes}}minutes</div>
                                 </div>
-                                <div (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
+                                <div style="cursor: pointer;" (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
                             </div>
                         </div>
                     </div>
@@ -557,7 +556,7 @@
                 </div>
     
                 
-                <div style="display: flex;gap: 5px" >
+                <div style="display: flex;gap: 5px;flex-wrap: wrap !important;" >
                     <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding">
                         <div class="taskTitle">
                             <div>Target Potential</div>
@@ -573,7 +572,7 @@
                             <div>Business Potential</div>
                         </div>
                         <div class="fieldPadding" >
-                            <input (keyup)="resetErrors()" type="number" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)" 
+                            <input min="0" (keyup)="resetErrors()" type="number" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)" 
                                 placeholder="Enter(&#8377;)"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
                         </div>
                     </div>               
@@ -589,7 +588,10 @@
                             >Cancel
                         </button>
                         <button 
-                            class="btn btn-primary font-weight-bold confirmBtn" [class.spinner]="api_loading" 
+                        [ngClass]="{
+                            'btn btn-primary font-weight-bold cancelBtn': !createTaskForm.valid,
+                            'btn btn-primary font-weight-bold confirmBtn': createTaskForm.valid
+                        }"  [class.spinner]="api_loading" 
                             [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateTask()"
                                 >{{showCreateTaskButtonCaption()}}
                         </button>

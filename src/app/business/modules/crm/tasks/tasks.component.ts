@@ -321,11 +321,11 @@ export class TasksComponent implements OnInit {
   getAssignedTask(from_oninit=true){
     this.assignedTaskList=[]
     this.totalTaskList.forEach((element:any)=>{
-       console.log('element:.',element)
+      //  console.log('element:.',element)
       if(element.status.name ==='Assigned'){
         this.assignedTaskList.push(element);
       }
-      console.log('this.assignedTaskList',this.assignedTaskList)
+      // console.log('this.assignedTaskList',this.assignedTaskList)
     })
   }
   getCancelledTask(from_oninit = true){
@@ -341,11 +341,11 @@ export class TasksComponent implements OnInit {
   getSuspendedTask(from_oninit=true){
     this.suspendedTaskList=[]
     this.totalTaskList.forEach((element:any)=>{
-      console.log('element:.',element)
+      // console.log('element:.',element)
      if(element.status.name ==='Suspended'){
        this.suspendedTaskList.push(element);
      }
-     console.log('this.suspendedTaskList',this.suspendedTaskList)
+    //  console.log('this.suspendedTaskList',this.suspendedTaskList)
    })
   }
   getTotalTask(from_oninit = true) {
