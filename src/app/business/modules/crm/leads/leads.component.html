@@ -110,7 +110,7 @@
           Actions <img height="20px" src="/assets/images/crmImages/downarrow.png" />
         </button>
         <mat-menu #appMenu="matMenu">
-          <button mat-menu-item data-toggle="modal" data-target="#exampleModalCenter">
+          <button mat-menu-item data-toggle="modal" (click)="createLead('Create')" data-target="#exampleModalCenter">
             <span>
               <img height="20px" width="25px" src="/assets/images/crmImages/craeteActivity.png" />
             </span>
@@ -118,7 +118,7 @@
               Create Lead
             </span>
           </button>
-          <button mat-menu-item [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'crm'}">
+          <button mat-menu-item [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'lead'}">
             <span style="font-weight: 500;">
               <img height="20px" src="/assets/images/crmImages/generateReport.png" />
             </span>
