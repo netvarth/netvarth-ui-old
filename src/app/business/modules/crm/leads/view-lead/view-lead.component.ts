@@ -12,6 +12,7 @@ import { SharedServices } from '../../../../../shared/services/shared-services';
 import { CrmProgressbarComponent } from '../../../../../../../src/app/business/shared/crm-progressbar/crm-progressbar.component';
 import { SelectAttachmentComponent } from '../../tasks/view-task/select-attachment/select-attachment.component';
 import { ProviderServices } from '../../../../../../../src/app/business/services/provider-services.service';
+import { WordProcessor } from '../../../../../../../src/app/shared/services/word-processor.service';
 @Component({
   selector: 'app-view-lead',
   templateUrl: './view-lead.component.html',
@@ -20,6 +21,7 @@ import { ProviderServices } from '../../../../../../../src/app/business/services
 export class ViewLeadComponent implements OnInit {
 tooltipcls = '';
 select_cap = Messages.SELECT_CAP;
+public customer_label:any;
 search_cap = Messages.SEARCH_CAP;
 date_time_cap = Messages.DATE_TIME_CAP;
 date_time_auditcap = Messages.DATE_TIME_AUDIT_CAP;
@@ -95,7 +97,7 @@ constructor(
   private router: Router,
   public shared_services: SharedServices,
   private snackbarService: SnackbarService,
-
+  private wordProcessor: WordProcessor,
 ) {
 }
 
@@ -126,6 +128,8 @@ ngOnInit(): void {
         this.parentUid = qparams.parentUid;
     }
   });
+  
+this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
 }
 
 uploadFiles() {

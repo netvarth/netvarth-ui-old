@@ -747,25 +747,6 @@ export class CreateTaskComponent implements OnInit {
     min = (min+'').length == 1 ? `0${min}` : min;
     hour = hour > 24 ? hour - 24 : hour;
     hour = (hour+'').length == 1 ? `0${hour}` : hour;
-    // console.log('`${hour}:${min} ${part}`',`${hour}:${min} ${part}`);
-    // if(hour<24){
-      // const day:number=0;
-      // if(this.dayGapBtwDate==0){
-      //   // console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
-      //   this.selectedTime={ "days" : this.dayGapBtwDate, "hours" : 24-hour, "minutes" : 60-min };
-      // }
-      // else{
-      //   // console.log('this.hour',this.hour)
-      //   // console.log('hour',hour);
-      //   if(this.hour >hour){
-      //     this.selectedTime={ "days" : this.dayGapBtwDate, "hours" :this.hour-hour, "minutes" : this.minute-min };
-      //     // console.log('this.selectedTime1',this.selectedTime)
-      //   }
-      //   else{
-      //     this.selectedTime={ "days" : this.dayGapBtwDate, "hours" : hour-this.hour, "minutes" : min-this.minute };
-      //     // console.log('this.selectedTime2',this.selectedTime)
-      //   }
-      // }
       return `${hour}:${min} ${part}`
     // }
     
@@ -857,14 +838,14 @@ export class CreateTaskComponent implements OnInit {
       "targetPotential" : this.createTaskForm.controls.targetPotential.value,
       "estDuration" : this.estTime   
     }
-    console.log('createTaskData',createTaskData)
-    console.log('this.userType',this.userType)
+    // console.log('createTaskData',createTaskData)
+    // console.log('this.userType',this.userType)
     if(this.taskMasterData){
       if(this.userType===('PROVIDER' || 'CONSUMER') ){
-        console.log('...................kl')
+        // console.log('...................kl')
         this.boolenTaskError=false;
         this.api_loading = true;
-        console.log("1")
+        // console.log("1")
         this.crmService.addTask(createTaskData).subscribe((response)=>{
           console.log('afterCreateList',response);
           setTimeout(() => {

@@ -56,7 +56,7 @@
                                 [lazy]="false"></circle-progress> -->
               </div>
               <div class="ml-3">
-                <span class="details text-dark" *ngIf="leadDetails.customer.name"><b> Consumer : {{leadDetails.customer.name}} </b></span><br>
+                <span class="details text-dark" *ngIf="leadDetails.customer.name"><b> {{customer_label}} : {{leadDetails.customer.name}} </b></span><br>
 
                 <span class="details text-secondary" *ngIf="leadDetails.assignee.name"><b> Assigned to {{leadDetails.assignee.name}} </b></span><br>
                 <span class="details text-secondary" *ngIf="leadDetails.manager.name">Manager : {{leadDetails.manager.name}}</span><br>
