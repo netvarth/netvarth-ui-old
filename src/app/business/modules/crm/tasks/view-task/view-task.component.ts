@@ -104,7 +104,9 @@ export class ViewTaskComponent implements OnInit {
         console.log("Task Details : ", this.taskDetails);
         if (this.taskDetails.originUid) {
           this.taskType = "SubTask";
+          console.log('taskType',this.taskType)
         }
+        console.log('taskType',this.taskType)
         console.log("taskDetails.status", this.taskDetails.status.name);
         // console.log('this.taskDetails.notes',this.taskDetails.notes)
         this.taskDetails.notes.forEach((notesdata: any) => {
