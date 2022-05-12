@@ -324,9 +324,9 @@ padding: 3px;
   background: #FFFFFF;
   box-shadow: 1.05788px 0.391416px 5.28941px rgb(96 95 95 / 25%);
   border-radius: 5.46305px;
-  width: 11rem;
-  cursor: pointer;
-  height: 5rem;
+  width: 14rem;
+    cursor: pointer;
+    height: 6rem;
 }
 .templateList{
   display: flex;
@@ -339,16 +339,24 @@ padding: 3px;
 }
 @media(max-width: 768px){
   .templateList{
-    justify-content: space-between
+    /* justify-content: space-evenly; */
   /* align-items: center; */
   }
   .singleTempalte{
-    width: 10rem;
+    width: 9rem;
     height: 6rem;
+  }
+  .templateName{
+    font-size: 12px !important;
+      font-weight: 500;
+      color: #1e4079;
   }
 }
 .templateName{
-  font-size: 12px;
+  font-size: 14px;
     font-weight: 500;
     color: #1e4079;
+}
+::ng-deep .commonpopupmainclassTemplate{
+  width: 750px !important;
 }

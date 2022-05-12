@@ -321,31 +321,31 @@ export class TasksComponent implements OnInit {
   getAssignedTask(from_oninit=true){
     this.assignedTaskList=[]
     this.totalTaskList.forEach((element:any)=>{
-       console.log('element:.',element)
+      //  console.log('element:.',element)
       if(element.status.name ==='Assigned'){
         this.assignedTaskList.push(element);
       }
-      console.log('this.assignedTaskList',this.assignedTaskList)
+      // console.log('this.assignedTaskList',this.assignedTaskList)
     })
   }
   getCancelledTask(from_oninit = true){
     this.canceledTaskList=[]
     this.totalTaskList.forEach((element:any)=>{
-      console.log('element:.',element)
+      // console.log('element:.',element)
      if(element.status.name ==='Cancelled'){
        this.canceledTaskList.push(element);
      }
-     console.log('this.canceledTaskList',this.canceledTaskList)
+    //  console.log('this.canceledTaskList',this.canceledTaskList)
    })
   }
   getSuspendedTask(from_oninit=true){
     this.suspendedTaskList=[]
     this.totalTaskList.forEach((element:any)=>{
-      console.log('element:.',element)
+      // console.log('element:.',element)
      if(element.status.name ==='Suspended'){
        this.suspendedTaskList.push(element);
      }
-     console.log('this.suspendedTaskList',this.suspendedTaskList)
+    //  console.log('this.suspendedTaskList',this.suspendedTaskList)
    })
   }
   getTotalTask(from_oninit = true) {
@@ -719,7 +719,7 @@ export class TasksComponent implements OnInit {
       console.log('........')
       const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
         width:'100%',
-        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+        panelClass: ['commonpopupmainclassTemplate'],
         disableClose: true,
         data:{
           requestType:'taskMasterList',

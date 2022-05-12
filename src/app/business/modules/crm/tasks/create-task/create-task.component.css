@@ -173,7 +173,7 @@ textarea {
     margin-right: 0px !important;
   }
   input[type="number"],input[type="time"]{
-    width: 13rem;
+    /* width: 13rem; */
   }
   .estField{
     width: -webkit-fill-available;

@@ -13,7 +13,8 @@
     <div class=" card bgColor inputwithImg">
         <div class="noImg">
         <form [formGroup]="createTaskForm">
-            <span class="group-head" *ngIf="(taskMasterData && taskMasterData.title && taskMasterData.title.isvisible)|| (taskMasterData && taskMasterData.description && taskMasterData.description.isvisible)||(taskMasterData && taskMasterData.category && taskMasterData.category.isvisible)||(taskMasterData && taskMasterData.type && taskMasterData.type.isvisible)||(taskMasterData && taskMasterData.location && taskMasterData.location.isvisible)">{{selectHeader}} Details</span><br>
+            <div *ngIf="(taskMasterData && taskMasterData.title && taskMasterData.title.isvisible)|| (taskMasterData && taskMasterData.description && taskMasterData.description.isvisible)||(taskMasterData && taskMasterData.category && taskMasterData.category.isvisible)||(taskMasterData && taskMasterData.type && taskMasterData.type.isvisible)||(taskMasterData && taskMasterData.location && taskMasterData.location.isvisible)">
+                <span class="group-head" >{{selectHeader}} Details</span><br>
             <div class="bggrey my-2">
                 <div *ngIf="taskMasterData && taskMasterData.title && taskMasterData.title.isvisible" >
                     <div class="taskTitle">
@@ -35,7 +36,7 @@
                     <div  class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.description && taskMasterData.description.iseditable)}">
                         <textarea rowa="10" class="form-control" formControlName="taskDescription"
                             #taskDescription (change)="handleTaskDescription(taskDescription.value)"(keyup)="autoGrowTextZone($event)"
-                            maxlength="1000" placeholder="Enter activity description"  [readonly]="!(taskMasterData && taskMasterData.description && taskMasterData.description.iseditable)">
+                            maxlength="1000" placeholder="{{activityDescription}}"  [readonly]="!(taskMasterData && taskMasterData.description && taskMasterData.description.iseditable)">
                         </textarea>
                         <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                         </app-field-error-display>  
@@ -102,9 +103,25 @@
                     </div>
                 </div>
             </div>
+            </div>
 
 
-            <span class="group-head" *ngIf="(taskMasterData && taskMasterData.assignee && taskMasterData.assignee.isvisible)|| (taskMasterData && taskMasterData.manager && taskMasterData.manager.isvisible)">Select Activity Assignee and Manager</span><br>
+            <div *ngIf="(taskMasterData && taskMasterData.assignee && taskMasterData.assignee.isvisible)|| (taskMasterData && taskMasterData.manager && taskMasterData.manager.isvisible)">
+                <!-- <span class="group-head" >Select Activity Assignee and Manager</span><br> -->
+                <div style="display: flex;gap: 5px;">
+                    <div class="group-head" *ngIf="taskMasterData && taskMasterData.assignee && taskMasterData.assignee.isvisible ===true">
+                        Select Activity Assign Member
+                    </div>
+                    <div class="group-head" style="display: none;" *ngIf="taskMasterData && taskMasterData.assignee && taskMasterData.assignee.isvisible === false">
+                        Select Activity Assign Member
+                    </div>
+                    <div class="group-head" *ngIf="taskMasterData && taskMasterData.manager && taskMasterData.manager.isvisible===true">
+                        and Manager
+                    </div>
+                    <div class="group-head" style="display: none;" *ngIf="taskMasterData && taskMasterData.manager && taskMasterData.manager.isvisible===false">
+                        and Manager
+                    </div>
+                </div>
             <div class="bggrey my-2">
                 <div *ngIf="taskMasterData && taskMasterData.assignee && taskMasterData.assignee.isvisible">
                     <div class="taskTitle">
@@ -138,9 +155,30 @@
                     </div>                                     
                 </div>
             </div>
+            </div>
 
             
-            <span class="group-head" *ngIf="(taskMasterData && taskMasterData.dueDate && taskMasterData.dueDate.isvisible)|| (taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.isvisible)||(taskMasterData && taskMasterData.priority && taskMasterData.priority.isvisible)">Activity Date and Other Info</span><br>
+            <div *ngIf="(taskMasterData && taskMasterData.dueDate && taskMasterData.dueDate.isvisible)|| (taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.isvisible)||(taskMasterData && taskMasterData.priority && taskMasterData.priority.isvisible)">
+                <div>
+                    <div class="group-head" *ngIf="taskMasterData && taskMasterData.dueDate && taskMasterData.dueDate.isvisible===true">
+                        Activity Date 
+                    </div>
+                    <div class="group-head" style="display: none;" *ngIf="taskMasterData && taskMasterData.dueDate && taskMasterData.dueDate.isvisible===false">
+                        Activity Date 
+                    </div>
+                    <div class="group-head" *ngIf="(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.isvisible===true)">
+                         Other Info
+                    </div>
+                    <div class="group-head"  style="display: none;" *ngIf="(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.isvisible===false)">
+                         Other Info
+                    </div>
+                    <div class="group-head" *ngIf="(taskMasterData && taskMasterData.priority && taskMasterData.priority.isvisible===true)">
+                       Other Info
+                    </div>
+                    <div class="group-head" style="display: none;" *ngIf="(taskMasterData && taskMasterData.priority && taskMasterData.priority.isvisible===false)">
+                         Other Info
+                    </div>
+                </div>
             <div class="bggrey my-2">
                 <div style="display: flex;gap: 5px;flex-wrap: wrap;" >
                     <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding" *ngIf="taskMasterData && taskMasterData.dueDate && taskMasterData.dueDate.isvisible">
@@ -193,13 +231,12 @@
                         </div>
                         <div class="fieldPadding" *ngIf="updateBTimefield" >
                             <div class="form-control" style="display: flex !important;justify-content: space-between;align-items: center;">
-                                <!-- <div>{{updateValue.estDuration.days}}days,{{this.updateValue.estDuration.hours}}hours,{{this.updateValue.estDuration.minutes}}minutes</div> -->
                                 <div style="display: flex;gap: 5px;align-items: center;">
                                     <div>{{updateValue.estDuration.days}}days,</div>
                                     <div>{{this.updateValue.estDuration.hours}}hours,</div>
                                     <div>{{this.updateValue.estDuration.minutes}}minutes</div>
                                 </div>
-                                <div (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
+                                <div style="cursor: pointer;" (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
                             </div>
                         </div>
                     </div>
@@ -219,6 +256,7 @@
                         </mat-select>
                     </div>
                 </div>
+            </div>
             </div>
 
 
@@ -264,7 +302,7 @@
                             <div>Business Potential</div>
                         </div>
                         <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.targetPotential && taskMasterData.targetPotential.iseditable)}">
-                            <input (keyup)="resetErrors()" type="text" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)"   [readonly]="!(taskMasterData && taskMasterData.targetPotential && taskMasterData.targetPotential.iseditable)"
+                            <input  min="0" (keyup)="resetErrors()" type="text" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)"   [readonly]="!(taskMasterData && taskMasterData.targetPotential && taskMasterData.targetPotential.iseditable)"
                                 placeholder="Enter(&#8377;)"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
                         </div>
                     </div>               
@@ -323,7 +361,7 @@
                     <div  class="fieldPadding">
                         <textarea rowa="10" class="form-control" formControlName="taskDescription"
                             #taskDescription (change)="handleTaskDescription(taskDescription.value)"(keyup)="autoGrowTextZone($event)"
-                            maxlength="1000" placeholder="Enter activity description">
+                            maxlength="1000" placeholder="{{activityDescription}}">
                         </textarea>
                         <app-field-error-display [displayError]="true" style="color: #f24949 !important;font-size: 12px;" *ngIf="taskError" errorMsg="{{taskError}}">
                         </app-field-error-display>  
@@ -489,7 +527,7 @@
                                     <div>{{this.updateValue.estDuration.hours}}hours,</div>
                                     <div>{{this.updateValue.estDuration.minutes}}minutes</div>
                                 </div>
-                                <div (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
+                                <div style="cursor: pointer;" (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
                             </div>
                         </div>
                     </div>
@@ -557,7 +595,7 @@
                 </div>
     
                 
-                <div style="display: flex;gap: 5px" >
+                <div style="display: flex;gap: 5px;flex-wrap: wrap !important;" >
                     <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding">
                         <div class="taskTitle">
                             <div>Target Potential</div>
@@ -573,7 +611,7 @@
                             <div>Business Potential</div>
                         </div>
                         <div class="fieldPadding" >
-                            <input (keyup)="resetErrors()" type="number" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)" 
+                            <input min="0" (keyup)="resetErrors()" type="number" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)" 
                                 placeholder="Enter(&#8377;)"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
                         </div>
                     </div>               
@@ -589,7 +627,10 @@
                             >Cancel
                         </button>
                         <button 
-                            class="btn btn-primary font-weight-bold confirmBtn" [class.spinner]="api_loading" 
+                        [ngClass]="{
+                            'btn btn-primary font-weight-bold cancelBtn': !createTaskForm.valid,
+                            'btn btn-primary font-weight-bold confirmBtn': createTaskForm.valid
+                        }"  [class.spinner]="api_loading" 
                             [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateTask()"
                                 >{{showCreateTaskButtonCaption()}}
                         </button>

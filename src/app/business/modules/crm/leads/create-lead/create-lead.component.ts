@@ -137,6 +137,7 @@ export class CreateLeadComponent implements OnInit{
   leadMasterData: any;
   leadId:any;
   public innerWidth:any;
+  public customerInfoError:any=''
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -205,9 +206,10 @@ export class CreateLeadComponent implements OnInit{
       userLeadCategory:[null,[Validators.required]],
       userLeadType:[null,[Validators.required]],
       leadLocation:[null,[Validators.required]],
-      leadStatus:[null,[Validators.required]],
+      leadStatus:[null],
       customer_id : [null],
-      userLeadPriority:[null,[Validators.required]]
+      userLeadPriority:[null],
+      customerDetails:[null,[Validators.required]]
     }) 
     if(this.crmService.leadActivityName!='Create' && this.crmService.leadActivityName!='subLeadCreate' && this.crmService.leadActivityName!='CreatE' && this.crmService.leadActivityName!='CreteLeadMaster'){
       this.selectHeader='Update Lead'
@@ -262,11 +264,8 @@ export class CreateLeadComponent implements OnInit{
     else if(this.crmService.leadActivityName==='Create'){
       this.createBTimeField=true;
       this.updateBTimefield=false;
-      // this.selectMember='Select Member';
-      // this.selectLeadManger='Select Lead Manger'
         this.selectHeader='Add Lead';
         this.leadDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd') 
-        // this.datePipe.transform(this.leadDueDate,'yyyy-MM-dd');
         console.log(' this.leadDueDate', this.leadDueDate);
         this.selectedDate = this.leadDueDate;
         this.leadDueTime= "0000" ;
@@ -791,7 +790,7 @@ export class CreateLeadComponent implements OnInit{
       console.log('updateLeadData',updateLeadData)
       console.log('updateUserType',this.updateUserType)
       if(this.createLeadForm.controls.leadTitle.value!=null){
-        // this.api_loading = true;
+        this.api_loading = true;
         console.log("2")
         this.boolenLeadError=false;
         console.log('updateLeadData',updateLeadData)
@@ -810,11 +809,11 @@ export class CreateLeadComponent implements OnInit{
           }, projectConstants.TIMEOUT_DELAY);
         })
       }
-     
       console.log(' this.updateUserType', this.updateUserType)
 
     }
     else{
+      console.log('this.createLeadForm.controls.customerDetails.value',this.createLeadForm.controls.customerDetails.value)
     const createLeadData:any = {
       // "parentLeadUid" : this.leadUid,
       "title":this.createLeadForm.controls.leadTitle.value,
@@ -833,13 +832,14 @@ export class CreateLeadComponent implements OnInit{
     }
     console.log('createLeadData',createLeadData)
     console.log('this.userType',this.userType)
-    if(this.userType===('PROVIDER' || 'CONSUMER') && (this.createLeadForm.controls.leadTitle.value!=null)){
+    if(this.userType===('PROVIDER' || 'CONSUMER') && (this.createLeadForm.controls.leadTitle.value!=null) && (this.createLeadForm.controls.customerDetails.value != undefined)){
       // this.boolenLeadError=false;
       // this.api_loading = true;
       console.log("1")
       this.crmService.addLead(createLeadData).subscribe((response)=>{
         console.log('afterCreateList',response);
         setTimeout(() => {
+          this.api_loading = true;
           this.createLeadForm.reset();
         this.router.navigate(['provider', 'lead']);
         }, projectConstants.TIMEOUT_DELAY);
@@ -859,7 +859,7 @@ export class CreateLeadComponent implements OnInit{
   
   searchCustomer() {
     this.emptyFielderror = false;
-    if (this.search_input && this.search_input === '') {
+    if (this.createLeadForm.controls.customerDetails.value && this.createLeadForm.controls.customerDetails.value === '') {
       this.emptyFielderror = true;
     }
 
@@ -869,23 +869,23 @@ export class CreateLeadComponent implements OnInit{
       this.form_data = null;
       let post_data = {};
       const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
-      const isEmail = emailPattern.test(this.search_input);
+      const isEmail = emailPattern.test(this.createLeadForm.controls.customerDetails.value);
       if (isEmail) {
         mode = 'email';
         this.prefillnewCustomerwithfield = 'email';
       } else {
         const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
-        const isNumber = phonepattern.test(this.search_input);
+        const isNumber = phonepattern.test(this.createLeadForm.controls.customerDetails.value);
         const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
-        const isCount10 = phonecntpattern.test(this.search_input);
+        const isCount10 = phonecntpattern.test(this.createLeadForm.controls.customerDetails.value);
         if (isNumber && isCount10) {
           mode = 'phone';
           this.prefillnewCustomerwithfield = 'phone';
         } 
-        else if (isNumber && this.search_input.length >7) {
+        else if (isNumber && this.createLeadForm.controls.customerDetails.value.length >7) {
           mode = 'phone';
           this.prefillnewCustomerwithfield = 'phone';
-        } else if (isNumber && this.search_input.length <7 ) {
+        } else if (isNumber && this.createLeadForm.controls.customerDetails.value.length <7 ) {
           mode = 'id';
           this.prefillnewCustomerwithfield = 'id';
         }
@@ -895,18 +895,18 @@ export class CreateLeadComponent implements OnInit{
       switch (mode) {
         case 'phone':
           post_data = {
-            'phoneNo-eq': this.search_input
+            'phoneNo-eq': this.createLeadForm.controls.customerDetails.value
           };
-          this.qParams['phone'] = this.search_input;
+          this.qParams['phone'] = this.createLeadForm.controls.customerDetails.value;
           break;
         case 'email':
           post_data = {
-            'email-eq': this.search_input
+            'email-eq': this.createLeadForm.controls.customerDetails.value
           };
-          this.qParams['email'] = this.search_input;
+          this.qParams['email'] = this.createLeadForm.controls.customerDetails.value;
           break;
         case 'id':
-          post_data['or=jaldeeId-eq'] = this.search_input + ',firstName-eq=' + this.search_input;
+          post_data['or=jaldeeId-eq'] = this.createLeadForm.controls.customerDetails.value + ',firstName-eq=' + this.createLeadForm.controls.customerDetails.value;
           // post_data = {
           //   'jaldeeId-eq': form_data.search_input
           // };
@@ -981,6 +981,7 @@ export class CreateLeadComponent implements OnInit{
       const filter = { 'id-eq': res };
       this.provider_services.getCustomer(filter).subscribe((response:any)=>{
         this.customer_data = response[0];
+        console.log('customer_data',this.customer_data)
         this.hideSearch = true;
       },
       (error)=>{
