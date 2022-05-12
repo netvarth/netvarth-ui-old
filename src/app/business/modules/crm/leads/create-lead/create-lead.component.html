@@ -113,7 +113,20 @@
                     </div>
                 </div>
                 <div *ngIf="(leadMasterData && leadMasterData.assignee && leadMasterData.assignee.isvisible) || (leadMasterData && leadMasterData.manager && leadMasterData.manager.isvisible)">
-                    <span class="group-head" >Select Lead Assignee and Manager</span><br>
+                    <div style="display: flex;gap: 5px;">
+                        <div class="group-head" *ngIf="leadMasterData && leadMasterData.assignee && leadMasterData.assignee.isvisible ===true">
+                            Select Activity Assign Member
+                        </div>
+                        <div class="group-head" style="display: none;" *ngIf="leadMasterData && leadMasterData.assignee && leadMasterData.assignee.isvisible === false">
+                            Select Activity Assign Member
+                        </div>
+                        <div class="group-head" *ngIf="leadMasterData && leadMasterData.manager && leadMasterData.manager.isvisible===true">
+                            and Manager
+                        </div>
+                        <div class="group-head" style="display: none;" *ngIf="leadMasterData && leadMasterData.manager && leadMasterData.manager.isvisible===false">
+                            and Manager
+                        </div>
+                    </div>
                 <div class="bggrey my-2" >
                     <div *ngIf="leadMasterData && leadMasterData.assignee && leadMasterData.assignee.isvisible">
                         <div class="leadTitle">
