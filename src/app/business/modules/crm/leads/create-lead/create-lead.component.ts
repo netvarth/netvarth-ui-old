@@ -970,7 +970,7 @@ export class CreateLeadComponent implements OnInit{
       panelClass: ['popup-class', 'confirmationmainclass'],
       data:{
         requestType:'createCustomer',
-        header:'Select Customer',
+        header:'Select' + this.customer_label,
       }
   })
   dialogRef.afterClosed().subscribe((res:any)=>{
