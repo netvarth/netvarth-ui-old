@@ -1433,6 +1433,7 @@ svg {
 }
 .webDisplay{
     display: flex;
+    gap: 20px;
 }
 @media (max-width: 767px){
     .mobileDisplay{
