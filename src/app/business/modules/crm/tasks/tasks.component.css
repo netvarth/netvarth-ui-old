@@ -1259,10 +1259,10 @@ input[type='file'] {
     /* margin-right: 30px !important; */
     /* margin-bottom: 30px !important; */
     background-color: #1e4079 !important;
-    margin-right: 15px !important;
+    margin-right: -15px !important;
     /* margin-bottom: 22px !important; */
-    margin-left: 5px;
-    margin-top: 0px !important;
+    /* margin-left: 5px; */
+    /* margin-top: 0px !important; */
 }
 
 .head_color {

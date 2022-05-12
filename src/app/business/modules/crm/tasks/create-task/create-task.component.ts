@@ -141,24 +141,6 @@ export class CreateTaskComponent implements OnInit {
     // });
     
     this.api_loading=false;
-    // this.createTaskForm=this.createTaskFB.group({
-    //   taskTitle:[null],
-    //   taskDescription:[null],
-    //   userTaskCategory:[null],
-    //   userTaskType:[null],
-    //   taskLocation:[null],
-    //   areaName:[null],
-    //   taskStatus:[null],
-    //   taskDate:[null],
-    //   taskDays:[0],
-    //   taskHrs:[0],
-    //   taskMin:[0],
-    //   selectMember:[null],
-    //   selectTaskManger:[null],
-    //   userTaskPriority:[null],
-    //   targetResult:[null],
-    //   targetPotential:[null],
-    // }) 
     if(this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' && this.crmService.taskActivityName!='CreteTaskMaster'){
       console.log('this.crmService.taskActivityName',this.crmService.taskActivityName)
       this.createTaskForm=this.createTaskFB.group({
@@ -247,7 +229,6 @@ export class CreateTaskComponent implements OnInit {
         this.estTime={ "days" :this.createTaskForm.controls.taskDays.value, "hours" :this.createTaskForm.controls.taskHrs.value, "minutes" : this.createTaskForm.controls.taskMin.value };
         console.log('this.estTime',this.estTime);
         this.createTaskForm.controls.taskDate.setValue(this.taskDueDate);
-
           }
       else if(this.crmService.taskActivityName==='CreatE'){
         this.createTaskForm=this.createTaskFB.group({
@@ -275,9 +256,6 @@ export class CreateTaskComponent implements OnInit {
         console.log(' this.taskDueDate', this.taskDueDate);
         this.selectedDate = this.taskDueDate;
         this.activityTitle='Enter activity title';
-        // this.taskDueDays= 0;
-        // this.taskDueHrs= 0;
-        // this.taskDueMin= 0;
         this.createTaskForm.controls.taskDays.value= 0,
         this.createTaskForm.controls.taskHrs.value= 0
         this.createTaskForm.controls.taskMin.value= 0
