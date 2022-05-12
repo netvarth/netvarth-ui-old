@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router , NavigationExtras} from '@angular/router';
 import { CrmService } from '../../crm.service';
 import { MatDialog } from '@angular/material/dialog';
+import { SnackbarService } from "../../../../../shared/services/snackbar.service";
 import  {CrmSelectMemberComponent} from '../../../../shared/crm-select-member/crm-select-member.component'
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { CrmProgressbarComponent } from '../../../../../../../src/app/business/shared/crm-progressbar/crm-progressbar.component';
@@ -93,6 +94,7 @@ constructor(
   private _Activatedroute:ActivatedRoute,
   private router: Router,
   public shared_services: SharedServices,
+  private snackbarService: SnackbarService,
 
 ) {
 }
@@ -140,6 +142,7 @@ uploadFiles() {
     this.api_loading = true;
     setTimeout(() => {
     this.ngOnInit();
+    this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { 'panelClass': 'snackbarnormal' });
     }, 5000);
   })
   this.getLeadDetails();

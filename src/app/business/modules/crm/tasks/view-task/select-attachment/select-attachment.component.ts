@@ -84,7 +84,7 @@ export class SelectAttachmentComponent implements OnInit {
     const input = event.target.files;
     //let taskid = this.data.taskuid;
     console.log("input : ", input);
-    console.log("File Type  : ", type);
+  
     if (input) {
       for (const file of input) {
         // if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {

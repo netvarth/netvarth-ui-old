@@ -107,6 +107,10 @@ export class ReportsComponent implements OnInit {
             this.crm_criteria.push(this.criteria_list[i]);
             break;
           }
+          case 'CRM_LEAD': {
+            this.crm_criteria.push(this.criteria_list[i]);
+            break;
+          }
         }
       }
     });

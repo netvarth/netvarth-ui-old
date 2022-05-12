@@ -8,6 +8,34 @@
     }
 }
 
+.mobileDisplay{
+    display: none;
+}
+.webDisplay{
+    display: flex;
+}
+@media (max-width: 767px){
+    .mobileDisplay{
+        display: block;
+    }
+    .webDisplay{
+        display: none;
+    }
+   
+    .statusSelectDiv{
+        width: -webkit-fill-available;
+        
+    }
+    .form-control{
+        width: 100%  !important;
+    }
+    .btnClass{
+        padding-left: 0px !important;
+    }
+
+}
+
+
 .waitlist-box {
     margin: 10px 0px;
     border-radius: 0.75rem;
@@ -1357,7 +1385,8 @@ input[type='file'] {
     }
     .btnClass {
         display: flex !important;
-        justify-content: center !important;
+        justify-content: space-between !important;
+        align-items: baseline;
     }
 }
 
@@ -1458,23 +1487,16 @@ span.tab-text.ng-star-inserted {
     font-weight: bold !important;
 }
 @media (max-width: 767px){
-    .mobileDisplay{
+    .divDisp{
         display: block;
-    }
-    .webDisplay{
-        display: none;
-    }
-    .statusSelectDiv{
-        width: -webkit-fill-available;
-    }
-    .form-control{
-        width: 50%  !important;
-    }
-    .btnClass{
-        padding-left: 0px !important;
     }
 
 }
+
+.divDisp{
+    display: flex;
+}
+
 .taskTitle{
     display: flex;
     align-items: center;

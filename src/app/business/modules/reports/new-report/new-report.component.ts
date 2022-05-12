@@ -82,6 +82,7 @@ export class NewReportComponent implements OnInit {
   donation_timePeriod: string;
   appointment_timePeriod: string;
   crm_timePeriod: string;
+  lead_timePeriod : string;
   appointment_service_id: number;
   appointment_service: string;
   donation_service_id: any;
@@ -130,6 +131,8 @@ export class NewReportComponent implements OnInit {
   user_startDate;
   crm_startDate;
   crm_EndDate;
+  lead_StartDate;
+  lead_EndDate;
   user_timePeriod;
   user_users;
   report_criteria: any;
@@ -188,7 +191,7 @@ export class NewReportComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.payment_timePeriod = this.crm_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
+    this.payment_timePeriod = this.crm_timePeriod = this.lead_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.payment_modes = projectConstantsLocal.PAYMENT_MODES;
     this.payment_status = projectConstantsLocal.PAYMENT_STATUS;
@@ -338,6 +341,14 @@ export class NewReportComponent implements OnInit {
             this.hide_dateRange = false;
             this.crm_startDate = res.startDate;
             this.crm_EndDate = res.endDate;
+          }
+        }
+        case 'lead': {
+          this.lead_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
+          if (res.dateRange === 'DATE_RANGE') {
+            this.hide_dateRange = false;
+            this.lead_StartDate = res.startDate;
+            this.lead_EndDate = res.endDate;
           }
         }
       }
@@ -811,6 +822,7 @@ export class NewReportComponent implements OnInit {
       }
     } 
     else if (reportType === 'crm') {
+      console.log("Report Type :",reportType)
       if (this.crm_timePeriod === 'DATE_RANGE' && (this.crm_startDate === undefined || this.crm_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -875,7 +887,71 @@ export class NewReportComponent implements OnInit {
       }
     }
     
-    
+    else if (reportType === 'lead') {
+      console.log("Report Type :",reportType)
+      if (this.lead_timePeriod === 'DATE_RANGE' && (this.lead_StartDate === undefined || this.lead_EndDate === undefined)) {
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {
+          'paymentStatus': this.appointment_billpaymentstatus,
+          'schedule': this.appointment_schedule_id,
+          'service': this.appointment_service_id,
+          // 'apptStatus': this.appointment_status,
+          'appointmentMode': this.appointment_mode,
+          'apptForId': this.appointment_customerId
+        };
+        if (!this.appointment_customerId) {
+          delete this.filterparams.appmtFor;
+        }
+        if (this.appointment_schedule_id === 0) {
+          delete this.filterparams.schedule;
+        }
+        if (this.appointment_billpaymentstatus === 0) {
+          delete this.filterparams.paymentStatus;
+        }
+        if (this.appointment_service_id === 0) {
+          delete this.filterparams.service;
+        }
+        if (this.apptStatusFilter.length > 0) {
+          // this.waitlist_status = this.waitlistStatusFilter.toString();
+          this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
+          }
+        // if (this.appointment_status === 0) {
+        //   delete this.filterparams.apptStatus;
+        // }
+        if (this.apptIntStatusFilter.length > 0) {
+          this.filterparams['internalStatus'] = this.apptIntStatusFilter.toString();
+        }
+        if (this.appointment_mode === 0) {
+          delete this.filterparams.appointmentMode;
+        }
+        if (this.appointment_customerId === 0) {
+          delete this.filterparams.providerOwnConsumerId;
+        }
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            // assign property to new object with modified key
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.lead_timePeriod === 'DATE_RANGE') {
+          if (this.lead_StartDate === undefined || this.lead_EndDate === undefined) {
+            this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+
+          }
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.lead_StartDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.lead_EndDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = 'CRM_LEAD';
+        request_payload.reportDateCategory = this.lead_timePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
+      }
+    }
     
     else if (reportType === 'token') {
       if (this.waitlist_timePeriod === 'DATE_RANGE' && (this.waitlist_startDate === undefined || this.waitlist_endDate === undefined)) {

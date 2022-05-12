@@ -81,6 +81,7 @@ export class ConfirmPaymentLinkComponent implements OnInit {
     private wordProcessor: WordProcessor) {
     this.uuid = this.data.uuid;
     this.mobilenumber = this.data.mobilenumber;
+    console.log("Mobile Number :", this.mobilenumber);
     this.emailId = this.data.emailId;
     this.source = this.data.source;
     this.calculationMode = this.data.calc_mode;

@@ -1817,6 +1817,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return typeof time_min === "number" ? time_min : 0;
   }
   getTimeMinute(time) {
+    console.log("Delay Time :",time);
     let hr;
     let min;
     if (time >= 60) {
