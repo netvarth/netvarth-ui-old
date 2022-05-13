@@ -171,11 +171,11 @@
                 </div>
 
         <div *ngIf="leadMasterData">
-            <span class="group-head">Customer Info</span><br>
+            <span class="group-head">{{customer_label | capitalizeFirst }} Info</span><br>
         <div class="bggrey my-2">
             <div>
                 <div class="leadTitle" *ngIf="!hideSearch">
-                    <div>Customer</div>
+                    <div>{{customer_label | capitalizeFirst}}</div>
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding" *ngIf=" !hideSearch">
@@ -204,7 +204,7 @@
                               <span>
                                 <img class="customImg" src="/assets/images/crmImages/Group28024.png"/>
                               </span>
-                              Create Customer </button>
+                              Create {{customer_label | capitalizeFirst}} </button>
 
                         </div>
                     </div>
@@ -490,7 +490,7 @@
                     </div>
                 </div>
 
-                <span class="group-head">Customer Info</span><br>
+                <span class="group-head">{{customer_label | capitalizeFirst}} Info</span><br>
                 <div class="bggrey my-2">
                     <!-- <div>
                     <div class="leadTitle">
@@ -505,7 +505,7 @@
                 </div> -->
                     <div>
                         <div class="leadTitle" *ngIf="!hideSearch">
-                            <div>Customer</div>
+                            <div>{{customer_label | capitalizeFirst}}</div>
                             <div class="astericColor">*</div>
                         </div>
                         <div class="fieldPadding" *ngIf="!hideSearch">
@@ -537,7 +537,7 @@
                                       <span>
                                         <img class="customImg" src="/assets/images/crmImages/Group28024.png"/>
                                       </span>
-                                      Create Customer </button>
+                                      Create {{customer_label | capitalizeFirst}} </button>
 
                                 </div>
                             </div>
