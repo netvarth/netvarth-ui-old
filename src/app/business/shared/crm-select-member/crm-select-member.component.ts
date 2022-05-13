@@ -93,7 +93,7 @@ export class CrmSelectMemberComponent implements OnInit {
       private wordProcessor: WordProcessor,
       private groupService:GroupStorageService
     ) {
-      console.log('consdata',this.data)
+      console.log('consdataSelectMember',this.data)
       // this.assignMemberDetails= this.data.assignMembername
       // console.log('this.assignMemberDetails',this.assignMemberDetails);
      }
@@ -136,7 +136,7 @@ export class CrmSelectMemberComponent implements OnInit {
         
       })
     }
-    if(this.data.requestType==='createleadSelectCustomer'){
+    else if(this.data.requestType==='createleadSelectCustomer'){
 
       // this.data.memberList[0].forEach((singleMember:any)=>{
         
@@ -157,38 +157,39 @@ export class CrmSelectMemberComponent implements OnInit {
       this.memberList = this.data.memberList
       console.log("customermemberlist",this.memberList)
     }
-    if(this.data.requestType==='createUpdateNotes'){
+    else if(this.data.requestType==='createUpdateNotes'){
       console.log('createUpdateNotes');
     }
-    if(this.data.requestType==='noteDetails'){
+    else if(this.data.requestType==='noteDetails'){
       console.log('Notews')
       this.allNotes.push(this.data.noteDetails.notes)
       console.log(' this.allNotes', this.allNotes)
       this.noteDescription = this.data.noteDetails.note;
       this.noteDescriptionTime = this.data.noteDetails.createdDate;
     }
-    if(this.data.requestType==='taskComplete'){
+    else if(this.data.requestType==='taskComplete'){
       console.log('this.data',this.data)
       this.taskDes= this.data.taskName.title
     }
-    if(this.data.requestType==='statusChange'){
+    else if(this.data.requestType==='statusChange'){
+      console.log('this.data',this.data)
       console.log('statusChangeeeeeeeee')
-      this.taskDescription= this.data.taskDetails.description;
-      this.taskTitle = this.data.taskDetails.title;
-      this.taskProgress= this.data.taskDetails.progress;
-      this.status= this.data.taskDetails.status.name;
-      this.assigneeName = this.data.taskDetails.assignee.name;
-      this.managerName= this.data.taskDetails.manager.name;
-      this.priorityName= this.data.taskDetails.priority.name;
-      this.lastUpdate = this.data.taskDetails.dueDate;
-      this.currentStatus=this.data.taskDetails.status.name;
-      this.getTaskStatusListData()
-      this.selectedStatusUID= this.data.taskDetails.taskUid;
-      this.statusId= this.data.taskDetails.status.id
-      console.log('this.statusssssssssss',this.status);
-      console.log('this.statusChange',this.statusChange)
-      this.showHideTickMarkUpdate=true;
-      this.selectedStatusId=  this.statusId;
+        this.taskDescription= this.data.taskDetails.description;
+        this.taskTitle = this.data.taskDetails.title;
+        this.taskProgress= this.data.taskDetails.progress;
+        this.status= this.data.taskDetails.status.name;
+        this.assigneeName = this.data.taskDetails.assignee.name;
+        this.managerName= this.data.taskDetails.manager.name;
+        this.priorityName= this.data.taskDetails.priority.name;
+        this.lastUpdate = this.data.taskDetails.dueDate;
+        this.currentStatus=this.data.taskDetails.status.name;
+        this.getTaskStatusListData()
+        this.selectedStatusUID= this.data.taskDetails.taskUid;
+        this.statusId= this.data.taskDetails.status.id
+        console.log('this.statusssssssssss',this.status);
+        console.log('this.statusChange',this.statusChange)
+        this.showHideTickMarkUpdate=true;
+        this.selectedStatusId=  this.statusId;
     }
     else if(this.data.requestType==='LeadstatusChange'){
       console.log('LeadstatusChangeeeeeeeee')
@@ -209,17 +210,17 @@ export class CrmSelectMemberComponent implements OnInit {
       this.showHideTickMarkUpdate=true;
       this.selectedStatusId=  this.statusId;
     }
-    if(this.data.requestType==='uploadFilesDesciption'){
+    else if(this.data.requestType==='uploadFilesDesciption'){
       console.log('uploadFilesDesciption')
       this.allFilesDes.push(this.data.filesDes)
     }
-    if(this.data.requestType==='taskMasterList'){
+    else if(this.data.requestType==='taskMasterList'){
     this.taskMasterListData= this.data.taskMasterFullList[0];
       console.log('TaskMasterList.............',this.taskMasterListData)
       // this.selectTemplateLength= this.taskMasterListData.templateName.length;
       // console.log('selectTemplateLength',this.selectTemplateLength)
     }
-    if(this.data.requestType==='leadMasterList'){
+    else if(this.data.requestType==='leadMasterList'){
       this.leadMasterListData= this.data.leadMasterFullList[0];
         console.log('leadMasterList.............',this.leadMasterListData)
       }

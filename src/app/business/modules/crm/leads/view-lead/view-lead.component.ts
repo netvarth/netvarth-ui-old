@@ -88,6 +88,7 @@ action: any;
   cusDetails:any=[]
   leadTokens:any=[]
   parentUid: any;
+  public headerName:string='Lead Overview'
 constructor(
   private locationobj: Location,
    private crmService: CrmService,
@@ -441,6 +442,7 @@ openDialogStatusChange(leadData:any){
   });
   dialogRef.afterClosed().subscribe((res:any)=>{
     console.log('resssssssss',res);
+    this.ngOnInit()
   })
 }
 createToken(){
