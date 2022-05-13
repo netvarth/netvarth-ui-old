@@ -16,11 +16,11 @@
     {{taskDetails.description}}
   </div>
   <div class="text-primary location-name mb-2">
-    <i *ngIf="taskDetails.locationArea || (taskDetails.location && taskDetails.location.name)" class="fa fa-map-marker"></i>&nbsp;
+    <i *ngIf="taskDetails && taskDetails.locationArea || (taskDetails && taskDetails.location && taskDetails.location.name)" class="fa fa-map-marker"></i>&nbsp;
     <span *ngIf="taskDetails.locationArea">{{taskDetails.locationArea}},</span>
-    <span *ngIf="taskDetails.location && taskDetails.location.name">{{taskDetails.location.name}}</span>
+    <span *ngIf="taskDetails && taskDetails.location && taskDetails.location.name">{{taskDetails.location.name}}</span>
   </div>
-  <div class="d-flex" *ngIf="taskDetails.status && taskDetails.status.name != 'Completed'">
+  <div class="d-flex" *ngIf="taskDetails && taskDetails.status && taskDetails.status.name != 'Completed'">
     <!-- <div class="dropdown">
       <button class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
         Actions <i class="fa fa-chevron-down"></i>
@@ -84,7 +84,7 @@
     <div>
       <button class="btn btn-outline-primary mx-2" (click)="openAddNoteDialog('AddNote')">Add Remarks</button>
     </div>
-    <div *ngIf="taskDetails.status && taskDetails.status.name != 'Cancelled'">
+    <div *ngIf="taskDetails && taskDetails.status && taskDetails.status.name != 'Cancelled'">
       <button class="btn btn-outline-primary mx-2" (click)="markAsDone(taskUid)">Mark as done</button>
     </div>
   </div>
@@ -106,11 +106,11 @@
                               [lazy]="false"></circle-progress>
             </div>
             <div class="ml-3">
-              <span class="details text-dark" *ngIf="taskDetails.assignee.name"><b> Assigned to {{taskDetails.assignee.name}} </b></span><br>
-              <span class="details text-secondary" *ngIf="taskDetails.manager.name">Manager : {{taskDetails.manager.name}}</span><br>
-              <span class="details text-warning" *ngIf="taskDetails.priority.name">Priority : {{taskDetails.priority.name}} </span><br>
-              <span class="details text-secondary" *ngIf="taskDetails.dueDate">Due date : {{taskDetails.dueDate | date:newDateFormat}} </span><br>
-              <span class="details text-dark" *ngIf="taskDetails.actualResult"><b>Actual Result : <span class="text-success">{{taskDetails.actualResult}}</span> </b></span>
+              <span class="details text-dark" *ngIf="taskDetails && taskDetails.assignee && taskDetails.assignee.name"><b> Assigned to {{taskDetails.assignee.name}} </b></span><br>
+              <span class="details text-secondary" *ngIf="taskDetails && taskDetails.manager && taskDetails.manager.name">Manager : {{taskDetails.manager.name}}</span><br>
+              <span class="details text-warning" *ngIf="taskDetails && taskDetails.priority && taskDetails.priority.name">Priority : {{taskDetails.priority.name}} </span><br>
+              <span class="details text-secondary" *ngIf="taskDetails && taskDetails.dueDate">Due date : {{taskDetails.dueDate | date:newDateFormat}} </span><br>
+              <span class="details text-dark" *ngIf="taskDetails && taskDetails.actualResult"><b>Actual Result : <span class="text-success">{{taskDetails.actualResult}}</span> </b></span>
             </div>
           </div>
           <!-- <div class="task-description">
@@ -196,7 +196,7 @@
       </div>
 
       <div class="row d-lg-flex justify-content-lg-start" *ngIf="(taskType != 'SubTask')">
-        <div  class="subtask-border  col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mt-2" *ngIf="(taskDetails.status && taskDetails.status.name != ('Completed'))">
+        <div  class="subtask-border  col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mt-2" *ngIf="(taskDetails && taskDetails.status && taskDetails.status.name != ('Completed'))">
           <app-subtasks [taskid]="taskUid"></app-subtasks>
         </div>
       </div>
