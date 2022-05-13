@@ -12,7 +12,7 @@
         <table class="table">
             <thead>
                 <tr class="subtask-table-headings">
-                    <th class="head_color">&nbsp;&nbsp;&nbsp;Name</th>
+                    <th class="head_color">Name</th>
                     <th class="head_color">Assigned To</th>
                     <th class="head_color">Status</th>
                     <th class="head_color">Category</th>
@@ -29,10 +29,7 @@
                 <ng-container *ngIf="LeadTaskDetails && LeadTaskDetails.length > 0">
                     <tr class="subtask-table-data pointer-cursor" *ngFor="let task of LeadTaskDetails" (click)="viewTask(task.taskUid,task)">
                         <!-- <pre>{{subtask | json}}</pre> -->
-                        <td class="head_color"><span class="text-dark">
-                            &nbsp;&nbsp;&nbsp;<b>{{task.title}}</b></span>
-                            <!-- </span><br>&nbsp;&nbsp;&nbsp;<span class="text-primary">Assigned to {{subtask.assignee.name}}</span> -->
-                        </td>
+                        <td class="head_color"><span class="text-dark"><b>{{task.title}}</b></span></td>
                         <td class="head_color" *ngIf="task.assignee">{{task.assignee.name}}</td>
                         <td class="head_color" *ngIf="task.status">{{task.status.name}}</td>
                         <td class="head_color" *ngIf="task.category">{{task.category.name}}</td>

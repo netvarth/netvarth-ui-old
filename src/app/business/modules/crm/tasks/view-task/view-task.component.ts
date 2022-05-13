@@ -3,7 +3,8 @@ import { projectConstantsLocal } from "../../../../../../../src/app/shared/const
 import { projectConstants } from "../../../../../../../src/app/app.component";
 import { Messages } from "../../../../../../../src/app/shared/constants/project-messages";
 import { Location } from "@angular/common";
-import { ActivatedRoute, Router , NavigationExtras } from "@angular/router";
+import { ActivatedRoute, Router,NavigationExtras  } from "@angular/router";
+// NavigationExtras
 import { CrmService } from "../../crm.service";
 import { MatDialog } from "@angular/material/dialog";
 import { SnackbarService } from "../../../../../shared/services/snackbar.service";
@@ -164,16 +165,36 @@ export class ViewTaskComponent implements OnInit {
     });
   }
   openEditTask(taskdata: any, editText: any) {
+    console.log('taskdata',taskdata)
+    console.log('editText',editText)
     this.crmService.taskToCraeteViaServiceData = taskdata
+
     const newTaskData = this.crmService.taskToCraeteViaServiceData;
     this.crmService.taskActivityName = editText;
     newTaskData;
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        type: 'Update'
-      }
-    };
-    this.router.navigate(['provider', 'task', 'create-task'], navigationExtras);
+    console.log('newTaskData',newTaskData)
+    console.log('this.taskType',this.taskType)
+    if(this.taskType !='SubTask'){
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          type: 'Update'
+        }
+      };
+      this.router.navigate(['provider', 'task', 'create-task'], navigationExtras);
+    }
+    else {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          type: 'SubUpdate'
+        }
+      };
+      this.router.navigate(['provider', 'task', 'create-task'], navigationExtras);
+    }
+    
+
+
+
+
     // setTimeout(() => {
     //   this.crmService.taskActivityName = editText;
     //   newTaskData;
@@ -412,6 +433,26 @@ export class ViewTaskComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((res: any) => {
       console.log("resssssssss", res);
+      this.getTaskDetails();
+      // if(res === 'Cancelled'){
+      //   console.log('kkk')
+      // }
+    });
+  }
+  openDialogStatusChangeLeadToTask(taskData: any){
+    console.log("openDialogStatusChange", taskData);
+    const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
+      width: "100%",
+      panelClass: ["commonpopupmainclass", "confirmationmainclass"],
+      disableClose: true,
+      data: {
+        requestType: "statusChangeLeadToTask",
+        taskDetails: taskData
+      }
+    });
+    dialogRef.afterClosed().subscribe((res: any) => {
+      console.log("resssssssss", res);
+      this.ngOnInit()
       this.getTaskDetails();
       // if(res === 'Cancelled'){
       //   console.log('kkk')

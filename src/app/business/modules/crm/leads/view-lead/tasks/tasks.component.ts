@@ -66,6 +66,7 @@ export class TasksComponent implements OnInit {
       // let LeadTaskFilter = this.taskDetails.filter(data => this.leadDetails.tasks.includes(data.taskUid));
       this.LeadTaskDetails = this.taskDetails;
       console.log("Task Details : ",this.LeadTaskDetails);
+      this.crmService.taskToCraeteViaServiceData= this.taskDetails
     })
 
 
@@ -216,19 +217,19 @@ this.getTaskmaster()
 
   }
   
-  openDialogStatusChange(taskData:any){
-    console.log('openDialogStatusChange',taskData)
-    const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
-      width:'100%',
-      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data:{
-        requestType:'statusChange',
-        taskDetails:taskData,
-      }
-    });
-    dialogRef.afterClosed().subscribe((res:any)=>{
-      console.log('resssssssss',res);
-    })
-  }
+  // openDialogStatusChange(taskData:any){
+  //   console.log('openDialogStatusChange',taskData)
+  //   const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
+  //     width:'100%',
+  //     panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+  //     disableClose: true,
+  //     data:{
+  //       requestType:'statusChange',
+  //       taskDetails:taskData,
+  //     }
+  //   });
+  //   dialogRef.afterClosed().subscribe((res:any)=>{
+  //     console.log('resssssssss',res);
+  //   })
+  // }
 }

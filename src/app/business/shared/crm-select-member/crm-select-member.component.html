@@ -450,7 +450,102 @@
 
 </section>
 
+<section *ngIf="data.requestType === 'statusChangeLeadToTask'"style="padding: 20px;">
+    <div class="header">
+        <div class="headerText" style="color: #22242C !important;font-size: 18px;">Change Status</div>
+        <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+            <mat-icon>clear</mat-icon>
+        </div>
+    </div>
+    <!---task des start-->
+    <div *ngIf="data.taskDetails.description != undefined">
+        <div class="taskDes">{{taskDescription}}</div>
+    </div>
+    <!---task des end-->
+    <!--task name start-->
+    <div class="titleTask" *ngIf="data.taskDetails.title != undefined">
+        <div>{{taskTitle}}</div>
+    </div>
+    <!---task name end-->
+    <!---spinner start-->
+    <div style="margin-top: 10px;display: flex;gap:10px">
+        <div *ngIf="data.taskDetails.progress != undefined">
+            <circle-progress class="circle__progress" [outerStrokeWidth]="10" [radius]="40" [percent]="taskProgress"
+                [animation]="true" [animationDuration]="1000" [startFromZero]="true" [showInnerStroke]="true"
+                [titleFontSize]="'10'" [titleFontWeight]="'900'" [unitsFontSize]="'10'" [unitsFontWeight]="'700'"
+                [subtitle]="status" [subtitleFontSize]="'7'" [lazy]="false"></circle-progress>
+        </div>
+        <div>
+            <div style="display: flex;align-items: center;gap: 5px;"  *ngIf="data.taskDetails.assignee !== undefined">
+                <div class="assignee">Asignee :</div>
+                <div class="assignee">{{assigneeName}}</div>
+            </div>
+            <div style="display: flex;align-items: center;gap: 11px;"  *ngIf="data.taskDetails.manager != undefined">
+                <div class="manager">Manager :</div>
+                <div class="manager">{{managerName}}</div>
+            </div>
+            <div style="display: flex;align-items: center;gap: 27px;"  *ngIf="data.taskDetails.priority != undefined">
+                <div class="prioprity">Priority :</div>
+                <div class="prioprity">{{priorityName}}</div>
+            </div>
+        </div>
+    </div>
+    <!---spinner end-->
+    <!----current status start-->
+    <div style="display: flex;justify-content: flex-start;" *ngIf="data.taskDetails.status != undefined">
+        <!-- <div>
+            <mat-icon>clear</mat-icon>
+        </div> -->
+        <div class="currentStatus" >
+            Current status : {{currentStatus}}
+        </div>
 
+    </div>
+    <!---coming statua end-->
+    <!-----external status s\tart-->
+    <div class="extStatus">
+        <!-- <div class="extStatus1">External status</div> -->
+        <div  class="extStatus2">External Status is public and visible for your {{customer_label}}</div>
+        <!--status start-->
+        <div class="statusList" *ngIf="data.taskDetails.status != undefined">
+            <!-- [ngStyle]="{'background-color':status.id === data.taskDetails.status.id ? '#CACACA' : '#FFFFFF' }" -->
+            <div *ngFor="let status of taskStatusList[0];let index=i" class="singleStatus"
+                (click)="selectStatus(status)">
+                <div class="statusName">{{status.name}}</div>
+                <div *ngIf="data.taskDetails.status.name">
+                    <div *ngIf="status.id === data.taskDetails.status.id"> <i *ngIf="showHideTickMarkUpdate"
+                            class="fa fa-check" aria-hidden="true"></i></div>
+                </div>
+                <div *ngIf="status.id === selectedStatusId"> <i *ngIf="showHideTickMark" class="fa fa-check"
+                        aria-hidden="true"></i></div>
+            </div>
+        </div>
+        <!---status end-->
+        <div style="color: #f24949 !important;margin-top: 10px;">
+            {{selectText}}
+        </div>
+        <!---cancel save btn start-->
+        <div mat-dialog-actions
+            style="display: flex;justify-content: center;align-items: center;padding: 0px !important;">
+            <!---cancel save btn start-->
+            <div style="text-align: center;">
+                <ng-container>
+                    <div>
+                        <button type="button" class="btn btn-primary font-weight-bold cancelBtn"
+                            mat-dialog-close>Cancel</button>
+                        <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
+                            (click)="completeTaskStatus()">Save</button>
+                    </div>
+                </ng-container>
+            </div>
+
+            <!---cancel save btn end-->
+        </div>
+    </div>
+
+    <!----external status end-->
+
+</section>
 
 
 

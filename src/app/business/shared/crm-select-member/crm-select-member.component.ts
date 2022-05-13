@@ -191,6 +191,47 @@ export class CrmSelectMemberComponent implements OnInit {
         this.showHideTickMarkUpdate=true;
         this.selectedStatusId=  this.statusId;
     }
+    else if(this.data.requestType === 'statusChangeLeadToTask'){
+      console.log('this.data.taskDetails.assignee',this.data.taskDetails.assignee)
+      console.log('this.data',this.data)
+      this.taskDescription= this.data.taskDetails.description;
+      this.taskTitle = this.data.taskDetails.title;
+      this.taskProgress= this.data.taskDetails.progress;
+      if(this.data.taskDetails.assignee != undefined){
+        this.assigneeName= this.data.taskDetails.assignee.name
+      }
+      if(this.data.taskDetails.manager != undefined){
+        this.managerName= this.data.taskDetails.manager.name;
+      }
+      if(this.data.taskDetails.priority != undefined){
+        this.priorityName= this.data.taskDetails.priority.name;
+      }
+      if(this.data.taskDetails.dueDate!= undefined){
+        this.lastUpdate = this.data.taskDetails.dueDate;
+      }
+      if(this.data.taskDetails.currentStatus!= undefined){
+        this.currentStatus=this.data.taskDetails.status.name;
+      }
+      if(this.data.taskDetails.selectedStatusUID!= undefined){
+        this.selectedStatusUID= this.data.taskDetails.taskUid;
+      }
+      if(this.data.taskDetails.selectedStatusUID!= undefined){
+        this.statusId= this.data.taskDetails.status.id
+        // this.selectedStatusId=  this.statusId;
+        this.currentStatus=this.data.taskDetails.status.name;
+        // this.showHideTickMarkUpdate=true;
+      }
+        this.getTaskStatusListData()
+        console.log('this.statusssssssssss',this.status);
+        console.log('this.statusChange',this.statusChange)
+        this.statusId= this.data.taskDetails.status.id
+        this.showHideTickMarkUpdate=true;
+        this.selectedStatusId=  this.statusId;
+        this.selectedStatusUID= this.data.taskDetails.taskUid;
+      
+      
+        
+    }
     else if(this.data.requestType==='LeadstatusChange'){
       console.log('LeadstatusChangeeeeeeeee')
       this.leadDescription= this.data.leadDetails.description;

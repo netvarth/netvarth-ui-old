@@ -120,6 +120,7 @@ export class CreateTaskComponent implements OnInit {
           this.type = qparams.type;
       }
     });
+    // console.log('this.type',this.type)
     console.log("this.crmService.taskActivityName1",this.crmService.taskActivityName);
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
         console.log("User is :", user);

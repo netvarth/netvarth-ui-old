@@ -67,7 +67,7 @@
         /* white-space: normal !important; */
       }
       tr{
-        display: block !important;
+        /* display: block !important; */
         border-bottom: 1px solid #f4f4f4;
       }
       /* table thead, table tbody tr {
