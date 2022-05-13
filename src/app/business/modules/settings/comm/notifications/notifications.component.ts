@@ -136,7 +136,7 @@ export class NotificationsComponent implements OnInit {
         }
     }
     goBack() {
-        this.router.navigate(['provider', 'settings', 'comm']);
+        this.router.navigate(['provider', 'settings']);
     }
     getGlobalSettingsStatus() {
         this.provider_services.getGlobalSettings().subscribe(

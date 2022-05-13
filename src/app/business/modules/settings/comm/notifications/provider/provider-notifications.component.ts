@@ -1680,7 +1680,7 @@ export class ProviderNotificationsComponent implements OnInit {
     return this.sharedfunctionObj.isNumeric(evt);
   }
   goBack() {
-    this.routerobj.navigate(['provider', 'settings', 'comm']);
+    this.routerobj.navigate(['provider', 'settings', 'comm','notifications']);
   }
 
   getSMSCredits() {
