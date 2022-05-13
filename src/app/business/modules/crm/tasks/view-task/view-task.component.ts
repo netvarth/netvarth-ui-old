@@ -131,11 +131,22 @@ export class ViewTaskComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(res => {
-      this.api_loading = true;
-      setTimeout(() => {
-        this.ngOnInit();
-        this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { 'panelClass': 'snackbarnormal' });
-      }, 5000);
+      // this.api_loading = true;
+      // setTimeout(() => {
+      //   this.ngOnInit();
+      //   this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { 'panelClass': 'snackbarnormal' });
+      // }, 5000);
+      if(res === 'close'){
+        this.api_loading = false;
+      }
+      else{
+        this.api_loading = true;
+        setTimeout(() => {
+          this.ngOnInit();
+          this.api_loading = false;
+          this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { 'panelClass': 'snackbarnormal' });
+        }, 5000);
+      }
     });
 
     this.getTaskDetails();
