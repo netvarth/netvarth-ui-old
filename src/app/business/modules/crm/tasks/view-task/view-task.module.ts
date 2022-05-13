@@ -18,6 +18,8 @@ import { ActivitylogComponent } from "./activitylog/activitylog.component";
 import { NgCircleProgressModule } from "ng-circle-progress";
 import { FileService } from "../../../../../shared/services/file-service";
 import { SelectAttachmentModule } from "./select-attachment/select-attachment.module";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatIconModule } from "@angular/material/icon";
 const routes: Routes = [
   { path: '', component: ViewTaskComponent },
   {path:'create-task',loadChildren:()=>import('../create-task/create-task.module').then((m)=>m.CreateTaskModule)},
@@ -43,6 +45,8 @@ const routes: Routes = [
     MenuModule,
     MatSliderModule,
     SelectAttachmentModule,
+    MatMenuModule,
+    MatIconModule,
     NgCircleProgressModule.forRoot({
       // set defaults here
       backgroundColor: "#e9ecef",

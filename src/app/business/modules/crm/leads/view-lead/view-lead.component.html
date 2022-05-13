@@ -18,25 +18,63 @@
       <span *ngIf="leadDetails.location.name">{{leadDetails.location.name}}</span>
     </div>
     <div class="d-flex" *ngIf="leadDetails.status.name != 'Completed'">
-      <div class="dropdown">
+      <!-- <div class="dropdown">
         <button class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
           Actions <i class="fa fa-chevron-down"></i>
         </button>
         <div class="dropdown-menu">
-          <!-- <a class="p-3 dropdown-item" (click)="openEditLead(leadDetails,'Update')"><i class="text-info fa fa-edit"></i>&nbsp;&nbsp;<span class="text-dark">Edit Lead</span></a><br><br> -->
-          <!-- <a class="p-3 dropdown-item" (click)="progressbarDialog()"><i class='fa fa-spinner green-color'></i>&nbsp;&nbsp;<span class="text-dark">Change Progress</span></a><br><br> -->
+          <a class="p-3 dropdown-item" (click)="openEditLead(leadDetails,'Update')"><i class="text-info fa fa-edit"></i>&nbsp;&nbsp;<span class="text-dark">Edit Lead</span></a><br><br>
+          <a class="p-3 dropdown-item" (click)="progressbarDialog()"><i class='fa fa-spinner green-color'></i>&nbsp;&nbsp;<span class="text-dark">Change Progress</span></a><br><br>
           <a class="p-3 dropdown-item" (click)="openDialogStatusChange(leadDetails)"><i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;&nbsp;<span class="text-dark">Change Status</span></a><br><br>
-          <!-- <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Convert to loan</span></a><br><br>
+          <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Convert to loan</span></a><br><br>
           <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Create Appointment</span></a><br><br>
-          <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Edit Actions</span></a><br><br> -->
+          <a class="p-3 dropdown-item"><i class="text-light-blue fa fa-edit"></i>&nbsp;<span class="text-dark">Edit Actions</span></a><br><br>
         </div>
+        
+      </div> -->
+      <div>
+        <a [matTooltipClass]="tooltipcls"
+            class="navbar-item-color bold pointer-cursor">
+              <button type="button"   [matMenuTriggerFor]="appMenu" class="btn btn-outline-primary"> 
+                <span class="text-dark">Actions</span> <i style="margin-left: 5px;" class="fa fa-chevron-down"></i>
+              </button>
+              <mat-menu #appMenu="matMenu">
+                  <!-- <button style="align-items:center !important;" mat-menu-item  (click)="openEditTask(taskDetails,'Update')" *ngIf="taskType != 'SubTask'" data-toggle="modal" data-target="#exampleModalCenter">
+                    <span>
+                      <img class="imageStatus" src="/assets/images/crmImages/edit.png" />
+                    </span>
+                    <span class="text-dark">Edit Activity</span>
+                  </button> -->
+                  <!-- <button style="align-items:center !important;" mat-menu-item (click)="createSubTask(taskUid)" >
+                    <span >
+                      <i class="text-primary fa fa-plus-square-o"></i>
+                    </span>
+                    <span class="text-dark">Create Subactivity</span>
+                  </button> -->
+                  <!-- <button style="align-items:baseline !important;" mat-menu-item (click)="progressbarDialog()" >
+                    <span >
+                      <i class='fa fa-spinner green-color'></i>&nbsp;&nbsp;
+                    </span>
+                    <span class="text-dark">Change Progress</span>
+                  </button> -->
+                  <button style="align-items:baseline !important;" mat-menu-item (click)="openDialogStatusChange(leadDetails)">
+                    <span >
+                      <i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;&nbsp;
+                    </span>
+                    <span class="text-dark">Change Status</span>
+                  </button>
+                  <!-- <button style="align-items:baseline !important;" mat-menu-item (click)="openDialogStatusChange(leadDetails)" *ngIf="taskType === 'SubTask'">
+                    <span >
+                      <i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;&nbsp;
+                    </span>
+                    <span class="text-dark">Change Status</span>
+                  </button> -->
+              </mat-menu>
+            </a>
       </div>
       <div>
         <button class="btn btn-outline-primary mx-2" (click)="openAddNoteDialog('AddNote')">Add Remarks</button>
       </div>
-      <!-- <div>
-        <button class="btn btn-outline-primary">Chat</button>
-      </div> -->
     </div>
   </section>
    

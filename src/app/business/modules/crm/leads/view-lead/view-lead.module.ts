@@ -18,6 +18,8 @@ import { MatSliderModule } from "@angular/material/slider";
 import { NgCircleProgressModule } from "ng-circle-progress";
 import { FileService } from "../../../../../shared/services/file-service";
 import { TasksComponent } from "./tasks/tasks.component";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatIconModule } from "@angular/material/icon";
 import { SelectAttachmentModule } from "../../tasks/view-task/select-attachment/select-attachment.module";
 const routes: Routes = [
   { path: '', component: ViewLeadComponent },
@@ -48,6 +50,8 @@ const routes: Routes = [
     MatSliderModule,
     LoadingSpinnerModule,
     SelectAttachmentModule,
+    MatMenuModule,
+    MatIconModule,
     NgCircleProgressModule.forRoot({
       // set defaults here
       backgroundColor: "#e9ecef",
