@@ -97,9 +97,11 @@ export class CreateTaskComponent implements OnInit {
   public errorMsgAnyType:string=''
   public activityTitle:any;
   public activityDescription:any;
+  type: any;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
+    private activated_route: ActivatedRoute,
      private crmService: CrmService,
      public fed_service: FormMessageDisplayService,
      private createTaskFB: FormBuilder,
@@ -113,6 +115,11 @@ export class CreateTaskComponent implements OnInit {
      }
 
   ngOnInit(): void {
+    this.activated_route.queryParams.subscribe(qparams => {
+      if (qparams.type) {
+          this.type = qparams.type;
+      }
+    });
     console.log("this.crmService.taskActivityName1",this.crmService.taskActivityName);
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
         console.log("User is :", user);
@@ -143,6 +150,62 @@ export class CreateTaskComponent implements OnInit {
     
     this.api_loading=false;
     if(this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' && this.crmService.taskActivityName!='CreteTaskMaster'){
+      console.log('this.crmService.taskActivityName',this.crmService.taskActivityName)
+      this.createTaskForm=this.createTaskFB.group({
+      taskTitle:[null],
+      taskDescription:[null],
+      userTaskCategory:[null],
+      userTaskType:[null],
+      taskLocation:[null],
+      areaName:[null],
+      taskStatus:[null],
+      taskDate:[null],
+      taskDays:[null],
+      taskHrs:[null],
+      taskMin:[null],
+      selectMember:[null],
+      selectTaskManger:[null],
+      userTaskPriority:[null],
+      targetResult:[null],
+      targetPotential:[null],
+    }) 
+      this.selectHeader='Update Activity'
+      this.createBTimeField=false;
+      this.updateBTimefield=true;
+      this.updateValue=this.crmService.taskToCraeteViaServiceData;
+      console.log('this.updateValue',this.updateValue)
+      if(this.updateValue != undefined){
+        console.log(' this.updateValue', this.updateValue);
+        this.createTaskForm.patchValue({
+        taskTitle:this.updateValue.title,
+        taskDescription:this.updateValue.description,
+        targetPotential:this.updateValue.targetPotential,
+        targetResult:this.updateValue.targetResult,
+        userTaskCategory:this.updateValue.category.id,
+        userTaskType:this.updateValue.type.id,
+        taskStatus:this.updateValue.status.id,
+        userTaskPriority:this.updateValue.priority.id,
+      })
+      this.locationName =this.updateValue.location.name;
+      this.createTaskForm.controls.areaName.value =this.updateValue.locationArea;
+      this.updteLocationId= this.updateValue.location.id,
+      this.createTaskForm.controls.taskDays.value= this.updateValue.estDuration.days,
+      this.createTaskForm.controls.taskHrs.value= this.updateValue.estDuration.hours,
+      this.createTaskForm.controls.taskMin.value= this.updateValue.estDuration.minutes,
+      this.selectMember = this.updateValue.assignee.name;
+      this.updateMemberId=this.updateValue.assignee.id;
+      this.selectTaskManger= this.updateValue.manager.name;
+      this.updateManagerId= this.updateValue.manager.id
+      this.updateUserType=this.updateValue.userTypeEnum;
+      this.createTaskForm.controls.taskDate.value = this.updateValue.dueDate
+      this.estTime={ "days" :this.updateValue.estDuration.days, "hours" :this.updateValue.estDuration.hours, "minutes" : this.updateValue.estDuration.minutes };
+      console.log('this.estTime',this.estTime)
+      }
+      else{
+        this.router.navigate(['provider', 'task']);
+      }
+    }
+    else if(this.type ==='Update'){
       console.log('this.crmService.taskActivityName',this.crmService.taskActivityName)
       this.createTaskForm=this.createTaskFB.group({
       taskTitle:[null],

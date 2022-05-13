@@ -3,7 +3,7 @@ import { projectConstantsLocal } from "../../../../../../../src/app/shared/const
 import { projectConstants } from "../../../../../../../src/app/app.component";
 import { Messages } from "../../../../../../../src/app/shared/constants/project-messages";
 import { Location } from "@angular/common";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router , NavigationExtras } from "@angular/router";
 import { CrmService } from "../../crm.service";
 import { MatDialog } from "@angular/material/dialog";
 import { SnackbarService } from "../../../../../shared/services/snackbar.service";
@@ -151,13 +151,22 @@ export class ViewTaskComponent implements OnInit {
     });
   }
   openEditTask(taskdata: any, editText: any) {
-    this.crmService.taskToCraeteViaServiceData = taskdata;
+    this.crmService.taskToCraeteViaServiceData = taskdata
     const newTaskData = this.crmService.taskToCraeteViaServiceData;
-    setTimeout(() => {
-      this.crmService.taskActivityName = editText;
-      newTaskData;
-      this.router.navigate(["provider", "task", "create-task"]);
-    }, projectConstants.TIMEOUT_DELAY);
+    this.crmService.taskActivityName = editText;
+    newTaskData;
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: 'Update'
+      }
+    };
+    this.router.navigate(['provider', 'task', 'create-task'], navigationExtras);
+    // setTimeout(() => {
+    //   this.crmService.taskActivityName = editText;
+    //   newTaskData;
+    //   this.router.navigate(['provider', 'task', 'create-task']);
+    // }, projectConstants.TIMEOUT_DELAY);
+
   }
   markAsDone(taskid) {
     const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
