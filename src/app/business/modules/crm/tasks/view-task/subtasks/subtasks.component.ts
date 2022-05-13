@@ -125,6 +125,7 @@ export class SubtasksComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((res)=>{
       console.log(res)
+      this.ngOnInit()
     })
   
   }
@@ -159,6 +160,7 @@ export class SubtasksComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((res:any)=>{
       console.log('resssssssss',res);
+      this.ngOnInit()
     })
   }
 

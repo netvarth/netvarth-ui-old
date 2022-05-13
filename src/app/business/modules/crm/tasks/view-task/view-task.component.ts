@@ -83,6 +83,7 @@ export class ViewTaskComponent implements OnInit {
   taskkid: any;
   taskType: any;
   changeAction = false;
+  public headerName:string='Activity Overview'
   constructor(
     private locationobj: Location,
     private crmService: CrmService,
@@ -107,6 +108,7 @@ export class ViewTaskComponent implements OnInit {
         if (this.taskDetails.originUid) {
           this.taskType = "SubTask";
           console.log('taskType',this.taskType)
+          this.headerName='SubActivity Overview'
         }
         console.log('taskType',this.taskType)
         console.log("taskDetails.status", this.taskDetails.status.name);
