@@ -127,6 +127,7 @@ export class SelectAttachmentComponent implements OnInit {
 
   saveFile() {
     const _this = this;
+    this.dialogRef.close();
     console.log("The data is : ", this.data.source);
     if (this.data.source == "Lead") {
       var id = this.data.leaduid;
@@ -152,6 +153,7 @@ export class SelectAttachmentComponent implements OnInit {
       dataToSend.append("captions", blobPropdata);
       _this.sendWLAttachment(id, dataToSend).then(() => {                                                                         
         resolve(true);
+      
       });
     });
   }
@@ -223,7 +225,7 @@ export class SelectAttachmentComponent implements OnInit {
   }
 
   dialogClose() {
-    this.dialogRef.close();
+    this.dialogRef.close('close');
   }
 
   goBack() {
