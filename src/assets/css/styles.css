@@ -10141,6 +10141,12 @@ ngx-intl-tel-input input
   .third-party-listing-field .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element{
     border:1px solid #1E4079!important;
   }
+
+  .service-options .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-input-element{
+    /* border:2px solid #1E4079!important; */
+    /* border-radius: 10px!important; */
+    border: none!important;
+  }
   
   .freeslots .mat-chip-list-wrapper
   {

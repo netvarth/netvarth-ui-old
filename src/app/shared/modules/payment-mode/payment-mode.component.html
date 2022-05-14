@@ -4,7 +4,7 @@
                 *ngFor="let gateway of getPayTMmodesByGroup(paymentProfile.indianPaymodes)|keyvalue">
                 <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 mode-head">
                     <!-- <img [src]="getImageSrc(gateway.key)" class="gateway-img" alt="{{gateway.key}}" />  -->
-                    <b>{{gateway.key}}</b> Modes available for national payments
+                    <b>{{gateway.key}}</b> <span class="text-primary">Modes available for national payments</span>
                 </div>
                 <div class="pay-rad" *ngFor="let modes of gateway.value">
                     <div class="col-xs-12 no-padding pay-mode">
@@ -22,9 +22,9 @@
             *ngIf="paymentProfile.internationalPay">
             <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 no-padding"
                 *ngFor="let gateway of getPayTMmodesByGroup(paymentProfile.internationalPaymodes)|keyvalue">
-                <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 mgn-up-10  mode-head">
+                <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 mgn-up-10 mode-head">
                     <!-- <img [src]="getImageSrc(gateway.key)" class="gateway-img" alt="{{gateway.key}}" />  -->
-                    <b>{{gateway.key}}</b> Modes available for international payments
+                    <b>{{gateway.key}}</b> <span class="text-primary">Modes available for international payments</span>
                 </div>
                 <div class="pay-rad" *ngFor="let modes of gateway.value">
                     <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 no-padding pay-mode">

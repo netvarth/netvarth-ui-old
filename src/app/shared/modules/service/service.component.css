@@ -32,3 +32,77 @@
   margin: 2px;
   padding: 5px;;
  }
+
+
+ .bgGrey
+ {
+   background-color: #F8F8F8!important;
+   padding:10px 20px!important;
+   margin: 10px 0px!important;
+ }
+ .grouping-heading
+ {
+   font-size: 16px!important;
+   /* box-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1) !important; */
+ }
+
+ .label
+ {
+   font-size: 12px!important;
+ }
+ .ynw-common-form-nm .mat-input-element
+ {
+   padding: 0px !important;
+ }
+
+ .form-control{
+  margin-bottom: 0px!important;
+  height: 35px!important;
+  padding: 6px 12px!important;
+  font-size: 14px !important;
+  color: #555!important;
+  background-image: none !important;
+  border-radius: 5.73504px !important;
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%) !important;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;
+}
+
+
+.card-header{
+  border-radius: calc(0.5rem - 1px) calc(0.5rem - 1px) 0 0 !important;
+  border-bottom: 1.75px solid #d0d0d0 !important;
+  font-size: 15px !important;
+  text-transform: uppercase !important;
+  color: #395789 !important;
+  font-weight: 700 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+}
+
+/* input[type=number] {
+  height: 28px!important;
+} */
+
+.collapsed .fa-angle-down {
+  transform: rotate(180deg);
+  transition: .3s ease-in-out;
+  }
+
+.card{
+  padding: 10px!important;
+}
+
+.arrow
+{
+  font-size: 15px!important;
+  color: #1E4079;
+}
+
+@media(max-width: 768px) 
+{
+  .form-control
+  {
+      width: 100%;
+  }
+}
