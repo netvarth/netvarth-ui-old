@@ -444,40 +444,21 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </div>
       </div>
 
-      <div class="card-header card pointer-cursor d-flex" data-toggle="collapse" data-target="#patient_info">
-        <div>
-          <span class="font-weight-bold grouping-heading float-left"><label *ngIf="!is_donation" class="no-padding grouping-heading" style="font-size: 1.1rem;">
-            {{customer_label | capitalizeFirst}} Info</label>
-          <label *ngIf="is_donation" class="no-padding grouping-heading" style="font-size: 1.1rem;">
-            Donor Info</label>
-          </span>
-          <span class="float-right arrow font-weight-bolder"><span class="fa fa-angle-down"></span></span>
-        </div>
-        <div class="settings_info" *ngIf="!is_donation">
-          Would you like to collect more information from your {{customer_label}} along with the booking ? Jaldee can
-          set it up for you. Please contact support team at (+91 8880125000) to help us assist you.
-        </div>
-        <div class="settings_info" *ngIf="is_donation">
-          Would you like to collect more information from your donor along with the donation ? Jaldee can set it up
-          for you. Please contact support team at (+91 8880125000) to help us assist you.
-        </div>
-        <!-- <div>
-          <span class="fa fa-angle-down" aria-hidden="true"></span>
-          <span class="fa fa-angle-up" aria-hidden="true"></span>
-        </div> -->
-      </div>
+      
 
-      <div class="mgn-bt-20">
-        
+      <div class="card-header card pointer-cursor d-flex" data-toggle="collapse" data-target="#payment_info">
+        <div *ngIf="bprofile.serviceSector.domain != 'finance'">
+          <span class="no-padding pointer-cursor" *ngIf="!is_donation">
+            Pricing</span>
+            <span class="float-right arrow font-weight-bolder"><span class="fa fa-angle-down"></span></span>
+        </div>
+        <div class="settings_info mx-1" *ngIf="!is_donation">
+          Service price, advance amount and more
+        </div>
       </div>
       
-      <div class="collapse bgGrey" id="patient_info">
-        <div *ngIf="bprofile.serviceSector.domain != 'finance'" class="mgn-bt-20">
-          <a class="no-padding underline pointer-cursor" *ngIf="!is_donation" style="font-size: 1.1rem;">
-            Payment Info</a>
-          <div class="settings_info mx-1" *ngIf="!is_donation">
-            Service price, advance amount and more</div>
-        </div>
+      <div class="collapse bgGrey" id="payment_info">
+        
         <!-- mgn-lt-5 -->
         <div class="row mx-1 mgn-up-20" *ngIf="showBillingInfo && !is_donation">
           <section class="mgn-bt-30">
@@ -550,6 +531,19 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
           </section>
         </div>
+      </div>
+
+
+      
+      <div class="card-header card pointer-cursor d-flex" data-toggle="collapse" data-target="#payment_profiles">
+        <div>
+          <span class="no-padding pointer-cursor">
+            Payment Info
+          </span>
+          <span class="float-right arrow font-weight-bolder"><span class="fa fa-angle-down"></span></span>
+        </div>
+      </div>
+      <div class="collapse bgGrey" id="payment_profiles">
         <ng-container *ngIf="paymentProfiles.length===1">
           <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 mgn-bt-10 no-padding ">Payment Profile Selected for this
             service is: <b>{{paymentProfiles[0].displayName}}.</b> Contact our support team to change payment profile for
@@ -572,11 +566,19 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </mat-radio-group>
           </div>
         </ng-container>
-        <div class="mgn-bt-20">
-          <a class="no-padding underline pointer-cursor" (click)="advancedClick()" style="font-size: 1.1rem;">
-            Customization</a>
+      </div>
+
+      
+      
+      <div class="card-header card pointer-cursor d-flex" (click)="advancedClick()" data-toggle="collapse" data-target="#customization">
+        <div>
+          <span class="no-padding pointer-cursor">
+            Customization
+          </span>
+          <span class="float-right arrow font-weight-bolder"><span class="fa fa-angle-down"></span></span>
         </div>
-        <!-- mgn-lt-5 -->
+      </div>
+      <div class="collapse bgGrey" id="customization">
         <div class="row mx-1  mgn-up-20" *ngIf="showAdvancedSettings">
           <div class="form-group box-style col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="disp-flex">
@@ -655,6 +657,33 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           </div>
         </div>
       </div>
+
+
+      <a class="card-header card pointer-cursor d-flex" href="tel:+91 8880125000">
+        <div>
+          <span class="font-weight-bold grouping-heading float-left"><label *ngIf="!is_donation" class="no-padding grouping-heading" style="font-size: 1.1rem;">
+            {{customer_label | capitalizeFirst}} Info</label>
+          <label *ngIf="is_donation" class="no-padding grouping-heading" style="font-size: 1.1rem;">
+            Donor Info</label>
+          </span>
+          <!-- <span class="float-right arrow font-weight-bolder"><span class="fa fa-angle-down"></span></span> -->
+        </div>
+        <div class="settings_info" *ngIf="!is_donation">
+          Would you like to collect more information from your {{customer_label}} along with the booking ? Jaldee can
+          set it up for you. Please contact support team at (+91 8880125000) to help us assist you.
+        </div>
+        <div class="settings_info" *ngIf="is_donation">
+          Would you like to collect more information from your donor along with the donation ? Jaldee can set it up
+          for you. Please contact support team at (+91 8880125000) to help us assist you.
+        </div>
+        <!-- <div>
+          <span class="fa fa-angle-down" aria-hidden="true"></span>
+          <span class="fa fa-angle-up" aria-hidden="true"></span>
+        </div> -->
+      </a>
+
+
+
       <div class="actiondiv" style="margin-top: 20px;">
         <div style="margin-bottom:30px;display: inline-flex;">
           <button (click)="onCancel()" type="button" class="cs-btn bt2">{{cancel_btn}}</button> &nbsp;

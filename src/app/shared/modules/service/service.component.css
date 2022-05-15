@@ -52,7 +52,7 @@
  }
  .ynw-common-form-nm .mat-input-element
  {
-   padding: 0px !important;
+   padding: 10px !important;
  }
 
  .form-control{
@@ -99,10 +99,19 @@
   color: #1E4079;
 }
 
-@media(max-width: 768px) 
+@media(max-width: 768px)
 {
   .form-control
   {
       width: 100%;
+  }
+  .serv-county-code
+  {
+    width: 25px!important;
+  }
+  .serv-phone-code
+  {
+    width: 100px!important;
+    padding-top: 10px!important;
   }
 }
