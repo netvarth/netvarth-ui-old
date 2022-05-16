@@ -1,14 +1,14 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {  Meta, Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import { projectConstantsLocal } from '../../constants/project-constants';
 
 @Component({
   selector: 'app-qrcodegenerator',
   templateUrl: './qrcodegeneratordetail.component.html',
- // styleUrls: ['./qrcodegeneratordetail.component.css']
+  // styleUrls: ['./qrcodegeneratordetail.component.css']
 })
-export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
+export class QRCodeGeneratordetailComponent implements OnInit, OnDestroy {
   elementType = 'url';
   accuid: any;
   bname: any;
@@ -19,7 +19,6 @@ export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
   qr_value;
   qrCodePath: string;
   wpath: any;
-  imageUrl: string;
   description: string;
   shareLink: any;
   window_path: any;
@@ -28,7 +27,7 @@ export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
   constructor(private changeDetectorRef: ChangeDetectorRef,
     public dialogRef: MatDialogRef<QRCodeGeneratordetailComponent>,
     private angular_meta: Meta,
-    private titleService: Title ,
+    private titleService: Title,
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
   }
@@ -60,23 +59,22 @@ export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
     // this.window_path = this.data.pathUrl;
     // console.log(this.wpath + this.accuid);
     this.userId = this.data.userId;
-    if(this.userId){
-      this.shareLink = this.wpath + this.accuid+'/'+ this.userId + '/' ;
+    if (this.userId) {
+      this.shareLink = this.wpath + this.accuid + '/' + this.userId + '/';
     } else {
       this.shareLink = this.wpath + this.accuid + '/';
     }
     // this.description = 'You can book my services by just clicking this link';
     this.description = 'For bookings use this link';
-    this.imageUrl = this.wpath + 'assets/images/logo.png';
-    this.qrCodegenerateOnlineID(this.accuid,this.userId);
+    this.qrCodegenerateOnlineID(this.accuid, this.userId);
   }
   ngOnDestroy() {
     this.titleService.setTitle('Jaldee');
   }
-  qrCodegenerateOnlineID(valuetogenerate,userid?) {
-    if(userid){
-      this.qr_value = projectConstantsLocal.PATH + valuetogenerate +'/'+ userid + "/" ;
-    } else{
+  qrCodegenerateOnlineID(valuetogenerate, userid?) {
+    if (userid) {
+      this.qr_value = projectConstantsLocal.PATH + valuetogenerate + '/' + userid + "/";
+    } else {
       this.qr_value = projectConstantsLocal.PATH + valuetogenerate + "/";
     }
     this.qr_code_oId = true;
@@ -84,35 +82,14 @@ export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
     setTimeout(() => {
       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
       this.angular_meta.addTags([
-         { property: 'og:title', content: this.data.businessName },
-        { property: 'og:image', content: this.imageUrl },
+        { property: 'og:title', content: this.data.businessName },
+        // { property: 'og:image', content: this.imageUrl },
         { property: 'og:type', content: 'link' },
         { property: 'og:description', content: this.description },
 
       ]);
     }, 50);
-
-    // console.log('sharelink...' + this.shareLink);
-    // console.log('qrcode...' + this.qrCodePath);
-
   }
-  // qrCodegenerateCustID(valuetogenerate) {
-  //     this.qr_value = projectConstantsLocal.PATH + valuetogenerate;
-  //     this.qr_code_cId = true;
-  //     this.changeDetectorRef.detectChanges();
-  //     setTimeout(() => {
-  //       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
-  //     }, 50);
-  // }
-  //   closeOnlineQR() {
-  //     this.qr_code_oId = false;
-  //   }
-  //   closeCustomQR() {
-  //     this.qr_code_cId = false;
-  //   }
-  //   showPasscode() {
-  //     this.show_passcode = !this.show_passcode;
-  //   }
   printQr(printSectionId) {
     const printContent = document.getElementById(printSectionId);
     const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
@@ -128,11 +105,6 @@ export class QRCodeGeneratordetailComponent implements OnInit , OnDestroy {
     WindowPrt.print();
     WindowPrt.close();
   }
-
   downloadQR() {
-
   }
 }
-
-
-

@@ -187,12 +187,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   progress_loading_url = false;
   profile_incomplete_cap = Messages.PROFILE_INCOMPLETE_CAP;
   loading = true;
-  imageUrl: string;
-  // jaldee_turn_on_cap=Messages.JALDEEE_TURN_ON_CAP;
-  // jaldee_turn_ff_cap=Messages.JALDEE_TURN_OFF_CAP;
-  // path = window.location.host + ;
   wndw_path = projectConstantsLocal.PATH;
-  // @ViewChildren('qrCodeParent') qrCodeParent: ElementRef;
   @ViewChild('closebutton') closebutton;
   notedialogRef: any;
   private qrCodeParent: ElementRef;
@@ -220,12 +215,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       this.qrCodeParent = content1;
     }
   }
-  // private qrCodeCustId: ElementRef;
-  // @ViewChild('qrCodeCustId', { static: false }) set content2(content2: ElementRef) {
-  //   if (content2) { // initially setter gets called with undefined
-  //     this.qrCodeParent = content2;
-  //   }
-  // }
   mandatoryfieldArray: any = [];
 
   additionalInfoDomainFields: any = [];
@@ -234,8 +223,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   bProfile = null;
   serviceSector = null;
   public_search = false;
-  // error_msg = '';
-
   loc_badges: any = [];
   badge_map_arr: any = [];
   loc_list: any = [];
@@ -260,12 +247,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   currentlicense_details: any = [];
 
   blogo: any = [];
-  // item_pic = {
-  //   files: [],
-  //   base64: null
-  // };
-  // selitem_pic = '';
-  // profimg_exists = false;
   badgeIcons: any = [];
   badgeArray: any = [];
 
@@ -483,16 +464,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       this.businessweightageArray = result;
       if (this.businessweightageArray.length !== 0) {
         this.weightageValue = this.calculateWeightage(result);
-        // if(this.checkAllRequiredFiedsOfJaldeeOnlineFilled()){
-        //   if(this.mandatoryfieldArray.length!==0){
-        //     this.changeJaldeeOnlineStatus(this.checkMandatoryFieldsAlsoFilled());
-        //   }
-        //   else{
-        //     this.changeJaldeeOnlineStatus(true);
-        //   }
-        // }else{
-        //   this.changeJaldeeOnlineStatus(false);
-        // }
       } else {
         this.weightageValue = 0;
         this.businessProfile_show = -1;
@@ -1414,7 +1385,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   // dwnld QR
   qrCodegenerateOnlineID(valuetogenerate) {
-    this.imageUrl = this.wndw_path + 'assets/images/logo.png';
     this.qr_value = projectConstantsLocal.PATH + valuetogenerate + "/";
     this.qr_code_oId = true;
     this.changeDetectorRef.detectChanges();
@@ -1423,7 +1393,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
       this.angular_meta.addTags([
         { property: 'og:title', content: this.bProfile.businessName },
-        { property: 'og:image', content: this.imageUrl },
+        // { property: 'og:image', content: this.imageUrl },
         { property: 'og:type', content: 'link' },
         { property: 'og:description', content: this.bProfile.businessDesc },
 
@@ -1512,9 +1482,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
     return new File([u8arr], filename, { type: mime });
   }
-
-
-
   // Save pro pic and cover pic
   saveImages() {
     this.spinner_load = true;

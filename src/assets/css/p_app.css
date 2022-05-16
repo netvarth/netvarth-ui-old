@@ -1,9 +1,4 @@
 .lgo img {width: 100px !important}
-.parent-cont {
-  background: url(../images/mobile/mobile.jpg) !important;
-  background-repeat : no-repeat !important;
-  background-size: cover !important;
-}
 .home-cnt {
   height: 100vh !important;
 }

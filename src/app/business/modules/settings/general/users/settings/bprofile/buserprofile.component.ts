@@ -246,7 +246,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   subdomain: any;
   maintooltip: any;
   qrdialogRef: MatDialogRef<QRCodeGeneratorComponent, any>;
-  imageUrl: string;
+  // imageUrl: string;
   qr_value: any;
   qr_code_oId = false;
   qrCodePath: string;
@@ -565,7 +565,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     });
   }
   qrCodegenerateOnlineID(valuetogenerate,userid) {
-    this.imageUrl = this.wndw_path + 'assets/images/logo.png';
     this.qr_value = projectConstantsLocal.PATH + valuetogenerate +'/'+ userid + "/";
     this.qr_code_oId = true;
     this.cdref.detectChanges();
@@ -575,7 +574,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
       console.log(this.qrCodePath);
       this.angular_meta.addTags([
         { property: 'og:title', content: this.bProfile.businessName },
-        { property: 'og:image', content: this.imageUrl },
+        // { property: 'og:image', content: this.imageUrl },
         { property: 'og:type', content: 'link' },
         { property: 'og:description', content: this.bProfile.businessDesc },
 

@@ -97,24 +97,6 @@ body {
   -o-border-radius: 20px;
   -ms-border-radius: 20px;
  }
-  
- .container2  {
-  width: 1400px;
-  background: #fff;
-  margin: 0 auto;
-  box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
-  -webkit-box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
-  -o-box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
-  -ms-box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
-  border-radius: 20px;
-  -moz-border-radius: 20px;
-  -webkit-border-radius: 20px;
-  -o-border-radius: 20px;
-  -ms-border-radius: 20px;
-  /* background-image: url(../../../../assets/images/home/signup/password.png); */
-  background-repeat: no-repeat;
- }
 .display-flex {
   justify-content: space-between;
   -moz-justify-content: space-between;
@@ -471,10 +453,6 @@ label.valid {
   .container1 {
     width: calc( 100% - 30px);
     max-width: 100%; } }
-    @media screen and (max-width: 1200px) {
-      .container2 {
-        width: calc( 100% - 30px);
-        max-width: 100%; } }
 @media screen and (min-width: 1024px) {
   .container {
     max-width: 1200px; } }
@@ -892,9 +870,6 @@ input[type=checkbox]:not(old):checked + label > span:before {
 
 .domainstyle {
   background-color: #4cb7ff !important;
-  /* display: block !important;
-    padding: 0 !important;
-    margin: 2px 0 0 2px  !important; */
     float: left;
     margin: 5px;
     border: 1px solid #333;
@@ -920,10 +895,6 @@ input[type=checkbox]:not(old):checked + label > span:before {
   width: 25px !important;
   height:25px !important;
   float: left;
-}
-.acc-doms h6 {
-  padding-left: 40px;
-  padding-top: 10px;
 }
 .food_icon {
   content:    url(../../../../../assets/images/home/signup/Resturant.png);

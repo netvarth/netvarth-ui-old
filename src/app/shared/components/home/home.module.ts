@@ -2,8 +2,6 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { MatDialogModule } from "@angular/material/dialog";
 import { RouterModule, Routes } from "@angular/router";
-import { ScrollToModule } from "@nicky-lenaers/ngx-scroll-to";
-import { OwlModule } from "ngx-owl-carousel";
 import { Nl2BrPipeModule } from "nl2br-pipe";
 import { LazyModule } from "../../modules/lazy-load/lazy.module";
 import { LoadingSpinnerModule } from "../../modules/loading-spinner/loading-spinner.module";
@@ -26,8 +24,6 @@ const routes: Routes = [
         MatDialogModule,
         CommonModule,
         Nl2BrPipeModule,
-        OwlModule,
-        ScrollToModule.forRoot(),
         LoadingSpinnerModule,
         SearchModule,
         LoginModule,
