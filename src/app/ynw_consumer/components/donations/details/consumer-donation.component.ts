@@ -1,10 +1,8 @@
 import { Component, OnInit, Inject, OnDestroy, ViewChild, NgZone, ChangeDetectorRef, HostListener } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-// import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT, Location } from '@angular/common';
 import { Messages } from '../../../../shared/constants/project-messages';
-// import { projectConstants } from '../../../../app.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -15,7 +13,6 @@ import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { WindowRefService } from '../../../../shared/services/windowRef.service';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
 import { MatDialog } from '@angular/material/dialog';
-// import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
@@ -823,7 +820,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     payWithPayTM(pData: any, accountId: any) {
         this.loadingPaytm = true;
         pData.paymentMode = this.paymentMode;
-        this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
+        this.paytmService.initializePayment(pData, accountId, this);
     }
     finishDonation(status, response?) {
         if (status) {

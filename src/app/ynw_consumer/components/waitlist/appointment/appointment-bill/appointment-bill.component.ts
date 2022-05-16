@@ -547,7 +547,7 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
         this.isClickedOnce = true;
         this.loadingPaytm = true;
         pData.paymentMode = this.selected_payment_mode;
-        this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
+        this.paytmService.initializePayment(pData, accountId, this);
     }
     closeloading() {
         this.isClickedOnce = false;

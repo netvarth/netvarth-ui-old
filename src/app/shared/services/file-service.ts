@@ -94,10 +94,7 @@ export class FileService {
   }
   getImage(url, file) {
     console.log("File Type :", file.type)
-    
-    
     console.log("File Name :", file.name.includes('docx'))
-
     if (file.type == 'application/pdf') {
       return './assets/images/pdf.png';
     } else if (file.type == 'application/vnd.ms-excel' || file.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
@@ -106,12 +103,11 @@ export class FileService {
       return './assets/images/audio.png';
     } else if (file.type == 'video/mp4' || file.type == 'video/mpeg') {
       return './assets/images/video.png';
-    } else if (file.type == 'application/msword' || file.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+    } else if (file.type == 'application/msword' || file.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || file.name.includes('docx') || file.name.includes('doc')) {
       return './assets/images/ImgeFileIcon/wordDocsBgWhite.jpg';
-    } else if (file.name.includes('docx') || file.name.includes('doc')) {
+    } else if (file.name.includes('txt')) {
       return './assets/images/ImgeFileIcon/docTxt.png';
-    } 
-    else {
+    } else {
       return url;
     }
   }

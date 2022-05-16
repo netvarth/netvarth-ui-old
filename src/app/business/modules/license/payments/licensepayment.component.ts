@@ -8,7 +8,6 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
-import { projectConstantsLocal } from '../../../../../../src/app/shared/constants/project-constants';
 import { PaytmService } from '../../../../../../src/app/shared/services/paytm.service';
 import { Messages } from '../../../../../../src/app/shared/constants/project-messages';
 import { ProviderServices } from '../../../../../../src/app/business/services/provider-services.service';
@@ -150,7 +149,7 @@ export class PaymentComponent implements OnInit {
               // if (paymentMode === 'DC') {
               //   this.document.getElementById('payuform').submit();
               // } else {
-              this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, this.accountId, this);
+              this.paytmService.initializePayment(pData,this.accountId, this);
               // }
             }, 2000);
           } else {

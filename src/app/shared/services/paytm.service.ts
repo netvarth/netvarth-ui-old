@@ -4,27 +4,26 @@ import { SharedServices } from './shared-services';
 
 @Injectable()
 export class PaytmService {
-    paymentModes=[
-         'NB','CC','DC','UPI','PPI','CARD'
-      ];
+    paymentModes = [
+        'NB', 'CC', 'DC', 'UPI', 'PPI', 'CARD'
+    ];
     constructor(
         private sharedServices: SharedServices
     ) { }
-    initializePayment(pData: any, paytmUrl, accountId, referrer) {
+    initializePayment(pData: any, accountId, referrer) {
         let response = JSON.parse(pData.response);
-        if(pData.paymentMode==='CC'||pData.paymentMode==='DC'){
-            pData.paymentMode='CARD';
+        if (pData.paymentMode === 'CC' || pData.paymentMode === 'DC') {
+            pData.paymentMode = 'CARD';
         }
-        const paymentModesHidden=this.paymentModes.filter(obj=>obj!==pData.paymentMode);
+        const paymentModesHidden = this.paymentModes.filter(obj => obj !== pData.paymentMode);
         const paytm_payload = {
-
             "paymentId": pData.txnid,
             "orderId": pData.orderId,
             "siganature": response.signature
 
         };
         console.log('response' + JSON.stringify(response));
-        this.loadPayTMScript(pData, paytmUrl, referrer).onload = () => {
+        this.loadPayTMScript(pData, referrer).onload = () => {
             var config = {
                 "root": "",
                 "flow": "DEFAULT",
@@ -33,28 +32,26 @@ export class PaytmService {
                     "token": response.body.txnToken, /* update token value */
                     "tokenType": "TXN_TOKEN",
                     "amount": pData.amount
-                  
-                    
                 },
-                
                 "merchant": {
                     "mid": pData.merchantId,
                     "redirect": false
                 },
-                "payMode":{
-                    "filter":{
-                        'exclude':paymentModesHidden
+                "payMode": {
+                    "filter": {
+                        'exclude': paymentModesHidden
                     }
                 },
                 "handler": {
                     "notifyMerchant": function (eventName, data) {
+                        alert(JSON.stringify(data));
                         console.log("notifyMerchant handler function called");
                         console.log("eventName => ", eventName);
                         console.log("data => ", data);
-                        referrer.closeloading();
-
+                        // referrer.closeloading();
                     },
-                    transactionStatus: function (data) {
+                    "transactionStatus": function (data) {
+                        alert(JSON.stringify(data));
                         console.log("payment status ", data);
                         console.log(paytm_payload);
                         // console.log("payment status ", JSON.stringify(data));
@@ -62,13 +59,12 @@ export class PaytmService {
                         if (data) {
                             referrer.transactionCompleted(data, paytm_payload, accountId);
                         } else {
-                            referrer.transactionCompleted({STATUS:'TXN_SUCCESS'}, paytm_payload, accountId);
-                        }         
-                        // referrer.closeloading();
+                            referrer.transactionCompleted({ STATUS: 'TXN_SUCCESS' }, paytm_payload, accountId);
+                        }
                     }
                 }
             };
-            console.log(config);
+            console.log(JSON.stringify(config));
             if (window['Paytm'] && window['Paytm'].CheckoutJS) {
                 window['Paytm'].CheckoutJS.onLoad(function excecuteAfterCompleteLoad() {
                     // initialze configuration using init method 
@@ -76,12 +72,12 @@ export class PaytmService {
                         // after successfully updating configuration, invoke JS Checkout
                         window['Paytm'].CheckoutJS.invoke();
                     }).catch(function onError(error) {
+                        alert("Error....");
                         console.log("error => ", error);
                         window['Paytm'].CheckoutJS.close();
                         referrer.closeloading();
                     });
                 });
-
             }
         };
 
@@ -91,8 +87,7 @@ export class PaytmService {
         }, 600000);
     }
 
-
-    public loadPayTMScript(pData, payTMUrl, isfrom): HTMLScriptElement {
+    public loadPayTMScript(pData,isfrom): HTMLScriptElement {
         let payTmurl;
         if (pData.paymentEnv == 'production') {
             payTmurl = projectConstantsLocal.PAYTM_URL;
@@ -100,7 +95,7 @@ export class PaytmService {
             payTmurl = projectConstantsLocal.PAYTMLOCAL_URL;
         }
         const url = payTmurl + '/merchantpgpui/checkoutjs/merchants/' + pData.merchantId + '.js';
-        console.log('preparing to load...')
+        console.log('preparing to load...');
         let script = document.createElement('script');
         script.id = pData.orderId;
         script.src = url;
@@ -115,34 +110,28 @@ export class PaytmService {
         return script;
     }
     updatePaytmPay(payload, account_id) {
+        const _this = this;
         return new Promise((resolve, reject) => {
-
-            this.sharedServices.updatePaytmPay(payload, account_id)
+            _this.sharedServices.updatePaytmPay(payload, account_id)
                 .subscribe(result => {
                     console.log('result' + result);
                     resolve(result);
                 }, error => {
                     reject(false);
                 })
-
         })
-
-
     }
-    updatePaytmPayForProvider(payload, ) {
+    updatePaytmPayForProvider(payload,) {
+        const _this = this;
         return new Promise((resolve, reject) => {
-
-            this.sharedServices.updatePaytmPayProvider(payload)
+            _this.sharedServices.updatePaytmPayProvider(payload)
                 .subscribe(result => {
                     console.log('result' + result);
                     resolve(result);
                 }, error => {
                     reject(false);
                 })
-
         })
-
-
     }
 
 }

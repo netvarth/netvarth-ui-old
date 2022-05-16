@@ -10,6 +10,7 @@ import { LoadingSpinnerModule } from '../../modules/loading-spinner/loading-spin
 import { QuestionnaireComponent } from './questionnaire.component';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
+import { FileService } from '../../services/file-service';
 @NgModule({
     declarations: [
         QuestionnaireComponent
@@ -27,6 +28,7 @@ import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
         MatOptionModule,
         MatSelectModule
     ],
+    providers:[FileService],
     exports: [QuestionnaireComponent]
 })
 export class QuestionnaireModule { }

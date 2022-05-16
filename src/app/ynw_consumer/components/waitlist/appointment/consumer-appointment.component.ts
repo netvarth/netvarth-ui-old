@@ -1958,6 +1958,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         } else {
             this.subs.sink = this.sharedServices.consumerPayment(paymentReqInfo)
                 .subscribe((pData: any) => {
+                    console.log(JSON.stringify(pData));
                     this.paymentRequestId = pData['paymentRequestId'];
                     this.pGateway = pData.paymentGateway;
                     if (this.pGateway === 'RAZORPAY') {
@@ -1987,7 +1988,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     payWithPayTM(pData: any, accountId: any) {
         this.loadingPaytm = true;
         pData.paymentMode = this.paymentMode;
-        this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
+        this.paytmService.initializePayment(pData, accountId, this);
     }
 
     finishAppointment(status) {

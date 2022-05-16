@@ -12,6 +12,7 @@ import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { ShowuploadfileComponent } from '../../../business/modules/medicalrecord/uploadfile/showuploadfile/showuploadfile.component';
 import { MatDialog } from '@angular/material/dialog';
 import { projectConstantsLocal } from '../../constants/project-constants';
+import { FileService } from '../../services/file-service';
 
 @Component({
   selector: 'app-questionnaire',
@@ -28,7 +29,7 @@ export class QuestionnaireComponent implements OnInit {
   @Input() type;
   @Input() waitlistStatus;
   @Input() orderStatus;
-  
+
   @Input() donationDetails;
   @Output() returnAnswers = new EventEmitter<any>();
   answers: any = {};
@@ -96,6 +97,7 @@ export class QuestionnaireComponent implements OnInit {
     private providerService: ProviderServices,
     private dateProcessor: DateTimeProcessor,
     public dialog: MatDialog,
+    private fileService: FileService,
     private location: Location) {
     this.activated_route.queryParams.subscribe(qparams => {
       this.params = qparams;
@@ -124,7 +126,7 @@ export class QuestionnaireComponent implements OnInit {
   }
   ngOnInit(): void {
     console.log("Questionaire init");
-    console.log("QuestionAnswers:",this.questionAnswers);
+    console.log("QuestionAnswers:", this.questionAnswers);
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     if (this.questionnaireList) {
       console.log("QuestionaireList:", this.questionnaireList);
@@ -228,7 +230,7 @@ export class QuestionnaireComponent implements OnInit {
       this.uploadedImages = [];
       this.uploadedFiles = [];
       for (let answ of answerData) {
-        console.log("Answer:",answ);
+        console.log("Answer:", answ);
         if (answ.answerLine) {
           if (answ.question.fieldDataType === 'fileUpload') {
             if (answ.answerLine.answer && answ.answerLine.answer[answ.question.fieldDataType] && answ.answerLine.answer[answ.question.fieldDataType].length > 0) {
@@ -285,6 +287,7 @@ export class QuestionnaireComponent implements OnInit {
               this.uploadFilesTemp[key] = [];
             }
             const type = this.uploadedFiles[key][key1].type.split('/');
+            console.log("Type1:", type);
             if (type[0] !== 'audio' && type[0] !== 'video' || ((type[0] === 'audio' || type[0] === 'video') && this.uploadedFiles[key][key1].status === 'COMPLETE')) {
               this.uploadFilesTemp[key].push(key1);
             }
@@ -307,60 +310,63 @@ export class QuestionnaireComponent implements OnInit {
   }
   filesSelected(event, question, document) {
     const input = event.target.files;
+    console.log("Input:");
+    console.log(input);
     if (input) {
       for (const file of input) {
         let type = file.type.split('/');
+        console.log("type2:", type);
         this.apiError[question.labelName] = [];
         // if (question.filePropertie.fileTypes.indexOf(type[1]) === -1) {
         //   this.snackbarService.openSnackBar('Selected file type not supported', { 'panelClass': 'snackbarerror' });
         // } else {
 
-          if (!this.filestoUpload[question.labelName]) {
-            this.filestoUpload[question.labelName] = {};
-          }
-          if (!this.filestoUpload[question.labelName][document]) {
-            this.filestoUpload[question.labelName][document] = {};
-          }
-          if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
-            let index;
-            if (type[0] === 'application' || type[0] === 'image') {
-              index = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
-            } else {
-              index = this.audioVideoFiles.indexOf(this.filestoUpload[question.labelName][document]);
-            }
-            if (index !== -1) {
-              if (type[0] === 'application' || type[0] === 'image') {
-                this.selectedMessage.splice(index, 1);
-              } else {
-                this.audioVideoFiles.splice(index, 1);
-              }
-              delete this.filestoUpload[question.labelName][document];
-              delete this.answers[question.labelName][index];
-            }
-          }
-          this.filestoUpload[question.labelName][document] = file;
+        if (!this.filestoUpload[question.labelName]) {
+          this.filestoUpload[question.labelName] = {};
+        }
+        if (!this.filestoUpload[question.labelName][document]) {
+          this.filestoUpload[question.labelName][document] = {};
+        }
+        if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
+          let index;
           if (type[0] === 'application' || type[0] === 'image') {
-            this.selectedMessage.push(file);
-            const indx = this.selectedMessage.indexOf(file);
-            if (indx !== -1) {
-              const reader = new FileReader();
-              reader.onload = (e) => {
-                this.selectedMessage[indx]['path'] = e.target['result'];
-              };
-              reader.readAsDataURL(file);
-            }
+            index = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
           } else {
-            this.audioVideoFiles.push(file);
-            const indx = this.audioVideoFiles.indexOf(file);
-            if (indx !== -1) {
-              const reader = new FileReader();
-              reader.onload = (e) => {
-                this.audioVideoFiles[indx]['path'] = e.target['result'];
-              };
-              reader.readAsDataURL(file);
-            }
+            index = this.audioVideoFiles.indexOf(this.filestoUpload[question.labelName][document]);
           }
-       // }
+          if (index !== -1) {
+            if (type[0] === 'application' || type[0] === 'image') {
+              this.selectedMessage.splice(index, 1);
+            } else {
+              this.audioVideoFiles.splice(index, 1);
+            }
+            delete this.filestoUpload[question.labelName][document];
+            delete this.answers[question.labelName][index];
+          }
+        }
+        this.filestoUpload[question.labelName][document] = file;
+        if (type[0] === 'application' || type[0] === 'image') {
+          this.selectedMessage.push(file);
+          const indx = this.selectedMessage.indexOf(file);
+          if (indx !== -1) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              this.selectedMessage[indx]['path'] = e.target['result'];
+            };
+            reader.readAsDataURL(file);
+          }
+        } else {
+          this.audioVideoFiles.push(file);
+          const indx = this.audioVideoFiles.indexOf(file);
+          if (indx !== -1) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              this.audioVideoFiles[indx]['path'] = e.target['result'];
+            };
+            reader.readAsDataURL(file);
+          }
+        }
+        // }
       }
       if (this.file2 && this.file2.nativeElement.value) {
         this.file2.nativeElement.value = '';
@@ -449,7 +455,7 @@ export class QuestionnaireComponent implements OnInit {
               let type = this.filestoUpload[key][key1].type.split('/');
               type = type[0];
               if (type === 'application' || type === 'image') {
-                this.answers[key].push({caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1] });
+                this.answers[key].push({ caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1] });
               } else {
                 this.answers[key].push({ caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1] });
               }
@@ -535,7 +541,7 @@ export class QuestionnaireComponent implements OnInit {
       this.apiError[key] = [];
       let newMap = {};
       let question = this.questions.filter(quest => this.getQuestion(quest).labelName === key);
-      if (this.source === 'customer-create' || this.source === 'qnrDetails' || this.source==='onetime') {
+      if (this.source === 'customer-create' || this.source === 'qnrDetails' || this.source === 'onetime') {
         question = question[0];
       } else {
         question = question[0].question;
@@ -870,7 +876,7 @@ export class QuestionnaireComponent implements OnInit {
                       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                       this.buttonDisable = false;
                     });
-              } 
+              }
               else if (type === 'consOrder') {
                 this.sharedService.consumerOrderQnrUploadStatusUpdate(this.uuid, this.accountId, postData)
                   .subscribe((data) => {
@@ -880,7 +886,7 @@ export class QuestionnaireComponent implements OnInit {
                       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                       this.buttonDisable = false;
                     });
-              } 
+              }
               else if (type === 'consDonationDetails') {
                 this.sharedService.consumerDonationQnrUploadStatusUpdate(this.uuid, this.accountId, postData)
                   .subscribe((data) => {
@@ -899,7 +905,7 @@ export class QuestionnaireComponent implements OnInit {
                       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                       this.buttonDisable = false;
                     });
-              } 
+              }
               else if (type === 'proOrder') {
                 this.providerService.providerOrderQnrUploadStatusUpdate(this.uuid, postData)
                   .subscribe((data) => {
@@ -954,14 +960,14 @@ export class QuestionnaireComponent implements OnInit {
           } else {
             this.submitProviderWaitlistQuestionnaire(dataToSend);
           }
-        } 
+        }
         else if (this.source === 'proOrder') {
           if (this.qnrStatus === 'submitted') {
             this.resubmitProviderOrderQuestionnaire(dataToSend);
           } else {
             this.submitProviderOrderQuestionnaire(dataToSend);
           }
-        }else {
+        } else {
           if (this.qnrStatus === 'submitted') {
             this.resubmitProviderApptQuestionnaire(dataToSend);
           } else {
@@ -984,21 +990,21 @@ export class QuestionnaireComponent implements OnInit {
           } else {
             this.submitConsumerWaitlistQuestionnaire(dataToSend);
           }
-        } else if(this.source === 'consAppt') {
+        } else if (this.source === 'consAppt') {
           if (this.qnrStatus === 'submitted') {
             this.resubmitConsumerApptQuestionnaire(dataToSend);
           } else {
             this.submitConsumerApptQuestionnaire(dataToSend);
           }
         }
-        else if(this.source === 'consOrder') {
+        else if (this.source === 'consOrder') {
           if (this.qnrStatus === 'submitted') {
             this.resubmitConsumerOrderQuestionnaire(dataToSend);
           } else {
             this.submitConsumerOrderQuestionnaire(dataToSend);
           }
         }
-        else{
+        else {
           if (this.qnrStatus === 'submitted') {
             this.resubmitConsumerDonationQuestionnaire(dataToSend);
           } else {
@@ -1014,6 +1020,7 @@ export class QuestionnaireComponent implements OnInit {
   getImg(question, document) {
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
       let type = this.filestoUpload[question.labelName][document].type.split('/');
+      console.log("Type3:", type);
       let file;
       if (type[0] === 'video' || type[0] === 'audio') {
         file = this.audioVideoFiles;
@@ -1022,35 +1029,53 @@ export class QuestionnaireComponent implements OnInit {
       }
       const indx = file.indexOf(this.filestoUpload[question.labelName][document]);
       if (indx !== -1) {
-        let path;
-        if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc') {
-          path = 'assets/images/pdf.png';
-        } else if (type[0] === 'video') {
-          path = 'assets/images/video.png';
-        } else if (type[0] === 'audio') {
-          path = 'assets/images/audio.png';
+        let path = this.fileService.getImage(null, this.filestoUpload[question.labelName][document]);
+        if (path || path !== null) {
+          return path;
         } else {
-          path = file[indx].path;
+          return file[indx].path;
         }
-        return path;
+        // if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc') {
+        //   path = 'assets/images/pdf.png';
+        // } else if (type[0] === 'video') {
+        //   path = 'assets/images/video.png';
+        // } else if (type[0] === 'audio') {
+        //   path = 'assets/images/audio.png';
+        // } else {
+        //   path = file[indx].path;
+        // }
+        // return path;
       }
     } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
       const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
       if (indx !== -1) {
-        let path;
-        let type = this.uploadedImages[indx].type.split('/');
-        if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc') {
-          path = 'assets/images/pdf.png';
-        } else if (this.uploadedImages[indx].status === 'COMPLETE' && type[0] === 'video') {
-          path = 'assets/images/video.png';
-        } else if (this.uploadedImages[indx].status === 'COMPLETE' && type[0] === 'audio') {
-          path = 'assets/images/audio.png';
+        let path = this.fileService.getImage(null, this.filestoUpload[question.labelName][document]);
+        if (path || path !== null) {
+          return path;
         } else {
-          path = this.uploadedImages[indx].s3path;
+          return this.uploadedImages[indx].s3path;
         }
-        return path;
       }
     }
+    // let type = this.uploadedImages[indx].type.split('/');
+    // if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc') {
+    //   path = 'assets/images/pdf.png';
+    // } 
+    // if (path || path!==null) {
+    //   path;
+    // } else 
+    // } else if (this.uploadedImages[indx].status === 'COMPLETE' && type[0] === 'video') {
+    //   path = 'assets/images/video.png';
+    // } else if (this.uploadedImages[indx].status === 'COMPLETE' && type[0] === 'audio') {
+    //   path = 'assets/images/audio.png';
+    // } 
+    //   if (path || path !==null) {        
+    //   }else {
+    //     path = this.uploadedImages[indx].s3path;
+    //   }
+    //   return path;
+    // }
+    // }
   }
   disableInput() {
     if (this.uuid) {
@@ -1090,7 +1115,7 @@ export class QuestionnaireComponent implements OnInit {
         if (this.waitlistStatus !== 'Order Confirmed' && this.waitlistStatus !== 'Order Received') {
           return false;
         }
-        
+
       }
       if (this.source === 'consDonationDetails' || this.source === 'qnrDetails' || this.source === 'qnrView' || (this.type && this.type !== 'qnr-link' && !this.editQuestionnaire)) {
         return false;
@@ -1272,11 +1297,11 @@ export class QuestionnaireComponent implements OnInit {
     if (value === false) {
       return 'No';
     }
-  } 
-   getMaxdate(data) {
+  }
+  getMaxdate(data) {
     let date;
-    console.log("tday"+this.tday);
-    if(this.getQuestion(data).dateProperties && this.getQuestion(data).dateProperties.endDate){
+    console.log("tday" + this.tday);
+    if (this.getQuestion(data).dateProperties && this.getQuestion(data).dateProperties.endDate) {
       const dt = this.reverse(this.getQuestion(data).dateProperties.endDate);
       date = new Date(dt)
     } else {
@@ -1286,18 +1311,18 @@ export class QuestionnaireComponent implements OnInit {
   }
   getMindate(data) {
     let date;
-    if(this.getQuestion(data).dateProperties && this.getQuestion(data).dateProperties.startDate){
+    if (this.getQuestion(data).dateProperties && this.getQuestion(data).dateProperties.startDate) {
       const dt = this.reverse(this.getQuestion(data).dateProperties.startDate);
       date = new Date(dt)
     } else {
       date = this.minday;
     }
-   // console.log(date);
+    // console.log(date);
     return date;
   }
-   reverse(s){
-   // date.split("/").reverse().join("-");
+  reverse(s) {
+    // date.split("/").reverse().join("-");
     return s.split("-").reverse().join("-");
-}
+  }
 }
 
