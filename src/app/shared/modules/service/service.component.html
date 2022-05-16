@@ -210,7 +210,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
     <br>
     <div class="card-header card pointer-cursor d-flex" data-toggle="collapse" data-target="#service_details">
       <div>
-       <span class="font-weight-bold grouping-heading float-left">Service Details</span>
+       <span class="font-weight-bold grouping-heading float-left">{{is_donation ? 'Cause' : service_name_cap}} Details</span>
        <span class="float-right arrow font-weight-bolder"><span class="fa fa-angle-down"></span></span>
       </div>
       <!-- <div>
@@ -221,7 +221,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
     <ng-container>
       <div id="service_details" class="collapse bgGrey">
         <div class="form-group service-options">
-            <label class="label">Service Name <span class="text-red">*</span></label>
+            <label class="label">{{is_donation ? 'Cause' : service_name_cap}} Name <span class="text-red">*</span></label>
             <input matInput type="text" class="form-control" id="service_name"
               placeholder="{{is_donation ? 'Cause *' : service_name_cap}}" formControlName="name" autocomplete="off">
           <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'name')" [errorMsg]="fed_service.getErrorMessage(serviceForm,'name',
@@ -233,7 +233,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </div>
         <div class="form-group service-options">
           <!-- <mat-form-field> -->
-            <label class="label">Briefly describe service</label>
+            <label class="label">{{is_donation ? 'Briefly describe cause' : 'Briefly describe service'}}</label>
             <textarea matInput class="form-control" id="description"
               placeholder="{{is_donation ? 'Briefly describe cause' : 'Briefly describe service'}}"
               formControlName="description" (keyup)="setCharCount()" (focus)="setDescFocus()" (blur)="lostDescFocus()"
@@ -352,7 +352,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
       </div>
       <div class="card-header card pointer-cursor" data-toggle="collapse" data-target="#service_time_duration">
         <div>
-          <span class="font-weight-bold grouping-heading float-left">Service Time Window</span>
+          <span class="font-weight-bold grouping-heading float-left" *ngIf="!is_donation">Service Time Window</span>
+          <span class="font-weight-bold grouping-heading float-left" *ngIf="is_donation">Cause Amount Details</span>
           <span class="float-right arrow font-weight-bolder"><span class="fa fa-angle-down"></span></span>
         </div>
       </div>
@@ -397,7 +398,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
           </section>
         </div>
-        <div>
+        <div *ngIf="!is_donation">
           <mat-checkbox [checked]="showOnlyAvailableSlots" [(ngModel)]="showOnlyAvailableSlots"
             [ngModelOptions]="{standalone: true}">
             Show Only Available Slots
@@ -405,37 +406,40 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </div>
         <div class="form-group glbl-preview"
           *ngIf="(subdomainsettings.serviceBillable || !subdomainsettings.serviceBillable) && is_donation">
-          <div>
+          <div class="mr-4">
             <div class="rupee-font">
+              <label class="label">Minimum Amount ({{rupee_symbol}}) *</label>
               <input min="1" matInput type="number" class="form-control number-ip-sm" id="minprice" maxlength="10"
                 (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'minDonationAmount')"
                 placeholder="Minimum Amount ({{rupee_symbol}}) *" formControlName="minDonationAmount" autocomplete="off">
             </div>
             <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'minDonationAmount')"
               [errorMsgs]="fed_service.getErrorMessage(serviceForm,'minDonationAmount',
-          {'required' : 'Please enter amount',
-          'pattern' : 'Enter a valid amount',
-          'maxlength' : 'Only 10 digits are allowed'})">
+              {'required' : 'Please enter amount',
+              'pattern' : 'Enter a valid amount',
+              'maxlength' : 'Only 10 digits are allowed'})">
             </app-field-error-display>
           </div>
           <div>
             <div class="rupee-font">
+              <label class="label">Maximum Amount ({{rupee_symbol}}) *</label>
               <input min="1" matInput type="number" class="form-control number-ip-sm" id="maxprice" maxlength="10"
                 (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'maxDonationAmount')"
                 placeholder="Maximum Amount ({{rupee_symbol}}) *" formControlName="maxDonationAmount" autocomplete="off">
             </div>
             <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'maxDonationAmount')"
               [errorMsgs]="fed_service.getErrorMessage(serviceForm,'maxDonationAmount',
-          {'required' : 'Please enter amount',
-          'pattern' : 'Enter a valid amount',
-          'maxlength' : 'Only 10 digits are allowed'})">
+              {'required' : 'Please enter amount',
+              'pattern' : 'Enter a valid amount',
+              'maxlength' : 'Only 10 digits are allowed'})">
             </app-field-error-display>
           </div>
         </div>
         <div class="form-group" *ngIf="is_donation">
-            <input min="1" max={{maxlimit}} matInput type="number" class="form-control number-ip-sm" id="multiples"
-              pattern="[0-9]+" maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'multiples')"
-              placeholder="Multiples*" formControlName="multiples" autocomplete="off">
+          <label class="label">Multiples</label>
+          <input min="1" max={{maxlimit}} matInput type="number" class="form-control number-ip-sm" id="multiples"
+            pattern="[0-9]+" maxlength="10" (keypress)="isNumeric($event)" (keyup)="isvalid($event, 'multiples')"
+            placeholder="Multiples*" formControlName="multiples" autocomplete="off">
           <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'multiples')" [errorMsgs]="fed_service.getErrorMessage(serviceForm,'multiples',
           {'required' : 'Please enter a multiple',
           'pattern' : 'Enter a valid multiple',
@@ -446,9 +450,9 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
 
       
 
-      <div class="card-header card pointer-cursor d-flex" data-toggle="collapse" data-target="#payment_info">
+      <div *ngIf="!is_donation" class="card-header card pointer-cursor d-flex" data-toggle="collapse" data-target="#payment_info">
         <div *ngIf="bprofile.serviceSector.domain != 'finance'">
-          <span class="no-padding pointer-cursor" *ngIf="!is_donation">
+          <span class="no-padding pointer-cursor">
             Pricing</span>
             <span class="float-right arrow font-weight-bolder"><span class="fa fa-angle-down"></span></span>
         </div>
