@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { projectConstantsLocal } from "../../../../../../../src/app/shared/constants/project-constants";
 import { projectConstants } from "../../../../../../../src/app/app.component";
 import { Messages } from "../../../../../../../src/app/shared/constants/project-messages";
-import { Location } from "@angular/common";
+import {  Location } from "@angular/common";
 import { ActivatedRoute, Router,NavigationExtras  } from "@angular/router";
 // NavigationExtras
 import { CrmService } from "../../crm.service";
@@ -84,7 +84,8 @@ export class ViewTaskComponent implements OnInit {
   taskkid: any;
   taskType: any;
   changeAction = false;
-  public headerName:string='Activity Overview'
+  public headerName:string='Activity Overview';
+  public taskDetailsData:any;
   constructor(
     private locationobj: Location,
     private crmService: CrmService,
@@ -109,7 +110,10 @@ export class ViewTaskComponent implements OnInit {
         if (this.taskDetails.originUid) {
           this.taskType = "SubTask";
           console.log('taskType',this.taskType)
-          this.headerName='SubActivity Overview'
+          this.headerName='SubActivity Overview';
+          this.taskDetailsData = this.taskDetails
+          this.crmService.taskToCraeteViaServiceData = this.taskDetailsData 
+          console.log('this.crmService.taskToCraeteViaServiceData;',this.crmService.taskToCraeteViaServiceData)
         }
         console.log('taskType',this.taskType)
         console.log("taskDetails.status", this.taskDetails.status.name);
@@ -118,9 +122,11 @@ export class ViewTaskComponent implements OnInit {
           this.notesList.push(notesdata);
         });
         console.log("this.notesList", this.notesList);
+        this.crmService.taskToCraeteViaServiceData = this.taskDetails
+    console.log('this.crmService.taskToCraeteViaServiceData;',this.crmService.taskToCraeteViaServiceData)
       });
     });
-    this.crmService.taskToCraeteViaServiceData = this.updateTaskData;
+    
   }
 
   uploadFiles() {
@@ -164,30 +170,90 @@ export class ViewTaskComponent implements OnInit {
       });
     });
   }
-  openEditTask(taskdata: any, editText: any) {
-    console.log('taskdata',taskdata)
-    console.log('editText',editText)
-    this.crmService.taskToCraeteViaServiceData = taskdata
-
-    const newTaskData = this.crmService.taskToCraeteViaServiceData;
-    this.crmService.taskActivityName = editText;
-    newTaskData;
-    console.log('newTaskData',newTaskData)
-    console.log('this.taskType',this.taskType)
-    if(this.taskType !='SubTask'){
+  openEditTask(taskdata: any, editText: any,subUpdateData:any) {
+    if(taskdata.originUid === undefined){
+      console.log('taskdata',taskdata)
+      console.log('editText',editText)
+      console.log('taskDetailsData',this.taskDetailsData)
+      console.log('taskdata.originUid',taskdata.originUid)
+      this.crmService.taskToCraeteViaServiceData = taskdata
+  
+      const newTaskData = this.crmService.taskToCraeteViaServiceData;
+      this.crmService.taskActivityName = editText;
+      newTaskData;
+      console.log('newTaskData',newTaskData)
+      console.log('this.taskType',this.taskType)
       const navigationExtras: NavigationExtras = {
         queryParams: {
           type: 'Update'
         }
       };
+      console.log('navigationExtras',navigationExtras)
       this.router.navigate(['provider', 'task', 'create-task'], navigationExtras);
     }
     else {
+      console.log('taskDetailsData',this.taskDetailsData)
+      console.log('subUpdateData',subUpdateData)
+      console.log('this.taskType',this.taskType)
+      this.crmService.taskToCraeteViaServiceData = subUpdateData
+      const newTaskData = this.crmService.taskToCraeteViaServiceData;
+      this.crmService.taskActivityName = editText;
+      newTaskData;
+      console.log('newTaskData',newTaskData)
+      console.log('this.taskType',this.taskType)
+      
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          type: 'SubUpdate'
+          type: 'SubUpdate',
+          accountId:newTaskData.accountId,
+          days:newTaskData.actualDuration.days,
+          hours:newTaskData.actualDuration.hours,
+          minutes:newTaskData.actualDuration.minutes,
+          appointments:newTaskData.appointments,
+          assigneeId:newTaskData.assignee.id,
+          assigneeName:newTaskData.assignee.name,
+          attachments:newTaskData.attachments,
+          category:newTaskData.category.id,
+          categoryName:newTaskData.category.name,
+          createdBy:newTaskData.createdBy,
+          customerNotes:newTaskData.customerNotes,
+          dueDate:newTaskData.dueDate,
+          description:newTaskData.description,
+          // estDuration:{
+          //   days:newTaskData.estDuration.days,hours:newTaskData.estDuration.hours,minutes:newTaskData.estDuration.minutes
+          // },
+          estdays:(newTaskData.estDuration.days),
+          esthours:newTaskData.estDuration.hours,
+          estminutes:newTaskData.estDuration.minutes,
+          id:newTaskData.id,
+          isSubTask: newTaskData.isSubTask,
+          lastStatusUpdatedBy:newTaskData.lastStatusUpdatedBy,
+          locationId:newTaskData.location.id,
+          locationName:newTaskData.location.name,
+          managerId:newTaskData.manager.id,
+          managerName:newTaskData.manager.name,
+          notes:newTaskData.notes,
+          originFrom:newTaskData.originFrom,
+          originId:newTaskData.originId,
+          originUid:newTaskData.originUid,
+          priorityId:newTaskData.priority.id,
+          priorityName:newTaskData.priority.name,
+          progress: newTaskData.progress,
+          progressNotes:newTaskData.progressNotes,
+          statusId:newTaskData.status.id,
+          statusName:newTaskData.status.name,
+          taskUid:newTaskData.taskUid,
+          teamMembers:newTaskData.teamMembers,
+          teams:newTaskData.teams,
+          title:newTaskData.title,
+          typeId:newTaskData.type.id,
+          typeName:newTaskData.type.name,
+          userTypeEnum:newTaskData.userTypeEnum,
+          targetResult:newTaskData.targetResult,
+          targetPotential:newTaskData.targetPotential
         }
       };
+      console.log('navigationExtras',navigationExtras)
       this.router.navigate(['provider', 'task', 'create-task'], navigationExtras);
     }
     

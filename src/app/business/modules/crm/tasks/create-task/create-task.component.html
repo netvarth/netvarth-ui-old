@@ -231,10 +231,15 @@
                         </div>
                         <div class="fieldPadding" *ngIf="updateBTimefield" >
                             <div class="form-control" style="display: flex !important;justify-content: space-between;align-items: center;">
-                                <div style="display: flex;gap: 5px;align-items: center;">
+                                <div style="display: flex;gap: 5px;align-items: center;" *ngIf="type != 'SubUpdate'">
                                     <div>{{updateValue.estDuration.days}}days,</div>
                                     <div>{{this.updateValue.estDuration.hours}}hours,</div>
                                     <div>{{this.updateValue.estDuration.minutes}}minutes</div>
+                                </div>
+                                <div style="display: flex;gap: 5px;align-items: center;" *ngIf="type === 'SubUpdate'">
+                                    <div>{{updateValue.estdays}}days,</div>
+                                    <div>{{updateValue.esthours}}hours,</div>
+                                    <div>{{updateValue.estminutes}}minutes</div>
                                 </div>
                                 <div style="cursor: pointer;" (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
                             </div>
@@ -317,7 +322,10 @@
                         <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()"
                             >Cancel
                         </button>
-                        <button class="btn btn-primary font-weight-bold confirmBtn"
+                        <button [ngClass]="{
+                            'btn btn-primary font-weight-bold cancelBtn': !createTaskForm.valid,
+                            'btn btn-primary font-weight-bold confirmBtn': createTaskForm.valid
+                        }" 
                             [class.spinner]="api_loading" 
                             [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateTask()"
                                 >{{showCreateTaskButtonCaption()}}
@@ -521,11 +529,15 @@
                         </div>
                         <div class="fieldPadding" *ngIf="updateBTimefield" >
                             <div class="form-control" style="display: flex !important;justify-content: space-between;align-items: center;">
-                                <!-- <div>{{updateValue.estDuration.days}}days,{{this.updateValue.estDuration.hours}}hours,{{this.updateValue.estDuration.minutes}}minutes</div> -->
-                                <div style="display: flex;gap: 5px;align-items: center;">
+                                <div style="display: flex;gap: 5px;align-items: center;" *ngIf="type != 'SubUpdate'">
                                     <div>{{updateValue.estDuration.days}}days,</div>
                                     <div>{{this.updateValue.estDuration.hours}}hours,</div>
                                     <div>{{this.updateValue.estDuration.minutes}}minutes</div>
+                                </div>
+                                <div style="display: flex;gap: 5px;align-items: center;" *ngIf="type === 'SubUpdate'">
+                                    <div>{{updateValue.estdays}}days,</div>
+                                    <div>{{updateValue.esthours}}hours,</div>
+                                    <div>{{updateValue.estminutes}}minutes</div>
                                 </div>
                                 <div style="cursor: pointer;" (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
                             </div>
@@ -626,11 +638,8 @@
                         <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()"
                             >Cancel
                         </button>
-                        <button 
-                        [ngClass]="{
-                            'btn btn-primary font-weight-bold cancelBtn': !createTaskForm.valid,
-                            'btn btn-primary font-weight-bold confirmBtn': createTaskForm.valid
-                        }"  [class.spinner]="api_loading" 
+                        <button class="btn btn-primary font-weight-bold confirmBtn"
+                          [class.spinner]="api_loading" 
                             [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateTask()"
                                 >{{showCreateTaskButtonCaption()}}
                         </button>
