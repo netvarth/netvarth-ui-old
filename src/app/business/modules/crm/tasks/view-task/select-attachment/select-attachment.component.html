@@ -1,13 +1,14 @@
 <div class="text-center dialog-box-width">
   <span class="head-text" *ngIf="data.source === 'Lead'"><b>Upload files related to lead</b></span>
 
-    <span class="head-text" *ngIf="data.source === 'Task'"><b>Upload files related to activity</b></span>
+    <span class="head-text" *ngIf="data.source === 'Task' && data.type !== 'SubTask' "><b>Upload files related to activity</b></span>
+    <span class="head-text" *ngIf="data.source === 'Task' && data.type === 'SubTask'"><b >Upload files related to subactivity</b></span>
     
 </div>
 <hr class="my-0 py-0">
 <div class="container-fluid my-3 select-attachment" style="overflow-y: scroll!important;">
-      <mat-chip-list class="btns">
-        <mat-chip disableRipple >
+      <!-- <mat-chip-list class="btns">
+        <mat-chip disableRipple > -->
           <div class="file_upload_list">
           </div>
           <div class="choose_file">
@@ -21,8 +22,8 @@
               <span>Choose Files</span>
             </label>
           </div>
-        </mat-chip>
-       </mat-chip-list> 
+        <!-- </mat-chip>
+       </mat-chip-list>  -->
       <ul class="galul mt-4">
         <ng-container
         *ngIf="selectedMessage.files && selectedMessage.files.length > 0">

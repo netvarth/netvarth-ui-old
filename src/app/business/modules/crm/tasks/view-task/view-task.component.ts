@@ -103,6 +103,7 @@ export class ViewTaskComponent implements OnInit {
       this.taskUid = params.get("id");
       console.log("task id : ", this.taskUid);
       this.crmService.getTaskDetails(this.taskUid).subscribe(data => {
+        console.log(' this.taskType ', this.taskType )
         this.taskDetails = data;
         this.taskkid = this.taskDetails.id;
         this.api_loading = false;
@@ -135,7 +136,8 @@ export class ViewTaskComponent implements OnInit {
       disableClose: true,
       data: {
         source: "Task",
-        taskuid: this.taskUid
+        taskuid: this.taskUid,
+        type:this.taskType
       }
     });
 

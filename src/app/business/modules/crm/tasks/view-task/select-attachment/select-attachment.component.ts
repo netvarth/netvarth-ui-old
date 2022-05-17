@@ -40,6 +40,7 @@ export class SelectAttachmentComponent implements OnInit {
   ) // private router: Router,
 
   { 
+    console.log('this.source',this.data)
     this.source = this.data.source
     console.log("Source Type :",this.source)
   }
