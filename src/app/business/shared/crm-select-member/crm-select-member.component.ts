@@ -664,5 +664,13 @@ getTaskmaster(){
     hamdleemail(resValue){
     
     }
+    downloadFile(fileDes:any){
+      console.log('file',fileDes);
+      window.open(fileDes.s3path)
+      // if(fileDes.type ==='pdf'){
+      //   window.open(fileDes.s3path)
+      // }
+
+    }
 }
 

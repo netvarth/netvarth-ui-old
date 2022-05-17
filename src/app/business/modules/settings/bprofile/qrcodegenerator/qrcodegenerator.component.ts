@@ -61,7 +61,6 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
     
     // this.description = 'You can book my services by just clicking this link';
     this.description = 'For bookings use this link';
-    this.imageUrl = this.wpath + 'assets/images/logo.png';
     this.qrCodegenerateOnlineID(this.accuid,this.userId);
   }
   ngOnDestroy() {
@@ -79,7 +78,7 @@ export class QRCodeGeneratorComponent implements OnInit , OnDestroy {
       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
       this.angular_meta.addTags([
          { property: 'og:title', content: this.data.businessName },
-        { property: 'og:image', content: this.imageUrl },
+        // { property: 'og:image', content: this.imageUrl },
         { property: 'og:type', content: 'link' },
         { property: 'og:description', content: this.description },
       ]);

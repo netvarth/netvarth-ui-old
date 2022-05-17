@@ -8,7 +8,6 @@ import { RazorpayService } from '../../../../services/razorpay.service';
 import { WindowRefService } from '../../../../services/windowRef.service';
 import { WordProcessor } from '../../../../services/word-processor.service';
 import { PaytmService } from '../../../../services/paytm.service';
-import { projectConstantsLocal } from '../../../../constants/project-constants';
 import { SnackbarService } from '../../../../services/snackbar.service';
 import { SubSink } from 'subsink';
 import { MatDialog } from '@angular/material/dialog';
@@ -321,7 +320,7 @@ export class DonationLinkComponent implements OnInit {
   payWithPayTM(pData: any, accountId: any) {
     this.loadingPaytm = true;
     pData.paymentMode = this.selected_payment_mode;
-    this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
+    this.paytmService.initializePayment(pData, accountId, this);
   }
   finishDonation(status, response?) {
     this.isClickedOnce = false;

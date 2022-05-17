@@ -9,7 +9,8 @@
 </section>
 <br>
 <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
-<section  class="card" *ngIf="taskMasterData">
+<!-- {{type | json}} -->
+<section  class="card" *ngIf="taskMasterData && type !=='SubUpdate'">
     <div class=" card bgColor inputwithImg">
         <div class="noImg">
         <form [formGroup]="createTaskForm">
@@ -204,21 +205,21 @@
                         </div>
                         <div class="fieldPadding d-flex" style="gap: 5px;flex-wrap: wrap;"  *ngIf="createBTimeField" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)}">
                             <div class="estField">
-                                <div>
+                                <div class="secondEst">
                                     <input id="days" [value]="taskDays" (keyup)="resetErrors()"  type="number" #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
                                 placeholder="Days" class="form-control widthWebKit" formControlName="taskDays"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0"/>
                                 </div>
                                 <div class="timeField">Days</div>
                             </div>
                             <div class="estField">
-                                <div>
+                                <div class="secondEst">
                                     <input id="hrs" [value]="taskHrs" (keyup)="resetErrors()"  type="number" #taskHrs (ngModelChange)="handleTaskEstDuration(taskHrs.value)"
                             placeholder="Hours" class="form-control widthWebKit" formControlName="taskHrs"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0" max="23"/>
                                 </div>
                                 <div class="timeField"> Hours </div>
                             </div>
                             <div class="estField">
-                                <div>
+                                <div class="secondEst">
                                     <input id="min" [value]="taskMin" (keyup)="resetErrors()"  type="number" #taskMin (ngModelChange)="handleTaskEstDuration(taskMin.value)"
                                     placeholder="Minutes" class="form-control widthWebKit" formControlName="taskMin"  [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)" autocomplete="off" min="0" max="59"/>
                                 </div>
@@ -231,10 +232,15 @@
                         </div>
                         <div class="fieldPadding" *ngIf="updateBTimefield" >
                             <div class="form-control" style="display: flex !important;justify-content: space-between;align-items: center;">
-                                <div style="display: flex;gap: 5px;align-items: center;">
+                                <div style="display: flex;gap: 5px;align-items: center;" *ngIf="type != 'SubUpdate'">
                                     <div>{{updateValue.estDuration.days}}days,</div>
                                     <div>{{this.updateValue.estDuration.hours}}hours,</div>
                                     <div>{{this.updateValue.estDuration.minutes}}minutes</div>
+                                </div>
+                                <div style="display: flex;gap: 5px;align-items: center;" *ngIf="type === 'SubUpdate'">
+                                    <div>{{updateValue.estdays}}days,</div>
+                                    <div>{{updateValue.esthours}}hours,</div>
+                                    <div>{{updateValue.estminutes}}minutes</div>
                                 </div>
                                 <div style="cursor: pointer;" (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
                             </div>
@@ -317,7 +323,10 @@
                         <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()"
                             >Cancel
                         </button>
-                        <button class="btn btn-primary font-weight-bold confirmBtn"
+                        <button [ngClass]="{
+                            'btn btn-primary font-weight-bold cancelBtn': !createTaskForm.valid,
+                            'btn btn-primary font-weight-bold confirmBtn': createTaskForm.valid
+                        }" 
                             [class.spinner]="api_loading" 
                             [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateTask()"
                                 >{{showCreateTaskButtonCaption()}}
@@ -334,7 +343,7 @@
       
 
 </section>
-<section  class="card" *ngIf="!taskMasterData">
+<section  class="card" *ngIf="!taskMasterData && type !=='SubUpdate'">
     <div class=" card bgColor inputwithImg">
         <div class="noImg">
         <form [formGroup]="createTaskForm">
@@ -488,27 +497,27 @@
                         </div>
                     </div>
                 
-                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding" >
+                    <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding">
                         <div class="taskTitle">
                             <div>Est Duration</div>
                         </div>
                         <div class="fieldPadding d-flex" style="gap: 5px;flex-wrap: wrap;"  *ngIf="createBTimeField" >
                             <div class="estField">
-                                <div>
+                                <div class="secondEst">
                                     <input id="days" [value]="taskDays" (keyup)="resetErrors()"  type="number" #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
                                 placeholder="Days" class="form-control widthWebKit" formControlName="taskDays"   autocomplete="off" min="0"/>
                                 </div>
                                 <div class="timeField">Days</div>
                             </div>
                             <div class="estField">
-                                <div>
+                                <div class="secondEst">
                                     <input id="hrs" [value]="taskHrs" (keyup)="resetErrors()"  type="number" #taskHrs (ngModelChange)="handleTaskEstDuration(taskHrs.value)"
                             placeholder="Hours" class="form-control widthWebKit" formControlName="taskHrs"   autocomplete="off" min="0" max="23"/>
                                 </div>
                                 <div class="timeField"> Hours </div>
                             </div>
                             <div class="estField">
-                                <div>
+                                <div class="secondEst">
                                     <input id="min" [value]="taskMin" (keyup)="resetErrors()"  type="number" #taskMin (ngModelChange)="handleTaskEstDuration(taskMin.value)"
                                     placeholder="Minutes" class="form-control widthWebKit" formControlName="taskMin"   autocomplete="off" min="0" max="59"/>
                                 </div>
@@ -521,11 +530,15 @@
                         </div>
                         <div class="fieldPadding" *ngIf="updateBTimefield" >
                             <div class="form-control" style="display: flex !important;justify-content: space-between;align-items: center;">
-                                <!-- <div>{{updateValue.estDuration.days}}days,{{this.updateValue.estDuration.hours}}hours,{{this.updateValue.estDuration.minutes}}minutes</div> -->
-                                <div style="display: flex;gap: 5px;align-items: center;">
+                                <div style="display: flex;gap: 5px;align-items: center;" *ngIf="type != 'SubUpdate'">
                                     <div>{{updateValue.estDuration.days}}days,</div>
                                     <div>{{this.updateValue.estDuration.hours}}hours,</div>
                                     <div>{{this.updateValue.estDuration.minutes}}minutes</div>
+                                </div>
+                                <div style="display: flex;gap: 5px;align-items: center;" *ngIf="type === 'SubUpdate'">
+                                    <div>{{updateValue.estdays}}days,</div>
+                                    <div>{{updateValue.esthours}}hours,</div>
+                                    <div>{{updateValue.estminutes}}minutes</div>
                                 </div>
                                 <div style="cursor: pointer;" (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
                             </div>
@@ -612,7 +625,7 @@
                         </div>
                         <div class="fieldPadding" >
                             <input min="0" (keyup)="resetErrors()" type="number" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)" 
-                                placeholder="Enter(&#8377;)"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
+                            placeholder="Enter(&#8377;)"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
                         </div>
                     </div>               
                 </div>
@@ -626,11 +639,8 @@
                         <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()"
                             >Cancel
                         </button>
-                        <button 
-                        [ngClass]="{
-                            'btn btn-primary font-weight-bold cancelBtn': !createTaskForm.valid,
-                            'btn btn-primary font-weight-bold confirmBtn': createTaskForm.valid
-                        }"  [class.spinner]="api_loading" 
+                        <button class="btn btn-primary font-weight-bold confirmBtn"
+                          [class.spinner]="api_loading" 
                             [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateTask()"
                                 >{{showCreateTaskButtonCaption()}}
                         </button>
@@ -646,4 +656,324 @@
       
 
 </section>
+
+<section  class="card" *ngIf="type ==='SubUpdate'">
+    <div class=" card bgColor inputwithImg">
+        <div class="noImg">
+        <form [formGroup]="createTaskForm">
+            <span class="group-head">{{selectHeader}} Details</span><br>
+            <div class="bggrey my-2">
+                <div>
+                    <div class="taskTitle">
+                      <div>Title</div>
+                      <div class="astericColor">*</div>
+                    </div>
+                    <div class="fieldPadding">
+                        <input (keyup)="resetErrors()" type="text" #taskTitle (ngModelChange)="hamdleTaskTitle(taskTitle.value)" (ngModelChange)="removeEmoji(taskTitle.value,$event)"
+                        placeholder="{{activityTitle}}"class="form-control"formControlName="taskTitle"autocomplete="off" [value]="taskTitle" /> 
+                        <app-field-error-display 
+                            [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
+                        </app-field-error-display>
+                        <div *ngIf="bErrormsg" style="color: #f24949 !important;font-size: 12px;">{{errorMsgAny}}</div>
+                    </div>                                      
+                </div>
+                <div>
+                    <div class="taskTitle">
+                        <div>Description</div>
+                    </div>
+                    <div  class="fieldPadding">
+                        <textarea rowa="10" class="form-control" formControlName="taskDescription"
+                            #taskDescription (change)="handleTaskDescription(taskDescription.value)"(keyup)="autoGrowTextZone($event)"
+                            maxlength="1000" placeholder="{{activityDescription}}">
+                        </textarea>
+                        <app-field-error-display [displayError]="true" style="color: #f24949 !important;font-size: 12px;" *ngIf="taskError" errorMsg="{{taskError}}">
+                        </app-field-error-display>  
+                    </div>
+                </div>
+                <div style="display: flex;gap: 5px" >
+                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                        <div class="taskTitle">
+                            <div>Category</div>
+                            <div class="astericColor">*</div>
+                        </div>
+                        <div class="fieldPadding">
+                        <mat-select class="form-control widthWebKit" placeholder="Enter Category"
+                            #userTaskCategory formControlName="userTaskCategory" (selectionChange)="handleTaskCategorySelection(userTaskCategory.value)" >
+                            <mat-option *ngFor="let item of categoryListData[0];let index=i" [value]="item.id"  (ngModelChange)="handleTaskCategorySelection(userTaskCategory.value)" >
+                                <div>
+                                    {{item.name}}
+                                </div>
+                            </mat-option>
+                        </mat-select>
+                        </div>
+                        <div *ngIf="bErrormsgCategory" style="color: #f24949 !important;font-size: 12px;">{{errorMsgAnyCategory}}</div>
+                    </div>
+                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                        <div class="taskTitle">
+                            <div>Type</div>
+                            <div class="astericColor">*</div>
+                        </div>
+                        <div class="fieldPadding">
+                        <mat-select class="form-control widthWebKit" placeholder="Enter Type"
+                            #userTaskType formControlName="userTaskType" (selectionChange)="handleTaskTypeSelection(userTaskType.value)">
+                            <mat-option *ngFor="let item of taskTypeList[0];let index=i" [value]="item.id"  (ngModelChange)="handleTaskTypeSelection(userTaskType.value)">
+                                <div>
+                                    {{item.name}}
+                                </div>
+                            </mat-option>
+                        </mat-select>
+                        </div>  
+                        <div *ngIf="bErrormsgType" style="color: #f24949 !important;font-size: 12px;">{{errorMsgAnyType}}</div>  
+                    </div>
+                </div>
+    
+                <div style="display: flex;gap: 5px" >
+                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                        <div class="taskTitle">
+                            <div>Location</div>
+                            <div class="astericColor">*</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <input (keyup)="resetErrors()"  type="text" #taskLocation (ngModelChange)="handleTaskLocation(taskLocation.value)"
+                            placeholder="Enter activity location"class="form-control widthWebKit" formControlName="taskLocation" autocomplete="off" [value]="taskLocation.name" /> 
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
+                            </app-field-error-display>    
+                        </div>
+                    </div>
+                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                        <div class="taskTitle">
+                            <div>Area</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <input (keyup)="resetErrors()" type="text"
+                            placeholder=""class="form-control widthWebKit"formControlName="areaName" autocomplete="off" /> 
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
+                            </app-field-error-display>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <span class="group-head">Select Activity Assignee and Manager</span><br>
+            <div class="bggrey my-2">
+                <div>
+                    <div class="taskTitle">
+                        <div>Assign Member</div>
+                        <div class="astericColor">*</div>
+                    </div>
+                    <div class="fieldPadding">
+                        <div>
+                            <div [formControlName]="selectMember" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectMemberDialog(selectMember)" >
+                                <div >{{selectMember}}</div>
+                                <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
+                            </div>
+                        </div>
+                        <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
+                        </app-field-error-display>  
+                    </div>                           
+                </div>
+                <div>
+                    <div class="taskTitle">
+                        <div>Manager</div>
+                    </div>
+                    <div class="fieldPadding">
+                        <div>
+                            <div  [formControlName]="selectTaskManger" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectManagerDialog(selectTaskManger)" >
+                                <div>{{selectTaskManger}}</div>
+                                <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
+                            </div>
+                        </div>
+                        <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
+                        </app-field-error-display>
+                    </div>                                     
+                </div>
+            </div>
+
+            
+            <span class="group-head">Activity Date and Other Info</span><br>
+            <div class="bggrey my-2">
+                <div style="display: flex;gap: 5px;flex-wrap: wrap;" >
+                    <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding">
+                        <div class="taskTitle">
+                            <div>Due Date</div>
+                        </div>
+                        <div class="pickerouter fieldPadding dt dateWithMatDtae" >
+                            <input  formControlName="taskDate" class="form-control widthWebKit positionNameInput" type="text"  matInput
+                                [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
+                                [value]="ddate" (dateChange)="handleDateChange($event)" placeholder="Enter Date" #taskDate>
+                            <mat-datepicker-toggle matSuffix [for]="picker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
+                            </mat-datepicker>
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
+                            </app-field-error-display>       
+                        </div>
+                    </div>
+                
+                    <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding">
+                        <div class="taskTitle">
+                            <div>Est Duration</div>
+                        </div>
+                        <div class="fieldPadding d-flex" style="gap: 5px;flex-wrap: wrap;"  *ngIf="createBTimeField" >
+                            <div class="estField">
+                                <div class="secondEst">
+                                    <input id="days" [value]="taskDays" (keyup)="resetErrors()"  type="number" #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
+                                placeholder="Days" class="form-control widthWebKit" formControlName="taskDays"   autocomplete="off" min="0"/>
+                                </div>
+                                <div class="timeField">Days</div>
+                            </div>
+                            <div class="estField">
+                                <div class="secondEst">
+                                    <input id="hrs" [value]="taskHrs" (keyup)="resetErrors()"  type="number" #taskHrs (ngModelChange)="handleTaskEstDuration(taskHrs.value)"
+                            placeholder="Hours" class="form-control widthWebKit" formControlName="taskHrs"   autocomplete="off" min="0" max="23"/>
+                                </div>
+                                <div class="timeField"> Hours </div>
+                            </div>
+                            <div class="estField">
+                                <div class="secondEst">
+                                    <input id="min" [value]="taskMin" (keyup)="resetErrors()"  type="number" #taskMin (ngModelChange)="handleTaskEstDuration(taskMin.value)"
+                                    placeholder="Minutes" class="form-control widthWebKit" formControlName="taskMin"   autocomplete="off" min="0" max="59"/>
+                                </div>
+                                <div class="timeField">
+                                    Minutes 
+                                </div>
+                            </div>
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
+                            </app-field-error-display>
+                        </div>
+                        <div class="fieldPadding" *ngIf="updateBTimefield" >
+                            <div class="form-control" style="display: flex !important;justify-content: space-between;align-items: center;">
+                                <div style="display: flex;gap: 5px;align-items: center;" *ngIf="type != 'SubUpdate'">
+                                    <div>{{updateValue.estDuration.days}}days,</div>
+                                    <div>{{this.updateValue.estDuration.hours}}hours,</div>
+                                    <div>{{this.updateValue.estDuration.minutes}}minutes</div>
+                                </div>
+                                <div style="display: flex;gap: 5px;align-items: center;" *ngIf="type === 'SubUpdate'">
+                                    <div>{{updateValue.estdays}}days,</div>
+                                    <div>{{updateValue.esthours}}hours,</div>
+                                    <div>{{updateValue.estminutes}}minutes</div>
+                                </div>
+                                <div style="cursor: pointer;" (click)="openTimeField()"><mat-icon>access_time</mat-icon></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding" *ngIf="updateBTimefield">
+                <div class="taskTitle">
+                    <div>Est Duration</div>
+                    <div class="astericColor">*</div>
+                    </div>
+                    <div class="fieldPadding"  >
+                        <div class="form-control widthWebKit" style="display: flex !important;justify-content: space-between;align-items: center;" *ngIf=" updateValue.estDuration.hours !=0">
+                        <div>{{updateValue.estDuration.days}}(Days),{{this.updateValue.estDuration.hours}}(Hours)</div>
+                        </div>
+                        <div class="form-control widthWebKit" style="display: flex !important;justify-content: space-between;align-items: center;" *ngIf=" updateValue.estDuration.hours ===0">
+                        <div>{{updateValue.estDuration.days}}(Days)</div>
+                        </div>
+                    </div>
+    
+                </div> -->
+                
+                <div> 
+                    <div class="taskTitle">
+                        <div>Priority</div>
+                    </div>
+                    <div class="fieldPadding">
+                        <mat-select class="form-control" placeholder="Select Priority"
+                            #userTaskPriority formControlName="userTaskPriority" (ngModelChange)="handleTaskPrioritySelection(userTaskPriority.value,'taskPriority')">
+                            <mat-option  *ngFor="let item of taskPriorityList[0];let index=i" [value]="item.id" >
+                                <div>
+                                    {{item.name}}
+                                </div>
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+            </div>
+
+
+
+            
+            
+            <div class="bggrey my-2">
+                <div style="display: flex;gap: 5px" >
+                    <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                        <div class="taskTitle">
+                            <div>Status</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <mat-select class="form-control widthWebKit" placeholder="Enter activity status"
+                                #taskStatus formControlName="taskStatus" name="item"  (selectionChange)="handleTaskStatus(taskStatus.value)">
+                                <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id"  >
+                                    <!-- <div>
+                                        {{item.name | capitalizeFirst}}
+                                    </div> -->
+                                    <div [ngStyle]="{'color': getColor(item.name)}">
+                                        {{item.name | capitalizeFirst}}
+                                    </div>
+                                </mat-option>
+                            </mat-select>
+                                
+                            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
+                            </app-field-error-display>
+                        </div>
+                    </div>
+                </div>
+    
+                
+                <div style="display: flex;gap: 5px;flex-wrap: wrap !important;" >
+                    <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding">
+                        <div class="taskTitle">
+                            <div>Target Potential</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <input (keyup)="resetErrors()" type="text" #targetResult (ngModelChange)="handleTargetResult(targetResult.value)"
+                            placeholder="Enter potential"class="form-control widthWebKit"formControlName="targetResult"  autocomplete="off" /> 
+                        </div>
+                    </div>
+                                   
+                    <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding">
+                        <div class="taskTitle">
+                            <div>Business Potential</div>
+                        </div>
+                        <div class="fieldPadding" >
+                            <input min="0" (keyup)="resetErrors()" type="number" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)" 
+                            placeholder="Enter(&#8377;)"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
+                        </div>
+                    </div>               
+                </div>
+            </div>
+
+
+
+            <div style="text-align: center;margin-top: 15px;">
+                <ng-container >
+                    <div class=" mgn-bt-20 mgn-up-10">
+                        <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()"
+                            >Cancel
+                        </button>
+                        <!-- [ngClass]="{
+                            'btn btn-primary font-weight-bold cancelBtn': !createTaskForm.valid,
+                            'btn btn-primary font-weight-bold confirmBtn': createTaskForm.valid
+                        }"  -->
+                        <button class="btn btn-primary font-weight-bold confirmBtn"
+                         
+                          [class.spinner]="api_loading" 
+                            [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateTask()"
+                                >{{showCreateTaskButtonCaption()}}
+                        </button>
+                    </div>
+                </ng-container>
+            </div>
+        </form>
+    </div>
+        <!-- <div class="imageClass">
+            <img class="taskImg" src="/assets/images/crmImages/Addtasks.png" />
+        </div> -->
+    </div>
+      
+
+</section>
+
 

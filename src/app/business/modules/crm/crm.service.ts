@@ -15,6 +15,7 @@ export class CrmService {
   public subtaskToView:any;
   public taskMasterToCreateServiceData:any;
   public leadMasterToCreateServiceData:any;
+  public updateSubTaskData:any;
   
 
   constructor(

@@ -97,7 +97,8 @@ export class CreateTaskComponent implements OnInit {
   public errorMsgAnyType:string=''
   public activityTitle:any;
   public activityDescription:any;
-  type: any;
+  public type: any;
+  public subActivityTaskUid:any;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -116,12 +117,16 @@ export class CreateTaskComponent implements OnInit {
 
   ngOnInit(): void {
     this.activated_route.queryParams.subscribe(qparams => {
+      console.log('qparams',qparams)
+      this.updateValue=qparams;
+      console.log(' this.updateValue', this.updateValue);
       if (qparams.type) {
           this.type = qparams.type;
       }
     });
-    // console.log('this.type',this.type)
-    console.log("this.crmService.taskActivityName1",this.crmService.taskActivityName);
+    console.log('this.type',this.type)
+    // console.log('this.crmService.taskActivityName',this.crmService.taskActivityName)
+    // console.log('this.crmService.updateSubTaskData;',this.crmService.updateSubTaskData)
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
         console.log("User is :", user);
         this.selectMember= user.firstName + user.lastName;
@@ -141,17 +146,20 @@ export class CreateTaskComponent implements OnInit {
         this.crmService.taskActivityName = "subTaskCreate";
       }
     });
-     // this._Activatedroute.paramMap.subscribe(params => { 
-    //   this.taskUid = params.get('taskid');
+    //  this.activated_route.paramMap.subscribe(params => { 
+    //   console.log('params',params)
+    //   this.taskUid = params.get('id');
+    //   // console.log('this.crmService.taskActivityName',this.crmService.taskActivityName)
     //   if(this.taskUid)
     //   {
+    //     // console.log('this.crmService.taskActivityName',this.crmService.taskActivityName)
     //     this.crmService.taskActivityName = "subTaskEdit";
     //   }
     // });
     
     this.api_loading=false;
-    if(this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' && this.crmService.taskActivityName!='CreteTaskMaster'){
-      console.log('this.crmService.taskActivityName',this.crmService.taskActivityName)
+    if(this.type ==='SubUpdate'){
+      console.log('.....................this.type',this.type)
       this.createTaskForm=this.createTaskFB.group({
       taskTitle:[null],
       taskDescription:[null],
@@ -170,43 +178,51 @@ export class CreateTaskComponent implements OnInit {
       targetResult:[null],
       targetPotential:[null],
     }) 
-      this.selectHeader='Update Activity'
+      this.selectHeader='SubActivity Update'
       this.createBTimeField=false;
       this.updateBTimefield=true;
-      this.updateValue=this.crmService.taskToCraeteViaServiceData;
       console.log('this.updateValue',this.updateValue)
       if(this.updateValue != undefined){
-        console.log(' this.updateValue', this.updateValue);
+      //  console.log('this.createTaskForm.controls.targetResult.value',(this.createTaskForm.controls.targetResult.value))
+      //  console.log('this.updateValue.targetResult',typeof(this.updateValue.targetResult))
+      //  console.log('this.updateValue.targetResult',Number(this.updateValue.targetResult))
         this.createTaskForm.patchValue({
         taskTitle:this.updateValue.title,
         taskDescription:this.updateValue.description,
-        targetPotential:this.updateValue.targetPotential,
-        targetResult:this.updateValue.targetResult,
-        userTaskCategory:this.updateValue.category.id,
-        userTaskType:this.updateValue.type.id,
-        taskStatus:this.updateValue.status.id,
-        userTaskPriority:this.updateValue.priority.id,
+        targetResult:(this.updateValue.targetResult),
+        userTaskCategory:parseInt(this.updateValue.category),
+        userTaskType:parseInt(this.updateValue.typeId),
+        taskStatus:parseInt(this.updateValue.statusId),
+        userTaskPriority:parseInt(this.updateValue.priorityId),
+        taskLocation : this.updateValue.locationName,
+        // selectMember:parseInt(this.updateValue.aassigneeId),
+        // selectTaskManger:parseInt(this.updateValue.managerId),
+        taskDays:( this.updateValue.estdays),
+        taskHrs:parseInt( this.updateValue.esthours),
+        taskMin:parseInt( this.updateValue.estminutes),
+        taskDate:this.updateValue.dueDate,
+        targetPotential:parseInt(this.updateValue.targetPotential),
+        areaName: this.updateValue.locationArea
+
       })
-      this.locationName =this.updateValue.location.name;
-      this.createTaskForm.controls.areaName.value =this.updateValue.locationArea;
-      this.updteLocationId= this.updateValue.location.id,
-      this.createTaskForm.controls.taskDays.value= this.updateValue.estDuration.days,
-      this.createTaskForm.controls.taskHrs.value= this.updateValue.estDuration.hours,
-      this.createTaskForm.controls.taskMin.value= this.updateValue.estDuration.minutes,
-      this.selectMember = this.updateValue.assignee.name;
-      this.updateMemberId=this.updateValue.assignee.id;
-      this.selectTaskManger= this.updateValue.manager.name;
-      this.updateManagerId= this.updateValue.manager.id
+      this.locationName =this.updateValue.locationName;
+      // this.createTaskForm.controls.areaName.value =this.updateValue.locationArea;
+      this.updteLocationId= parseInt(this.updateValue.locationId)
+      this.selectMember = (this.updateValue.assigneeName);
+      this.updateMemberId=parseInt(this.updateValue.assigneeId);
+      console.log(' this.updateMemberId', this.updateMemberId)
+      this.selectTaskManger= (this.updateValue.managerName);
+      this.updateManagerId=parseInt( this.updateValue.managerId)
       this.updateUserType=this.updateValue.userTypeEnum;
-      this.createTaskForm.controls.taskDate.value = this.updateValue.dueDate
-      this.estTime={ "days" :this.updateValue.estDuration.days, "hours" :this.updateValue.estDuration.hours, "minutes" : this.updateValue.estDuration.minutes };
+      this.estTime={ "days" :parseInt(this.updateValue.estdays), "hours" :parseInt(this.updateValue.esthours), "minutes" : parseInt(this.updateValue.estminutes)};
       console.log('this.estTime',this.estTime)
+      this.subActivityTaskUid= this.updateValue.taskUid
       }
       else{
         this.router.navigate(['provider', 'task']);
       }
     }
-    else if(this.type ==='Update'){
+    else if((this.type ==='Update' )&& (this.type !=='SubUpdate') || (this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' && this.crmService.taskActivityName !='CreteTaskMaster')){
       console.log('this.crmService.taskActivityName',this.crmService.taskActivityName)
       this.createTaskForm=this.createTaskFB.group({
       taskTitle:[null],
@@ -295,8 +311,8 @@ export class CreateTaskComponent implements OnInit {
         this.estTime={ "days" :this.createTaskForm.controls.taskDays.value, "hours" :this.createTaskForm.controls.taskHrs.value, "minutes" : this.createTaskForm.controls.taskMin.value };
         console.log('this.estTime',this.estTime);
         this.createTaskForm.controls.taskDate.setValue(this.taskDueDate);
-          }
-      else if(this.crmService.taskActivityName==='CreatE'){
+    }
+    else if(this.crmService.taskActivityName==='CreatE'){
         this.createTaskForm=this.createTaskFB.group({
           taskTitle:[null,[Validators.required]],
           taskDescription:[null],
@@ -525,7 +541,7 @@ export class CreateTaskComponent implements OnInit {
 }
   getAssignMemberList(){
     this.crmService.getMemberList().subscribe((memberList:any)=>{
-      console.log('memberList',memberList)
+      // console.log('memberList',memberList)
       this.allMemberList.push(memberList)
         // this.allMemberList.sort((a:any, b:any) => (a.firstName).localeCompare(b.firstName))
     },(error:any)=>{
@@ -559,10 +575,14 @@ export class CreateTaskComponent implements OnInit {
         this.createTaskForm.controls.taskStatus.setValue(this.taskStatusList[0][0].id);
         // this.taskStatusModal=this.taskStatusList[0][0].id;
       }
-      else{
+      else if(this.type ==='SubUpdate'){
+        this.createTaskForm.controls.taskStatus.setValue(parseInt(this.updateValue.statusId));
+      }
+      else {
         this.createTaskForm.controls.taskStatus.setValue(this.updateValue.status.id);
         // this.taskStatusModal=this.updateValue.status.id
       }
+      
     },
     (error)=>{
       this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
@@ -575,10 +595,15 @@ export class CreateTaskComponent implements OnInit {
       if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName==='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster'){
         this.createTaskForm.controls.userTaskPriority.setValue(this.taskPriorityList[0][0].id);
         // this.taskPriority=this.taskPriorityList[0][0].id;
-      }else{
+      }
+      else if(this.type ==='SubUpdate'){
+        this.createTaskForm.controls.userTaskPriority.setValue(parseInt(this.updateValue.priorityId))
+      }
+      else {
         this.createTaskForm.controls.userTaskPriority.setValue(this.updateValue.priority.id);
         // this.taskPriority=this.updateValue.priority.id;
       }
+      
       console.log( this.taskPriority)
     },
     (error)=>{
@@ -836,7 +861,50 @@ export class CreateTaskComponent implements OnInit {
 }
   saveCreateTask(){
     // this.api_loading = true;
-    if(this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' && this.crmService.taskActivityName !='CreteTaskMaster'){
+    console.log('this.type',this.type)
+    if(this.type ==='SubUpdate'){
+      console.log('this.subActivityTaskUid',this.subActivityTaskUid)
+      const SubUpdateTaskData:any = {
+        "title":this.createTaskForm.controls.taskTitle.value,
+        "description":this.createTaskForm.controls.taskDescription.value,
+        "userType":this.updateUserType,
+        "category":{"id":this.createTaskForm.controls.userTaskCategory.value},
+        "type":{"id":this.createTaskForm.controls.userTaskType.value},
+  
+        "status":{"id":this.createTaskForm.controls.taskStatus.value},
+        "priority":{"id":this.createTaskForm.controls.userTaskPriority.value},
+        "dueDate" : this.datePipe.transform(this.createTaskForm.controls.taskDate.value,'yyyy-MM-dd'),
+        "location" : { "id" : this.updteLocationId},
+        "locationArea" : this.createTaskForm.controls.areaName.value,
+        "assignee":{"id":this.updateMemberId },
+        "manager":{"id":this.updateManagerId},
+        "targetResult" : this.createTaskForm.controls.targetResult.value,
+        "targetPotential" : this.createTaskForm.controls.targetPotential.value,
+        "estDuration" : this.estTime    
+      }
+      console.log('SubUpdateTaskData',SubUpdateTaskData)
+      if(this.updateUserType===('PROVIDER' || 'CONSUMER') && (this.createTaskForm.controls.taskTitle.value!=null)){
+        // this.api_loading = true;
+        console.log("2")
+        this.boolenTaskError=false;
+        console.log('SubUpdateTaskData',SubUpdateTaskData)
+        this.crmService.updateTask(this.subActivityTaskUid, SubUpdateTaskData).subscribe((response)=>{
+          console.log('afterUpdateList',response);
+          setTimeout(() => {
+            this.createTaskForm.reset();
+          this.router.navigate(['provider', 'task']);
+          }, projectConstants.TIMEOUT_DELAY);
+        },
+        (error)=>{
+          setTimeout(() => {
+            this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
+            // this.router.navigate(['provider', 'task']);
+          }, projectConstants.TIMEOUT_DELAY);
+        })
+      }
+    }
+      
+    else if(this.type ==='Update' && this.type !=='SubUpdate' || (this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' && this.crmService.taskActivityName !='CreteTaskMaster')){
       console.log("est time update data : ",this.estTime  )
       const updateTaskData:any = {
         "title":this.createTaskForm.controls.taskTitle.value,
@@ -882,7 +950,7 @@ export class CreateTaskComponent implements OnInit {
       console.log(' this.updateUserType', this.updateUserType)
 
     }
-    else{
+    else if((this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' && this.crmService.taskActivityName !='CreteTaskMaster') || this.type===undefined){
     const createTaskData:any = {
       "originUid" : this.taskUid,
       "title":this.createTaskForm.controls.taskTitle.value,
@@ -953,7 +1021,7 @@ export class CreateTaskComponent implements OnInit {
         })
       }
       else{
-        console.log('title',this.createTaskForm.controls.taskTitle.value )
+        // console.log('title',this.createTaskForm.controls.taskTitle.value )
         // this.bErrormsg=true;
         // this.errorMsgAny='Please enter some activity title';
         // this.bErrormsgCategory=true;

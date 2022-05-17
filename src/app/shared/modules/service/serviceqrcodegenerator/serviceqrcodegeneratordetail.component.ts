@@ -14,7 +14,6 @@ export class ServiceQRCodeGeneratordetailComponent implements OnInit, OnDestroy 
   qr_value;
   qrCodePath: string;
   wpath: any;
-  imageUrl: string;
   description: string;
   shareLink: any;
   window_path: any;
@@ -45,7 +44,6 @@ export class ServiceQRCodeGeneratordetailComponent implements OnInit, OnDestroy 
       this.shareLink = this.wpath + this.accuid + '/service/' + this.serviceId + '/';
     }
     this.description = 'You can book my services by just clicking this link';
-    this.imageUrl = this.wpath + 'assets/images/logo.png';
     this.qrCodegenerateOnlineID(this.shareLink);
   }
   ngOnDestroy() {
@@ -59,7 +57,7 @@ export class ServiceQRCodeGeneratordetailComponent implements OnInit, OnDestroy 
       this.qrCodePath = this.qrCodeParent.nativeElement.getElementsByTagName('img')[0].src;
       this.angular_meta.addTags([
         { property: 'og:title', content: this.data.businessName ? this.data.businessName : '' },
-        { property: 'og:image', content: this.imageUrl },
+        // { property: 'og:image', content: this.imageUrl },
         { property: 'og:type', content: 'link' },
         { property: 'og:description', content: this.description },
 

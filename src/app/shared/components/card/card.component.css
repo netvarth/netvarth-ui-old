@@ -77,16 +77,9 @@
     min-width: 210px !important;
 }
 .mrgn{
-    margin-top: 35px !important ;
-   
-}
-.text-center {
-    text-align: center !important;
+    margin-top: 35px !important ;  
 }
 
-/* .booking-card.card.service {
-    height: 274px !important;
-} */
 .display-lg-none {
     display:none !important;
 }

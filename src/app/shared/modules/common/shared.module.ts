@@ -32,11 +32,7 @@ import { NgBootstrapModule } from './ngbootstrap.module';
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
-        // HeaderModule,
         OtpFormModule,
-        // EditProfileModule,
-        // ChangePasswordModule,
-        // ChangeMobileModule,
         FooterModule,
         FormMessageDisplayModule,
         NgBootstrapModule

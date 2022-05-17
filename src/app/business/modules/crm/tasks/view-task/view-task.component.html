@@ -45,7 +45,7 @@
              <span class="text-dark">Actions</span><i style="margin-left: 5px;" class="fa fa-chevron-down"></i>
             </button>
             <mat-menu #appMenu="matMenu">
-                <button style="align-items:center !important;" mat-menu-item  (click)="openEditTask(taskDetails,'Update')"  data-toggle="modal" data-target="#exampleModalCenter">
+                <button style="align-items:center !important;" mat-menu-item  (click)="openEditTask(taskDetails,'Update',taskDetailsData)"  data-toggle="modal" data-target="#exampleModalCenter">
                   <span>
                     <img class="imageStatus" src="/assets/images/crmImages/edit.png" />
                   </span>
@@ -197,7 +197,7 @@
 
       <div class="row d-lg-flex justify-content-lg-start" *ngIf="(taskType != 'SubTask')">
         <div  class="subtask-border  col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mt-2" *ngIf="(taskDetails && taskDetails.status && taskDetails.status.name != ('Completed'))">
-          <app-subtasks [taskid]="taskUid"></app-subtasks>
+          <app-subtasks [taskid]="taskUid" ></app-subtasks>
         </div>
       </div>
       <div class="row d-lg-flex justify-content-lg-start">

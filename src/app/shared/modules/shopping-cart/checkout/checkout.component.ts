@@ -1758,7 +1758,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   payWithPayTM(pData: any, accountId: any) {
     this.loadingPaytm = true;
     pData.paymentMode = this.selected_payment_mode;
-    this.paytmService.initializePayment(pData, projectConstantsLocal.PAYTM_URL, accountId, this);
+    this.paytmService.initializePayment(pData, accountId, this);
   }
 
   finishCheckout(status) {

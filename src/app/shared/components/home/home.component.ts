@@ -7,7 +7,6 @@ import { SignUpComponent } from '../../components/signup/signup.component';
 import { LoginComponent } from '../../components/login/login.component';
 import { SearchFields } from '../../modules/search/searchfields';
 import { projectConstants } from '../../../app.component';
-import { ScrollToConfigOptions, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 import { Meta, Title } from '@angular/platform-browser';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
@@ -21,35 +20,18 @@ import { projectConstantsLocal } from '../../constants/project-constants';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
-  images = {
-    jaldee_find: 'assets/images/home/jaldee_find.svg',
-    jaldee_find_img: 'assets/images/home/01_26.jpg',
-    jaldee_checkin: 'assets/images/home/jaldee_checkin.svg',
-    jaldee_checkin_img: 'assets/images/home/Graph-06_26.jpg',
-    jaldee_alerts: 'assets/images/home/jaldee_alerts.svg',
-    jaldee_alerts_img: 'assets/images/home/Graph-07_26.jpg',
-    jaldee_coupons: 'assets/images/home/jaldee_coupons.svg',
-    jaldee_coupons_img: 'assets/images/home/Graph-08.jpg',
-    jaldee_pay: 'assets/images/home/jaldee_pay.svg',
-    jaldee_pay_img: 'assets/images/home/Graphs-15.jpg',
-    jaldee_graph: 'assets/images/home/banner-01.svg',
-    jaldee_home: 'assets/images/home/02.png'
-  };
   languages = projectConstantsLocal.SUPPORTEDLANGUAGES;
   langselected = 'English';
   public domainlist_data: any = [];
-  sector_info: any = [];
-  special_info: any = [];
+  // sector_info: any = [];
+  // special_info: any = [];
   public searchfields: SearchFields = new SearchFields();
   locationholder = { 'autoname': '', 'name': '', 'lat': '', 'lon': '', 'typ': '' };
   keywordholder = { 'autoname': '', 'name': '', 'domain': '', 'subdomain': '', 'typ': '' };
   selected_domain = '';
   is_provider = 'true';
   domain_obtained = false;
-  carouselOne;
   playvideo = false;
-  customOptions: any;
-  carouselPackages: any;
   evnt;
   loading = false;
   appliedDate: string = '31st January 2022.'
@@ -58,7 +40,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     public shared_functions: SharedFunctions,
     private routerobj: Router,
     public dialog: MatDialog,
-    private _scrollToService: ScrollToService,
     private lStorageService: LocalStorageService,
     private dateTimeProcessor: DateTimeProcessor,
     private titleService: Title,
@@ -112,123 +93,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     ]);
     this.setSystemDate().then(
       () => {
-        // this.loading = false;
         // calling the method to get the list of domains
         this.getDomainList();
-        // callling method to set the captions for sectors / subdomains or specializations in the home page
-        this.setRequiredCaptions();
-        this.carouselPackages = {
-          dots: false,
-          autoplay: true,
-          autoplayTimeout: 6000,
-          autoplaySpeed: 1000,
-          autoplayHoverPause: true,
-          mouseDrag: true,
-          touchDrag: true,
-          pullDrag: true,
-          loop: true,
-          responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 3 }, 1200: { items: 3 } }
-        };
-
-        this.customOptions = {
-          loop: true,
-          mouseDrag: true,
-          touchDrag: true,
-          pullDrag: true,
-          dots: false,
-          autoplay: true,
-          navSpeed: 700,
-          navText: ['', ''],
-          responsive: {
-            0: {
-              items: 1
-            },
-            400: {
-              items: 1
-            },
-            740: {
-              items: 1
-            },
-            940: {
-              items: 1
-            }
-          },
-          nav: true
-        };
-        this.carouselOne = {
-          dots: true,
-          loop: true,
-          autoplay: true,
-          responsiveClass: true,
-          responsive: {
-            0: {
-              items: 1
-            },
-            992: {
-              items: 3,
-              center: true,
-            }
-          }
-        };
-        setTimeout(() => {
-          this.handleScroll('home');
-        }, 500);
       }
     );
-
-  }
-  handleScroll(target) {
-    this.triggerScrollTo(target);
-  }
-  public triggerScrollTo(destination) {
-    const config: ScrollToConfigOptions = {
-      target: destination,
-      duration: 150,
-      easing: 'easeOutElastic',
-      offset: 0
-    };
-    this._scrollToService.scrollTo(config);
-  }
-  setRequiredCaptions() {
-    // building array to hold the details related to the specialization
-    this.special_info['healthCare'] = [
-      { 'caption': 'Paediatrics', 'kw': 'Paediatrics', 'kwautoname': 'Paediatrics', 'kwtyp': 'special' },
-      { 'caption': 'Ayurvedic Medicine', 'kw': 'AyurvedicMedicine', 'kwautoname': 'Ayurvedic Medicine', 'kwtyp': 'special' },
-      { 'caption': 'Dentists', 'kw': 'dentists', 'kwautoname': 'Dentists', 'kwtyp': 'subdom' }
-    ];
-    this.special_info['personalCare'] = [
-      { 'caption': 'Beauty Care for Men', 'kw': 'BeautyCareForMen', 'kwautoname': 'Beauty Care for Men', 'kwtyp': 'special' },
-      { 'caption': 'Beauty Care for Women', 'kw': 'BeautyCareForWomen', 'kwautoname': 'Beauty Care for Women', 'kwtyp': 'special' },
-      { 'caption': 'Personal Fitness', 'kw': 'HairSalonForKids', 'kwautoname': 'Personal Fitness', 'kwtyp': 'special' }
-    ];
-    this.special_info['professionalConsulting'] = [
-      { 'caption': 'Lawyer', 'kw': 'lawyers', 'kwautoname': 'Lawyer', 'kwtyp': 'subdom' },
-      { 'caption': 'Tax Consultants', 'kw': 'taxConsultants', 'kwautoname': 'Tax Consultants', 'kwtyp': 'subdom' },
-      { 'caption': 'Civil Architects', 'kw': 'civilArchitects', 'kwautoname': 'Civil Architects', 'kwtyp': 'subdom' },
-      { 'caption': 'Chartered Accountants', 'kw': 'charteredAccountants', 'kwautoname': 'Chartered Accountants', 'kwtyp': 'subdom' }
-    ];
-    this.special_info['finance'] = [
-      { 'caption': 'Bank', 'kw': 'bank', 'kwautoname': 'Bank', 'kwtyp': 'subdom' },
-      { 'caption': 'NBFC', 'kw': 'nbfc', 'kwautoname': 'NBFC', 'kwtyp': 'subdom' },
-      { 'caption': 'Insurance', 'kw': 'insurance', 'kwautoname': 'Insurance', 'kwtyp': 'subdom' }
-    ];
-    // building array to hold the details related to the domains
-    this.sector_info['healthCare'] = {
-      'simg': 'assets/images/home/HealthCare.jpg',
-      'caption1': '1000s of Doctors', 'caption2': '', 'special': this.special_info['healthCare']
-    };
-    this.sector_info['personalCare'] = {
-      'simg': 'assets/images/home/personal-care.jpg',
-      'caption1': '', 'caption2': '', 'special': this.special_info['personalCare']
-    };
-    this.sector_info['professionalConsulting'] = {
-      'simg': 'assets/images/home/Proffesional.jpg',
-      'caption1': '', 'caption2': '', 'special': this.special_info['professionalConsulting']
-    };
-    this.sector_info['finance'] = {
-      'simg': 'assets/images/home/Graphs-055.jpg',
-      'caption1': '', 'caption2': '', 'special': this.special_info['finance']
-    };
   }
   playvideoClicked() {
     document.getElementById('video-box').innerHTML = '<iframe width="100%"  src="https://www.youtube-nocookie.com/embed/qF4gLhQW2CE?controls=1&rel=0&autoplay=1" height= "514px" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
@@ -245,7 +113,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
           },
         );
     })
-
   }
   getDomainList() {
     const bconfig = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
@@ -259,7 +126,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
           run_api = false;
           this.domainlist_data = bdata;
-          // this.domainlist_data = ddata.bdata;
           this.domain_obtained = true;
         }
       }

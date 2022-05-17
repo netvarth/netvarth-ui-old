@@ -142,7 +142,9 @@ export class SubtasksComponent implements OnInit {
   }
 
   viewTask(taskUid,taskData:any) {
+    // console.group('taskData',taskData)
     this.crmService.taskToCraeteViaServiceData = taskData;
+    // console.log('this.crmService.taskToCraeteViaServiceData ',this.crmService.taskToCraeteViaServiceData )
     this.router.navigate(['/provider/viewsubtask/' + taskUid]);
 
   }
