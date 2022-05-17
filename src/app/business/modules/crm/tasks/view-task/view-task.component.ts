@@ -201,6 +201,7 @@ export class ViewTaskComponent implements OnInit {
       newTaskData;
       console.log('newTaskData',newTaskData)
       console.log('this.taskType',this.taskType)
+      // console.log('typeOf',typeof(newTaskData.targetResult))
       
       const navigationExtras: NavigationExtras = {
         queryParams: {
