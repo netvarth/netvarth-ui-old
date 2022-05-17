@@ -44,14 +44,14 @@ export class PaytmService {
                 },
                 "handler": {
                     "notifyMerchant": function (eventName, data) {
-                        alert(JSON.stringify(data));
+                        // alert(JSON.stringify(data));
                         console.log("notifyMerchant handler function called");
                         console.log("eventName => ", eventName);
                         console.log("data => ", data);
-                        // referrer.closeloading();
+                        referrer.closeloading();
                     },
                     "transactionStatus": function (data) {
-                        alert(JSON.stringify(data));
+                        // alert(JSON.stringify(data));
                         console.log("payment status ", data);
                         console.log(paytm_payload);
                         // console.log("payment status ", JSON.stringify(data));

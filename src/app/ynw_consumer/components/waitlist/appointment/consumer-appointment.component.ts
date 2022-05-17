@@ -2195,7 +2195,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.btnClicked = false;
         this.loadingPaytm = false;
         this.cdRef.detectChanges();
-        this.snackbarService.openSnackBar('Payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+        // this.snackbarService.openSnackBar('Payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
         return false;
     }
 }
