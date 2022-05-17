@@ -49,7 +49,8 @@
                   <span>
                     <img class="imageStatus" src="/assets/images/crmImages/edit.png" />
                   </span>
-                  <span class="text-dark">Edit Activity</span>
+                  <span *ngIf="(taskType != 'SubTask')" class="text-dark">Edit Activity</span>
+                  <span *ngIf="(taskType === 'SubTask')"class="text-dark">Edit SubActivity</span>
                 </button>
                 <button style="align-items:center !important;" mat-menu-item (click)="createSubTask(taskUid)" *ngIf="taskType != 'SubTask'">
                   <span >
