@@ -87,34 +87,35 @@
     <div class="webDisplay">
       <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small" (click)="createTask('Create')">
         <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
-          Create Activity </button>
+          Create Activity <i class="fa fa-plus" aria-hidden="true"></i></button>
+          
       </a>
       <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small"
         [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'crm'}">
         <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
-          Generate Report</button>
+          Generate Report <i class="fa fa-plus" aria-hidden="true"></i></button>
       </a>
     </div>
     <div class="mobileDisplay">
       <a [matTooltipClass]="tooltipcls"
           class="navbar-item-color bold pointer-cursor mgn-lt-5">
             <button type="button"   [matMenuTriggerFor]="appMenu" class="btn btn  action-button  btn-primary action-button-add confirmBtn"> 
-              Actions <img height="20px" src="/assets/images/crmImages/downarrow.png" /> 
+              Actions <img height="25px" width="25px" src="/assets/images/crmImages/downarrow.png" /> 
             </button>
             <mat-menu #appMenu="matMenu">
-                <button mat-menu-item  (click)="createTask('Create')" data-toggle="modal" data-target="#exampleModalCenter">
+                <button style="gap:5px !important" mat-menu-item  (click)="createTask('Create')" data-toggle="modal" data-target="#exampleModalCenter">
                   <span>
-                    <img height="20px" width="25px" src="/assets/images/crmImages/craeteActivity.png"/>
+                    <img height="25px" width="25px" src="/assets/images/crmImages/craeteActivity.png"/>
                   </span>
                  <span style="font-weight: 500;">
                   Create Activity 
                  </span>
                 </button>
-                <button mat-menu-item  [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'crm'}" >
-                  <span style="font-weight: 500;">
-                    <img height="20px" src="/assets/images/crmImages/generateReport.png"/>
+                <button style="gap:5px !important" mat-menu-item  [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'crm'}" >
+                  <span >
+                    <img height="25px" width="25px" src="/assets/images/crmImages/generateReport.png"/>
                   </span>
-                 <span>
+                 <span style="font-weight: 500;">
                  Generate Report
                  </span>
                 </button>
@@ -124,9 +125,6 @@
   </div>
   <div class="clearfix"></div>
   <div class="startMatTab">
-    <!-- <mat-tab-group dynamicHeight mat-stretch-tabs (selectedTabChange)="tabChange($event)"
-      [selectedIndex]="selectedTab - 1"> -->
-      <!-- <mat-tab class="mat-tab"> -->
         <!----total task start-->
         <div *ngIf="bTotalTask">
         <!-- <ng-template mat-tab-label>
@@ -377,7 +375,7 @@
                       </ng-container>
                     </tbody>
                   </table>
-                  <div class="search_paging" *ngIf="pagination.totalCnt>0">
+                  <div class="search_paging" *ngIf="pagination.totalCnt>10">
                     <!-- {{pagination.totalCnt}} -->
                     <app-pager  [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                       (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
@@ -390,9 +388,6 @@
         </div>
       </div>
         <!---total task end-->
-
-      <!-- </mat-tab> -->
-      <!-- <mat-tab class="mat-tab"> -->
         <!----inprogress task start-->
         <div *ngIf="bInprogressTask">
         <!-- <ng-template mat-tab-label>
@@ -650,8 +645,6 @@
         </div>
       </div>
         <!----inprogress task end-->
-      <!-- </mat-tab> -->
-      <!-- <mat-tab class="mat-tab"> -->
         <!----completed task start-->
         <div *ngIf="bCompltedTask">
                   <ng-template mat-tab-label>
@@ -926,9 +919,7 @@
         </div>
       </div>
        <!----completed task end-->
-      <!-- </mat-tab> -->
       <!---newtask start--->
-      <!-- <mat-tab class="mat-tab"> -->
         <div *ngIf="bNewTask">
         <!-- <ng-template mat-tab-label>
           <div>
@@ -1201,7 +1192,6 @@
         </div>
       </div>
         <!---newtask end--->
-      <!-- </mat-tab> -->
       <!-----assigned start-->
       <div *ngIf="bAssignedTask">
         <!-- <ng-template mat-tab-label>
@@ -2020,7 +2010,6 @@
         </div>
       </div>
       <!----suspended task end-->
-    <!-- </mat-tab-group> -->
   </div>
 
 </section>

@@ -99,6 +99,7 @@ export class CreateTaskComponent implements OnInit {
   public activityDescription:any;
   public type: any;
   public subActivityTaskUid:any;
+  public rupee_symbol = '₹';
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -517,7 +518,7 @@ export class CreateTaskComponent implements OnInit {
   getColor(status){
     if(status){
     if(status === 'New'){
-      return 'blue'
+      return '#0D2348'
     }
     else if(status === 'Assigned'){
       return 'pink';

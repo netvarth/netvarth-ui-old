@@ -1486,9 +1486,15 @@ span.tab-text.ng-star-inserted {
 ::ng-deep.mat-tab-label-active .mat-tab-label-content{ 
     font-weight: bold !important;
 }
+.generateBTN{
+    margin-right: -15px !important;
+}
 @media (max-width: 767px){
     .divDisp{
         display: block;
+    }
+    .generateBTN{
+        margin-right: -30px !important;
     }
 
 }

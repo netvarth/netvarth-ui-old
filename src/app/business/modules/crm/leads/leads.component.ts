@@ -206,13 +206,14 @@ export class LeadsComponent implements OnInit {
             .subscribe(
               data => {
                 this.totalLeadList = data;
-                this.totalLeadList = this.totalLeadList.filter(obj => !obj.originId);
+                console.log('totalLeadList',this.totalLeadList.length)
                 this.getUnassignedLead()
                 this.getAssignedLead()
                 this.getSucessListLead()
                 this.getTransferredLead()
                 this.getFailedLead()
                 this.getInprogressLead()
+                this.totalLeadList = this.totalLeadList.filter(obj => !obj.originId);
                 this.loadComplete = true;
               },
               error => {

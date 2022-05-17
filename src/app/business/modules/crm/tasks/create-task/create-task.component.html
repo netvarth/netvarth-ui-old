@@ -309,7 +309,7 @@
                         </div>
                         <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.targetPotential && taskMasterData.targetPotential.iseditable)}">
                             <input  min="0" (keyup)="resetErrors()" type="text" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)"   [readonly]="!(taskMasterData && taskMasterData.targetPotential && taskMasterData.targetPotential.iseditable)"
-                                placeholder="Enter(&#8377;)"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
+                            placeholder="Enter ({{rupee_symbol}})"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
                         </div>
                     </div>               
                 </div>
@@ -625,7 +625,7 @@
                         </div>
                         <div class="fieldPadding" >
                             <input min="0" (keyup)="resetErrors()" type="number" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)" 
-                            placeholder="Enter(&#8377;)"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
+                            placeholder="Enter ({{rupee_symbol}})"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
                         </div>
                     </div>               
                 </div>
@@ -939,7 +939,7 @@
                         </div>
                         <div class="fieldPadding" >
                             <input min="0" (keyup)="resetErrors()" type="number" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)" 
-                            placeholder="Enter(&#8377;)"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
+                            placeholder="Enter ({{rupee_symbol}})"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
                         </div>
                     </div>               
                 </div>
