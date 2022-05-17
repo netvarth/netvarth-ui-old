@@ -273,6 +273,17 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 Onsite Service
               </mat-option>
             </mat-select>
+
+            <!-- <div>
+              <mat-radio-button *ngIf="!is_donation && is_virtual_enable" [value]="'virtualService'"  formControlName="serviceType" #virtual (selectionChange)="selectServiceHandler(virtual.value)" class="form-control">
+                Teleservice
+              </mat-radio-button>
+              <mat-radio-button *ngIf="!is_donation" [value]="'physicalService'"  formControlName="serviceType" #virtual (selectionChange)="selectServiceHandler(virtual.value)" class="form-control">
+                Onsite Service
+              </mat-radio-button>
+            </div> -->
+
+
           </div>
           <div
             *ngIf="is_virtual_serv ||(service_data && service_data.serviceType==='virtualService' && is_physical ===0)"
@@ -320,7 +331,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
               <label class="label">
                 {{(tool_name === 'WhatsApp' || tool_name === 'Phone') ? tool_name+' Number' : tool_name+' ID'}}
               </label> <br />
-              <div class="form-group">
+              <div class="form-group d-flex">
                 <div class="input-group-prepend" *ngIf="tool_name === 'WhatsApp' || tool_name === 'Phone'">
                   <input type="text" style="padding: 0px !important;" class="form-control serv-county-code"
                     value="{{tool_code}}" [(ngModel)]="tool_code" [ngModelOptions]="{standalone: true}"
