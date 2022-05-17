@@ -252,7 +252,7 @@ padding: 3px;
     border-radius: 5.73504px !important;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;
     display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   grid-gap: 10px;
   gap: 10px;
   align-items: center;
@@ -359,4 +359,10 @@ padding: 3px;
 }
 ::ng-deep .commonpopupmainclassTemplate{
   width: 750px !important;
+}
+.pointerClass{
+  cursor: pointer;
+}
+.imageIconType{
+  width: 20px;
 }

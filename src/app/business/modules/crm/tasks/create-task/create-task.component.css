@@ -95,6 +95,9 @@
     .widthWebKit{
       width: -webkit-fill-available !important;
     }
+    .secondEst{
+      width: 200px;
+    }
 }
 @media(max-width: 768px) {
     .form-control{
@@ -105,6 +108,9 @@
     }
     .lbl{
         width: -webkit-fill-available !important;
+    }
+    .secondEst{
+      width: -webkit-fill-available !important;
     }
 }
 .lbl{

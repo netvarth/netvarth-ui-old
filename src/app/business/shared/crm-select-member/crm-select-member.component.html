@@ -697,10 +697,32 @@
                 <img class="imageIcon" src="/assets/images/ImgeFileIcon/othersFile.png" />
             </div>
             <div style="text-align: center;" class="filesNameSize">
-                {{files.originalName}}
+                {{files.originalName | capitalizeFirst}}
             </div>
             <div class="filesNameSize">
                 {{files.size }}MB
+            </div>
+            <div *ngIf="files.type ==='pdf'" class="fileType pointerClass">
+                <img class="imageIconType"src="/assets/images/ImgeFileIcon/pdfDwnld.png" (click)="downloadFile(files)" />
+            </div>
+            <div *ngIf="files.type ==='jpg'" class="fileType pointerClass">
+                <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png" (click)="downloadFile(files)" />
+            </div>
+            <div *ngIf="files.type ==='PNG'" class="fileType pointerClass">
+                <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png" (click)="downloadFile(files)"/>
+            </div>
+            <div *ngIf="files.type ==='docx'" class="fileType pointerClass">
+                <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png" (click)="downloadFile(files)"/>
+            </div>
+            <div *ngIf="files.type ==='xlsx'" class="fileType pointerClass">
+                <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png" (click)="downloadFile(files)"/>
+            </div>
+            <div *ngIf="files.type ==='txt'" class="fileType pointerClass">
+                <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png" (click)="downloadFile(files)"/>
+            </div>
+            <div *ngIf="( files.type !=='pdf' &&  files.type !=='txt' &&  files.type !=='xlsx' &&  files.type !=='docx' && files.type !=='PNG' && files.type !=='jpg'  )"
+                class="fileType pointerClass">
+                <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png" (click)="downloadFile(files)"/>
             </div>
         </div>
     </mat-dialog-content>
