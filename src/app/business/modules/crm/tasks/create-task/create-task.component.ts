@@ -200,26 +200,20 @@ export class CreateTaskComponent implements OnInit {
         taskDays:( this.updateValue.estdays),
         taskHrs:parseInt( this.updateValue.esthours),
         taskMin:parseInt( this.updateValue.estminutes),
-        // taskDate:this.updateValue.dueDate,
+        taskDate:this.updateValue.dueDate,
         targetPotential:parseInt(this.updateValue.targetPotential),
+        areaName: this.updateValue.locationArea
 
       })
       this.locationName =this.updateValue.locationName;
-      this.createTaskForm.controls.areaName.value =this.updateValue.locationArea;
+      // this.createTaskForm.controls.areaName.value =this.updateValue.locationArea;
       this.updteLocationId= parseInt(this.updateValue.locationId)
-      // if(this.createTaskForm.controls.targetResult.value != null){
-      //   this.createTaskForm.patchValue({
-      //     targetResult:parseInt(this.updateValue.targetResult),
-      //   })
-      // }
       this.selectMember = (this.updateValue.assigneeName);
       this.updateMemberId=parseInt(this.updateValue.assigneeId);
       console.log(' this.updateMemberId', this.updateMemberId)
       this.selectTaskManger= (this.updateValue.managerName);
       this.updateManagerId=parseInt( this.updateValue.managerId)
       this.updateUserType=this.updateValue.userTypeEnum;
-      this.createTaskForm.controls.taskDate.value = this.updateValue.dueDate
-      // this.createTaskForm.controls.taskDate.value = this.updateValue.dueDate
       this.estTime={ "days" :parseInt(this.updateValue.estdays), "hours" :parseInt(this.updateValue.esthours), "minutes" : parseInt(this.updateValue.estminutes)};
       console.log('this.estTime',this.estTime)
       this.subActivityTaskUid= this.updateValue.taskUid

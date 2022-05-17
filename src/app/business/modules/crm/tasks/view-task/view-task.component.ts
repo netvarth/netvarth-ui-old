@@ -251,7 +251,8 @@ export class ViewTaskComponent implements OnInit {
           typeName:newTaskData.type.name,
           userTypeEnum:newTaskData.userTypeEnum,
           targetResult:newTaskData.targetResult,
-          targetPotential:newTaskData.targetPotential
+          targetPotential:newTaskData.targetPotential,
+          locationArea:newTaskData.locationArea,
         }
       };
       console.log('navigationExtras',navigationExtras)
