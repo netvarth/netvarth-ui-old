@@ -313,7 +313,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                 <span class="dash">{{mode}}</span>
               </mat-option>
             </mat-select>
-          </div>
+          </div> 
           <div class="example-full-width mat-select-virtualservice">
             <div class="form-group"
               *ngIf="(is_tool || ((service_data && service_data.serviceType==='virtualService' && is_physical ===0) && tool_name !== '')) && tool_name!=='VideoCall'">

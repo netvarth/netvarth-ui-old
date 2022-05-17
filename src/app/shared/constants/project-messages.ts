@@ -34,7 +34,7 @@ export const Messages = {
   'DISCOUNT_DELETE': 'Do you really want to remove the discount "[name]"?',
   'DISCOUNT_DELETED': 'Discount deleted successfully',
   'DISCOUNT_LISTEMPTY': 'No Discounts exist',
-  // Bill/Discountdetails
+  // Bill/Discountdetails 
   'DISCOUNT_NAME_MAND_CAP': 'Enter the name of discount *',
 
   // Bill Coupons
