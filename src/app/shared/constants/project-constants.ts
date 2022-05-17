@@ -226,7 +226,8 @@ export const projectConstantsLocal = {
     otherMiscellaneous: { helphint: 'Add your services here' },
     educationalInstitution: { helphint: 'Add your services here' },
     sportsAndEntertainement: { helphint: 'Add your services here' },
-    communitySocietyAssociation:{helphint:'Add your services here'}
+    communitySocietyAssociation:{helphint:'Add your services here'},
+    transportation:{helphint:'Add your services here'}
 
   },
   SUBDOMAIN_ICONS: {
@@ -267,8 +268,9 @@ export const projectConstantsLocal = {
     nbfc: { help: '', iconClass: 'veterinarydoctor_doc' },
     insurance: { help: '', iconClass: 'veterinarydoctor_doc' },
     educationalTrainingInstitute: { help: '', iconClass: 'veterinarydoctor_doc' },
-    schools: { help: '', iconClass: 'veterinarydoctor_doc' },
-    colleges: { help: '', iconClass: 'veterinarydoctor_doc' }
+    schools: { help: '', iconClass: 'schools_doc' },
+    colleges: { help: '', iconClass: 'colleges_doc' },
+    freightLogistics: { help: '', iconClass: 'freightLogistics_doc' }
   },
   SOCIAL_MEDIA: [
     { key: 'facebook', iconClass: 'socicon-facebook text-danger', iconImg: 'facebook.png', displayName: 'Facebook' },

@@ -509,7 +509,7 @@
                                                                             capitalizeFirst}}
                                                                             {{waitlist_for[0].lastName |
                                                                             capitalizeFirst}}
-                                                                            <a *ngIf="type !== 'waitlistreschedule'"
+                                                                            <a *ngIf="type !== 'waitlistreschedule' && !paymentRequestId"
                                                                                 class="pointer-cursor changeitem font-weight-bold text-capitalize px-2 py-1"
                                                                                 (click)="handleSideScreen('members')"
                                                                                 data-toggle="modal"

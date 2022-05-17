@@ -256,7 +256,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     if (user.sector) {
       this.domain = user.sector;
     }
-    if(projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain].helphint){
+    if(projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain] && projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain].helphint){
     this.services_hint = projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain].helphint;
     }
     if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {

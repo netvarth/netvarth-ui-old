@@ -1217,7 +1217,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     closeloading() {
         this.loadingPaytm = false;
         this.cdRef.detectChanges();
-        this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
+        // this.snackbarService.openSnackBar('Your payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
         return false;
         // if (this.from) {
         //     this.ngZone.run(() => this.router.navigate(['consumer']));
