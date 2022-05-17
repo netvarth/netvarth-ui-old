@@ -72,7 +72,6 @@
   border-radius: calc(0.5rem - 1px) calc(0.5rem - 1px) 0 0 !important;
   border-bottom: 1.75px solid #d0d0d0 !important;
   font-size: 15px !important;
-  text-transform: uppercase !important;
   color: #395789 !important;
   font-weight: 700 !important;
   display: flex !important;
@@ -98,6 +97,13 @@
   font-size: 15px!important;
   color: #1E4079;
 }
+
+.serv-phone-code
+  {
+    width: 200px!important;
+    padding-top: 10px!important;
+  }
+
 
 @media(max-width: 768px)
 {

@@ -208,9 +208,9 @@
 onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show' && !showInfo"
     class="ynw-common-form-nm wiz-service serviceform">
     <br>
-    <div class="card-header card pointer-cursor d-flex" data-toggle="collapse" data-target="#service_details">
+    <div class="card-header text-capitalize card pointer-cursor d-flex" data-toggle="collapse" data-target="#service_details">
       <div>
-       <span class="font-weight-bold grouping-heading float-left">{{is_donation ? 'Cause' : service_name_cap}} Details</span>
+       <span class="font-weight-bold grouping-heading float-left">{{is_donation ? 'Cause' : 'Service'}} Details</span>
        <span class="float-right arrow font-weight-bolder"><span class="fa fa-angle-down"></span></span>
       </div>
       <!-- <div>
@@ -221,7 +221,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
     <ng-container>
       <div id="service_details" class="collapse bgGrey">
         <div class="form-group service-options">
-            <label class="label">{{is_donation ? 'Cause' : service_name_cap}} Name <span class="text-red">*</span></label>
+            <label class="label">{{is_donation ? 'Cause' : service_name_cap}} <span class="text-red">*</span></label>
             <input matInput type="text" class="form-control" id="service_name"
               placeholder="{{is_donation ? 'Cause *' : service_name_cap}}" formControlName="name" autocomplete="off">
           <app-field-error-display [displayError]="fed_service.isFieldValid(serviceForm,'name')" [errorMsg]="fed_service.getErrorMessage(serviceForm,'name',
@@ -320,17 +320,17 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
               <label class="label">
                 {{(tool_name === 'WhatsApp' || tool_name === 'Phone') ? tool_name+' Number' : tool_name+' ID'}}
               </label> <br />
-              <div class="input-group">
+              <div class="form-group">
                 <div class="input-group-prepend" *ngIf="tool_name === 'WhatsApp' || tool_name === 'Phone'">
-                  <input type="text" style="max-width: 38px; padding: 0px !important;" class="serv-county-code"
+                  <input type="text" style="padding: 0px !important;" class="form-control serv-county-code"
                     value="{{tool_code}}" [(ngModel)]="tool_code" [ngModelOptions]="{standalone: true}"
                     (keypress)="isNumericSign($event)">
                 </div>
-               <div>
-                <input type="text" style="padding: 0px !important;" type="text" class="form-control serv-phone-code"
-                autocomplete="off" value="{{tool_id}}" [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}"
-                (blur)="checkUrl(tool_id)">
-               </div>
+                <div class="form-group">
+                  <input type="number" style="padding: 0px !important;" type="text" class="form-control serv-phone-code"
+                  autocomplete="off" value="{{tool_id}}" [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}"
+                  (blur)="checkUrl(tool_id)">
+                </div>
               </div>
             </div>
           </div>
@@ -350,7 +350,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           </div>
         </div>
       </div>
-      <div class="card-header card pointer-cursor" data-toggle="collapse" data-target="#service_time_duration">
+      <div class="card-header text-capitalize card pointer-cursor" data-toggle="collapse" data-target="#service_time_duration">
         <div>
           <span class="font-weight-bold grouping-heading float-left" *ngIf="!is_donation">Service Time Window</span>
           <span class="font-weight-bold grouping-heading float-left" *ngIf="is_donation">Cause Amount Details</span>
@@ -450,7 +450,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
 
       
 
-      <div *ngIf="!is_donation" class="card-header card pointer-cursor d-flex" data-toggle="collapse" data-target="#payment_info">
+      <div *ngIf="!is_donation && bprofile.serviceSector.domain != 'finance'" class="card-header text-capitalize card pointer-cursor d-flex" data-toggle="collapse" data-target="#payment_info">
         <div *ngIf="bprofile.serviceSector.domain != 'finance'">
           <span class="no-padding pointer-cursor">
             Pricing</span>
@@ -461,7 +461,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         </div>
       </div>
       
-      <div class="collapse bgGrey" id="payment_info">
+      <div *ngIf="bprofile.serviceSector.domain != 'finance'" class="collapse bgGrey" id="payment_info">
         
         <!-- mgn-lt-5 -->
         <div class="row mx-1 mgn-up-20" *ngIf="showBillingInfo && !is_donation">
@@ -539,7 +539,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
 
 
       
-      <div class="card-header card pointer-cursor d-flex" data-toggle="collapse" data-target="#payment_profiles">
+      <div *ngIf="bprofile.serviceSector.domain != 'finance'" class="card-header text-capitalize card pointer-cursor d-flex" data-toggle="collapse" data-target="#payment_profiles">
         <div>
           <span class="no-padding pointer-cursor">
             Payment Info
@@ -547,7 +547,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           <span class="float-right arrow font-weight-bolder"><span class="fa fa-angle-down"></span></span>
         </div>
       </div>
-      <div class="collapse bgGrey" id="payment_profiles">
+      <div *ngIf="bprofile.serviceSector.domain != 'finance'" class="collapse bgGrey" id="payment_profiles">
         <ng-container *ngIf="paymentProfiles.length===1">
           <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 mgn-bt-10 no-padding ">Payment Profile Selected for this
             service is: <b>{{paymentProfiles[0].displayName}}.</b> Contact our support team to change payment profile for
@@ -574,7 +574,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
 
       
       
-      <div class="card-header card pointer-cursor d-flex" (click)="advancedClick()" data-toggle="collapse" data-target="#customization">
+      <div class="card-header text-capitalize card pointer-cursor d-flex" (click)="advancedClick()" data-toggle="collapse" data-target="#customization">
         <div>
           <span class="no-padding pointer-cursor">
             Customization
@@ -663,7 +663,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
       </div>
 
 
-      <a class="card-header card pointer-cursor d-flex" href="tel:+91 8880125000">
+      <a class="card-header text-capitalize card pointer-cursor d-flex" href="tel:+91 8880125000">
         <div>
           <span class="font-weight-bold grouping-heading float-left"><label *ngIf="!is_donation" class="no-padding grouping-heading" style="font-size: 1.1rem;">
             {{customer_label | capitalizeFirst}} Info</label>

@@ -781,7 +781,7 @@ export const Messages = {
   'SERVE_CAP': 'served at a time',
 
   // App-ynw_provider-components-add-provider-watlist-service
-  'SERVICE_NAME_CAP': 'Service Name *',
+  'SERVICE_NAME_CAP': 'Service Name',
   'EST_DURATION_CAP': 'Estimated Duration (min)',
   'ENABLE_PREPAYMENT_CAP': 'Enable prepayment',
   'PREPAYMENT_CAP': 'Prepayment Amount ',
