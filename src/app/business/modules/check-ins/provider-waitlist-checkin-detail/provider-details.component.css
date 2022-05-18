@@ -214,13 +214,13 @@
     min-height: 190px!important;
     max-height: 190px!important;
 }
-
+/* 
 .btn-primary
 {
-    /* background-color: #1E4079!important;
+    background-color: #1E4079!important;
     color: #fff!important;
-    border-color: #1E4079!important; */
-}
+    border-color: #1E4079!important;
+} */
 .content.comn-cls .lbl .card
 {
     margin-bottom: 10px!important;
@@ -247,7 +247,33 @@
 }
 
 
+
+
+.card-header{
+    border-radius: calc(0.5rem - 1px) calc(0.5rem - 1px) 0 0 !important;
+    border-bottom: 1.75px solid #d0d0d0 !important;
+    font-size: 15px !important;
+    color: #395789 !important;
+    font-weight: 700 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+  }
+  
+/* input[type=number] {
+height: 28px!important;
+} */
+
+.collapsed .fa-angle-down {
+transform: rotate(180deg);
+transition: .3s ease-in-out;
+}
+
+
 @media (max-width: 750px) {
+    .card-header.text-capitalize.card.pointer-cursor.d-flex {
+        margin-bottom: 30px!important;
+    }
     .note_view{
         background: whitesmoke; 
         margin: 3px; 
@@ -319,13 +345,12 @@
             margin-top: 5px!important;
             color: rgb(141, 135, 135)!important;
         }
-        .fa-icons
+        /* .fa-icons
         {
-            /* margin-left: -5px; */
-            /* padding: 10px;
-    background: #F8F8F8;
-    mix-blend-mode: normal; */
-        }
+            padding: 10px;
+            background: #F8F8F8;
+            mix-blend-mode: normal;
+        } */
     .map{
         margin-top: 5px;
         font-size: 12px;

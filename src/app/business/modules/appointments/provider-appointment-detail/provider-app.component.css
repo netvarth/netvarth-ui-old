@@ -230,7 +230,11 @@
     min-height: auto!important;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 750px) 
+{
+    .card-header.text-capitalize.card.pointer-cursor.d-flex {
+        margin-bottom: 30px!important;
+    }
     .note_view{
         background: whitesmoke; 
         margin: 3px; 
@@ -272,4 +276,4 @@
         padding-top: 10px!important;
         padding-bottom: 0px!important;
     }
-  }
+}

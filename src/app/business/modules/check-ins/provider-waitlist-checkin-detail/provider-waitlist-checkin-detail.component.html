@@ -275,7 +275,17 @@
     </div>
   </section>
 
+
   <div class="content comn-cls checkin-details" *ngIf="!api_loading && questionnaires.length > 0">
+    <div class="card-header text-capitalize card pointer-cursor d-flex" data-toggle="collapse" data-target="#moreinfo">
+      <div>
+       <span class="font-weight-bold grouping-heading float-left">More info</span>
+       <span class="float-right arrow font-weight-bolder"><span class="fa fa-angle-down"></span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapse content comn-cls checkin-details" id="moreinfo" *ngIf="!api_loading && questionnaires.length > 0">
     <div class="card cardBorder">
       <div class="">
         <h3 class="">

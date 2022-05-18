@@ -224,8 +224,16 @@
     </div>
   </section>
 
+  <div class="content comn-cls checkin-details" *ngIf="!api_loading && questionnaires.length > 0">
+    <div class="card-header text-capitalize card pointer-cursor d-flex" data-toggle="collapse" data-target="#moreinfo">
+      <div>
+       <span class="font-weight-bold grouping-heading float-left">{{customer_label | capitalizeFirst}} info</span>
+       <span class="float-right arrow font-weight-bolder"><span class="fa fa-angle-down"></span></span>
+      </div>
+    </div>
+  </div>
 
-  <div class="content checkin-details" *ngIf="!api_loading && questionnaires.length > 0">
+  <div class="collapse content checkin-details" id="moreinfo" *ngIf="!api_loading && questionnaires.length > 0">
     <div class="card">
       <div class="">
         <h3 class="">

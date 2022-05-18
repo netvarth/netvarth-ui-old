@@ -372,7 +372,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
           <ng-container class="example-full-width">
             <label class="col-form-label">{{est_duration_cap}} (Hours : Minutes) *</label>
-            <ngb-timepicker [(ngModel)]="duration" formControlName="serviceDuration" (ngModelChange)="resetApiErrors()">
+            <ngb-timepicker [(ngModel)]="duration" formGroupName="serviceDuration" (ngModelChange)="resetApiErrors()">
             </ngb-timepicker>
           </ng-container>
         </div>

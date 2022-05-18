@@ -215,6 +215,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.paymentsettings = serviceParams.paymentsettings;
                     this.taxsettings = serviceParams.taxsettings;
                     this.subdomainsettings = serviceParams.subdomainsettings;
+                    console.log("this.subdomainsettings",this.subdomainsettings);
                     this.showResources = this.subdomainsettings.serviceSharing;
                     this.userId = serviceParams.userId;
                     this.departmentId = serviceParams.deptId;
@@ -223,6 +224,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                         this.createForm();
                     } else {
                         this.service_data = this.service;
+                        console.log("this.service_data",this.service_data)
                         if (this.service_data.paymentProfileId) {
                             this.getPaymentProfileDetails(this.service_data.paymentProfileId)
                         }
@@ -691,7 +693,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             serviceActionModel['action'] = this.action;
             serviceActionModel['service'] = form_data;
             if (form_data.serviceType === 'virtualService') {
-                if ((form_data.virtualCallingModes[0].callingMode === 'WhatsApp' || form_data.virtualCallingModes[0].callingMode === 'Phone') && form_data.virtualCallingModes[0].value.charAt(0) === '0') {
+                if ((form_data.virtualCallingModes[0].callingMode === 'WhatsApp' || form_data.virtualCallingModes[0].callingMode === 'Phone') && (form_data.virtualCallingModes[0].value.charAt(0) === '0')) {
                     this.snackbarService.openSnackBar('Please provide valid phone number', { 'panelClass': 'snackbarerror' });
                 } else if (!form_data.virtualServiceType) {
                     this.snackbarService.openSnackBar(Messages.SELECT_TELE_MODE, { 'panelClass': 'snackbarerror' });
