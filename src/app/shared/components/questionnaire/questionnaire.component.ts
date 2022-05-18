@@ -205,8 +205,12 @@ export class QuestionnaireComponent implements OnInit {
     if (this.source === 'customer-create' || this.source === 'qnrDetails' || this.source === 'onetime') {
       this.groupedQnr = this.sharedFunctionobj.groupBy(this.questions, 'sectionName');
     } else {
+      // this.groupedQnr = this.questions.reduce(function (rv, x) {
+      //   (rv[x.question['sectionName']] = rv[x.question['sectionName']] || []).push(x);
+      //   return rv;
+      // }, {});
       this.groupedQnr = this.questions.reduce(function (rv, x) {
-        (rv[x.question['sectionName']] = rv[x.question['sectionName']] || []).push(x);
+        (rv[x.question['sectionOrder']] = rv[x.question['sectionOrder']] || []).push(x);
         return rv;
       }, {});
     }
