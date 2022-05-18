@@ -18,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-change-mobile',
   templateUrl: './change-mobile.component.html',
-  styleUrls: ['./change-mobile.component.css', '../../../../assets/css/style.bundle.css', '../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
+  styleUrls: ['./change-mobile.component.css']
 
 })
 export class ChangeMobileComponent implements OnInit {

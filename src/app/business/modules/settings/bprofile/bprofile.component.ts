@@ -866,9 +866,6 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   gotoJaldeeIntegration() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'jaldee-integration']);
   }
-  gotoMedia() {
-    this.routerobj.navigate(['provider', 'settings', 'bprofile', 'media']);
-  }
   gotoSpecializations() {
     this.routerobj.navigate(['provider', 'settings', 'bprofile', 'specializations']);
   }

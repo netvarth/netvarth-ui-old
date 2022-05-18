@@ -793,9 +793,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       case 'privacy':
         this.routerobj.navigate(['provider', 'settings', 'bprofile', 'privacy']);
         break;
-      case 'media':
-        this.routerobj.navigate(['provider', 'settings', 'bprofile', 'media']);
-        break;
       case 'integration':
         this.routerobj.navigate(['provider', 'settings', 'bprofile', 'jaldee-integration']);
         break;

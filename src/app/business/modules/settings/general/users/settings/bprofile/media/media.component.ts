@@ -15,7 +15,7 @@ import { WordProcessor } from '../../../../../../../../shared/services/word-proc
 @Component({
     selector: 'app-usermedia',
     templateUrl: './media.component.html',
-    styleUrls: ['./media.component.css', '../../../../../../../../../assets/css/style.bundle.css', '../../../../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
+    styleUrls: ['./media.component.css','../../../../../../../../../assets/plugins/global/plugins.bundle.css']
 })
 export class MediaComponent implements OnInit, OnDestroy {
     bProfile = null;

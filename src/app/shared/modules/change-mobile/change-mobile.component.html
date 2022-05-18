@@ -17,21 +17,21 @@
               <div *ngIf="step==1" class="change-phone-div">
                 <form [formGroup]="spForm" novalidate (ngSubmit)="spForm.valid && onSubmit(spForm.value)"
                   (keyup)="resetApiErrors()" class="form">
-                  <div class="col-md-12 mr-2">
+                  <div class="mr-2">
                     <ul class="info-lst serviceadd-info">
                       <li> <a>The new mobile number will be updated as the login mobile number too.</a>
                       </li>
                     </ul>
                   </div>
-                  <div class="form-group phonenumber">
+                  <div class="form-group phonenumber mgn-up-20">
                     <label for="phonenumber">{{your_curmob_msg}} <b>{{currentcountryCode}} {{prev_phonenumber}}</b>
                     </label>
                   </div>
-                  <div class="codenumber col-md-8">
-                    <input class="width100 height40 email-border code-field pull-right" id="countryCode" placeholder=""
+                  <div class="codenumber mgn-bt-10">
+                    <input class="height40 email-border code-field pull-right" id="countryCode" placeholder=""
                       name="countryCode" formControlName="countryCode" autocomplete="off"
                       (keypress)="isNumericSign($event)">
-                    <input class="width100 height40 email-border input-field pull-right" id="newPhone" placeholder=""
+                    <input class="height40 email-border input-field pull-right" id="newPhone" placeholder=""
                       name="newPhone" formControlName="phonenumber" autocomplete="off" (keypress)="isNumeric($event)"
                       maxlength="10" formc>
                   </div>
@@ -71,7 +71,7 @@
   <div class="card title-gb">
     <h5 class="mgn-up-10">
       <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Change
-      Mobile #11111111111
+      Mobile #
     </h5>
   </div>
   <div class="content see-pages mgn-up-10">
@@ -81,19 +81,19 @@
           <div *ngIf="step==1" class="change-phone-div">
             <form [formGroup]="spForm" novalidate (ngSubmit)="spForm.valid && onSubmit(spForm.value)"
               (keyup)="resetApiErrors()" class="ynw-common-form-nm change-mob-style">
-              <div class="col-md-12 mr-2">
+              <div class="mr-2">
                 <ul class="info-lst serviceadd-info">
                   <li> <a >{{'The new mobile number will be updated as the login mobile number too.' | translate}}</a>
                   </li>
                 </ul>
               </div>
-              <div class="form-group phonenumber">
+              <div class="form-group phonenumber mgn-up-20">
                 <label for="phonenumber">{{your_curmob_msg}} <b>{{currentcountryCode}} {{prev_phonenumber}}</b> </label>
               </div>
-              <div class="codenumber">
-                <input  class="width100 height40 email-border code-field pull-right" id="countryCode" placeholder=""
+              <div class="codenumber mgn-bt-10">
+                <input  class="height40 email-border code-field pull-right" id="countryCode" placeholder=""
                   name="countryCode"  formControlName="countryCode" autocomplete="off">
-                <input class="width100 height40 email-border input-field pull-right" id="newPhone" placeholder=""
+                <input class="height40 email-border input-field pull-right" id="newPhone" placeholder=""
                   name="newPhone" formControlName="phonenumber" autocomplete="off" (keypress)="isNumeric($event)"
                   maxlength="10" formc>
               </div>

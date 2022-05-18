@@ -24,7 +24,7 @@ import { SubSink } from 'subsink';
 @Component({
     selector: 'app-catalogdetail',
     templateUrl: './catalog-details.component.html',
-    styleUrls: ['./catalog-details.component.css', '../../../../../../../assets/css/style.bundle.css', '../../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../../assets/css/pages/wizard/wizard-1.css']
+    styleUrls: ['./catalog-details.component.css', '../../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../../assets/css/pages/wizard/wizard-1.css']
 
 })
 export class CatalogdetailComponent implements OnInit, OnDestroy {
@@ -246,8 +246,6 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
                         (qParams) => {
                             this.action = qParams.action;
                             this.cataId = this.catalog_id;
-
-
                         });
 
                 }
@@ -1675,12 +1673,9 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             this.step = this.step + 1;
             return;
         }
-
     }
-
     createItem(form_data, isfrom?) {
         if (this.showPromotionalPrice && (!form_data.promotionalPrice || form_data.promotionalPrice == 0)) {
-            // this.api_error = 'Please enter valid promotional value';
             this.snackbarService.openSnackBar('Please enter valid promotional value', { 'panelClass': 'snackbarerror' });
             return;
         }
@@ -1688,25 +1683,21 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             form_data.promotionalPrice = '';
         }
         if (this.showPromotionalPrice && form_data.promotionallabel === 'CUSTOM' && !form_data.customlabel) {
-            // this.api_error = 'Please enter custom label';
             this.snackbarService.openSnackBar('Please enter custom label', { 'panelClass': 'snackbarerror' });
             return;
         }
         const iprice = parseFloat(form_data.price);
         if (!iprice || iprice === 0) {
-            // this.api_error = 'Please enter valid price';
             this.snackbarService.openSnackBar('Please enter valid price', { 'panelClass': 'snackbarerror' });
             return;
         }
         if (iprice < 0) {
-            //this.api_error = 'Price should not be a negative value';
             this.snackbarService.openSnackBar('Price should not be a negative value', { 'panelClass': 'snackbarerror' });
             return;
         }
         if (form_data.promotionalPrice) {
             const proprice = parseFloat(form_data.price);
             if (proprice < 0) {
-                //  this.api_error = 'Price should not be a negative value';
                 this.snackbarService.openSnackBar('Price should not be a negative value', { 'panelClass': 'snackbarerror' });
                 return;
             }

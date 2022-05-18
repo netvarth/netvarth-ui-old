@@ -14,7 +14,6 @@ import { CommunicationService } from "../../../../business/services/communicatio
 import { BookingHistoryModule } from "../../appointments/booking-history/booking-history.module";
 import { CheckinsActionsModule } from "../checkin-actions/checkin-actions.module";
 import { BookingMedicalRecordsRXModule } from "../../bookings/booking-medical-records-rx/booking-medical-records-rx.module";
-import { BookingDocumentsModule } from "../../bookings/booking-documents/booking-documents.module";
 import { RecordsDatagridModule } from "../../bookings/records-datagrid/records-datagrid.module";
 import { NotesSectionModule } from "../../bookings/notes-section/notes-section.module";
 import { HistorySectionModule } from "../../bookings/history-section/history-section.module";
@@ -38,7 +37,6 @@ const routes: Routes = [
         InboxListModule,
         CheckinsActionsModule,
         BookingMedicalRecordsRXModule,
-        BookingDocumentsModule,
         RecordsDatagridModule,
         NotesSectionModule,
         HistorySectionModule,

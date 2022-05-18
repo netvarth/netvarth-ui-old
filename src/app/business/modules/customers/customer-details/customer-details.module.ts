@@ -16,10 +16,7 @@ import { RecordsDatagridModule } from "../../bookings/records-datagrid/records-d
 import { ProviderServices } from "../../../../business/services/provider-services.service";
 import { CommunicationPopupModule } from "../../bookings/communication-popup/communication-popup.module";
 import { BookingMedicalRecordsRXModule } from "../../bookings/booking-medical-records-rx/booking-medical-records-rx.module";
-import { BookingDocumentsModule } from "../../bookings/booking-documents/booking-documents.module";
 import { VoiceConfirmModule } from "../video-confirm/voice-confirm.module";
-// import { InboxListModule } from "../../bookings/inbox-list/inbox-list.module";
-//import { BusinessInboxListModule } from "../../inbox-list/inbox-list.module";
 const routes: Routes = [
     {path: '', component: CustomerDetailComponent}
 ]
@@ -41,10 +38,7 @@ const routes: Routes = [
         RecordsDatagridModule,
         CommunicationPopupModule,
         BookingMedicalRecordsRXModule,
-        BookingDocumentsModule,
         VoiceConfirmModule,
-        // InboxListModule,
-        //BusinessInboxListModule,
         [RouterModule.forChild(routes)]
     ],
     providers : [

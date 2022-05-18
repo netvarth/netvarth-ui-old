@@ -148,3 +148,11 @@
     margin-left: 12px;
     color: #cc0c0c;
 }
+.mt-9, .my-9 {
+    margin-top: 2.25rem!important;
+}
+.btn.btn-light-danger {
+    color: #f64e60;
+    background-color: #ffe2e5;
+    border-color: transparent;
+}

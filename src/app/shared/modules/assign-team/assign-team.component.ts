@@ -21,7 +21,7 @@ import { TeamMembersComponent } from './team-members/team-members.component';
 @Component({
   selector: 'app-assign-team',
   templateUrl: './assign-team.component.html',
-  styleUrls: ['./assign-team.component.css', '../../../../assets/css/style.bundle.css', '../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
+  styleUrls: ['./assign-team.component.css','../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 
 export class AssignTeam implements OnInit {
@@ -110,6 +110,7 @@ export class AssignTeam implements OnInit {
     this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
     this.getSpokenLanguages();
     this.getProviders();
+    console.log("Assign Team");
     // this.getSpecializations();
   }
   // getProvidersByTeam() {

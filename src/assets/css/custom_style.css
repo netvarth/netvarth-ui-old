@@ -14566,3 +14566,4 @@ pointer-events: none !important;
     height: 40px !important;
     padding: 10px 0 0 15px !important;
   }
+  .skin-blue .wrapper {background-color: transparent !important;}

@@ -19,7 +19,7 @@ import { AuthService } from '../../../services/auth-service';
 @Component({
   selector: 'app-pCustomlogin',
   templateUrl: './provider-customlogin.component.html',
-  styleUrls: ['../../../../../assets/css/pages/login/login-3.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../assets/css/style.bundle.css']
+  styleUrls: ['./provider-customlogin.component.css']
 })
 
 export class ProviderCustomLoginComponent implements OnInit {

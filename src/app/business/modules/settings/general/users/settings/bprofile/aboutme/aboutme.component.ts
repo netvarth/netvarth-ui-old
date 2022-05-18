@@ -26,7 +26,7 @@ import { FileService } from '../../../../../../../../shared/services/file-servic
 @Component({
   selector: 'app-aboutme',
   templateUrl: './aboutme.component.html',
-  styleUrls: ['./aboutme.component.css', '../../../../../../../../../assets/css/style.bundle.css', '../../../../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
+  styleUrls: ['./aboutme.component.css']
 })
 
 export class AboutmeComponent implements OnInit, OnDestroy {
@@ -132,6 +132,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getUser();
     this.createForm();
+    console.log("In AboutME");
     // this.getBusinessProfile();
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.provider_label = this.wordProcessor.firstToUpper(this.wordProcessor.getTerminologyTerm('provider'));

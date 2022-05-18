@@ -338,6 +338,8 @@ export class PaymentLinkComponent implements OnInit {
 
     this.provider_services.linkPayment(postdata)
       .subscribe((data: any) => {
+        console.log("Response Data:");
+        console.log(JSON.stringify(data));
         this.checkIn_type = 'payment_link';
         this.origin = 'consumer';
         this.pGateway = data.paymentGateway || 'PAYTM';
