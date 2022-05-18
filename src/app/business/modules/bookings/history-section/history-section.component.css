@@ -28,6 +28,7 @@
 .widgetStyle .data-card {
     border: 1.75px solid #d0d0d0 !important;
     border-radius: 10px !important;
+    border-top: 3px solid #1E4079 !important;
 }
 .card-body > div > .row {
     width: 100% !important;

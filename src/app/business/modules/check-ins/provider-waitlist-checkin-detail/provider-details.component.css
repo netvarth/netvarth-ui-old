@@ -224,6 +224,10 @@
 .content.comn-cls .lbl .card
 {
     margin-bottom: 10px!important;
+    border-top: 3px solid #1E4079 !important;
+}
+.cardBorder{
+    border-top: 3px solid #1E4079 !important;
 }
 
 .btn-disabled

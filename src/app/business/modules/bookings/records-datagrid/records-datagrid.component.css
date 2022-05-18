@@ -209,3 +209,6 @@ th {
     font-size: 20px!important;
     font-weight: bold!important;
 }
+.cardBorder{
+    border-top: 3px solid #1E4079 !important;
+}
