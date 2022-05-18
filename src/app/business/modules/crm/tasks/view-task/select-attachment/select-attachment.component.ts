@@ -147,7 +147,7 @@ export class SelectAttachmentComponent implements OnInit {
     if(this.selectedMessage.files.length >0){
       this.bUploadFileError=false;
       this.fileSelectErrorMsg=''
-      // this.dialogRef.close();
+      this.dialogRef.close();
       console.log("The data is : ", this.data.source);
       if (this.data.source == "Lead") {
         var id = this.data.leaduid;
