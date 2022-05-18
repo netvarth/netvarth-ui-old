@@ -366,8 +366,17 @@ handleNotesDescription(textValue:any){
     this.assignMemberErrorMsg='Please enter some description'
   }
 }
+cancelCreateNote(textValue){
+console.log('textValue',textValue);
+  if(textValue==='Cancel'){
+    setTimeout(() => {
+      this.dialogRef.close(textValue)
+    }, projectConstants.TIMEOUT_DELAY);
+  }
+}
 saveCreateNote(notesValue:any){
   console.log('notesValue',notesValue)
+  console.log('this.data.taskUid',this.data.taskUid)
   if(this.notesTextarea !==undefined){
     console.log('this.notesTextarea',this.notesTextarea);
     this.errorMsg=false;

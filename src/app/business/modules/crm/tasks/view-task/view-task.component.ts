@@ -102,6 +102,7 @@ export class ViewTaskComponent implements OnInit {
     this._Activatedroute.paramMap.subscribe(params => {
       this.taskUid = params.get("id");
       console.log("task id : ", this.taskUid);
+      console.log('this.action',this.action)
       this.crmService.getTaskDetails(this.taskUid).subscribe(data => {
         console.log(' this.taskType ', this.taskType )
         this.taskDetails = data;
@@ -436,10 +437,23 @@ export class ViewTaskComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(response => {
       this.notesText = response;
+      console.log('response',this.notesText)
+      if(response==='Cancel'){
       setTimeout(() => {
-        // this.ngOnInit();
-        this.getTaskDetails();
+        this.api_loading = false;
+        this.ngOnInit();
+        // this.getTaskDetails();
       }, projectConstants.TIMEOUT_DELAY);
+      }
+      else{
+        this.api_loading = true;
+        setTimeout(() => {
+          this.api_loading = false;
+          this.ngOnInit();
+          // this.getTaskDetails();
+        }, projectConstants.TIMEOUT_DELAY);
+      }
+      
     });
   }
   attatchmentDialog(filesDes: any) {
@@ -504,10 +518,22 @@ export class ViewTaskComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((res: any) => {
       console.log("resssssssss", res);
-      this.getTaskDetails();
-      // if(res === 'Cancelled'){
-      //   console.log('kkk')
-      // }
+      // this.getTaskDetails();
+      if(res==='Cancel'){
+        setTimeout(() => {
+          this.api_loading = false;
+          this.ngOnInit();
+          // this.getTaskDetails();
+        }, projectConstants.TIMEOUT_DELAY);
+        }
+        else{
+          this.api_loading = true;
+          setTimeout(() => {
+            this.api_loading = false;
+            this.ngOnInit();
+            // this.getTaskDetails();
+          }, projectConstants.TIMEOUT_DELAY);
+        }
     });
   }
   openDialogStatusChangeLeadToTask(taskData: any){
@@ -523,11 +549,23 @@ export class ViewTaskComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((res: any) => {
       console.log("resssssssss", res);
-      this.ngOnInit()
-      this.getTaskDetails();
-      // if(res === 'Cancelled'){
-      //   console.log('kkk')
-      // }
+      // this.ngOnInit()
+      // this.getTaskDetails();
+      if(res==='Cancel'){
+        setTimeout(() => {
+          this.api_loading = false;
+          this.ngOnInit();
+          // this.getTaskDetails();
+        }, projectConstants.TIMEOUT_DELAY);
+        }
+        else{
+          this.api_loading = true;
+          setTimeout(() => {
+            this.api_loading = false;
+            this.ngOnInit();
+            // this.getTaskDetails();
+          }, projectConstants.TIMEOUT_DELAY);
+        }
     });
   }
 }

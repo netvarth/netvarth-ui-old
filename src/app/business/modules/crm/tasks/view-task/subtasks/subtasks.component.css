@@ -58,3 +58,16 @@
         margin: 0!important;
     }
   }
+  ::-webkit-scrollbar {
+    width: 0.3em;
+    height: 0.3em
+}
+::-webkit-scrollbar-button {
+    background: #ccc
+}
+::-webkit-scrollbar-track-piece {
+    background: #eee
+}
+::-webkit-scrollbar-thumb {
+    background: #888
+}

@@ -50,8 +50,11 @@
       </ul>
 </div>
 <hr class="my-0 py-0">
+<div *ngIf="bUploadFileError">
+    <div style="color: #f24949 !important;margin-left: 25px;font-size: 12px;">{{fileSelectErrorMsg}}</div>
+</div>
 <div class="my-2 text-right mb-2 mr-2">
   <button class="btn btn-warning mx-2" (click)="dialogClose()">Cancel</button>
-  <button class="btn btn-primary" (click)="saveFile()">Upload</button>
+  <button class="btn btn-primary" (click)="saveFile(imagefile)">Upload</button>
 </div>
 

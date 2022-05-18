@@ -200,7 +200,20 @@ markAsDone(leadid){
   });
   dialogRef.afterClosed().subscribe((res)=>{
     console.log(res)
-    this.getLeadDetails();
+    // this.getLeadDetails();
+    if(res==='Cancel'){
+      setTimeout(() => {
+        this.api_loading = false;
+        this.ngOnInit();
+        // this.getTaskDetails();
+      }, projectConstants.TIMEOUT_DELAY);
+      }
+    this.api_loading = true;
+    setTimeout(() => {
+      this.api_loading = false;
+      this.ngOnInit();
+      // this.getTaskDetails();
+    }, projectConstants.TIMEOUT_DELAY);
   })
 
 }
@@ -216,7 +229,23 @@ chnageStatus(){
       }
     });
     dialogRef.afterClosed().subscribe((res:any)=>{
-      console.log('resssssssss',res);
+      if(res==='Cancel'){
+        setTimeout(() => {
+          this.api_loading = false;
+          this.ngOnInit();
+          // this.getTaskDetails();
+        }, projectConstants.TIMEOUT_DELAY);
+        }
+      else{
+        console.log('resssssssss',res);
+      this.api_loading = true;
+      setTimeout(() => {
+        this.api_loading = false;
+        this.ngOnInit();
+        // this.getTaskDetails();
+      }, projectConstants.TIMEOUT_DELAY);
+      // this.ngOnInit()
+      }
     })
 }
 
@@ -351,12 +380,35 @@ openAddNoteDialog(addNoteText:any){
       leadUid:this.leadUid,
     }
   })
-  dialogRef.afterClosed().subscribe((response)=>{
-    this.notesText=response;
+  dialogRef.afterClosed().subscribe(response => {
+    this.notesText = response;
+    console.log('response',this.notesText)
+    if(response==='Cancel'){
     setTimeout(() => {
+      this.api_loading = false;
       this.ngOnInit();
+      // this.getTaskDetails();
+    }, projectConstants.TIMEOUT_DELAY);
+    }
+    else{
+      this.api_loading = true;
+      setTimeout(() => {
+        this.api_loading = false;
+        this.ngOnInit();
+        // this.getTaskDetails();
       }, projectConstants.TIMEOUT_DELAY);
-  })
+    }
+    
+  });
+  // dialogRef.afterClosed().subscribe((response)=>{
+  //   this.notesText=response;
+  //   console.log('response',response)
+  //   this.api_loading = true;
+  //   setTimeout(() => {
+  //     this.api_loading = false;
+  //     this.ngOnInit();
+  //     }, projectConstants.TIMEOUT_DELAY);
+  // })
 
 }
 attatchmentDialog(filesDes:any){
@@ -373,6 +425,12 @@ attatchmentDialog(filesDes:any){
   })
   dialogRef.afterClosed().subscribe((response:any)=>{
     console.log('response',response)
+    this.api_loading = true;
+    setTimeout(() => {
+      this.api_loading = false;
+      this.ngOnInit();
+      // this.getTaskDetails();
+    }, projectConstants.TIMEOUT_DELAY);
   })
 
 }
@@ -388,6 +446,12 @@ noteView(noteDetails:any){
     }
   })
   dialogRef.afterClosed().subscribe((response:any)=>{
+    this.api_loading = true;
+    setTimeout(() => {
+      this.api_loading = false;
+      this.ngOnInit();
+      // this.getTaskDetails();
+    }, projectConstants.TIMEOUT_DELAY);
     this.getLeadDetails();
     console.log('response',response)
   })
@@ -441,8 +505,23 @@ openDialogStatusChange(leadData:any){
     }
   });
   dialogRef.afterClosed().subscribe((res:any)=>{
-    console.log('resssssssss',res);
-    this.ngOnInit()
+    if(res==='Cancel'){
+      setTimeout(() => {
+        this.api_loading = false;
+        this.ngOnInit();
+        // this.getTaskDetails();
+      }, projectConstants.TIMEOUT_DELAY);
+      }
+    else{
+      console.log('resssssssss',res);
+    this.api_loading = true;
+    setTimeout(() => {
+      this.api_loading = false;
+      this.ngOnInit();
+      // this.getTaskDetails();
+    }, projectConstants.TIMEOUT_DELAY);
+    // this.ngOnInit()
+    }
   })
 }
 createToken(){

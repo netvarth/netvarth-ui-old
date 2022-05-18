@@ -152,6 +152,7 @@ textarea {
   font-size: 15px;
     font-weight: bold;
     color: #22242C;
+    margin-top: 10px;
 }
 .assignee{
   color: #121212;
@@ -241,6 +242,10 @@ padding: 3px;
   }
   .uploadFile{
     width: 100% !important;
+  }
+  .singleStatus{
+    justify-content: flex-start;
+    width: 9.5rem;
   }
 }
 .filesDes{

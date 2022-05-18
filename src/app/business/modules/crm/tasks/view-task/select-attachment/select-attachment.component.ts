@@ -29,6 +29,9 @@ export class SelectAttachmentComponent implements OnInit {
   message = "";
   fileInfos: Observable<any>;
   action: string;
+  public fileInput:any;
+  public fileSelectErrorMsg:any;
+  public bUploadFileError:boolean=false
   constructor(
     public _location: Location,
     public dialogRef: MatDialogRef<SelectAttachmentComponent>,
@@ -83,8 +86,11 @@ export class SelectAttachmentComponent implements OnInit {
 
   filesSelected(event, type?) {
     const input = event.target.files;
+    this.fileInput=input
     //let taskid = this.data.taskuid;
     console.log("input : ", input);
+    // this.bUploadFileError=false;
+    //   this.fileSelectErrorMsg=''
   
     if (input) {
       for (const file of input) {
@@ -124,42 +130,63 @@ export class SelectAttachmentComponent implements OnInit {
       ) {
       }
     }
+    // if( this.fileInput.length>0){
+    //   this.bUploadFileError=false;
+    //   this.fileSelectErrorMsg=''
+    // }
+    // else{
+    //   this.bUploadFileError=true;
+    //   this.fileSelectErrorMsg='Please select atleast one file'
+    // }
   }
 
-  saveFile() {
+  saveFile(fileDes:any) {
     const _this = this;
-    this.dialogRef.close();
-    console.log("The data is : ", this.data.source);
-    if (this.data.source == "Lead") {
-      var id = this.data.leaduid;
-      console.log("This is Lead id : ", id);
-    } else {
-      var id = this.data.taskuid;
-      console.log("This is Task id : ", id);
-    }
-    return new Promise(function(resolve, reject) {
-      const dataToSend: FormData = new FormData();
-      const captions = {};
-      let i = 0;
-      if (_this.selectedMessage) {
-        for (const pic of _this.selectedMessage.files) {
-          dataToSend.append("attachments", pic, pic["name"]);
-          captions[i] = _this.imgCaptions[i] ? _this.imgCaptions[i] : "";
-          i++;
-        }
+    // console.log('this.fileInput',this.fileInput.length)
+    console.log('file', this.selectedMessage.files)
+    if(this.selectedMessage.files.length >0){
+      this.bUploadFileError=false;
+      this.fileSelectErrorMsg=''
+      // this.dialogRef.close();
+      console.log("The data is : ", this.data.source);
+      if (this.data.source == "Lead") {
+        var id = this.data.leaduid;
+        console.log("This is Lead id : ", id);
+      } else {
+        var id = this.data.taskuid;
+        console.log("This is Task id : ", id);
       }
-      const blobPropdata = new Blob([JSON.stringify(captions)], {
-        type: "application/json"
+      return new Promise(function(resolve, reject) {
+        const dataToSend: FormData = new FormData();
+        const captions = {};
+        let i = 0;
+        if (_this.selectedMessage) {
+          for (const pic of _this.selectedMessage.files) {
+            dataToSend.append("attachments", pic, pic["name"]);
+            captions[i] = _this.imgCaptions[i] ? _this.imgCaptions[i] : "";
+            i++;
+          }
+        }
+        const blobPropdata = new Blob([JSON.stringify(captions)], {
+          type: "application/json"
+        });
+        dataToSend.append("captions", blobPropdata);
+        _this.sendWLAttachment(id, dataToSend).then(() => {                                                                         
+          resolve(true);
+        
+        });
       });
-      dataToSend.append("captions", blobPropdata);
-      _this.sendWLAttachment(id, dataToSend).then(() => {                                                                         
-        resolve(true);
-      
-      });
-    });
+    }
+    else{
+      this.bUploadFileError=true;
+      this.fileSelectErrorMsg='Please select atleast one file to upload' ;
+    }
+    
   }
   getImage(url, file) {
     console.log("File :", file);
+    this.bUploadFileError=false;
+    this.fileSelectErrorMsg=''
     return this.fileService.getImage(url, file);
   }
   //   getImage(url, file) {
@@ -183,6 +210,15 @@ export class SelectAttachmentComponent implements OnInit {
     this.selectedMessage.base64.splice(i, 1);
     this.selectedMessage.caption.splice(i, 1);
     this.imgCaptions[i] = "";
+    console.log('this.selectedMessage.files',this.selectedMessage.files.length)
+    if( this.selectedMessage.files.length>0){
+      this.bUploadFileError=false;
+      this.fileSelectErrorMsg=''
+    }
+    else{
+      this.bUploadFileError=true;
+      this.fileSelectErrorMsg='Please select atleast one file to upload'
+    }
   }
 
   sendWLAttachment(Uid, dataToSend) {

@@ -137,7 +137,8 @@ export class CreateLeadComponent implements OnInit{
   leadMasterData: any;
   leadId:any;
   public innerWidth:any;
-  public customerInfoError:any=''
+  public customerInfoError:any='';
+  public editable:boolean=true;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -212,7 +213,8 @@ export class CreateLeadComponent implements OnInit{
       customerDetails:[null,[Validators.required]]
     }) 
     if(this.crmService.leadActivityName!='Create' && this.crmService.leadActivityName!='subLeadCreate' && this.crmService.leadActivityName!='CreatE' && this.crmService.leadActivityName!='CreteLeadMaster'){
-      this.selectHeader='Update Lead'
+      this.selectHeader='Update Lead';
+      this.editable=false;
       this.createBTimeField=false;
       this.updateBTimefield=true;
       this.updateValue=this.crmService.leadToCraeteViaServiceData;

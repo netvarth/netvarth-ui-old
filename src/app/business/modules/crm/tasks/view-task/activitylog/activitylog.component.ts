@@ -21,11 +21,13 @@ export class ActivitylogComponent implements OnInit {
 
     ) { }
     ngOnChanges(){
+      console.log('this.action',this.action)
       if(this.action){
         this.getActivitylog();
       }
     }
   ngOnInit(): void {
+    console.log('this.action',this.action)
     console.log('this.taskType',this.taskType)
     if(this.taskType != 'SubTask'){
       this.activityType='Activity'

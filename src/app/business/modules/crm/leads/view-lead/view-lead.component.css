@@ -313,6 +313,7 @@
     box-sizing: border-box;
     border-radius: 3.93969px;
     margin-bottom: 5px;
+    margin-right: 5px;
   }
   .dropdown-menu {
     position: absolute;
@@ -341,4 +342,16 @@
   margin-right: 8px;
 }
   
- 
+::-webkit-scrollbar {
+  width: 0.3em;
+  height: 0.3em
+}
+::-webkit-scrollbar-button {
+  background: #ccc
+}
+::-webkit-scrollbar-track-piece {
+  background: #eee
+}
+::-webkit-scrollbar-thumb {
+  background: #888
+}

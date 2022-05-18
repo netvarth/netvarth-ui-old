@@ -681,7 +681,7 @@
                                 <div>Status</div>
                             </div>
                             <div class="fieldPadding">
-                                <mat-select class="form-control widthWebKit" placeholder="Enter Lead status" #leadStatus
+                                <mat-select [disabled]="!editable"  class="form-control widthWebKit" placeholder="Enter Lead status" #leadStatus
                                     formControlName="leadStatus" name="item"
                                     (selectionChange)="handleLeadStatus(leadStatus.value)">
                                     <mat-option *ngFor="let item of leadStatusList[0];let index=i" [value]="item.id">

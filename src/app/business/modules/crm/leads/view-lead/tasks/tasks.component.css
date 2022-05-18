@@ -82,3 +82,17 @@
   thead{
     border-bottom: 1px solid #f4f4f4 !important;
   }
+
+  ::-webkit-scrollbar {
+    width: 0.3em;
+    height: 0.3em
+  }
+  ::-webkit-scrollbar-button {
+    background: #ccc
+  }
+  ::-webkit-scrollbar-track-piece {
+    background: #eee
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #888
+  }

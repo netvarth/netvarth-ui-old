@@ -100,6 +100,7 @@ export class CreateTaskComponent implements OnInit {
   public type: any;
   public subActivityTaskUid:any;
   public rupee_symbol = '₹';
+  public editable:boolean=true;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -159,6 +160,7 @@ export class CreateTaskComponent implements OnInit {
     // });
     
     this.api_loading=false;
+    console.log('this.taskMasterData',this.taskMasterData)
     if(this.type ==='SubUpdate'){
       console.log('.....................this.type',this.type)
       this.createTaskForm=this.createTaskFB.group({
@@ -179,7 +181,8 @@ export class CreateTaskComponent implements OnInit {
       targetResult:[null],
       targetPotential:[null],
     }) 
-      this.selectHeader='SubActivity Update'
+      this.selectHeader='SubActivity Update';
+      this.editable=false;
       this.createBTimeField=false;
       this.updateBTimefield=true;
       console.log('this.updateValue',this.updateValue)
@@ -243,7 +246,8 @@ export class CreateTaskComponent implements OnInit {
       targetResult:[null],
       targetPotential:[null],
     }) 
-      this.selectHeader='Update Activity'
+      this.selectHeader='Update Activity';
+      this.editable=false;
       this.createBTimeField=false;
       this.updateBTimefield=true;
       this.updateValue=this.crmService.taskToCraeteViaServiceData;
