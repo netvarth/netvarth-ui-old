@@ -299,7 +299,7 @@
             </div>
             <div style="text-align: center;">
                 <div class="almostDone">You're almost done!</div>
-                <div class="taskDes">Confirm activity completion!</div>
+                <div class="taskDes">Confirm {{taskType}} completion!</div>
                 <!-- <div class="taskDes">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate ea vitae ab pariatur repellat? Ut quae rerum laborum dicta voluptatibus vitae debitis accusamus obcaecati at quas! Repellendus voluptatibus fugiat necessitatibus.</div> -->
             </div>
             <div style="text-align: center;">
@@ -692,7 +692,10 @@
             <div *ngIf="files.type ==='jpg'" class="fileType">
                 <img class="imageIcon" src="/assets/images/ImgeFileIcon/jpg.png" />
             </div>
-            <div *ngIf="( files.type !=='pdf' &&  files.type !=='txt' &&  files.type !=='xlsx' &&  files.type !=='docx' && files.type !=='PNG' && files.type !=='jpg'  )"
+            <div *ngIf="files.type ==='mp4'" class="fileType">
+                <img class="imageIcon" src="/assets/images/ImgeFileIcon/video.png" />
+            </div>
+            <div *ngIf="( files.type !=='pdf' &&  files.type !=='txt' &&  files.type !=='xlsx' &&  files.type !=='docx' && files.type !=='PNG' && files.type !=='jpg' && files.type !=='mp4'  )"
                 class="fileType">
                 <img class="imageIcon" src="/assets/images/ImgeFileIcon/othersFile.png" />
             </div>
@@ -720,7 +723,10 @@
             <div *ngIf="files.type ==='txt'" class="fileType pointerClass">
                 <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png" (click)="downloadFile(files)"/>
             </div>
-            <div *ngIf="( files.type !=='pdf' &&  files.type !=='txt' &&  files.type !=='xlsx' &&  files.type !=='docx' && files.type !=='PNG' && files.type !=='jpg'  )"
+            <div *ngIf="files.type ==='mp4'" class="fileType pointerClass">
+                <img class="imageIconType" src="/assets/images/ImgeFileIcon/videoDownload.png" />
+            </div>
+            <div *ngIf="( files.type !=='pdf' &&  files.type !=='txt' &&  files.type !=='xlsx' &&  files.type !=='docx' && files.type !=='PNG' && files.type !=='jpg' && files.type !=='mp4'  )"
                 class="fileType pointerClass">
                 <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png" (click)="downloadFile(files)"/>
             </div>

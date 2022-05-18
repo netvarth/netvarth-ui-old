@@ -10,8 +10,10 @@ import { CrmService } from '../../../crm.service';
 export class ActivitylogComponent implements OnInit {
   @Input() taskid;
   @Input() action;
+  @Input() taskType;
   activityList:any=[];
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+  public activityType:any;
   constructor( 
 
     private crmService: CrmService,
@@ -24,6 +26,13 @@ export class ActivitylogComponent implements OnInit {
       }
     }
   ngOnInit(): void {
+    console.log('this.taskType',this.taskType)
+    if(this.taskType != 'SubTask'){
+      this.activityType='Activity'
+    }
+    else{
+      this.activityType='SubActivity'
+    }
     this.getActivitylog();
 
   }

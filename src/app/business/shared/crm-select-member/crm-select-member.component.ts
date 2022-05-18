@@ -75,6 +75,7 @@ export class CrmSelectMemberComponent implements OnInit {
   public phoneNoValue:any;
   public emailValue:any;
   public selectTemplateLength:any;
+  public taskType:any;
 
 
 
@@ -170,6 +171,13 @@ export class CrmSelectMemberComponent implements OnInit {
     else if(this.data.requestType==='taskComplete'){
       console.log('this.data',this.data)
       this.taskDes= this.data.taskName.title
+      if(this.data.type != 'SubTask'){
+        this.taskType='activity'
+      }
+      else{
+        this.taskType='subactivity'
+      }
+
     }
     else if(this.data.requestType==='statusChange'){
       console.log('this.data',this.data)

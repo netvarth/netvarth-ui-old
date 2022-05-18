@@ -279,7 +279,8 @@ export class ViewTaskComponent implements OnInit {
       disableClose: true,
       data: {
         requestType: "taskComplete",
-        taskName: this.taskDetails
+        taskName: this.taskDetails,
+        type:this.taskType
       }
     });
     dialogRef.afterClosed().subscribe(res => {
