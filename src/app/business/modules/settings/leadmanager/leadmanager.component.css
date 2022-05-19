@@ -1,0 +1,12 @@
+.ordermgmt {
+    background: white;
+    padding-bottom: 100px;
+}
+.ordermgmt .item{
+    box-shadow: 5px 5px 5px 0px #cccccc60 !important;
+    padding: 30px;
+    border: 1px solid #cccccc57 !important;
+    margin: 10px 10px 20px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+}

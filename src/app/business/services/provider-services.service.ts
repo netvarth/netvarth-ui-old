@@ -2435,7 +2435,15 @@ export class ProviderServices {
     const url = 'provider/account/settings/task/' + status;
     return this.servicemeta.httpPut(url);
   }
+  setProviderLeadStatus(status){
+    const url = 'provider/account/settings/lead/' + status;
+    return this.servicemeta.httpPut(url);
+  }
   getProviderTaskSettings() {
+    const url = 'provider/account/settings';
+    return this.servicemeta.httpGet(url);
+  }
+  getProviderLeadSettings(){
     const url = 'provider/account/settings';
     return this.servicemeta.httpGet(url);
   }

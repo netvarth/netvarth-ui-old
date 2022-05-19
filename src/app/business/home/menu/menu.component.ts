@@ -37,6 +37,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   count = 0;
   orderstatus;
   taskStatus;
+  public leadStatus;
   minimizeMenu = false;
   showMenu = false;
   enquiryCount;
@@ -132,6 +133,9 @@ export class MenuComponent implements OnInit, OnDestroy {
           case 'taskstatus':
             this.taskStatus = message.taskstatus;
             break;
+            case 'leadstatus':
+            this.leadStatus = message.leadStatus;
+            break;
         case 'showmenu':
           this.showMenu = message.value;
           break;
@@ -220,6 +224,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.getProviderSettings();
     this.getOrderStatus();
     this.getTaskStatus();
+    this.getLeadStatus()
     this.getEnquiryCount();
   }
 
@@ -280,6 +285,14 @@ export class MenuComponent implements OnInit, OnDestroy {
   getTaskStatus() {
     this.provider_services.getProviderTaskSettings().subscribe((data: any) => {
       this.taskStatus = data.enableTask;
+      // this.leadStatus=false
+    });
+  }
+  getLeadStatus() {
+    this.provider_services.getProviderLeadSettings().subscribe((data: any) => {
+      console.log('data',data)
+      this.leadStatus = data.enableLead;
+      // this.taskStatus=false
     });
   }
   minimizeSideBar() {

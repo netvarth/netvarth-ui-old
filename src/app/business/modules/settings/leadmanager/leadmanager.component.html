@@ -1,0 +1,26 @@
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           CRM
+            <!-- <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i> -->
+        </h5>
+    </div>
+</section>
+<section>
+    <div class="ordermgmt col-sm-12 col-md-12 col-lg-12 col-xs-12">
+        <div class="col-sm-12 col-md-12 col-lg-12 mgn-up-20 mgn-bt-20" style="margin-bottom: 10px">
+            <div>
+                <label>
+                    Lead Manager
+                    <mat-slide-toggle class="mgn-lt-20" [(ngModel)]="leadstatus" (change)="handleleadStatus($event)">
+                    </mat-slide-toggle>&nbsp;{{pos_statusstr}}
+                </label>
+                <div class="form-level-settings"> Lead management system 
+                </div>
+            </div>
+        </div>
+      
+    </div>
+</section>

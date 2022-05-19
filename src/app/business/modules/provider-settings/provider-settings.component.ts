@@ -166,6 +166,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   taskstatus;
   orderstatusstr;
   taskstatusstr;
+  public leadStatus:any;
+  public leadstatusstr:any;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private cdf: ChangeDetectorRef,
@@ -312,6 +314,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.getDisplayboardCountWaitlist();
     this.getOrderStatus();
     this.getTaskStatus();
+    this.getLeadStatus();
     this.getSchedulesCount();
     this.getCatalog();
     // this.getStatusboardLicenseStatus();
@@ -976,6 +979,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         case 'taskmanager':
           this.routerobj.navigate(['provider', 'settings', 'taskmanager']);
           break;
+        case 'leadmanager':
+          this.routerobj.navigate(['provider', 'settings', 'leadmanager']);
+        break;
       case 'catalogs':
         this.routerobj.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
         break;
@@ -1497,6 +1503,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.getProviderTaskSettings().subscribe((data: any) => {
       this.taskstatus = data.enableTask;
       this.taskstatusstr = (this.taskstatus) ? 'On' : 'Off';
+    });
+  }
+  getLeadStatus(){
+    this.provider_services.getProviderLeadSettings().subscribe((data: any) => {
+      this.leadStatus = data.enableLead;
+      this.leadstatusstr = (this.leadStatus) ? 'On' : 'Off';
     });
   }
 }
