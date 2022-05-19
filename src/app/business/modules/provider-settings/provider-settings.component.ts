@@ -164,10 +164,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   catalog_list: any = [];
   orderstatus;
   taskstatus;
+  leadstatus;
   orderstatusstr;
   taskstatusstr;
-  public leadStatus:any;
-  public leadstatusstr:any;
+  leadstatusstr:any;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private cdf: ChangeDetectorRef,
@@ -1507,8 +1507,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   }
   getLeadStatus(){
     this.provider_services.getProviderLeadSettings().subscribe((data: any) => {
-      this.leadStatus = data.enableLead;
-      this.leadstatusstr = (this.leadStatus) ? 'On' : 'Off';
+      this.leadstatus = data.enableLead;
+      this.leadstatusstr = (this.leadstatus) ? 'On' : 'Off';
     });
   }
 }

@@ -123,6 +123,7 @@ export class LeadmanagerComponent implements OnInit,OnDestroy {
     
                 });
     }
+     
       getLeadStatus() {
         this.subscriptions.sink = this.provider_services.getProviderLeadSettings().subscribe((data: any) => {
           this.leadstatus = data.enableLead;
@@ -130,7 +131,6 @@ export class LeadmanagerComponent implements OnInit,OnDestroy {
           this.shared_functions.sendMessage({ 'ttype': 'leadstatus', leadstatus: this.leadstatus });
         });
       }
-      
       redirecToSettings() {
         this.routerobj.navigate(['provider', 'settings']);
       }

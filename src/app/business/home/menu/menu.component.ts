@@ -37,7 +37,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   count = 0;
   orderstatus;
   taskStatus;
-  public leadStatus;
+  leadStatus;
   minimizeMenu = false;
   showMenu = false;
   enquiryCount;
@@ -134,7 +134,7 @@ export class MenuComponent implements OnInit, OnDestroy {
             this.taskStatus = message.taskstatus;
             break;
             case 'leadstatus':
-            this.leadStatus = message.leadStatus;
+            this.leadStatus = message.leadstatus;
             break;
         case 'showmenu':
           this.showMenu = message.value;
