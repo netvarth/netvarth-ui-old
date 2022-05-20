@@ -385,18 +385,24 @@ export class MedicalrecordComponent implements OnInit {
     });
 
   }
-  goback() {
+  goback(type_from) {
+
     const back_type = this.medicalService.getReturnTo();
-    if (back_type === 'waitlist') {
-      this.router.navigate(['provider', 'check-ins']);
-    } else if (back_type === 'appt') {
-      this.router.navigate(['provider', 'appointments']);
-    } else if (back_type === 'patient') {
-      this.router.navigate(['provider', 'customers']);
-    } else if (back_type === 'list') {
-      this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'list']);
-    } else {
+    if(type_from === 'medical'){
       this.location.back();
+    }
+    else{
+      if (back_type === 'waitlist') {
+        this.router.navigate(['provider', 'check-ins']);
+      } else if (back_type === 'appt') {
+        this.router.navigate(['provider', 'appointments']);
+      } else if (back_type === 'patient') {
+        this.router.navigate(['provider', 'customers']);
+      } else if (back_type === 'list') {
+        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'list']);
+      } else {
+        this.location.back();
+      }
     }
   }
   showLastvisitorNot() {
