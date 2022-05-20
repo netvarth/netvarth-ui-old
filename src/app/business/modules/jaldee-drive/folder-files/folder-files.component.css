@@ -542,13 +542,13 @@
 }
 }
 
-.count { 
-/* border-radius: 10px;
+/* .count { 
+border-radius: 10px;
     background-color: #777;
     padding: 3px 7px;
     font-size: 12px;
-    font-weight: 700; */
-}
+    font-weight: 700;
+} */
 .cust-name{
     margin-top: 25px !important;
     width: 100%;
@@ -585,6 +585,7 @@
   .customersList .row .card {
     padding: 0 !important;
     display: inline-block;
+    box-shadow: #cfd9e0;
     
   }
 } 
@@ -596,10 +597,58 @@
   padding: 0 !important;
 
 }
+.confirmBtn {
+    background: #0D2348 !important;
+    box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+    border-radius: 5.75916px !important;
+    border: 0px solid !important;
+}
+/* .dashboard .card.w-dta .dash-list .table tbody tr td {
+  border-top: 1px solid #ddd;
+  padding: 8px;
+  font-weight: 500;
+  transition: all 500ms;
+  vertical-align: middle;
 }
 
+.dashboard .card.w-dta .dash-list .table thead tr th {
+  padding: 20px 8px;
+}
+.dashboard .card.w-dta .dash-list .table tbody tr:nth-child(even) {
+  background: transparent !important;
+} */
 
-
+  /* .head_color {
+    color: #1e4079 !important;
+}
+.headAlign{
+  vertical-align: -webkit-baseline-middle !important;
+} */
+}
+.head_color{
+  border-top: 0;
+  color: #1e4079;
+  vertical-align: middle;
+}
+.heght {
+  line-height: 24px !important;
+  /* background-color: #f3f6f9; */
+  background-color: #d8e2f1 !important;
+  height: 60px;
+  align-items: center;
+}
+.action_bt {
+  margin-top: 5px;
+  border: none !important;
+  /* background-color: white !important; */
+  background: transparent !important;
+}
+.imageStatus {
+  height: 16px;
+  width: 16px;
+  margin-left: -2px;
+  margin-right: 8px;
+}
 .img-section img {
   width: 100px;
   height: 80px;
@@ -783,10 +832,10 @@ table{
    td {
     word-wrap: break-word;
     margin:auto;
-    word-break: break-word;
+    /* word-break: break-word; */
     white-space: pre-line;
-    overflow-wrap: break-word;
-    -ms-word-break: break-word;
+    /* overflow-wrap: break-word; */
+    /* -ms-word-break: break-word; */
     -ms-hyphens: auto;
     -moz-hyphens: auto;
     -webkit-hyphens: auto;

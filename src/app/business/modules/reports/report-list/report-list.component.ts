@@ -118,6 +118,7 @@ export class ReportListComponent implements OnInit {
         (data: any) => {
           console.log(data);
           this.totalReportList = data
+          console.log("totalReportList :::",this.totalReportList)
           this.api_loading = false;
         }
       );
@@ -266,6 +267,7 @@ export class ReportListComponent implements OnInit {
     event.stopPropagation();
   }
   generatedReport(report) {
+    console.log("Report Data :",report)
     const navigationExtras: NavigationExtras = {
       queryParams: {
         token: report.reportToken

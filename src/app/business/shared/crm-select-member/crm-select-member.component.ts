@@ -11,6 +11,11 @@ import { CrmMarkasDoneComponent } from '../../shared/crm-markas-done/crm-markas-
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { Router } from '@angular/router';
+import { ProviderServices } from "../../../business/services/provider-services.service";
+//import { FormBuilder, FormControl, Validators } from "@angular/forms";
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
+import { projectConstantsLocal } from "../../../../../src/app/shared/constants/project-constants";
 
 @Component({
   selector: 'app-crm-select-member',
@@ -77,6 +82,26 @@ export class CrmSelectMemberComponent implements OnInit {
   public selectTemplateLength:any;
   public taskType:any;
 
+  public createCustomerForm: any;
+  customerDetails:any
+
+  searchby = "";
+  form_data: any;
+  emptyFielderror = false;
+  create_new = false;
+  qParams: {};
+  prefillnewCustomerwithfield = "";
+  customer_data: any;
+  show_customer = false;
+  create_customer = false;
+  disabledNextbtn = true;
+  jaldeeId: any;
+  formMode: string;
+  countryCode;
+  customer_email: any;
+  search_input: any;
+  hideSearch = false;
+  private onDestroy$: Subject<void> = new Subject<void>();
 
 
 
@@ -89,6 +114,7 @@ export class CrmSelectMemberComponent implements OnInit {
     // private _Activatedroute:ActivatedRoute,
       // private router: Router,
       // private createTaskFB: FormBuilder,
+      private providerServiceObj: ProviderServices,
       private dialog: MatDialog,
       // private datePipe:DatePipe,
       private wordProcessor: WordProcessor,
@@ -273,7 +299,16 @@ export class CrmSelectMemberComponent implements OnInit {
       this.leadMasterListData= this.data.leadMasterFullList[0];
         console.log('leadMasterList.............',this.leadMasterListData)
       }
+      
+ if (this.data.requestType === "fileShare") {
+  console.log("this.data", this.data.file);
+}
   }
+
+  createCustomerData(customer){
+    console.log("FormData ",customer)
+      }
+    
   handleMemberSelect(member,selected:string){
     this.handleAssignMemberSelectText=''
     // console.log(selected)
@@ -689,5 +724,216 @@ getTaskmaster(){
       // }
 
     }
+
+
+    searchCustomer() {
+      this.emptyFielderror = false;
+      if (
+        this.customerDetails &&
+        this.customerDetails === ""
+      ) {
+        this.emptyFielderror = true;
+      } else {
+        this.qParams = {};
+        let mode = "id";
+        this.form_data = null;
+        let post_data = {};
+        const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+        const isEmail = emailPattern.test(
+          this.customerDetails
+        );
+        if (isEmail) {
+          mode = "email";
+          this.prefillnewCustomerwithfield = "email";
+        } else {
+          const phonepattern = new RegExp(
+            projectConstantsLocal.VALIDATOR_NUMBERONLY
+          );
+          const isNumber = phonepattern.test(
+            this.customerDetails
+          );
+          const phonecntpattern = new RegExp(
+            projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10
+          );
+          const isCount10 = phonecntpattern.test(
+            this.customerDetails
+          );
+          if (isNumber && isCount10) {
+            mode = "phone";
+            this.prefillnewCustomerwithfield = "phone";
+          } else if (
+            isNumber &&
+            this.customerDetails.length > 7
+          ) {
+            mode = "phone";
+            this.prefillnewCustomerwithfield = "phone";
+          } else if (
+            isNumber &&
+            this.customerDetails.length < 7
+          ) {
+            mode = "id";
+            this.prefillnewCustomerwithfield = "id";
+          }
+        }
+  
+        switch (mode) {
+          case "phone":
+            post_data = {
+              "phoneNo-eq": this.customerDetails
+            };
+            this.qParams[
+              "phone"
+            ] = this.customerDetails;
+            break;
+          case "email":
+            post_data = {
+              "email-eq": this.customerDetails
+            };
+            this.qParams[
+              "email"
+            ] = this.customerDetails;
+            break;
+          case "id":
+            post_data["or=jaldeeId-eq"] =
+              this.customerDetails +
+              ",firstName-eq=" +
+              this.customerDetails;
+            // post_data = {
+            //   'jaldeeId-eq': form_data.search_input
+            // };
+            break;
+        }
+        console.log("Post Data :", post_data);
+  
+        this.providerServiceObj
+          .getCustomer(post_data)
+          .pipe(takeUntil(this.onDestroy$))
+          .subscribe(
+            (data: any) => {
+              this.customer_data = [];
+              console.log("Customer dataaaa :", data);
+              if (data.length === 0) {
+                this.show_customer = false;
+                this.create_customer = true;
+  
+                //this.createNew();
+              } else {
+                if (data.length > 1) {
+                  // const customer = data.filter(member => !member.parent);
+                  this.customer_data = data[0];
+                  this.hideSearch = true;
+                } else {
+                  this.customer_data = data[0];
+                  if (this.customer_data) {
+                    this.hideSearch = true;
+                  }
+                }
+                this.disabledNextbtn = false;
+                this.jaldeeId = this.customer_data.jaldeeId;
+                this.show_customer = true;
+                this.create_customer = false;
+  
+                this.formMode = data.type;
+                if (
+                  this.customer_data.countryCode &&
+                  this.customer_data.countryCode !== "+null"
+                ) {
+                  this.countryCode = this.customer_data.countryCode;
+                } else {
+                  this.countryCode = "+91";
+                }
+                if (
+                  this.customer_data.email &&
+                  this.customer_data.email !== "null"
+                ) {
+                  this.customer_email = this.customer_data.email;
+                }
+  
+                if (
+                  this.customer_data.jaldeeId &&
+                  this.customer_data.jaldeeId !== "null"
+                ) {
+                  this.jaldeeId = this.customer_data.jaldeeId;
+                }
+                if (
+                  this.customer_data.firstName &&
+                  this.customer_data.firstName !== "null"
+                ) {
+                  this.jaldeeId = this.customer_data.firstName;
+                }
+              }
+            },
+            error => {
+              this.wordProcessor.apiErrorAutoHide(this, error);
+            }
+          );
+      }
+    }
+    shareFileToConsumerOrProvider(customer,file) {
+      // if(customer === '' && file === ''){
+      //   this.customerError= null
+      //   this.customerErrorMsg = 'Please add cunsumer or provider info'
+      // }
+      console.log("Submit Share :",customer,file.id)
+      let customerData = [
+        {
+          owner: customer.id,
+          ownerType: file.ownerType
+        }
+      ];
+     let attachments=[
+       file.id
+     ]
+      this.providerServiceObj
+        .shareProviderFiles(customerData, attachments)
+        .subscribe(res => {
+          console.log("Ressssssssssssult:", res);
+          this.dialogRef.close(res);
+        });
+    }
+    search() {
+      this.hideSearch = false;
+    }
+  
+  
+    createNew(){
+      const dialogRef  = this.dialog.open(CrmSelectMemberComponent, {
+        width: '100%',
+        panelClass: ['popup-class', 'confirmationmainclass'],
+        data:{
+          requestType:'createCustomer',
+          header:'Create ' + this.customer_label,
+        }
+    })
+    dialogRef.afterClosed().subscribe((res:any)=>{
+      console.log('afterSelectPopupValue',res)
+      if(res=== ''){
+        this.hideSearch = false;
+      }else{
+        const filter = { 'id-eq': res };
+        this.providerServiceObj.getCustomer(filter).subscribe((response:any)=>{
+          this.customer_data = response[0];
+          console.log('customer_data',this.customer_data)
+          this.hideSearch = true;
+        },
+        (error)=>{
+          this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+        })
+      }
+     
+    })
+    }
+  
+  
+    UpdateFileStatus() {
+      this.providerServiceObj
+        .changeUploadStatus(this.data.file.owner, this.data.file.uploadStatus)
+        .subscribe(res => {
+          console.log("Ressssssssssss:", res);
+        });
+    }
+  
+  
+  
 }
 

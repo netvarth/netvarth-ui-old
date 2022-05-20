@@ -954,3 +954,110 @@
     </div>
 
 </section>
+
+
+
+<section *ngIf="data.requestType==='fileShare'"  style="padding: 20px;">
+    <div class="header">
+        <div class="headerText">{{data.file.fileName | capitalizeFirst}}</div>
+        <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+            <mat-icon>clear</mat-icon>
+        </div>
+    </div>
+    <mat-dialog-content>
+        <!----task description start-->
+        <!-- <form [formGroup]="createCustomerForm"> -->
+        <div >
+            <div class="leadTitle" *ngIf="!hideSearch"  >
+                <!-- -->
+                <div>{{customer_label | capitalizeFirst}} <span class="astericColor">*</span></div>
+                <!-- <div class="astericColor">*</div> -->
+            </div>
+            <div class="fieldPadding" *ngIf=" !hideSearch" >
+               
+                <div>
+                    <div class="customerInfo" *ngIf="!hideSearch">
+                        <!-- [ngModelOptions]="{standalone: true}" [(ngModel)]="search_input"-->
+                        <input type="text" autocomplete="off"
+                            class="form-control inputSize" name="search" (ngModelChange)="createCustomerData(customerDetails)" [(ngModel)]="customerDetails" placeholder="Search {{customer_label}}"/>
+                            <!--  -->
+                            <!-- {{searchby}} -->
+                            <div class="">
+                                <button type="button" class="btn confirmBtnFind" title="Search" (click)="searchCustomer()">Search<i style="color:#fff;margin-left: 5px;" class="fa fa-search"></i> </button>
+                            </div>
+                             
+                                <!-- (click)="
+                                  searchCustomer()" -->
+                    </div>
+                </div>
+                <div>
+                    <br>
+                    <div class="disp-flex" *ngIf="!hideSearch">
+                        <!-- <a>*ngIf="!hideSearch"
+                            <span (click)="createNew()"><u>Create Customer</u></span>(click)="createNew()"
+                        </a> -->
+                        <!-- <button type="button" class="btn confirmBtnCustomerInfo px-8 py-1" (click)="createNew()">
+                          <span>
+                            <img class="customImg" src="/assets/images/crmImages/Group28024.png"/>
+                          </span>
+                          Create {{customer_label | capitalizeFirst}} </button> -->
+
+                    </div>
+                </div>
+                <!-- <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="createCustomerForm.customerDetails === '' || data.file === ''"
+                    errorMsg="{{emptyFielderror}}">
+                </app-field-error-display> -->
+            </div>
+            <!-- {{data| json}} -->
+            <!-- <div *ngFor="let note of allNotes[0];let index=i" class="note">
+                {{note.note }}
+            </div> -->
+            <div class="bggrey my-2" *ngIf="hideSearch">
+                <div style="display: flex;gap: 5px;flex-wrap: wrap;">
+                    {{customer_data.firstName}} {{customer_data.lastName}}
+                </div>
+                <div>
+                    <div class="leadTitle" *ngIf="customer_data.jaldeeId">
+                        <i class="fa fa-id-card-o icon"></i>
+                        <span>{{customer_label}} id : {{customer_data.jaldeeId}}</span>
+                    </div>
+                    <div class="leadTitle" *ngIf="customer_data.phoneNo">
+                        <i class="fa fa-mobile icon"></i>
+                        <span>{{customer_data.phoneNo}}</span>
+                    </div>
+                    <div class="leadTitle" *ngIf="customer_data.email">
+                        <i class="fa fa-envelope icon"></i>
+                        <span>{{customer_data.email}}</span>
+                    </div>
+                </div>
+                <div style="margin-top:5px;">
+                    <a class="navbar-item-color bold pointer-cursor disp-none-small"
+                        (click)="search()">
+                        <button mat-flat-button
+                            class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
+                            Search Again </button>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    <!-- </form> -->
+        <!---cancel save btn start-->
+        <div mat-dialog-actions style="display: flex; margin-top: 5;">
+            <!---cancel save btn start-->
+            <div>
+                <ng-container>
+                    <div class=" mgn-bt-20 mgn-up-10 mt-4">
+                        <button type="button" class="btn font-weight-bold"
+                            mat-dialog-close>Cancel</button>&nbsp; &nbsp;
+                            <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
+                             (click)="shareFileToConsumerOrProvider(customer_data,data.file)"> <i class="fa fa-share-alt" aria-hidden="true"></i> Share</button>
+                    </div>
+                </ng-container>
+            </div>
+
+            <!---cancel save btn end-->
+        </div>
+
+    </mat-dialog-content>
+</section>

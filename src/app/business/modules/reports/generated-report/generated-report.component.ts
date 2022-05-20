@@ -71,18 +71,19 @@ export class GeneratedReportComponent implements OnInit {
   }
   ngOnInit() {
     
-    console.log(this.report_dataSource)
+    console.log("report_dataSource",this.report_dataSource)
     
       this.provider_services.getReportListbyId(this.token)
         .subscribe(
           data => {
             this.new_report = data;
+
             console.log(this.new_report.status)
-            console.log(this.new_report.reportContent)
+            console.log("new_report.reportContent",this.new_report.reportContent.data)
             this.report_view = this.new_report.reportContent.data;
-            console.log(this.report_view)
+            console.log("report_view",this.report_view)
            this.tableColums = this.new_report.reportContent.columns;
-        console.log(this.tableColums)
+        console.log("tableColums",this.tableColums)
          this.objectKeys = Object.keys;
         this.reportCriteriaHeader = this.new_report.reportContent.reportHeader;
         if (this.new_report.reportContent && this.new_report.reportContent.dataHeader) {
@@ -93,6 +94,7 @@ export class GeneratedReportComponent implements OnInit {
           ([key, value]) => this.table_header.push({ 'order': key, 'name': value })
         );
         this.displayedColumns = this.table_header.map(column => column.order);
+        console.log("Logggggg :",this.table_header)
         this.activated_route.queryParams.subscribe(qparams => {
           if (qparams.reportRecreate) {
             this.hide_criteria_save = true;

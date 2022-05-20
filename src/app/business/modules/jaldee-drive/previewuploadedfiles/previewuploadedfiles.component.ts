@@ -15,7 +15,9 @@ export class PreviewuploadedfilesComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.details = this.data.file;
-    console.log("Caption :",this.details.caption);
+    //console.log("Caption :",this.details.caption);
+   // console.log("Path :",this.details.filePath);
+    console.log("Type :",this.details.fileType);
   }
   ngOnInit() {
   }

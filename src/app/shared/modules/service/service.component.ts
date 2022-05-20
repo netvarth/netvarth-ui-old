@@ -309,6 +309,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                         if (this.service_data.virtualCallingModes[0].countryCode) {
                                             this.tool_code = this.service_data.virtualCallingModes[0].countryCode;
                                         }
+                                        else{
+                                            this.tool_code = "+91";
+                                        }
                                     }
                                 } else {
                                     if (this.service_data.serviceType === 'donationService') {
@@ -360,6 +363,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             this.tool_instruct = this.service_data.virtualCallingModes[0].instructions;
                                             if (this.service_data.virtualCallingModes[0].countryCode) {
                                                 this.tool_code = this.service_data.virtualCallingModes[0].countryCode;
+                                            }
+                                            else{
+                                                this.tool_code = "+91";
                                             }
                                         }
                                     }
@@ -920,13 +926,19 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     if (this.selctd_tool === this.vcallmodes[i].callingMode) {
                         this.tool_id = this.vcallmodes[i].value;
                         if ((this.vcallmodes[i].callingMode === 'WhatsApp' || this.vcallmodes[i].callingMode === 'Phone') && this.vcallmodes[i].countryCode) {
-                            this.tool_code = this.vcallmodes[i].countryCode
+                            if(this.vcallmodes[i].countryCode === "91" || ''){
+                                this.tool_code = '+91'
+                            }
+                            else{
+                                this.tool_code =  this.vcallmodes[i].countryCode
+                            }
                         }
                         break;
                     } else {
                         this.tool_id = '';
                         this.tool_code = '+91'
                     }
+                    
                 }
             });
     }

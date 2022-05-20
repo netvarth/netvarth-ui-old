@@ -11,6 +11,10 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter'; // import ng2search pipe module
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
 import { FileService } from "../../../../shared/services/file-service";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatIconModule } from "@angular/material/icon";
+
 
 
 const routes: Routes = [
@@ -28,6 +32,9 @@ const routes: Routes = [
         NgxPaginationModule,
         Ng2SearchPipeModule,
         CapitalizeFirstPipeModule,
+        MatDatepickerModule,
+        MatMenuModule,
+        MatIconModule,
         [RouterModule.forChild(routes)]
     ],
     exports: [

@@ -245,9 +245,9 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     );
   }
   getTotalFileShareCount() {
-    this.provider_servicesobj.getTotalFileShareCount(0).subscribe(
+    this.provider_servicesobj.getTotalFileShareCount(this.active_user.id).subscribe(
       (data: any) => {
-        console.log(data);
+        console.log("Total Count Of Files:",data);
         this.totalcount = data
       }
     );
@@ -402,9 +402,10 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   }
   changeType(event) {
     this.choose_type = event.value;
-    console.log("File Type : ", this.choose_type);
+    //console.log("File Type : ", this.choose_type);
   }
   publicfolder(foldername) {
+    console.log("jaldee drive type :",foldername)
     const navigationExtras: NavigationExtras = {
       queryParams: {
         foldername: foldername,

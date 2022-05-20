@@ -10,6 +10,8 @@ import { MatTableModule } from "@angular/material/table";
 import { RouterModule, Routes } from "@angular/router";
 import { CriteriaDialogModule } from "./criteria-dialog/criteria-dialog.module";
 import { GeneratedReportComponent } from "./generated-report.component";
+import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
+
 const routes: Routes = [
     {path: '', component: GeneratedReportComponent}
 ]
@@ -26,6 +28,7 @@ const routes: Routes = [
         MatTableModule,
         MatSortModule,
         CriteriaDialogModule,
+        CapitalizeFirstPipeModule,
         [RouterModule.forChild(routes)]
     ]
 })

@@ -137,6 +137,7 @@ export class ReportsComponent implements OnInit {
 
   }
   viewCriteria(details) {
+    console.log("Detailssssss....",details)
     this.reprtdialogRef = this.dialog.open(CriteriaDialogComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -150,7 +151,7 @@ export class ReportsComponent implements OnInit {
       if (result) {
       }
     });
-    console.log("View Details :",details.reportName,details.reportType);
+    console.log("View Details :",details.reportName,details.reportType,details.donorName);
   
   //   this.reprtdialogRef = this.dialog.open(CriteriaDialogComponent, {
   //     width: '50%',

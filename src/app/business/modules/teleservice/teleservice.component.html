@@ -53,8 +53,9 @@
                                     <span class="sub-texts">{{data.waitlistingFor[0].preferredLanguage}}</span>
                                 </div>
                                 <div class="location-place" *ngIf="data.waitlistingFor[0].bookingLocation && (data.waitlistingFor[0].bookingLocation.localArea || data.waitlistingFor[0].bookingLocation.district)">
-                                    <i class="fa fa-map-marker icon"></i>
-                                    <span class="sub-texts">{{data.waitlistingFor[0].bookingLocation.localArea}},
+                                    <i class="fa fa-map-marker icon" *ngIf="data.waitlistingFor[0].bookingLocation && (data.waitlistingFor[0].bookingLocation.localArea || data.waitlistingFor[0].bookingLocation.district)"></i>
+                                    <span class="sub-texts" >{{data.waitlistingFor[0].bookingLocation.localArea}}
+                                        <span *ngIf="data.waitlistingFor[0].bookingLocation && (data.waitlistingFor[0].bookingLocation.localArea && data.waitlistingFor[0].bookingLocation.district)">,</span>
                                         {{data.waitlistingFor[0].bookingLocation.district}}</span>
                                 </div>
                             </div>

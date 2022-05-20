@@ -1014,6 +1014,7 @@ export class NewReportComponent implements OnInit {
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
     } else if (reportType === 'donation') {
+      console.log("Donation Entered Data :",this.donation_donorFirstName,this.donation_donorLastName)
       if (this.donation_timePeriod === 'DATE_RANGE' && (this.donation_startDate === undefined || this.donation_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -1063,8 +1064,10 @@ export class NewReportComponent implements OnInit {
         request_payload.reportType = this.report_type.toUpperCase();
         request_payload.reportDateCategory = this.donation_timePeriod;
         request_payload.filter = filter;
+        request_payload.donorName = this.donation_donorFirstName + '' + this.donation_donorLastName;
         request_payload.responseType = 'INLINE';
         this.passPayloadForReportGeneration(request_payload);
+        console.log("Donation Data :",this.passPayloadForReportGeneration(request_payload))
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
     } else if (reportType === 'order') {
@@ -1201,6 +1204,7 @@ export class NewReportComponent implements OnInit {
     // this.router.navigate(['provider', 'reports']);
   }
   passPayloadForReportGeneration(payload) {
+    console.log("Payload :",payload)
     this.btn_disabled = true;
     this.report_loading = true;
     if (this.report_type === 'user') {
@@ -1208,6 +1212,7 @@ export class NewReportComponent implements OnInit {
         this.report_loading = false;
         this.btn_disabled = false;
         this.report_data_service.storeSelectedValues(res);
+        console.log("Resss...",this.report_data_service.storeSelectedValues(res))
         this.lStorageService.setitemonLocalStorage('reportCriteria', payload);
         this.generateUserReport(res, payload);
       },
@@ -1221,6 +1226,8 @@ export class NewReportComponent implements OnInit {
         this.report_loading = false;
         this.btn_disabled = false;
         this.report_data_service.storeSelectedValues(res);
+        console.log("Resss...",this.report_data_service.storeSelectedValues(res))
+
         this.lStorageService.setitemonLocalStorage('reportCriteria', payload);
         this.generatedReport(res);
       },
@@ -1336,6 +1343,7 @@ export class NewReportComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.setSelectedData().then(res => {
         this.lStorageService.setitemonLocalStorage('report', JSON.stringify(report));
+        console.log("Report Data :",this.lStorageService.setitemonLocalStorage('report', JSON.stringify(report)))
       },
       );
       this.router.navigate(['provider', 'reports', 'report-list']);

@@ -2365,6 +2365,7 @@ export class ProviderServices {
   }
   uploadAttachments(folder_name, account_id, body) {
     const url = 'provider/fileShare/upload/' + folder_name + '/' + account_id;
+    console.log(url);
     return this.servicemeta.httpPost(url, body);
   }
   // uploadAttachmentFiles(account_id ,body) {
@@ -2380,6 +2381,105 @@ export class ProviderServices {
   getAllFileAttachments() {
     return this.servicemeta.httpGet('provider/fileShare/');
   }
+  getFileShareCountOnProviderId(id){
+    return this.servicemeta.httpGet('provider/fileShare/count/' + id);
+  }
+
+
+ // get files using short url...
+ getFilesUploaded(id){
+  return this.servicemeta.httpGet('provider/fileShare/shortUrl/'+id);
+}
+//to share files...
+shareProviderFiles(shareto, attachments){
+  const url = 'provider/fileShare/sharefiles';
+  // Headers: {
+  //   'Content-Type': multipart/form-data
+  // }
+  // const httpHeads = new HttpHeaders({
+  //   'Accept': 'text/html, application/xhtml+xml, */*',
+  //   'Content-Type': 'application/multipart/form-data'
+  // });
+  return this.servicemeta.httpPost(url, shareto, attachments);
+}
+//to remove share files
+removeShareFiles(id,sharedTo){
+  const url = `provider/fileShare/sharefiles/${id}`;
+  return this.servicemeta.httpDelete(url,sharedTo);
+}
+// to change upload status
+changeUploadStatus(id,status){
+  const url = `provider/fileShare/upload/${status}`;
+  return this.servicemeta.httpPut(url,id);
+}
+// to get list of shared owner details.....
+getSharedOwnerFiles(ownerType,providerId){
+  const url = `provider/fileShare/${ownerType}/${providerId}`;
+  return this.servicemeta.httpGet(url);
+
+}
+
+
+getFilterFileslogs( sdate, edate, startfrom, limit) {
+  let retparam = this.buildFilesParams( sdate, edate);
+  if (startfrom !== '') {
+    if (retparam !== '') {
+      retparam += '&';
+    }
+    retparam += 'from=' + startfrom;
+  }
+  if (limit !== '') {
+    if (retparam !== '') {
+      retparam += '&';
+    }
+    retparam += 'count=' + limit;
+  }
+  if (retparam !== '') {
+    retparam = '?' + retparam;
+  }
+  const url = 'provider/fileShare';
+  return this.servicemeta.httpGet(url);
+}
+
+buildFilesParams(sdate, edate) {
+  let param = '';
+  // if (ackStatus === 'true') {
+  //   param += 'ackStatus-eq=true';
+  // } else if (ackStatus === 'false') {
+  //   if (ackStatus === 'false') {
+  //     param += 'ackStatus-eq=false';
+  //   }
+  // } else if (ackStatus === 'true,false') {
+  //   param += 'ackStatus-eq=false,true';
+  // }
+  /*if (subcat !== '') {
+    if (param !== '') {
+      param += '&';
+    }
+    param += 'subCategory-eq=' + subcat;
+  }
+  if (action !== '') {
+    if (param !== '') {
+      param += '&';
+    }
+    param += 'action-eq=' + action;
+  }*/
+  if (sdate && sdate !== '') {
+    if (param !== '') {
+      param += '&';
+    }
+    param += 'createdDate-ge=' + sdate;
+  }
+  if (edate && edate !== '') {
+    if (param !== '') {
+      param += '&';
+    }
+    param += 'createdDate-le=' + edate;
+  }
+  return param;
+}
+
+
   changestatustowaitlistComplete(idlist, status) {
     const url = 'provider/waitlist/multiStatusChange/' + status;
     return this.servicemeta.httpPut(url, idlist);

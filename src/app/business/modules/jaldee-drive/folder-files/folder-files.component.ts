@@ -12,6 +12,9 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { projectConstants } from '../../../../app.component';
 import { ConfirmBoxComponent } from '../../../../business/shared/confirm-box/confirm-box.component';
 import { FileService } from '../../../../shared/services/file-service';
+import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { CrmSelectMemberComponent } from '../../../../../../src/app/business/shared/crm-select-member/crm-select-member.component';
+
 // import { ConfirmDeleteBoxComponent } from '../confirm-delete-box/confirm-delete-box.component';
 
 @Component({
@@ -75,9 +78,14 @@ export class FolderFilesComponent implements OnInit {
   filter = {
     fileSize: '',
     fileName: '',
+    ownerName:'',
     fileType: '',
-    contextId: '',
+    context: '',
+    serviceId:'',
     folderName: '',
+    startDate:'',
+    endDate:'',
+    endminday:'',
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1
   };
@@ -112,6 +120,7 @@ export class FolderFilesComponent implements OnInit {
   jpg: boolean;
   mp3:boolean;
   mp4:boolean;
+  doc:boolean;
   selectrow = false;
   user_count_filterApplied: any;
   availabileSelected: boolean;
@@ -120,6 +129,33 @@ export class FolderFilesComponent implements OnInit {
   customer_label = '';
   provider_label = '';
   isHealthCare = false;
+  fileData:any;
+  fileExisted:string;
+  isExistFile:boolean=false;
+
+  // fileData:any =[
+  //   {
+  //     owner:'',
+  //     fileName: '',
+  //     fileSize: '',
+  //     caption:'',
+  //     fileType: '',
+  //     order: '',
+  //   }
+  // ]
+  folderTypeName : any;
+  tday = new Date();
+  minday = new Date(2015, 0, 1);
+  endminday = new Date(1900, 0, 1);
+  maxDate = new Date();
+  isCheckin;
+  dateFilter = false;
+  auditSelAck = [];
+ startDate = null;
+ endDate = null;
+  holdauditSelAck = null;
+  holdauditStartdate = null;
+  holdauditEnddate = null;
   constructor(
     private _location: Location,
     private provider_servicesobj: ProviderServices,
@@ -129,13 +165,20 @@ export class FolderFilesComponent implements OnInit {
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
-    private fileService: FileService
+    private fileService: FileService,
+    private dateTimeProcessor: DateTimeProcessor,
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.activated_route.queryParams.subscribe(params => {
       this.foldertype = params.foldername;
       this.foldername = this.foldertype;
+      if(this.foldertype === 'private'){
+        this.folderTypeName = 'privateFolder'
+      }
+      if(this.foldertype === 'public'){
+        this.folderTypeName = 'publicFolder'
+      }
     });
     this.config = {
       itemsPerPage: 10,
@@ -154,20 +197,67 @@ export class FolderFilesComponent implements OnInit {
   ngOnInit() {
     this.getfiles();
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
-    console.log(this.active_user);
+    console.log("getFilesOnProviderId",this.getFilesOnProviderId());
+    console.log("active_user",this.active_user);
   }
   doSearch() {
+    this.filter.endminday = this.filter.startDate;
+    this.holdauditStartdate = '';
+    this.holdauditEnddate = '';
+   if (this.filter.startDate) {
+     this.holdauditStartdate = this.dateTimeProcessor.transformToYMDFormat(this.filter.startDate);
+   }
+   if (this.filter.endDate) {
+     this.holdauditEnddate = this.dateTimeProcessor.transformToYMDFormat(this.filter.endDate);
+   }
+   this.getAuditList(this.holdauditStartdate,  this.holdauditEnddate);
+  //  if (this.holdauditEnddate !== '' || this.holdauditStartdate !== '' ) {
+  //    this.filterapplied = true;
+  //  } else {
+  //    this.filterapplied = false;
+  //  }
     this.lStorageService.removeitemfromLocalStorage('drivefilter');
-    if (this.filter.fileSize || this.filter.fileName || this.filter.fileType || this.filter.folderName || this.filter.contextId || this.selectedLanguages.length > 0 || this.selectedLocations.length > 0 || this.selectedSpecialization.length > 0) {
+    if (this.holdauditEnddate !== '' || this.holdauditStartdate !== '' || this.filter.fileSize || this.filter.startDate || this.filter.endDate ||this.filter.ownerName || this.filter.fileName || this.filter.fileType || this.filter.folderName || this.filter.context || this.filter.serviceId || this.selectedLanguages.length > 0 || this.selectedLocations.length > 0 || this.selectedSpecialization.length > 0) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
     }
+   
   }
+
+  getAuditList(sdate, edate) {
+    let pageval;
+    if (this.config.currentPage) {
+      pageval = (this.config.currentPage - 1) * this.config.itemsPerPage;
+    } else {
+      pageval = 0;
+    }
+   // this.auditlog_details = [];
+    this.provider_servicesobj.getFilterFileslogs( sdate, edate, Number(pageval), this.config.itemsPerPage)
+      .subscribe(data => {
+       // this.auditlog_details = data;
+        console.log("Date Range Data :",data);
+        // if (this.auditlog_details.length > 0) {
+        //   this.auditStatus = 3;
+        // } else {
+        //   this.auditStatus = 2;
+        // }
+      },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          // this.load_complete = 2;
+          // this.auditStatus = 0;
+        });
+  }
+
+  stopprop(event) {
+    event.stopPropagation();
+  }
+
   hideFilterSidebar() {
     this.filter_sidebar = false;
   }
-  getUsers(from_oninit = false) {
+  getFilteredFiles(from_oninit = false) {
     this.loading = true;
     let filter = this.setFilterForApi();
     if (filter) {
@@ -182,6 +272,10 @@ export class FolderFilesComponent implements OnInit {
       );
     }
   }
+
+
+
+
   setFilterForApi() {
     let api_filter = {};
     const filter = this.lStorageService.getitemfromLocalStorage('drivefilter');
@@ -198,8 +292,21 @@ export class FolderFilesComponent implements OnInit {
         api_filter['folderName-eq'] = this.foldertype;
       }
     }
+    if (this.holdauditStartdate !== '') {
+      api_filter['uploadedDate-ge'] = this.holdauditStartdate;
+      api_filter['folderName-eq'] = this.foldertype;
+    }
+    if (this.holdauditEnddate !== '') {
+      api_filter['uploadedDate-le'] = this.holdauditEnddate;
+      api_filter['folderName-eq'] = this.foldertype;
+    }
     if (this.filter.fileName !== '') {
       api_filter['fileName-like'] = this.filter.fileName;
+      api_filter['folderName-eq'] = this.foldertype;
+    }
+    //uploadedDate
+    if (this.filter.ownerName !== '') {
+      api_filter['ownerName-like'] = this.filter.ownerName;
       api_filter['folderName-eq'] = this.foldertype;
     }
     if (this.filter.fileType !== '') {
@@ -209,8 +316,12 @@ export class FolderFilesComponent implements OnInit {
     if (this.filter.folderName !== '') {
       api_filter['folderName-eq'] = this.filter.folderName;
     }
-    if (this.filter.contextId !== '') {
-      api_filter['contextId-eq'] = this.filter.contextId;
+    if (this.filter.context !== '') {
+      api_filter['contextType-eq'] = this.filter.context;
+      api_filter['folderName-eq'] = this.foldertype;
+    }
+    if(this.filter.serviceId !== ''){
+      api_filter['serviceId-eq'] = this.filter.serviceId;
       api_filter['folderName-eq'] = this.foldertype;
     }
     if (this.selectedLanguages.length > 0) {
@@ -264,6 +375,9 @@ export class FolderFilesComponent implements OnInit {
     this.jpeg = false;
     this.jpg = false;
     this.pdf = false;
+    this.mp3 = false;
+    this.mp4 = false;
+    this.doc = false;
     this.lessMb = false;
     this.grateMB = false;
   }
@@ -283,9 +397,14 @@ export class FolderFilesComponent implements OnInit {
     this.filter = {
       fileSize: '',
       fileName: '',
+      ownerName:'',
       fileType: '',
-      contextId: '',
+      context: '',
+      serviceId:'',
       folderName: '',
+      startDate:'',
+      endDate:'',
+      endminday:'',
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 1,
     };
@@ -341,6 +460,7 @@ export class FolderFilesComponent implements OnInit {
         this.jpeg = false;
         this.jpg = false;
         this.pdf = false;
+        this.doc = false;
         this.filter.fileType = ' ';
         console.log("Type :", type, "Value Null :", value, "Filter", this.filter.fileType)
       }
@@ -372,8 +492,20 @@ export class FolderFilesComponent implements OnInit {
         this.png = false;
         this.jpeg = false;
         this.jpg = false;
+        this.doc= false;
         this.pdf = true;
         this.filter.fileType = 'pdf';
+
+      }
+      else if (value === 'doc') {
+        this.doc = true;
+        this.png = false;
+        this.jpeg = false;
+        this.jpg = false;
+        this.pdf = false;
+        this.mp4 = false;
+        this.mp3 = false;
+        this.filter.fileType = 'doc';
 
       }
       else if (value === 'mp3') {
@@ -383,6 +515,7 @@ export class FolderFilesComponent implements OnInit {
         this.jpg = false;
         this.pdf = false;
         this.mp4 = false;
+        this.doc = false;
         this.filter.fileType = 'mp3';
 
       }
@@ -403,6 +536,7 @@ export class FolderFilesComponent implements OnInit {
         this.pdf = false;
         this.mp3 = false;
         this.mp4 = false;
+        this.doc = false;
         this.filter.fileType = '';
       }
     }
@@ -499,6 +633,18 @@ export class FolderFilesComponent implements OnInit {
       this.getfiles();
     }
   }
+
+  getAllFiles(){
+    this.dataLoading = true;
+    this.provider_servicesobj.getFilesUploaded(this.active_user.id).subscribe(
+      (data: any) => {
+        console.log("Alllllll Filessss.",data);
+        this.customers = data
+        this.dataLoading = false;
+      }
+    );
+  }
+
   getfiles() {
     this.dataLoading = true;
     const filter = {};
@@ -519,8 +665,9 @@ export class FolderFilesComponent implements OnInit {
     console.log("Types :", this.fileTypeDisplayName)
     this.provider_servicesobj.getAllFilterAttachments(filter).subscribe(
       (data: any) => {
-        console.log(data);
+        console.log("Alllllll Filessss.",data);
         this.customers = data
+        console.log("this.customers.",this.customers);
         this.dataLoading = false;
       }
     );
@@ -533,6 +680,7 @@ export class FolderFilesComponent implements OnInit {
     if (fileType.indexOf('pdf')) {
       fileTypeName = fileType.split('/')[1];
     }
+    
     return fileTypeName;
   }
   getFileName(fileName) {
@@ -550,46 +698,115 @@ export class FolderFilesComponent implements OnInit {
   getFileSize(fileSize) {
     return Math.round(fileSize)
   }
+  getFilesOnProviderId(){
+    this.provider_servicesobj.getFileShareCountOnProviderId(this.active_user.id).subscribe((res)=>{
+      console.log("Files are :",res)
+    })
+  }
   actionCompleted() {
-    console.log(this.action);
+    console.log("this.action",this.customers);
+    console.log("this.selectedMessage",this.selectedMessage.files);
     this.apiloading = true;
-    if (this.action === 'attachment' && this.foldertype && this.selectedMessage) {
-      console.log("After Click of OK Button :", this.foldertype, this.action, this.selectedMessage);
-      const dataToSend: FormData = new FormData();
-      const captions = {};
-      let i = 0;
-      for (const pic of this.selectedMessage.files) {
-        console.log("Selected File Is : ", this.selectedMessage.files, pic['name'], pic)
-        dataToSend.append('attachments', pic, pic['name']);
-        captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
-        i++;
-        console.log("Uploaded Image : ", captions[i]);
+  //  this.customers.forEach((element:any)=>{
+  //    if(element.fileName === this.selectedMessage.files[0]['name']){
+  //      this.isExistFile = true;
+  //      this.fileExisted = 'File already existed';
+  //      alert(this.fileExisted)
+  //    }
+  //   //  else{
+  //   //   this.isExistFile = false;
+  //   //   this.fileExisted = ''
+     
+  //   //  }
+    
+  //  })
+   // if(this.selectedMessage.files['name'] === this.customers)
+   if (this.action === 'attachment' && this.folderTypeName && this.selectedMessage) {
+    console.log("After Click of OK Button :", this.folderTypeName, this.action, this.selectedMessage);
+  const dataToSend: FormData = new FormData();
+   //const captions = {};
+    let i = 0;
+    this. fileData =[
+      {
+        owner:'',
+        fileName: '',
+        fileSize: '',
+        caption:'',
+        fileType: '',
+        order: '',
       }
-      const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
-      dataToSend.append('captions', blobPropdata);
-      this.provider_servicesobj.uploadAttachments(this.foldertype, this.active_user.id, dataToSend)
-        .subscribe(
-          () => {
-            this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { 'panelClass': 'snackbarnormal' });
-            this.selectedMessage = {
-              files: [],
-              base64: [],
-              caption: []
-            }
-            this.getfiles();
-            this.apiloading = false;
-          },
-          error => {
-            this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-            this.apiloading = false;
+    ]
+    for (const pic of this.selectedMessage.files) {
+     
+      // console.log("Uploaded Image : ", captions[i]);
+      const size = pic['size']/1024
+
+      //parseInt(((Math.round(size/1024 * 100) / 100).toFixed(2))),
+      console.log("Pic Type ", pic['type'])
+      if(pic['type']){
+        this.fileData = [{
+          owner:this.active_user.id,
+          fileName: pic['name'],
+          fileSize: size/1024,
+          caption:  (this.imgCaptions[i]) ? this.imgCaptions[i] : '',
+          fileType: pic['type'].split('/')[1],
+          order: i++,
+      }]
+      }
+      else{
+        const picType = 'doc';
+        this.fileData = [{
+          owner:this.active_user.id,
+          fileName: pic['name'],
+          fileSize: size/1024,
+          caption:  (this.imgCaptions[i]) ? this.imgCaptions[i] : '',
+          fileType: picType,
+          order: i++,
+      }]
+      }
+    // console.log("Selected File Is : ", this.fileData)
+    // captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
+    // i++;
+   // dataToSend.append('attachments', this.fileData);
+    console.log("Json Daata :",JSON.stringify(this.fileData))
+   
+    
+    }
+    // const blobPropdata = new Blob([JSON.stringify(this.fileData)], {
+    //   type: "application/json"
+    // });
+  const newBlobData =  new Blob([JSON.stringify(this.fileData, null, 2)], {type : 'application/json'});
+    dataToSend.append("fileData", newBlobData);
+    // console.log("Uploaded File : ", this.fileData);
+    // const blobPropdata = new Blob([JSON.stringify(captions)], {
+    //   type: "application/json"
+    // });
+    // dataToSend.append("captions", blobPropdata);
+    this.provider_servicesobj.uploadAttachments(this.folderTypeName, this.active_user.id, this.fileData)
+      .subscribe(
+        (res) => {
+          this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { 'panelClass': 'snackbarnormal' });
+          this.selectedMessage = {
+            files: [],
+            base64: [],
+            caption: []
           }
-        );
-    }
-    else {
-      alert('Please attach atleast one file.');
-    }
-    this.getfiles();
-    console.log("All Files : ", this.getfiles());
+          this.getfiles();
+          this.apiloading = false;
+
+        },
+        error => {
+          this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+          this.apiloading = false;
+        }
+      );
+  }
+  else {
+    alert('Please attach atleast one file.');
+  }
+  
+  
+
   }
   getFolderfiles() {
     this.provider_servicesobj.getAllFileAttachments().subscribe(
@@ -607,7 +824,7 @@ export class FolderFilesComponent implements OnInit {
     let i = 0;
     if (input) {
       for (const file of input) {
-        if (file.size > projectConstants.FILE_MAX_SIZE) {
+       if (file.size > projectConstants.FILE_MAX_SIZE) {
           this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
           return;
         }
@@ -673,5 +890,43 @@ export class FolderFilesComponent implements OnInit {
     this.selectedMessage.base64.splice(i, 1);
     this.selectedMessage.caption.splice(i, 1);
     this.imgCaptions[i] = '';
+    
+  }
+
+  openDialogStatusChange(file){
+    console.log('openDialogStatusChange',file)
+    const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
+      width:'100%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data:{
+        requestType:'fileShare',
+        file:file,
+      }
+    });
+    dialogRef.afterClosed().subscribe((res:any)=>{
+      console.log('resssssssss',res);
+      // this.getCompletedTask();
+      if(res==='In Progress' ||res==='Completed' || res==='Assigned' || res==='New' || res === 'Cancelled' || res === 'Suspended' ){
+        // this.getInprogressTask();
+        this.ngOnInit()
+      }
+      // else if(res==='Completed'){
+      //   this.ngOnInit()
+      // }
+      // else if(res==='Assigned'){
+      //   this.ngOnInit()
+      // }
+      // else if(res === 'New'){
+      //   this.ngOnInit()
+      // }
+      // else if( res === 'Cancelled'){
+      //   this.ngOnInit()
+      // }
+      // else if( res ==='Suspended'){
+      //   this.ngOnInit()
+      // }
+      
+    })
   }
 }

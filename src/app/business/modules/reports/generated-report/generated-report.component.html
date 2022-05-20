@@ -29,6 +29,8 @@
                   <label>{{replacewithTerminologies(key)}} :&nbsp;</label>
                   <span>{{reportCriteriaHeader[key]}}</span>
                   <br>
+                  <label *ngIf="new_report.reportContent.data[0][2]">{{customer_label | capitalizeFirst}} :&nbsp;</label>
+                  <span *ngIf="new_report.reportContent.data[0][2]">{{new_report.reportContent.data[0][2]}}</span>
                 </div>
               </ng-container>
               <div class="clearfix">

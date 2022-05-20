@@ -18,8 +18,7 @@
     <!-- <p class="text-secondary mx-5 no-padding">
       Manage the files uploaded by the {{customer_label ? customer_label : provider_label}}s !
     </p> -->
-    <p *ngIf="foldertype === 'shared'"
-      class="text-secondary mx-5 no-padding">
+    <p *ngIf="foldertype === 'shared'" class="text-secondary mx-5 no-padding">
       <!-- && !isHealthCare -->
       <!-- Manage the files uploaded by the {{foldername=='Provider' ? 'provider' : 'consumer'}} label! -->
       Manage the files uploaded by the {{customer_label | capitalizeFirst}}s label!
@@ -69,6 +68,9 @@
         </div>
       </ng-container>
       <div class="modal-footer">
+        <!-- <div style="text-align:left; color: red;" *ngIf="isExistFile">
+         {{fileExisted}}
+        </div> -->
         <button type="button" class="disp-none btn btn-light-primary font-weight-bold" data-dismiss="modal"
           #closebutton>Cancel</button>
         <button type="button" class="btn btn-primary font-weight-bold hf-btn pull-right" data-dismiss="modal"
@@ -83,20 +85,28 @@
     </div>
   </div>
 </div>
-<section class="customersList mt-2 p-3 table-card">
+<section class="customersList mt-2 p-3 table-card card col-md-12 ">
   <div class="row p-3 no-padding-small">
     <div class="card  card-custom card-stretch gutter-b no-padding col-md-12  col-sm-12  col-xs-12">
       <div class="mx-2" *ngIf="foldertype === 'private'">
         <button type="button" class="pull-left p-button-rounded p-ripple p-button p-component mx-2 my-3 p-1">
           <a style="color: white !important;" #modal data-toggle="modal" data-target="#exampleModalCenter">
           </a>
-          <a style="color: white !important;" class="pointer-cursor mr-1 p-2" (click)="$event.target.value=null;imagefile1.click();"><input
+          <!-- <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small" (click)="$event.target.value=null;imagefile1.click();">
+            <input
               #imagefile1 type="file" accept="/*;capture=camera" style="display:none;" multiple
               (change)="filesSelected($event, 'close')"><i style="color: white !important;" class="fa fa-plus mgn-rt-5"
-              aria-hidden="true"></i> Upload File </a>
+              aria-hidden="true"></i> 
+            <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
+              Upload File</button>
+          </a> -->
+          <a style="color: white !important;" class="pointer-cursor mr-1 p-2 "
+            (click)="$event.target.value=null;imagefile1.click();"><input #imagefile1 type="file"
+              accept="/*;capture=camera" style="display:none;" multiple (change)="filesSelected($event, 'close')"><i
+              style="color: white !important;" class="fa fa-plus mgn-rt-5" aria-hidden="true"></i> Upload File </a>
         </button>
       </div>
-      <div class="p-3">
+      <!-- <div class="p-3">
 
         <h3 class="align-items-start flex-column">
           <a (click)="showFilterSidebar()" class=" mb-2 mgn-lt-5 pull-right" data-bs-toggle="tooltip"
@@ -105,7 +115,7 @@
               style="width: 22px !important; margin-top: -4px !important;">
           </a>
         </h3>
-      </div>
+      </div> -->
       <div class="row p-3 no-padding-small">
         <div class="card-body tble pt-0 pb-3 col-12 col-sm-12 col-xs-12">
           <div class="tab-content">
@@ -114,30 +124,49 @@
               <table
                 class="table  table-responsive table-hover table-head-custom table-head-bg table-borderless table-vertical-center">
                 <thead>
-                  <tr class="text-left text-uppercase mx-2 " style="background-color: #f3f6f9; height: 60px;">
-                    <th style="min-width: 145px">
+                  <tr class="tble-filtr-tr heght ">
+                    <th style="min-width: 145px;margin-left: 5px;" class="head_color">
                       Name
                     </th>
-                    <th style="min-width: 80px" *ngIf="foldertype === 'shared'">
+                    <th style="min-width: 80px" *ngIf="foldertype === 'shared'" class="head_color">
                       Owner
                     </th>
-                    <th style="min-width: 65px">Date</th>
-                    <th style="min-width: 45px">Type</th>
-                    <th style="min-width: 55px">Size</th>
-                    <th *ngIf="foldertype === 'private'">Remove</th>
+                    <!--style="min-width: 65px" style="min-width: 45px" style="min-width: 55px"   -->
+                    <th class="head_color">Date</th>
+                    <th class="head_color">Type</th>
+                    <th class="head_color">Size</th>
+                    <th class="head_color">
+                      Context
+                    </th>
+                    <!-- <th *ngIf="foldertype === 'private'" class="head_color">Remove</th> -->
+                    <th class="head_color" >
+                      <table class="fltr-tbl">
+                        <tr>
+                          <td>
+                            <span>
+                              <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                [matTooltip]="filtericonTooltip"
+                                *ngIf="filterapplied || (customers.length > 0 && !filterapplied)"></i>
+                            </span>
+                          </td>
+                        </tr>
+                      </table>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style="cursor: pointer;" class="py-4"
+                  <tr class="py-4" class="pointer-cursor"
                     *ngFor="let customer of customers | filter:searchTerm | paginate: config;   let i= index">
                     <td (click)="preview(customer)">
                       <span class="text-dark-75 text-hover-primary mb-1 cust-name">
                         <i class="fa fa-file-video-o" aria-hidden="true" *ngIf="customer.fileType == 'mp4'"
                           style="color:red;"></i>
+                        <i class="fa fa-file-text" aria-hidden="true"
+                          *ngIf="customer.fileType && (customer.fileType == 'doc' ||customer.fileType == 'docx' || customer.fileType == 'xlsx' || customer.fileType == 'txt')"></i>
 
                         <i class="fa fa-file-audio-o" aria-hidden="true" style="color:red;"
-                          *ngIf="customer.fileType === 'mp3'"></i>
-                          <!-- <i class="fa fa-file-text" aria-hidden="true" style="color:red;" *ngIf="customer.fileType === 'mp3'"></i> -->
+                          *ngIf="customer.fileType === 'mp3' || customer.fileType === 'mpeg'"></i>
+                        <!-- <i class="fa fa-file-text" aria-hidden="true" style="color:red;" *ngIf="customer.fileType === 'mp3'"></i> -->
 
 
                         <i class="fa fa-file-pdf-o" aria-hidden="true" *ngIf="customer.fileType === 'pdf'"
@@ -168,7 +197,7 @@
                     </td>
                     <td (click)="preview(customer)">
                       <span class="text-dark-75 d-block">
-                        {{customer.fileType}}
+                        {{customer.fileType ? customer.fileType : 'document'}}
                       </span>
                     </td>
                     <td (click)="preview(customer)">
@@ -179,19 +208,50 @@
                         {{getFileSize(customer.fileSize*1024)}}KB
                       </span>
                     </td>
-                    <td *ngIf="foldertype === 'private'">
+                    <td (click)="preview(customer)">
                       <span class="text-dark-75 d-block">
-                        <i class="fa fa-trash" style="color: red;" aria-hidden="true"
-                          (click)="deleteFile(customer.id,customer.fileName)"></i>
-
+                        {{customer.context}}
                       </span>
                     </td>
+                    <!-- <td *ngIf="foldertype === 'private'">
+                      <span class="" title="Delete">
+                        <i class="fa fa-trash" style="color: red; justify-content: space-around !important;" aria-hidden="true"
+                          (click)="deleteFile(customer.id,customer.fileName)" title="Delete"></i>
+
+                      </span>
+                    </td> -->
+                    <!-- <td></td> -->
+                    <td *ngIf="foldertype === 'private'">
+                      <div class="copy">
+                        <span class="">
+                          <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
+                          (click)="stopprop($event);" >
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                        </span>
+                        <mat-menu #appMenu="matMenu">
+                         
+                          <!-- <button mat-menu-item (click)="openDialogStatusChange(customer)">
+                            <i class="fa fa-share-alt" aria-hidden="true"></i> Share file
+                           </button> -->
+                           <button mat-menu-item *ngIf="foldertype === 'private'" (click)="deleteFile(customer.id,customer.fileName)" >
+                            <i class="fa fa-trash" aria-hidden="true"></i> Remove
+                           </button>
+                        </mat-menu>
+                      </div>
+                    </td>
+<!--        <i class="fa fa-trash" style="color: red; justify-content: space-around !important;" aria-hidden="true"
+                             title="Delete"></i> -->
+                    <!-- <i class="fa fa-share-alt" aria-hidden="true"></i> -->
+                    <!-- <button mat-menu-item (click)="openDialogStatusChange(customer)">
+                           <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
+                          </button> -->
                   </tr>
-                  <tr *ngIf="customers.length === 0" class="my-2 py-2">
+                  <tr *ngIf="customers.length === 0" class="my-2 py-2 ">
                     <td class="text-center my-2 py-2" colspan="4">No files found.</td>
                   </tr>
                   <tr *ngIf="dataLoading">
-                    <td class="text-center" colspan="4">                      
+                    <td class="text-center" colspan="4">
                       <app-common-innerloading-spinner *ngIf="dataLoading"></app-common-innerloading-spinner>
                     </td>
                   </tr>
@@ -247,6 +307,7 @@
                     aria-expanded="false">
                     <div>
                       <div style="display: inline-block !important;">
+                        <i class="fa fa-circle-o-notch"></i>
                       </div>
                       File name
                     </div>
@@ -269,10 +330,38 @@
             <div class="card side">
               <div class="card-header">
                 <h2 class="mb-0">
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOwnerName"
+                    aria-expanded="false">
+                    <div>
+                      <div style="display: inline-block !important;">
+                        <i class="fa fa-user"></i>
+                      </div>
+                      Owner name
+                    </div>
+                    <i class="fa fa-angle-down"></i>
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseOwnerName" class="collapse in" data-parent="#accordion1">
+                <div class="card-body">
+                  <div class="filterTextinput filter-text-input">
+                    <li class="filterli filter-li">
+                      <input type="text" id="city" [(ngModel)]="filter.ownerName" #city (keyup)="doSearch()"
+                        maxlength="20" class="filterTextbox filter-textbox" placeholder="Enter owner name">
+                    </li>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="card side">
+              <div class="card-header">
+                <h2 class="mb-0">
                   <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsePin1"
                     aria-expanded="false">
                     <div>
                       <div style="display: inline-block !important;">
+                        <i class="fa fa-circle-o-notch"></i>
                       </div>
                       File type
                     </div>
@@ -319,6 +408,11 @@
                         [checked]="mp3">
                         MP3</mat-checkbox>
                     </li>
+                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                      <mat-checkbox class="filter-checkbox" [checked]="doc"
+                        (change)="setFilterDataCheckbox('fileType', 'doc')">
+                        DOC</mat-checkbox>
+                    </li>
                   </div>
                 </div>
               </div>
@@ -330,6 +424,7 @@
                     aria-expanded="false">
                     <div>
                       <div style="display: inline-block !important;">
+                        <i class="fa fa-circle-o-notch"></i>
                       </div>
                       File size
                     </div>
@@ -363,12 +458,64 @@
             <div class="card side">
               <div class="card-header">
                 <h2 class="mb-0">
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseId1"
+                    aria-expanded="false">
+                    <div>
+                      <div style="display: inline-block !important;">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                      <span>&nbsp;Filter by Date</span>
+                    </div>
+                    <i class="fa fa-angle-down"></i>
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseId1" class="collapse in" data-parent="#accordion1">
+                <div class="card-body">
+                  <div class="filterTextinput filter-text-input">
+                    <div style="color: #374957 !important;
+                      font-weight: 700 !important;
+                      font-size: 14px !important;">From</div>
+                    <li class="filterli filter-li">
+                      <input class="filterTextbox" type="text" (dateChange)="doSearch()" [(ngModel)]="filter.startDate"
+                        [min]="minday" [max]="maxDate" [matDatepicker]="picker" #Fdate placeholder="Start date"
+                        readonly>
+
+
+                      <mat-datepicker-toggle matSuffix [for]="picker">
+                      </mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </li>
+                  </div>
+
+                  <div class="filterTextinput filter-text-input">
+                    <div style="color: #374957 !important;
+                      font-weight: 700 !important;
+                      font-size: 14px !important;">To</div>
+                    <li class="filterli filter-li">
+                      <input class="filterTextbox" type="text" [(ngModel)]="filter.endDate" [min]="filter.endminday"
+                        [max]="maxDate" [matDatepicker]="picker1" #Edate placeholder="End date"
+                        (dateChange)="doSearch()" readonly>
+
+                      <mat-datepicker-toggle matSuffix [for]="picker1">
+                      </mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                    </li>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="card side">
+              <div class="card-header">
+                <h2 class="mb-0">
                   <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseBNo1"
                     aria-expanded="false">
                     <div>
                       <div style="display: inline-block !important;">
+                        <i class="fa fa-circle-o-notch"></i>
                       </div>
-                      <span>&nbsp;Booking ID</span>
+                      <span>&nbsp;Business context</span>
                     </div>
                     <i class="fa fa-angle-down"></i>
                   </button>
@@ -378,21 +525,48 @@
                 <div class="card-body">
                   <div class="filterTextinput filter-text-input">
                     <li class="filterli filter-li">
-                      <input type="text" id="txt_mobile" [(ngModel)]="filter.contextId"
+                      <input type="text" id="txt_mobile" [(ngModel)]="filter.context" (keyup)="doSearch()"
                         [ngModelOptions]="{standalone: true}" class="filterTextbox filter-textbox"
-                        placeholder="Enter Booking ID">
+                        placeholder="Enter business context">
                     </li>
                   </div>
                 </div>
               </div>
             </div>
+            <!-- <div class="card side">
+              <div class="card-header">
+                <h2 class="mb-0">
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseService"
+                    aria-expanded="false">
+                    <div>
+                      <div style="display: inline-block !important;">
+                        <i class="fa fa-cogs"></i>
+                      </div>
+                      <span>&nbsp;Service Id</span>
+                    </div>
+                    <i class="fa fa-angle-down"></i>
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseService" class="collapse in" data-parent="#accordion1">
+                <div class="card-body">
+                  <div class="filterTextinput filter-text-input">
+                    <li class="filterli filter-li">
+                      <input type="text" id="txt_mobile" [(ngModel)]="filter.serviceId" (keyup)="doSearch()"
+                        [ngModelOptions]="{standalone: true}" class="filterTextbox filter-textbox"
+                        placeholder="Enter service id">
+                    </li>
+                  </div>
+                </div>
+              </div>
+            </div> -->
           </ul>
         </section>
         <div class="filter-footer" *ngIf="filterapplied === true">
           <button class="btn reset-btn" (click)="clearFilter()">
             <i class="fa fa-undo"></i>Reset
           </button>
-          <button class="btn apply-btn" (click)="getUsers()">
+          <button class="btn apply-btn" (click)="getFilteredFiles()">
             <i class="fa fa-check"></i>Apply
           </button>
         </div>
