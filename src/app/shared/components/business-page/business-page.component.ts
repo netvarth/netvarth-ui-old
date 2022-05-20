@@ -308,6 +308,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   checkavailabilitydialogref: any;
   searchEnabled;
   uniqueId: any;
+
+  globalLoading= true;
+
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -489,6 +492,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                     () => {
                       _this.domainConfigService.getUIAccountConfig(_this.uniqueId).subscribe(
                         (uiconfig: any) => {
+
+                          if (uiconfig['customWebsite']) {
+                            if (uiconfig['customWebsite']['redirect']===true)
+                            window.location.href = uiconfig['customWebsite']['url'];
+                          }
+
                           if (uiconfig['pwaEnabled']) {
                             _this.pwaEnabled = true;
                           }
@@ -557,6 +566,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                             _this.popUp.nativeElement.style.display = 'block';
                           }
                           _this.gets3curl();
+                        }, ()=> {
+                          _this.globalLoading = false;
                         }
                       )
                     }

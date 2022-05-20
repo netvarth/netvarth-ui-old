@@ -8,7 +8,7 @@ import { SubSink } from 'subsink';
 @Component({
     selector: 'app-edit-store-details',
     templateUrl: './edit-store-details.component.html',
-    styleUrls: ['../../../../../../../assets/css/style.bundle.css']
+    styleUrls: ['./edit-store-details.component.css']
 
 })
 export class EditStoreDetailsComponent implements OnInit , OnDestroy{

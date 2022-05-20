@@ -1,4 +1,4 @@
-<section id="busPageId" class="content bus-page" [ngClass]="theme">
+<section id="busPageId" class="content bus-page" [ngClass]="theme" *ngIf="!globalLoading">
     <div class="container">
         <div class="row pad-bt-10 bus-page-header">
             <div class="panel panel-default">
@@ -554,7 +554,7 @@
         </div>
     </div>
 </div>
-<footer class="site-footer bus-page-footer" *ngIf="!userId && !loading_direct"  [ngClass]="accountProperties?accountProperties['theme']:''">
+<footer class="site-footer bus-page-footer" *ngIf="!userId && !loading_direct && !globalLoading"  [ngClass]="accountProperties?accountProperties['theme']:''">
     <div class="footer-bottom brd-tp pad-up-20">
         <div class="container">
             <div class="row align-items-center justify-content-between text-center">
@@ -568,5 +568,5 @@
         </div>
     </div>
 </footer>
-
+<app-common-innerloading-spinner *ngIf="globalLoading"></app-common-innerloading-spinner>
 <!-- <app-consumer-footer></app-consumer-footer> -->

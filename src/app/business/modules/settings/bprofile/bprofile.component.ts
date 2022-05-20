@@ -34,7 +34,7 @@ import { FileService } from '../../../../shared/services/file-service';
 @Component({
   selector: 'app-bprofile',
   templateUrl: './bprofile.component.html',
-  styleUrls: ['../bprofile/additionalinfo/additionalinfo.component.scss', './bprofile.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
+  styleUrls: ['../bprofile/additionalinfo/additionalinfo.component.scss', './bprofile.component.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 
 

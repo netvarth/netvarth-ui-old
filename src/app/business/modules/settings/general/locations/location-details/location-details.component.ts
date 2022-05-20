@@ -23,7 +23,7 @@ import { GoogleMapComponent } from '../../../../../../business/modules/googlemap
 @Component({
   selector: 'app-location-details',
   templateUrl: './location-details.component.html',
-  styleUrls: ['../../../../../../../assets/css/style.bundle.css', '../../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../../assets/css/pages/wizard/wizard-1.css']
+  styleUrls: ['./location-details.component.css','../../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../../assets/css/pages/wizard/wizard-1.css']
 
 })
 

@@ -25,8 +25,6 @@ import { DateTimeProcessor } from "../../../../shared/services/datetime-processo
   templateUrl: "./customer-create.component.html",
   styleUrls: [
     "./customer-create.component.css",
-    "../../../../../assets/css/style.bundle.css",
-    "../../../../../assets/plugins/custom/datatables/datatables.bundle.css",
     "../../../../../assets/plugins/global/plugins.bundle.css",
     "../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css"
   ]

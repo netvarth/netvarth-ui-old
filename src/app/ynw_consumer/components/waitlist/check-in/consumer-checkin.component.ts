@@ -2558,7 +2558,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     goBack(type?) {
         if (type) {
             if (this.bookStep === 1) {
-                this.location.back();
+                let source = this.lStorageService.getitemfromLocalStorage('source');
+                if (source) {
+                    window.location.href = source;
+                    this.lStorageService.removeitemfromLocalStorage('source');
+                } else {
+                    this.location.back();
+                }      
             } else {
                 this.goToStep('prev');
             }
