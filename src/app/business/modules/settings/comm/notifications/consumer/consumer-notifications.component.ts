@@ -455,7 +455,7 @@ export class ConsumerNotificationsComponent implements OnInit {
     this.routerobj.navigate(['/provider/' + this.domain + '/comm->' + mod]);
   }
   goBack() {
-    this.routerobj.navigate(['provider', 'settings', 'comm']);
+    this.routerobj.navigate(['provider', 'settings', 'comm','notifications']);
   }
   handleHrSelction(obj, atempt) {
     switch (atempt) {
