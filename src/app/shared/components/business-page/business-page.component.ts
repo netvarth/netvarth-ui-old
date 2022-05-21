@@ -492,12 +492,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                     () => {
                       _this.domainConfigService.getUIAccountConfig(_this.uniqueId).subscribe(
                         (uiconfig: any) => {
-
+                          
                           if (uiconfig['customWebsite']) {
                             if (uiconfig['customWebsite']['redirect']===true)
                             window.location.href = uiconfig['customWebsite']['url'];
                           }
-
+                          _this.globalLoading= false;
                           if (uiconfig['pwaEnabled']) {
                             _this.pwaEnabled = true;
                           }
@@ -561,6 +561,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                           }
                           _this.gets3curl();
                         }, (error: any) => {
+                          _this.globalLoading = false;
                           const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
                           if (!appPopupDisplayed && _this.searchEnabled) {
                             _this.popUp.nativeElement.style.display = 'block';
