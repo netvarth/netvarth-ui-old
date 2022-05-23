@@ -1832,6 +1832,10 @@ sup {
   max-width: 80px !important;
 }
 
+.time-ip-sm {
+  max-width: 60px !important;
+}
+
 .otp_scr .number-ip-sm {
   max-width: 100px !important;
 }

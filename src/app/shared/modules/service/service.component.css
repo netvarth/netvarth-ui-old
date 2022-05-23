@@ -98,6 +98,11 @@
   color: #1E4079;
 }
 
+.radio-btn
+{
+  width: auto!important;
+}
+
 .serv-phone-code
   {
     width: 200px!important;
@@ -105,11 +110,29 @@
   }
 
 
+::ng-deep .mat-radio-button .mat-radio-container {
+  width: 0;
+}
+::ng-deep .mat-radio-container .mat-radio-outer-circle,
+::ng-deep .mat-radio-container .mat-radio-inner-circle {
+  border: none;
+  width: 0;
+}
+
+::ng-deep.mat-radio-button.mat-accent.mat-radio-checked {
+    border: 1px solid #1E4079 !important;    
+}
+
+
 @media(max-width: 768px)
 {
   .form-control
   {
       width: 100%;
+  }
+  .radio-btn
+  {
+    width: 100%!important;
   }
   .serv-county-code
   {

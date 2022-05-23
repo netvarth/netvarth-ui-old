@@ -274,14 +274,14 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
               </mat-option>
             </mat-select>
 
-            <!-- <div>
-              <mat-radio-button *ngIf="!is_donation && is_virtual_enable" [value]="'virtualService'"  formControlName="serviceType" #virtual (selectionChange)="selectServiceHandler(virtual.value)" class="form-control">
+            <!-- <mat-radio-group formControlName="serviceType" class="d-flex">
+              <mat-radio-button disableRipple="true" (change)="selectServiceHandler(virtual.value)" *ngIf="!is_donation && is_virtual_enable" [value]="'virtualService'" #virtual class="radio-btn form-control">
                 Teleservice
               </mat-radio-button>
-              <mat-radio-button *ngIf="!is_donation" [value]="'physicalService'"  formControlName="serviceType" #virtual (selectionChange)="selectServiceHandler(virtual.value)" class="form-control">
+              <mat-radio-button disableRipple="true" (change)="selectServiceHandler(virtual.value)" *ngIf="!is_donation" [value]="'physicalService'" #virtual class="radio-btn form-control">
                 Onsite Service
               </mat-radio-button>
-            </div> -->
+            </mat-radio-group> -->
 
 
           </div>
@@ -372,7 +372,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
         <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
           <ng-container class="example-full-width">
             <label class="col-form-label">{{est_duration_cap}} (Hours : Minutes) *</label>
-            <ngb-timepicker [(ngModel)]="duration" formGroupName="serviceDuration" (ngModelChange)="resetApiErrors()">
+            <ngb-timepicker [(ngModel)]="duration" formControlName="serviceDuration" (ngModelChange)="resetApiErrors()">
             </ngb-timepicker>
           </ng-container>
         </div>

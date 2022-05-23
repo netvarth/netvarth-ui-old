@@ -466,6 +466,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         //  return indian_modes.concat(international_modes.filter(x => indian_modes.every(y => y !== x)))
     }
     selectServiceHandler(event) {
+        console.log("selectServiceHandlerCalled");
         this.serv_type = event;
         if (event === 'virtualService') {
             this.serviceForm.controls['virtualServiceType'].enable();
@@ -699,7 +700,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             serviceActionModel['action'] = this.action;
             serviceActionModel['service'] = form_data;
             if (form_data.serviceType === 'virtualService') {
-                if ((form_data.virtualCallingModes[0].callingMode === 'WhatsApp' || form_data.virtualCallingModes[0].callingMode === 'Phone') && (form_data.virtualCallingModes[0].value.charAt(0) === '0')) {
+                if ((form_data.virtualCallingModes[0].callingMode === 'WhatsApp' || form_data.virtualCallingModes[0].callingMode === 'Phone') && (form_data.virtualCallingModes[0].value.toString().charAt(0) === '0')) {
                     this.snackbarService.openSnackBar('Please provide valid phone number', { 'panelClass': 'snackbarerror' });
                 } else if (!form_data.virtualServiceType) {
                     this.snackbarService.openSnackBar(Messages.SELECT_TELE_MODE, { 'panelClass': 'snackbarerror' });
