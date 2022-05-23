@@ -953,6 +953,7 @@ editCustomerDetails() {
     if (checkin) {
       waitlist = checkin;
     }
+    console.log("Action Data ...",checkin)
     const actiondialogRef = this.dialog.open(CheckinActionsComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],

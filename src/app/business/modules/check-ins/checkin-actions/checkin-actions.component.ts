@@ -369,6 +369,7 @@ export class CheckinActionsComponent implements OnInit {
         const ndate3 = moment(ndate2, 'YYYY-MM-DD HH:mm').format();
         const strtDt = new Date(ndate3);
         const nDt = new Date(ndate);
+     
         if (type === 'pre') {
             if (strtDt.getTime() >= nDt.getTime()) {
                 this.checkin_date = ndate;
@@ -392,7 +393,8 @@ export class CheckinActionsComponent implements OnInit {
         const startdate = new Date(strtDt.getFullYear() + '-' + this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) + '-' + this.dateTimeProcessor.addZero(strtDt.getDate()));
         if (startdate >= selecttdate) {
             return true;
-        } else {
+        }
+         else {
             return false;
         }
     }

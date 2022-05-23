@@ -420,6 +420,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             _this.subscriptions.sink = _this.provider_services.getProviderCatalogs(cataId)
                 .subscribe(
                     data => {
+                        console.log("cataId ",data)
                         resolve(data);
                     },
                     () => {

@@ -207,7 +207,7 @@
                 <span class="value cusHead"> {{waitlist_data.waitlistingFor[0].bookingLocation.district}},
                   {{waitlist_data.waitlistingFor[0].bookingLocation.state}}</span>
               </div>
-              <div class="callingBtn">
+              <div class="callingBtn" *ngIf="waitlist_data.waitlistPhoneNumber">
                 <a (click)="showCommunications()" *ngIf="whatsappNumber || mobileNumber || email"
                   class="text-capitalize btn btn-primary col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2 confirmBtn">Call
                   {{customer_label}}</a>

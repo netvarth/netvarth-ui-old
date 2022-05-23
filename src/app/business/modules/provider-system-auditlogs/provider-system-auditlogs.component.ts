@@ -287,6 +287,7 @@ redirecToHelp() {
     this.shared_services.getAuditFilterlogs( sdate, edate, Number(pageval), this.perPage)
       .subscribe(data => {
         this.auditlog_details = data;
+        console.log("Log Data :",this.auditlog_details);
         if (this.auditlog_details.length > 0) {
           this.auditStatus = 3;
         } else {

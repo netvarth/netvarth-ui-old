@@ -802,8 +802,10 @@ export class CustomerCreateComponent implements OnInit {
       if (form_data.customer_id) {
         post_data["jaldeeId"] = form_data.customer_id;
       }
+      console.log("Form Data :",form_data)
       this.provider_services.updateProviderCustomer(post_data).subscribe(
         data => {
+          console.log("Datttttt :",data)
           this.wordProcessor.apiSuccessAutoHide(
             this,
             Messages.PROVIDER_CUSTOMER_CREATED
@@ -814,7 +816,7 @@ export class CustomerCreateComponent implements OnInit {
           if (this.questionAnswers && this.questionAnswers.length > 0) {
             this.submitQnr(form_data, this.customerId);
           } else {
-            this.goBackAfterEdit(form_data, data);
+           this.goBackAfterEdit(form_data, this.customerId);
           }
         },
         error => {
@@ -918,7 +920,8 @@ export class CustomerCreateComponent implements OnInit {
         navigationExtras
       );
     } else {
-      this.router.navigate(["provider", "customers"]);
+      // this.router.navigate(["provider", "customers"]);
+      this.router.navigate(['/provider/customers/' + data]);
     }
   }
   confirmApptBlock(id, type?) {

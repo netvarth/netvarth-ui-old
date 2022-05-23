@@ -77,15 +77,19 @@ export class EditStoreDetailsComponent implements OnInit , OnDestroy{
             'secCountryCode': '+91',
             'whatsAppCountryCode': '+91',
         };
+        // if(this.firstName === '' && this.lastName === '' && this.phone === '' && this.email === ''){
+        //     this.disableButton = true;
+        // }
         if ((this.email !== '' && this.email !== undefined) && (this.alternateEmail !== '' && this.alternateEmail !== undefined) && (this.email === this.alternateEmail)) {
             //if (this.email === this.alternateEmail) {
             this.snackbarService.openSnackBar('Email and Alternate email are same. Please enter different email', { 'panelClass': 'snackbarerror' });
            // }
-        } else if (this.phone === this.alternatePhone) {
+        } else if (this.phone && this.alternatePhone && (this.phone === this.alternatePhone)) {
             this.snackbarService.openSnackBar('Phone number and Alternate phone number are same. Please enter different Phone number', { 'panelClass': 'snackbarerror' });
         } else {
             this.editInfo(data);
         }
+
 
     }
     editInfo(data) {
