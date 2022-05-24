@@ -111,4 +111,21 @@ export class FileService {
       return url;
     }
   }
+  getImageByType(type) {
+    if (type == 'pdf') {
+      return './assets/images/pdf.png';
+    } else if (type == 'vnd.ms-excel' || type == 'vnd.openxmlformats-officedocument.spreadsheetml.sheet' || type == 'xls' || type=='xlsx') {
+      return './assets/images/xls.png';
+    } else if (type == 'mp3' || type == 'mpeg' || type == 'ogg') {
+      return './assets/images/audio.png';
+    } else if (type == 'mp4' || type == 'mpeg') {
+      return './assets/images/video.png';
+    } else if (type == 'application/msword' || type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || type=='docx' || type=='doc') {
+      return './assets/images/ImgeFileIcon/wordDocsBgWhite.jpg';
+    } else if (type=='txt') {
+      return './assets/images/ImgeFileIcon/docTxt.png';
+    } else {
+      return './assets/images/img_uplod.png';
+    }
+  }
 }

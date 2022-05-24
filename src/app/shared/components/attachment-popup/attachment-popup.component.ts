@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { ShowuploadfileComponent } from '../../../../app/business/modules/medicalrecord/uploadfile/showuploadfile/showuploadfile.component';
+import { FileService } from '../../services/file-service';
 
 @Component({
   selector: 'app-attachment-popup',
@@ -19,6 +20,7 @@ export class AttachmentPopupComponent implements OnInit {
     public dialogRef: MatDialogRef<AttachmentPopupComponent>,
     public sharedfunctionObj: SharedFunctions,
     private dialog: MatDialog,
+    private fileService: FileService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.attachments = this.data.attachments;
@@ -75,23 +77,27 @@ export class AttachmentPopupComponent implements OnInit {
   closeDialog() {
     this.dialogRef.close();
   }
-  getImageSource(file) {
-    let imgsrc = '/assets/images/pdf.png';
-    // console.log(file);
-    let type = '';
-    type = file.type.split("/");
-    // console.log(type[0]);
-    if (type[0] == 'video') {
-      imgsrc = '/assets/images/video.png';
-    } else if (type[0] == 'audio') {
-      imgsrc = '/assets/images/audio.png';
-    } else if (type[0] == 'image') {
-      imgsrc = '/assets/images/imageexamle.png';
-    }
-    return imgsrc;
-  }
-  cancel() {
-  }
-  submit() {
-  }
+  getImage(fileType) {
+    console.log(fileType);
+    return this.fileService.getImageByType(fileType);
+}
+  // getImageSource(file) {
+  //   let imgsrc = '/assets/images/pdf.png';
+  //   // console.log(file);
+  //   let type = '';
+  //   type = file.type.split("/");
+  //   // console.log(type[0]);
+  //   if (type[0] == 'video') {
+  //     imgsrc = '/assets/images/video.png';
+  //   } else if (type[0] == 'audio') {
+  //     imgsrc = '/assets/images/audio.png';
+  //   } else if (type[0] == 'image') {
+  //     imgsrc = '/assets/images/imageexamle.png';
+  //   }
+  //   return imgsrc;
+  // }
+  // cancel() {
+  // }
+  // submit() {
+  // }
 }

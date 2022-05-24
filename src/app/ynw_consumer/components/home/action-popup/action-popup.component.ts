@@ -115,14 +115,18 @@ export class ActionPopupComponent implements OnInit {
     this.subs.unsubscribe();
   }
   gotoAptmtReschedule() {
+    let queryParams = {
+      uuid: this.bookingDetails.uid,
+      type: 'reschedule',
+      account_id: this.bookingDetails.providerAccount.id,
+      unique_id: this.bookingDetails.providerAccount.uniqueId,
+      service_id:this.bookingDetails.service.serviceId
+    }
+    if (this.bookingDetails['customId']) {
+      queryParams['customId']=this.bookingDetails['customId'];
+    }
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        uuid: this.bookingDetails.uid,
-        type: 'reschedule',
-        account_id: this.bookingDetails.providerAccount.id,
-        unique_id: this.bookingDetails.providerAccount.uniqueId,
-        service_id:this.bookingDetails.service.serviceId
-      }
+      queryParams: queryParams
     };
     this.router.navigate(['consumer', 'appointment'], navigationExtras);
     this.dialogRef.close();
@@ -235,11 +239,15 @@ export class ActionPopupComponent implements OnInit {
     } else {
       uid = this.bookingDetails.ynwUuid;
     }
+    let queryParams = {
+      account_id: this.bookingDetails.providerAccount.id,
+      status: stat
+    }
+    if (this.bookingDetails['customId']) {
+      queryParams['customId']=this.bookingDetails['customId'];
+    }
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        account_id: this.bookingDetails.providerAccount.id,
-        status: stat
-      }
+      queryParams: queryParams
     };
     this.dialogRef.close();
     if (this.bookingDetails.appointmentEncId) {
@@ -250,14 +258,18 @@ export class ActionPopupComponent implements OnInit {
 
   }
   gotoWaitlistReschedule() {
+    let queryParams = {
+      uuid: this.bookingDetails.ynwUuid,
+      type: 'waitlistreschedule',
+      account_id: this.bookingDetails.providerAccount.id,
+      unique_id: this.bookingDetails.providerAccount.uniqueId,
+      service_id:this.bookingDetails.service.id
+    }
+    if (this.bookingDetails['customId']) {
+      queryParams['customId']=this.bookingDetails['customId'];
+    }
     const navigationExtras: NavigationExtras = {
-      queryParams: {
-        uuid: this.bookingDetails.ynwUuid,
-        type: 'waitlistreschedule',
-        account_id: this.bookingDetails.providerAccount.id,
-        unique_id: this.bookingDetails.providerAccount.uniqueId,
-        service_id:this.bookingDetails.service.id
-      }
+      queryParams: queryParams
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
     this.dialogRef.close();

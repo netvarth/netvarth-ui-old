@@ -265,6 +265,9 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
     this.view_more = !this.view_more;
   }
   gotoActions(booking) {
+    if (this.customId) { 
+      booking['customId'] = this.customId;
+    }
     this.actiondialogRef = this.dialog.open(ActionPopupComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],

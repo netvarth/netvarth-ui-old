@@ -1,10 +1,7 @@
-ul li {
-    list-style-type: circle;
+ul, li {
+    list-style-type: none;
+    padding-left: 5px;
   }
-  /* a:link {color:#FFFAFA;}     
-a:visited {color:#FFFAFA;}  
-a:hover {color:#FFFAFA;}  
- a:active {color:#FFFAFA;}   */
  .attachment a:link, .attachment a:active, .attachment a:visited
  {
    color: #008566;
@@ -16,4 +13,9 @@ a:hover {color:#FFFAFA;}
    {
    color: #008566;
    text-decoration: underline;
+   }
+
+   .imgIcon {
+    height: 35px;
+    width: 35px;
    }

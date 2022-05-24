@@ -17,9 +17,9 @@
     <ng-container *ngIf="docfiles.length>0">
       <ul *ngFor="let file of docfiles;let i = index ">
         <li>
-          <span><i class="fa fa-file-text" aria-hidden="true" *ngIf="file.type === 'bmp' || file.type === 'doc'"></i>
-            <i class="fa fa-file-pdf-o" aria-hidden="true" style="color:red;" *ngIf="file.type === 'pdf'"></i>&nbsp;<a [href]="file.s3path"
-                target="_blank" download>{{file.caption ? file.caption:'document'}}-{{file.type ? file.type:'file' }}
+          <!-- <i class="fa fa-file-pdf-o" aria-hidden="true" style="color:red;"></i> -->
+          <span><img class="imgIcon mgn-rt-10" [src]="getImage(file.type)"/><a [href]="file.s3path"
+                target="_blank" download>{{file.originalName ? file.originalName:'document'}}-{{file.type ? file.type:'file' }}
               </a></span>
         </li>
       </ul>

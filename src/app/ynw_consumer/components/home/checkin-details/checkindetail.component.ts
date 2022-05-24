@@ -263,6 +263,9 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
   }
 
   gotoActions(booking) {
+    if (this.customId) { 
+      booking['customId'] = this.customId;
+    }
     this.actiondialogRef = this.dialog.open(ActionPopupComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
