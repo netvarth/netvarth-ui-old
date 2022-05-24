@@ -20,6 +20,16 @@ import { FileService } from "../../../../../shared/services/file-service";
 import { SelectAttachmentModule } from "./select-attachment/select-attachment.module";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
+import { FormsModule } from "@angular/forms";
+import { MatRadioModule } from "@angular/material/radio";
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {  ReactiveFormsModule } from '@angular/forms';
+import { FormMessageDisplayModule } from "../../../../../shared/modules/form-message-display/form-message-display.module";
+import { MatSelectModule } from "@angular/material/select";
+import { MatOptionModule } from "@angular/material/core";
+import { MatDatepickerModule } from "@angular/material/datepicker";
 const routes: Routes = [
   { path: '', component: ViewTaskComponent },
   {path:'create-task',loadChildren:()=>import('../create-task/create-task.module').then((m)=>m.CreateTaskModule)},
@@ -63,7 +73,19 @@ const routes: Routes = [
       subtitleColor: "teal",
     }),
     [RouterModule.forChild(routes)],
-    
+    FormsModule,
+    MatRadioModule,
+    MatSlideToggleModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    FormMessageDisplayModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatDatepickerModule
+
+
+
   ],
   providers: [
     CrmService,

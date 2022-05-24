@@ -12,6 +12,11 @@ import { SelectAttachmentComponent } from "./select-attachment/select-attachment
 import { CrmSelectMemberComponent } from "../../../../shared/crm-select-member/crm-select-member.component";
 import { SharedServices } from "../../../../../shared/services/shared-services";
 import { CrmProgressbarComponent } from "../../../../../../../src/app/business/shared/crm-progressbar/crm-progressbar.component";
+import { FormBuilder } from '@angular/forms';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
+import * as moment from 'moment';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: "app-view-task",
   templateUrl: "./view-task.component.html",
@@ -59,7 +64,6 @@ export class ViewTaskComponent implements OnInit {
   tday = new Date();
   minday = new Date(2015, 0, 1);
   endminday = new Date(1900, 0, 1);
-  maxDate = new Date();
   dateFilter = false;
   auditSelAck = [];
   auditStartdate = null;
@@ -84,8 +88,58 @@ export class ViewTaskComponent implements OnInit {
   taskkid: any;
   taskType: any;
   changeAction = false;
-  public headerName:string='Activity Overview';
   public taskDetailsData:any;
+  //new ui variabe start
+  public headerName:string='';
+  public taskDetailsDescription:string='View Task Details';
+  public taskError:null;
+  public taskDetailsForm:any;
+  public selectMember:any;
+  public allMemberList:any=[];
+  public updateAssignMemberDetailsToDialog:any;
+  public userType:any;
+  public updateMemberId:any;
+  public locationId:any;
+  public assigneeId:any;
+  public updteLocationId:any;
+  public availableDates: any = [];
+  public minDate:any=new Date();
+  public maxDate:any;
+  public ddate:any;
+  public bTaskTitle:boolean=true
+  public bTaskDescription:boolean=true;
+  public bTaskAreaName:boolean=true;
+  public bTaskDate:boolean=true;
+  public bAssigneeName:boolean=true;
+  public categoryListData:any=[];
+  public taskTypeList:any=[];
+  public taskStatusList:any=[];
+  public taskPriorityList:any=[];
+  public updateSelectTaskMangerDetailsToDialog:any;
+  public selectTaskManger:any;
+  public selectTaskMangerId:any;
+  public updateManagerId:any;
+  public estDurationWithDay:any;
+  public estTime:any;
+  public taskDueDays:any;
+  public rupee_symbol = '₹';
+  public bTaskCategory:boolean=true;
+  public bTaskType:boolean=true;
+  public bTaskLocation:boolean=true;
+  public bTaskManager:boolean=true;
+  public bTaskEstDuration:boolean=true;
+  public bTaskPriority:boolean=true;
+  public bTaskStatus:boolean=true;
+  public bTaskTargetPotential:boolean=true;
+  public bTaskBusinessPotential:boolean=true;
+  public updateUserType:any;
+  public taskMasterList:any=[];
+  public notesTextarea:any;
+  public errorMsg:boolean=false;
+  public assignMemberErrorMsg:string=''
+
+
+ 
   constructor(
     private locationobj: Location,
     private crmService: CrmService,
@@ -95,10 +149,46 @@ export class ViewTaskComponent implements OnInit {
     private router: Router,
     public shared_services: SharedServices,
     private snackbarService: SnackbarService,
+    private createTaskFormBuilder: FormBuilder,
+    private groupService:GroupStorageService,
+    private datePipe:DatePipe,
+
   ) {}
 
   ngOnInit(): void {
    this.api_loading = false;
+   this.taskDetailsForm= this.createTaskFormBuilder.group({
+    taskTitle:[],
+    taskDescription:[],
+    areaName:[],
+    taskDate:[],
+    userTaskCategory:[],
+    userTaskType:[],
+    taskLocation:[],
+    selectTaskManger:[],
+    taskDays:[],
+    taskHrs:[],
+    taskMin:[],
+    userTaskPriority:[],
+    taskStatus:[],
+    targetResult:[],
+    targetPotential:[]
+
+
+
+   })
+   const user = this.groupService.getitemFromGroupStorage('ynw-user');
+   console.log("User is :", user);
+   this.selectMember= user.firstName + user.lastName;
+   this.selectTaskManger=user.firstName + user.lastName;
+   // console.log(' this.selectMember', this.selectMember)
+   // console.log(' this.selectMember', this.selectTaskManger)
+   this.assigneeId=user.id;
+  //  this.selectTaskMangerId=user.id;
+   this.locationId= user.bussLocs[0]
+   if(user.userType === 1){
+     this.userType='PROVIDER'
+   }
     this._Activatedroute.paramMap.subscribe(params => {
       this.taskUid = params.get("id");
       console.log("task id : ", this.taskUid);
@@ -106,9 +196,124 @@ export class ViewTaskComponent implements OnInit {
       this.crmService.getTaskDetails(this.taskUid).subscribe(data => {
         console.log(' this.taskType ', this.taskType )
         this.taskDetails = data;
+        this.getTaskmaster()
         this.taskkid = this.taskDetails.id;
         this.api_loading = false;
         console.log("Task Details : ", this.taskDetails);
+        this.updateUserType=this.taskDetails.userTypeEnum;
+       
+        
+          if(this.taskDetails.title != undefined){
+            this.bTaskTitle=true;
+            this.taskDetailsForm.controls.taskTitle.value= this.taskDetails.title;
+          }
+          else{
+            this.bTaskTitle=false
+          }
+          if(this.taskDetails.description != undefined){
+            this.bTaskDescription=true;
+            this.taskDetailsForm.controls.taskDescription.value= this.taskDetails.description;
+          }
+          else{
+            this.bTaskDescription=false
+          }
+          if(this.taskDetails.assignee.name != undefined){
+            this.bAssigneeName=true;
+            this.selectMember = this.taskDetails.assignee.name;
+            this.updateMemberId=this.taskDetails.assignee.id;
+          }
+          else{
+            this.bAssigneeName=false
+          }
+          if(this.taskDetails.locationArea != undefined){
+            this.bTaskAreaName=true;
+            this.taskDetailsForm.controls.areaName.value= this.taskDetails.locationArea;
+          }
+          else{
+            this.bTaskAreaName=false
+          }
+          if(this.taskDetails.dueDate != undefined){
+            this.bTaskDate=true
+            this.taskDetailsForm.controls.taskDate.value= this.taskDetails.dueDate
+          }
+          else{
+            this.bTaskDate=false
+          }
+          if(this.taskDetails.category.name != undefined){
+            this.bTaskCategory=true;
+            this.taskDetailsForm.controls.userTaskCategory.value=this.taskDetails.category.id;
+          }
+          else{
+            this.bTaskCategory=false;
+          }
+          if(this.taskDetails.type.name != undefined){
+            this.bTaskType=true
+            this.taskDetailsForm.controls.userTaskType.value=this.taskDetails.type.id;
+          }
+          else{
+            this.bTaskType=false;
+          }
+          if(this.taskDetails.location.name != undefined){
+            this.bTaskLocation=true;
+            // this.taskDetailsForm.controls.taskLocation.value = this.taskDetails.location.id
+            this.taskDetailsForm.controls.taskLocation.setValue(this.taskDetails.location.name);
+              this.updteLocationId=this.taskDetails.location.name.id;
+          }
+          else{
+            this.bTaskLocation=false;
+          }
+          if(this.taskDetails.manager.name != undefined){
+            this.bTaskManager=true;
+            this.selectTaskManger= this.taskDetails.manager.name;
+            this.updateManagerId= this.taskDetails.manager.id
+          }
+          else{
+            this.bTaskManager=false
+          }
+          if(this.taskDetails.estDuration.days != undefined ||this.taskDetails.estDuration.hours != undefined || this.taskDetails.estDuration.minutes != undefined ){
+           this.bTaskEstDuration=true;
+           this.estTime={ "days" :this.taskDetails.estDuration.days, "hours" :this.taskDetails.estDuration.hours, "minutes" : this.taskDetails.estDuration.minutes };
+           this.taskDetailsForm.controls.taskDays.value= this.taskDetails.estDuration.days;
+          this.taskDetailsForm.controls.taskHrs.value= this.taskDetails.estDuration.hours;
+          this.taskDetailsForm.controls.taskMin.value= this.taskDetails.estDuration.minutes;
+          }
+          else{
+            this.bTaskEstDuration=false
+          }
+          if(this.taskDetails.priority.name != undefined){
+            this.bTaskPriority=true;
+            this.taskDetailsForm.controls.userTaskPriority.value=this.taskDetails.priority.id
+          }
+          else{
+            this.bTaskPriority=false
+          }
+          if(this.taskDetails.status.name != undefined){
+            this.bTaskStatus=true;
+            this.taskDetailsForm.controls.taskStatus.value=this.taskDetails.status.id
+          }
+          else{
+            this.bTaskStatus=false
+          }
+          if(this.taskDetails.targetPotential){
+            this.bTaskTargetPotential= true;
+            this.taskDetailsForm.patchValue({
+              targetPotential:this.taskDetails.targetPotential
+            })
+          }
+          else{
+            this.bTaskTargetPotential=false
+          }
+          if(this.taskDetails.targetResult){
+            this.bTaskBusinessPotential= true;
+            this.taskDetailsForm.patchValue({
+              targetResult:this.taskDetails.targetResult
+            })
+          }
+          else{
+            this.bTaskBusinessPotential=false
+          }
+        // }
+        this.headerName=this.taskDetails.title
         if (this.taskDetails.originUid) {
           this.taskType = "SubTask";
           console.log('taskType',this.taskType)
@@ -119,7 +324,7 @@ export class ViewTaskComponent implements OnInit {
         }
         console.log('taskType',this.taskType)
         console.log("taskDetails.status", this.taskDetails.status.name);
-        // console.log('this.taskDetails.notes',this.taskDetails.notes)
+        console.log('this.taskDetails.notes',this.taskDetails.notes)
         this.taskDetails.notes.forEach((notesdata: any) => {
           this.notesList.push(notesdata);
         });
@@ -128,8 +333,543 @@ export class ViewTaskComponent implements OnInit {
     console.log('this.crmService.taskToCraeteViaServiceData;',this.crmService.taskToCraeteViaServiceData)
       });
     });
+    this.getAssignMemberList();
+    this.getLocation()
+    this.getCategoryListData()
+    this.getTaskTypeListData()
+    this.getTaskPriorityListData()
+    this.getTaskStatusListData()
+    // this.getTaskmaster()
+    // this.getNotesDetails()
     
   }
+
+  //mew ui method start
+  getTaskmaster(){
+    this.crmService.getTaskMasterList().subscribe((response:any)=>{
+      console.log('TaskMasterListresponse :',response);
+      this.taskMasterList.push(response) 
+      this.taskMasterList[0].forEach((item:any)=>{
+        console.log('item',item)
+        console.log(item.title.value)
+        if(this.taskDetails.title === item.title.value){
+          console.log('Matched',item.title.isvisible)
+          //est duration start
+          if( item.estDuration.isvisible===false){
+            this.bTaskEstDuration=false
+          }
+          else{
+            if(this.taskDetails.estDuration.days != undefined ||this.taskDetails.estDuration.hours != undefined || this.taskDetails.estDuration.minutes != undefined ){
+                this.bTaskEstDuration=true;
+                this.estTime={ "days" :this.taskDetails.estDuration.days, "hours" :this.taskDetails.estDuration.hours, "minutes" : this.taskDetails.estDuration.minutes };
+                this.taskDetailsForm.controls.taskDays.value= this.taskDetails.estDuration.days;
+               this.taskDetailsForm.controls.taskHrs.value= this.taskDetails.estDuration.hours;
+               this.taskDetailsForm.controls.taskMin.value= this.taskDetails.estDuration.minutes;
+               }
+          }
+          //est duration end
+          if(item.title.isvisible===true){
+            if(this.taskDetails.title != undefined){
+              this.bTaskTitle=true;
+              this.taskDetailsForm.controls.taskTitle.value= this.taskDetails.title;
+            }
+            else{
+              this.bTaskTitle=false
+            }
+          }
+          else{
+            this.bTaskTitle=false
+          }
+          if(item.description.isvisible === true){
+            if(this.taskDetails.description != undefined){
+              this.bTaskDescription=true;
+              this.taskDetailsForm.controls.taskDescription.value= this.taskDetails.description;
+            }
+            else{
+              this.bTaskDescription=false
+            }
+          }
+          else{
+            this.bTaskDescription=false
+          }
+          if(item.assignee.isvisible === true){
+            if(this.taskDetails.assignee.name != undefined){
+              this.bAssigneeName=true;
+              this.selectMember = this.taskDetails.assignee.name;
+              this.updateMemberId=this.taskDetails.assignee.id;
+            }
+            else{
+              this.bAssigneeName=false
+            }
+          }
+          else{
+            this.bAssigneeName=false
+          }
+          if(item.dueDate.isvisible === true){
+            if(this.taskDetails.dueDate != undefined){
+              this.bTaskDate=true;
+              this.taskDetailsForm.controls.taskDate.value= this.taskDetails.dueDate;
+            }
+            else{
+              this.bTaskDate=false;
+            }
+          }
+          else{
+            this.bTaskDate=false;
+          }
+          if(item.category.isvisible === true){
+            if(this.taskDetails.category.name != undefined){
+              this.bTaskCategory=true;
+              this.taskDetailsForm.controls.userTaskCategory.value=this.taskDetails.category.id;
+            }
+            else{
+              this.bTaskCategory=false;
+            }
+          }
+          else{
+            this.bTaskCategory=false;
+          }
+          if(item.type.isvisible === true){
+            if(this.taskDetails.type.name != undefined){
+              this.bTaskType=true
+              this.taskDetailsForm.controls.userTaskType.value=this.taskDetails.type.id;
+            }
+            else{
+              this.bTaskType=false;
+            }
+          }
+          else{
+            this.bTaskType=false;
+          }
+          if(item.locationArea.isvisible === true){
+            if(this.taskDetails.location.name != undefined){
+              this.bTaskLocation=true;
+              // this.taskDetailsForm.controls.taskLocation.value = this.taskDetails.location.id;
+              this.taskDetailsForm.controls.taskLocation.setValue(this.taskDetails.location.name);
+              this.updteLocationId=this.taskDetails.location.name.id;
+            }
+            else{
+              this.bTaskLocation=false;
+            }
+          }
+          else{
+            this.bTaskLocation=false;
+          }
+          if(item.manager.isvisible === true){
+            if(this.taskDetails.manager.name != undefined){
+              this.bTaskManager=true;
+              this.selectTaskManger= this.taskDetails.manager.name;
+              this.updateManagerId= this.taskDetails.manager.id
+            }
+            else{
+              this.bTaskManager=false
+            }
+          }else{
+            this.bTaskManager=false
+          }
+          if(item.priority.isvisible === true){
+            if(this.taskDetails.priority.name != undefined){
+              this.bTaskPriority=true;
+              this.taskDetailsForm.controls.userTaskPriority.value=this.taskDetails.priority.id
+            }
+            else{
+              this.bTaskPriority=false
+            }
+          }else{
+            this.bTaskPriority=false
+          }
+          if(item.status.isvisible === true){
+            if(this.taskDetails.status.name != undefined){
+              this.bTaskStatus=true;
+              this.taskDetailsForm.controls.taskStatus.value=this.taskDetails.status.id
+            }
+            else{
+              this.bTaskStatus=false
+            }
+          }
+          else{
+            this.bTaskStatus=false
+          }
+          if(item.targetResult.isvisible === true){
+            if(this.taskDetails.targetResult){
+              this.bTaskBusinessPotential= true;
+              this.taskDetailsForm.patchValue({
+                targetResult:this.taskDetails.targetResult
+              })
+            }
+            else{
+              this.bTaskBusinessPotential=false
+            }
+          }
+          else{
+            this.bTaskBusinessPotential=false
+          }
+          if(item.targetPotential.isvisible === true){
+            if(this.taskDetails.targetPotential){
+              this.bTaskTargetPotential= true;
+              this.taskDetailsForm.patchValue({
+                targetPotential:this.taskDetails.targetPotential
+              })
+            }
+            else{
+              this.bTaskTargetPotential=false;
+            }
+          }
+          else{
+            this.bTaskTargetPotential=false;
+          }
+
+
+        }
+      })
+    })
+    // console.log('this.taskMasterList',this.taskMasterList[0])
+  }
+  getNotesDetails(){
+    this.taskDetails.notes.forEach((notesdata: any) => {
+      this.notesList.push(notesdata);
+    });
+  }
+  resetErrors(){
+    this.taskError = null;
+  }
+  oneField(value){
+    console.log('value',(this.taskDetailsForm.controls.taskTitle.value ));
+    if((this.taskDetailsForm.controls.taskTitle.value !== this.taskDetails.title) || (this.taskDetailsForm.controls.taskDescription.value !== this.taskDetails.description)
+    || (this.taskDetailsForm.controls.areaName.value !== this.taskDetails.locationArea) || (this.selectMember !== this.taskDetails.assignee.id) 
+      || (this.taskDetailsForm.controls.taskDate.value !== this.taskDetails.dueDate) || (this.taskDetailsForm.controls.userTaskCategory.value !== this.taskDetails.category.id) ||
+      (this.taskDetailsForm.controls.userTaskType.value != this.taskDetails.type.id)){
+        this.taskDetailsDescription ='Enter Task Details'
+
+    }
+    else{
+      this.taskDetailsDescription ='View Task Details'
+    }
+  }
+  handleTaskTitle(taskTitleValue,event){
+    console.log('taskTitleValue',taskTitleValue)
+    console.log('event',event);
+    // if(taskTitleValue===this.taskDetails.title){
+    //   this.taskDetailsDescription= 'View Task Details'
+    // }
+    // else{
+    //   this.taskDetailsDescription= 'Enter Task Details'
+    // }
+    
+  }
+  autoGrowTextZone(e) {
+    // console.log('textarea',e)
+    e.target.style.height = "0px";
+    e.target.style.height = (e.target.scrollHeight + 15)+"px";
+  }
+  handTaskDescription(taskDescription){
+    console.log('taskDescription',taskDescription)
+  }
+  handeAreaName(taskAreaName){
+    console.log('taskAreaName',taskAreaName)
+  }
+  getLocation(){
+    this.crmService.getProviderLocations().subscribe((res)=>{
+      console.log('location.........',res)
+      this.taskDetailsForm.controls.taskLocation.setValue(res[0].place);
+      this.updteLocationId= res[0].id;
+    })
+  }
+  getAssignMemberList(){
+    this.crmService.getMemberList().subscribe((memberList:any)=>{
+      // console.log('memberList',memberList)
+      this.allMemberList.push(memberList)
+    },(error:any)=>{
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    })
+  }
+  selectMemberDialog(handleselectMember:any){
+    // console.log('handleselectMember',handleselectMember)
+    const dialogRef  = this.dialog.open(CrmSelectMemberComponent, {
+      width: '100%',
+      panelClass: ['popup-class', 'confirmationmainclass'],
+      data:{
+        requestType:'createtaskSelectMember',
+        header:'Assign Member',
+        memberList: this.allMemberList,
+        assignMembername:handleselectMember,
+        updateSelectedMember:this.updateAssignMemberDetailsToDialog,
+        updateAssignMemberId:this.updateMemberId
+      }
+  })
+  dialogRef.afterClosed().subscribe((res:any)=>{
+    console.log('afterSelectPopupValue',res);
+    if(res===''){
+      // console.log('Select Manager')
+      // this.selectMember =  this.updateValue.assignee.name;
+    }else{
+      this.updateAssignMemberDetailsToDialog=res;
+    console.log('this.updateAssignMemberDetailsToDialog',this.updateAssignMemberDetailsToDialog)
+    this.selectMember = (res.firstName + res.lastName);
+    this.userType = res.userType;
+    // this.locationName = res.locationName;
+    this.locationId = res.bussLocations[0];
+    console.log('this.updateAssignMemberDetailsToDialog',res)
+    if(res.place)
+    {
+      // this.taskDetailsForm.controls.taskLocation.setValue(res.place);
+    }
+    this.assigneeId= res.id;
+    console.log('this.assigneeid',res.id)
+    this.updateMemberId=this.assigneeId;
+    this.updteLocationId= this.locationId;
+    }
+  })
+  }
+  handleDateChange(e){
+    console.log(e)
+  }
+  dateClass(date: Date): MatCalendarCellCssClasses {
+    return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
+  }
+  getCategoryListData(){
+    this.crmService.getCategoryList().subscribe((categoryList:any)=>{
+      // console.log('category',categoryList);
+      this.categoryListData.push(categoryList)
+    },
+    (error:any)=>{
+      this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+    }
+    )
+  }
+  handleTaskCategorySelection(taskCategory){
+    console.log('taskCategory',taskCategory)
+  }
+  handleTaskTypeSelection(taskType:any){
+    console.log('taskType',taskType)
+
+  }
+  getTaskTypeListData(){
+    this.crmService.getTaskType().subscribe((taskTypeList:any)=>{
+      // console.log('taskTypeList',taskTypeList);
+      this.taskTypeList.push(taskTypeList)
+    },
+    (error:any)=>{
+      this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+    })
+  }
+  handleTaskLocation(taskLocation){
+    console.log(taskLocation)
+  }
+  selectManagerDialog(handleSelectManager:any){
+    // console.log('handleselectMember',handleSelectManager);
+    const dialogRef  = this.dialog.open(CrmSelectMemberComponent, {
+      width: '100%',
+      panelClass: ['popup-class', 'confirmationmainclass'],
+      data:{
+        requestType:'createtaskSelectManager',
+        header:'Assign Manager',
+        memberList: this.allMemberList,
+        assignMembername:handleSelectManager,
+        updateSelectTaskManager:this.updateSelectTaskMangerDetailsToDialog,
+        updateManagerId:this.updateManagerId,
+      }
+  })
+  dialogRef.afterClosed().subscribe((res:any)=>{
+    console.log('afterSelectPopupValue',res)
+    if(res===''){
+      // console.log('Select task manager')
+      this.selectTaskManger = this.taskDetails.manager.name;//'Select task manager'
+
+    }
+    else{
+      this.updateSelectTaskMangerDetailsToDialog=res;
+    // console.log('updateSelectTaskMangerDetailsToDialog',this.updateSelectTaskMangerDetailsToDialog)
+    this.selectTaskManger=((res.firstName + res.lastName))
+    this.selectTaskMangerId= res.id;
+    this.updateManagerId=this.selectTaskMangerId
+    }
+  })
+  }
+  handleTaskEstDuration(estDuration:any){
+    console.log("entered")
+    this.estDurationWithDay=this.taskDueDays;
+    const estDurationDay=this.taskDetailsForm.controls.taskDays.value
+    const estDurationHour=this.taskDetailsForm.controls.taskHrs.value
+    const estDurationMinute= this.taskDetailsForm.controls.taskMin.value
+    this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinute };
+    console.log('estDurationDay',this.estTime)
+
+  }
+  handleTaskPrioritySelection(taskPriority,taskPriorityText:any){
+  }
+  getTaskPriorityListData(){
+    this.crmService.getTaskPriority().subscribe((taskPriority:any)=>{
+      console.log('taskPriority',taskPriority);
+      this.taskPriorityList.push(taskPriority);
+      // if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName==='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster'){
+      //   this.taskDetailsForm.controls.userTaskPriority.setValue(this.taskPriorityList[0][0].id);
+      // }
+      // else if(this.type ==='SubUpdate'){
+      //   this.taskDetailsForm.controls.userTaskPriority.setValue(parseInt(this.taskDetails.priorityId))
+      // }
+      // else 
+      {
+        // this.taskDetailsForm.controls.userTaskPriority.setValue(this.taskDetails.priority.id);
+        // this.taskPriority=this.updateValue.priority.id;
+      }
+    },
+    (error)=>{
+      this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+    }
+    )
+  }
+  handleTaskStatus(taskStatus){
+    // console.log(taskStatus)
+  }
+  getColor(status){
+    if(status){
+    if(status === 'New'){
+      return '#0D2348'
+    }
+    else if(status === 'Assigned'){
+      return 'pink';
+    }
+    else if(status === 'In Progress'){
+      return '#fcce2b';
+    }
+    else if(status === 'Cancelled'){
+      return 'red';
+    }
+    else if(status === 'Suspended'){
+      return 'orange';
+    }
+    else if(status === 'Completed'){
+      return 'green';
+    }
+    else{
+      return 'black'
+    }
+  }
+  }
+  getTaskStatusListData(){
+    this.crmService.getTaskStatus().subscribe((taskStatus:any)=>{
+      console.log('taskStatus',taskStatus);
+      this.taskStatusList.push(taskStatus);
+      // if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName==='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster'){
+      //   this.taskDetailsForm.controls.taskStatus.setValue(this.taskStatusList[0][0].id);
+      // }
+      // else if(this.type ==='SubUpdate'){
+      //   this.taskDetailsForm.controls.taskStatus.setValue(parseInt(this.updateValue.statusId));
+      // }
+      // else {
+        // this.taskDetailsForm.controls.taskStatus.setValue(this.taskDetails.status.id);
+        // this.taskStatusModal=this.updateValue.status.id
+      // }
+      
+    },
+    (error)=>{
+      this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+    })
+  }
+  handleTargetResult(targetResult){
+    // console.log('targetResult',targetResult)
+  }
+  handleTargetPotential(targetPotential){
+  // console.log('targetPotential',targetPotential)
+  }
+  saveCreateTask(){
+    const updateTaskData:any = {
+      "title":this.taskDetailsForm.controls.taskTitle.value,
+      "description":this.taskDetailsForm.controls.taskDescription.value,
+      "userType":this.updateUserType,
+      "category":{"id":this.taskDetailsForm.controls.userTaskCategory.value},
+      "type":{"id":this.taskDetailsForm.controls.userTaskType.value},
+      "status":{"id":this.taskDetailsForm.controls.taskStatus.value},
+      "priority":{"id":this.taskDetailsForm.controls.userTaskPriority.value},
+      "dueDate" : this.datePipe.transform(this.taskDetailsForm.controls.taskDate.value,'yyyy-MM-dd'),
+      "location" : { "id" : this.updteLocationId},
+      "locationArea" : this.taskDetailsForm.controls.areaName.value,
+      "assignee":{"id":this.updateMemberId },
+      "manager":{"id":this.updateManagerId},
+      "targetResult" : this.taskDetailsForm.controls.targetResult.value,
+      "targetPotential" : this.taskDetailsForm.controls.targetPotential.value,
+      "estDuration" : this.estTime    
+    }
+    console.log('updateTaskData',updateTaskData)
+    if(this.updateUserType===('PROVIDER' || 'CONSUMER')){
+      // this.api_loading = true;
+      // console.log("2")
+      console.log('updateTaskData',updateTaskData)
+      this.crmService.updateTask(this.taskDetails.taskUid, updateTaskData).subscribe((response)=>{
+        console.log('afterUpdateList',response);
+        setTimeout(() => {
+          this.taskDetailsForm.reset();
+        this.router.navigate(['provider', 'task']);
+        }, projectConstants.TIMEOUT_DELAY);
+      },
+      (error)=>{
+        setTimeout(() => {
+          this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
+          // this.router.navigate(['provider', 'task']);
+        }, projectConstants.TIMEOUT_DELAY);
+      })
+    }
+   
+    console.log(' this.updateUserType', this.updateUserType)
+  }
+  handleNotesDescription(textValue:any){
+    console.log('taskDescription',textValue)
+    if(textValue != ''){
+      this.errorMsg=false;
+      this.assignMemberErrorMsg='';
+    }
+    else{
+      this.errorMsg=true;
+          this.assignMemberErrorMsg='Please enter some remarks'
+    }
+    
+  }
+  saveCreateNote(notesValue:any){
+    if(this.notesTextarea !==undefined){
+      console.log('this.notesTextarea',this.notesTextarea);
+      this.errorMsg=false;
+      this.assignMemberErrorMsg='';
+      const createNoteData:any = {
+        "note" :this.notesTextarea
+      }
+        console.log('createNoteData',createNoteData)
+      // if(this.data.source == "Lead")
+      // {
+      //   this.crmService.addLeadNotes(this.taskDetails.taskUid,createNoteData).subscribe((response:any)=>{
+      //     console.log('response',response)
+      //     setTimeout(() => {
+      //       // this.dialogRef.close(notesValue)
+      //     }, projectConstants.TIMEOUT_DELAY);
+      //   },
+      //   (error)=>{
+      //     this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+      //   })
+      // }
+      // else{
+        this.crmService.addNotes(this.taskDetails.taskUid,createNoteData).subscribe((response:any)=>{
+          console.log('response',response)
+          this.api_loading = true;
+          setTimeout(() => {
+            // this.dialogRef.close(notesValue)
+            this.ngOnInit()
+            // this.getNotesDetails()
+            this.api_loading = false;
+          }, projectConstants.TIMEOUT_DELAY);
+          this.snackbarService.openSnackBar('Remarks added successfully');
+        },
+        (error)=>{
+          this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+        })
+      // }
+      
+    }
+    else{
+      this.errorMsg=true;
+          this.assignMemberErrorMsg='Please enter some description'
+    }
+  }
+  //new ui method end
 
   uploadFiles() {
     const dialogRef = this.dialog.open(SelectAttachmentComponent, {

@@ -1,0 +1,72 @@
+<section class="card">
+    <div class="title-gb no-padding">
+      <div class="mgn-up-15 dash-head">&nbsp;&nbsp;&nbsp;
+          <div style="display:flex;gap:5px">
+            <div>
+                <i style="color:#1D3E77 !important" class="fa fa-arrow-left pointer-cursor" (click)="goback()"></i>
+            </div>
+          <div style="color: #1D3E77;"> Schedule Marketing Lead</div>
+          </div>
+      </div>
+    </div>
+  </section>
+  <div style="margin:20px">
+    <section class="card">
+        <div>
+            <div>
+                <div class="selectType">Select Type of Lead :</div>
+            </div>
+            <hr/>
+           <div class="templateList">
+               <!-- [ngStyle]="{'background-color':status.id === data.taskDetails.status.id ? '#CACACA' : '#FFFFFF' }" -->
+               <div *ngFor="let leadMaster of leadMasterList[0];let index=i" class="singleTempalte"
+                     >
+                   <div style="display: flex;justify-content: space-between;align-items: center;" *ngIf="leadMaster.templateName==='Enquiry'" >
+                       <div style="display: flex;gap:5px;align-items: center;">
+                        <div class="mainImg">
+                            <img class="image" src="/assets/images/crmImages/tempateImg/homeVisit.png" />
+                        </div>
+                        <div >
+                         <div class="templateName">{{leadMaster.templateName}}</div>
+                         <div class="templateName">{{leadMaster.description.value}}</div>
+                     </div>
+                       </div>
+                    <div>
+                        <img (click)="saveLeadMaster(leadMaster)" style="width:30px" src="/assets/images/crmImages/tempateImg/rightArrow.png" />
+                    </div>
+                   </div>
+                   <div style="display: flex;justify-content: space-between;align-items: center;" *ngIf="leadMaster.templateName==='Lead'" >
+                    <div style="display: flex;gap:5px;align-items: center;">
+                        <div class="mainImg">
+                            <img class="image" src="/assets/images/crmImages/tempateImg/noticeThroughDist.png" />
+                        </div>
+                        <div>
+                            <div class="templateName">{{leadMaster.templateName}}</div>
+                            <div class="templateName">{{leadMaster.description.value}}</div>
+                        </div>
+                    </div>
+                    <div>
+                        <img (click)="saveLeadMaster(leadMaster)" style="width:30px" src="/assets/images/crmImages/tempateImg/rightArrow.png" />
+                    </div>
+                    </div>
+                    
+               </div>
+               <div class="singleTempalte">
+                   <div style="display:flex;justify-content: space-between;align-items: center;">
+                    <div style="display: flex;align-items: center;gap:5px">
+                        <div>
+                            <img class="image" src="/assets/images/crmImages/tempateImg/others.png" />
+                        </div>   
+                        <div>
+                               <div class="templateName">Others</div>
+                           </div>
+                    </div>
+                    <div>
+                        <img (click)="createLead('CreatE')"  style="width:30px" src="/assets/images/crmImages/tempateImg/rightArrow.png" />
+                    </div>
+                   </div>
+               </div>
+           </div>
+        </div>
+     </section>
+  </div>

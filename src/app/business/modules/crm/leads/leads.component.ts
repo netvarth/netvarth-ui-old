@@ -4,7 +4,7 @@ import { projectConstants } from '../../../../../../src/app/app.component';
 import { Messages } from '../../../../../../src/app/shared/constants/project-messages';
 import { Location } from '@angular/common';
 import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
-import { Router } from '@angular/router';
+import { Router,NavigationExtras } from '@angular/router';
 import { SnackbarService } from '../../../../../../src/app/shared/services/snackbar.service';
 import { CrmService } from '../crm.service';
 import { WordProcessor } from '../../../../../../src/app/shared/services/word-processor.service';
@@ -629,34 +629,43 @@ export class LeadsComponent implements OnInit {
   createLead(createText: any) {
       if(this.leadMasterList.length>0){
       console.log('........')
-      const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
-        width:'100%',
-        panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-        disableClose: true,
-        data:{
-          requestType:'leadMasterList',
-          leadMasterFullList:this.leadMasterList
+      // this.router.navigate(['provider','lead', 'leadtemplate'])
+      if(this.leadMasterList[0].length>0){
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            type: 'leadCreateTemplate',
+          }
         }
+        this.router.navigate(['provider','lead', 'leadtemplate'],navigationExtras)
+      }
+      // const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
+      //   width:'100%',
+      //   panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      //   disableClose: true,
+      //   data:{
+      //     requestType:'leadMasterList',
+      //     leadMasterFullList:this.leadMasterList
+      //   }
   
-      })
-      dialogRef.afterClosed().subscribe((res)=>{
-        console.log('selectLeadMaster',res);
-        const selectLeadMaster= res;
-      if(selectLeadMaster==='CreatE'){
-        this.crmService.leadActivityName = 'CreatE';
-        this.crmService.leadMasterToCreateServiceData=selectLeadMaster
-        this.router.navigate(['provider', 'lead', 'create-lead'])
-      }
-      else if(selectLeadMaster==='Close'){
-        this.router.navigate(['provider', 'lead'])
-        // this.ngOnInit()
-      }
-      else{
-        this.crmService.leadActivityName = createText;
-        this.crmService.leadMasterToCreateServiceData= selectLeadMaster;
-        this.router.navigate(['provider', 'lead', 'create-lead'])
-      }
-      })
+      // })
+      // dialogRef.afterClosed().subscribe((res)=>{
+      //   console.log('selectLeadMaster',res);
+      //   const selectLeadMaster= res;
+      // if(selectLeadMaster==='CreatE'){
+      //   this.crmService.leadActivityName = 'CreatE';
+      //   this.crmService.leadMasterToCreateServiceData=selectLeadMaster
+      //   this.router.navigate(['provider', 'lead', 'create-lead'])
+      // }
+      // else if(selectLeadMaster==='Close'){
+      //   this.router.navigate(['provider', 'lead'])
+      //   // this.ngOnInit()
+      // }
+      // else{
+      //   this.crmService.leadActivityName = createText;
+      //   this.crmService.leadMasterToCreateServiceData= selectLeadMaster;
+      //   this.router.navigate(['provider', 'lead', 'create-lead'])
+      // }
+      // })
     }else{
       console.log('kkkk')
       this.crmService.leadActivityName = 'CreteLeadMaster'

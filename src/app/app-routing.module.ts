@@ -40,8 +40,9 @@ const routes: Routes = [
     { path: 'provider/viewtask/:id', loadChildren: () => import('./business/modules/crm/tasks/view-task/view-task.module').then(m => m.ViewTaskModule) },
     { path: 'provider/viewlead/:id', loadChildren: () => import('./business/modules/crm/leads/view-lead/view-lead.module').then(m => m.ViewLeadModule) },
     {path:'task/create-subtask/:taskid',loadChildren:()=>import ('./business/modules/crm/tasks/create-task/create-task.module').then(m=>m.CreateTaskModule)},
-    {path:'task/create-task/:id',loadChildren:()=>import ('./business/modules/crm/tasks/create-task/create-task.module').then(m=>m.CreateTaskModule)}
-
+    {path:'task/create-task/:id',loadChildren:()=>import ('./business/modules/crm/tasks/create-task/create-task.module').then(m=>m.CreateTaskModule)},
+    {path:'task/tasktemplate',loadChildren:()=>import ('./business/modules/crm/tasks/tasktemplate/tasktemplate.module').then(m=>m.TasktemplateModule)},
+    {path:'lead/leadtemplate',loadChildren:()=>import ('./business/modules/crm/leads/leadtemplate/leadtemplate.module').then(m=>m.LeadtemplateModule)},
 ];
 
 @NgModule({

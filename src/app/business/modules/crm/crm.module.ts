@@ -3,33 +3,35 @@ import { CommonModule } from "@angular/common";
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { MatDialogModule } from "@angular/material/dialog";
 import {  MatTableModule } from "@angular/material/table";
-import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
-import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner/loading-spinner.module";
-import { CrmService } from "../crm.service";
-import { LeadsComponent } from "./leads.component";
+import { CapitalizeFirstPipeModule } from "../../../shared/pipes/capitalize.module";
+import { LoadingSpinnerModule } from "../../../shared/modules/loading-spinner/loading-spinner.module";
+import { CrmService } from "./crm.service";
+// import { TasksComponent } from "./tasks.component";
+import {crmComponent} from "./crm.component"
 import { RouterModule, Routes } from "@angular/router";
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormMessageDisplayModule } from "../../../../shared/modules/form-message-display/form-message-display.module";
+import { FormMessageDisplayModule } from "../../../shared/modules/form-message-display/form-message-display.module";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
-import { PagerModule } from "../../../../../../src/app/shared/modules/pager/pager.module";
+import { PagerModule } from "../../../../../src/app/shared/modules/pager/pager.module";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { NgCircleProgressModule } from "ng-circle-progress";
 import { FormsModule } from "@angular/forms";
 import { MatSelectModule } from "@angular/material/select";
 import { MatOptionModule } from "@angular/material/core";
 import { MatDatepickerModule } from "@angular/material/datepicker";
+import {MatExpansionModule} from '@angular/material/expansion';
 const routes: Routes = [
-  { path: '', component: LeadsComponent },
-  {path:'viewlead/:id',loadChildren:()=>import('./view-lead/view-lead.module').then((m)=>m.ViewLeadModule)},
-  {path:'create-lead',loadChildren:()=>import('./create-lead/create-lead.module').then((m)=>m.CreateLeadModule)},
-  {path:'create-task/:id',loadChildren:()=>import('../tasks/create-task/create-task.module').then((m)=>m.CreateTaskModule)},
-  {path:'leadtemplate',loadChildren:()=>import('./leadtemplate/leadtemplate.module').then((m)=>m.LeadtemplateModule)},
-];
+    { path: '', component: crmComponent },
+    { path: 'leads', loadChildren: ()=> import('./leads/leads.module').then(m=>m.LeadsModule) },
+    { path: 'tasks',loadChildren: ()=> import('./tasks/tasks.module').then(m=>m.TasksModule) },
+    { path: 'enquiry',loadChildren: ()=> import('./enquiry/enquiry.module').then(m=>m.EnquiryModule) },
+  
+  ];
 
-@NgModule({
+  @NgModule({
     imports: [
         CommonModule,
         PagerModule,
@@ -49,6 +51,7 @@ const routes: Routes = [
         MatOptionModule,
         MatDatepickerModule,
         NgCircleProgressModule.forRoot({
+          // set defaults here
           backgroundColor: "#e9ecef",
           backgroundPadding: 2,
           radius: 19,
@@ -62,10 +65,11 @@ const routes: Routes = [
           titleColor: "teal",
           subtitleColor: "teal",
         }),
-        [RouterModule.forChild(routes)]
+        [RouterModule.forChild(routes)],
+        MatExpansionModule
     ],
-    exports: [LeadsComponent],
-    declarations: [LeadsComponent],
+    exports: [crmComponent],
+    declarations: [crmComponent],
     providers: [
       CrmService
     ],
@@ -74,5 +78,4 @@ const routes: Routes = [
         NO_ERRORS_SCHEMA
     ]
 })
-export class LeadsModule {}
-
+export class crmModule {}

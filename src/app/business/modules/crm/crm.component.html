@@ -1,0 +1,141 @@
+<section class="card">
+    <div class="title-gb no-padding">
+      <div class="mgn-up-15 dash-head">&nbsp;&nbsp;&nbsp;
+          <div style="display:flex;gap:5px">
+            <div>
+                <i style="color:#1D3E77 !important" class="fa fa-arrow-left pointer-cursor" (click)="goback()"></i>
+            </div>
+          <div style="color: #1D3E77;">Crm</div>
+          </div>
+      </div>
+    </div>
+</section> 
+<section class="card mgn-up-15">
+    <!----threee tab start-->
+    <div class="threeTab">
+        <div class="customCard" id="A" (click)="fnChangeBorder('A')">
+            <div class="eachTab">
+                <div>
+                    <mat-icon class="iconBackgroundMatIcon">home</mat-icon>
+                </div>
+                <div class="topicName">
+                    LOS
+                </div>
+            </div>
+        </div>
+        <div class="customCard" id="B" (click)="fnChangeBorder('B')">
+            <div class="eachTab">
+                <div >
+                    <mat-icon class="iconBackgroundMatIcon">home</mat-icon>
+                </div>
+                <div class="topicName">
+                    LMS
+                </div>
+            </div>
+        </div>
+        <div class="customCard" id="C" (click)="fnChangeBorder('C')">
+            <div class="eachTab">
+                <div >
+                    <mat-icon class="iconBackgroundMatIcon">home</mat-icon>
+                </div>
+                <div class="topicName">
+                    REPORTS
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--three tab end-->
+    <!---mat pannel start-->
+    <div class="mgn-up-15">
+        <mat-accordion class="example-headers-align">
+            <mat-expansion-panel 
+            (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                   <div style="display:flex;gap:10px;align-items: center;">
+                    <div class="plusOutside">
+                        <i style="color: #D92323;" class="fa fa-plus" aria-hidden="true"></i>
+                       </div>
+                       <div class="marketActivity">
+                           <div>Marketing Activity</div>
+                       </div>
+                   </div>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    <!-- <div class="forMobile">
+                        <div>Marketing Activity</div>
+                    </div> -->
+                    <!-- <mat-icon>keyboard_arrow_down</mat-icon> -->
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="allTabInPannel">
+                    <div class="customCard box" style="margin-bottom: 5px;" tabindex="1">
+                        <div>
+                            <div style="padding:8px">
+                                <img class="img iconBackground" src="/assets/images/crmImages/Vector.png" />
+                            </div>
+                            <div style="padding:8px" class="topicName">
+                                Schedule Marketing Activity
+                            </div>
+                            <div  class="imgClick" (click)="scheduleMarketingActivity()">
+                                <div  class="clickHere">
+                                    Click here 
+                                </div>
+                                <div>
+                                    <img class="img "  src="/assets/images/crmImages/handsLeftArrow.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="customCard" style="margin-bottom: 5px;">
+                        <div>
+                            <div style="padding:8px">
+                                <img class="img iconBackground" src="/assets/images/crmImages/Vector.png" />
+                            </div>
+                            <div class="topicName" style="padding:8px">
+                                Marketing Activity Updation
+                            </div>
+                            <div class="imgClick" (click)="scheduleMarketingActivityUpdation()">
+                               <div class="clickHere">
+                                Click here 
+                               </div>
+                               <div style="cursor: pointer;">
+                                   <img class="img"   src="/assets/images/crmImages/handsLeftArrow.png" />
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="customCard" style="margin-bottom: 5px;">
+                        <div class="eachTab">
+                            <div class="iconBackground">
+                                <mat-icon>home</mat-icon>
+                            </div>
+                            <div class="topicName">
+                                REPORTS
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+              </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <!---mat pannel end-->
+    <!----tempates strat-->
+    <div  class="mgn-up-15">
+        <div>
+            <div class="eachTab" style="flex-wrap: wrap;">
+                <div class="customCard redirectionList" *ngFor="let item of redirectionList">
+                    <div >
+                        <img class="imgTempalte" src="/assets/images/crmImages/navbarIcon.png" />
+                    </div>
+                    <div class="topicNameedirectionList" >
+                        {{item.activityName}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!----templates end-->
+
+</section>

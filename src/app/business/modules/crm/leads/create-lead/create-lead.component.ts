@@ -212,6 +212,7 @@ export class CreateLeadComponent implements OnInit{
       userLeadPriority:[null],
       customerDetails:[null,[Validators.required]]
     }) 
+    console.log('this.crmService.leadActivityName',this.crmService.leadActivityName)
     if(this.crmService.leadActivityName!='Create' && this.crmService.leadActivityName!='subLeadCreate' && this.crmService.leadActivityName!='CreatE' && this.crmService.leadActivityName!='CreteLeadMaster'){
       this.selectHeader='Update Lead';
       this.editable=false;
@@ -965,6 +966,7 @@ export class CreateLeadComponent implements OnInit{
           }
         );
     }
+    console.log(' this.customer_data', this.customer_data)
   }
   createNew(){
     const dialogRef  = this.dialog.open(CrmSelectMemberComponent, {

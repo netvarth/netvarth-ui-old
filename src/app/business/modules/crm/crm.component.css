@@ -1,0 +1,159 @@
+.threeTab{
+    display: flex;gap:10px;align-items: center;justify-content: space-between;
+}
+.eachTab{
+    display: flex;gap:10px;align-items: center;
+}
+.customCard{
+    padding: 20px;
+    /* box-shadow: 0 0 10px rgb(0 0 0 / 5%) !important; */
+    border-radius: 5px;
+    background: #FFFFFF;
+    box-shadow: 0px 24.6462px 44.8113px rgb(142 151 164 / 19%);
+    background-clip: padding-box;
+    /* border: none !important; */
+    width: 100%;
+    cursor: pointer;
+}
+.topicName{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18.0896px;
+    color: #404650;;
+}
+/* .allTabInPannel{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+} */
+@media  (max-width:764px){
+    .topicName{
+        font-style: normal;
+        font-weight: 600;
+        font-size: 12.0896px;
+        color: #404650;;
+    }
+    .forWeb{
+        display: none;
+    }
+    .forMobile{
+        display: block;
+    }
+    ::ng-deep .example-headers-align .mat-expansion-panel-header-description{
+        justify-content: flex-end !important;
+    }
+    ::ng-deep .example-headers-align .mat-expansion-panel-header-title{
+        flex-basis: auto  !important;
+    }
+    .allTabInPannel{
+        display: block;
+        /* justify-content: space-between;
+        align-items: center;
+        gap: 10px; */
+    }
+    .redirectionList{
+        width: 100% !important;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    .threeTab{
+        /* flex-wrap: wrap !important; */
+    }
+    
+}
+@media(min-width: 768px){
+    .forWeb{
+      display: block;
+    }
+    .forMobile{
+      display: none;
+    }
+    ::ng-deep .example-headers-align .mat-expansion-panel-header-title{
+        flex-basis: auto  !important;
+    }
+    ::ng-deep .example-headers-align .mat-expansion-panel-header-description{
+        justify-content: flex-end !important;
+    }
+    .allTabInPannel{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+    
+  }
+.iconBackground{
+    background: #E9EBEC;
+    padding: 3px;
+    object-fit: cover;
+}
+.iconBackgroundMatIcon{
+    background: #E9EBEC;
+    /* padding: 3px; */
+}
+::ng-deep .example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+::ng-deep.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+.plusOutside{
+    border: 1px solid #FBDCDC;
+    padding: 4px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    border-radius: 50%;
+    background: #FBDCDC;
+}
+.marketActivity{
+    color: #1D3E77;
+    font-size: 15px;
+    font-weight: 600;
+}
+::ng-deep .mat-expansion-panel{
+    color: rgba(0, 0, 0, 0.87) !important;
+    background: #F7F7F7 !important;
+    border: 0.5px solid #E2E2E2 !important;
+    box-shadow: 3px 6px 5px rgb(131 128 128 / 15%) !important;
+    border-top-right-radius: 5px !important;
+    border-top-left-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+}
+.clickHere{
+    color: #B8B8B8;
+    cursor: pointer;
+}
+.imgClick{
+    padding:8px;display:flex;align-items: center;
+    gap: 10px;
+}
+img{
+    height: 30px;
+    width: 30px;
+
+}
+.redirectionList{
+    width: 49%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.topicNameedirectionList{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13.0896px;
+    color: #404650;
+    cursor: pointer;
+}
+.imgTempalte{
+    height: 15px;
+    width: 15px;
+    object-fit: cover;
+}

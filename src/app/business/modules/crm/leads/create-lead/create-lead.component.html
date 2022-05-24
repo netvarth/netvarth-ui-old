@@ -221,7 +221,11 @@
                             <i class="fa fa-id-card-o icon"></i>
                             <span>{{customer_label}} id : {{customer_data.jaldeeId}}</span>
                         </div>
-                        <div class="leadTitle" *ngIf="customer_data.phoneNo">
+                        <div class="leadTitle" *ngIf="customer_data.phoneNo=== ' '" style="display: none;">
+                            <i class="fa fa-mobile icon"></i>
+                            <span>{{customer_data.phoneNo}}</span>
+                        </div>
+                        <div class="leadTitle" *ngIf="customer_data.phoneNo !== ' '">
                             <i class="fa fa-mobile icon"></i>
                             <span>{{customer_data.phoneNo}}</span>
                         </div>
@@ -565,10 +569,13 @@
                                     <i class="fa fa-id-card-o icon"></i>
                                     <span>{{customer_label}} id : {{customer_data.jaldeeId}}</span>
                                 </div>
-                                <div class="leadTitle" *ngIf="customer_data.phoneNo">
+                                <div class="leadTitle" *ngIf="customer_data.phoneNo=== ' '" style="display: none;">
                                     <i class="fa fa-mobile icon"></i>
                                     <span>{{customer_data.phoneNo}}</span>
-
+                                </div>
+                                <div class="leadTitle" *ngIf="customer_data.phoneNo !== ' '">
+                                    <i class="fa fa-mobile icon"></i>
+                                    <span>{{customer_data.phoneNo}}</span>
                                 </div>
                                 <div class="leadTitle" *ngIf="customer_data.email">
                                     <i class="fa fa-envelope icon"></i>

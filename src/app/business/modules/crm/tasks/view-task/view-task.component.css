@@ -1,6 +1,6 @@
 .card
 {
-    border-radius: 10px!important;
+    border-radius: 10px;
 }
 .dropdown-menu {
   width: 200px!important;
@@ -237,10 +237,13 @@
 
   .upload-file-btn
   {
-    width: 300px!important;
+    width: -webkit-fill-available !important;
     color: #1E4079!important;
     background-color: #fff!important;
     text-align: left!important;
+    background: #FCFCFC;
+    border: 1.07315px dashed #C9C9C9;
+    border-radius: 11.8046px;
   }
   .btn-text
   {
@@ -286,8 +289,7 @@
     border: 0.450552px solid #DCDCDC;
     box-sizing: border-box;
     border-radius: 3.93969px;
-    margin-bottom: 5px;
-    margin-right: 5px;
+   margin: 10px;
   }
   .dropdown-menu {
     position: absolute;
@@ -331,4 +333,281 @@
 }
 ::-webkit-scrollbar-thumb {
     background: #888
+}
+.card{
+  background: #FFFFFF;
+    box-shadow: 1.15808px 4.63232px 11.5808px rgb(179 179 179 / 25%) !important;
+    border-radius: 8px !important;
+}
+.headerName{
+  color: #000000;
+    font-weight: 600;
+    /* padding-left: 10px; */
+    font-size: 18px;
+}
+.taskDetailsEnterHeader{
+  font-weight: 500;
+  color: #000000;
+  font-size: 15px;
+}
+.taskTitle{
+  display: flex;
+  align-items: center;
+  grid-gap: 5px;
+  gap: 5px;
+  font-weight: 400;
+  font-size: 12px;
+  color: rgb(109, 108, 108);
+}
+.astericColor{
+  color: #f24949 !important;
+}
+.form-control{
+  /* background-color: #f6f6f6!important; */
+  display: block;
+  width: 100%;
+  height: 35px;
+  padding: 6px 12px!important;
+  font-size: 14px !important;
+  line-height: 1.42857143!important;
+  color: #000000 !important;
+  /* border: none !important; */
+  /* background-image: none !important; */
+  /* background: #F1F1F1 !important; */
+  border-radius: 5.73504px !important;
+  /* background: #F7F7F7 !important; */
+  border: 1px solid #E9E9E9;
+  /* box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%) !important; */
+  /* transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;
+  background: #F7F7F7 !important;
+  border: 1px solid #E9E9E9; */
+  /* box-shadow: 0px 4px 11px rgb(0 0 0 / 15%) !important; */
+  /* border-radius: 7px !important; */
+}
+.inputlabel{
+  color: #949191;
+  font-weight: 400;
+}
+::-webkit-input-placeholder { /* Edge */
+  color: #000000;
+}
+
+:-ms-input-placeholder { /* Internet Explorer */
+  color: #000000;
+}
+
+::placeholder {
+  color: #000000;
+}
+.formTop{
+  margin-top: 5px;
+}
+.fieldPadding{
+  margin-top: 3px;
+}
+::ng-deep .mat-select-arrow {
+  transform: rotate(0deg) !important;
+}
+
+::ng-deep .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+  transform: rotate(-180deg) !important;
+}
+::ng-deep .form-group .pickerouter .mat-datepicker-toggle button{
+  height: auto !important;
+    background: #B2B2B2 !important;
+
+}
+::ng-deep .mat-datepicker-toggle{
+  /* position: absolute; */
+  margin-left: -40px;
+  /* background: url("../../../../../../assets/images/crmImages/calendarIcon.png") no-repeat !important; */
+}
+.dateWithMatDtae{
+  display: flex;
+  /* flex-direction: row-reverse; */
+  align-items: center;
+  justify-content: space-between;
+
+}
+textarea {
+  resize: none;
+}
+.positionNameInput{
+  position: relative;
+
+}
+.estField{
+  display: flex;align-items: center;gap: 5px;
+  box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+  padding: 10px;
+  /* width: -webkit-fill-available; */
+  border-radius: 5px;
+}
+@media(max-width: 768px){
+  .taskImg{
+    display: none;
+  }
+  .noImg{
+    margin-right: 0px !important;
+  }
+  .secondEst{
+    width: -webkit-fill-available;
+  }
+  .estField{
+    width: -webkit-fill-available;
+    gap: 10px;
+  }
+  .taskAndNote{
+    display: block;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+  .formWidth{
+    width: 100% !important;
+    padding: 5px;
+  }
+  .notesWidth{
+    width: 100% !important;
+  }
+  .forWeb{
+    display: none;
+  }
+  .forMobile{
+    display: block;
+  }
+  ::ng-deep .example-headers-align .mat-expansion-panel-header-description{
+    justify-content: flex-end !important;
+  }
+
+}
+@media(min-width: 768px){
+  .forWeb{
+    display: block;
+  }
+  .forMobile{
+    display: none;
+  }
+  ::ng-deep .example-headers-align .mat-expansion-panel-header-description{
+    justify-content: flex-start !important;
+  }
+}
+
+.timeField{
+  font-weight: bold;
+    font-size: 12px;
+    color: #2e2e2e;
+}
+.cancelBtn{
+  background: #A8ABAF !important;
+box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+border-radius: 3.75916px !important;
+border: 0px solid  !important;
+margin-right: 10px !important;
+padding: 6px 10px;
+color: #fff;
+font-weight: bold;
+  font-size: 14px;
+}
+.confirmBtn{
+  background: #0D2348 !important;
+box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+border-radius: 3.75916px !important;
+border: 0px solid  !important;
+padding: 6px 12px;
+color: #fff;
+}
+input:focus  {
+  box-shadow: 0px 4px 11px rgb(0 0 0 / 15%) !important;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;
+  background: #F7F7F7 !important;
+  border: 2px solid #E9E9E9 !important;
+}
+input:not(:focus)  {
+  box-shadow: none;
+  /* border: none !important; */
+}
+textarea:focus  {
+  box-shadow: 0px 4px 11px rgb(0 0 0 / 15%) !important;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;
+  background: #F7F7F7 !important;
+  border: 2px solid #E9E9E9 !important;
+}
+textarea:not(:focus)  {
+  box-shadow: none;
+  /* border: none !important; */
+}
+.notesSection{
+  background: #FFFFFF;
+    border: 0.82945px solid #D9D5D5;
+    border-radius: 7.25282px;
+}
+.taskAndNote{
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+ 
+}
+.formWidth{
+  width: 60%;
+  padding: 5px;
+}
+.notesWidth{
+  width: 40%;
+}
+.fiesWithIcon{
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd !important;
+}
+.filesUploadThings{
+  padding: 10px;
+}
+.filesUploadThingsAction{
+  padding: 10px;
+  text-align: center;
+}
+.label{
+  color: #505050 !important;
+  font-weight: 500;
+  padding: 10px !important;
+  font-weight: 600;
+    /* padding: 10px !important; */
+    font-size: 12px;
+}
+.labelFile{
+  color: #505050 !important;
+  font-weight: 500;
+}
+.textareaStart{
+  background: #FFFFFF;
+    border: 0.82945px solid #D9D5D5;
+    border-radius: 7.25282px;
+}
+textarea .form-control{
+  height: 100px !important;
+  background: #FCFCFC !important;
+    border: 1.07315px solid #C9C9C9 !important;
+    border-radius: 11.8046px !important;
+}
+.allNotesList{
+  /* display: flex;
+  justify-content: space-between;
+  align-items: center; */
+}
+.errorMsg{
+  color: #f24949;
+  font-size: 12px;
+  font-weight: 500;
+  margin-left: 10px;
+    margin-bottom: 10px;
+    margin-top: -10px;
+}
+.inputFile{
+  border: 1.07315px dashed #C9C9C9;
+    border-radius: 11.8046px;
+    height: 85px !important;
+    background: #FCFCFC !important;
 }
