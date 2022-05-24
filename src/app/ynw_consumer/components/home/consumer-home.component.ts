@@ -1493,7 +1493,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         queryParams: {
           uuid: checkin.uid,
           accountId: checkin.providerAccount.id,
-          type: 'order',
+          // type: 'order',
           'paidStatus': false
         }
       };
