@@ -12,6 +12,7 @@ import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { ShowuploadfileComponent } from '../../../business/modules/medicalrecord/uploadfile/showuploadfile/showuploadfile.component';
 import { MatDialog } from '@angular/material/dialog';
 import { projectConstantsLocal } from '../../constants/project-constants';
+import { FileService } from '../../services/file-service';
 
 @Component({
   selector: 'app-questionnaire',
@@ -96,6 +97,7 @@ export class QuestionnaireComponent implements OnInit {
     private providerService: ProviderServices,
     private dateProcessor: DateTimeProcessor,
     public dialog: MatDialog,
+    private fileService: FileService,
     private location: Location) {
     this.activated_route.queryParams.subscribe(qparams => {
       this.params = qparams;
@@ -1031,32 +1033,42 @@ export class QuestionnaireComponent implements OnInit {
       }
       const indx = file.indexOf(this.filestoUpload[question.labelName][document]);
       if (indx !== -1) {
-        let path;
-        if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc') {
-          path = 'assets/images/pdf.png';
-        } else if (type[0] === 'video') {
-          path = 'assets/images/video.png';
-        } else if (type[0] === 'audio') {
-          path = 'assets/images/audio.png';
-        } else {
-          path = file[indx].path;
+        let path = this.fileService.getImage(null, this.filestoUpload[question.labelName][document]);
+
+        if (path && path !== null) {
+          return path;
         }
+        // if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc') {
+        //   path = 'assets/images/pdf.png';
+        // } else if (type[0] === 'video') {
+        //   path = 'assets/images/video.png';
+        // } else if (type[0] === 'audio') {
+        //   path = 'assets/images/audio.png';
+        // } else {
+          path = file[indx].path;
+        // }
         return path;
       }
     } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
       const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
       if (indx !== -1) {
-        let path;
-        let type = this.uploadedImages[indx].type.split('/');
-        if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc') {
-          path = 'assets/images/pdf.png';
-        } else if (this.uploadedImages[indx].status === 'COMPLETE' && type[0] === 'video') {
-          path = 'assets/images/video.png';
-        } else if (this.uploadedImages[indx].status === 'COMPLETE' && type[0] === 'audio') {
-          path = 'assets/images/audio.png';
-        } else {
-          path = this.uploadedImages[indx].s3path;
+        // let path;
+        // let type = this.uploadedImages[indx].type.split('/');
+        
+        // if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc') {
+        //   path = 'assets/images/pdf.png';
+        // } else if (this.uploadedImages[indx].status === 'COMPLETE' && type[0] === 'video') {
+        //   path = 'assets/images/video.png';
+        // } else if (this.uploadedImages[indx].status === 'COMPLETE' && type[0] === 'audio') {
+        //   path = 'assets/images/audio.png';
+        // } else {
+          let path = this.fileService.getImage(null, this.uploadedImages[indx]);
+
+        if (path && path !== null) {
+          return path;
         }
+          path = this.uploadedImages[indx].s3path;
+        // }
         return path;
       }
     }

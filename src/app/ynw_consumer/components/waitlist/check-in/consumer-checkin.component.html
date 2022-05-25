@@ -734,7 +734,7 @@
                                                             <div class="mgn-up-20 col-md-12 col-xs-12 no-padding">
                                                                 <div class="col-md-12 txt-align-center pad_link question-header"
                                                                     *ngIf="paymentmodes && paymentmodes.internationalPay && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                                    <span [class.disabled]="paymentBtnDisabled"
+                                                                    <span 
                                                                         (click)="togglepaymentMode()"
                                                                         class="pointer-cursor">
                                                                         <a class="refund_policy">
@@ -763,7 +763,6 @@
                                                                 <div class="col-md-12 txt-align-center">
                                                                     <button type="button"
                                                                         class=" next-button btn btn-primary font-weight-bold text-capitalize "
-                                                                        [class.disabled]="paymentBtnDisabled"
                                                                         *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))"
                                                                         (click)="!isClickedOnce && confirmcheckin('checkin')">
                                                                         Make Payment

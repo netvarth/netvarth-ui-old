@@ -17,6 +17,7 @@ import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { MeetingDetailsComponent } from '../../meeting-details/meeting-details.component';
 import { TeleBookingService } from '../../../../shared/services/tele-bookings-service';
+import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 
 @Component({
   selector: 'app-checkindetail',
@@ -86,7 +87,8 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
     private dateTimeProcessor: DateTimeProcessor,
-    private teleBookingService: TeleBookingService
+    private teleBookingService: TeleBookingService,
+    private s3Processor: S3UrlProcessor
   ) {
     this.subs.sink = this.activated_route.queryParams.subscribe(
       (qParams) => {
@@ -110,10 +112,35 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
     this.getCheckinDetails();
     this.getFavouriteProvider();
   }
+  processS3s(type, res) {
+    let result = this.s3Processor.getJson(res);
+    switch (type) {
+      case 'terminologies': {
+        this.wordProcessor.setTerminologies(result);
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+        this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
+        this.checkin_label = this.wordProcessor.getTerminologyTerm('checkin');
+        this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
+        break;
+      }
+    }
+  }
   getCheckinDetails() {
     this.subs.sink = this.sharedServices.getCheckinByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
       (data) => {
         this.waitlist = data;
+
+        if (this.waitlist && this.waitlist.providerAccount && this.waitlist.providerAccount.uniqueId) {
+          this.subs.sink = this.s3Processor.getJsonsbyTypes(this.waitlist.providerAccount.uniqueId ,
+            null, 'terminologies').subscribe(
+              (accountS3s) => {
+                if (accountS3s['terminologies']) {
+                  this.processS3s('terminologies', accountS3s['terminologies']);
+                }
+              })
+        }
+
         if(this.waitlist && this.waitlist.service && this.waitlist.service.virtualCallingModes){
           this.whatsAppNumber = this.teleBookingService.getTeleNumber(this.waitlist.virtualService[this.waitlist.service.virtualCallingModes[0].callingMode]);
         }

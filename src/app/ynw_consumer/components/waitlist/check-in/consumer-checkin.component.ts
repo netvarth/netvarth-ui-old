@@ -35,7 +35,7 @@ import { FileService } from '../../../../shared/services/file-service';
     styleUrls: ['./consumer-checkin.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css'],
 })
 export class ConsumerCheckinComponent implements OnInit, OnDestroy {
-    paymentBtnDisabled = false;
+    // paymentBtnDisabled = false;
     isClickedOnce = false;
     shownonIndianModes = false;
     tooltipcls = '';
@@ -654,10 +654,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
     }
     rescheduleWaitlist() {
+        // 'queue': this.sel_queue_id,
         const post_Data = {
             'ynwUuid': this.rescheduleUserId,
             'date': this.checkinDate,
-            'queue': this.sel_queue_id,
+            'queue': this.queueId,
             'consumerNote': this.consumerNote
         };
         console.log(post_Data)
@@ -822,7 +823,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         const _this = this;
         // type === 'checkin' && 
         if (this.selectedService.isPrePayment && (!this.commObj['communicationEmail'] || this.commObj['communicationEmail'] === '')) {
-            this.paymentBtnDisabled = true;
+            // this.paymentBtnDisabled = true;
             const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
                 width: '40%',
                 panelClass: ['loginmainclass', 'popup-class']
@@ -833,7 +834,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.confirmcheckin(type);
                 } else {
                     this.isClickedOnce = false;
-                    this.paymentBtnDisabled = false;
+                    // this.paymentBtnDisabled = false;
                     this.goBack('backy');
                 }
             });
@@ -1047,7 +1048,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             _this.disablebutton = false;
                             _this.paytmGateway = false;
                             _this.razorpayGatway = false;
-                            _this.paymentBtnDisabled = false;
+                            // _this.paymentBtnDisabled = false;
                         });
             }
         });
@@ -1854,13 +1855,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         });
     }
     disableButn() {
-
-        if (this.queuesLoaded && this.checkinDate === this.scheduledWaitlist.date && this.scheduledWaitlist.queue && this.queuejson[this.sel_queue_indx] && this.scheduledWaitlist.queue.id === this.queuejson[this.sel_queue_indx].id) {
-            console.log("Calling Disable:", this.checkinDate === this.scheduledWaitlist.date && this.scheduledWaitlist.queue && this.queuejson[this.sel_queue_indx] && this.scheduledWaitlist.queue.id === this.queuejson[this.sel_queue_indx].id);
-            console.log(this.checkinDate);
-            console.log(this.scheduledWaitlist.date);
-            console.log(this.scheduledWaitlist.queue.id);
-            console.log(this.queuejson[this.sel_queue_indx].id);
+        console.log("Calling Disable:", this.checkinDate === this.scheduledWaitlist.date && this.scheduledWaitlist.queue && this.queueId);
+        console.log(this.checkinDate);
+        console.log(this.scheduledWaitlist.date);
+        console.log(this.scheduledWaitlist.queue.id);
+        console.log(this.queueId);
+        if (this.queuesLoaded && this.checkinDate === this.scheduledWaitlist.date && this.scheduledWaitlist.queue && this.scheduledWaitlist.queue.id === this.queueId) {
+            
             return true;
         } else {
             return false;

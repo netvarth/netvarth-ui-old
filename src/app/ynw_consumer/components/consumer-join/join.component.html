@@ -111,6 +111,10 @@
                     <input type="text" class="form-control" id="emailId" formControlName="emailId" autocomplete="off"
                         (keypress)="resetApiErrors()" (blur)="onFieldBlur('emailId')">
                 </div>
+                <div class="mgn-bt-10 red" *ngIf="api_error">
+                    <app-field-error-display [displayError]="true"  errorMsg="{{api_error}}">
+                    </app-field-error-display>
+                </div>            
                 <div class="" style="display: flex !important; justify-content: space-between !important;">
                     <div class="mgn-bt-20 go-back" (click)="cancelForgotPassword()">
                         <span>
@@ -126,8 +130,6 @@
                     </button>
                 </div>
                 <!-- </div> -->
-                <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
-                </app-field-error-display>
             </div>
 
             <!-- step 6 for signup password -->

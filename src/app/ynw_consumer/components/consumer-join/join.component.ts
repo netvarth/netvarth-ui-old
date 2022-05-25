@@ -513,6 +513,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   }
   cancelForgotPassword() {
     this.step = 1;
+    this.resetApiErrors();
   }
   handleSignup() {
     if (this.moreParams && (this.moreParams['source'] === 'searchlist_checkin' || this.moreParams['source'] === 'business_page')) {

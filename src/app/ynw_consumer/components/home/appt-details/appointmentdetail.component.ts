@@ -17,6 +17,7 @@ import { SubSink } from 'subsink';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { MeetingDetailsComponent } from '../../meeting-details/meeting-details.component';
 import { TeleBookingService } from '../../../../shared/services/tele-bookings-service';
+import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 
 @Component({
   selector: 'app-appointmentdetail',
@@ -48,7 +49,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
   newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   dateTimeFormat = projectConstants.PIPE_DISPLAY_DATE_TIME_FORMAT;
   check_in_statuses = projectConstantsLocal.CHECK_IN_STATUSES;
-  cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP;
+  cust_notes_cap = '';
   providerId: any;
   addnotedialogRef: any;
   customer_label: any;
@@ -83,7 +84,8 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
     private dateTimeProcessor: DateTimeProcessor,
-    private teleBookingService: TeleBookingService
+    private teleBookingService: TeleBookingService,
+    private s3Processor: S3UrlProcessor
   ) {
     this.activated_route.queryParams.subscribe(
       (qParams) => {
@@ -96,26 +98,45 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
           this.customId = qParams.customId;
         }
       });
-    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
-    this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
-    this.checkin_label = this.wordProcessor.getTerminologyTerm('checkin');
-    this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
+      console.log("Terminologies");
+      console.log(this.wordProcessor.getTerminologies())
   }
   ngOnInit() {
     this.getCommunicationHistory();
     this.getApptDetails();
     this.getFavouriteProvider();
   }
+  processS3s(type, res) {
+    let result = this.s3Processor.getJson(res);
+    switch (type) {
+      case 'terminologies': {
+        this.wordProcessor.setTerminologies(result);
+        this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+        this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
+        this.checkin_label = this.wordProcessor.getTerminologyTerm('checkin');
+        this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
+        break;
+      }
+    }
+  }
   getApptDetails() {
     this.subs.sink = this.sharedServices.getAppointmentByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
       (data) => {
         this.appt = data;
-        console.log(this.appt )
+
+        if (this.appt && this.appt.providerAccount && this.appt.providerAccount.uniqueId) {
+          this.subs.sink = this.s3Processor.getJsonsbyTypes(this.appt.providerAccount.uniqueId ,
+            null, 'terminologies').subscribe(
+              (accountS3s) => {
+                if (accountS3s['terminologies']) {
+                  this.processS3s('terminologies', accountS3s['terminologies']);
+                }
+              })
+        }
         if(this.appt && this.appt.service && this.appt.service.virtualCallingModes){
           this.whatsAppNumber = this.teleBookingService.getTeleNumber(this.appt.virtualService[this.appt.service.virtualCallingModes[0].callingMode]);
         }
-        
         console.log("Deatils:",this.appt)
         if (this.appt.questionnaires && this.appt.questionnaires.length > 0) {
           this.questionnaires = this.appt.questionnaires;

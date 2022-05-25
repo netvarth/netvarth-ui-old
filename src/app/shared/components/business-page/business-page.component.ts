@@ -494,10 +494,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                         (uiconfig: any) => {
                           
                           if (uiconfig['customWebsite']) {
-                            if (uiconfig['customWebsite']['redirect']===true)
-                            window.location.href = uiconfig['customWebsite']['url'];
+                            if (uiconfig['customWebsite']['redirect']===true && uiconfig['customWebsite']['url']) {
+                              window.location.href = uiconfig['customWebsite']['url'];
+                            } else {
+                              _this.globalLoading= false;
+                            }                            
                           }
-                          _this.globalLoading= false;
+                          
                           if (uiconfig['pwaEnabled']) {
                             _this.pwaEnabled = true;
                           }
@@ -567,8 +570,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                             _this.popUp.nativeElement.style.display = 'block';
                           }
                           _this.gets3curl();
-                        }, ()=> {
-                          _this.globalLoading = false;
                         }
                       )
                     }
