@@ -233,9 +233,10 @@
             <div>Status</div>
         </div>
         <div class="fieldPadding">
-            <mat-select class="form-control" placeholder="Enter activity status"
+          <!-- [disabled]="!editable" -->
+            <mat-select  class="form-control" placeholder="Enter activity status"
                 #taskStatus formControlName="taskStatus" name="item" (ngModelChange)="oneField(taskStatus.value)"  (selectionChange)="handleTaskStatus(taskStatus.value)">
-                <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id"  >
+                <mat-option *ngFor="let item of taskStatusList;let index=i" [value]="item.id"  >
                     <!-- <div>
                         {{item.name | capitalizeFirst}}
                     </div> -->
@@ -271,6 +272,15 @@
         </div>
     </div>
       <!---business potential end-->
+      <!-- <div class="formTop" *ngIf="bTaskFollowUpResult" >
+        <div class="card" >
+          <div *ngFor="let item of taskStatusList[0]">
+            <div>
+              {{item.name }}
+            </div>
+          </div>
+        </div>
+      </div> -->
       <!----for web cancel save btn-->
       <div style="text-align: center;margin-top: 15px;" class="forWeb">
         <ng-container >

@@ -8,11 +8,12 @@
   </section>
   <section class="card mgn-up-15">
       <div>
-        <div class="customer">
-            <div class="infoHeader ">{{customer_label | capitalizeFirst}} Info</div>
-        </div>
+        
         <div>
             <form [formGroup]="createEnquiryForm">
+                <div class="customer">
+                    <div class="infoHeader ">{{customer_label | capitalizeFirst}} Info</div>
+                </div>
                 <div class="customerInfo mgn-up-15" >
                     <input type="text" formControlName="enquiryDetails"
                         class="form-control" name="search" placeholder={{searchby}} />
@@ -75,20 +76,39 @@
                             </div>
                         </div>
                     </div>
-                    <div style="margin-top: 5px;">
-                        <div class="taskTitle">
-                            <div>Sourcing Channel </div>
+                    <div class="formField">
+                        <div style="margin-top: 5px;width: -webkit-fill-available;">
+                            <div class="taskTitle">
+                                <div>Sourcing Channel </div>
+                            </div>
+                            <div class="fieldPadding">
+                                <div>
+                                    <div  class="form-control" style="display: flex;justify-content: space-between;"(click)="selectActivityListDialog(activityList)" >
+                                        <div >{{activityTitleDialogValue}}</div>
+                                        <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
+                                    </div>
+                                </div>
+                                <!-- <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
+                                </app-field-error-display>   -->
+                            </div> 
                         </div>
-                        <div class="fieldPadding">
-                            <div class="SorceChannel">
-                                <div  class="form-control" style="display: flex;justify-content: space-between;"(click)="selectActivityListDialog(activityList)" >
-                                    <div >{{activityTitleDialogValue}}</div>
-                                    <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
+                        <div style="margin-top: 5px;width: -webkit-fill-available;">
+                            <div> 
+                                <div class="taskTitle">
+                                    <div>Service</div>
+                                </div>
+                                <div class="fieldPadding">
+                                    <mat-select class="form-control" placeholder="Select Category"
+                                        #userTaskCategory formControlName="userTaskCategory" (ngModelChange)="handleTaskPrioritySelection(userTaskCategory.value)">
+                                        <mat-option  *ngFor="let item of categoryList;let index=i" [value]="item.id" >
+                                            <div>
+                                                {{item.name}}
+                                            </div>
+                                        </mat-option>
+                                    </mat-select>
                                 </div>
                             </div>
-                            <!-- <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
-                            </app-field-error-display>   -->
-                        </div> 
+                        </div>
                     </div>
                 </div>
                 <div style="text-align: center;margin-top: 15px;">

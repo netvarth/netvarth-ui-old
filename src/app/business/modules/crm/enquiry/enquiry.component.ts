@@ -35,6 +35,14 @@ import { CrmSelectMemberComponent } from '../../../shared/crm-select-member/crm-
       public activityList:any=[];
       public activityTitleDialogValue:any='None';
       public activityIdDialogValue:any;
+      public categoryList:any=[
+        {
+          id:1,name:'Category 1'
+        },
+        {
+          id:2,name:'Category 2'
+        }
+      ]
 
 
       constructor(
@@ -67,6 +75,7 @@ import { CrmSelectMemberComponent } from '../../../shared/crm-select-member/crm-
         lastNameValue:[''],
         phoneNoValue:[''],
         emailValue:[''],
+        userTaskCategory:['']
         // activityList:[],
 
        })
@@ -159,6 +168,9 @@ import { CrmSelectMemberComponent } from '../../../shared/crm-select-member/crm-
           // }
           
         })
+      }
+      handleTaskPrioritySelection(categoryValue){
+        console.log('categoryValue',categoryValue)
       }
       saveCreateEnquiry(){
         const createEnquiry:any={

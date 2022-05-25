@@ -136,7 +136,9 @@ export class ViewTaskComponent implements OnInit {
   public taskMasterList:any=[];
   public notesTextarea:any;
   public errorMsg:boolean=false;
-  public assignMemberErrorMsg:string=''
+  public assignMemberErrorMsg:string='';
+  public bTaskFollowUpResult:boolean=true;
+  // public editable:boolean=true;
 
 
  
@@ -257,7 +259,7 @@ export class ViewTaskComponent implements OnInit {
             this.bTaskLocation=true;
             // this.taskDetailsForm.controls.taskLocation.value = this.taskDetails.location.id
             this.taskDetailsForm.controls.taskLocation.setValue(this.taskDetails.location.name);
-              this.updteLocationId=this.taskDetails.location.name.id;
+              this.updteLocationId=this.taskDetails.location.id;
           }
           else{
             this.bTaskLocation=false;
@@ -289,9 +291,11 @@ export class ViewTaskComponent implements OnInit {
           }
           if(this.taskDetails.status.name != undefined){
             this.bTaskStatus=true;
-            this.taskDetailsForm.controls.taskStatus.value=this.taskDetails.status.id
+            this.taskDetailsForm.controls.taskStatus.value=this.taskDetails.status.id;
+            // this.editable=false;
           }
           else{
+            // this.editable=false;
             this.bTaskStatus=false
           }
           if(this.taskDetails.targetPotential){
@@ -352,7 +356,7 @@ export class ViewTaskComponent implements OnInit {
       this.taskMasterList[0].forEach((item:any)=>{
         console.log('item',item)
         console.log(item.title.value)
-        if(this.taskDetails.title === item.title.value){
+        if((this.taskDetails.title === item.title.value) && (this.taskDetails.title !=='Follow Up 1') && (this.taskDetails.title !=='Follow Up 2') ){
           console.log('Matched',item.title.isvisible)
           //est duration start
           if( item.estDuration.isvisible===false){
@@ -446,7 +450,7 @@ export class ViewTaskComponent implements OnInit {
               this.bTaskLocation=true;
               // this.taskDetailsForm.controls.taskLocation.value = this.taskDetails.location.id;
               this.taskDetailsForm.controls.taskLocation.setValue(this.taskDetails.location.name);
-              this.updteLocationId=this.taskDetails.location.name.id;
+              this.updteLocationId=this.taskDetails.location.id;
             }
             else{
               this.bTaskLocation=false;
@@ -481,9 +485,11 @@ export class ViewTaskComponent implements OnInit {
           if(item.status.isvisible === true){
             if(this.taskDetails.status.name != undefined){
               this.bTaskStatus=true;
-              this.taskDetailsForm.controls.taskStatus.value=this.taskDetails.status.id
+              this.taskDetailsForm.controls.taskStatus.value=this.taskDetails.status.id;
+              // this.editable=false;
             }
             else{
+              // this.editable=false;
               this.bTaskStatus=false
             }
           }
@@ -520,6 +526,9 @@ export class ViewTaskComponent implements OnInit {
           }
 
 
+        }
+        else if((this.taskDetails.title === item.title.value) && (this.taskDetails.title ==='Follow Up 1') || (this.taskDetails.title ==='Follow Up 2') ){
+          // this.bTaskStatus=false
         }
       })
     })
@@ -750,7 +759,18 @@ export class ViewTaskComponent implements OnInit {
   getTaskStatusListData(){
     this.crmService.getTaskStatus().subscribe((taskStatus:any)=>{
       console.log('taskStatus',taskStatus);
-      this.taskStatusList.push(taskStatus);
+      
+      if((this.taskDetails.title ==='Follow Up 1') || (this.taskDetails.title ==='Follow Up 2')){
+        this.taskStatusList.push(
+          {id: 5, name: 'Proceed',image:'./assets/images/crmImages/total.png'},{id: 3, name: 'Pending',image:'./assets/images/crmImages/total.png'},{id: 4, name: 'Rejected',image:'./assets/images/crmImages/total.png'}
+        );
+      }
+      else{
+        this.taskStatusList.push(
+          {id: 1, name: 'New'},{id: 2, name: 'Assigned'},{id: 3, name: 'In Progress'},
+          {id: 4, name: 'Cancelled'},{id: 5, name: 'Completed'},{id: 12, name: 'Suspended'}
+        );
+      }
       // if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName==='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster'){
       //   this.taskDetailsForm.controls.taskStatus.setValue(this.taskStatusList[0][0].id);
       // }
@@ -774,6 +794,7 @@ export class ViewTaskComponent implements OnInit {
   // console.log('targetPotential',targetPotential)
   }
   saveCreateTask(){
+    console.log('this.updteLocationId',this.updteLocationId)
     const updateTaskData:any = {
       "title":this.taskDetailsForm.controls.taskTitle.value,
       "description":this.taskDetailsForm.controls.taskDescription.value,
@@ -806,7 +827,6 @@ export class ViewTaskComponent implements OnInit {
       (error)=>{
         setTimeout(() => {
           this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
-          // this.router.navigate(['provider', 'task']);
         }, projectConstants.TIMEOUT_DELAY);
       })
     }
