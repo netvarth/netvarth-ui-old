@@ -462,3 +462,13 @@ padding: 3px;
 .imageIconType{
   width: 20px;
 }
+tr{
+  font-size: 14px !important;
+}
+tr:hover {box-shadow: 0 3px 15px rgb(0 0 0 / 20%);}
+thead{
+  background-color: #d8e2f1!important;
+    color: #555!important;
+}
+tr:nth-child(even) {background-color: #f2f2f2;}
+/* tr:nth-child(odd) {background-color: green;} */

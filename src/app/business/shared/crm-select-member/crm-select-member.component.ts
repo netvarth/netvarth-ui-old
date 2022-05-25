@@ -76,6 +76,7 @@ export class CrmSelectMemberComponent implements OnInit {
   public emailValue:any;
   public selectTemplateLength:any;
   public taskType:any;
+  public activityList:any=[]
 
 
 
@@ -273,6 +274,13 @@ export class CrmSelectMemberComponent implements OnInit {
       this.leadMasterListData= this.data.leadMasterFullList[0];
         console.log('leadMasterList.............',this.leadMasterListData)
       }
+    else if(this.data.requestType==='createTaskActivityList'){
+      // this.getTotalTaskActivity();
+      // this.activityList= this.data[0];
+      this.data.data[0].forEach((item:any)=>{
+        this.activityList.push(item)
+      })
+    }
   }
   handleMemberSelect(member,selected:string){
     this.handleAssignMemberSelectText=''
@@ -313,9 +321,6 @@ export class CrmSelectMemberComponent implements OnInit {
     
 
   }
-
-
-
   saveAssignCustomer(res){
     console.log("Saved customer details : ",res)
     if(this.assignCustomerDetails !==''){
@@ -332,9 +337,6 @@ export class CrmSelectMemberComponent implements OnInit {
     
 
   }
-
-
-
   getUserImg(user) {
     if (user.profilePicture) {
       const proImage = user.profilePicture;
@@ -688,6 +690,42 @@ getTaskmaster(){
       //   window.open(fileDes.s3path)
       // }
 
+    }
+    getColor(status){
+      if(status){
+      if(status === 'New'){
+        return 'blue'
+      }
+      else if(status === 'Assigned'){
+        return 'pink';
+      }
+      else if(status === 'In Progress'){
+        return '#fcce2b';
+      }
+      else if(status === 'Cancelled'){
+        return 'red';
+      }
+      else if(status === 'Suspended'){
+        return 'orange';
+      }
+      else if(status === 'Completed'){
+        return 'green';
+      }
+      else{
+        return 'black'
+      }
+    }
+  }
+  selectTaskActivity(taskData){
+    console.log('taskData',taskData)
+    this.dialogRef.close(taskData)
+  }
+    getTotalTaskActivity(){
+      // this.crmService.getTotalTask().subscribe((response)=>{
+      //   console.log('response',response);
+      //   this.activityList.push(response);
+
+      // })
     }
 }
 

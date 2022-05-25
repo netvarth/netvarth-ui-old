@@ -1,0 +1,115 @@
+<section class="card">
+    <div class="title-gb no-padding">
+      <div class="dash-head">
+       <div class="arrowLeftIcon"> <i class="fa fa-arrow-left iconClr" aria-hidden="true" (click)="goback()"></i></div>
+       <div>{{headerName}}</div>
+      </div>
+    </div>
+  </section>
+  <section class="card mgn-up-15">
+      <div>
+        <div class="customer">
+            <div class="infoHeader ">{{customer_label | capitalizeFirst}} Info</div>
+        </div>
+        <div>
+            <form [formGroup]="createEnquiryForm">
+                <div class="customerInfo mgn-up-15" >
+                    <input type="text" formControlName="enquiryDetails"
+                        class="form-control" name="search" placeholder={{searchby}} />
+                        <div class="webDisplay">
+                            <button type="button" class="btn confirmBtnFind" (click)="
+                            searchCustomer()">Search<i style="color:#fff;margin-left: 5px;" class="fa fa-search"></i> </button>
+                        </div>
+                          <div class="mobileDisplay">
+                              <button type="button" class="btn confirmBtnFindMObile" (click)="
+                              searchCustomer()"><i style="color:#fff;" class="fa fa-search"></i> </button>
+                            </div>
+                </div>
+                <div class="mgn-up-15">
+                    <div class="customer">
+                        <div class="infoHeader ">New {{ customer_label | capitalizeFirst}}</div>
+                    </div>
+                </div>
+                <div class="mgn-up-15">
+                    <div class="formField">
+                        <div class="taskInputField" style="margin-top: 5px;">
+                            <div class="taskTitle">
+                                <div>First Name</div>
+                            </div>
+                            <div class="fieldPadding">
+                                <input formControlName="firstNameValue" type="text" #firstName
+                                    (ngModelChange)="hamdlefirstName(firstName.value)" placeholder="Enter First Name"
+                                    class="form-control" autocomplete="off" [value]="firstName" />
+                            </div>
+                        </div>
+                        <div class="taskInputField" style="margin-top: 5px;">
+                            <div class="taskTitle">
+                                <div>Last Name</div>
+                            </div>
+                            <div class="fieldPadding">
+                                <input formControlName="lastNameValue" type="text" #lastName
+                                    (ngModelChange)="hamdlelastName(lastName.value)" placeholder="Enter Last Name"
+                                    class="form-control" autocomplete="off" [value]="lastName" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formField">
+                        <div class="taskInputField" style="margin-top: 5px;">
+                            <div class="taskTitle">
+                                <div>Phone Number</div>
+                            </div>
+                            <div class="fieldPadding">
+                                <input formControlName="phoneNoValue" type="tel" #phoneNo type="tel"
+                                    (ngModelChange)="hamdlephoneNo(phoneNo.value)" placeholder="Enter Phone Number"
+                                    class="form-control" autocomplete="off" minlength="10" maxlength="10" [value]="phoneNo" />
+                            </div>
+                        </div>
+                        <div class="taskInputField" style="margin-top: 5px;">
+                            <div class="taskTitle">
+                                <div>Email</div>
+                            </div>
+                            <div class="fieldPadding">
+                                <input formControlName="emailValue" type="email" #email
+                                    (ngModelChange)="hamdleemail(email.value)" placeholder="Enter Email"
+                                    class="form-control" autocomplete="off" [value]="email" />
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px;">
+                        <div class="taskTitle">
+                            <div>Sourcing Channel </div>
+                        </div>
+                        <div class="fieldPadding">
+                            <div class="SorceChannel">
+                                <div  class="form-control" style="display: flex;justify-content: space-between;"(click)="selectActivityListDialog(activityList)" >
+                                    <div >{{activityTitleDialogValue}}</div>
+                                    <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
+                                </div>
+                            </div>
+                            <!-- <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
+                            </app-field-error-display>   -->
+                        </div> 
+                    </div>
+                </div>
+                <div style="text-align: center;margin-top: 15px;">
+                    <ng-container >
+                        <div class=" mgn-bt-20 mgn-up-10">
+                            <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()"
+                                >Cancel
+                            </button>
+                            <button [ngClass]="{
+                                'btn btn-primary font-weight-bold cancelBtn': !createEnquiryForm.valid,
+                                'btn btn-primary font-weight-bold confirmBtn': createEnquiryForm.valid
+                            }"
+                             
+                              [class.spinner]="api_loading" 
+                                [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateEnquiry()"
+                                    >Save
+                            </button>
+                        </div>
+                    </ng-container>
+                </div>
+            </form>
+        </div>
+      </div>
+  </section>
