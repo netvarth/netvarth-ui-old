@@ -718,7 +718,7 @@ getTaskmaster(){
   }
   selectTaskActivity(taskData){
     console.log('taskData',taskData)
-    this.dialogRef.close(taskData)
+    this.dialogRef.close(taskData);
   }
     getTotalTaskActivity(){
       // this.crmService.getTotalTask().subscribe((response)=>{

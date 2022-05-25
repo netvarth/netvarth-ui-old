@@ -958,7 +958,7 @@
 <section *ngIf="data.requestType==='createTaskActivityList'" style="padding: 20px;">
     <div class="header">
         <div class="headerText">Activity List</div>
-        <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+        <div style=" cursor: pointer;" >
             <mat-icon (click)="selectTaskActivity('Close')">clear</mat-icon>
         </div>
     </div>
@@ -996,6 +996,9 @@
                                         *ngIf="task.assignee">{{task.assignee.name}}</span></td>
                                     <td data-title="Status" class="td3" [ngStyle]="{'color': getColor(task.status.name)}">{{task.status.name}}</td>
                                     
+                                  </tr>
+                                  <tr>
+                                    <td data-title="Task Details" class="td4" (click)="selectTaskActivity('None')">{{data.noneData}}</td>
                                   </tr>
                                 </ng-container>
                               </tbody>

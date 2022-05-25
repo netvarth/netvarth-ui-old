@@ -33,7 +33,7 @@ import { CrmSelectMemberComponent } from '../../../shared/crm-select-member/crm-
       public innerWidth:any;
       public templateList:any=[];
       public activityList:any=[];
-      public activityTitleDialogValue:any='Select Activity';
+      public activityTitleDialogValue:any='None';
       public activityIdDialogValue:any;
 
 
@@ -137,19 +137,26 @@ import { CrmSelectMemberComponent } from '../../../shared/crm-select-member/crm-
       panelClass: ['popup-class', 'confirmationmainclass'],
       data:{
         requestType:'createTaskActivityList',
-        data:this.activityList
+        data:this.activityList,
+        noneData:'None'
        
       }
         })
-        dialogRef.afterClosed().subscribe((response)=>{
+        dialogRef.afterClosed().subscribe((response:any)=>{
           console.log('response',response);
-          if(response != undefined){
-            this.activityTitleDialogValue= response.title;
-            this.activityIdDialogValue= response.id
+          if(response !== undefined && response !=='None'){
+            this.activityTitleDialogValue=== response.title;
+            this.activityIdDialogValue=== response.id
           }
-          else{
-            this.activityTitleDialogValue='Select Activity'
+          else if(response==='None' && response !== undefined){
+            this.activityTitleDialogValue=== 'None'
           }
+          else if(response==='Close' && response !== undefined){
+            this.activityTitleDialogValue==='None'
+          }
+          // else{
+          //   this.activityTitleDialogValue==='None'
+          // }
           
         })
       }
