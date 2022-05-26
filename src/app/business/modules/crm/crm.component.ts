@@ -1,26 +1,24 @@
 import { Component, OnInit, } from '@angular/core';
-// import { GroupStorageService } from '../../../shared/services/group-storage.service';
-// import { SnackbarService } from '../../../shared/services/snackbar.service';
-// import { Messages } from '../../../shared/constants/project-messages';
-// import { Router } from '@angular/router';
-// NavigationExtras
-// import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { Location } from '@angular/common';
-// import { MatDialog } from '@angular/material/dialog';
-// import { ProviderServices } from '../../../business/services/provider-services.service';
-// import { WordProcessor } from '../../../shared/services/word-processor.service';
-// import { FileService } from '../../../shared/services/file-service';
-
+import { WordProcessor } from '../../../shared/services/word-processor.service';
+import { ProviderServices } from '../../services/provider-services.service';
+import { CrmService } from './crm.service';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-crm',
   templateUrl: './crm.component.html',
   styleUrls: ['./crm.component.css']
 })
-export class crmComponent implements OnInit{
-  public step:any = 0;
-  public panelOpenState:false;
-  public redirectionList:any=[
+export class CRMComponent implements OnInit {
+
+  crmTitle = '';
+
+
+
+  public step: any = 0;
+  public panelOpenState: false;
+  public redirectionList: any = [
     // {
     //   id:1,
     //   activityName:'Enquiry'
@@ -30,91 +28,124 @@ export class crmComponent implements OnInit{
     //   activityName:'Follow UPS'
     // },
     {
-      id:3,
-      activityName:'Leads'
+      id: 3,
+      activityName: 'Leads'
     },
     {
-      id:4,
-      activityName:'CRIF'
+      id: 4,
+      activityName: 'CRIF'
     },
     {
-      id:5,
-      activityName:'Sales Field Verification Processing Files'
+      id: 5,
+      activityName: 'Sales Field Verification Processing Files'
     },
     {
-      id:6,
-      activityName:'Document Upload'
+      id: 6,
+      activityName: 'Document Upload'
     },
     {
-      id:7,
-      activityName:'Document Verification'
+      id: 7,
+      activityName: 'Document Verification'
     },
     {
-      id:8,
-      activityName:'Credit field verification and recommendation'
+      id: 8,
+      activityName: 'Credit field verification and recommendation'
     },
     {
-      id:9,
-      activityName:'Loan Sanction'
+      id: 9,
+      activityName: 'Loan Sanction'
     },
     {
-      id:10,
-      activityName:'Loan Disbursement'
+      id: 10,
+      activityName: 'Loan Disbursement'
     }
   ]
-  public api_loading:boolean = true;
+  public api_loading: boolean = true;
 
-    constructor(
-        // private groupService: GroupStorageService,
-        // private provider_servicesobj: ProviderServices,
-        // private snackbarService: SnackbarService,
-        // private lStorageService: LocalStorageService,
-        // private router: Router,
-        private locationobj: Location,
-        // public dialog: MatDialog,
-        // private _location: Location,
-        //  private wordProcessor:WordProcessor,
-        // private fileService:FileService
-        ){}
-        ngOnInit(): void {
-          this.fnChangeBorder('A')
-          this.api_loading=false;
-            
-        }
-        setStep(index: number) {
-          console.log('index',index)
-          this.step = index;
-        }
-        goback() {
-          this.locationobj.back();
-        }
-        templateViewActivity(textValue){
-          console.log('textValue',textValue)
-          // this.router.navigate()
-          // this.router.navigate(['provider','crm', 'tasktemplate'])
+  constructor(
+    // private groupService: GroupStorageService,
+    private providerServices: ProviderServices,
+    // private snackbarService: SnackbarService,
+    // private lStorageService: LocalStorageService,
+    private router: Router,
+    private locationobj: Location,
+    // public dialog: MatDialog,
+    // private _location: Location,
+     private wordProcessor:WordProcessor,
+     private crmService: CrmService
+    // private fileService:FileService
+  ) {
 
-        }
-        templateUpdation(textValue){
-          console.log('textValue',textValue)
-        }
-        fnChangeBorder(boxId){
-          console.log('boxId',boxId)
-          if(boxId==='A'){
-            document.getElementById(boxId).style.borderBottom = "2px solid #1D3E77";
-            document.getElementById('B').style.borderBottom = "0px solid #1D3E77";
-            document.getElementById('C').style.borderBottom = "0px solid #1D3E77";
+   }
+
+   initCRM() {
+    this.fnChangeBorder('A')
+    if(this.wordProcessor.getSPTerminologyTerm('CRM')) {
+      this.crmTitle = this.wordProcessor.getSPTerminologyTerm('CRM');
+    } else {
+      this.crmTitle = 'CRM';
+    }
+    this.api_loading = false;
+   }
+  ngOnInit(): void {
+    const _this = this;
+    _this.providerServices.getBussinessProfile().subscribe(
+      (bProfile: any) => {
+        _this.crmService.getSPTerminologies(bProfile.uniqueId).then(
+          (terminology: any) => {
+              _this.wordProcessor.setSPTerminologies(terminology);
+              _this.initCRM();
+          } 
+        )
+      }
+    )
+  }
+  setStep(index: number) {
+    console.log('index', index)
+    this.step = index;
+  }
+  goback() {
+    this.locationobj.back();
+  }
+  templateViewActivity(textValue) {
+    console.log('textValue', textValue)
+    // this.router.navigate()
+    // this.router.navigate(['provider','crm', 'tasktemplate'])
+
+  }
+  buttonClicked (type) {
+    switch(type) {
+      case 'LOS' :
+          this.router.navigate(['provider', 'crm', 'leads']);
+          break;
+      case 'CREATELEAD': 
+          const navigationExtras: NavigationExtras =  {
+            queryParams: {
+              type: 'leadCreateTemplate'
+            }
           }
-          else if(boxId==='B'){
-            document.getElementById(boxId).style.borderBottom = "2px solid #1D3E77";
-            document.getElementById('A').style.borderBottom = "0px solid #1D3E77";
-            document.getElementById('C').style.borderBottom = "0px solid #1D3E77";
-          }
-          else if(boxId==='C'){
-            document.getElementById('B').style.borderBottom = "0px solid #1D3E77";
-            document.getElementById('A').style.borderBottom = "0px solid #1D3E77";
-            document.getElementById(boxId).style.borderBottom = "2px solid #1D3E77";
-          }
-          
-          
-        }
+          this.router.navigate(['provider','lead', 'leadtemplate'], navigationExtras);
+    }
+  }
+  templateUpdation(textValue) {
+    console.log('textValue', textValue)
+  }
+  fnChangeBorder(boxId) {
+    console.log('boxId', boxId)
+    if (boxId === 'A') {
+      document.getElementById(boxId).style.borderBottom = "2px solid #1D3E77";
+      document.getElementById('B').style.borderBottom = "0px solid #1D3E77";
+      document.getElementById('C').style.borderBottom = "0px solid #1D3E77";
+    }
+    else if (boxId === 'B') {
+      document.getElementById(boxId).style.borderBottom = "2px solid #1D3E77";
+      document.getElementById('A').style.borderBottom = "0px solid #1D3E77";
+      document.getElementById('C').style.borderBottom = "0px solid #1D3E77";
+    }
+    else if (boxId === 'C') {
+      document.getElementById('B').style.borderBottom = "0px solid #1D3E77";
+      document.getElementById('A').style.borderBottom = "0px solid #1D3E77";
+      document.getElementById(boxId).style.borderBottom = "2px solid #1D3E77";
+    }
+  }
 }

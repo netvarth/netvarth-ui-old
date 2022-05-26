@@ -1,6 +1,7 @@
 import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { ServiceMeta } from '../../../shared/services/service-meta';
 
 @Injectable({
@@ -316,5 +317,31 @@ export class CrmService {
       const url = 'provider/lead/' + leadUid + '/waitlist';
       return this.servicemeta.httpGet(url);
     }
+
+    getProviderTerminologies(accountUniqueId) {
+      const path = projectConstantsLocal.UIS3PATH + accountUniqueId + '/spTerminologies.json?t=' + new Date();
+      console.log("Path:", path);
+      return this.servicemeta.httpGet(path);
+    }
+    getSPTerminologies(accountUniqueId) {
+      const _this = this;
+      console.log("getSPTerminologies:", accountUniqueId);
+      return new Promise(function (resolve, reject) {
+          _this.getProviderTerminologies(accountUniqueId).subscribe(
+              (terminologies: any) => {
+                  resolve(terminologies);
+              }, () => {
+                  _this.getProviderTerminologies('default').subscribe(
+                      (terminologies: any) => {
+                          resolve(terminologies);
+                      }, (error) => {
+                          reject(error);
+                      }
+                  )
+              }
+          );
+      })
+  }
+
 
 }

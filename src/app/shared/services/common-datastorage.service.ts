@@ -5,7 +5,8 @@ import {Injectable} from '@angular/core';
 export class CommonDataStorageService {
 
   private storage = {
-    'terminologies': null
+    'terminologies': null,
+    'spterminologies':null
   };
 
   public checkinInfo;
@@ -22,7 +23,8 @@ export class CommonDataStorageService {
 
   clear() {
     this.storage = {
-      'terminologies': null
+      'terminologies': null,
+      'spterminologies': null
     };
   }
 

@@ -5,7 +5,7 @@
             <div>
                 <i style="color:#1D3E77 !important" class="fa fa-arrow-left pointer-cursor" (click)="goback()"></i>
             </div>
-          <div style="color: #1D3E77;">Crm</div>
+          <div style="color: #1D3E77;">{{crmTitle}}</div>
           </div>
       </div>
     </div>
@@ -28,7 +28,7 @@
                 <div >
                     <mat-icon class="iconBackgroundMatIcon">home</mat-icon>
                 </div>
-                <div class="topicName">
+                <div class="topicName" >
                     LMS
                 </div>
             </div>
@@ -65,7 +65,7 @@
                   </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="allTabInPannel">
-                    <div class="customCard box" style="margin-bottom: 5px;" tabindex="1">
+                    <div class="customCard box" style="margin-bottom: 5px;" tabindex="1" (click)="buttonClicked('CREATELEAD')">
                         <div>
                             <div style="padding:8px">
                                 <img class="img iconBackground" src="/assets/images/crmImages/Vector.png" />
@@ -119,7 +119,7 @@
     <!----tempates strat-->
     <div  class="mgn-up-15">
         <div>
-            <div class="customCard">
+            <div class="customCard" (click)="buttonClicked('LOS')">
                 <div >
                     <img class="imgTempalte" src="/assets/images/crmImages/navbarIcon.png" />
                 </div>
@@ -189,8 +189,6 @@
         </mat-accordion>
     </div>
     <!---mat pannel end-->
-               
-
                <!----follow ups pannel end-->
             <div class="eachTab mgn-up-15" style="flex-wrap: wrap;" >
                 <div class="customCard redirectionList" *ngFor="let item of redirectionList">

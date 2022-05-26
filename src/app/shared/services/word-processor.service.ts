@@ -28,6 +28,23 @@ export class WordProcessor {
   getTerminologies() {
     return this.common_datastorage.get('terminologies');
   }
+
+  /**
+   *  Method to set the sp terminlogies for Jaldee
+   * @param terminology 
+   */
+  setSPTerminologies(terminology) {
+    this.common_datastorage.set('spterminologies', terminology);
+  }
+
+  /**
+   * Method to get the sp terminologies
+   */
+   getSPTerminologies() {
+     console.log("In GetSP:", this.common_datastorage.get('spterminologies'));
+    return this.common_datastorage.get('spterminologies');
+  }
+
   /**
    * Method returns the CamelCase
    * @param str text to convert
@@ -129,5 +146,19 @@ export class WordProcessor {
     let message = this.errorService.getApiError(error);
     message = this.findTerminologyTerm(message);
     return this.firstToUpper(message);
+  }
+  /**
+   * Get the terminology from terminologies
+   * @param term 
+   */
+   getSPTerminologyTerm(term) {
+    const term_only = term;
+    const terminologies = this.common_datastorage.get('spterminologies');
+    console.log("Terminologies:", terminologies);
+    if (terminologies) {
+      return (terminologies[term_only]) ? terminologies[term_only] : ((term === term_only) ? term_only : term);
+    } else {
+      return (term === term_only) ? term_only : term;
+    }
   }
 }

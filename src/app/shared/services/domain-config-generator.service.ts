@@ -53,7 +53,7 @@ export class DomainConfigGenerator {
                             _this.lStorageService.setitemonLocalStorage('ynw-bconf', postdata);
                             resolve(postdata);
                         }
-                    ); 
+                    );
             }
         });
     }
@@ -70,15 +70,15 @@ export class DomainConfigGenerator {
      * 
      */
     getUIAccountConfig(account) {
-        const path = projectConstantsLocal.UIS3PATH + account + '/account_config.json';
+        const path = projectConstantsLocal.UIS3PATH + account + '/account_config.json?t=' + new Date();
         return this.servicemeta.httpGet(path);
     }
-    
+
     /**
      * 
      */
-     getHometemplate(accountUniqueId) {
-        const path = projectConstantsLocal.UIS3PATH + accountUniqueId + '/template.json?t='+new Date();
+    getHometemplate(accountUniqueId) {
+        const path = projectConstantsLocal.UIS3PATH + accountUniqueId + '/template.json?t=' + new Date();
         return this.servicemeta.httpGet(path);
     }
 }
