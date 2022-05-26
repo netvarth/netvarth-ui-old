@@ -234,9 +234,9 @@
         </div>
         <div class="fieldPadding">
           <!-- [disabled]="!editable" -->
-            <mat-select  class="form-control" placeholder="Enter activity status"
+            <mat-select [disabled]="!editable"  class="form-control" placeholder="Enter activity status"
                 #taskStatus formControlName="taskStatus" name="item" (ngModelChange)="oneField(taskStatus.value)"  (selectionChange)="handleTaskStatus(taskStatus.value)">
-                <mat-option *ngFor="let item of taskStatusList;let index=i" [value]="item.id"  >
+                <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id"  >
                     <!-- <div>
                         {{item.name | capitalizeFirst}}
                     </div> -->
@@ -272,15 +272,35 @@
         </div>
     </div>
       <!---business potential end-->
-      <!-- <div class="formTop" *ngIf="bTaskFollowUpResult" >
-        <div class="card" >
-          <div *ngFor="let item of taskStatusList[0]">
-            <div>
-              {{item.name }}
+      <div class="formTop" *ngIf="taskDetails.title ==='Follow Up 1' && taskDetails.title ==='Follow Up 2'" >
+        <div class="card" style="border: 0.772915px solid #D9D5D5 !important;" >
+          <div class="statusResult">
+            <div style="font-size: 12px;font-weight: bold;">Enter Result</div>
+          <div class="statusListClass">
+            <div *ngFor="let item of taskStatusList[0]">
+              <div *ngIf="item.name==='Completed'" class="statusClass1" (click)="selectStatus(item)" id="A">
+                <div>Proceed</div>
+                <div>
+                  <img class="imageStatus" src="../../../../../../assets/images/crmImages/completed2.png" />
+                </div>
+              </div>
+              <div *ngIf="item.name==='In Progress'" class="statusClass2" (click)="selectStatus(item)" id="B">
+                <div>Pending</div>
+                <div>
+                  <img class="imageStatus" src="../../../../../../assets/images/crmImages/inProgress2.png" />
+                </div>
+              </div>
+              <div *ngIf="item.name==='Cancelled'" class="statusClass3" (click)="selectStatus(item)" id="C">
+                <div>Rejected</div>
+                <div>
+                  <img class="imageStatus" src="../../../../../../assets/images/crmImages/cancelled.png" />
+                </div>
+              </div>
             </div>
           </div>
+          </div>
         </div>
-      </div> -->
+      </div>
       <!----for web cancel save btn-->
       <div style="text-align: center;margin-top: 15px;" class="forWeb">
         <ng-container >

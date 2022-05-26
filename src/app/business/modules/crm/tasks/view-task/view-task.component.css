@@ -611,3 +611,61 @@ textarea .form-control{
     height: 85px !important;
     background: #FCFCFC !important;
 }
+.imageStatus{
+  height: 20px;
+  width: 20px;
+}
+.statusListClass{
+  display: flex;
+    gap: 10px;
+    margin-top: 5px;
+    margin-left: -20px;
+}
+.statusClass1{
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* gap: 10px; */
+    background: #D7FEE9;
+    border: 1px solid #D7FFE9;
+    border-radius: 11px;
+    padding: 10px;
+    flex-direction: row-reverse;
+    cursor: pointer;
+}
+.statusClass2{
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* gap: 10px; */
+    background: #FEECD7;
+border-radius: 11.9425px;   
+    padding: 10px;
+    border-radius: 11px;
+    flex-direction: row-reverse;
+    /* border: 1px solid #D7FFE9; */
+    cursor: pointer;
+}
+.statusClass3{
+  display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* gap: 10px; */
+    padding: 10px;
+    flex-direction: row-reverse;
+    background: #FADDDD;
+    border-radius: 11.9425px;
+    /* border-radius: 11px; */
+    cursor: pointer;
+}
+@media(max-width: 768px){
+  .statusListClass{
+    display: flex;
+    grid-gap: 5px;
+    margin-top: 10px;
+    /* margin-left: -25px; */
+  }
+  .statusResult{
+    margin-left: -15px;
+  }
+}

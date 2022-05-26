@@ -21,14 +21,14 @@ export class crmComponent implements OnInit{
   public step:any = 0;
   public panelOpenState:false;
   public redirectionList:any=[
-    {
-      id:1,
-      activityName:'Enquiry'
-    },
-    {
-      id:2,
-      activityName:'Follow UPS'
-    },
+    // {
+    //   id:1,
+    //   activityName:'Enquiry'
+    // },
+    // {
+    //   id:2,
+    //   activityName:'Follow UPS'
+    // },
     {
       id:3,
       activityName:'Leads'
@@ -88,12 +88,15 @@ export class crmComponent implements OnInit{
         goback() {
           this.locationobj.back();
         }
-        scheduleMarketingActivity(){
+        templateViewActivity(textValue){
+          console.log('textValue',textValue)
           // this.router.navigate()
           // this.router.navigate(['provider','crm', 'tasktemplate'])
 
         }
-        scheduleMarketingActivityUpdation(){}
+        templateUpdation(textValue){
+          console.log('textValue',textValue)
+        }
         fnChangeBorder(boxId){
           console.log('boxId',boxId)
           if(boxId==='A'){

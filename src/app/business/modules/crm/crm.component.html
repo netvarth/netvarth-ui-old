@@ -62,10 +62,6 @@
                    </div>
                   </mat-panel-title>
                   <mat-panel-description>
-                    <!-- <div class="forMobile">
-                        <div>Marketing Activity</div>
-                    </div> -->
-                    <!-- <mat-icon>keyboard_arrow_down</mat-icon> -->
                   </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="allTabInPannel">
@@ -77,7 +73,7 @@
                             <div style="padding:8px" class="topicName">
                                 Schedule Marketing Activity
                             </div>
-                            <div  class="imgClick" (click)="scheduleMarketingActivity()">
+                            <div  class="imgClick" (click)="templateViewActivity('Schedule Marketing Activity')">
                                 <div  class="clickHere">
                                     Click here 
                                 </div>
@@ -87,7 +83,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="customCard" style="margin-bottom: 5px;">
+                    <div class="customCard box" style="margin-bottom: 5px;">
                         <div>
                             <div style="padding:8px">
                                 <img class="img iconBackground" src="/assets/images/crmImages/Vector.png" />
@@ -95,7 +91,7 @@
                             <div class="topicName" style="padding:8px">
                                 Marketing Activity Updation
                             </div>
-                            <div class="imgClick" (click)="scheduleMarketingActivityUpdation()">
+                            <div class="imgClick" (click)="templateUpdation(' Marketing Activity Updation')">
                                <div class="clickHere">
                                 Click here 
                                </div>
@@ -123,13 +119,88 @@
     <!----tempates strat-->
     <div  class="mgn-up-15">
         <div>
-            <div class="eachTab" style="flex-wrap: wrap;">
-                <div class="customCard redirectionList" *ngFor="let item of redirectionList">
-                    <div >
-                        <img class="imgTempalte" src="/assets/images/crmImages/navbarIcon.png" />
+            <div class="customCard">
+                <div >
+                    <img class="imgTempalte" src="/assets/images/crmImages/navbarIcon.png" />
+                </div>
+                <div class="topicNameedirectionList" >
+                    Enquiry
+                </div>
+               </div>
+               <!----follow ups pannel start-->
+               <!---mat pannel start-->
+    <div class="mgn-up-15">
+        <mat-accordion class="example-headers-align">
+            <mat-expansion-panel 
+            (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                   <div style="display:flex;gap:10px;align-items: center;">
+                    <div class="plusOutside">
+                        <i style="color: #D92323;" class="fa fa-plus" aria-hidden="true"></i>
+                       </div>
+                       <div class="marketActivity">
+                           <div>Follow UPS</div>
+                       </div>
+                   </div>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="allTabInPannel">
+                    <div class="customCard box" style="margin-bottom: 5px;" tabindex="1">
+                        <div>
+                            <div style="padding:8px">
+                                <img class="img iconBackground" src="/assets/images/crmImages/tempateImg/Folloup1.png" />
+                            </div>
+                            <div style="padding:8px" class="topicName">
+                                Follow UP 1
+                            </div>
+                            <div  class="imgClick" (click)="templateViewActivity('Follow UP 1')">
+                                <div  class="clickHere">
+                                    Click here 
+                                </div>
+                                <div>
+                                    <img class="img "  src="/assets/images/crmImages/handsLeftArrow.png" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="topicNameedirectionList" >
-                        {{item.activityName}}
+                    <div class="customCard box" style="margin-bottom: 5px;">
+                        <div>
+                            <div style="padding:8px">
+                                <img class="img iconBackground" src="/assets/images/crmImages/tempateImg/Folloup2.png" />
+                            </div>
+                            <div class="topicName" style="padding:8px">
+                                Follow UP 2
+                            </div>
+                            <div class="imgClick" (click)="templateUpdation('Follow UP 2')">
+                               <div class="clickHere">
+                                Click here 
+                               </div>
+                               <div style="cursor: pointer;">
+                                   <img class="img"   src="/assets/images/crmImages/handsLeftArrow.png" />
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <!---mat pannel end-->
+               
+
+               <!----follow ups pannel end-->
+            <div class="eachTab mgn-up-15" style="flex-wrap: wrap;" >
+                <div class="customCard redirectionList" *ngFor="let item of redirectionList">
+                    <div class="activityTemplate">
+                        <div >
+                            <img class="imgTempalte" src="/assets/images/crmImages/navbarIcon.png" />
+                        </div>
+                        <div class="topicNameedirectionList" >
+                            {{item.activityName}}
+                        </div>
                     </div>
                 </div>
             </div>

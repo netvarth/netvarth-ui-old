@@ -138,7 +138,10 @@ export class ViewTaskComponent implements OnInit {
   public errorMsg:boolean=false;
   public assignMemberErrorMsg:string='';
   public bTaskFollowUpResult:boolean=true;
-  // public editable:boolean=true;
+  public editable:boolean=true;
+  public followUpStatusComplToProceed:any;
+  public followUpStatusInProgressToPending:any;
+  public fiollowUpStatusCancelledToRejected:any;
 
 
  
@@ -292,7 +295,7 @@ export class ViewTaskComponent implements OnInit {
           if(this.taskDetails.status.name != undefined){
             this.bTaskStatus=true;
             this.taskDetailsForm.controls.taskStatus.value=this.taskDetails.status.id;
-            // this.editable=false;
+            this.editable=false;
           }
           else{
             // this.editable=false;
@@ -316,7 +319,6 @@ export class ViewTaskComponent implements OnInit {
           else{
             this.bTaskBusinessPotential=false
           }
-        // }
         this.headerName=this.taskDetails.title
         if (this.taskDetails.originUid) {
           this.taskType = "SubTask";
@@ -357,7 +359,8 @@ export class ViewTaskComponent implements OnInit {
         console.log('item',item)
         console.log(item.title.value)
         if((this.taskDetails.title === item.title.value) && (this.taskDetails.title !=='Follow Up 1') && (this.taskDetails.title !=='Follow Up 2') ){
-          console.log('Matched',item.title.isvisible)
+          console.log('Matched',item.title.isvisible);
+          this.bTaskFollowUpResult=false;
           //est duration start
           if( item.estDuration.isvisible===false){
             this.bTaskEstDuration=false
@@ -445,7 +448,7 @@ export class ViewTaskComponent implements OnInit {
           else{
             this.bTaskType=false;
           }
-          if(item.locationArea.isvisible === true){
+          if(item.location.isvisible === true){
             if(this.taskDetails.location.name != undefined){
               this.bTaskLocation=true;
               // this.taskDetailsForm.controls.taskLocation.value = this.taskDetails.location.id;
@@ -458,6 +461,18 @@ export class ViewTaskComponent implements OnInit {
           }
           else{
             this.bTaskLocation=false;
+          }
+          if(item.locationArea.isvisible === true){
+            if(this.taskDetails.locationArea != undefined){
+              this.bTaskAreaName=true;
+              this.taskDetailsForm.controls.areaName.value=(this.taskDetails.locationArea);
+            }
+            else{
+              this.bTaskAreaName=false;
+            }
+          }
+          else{
+            this.bTaskAreaName=false;
           }
           if(item.manager.isvisible === true){
             if(this.taskDetails.manager.name != undefined){
@@ -486,7 +501,7 @@ export class ViewTaskComponent implements OnInit {
             if(this.taskDetails.status.name != undefined){
               this.bTaskStatus=true;
               this.taskDetailsForm.controls.taskStatus.value=this.taskDetails.status.id;
-              // this.editable=false;
+              this.editable=false;
             }
             else{
               // this.editable=false;
@@ -524,11 +539,28 @@ export class ViewTaskComponent implements OnInit {
           else{
             this.bTaskTargetPotential=false;
           }
+         
 
 
         }
-        else if((this.taskDetails.title === item.title.value) && (this.taskDetails.title ==='Follow Up 1') || (this.taskDetails.title ==='Follow Up 2') ){
-          // this.bTaskStatus=false
+        else if( (this.taskDetails.title ==='Follow Up 1') || (this.taskDetails.title ==='Follow Up 2') ){
+          this.bTaskStatus=false;
+          this.bTaskCategory=false;
+          this.bTaskType=false;
+          this.bTaskLocation=false;
+          this.bTaskManager=false;
+          this.bTaskEstDuration=false;
+          this.bTaskPriority=false;
+          this.bTaskStatus=false;
+          this.bTaskTargetPotential=false;
+          this.bTaskBusinessPotential=false;
+          this.bTaskTitle=true;
+          this.bTaskDescription=true;
+          this.bAssigneeName=true;
+          this.bTaskDate=true;
+          this.bTaskAreaName=true;
+          this.bTaskFollowUpResult=true;
+          
         }
       })
     })
@@ -759,29 +791,19 @@ export class ViewTaskComponent implements OnInit {
   getTaskStatusListData(){
     this.crmService.getTaskStatus().subscribe((taskStatus:any)=>{
       console.log('taskStatus',taskStatus);
+      this.taskStatusList.push(taskStatus)
       
-      if((this.taskDetails.title ==='Follow Up 1') || (this.taskDetails.title ==='Follow Up 2')){
-        this.taskStatusList.push(
-          {id: 5, name: 'Proceed',image:'./assets/images/crmImages/total.png'},{id: 3, name: 'Pending',image:'./assets/images/crmImages/total.png'},{id: 4, name: 'Rejected',image:'./assets/images/crmImages/total.png'}
-        );
-      }
-      else{
-        this.taskStatusList.push(
-          {id: 1, name: 'New'},{id: 2, name: 'Assigned'},{id: 3, name: 'In Progress'},
-          {id: 4, name: 'Cancelled'},{id: 5, name: 'Completed'},{id: 12, name: 'Suspended'}
-        );
-      }
-      // if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName==='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster'){
-      //   this.taskDetailsForm.controls.taskStatus.setValue(this.taskStatusList[0][0].id);
+      // if((this.taskDetails.title ==='Follow Up 1') || (this.taskDetails.title ==='Follow Up 2')){
+      //   this.taskStatusList.push(
+      //     {id: 5, name: 'Proceed',image:'./assets/images/crmImages/total.png'},{id: 3, name: 'Pending',image:'./assets/images/crmImages/total.png'},{id: 4, name: 'Rejected',image:'./assets/images/crmImages/total.png'}
+      //   );
       // }
-      // else if(this.type ==='SubUpdate'){
-      //   this.taskDetailsForm.controls.taskStatus.setValue(parseInt(this.updateValue.statusId));
+      // else{
+      //   this.taskStatusList.push(
+      //     {id: 1, name: 'New'},{id: 2, name: 'Assigned'},{id: 3, name: 'In Progress'},
+      //     {id: 4, name: 'Cancelled'},{id: 5, name: 'Completed'},{id: 12, name: 'Suspended'}
+      //   );
       // }
-      // else {
-        // this.taskDetailsForm.controls.taskStatus.setValue(this.taskDetails.status.id);
-        // this.taskStatusModal=this.updateValue.status.id
-      // }
-      
     },
     (error)=>{
       this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
@@ -888,6 +910,28 @@ export class ViewTaskComponent implements OnInit {
       this.errorMsg=true;
           this.assignMemberErrorMsg='Please enter some description'
     }
+  }
+  selectStatus(status:any){
+    console.log('status',status)
+    if(status.name==='In Progress'){
+      this.followUpStatusInProgressToPending= status.id
+      document.getElementById('A').style.boxShadow = "none";
+      document.getElementById('B').style.boxShadow = "0px 4px 11px rgb(0 0 0 / 15%)";
+      document.getElementById('C').style.boxShadow = "none";
+    }
+    else if(status.name==='Cancelled'){
+      this.fiollowUpStatusCancelledToRejected= status.id
+      document.getElementById('A').style.boxShadow = "none";
+      document.getElementById('B').style.boxShadow = "none";
+      document.getElementById('C').style.boxShadow = "0px 4px 11px rgb(0 0 0 / 15%)";
+    }
+    else if(status.name==='Completed'){
+      this.followUpStatusComplToProceed= status.id
+      document.getElementById('A').style.boxShadow = "0px 4px 11px rgb(0 0 0 / 15%)";
+      document.getElementById('B').style.boxShadow = "none";
+      document.getElementById('C').style.boxShadow = "none";
+    }
+    
   }
   //new ui method end
 
