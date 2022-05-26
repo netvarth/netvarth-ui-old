@@ -70,7 +70,8 @@ const routes: Routes = [
         {path:'create-task/:id',loadChildren:()=>import ('./modules/crm/tasks/view-task/view-task.module').then(m=>m.ViewTaskModule)},
         {path:'tasktemplate',loadChildren:()=>import ('./modules/crm/tasks/tasktemplate/tasktemplate.module').then(m=>m.TasktemplateModule)},
         {path:'leadtemplate',loadChildren:()=>import ('./modules/crm/leads/leadtemplate/leadtemplate.module').then(m=>m.LeadtemplateModule)},
-        {path:'crm',loadChildren:()=>import ('./modules/crm/crm.module').then(m=>m.crmModule)}
+        {path:'crm',loadChildren:()=>import ('./modules/crm/crm.module').then(m=>m.crmModule)},
+        {path:'followupone',loadChildren:()=>import ('./modules/crm/followupone/followupone.module').then(m=>m.FollowuponeModule)}
       ]
     }
   ];
