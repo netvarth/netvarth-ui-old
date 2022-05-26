@@ -95,12 +95,12 @@
                         <div style="margin-top: 5px;width: -webkit-fill-available;">
                             <div> 
                                 <div class="taskTitle">
-                                    <div>Service</div>
+                                    <div>Category</div>
                                 </div>
                                 <div class="fieldPadding">
                                     <mat-select class="form-control" placeholder="Select Category"
                                         #userTaskCategory formControlName="userTaskCategory" (ngModelChange)="handleTaskPrioritySelection(userTaskCategory.value)">
-                                        <mat-option  *ngFor="let item of categoryList;let index=i" [value]="item.id" >
+                                        <mat-option  *ngFor="let item of categoryList[0];let index=i" [value]="item.id" >
                                             <div>
                                                 {{item.name}}
                                             </div>
@@ -117,11 +117,11 @@
                             <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()"
                                 >Cancel
                             </button>
-                            <button [ngClass]="{
+                            <!-- [ngClass]="{
                                 'btn btn-primary font-weight-bold cancelBtn': !createEnquiryForm.valid,
                                 'btn btn-primary font-weight-bold confirmBtn': createEnquiryForm.valid
-                            }"
-                             
+                            }" -->
+                            <button class="btn btn-primary font-weight-bold confirmBtn"
                               [class.spinner]="api_loading" 
                                 [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateEnquiry()"
                                     >Save

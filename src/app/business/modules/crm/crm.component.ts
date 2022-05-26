@@ -113,18 +113,38 @@ export class CRMComponent implements OnInit {
     // this.router.navigate(['provider','crm', 'tasktemplate'])
 
   }
+  redirectionTaskTemplate(){
+    const navigationExtras: NavigationExtras =  {
+      queryParams: {
+        type: 'activityCreateTemplate'
+      }
+    }
+    this.router.navigate(['provider','task', 'tasktemplate'], navigationExtras);
+  }
+  redirectionTaskActivityList(){
+    this.router.navigate(['provider','task']);
+  }
+  redirectionToEnquiry(){
+    this.router.navigate(['provider','CreateEnquiry']);
+  }
+  redirectionSeperateTemplate(templateName:any){
+    console.log('templateName',templateName)
+    if(templateName==='Leads'){
+      
+    }
+  }
   buttonClicked (type) {
     switch(type) {
       case 'LOS' :
           this.router.navigate(['provider', 'crm', 'leads']);
           break;
-      case 'CREATELEAD': 
+      case 'CREATETASK': 
           const navigationExtras: NavigationExtras =  {
             queryParams: {
               type: 'leadCreateTemplate'
             }
           }
-          this.router.navigate(['provider','lead', 'leadtemplate'], navigationExtras);
+          this.router.navigate(['provider','task', 'tasktemplate'], navigationExtras);
     }
   }
   templateUpdation(textValue) {

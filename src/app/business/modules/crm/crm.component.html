@@ -65,7 +65,8 @@
                   </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="allTabInPannel">
-                    <div class="customCard box" style="margin-bottom: 5px;" tabindex="1" (click)="buttonClicked('CREATELEAD')">
+                    <div class="customCard box" style="margin-bottom: 5px;" tabindex="1"(click)="redirectionTaskTemplate()" >
+                        <!-- (click)="buttonClicked('CREATETASK')" -->
                         <div>
                             <div style="padding:8px">
                                 <img class="img iconBackground" src="/assets/images/crmImages/Vector.png" />
@@ -83,7 +84,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="customCard box" style="margin-bottom: 5px;">
+                    <div class="customCard box" style="margin-bottom: 5px;" (click)="redirectionTaskActivityList()">
                         <div>
                             <div style="padding:8px">
                                 <img class="img iconBackground" src="/assets/images/crmImages/Vector.png" />
@@ -119,7 +120,8 @@
     <!----tempates strat-->
     <div  class="mgn-up-15">
         <div>
-            <div class="customCard" (click)="buttonClicked('LOS')">
+            <!-- (click)="buttonClicked('LOS')" -->
+            <div class="customCard" (click)="redirectionToEnquiry()" >
                 <div >
                     <img class="imgTempalte" src="/assets/images/crmImages/navbarIcon.png" />
                 </div>
@@ -191,7 +193,7 @@
     <!---mat pannel end-->
                <!----follow ups pannel end-->
             <div class="eachTab mgn-up-15" style="flex-wrap: wrap;" >
-                <div class="customCard redirectionList" *ngFor="let item of redirectionList">
+                <div class="customCard redirectionList" *ngFor="let item of redirectionList"(click)="redirectionSeperateTemplate(item.activityName)">
                     <div class="activityTemplate">
                         <div >
                             <img class="imgTempalte" src="/assets/images/crmImages/navbarIcon.png" />

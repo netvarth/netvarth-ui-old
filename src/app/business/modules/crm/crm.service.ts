@@ -342,6 +342,16 @@ export class CrmService {
           );
       })
   }
+  getEnquiryCategoryList(){
+    const url ='provider/enquire/category';
+    return this.servicemeta.httpGet(url, null);
+  }
+  createEnquiry(data){
+    return this.servicemeta.httpPost('provider/enquire', data);
+  }
+  // addLead(data){
+  //   return this.servicemeta.httpPost('provider/lead', data);
+  // }
 
 
 }

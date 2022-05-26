@@ -188,6 +188,7 @@ export class TasksComponent implements OnInit {
   public suspendedTaskList:any=[];
   public inProgressListData:any=[];
   public totalActivity:any='Total activity';
+  public headerName:any='Activity'
 
   constructor(
     private locationobj: Location,

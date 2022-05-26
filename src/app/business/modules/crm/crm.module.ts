@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'leads', loadChildren: () => import('./leads/leads.module').then(m => m.LeadsModule) },
   { path: 'tasks', loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksModule) },
   { path: 'enquiry', loadChildren: () => import('./enquiry/enquiry.module').then(m => m.EnquiryModule) },
+  { path: 'followupone', loadChildren: () => import('./followupone/followupone.module').then(m => m.FollowuponeModule) },
 
 ];
 
