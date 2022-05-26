@@ -29,7 +29,7 @@ import { CustomerService } from '../../../../shared/services/customer.service';
 @Component({
     selector: 'app-consumer-donation',
     templateUrl: './consumer-donation.component.html',
-    styleUrls: ['./consumer-donation.component.css', '../../../../../assets/css/style.bundle.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
+    styleUrls: ['./consumer-donation.component.css', '../../../../../assets/css/pages/wizard/wizard-1.css', '../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class ConsumerDonationComponent implements OnInit, OnDestroy {
     customPlainGalleryRowConfig: PlainGalleryConfig = {
