@@ -45,6 +45,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   isShowCsmrDataBase:any;
   apptstatus: any;
   checkinStatus:any;
+  bCrm:boolean=false;
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
@@ -318,5 +319,9 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
   doLogout() {
     this.authService.logoutFromJaldee().then();
+  }
+  crmOpen(){
+   this.router.navigate(['provider', 'crm'])
+    // window.navigator(['provider', 'crm'])
   }
 }

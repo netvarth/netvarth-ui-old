@@ -57,6 +57,13 @@ import { Subject } from 'rxjs';
       public customer_email:any;
       public enquiryErrorMsg:string='';
       public enquiryTemplateId:any;
+      public customerActivityText:any='New'
+      public enquiryDefultFormControl:any;
+      public enterFirstName:string='Enter First Name';
+      public enterSecondName:string='Enter Second Name';
+      public enterPhoNeNo:string='Enter Phone No';
+      public enterEmailId:string='Enter Email Id';
+      public selectProduct:string='Selet Product'
 
 
 
@@ -84,6 +91,8 @@ import { Subject } from 'rxjs';
         this.api_loading = false;
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         console.log("User is :", user);
+        this.activityLocationIdDialogValue= user.bussLocs[0];
+        console.log('this.activityLocationIdDialogValue',this.activityLocationIdDialogValue)
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
        console.log('DatePipe',this.datePipe.transform(new Date(),'yyyy-MM-dd'))
        this.headerName='Create Enquiry';
@@ -108,6 +117,7 @@ import { Subject } from 'rxjs';
       this.getTotalTaskActivity()
       this.enquiryCategoryList()
       this.getTemplateEnuiry()
+      this.enquiryDefultFormControl='Empty'
     }
       goback() {
         this.locationobj.back();
@@ -124,6 +134,17 @@ import { Subject } from 'rxjs';
         this.searchby = 'Enter ' + labelTerm+ ' id/name/phone #';
         console.log(' this.searchby', this.searchby)
         return `${value.substring(0, 4)}`;
+      }
+      enquiryDetailsInput(value:any){
+        console.log('value',value);
+        if(!value){
+          console.log('kkk');
+          this.createEnquiryForm.controls.firstNameValue.setValue('');
+           this.createEnquiryForm.controls.lastNameValue.setValue('');
+           this.createEnquiryForm.controls.phoneNoValue.setValue('');
+           this.createEnquiryForm.controls.emailValue.setValue('');
+           this.createEnquiryForm.controls.userTaskCategory.setValue('');
+        }
       }
       searchCustomer() {
         this.emptyFielderror = false;
@@ -186,26 +207,58 @@ import { Subject } from 'rxjs';
             .subscribe(
               (data: any) => {
                 console.log('data',data);
-                console.log('data[0].firstName',data[0].firstName)
-                this.createEnquiryForm.patchValue({
-                  firstNameValue:data[0].firstName,
-                  lastNameValue:data[0].lastName,
-                  phoneNoValue:data[0].countryCode+''+data[0].phoneNo,
-                  emailValue:data[0].email,
-                })
-                // this.createEnquiryForm.controls.firstNameValue.value= data[0].firstName
+                if(data.length===0){
+                  this.createEnquiryForm.patchValue({
+                    firstNameValue:'',
+                    lastNameValue:'',
+                    phoneNoValue:'',
+                    emailValue:'',
+                    userTaskCategory:'',
+                  })
+                  this.enterFirstName='Enter First Name';
+                  this.enterSecondName='Enter Second Name'
+                  this.enterEmailId='Enter Email Name'
+                  this.enterPhoNeNo='Enter Phone No'
+                  this.customerActivityText='New';
+                  this.selectProduct='Select Product'
+               }
+                // console.log('data[0].firstName',data[0].firstName)
+                // this.createEnquiryForm.patchValue({
+                //   firstNameValue:data[0].firstName,
+                //   lastNameValue:data[0].lastName,
+                //   phoneNoValue:data[0].phoneNo,
+                //   emailValue:data[0].email,
+                // })
                 this.customer_data = [];
                 if (data.length === 0) {
                   this.show_customer = false;
                   this.create_customer = true;
-    
+                  this.createEnquiryForm.patchValue({
+                  firstNameValue:'',
+                  lastNameValue:'',
+                  phoneNoValue:'',
+                  emailValue:'',
+                  userTaskCategory:'',
+                })
+                  this.enterFirstName='Enter First Name';
+                  this.enterSecondName='Enter Second Name'
+                  this.enterEmailId='Enter Email Name'
+                  this.enterPhoNeNo='Enter Phone No'
+                  this.customerActivityText='New';
+                  this.selectProduct='Select Product'
                   // this.createNew();
                 } else {
+                  this.createEnquiryForm.patchValue({
+                    firstNameValue:data[0].firstName,
+                    lastNameValue:data[0].lastName,
+                    phoneNoValue:data[0].phoneNo,
+                    emailValue:data[0].email,
+                  })
+                  this.customerActivityText='View'
                   if (data.length > 1) {
                     // const customer = data.filter(member => !member.parent);
                     this.customer_data = data[0];
-                    console.log('this.customer_data',this.customer_data)
-                    
+                    console.log('this.customer_data',this.customer_data);
                     this.hideSearch = true;
                   }else {
                     this.customer_data = data[0];
@@ -242,7 +295,7 @@ import { Subject } from 'rxjs';
               }
             );
         }
-        console.log(' this.customer_data', this.customer_data)
+        // console.log(' this.customer_data', this.customer_data);
       }
       hamdlefirstName(firstName:any){
         console.log('firstName',firstName);
@@ -343,6 +396,7 @@ import { Subject } from 'rxjs';
         },
         (error)=>{
           setTimeout(() => {
+            console.log('error',error)
             this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
           }, projectConstants.TIMEOUT_DELAY);
         })
@@ -378,6 +432,17 @@ import { Subject } from 'rxjs';
             }, projectConstants.TIMEOUT_DELAY);
           },
           (error)=>{
+            console.log('error1',error)
+            if(error){
+              // console.log( this.createEnquiryForm.controls.enquiryDetails.value)
+              this.createEnquiryForm.controls.enquiryDetails.setValue('')
+              this.createEnquiryForm.controls.firstNameValue.setValue('');
+              this.createEnquiryForm.controls.lastNameValue.setValue('');
+              this.createEnquiryForm.controls.phoneNoValue.setValue('');
+              this.createEnquiryForm.controls.emailValue.setValue('');
+              this.createEnquiryForm.controls.userTaskCategory.setValue('');
+               this.customerActivityText='New';
+            }
             this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
           })
       }
