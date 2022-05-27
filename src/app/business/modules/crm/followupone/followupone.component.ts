@@ -4,7 +4,7 @@ import { projectConstants } from '../../../../../../src/app/app.component';
 import { Messages } from '../../../../../../src/app/shared/constants/project-messages';
 import { Location } from '@angular/common';
 // import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
-import {ActivatedRoute } from '@angular/router';
+import {ActivatedRoute,Router,NavigationExtras } from '@angular/router';
 // Router,NavigationExtras,
 import { SnackbarService } from '../../../../../../src/app/shared/services/snackbar.service';
 import { CrmService } from '../crm.service';
@@ -46,7 +46,7 @@ export class FollowUpOneComponent implements OnInit{
     constructor(
         private locationobj: Location,
     // private groupService: GroupStorageService,
-    // public router: Router,
+    public router: Router,
     // private dialog: MatDialog,
     // private lStorageService: LocalStorageService,
     // private wordProcessor: WordProcessor,
@@ -133,77 +133,128 @@ export class FollowUpOneComponent implements OnInit{
         this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
       })
     }
-    getFollowUpData(){
-      this.crmService.getFollowUPOne().subscribe((res:any)=>{
-        console.log('res1',res)
-        this.totalFollowUpList= res;
-        this.pagination.totalCnt = res;
-        this.totalCount = this.pagination.totalCnt;
-      })
-    }
-    getFollowUTwoData(){
-      this.crmService.getFollowUPTwo().subscribe((res:any)=>{
-        console.log('res2',res)
-        this.totalFollowUpTwoList= res;
-        this.pagination.totalCnt = res;
-        this.totalCount = this.pagination.totalCnt;
-      })
-    }
+    // getFollowUpData(){
+    //   this.crmService.getFollowUPOne().subscribe((res:any)=>{
+    //     console.log('res1',res)
+    //     this.totalFollowUpList= res;
+    //     this.pagination.totalCnt = res;
+    //     this.totalCount = this.pagination.totalCnt;
+    //   })
+    // }
+    // getFollowUTwoData(){
+    //   this.crmService.getFollowUPTwo().subscribe((res:any)=>{
+    //     console.log('res2',res)
+    //     this.totalFollowUpTwoList= res;
+    //     this.pagination.totalCnt = res;
+    //     this.totalCount = this.pagination.totalCnt;
+    //   })
+    // }
     handle_pageclick(pg) {
       this.pagination.startpageval = pg;
       this.filter.page = pg;
       this.getFollowUpData();
+    }
+    handle_pageclickTwo(pg){
+      this.pagination.startpageval = pg;
+      this.filter.page = pg;
+      this.getFollowUTwoData();
     }
     setPaginationFilter(api_filter) {
       api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
       api_filter['count'] = this.filter.page_count;
       return api_filter;
     }
-    // getFollowUpData(from_oninit = true) {
-    //   let filter = this.setFilterForApi();
-    //   console.log("filter is : ",filter)
-    //   this.getTotalFollowUPOneCount(filter)
-    //     .then(
-    //       result => {
-    //         if (from_oninit) { 
-    //           console.log("Lead Count : ",result)
-    //           this.totalCount = result; }
-    //         filter = this.setPaginationFilter(filter);
-    //         this.crmService.getFollowUPOne(filter)
-    //           .subscribe(
-    //             data => {
-    //               this.totalFollowUpList = data;
-    //               console.log('totalFollowUpList',this.totalFollowUpList.length)
-    //               // this.totalFollowUpList = this.totalFollowUpList.filter(obj => !obj.originId);
-    //               this.loadComplete = true;
-    //             },
-    //             error => {
-    //               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //               this.loadComplete = true;
+    getFollowUpData(from_oninit = true) {
+      let filter = this.setFilterForApi();
+      console.log("filter is : ",filter)
+      this.getTotalFollowUPOneCount(filter)
+        .then(
+          result => {
+            if (from_oninit) { 
+              console.log("Lead Count : ",result)
+              this.totalCount = result; }
+            filter = this.setPaginationFilter(filter);
+            this.crmService.getFollowUPOne(filter)
+              .subscribe(
+                data => {
+                  this.totalFollowUpList = data;
+                  console.log('totalFollowUpList',this.totalFollowUpList.length)
+                  // this.totalFollowUpList = this.totalFollowUpList.filter(obj => !obj.originId);
+                  this.loadComplete = true;
+                },
+                error => {
+                  this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                  this.loadComplete = true;
                
-    //             }
-    //           );
-    //       },
-    //       error => {
-    //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //       }
-    //     );
-    // } 
-    // getTotalFollowUPOneCount(filter) {
-    //   return new Promise((resolve, reject) => {
-    //     this.crmService.getTotalFollowUPOneCount(filter)
-    //       .subscribe(
-    //         data => {
-    //           this.pagination.totalCnt = data;
-    //           this.totalCount = this.pagination.totalCnt;
-    //           resolve(data);
-    //         },
-    //         error => {
-    //           reject(error);
-    //         }
-    //       );
-    //   });
-    // }
+                }
+              );
+          },
+          error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+        );
+    } 
+    getTotalFollowUPOneCount(filter) {
+      return new Promise((resolve, reject) => {
+        this.crmService.getTotalFollowUPOneCount(filter)
+          .subscribe(
+            data => {
+              this.pagination.totalCnt = data;
+              this.totalCount = this.pagination.totalCnt;
+              resolve(data);
+            },
+            error => {
+              reject(error);
+            }
+          );
+      });
+    }
+    getFollowUTwoData(from_oninit = true){
+      let filter = this.setFilterForApi();
+      console.log("filter is : ",filter)
+      this.getTotalFollowUPTwoCount(filter)
+        .then(
+          result => {
+            if (from_oninit) { 
+              console.log("Lead Count : ",result)
+              this.totalCount = result; }
+            filter = this.setPaginationFilter(filter);
+            this.crmService.getFollowUPTwo(filter)
+              .subscribe(
+                data => {
+                  this.totalFollowUpTwoList = data;
+                  console.log('totalFollowUpTwoList',this.totalFollowUpTwoList.length)
+                  // this.totalFollowUpList = this.totalFollowUpList.filter(obj => !obj.originId);
+                  // this.loadComplete = true;
+                },
+                error => {
+                  this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                  // this.loadComplete = true;
+               
+                }
+              );
+          },
+          error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+        );
+
+    }
+    getTotalFollowUPTwoCount(filter) {
+      return new Promise((resolve, reject) => {
+        this.crmService.getTotalFollowUPTwoCount(filter)
+          .subscribe(
+            data => {
+              this.pagination.totalCnt = data;
+              this.totalCount = this.pagination.totalCnt;
+              resolve(data);
+            },
+            error => {
+              reject(error);
+            }
+          );
+      });
+    }
     setFilterForApi() {
       const api_filter = {};
      
@@ -221,6 +272,15 @@ export class FollowUpOneComponent implements OnInit{
       }
       console.log(api_filter)
       return api_filter;
+    }
+    redirectToOverview(data:any){
+      console.log(data)
+      const navigationExtras: NavigationExtras =  {
+        queryParams: {
+          type: data
+        }
+      }
+      this.router.navigate(['provider','followupone'],navigationExtras)
     }
   
 

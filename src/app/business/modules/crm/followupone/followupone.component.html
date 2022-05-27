@@ -173,7 +173,7 @@
                       </tr>
                     </ng-container>
                     <ng-container *ngIf="totalFollowUpList.length>0">
-                      <tr *ngFor="let task of totalFollowUpList; let i=index" class="pointer-cursor" >
+                      <tr *ngFor="let task of totalFollowUpList; let i=index" class="pointer-cursor" (click)="redirectToOverview(task)">
                         <td  class="td1">{{task.title}}</td>
                         <!-- <td  class="td2">{{task.title}}</td> -->
                         <td  class="td3"><span *ngIf="task.assignee">{{task.assignee.name}}</span></td>
@@ -448,9 +448,9 @@
                     </ng-container>
                   </tbody>
                 </table>
-                <div class="search_paging" *ngIf="totalFollowUpTwoList.length>10">
+                <div class="search_paging" *ngIf="pagination.totalCnt">
                   <app-pager  [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-                    (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
+                    (pagerclick)="handle_pageclickTwo($event)" [curpage]="pagination.startpageval">
                   </app-pager>
                 </div>
               </div>

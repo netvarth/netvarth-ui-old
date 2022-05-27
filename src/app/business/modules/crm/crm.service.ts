@@ -361,9 +361,9 @@ export class CrmService {
     const url ='provider/task/provider?originFrom-eq=Enquire&title-eq=Follow Up 1';
     return this.servicemeta.httpGet(url, null,filter);
   }
-  getFollowUPTwo(){
+  getFollowUPTwo(filter = {}){
     const url ='provider/task/provider?originFrom-eq=Enquire&title-eq=Follow Up 2';
-    return this.servicemeta.httpGet(url, null);
+    return this.servicemeta.httpGet(url, null,filter);
   }
   // getTotalLeadCount(filter) {
   //   const url = 'provider/lead/count';
@@ -371,6 +371,10 @@ export class CrmService {
   // }
   getTotalFollowUPOneCount(filter){
     const url = 'provider/task/provider/count?originFrom-eq=Enquire&title-eq=Follow Up 1';
+      return this.servicemeta.httpGet(url, null, filter);
+  }
+  getTotalFollowUPTwoCount(filter){
+    const url = 'provider/task/provider/count?originFrom-eq=Enquire&title-eq=Follow Up 2';
       return this.servicemeta.httpGet(url, null, filter);
   }
 
