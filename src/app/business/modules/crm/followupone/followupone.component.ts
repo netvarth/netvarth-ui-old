@@ -4,7 +4,8 @@ import { projectConstants } from '../../../../../../src/app/app.component';
 import { Messages } from '../../../../../../src/app/shared/constants/project-messages';
 import { Location } from '@angular/common';
 // import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
-// import { Router,NavigationExtras } from '@angular/router';
+import {ActivatedRoute } from '@angular/router';
+// Router,NavigationExtras,
 import { SnackbarService } from '../../../../../../src/app/shared/services/snackbar.service';
 import { CrmService } from '../crm.service';
 // import { projectConstants } from 'src/app/app.component';
@@ -17,17 +18,17 @@ import { CrmService } from '../crm.service';
   styleUrls: ['./followupone.component.css']
 })
 export class FollowUpOneComponent implements OnInit{
-  public headerName:string='Follow Ups';
+  public headerName:string='';
   public api_loading:boolean=false;
   public no_tasks_cap = Messages.AUDIT_NO_TASKS_CAP;
   public totalFollowUpList:any=[];
   public followUpStatusList:any=[];
   public filtericonTooltip:any = '';
   public filter:any = {
-    status: '',
-    category: '',
-    type: '',
-    dueDate: '',
+    // status: '',
+    // category: '',
+    // type: '',
+    // dueDate: '',
     title: '',
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1
@@ -39,6 +40,8 @@ export class FollowUpOneComponent implements OnInit{
   };
   totalCount: any;
   public totalFollowUpTwoList:any=[]
+  loadComplete = false;
+  public type:any;
 
     constructor(
         private locationobj: Location,
@@ -49,14 +52,27 @@ export class FollowUpOneComponent implements OnInit{
     // private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private crmService: CrmService,
+    private activated_route: ActivatedRoute,
     ){
 
     }
     ngOnInit(): void {
       this.api_loading = false;
+      this.activated_route.queryParams.subscribe(qparams => {
+        console.log('qparams',qparams)
+        if (qparams.type) {
+            this.type = qparams.type;
+        }
+      });
       this.getFollowUpStatusListData()
       this.getFollowUpData()
       this.getFollowUTwoData()
+      if(this.type==='followUpOne'){
+        this.headerName==='Follow Up 1'
+      }
+      else{
+        this.headerName==='Follow Up 2'
+      }
     }
     goback() {
       this.locationobj.back();
@@ -126,8 +142,8 @@ export class FollowUpOneComponent implements OnInit{
       })
     }
     getFollowUTwoData(){
-      this.crmService.getFollowUPOne().subscribe((res:any)=>{
-        console.log('res1',res)
+      this.crmService.getFollowUPTwo().subscribe((res:any)=>{
+        console.log('res2',res)
         this.totalFollowUpTwoList= res;
         this.pagination.totalCnt = res;
         this.totalCount = this.pagination.totalCnt;
@@ -137,6 +153,74 @@ export class FollowUpOneComponent implements OnInit{
       this.pagination.startpageval = pg;
       this.filter.page = pg;
       this.getFollowUpData();
+    }
+    setPaginationFilter(api_filter) {
+      api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+      api_filter['count'] = this.filter.page_count;
+      return api_filter;
+    }
+    // getFollowUpData(from_oninit = true) {
+    //   let filter = this.setFilterForApi();
+    //   console.log("filter is : ",filter)
+    //   this.getTotalFollowUPOneCount(filter)
+    //     .then(
+    //       result => {
+    //         if (from_oninit) { 
+    //           console.log("Lead Count : ",result)
+    //           this.totalCount = result; }
+    //         filter = this.setPaginationFilter(filter);
+    //         this.crmService.getFollowUPOne(filter)
+    //           .subscribe(
+    //             data => {
+    //               this.totalFollowUpList = data;
+    //               console.log('totalFollowUpList',this.totalFollowUpList.length)
+    //               // this.totalFollowUpList = this.totalFollowUpList.filter(obj => !obj.originId);
+    //               this.loadComplete = true;
+    //             },
+    //             error => {
+    //               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //               this.loadComplete = true;
+               
+    //             }
+    //           );
+    //       },
+    //       error => {
+    //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //       }
+    //     );
+    // } 
+    // getTotalFollowUPOneCount(filter) {
+    //   return new Promise((resolve, reject) => {
+    //     this.crmService.getTotalFollowUPOneCount(filter)
+    //       .subscribe(
+    //         data => {
+    //           this.pagination.totalCnt = data;
+    //           this.totalCount = this.pagination.totalCnt;
+    //           resolve(data);
+    //         },
+    //         error => {
+    //           reject(error);
+    //         }
+    //       );
+    //   });
+    // }
+    setFilterForApi() {
+      const api_filter = {};
+     
+      // if (this.statuses.length > 0) {
+      //   api_filter['status-eq'] = this.statuses.toString();
+      // }
+      // if (this.types.length > 0) {
+      //   api_filter['type-eq'] = this.types.toString();
+      // }
+      // if (this.categories.length > 0) {
+      //   api_filter['category-eq'] = this.categories.toString();
+      // }
+      if (this.filter.title !== '') {
+        api_filter['title-eq'] = this.filter.title;
+      }
+      console.log(api_filter)
+      return api_filter;
     }
   
 

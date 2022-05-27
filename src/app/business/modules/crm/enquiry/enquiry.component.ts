@@ -402,12 +402,12 @@ import { Subject } from 'rxjs';
         console.log('this.customer_data.id',this.customer_data);
         if(this.enquiryArr.length !==0){
         const createEnquiry:any = {
-          "title" : this.activityListTitleDialogValue,
-    		"description" : this.activityListDescriptionDialogValue,
-    		"category" : { "id": this.activityListCategoryDialogValue },
-    		"type" : { "id": this.activityListTypeDialogValue},
-    		"status" : { "id":  this.activityListStatusDialogValue},
-    		"priority" : { "id": this.activityListpriorityDialogValue },
+        //   "title" : this.activityListTitleDialogValue,
+    		// "description" : this.activityListDescriptionDialogValue,
+    		// "category" : { "id": this.activityListCategoryDialogValue },
+    		// "type" : { "id": this.activityListTypeDialogValue},
+    		// "status" : { "id":  this.activityListStatusDialogValue},
+    		// "priority" : { "id": this.activityListpriorityDialogValue },
 
           "location" : { "id" : this.activityLocationIdDialogValue},
           "customer" : {"id" :  this.customer_data.id},

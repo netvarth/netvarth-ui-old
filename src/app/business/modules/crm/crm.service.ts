@@ -357,13 +357,21 @@ export class CrmService {
     const url ='provider/lead/master';
     return this.servicemeta.httpGet(url, null);
   }
-  getFollowUPOne(){
+  getFollowUPOne(filter = {}){
     const url ='provider/task/provider?originFrom-eq=Enquire&title-eq=Follow Up 1';
-    return this.servicemeta.httpGet(url, null);
+    return this.servicemeta.httpGet(url, null,filter);
   }
   getFollowUPTwo(){
     const url ='provider/task/provider?originFrom-eq=Enquire&title-eq=Follow Up 2';
     return this.servicemeta.httpGet(url, null);
+  }
+  // getTotalLeadCount(filter) {
+  //   const url = 'provider/lead/count';
+  //   return this.servicemeta.httpGet(url, null, filter);
+  // }
+  getTotalFollowUPOneCount(filter){
+    const url = 'provider/task/provider/count?originFrom-eq=Enquire&title-eq=Follow Up 1';
+      return this.servicemeta.httpGet(url, null, filter);
   }
 
 

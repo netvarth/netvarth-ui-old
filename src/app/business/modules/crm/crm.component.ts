@@ -112,7 +112,21 @@ export class CRMComponent implements OnInit {
     // this.router.navigate()
     // this.router.navigate(['provider','crm', 'tasktemplate'])
     if(textValue==='Follow UP 1'){
-      this.router.navigate(['provider','followupone'])
+      const navigationExtras: NavigationExtras =  {
+        queryParams: {
+          type: 'followUpOne'
+        }
+      }
+      this.router.navigate(['provider','followupone'],navigationExtras)
+    }
+    else{
+      const navigationExtras: NavigationExtras =  {
+        queryParams: {
+          type: 'followUpTwo'
+        }
+      }
+      this.router.navigate(['provider','followupone'],navigationExtras)
+      
     }
 
   }

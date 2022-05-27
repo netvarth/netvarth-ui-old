@@ -14,3 +14,7 @@
   text-align: center;
   background: #1D3E77;
   }
+  .dashboard .card.w-dta .dash-list .table tbody tr:nth-child(even){
+    /* background:none; */
+  }
+  
