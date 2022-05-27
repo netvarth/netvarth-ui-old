@@ -1,3 +1,4 @@
+//import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { projectConstants } from '../../app.component';
 // Import RxJs required methods
@@ -2391,16 +2392,9 @@ export class ProviderServices {
   return this.servicemeta.httpGet('provider/fileShare/shortUrl/'+id);
 }
 //to share files...
-shareProviderFiles(shareto, attachments){
+shareProviderFiles(body){
   const url = 'provider/fileShare/sharefiles';
-  // Headers: {
-  //   'Content-Type': multipart/form-data
-  // }
-  // const httpHeads = new HttpHeaders({
-  //   'Accept': 'text/html, application/xhtml+xml, */*',
-  //   'Content-Type': 'application/multipart/form-data'
-  // });
-  return this.servicemeta.httpPost(url, shareto, attachments);
+  return this.servicemeta.httpPost(url, body);
 }
 //to remove share files
 removeShareFiles(id,sharedTo){

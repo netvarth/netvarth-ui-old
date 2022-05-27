@@ -636,6 +636,20 @@ export class CustomersListComponent implements OnInit {
         if (customer.length === 0 && !this.showText(this.customers[i])) {
           this.selectedcustomersformsg.push(this.customers[i]);
         }
+        if (this.selectedcustomersformsg.length > 1) {
+          if (this.selectedcustomersformsg[0].phoneNo && this.selectedcustomersformsg[0].email) {
+            this.hide_msgicon = false;
+          }
+          else{
+            this.hide_msgicon = true;
+          }
+        } 
+        // else {
+        //   const customerList = this.selectedcustomersformsg.filter(customer => customer.phoneNo || customer.email);
+        //   if (customerList.length === 0) {
+        //     this.hide_msgicon = true;
+        //   }
+        // }
       }
     } else {
       for (let i = 0; i < this.customers.length; i++) {
@@ -687,6 +701,13 @@ export class CustomersListComponent implements OnInit {
         return this.allLabels[i].displayName;
       }
     }
+  }
+  getPhoneNumber() {
+    // for (let i = 0; i < this.allLabels.length; i++) {
+    //   if (this.allLabels[i].label === label) {
+    //     return this.allLabels[i].displayName;
+    //   }
+    // }
   }
   seeVisible() {
     this.visibility = true;

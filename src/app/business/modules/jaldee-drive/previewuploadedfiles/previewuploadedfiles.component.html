@@ -9,18 +9,56 @@
 
     *ngIf="details.fileType && details.fileType == 'pdf' || details.fileType && (details.fileType == 'doc' ||details.fileType == 'docx' || details.fileType == 'xlsx' || details.fileType == 'txt') || details.fileType && (details.fileType == 'mp3' || details.fileType == 'mpeg') || details.fileType && (details.fileType == 'mp4' || details.fileType == 'video/mp4')">
   <div class="mx-3 py-2 px-2 pad-20">
-    <i class="fa fa-file-text" aria-hidden="true" *ngIf="(details.fileType == 'doc' ||details.fileType == 'docx' || details.fileType == 'xlsx' || details.fileType == 'txt')" ></i>
+    <i class="fa fa-file-text" aria-hidden="true" *ngIf="details.fileType && (details.fileType == 'doc' || details.fileType == 'docx' || details.fileType == 'xlsx' || details.fileType == 'txt')" ></i>
 
-    <i class="fa fa-file-video-o" aria-hidden="true" *ngIf="details.fileType == 'mp4' || details.fileType == 'video/mp4'" style="color:red;"></i>
-    <i class="fa fa-file-audio-o" aria-hidden="true" *ngIf="details.fileType == 'mp3' || details.fileType == 'mpeg'" style="color:red;"></i>
-    <i class="fa fa-file-pdf-o" aria-hidden="true" *ngIf="details.fileType == 'pdf'" style="color:red;"></i>
+    <i class="fa fa-file-video-o" aria-hidden="true" *ngIf="details.fileType && (details.fileType == 'mp4' || details.fileType == 'video/mp4')" style="color:red;"></i>
+    <i class="fa fa-file-audio-o" aria-hidden="true" *ngIf="details.fileType && (details.fileType == 'mp3' || details.fileType == 'mpeg')" style="color:red;"></i>
+    <i class="fa fa-file-pdf-o" aria-hidden="true" *ngIf="details.fileType && (details.fileType == 'pdf')" style="color:red;"></i>
     <a [href]="details.filePath" target="_blank" download>
-      <!--|| details.fileType && details.fileType == '.pdf' {{details.caption ? details.caption:'document'}}-{ -->
       {{details.fileType ? details.fileType:'file' }}
     </a>
   </div>
 </div>
+<!-- <ng-container *ngIf="docfiles.length>0">
+  <ul *ngFor="let file of docfiles;let i = index ">
+    <li>
+      <span><img class="imgIcon mgn-rt-10" [src]="getImage(file.type)"/><a [href]="file.s3path"
+            target="_blank" download>{{file.originalName ? file.originalName:'document'}}-{{file.type ? file.type:'file' }}
+          </a></span>
+    </li>
+  </ul>
+</ng-container> -->
 <div class="pad-20 image-scroll" *ngIf="details.fileType && details.fileType != 'pdf'">
   <img style="width:100%;margin-top: -20px;" [src]="details.filePath"
     *ngIf="details.fileType && details.fileType == 'bmp'|| details.fileType =='image/png' || details.fileType =='png' || details.fileType == 'gif' || details.fileType == 'jpg' ||details.fileType =='jpeg' || details.fileType =='jfif' ||details.fileType == 'webp'" />
 </div>
+
+
+
+<!-- <h1 mat-dialog-title>File Attachments
+  <button #locte mat-dialog-close class="modal_close" tabindex="-1">
+    <i class="fa fa-window-close" aria-hidden="true"></i>
+  </button>
+</h1>
+<div mat-dialog-content>
+  <div class="attachment">
+    <ng-container *ngIf="mediafiles.length >0">
+      <ul *ngFor="let file of mediafiles;let i = index ">
+        <li>
+          <span (click)="showFile(file)" style="color:blue;"><i class="fa fa-image ">&nbsp;<a
+                href="javascript:void(0);">{{file.caption
+                ?file.caption:'image'}}-{{file.type?file.type:'file'}}</a></i></span>
+        </li>
+      </ul>
+    </ng-container>
+    <ng-container *ngIf="docfiles.length>0">
+      <ul *ngFor="let file of docfiles;let i = index ">
+        <li>
+          <span><img class="imgIcon mgn-rt-10" [src]="getImage(file.type)"/><a [href]="file.s3path"
+                target="_blank" download>{{file.originalName ? file.originalName:'document'}}-{{file.type ? file.type:'file' }}
+              </a></span>
+        </li>
+      </ul>
+    </ng-container>
+  </div>
+</div> -->

@@ -85,7 +85,7 @@
     </div>
   </div>
 </div>
-<section class="customersList mt-2 p-3 table-card card col-md-12 ">
+<section class="driveFilesList mt-2 p-3 table-card card col-md-12 ">
   <div class="row p-3 no-padding-small">
     <div class="card  card-custom card-stretch gutter-b no-padding col-md-12  col-sm-12  col-xs-12">
       <div class="mx-2" *ngIf="foldertype === 'private'">
@@ -110,7 +110,7 @@
 
         <h3 class="align-items-start flex-column">
           <a (click)="showFilterSidebar()" class=" mb-2 mgn-lt-5 pull-right" data-bs-toggle="tooltip"
-            data-bs-placement="top" title="filter" *ngIf="filterapplied || (customers.length > 0 && !filterapplied)">
+            data-bs-placement="top" title="filter" *ngIf="filterapplied || (driveFiles.length > 0 && !filterapplied)">
             <img src="assets/images/provider-filter-icon.png"
               style="width: 22px !important; margin-top: -4px !important;">
           </a>
@@ -125,7 +125,7 @@
                 class="table  table-responsive table-hover table-head-custom table-head-bg table-borderless table-vertical-center">
                 <thead>
                   <tr class="tble-filtr-tr heght ">
-                    <th style="min-width: 145px;margin-left: 5px;" class="head_color">
+                    <th style="min-width: 160px" class="head_color">
                       Name
                     </th>
                     <th style="min-width: 80px" *ngIf="foldertype === 'shared'" class="head_color">
@@ -135,7 +135,7 @@
                     <th class="head_color">Date</th>
                     <th class="head_color">Type</th>
                     <th class="head_color">Size</th>
-                    <th class="head_color">
+                    <th style="min-width: 80px" class="head_color">
                       Context
                     </th>
                     <!-- <th *ngIf="foldertype === 'private'" class="head_color">Remove</th> -->
@@ -146,7 +146,7 @@
                             <span>
                               <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
                                 [matTooltip]="filtericonTooltip"
-                                *ngIf="filterapplied || (customers.length > 0 && !filterapplied)"></i>
+                                *ngIf="filterapplied || (driveFiles.length > 0 && !filterapplied)"></i>
                             </span>
                           </td>
                         </tr>
@@ -155,62 +155,60 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="py-4" class="pointer-cursor"
-                    *ngFor="let customer of customers | filter:searchTerm | paginate: config;   let i= index">
-                    <td (click)="preview(customer)">
+                  <tr class="py-4" class="trRow pointer-cursor"
+                    *ngFor="let file of driveFiles | filter:searchTerm | paginate: config;   let i= index">
+                    <td (click)="preview(file)">
                       <span class="text-dark-75 text-hover-primary mb-1 cust-name">
-                        <i class="fa fa-file-video-o" aria-hidden="true" *ngIf="customer.fileType == 'mp4'"
+                        <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
+                        <!-- <i class="fa fa-file-video-o" aria-hidden="true" *ngIf="customer.fileType == 'mp4'"
                           style="color:red;"></i>
                         <i class="fa fa-file-text" aria-hidden="true"
                           *ngIf="customer.fileType && (customer.fileType == 'doc' ||customer.fileType == 'docx' || customer.fileType == 'xlsx' || customer.fileType == 'txt')"></i>
 
                         <i class="fa fa-file-audio-o" aria-hidden="true" style="color:red;"
                           *ngIf="customer.fileType === 'mp3' || customer.fileType === 'mpeg'"></i>
-                        <!-- <i class="fa fa-file-text" aria-hidden="true" style="color:red;" *ngIf="customer.fileType === 'mp3'"></i> -->
-
-
                         <i class="fa fa-file-pdf-o" aria-hidden="true" *ngIf="customer.fileType === 'pdf'"
                           style="color:red;"></i> <i class="fa fa-file-image-o" aria-hidden="true"
-                          *ngIf="customer.fileType === 'png' || customer.fileType === 'jfif' || customer.fileType === 'jpg' || customer.fileType === 'jpeg' || customer.fileType === 'bmp' || customer.fileType === 'webp' "></i>
-                        {{customer.fileName?.length>10 ? customer.fileName.slice(0, 10)+'...' : customer.fileName}}
+                          *ngIf="customer.fileType === 'png' || customer.fileType === 'jfif' || customer.fileType === 'jpg' || customer.fileType === 'jpeg' || customer.fileType === 'bmp' || customer.fileType === 'webp' "></i> -->
+                        {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                       </span>
                     </td>
-                    <td *ngIf="foldertype === 'shared' && customer.fileName === undefined">
+                    <td *ngIf="foldertype === 'shared' && file.fileName === undefined">
                       <span class="text-dark-75 d-block ">
                         -
                       </span>
                     </td>
-                    <td (click)="preview(customer)" *ngIf="foldertype === 'shared' && customer.ownerName !==''">
+                    <td (click)="preview(file)" *ngIf="foldertype === 'shared' && file.ownerName !==''">
                       <span class="text-dark-75 d-block ">
-                        {{customer.ownerName}}
+                        {{file.ownerName}}
                       </span>
                     </td>
-                    <td *ngIf="foldertype === 'shared' && customer.ownerName === ''">
+                    <td *ngIf="foldertype === 'shared' && file.ownerName === ''">
                       <span class="text-dark-75 d-block ">
                         -
                       </span>
                     </td>
-                    <td (click)="preview(customer)">
+                    <td (click)="preview(file)">
                       <span class="text-dark-75 d-block ">
-                        {{customer.uploadedDate | date:"dd/MM/yy" }}
+                        {{file.uploadedDate | date:"dd/MM/yy" }}
                       </span>
                     </td>
-                    <td (click)="preview(customer)">
+                    <td (click)="preview(file)">
                       <span class="text-dark-75 d-block">
-                        {{customer.fileType ? customer.fileType : 'document'}}
+                        {{file.fileType ? file.fileType : 'document'}}
                       </span>
                     </td>
-                    <td (click)="preview(customer)">
-                      <span class="text-dark-75 d-block" *ngIf="customer.fileSize >=1">
-                        {{getFileSize(customer.fileSize)}}MB
+                    <td (click)="preview(file)">
+                      <span class="text-dark-75 d-block" *ngIf="file.fileSize >=1">
+                        {{getFileSize(file.fileSize)}}MB
                       </span>
-                      <span class="text-dark-75 d-block" *ngIf="customer.fileSize <1">
-                        {{getFileSize(customer.fileSize*1024)}}KB
+                      <span class="text-dark-75 d-block" *ngIf="file.fileSize <1">
+                        {{getFileSize(file.fileSize*1024)}}KB
                       </span>
                     </td>
-                    <td (click)="preview(customer)">
+                    <td (click)="preview(file)">
                       <span class="text-dark-75 d-block">
-                        {{customer.context}}
+                        {{file.context}}
                       </span>
                     </td>
                     <!-- <td *ngIf="foldertype === 'private'">
@@ -220,7 +218,7 @@
 
                       </span>
                     </td> -->
-                    <!-- <td></td> -->
+                    <td *ngIf="foldertype !== 'private'"></td>
                     <td *ngIf="foldertype === 'private'">
                       <div class="copy">
                         <span class="">
@@ -230,11 +228,13 @@
                           </button>
                         </span>
                         <mat-menu #appMenu="matMenu">
-                         
+                          <button mat-menu-item (click)="openShareFileWindow(file)">
+                            <i class="fa fa-share-alt" aria-hidden="true"></i> Share file
+                           </button>
                           <!-- <button mat-menu-item (click)="openDialogStatusChange(customer)">
                             <i class="fa fa-share-alt" aria-hidden="true"></i> Share file
                            </button> -->
-                           <button mat-menu-item *ngIf="foldertype === 'private'" (click)="deleteFile(customer.id,customer.fileName)" >
+                           <button mat-menu-item *ngIf="foldertype === 'private'" (click)="deleteFile(file.id,file.fileName)" >
                             <i class="fa fa-trash" aria-hidden="true"></i> Remove
                            </button>
                         </mat-menu>
@@ -247,7 +247,7 @@
                            <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
                           </button> -->
                   </tr>
-                  <tr *ngIf="customers.length === 0" class="my-2 py-2 ">
+                  <tr *ngIf="driveFiles.length === 0" class="my-2 py-2 ">
                     <td class="text-center my-2 py-2" colspan="4">No files found.</td>
                   </tr>
                   <tr *ngIf="dataLoading">
@@ -258,8 +258,8 @@
                 </tbody>
               </table>
               <div class="d-flex justify-content-between align-items-center flex-wrap pull-right mb-0 pageControls"
-                *ngIf="!apiloading && customers.length > 0">
-                <pagination-template *ngIf="customers.length>10" #p="paginationApi" [id]="config.id"
+                *ngIf="!apiloading && driveFiles.length > 0">
+                <pagination-template *ngIf="driveFiles.length>10" #p="paginationApi" [id]="config.id"
                   (pageChange)="config.currentPage = $event">
                   <div
                     class="custom-pagination d-flex justify-content-between align-items-center flex-wrap pull-right mb-0">

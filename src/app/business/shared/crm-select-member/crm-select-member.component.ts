@@ -11,6 +11,11 @@ import { CrmMarkasDoneComponent } from '../../shared/crm-markas-done/crm-markas-
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { Router } from '@angular/router';
+import { ProviderServices } from "../../../business/services/provider-services.service";
+//import { FormBuilder, FormControl, Validators } from "@angular/forms";
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
+import { projectConstantsLocal } from "../../../../../src/app/shared/constants/project-constants";
 
 @Component({
   selector: 'app-crm-select-member',
@@ -76,6 +81,33 @@ export class CrmSelectMemberComponent implements OnInit {
   public emailValue:any;
   public selectTemplateLength:any;
   public taskType:any;
+  public fileArray:any=[]
+
+  public createCustomerForm: any;
+  customerDetails:any
+  customerName:any;
+  customerList:any=[]
+  notify:boolean=false;
+  message:any;
+  searchby = "";
+  form_data: any;
+  emptyFielderror = false;
+  create_new = false;
+  qParams: {};
+  prefillnewCustomerwithfield = "";
+  customer_data: any;
+  show_customer = false;
+  create_customer = false;
+  disabledNextbtn = true;
+  jaldeeId: any;
+  formMode: string;
+  countryCode;
+  customer_email: any;
+  search_input: any;
+  hideSearch = false;
+  customerArray:any=[];
+  customerData:any
+  private onDestroy$: Subject<void> = new Subject<void>();
   public activityList:any=[]
 
 
@@ -92,6 +124,7 @@ export class CrmSelectMemberComponent implements OnInit {
       // private createTaskFB: FormBuilder,
       private dialog: MatDialog,
       // private datePipe:DatePipe,
+      private providerServiceObj : ProviderServices,
       private wordProcessor: WordProcessor,
       private groupService:GroupStorageService
     ) {
@@ -281,6 +314,13 @@ export class CrmSelectMemberComponent implements OnInit {
         this.activityList.push(item)
       })
     }
+    
+ if (this.data.requestType === "fileShare") {
+  console.log("this.data", this.data.file);
+}
+if(this.data.requestType === 'customerSearch'){
+
+}
   }
   handleMemberSelect(member,selected:string){
     this.handleAssignMemberSelectText=''
@@ -727,5 +767,323 @@ getTaskmaster(){
 
       // })
     }
+
+
+
+
+    createCustomerData(customer:any){
+      console.log("FormData ",customer);
+        }
+  
+        notifyied(notify:boolean){
+          console.log("Notify ",notify);
+        }
+        messageData(message:any){
+          console.log("Message :",message);
+        }
+  
+      openCustomerSearchDialog() {
+        console.log("openCustomerSearchDialog");
+        const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
+          width: "100%",
+          panelClass: ["commonpopupmainclass", "confirmationmainclass"],
+          disableClose: true,
+          data: {
+            requestType: "customerSearch",
+           // file: file
+          }
+        });
+        dialogRef.afterClosed().subscribe((res: any) => {
+        
+          if(res){
+            console.log("searched ", res);
+            
+            this.customerName = (res.firstName ? res.firstName : '') + ' ' + (res.lastName ? res.lastName : '');
+            console.log("Customer Name :",this.customerName);
+            this.customerList.push(res);
+            this.customerArray.push(res.id);
+            this.customerData = res.id
+            console.log("Customer List :",this.customerArray);
+          }
+          if(res === ''){
+            //alert("please selecte atleast one consumer or provider")
+            (error)=>{
+              this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+            }
+          }
+          // this.getCompletedTask();
+          
+            // this.getInprogressTask();
+            //this.ngOnInit();
+      
+         
+        });
+      }
+      remove(customer) {
+        const index = this.customerList.indexOf(customer);
+        if (index >= 0) {
+          this.customerList.splice(index, 1);
+        }
+      }
+  
+      searchCustomer() {
+        this.emptyFielderror = false;
+        if (
+          this.customerDetails &&
+          this.customerDetails === ""
+          
+        ) {
+          this.emptyFielderror = true;
+          this.snackbarService.openSnackBar("Please search atleast one consumer or provider",{'panelClass': 'snackbarerror'})
+        } else {
+          this.qParams = {};
+          let mode = "id";
+          this.form_data = null;
+          let post_data = {};
+          const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+          const isEmail = emailPattern.test(
+            this.customerDetails
+          );
+          if (isEmail) {
+            mode = "email";
+            this.prefillnewCustomerwithfield = "email";
+          } else {
+            const phonepattern = new RegExp(
+              projectConstantsLocal.VALIDATOR_NUMBERONLY
+            );
+            const isNumber = phonepattern.test(
+              this.customerDetails
+            );
+            const phonecntpattern = new RegExp(
+              projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10
+            );
+            const isCount10 = phonecntpattern.test(
+              this.customerDetails
+            );
+            if (isNumber && isCount10) {
+              mode = "phone";
+              this.prefillnewCustomerwithfield = "phone";
+            } else if (
+              isNumber &&
+              this.customerDetails.length > 7
+            ) {
+              mode = "phone";
+              this.prefillnewCustomerwithfield = "phone";
+            } else if (
+              isNumber &&
+              this.customerDetails.length < 7
+            ) {
+              mode = "id";
+              this.prefillnewCustomerwithfield = "id";
+            }
+          }
+    
+          switch (mode) {
+            case "phone":
+              post_data = {
+                "phoneNo-eq": this.customerDetails
+              };
+              this.qParams[
+                "phone"
+              ] = this.customerDetails;
+              break;
+            case "email":
+              post_data = {
+                "email-eq": this.customerDetails
+              };
+              this.qParams[
+                "email"
+              ] = this.customerDetails;
+              break;
+            case "id":
+              post_data["or=jaldeeId-eq"] =
+                this.customerDetails +
+                ",firstName-eq=" +
+                this.customerDetails;
+              // post_data = {
+              //   'jaldeeId-eq': form_data.search_input
+              // };
+              break;
+          }
+          console.log("Post Data :", post_data);
+          if(post_data === '' || post_data === undefined){
+            this.snackbarService.openSnackBar("Please search atleast one consumer or provider",{'panelClass': 'snackbarerror'})
+          }
+    
+          this.providerServiceObj
+            .getCustomer(post_data)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(
+              (data: any) => {
+                this.customer_data = [];
+                console.log("Customer dataaaa :", data);
+                if (data.length === 0) {
+                  this.show_customer = false;
+                  this.create_customer = true;
+    
+                  //this.createNew();
+                } else {
+                  if (data.length > 1) {
+                    // const customer = data.filter(member => !member.parent);
+                    this.customer_data = data[0];
+                    this.hideSearch = true;
+                  } else {
+                    this.customer_data = data[0];
+                    if (this.customer_data) {
+                      this.hideSearch = true;
+                    }
+                  }
+                  this.disabledNextbtn = false;
+                  this.jaldeeId = this.customer_data.jaldeeId;
+                  this.show_customer = true;
+                  this.create_customer = false;
+    
+                  this.formMode = data.type;
+                  if (
+                    this.customer_data.countryCode &&
+                    this.customer_data.countryCode !== "+null"
+                  ) {
+                    this.countryCode = this.customer_data.countryCode;
+                  } else {
+                    this.countryCode = "+91";
+                  }
+                  if (
+                    this.customer_data.email &&
+                    this.customer_data.email !== "null"
+                  ) {
+                    this.customer_email = this.customer_data.email;
+                  }
+    
+                  if (
+                    this.customer_data.jaldeeId &&
+                    this.customer_data.jaldeeId !== "null"
+                  ) {
+                    this.jaldeeId = this.customer_data.jaldeeId;
+                  }
+                  if (
+                    this.customer_data.firstName &&
+                    this.customer_data.firstName !== "null"
+                  ) {
+                    this.jaldeeId = this.customer_data.firstName;
+                  }
+                }
+               
+              },
+              // error => {
+              //   this.wordProcessor.apiErrorAutoHide(this, error);
+              // }
+              (error)=>{
+                this.snackbarService.openSnackBar("Please select atleast one consumer",{'panelClass': 'snackbarerror'})
+              }
+            );
+        }
+      }
+  
+      getCustomerDetail(customer){
+              console.log("Customerrrrr...",customer)
+              if(customer === '' || customer === undefined){
+                this.snackbarService.openSnackBar("Please select atleast one consumer or provider",{'panelClass': 'snackbarerror'})
+              }
+              else{
+              setTimeout(() => {
+                console.log('aftergetCustomer..',customer)
+                this.dialogRef.close(customer)
+              // this.router.navigate(['provider', 'task']);
+              }, projectConstants.TIMEOUT_DELAY);
+            }
+      }
+      shareFileToConsumerOrProvider() {
+        // if(customer === '' && file === ''){
+        //   this.customerError= null
+        //   this.customerErrorMsg = 'Please add cunsumer or provider info'
+        // }
+        console.log("Submit Share :",this.customerArray,this.data.file.id)
+        
+          this.customerArray.forEach((element)=>{
+            console.log("Element :",element)
+           const newObj =
+              {
+                owner: element,
+                ownerType: "ProviderConsumer"
+              }
+          
+            this.fileArray.push(newObj)
+          })
+          //console.log("Custome :",this.fileArray)
+       
+        // const newArray = []
+        // newArray.push(this.customerArray)
+       // console.log("new Array",newArray)
+       const attachments = [];
+    
+       attachments.push(this.data.file.id)
+
+       console.log("ProviderConsumer :",this.fileArray,"File Id :",attachments[0])
+         let dataToSend = new FormData()
+         const newBlobArray = new Blob([JSON.stringify(this.fileArray, null, 2)], {
+          type: "application/json"
+        });
+         dataToSend.append("sharedto", newBlobArray);
+         const newBlob = new Blob([JSON.stringify(attachments, null, 2)], {
+          type: "application/json"
+        });
+         dataToSend.append("attachments", newBlob);
+
+        this.providerServiceObj
+          .shareProviderFiles(dataToSend)
+          .subscribe(res => {
+          //   console.log("Ressssssssssssult:", res);
+          //   this.dialogRef.close(res);
+          // });
+          console.log('response',res)
+          setTimeout(() => {
+            this.dialogRef.close(res)
+          }, projectConstants.TIMEOUT_DELAY);
+        },
+        (error)=>{
+          this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+        })
+      }
+      search() {
+        this.hideSearch = false;
+      }
+    
+    
+      createNew(){
+        const dialogRef  = this.dialog.open(CrmSelectMemberComponent, {
+          width: '100%',
+          panelClass: ['popup-class', 'confirmationmainclass'],
+          data:{
+            requestType:'createCustomer',
+            header:'Create ' + this.customer_label,
+          }
+      })
+      dialogRef.afterClosed().subscribe((res:any)=>{
+        console.log('afterSelectPopupValue',res)
+        if(res=== ''){
+          this.hideSearch = false;
+        }else{
+          const filter = { 'id-eq': res };
+          this.providerServiceObj.getCustomer(filter).subscribe((response:any)=>{
+            this.customer_data = response[0];
+            console.log('customer_data',this.customer_data)
+            this.hideSearch = true;
+          },
+          (error)=>{
+            this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+          })
+        }
+       
+      })
+      }
+    
+    
+      UpdateFileStatus() {
+        this.providerServiceObj
+          .changeUploadStatus(this.data.file.owner, this.data.file.uploadStatus)
+          .subscribe(res => {
+            console.log("Ressssssssssss:", res);
+          });
+      }
 }
 

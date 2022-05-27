@@ -12,6 +12,8 @@ import { CapitalizeFirstPipeModule } from "../../../shared/pipes/capitalize.modu
 import { MatRadioModule } from "@angular/material/radio";
 import {  ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from "@angular/material/icon";
+import {MatChipsModule} from '@angular/material/chips';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import { NgCircleProgressModule } from "ng-circle-progress";
 import { FilterPipe } from './filter.pipe';
 
@@ -37,6 +39,8 @@ const routes: Routes = [
     MatRadioModule,
     ReactiveFormsModule,
     MatIconModule,
+    MatChipsModule,
+    MatFormFieldModule,
     NgCircleProgressModule.forRoot({
       // set defaults here
       backgroundColor: "#e9ecef",

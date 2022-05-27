@@ -2,3 +2,25 @@
     overflow : none !important;
    
     }
+
+    ul, li {
+        list-style-type: none;
+        padding-left: 5px;
+      }
+     .attachment a:link, .attachment a:active, .attachment a:visited
+     {
+       color: #008566;
+       text-decoration: none;
+     }
+     
+     
+     .attachment a:hover
+       {
+       color: #008566;
+       text-decoration: underline;
+       }
+    
+       .imgIcon {
+        height: 35px;
+        width: 35px;
+       }

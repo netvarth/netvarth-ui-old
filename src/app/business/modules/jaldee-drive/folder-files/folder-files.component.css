@@ -1,3 +1,4 @@
+
 .img-min-width{
   min-width: 50px;
 }
@@ -21,6 +22,21 @@
   border-bottom-right-radius: 100px 100px;
   border-top-right-radius: 100px 100px;
 }
+.trRow:hover{
+  background: transparent;
+  box-shadow: 0 3px 15px rgb(0 0 0 / 20%);
+
+}
+.trRow{
+  height: 60px !important;
+ 
+}
+.trRow td{
+  vertical-align: middle;
+  
+}
+
+
 .action-button {
   color: #1E4079 !important;
   /* background-color: white !important;
@@ -895,7 +911,7 @@ table{
   
 }
 .table.table-vertical-center td {
-  vertical-align: baseline !important;
+  vertical-align: middle !important;
 }
 .view-details {
   margin-top: 10px;
@@ -1076,7 +1092,18 @@ table{
   width:10%;
   font-weight: bold;
 }
-
+/* @media only screen and (max-width: 568px){
+  .theadSiZe{
+    width: 160px !important;
+    
+  }
+  }
+  @media only screen and (max-width: 568px){
+    .thSiZe{
+      width: 800px !important;
+      
+    }
+    } */
 /* revamp css */
 .lic_revamp .ln-ht-3 {
   line-height: 3;

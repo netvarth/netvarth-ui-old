@@ -1008,3 +1008,215 @@
     </mat-dialog-content>
 </section>
 
+<section *ngIf="data.requestType==='fileShare'" style="padding: 20px;">
+    <div class="header">
+        <div class="d-flex" style="gap:10px">
+            <div> <i class="fa fa-share-square" aria-hidden="true"></i></div>
+            <div class="headerText">Share with people and groups </div>
+        </div>
+        <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+            <mat-icon>clear</mat-icon>
+        </div>
+    </div>
+
+    <mat-dialog-content class="matSiZe">
+        <div>
+            <div class="leadTitle">
+                <!-- <div>Add people</div> -->
+                <!-- <span class="astericColor">*</span> -->
+
+            </div>
+           
+            <div>
+                <div class="fileInfo">
+                    <div>
+                        <!--[(ngModel)]="customerDetails" (ngModelChange)="createCustomerData(customerDetails)" [ngModelOptions]="{standalone: true}" [(ngModel)]="search_input"-->
+                        <!-- <input  type="text" autocomplete="off" class="form-control inputSize" name="search"
+                        [(ngModel)]="customerName" placeholder="Add consumer or provider"
+                             /> -->
+                             <mat-form-field>
+                                <!-- <mat-label>Favorite Fruits</mat-label> -->
+                                <mat-chip-list #chipList aria-label="Fruit selection">
+                                  <mat-chip *ngFor="let customer of customerList" (removed)="remove(customer)">
+                                    {{customer.firstName ? customer.firstName : ''}}  {{customer.lastName ? customer.lastName : ''}}
+                                    <button matChipRemove>
+                                      <mat-icon>cancel</mat-icon>
+                                    </button>
+                                  </mat-chip>
+                                  <input placeholder="Add people"
+                                         [matChipInputFor]="chipList"  >
+                                         <!-- <input type="text" matInput class="form-control" id="bname" 
+                                          autocomplete="off"
+                                         placeholder="A"> -->
+                                        <!--   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                         [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" -->
+                                </mat-chip-list>
+
+                                <mat-icon matSuffix class="pull-right">
+                                    <button type="button" class="btn searchBtnFind" title="Search"
+                                    (click)="openCustomerSearchDialog()"><i style="color:#fff;margin-left: 5px;"
+                                        class="fa fa-plus"></i> </button></mat-icon>
+
+                              </mat-form-field>
+                            
+                              
+                            
+                    </div>
+                    <!-- <div>
+                       
+                            <div>
+                                <button type="button" class="btn confirmBtnFind" title="Search"
+                                    (click)="openCustomerSearchDialog()"><i style="color:#fff;margin-left: 5px;"
+                                        class="fa fa-plus"></i> </button>
+                            </div>
+                          
+                    </div> -->
+                  
+                    <!-- <input type="checkbox" [(ngModel)]="notify" (ngModelChange)="notifyied(notify)" class="mb-2 mt-2" name="" id="">&nbsp; Notify
+                    <br>
+                    <label for="" class="mb-2 mt-2">Messages</label>
+                    <textarea class="textArea" [(ngModel)]="message" (ngModelChange)="messageData(message)" (keyup)="autoGrowTextZone($event)" name="" id="" cols="" rows="5" placeholder="message"
+                        style="width: 90% !important;border-radius: 5.73504px !important"></textarea> -->
+                </div>
+            </div>
+           
+        </div>
+ <div class="">
+    <mat-chip>
+        <i class="fa fa-file-video-o" aria-hidden="true" *ngIf="data.file.fileType == 'mp4'"
+        style="color:red;"></i>
+      <i class="fa fa-file-text" aria-hidden="true"
+        *ngIf="data.file.fileType && (data.file.fileType == 'doc' ||data.file.fileType == 'docx' || data.file.fileType == 'xlsx' || data.file.fileType == 'txt')"></i>
+
+      <i class="fa fa-file-audio-o" aria-hidden="true" style="color:red;"
+        *ngIf="data.file.fileType === 'mp3' || data.file.fileType === 'mpeg'"></i>
+      <!-- <i class="fa fa-file-text" aria-hidden="true" style="color:red;" *ngIf="data.file.fileType === 'mp3'"></i> -->
+
+
+      <i class="fa fa-file-pdf-o" aria-hidden="true" *ngIf="data.file.fileType === 'pdf'"
+        style="color:red;"></i>
+         <i class="fa fa-file-image-o" aria-hidden="true" style="color:red;"
+        *ngIf="data.file.fileType === 'png' || data.file.fileType === 'jfif' || data.file.fileType === 'jpg' || data.file.fileType === 'jpeg' || data.file.fileType === 'bmp' || data.file.fileType === 'webp' "></i>&nbsp;
+        {{data.file.fileName?.length>10 ? data.file.fileName.slice(0, 10)+'...' : data.file.fileName}}
+        <!-- <button matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button> -->
+      </mat-chip>
+</div>
+       
+        <div mat-dialog-actions style="display: flex; margin-top: 5; padding: 0px !important;" class="pull-left">
+            <div class="cancelSaveBtn">
+                <ng-container>
+                    <div class="mt-4">
+                        <button type="button" class="btn font-weight-bold" mat-dialog-close>Cancel</button>&nbsp; &nbsp;
+                        <button type="button" class="btn btn-primary font-weight-bold confirmBtn" [disabled]="customerList.length === 0" (click)="shareFileToConsumerOrProvider()"> <i
+                             class="fa fa-share-alt"  aria-hidden="true"></i> Send</button>
+                    </div>
+                    <!-- (click)="shareFileToConsumerOrProvider(customer_data,data.file)" -->
+                </ng-container>
+            </div>
+        </div>
+    </mat-dialog-content>
+</section>
+
+
+<section *ngIf="data.requestType==='customerSearch'"  style="padding: 20px;">
+    <div class="header">
+        <div class="headerText">Search {{customer_label | capitalizeFirst}}</div>
+        <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+            <mat-icon>clear</mat-icon>
+        </div>
+    </div>
+    <mat-dialog-content>
+        <div >
+            <div class="leadTitle" *ngIf="!hideSearch"  >
+                <div>{{customer_label | capitalizeFirst}} <span class="astericColor">*</span></div>
+            </div>
+            <div class="fieldPadding" *ngIf=" !hideSearch" >
+                <div>
+                    <div class="customerInfo" *ngIf="!hideSearch">
+                        <!-- [ngModelOptions]="{standalone: true}" [(ngModel)]="search_input"-->
+                        <input type="text" autocomplete="off"
+                            class="form-control inputSize" name="search" (ngModelChange)="createCustomerData(customerDetails)" [(ngModel)]="customerDetails" placeholder="Search {{customer_label}}"/>
+                            <!--  -->
+                            <!-- {{searchby}} -->
+                            <div>
+                                <button type="button" class="btn confirmBtnFind" [disabled]="!customerDetails" title="Search" (click)="searchCustomer()"><i style="color:#fff;margin-left: 5px;" class="fa fa-search"></i> </button>
+                            </div>
+                                <!-- (click)="
+                                  searchCustomer()" -->
+                    </div>
+                </div>
+                <div>
+                    <br>
+                    <div class="disp-flex" *ngIf="!hideSearch">
+                        <!-- <a>*ngIf="!hideSearch"
+                            <span (click)="createNew()"><u>Create Customer</u></span>(click)="createNew()"
+                        </a> -->
+                        <!-- <button type="button" class="btn confirmBtnCustomerInfo px-8 py-1" (click)="createNew()">
+                          <span>
+                            <img class="customImg" src="/assets/images/crmImages/Group28024.png"/>
+                          </span>
+                          Create {{customer_label | capitalizeFirst}} </button> -->
+
+                    </div>
+                </div>
+                <!-- <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="createCustomerForm.customerDetails === '' || data.file === ''"
+                    errorMsg="{{emptyFielderror}}">
+                </app-field-error-display> -->
+            </div>
+            <!-- {{data| json}} -->
+            <!-- <div *ngFor="let note of allNotes[0];let index=i" class="note">
+                {{note.note }}
+            </div> -->
+            <div class="bggrey my-2" *ngIf="hideSearch">
+                <div style="display: flex;gap: 5px;flex-wrap: wrap;">
+                    {{customer_data.firstName}} {{customer_data.lastName}}
+                </div>
+                <div>
+                    <div class="leadTitle" *ngIf="customer_data.jaldeeId">
+                        <i class="fa fa-id-card-o icon"></i>
+                        <span>{{customer_label}} id : {{customer_data.jaldeeId}}</span>
+                    </div>
+                    <div class="leadTitle" *ngIf="customer_data.phoneNo">
+                        <i class="fa fa-mobile icon"></i>
+                        <span>{{customer_data.phoneNo}}</span>
+                    </div>
+                    <div class="leadTitle" *ngIf="customer_data.email">
+                        <i class="fa fa-envelope icon"></i>
+                        <span>{{customer_data.email}}</span>
+                    </div>
+                </div>
+                <!-- <div style="margin-top:5px;">
+                    <a class="navbar-item-color bold pointer-cursor disp-none-small"
+                        (click)="search()">
+                        <button mat-flat-button
+                            class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
+                            Search Again </button>
+                    </a>
+
+                </div> -->
+            </div>
+        </div>
+    <!-- </form> -->
+        <!---cancel save btn start-->
+        <div mat-dialog-actions style="display: flex; margin-top: 5; padding: 0px !important;">
+            <!---cancel save btn start-->
+            <div class="cancelSaveBtn">
+                <ng-container>
+                    <div class=" mgn-bt-20 mgn-up-10 mt-4">
+                        <button type="button" class="btn font-weight-bold"
+                            mat-dialog-close>Cancel</button>&nbsp; &nbsp;
+                            <button type="button" [disabled]="!customer_data" class="btn btn-primary font-weight-bold confirmBtn"
+                            (click)="getCustomerDetail(customer_data)" > <i class="fa fa-search" aria-hidden="true"></i> Send</button>
+                    </div>
+                    <!-- (click)="shareFileToConsumerOrProvider(customer_data,data.file)" -->
+                </ng-container>
+            </div>
+
+            <!---cancel save btn end-->
+        </div>
+    </mat-dialog-content>
+</section>
+
+

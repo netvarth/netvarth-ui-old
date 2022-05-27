@@ -54,7 +54,7 @@
                   <div class="input-group mob-container">
                     <input autocomplete="off"
                       placeholder="{{customer_label | capitalizeFirst}} {{categoryvalue.slice(12)}}" type="text"
-                      class="inputstyling" formControlName="search_input"
+                      class="inputstyling" formControlName="search_input" 
                       (keypress)="findCustomer(searchForm.value, $event)">
                   </div>
                   <div *ngIf="emptyFielderror" class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding">
@@ -324,7 +324,9 @@
                             </i>
                             <span class="dash selectedUser">{{serv.name | capitalizeFirst}}</span>
                           </mat-option>
+
                         </mat-select>
+                        
                       </mat-form-field>
                       <ng-container *ngIf="servicesjson.length == 0">
                         <span class='no-queue-available'>{{no_services_avail_cap}}</span>

@@ -14,6 +14,8 @@ import { FileService } from "../../../../shared/services/file-service";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
+import {MatChipsModule} from '@angular/material/chips';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 
@@ -35,6 +37,8 @@ const routes: Routes = [
         MatDatepickerModule,
         MatMenuModule,
         MatIconModule,
+        MatChipsModule,
+        MatFormFieldModule,
         [RouterModule.forChild(routes)]
     ],
     exports: [
