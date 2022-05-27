@@ -17,6 +17,7 @@ export class CrmService {
   public taskMasterToCreateServiceData:any;
   public leadMasterToCreateServiceData:any;
   public updateSubTaskData:any;
+  public followUpTableToOverView:any;
   
 
   constructor(

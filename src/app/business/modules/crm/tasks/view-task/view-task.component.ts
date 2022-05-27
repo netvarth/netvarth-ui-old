@@ -194,6 +194,7 @@ export class ViewTaskComponent implements OnInit {
    if(user.userType === 1){
      this.userType='PROVIDER'
    }
+  //  console.log('this.crmService.followUpTableToOverView',this.crmService.followUpTableToOverView)
     this._Activatedroute.paramMap.subscribe(params => {
       this.taskUid = params.get("id");
       console.log("task id : ", this.taskUid);
@@ -356,11 +357,12 @@ export class ViewTaskComponent implements OnInit {
       console.log('TaskMasterListresponse :',response);
       this.taskMasterList.push(response) 
       this.taskMasterList[0].forEach((item:any)=>{
-        console.log('item',item)
-        console.log(item.title.value)
+        // console.log('item',item)
+        // console.log(item.title.value)
         if((this.taskDetails.title === item.title.value) && (this.taskDetails.title !=='Follow Up 1') && (this.taskDetails.title !=='Follow Up 2') ){
           console.log('Matched',item.title.isvisible);
           this.bTaskFollowUpResult=false;
+          console.log('this.taskDetails.title',this.taskDetails.title)
           //est duration start
           if( item.estDuration.isvisible===false){
             this.bTaskEstDuration=false
@@ -544,6 +546,7 @@ export class ViewTaskComponent implements OnInit {
 
         }
         else if( (this.taskDetails.title ==='Follow Up 1') || (this.taskDetails.title ==='Follow Up 2') ){
+          console.log('this.taskDetails.title',this.taskDetails.title)
           this.bTaskStatus=false;
           this.bTaskCategory=false;
           this.bTaskType=false;

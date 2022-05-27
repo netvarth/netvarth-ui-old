@@ -4,7 +4,7 @@ import { projectConstants } from '../../../../../../src/app/app.component';
 import { Messages } from '../../../../../../src/app/shared/constants/project-messages';
 import { Location } from '@angular/common';
 // import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
-import {ActivatedRoute,Router,NavigationExtras } from '@angular/router';
+import {ActivatedRoute,Router } from '@angular/router';
 // Router,NavigationExtras,
 import { SnackbarService } from '../../../../../../src/app/shared/services/snackbar.service';
 import { CrmService } from '../crm.service';
@@ -274,13 +274,11 @@ export class FollowUpOneComponent implements OnInit{
       return api_filter;
     }
     redirectToOverview(data:any){
-      console.log(data)
-      const navigationExtras: NavigationExtras =  {
-        queryParams: {
-          type: data
-        }
-      }
-      this.router.navigate(['provider','followupone'],navigationExtras)
+      console.log('data',data)
+      this.crmService.followUpTableToOverView = data;
+      this.router.navigate(['/provider/viewtask/' + data.taskUid]);
+      // console.log('this.crmService.followUpTableToOverView',this.crmService.followUpTableToOverView)
+      // this.router.navigate(['provider','viewtask']);
     }
   
 
