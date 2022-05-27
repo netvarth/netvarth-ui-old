@@ -36,7 +36,7 @@ import { Subject } from 'rxjs';
       public innerWidth:any;
       public templateList:any=[];
       public activityList:any=[];
-      public activityTitleDialogValue:any='None';
+      public activityTitleDialogValue:any='Select Channel';
       public activityIdDialogValue:any;
       public activityLocationIdDialogValue:any;
       public categoryList:any=[];
@@ -55,6 +55,9 @@ import { Subject } from 'rxjs';
       public formMode:any
       public countryCode:any;
       public customer_email:any;
+      public enquiryErrorMsg:string='';
+      public enquiryTemplateId:any;
+
 
 
 
@@ -104,6 +107,7 @@ import { Subject } from 'rxjs';
       // this.getTemplateList()
       this.getTotalTaskActivity()
       this.enquiryCategoryList()
+      this.getTemplateEnuiry()
     }
       goback() {
         this.locationobj.back();
@@ -296,7 +300,7 @@ import { Subject } from 'rxjs';
             this.activityTitleDialogValue= 'None'
           }
           else if(response==='Close' && response !== undefined){
-            this.activityTitleDialogValue='None'
+            this.activityTitleDialogValue='Select Channel'
           }
           // else{
           //   this.activityTitleDialogValue==='None'
@@ -314,22 +318,21 @@ import { Subject } from 'rxjs';
         })
       }
       saveCreateEnquiry(){
-        // const createEnquiry:any={
-        //   "firstName":this.createEnquiryForm.controls.firstNameValue.value,
-        //   "lastName":this.createEnquiryForm.controls.lastNameValue.value,
-        //   "phoneNumber": this.createEnquiryForm.controls.phoneNoValue.value,
-        //   "email":this.createEnquiryForm.controls.emailValue.value,
-        //   "sourceCtrl":  this.activityIdDialogValue,
-        // }
-        // console.log('createEnquiry',createEnquiry)
-        const leadId:number=1;
+        // console.log('this.customer_data.id',this.customer_data);
+        if(this.customer_data = undefined){
+        //   console.log('this.activityLocationIdDialogValue',this.activityLocationIdDialogValue)
+        // console.log(this.createEnquiryForm.controls.enquiryDetails.value)
         const createEnquiry:any = {
           "location" : { "id" : this.activityLocationIdDialogValue},
           "customer" : {"id" :  this.customer_data.id},
-          "leadMasterId":leadId,
+          "leadMasterId": this.enquiryTemplateId,
           "isLeadAutogenerate":true,
         }
         console.log('createLeadData',createEnquiry);
+        // if(this.createEnquiryForm.controls.enquiryDetails.value=== undefined || this.activityLocationIdDialogValue===undefined ){
+        //   this.enquiryErrorMsg='Please select '
+        // }
+        console.log('enquiryErrorMsg',this.enquiryErrorMsg)
         this.crmService.createEnquiry(createEnquiry).subscribe((response)=>{
           console.log('afterCreateList',response);
           setTimeout(() => {
@@ -343,6 +346,46 @@ import { Subject } from 'rxjs';
             this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
           }, projectConstants.TIMEOUT_DELAY);
         })
+        }
+        else{
+          this.createCustomer()
+        }
         
+        
+      }
+      createCustomer(){
+        // console.log('this.createEnquiryForm.controls.phoneNoValue.value',this.createEnquiryForm.controls.phoneNoValue.value)
+        // if(this.createEnquiryForm.controls.phoneNoValue.value.startsWith('+91')){
+        //   console.log('+91')
+        // }
+        // else{
+        //   console.log('-91')
+        // }
+          const afterCompleteAddData:any = {
+            "firstName": this.createEnquiryForm.controls.firstNameValue.value,
+            "lastName": this.createEnquiryForm.controls.lastNameValue.value,
+            "phoneNo": this.createEnquiryForm.controls.phoneNoValue.value,
+            "email": this.createEnquiryForm.controls.emailValue.value,
+            "countryCode": '+91',
+          }
+          console.log('afterCompleteAddData',afterCompleteAddData)
+          this.crmService.createProviderCustomer(afterCompleteAddData).subscribe((response:any)=>{
+            setTimeout(() => {
+              console.log('afterCompleteAddData',response);
+              this.api_loading = true;
+            this.createEnquiryForm.reset();
+          this.router.navigate(['provider', 'crm']);
+            }, projectConstants.TIMEOUT_DELAY);
+          },
+          (error)=>{
+            this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+          })
+      }
+      getTemplateEnuiry(){
+        this.crmService.getEnquiryTemplate().subscribe((template:any)=>{
+          console.log('template',template)
+          this.enquiryTemplateId = template[0].id;
+          console.log(' this.enquiryTemplateId', this.enquiryTemplateId)
+        })
       }
   }

@@ -7,7 +7,7 @@
 }
 .height-limit
 {
-    height: 250px!important;
+    height: 200px!important;
     overflow-y: scroll!important;
 }
 .text-primary

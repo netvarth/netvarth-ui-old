@@ -13,16 +13,17 @@ import { MatInputModule } from '@angular/material/input';
 import { FormMessageDisplayModule } from "../../../../shared/modules/form-message-display/form-message-display.module";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
-import { PagerModule } from "../../../../../../src/app/shared/modules/pager/pager.module";
+import { PagerModule } from "../../../../shared/modules/pager/pager.module";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { NgCircleProgressModule } from "ng-circle-progress";
 import { FormsModule } from "@angular/forms";
 import { MatSelectModule } from "@angular/material/select";
 import { MatOptionModule } from "@angular/material/core";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import {FollowUpComponent} from "./followupone.component"
+// import {FollowUpOneComponent} from "./followupone.component"
+import {FollowUpOneComponent} from "./followupone.component"
 const routes: Routes = [
-  { path: '', component: FollowUpComponent },
+  { path: '', component: FollowUpOneComponent },
   
 
 ];
@@ -65,8 +66,8 @@ const routes: Routes = [
       }),
       [RouterModule.forChild(routes)]
   ],
-  exports: [FollowUpComponent],
-  declarations: [FollowUpComponent],
+  exports: [FollowUpOneComponent],
+  declarations: [FollowUpOneComponent],
   providers: [
     CrmService
   ],

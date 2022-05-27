@@ -1341,6 +1341,8 @@ export class ProviderCheckinComponent implements OnInit {
     }
 
     handleQueueSelection(queue,index) {
+        console.log('queue',queue)
+        console.log('index',index)
         this.sel_queue_indx = index;
         this.sel_queue_id = queue.id;
         this.sel_queue_waitingmins = this.dateTimeProcessor.convertMinutesToHourMinute(queue.queueWaitingTime);

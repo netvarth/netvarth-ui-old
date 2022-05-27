@@ -15,7 +15,7 @@
                     <div class="infoHeader ">{{customer_label | capitalizeFirst}} Info</div>
                 </div>
                 <div class="customerInfo mgn-up-15" >
-                    <input type="text" formControlName="enquiryDetails"
+                    <input autocomplete="off" type="text" formControlName="enquiryDetails"
                         class="form-control" name="search" placeholder={{searchby}} />
                         <div class="webDisplay">
                             <button type="button" class="btn confirmBtnFind" (click)="
@@ -38,7 +38,7 @@
                                 <div>First Name</div>
                             </div>
                             <div class="fieldPadding">
-                                <input formControlName="firstNameValue" type="text" #firstName
+                                <input autocomplete="off" formControlName="firstNameValue" type="text" #firstName
                                     (ngModelChange)="hamdlefirstName(firstName.value)" placeholder="Enter First Name"
                                     class="form-control" autocomplete="off" [value]="firstName" />
                             </div>
@@ -48,7 +48,7 @@
                                 <div>Last Name</div>
                             </div>
                             <div class="fieldPadding">
-                                <input formControlName="lastNameValue" type="text" #lastName
+                                <input autocomplete="off" formControlName="lastNameValue" type="text" #lastName
                                     (ngModelChange)="hamdlelastName(lastName.value)" placeholder="Enter Last Name"
                                     class="form-control" autocomplete="off" [value]="lastName" />
                             </div>
@@ -60,7 +60,7 @@
                                 <div>Phone Number</div>
                             </div>
                             <div class="fieldPadding">
-                                <input formControlName="phoneNoValue" type="tel" #phoneNo type="tel"
+                                <input autocomplete="off" formControlName="phoneNoValue" type="tel" #phoneNo type="tel"
                                     (ngModelChange)="hamdlephoneNo(phoneNo.value)" placeholder="Enter Phone Number"
                                     class="form-control" autocomplete="off" minlength="10" maxlength="10" [value]="phoneNo" />
                             </div>
@@ -70,7 +70,7 @@
                                 <div>Email</div>
                             </div>
                             <div class="fieldPadding">
-                                <input formControlName="emailValue" type="email" #email
+                                <input autocomplete="off" formControlName="emailValue" type="email" #email
                                     (ngModelChange)="hamdleemail(email.value)" placeholder="Enter Email"
                                     class="form-control" autocomplete="off" [value]="email" />
                             </div>
@@ -91,6 +91,7 @@
                                 <!-- <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                                 </app-field-error-display>   -->
                             </div> 
+                            {{enquiryErrorMsg}}
                         </div>
                         <div style="margin-top: 5px;width: -webkit-fill-available;">
                             <div> 
@@ -108,6 +109,7 @@
                                     </mat-select>
                                 </div>
                             </div>
+                            {{enquiryErrorMsg}}
                         </div>
                     </div>
                 </div>

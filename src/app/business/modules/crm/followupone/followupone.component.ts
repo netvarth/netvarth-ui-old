@@ -15,7 +15,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './followupone.component.html',
   styleUrls: ['./followupone.component.css']
 })
-export class FollowUpComponent implements OnInit{
+export class FollowUpOneComponent implements OnInit{
 
     constructor(
     //     private locationobj: Location,
