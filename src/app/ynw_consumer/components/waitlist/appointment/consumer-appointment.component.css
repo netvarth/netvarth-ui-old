@@ -2483,3 +2483,23 @@ button {
 .card {
   word-wrap: break-word;
 }
+.mat-dialog-actions {
+  padding: 8px 0;
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 52px;
+  align-items: center;
+  box-sizing: content-box;
+  margin-bottom: -24px;
+}
+.btn.btn-light-primary {
+  color: #1e4079;
+  background-color: #f9e2a7;
+  border-color: transparent;
+}
+.py-4 {
+  padding-bottom: 0.5rem!important;
+  padding-top: 0.5rem!important;
+}
+
+

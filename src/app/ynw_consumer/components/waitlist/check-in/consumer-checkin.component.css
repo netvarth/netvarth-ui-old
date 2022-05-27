@@ -2218,17 +2218,17 @@ body.modal-open {
   transition: color .3s ease-in-out,background-color .3s ease-in-out,border-color .3s ease-in-out,box-shadow .3s ease-in-out;
 }
 
-.px-9 {
+/* .px-9 {
   padding-left: 2.25rem!important;
 }
 .px-9 {
   padding-right: 2.25rem!important;
+} */
+.py-4 {
+  padding-bottom: 0.5rem!important;
 }
 .py-4 {
-  padding-bottom: 1rem!important;
-}
-.py-4 {
-  padding-top: 1rem!important;
+  padding-top: 0.5rem!important;
 }
 .col-sm-12, .col-md-4, .col-lg-4
 {
@@ -2324,4 +2324,9 @@ button {
 }
 .align-items-stretch {
   align-items: stretch!important;
+}
+.btn.btn-light-primary {
+  color: #1e4079;
+  background-color: #f9e2a7;
+  border-color: transparent;
 }
