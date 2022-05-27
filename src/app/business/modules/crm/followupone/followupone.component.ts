@@ -37,6 +37,8 @@ export class FollowUpOneComponent implements OnInit{
     totalCnt: 0,
     perPage: this.filter.page_count
   };
+  totalCount: any;
+  public totalFollowUpTwoList:any=[]
 
     constructor(
         private locationobj: Location,
@@ -53,6 +55,8 @@ export class FollowUpOneComponent implements OnInit{
     ngOnInit(): void {
       this.api_loading = false;
       this.getFollowUpStatusListData()
+      this.getFollowUpData()
+      this.getFollowUTwoData()
     }
     goback() {
       this.locationobj.back();
@@ -112,6 +116,27 @@ export class FollowUpOneComponent implements OnInit{
       (error)=>{
         this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
       })
+    }
+    getFollowUpData(){
+      this.crmService.getFollowUPOne().subscribe((res:any)=>{
+        console.log('res1',res)
+        this.totalFollowUpList= res;
+        this.pagination.totalCnt = res;
+        this.totalCount = this.pagination.totalCnt;
+      })
+    }
+    getFollowUTwoData(){
+      this.crmService.getFollowUPOne().subscribe((res:any)=>{
+        console.log('res1',res)
+        this.totalFollowUpTwoList= res;
+        this.pagination.totalCnt = res;
+        this.totalCount = this.pagination.totalCnt;
+      })
+    }
+    handle_pageclick(pg) {
+      this.pagination.startpageval = pg;
+      this.filter.page = pg;
+      this.getFollowUpData();
     }
   
 

@@ -64,7 +64,19 @@ import { Subject } from 'rxjs';
       public enterSecondName:string='Enter Second Name';
       public enterPhoNeNo:string='Enter Phone No';
       public enterEmailId:string='Enter Email Id';
-      public selectProduct:string='Selet Product'
+      public selectProduct:string='Selet Product';
+      public enquiryArr:any=[];
+      public activityListTitleDialogValue:any;
+      public activityListDescriptionDialogValue:any;
+      public activityListCategoryDialogValue:any;
+      public activityListTypeDialogValue:any
+      public activityListStatusDialogValue:any
+      public activityListpriorityDialogValue:any
+
+
+
+
+     
 
 
 
@@ -207,14 +219,15 @@ import { Subject } from 'rxjs';
             .subscribe(
               (data: any) => {
                 console.log('data',data);
+                this.enquiryArr=data;
                 if(data.length===0){
-                  this.createEnquiryForm.patchValue({
-                    firstNameValue:'',
-                    lastNameValue:'',
-                    phoneNoValue:'',
-                    emailValue:'',
-                    userTaskCategory:'',
-                  })
+                  // this.createEnquiryForm.patchValue({
+                  //   firstNameValue:'',
+                  //   lastNameValue:'',
+                  //   phoneNoValue:'',
+                  //   emailValue:'',
+                  //   userTaskCategory:'',
+                  // })
                   this.enterFirstName='Enter First Name';
                   this.enterSecondName='Enter Second Name'
                   this.enterEmailId='Enter Email Name'
@@ -233,13 +246,13 @@ import { Subject } from 'rxjs';
                 if (data.length === 0) {
                   this.show_customer = false;
                   this.create_customer = true;
-                  this.createEnquiryForm.patchValue({
-                  firstNameValue:'',
-                  lastNameValue:'',
-                  phoneNoValue:'',
-                  emailValue:'',
-                  userTaskCategory:'',
-                })
+                //   this.createEnquiryForm.patchValue({
+                //   firstNameValue:'',
+                //   lastNameValue:'',
+                //   phoneNoValue:'',
+                //   emailValue:'',
+                //   userTaskCategory:'',
+                // })
                   this.enterFirstName='Enter First Name';
                   this.enterSecondName='Enter Second Name'
                   this.enterEmailId='Enter Email Name'
@@ -247,6 +260,7 @@ import { Subject } from 'rxjs';
                   this.customerActivityText='New';
                   this.selectProduct='Select Product'
                   // this.createNew();
+                  // this.createCustomer()
                 } else {
                   this.createEnquiryForm.patchValue({
                     firstNameValue:data[0].firstName,
@@ -347,7 +361,17 @@ import { Subject } from 'rxjs';
           if(response !== undefined && response !=='None' && response !== 'Close'){
             this.activityTitleDialogValue= response.title;
             this.activityIdDialogValue= response.id,
-            this.activityOriginUidDialogValue= response.taskUid
+            this.activityOriginUidDialogValue= response.taskUid;
+            this.activityListTitleDialogValue=response.title;
+            this.activityListDescriptionDialogValue=response.description;
+            this.activityListCategoryDialogValue= response.category.id;
+            this.activityListTypeDialogValue= response.type.id;
+            this.activityListStatusDialogValue= response.status.id;
+            this.activityListpriorityDialogValue= response.priority.id;
+
+
+
+
             // this.activityLocationIdDialogValue= response.location.id
           }
           else if(response==='None' && response !== undefined && response !== 'Close'){
@@ -371,23 +395,30 @@ import { Subject } from 'rxjs';
           this.categoryList.push(category)
         })
       }
+      search(){
+        this.hideSearch = false;
+      }
       saveCreateEnquiry(){
-        // console.log('this.customer_data.id',this.customer_data);
-        if(this.customer_data = undefined){
+        console.log('this.customer_data.id',this.customer_data);
+        if(this.enquiryArr.length !==0){
         const createEnquiry:any = {
+          "title" : this.activityListTitleDialogValue,
+    		"description" : this.activityListDescriptionDialogValue,
+    		"category" : { "id": this.activityListCategoryDialogValue },
+    		"type" : { "id": this.activityListTypeDialogValue},
+    		"status" : { "id":  this.activityListStatusDialogValue},
+    		"priority" : { "id": this.activityListpriorityDialogValue },
+
           "location" : { "id" : this.activityLocationIdDialogValue},
           "customer" : {"id" :  this.customer_data.id},
-          "leadMasterId": this.enquiryTemplateId,
+          "enquireMasterId":this.enquiryTemplateId,
+          "leadMasterId": this.createEnquiryForm.controls.userTaskCategory.value,
           "isLeadAutogenerate":true,
           "originUid":this.activityOriginUidDialogValue
         }
-        console.log('createLeadData',createEnquiry);
-        // if(this.createEnquiryForm.controls.enquiryDetails.value=== undefined || this.activityLocationIdDialogValue===undefined ){
-        //   this.enquiryErrorMsg='Please select '
-        // }
-        console.log('enquiryErrorMsg',this.enquiryErrorMsg)
+        console.log('createEnquiry',createEnquiry);
         this.crmService.createEnquiry(createEnquiry).subscribe((response)=>{
-          console.log('afterCreateList',response);
+          console.log('createEnquiry',response);
           setTimeout(() => {
             this.api_loading = true;
             this.createEnquiryForm.reset();
@@ -426,15 +457,6 @@ import { Subject } from 'rxjs';
           },
           (error)=>{
             console.log('error1',error)
-            if(error){
-              this.createEnquiryForm.controls.enquiryDetails.setValue('')
-              this.createEnquiryForm.controls.firstNameValue.setValue('');
-              this.createEnquiryForm.controls.lastNameValue.setValue('');
-              this.createEnquiryForm.controls.phoneNoValue.setValue('');
-              this.createEnquiryForm.controls.emailValue.setValue('');
-              this.createEnquiryForm.controls.userTaskCategory.setValue('');
-               this.customerActivityText='New';
-            }
             this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
           })
       }

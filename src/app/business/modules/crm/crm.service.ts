@@ -357,6 +357,14 @@ export class CrmService {
     const url ='provider/lead/master';
     return this.servicemeta.httpGet(url, null);
   }
+  getFollowUPOne(){
+    const url ='provider/task/provider?originFrom-eq=Enquire&title-eq=Follow Up 1';
+    return this.servicemeta.httpGet(url, null);
+  }
+  getFollowUPTwo(){
+    const url ='provider/task/provider?originFrom-eq=Enquire&title-eq=Follow Up 2';
+    return this.servicemeta.httpGet(url, null);
+  }
 
 
 }

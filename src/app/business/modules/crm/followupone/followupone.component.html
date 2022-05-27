@@ -16,13 +16,10 @@
                 <table class="table" style="background-color: white;">
                   <thead>
                     <tr class="tble-filtr-tr heght">
-                      <th></th>
                       <th class="head_color">Follow Ups 1</th>
                       <th class="head_color">Customer</th>
                       <th class="head_color">Assignee</th>
                       <th class="head_color">Status</th>
-                      <th class="head_color">Type</th>
-                      <th class="head_color">Due Date</th>
                       <!-- <th class="filter-fx-col">
                         <table class="fltr-tbl">
                           <tr>
@@ -169,23 +166,11 @@
                     </ng-container>
                     <ng-container *ngIf="totalFollowUpList.length>0">
                       <tr *ngFor="let task of totalFollowUpList; let i=index" class="pointer-cursor" >
-
-                        <td>
-                          <circle-progress class="circle__progress" [percent]="task.progress" [animation]="true"
-                            [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
-                            [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
-                            [unitsFontWeight]="'700'" [subtitle]="task.status.name" [subtitleFontSize]="'7'"
-                            [lazy]="false"></circle-progress>
-                        </td>
-
-                        <td data-title="Task Details" class="td1">{{task.title}}</td>
-                        <td data-title="Task Details" class="td2"><span
-                            *ngIf="task.assignee">{{task.assignee.name}}</span></td>
-                        <td data-title="Status" class="td3" [ngStyle]="{'color': getColor(task.status.name)}">{{task.status.name}}</td>
-                        <td data-title="Category" class="td4">{{task.category.name}}</td>
-                        <td data-title="Type" class="td5">{{task.type.name}}</td>
-                        <td data-title="Due Date" class="td6" *ngIf="task.dueDate">{{task.dueDate }}</td>
-                        <td data-title="Due Date" class="td6" *ngIf="!task.dueDate">--</td>
+                        <td  class="td1">{{task.title}}</td>
+                        <td  class="td2">{{task.title}}</td>
+                        <td  class="td3"><span *ngIf="task.assignee">{{task.assignee.name}}</span></td>
+                        <td  class="td4" [ngStyle]="{'color': getColor(task.status.name)}">{{task.status.name}}</td>
+                        
                         <!-- <td >
                           <div class="copy">
                             <span class="">
@@ -212,11 +197,11 @@
                     </ng-container>
                   </tbody>
                 </table>
-                <!-- <div class="search_paging" *ngIf="pagination.totalCnt>10">
+                <div class="search_paging" *ngIf="pagination.totalCnt>10">
                   <app-pager  [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                     (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
                   </app-pager>
-                </div> -->
+                </div>
               </div>
             </div>
           </div>

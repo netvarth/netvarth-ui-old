@@ -26,6 +26,49 @@
                               searchCustomer()"><i style="color:#fff;" class="fa fa-search"></i> </button>
                             </div>
                 </div>
+                <!-- <div>
+                    <br>
+                    <div class="disp-flex" *ngIf="!hideSearch">
+                        <button type="button" class="btn confirmBtnCustomerInfo px-8 py-1">
+                          <span>
+                            <img class="customImg" src="/assets/images/crmImages/Group28024.png"/>
+                          </span>
+                          Create {{customer_label | capitalizeFirst}} </button>
+
+                    </div>
+                </div> -->
+                <!-- <div class="bggrey my-2" *ngIf="hideSearch">
+                    <div style="display: flex;gap: 5px;flex-wrap: wrap;">
+                        {{customer_data.firstName}} {{customer_data.lastName}}
+                    </div>
+                    <div>
+                        <div class="leadTitle" *ngIf="customer_data.jaldeeId">
+                            <i class="fa fa-id-card-o icon"></i>
+                            <span>{{customer_label}} id : {{customer_data.jaldeeId}}</span>
+                        </div>
+                        <div class="leadTitle" *ngIf="customer_data.phoneNo=== ' '" style="display: none;">
+                            <i class="fa fa-mobile icon"></i>
+                            <span>{{customer_data.phoneNo}}</span>
+                        </div>
+                        <div class="leadTitle" *ngIf="customer_data.phoneNo !== ' '">
+                            <i class="fa fa-mobile icon"></i>
+                            <span>{{customer_data.phoneNo}}</span>
+                        </div>
+                        <div class="leadTitle" *ngIf="customer_data.email">
+                            <i class="fa fa-envelope icon"></i>
+                            <span>{{customer_data.email}}</span>
+                        </div>
+                    </div>
+                    <div style="margin-top:5px;">
+                        <a class="navbar-item-color bold pointer-cursor disp-none-small"
+                            (click)="search()">
+                            <button mat-flat-button
+                                class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
+                                Search Again </button>
+                        </a>
+
+                    </div>
+                </div> -->
                 <div class="mgn-up-15">
                     <div class="customer">
                         <div class="infoHeader ">{{customerActivityText}} {{ customer_label | capitalizeFirst}}</div>
@@ -91,7 +134,6 @@
                                 <!-- <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                                 </app-field-error-display>   -->
                             </div> 
-                            {{enquiryErrorMsg}}
                         </div>
                         <div style="margin-top: 5px;width: -webkit-fill-available;">
                             <div> 
