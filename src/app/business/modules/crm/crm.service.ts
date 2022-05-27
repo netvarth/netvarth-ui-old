@@ -349,9 +349,10 @@ export class CrmService {
   createEnquiry(data){
     return this.servicemeta.httpPost('provider/enquire', data);
   }
-  // addLead(data){
-  //   return this.servicemeta.httpPost('provider/lead', data);
-  // }
+  getEnquiryTemplate(){
+    const url ='provider/enquire/master';
+    return this.servicemeta.httpGet(url, null);
+  }
 
 
 }
