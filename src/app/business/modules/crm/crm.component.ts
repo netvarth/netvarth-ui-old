@@ -111,6 +111,9 @@ export class CRMComponent implements OnInit {
     console.log('textValue', textValue)
     // this.router.navigate()
     // this.router.navigate(['provider','crm', 'tasktemplate'])
+    if(textValue==='Follow UP 1'){
+      this.router.navigate(['provider','followupone'])
+    }
 
   }
   redirectionTaskTemplate(){

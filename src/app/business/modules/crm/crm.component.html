@@ -2,9 +2,9 @@
     <div class="title-gb no-padding">
       <div class="mgn-up-15 dash-head">&nbsp;&nbsp;&nbsp;
           <div style="display:flex;gap:5px">
-            <div>
+            <!-- <div>
                 <i style="color:#1D3E77 !important" class="fa fa-arrow-left pointer-cursor" (click)="goback()"></i>
-            </div>
+            </div> -->
           <div style="color: #1D3E77;">{{crmTitle}}</div>
           </div>
       </div>
@@ -74,7 +74,7 @@
                             <div style="padding:8px" class="topicName">
                                 Schedule Marketing Activity
                             </div>
-                            <div  class="imgClick" (click)="templateViewActivity('Schedule Marketing Activity')">
+                            <div  class="imgClick">
                                 <div  class="clickHere">
                                     Click here 
                                 </div>
@@ -150,7 +150,7 @@
                   </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="allTabInPannel">
-                    <div class="customCard box" style="margin-bottom: 5px;" tabindex="1">
+                    <div class="customCard box" style="margin-bottom: 5px;" tabindex="1" (click)="templateViewActivity('Follow UP 1')">
                         <div>
                             <div style="padding:8px">
                                 <img class="img iconBackground" src="/assets/images/crmImages/tempateImg/Folloup1.png" />
@@ -158,7 +158,7 @@
                             <div style="padding:8px" class="topicName">
                                 Follow UP 1
                             </div>
-                            <div  class="imgClick" (click)="templateViewActivity('Follow UP 1')">
+                            <div  class="imgClick" >
                                 <div  class="clickHere">
                                     Click here 
                                 </div>

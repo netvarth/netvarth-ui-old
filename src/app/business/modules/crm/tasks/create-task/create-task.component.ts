@@ -897,7 +897,7 @@ export class CreateTaskComponent implements OnInit {
           console.log('afterUpdateList',response);
           setTimeout(() => {
             this.createTaskForm.reset();
-          this.router.navigate(['provider', 'task']);
+            this.router.navigate(['provider', 'crm']);
           }, projectConstants.TIMEOUT_DELAY);
         },
         (error)=>{
@@ -941,7 +941,7 @@ export class CreateTaskComponent implements OnInit {
           console.log('afterUpdateList',response);
           setTimeout(() => {
             this.createTaskForm.reset();
-          this.router.navigate(['provider', 'task']);
+            this.router.navigate(['provider', 'crm']);
           }, projectConstants.TIMEOUT_DELAY);
         },
         (error)=>{
@@ -987,7 +987,7 @@ export class CreateTaskComponent implements OnInit {
           console.log('afterCreateList',response);
           setTimeout(() => {
             this.createTaskForm.reset();
-          this.router.navigate(['provider', 'task']);
+          this.router.navigate(['provider', 'crm']);
           }, projectConstants.TIMEOUT_DELAY);
         },
         (error)=>{
@@ -1015,7 +1015,7 @@ export class CreateTaskComponent implements OnInit {
           console.log('afterCreateList',response);
           setTimeout(() => {
             this.createTaskForm.reset();
-          this.router.navigate(['provider', 'task']);
+          this.router.navigate(['provider', 'crm']);
           }, projectConstants.TIMEOUT_DELAY);
         },
         (error)=>{

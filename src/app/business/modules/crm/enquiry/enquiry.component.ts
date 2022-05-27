@@ -39,6 +39,7 @@ import { Subject } from 'rxjs';
       public activityTitleDialogValue:any='Select Channel';
       public activityIdDialogValue:any;
       public activityLocationIdDialogValue:any;
+      public activityOriginUidDialogValue:any;
       public categoryList:any=[];
       public  emptyFielderror = false;
       public qParams: {};
@@ -117,7 +118,6 @@ import { Subject } from 'rxjs';
       this.getTotalTaskActivity()
       this.enquiryCategoryList()
       this.getTemplateEnuiry()
-      this.enquiryDefultFormControl='Empty'
     }
       goback() {
         this.locationobj.back();
@@ -347,7 +347,8 @@ import { Subject } from 'rxjs';
           if(response !== undefined && response !=='None' && response !== 'Close'){
             this.activityTitleDialogValue= response.title;
             this.activityIdDialogValue= response.id,
-            this.activityLocationIdDialogValue= response.location.id
+            this.activityOriginUidDialogValue= response.taskUid
+            // this.activityLocationIdDialogValue= response.location.id
           }
           else if(response==='None' && response !== undefined && response !== 'Close'){
             this.activityTitleDialogValue= 'None'
@@ -365,7 +366,7 @@ import { Subject } from 'rxjs';
         console.log('categoryValue',categoryValue)
       }
       enquiryCategoryList(){
-        this.crmService.getEnquiryCategoryList().subscribe((category:any)=>{
+        this.crmService.getLeadTemplate().subscribe((category:any)=>{
           console.log('category',category)
           this.categoryList.push(category)
         })
@@ -373,13 +374,12 @@ import { Subject } from 'rxjs';
       saveCreateEnquiry(){
         // console.log('this.customer_data.id',this.customer_data);
         if(this.customer_data = undefined){
-        //   console.log('this.activityLocationIdDialogValue',this.activityLocationIdDialogValue)
-        // console.log(this.createEnquiryForm.controls.enquiryDetails.value)
         const createEnquiry:any = {
           "location" : { "id" : this.activityLocationIdDialogValue},
           "customer" : {"id" :  this.customer_data.id},
           "leadMasterId": this.enquiryTemplateId,
           "isLeadAutogenerate":true,
+          "originUid":this.activityOriginUidDialogValue
         }
         console.log('createLeadData',createEnquiry);
         // if(this.createEnquiryForm.controls.enquiryDetails.value=== undefined || this.activityLocationIdDialogValue===undefined ){
@@ -408,13 +408,6 @@ import { Subject } from 'rxjs';
         
       }
       createCustomer(){
-        // console.log('this.createEnquiryForm.controls.phoneNoValue.value',this.createEnquiryForm.controls.phoneNoValue.value)
-        // if(this.createEnquiryForm.controls.phoneNoValue.value.startsWith('+91')){
-        //   console.log('+91')
-        // }
-        // else{
-        //   console.log('-91')
-        // }
           const afterCompleteAddData:any = {
             "firstName": this.createEnquiryForm.controls.firstNameValue.value,
             "lastName": this.createEnquiryForm.controls.lastNameValue.value,
@@ -434,7 +427,6 @@ import { Subject } from 'rxjs';
           (error)=>{
             console.log('error1',error)
             if(error){
-              // console.log( this.createEnquiryForm.controls.enquiryDetails.value)
               this.createEnquiryForm.controls.enquiryDetails.setValue('')
               this.createEnquiryForm.controls.firstNameValue.setValue('');
               this.createEnquiryForm.controls.lastNameValue.setValue('');

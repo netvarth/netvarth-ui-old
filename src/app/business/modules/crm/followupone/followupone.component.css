@@ -1,0 +1,16 @@
+.dash-head{
+    display: flex;
+    color: #1D3E77 !important;
+    gap: 10px;
+  }
+  .iconClr{
+    color: #fff !important;
+  }
+  .arrowLeftIcon{
+    border: 1px solid;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  text-align: center;
+  background: #1D3E77;
+  }

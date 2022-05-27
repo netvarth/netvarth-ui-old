@@ -1,3 +1,226 @@
-<div>
-    jj
-</div>
+<section class="card">
+    <div class="title-gb no-padding">
+      <div class="dash-head">
+       <div class="arrowLeftIcon"> <i class="fa fa-arrow-left iconClr" aria-hidden="true" (click)="goback()"></i></div>
+       <div>{{headerName}}</div>
+      </div>
+    </div>
+  </section>
+  <section class="card col-md-12">
+    <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+    <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
+        <div class="col-md-12 no-padding-small">
+          <div class="row">
+            <div class="card p0 w-dta">
+              <div class="table-responsive dash-list">
+                <table class="table" style="background-color: white;">
+                  <thead>
+                    <tr class="tble-filtr-tr heght">
+                      <th></th>
+                      <th class="head_color">Follow Ups 1</th>
+                      <th class="head_color">Customer</th>
+                      <th class="head_color">Assignee</th>
+                      <th class="head_color">Status</th>
+                      <th class="head_color">Type</th>
+                      <th class="head_color">Due Date</th>
+                      <!-- <th class="filter-fx-col">
+                        <table class="fltr-tbl">
+                          <tr>
+                            <td>
+                              <span>
+                                <i class="icon-filter-one" (click)="showFilterSidebar()"
+                                  [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
+                                  style="cursor: pointer;"></i>
+                              </span>
+                            </td>
+                          </tr>
+                        </table>
+                      </th> -->
+                    </tr>
+                  </thead>
+                  <!-- <tbody>
+                    <tr>
+                      <div>
+                        <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
+                          <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                            <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+                              <span class="filter-head-title">Filters</span>
+                              <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                                (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                [matTooltip]="'Close filter window'"></i>
+                            </div>
+                            <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
+                            <ul class="sidebar-menu accordion" id="accordion1">
+
+
+                              <div class="card">
+                                <div class="card-header">
+                                  <h2 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse"
+                                      data-target="#collapseStatus2" aria-expanded="false">
+                                      <div>
+                                        <div style="display: inline-block !important;">
+                                          <i class="fa fa-circle-o-notch"></i>
+                                        </div>
+                                        <span>&nbsp;Status</span>
+                                      </div>
+                                      <i class="fa fa-angle-down"></i>
+                                    </button>
+                                  </h2>
+                                </div>
+                                <div id="collapseStatus2" class="collapse in" data-parent="#accordion2">
+                                  <div class="card-body">
+                                    <div class="filter-checkbox-input">
+                                      <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                      </li>
+                                      <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                        *ngFor="let stat of taskStatusList;let index=i">
+                                        <mat-checkbox [checked]="statuses.indexOf(stat) !== -1"
+                                          [checked]="statuses.indexOf(stat.id) !== -1"
+                                          (change)="setFilterDataCheckbox('status', stat.id)">
+                                          {{stat.name}}</mat-checkbox>
+                                      </li>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="card">
+                                <div class="card-header">
+                                  <h2 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse"
+                                      data-target="#collapseCategory3" aria-expanded="false">
+                                      <div>
+                                        <div style="display: inline-block !important;">
+                                          <i class="fa fa-circle-o-notch"></i>
+                                        </div>
+                                        <span>&nbsp;Category</span>
+                                      </div>
+                                      <i class="fa fa-angle-down"></i>
+                                    </button>
+                                  </h2>
+                                </div>
+                                <div id="collapseCategory3" class="collapse in" data-parent="#accordion2">
+                                  <div class="card-body">
+                                    <div class="filter-checkbox-input">
+                                      <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                      </li>
+                                      <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                        *ngFor="let cat of categoryListData[0];let index=i">
+                                        <mat-checkbox [checked]="categories.indexOf(cat) !== -1"
+                                          [checked]="categories.indexOf(cat.id) !== -1"
+                                          (change)="setFilterDataCheckbox('category', cat.id)">
+                                          {{cat.name}}</mat-checkbox>
+                                      </li>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="card">
+                                <div class="card-header">
+                                  <h2 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse"
+                                      data-target="#collapseType3" aria-expanded="false">
+                                      <div>
+                                        <div style="display: inline-block !important;">
+                                          <i class="fa fa-circle-o-notch"></i>
+                                        </div>
+                                        <span>&nbsp;Type</span>
+                                      </div>
+                                      <i class="fa fa-angle-down"></i>
+                                    </button>
+                                  </h2>
+                                </div>
+                                <div id="collapseType3" class="collapse in" data-parent="#accordion2">
+                                  <div class="card-body">
+                                    <div class="filter-checkbox-input">
+                                      <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                      </li>
+                                      <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                        *ngFor="let typ of taskTypeList[0];let index=i">
+                                        <mat-checkbox [checked]="types.indexOf(typ) !== -1"
+                                          [checked]="types.indexOf(typ.id) !== -1"
+                                          (change)="setFilterDataCheckbox('type', typ.id)">
+                                          {{typ.name}}</mat-checkbox>
+                                      </li>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </ul>
+                          </section>
+                          <div class="filter-footer mt-1 mx-auto text-center" *ngIf="filterapplied === true">
+                            <button class="btn reset-btn mt-4" (click)="clearFilter()">
+                              <i class="fa fa-undo"></i>&nbsp;Reset
+                            </button>
+                            <button  class="btn apply-btn" (click)="getTotalTask()">
+                              <i class="fa fa-check"></i>&nbsp;Apply
+                            </button>
+                          </div>
+                        </aside>
+                      </div>
+
+                    </tr>
+                  </tbody> -->
+                  <tbody>
+                    <ng-container *ngIf="totalFollowUpList.length === 0">
+                      <tr>
+                        <td class="nodatafound" colspan="5">{{no_tasks_cap}}</td>
+                      </tr>
+                    </ng-container>
+                    <ng-container *ngIf="totalFollowUpList.length>0">
+                      <tr *ngFor="let task of totalFollowUpList; let i=index" class="pointer-cursor" >
+
+                        <td>
+                          <circle-progress class="circle__progress" [percent]="task.progress" [animation]="true"
+                            [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
+                            [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
+                            [unitsFontWeight]="'700'" [subtitle]="task.status.name" [subtitleFontSize]="'7'"
+                            [lazy]="false"></circle-progress>
+                        </td>
+
+                        <td data-title="Task Details" class="td1">{{task.title}}</td>
+                        <td data-title="Task Details" class="td2"><span
+                            *ngIf="task.assignee">{{task.assignee.name}}</span></td>
+                        <td data-title="Status" class="td3" [ngStyle]="{'color': getColor(task.status.name)}">{{task.status.name}}</td>
+                        <td data-title="Category" class="td4">{{task.category.name}}</td>
+                        <td data-title="Type" class="td5">{{task.type.name}}</td>
+                        <td data-title="Due Date" class="td6" *ngIf="task.dueDate">{{task.dueDate }}</td>
+                        <td data-title="Due Date" class="td6" *ngIf="!task.dueDate">--</td>
+                        <!-- <td >
+                          <div class="copy">
+                            <span class="">
+                              <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
+                                (click)="stopprop($event);">
+                                <mat-icon>more_vert</mat-icon>
+                              </button>
+                            </span>
+                            <mat-menu #appMenu="matMenu">
+                              <button mat-menu-item (click)="openTaskCompletion(task)" *ngIf="task.status.name !='Completed'">
+                                <img class="imageStatus" src="/assets/images/crmImages/mark.png" />Mark as Done
+                              </button>
+                              <button mat-menu-item (click)="openEditTask(task,'Update')"  *ngIf="task.status.name !='Completed'">
+                                <img class="imageStatus" src="/assets/images/crmImages/edit.png" />Edit
+                              </button>
+                              <button mat-menu-item (click)="openDialogStatusChange(task)" >
+                               <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
+                              </button>
+
+                            </mat-menu>
+                          </div>
+                        </td> -->
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+                <!-- <div class="search_paging" *ngIf="pagination.totalCnt>10">
+                  <app-pager  [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                    (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
+                  </app-pager>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </section>

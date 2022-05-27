@@ -103,7 +103,7 @@
                                         #userTaskCategory formControlName="userTaskCategory" (ngModelChange)="handleTaskPrioritySelection(userTaskCategory.value)">
                                         <mat-option  *ngFor="let item of categoryList[0];let index=i" [value]="item.id" >
                                             <div>
-                                                {{item.name}}
+                                                {{item.title.value}}
                                             </div>
                                         </mat-option>
                                     </mat-select>

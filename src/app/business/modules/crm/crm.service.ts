@@ -353,6 +353,10 @@ export class CrmService {
     const url ='provider/enquire/master';
     return this.servicemeta.httpGet(url, null);
   }
+  getLeadTemplate(){
+    const url ='provider/lead/master';
+    return this.servicemeta.httpGet(url, null);
+  }
 
 
 }
