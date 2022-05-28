@@ -227,7 +227,6 @@ export class ViewLeadQnrComponent implements OnInit{
         }
         if(this.leadDetails.status.name === 'Credit Score Generated') {
           this.showqnr = true;
-          this.getKycDetails();
         }
         this.getLeadQnr()
         // console.log('this.leadDetails.notes',this.leadDetails.notes)
