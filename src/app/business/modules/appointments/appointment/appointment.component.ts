@@ -269,6 +269,7 @@ export class AppointmentComponent implements OnInit {
     currentDate
     fileSizeInKb:number=1024
     Math = Math
+    selectedSchedule: any;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -936,33 +937,33 @@ export class AppointmentComponent implements OnInit {
             this.api_loading1 = false;
         }
     }
-    addPhone() {
-        this.resetApiErrors();
-        this.resetApi();
-        const curphone = this.selected_phone;
-        const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
-        const result = pattern.test(curphone);
-        const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
-        const result1 = pattern1.test(curphone);
-        if (this.selected_phone === '') {
-            this.phoneerror = Messages.BPROFILE_PHONENO;
-            return;
-        } else if (!result) {
-            this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
-            return;
-        } else if (!result1) {
-            this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Mobile number should have 10 digits';
-            return;
-        } else {
-            this.consumerPhoneNo = this.selected_phone;
-            this.userPhone = this.selected_phone;
-            this.edit = true;
-        }
-    }
-    editPhone() {
-        this.edit = false;
-        this.selected_phone = this.userPhone;
-    }
+    // addPhone() {
+    //     this.resetApiErrors();
+    //     this.resetApi();
+    //     const curphone = this.selected_phone;
+    //     const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+    //     const result = pattern.test(curphone);
+    //     const pattern1 = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+    //     const result1 = pattern1.test(curphone);
+    //     if (this.selected_phone === '') {
+    //         this.phoneerror = Messages.BPROFILE_PHONENO;
+    //         return;
+    //     } else if (!result) {
+    //         this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_INVALID; // 'Please enter a valid mobile phone number';
+    //         return;
+    //     } else if (!result1) {
+    //         this.phoneerror = Messages.BPROFILE_PRIVACY_PHONE_10DIGITS; // 'Mobile number should have 10 digits';
+    //         return;
+    //     } else {
+    //         this.consumerPhoneNo = this.selected_phone;
+    //         this.userPhone = this.selected_phone;
+    //         this.edit = true;
+    //     }
+    // }
+    // editPhone() {
+    //     this.edit = false;
+    //     this.selected_phone = this.userPhone;
+    // }
     validateEmail(mail) {
         const emailField = mail;
         const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
@@ -1040,6 +1041,7 @@ export class AppointmentComponent implements OnInit {
                             }
                         }
                         this.sel_queue_id = this.queuejson[selindx].id;
+                        this.selectedSchedule = this.queuejson[selindx];
                         this.sel_queue_indx = selindx;
                         this.setTerminologyLabels();
                         if (this.queuejson[this.sel_queue_indx].timeDuration && this.queuejson[this.sel_queue_indx].timeDuration !== 0) {
@@ -1053,7 +1055,7 @@ export class AppointmentComponent implements OnInit {
                     } else {
                         this.sel_queue_indx = -1;
                         this.sel_queue_id = 0;
-
+                        // this.selectedSchedule = null;
                     }
                 });
         }
@@ -1075,24 +1077,24 @@ export class AppointmentComponent implements OnInit {
             this.confrmshow = true;
         }
     }
-    isSelectedService(id) {
-        let clr = false;
-        if (id === this.sel_ser) {
-            clr = true;
-        } else {
-            clr = false;
-        }
-        return clr;
-    }
-    isSelectedQueue(id) {
-        let clr = false;
-        if (id === this.sel_queue_id) {
-            clr = true;
-        } else {
-            clr = false;
-        }
-        return clr;
-    }
+    // isSelectedService(id) {
+    //     let clr = false;
+    //     if (id === this.sel_ser) {
+    //         clr = true;
+    //     } else {
+    //         clr = false;
+    //     }
+    //     return clr;
+    // }
+    // isSelectedQueue(id) {
+    //     let clr = false;
+    //     if (id === this.sel_queue_id) {
+    //         clr = true;
+    //     } else {
+    //         clr = false;
+    //     }
+    //     return clr;
+    // }
     // handleQueueSel(mod) {
     //     this.resetApi();
     //     if (mod === 'next') {
@@ -1112,8 +1114,9 @@ export class AppointmentComponent implements OnInit {
     //     }
     // }
 
-    handleQueueSelection(queue,index) {
-        this.sel_queue_indx = index;
+    handleQueueSelection(queue) {
+        // this.sel_queue_indx = index;
+        this.selectedSchedule = queue;
         if (queue) {
             this.sel_queue_id = queue.id;
             if (queue.timeDuration && queue.timeDuration !== 0) {
@@ -1126,16 +1129,16 @@ export class AppointmentComponent implements OnInit {
     handleFuturetoggle() {
         this.showfuturediv = !this.showfuturediv;
     }
-    isCheckinenable() {
-        if (this.sel_loc && this.sel_ser && this.sel_queue_id && this.sel_checkindate) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    revealChk() {
-        this.revealphonenumber = !this.revealphonenumber;
-    }
+    // isCheckinenable() {
+    //     if (this.sel_loc && this.sel_ser && this.sel_queue_id && this.sel_checkindate) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+    // revealChk() {
+    //     this.revealphonenumber = !this.revealphonenumber;
+    // }
     handleConsumerNote(vale) {
         this.consumerNote = vale;
     }
@@ -1176,132 +1179,127 @@ export class AppointmentComponent implements OnInit {
             this.getSchedulesbyLocationandServiceIdavailability(this.sel_loc, this.sel_ser, this.account_id);
         }
     }
-    handleServiceForWhom() {
-        this.resetApi();
-        this.holdwaitlist_for = this.waitlist_for;
-        this.step = 3;
-        this.main_heading = 'Family Members';
-    }
-    handleCheckinClicked() {
-        this.resetApi();
-        let error = '';
-        if (this.step === 1) {
-            if (this.partySizeRequired) {
-                this.clearerrorParty();
-                error = this.validatorPartysize(this.enterd_partySize);
-            }
-            if (error === '') {
-                if (this.waitlist_for.length === 0) {
-                    // if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
-                    //     this.getCustomerCount();
-                    // } else {
-                    //     this.createCustomer();
-                    // }
-                    this.waitlist_for.push({ firstName: this.thirdParty, lastName: 'user', apptTime: this.apptTime });
-                }
-                //  else {
-                this.saveCheckin();
-                // }
-            } else {
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                // this.api_error = error;
-            }
-        }
-    }
-    createCustomer() {
-        const post_data = {
-            'firstName': this.thirdParty,
-            'lastName': 'user'
-        };
-        if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
-            post_data['jaldeeId'] = this.jld;
-        }
-        this.provider_services.createProviderCustomer(post_data)
-            .subscribe(
-                data => {
-                    this.getCustomerbyId(data);
-                });
-    }
-    getCustomerbyId(id) {
-        const filter = { 'id-eq': id };
-        this.provider_services.getCustomer(filter)
-            .subscribe(
-                (data: any) => {
-                    if (data.length > 1) {
-                        const customer = data.filter(member => !member.parent);
-                        this.customer_data = customer[0];
-                        this.foundMultipleCustomers = true;
-                    } else {
-                        this.customer_data = data[0];
-                        this.foundMultipleCustomers = false;
-                    }
-                    this.jaldeeId = this.customer_data.jaldeeId;
-                    if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
-                        this.countryCode = this.customer_data.countryCode;
-                    } else {
-                        this.countryCode = '+91';
-                    }
-                    this.waitlist_for.push({ id: data[0].id, firstName: data[0].firstName, lastName: data[0].lastName, apptTime: this.apptTime });
-                    this.saveCheckin();
-                });
-    }
+    // handleCheckinClicked() {
+    //     this.resetApi();
+    //     let error = '';
+    //     if (this.step === 1) {
+    //         if (this.partySizeRequired) {
+    //             this.clearerrorParty();
+    //             error = this.validatorPartysize(this.enterd_partySize);
+    //         }
+    //         if (error === '') {
+    //             if (this.waitlist_for.length === 0) {
+    //                 // if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+    //                 //     this.getCustomerCount();
+    //                 // } else {
+    //                 //     this.createCustomer();
+    //                 // }
+    //                 this.waitlist_for.push({ firstName: this.thirdParty, lastName: 'user', apptTime: this.apptTime });
+    //             }
+    //             //  else {
+    //             this.saveCheckin();
+    //             // }
+    //         } else {
+    //             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //             // this.api_error = error;
+    //         }
+    //     }
+    // }
+    // createCustomer() {
+    //     const post_data = {
+    //         'firstName': this.thirdParty,
+    //         'lastName': 'user'
+    //     };
+    //     if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
+    //         post_data['jaldeeId'] = this.jld;
+    //     }
+    //     this.provider_services.createProviderCustomer(post_data)
+    //         .subscribe(
+    //             data => {
+    //                 this.getCustomerbyId(data);
+    //             });
+    // }
+    // getCustomerbyId(id) {
+    //     const filter = { 'id-eq': id };
+    //     this.provider_services.getCustomer(filter)
+    //         .subscribe(
+    //             (data: any) => {
+    //                 if (data.length > 1) {
+    //                     const customer = data.filter(member => !member.parent);
+    //                     this.customer_data = customer[0];
+    //                     this.foundMultipleCustomers = true;
+    //                 } else {
+    //                     this.customer_data = data[0];
+    //                     this.foundMultipleCustomers = false;
+    //                 }
+    //                 this.jaldeeId = this.customer_data.jaldeeId;
+    //                 if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+    //                     this.countryCode = this.customer_data.countryCode;
+    //                 } else {
+    //                     this.countryCode = '+91';
+    //                 }
+    //                 this.waitlist_for.push({ id: data[0].id, firstName: data[0].firstName, lastName: data[0].lastName, apptTime: this.apptTime });
+    //                 this.saveCheckin();
+    //             });
+    // }
 
 
-    searchCustomerById(customer_id) {
-        console.log(customer_id)
-        if (!customer_id) {
-            this.emptyFielderror = true;
-        } else {
-            this.qParams = {};
-            this.create_new = false;
-            let post_data = {};
-            post_data['or=jaldeeId-eq'] = customer_id + ',firstName-eq=' + customer_id;
-            this.provider_services.getCustomer(post_data)
-                .subscribe(
-                    (data: any) => {
-                        if (data.length === 0) {
-                            this.createNew('create');
-                        } else {
-                            if (data.length > 1) {
-                                const customer = data.filter(member => !member.parent);
-                                this.customer_data = customer[0];
-                                this.foundMultipleCustomers = true;
-                            } else {
-                                this.customer_data = data[0];
-                                this.foundMultipleCustomers = false;
-                            }
-                            this.jaldeeId = this.customer_data.jaldeeId;
-                            if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
-                                this.countryCode = this.customer_data.countryCode;
-                            } else {
-                                this.countryCode = '+91';
-                            }
-                            if (this.source === 'appt-block') {
-                                this.showBlockHint = true;
-                                this.heading = 'Confirm your Appointment';
-                            } else {
-                                this.getFamilyMembers();
-                                this.initAppointment();
-                            }
-                        }
-                    },
-                    error => {
-                        this.wordProcessor.apiErrorAutoHide(this, error);
-                    }
-                );
-        }
-    }
+    // searchCustomerById(customer_id) {
+    //     console.log(customer_id)
+    //     if (!customer_id) {
+    //         this.emptyFielderror = true;
+    //     } else {
+    //         this.qParams = {};
+    //         this.create_new = false;
+    //         let post_data = {};
+    //         post_data['or=jaldeeId-eq'] = customer_id + ',firstName-eq=' + customer_id;
+    //         this.provider_services.getCustomer(post_data)
+    //             .subscribe(
+    //                 (data: any) => {
+    //                     if (data.length === 0) {
+    //                         this.createNew('create');
+    //                     } else {
+    //                         if (data.length > 1) {
+    //                             const customer = data.filter(member => !member.parent);
+    //                             this.customer_data = customer[0];
+    //                             this.foundMultipleCustomers = true;
+    //                         } else {
+    //                             this.customer_data = data[0];
+    //                             this.foundMultipleCustomers = false;
+    //                         }
+    //                         this.jaldeeId = this.customer_data.jaldeeId;
+    //                         if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+    //                             this.countryCode = this.customer_data.countryCode;
+    //                         } else {
+    //                             this.countryCode = '+91';
+    //                         }
+    //                         if (this.source === 'appt-block') {
+    //                             this.showBlockHint = true;
+    //                             this.heading = 'Confirm your Appointment';
+    //                         } else {
+    //                             this.getFamilyMembers();
+    //                             this.initAppointment();
+    //                         }
+    //                     }
+    //                 },
+    //                 error => {
+    //                     this.wordProcessor.apiErrorAutoHide(this, error);
+    //                 }
+    //             );
+    //     }
+    // }
 
 
 
     saveCheckin() {
+        // 'id': this.sel_queue_id
         if (this.type === 'followup') {
             this.sel_ser = this.servId;
             this.sel_ser_det.serviceType = this.follow_up_Details.service.serviceType;
             this.waitlist_for.push({ id: this.cusId, firstName: this.cusfirstname, lastName: this.cuslastname , apptTime: this.apptTime});
             const post_Data = {
                 'schedule': {
-                    'id': this.sel_queue_id
+                    'id': this.selectedSchedule.id
                 },
                 'appmtDate': this.sel_checkindate,
                 'service': {
@@ -1393,7 +1391,7 @@ export class AppointmentComponent implements OnInit {
             }
             const post_Data = {
                 'schedule': {
-                    'id': this.sel_queue_id
+                    'id': this.selectedSchedule.id
                 },
                 'appmtDate': this.sel_checkindate,
                 'service': {
@@ -2321,7 +2319,7 @@ if(this.type === 'followup'){
                                 this.queuejson.splice(i, 1);
                             }
                         }
-                        this.handleQueueSelection(this.queuejson[0],0);
+                        this.handleQueueSelection(this.queuejson[0]);
                     } else {
                         this.showApptTime = false;
                         this.api_loading = false;
@@ -2374,7 +2372,7 @@ else{
                         this.queuejson.splice(i, 1);
                     }
                 }
-                this.handleQueueSelection(this.queuejson[0],0);
+                this.handleQueueSelection(this.queuejson[0]);
             } else {
                 this.showApptTime = false;
                 this.api_loading = false;
@@ -2451,14 +2449,14 @@ else{
     resetError() {
         this.thirdparty_error = null;
     }
-    getCustomerCount() {
-        this.provider_services.getProviderCustomersCount()
-            .subscribe(
-                data => {
-                    this.jld = 'JLD' + this.thirdParty + data;
-                    this.createCustomer();
-                });
-    }
+    // getCustomerCount() {
+    //     this.provider_services.getProviderCustomersCount()
+    //         .subscribe(
+    //             data => {
+    //                 this.jld = 'JLD' + this.thirdParty + data;
+    //                 this.createCustomer();
+    //             });
+    // }
     goBack() {
         if (this.showQuestionnaire) {
             this.showQuestionnaire = false;

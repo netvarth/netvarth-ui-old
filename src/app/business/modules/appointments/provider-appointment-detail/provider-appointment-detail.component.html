@@ -80,8 +80,6 @@
           <div class="text-center mx-auto">
             <a class="status-btn btn btn-outline-dark my-2" (click)="addConsumerInboxMessage()"><i
                 class="fa fa-commenting-o" aria-hidden="true"></i> Message</a>
-
-
             <a class="status-btn btn btn-outline-dark my-2 mx-1" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' 
               && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'"
               (click)="changeWaitlistStatus('Cancelled')"><i class="fa fa-times" aria-hidden="true"></i> Cancel</a>
@@ -98,13 +96,8 @@
               && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'"
               (click)="changeWaitlistStatus('Completed')"><i class="fa fa-check" aria-hidden="true"></i> Complete</a>
           </div>
-
         </div>
       </div>
-
-
-
-
       <div class="lbl col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small px-1">
         <div class="rowcard customer-details-card card">
           <div class="booking-details">
