@@ -1245,10 +1245,10 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="dob" #dob
-                  (change)="handledob(dob.value)" (keyup)="autoGrowTextZone($event)"
-                  maxlength="1000" placeholder="">
-                </textarea>
+              
+                <input (keyup)="resetErrors()" type="date" #dob (ngModelChange)="handledob(dob.value)"
+                placeholder="" class="form-control" formControlName="dob" autocomplete="off"
+               />
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                   errorMsg="{{leadError}}">
                 </app-field-error-display>
