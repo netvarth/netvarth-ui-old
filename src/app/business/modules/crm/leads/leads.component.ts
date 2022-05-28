@@ -148,10 +148,10 @@ export class LeadsComponent implements OnInit {
   public bFailedLead:boolean=false;
   public bSucessLead:boolean=false;
   public bInProgressLead:boolean=false;
-  public bTotalLead:boolean=true;
+  public bTotalLead:boolean=true
   public statusFilter:any;
   public assignedLeadList:any=[]
-  public bUnassigned:boolean=true
+  public bUnassigned:boolean=false;
   public bAssigned:boolean=false;
   public UnassignedLeadList:any=[]
   public sucessListLead:any=[]
@@ -181,31 +181,22 @@ export class LeadsComponent implements OnInit {
     this.getLeadStatusListData();
     this.getCategoryListData();
     this.getLeadTypeListData();
-    this.getTotalLead();
+    // this.getTotalLead();
     this.getInprogressLead();
     this.getCompletedLead();
     this.getDelayedLead();
     this.getFailedLead();
     this.getTransferredLead();
     this.getLeadmaster()
-    // this.getUnassignedLead()
-    // this.getAssignedLead()
-    // this.getSucessListLead()
-    // this.getNewGenerateLead()
-    // this.getLeadStatusListData();
-    // this.getCategoryListData();
-    // this.getLeadTypeListData();
-    // this.getTotalLead();
-    // this.getInprogressLead();
-    // this.getCompletedLead();
-    // this.getDelayedLead();
-    // this.getFailedLead();
-    // this.getTransferredLead();
-    this.getLeadmaster()
-    // this.getUnassignedLead()
-    // this.getAssignedLead()
-    // this.getSucessListLead()
+    this.getAssignedLead()
+    this.getSucessListLead()
     this.getNewGenerateLead()
+    this.getUnassignedLead()
+    this.crmService.getTotalLead().subscribe((res)=>{
+      console.log(res);
+      this.totalLeadList = res;
+
+    })
   }
   getTotalLead(from_oninit = true) {
     let filter = this.setFilterForApi();
@@ -223,12 +214,12 @@ export class LeadsComponent implements OnInit {
                 this.totalLeadList = data;
                 console.log('totalLeadList',this.totalLeadList)
                 // this.getUnassignedLead()
-                this.getAssignedLead()
-                this.getSucessListLead()
-                this.getTransferredLead()
-                this.getFailedLead()
-                this.getInprogressLead()
-                this.getNewGenerateLead()
+                // this.getAssignedLead()
+                // this.getSucessListLead()
+                // this.getTransferredLead()
+                // this.getFailedLead()
+                // this.getInprogressLead()
+                // this.getNewGenerateLead()
                 this.totalLeadList = this.totalLeadList.filter(obj => !obj.originId);
                 this.loadComplete = true;
               },

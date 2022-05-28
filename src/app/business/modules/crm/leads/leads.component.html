@@ -377,7 +377,7 @@
                   <!-- {{pagination.totalCnt}}
                   {{pagination.perPage}}
                   {{pagination.startpageval}} -->
-                  <app-pager [total_pages]="totalCount" [pagesize]="pagination.perPage"
+                  <app-pager *ngIf="totalLeadList.length >10" [total_pages]="totalCount" [pagesize]="pagination.perPage"
                     (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
                   </app-pager>
                 </div>
