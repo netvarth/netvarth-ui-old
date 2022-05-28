@@ -489,9 +489,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.getVirtualCallingModesList();
     }
     selectToolTypeHandler(event) {
+        console.log("selectToolTypeHandler :",event)
         this.getVirtualCallingModesList();
         this.selctd_tool = event;
-        this.tool_id = '';
+       this.tool_id = '';
         this.tool_code = '+91';
         this.is_tool = true;
         this.provider_services.getvirtualServiceInstructions().subscribe(
@@ -926,6 +927,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 for (let i = 0; i < this.vcallmodes.length; i++) {
                     if (this.selctd_tool === this.vcallmodes[i].callingMode) {
                         this.tool_id = this.vcallmodes[i].value;
+                        console.log("tool_id :",this.tool_id)
                         if ((this.vcallmodes[i].callingMode === 'WhatsApp' || this.vcallmodes[i].callingMode === 'Phone') && this.vcallmodes[i].countryCode) {
                             if(this.vcallmodes[i].countryCode === "91" || ''){
                                 this.tool_code = '+91'
@@ -1022,6 +1024,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.sharedFunctons.sendMessage({ 'ttype': 'show-back' });
     }
     checkUrl(urlData) {
+        console.log("UrlData :",urlData)
         if (this.tool_id && (this.selctd_tool === 'GoogleMeet' || this.selctd_tool === 'Zoom')) {
             const tempvar = urlData.substring(0, 4);
             if (tempvar !== 'http') {
@@ -1061,7 +1064,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     getProviderNametruncate(users) {
-        console.log(users);
+       // console.log(users);
         let userlst = '';
         if (users[0] === 'All') {
             return 'All Users'

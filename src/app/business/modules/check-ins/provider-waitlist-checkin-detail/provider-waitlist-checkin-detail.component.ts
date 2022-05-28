@@ -948,7 +948,7 @@ editCustomerDetails() {
     this.view_more = !this.view_more;
   }
   gotoActions(checkin?) {
-    console.log("opend")
+    console.log("opend",checkin)
     let waitlist = [];
     if (checkin) {
       waitlist = checkin;

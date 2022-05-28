@@ -337,7 +337,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                     value="{{tool_code}}" [(ngModel)]="tool_code" [ngModelOptions]="{standalone: true}"
                     (keypress)="isNumericSign($event)">
                 </div>
-                <div class="form-group">
+                <div class="form-group" >
                   <input type="number" style="padding: 0px !important;" type="text" class="form-control serv-phone-code"
                   autocomplete="off" value="{{tool_id}}" [(ngModel)]="tool_id" [ngModelOptions]="{standalone: true}"
                   (blur)="checkUrl(tool_id)">

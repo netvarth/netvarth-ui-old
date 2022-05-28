@@ -594,11 +594,11 @@ export class FolderFilesComponent implements OnInit {
   preview(file) {
     console.log("Files : ", this.driveFiles);
     this.fileviewdialogRef = this.dialog.open(PreviewuploadedfilesComponent, {
-      width: "50%",
+      width: "100%",
       panelClass: [
         "popup-class",
-        "commonpopupmainclass",
-        "uploadfilecomponentclass"
+        "commonpopupmainclass"
+        // "uploadfilecomponentclass"
       ],
       disableClose: true,
       data: {
@@ -893,7 +893,7 @@ export class FolderFilesComponent implements OnInit {
     return this.fileService.getImage(url, file);
   }
   getImageType(fileType) {
-    console.log(fileType);
+   // console.log(fileType);
     return this.fileService.getImageByType(fileType);
 }
   // getFileTypeImage(url,file){

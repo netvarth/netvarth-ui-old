@@ -1,9 +1,25 @@
-<h1 class="mat-dialog-title">Service QR Code
+<h1 class="mat-dialog-title" *ngIf="data.requestType !== 'fileShare'">Service QR Code
     <button mat-dialog-close class="modal_close" tabindex="-1">
         <i class="fa fa-window-close" aria-hidden="true"></i>
     </button>
 </h1>
-<mat-dialog-content>
+    <div>
+    <div class="mat-dialog-title d-flex justify-content-between" style="gap:14px" *ngIf="data.requestType === 'fileShare'">
+        <div style="display:flex;gap:10px;">
+            <div>
+                <i class="fa fa-share-square" aria-hidden="true"></i>
+            </div>
+             <div>
+                Share with people and groups
+             </div>
+        </div>
+          <div mat-dialog-close tabindex="-1" class="cursor-pointer">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+        </div>
+    </div>
+    <hr>
+</div>
+<mat-dialog-content *ngIf="data.requestType !== 'fileShare'">
     <div class="coupon-outer textcenter" *ngIf="qr_code_oId" #qrCodeOnlineId>
         <div>
             <ngx-qrcode id="print-section" [elementType]="elementType" [value]="qr_value">
@@ -16,17 +32,74 @@
             </button>
         </div>
         <div class="jld-link-pad">
-            <div>Link - <span class="jld-lnk-font"><span>{{shareLink}}</span></span></div>
+            <div>Link - <span class="jld-lnk-font" ><span>{{shareLink}}</span></span></div>
             <br>
             <div style="padding-right: 20%;">
                 Jaldee Provider ID - <span class="jld-lnk-font">{{accuid}}</span>
             </div>
             <div class="mgn-up-20">
-                <label>Share Link</label>
+                <label >Share Link</label>
+            
                 <share-buttons [theme]="'circles-dark'" [include]="['facebook','whatsapp','email','telegram','copy']"
                     [url]="shareLink" [autoSetMeta]="true" [image]="qrCodePath" [showIcon]="true" [showText]="true">
                 </share-buttons>
             </div>
         </div>
     </div>
+</mat-dialog-content>
+
+
+<mat-dialog-content *ngIf="data.requestType === 'fileShare'">
+   
+        <div>
+            <div class="custom d-flex" style="flex-direction:row-reverse !important;">
+                <!-- [ngModelOptions]="{standalone: true}" [(ngModel)]="search_input" (ngModelChange)="createCustomerData(customerDetails)" [(ngModel)]="customerDetails" -->
+                <input type="text" autocomplete="off" style="position:relative !important;"
+                    class="form-control inputSize" name="search" placeholder="Search here for people"/>
+                    <!--{{customer_label}}  -->
+                    <!--(click)="searchCustomer()" {{searchby}} -->
+                    <div style="position:absolute !important;">
+                        <button type="button" (click)="openDialogSearchCustomer()" class="btn searchBtn bg-primary" title="Search" ><i style="color:#fff;margin-left: 5px;" class="fa fa-plus"></i> </button>
+                    </div>
+                     
+                        <!-- (click)="
+                          searchCustomer()" -->
+            </div>
+
+            <input type="checkbox" class="mb-2 mt-2" name="" id="">&nbsp; Notify
+            <br>
+            <label for="" class="mb-2 mt-2">Messages</label>
+            <textarea class="textArea" name="" id="" cols="" rows="5" placeholder="message*" style="width: 100% !important;border-radius: 5.73504px !important"></textarea>
+        </div>
+        <!-- <div class="jld-link-pad">
+            <div>Link - <span class="jld-lnk-font"><span>{{shareLink}}</span></span></div>
+            <br>
+            <div style="padding-right: 20%;">
+                Jaldee Provider ID - <span class="jld-lnk-font">{{accuid}}</span>
+            </div>
+            <div class="mgn-up-20">
+                <label *ngIf="data.requestType === 'fileShare'">Share File</label>
+                <share-buttons [theme]="'circles-dark'" [include]="['facebook','whatsapp','email','telegram','copy']"
+                    [url]="shareLink" [autoSetMeta]="true" [image]="qrCodePath" [showIcon]="true" [showText]="true">
+                </share-buttons>
+            </div>
+        </div> -->
+       
+   
+    <div style="display: flex; margin-top: 5;">
+        <!---cancel save btn start-->
+        <div>
+            <ng-container>
+                <div class=" mgn-bt-20 mgn-up-10 mt-4">
+                    <button type="button" class="btn font-weight-bold"
+                        mat-dialog-close>Cancel</button>&nbsp; &nbsp;
+                        <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
+                        > <i class="fa fa-share-alt" aria-hidden="true"></i> Share</button>
+                </div>
+            </ng-container>
+        </div>
+
+        <!--- (click)="shareFileToConsumerOrProvider(customer_data,data.file)" cancel save btn end-->
+    </div>
+
 </mat-dialog-content>

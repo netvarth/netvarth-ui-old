@@ -13,6 +13,11 @@ import { GroupStorageService } from '../../../shared/services/group-storage.serv
 import { Router } from '@angular/router';
 import { ProviderServices } from "../../../business/services/provider-services.service";
 //import { FormBuilder, FormControl, Validators } from "@angular/forms";
+//import {MatChipInputEvent} from '@angular/material/chips';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { FileService } from "../../../shared/services/file-service";
+
+
 import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
 import { projectConstantsLocal } from "../../../../../src/app/shared/constants/project-constants";
@@ -82,7 +87,6 @@ export class CrmSelectMemberComponent implements OnInit {
   public selectTemplateLength:any;
   public taskType:any;
   public fileArray:any=[]
-
   public createCustomerForm: any;
   customerDetails:any
   customerName:any;
@@ -107,6 +111,10 @@ export class CrmSelectMemberComponent implements OnInit {
   hideSearch = false;
   customerArray:any=[];
   customerData:any
+  addOnBlur = true;
+  selectable = true;
+  removable = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
   private onDestroy$: Subject<void> = new Subject<void>();
   public activityList:any=[]
 
@@ -126,7 +134,8 @@ export class CrmSelectMemberComponent implements OnInit {
       // private datePipe:DatePipe,
       private providerServiceObj : ProviderServices,
       private wordProcessor: WordProcessor,
-      private groupService:GroupStorageService
+      private groupService:GroupStorageService,
+      private fileService : FileService
     ) {
       console.log('consdataSelectMember',this.data)
       // this.assignMemberDetails= this.data.assignMembername
@@ -316,12 +325,17 @@ export class CrmSelectMemberComponent implements OnInit {
     }
     
  if (this.data.requestType === "fileShare") {
-  console.log("this.data", this.data.file);
+  //console.log("this.data", this.data.file);
 }
 if(this.data.requestType === 'customerSearch'){
 
 }
   }
+
+  getImageType(fileType) {
+    //console.log("fileType",fileType);
+    return this.fileService.getImageByType(fileType);
+}
   handleMemberSelect(member,selected:string){
     this.handleAssignMemberSelectText=''
     // console.log(selected)
@@ -797,14 +811,25 @@ getTaskmaster(){
         
           if(res){
             console.log("searched ", res);
-            
             this.customerName = (res.firstName ? res.firstName : '') + ' ' + (res.lastName ? res.lastName : '');
             console.log("Customer Name :",this.customerName);
             this.customerList.push(res);
             this.customerArray.push(res.id);
             this.customerData = res.id
+            if(this.customerList['firstName'] || this.customerList['lastName'] ===''){
+             this.snackbarService.openSnackBar("Shared person must have name",{'panelClass': 'snackbarerror'})
+            }
+            // this.customerArray.forEach((id)=>{
+            //   if(res.id === id){
+            //     alert("Alredy")
+            //              }
+            // })
+         
             console.log("Customer List :",this.customerArray);
           }
+          // if(this.customerList['id'] === res.id){
+          //   this.snackbarService.openSnackBar("Already existed!",{'panelClass': 'snackbarerror'})
+          // }
           if(res === ''){
             //alert("please selecte atleast one consumer or provider")
             (error)=>{
@@ -825,6 +850,19 @@ getTaskmaster(){
           this.customerList.splice(index, 1);
         }
       }
+
+      // add(event: MatChipInputEvent): void {
+      //   const value = (event.value || '').trim();
+    
+      //   // Add our fruit
+      //   if (value) {
+      //     this.customerList.push({customer: value});
+      //   }
+    
+      //   // Clear the input value
+      //   event.chipInput!.clear();
+      // }
+    
   
       searchCustomer() {
         this.emptyFielderror = false;
@@ -917,6 +955,7 @@ getTaskmaster(){
               (data: any) => {
                 this.customer_data = [];
                 console.log("Customer dataaaa :", data);
+              
                 if (data.length === 0) {
                   this.show_customer = false;
                   this.create_customer = true;
@@ -969,6 +1008,7 @@ getTaskmaster(){
                 }
                
               },
+              
               // error => {
               //   this.wordProcessor.apiErrorAutoHide(this, error);
               // }
@@ -976,20 +1016,27 @@ getTaskmaster(){
                 this.snackbarService.openSnackBar("Please select atleast one consumer",{'panelClass': 'snackbarerror'})
               }
             );
+
+            
         }
       }
   
       getCustomerDetail(customer){
               console.log("Customerrrrr...",customer)
-              if(customer === '' || customer === undefined){
-                this.snackbarService.openSnackBar("Please select atleast one consumer or provider",{'panelClass': 'snackbarerror'})
-              }
+              // if(customer === '' || customer === undefined){
+              //   this.snackbarService.openSnackBar("Please select atleast one consumer or provider",{'panelClass': 'snackbarerror'})
+              // }
+           
+              if(customer.id !== this.customerList['id']){
+                setTimeout(() => {
+                  console.log('aftergetCustomer..',customer)
+                  this.dialogRef.close(customer)
+                // this.router.navigate(['provider', 'task']);
+                }, projectConstants.TIMEOUT_DELAY);
+             }
               else{
-              setTimeout(() => {
-                console.log('aftergetCustomer..',customer)
-                this.dialogRef.close(customer)
-              // this.router.navigate(['provider', 'task']);
-              }, projectConstants.TIMEOUT_DELAY);
+                this.snackbarService.openSnackBar("Already existed!",{'panelClass': 'snackbarerror'})
+              
             }
       }
       shareFileToConsumerOrProvider() {
@@ -1009,7 +1056,7 @@ getTaskmaster(){
           
             this.fileArray.push(newObj)
           })
-          //console.log("Custome :",this.fileArray)
+          console.log("Custome :",this.fileArray)
        
         // const newArray = []
         // newArray.push(this.customerArray)

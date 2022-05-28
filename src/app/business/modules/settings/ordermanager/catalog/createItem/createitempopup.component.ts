@@ -306,6 +306,7 @@ resetApiErrors() {
 itemimageSelect(event, type?) {
   this.api_loading = true;
   const input = event.target.files;
+  console.log("Selected File from catalog:",input)
   if (input) {
       for (const file of input) {
           if (projectConstants.IMAGE_FORMATS.indexOf(file.type) === -1) {

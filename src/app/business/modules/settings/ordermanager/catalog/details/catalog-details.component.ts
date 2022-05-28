@@ -1573,9 +1573,14 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
     getItemImg(item) {
         if (item.itemImages) {
             const img = item.itemImages.filter(image => image.displayImage);
+            console.log("Img URl",img[0])
+            if(img[0].imageSize === 0){
+                return '../../../../assets/images/order/Items.svg';
+            }
             if (img[0]) {
                 return img[0].url;
-            } else {
+            } 
+            else {
                 return '../../../../assets/images/order/Items.svg';
             }
         } else {

@@ -13,7 +13,7 @@ import { TeleBookingService } from "../../../shared/services/tele-bookings-servi
 import { MediaService } from "../../../shared/services/media-service";
 import { RequestDialogComponent } from "../../../shared/modules/request-dialog/request-dialog.component";
 import * as Video from 'twilio-video';
-import { SharedServices } from "../../../shared/services/shared-services";
+//import { SharedServices } from "../../../shared/services/shared-services";
 import { ProviderServices } from '../../services/provider-services.service';
 @Component({
     selector: 'app-meeting-room',
@@ -64,7 +64,8 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
         private teleService: TeleBookingService,
         private mediaService: MediaService,
         private provider_services: ProviderServices,
-        private sharedServices: SharedServices) {
+       // private sharedServices: SharedServices
+        ) {
         const _this = this;
         _this.twilioService.loading = false;
         _this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -232,7 +233,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
                 )
             }
         ).catch(error => {
-            _this.sharedServices.callHealth(error.stack).subscribe();
+           // _this.sharedServices.callHealth(error.stack).subscribe();
             console.log("error"+error);
             _this.openRequestDialog('b-both');
         });

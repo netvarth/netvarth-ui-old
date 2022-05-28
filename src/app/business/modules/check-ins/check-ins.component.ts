@@ -881,12 +881,13 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
 
         if (event.checked) {
           for (const multi of this.users) {
-            // console.log("User :",this.users);
+             console.log("Users :",this.users);
 
             // console.log(this.multiUserFilter.indexOf(multi.id))
             if (this.multiUserFilter.indexOf(multi.id) === -1) {
               this.multiUserFilter.push(multi.id);
             }
+            this.allServiceSelectedMultiUser = true;
           }
           // console.log('multiuserFilter:',this.multiUserFilter);
           this.allServiceSelectedMultiUser = true;

@@ -59,6 +59,7 @@ export class CheckinActionsComponent implements OnInit {
     showCall;
     board_count;
     pos = false;
+    showButton = false
     showBill = false;
     showMsg = false;
     showAttachment = false;
@@ -296,6 +297,7 @@ export class CheckinActionsComponent implements OnInit {
         this.action = 'slotChange';
         // this.selectedTime = '';
         this.activeDate = this.checkin_date;
+        console.log("activeDate :",this.activeDate)
         this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.accountid);
         this.getQueuesbyLocationandServiceIdavailability(this.location_id, this.serv_id, this.accountid);
     }
@@ -339,6 +341,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     handleFutureDateChange(e) {
         const tdate = e.targetElement.value;
+        console.log("Toadya :",tdate)
         const newdate = tdate.split('/').reverse().join('-');
         const futrDte = new Date(newdate);
         const obtmonth = (futrDte.getMonth() + 1);
@@ -398,6 +401,14 @@ export class CheckinActionsComponent implements OnInit {
             return false;
         }
     }
+    disableReshedule(){
+        if(this.checkin_date === this.activeDate){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     handleQueueSelection(queue, index) {
         this.sel_queue_indx = index;
         this.sel_queue_id = queue.id;
@@ -417,9 +428,15 @@ export class CheckinActionsComponent implements OnInit {
             'queue': this.sel_queue_id,
             'date': this.checkin_date
         };
-        this.provider_services.rescheduleConsumerWaitlist(data)
+        
+        if(this.checkin_date === this.activeDate){
+            this.snackbarService.openSnackBar("Please select other day for reschedule",{ 'panelClass': 'snackbarerror' });
+        }
+        else{
+            this.provider_services.rescheduleConsumerWaitlist(data)
             .subscribe(
                 () => {
+                    
                     if (this.showToken) {
                         this.snackbarService.openSnackBar('Token rescheduled to ' + this.dateformat.transformToMonthlyDate(this.checkin_date));
                     } else {
@@ -431,6 +448,8 @@ export class CheckinActionsComponent implements OnInit {
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
+        }
+      
     }
     qrCodegeneration(valuetogenerate) {
         this.qr_value = this.path + 'status/' + valuetogenerate.checkinEncId;

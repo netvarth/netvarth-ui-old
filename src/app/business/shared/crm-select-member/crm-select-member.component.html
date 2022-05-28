@@ -1008,10 +1008,10 @@
     </mat-dialog-content>
 </section>
 
-<section *ngIf="data.requestType==='fileShare'" style="padding: 20px;">
+<section  *ngIf="data.requestType==='fileShare'" style="padding: 20px;">
     <div class="header">
         <div class="d-flex" style="gap:10px">
-            <div> <i class="fa fa-share-square" aria-hidden="true"></i></div>
+            <div> <i class="fa fa-share-square fa-2x" aria-hidden="true"></i></div>
             <div class="headerText">Share with people and groups </div>
         </div>
         <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
@@ -1021,36 +1021,41 @@
 
     <mat-dialog-content class="matSiZe">
         <div>
-            <div class="leadTitle">
-                <!-- <div>Add people</div> -->
-                <!-- <span class="astericColor">*</span> -->
-
-            </div>
-           
+         
             <div>
                 <div class="fileInfo">
-                    <div>
+                  
+                    <div></div>
                         <!--[(ngModel)]="customerDetails" (ngModelChange)="createCustomerData(customerDetails)" [ngModelOptions]="{standalone: true}" [(ngModel)]="search_input"-->
                         <!-- <input  type="text" autocomplete="off" class="form-control inputSize" name="search"
                         [(ngModel)]="customerName" placeholder="Add consumer or provider"
-                             /> -->
-                             <mat-form-field>
+                             /> appearance="fill"-->
+                             <mat-form-field >
                                 <!-- <mat-label>Favorite Fruits</mat-label> -->
                                 <mat-chip-list #chipList aria-label="Fruit selection">
-                                  <mat-chip *ngFor="let customer of customerList" (removed)="remove(customer)">
+                                    
+                                   <div *ngFor="let customer of customerList">
+                                    <mat-chip *ngIf="(customer.firstName || customer.lastName)" class="matChipFilterSze"  [selectable]="selectable" [removable]="removable" (removed)="remove(customer)">
                                     {{customer.firstName ? customer.firstName : ''}}  {{customer.lastName ? customer.lastName : ''}}
+                            
                                     <button matChipRemove>
-                                      <mat-icon>cancel</mat-icon>
+                                      <mat-icon >cancel</mat-icon>
                                     </button>
                                   </mat-chip>
-                                  <input placeholder="Add people"
-                                         [matChipInputFor]="chipList"  >
+                                </div>
+
+                                </mat-chip-list>
+                                  <input placeholder="Add people" readonly class="textField"
+                                  [matChipInputFor]="chipList"
+                                 >
+                               
+                                 
                                          <!-- <input type="text" matInput class="form-control" id="bname" 
                                           autocomplete="off"
                                          placeholder="A"> -->
                                         <!--   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                                          [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" -->
-                                </mat-chip-list>
+                                
 
                                 <mat-icon matSuffix class="pull-right">
                                     <button type="button" class="btn searchBtnFind" title="Search"
@@ -1059,9 +1064,9 @@
 
                               </mat-form-field>
                             
-                              
+
                             
-                    </div>
+                   
                     <!-- <div>
                        
                             <div>
@@ -1079,24 +1084,27 @@
                         style="width: 90% !important;border-radius: 5.73504px !important"></textarea> -->
                 </div>
             </div>
+            <!-- <span *ngIf="customer.firstName === '' || customer.lastName ===''" style="color:red;">Already existed!</span> -->
+
            
         </div>
- <div class="">
-    <mat-chip>
-        <i class="fa fa-file-video-o" aria-hidden="true" *ngIf="data.file.fileType == 'mp4'"
+ <div >
+    <mat-chip class="mt-4 mb-2" class="matChipSize">
+        <img class="imgIcon" [src]="getImageType(data.file.fileType)" alt="">
+
+        <!-- <i class="fa fa-file-video-o" aria-hidden="true" *ngIf="data.file.fileType == 'mp4'"
         style="color:red;"></i>
       <i class="fa fa-file-text" aria-hidden="true"
         *ngIf="data.file.fileType && (data.file.fileType == 'doc' ||data.file.fileType == 'docx' || data.file.fileType == 'xlsx' || data.file.fileType == 'txt')"></i>
 
       <i class="fa fa-file-audio-o" aria-hidden="true" style="color:red;"
         *ngIf="data.file.fileType === 'mp3' || data.file.fileType === 'mpeg'"></i>
-      <!-- <i class="fa fa-file-text" aria-hidden="true" style="color:red;" *ngIf="data.file.fileType === 'mp3'"></i> -->
 
 
       <i class="fa fa-file-pdf-o" aria-hidden="true" *ngIf="data.file.fileType === 'pdf'"
         style="color:red;"></i>
          <i class="fa fa-file-image-o" aria-hidden="true" style="color:red;"
-        *ngIf="data.file.fileType === 'png' || data.file.fileType === 'jfif' || data.file.fileType === 'jpg' || data.file.fileType === 'jpeg' || data.file.fileType === 'bmp' || data.file.fileType === 'webp' "></i>&nbsp;
+        *ngIf="data.file.fileType === 'png' || data.file.fileType === 'jfif' || data.file.fileType === 'jpg' || data.file.fileType === 'jpeg' || data.file.fileType === 'bmp' || data.file.fileType === 'webp' "></i>&nbsp; -->
         {{data.file.fileName?.length>10 ? data.file.fileName.slice(0, 10)+'...' : data.file.fileName}}
         <!-- <button matChipRemove>
           <mat-icon>cancel</mat-icon>
@@ -1105,13 +1113,13 @@
 </div>
        
         <div mat-dialog-actions style="display: flex; margin-top: 5; padding: 0px !important;" class="pull-left">
-            <div class="cancelSaveBtn">
+            <div class="cancelShareBtn">
                 <ng-container>
                     <div class="mt-4">
                         <button type="button" class="btn font-weight-bold" mat-dialog-close>Cancel</button>&nbsp; &nbsp;
-                        <button type="button" class="btn btn-primary font-weight-bold confirmBtn" [disabled]="customerList.length === 0" (click)="shareFileToConsumerOrProvider()"> <i
-                             class="fa fa-share-alt"  aria-hidden="true"></i> Send</button>
+                        <button type="button" class="btn btn-primary font-weight-bold confirmBtn" [disabled]="customerList.length === 0" (click)="shareFileToConsumerOrProvider()">Send</button>
                     </div>
+                    <!-- <i class="fa fa-share-alt"  aria-hidden="true"></i> -->
                     <!-- (click)="shareFileToConsumerOrProvider(customer_data,data.file)" -->
                 </ng-container>
             </div>
@@ -1127,9 +1135,9 @@
             <mat-icon>clear</mat-icon>
         </div>
     </div>
-    <mat-dialog-content>
+    <mat-dialog-content class="matContainer">
         <div >
-            <div class="leadTitle" *ngIf="!hideSearch"  >
+            <div class="leadTitle mb-1" *ngIf="!hideSearch"  >
                 <div>{{customer_label | capitalizeFirst}} <span class="astericColor">*</span></div>
             </div>
             <div class="fieldPadding" *ngIf=" !hideSearch" >
@@ -1147,9 +1155,9 @@
                                   searchCustomer()" -->
                     </div>
                 </div>
-                <div>
+                <!-- <div>
                     <br>
-                    <div class="disp-flex" *ngIf="!hideSearch">
+                    <div class="disp-flex" *ngIf="!hideSearch"> -->
                         <!-- <a>*ngIf="!hideSearch"
                             <span (click)="createNew()"><u>Create Customer</u></span>(click)="createNew()"
                         </a> -->
@@ -1159,8 +1167,8 @@
                           </span>
                           Create {{customer_label | capitalizeFirst}} </button> -->
 
-                    </div>
-                </div>
+                    <!-- </div>
+                </div> -->
                 <!-- <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="createCustomerForm.customerDetails === '' || data.file === ''"
                     errorMsg="{{emptyFielderror}}">
                 </app-field-error-display> -->
@@ -1170,20 +1178,23 @@
                 {{note.note }}
             </div> -->
             <div class="bggrey my-2" *ngIf="hideSearch">
-                <div style="display: flex;gap: 5px;flex-wrap: wrap;">
+                <div class="leadTitle" *ngIf="customer_data.firstName || customer_data.lastName">
+                    <!-- style="display: flex;gap: 5px;flex-wrap: wrap;" -->
+                    <i class="fa fa-user"></i>
                     {{customer_data.firstName}} {{customer_data.lastName}}
                 </div>
-                <div>
+                <div *ngIf="customer_data">
                     <div class="leadTitle" *ngIf="customer_data.jaldeeId">
                         <i class="fa fa-id-card-o icon"></i>
                         <span>{{customer_label}} id : {{customer_data.jaldeeId}}</span>
                     </div>
-                    <div class="leadTitle" *ngIf="customer_data.phoneNo">
-                        <i class="fa fa-mobile icon"></i>
+                    <div class="leadTitle" *ngIf="customer_data.phoneNo !== ' ' || customer_data.phoneNo === undefined || customer_data.phoneNo === ''">
+                        <i class="fa fa-mobile icon" ></i>
                         <span>{{customer_data.phoneNo}}</span>
                     </div>
-                    <div class="leadTitle" *ngIf="customer_data.email">
-                        <i class="fa fa-envelope icon"></i>
+                    
+                    <div class="leadTitle" *ngIf="customer_data.email !== '' || customer_data.email === undefined">
+                        <i class="fa fa-envelope icon" ></i>
                         <span>{{customer_data.email}}</span>
                     </div>
                 </div>
@@ -1208,9 +1219,9 @@
                         <button type="button" class="btn font-weight-bold"
                             mat-dialog-close>Cancel</button>&nbsp; &nbsp;
                             <button type="button" [disabled]="!customer_data" class="btn btn-primary font-weight-bold confirmBtn"
-                            (click)="getCustomerDetail(customer_data)" > <i class="fa fa-search" aria-hidden="true"></i> Send</button>
+                            (click)="getCustomerDetail(customer_data)" >Done</button>
                     </div>
-                    <!-- (click)="shareFileToConsumerOrProvider(customer_data,data.file)" -->
+                    <!--<i class="fa fa-search" aria-hidden="true"></i> (click)="shareFileToConsumerOrProvider(customer_data,data.file)" -->
                 </ng-container>
             </div>
 

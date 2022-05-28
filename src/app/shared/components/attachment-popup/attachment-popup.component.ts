@@ -60,6 +60,7 @@ export class AttachmentPopupComponent implements OnInit {
     }
   }
   showFile(file) {
+    
     this.fileviewdialogRef = this.dialog.open(ShowuploadfileComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'uploadfilecomponentclass'],

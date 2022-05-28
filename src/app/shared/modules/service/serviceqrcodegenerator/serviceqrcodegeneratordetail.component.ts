@@ -1,10 +1,13 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Meta, Title } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
+import { CrmSelectMemberComponent } from '../../../../../../src/app/business/shared/crm-select-member/crm-select-member.component';
 
 @Component({
   selector: 'app-serviceqrcodegenerator',
-  templateUrl: './serviceqrcodegeneratordetail.component.html'
+  templateUrl: './serviceqrcodegeneratordetail.component.html',
+  // styleUrls: ['./serviceqrcodegeneratordetail.component.css']
 })
 export class ServiceQRCodeGeneratordetailComponent implements OnInit, OnDestroy {
   elementType = 'url';
@@ -21,6 +24,7 @@ export class ServiceQRCodeGeneratordetailComponent implements OnInit, OnDestroy 
   serviceId;
   userId;
   constructor(private changeDetectorRef: ChangeDetectorRef,
+    public dialog: MatDialog,
     public dialogRef: MatDialogRef<ServiceQRCodeGeneratordetailComponent>,
     private angular_meta: Meta,
     private titleService: Title,
@@ -38,6 +42,9 @@ export class ServiceQRCodeGeneratordetailComponent implements OnInit, OnDestroy 
     this.serviceId = this.data.serviceid;
     this.customId = this.data.customId;
     this.userId = this.data.userid;
+    if(this.data.requestType === 'fileShare'){
+      this.shareLink = '';
+    }
     if (this.userId) {
       this.shareLink = this.wpath + this.accuid + '/' + this.userId + '/service/' + this.serviceId + '/';
     } else {
@@ -80,5 +87,27 @@ export class ServiceQRCodeGeneratordetailComponent implements OnInit, OnDestroy 
     WindowPrt.close();
   }
   downloadQR() {
+  }
+
+
+  openDialogSearchCustomer(){
+    console.log('openDialogStatusChange')
+    const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
+      width:'100%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data:{
+        requestType:'fileShare',
+        //file:file,
+      }
+    });
+    dialogRef.afterClosed().subscribe((res:any)=>{
+      console.log('resssssssss',res);
+      // this.getCompletedTask();
+      // if(res==='In Progress' ||res==='Completed' || res==='Assigned' || res==='New' || res === 'Cancelled' || res === 'Suspended' ){
+      //   // this.getInprogressTask();
+      //   this.ngOnInit()
+      // }
+    })
   }
 }
