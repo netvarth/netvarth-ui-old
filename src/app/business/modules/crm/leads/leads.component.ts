@@ -191,6 +191,7 @@ export class LeadsComponent implements OnInit {
     this.getUnassignedLead()
     this.getAssignedLead()
     this.getSucessListLead()
+    this.getNewGenerateLead()
   }
   getTotalLead(from_oninit = true) {
     let filter = this.setFilterForApi();
@@ -206,13 +207,14 @@ export class LeadsComponent implements OnInit {
             .subscribe(
               data => {
                 this.totalLeadList = data;
-                console.log('totalLeadList',this.totalLeadList.length)
-                this.getUnassignedLead()
+                console.log('totalLeadList',this.totalLeadList)
+                // this.getUnassignedLead()
                 this.getAssignedLead()
                 this.getSucessListLead()
                 this.getTransferredLead()
                 this.getFailedLead()
                 this.getInprogressLead()
+                this.getNewGenerateLead()
                 this.totalLeadList = this.totalLeadList.filter(obj => !obj.originId);
                 this.loadComplete = true;
               },
@@ -352,13 +354,55 @@ export class LeadsComponent implements OnInit {
     });
   }
   getUnassignedLead(){
-    this.UnassignedLeadList=[]
-    this.totalLeadList.forEach((unassigned)=>{
-      if(unassigned.status.name ==='Unassigned'){
-        this.UnassignedLeadList.push(unassigned)
-      }
+    // this.UnassignedLeadList=[]
+    // this.totalLeadList.forEach((unassigned)=>{
+    //   if(unassigned.status.name ==='New'){
+    //     this.UnassignedLeadList.push(unassigned)
+    //   }
       
-    })
+    // })
+  }
+  getNewGenerateLead(from_oninit = true) {
+    let filter = this.setFilterForApi();
+    this.getNewLeadCount(filter)
+      .then(
+        result => {
+          if (from_oninit) { this.completedCount = result; }
+          filter = this.setPaginationCompletedFilter(filter);
+          this.crmService.getNewLead(filter)
+            .subscribe(
+              data => {
+                console.log('dataNew',data)
+                this.UnassignedLeadList = data;
+                this.loadComplete2 = true;
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                this.loadComplete2 = true;
+             
+              }
+            );
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getNewLeadCount(filter){
+    return new Promise((resolve, reject) => {
+      this.crmService.getNewLeadCount(filter)
+        .subscribe(
+          data => {
+            console.log('dataUnassigned',data)
+            this.pagination.totalCnt = data;
+            // this. = this.pagination.totalCnt;
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
   }
   getAssignedLead(){
     this.assignedLeadList=[]
@@ -553,7 +597,8 @@ export class LeadsComponent implements OnInit {
   handle_pageclick_Unassigned(pg){
     this.pagination.startpageval = pg;
     this.filter.page = pg;
-    this.getUnassignedLead();
+    // this.getUnassignedLead();
+    this.getNewGenerateLead()
   }
   handle_pageclick_ASsigned(pg){
     this.pagination.startpageval = pg;
@@ -780,7 +825,8 @@ export class LeadsComponent implements OnInit {
       this.bInProgressLead=false;
       this.bTotalLead=false;
       this.bAssigned=false;
-      this.getUnassignedLead()
+      // this.getUnassignedLead()
+      this.getNewGenerateLead()
     }
     else if(statusValue===7){
       this.bUnassigned=false;
@@ -849,14 +895,19 @@ export class LeadsComponent implements OnInit {
       
     }
   }
+  // getNewGenerateLead(){
+  //   this.crmService.getNewLead()
+  // }
+  
   getLeadStatusListData(){
     this.crmService.getLeadStatus().subscribe((leadStatus:any)=>{
       console.log('leadStatus',leadStatus);
-      this.leadStatusList.push({
+      this.leadStatusList.push(
+        {
         id:0,   name:'Total Lead',image:'./assets/images/crmImages/total.png',
       },
       {
-        id: 6, name: 'Unassigned',image:'./assets/images/crmImages/unassigned.png',
+        id: 6, name: 'New',image:'./assets/images/crmImages/unassigned.png',
       },
       {
         id: 7, name: 'Assigned',image:'./assets/images/tokenDetailsIcon/assignedTo.png',
@@ -872,7 +923,8 @@ export class LeadsComponent implements OnInit {
       },
       {
         id: 11, name: 'Transferred',image:'./assets/images/crmImages/transferred.png',
-      },);
+      },
+      );
     },
     (error)=>{
       this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})

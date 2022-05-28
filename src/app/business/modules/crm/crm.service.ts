@@ -162,6 +162,14 @@ export class CrmService {
       const url = 'provider/lead/count?status-eq=10';
       return this.servicemeta.httpGet(url, null, filter);
     }
+    getNewLead(filter){
+      const url = 'provider/lead/?status-eq=6';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+    getNewLeadCount(filter){
+      const url = 'provider/lead/count?status-eq=6';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
 
     getFailedLead(filter = {}) {
       const url = 'provider/lead?status-eq=9';
@@ -397,10 +405,10 @@ export class CrmService {
       const url='provider/task/'+ taskUid + '/status/rejected'
       return this.servicemeta.httpPut(url, data);
   }
-  statusToProceed(taskUid,data){
-    console.log(data)
-      const url='provider/task/'+ taskUid + '/status/done'
-      return this.servicemeta.httpPut(url, data);
+  statusToProceed(taskUid){
+    // console.log(data)
+      const url='provider/task/'+ taskUid + '/status/closed'
+      return this.servicemeta.httpPut(url);
   }
 
 }

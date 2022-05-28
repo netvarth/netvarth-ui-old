@@ -147,7 +147,7 @@ export class CRMComponent implements OnInit {
   redirectionSeperateTemplate(templateName:any){
     console.log('templateName',templateName)
     if(templateName==='Leads'){
-      
+      this.router.navigate(['provider','lead']);
     }
   }
   buttonClicked (type) {

@@ -1054,7 +1054,7 @@ export class ViewTaskComponent implements OnInit {
       "estDuration" : this.estTime
 
       }
-      this.crmService.statusToPending(this.taskDetails.taskUid, updateFollowUpData).subscribe((response)=>{
+      this.crmService.statusToRejected(this.taskDetails.taskUid, updateFollowUpData).subscribe((response)=>{
         console.log('afterupdateFollowUpData',response);
         setTimeout(() => {
           this.taskDetailsForm.reset();
@@ -1092,10 +1092,12 @@ export class ViewTaskComponent implements OnInit {
       "estDuration" : this.estTime
 
       }
-      this.crmService.statusToPending(this.taskDetails.taskUid, updateFollowUpData).subscribe((response)=>{
+      console.log('updateFollowUpData',updateFollowUpData)
+      console.log('this.taskDetails.taskUid',this.taskDetails.taskUid)
+      this.crmService.statusToProceed(this.taskDetails.taskUid).subscribe((response)=>{
         console.log('afterupdateFollowUpData',response);
         setTimeout(() => {
-          this.taskDetailsForm.reset();
+          // this.taskDetailsForm.reset();
         this.router.navigate(['provider', 'crm']);
         }, projectConstants.TIMEOUT_DELAY);
       },
