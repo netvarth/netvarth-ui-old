@@ -820,8 +820,7 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
-    else if (reportType === 'crm') {
+    } else if (reportType === 'crm') {
       console.log("Report Type :",reportType)
       if (this.crm_timePeriod === 'DATE_RANGE' && (this.crm_startDate === undefined || this.crm_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
@@ -885,9 +884,7 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    }
-    
-    else if (reportType === 'lead') {
+    } else if (reportType === 'lead') {
       console.log("Report Type :",reportType)
       if (this.lead_timePeriod === 'DATE_RANGE' && (this.lead_StartDate === undefined || this.lead_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
@@ -951,9 +948,7 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    }
-    
-    else if (reportType === 'token') {
+    } else if (reportType === 'token') {
       if (this.waitlist_timePeriod === 'DATE_RANGE' && (this.waitlist_startDate === undefined || this.waitlist_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -1067,7 +1062,7 @@ export class NewReportComponent implements OnInit {
         request_payload.donorName = this.donation_donorFirstName + '' + this.donation_donorLastName;
         request_payload.responseType = 'INLINE';
         this.passPayloadForReportGeneration(request_payload);
-        console.log("Donation Data :",this.passPayloadForReportGeneration(request_payload))
+        // console.log("Donation Data :",this.passPayloadForReportGeneration(request_payload))
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
     } else if (reportType === 'order') {
@@ -1120,8 +1115,7 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    }
-    else if (reportType === 'user') {
+    } else if (reportType === 'user') {
       if (this.user_timePeriod === 'DATE_RANGE' && (this.user_startDate === undefined || this.user_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -1330,6 +1324,7 @@ export class NewReportComponent implements OnInit {
     });
   }
   generatedReport(report) {
+
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
@@ -1348,238 +1343,8 @@ export class NewReportComponent implements OnInit {
       );
       this.router.navigate(['provider', 'reports', 'report-list']);
     });
-    
   }
 
-  // loadBookingQuestionaaireReport(list) {
-  //   const dialogRef = this.dialog.open(ExportBookingReportComponent, {
-  //     width: '100%',
-  //     panelClass: ['export-class', 'popup-class', 'commonpopupmainclass'],
-  //     disableClose: true,
-  //     data: {
-  //       bookingList: list,
-  //       criteria: this.waitlist_timePeriod
-  //     }
-  //   });
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     this.loading = false;
-  //   });
-  // }
-
-  // generateSummary(reportType) {
-  //   this.loading = true;
-  //   if (reportType === 'token') {
-  //     if (this.waitlist_timePeriod === 'DATE_RANGE' && (this.waitlist_startDate === undefined || this.waitlist_endDate === undefined)) {
-  //       this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
-  //     } else {
-  //       this.filterparams = {
-  //         'billPaymentStatus': this.waitlist_billpaymentstatus,
-  //         'queue': this.token_queue_id,
-  //         'service': this.token_service_id,
-  //         // 'waitlistStatus': this.waitlist_status,
-  //         'waitlistMode': this.waitlist_mode,
-  //         'waitlistingForId': this.waitlist_customerId
-  //       };
-  //       if (!this.waitlist_customerId) {
-  //         delete this.filterparams.waitlistingForId;
-  //       }
-  //       if (this.waitlist_billpaymentstatus === 0) {
-  //         delete this.filterparams.billPaymentStatus;
-  //       }
-  //       if (this.token_service_id === 0) {
-  //         delete this.filterparams.service;
-  //       }
-  //       if (this.token_queue_id === 0) {
-  //         delete this.filterparams.queue;
-  //       }
-        
-  //       if (this.waitlistStatusFilter.length > 0) {
-  //         this.filterparams ['waitlistStatus'] = this.waitlistStatusFilter.toString();
-  //         // delete this.filterparams.waitlistStatus;
-  //       }
-  //       if (this.waitlistIntStatusFilter.length > 0) {
-  //         this.filterparams['internalStatus'] = this.waitlistIntStatusFilter.toString();
-  //       }
-  //       // if (this.waitlist_status === 0) {
-  //       //   delete this.filterparams.waitlistStatus;
-  //       // }
-  //       if (this.waitlist_mode === 0) {
-  //         delete this.filterparams.waitlistMode;
-  //       }
-  //       if (this.waitlist_customerId === 0) {
-  //         delete this.filterparams.providerOwnConsumerId;
-  //       }
-  //       const filter = {};
-  //       for (const key in this.filterparams) {
-  //         if (this.filterparams.hasOwnProperty(key)) {
-  //           // assign property to new object with modified key
-  //           filter[key + '-eq'] = this.filterparams[key];
-  //         }
-  //       }
-  //       if (this.waitlist_timePeriod === 'DATE_RANGE') {
-  //         filter['date-ge'] = this.dateformat.transformTofilterDate(this.waitlist_startDate);
-  //         filter['date-le'] = this.dateformat.transformTofilterDate(this.waitlist_endDate);
-  //       }
-  //       if (this.waitlist_timePeriod === 'LAST_THIRTY_DAYS') {
-  //         filter['date-ge'] = this.dateformat.transformTofilterDate(new Date(new Date().setDate(new Date().getDate() - 30)))
-  //         filter['date-le'] = this.dateformat.transformTofilterDate(new Date());
-  //       }
-  //       if (this.waitlist_timePeriod === 'LAST_WEEK') {
-  //         filter['date-ge'] = this.dateformat.transformTofilterDate(new Date(new Date().setDate(new Date().getDate() - 7)))
-  //         filter['date-le'] = this.dateformat.transformTofilterDate(new Date());
-  //       }
-  //       if (this.waitlist_timePeriod === 'NEXT_WEEK') {
-  //         filter['date-le'] = this.dateformat.transformTofilterDate(new Date(new Date().setDate(new Date().getDate() + 7)))
-  //         filter['date-ge'] = this.dateformat.transformTofilterDate(new Date(new Date().setDate(new Date().getDate() + 1)))
-  //       }
-  //       if (this.waitlist_timePeriod === 'TODAY') {
-  //         filter['date-eq'] = this.dateformat.transformTofilterDate(new Date());
-  //       }
-
-  //       // const request_payload: any = {};
-  //       // request_payload.reportType = 'QNRTOKEN';
-  //       // request_payload.reportDateCategory = this.waitlist_timePeriod;
-  //       // request_payload.filter = filter;
-  //       // request_payload.responseType = 'INLINE';
-  //       // this.passPayloadForReportGeneration(request_payload);
-  //       // this.report_data_service.setReportCriteriaInput(request_payload);
-
-  //       if (this.waitlist_timePeriod === 'TODAY') {
-  //         this.provider_services.getTodayWaitlist(filter).subscribe(
-  //           data => {
-  //             const list = data;
-  //            this.loadBookingQuestionaaireReport(list);
-  //           },
-  //           () => { },
-  //           () => { });
-  //       } else if (this.waitlist_timePeriod === 'NEXT_WEEK') {
-  //         this.provider_services.getFutureWaitlist(filter).subscribe(
-  //           data => {
-  //             const list = data;
-  //             this.loadBookingQuestionaaireReport(list);
-  //           },
-  //           () => { },
-  //           () => { });
-  //       } else {
-  //         this.provider_services.getHistoryWaitlist(filter).subscribe(
-  //           (data:any) => {   
-  //             this.provider_services.getTodayWaitlist(filter).subscribe(
-  //               (tdata:any) => {
-  //                 const list = [...data,...tdata];
-  //                this.loadBookingQuestionaaireReport(list);
-  //               },
-  //               () => { },
-  //               () => { });
-
-  //             // this.loadBookingQuestionaaireReport(list);
-  //           },
-  //           () => { this.loading = false; },
-  //           () => { this.loading = false; });
-  //       }
-  //     }
-  //   } else if (reportType === 'appointment') {
-  //     if (this.appointment_timePeriod === 'DATE_RANGE' && (this.appointment_startDate === undefined || this.appointment_endDate === undefined)) {
-  //       this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
-  //     } else {
-  //       this.filterparams = {
-  //         'paymentStatus': this.appointment_billpaymentstatus,
-  //         'schedule': this.appointment_schedule_id,
-  //         'service': this.appointment_service_id,
-  //         // 'apptStatus': this.appointment_status,
-  //         'appointmentMode': this.appointment_mode,
-  //         // 'apptForId': this.appointment_customerId
-  //       };
-  //       // if (!this.appointment_customerId) {
-  //       //   delete this.filterparams.appmtFor;
-  //       // }
-  //       if (this.appointment_schedule_id === 0) {
-  //         delete this.filterparams.schedule;
-  //       }
-  //       if (this.appointment_billpaymentstatus === 0) {
-  //         delete this.filterparams.paymentStatus;
-  //       }
-  //       if (this.appointment_service_id === 0) {
-  //         delete this.filterparams.service;
-  //       }
-  //       if (this.apptStatusFilter.length > 0) {
-  //         this.filterparams ['apptStatus'] = this.apptStatusFilter.toString();
-  //         // delete this.filterparams.waitlistStatus;
-  //       }
-  //       if (this.apptIntStatusFilter.length > 0) {
-  //         this.filterparams['internalStatus'] = this.apptIntStatusFilter.toString();
-  //       }
-  //       // if (this.appointment_status === 0) {
-  //       //   delete this.filterparams.apptStatus;
-  //       // }
-  //       if (this.appointment_mode === 0) {
-  //         delete this.filterparams.appointmentMode;
-  //       }
-  //       if (this.appointment_customerId === 0) {
-  //         delete this.filterparams.providerOwnConsumerId;
-  //       }
-  //       const filter = {};
-  //       for (const key in this.filterparams) {
-  //         if (this.filterparams.hasOwnProperty(key)) {
-  //           // assign property to new object with modified key
-  //           filter[key + '-eq'] = this.filterparams[key];
-  //         }
-  //       }
-  //       if (this.appointment_timePeriod === 'DATE_RANGE') {
-  //         if (this.appointment_startDate === undefined || this.appointment_endDate === undefined) {
-  //           this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
-
-  //         }
-  //         filter['date-ge'] = this.dateformat.transformTofilterDate(this.appointment_startDate);
-  //         filter['date-le'] = this.dateformat.transformTofilterDate(this.appointment_endDate);
-  //       }
-  //       if (this.appointment_timePeriod === 'DATE_RANGE') {
-  //         filter['date-ge'] = this.dateformat.transformTofilterDate(this.waitlist_startDate);
-  //         filter['date-le'] = this.dateformat.transformTofilterDate(this.waitlist_endDate);
-  //       }
-  //       if (this.appointment_timePeriod === 'LAST_THIRTY_DAYS') {
-  //         filter['date-ge'] = this.dateformat.transformTofilterDate(new Date(new Date().setDate(new Date().getDate() - 30)))
-  //         filter['date-le'] = this.dateformat.transformTofilterDate(new Date());
-  //       }
-  //       if (this.appointment_timePeriod === 'LAST_WEEK') {
-  //         filter['date-ge'] = this.dateformat.transformTofilterDate(new Date(new Date().setDate(new Date().getDate() - 7)))
-  //         filter['date-le'] = this.dateformat.transformTofilterDate(new Date());
-  //       }
-  //       if (this.appointment_timePeriod === 'NEXT_WEEK') {
-  //         filter['date-le'] = this.dateformat.transformTofilterDate(new Date(new Date().setDate(new Date().getDate() + 7)))
-  //         filter['date-ge'] = this.dateformat.transformTofilterDate(new Date(new Date().setDate(new Date().getDate() + 1)))
-  //       }
-  //       if (this.appointment_timePeriod === 'TODAY') {
-  //         filter['date-eq'] = this.dateformat.transformTofilterDate(new Date());
-  //       }
-  //       if (this.appointment_timePeriod === 'TODAY') {
-  //         this.provider_services.getTodayAppointments(filter).subscribe(
-  //           data => {
-  //             const list = data;
-  //             this.loadBookingQuestionaaireReport(list);
-  //           },
-  //           () => { },
-  //           () => { });
-  //       } else if (this.appointment_timePeriod === 'NEXT_WEEK') {
-  //         this.provider_services.getFutureAppointments(filter).subscribe(
-  //           data => {
-  //             const list = data;
-  //             this.loadBookingQuestionaaireReport(list);
-  //           },
-  //           () => { },
-  //           () => { });
-  //       } else {
-  //         this.provider_services.getHistoryAppointments(filter).subscribe(
-  //           data => {
-  //             const list = data;
-  //             this.loadBookingQuestionaaireReport(list);
-  //           },
-  //           () => { this.loading = false; },
-  //           () => { this.loading = false; });
-  //       }
-  //     }
-  //   }
-    
-  // }
   generateSummary(reportType) {
     this.loading = true;
     if (reportType === 'token') {

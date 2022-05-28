@@ -15,7 +15,7 @@ export class ConfirmBoxComponent {
   yes_btn_cap = 'YES';
   cancel_btn_cap = 'NO';
 
-  constructor(public dialogRef: MatDialogRef<ConfirmBoxComponent>,
+  constructor(private dialogRef: MatDialogRef<ConfirmBoxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (this.data.type) {
       this.yes_btn_cap = Messages.YES_BTN;
