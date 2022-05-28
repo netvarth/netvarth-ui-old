@@ -148,10 +148,10 @@ export class LeadsComponent implements OnInit {
   public bFailedLead:boolean=false;
   public bSucessLead:boolean=false;
   public bInProgressLead:boolean=false;
-  public bTotalLead:boolean=true;
+  public bTotalLead:boolean=false;
   public statusFilter:any;
   public assignedLeadList:any=[]
-  public bUnassigned:boolean=false
+  public bUnassigned:boolean=true
   public bAssigned:boolean=false;
   public UnassignedLeadList:any=[]
   public sucessListLead:any=[]
@@ -181,16 +181,30 @@ export class LeadsComponent implements OnInit {
     this.getLeadStatusListData();
     this.getCategoryListData();
     this.getLeadTypeListData();
-    this.getTotalLead();
-    this.getInprogressLead();
-    this.getCompletedLead();
-    this.getDelayedLead();
-    this.getFailedLead();
-    this.getTransferredLead();
+    // this.getTotalLead();
+    // this.getInprogressLead();
+    // this.getCompletedLead();
+    // this.getDelayedLead();
+    // this.getFailedLead();
+    // this.getTransferredLead();
     this.getLeadmaster()
-    this.getUnassignedLead()
-    this.getAssignedLead()
-    this.getSucessListLead()
+    // this.getUnassignedLead()
+    // this.getAssignedLead()
+    // this.getSucessListLead()
+    // this.getNewGenerateLead()
+    // this.getLeadStatusListData();
+    // this.getCategoryListData();
+    // this.getLeadTypeListData();
+    // this.getTotalLead();
+    // this.getInprogressLead();
+    // this.getCompletedLead();
+    // this.getDelayedLead();
+    // this.getFailedLead();
+    // this.getTransferredLead();
+    this.getLeadmaster()
+    // this.getUnassignedLead()
+    // this.getAssignedLead()
+    // this.getSucessListLead()
     this.getNewGenerateLead()
   }
   getTotalLead(from_oninit = true) {
@@ -403,6 +417,11 @@ export class LeadsComponent implements OnInit {
           }
         );
     });
+  }
+  setPaginationNewFilter(api_filter){
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
   }
   getAssignedLead(){
     this.assignedLeadList=[]
