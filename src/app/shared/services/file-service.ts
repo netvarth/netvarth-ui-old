@@ -21,6 +21,7 @@ export class FileService {
     'image/jpg',
     'image/png',
     'image/jpeg',
+    'image/bmp',
     'application/pdf',
     'application/jfif',
     'video/mp4',

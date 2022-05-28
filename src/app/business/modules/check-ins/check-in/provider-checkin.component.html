@@ -413,11 +413,11 @@
                         </div>
                         <div>
                           <mat-form-field>
-                            <mat-select class="inputbox timeSlot"
-                              [(ngModel)]="queuejson[0].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].queueSchedule.timeSlots[0]['eTime']">
-                              <mat-option *ngFor="let queue of queuejson, let i= index"
-                                [value]="queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']"
-                                (selectionChange)="handleQueueSelection(queue, i);">
+                            <!-- queuejson[0].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].queueSchedule.timeSlots[0]['eTime'] -->
+                            <!-- queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime'] -->
+                            <mat-select class="inputbox timeSlot" #lstQueue2
+                              [(ngModel)]="selectedQ" (selectionChange)="handleQueueSelection(lstQueue2.value);">
+                              <mat-option *ngFor="let queue of queuejson" [value]="queue">
                                 <div style="display:flex;gap:5px">
                                   <div>
                                     <div><i class="fa fa-clock-o" aria-hidden="true"></i></div>
@@ -1064,11 +1064,11 @@
                         </div>
                         <div>
                           <mat-form-field>
-                            <mat-select class="inputbox timeSlot"
-                              [(ngModel)]="queuejson[0].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].queueSchedule.timeSlots[0]['eTime']">
-                              <mat-option *ngFor="let queue of queuejson, let i= index"
-                                [value]="queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime']"
-                                (selectionChange)="handleQueueSelection(queue, i);">
+                            <!-- queuejson[0].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].queueSchedule.timeSlots[0]['eTime'] -->
+                            <!-- queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime'] -->
+                            <mat-select class="inputbox timeSlot" #lstQueue1 (selectionChange)="handleQueueSelection(lstQueue1.value);"
+                              [(ngModel)]="selectedQ">
+                              <mat-option *ngFor="let queue of queuejson, let i= index" [value]="queue">
                                 <div style="display:flex;gap:5px">
                                   <div>
                                     <div><i class="fa fa-clock-o" aria-hidden="true"></i></div>
@@ -1552,8 +1552,8 @@
                   <mat-chip-list class="pcheckin-owl">
                     <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']">
                       <mat-chip class="item" *ngFor="let queue of queuejson, let i= index"
-                        [selected]="queue.id === queuejson[this.sel_queue_indx].id"
-                        (click)="handleQueueSelection(queue,i);">
+                        [selected]="queue.id === selectedQ.id"
+                        (click)="handleQueueSelection(queue);">
                         <span>{{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
                           queue.queueSchedule.timeSlots[0]['eTime']}}
                         </span>
