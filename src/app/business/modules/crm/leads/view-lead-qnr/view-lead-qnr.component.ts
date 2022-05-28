@@ -691,6 +691,11 @@ export class ViewLeadQnrComponent implements OnInit{
       // dataToSend.append('attachments', this.fileData);
       console.log("Json Daata :", JSON.stringify(this.fileData));
     }
+    if(this.selectedMessage.files.length === 0){
+      this.fileData = [
+        
+      ];
+    }
     const createLeadData:any ={
       "originFrom": "Lead",
       "originUid": this.leadkid,
