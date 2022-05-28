@@ -23,7 +23,8 @@ import { MatOptionModule } from "@angular/material/core";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 const routes: Routes = [
   { path: '', component: LeadsComponent },
-  {path:'viewlead/:id',loadChildren:()=>import('./view-lead/view-lead.module').then((m)=>m.ViewLeadModule)},
+  // {path:'viewlead/:id',loadChildren:()=>import('./view-lead/view-lead.module').then((m)=>m.ViewLeadModule)},
+  {path:'viewleadqnr/:id',loadChildren:()=>import('./view-lead-qnr/view-lead-qnr.module').then((m)=>m.ViewLeadQnrModule)},
   {path:'create-lead',loadChildren:()=>import('./create-lead/create-lead.module').then((m)=>m.CreateLeadModule)},
   {path:'create-task/:id',loadChildren:()=>import('../tasks/create-task/create-task.module').then((m)=>m.CreateTaskModule)},
   {path:'leadtemplate',loadChildren:()=>import('./leadtemplate/leadtemplate.module').then((m)=>m.LeadtemplateModule)},

@@ -89,6 +89,94 @@ action: any;
   leadTokens:any=[]
   parentUid: any;
   public headerName:string='Lead Overview'
+  public apiloading:any= true;
+  public availableDates: any = [];
+  public minDate:any=new Date();
+  public ddate:any;
+  showCustomers = false;
+  pagination: any = {
+    startpageval: 1,
+    totalCnt: 0,
+    perPage: this.filter.page_count
+  };
+  //form variable start
+  public createLeadForm:any;
+  filteredCustomers:any;
+  public leadError:null;
+  public selectMember:any;
+  public categoryListData:any=[];
+  public allMemberList:any=[];
+  public leadTypeList:any=[];
+  public leadStatusList:any=[];
+  public leadPriorityList:any=[];
+  public userType:any;
+  public locationName:any;
+  public areaName:any;
+  public locationId:any;
+  public leadDueDate:any;
+  public leadDueTime:any;
+  public leadDueDays:any;
+  public leadDueHrs:any;
+  public leadDueMin:any;
+  public selectedDate:any;
+  public leadErrorText:any;
+  public boolenLeadError:boolean=false;
+  public assigneeId:any;
+  public selectedTime:any;
+  public selectLeadManger:any;
+  public selectLeadMangerId:any;
+  public selectLeadCustomer:any;
+  public createBTimeField:boolean=false;
+  public updateBTimefield:boolean=false;
+  public dayGapBtwDate:any;
+  public hour:any;
+  public minute:any;
+  customer_count: any = 0;
+  //update variable;
+  public updateValue:any;
+  public updateTitleLead:any;
+  public lead:any;
+  public selectHeader:any;
+  public updateUserType:any;
+  public updateMemberId:any;
+  public updateManagerId:any;
+  public updateLeadId:any;
+  public updteLocationId:any;
+  public minTime=new Date().getTime();
+  public bEstDuration:boolean=false;
+  public updateAssignMemberDetailsToDialog:any;
+  public updateSelectLeadMangerDetailsToDialog:any;
+  public sel_loc:any;
+  leadStatusModal: any;
+  leadPriority: any;
+  public estDurationWithDay:any;
+  public estTime:any;
+  estDurationWithTime: any;
+  customer: any;
+  customers: any = [];
+  loadComplete: boolean;
+  selectLeadCustomerId: any;
+  searchby = '';
+  form_data: any;
+  emptyFielderror = false;
+  create_new = false;
+  qParams: {};
+  prefillnewCustomerwithfield = '';
+  customer_data: any;
+  show_customer = false;
+  create_customer = false;
+  disabledNextbtn = true;
+  jaldeeId: any;
+  formMode: string;
+  countryCode;
+  customer_email: any;
+  search_input: any;
+  hideSearch = false;
+  leadMasterData: any;
+  leadId:any;
+  public innerWidth:any;
+  public customerInfoError:any='';
+  public editable:boolean=true;
 constructor(
   private locationobj: Location,
    private crmService: CrmService,

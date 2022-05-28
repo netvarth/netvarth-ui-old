@@ -1295,4 +1295,5 @@ export class SharedServices {
     const url = 'consumer/orders/questionnaire/upload/status/' + uid + '?account=' + account;
     return this.servicemeta.httpPut(url, data);
   }
+ 
 }

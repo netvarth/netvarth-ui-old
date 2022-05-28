@@ -410,5 +410,11 @@ export class CrmService {
       const url='provider/task/'+ taskUid + '/status/closed'
       return this.servicemeta.httpPut(url);
   }
-
+  getLeadQnrDetails(categoryId){
+    const url = 'provider/questionnaire/lead/' + categoryId + '/WALKIN';
+    return this.servicemeta.httpGet(url);
+  }
+  addkyc(data){
+    return this.servicemeta.httpPost('provider/customers/KYC/create', data);
+  }
 }

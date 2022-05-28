@@ -64,6 +64,7 @@ const routes: Routes = [
         {path:'crm-select-member',loadChildren:()=>import ('././shared/crm-select-member/crm-select-member.module').then(m=>m.CrmSelectMemberModule)},
         {path:'viewtask/:id',loadChildren:()=>import ('./modules/crm/tasks/view-task/view-task.module').then(m=>m.ViewTaskModule)},
         {path:'viewlead/:id',loadChildren:()=>import ('./modules/crm/leads/view-lead/view-lead.module').then(m=>m.ViewLeadModule)},
+        {path:'viewleadqnr/:id',loadChildren:()=>import ('./modules/crm/leads/view-lead-qnr/view-lead-qnr.module').then(m=>m.ViewLeadQnrModule)},
         {path:'task/create-subtask/:taskid',loadChildren:()=>import ('./modules/crm/tasks/create-task/create-task.module').then(m=>m.CreateTaskModule)},
         {path:'crm-markas-done',loadChildren:()=>import ('././shared/crm-markas-done/crm-markas-done.module').then(m=>m.CrmMarkasDoneModule)},
         {path:'viewsubtask/:id',loadChildren:()=>import ('./modules/crm/tasks/view-task/view-task.module').then(m=>m.ViewTaskModule)},

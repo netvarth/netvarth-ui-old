@@ -659,9 +659,14 @@ export class LeadsComponent implements OnInit {
     }
   }
 
+  // viewLead(leadUid,leadData:any) {
+  //   this.crmService.leadToCraeteViaServiceData = leadData;
+  //   this.router.navigate(['/provider/viewlead/' + leadUid]);
+
+  // }
   viewLead(leadUid,leadData:any) {
     this.crmService.leadToCraeteViaServiceData = leadData;
-    this.router.navigate(['/provider/viewlead/' + leadUid]);
+    this.router.navigate(['/provider/viewleadqnr/' + leadUid]);
 
   }
   getLeadmaster(){

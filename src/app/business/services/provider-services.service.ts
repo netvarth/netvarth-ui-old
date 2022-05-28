@@ -2545,4 +2545,16 @@ buildFilesParams(sdate, edate) {
     const url = 'provider/lead/' + uid + '/waitlist/' + uuid;
     return this.servicemeta.httpPut(url);
   }
+  submitProviderLeadQuestionnaire(body, uuid) {
+    const url = 'provider/lead/questionnaire/' + uuid;
+    return this.servicemeta.httpPost(url, body);
+  }
+  resubmitProviderLeadQuestionnaire(body, uuid) {
+    const url = 'provider/lead/questionnaire/resubmit/' + uuid;
+    return this.servicemeta.httpPost(url, body);
+  }
+  providerLeadQnrUploadStatusUpdate(uid, data) {
+    const url = 'provider/lead/questionnaire/upload/status/' + uid;
+    return this.servicemeta.httpPut(url, data);
+  }
 } 
