@@ -12,18 +12,19 @@
     /* background: #FFFFFF; */
     /* box-shadow: 1.05788px 0.391416px 5.28941px rgb(96 95 95 / 25%);
     border-radius: 5.46305px; */
-    width: 49%;
+    width: 40%;
       /* cursor: pointer; */
       /* height: 6rem; */
       background: #FFFFFF;
 border: 1.19687px solid #F8F8F8;
 box-shadow: 3.7135px 3.7135px 7.427px -2.9708px rgba(136, 136, 136, 0.25);
-border-radius: 6.6843px
+border-radius: 6.6843px;
+cursor: pointer;
   }
   .templateName{
-    font-size: 15px;
-    font-weight: 500;
-    color: #000000;
+    font-size: 12px;
+      font-weight: 500;
+      color: #000000;
   }
   .selectType{
     color: #000000;
@@ -32,9 +33,9 @@ border-radius: 6.6843px
     text-align: left;
   }
   .image{
-    height: 120px;
-    width: 120px;
-    object-fit: cover;
+    height: 75px;
+    width: 80px;
+    /* object-fit: cover; */
     cursor: pointer;
   }
   @media  (max-width:764px){

@@ -335,6 +335,7 @@ export class TasksComponent implements OnInit {
       // console.log('element:.',element)
      if(element.status.name ==='Cancelled'){
        this.canceledTaskList.push(element);
+       this.canceledTaskList = this.canceledTaskList.filter(obj => !obj.originId);
      }
     //  console.log('this.canceledTaskList',this.canceledTaskList)
    })
@@ -361,11 +362,14 @@ export class TasksComponent implements OnInit {
               data => {
                 this.totalTaskList = data;
                 console.log("Task List :",this.totalTaskList)
+                this.totalTaskList = this.totalTaskList.filter(obj => !obj.originId);
+                this.getInprogressTask();
+                this.getCompletedTask();
                 this.getNewTask()
                 this.getAssignedTask()
                 this. getCancelledTask()
                 this. getSuspendedTask()
-                this.totalTaskList = this.totalTaskList.filter(obj => !obj.originId);
+                
                 this.loadComplete = true;
               },
               error => {

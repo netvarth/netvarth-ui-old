@@ -21,7 +21,7 @@
                <!-- [ngStyle]="{'background-color':status.id === data.taskDetails.status.id ? '#CACACA' : '#FFFFFF' }" -->
                <div *ngFor="let taskMaster of taskMasterList[0];let index=i" class="singleTempalte"
                      >
-                   <div style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Direct Notice Distribution'" >
+                   <div style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Direct Notice Distribution'" (click)="saveTaskMaster(taskMaster)">
                        <div style="display: flex;gap:5px;align-items: center;">
                         <div class="mainImg">
                             <img class="image" src="/assets/images/crmImages/tempateImg/homeVisit.png" />
@@ -32,10 +32,10 @@
                      </div>
                        </div>
                     <div>
-                        <img (click)="saveTaskMaster(taskMaster)" style="width:30px;cursor: pointer;" src="/assets/images/crmImages/tempateImg/rightArrow.png" />
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </div>
                    </div>
-                   <div style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Notice Distribution Through Newspaper'" >
+                   <div (click)="saveTaskMaster(taskMaster)" style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Notice Distribution Through Newspaper'" >
                     <div style="display: flex;gap:5px;align-items: center;">
                         <div class="mainImg">
                             <img class="image" src="/assets/images/crmImages/tempateImg/noticeThroughDist.png" />
@@ -46,10 +46,10 @@
                         </div>
                     </div>
                     <div>
-                        <img (click)="saveTaskMaster(taskMaster)" style="width:30px;cursor: pointer;" src="/assets/images/crmImages/tempateImg/rightArrow.png" />
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </div>
                     </div>
-                    <div style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Kiosk/Umbrella Activity and Data Collection'" >
+                    <div (click)="saveTaskMaster(taskMaster)" style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Kiosk/Umbrella Activity and Data Collection'" >
                         <div style="display: flex;gap:5px;align-items: center;">
                             <div class="mainImg">
                                 <img class="image" src="/assets/images/crmImages/tempateImg/kisok.png" />
@@ -60,10 +60,10 @@
                             </div>
                         </div>
                         <div>
-                            <img (click)="saveTaskMaster(taskMaster)" style="width:30px;cursor: pointer;" src="/assets/images/crmImages/tempateImg/rightArrow.png" />
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </div>
                     </div>
-                    <div style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Poster Activity'" >
+                    <div (click)="saveTaskMaster(taskMaster)" style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Poster Activity'" >
                         <div style="display: flex;align-items: center;gap:5px">
                             <div class="mainImg">
                                 <img class="image" src="/assets/images/crmImages/tempateImg/posterActivity.png" />
@@ -74,10 +74,10 @@
                             </div>
                         </div>
                         <div>
-                            <img (click)="saveTaskMaster(taskMaster)" style="width:30px;cursor: pointer;" src="/assets/images/crmImages/tempateImg/rightArrow.png" />
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </div>
                     </div>
-                    <div style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Telecalling'" >
+                    <div (click)="saveTaskMaster(taskMaster)"  style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Telecalling'" >
                         <div style="display: flex;align-items: center;gap:5px">
                             <div class="mainImg">
                                 <img class="image" src="/assets/images/crmImages/tempateImg/telecaing.png" />
@@ -88,10 +88,10 @@
                             </div>
                         </div>
                         <div>
-                            <img (click)="saveTaskMaster(taskMaster)" style="width:30px;cursor: pointer;" src="/assets/images/crmImages/tempateImg/rightArrow.png" />
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </div>
                     </div>
-                    <div style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Digital Marketing'" >
+                    <div (click)="saveTaskMaster(taskMaster)" style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Digital Marketing'" >
                         <div style="display: flex;align-items: center;gap:5px">
                             <div class="mainImg">
                                 <img class="image" src="/assets/images/crmImages/tempateImg/digitaMarketing.png" />
@@ -102,10 +102,10 @@
                             </div>
                         </div>
                         <div>
-                            <img (click)="saveTaskMaster(taskMaster)" style="width:30px;cursor: pointer;" src="/assets/images/crmImages/tempateImg/rightArrow.png" />
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </div>
                     </div>
-                    <div style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Home Visit'" >
+                    <div (click)="saveTaskMaster(taskMaster)" style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Home Visit'" >
                         <div style="display: flex;align-items: center;gap:5px">
                             <div class="mainImg">
                                 <img class="image" src="/assets/images/crmImages/tempateImg/directNoticeDistribution.png" />
@@ -116,10 +116,10 @@
                             </div>
                         </div>
                         <div>
-                            <img (click)="saveTaskMaster(taskMaster)" style="width:30px;cursor: pointer;" src="/assets/images/crmImages/tempateImg/rightArrow.png" />
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </div>
                     </div>
-                    <div style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Follow Up 1'" >
+                    <div (click)="saveTaskMaster(taskMaster)" style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Follow Up 1'" >
                         <div style="display: flex;align-items: center;gap:5px">
                             <div class="mainImg">
                                 <img class="image" src="/assets/images/crmImages/tempateImg/Folloup1.png" />
@@ -130,10 +130,10 @@
                             </div>
                         </div>
                         <div>
-                            <img (click)="saveTaskMaster(taskMaster)" style="width:30px;cursor: pointer;" src="/assets/images/crmImages/tempateImg/rightArrow.png" />
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </div>
                     </div>
-                    <div style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Follow Up 2'" >
+                    <div (click)="saveTaskMaster(taskMaster)" style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Follow Up 2'" >
                         <div style="display: flex;align-items: center;gap:5px">
                             <div class="mainImg">
                                 <img class="image" src="/assets/images/crmImages/tempateImg/Folloup2.png" />
@@ -144,11 +144,11 @@
                             </div>
                         </div>
                         <div>
-                            <img (click)="saveTaskMaster(taskMaster)" style="width:30px;cursor: pointer;" src="/assets/images/crmImages/tempateImg/rightArrow.png" />
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </div>
                     </div>
                </div>
-               <div class="singleTempalte">
+               <div (click)="createTask('CreatE')" class="singleTempalte">
                    <div style="display:flex;justify-content: space-between;align-items: center;">
                     <div style="display: flex;align-items: center;gap:5px">
                         <div>
@@ -159,7 +159,7 @@
                            </div>
                     </div>
                     <div>
-                        <img (click)="createTask('CreatE')"  style="width:30px;cursor: pointer;" src="/assets/images/crmImages/tempateImg/rightArrow.png" />
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </div>
                    </div>
                </div>

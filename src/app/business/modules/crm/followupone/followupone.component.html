@@ -180,12 +180,26 @@
                         <td  class="td4" *ngIf="task.status" [ngStyle]="{'color': getColor(task.status.name)}">
                           <div *ngIf="task.status.name==='New'" style="width: min-content !important;
                           padding: 10px !important;
-                          color: #FC9925 !important;
-                          background: #FFF1D7 !important;
+                          color: #00D1FF !important;
+                          background: #D6F5FF !important;
                           border-radius: 7px!important">
                             {{task.status.name}}
                           </div>
-                          <div *ngIf="task.status.name !=='New'" style="width: min-content !important;
+                          <div *ngIf="task.status.name==='Pending'" style="width: min-content !important;
+                          padding: 10px !important;
+                          color: #FF9549 !important;
+                          background: #FEECD7 !important;
+                          border-radius: 7px!important">
+                            {{task.status.name}}
+                          </div>
+                          <div *ngIf="task.status.name==='Completed'" style="width: min-content !important;
+                          padding: 10px !important;
+                          color: white !important;
+                          background: green!important;
+                          border-radius: 7px!important">
+                            {{task.status.name}}
+                          </div>
+                          <div *ngIf="task.status.name !=='New' && task.status.name !=='Pending' &&task.status.name !== 'Completed'" style="width: min-content !important;
                           padding: 10px !important;color: #38C984 !important;background: #D7FEE9;border: 1px solid #D7FFE9;border-radius: 7px!important">
                             {{task.status.name}}
                           </div>
@@ -203,10 +217,7 @@
                           </div>
                           <div *ngIf="task.status.name==='Suspended'">
                             {{task.status.name}}
-                          </div>
-                          <div *ngIf="task.status.name==='Completed'">
-                            {{task.status.name}}
-                          </div> -->
+                          </div>--> 
                         </td>
                         
                         <!-- <td >
@@ -414,12 +425,26 @@
                           <!-- {{task.status.name}} -->
                           <div *ngIf="task.status.name==='New'" style="width: min-content !important;
                           padding: 10px !important;
-                          color: #FC9925 !important;
-                          background: #FFF1D7 !important;
+                          color: #00D1FF !important;
+                          background: #D6F5FF !important;
                           border-radius: 7px!important">
                             {{task.status.name}}
                           </div>
-                          <div *ngIf="task.status.name !=='New'" style="width: min-content !important;
+                          <div *ngIf="task.status.name==='Pending'" style="width: min-content !important;
+                          padding: 10px !important;
+                          color: #FF9549 !important;
+                          background: #FEECD7 !important;
+                          border-radius: 7px!important">
+                            {{task.status.name}}
+                          </div>
+                          <div *ngIf="task.status.name==='Completed'" style="width: min-content !important;
+                          padding: 10px !important;
+                          color: white !important;
+                          background: green!important;
+                          border-radius: 7px!important">
+                            {{task.status.name}}
+                          </div>
+                          <div *ngIf="task.status.name !=='New' && task.status.name !=='Pending' &&task.status.name !== 'Completed'" style="width: min-content !important;
                           padding: 10px !important;color: #38C984 !important;background: #D7FEE9;border: 1px solid #D7FFE9;border-radius: 7px!important">
                             {{task.status.name}}
                           </div>

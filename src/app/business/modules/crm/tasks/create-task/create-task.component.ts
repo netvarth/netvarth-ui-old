@@ -986,6 +986,7 @@ export class CreateTaskComponent implements OnInit {
         this.crmService.addTask(createTaskData).subscribe((response)=>{
           console.log('afterCreateList',response);
           setTimeout(() => {
+            this.snackbarService.openSnackBar('Successfull created activity');
             this.createTaskForm.reset();
           this.router.navigate(['provider', 'crm']);
           }, projectConstants.TIMEOUT_DELAY);
@@ -1014,6 +1015,7 @@ export class CreateTaskComponent implements OnInit {
         this.crmService.addTask(createTaskData).subscribe((response)=>{
           console.log('afterCreateList',response);
           setTimeout(() => {
+            this.snackbarService.openSnackBar('Successfull created activity');
             this.createTaskForm.reset();
           this.router.navigate(['provider', 'crm']);
           }, projectConstants.TIMEOUT_DELAY);
