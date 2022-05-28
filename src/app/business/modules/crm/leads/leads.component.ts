@@ -148,7 +148,7 @@ export class LeadsComponent implements OnInit {
   public bFailedLead:boolean=false;
   public bSucessLead:boolean=false;
   public bInProgressLead:boolean=false;
-  public bTotalLead:boolean=false;
+  public bTotalLead:boolean=true;
   public statusFilter:any;
   public assignedLeadList:any=[]
   public bUnassigned:boolean=true
@@ -181,12 +181,12 @@ export class LeadsComponent implements OnInit {
     this.getLeadStatusListData();
     this.getCategoryListData();
     this.getLeadTypeListData();
-    // this.getTotalLead();
-    // this.getInprogressLead();
-    // this.getCompletedLead();
-    // this.getDelayedLead();
-    // this.getFailedLead();
-    // this.getTransferredLead();
+    this.getTotalLead();
+    this.getInprogressLead();
+    this.getCompletedLead();
+    this.getDelayedLead();
+    this.getFailedLead();
+    this.getTransferredLead();
     this.getLeadmaster()
     // this.getUnassignedLead()
     // this.getAssignedLead()
