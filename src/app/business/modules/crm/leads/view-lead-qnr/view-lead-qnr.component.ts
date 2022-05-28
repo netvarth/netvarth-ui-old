@@ -169,6 +169,7 @@ export class ViewLeadQnrComponent implements OnInit{
   custId: any;
   custname: any;
   showupdateKyc= false;
+  showqnr= false;
   constructor(private locationobj: Location,
   
     // private lStorageService: LocalStorageService,
@@ -224,7 +225,10 @@ export class ViewLeadQnrComponent implements OnInit{
           this.showupdateKyc = true;
           this.getKycDetails();
         }
-
+        if(this.leadDetails.status.name === 'Credit Score Generated') {
+          this.showqnr = true;
+          this.getKycDetails();
+        }
         this.getLeadQnr()
         // console.log('this.leadDetails.notes',this.leadDetails.notes)
         this.leadDetails.notes.forEach((notesdata:any)=>{

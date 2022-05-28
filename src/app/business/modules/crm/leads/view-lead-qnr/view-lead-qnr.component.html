@@ -1569,8 +1569,8 @@
 
 </section>
 
-<!-- <section>
-  <div class="row d-lg-flex justify-content-lg-start" *ngIf="showQuestionnaire">
+<section>
+  <div class="row d-lg-flex justify-content-lg-start" *ngIf="showQuestionnaire && showqnr">
         
   
     <app-questionnaire [questionnaireList]="leadquestionnaireList" [source]="'proLead'"
@@ -1579,9 +1579,17 @@
   
    
   </div>
- <div >
-   <button (click)="submitQnr()">submit</button>
-   
- </div>
-</section> -->
+  <div style="text-align: center;margin-top: 15px;">
+    <ng-container>
+      <div class=" mgn-bt-20 mgn-up-10">
+        <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()">Cancel
+        </button>
+        <button class="btn btn-primary font-weight-bold confirmBtn" 
+         type="button"
+          (click)="submitQnr()">Submit
+        </button>
+      </div>
+    </ng-container>
+  </div>
+</section>
 
