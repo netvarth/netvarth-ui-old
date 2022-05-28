@@ -378,6 +378,29 @@ export class CrmService {
     const url = 'provider/task/provider/count?originFrom-eq=Enquire&title-eq=Follow Up 2';
       return this.servicemeta.httpGet(url, null, filter);
   }
-
+  getTotalEnquiryNone(filter = {}) {
+    const url = 'provider/task/provider?isSubTask-eq=false&originFrom-eq=None'
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+  // updateTask(taskUid ,updateTaskData){
+  //   console.log(updateTaskData)
+  //   const url='provider/task/'+ taskUid
+  //   return this.servicemeta.httpPut(url, updateTaskData);
+  // }
+  statusToPending(taskUid,data){
+    console.log(data)
+      const url='provider/task/'+ taskUid + '/status/pending'
+      return this.servicemeta.httpPut(url, data);
+  }
+  statusToRejected(taskUid,data){
+    console.log(data)
+      const url='provider/task/'+ taskUid + '/status/rejected'
+      return this.servicemeta.httpPut(url, data);
+  }
+  statusToProceed(taskUid,data){
+    console.log(data)
+      const url='provider/task/'+ taskUid + '/status/done'
+      return this.servicemeta.httpPut(url, data);
+  }
 
 }

@@ -4,7 +4,7 @@ import { projectConstants } from '../../../../../../src/app/app.component';
 import { Messages } from '../../../../../../src/app/shared/constants/project-messages';
 import { Location } from '@angular/common';
 // import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
-import {ActivatedRoute,Router } from '@angular/router';
+import {ActivatedRoute,Router,NavigationExtras} from '@angular/router';
 // Router,NavigationExtras,
 import { SnackbarService } from '../../../../../../src/app/shared/services/snackbar.service';
 import { CrmService } from '../crm.service';
@@ -70,7 +70,7 @@ export class FollowUpOneComponent implements OnInit{
       if(this.type==='followUpOne'){
         this.headerName==='Follow Up 1'
       }
-      else{
+      else if(this.type==='followUpTwo'){
         this.headerName==='Follow Up 2'
       }
     }
@@ -223,7 +223,7 @@ export class FollowUpOneComponent implements OnInit{
               .subscribe(
                 data => {
                   this.totalFollowUpTwoList = data;
-                  console.log('totalFollowUpTwoList',this.totalFollowUpTwoList.length)
+                  console.log('totalFollowUpTwoList',this.totalFollowUpTwoList)
                   // this.totalFollowUpList = this.totalFollowUpList.filter(obj => !obj.originId);
                   // this.loadComplete = true;
                 },
@@ -274,9 +274,14 @@ export class FollowUpOneComponent implements OnInit{
       return api_filter;
     }
     redirectToOverview(data:any){
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+        dataType:'UpdateFollowUP'
+        }
+      }
       console.log('data',data)
       this.crmService.followUpTableToOverView = data;
-      this.router.navigate(['/provider/viewtask/' + data.taskUid]);
+      this.router.navigate(['/provider/viewtask/' + data.taskUid],navigationExtras);
       // console.log('this.crmService.followUpTableToOverView',this.crmService.followUpTableToOverView)
       // this.router.navigate(['provider','viewtask']);
     }

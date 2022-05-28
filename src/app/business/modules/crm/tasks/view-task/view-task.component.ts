@@ -142,6 +142,8 @@ export class ViewTaskComponent implements OnInit {
   public followUpStatusComplToProceed:any;
   public followUpStatusInProgressToPending:any;
   public fiollowUpStatusCancelledToRejected:any;
+  public activityType:any;
+  public followUPStatus:any
 
 
  
@@ -189,13 +191,23 @@ export class ViewTaskComponent implements OnInit {
    // console.log(' this.selectMember', this.selectMember)
    // console.log(' this.selectMember', this.selectTaskManger)
    this.assigneeId=user.id;
+   this.updateMemberId=this.assigneeId;
   //  this.selectTaskMangerId=user.id;
    this.locationId= user.bussLocs[0]
    if(user.userType === 1){
      this.userType='PROVIDER'
    }
   //  console.log('this.crmService.followUpTableToOverView',this.crmService.followUpTableToOverView)
+  this._Activatedroute.queryParams.subscribe((qparams:any)=>{
+    // console.log('qparams',qparams)
+    if(qparams.dataType){
+      this.activityType=qparams.dataType;
+    }
+  })
+  
+  console.log('this.activityType',this.activityType)
     this._Activatedroute.paramMap.subscribe(params => {
+      // console.log('params',params)
       this.taskUid = params.get("id");
       console.log("task id : ", this.taskUid);
       console.log('this.action',this.action)
@@ -207,8 +219,7 @@ export class ViewTaskComponent implements OnInit {
         this.api_loading = false;
         console.log("Task Details : ", this.taskDetails);
         this.updateUserType=this.taskDetails.userTypeEnum;
-       
-        
+        if(this.activityType !=='UpdateFollowUP'){
           if(this.taskDetails.title != undefined){
             this.bTaskTitle=true;
             this.taskDetailsForm.controls.taskTitle.value= this.taskDetails.title;
@@ -338,6 +349,12 @@ export class ViewTaskComponent implements OnInit {
         console.log("this.notesList", this.notesList);
         this.crmService.taskToCraeteViaServiceData = this.taskDetails
     console.log('this.crmService.taskToCraeteViaServiceData;',this.crmService.taskToCraeteViaServiceData)
+      }
+      if(this.activityType==='UpdateFollowUP'){
+        this.getUpdateFollowUPValue()
+      }
+        
+        
       });
     });
     this.getAssignMemberList();
@@ -349,9 +366,25 @@ export class ViewTaskComponent implements OnInit {
     // this.getTaskmaster()
     // this.getNotesDetails()
     
+    
   }
 
   //mew ui method start
+  getUpdateFollowUPValue(){
+    console.log('UpdateValueFollowup')
+    this.taskDetailsForm.controls.taskTitle.value=this.taskDetails.title
+    this.headerName=this.taskDetails.title;
+    this.estTime={ "days" :this.taskDetails.estDuration.days, "hours" :this.taskDetails.estDuration.hours, "minutes" : this.taskDetails.estDuration.minutes };
+    this.updateMemberId=this.taskDetails.assignee.id;
+    this.updateUserType=this.taskDetails.userTypeEnum;
+    this.taskDetailsForm.controls.taskDescription.value= this.taskDetails.description;
+    this.taskDetailsForm.controls.areaName.value=(this.taskDetails.locationArea);
+    this.taskDetailsForm.controls.taskDate.value= this.taskDetails.dueDate;
+    this.bTaskFollowUpResult=true;
+    this.getTaskmaster()
+
+  }
+
   getTaskmaster(){
     this.crmService.getTaskMasterList().subscribe((response:any)=>{
       console.log('TaskMasterListresponse :',response);
@@ -820,43 +853,85 @@ export class ViewTaskComponent implements OnInit {
   }
   saveCreateTask(){
     console.log('this.updteLocationId',this.updteLocationId)
-    const updateTaskData:any = {
-      "title":this.taskDetailsForm.controls.taskTitle.value,
-      "description":this.taskDetailsForm.controls.taskDescription.value,
-      "userType":this.updateUserType,
-      "category":{"id":this.taskDetailsForm.controls.userTaskCategory.value},
-      "type":{"id":this.taskDetailsForm.controls.userTaskType.value},
-      "status":{"id":this.taskDetailsForm.controls.taskStatus.value},
-      "priority":{"id":this.taskDetailsForm.controls.userTaskPriority.value},
-      "dueDate" : this.datePipe.transform(this.taskDetailsForm.controls.taskDate.value,'yyyy-MM-dd'),
-      "location" : { "id" : this.updteLocationId},
-      "locationArea" : this.taskDetailsForm.controls.areaName.value,
-      "assignee":{"id":this.updateMemberId },
-      "manager":{"id":this.updateManagerId},
-      "targetResult" : this.taskDetailsForm.controls.targetResult.value,
-      "targetPotential" : this.taskDetailsForm.controls.targetPotential.value,
-      "estDuration" : this.estTime    
-    }
-    console.log('updateTaskData',updateTaskData)
-    if(this.updateUserType===('PROVIDER' || 'CONSUMER')){
-      // this.api_loading = true;
-      // console.log("2")
+    if(this.activityType !=='UpdateFollowUP'){
+      const updateTaskData:any = {
+        "title":this.taskDetailsForm.controls.taskTitle.value,
+        "description":this.taskDetailsForm.controls.taskDescription.value,
+        "userType":this.updateUserType,
+        "category":{"id":this.taskDetailsForm.controls.userTaskCategory.value},
+        "type":{"id":this.taskDetailsForm.controls.userTaskType.value},
+        "status":{"id":this.taskDetailsForm.controls.taskStatus.value},
+        "priority":{"id":this.taskDetailsForm.controls.userTaskPriority.value},
+        "dueDate" : this.datePipe.transform(this.taskDetailsForm.controls.taskDate.value,'yyyy-MM-dd'),
+        "location" : { "id" : this.updteLocationId},
+        "locationArea" : this.taskDetailsForm.controls.areaName.value,
+        "assignee":{"id":this.updateMemberId },
+        "manager":{"id":this.updateManagerId},
+        "targetResult" : this.taskDetailsForm.controls.targetResult.value,
+        "targetPotential" : this.taskDetailsForm.controls.targetPotential.value,
+        "estDuration" : this.estTime    
+      }
       console.log('updateTaskData',updateTaskData)
-      this.crmService.updateTask(this.taskDetails.taskUid, updateTaskData).subscribe((response)=>{
-        console.log('afterUpdateList',response);
-        setTimeout(() => {
-          this.taskDetailsForm.reset();
-        this.router.navigate(['provider', 'task']);
-        }, projectConstants.TIMEOUT_DELAY);
-      },
-      (error)=>{
-        setTimeout(() => {
-          this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
-        }, projectConstants.TIMEOUT_DELAY);
-      })
+      if(this.updateUserType===('PROVIDER' || 'CONSUMER')){
+        // this.api_loading = true;
+        // console.log("2")
+        console.log('updateTaskData',updateTaskData)
+        this.crmService.updateTask(this.taskDetails.taskUid, updateTaskData).subscribe((response)=>{
+          console.log('afterUpdateList',response);
+          setTimeout(() => {
+            this.taskDetailsForm.reset();
+          this.router.navigate(['provider', 'task']);
+          }, projectConstants.TIMEOUT_DELAY);
+        },
+        (error)=>{
+          setTimeout(() => {
+            this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
+          }, projectConstants.TIMEOUT_DELAY);
+        })
+      }
     }
    
+   
     console.log(' this.updateUserType', this.updateUserType)
+    if(this.activityType==='UpdateFollowUP'){
+      const updateFollowUpData={
+        "title":this.taskDetailsForm.controls.taskTitle.value,
+        "description":this.taskDetailsForm.controls.taskDescription.value,
+        "userType":this.updateUserType,
+      "category":{"id":this.taskDetails.category.id},
+      "type":{"id":this.taskDetails.type.id},
+      "status":{"id":this.followUPStatus},
+      "priority":{"id":this.taskDetails.priority.id},
+      "dueDate" : this.datePipe.transform(this.taskDetailsForm.controls.taskDate.value,'yyyy-MM-dd'),
+      "location" : { "id" : this.taskDetails.location.id},
+      "locationArea" : this.taskDetailsForm.controls.areaName.value,
+      "assignee":{"id":this.updateMemberId },
+      // "manager":{"id":this.updateManagerId},
+      // "targetResult" : this.taskDetailsForm.controls.targetResult.value,
+      // "targetPotential" : this.taskDetailsForm.controls.targetPotential.value,
+      "estDuration" : this.estTime
+
+      }
+      console.log('updateFollowUpData',updateFollowUpData)
+      if(this.updateUserType===('PROVIDER' || 'CONSUMER')){
+        // this.api_loading = true;
+        // console.log("2")
+        console.log('updateFollowUpData',updateFollowUpData)
+        this.crmService.updateTask(this.taskDetails.taskUid, updateFollowUpData).subscribe((response)=>{
+          console.log('afterupdateFollowUpData',response);
+          setTimeout(() => {
+            this.taskDetailsForm.reset();
+          this.router.navigate(['provider', 'crm']);
+          }, projectConstants.TIMEOUT_DELAY);
+        },
+        (error)=>{
+          setTimeout(() => {
+            this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
+          }, projectConstants.TIMEOUT_DELAY);
+        })
+      }
+
+    }
   }
   handleNotesDescription(textValue:any){
     console.log('taskDescription',textValue)
@@ -916,23 +991,119 @@ export class ViewTaskComponent implements OnInit {
   }
   selectStatus(status:any){
     console.log('status',status)
-    if(status.name==='In Progress'){
-      this.followUpStatusInProgressToPending= status.id
+    if(status.name==='Pending'){
+      this.followUpStatusInProgressToPending= status.id;
+      this.followUPStatus=status.id
+      console.log('this.followUPStatus',this.followUPStatus)
       document.getElementById('A').style.boxShadow = "none";
       document.getElementById('B').style.boxShadow = "0px 4px 11px rgb(0 0 0 / 15%)";
       document.getElementById('C').style.boxShadow = "none";
+      const updateFollowUpData={
+        "title":this.taskDetailsForm.controls.taskTitle.value,
+        "description":this.taskDetailsForm.controls.taskDescription.value,
+        "userType":this.updateUserType,
+      "category":{"id":this.taskDetails.category.id},
+      "type":{"id":this.taskDetails.type.id},
+      "status":{"id":this.followUPStatus},
+      "priority":{"id":this.taskDetails.priority.id},
+      "dueDate" : this.datePipe.transform(this.taskDetailsForm.controls.taskDate.value,'yyyy-MM-dd'),
+      "location" : { "id" : this.taskDetails.location.id},
+      "locationArea" : this.taskDetailsForm.controls.areaName.value,
+      "assignee":{"id":this.updateMemberId },
+      // "manager":{"id":this.updateManagerId},
+      // "targetResult" : this.taskDetailsForm.controls.targetResult.value,
+      // "targetPotential" : this.taskDetailsForm.controls.targetPotential.value,
+      "estDuration" : this.estTime
+
+      }
+      this.crmService.statusToPending(this.taskDetails.taskUid, updateFollowUpData).subscribe((response)=>{
+        console.log('afterupdateFollowUpData',response);
+        setTimeout(() => {
+          this.taskDetailsForm.reset();
+        this.router.navigate(['provider', 'crm']);
+        }, projectConstants.TIMEOUT_DELAY);
+      },
+      (error)=>{
+        setTimeout(() => {
+          this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
+        }, projectConstants.TIMEOUT_DELAY);
+      })
     }
-    else if(status.name==='Cancelled'){
+    else if(status.name==='Rejected'){
       this.fiollowUpStatusCancelledToRejected= status.id
+      this.followUPStatus=status.id
+      console.log('this.followUPStatus',this.followUPStatus)
       document.getElementById('A').style.boxShadow = "none";
       document.getElementById('B').style.boxShadow = "none";
       document.getElementById('C').style.boxShadow = "0px 4px 11px rgb(0 0 0 / 15%)";
+      const updateFollowUpData={
+        "title":this.taskDetailsForm.controls.taskTitle.value,
+        "description":this.taskDetailsForm.controls.taskDescription.value,
+        "userType":this.updateUserType,
+      "category":{"id":this.taskDetails.category.id},
+      "type":{"id":this.taskDetails.type.id},
+      "status":{"id":this.followUPStatus},
+      "priority":{"id":this.taskDetails.priority.id},
+      "dueDate" : this.datePipe.transform(this.taskDetailsForm.controls.taskDate.value,'yyyy-MM-dd'),
+      "location" : { "id" : this.taskDetails.location.id},
+      "locationArea" : this.taskDetailsForm.controls.areaName.value,
+      "assignee":{"id":this.updateMemberId },
+      // "manager":{"id":this.updateManagerId},
+      // "targetResult" : this.taskDetailsForm.controls.targetResult.value,
+      // "targetPotential" : this.taskDetailsForm.controls.targetPotential.value,
+      "estDuration" : this.estTime
+
+      }
+      this.crmService.statusToPending(this.taskDetails.taskUid, updateFollowUpData).subscribe((response)=>{
+        console.log('afterupdateFollowUpData',response);
+        setTimeout(() => {
+          this.taskDetailsForm.reset();
+        this.router.navigate(['provider', 'crm']);
+        }, projectConstants.TIMEOUT_DELAY);
+      },
+      (error)=>{
+        setTimeout(() => {
+          this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
+        }, projectConstants.TIMEOUT_DELAY);
+      })
     }
-    else if(status.name==='Completed'){
+    else if(status.name==='Proceed'){
       this.followUpStatusComplToProceed= status.id
+      this.followUPStatus=status.id
+      console.log('this.followUPStatus',this.followUPStatus)
       document.getElementById('A').style.boxShadow = "0px 4px 11px rgb(0 0 0 / 15%)";
       document.getElementById('B').style.boxShadow = "none";
       document.getElementById('C').style.boxShadow = "none";
+      const updateFollowUpData={
+        "title":this.taskDetailsForm.controls.taskTitle.value,
+        "description":this.taskDetailsForm.controls.taskDescription.value,
+        "userType":this.updateUserType,
+      "category":{"id":this.taskDetails.category.id},
+      "type":{"id":this.taskDetails.type.id},
+      "status":{"id":this.followUPStatus},
+      "priority":{"id":this.taskDetails.priority.id},
+      "dueDate" : this.datePipe.transform(this.taskDetailsForm.controls.taskDate.value,'yyyy-MM-dd'),
+      "location" : { "id" : this.taskDetails.location.id},
+      "locationArea" : this.taskDetailsForm.controls.areaName.value,
+      "assignee":{"id":this.updateMemberId },
+      // "manager":{"id":this.updateManagerId},
+      // "targetResult" : this.taskDetailsForm.controls.targetResult.value,
+      // "targetPotential" : this.taskDetailsForm.controls.targetPotential.value,
+      "estDuration" : this.estTime
+
+      }
+      this.crmService.statusToPending(this.taskDetails.taskUid, updateFollowUpData).subscribe((response)=>{
+        console.log('afterupdateFollowUpData',response);
+        setTimeout(() => {
+          this.taskDetailsForm.reset();
+        this.router.navigate(['provider', 'crm']);
+        }, projectConstants.TIMEOUT_DELAY);
+      },
+      (error)=>{
+        setTimeout(() => {
+          this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
+        }, projectConstants.TIMEOUT_DELAY);
+      })
     }
     
   }

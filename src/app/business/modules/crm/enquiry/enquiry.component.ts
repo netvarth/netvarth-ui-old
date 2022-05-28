@@ -36,7 +36,7 @@ import { Subject } from 'rxjs';
       public innerWidth:any;
       public templateList:any=[];
       public activityList:any=[];
-      public activityTitleDialogValue:any='Select Channel';
+      public activityTitleDialogValue:any='None';
       public activityIdDialogValue:any;
       public activityLocationIdDialogValue:any;
       public activityOriginUidDialogValue:any;
@@ -130,6 +130,7 @@ import { Subject } from 'rxjs';
       this.getTotalTaskActivity()
       this.enquiryCategoryList()
       this.getTemplateEnuiry()
+      this.getEnquiryNone()
     }
       goback() {
         this.locationobj.back();
@@ -340,8 +341,15 @@ import { Subject } from 'rxjs';
       getTotalTaskActivity(){
         this.crmService.getTotalTask().subscribe((response)=>{
           console.log('response',response);
-          this.activityList.push(response);
+          
+          // this.activityList.push(response);
   
+        })
+      }
+      getEnquiryNone(){
+        this.crmService.getTotalEnquiryNone().subscribe((response)=>{
+          this.activityList.push(response);
+          console.log('response',response);
         })
       }
       selectActivityListDialog(activityListData:any){
@@ -351,6 +359,7 @@ import { Subject } from 'rxjs';
       panelClass: ['popup-class', 'confirmationmainclass'],
       data:{
         requestType:'createTaskActivityList',
+        // this.totalFollowUpList = this.activityList.filter(obj => !obj.originId);
         data:this.activityList,
         noneData:'None'
        
@@ -393,6 +402,7 @@ import { Subject } from 'rxjs';
         this.crmService.getLeadTemplate().subscribe((category:any)=>{
           console.log('category',category)
           this.categoryList.push(category)
+          this.createEnquiryForm.controls.userTaskCategory.setValue(this.categoryList[0][0].id);
         })
       }
       search(){
@@ -445,6 +455,7 @@ import { Subject } from 'rxjs';
             "phoneNo": this.createEnquiryForm.controls.phoneNoValue.value,
             "email": this.createEnquiryForm.controls.emailValue.value,
             "countryCode": '+91',
+            "userTaskCategory":this.createEnquiryForm.controls.userTaskCategory.value
           }
           console.log('afterCompleteAddData',afterCompleteAddData)
           this.crmService.createProviderCustomer(afterCompleteAddData).subscribe((response:any)=>{

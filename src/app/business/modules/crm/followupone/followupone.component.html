@@ -25,7 +25,7 @@
                   <thead>
                     <tr class="tble-filtr-tr heght">
                       <th class="head_color">Follow Ups 1</th>
-                      <!-- <th class="head_color">Customer</th> -->
+                      <th class="head_color">Customer</th>
                       <th class="head_color">Assignee</th>
                       <th class="head_color">Status</th>
                       <!-- <th class="filter-fx-col">
@@ -175,10 +175,20 @@
                     <ng-container *ngIf="totalFollowUpList.length>0">
                       <tr *ngFor="let task of totalFollowUpList; let i=index" class="pointer-cursor" (click)="redirectToOverview(task)">
                         <td  class="td1">{{task.title}}</td>
-                        <!-- <td  class="td2">{{task.title}}</td> -->
+                        <td  class="td2"><span *ngIf="task.customer">{{task.customer.name}}</span></td>
                         <td  class="td3"><span *ngIf="task.assignee">{{task.assignee.name}}</span></td>
                         <td  class="td4" *ngIf="task.status" [ngStyle]="{'color': getColor(task.status.name)}">
-                          {{task.status.name}}
+                          <div *ngIf="task.status.name==='New'" style="width: min-content !important;
+                          padding: 10px !important;
+                          color: #FC9925 !important;
+                          background: #FFF1D7 !important;
+                          border-radius: 7px!important">
+                            {{task.status.name}}
+                          </div>
+                          <div *ngIf="task.status.name !=='New'" style="width: min-content !important;
+                          padding: 10px !important;color: #38C984 !important;background: #D7FEE9;border: 1px solid #D7FFE9;border-radius: 7px!important">
+                            {{task.status.name}}
+                          </div>
                           <!-- <div *ngIf="task.status.name==='New'">
                             {{task.status.name}}
                           </div>
@@ -248,7 +258,7 @@
                   <thead>
                     <tr class="tble-filtr-tr heght">
                       <th class="head_color">Follow Ups 2</th>
-                      <!-- <th class="head_color">Customer</th> -->
+                      <th class="head_color">Customer</th>
                       <th class="head_color">Assignee</th>
                       <th class="head_color">Status</th>
                       <!-- <th class="filter-fx-col">
@@ -396,16 +406,24 @@
                       </tr>
                     </ng-container>
                     <ng-container *ngIf="totalFollowUpTwoList.length>0">
-                      <tr *ngFor="let task of totalFollowUpTwoList; let i=index" class="pointer-cursor" >
+                      <tr *ngFor="let task of totalFollowUpTwoList; let i=index" class="pointer-cursor" (click)="redirectToOverview(task)">
                         <td  class="td1">{{task.title}}</td>
-                        <!-- <td  class="td2">{{task.title}}</td> -->
+                        <td  class="td2"><span *ngIf="task.customer">{{task.customer.name}}</span></td>
                         <td  class="td3"><span *ngIf="task.assignee">{{task.assignee.name}}</span></td>
                         <td  class="td4" *ngIf="task.status" [ngStyle]="{'color': getColor(task.status.name)}">
-                          {{task.status.name}}
-                          <!-- <div *ngIf="task.status.name==='New'">
+                          <!-- {{task.status.name}} -->
+                          <div *ngIf="task.status.name==='New'" style="width: min-content !important;
+                          padding: 10px !important;
+                          color: #FC9925 !important;
+                          background: #FFF1D7 !important;
+                          border-radius: 7px!important">
                             {{task.status.name}}
                           </div>
-                          <div *ngIf="task.status.name==='Assigned'">
+                          <div *ngIf="task.status.name !=='New'" style="width: min-content !important;
+                          padding: 10px !important;color: #38C984 !important;background: #D7FEE9;border: 1px solid #D7FFE9;border-radius: 7px!important">
+                            {{task.status.name}}
+                          </div>
+                          <!-- <div *ngIf="task.status.name==='Assigned'">
                             {{task.status.name}}
                           </div>
                           <div *ngIf="task.status.name==='In Progress'">
