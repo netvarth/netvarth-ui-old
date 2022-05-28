@@ -1068,7 +1068,7 @@
                             <!-- queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime'] -->
                             <mat-select class="inputbox timeSlot" #lstQueue1 (selectionChange)="handleQueueSelection(lstQueue1.value);"
                               [(ngModel)]="selectedQ">
-                              <mat-option *ngFor="let queue of queuejson, let i= index" [value]="queue">
+                              <mat-option *ngFor="let queue of queuejson" [value]="queue">
                                 <div style="display:flex;gap:5px">
                                   <div>
                                     <div><i class="fa fa-clock-o" aria-hidden="true"></i></div>
