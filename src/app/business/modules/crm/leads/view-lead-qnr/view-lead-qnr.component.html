@@ -99,7 +99,7 @@
           </div>
 
         </div>
-        <div class="fieldPadding">
+        <!-- <div class="fieldPadding">
           <div class="">
             <input #logofile type="file" accept="/*;capture=camera"
                  style="display:none;" multiple
@@ -107,8 +107,8 @@
             <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i
                     class="material-icons"> attach_file</i></a>
         </div>
-        </div>
-        <div>
+        </div> -->
+        <!-- <div>
           <div class="img-section mgn-up-20"
           *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
           <ul class="galul">
@@ -125,13 +125,13 @@
               </li>
           </ul>
       </div>
-        </div>
+        </div> -->
        
         </div>
+        <!-- <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-        <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-        <div *ngIf="selectedMessage.files && selectedMessage.files.length > 0"></div>
+        <div *ngIf="selectedMessage.files && selectedMessage.files.length > 0"></div> -->
         <span class="group-head">Pancard Details</span><br>
         <div class="bggrey my-2">
         <div style="display: flex;gap: 5px">
@@ -167,33 +167,33 @@
             </div>
           </div>
         </div>
-        <div class="fieldPadding">
+        <!-- <div class="fieldPadding">
           <div class="">
             <input #logofile type="file" accept="/*;capture=camera"
                  style="display:none;" multiple
-                (change)="filesSelected($event)">Click / Drop your files here
+                (change)="filesSelectedPan($event)">Click / Drop your files heree
             <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i
                     class="material-icons"> attach_file</i></a>
         </div>
         </div>
         <div>
           <div class="img-section mgn-up-20"
-          *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+          *ngIf="selectedMessagePan.files && selectedMessagePan.files.length > 0">
           <ul class="galul">
-              <li *ngFor="let file of selectedMessage.files;let i = index ">
+              <li *ngFor="let file of selectedMessagePan.files;let i = index ">
                   <div class="galimg_outer">
                       <div class="gal_img">
-                          <img [src]="getImage(selectedMessage.base64[i], file)"
-                              *ngIf="selectedMessage.base64[i]">
+                          <img [src]="getImage(selectedMessagePan.base64[i], file)"
+                              *ngIf="selectedMessagePan.base64[i]">
                       </div>
-                      <div class="gal_action" (click)="deleteTempImage(i)">
+                      <div class="gal_action" (click)="deleteTempImagePan(i)">
                           <i class="fa fa-times-circle" aria-hidden="true"></i>
                       </div>
                   </div>
               </li>
           </ul>
       </div>
-        </div>
+        </div> -->
         <!-- <div class="fieldPadding">
           <div class="choose_file">
             <label for="choose_file" (click)="imagefile.click()">
@@ -209,10 +209,10 @@
           </div> -->
         </div>
 
+        <!-- <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-        <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-        <div *ngIf="selectedMessage.files && selectedMessage.files.length > 0"></div>
+        <div *ngIf="selectedMessage.files && selectedMessage.files.length > 0"></div> -->
         <span class="group-head">Details</span><br>
         <div class="bggrey my-2">
           <div style="display: flex;gap: 5px">
