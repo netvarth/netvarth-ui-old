@@ -219,7 +219,6 @@ export class ViewLeadQnrComponent implements OnInit{
         }
         if(this.leadDetails.status.name === 'New') {
           this.showKyc = true;
-          this.getKycDetails();
         }
         if(this.leadDetails.status.name === 'KYC Updated') {
           this.showupdateKyc = true;
