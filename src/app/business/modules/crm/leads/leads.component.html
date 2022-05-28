@@ -151,7 +151,7 @@
                       <th class="head_color">Category</th>
                       <th class="head_color">Type</th>
                       <th class="filter-fx-col">
-                        <table class="fltr-tbl">
+                        <!-- <table class="fltr-tbl">
                           <tr>
                             <td>
                               <span>
@@ -160,11 +160,11 @@
                               </span>
                             </td>
                           </tr>
-                        </table>
+                        </table> -->
                       </th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <!-- <tbody>
                     <tr>
 
                       <div>
@@ -274,33 +274,7 @@
                                 </div>
 
                               </div>
-                              <!-- <div class="card">
-                                    <div class="card-header">
-                                      <h2 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse"
-                                          data-target="#collapseId3" aria-expanded="false">
-                                          <div>
-                                            <div style="display: inline-block !important;">
-                                              <i class="fa fa-id-badge"></i>
-                                            </div>
-                                            <span>&nbsp;Title</span>
-                                          </div>
-                                          <i class="fa fa-angle-down"></i>
-                                        </button>
-                                      </h2>
-                                    </div>
-                                    <div id="collapseId3" class="collapse in" data-parent="#accordion3">
-                                      <div class="card-body">
-                                        <div class="filterTextinput filter-text-input">
-                                          <li class="filterli filter-li">
-                                            <input type="text" autocomplete="off" [(ngModel)]="filter.title"
-                                              class="filterTextbox filter-textbox" (keyup)="keyPressed()"
-                                              placeholder="Enter Lead Title">
-                                          </li>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div> -->
+                              
                             </ul>
                           </section>
                           <div class="filter-footer mt-1 mx-auto text-center" *ngIf="filterapplied === true">
@@ -315,7 +289,7 @@
                       </div>
 
                     </tr>
-                  </tbody>
+                  </tbody> -->
                   <tbody>
                     <ng-container *ngIf="totalLeadList.length === 0">
                       <tr>
@@ -373,11 +347,11 @@
                     </ng-container>
                   </tbody>
                 </table>
-                <div >
+                <div *ngIf="totalLeadList.length> 0">
                   <!-- {{pagination.totalCnt}}
                   {{pagination.perPage}}
                   {{pagination.startpageval}} -->
-                  <app-pager *ngIf="totalLeadList.length >10" [total_pages]="totalCount" [pagesize]="pagination.perPage"
+                  <app-pager  [total_pages]="totalCount" [pagesize]="pagination.perPage"
                     (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
                   </app-pager>
                 </div>
