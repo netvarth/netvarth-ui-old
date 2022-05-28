@@ -421,4 +421,7 @@ export class CrmService {
     const url = 'provider/customers/KYC/' + id;
     return this.servicemeta.httpGet(url);
   }
+  crifVerification(data){
+    return this.servicemeta.httpPost('provider/crif/processinquiry', data);
+  }
 }

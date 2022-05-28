@@ -168,6 +168,7 @@ export class ViewLeadQnrComponent implements OnInit{
   kycDetails:any=[]
   custId: any;
   custname: any;
+  showupdateKyc= false;
   constructor(private locationobj: Location,
   
     // private lStorageService: LocalStorageService,
@@ -219,8 +220,8 @@ export class ViewLeadQnrComponent implements OnInit{
           this.showKyc = true;
           this.getKycDetails();
         }
-        else{
-          this.showKyc = false;
+        if(this.leadDetails.status.name === 'KYC Updated') {
+          this.showupdateKyc = true;
           this.getKycDetails();
         }
 
@@ -240,6 +241,7 @@ export class ViewLeadQnrComponent implements OnInit{
       }
     });
     
+   
   this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
         console.log("User is :", user);
@@ -324,7 +326,30 @@ export class ViewLeadQnrComponent implements OnInit{
   getKycDetails(){
     this.crmService.getkyc(this.custId).subscribe(data => {
       this.kycDetails = data;
-    
+      this.updateValue = this.kycDetails;
+      console.log(this.kycDetails)
+      console.log(this.updateValue)
+       this.createLeadForm.patchValue({
+        idTypes : this.updateValue.validationIds[0].idTypes,
+        idValue:this.updateValue.validationIds[0].idValue,
+        telephoneType:this.updateValue.telephone[0].telephoneType,
+        telephoneNumber:this.updateValue.telephone[0].telephoneNumber,
+        relationType:this.updateValue.relationType,
+        relationName:this.updateValue.relationName,
+        permanentAddress:this.updateValue.permanentAddress,
+        permanentCity:this.updateValue.permanentCity,
+        permanentState:this.updateValue.permanentState,
+        permanentPinCode:this.updateValue.permanentPinCode,
+        nomineeType:this.updateValue.nomineeType,
+        nomineeName:this.updateValue.nomineeName,
+        addressType:this.updateValue.address[0].addressType,
+        city:this.updateValue.address[0].city,
+        address:this.updateValue.address[0].address,
+        state:this.updateValue.address[0].state,
+        pin:this.updateValue.address[0].pin,
+        panNumber:this.updateValue.panNumber
+       
+    })
   })
   }
   getLeadToken(){
@@ -1063,6 +1088,21 @@ export class ViewLeadQnrComponent implements OnInit{
   }
   getImage(url, file) {
     return this.fileService.getImage(url, file);
+}
+saveCrif(){
+  const post_data = {
+    "customer": {
+      "id": this.custId,
+      "name": this.custname,
+    },
+    'originUid': this.leadkid,
+};
+this.crmService.crifVerification(post_data).subscribe(
+  () => {
+    this.router.navigate(['provider', 'lead']);
+  },
+  error => {
+  });
 }
 }
 
