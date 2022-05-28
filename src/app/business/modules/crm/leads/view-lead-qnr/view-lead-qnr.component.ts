@@ -159,6 +159,9 @@ export class ViewLeadQnrComponent implements OnInit{
   fileData: any;
   active_user: any;
   showKyc = false;
+  kycDetails:any=[]
+  custId: any;
+  custname: any;
   constructor(private locationobj: Location,
   
     // private lStorageService: LocalStorageService,
@@ -198,9 +201,23 @@ export class ViewLeadQnrComponent implements OnInit{
         this.getLeadToken();
         this.catId = this.leadDetails.category.id
         console.log('leadDetails.status',this.leadDetails.category.id)
+        if(this.leadDetails && this.leadDetails.customer && this.leadDetails.customer.id) {
+          this.custId = this.leadDetails.customer.id;
+          
+        }
+        if(this.leadDetails && this.leadDetails.customer && this.leadDetails.customer.name) {
+          this.custname = this.leadDetails.customer.name;
+          
+        }
         if(this.leadDetails.status.name === 'New') {
           this.showKyc = true;
+          this.getKycDetails();
         }
+        else{
+          this.showKyc = false;
+          this.getKycDetails();
+        }
+
         this.getLeadQnr()
         // console.log('this.leadDetails.notes',this.leadDetails.notes)
         this.leadDetails.notes.forEach((notesdata:any)=>{
@@ -297,6 +314,12 @@ export class ViewLeadQnrComponent implements OnInit{
     this.getAssignMemberList()
     this.getCategoryListData()
     this.getLeadTypeListData()
+  }
+  getKycDetails(){
+    this.crmService.getkyc(this.custId).subscribe(data => {
+      this.kycDetails = data;
+    
+  })
   }
   getLeadToken(){
     this.crmService.getLeadTokens(this.leadDetails.uid).subscribe(data => {
@@ -670,11 +693,11 @@ export class ViewLeadQnrComponent implements OnInit{
     }
     const createLeadData:any ={
       "originFrom": "Lead",
-      "originUid": "lead_76abc127-6d35-4335-bf56-0b4d7a5a175e",
+      "originUid": this.leadkid,
       "customer": {
-        "id": 27634
+        "id": this.custId
       },
-      "customerName": "Suraj",
+      "customerName": this.custname,
       "dob": "2022-05-27",
       "telephone": [
         {

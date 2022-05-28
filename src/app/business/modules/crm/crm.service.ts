@@ -417,4 +417,8 @@ export class CrmService {
   addkyc(data){
     return this.servicemeta.httpPost('provider/customers/KYC/create', data);
   }
+  getkyc(id){
+    const url = 'provider/customers/KYC/' + id;
+    return this.servicemeta.httpGet(url);
+  }
 }
