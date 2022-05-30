@@ -144,6 +144,8 @@ export class ViewTaskComponent implements OnInit {
   public fiollowUpStatusCancelledToRejected:any;
   public activityType:any;
   public followUPStatus:any
+  public bActualResult:boolean=true;
+  public actualResult:any;
 
 
  
@@ -179,7 +181,7 @@ export class ViewTaskComponent implements OnInit {
     userTaskPriority:[],
     taskStatus:[],
     targetResult:[],
-    targetPotential:[]
+    targetPotential:[],
 
 
 
@@ -383,6 +385,9 @@ export class ViewTaskComponent implements OnInit {
     this.bTaskFollowUpResult=true;
     this.getTaskmaster()
 
+  }
+  actualResultTask(actualRes:any){
+    console.log('actualRes',actualRes)
   }
 
   getTaskmaster(){
@@ -869,12 +874,11 @@ export class ViewTaskComponent implements OnInit {
         "manager":{"id":this.updateManagerId},
         "targetResult" : this.taskDetailsForm.controls.targetResult.value,
         "targetPotential" : this.taskDetailsForm.controls.targetPotential.value,
-        "estDuration" : this.estTime    
+        "estDuration" : this.estTime,
+        "actualResult" :this.actualResult
       }
       console.log('updateTaskData',updateTaskData)
       if(this.updateUserType===('PROVIDER' || 'CONSUMER')){
-        // this.api_loading = true;
-        // console.log("2")
         console.log('updateTaskData',updateTaskData)
         this.crmService.updateTask(this.taskDetails.taskUid, updateTaskData).subscribe((response)=>{
           console.log('afterUpdateList',response);
@@ -909,7 +913,8 @@ export class ViewTaskComponent implements OnInit {
       // "manager":{"id":this.updateManagerId},
       // "targetResult" : this.taskDetailsForm.controls.targetResult.value,
       // "targetPotential" : this.taskDetailsForm.controls.targetPotential.value,
-      "estDuration" : this.estTime
+      "estDuration" : this.estTime,
+      "actualResult" :this.actualResult
 
       }
       console.log('updateFollowUpData',updateFollowUpData)

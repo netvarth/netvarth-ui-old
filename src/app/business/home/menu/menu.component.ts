@@ -46,6 +46,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   apptstatus: any;
   checkinStatus:any;
   bCrm:boolean=false;
+  public LMSStatus:boolean=true;
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
@@ -321,6 +322,8 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.authService.logoutFromJaldee().then();
   }
   crmOpen(){
+    this.showMenu = false;
+    // this.LMSStatus=false
    this.router.navigate(['provider', 'crm'])
     // window.navigator(['provider', 'crm'])
   }

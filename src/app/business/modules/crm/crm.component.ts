@@ -41,7 +41,7 @@ export class CRMComponent implements OnInit {
     },
     {
       id: 6,
-      activityName: 'Document Upload'
+      activityName: 'Login'
     },
     // {
     //   id: 7,
@@ -75,7 +75,7 @@ export class CRMComponent implements OnInit {
      private crmService: CrmService
     // private fileService:FileService
   ) {
-
+    // this.fnChangeBorder('A')
    }
 
    initCRM() {

@@ -474,11 +474,11 @@ export class CrmService {
   }
   //upload fgile status need to change
   getDocUploadLead(filter = {}) {
-    const url = 'provider/lead?status-eq=19';
+    const url = 'provider/lead?status-eq=21';
     return this.servicemeta.httpGet(url, null, filter);
   }
   getDocUploadLeadCount(filter) {
-    const url = 'provider/lead/count?status-eq=19';
+    const url = 'provider/lead/count?status-eq=21';
     return this.servicemeta.httpGet(url, null, filter);
   }
 }

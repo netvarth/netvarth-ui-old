@@ -210,7 +210,7 @@ export class LeadsComponent implements OnInit {
       this.getSalesVerificationLead()
     }
     else if(this.type==='DOCUMENTUPLOD'){
-      this.headerName='Document Upload';
+      this.headerName='Login';
       this.getDocumentVerificationLead()
       // this.getSalesVerificationLead()
     }

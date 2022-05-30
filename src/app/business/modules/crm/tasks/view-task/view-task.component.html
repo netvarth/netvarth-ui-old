@@ -267,7 +267,7 @@
             <div>Business Potential</div>
         </div>
         <div class="fieldPadding" >
-            <input min="0" (ngModelChange)="oneField(targetPotential.value)" (keyup)="resetErrors()" type="number" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)" 
+            <input #targetPotential min="0" (ngModelChange)="oneField(targetPotential.value)" (keyup)="resetErrors()" type="number"  (ngModelChange)="handleTargetPotential(targetPotential.value)" 
             placeholder="Enter ({{rupee_symbol}})"class="form-control "formControlName="targetPotential"autocomplete="off" />           
         </div>
     </div>
@@ -427,7 +427,17 @@
     </div>
   </div>
   <!---notes end-->
-
+  <!----enter result start-->
+  <div class="formTop" *ngIf="bActualResult">
+    <div class="taskTitle">
+        <div>Enter Result</div>
+    </div>
+    <div class="fieldPadding">
+        <input min="0" (keyup)="resetErrors()" [(ngModel)]="actualResult" type="number"  #actualResultt (ngModelChange)="actualResultTask(actualResultt.value)"
+        placeholder="Enter result"class="form-control "   autocomplete="off" /> 
+    </div>
+</div>
+  <!---enter result end-->
   </div>
   
   <!----files end-->

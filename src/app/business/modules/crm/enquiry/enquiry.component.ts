@@ -431,6 +431,7 @@ import { Subject } from 'rxjs';
           console.log('createEnquiry',response);
           setTimeout(() => {
             this.api_loading = true;
+            this.snackbarService.openSnackBar('Successfull created enquiry');
             this.createEnquiryForm.reset();
           this.router.navigate(['provider', 'crm']);
           }, projectConstants.TIMEOUT_DELAY);
@@ -462,6 +463,7 @@ import { Subject } from 'rxjs';
             setTimeout(() => {
               console.log('afterCompleteAddData',response);
               this.api_loading = true;
+              this.snackbarService.openSnackBar('Successfull created enquiry');
             this.createEnquiryForm.reset();
           this.router.navigate(['provider', 'crm']);
             }, projectConstants.TIMEOUT_DELAY);
