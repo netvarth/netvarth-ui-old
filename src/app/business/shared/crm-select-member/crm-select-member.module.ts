@@ -14,6 +14,8 @@ import {  ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from "@angular/material/icon";
 import {MatChipsModule} from '@angular/material/chips';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 import { NgCircleProgressModule } from "ng-circle-progress";
 import { FilterPipe } from './filter.pipe';
 
@@ -41,6 +43,7 @@ const routes: Routes = [
     MatIconModule,
     MatChipsModule,
     MatFormFieldModule,
+    MatTooltipModule,
     NgCircleProgressModule.forRoot({
       // set defaults here
       backgroundColor: "#e9ecef",

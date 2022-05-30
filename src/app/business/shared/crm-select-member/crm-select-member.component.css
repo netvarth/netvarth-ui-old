@@ -36,6 +36,7 @@ position: relative;
 .fileInfo{
   align-items: center;
   position: relative;
+  margin-top: 15px;
 }
 .confirmBtnCustomerInfo{
   background: #E5E5E5 !important;
@@ -141,6 +142,12 @@ margin-top: -12px;
   background-color: #fff !important;
   border: 0.5px solid #a9a9a945;
 }
+.formSize{
+    height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-left: 5px;
+}
 .confirmBtnFind{
   background: #0D2348 !important;
     box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgb(30 64 121 / 15%) !important;
@@ -152,7 +159,7 @@ margin-top: -12px;
     height: 31px;
     width: 33px;
     float: right;
-    margin-right: 52px;
+    margin-right: 61px;
 }
 .bgColor{
   background-color: #fff !important;
@@ -265,9 +272,20 @@ margin-right: 36px !important;
   padding-left: 4px !important;
   
 }
+
+/* ::ng-deep .mat-form-field-infix {
+  flex: auto;
+  height: 150px !important;
+  overflow: auto;
+} */
 .textField {
-  width:600px;
+  width:555px;
   margin-right: 36px;
+  height: 0px !important;
+  /* border: 1px solid gray !important; */
+  overflow-x:hidden !important;
+  overflow-y: auto !important;
+  
 }
 .matForm{
   min-height: 100px !important;
@@ -287,10 +305,18 @@ margin-right: 36px !important;
     margin-right: 0px !important;
 
   }
-  
+  /* ::ng-deep .mat-form-field-infix {
+    height: 100px !important;
+    overflow: auto;
+    flex: auto !important;
+  } */
   .textField{
     width:300px;
     margin-right: 36px;
+    height: 0px!important;
+    /* border: 1px solid gray !important; */
+    overflow-x:hidden !important;
+    overflow-y: auto !important;
   }
   .searchBtnFind{
     background: #0D2348 !important;

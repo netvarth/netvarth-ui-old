@@ -890,6 +890,7 @@ export class FolderFilesComponent implements OnInit {
   }
 
   getImage(url, file) {
+    console.log("URL :",url)
     return this.fileService.getImage(url, file);
   }
   getImageType(fileType) {

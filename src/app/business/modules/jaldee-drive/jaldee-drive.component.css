@@ -15,6 +15,15 @@
   margin-right: 10px;
   /* position: relative; */
 }
+.example-card{
+  max-width: 200px;
+  margin: 8px;
+  
+}
+.textInfo{
+  text-align: center !important;
+  font-weight: bold;
+}
 #folder2 i.fa-folder, #folder2-content h2 .fa-folder {
   /* color: #4bc97a; */
   color: #152d56;
@@ -825,8 +834,7 @@ width: 200px;
     width: 100%;
     position: relative;
     min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
+
 }
 
 
