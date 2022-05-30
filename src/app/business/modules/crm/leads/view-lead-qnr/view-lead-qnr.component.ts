@@ -138,6 +138,7 @@ export class ViewLeadQnrComponent implements OnInit{
   leadMasterData: any;
   leadId:any;
   leadquestionnaireList: any = [];
+  leadafterquestionnaireList: any = [];
   public headerName:string='Lead Overview';
   showQuestionnaire = false;
   questionAnswers; // questionaire answers
@@ -170,6 +171,10 @@ export class ViewLeadQnrComponent implements OnInit{
   custname: any;
   showupdateKyc= false;
   showqnr= false;
+  showafterqnr= false;
+  unreleased_arr:any;
+  unreleased_question_arr: any;
+  released_arr: any;
   constructor(private locationobj: Location,
   
     // private lStorageService: LocalStorageService,
@@ -181,6 +186,7 @@ export class ViewLeadQnrComponent implements OnInit{
      private dialog: MatDialog, private snackbarService: SnackbarService,
      private datePipe:DatePipe,
      private wordProcessor: WordProcessor,
+     private providerservices: ProviderServices,
      private _Activatedroute:ActivatedRoute,
      private providerService: ProviderServices,
      private groupService:GroupStorageService,
@@ -199,16 +205,16 @@ export class ViewLeadQnrComponent implements OnInit{
     this.api_loading = false;
     this._Activatedroute.paramMap.subscribe(params => { 
       this.leadUid = params.get('id');
-      console.log("lead id : ",this.leadUid);
       this.crmService.getLeadDetails(this.leadUid).subscribe(data => {
       
         this.leadDetails = data;
         console.log(this.leadDetails)
         this.leadkid = this.leadDetails.uid
+        
         this.api_loading = false;
         this.getLeadToken();
         this.catId = this.leadDetails.category.id
-        console.log('leadDetails.status',this.leadDetails.category.id)
+      
         if(this.leadDetails && this.leadDetails.customer && this.leadDetails.customer.id) {
           this.custId = this.leadDetails.customer.id;
           
@@ -226,13 +232,21 @@ export class ViewLeadQnrComponent implements OnInit{
         }
         if(this.leadDetails.status.name === 'Credit Score Generated') {
           this.showqnr = true;
+          this.getLeadQnr()
         }
-        this.getLeadQnr()
-        // console.log('this.leadDetails.notes',this.leadDetails.notes)
+        
+      
+        if(this.leadDetails.status.name === 'Sales Verified') {
+          this.changeQnrStatus()
+          this.showafterqnr = true;
+          
+          // this.showqnr = true;
+        }
+      
         this.leadDetails.notes.forEach((notesdata:any)=>{
           this.notesList.push(notesdata)
         })
-        console.log('this.notesList',this.notesList)
+      
     })
     })
     this.crmService.leadToCraeteViaServiceData = this.updateLeadData;
@@ -246,19 +260,17 @@ export class ViewLeadQnrComponent implements OnInit{
    
   this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
-        console.log("User is :", user);
+      
         this.selectMember= user.firstName + user.lastName;
         this.selectLeadManger=user.firstName + user.lastName;
-        console.log(' this.selectMember', this.selectMember)
-        console.log(' this.selectMember', this.selectLeadManger)
+      
         this.assigneeId=user.id;
         this.selectLeadMangerId=user.id;
         this.locationId= user.bussLocs[0]
         if(user.userType === 1){
           this.userType='PROVIDER'
         }
-        console.log('this.innerWidth = window.innerWidth;',this.innerWidth = window.innerWidth)
-        console.log('this.innerWidth ',this.innerWidth )
+      
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         if(this.innerWidth<=768){
           this.placeholderTruncate(this.customer_label)
@@ -308,18 +320,17 @@ export class ViewLeadQnrComponent implements OnInit{
       this.updateBTimefield=false;
         this.selectHeader='Add Lead';
         this.leadDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd')
-        console.log(' this.leadDueDate', this.leadDueDate);
+       
         this.selectedDate = this.leadDueDate;
         this.leadDueTime= "0000" ;
-        console.log(' this.leadDueTime', this.leadDueTime)
+       
         this.estDurationWithDay=this.leadDueTime;
         const estDurationDay=this.datePipe.transform(this.estDurationWithDay,'d')
         const estDurationHour=this.datePipe.transform(this.estDurationWithDay,'h')
         const estDurationMinurte= this.datePipe.transform(this.estDurationWithDay,'mm')
         this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinurte };
         // this.customer = { "id" :  this.selectLeadCustomerId};
-        console.log('this.estTime',this.estTime)
-        console.log('new Date()',new Date())
+      
     
     this.getAssignMemberList()
     this.getCategoryListData()
@@ -329,8 +340,7 @@ export class ViewLeadQnrComponent implements OnInit{
     this.crmService.getkyc(this.custId).subscribe(data => {
       this.kycDetails = data;
       this.updateValue = this.kycDetails;
-      console.log(this.kycDetails)
-      console.log(this.updateValue)
+     
        this.createLeadForm.patchValue({
         idTypes : this.updateValue.validationIds[0].idTypes,
         idValue:this.updateValue.validationIds[0].idValue,
@@ -360,6 +370,13 @@ export class ViewLeadQnrComponent implements OnInit{
     
   })
   }
+  getleadDetails(){
+    this.crmService.getLeadDetails(this.leadkid).subscribe(data => {
+      
+      this.leadDetails = data;
+    });
+  }
+  
   getLeadQnr(){
     this.crmService.getLeadQnrDetails(this.catId).subscribe(data => {
       this.leadquestionnaireList = data;
@@ -376,13 +393,13 @@ export class ViewLeadQnrComponent implements OnInit{
     let lastindex = 4;
     if (completeWords) {
       lastindex = value.substring(0, 4).lastIndexOf(' ');
-      console.log('lastindex',lastindex)
+   console.log(lastindex)
     }
-    console.log('value.substring(0, 4)',value.substring(0, 4))
+    
     const labelTerm = value.substring(0, 4)
-    console.log('labelTerm',labelTerm)
+   
     this.searchby = 'Enter ' + labelTerm+ ' id/name/phone #';
-    console.log(' this.searchby', this.searchby)
+  
     return `${value.substring(0, 4)}`;
   }
   getLeadmaster(){
@@ -392,7 +409,7 @@ export class ViewLeadQnrComponent implements OnInit{
   }
   getAssignMemberList(){
     this.crmService.getMemberList().subscribe((memberList:any)=>{
-      console.log('memberList',memberList)
+    
       this.allMemberList.push(memberList)
         // this.allMemberList.sort((a:any, b:any) => (a.firstName).localeCompare(b.firstName))
     },(error:any)=>{
@@ -612,13 +629,13 @@ export class ViewLeadQnrComponent implements OnInit{
     
   }
   handleLeadEstDuration(estDuration:any){
-    console.log("entered")
+   
     this.estDurationWithDay=this.leadDueDays;
     const estDurationDay=this.estDurationWithDay
     const estDurationHour=this.leadDueHrs
     const estDurationMinute= this.leadDueMin
     this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinute };
-    console.log('estDurationDay',this.estTime)
+    
 
   }
   openTimeField(){
@@ -693,7 +710,7 @@ export class ViewLeadQnrComponent implements OnInit{
       const size = pic["size"] / 1024;
 
       //parseInt(((Math.round(size/1024 * 100) / 100).toFixed(2))),
-      console.log("Pic Type ", pic["type"]);
+     
       if (pic["type"]) {
         this.fileData = [
           {
@@ -722,7 +739,7 @@ export class ViewLeadQnrComponent implements OnInit{
       // captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
       // i++;
       // dataToSend.append('attachments', this.fileData);
-      console.log("Json Daata :", JSON.stringify(this.fileData));
+     
     }
     if(this.selectedMessage.files.length === 0){
       this.fileData = [
@@ -745,7 +762,7 @@ export class ViewLeadQnrComponent implements OnInit{
       const size = pic["size"] / 1024;
 
       //parseInt(((Math.round(size/1024 * 100) / 100).toFixed(2))),
-      console.log("Pic Type ", pic["type"]);
+    
       if (pic["type"]) {
         this.fileDataPan = [
           {
@@ -774,7 +791,7 @@ export class ViewLeadQnrComponent implements OnInit{
       // captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
       // i++;
       // dataToSend.append('attachments', this.fileData);
-      console.log("Json Daata :", JSON.stringify(this.fileDataPan));
+     
     }
     if(this.selectedMessagePan.files.length === 0){
       this.fileDataPan = [
@@ -822,13 +839,12 @@ export class ViewLeadQnrComponent implements OnInit{
       "panNumber": this.createLeadForm.controls.panNumber.value,
       "panAttachments": this.fileDataPan
     }
-    console.log('createLeadData',createLeadData)
-    console.log('this.userType',this.userType)
+  
       // this.boolenLeadError=false;
       // this.api_loading = true;
-      console.log("1")
+     
       this.crmService.addkyc(createLeadData).subscribe((response)=>{
-        console.log('afterCreateList',response);
+      
         setTimeout(() => {
           this.api_loading = true;
           this.createLeadForm.reset();
@@ -954,7 +970,7 @@ export class ViewLeadQnrComponent implements OnInit{
           }
         );
     }
-    console.log(' this.customer_data', this.customer_data)
+   
   }
   createNew(){
     const dialogRef  = this.dialog.open(CrmSelectMemberComponent, {
@@ -966,14 +982,14 @@ export class ViewLeadQnrComponent implements OnInit{
       }
   })
   dialogRef.afterClosed().subscribe((res:any)=>{
-    console.log('afterSelectPopupValue',res)
+  
     if(res=== ''){
       this.hideSearch = false;
     }else{
       const filter = { 'id-eq': res };
       this.provider_services.getCustomer(filter).subscribe((response:any)=>{
         this.customer_data = response[0];
-        console.log('customer_data',this.customer_data)
+       
         this.hideSearch = true;
       },
       (error)=>{
@@ -989,6 +1005,12 @@ export class ViewLeadQnrComponent implements OnInit{
   submitQnr(){
     if (this.leadquestionnaireList.labels && this.leadquestionnaireList.labels.length > 0) {
       this.submitQuestionnaire(this.leadDetails.uid);
+  }
+  }
+  submitafterQnr(){
+    console.log(this.unreleased_question_arr)
+    if (this.unreleased_question_arr[0].labels && this.unreleased_question_arr[0].labels.length > 0) {
+      this.submitAfterQuestionnaire(this.leadDetails.uid);
   }
   }
   submitQuestionnaire(uuid) {
@@ -1014,8 +1036,8 @@ export class ViewLeadQnrComponent implements OnInit{
                         if (data.urls.length === postData['urls'].length) {
                             this.provider_services.providerLeadQnrUploadStatusUpdate(uuid, postData)
                                 .subscribe((data) => {
-                                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
-                                    this.router.navigate(['provider', 'appointments']);
+                                    // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+                                    this.router.navigate(['provider', 'crm']);
                                 },
                                     error => {
                                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1024,21 +1046,123 @@ export class ViewLeadQnrComponent implements OnInit{
                                     });
                         }
                     },
+                  
                         error => {
                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                             this.api_loading = false;
                             this.api_loading_video = false;
                         });
             }
+           
         } else {
-            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
-            this.router.navigate(['provider', 'appointments']);
+            // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+            this.router.navigate(['provider', 'crm']);
         }
     }, error => {
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         this.api_loading = false;
         this.api_loading_video = false;
     });
+  }
+  submitAfterQuestionnaire(uuid) {
+    const dataToSend: FormData = new FormData();
+    // if (this.questionAnswers.files) {
+    //     for (const pic of this.questionAnswers.files) {
+    //         dataToSend.append('files', pic['name']);
+    //     }
+    // }
+    const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+    dataToSend.append('question', blobpost_Data);
+    this.providerService.submitProviderLeadQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
+        let postData = {
+            urls: []
+        };
+        if (data.urls && data.urls.length > 0) {
+            for (const url of data.urls) {
+                this.api_loading_video = true;
+                const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
+                this.provider_services.videoaudioS3Upload(file, url.url)
+                    .subscribe(() => {
+                        postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                        if (data.urls.length === postData['urls'].length) {
+                            this.provider_services.providerLeadQnrafterUploadStatusUpdate(uuid, postData)
+                                .subscribe((data) => {
+                                    // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+                                    this.router.navigate(['provider', 'crm']);
+                                },
+                                    error => {
+                                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                        this.api_loading = false;
+                                        this.api_loading_video = false;
+                                    });
+                        }
+                    },
+                  
+                        error => {
+                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                            this.api_loading = false;
+                            this.api_loading_video = false;
+                        });
+            }
+           
+        } else {
+            // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+            this.router.navigate(['provider', 'crm']);
+        }
+    }, error => {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        this.api_loading = false;
+        this.api_loading_video = false;
+    });
+  }
+  changeQnrStatus() {
+    this.unreleased_arr = this.leadDetails.releasedQnr.filter(releasedQn => releasedQn.status === 'unReleased');
+    if(this.unreleased_arr.length !== 0){
+      if(this.unreleased_arr && this.unreleased_arr[0].status === 'unReleased'){
+        console.log(this.leadDetails.releasedQnr[0])
+        this.providerservices.changeLeadQuestionnaireStatus('released',this.leadkid, this.unreleased_arr[0].id).subscribe(data => {
+          this.getleadDetails();
+          this.getAfterQnr()
+        },
+        
+          error => {
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
+          // setTimeout(() => {
+          //   this.getleadDetails();
+          // 1000});
+         
+          // setTimeout(() => {
+          //   this.getAfterQnr()
+          // 1000});
+         
+      }
+    }
+   
+    else{
+      this.getleadDetails();
+          this.getAfterQnr()
+    }
+     
+  }
+ 
+  getAfterQnr(){
+   console.log(this.leadDetails)
+    this.released_arr = this.leadDetails.releasedQnr.filter(releasedQn => releasedQn.status === 'released');
+  console.log(this.released_arr)
+  if(this.released_arr.length !==0){
+    this.crmService.getLeadafterQnrDetails(this.leadkid).subscribe(data => {
+      this.leadafterquestionnaireList = data;
+    
+      this.unreleased_question_arr = this.leadafterquestionnaireList.filter(releasedquestion => releasedquestion.id === this.released_arr[0].id);
+    
+      if (this.unreleased_question_arr && this.unreleased_question_arr[0].labels && this.unreleased_question_arr[0].labels.length > 0) {
+     
+        this.showQuestionnaire = true;
+    } 
+  })
+  }
+  
   }
   filesSelected(event) {
     const input = event.target.files;

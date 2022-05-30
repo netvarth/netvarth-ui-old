@@ -234,19 +234,14 @@
                       Company
                     </div>
                   </mat-option>
-                  <mat-option [value]="'Pancard'">
+                  <mat-option [value]="'Mobile'">
                     <div>
-                      ResCumOff
+                      Mobile
                     </div>
                   </mat-option>
                   <mat-option [value]="'Permanent'">
                     <div>
                       Permanent
-                    </div>
-                  </mat-option>
-                  <mat-option  [value]="'Current'">
-                    <div>
-                      Current
                     </div>
                   </mat-option>
                   <mat-option [value]="'Foreign'">
@@ -1126,19 +1121,14 @@
                       Company
                     </div>
                   </mat-option>
-                  <mat-option [value]="'Pancard'">
+                  <mat-option [value]="'Mobile'">
                     <div>
-                      ResCumOff
+                      Mobile
                     </div>
                   </mat-option>
                   <mat-option [value]="'Permanent'">
                     <div>
                       Permanent
-                    </div>
-                  </mat-option>
-                  <mat-option  [value]="'Current'">
-                    <div>
-                      Current
                     </div>
                   </mat-option>
                   <mat-option [value]="'Foreign'">
@@ -1156,7 +1146,6 @@
                       Other
                     </div>
                   </mat-option>
-                
                  
                 </mat-select>
               </div>
@@ -1592,4 +1581,26 @@
     </ng-container>
   </div>
 </section>
-
+<section *ngIf="showafterqnr">
+  <div class="row d-lg-flex justify-content-lg-start" *ngIf="showQuestionnaire && showafterqnr">
+        
+  
+    <app-questionnaire [questionnaireList]="unreleased_question_arr" [source]="'proLeadafter'"
+                  [questionAnswers]="questionAnswers"
+                  (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+  
+   
+  </div>
+  <div style="text-align: center;margin-top: 15px;">
+    <ng-container>
+      <div class=" mgn-bt-20 mgn-up-10">
+        <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()">Cancel
+        </button>
+        <button class="btn btn-primary font-weight-bold confirmBtn" 
+         type="button"
+          (click)="submitafterQnr()">Submit
+        </button>
+      </div>
+    </ng-container>
+  </div>
+</section>

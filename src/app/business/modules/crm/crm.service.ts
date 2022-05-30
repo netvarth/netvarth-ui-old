@@ -481,4 +481,8 @@ export class CrmService {
     const url = 'provider/lead/count?status-eq=21';
     return this.servicemeta.httpGet(url, null, filter);
   }
+  getLeadafterQnrDetails(uuId){
+    const url = 'provider/lead/questionnaire/' + uuId ;
+    return this.servicemeta.httpGet(url);
+  }
 }

@@ -2553,8 +2553,24 @@ buildFilesParams(sdate, edate) {
     const url = 'provider/lead/questionnaire/resubmit/' + uuid;
     return this.servicemeta.httpPost(url, body);
   }
+  submitProviderLeadafterQuestionnaire(body, uuid) {
+    const url = 'provider/lead/questionnaire/' + uuid;
+    return this.servicemeta.httpPost(url, body);
+  }
+  resubmitProviderLeadafterQuestionnaire(body, uuid) {
+    const url = 'provider/lead/questionnaire/resubmit/' + uuid;
+    return this.servicemeta.httpPost(url, body);
+  }
   providerLeadQnrUploadStatusUpdate(uid, data) {
     const url = 'provider/lead/questionnaire/upload/status/' + uid;
     return this.servicemeta.httpPut(url, data);
+  }
+  providerLeadQnrafterUploadStatusUpdate(uid, data) {
+    const url = 'provider/lead/questionnaire/upload/status/' + uid;
+    return this.servicemeta.httpPut(url, data);
+  }
+  changeLeadQuestionnaireStatus(status,uuid, id) {
+    const url = 'provider/lead/questionnaire/change/' + status + '/' + uuid + '/' + id;
+    return this.servicemeta.httpPut(url);
   }
 } 

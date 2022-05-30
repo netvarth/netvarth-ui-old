@@ -125,12 +125,8 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    console.log("Questionaire init");
-    console.log("QuestionAnswers:", this.questionAnswers);
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     if (this.questionnaireList) {
-      console.log("QuestionaireList:", this.questionnaireList);
-      console.log(this.source);
       if (this.source === 'customer-create' || this.source === 'onetime') {
         if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
           this.questions = this.questionnaireList.labels[0].questions;
@@ -146,10 +142,15 @@ export class QuestionnaireComponent implements OnInit {
       } 
       else if (this.source === 'proLead') {
         this.questions = this.questionnaireList.labels;
-       console.log(this.questionnaireList)
+      
+        this.groupQuestionsBySection();
+      }
+      else if (this.source === 'proLeadafter') {
+        this.questions = this.questionnaireList[0].labels;
+       
         this.groupQuestionsBySection();
       } else if (!this.uuid) {
-        console.log("here");
+      
         this.questions = this.questionnaireList.labels;
         this.groupQuestionsBySection();
       } else if (this.source === 'qnrView') {
@@ -231,7 +232,7 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   getAnswers(answerData, type?) {
-    console.log("Get Answers:", answerData);
+ 
     this.answers = new Object();
     this.dataGridColumns = {};
     if (type === 'get') {
@@ -239,7 +240,7 @@ export class QuestionnaireComponent implements OnInit {
       this.uploadedImages = [];
       this.uploadedFiles = [];
       for (let answ of answerData) {
-        console.log("Answer:", answ);
+     
         if (answ.answerLine) {
           if (answ.question.fieldDataType === 'fileUpload') {
             if (answ.answerLine.answer && answ.answerLine.answer[answ.question.fieldDataType] && answ.answerLine.answer[answ.question.fieldDataType].length > 0) {
@@ -296,7 +297,7 @@ export class QuestionnaireComponent implements OnInit {
               this.uploadFilesTemp[key] = [];
             }
             const type = this.uploadedFiles[key][key1].type.split('/');
-            console.log("Type1:", type);
+         
             if (type[0] !== 'audio' && type[0] !== 'video' || ((type[0] === 'audio' || type[0] === 'video') && this.uploadedFiles[key][key1].status === 'COMPLETE')) {
               this.uploadFilesTemp[key].push(key1);
             }
@@ -319,12 +320,11 @@ export class QuestionnaireComponent implements OnInit {
   }
   filesSelected(event, question, document) {
     const input = event.target.files;
-    console.log("Input:");
-    console.log(input);
+   
     if (input) {
       for (const file of input) {
         let type = file.type.split('/');
-        console.log("type2:", type);
+       
         this.apiError[question.labelName] = [];
         // if (question.filePropertie.fileTypes.indexOf(type[1]) === -1) {
         //   this.snackbarService.openSnackBar('Selected file type not supported', { 'panelClass': 'snackbarerror' });
@@ -430,8 +430,7 @@ export class QuestionnaireComponent implements OnInit {
     return this.sharedFunctionobj.isNumeric(evt);
   }
   onSubmit(keytype?) {
-    console.log("KeyType:", keytype);
-    console.log(this.answers);
+  
     Object.keys(this.filestoUpload).forEach(key => {
       if (!this.answers[key]) {
         this.answers[key] = [];
@@ -488,7 +487,7 @@ export class QuestionnaireComponent implements OnInit {
         delete this.answers[key];
       }
     });
-    console.log("Stage 2");
+   
     Object.keys(this.uploadedFiles).forEach(key => {
       if (!this.answers[key]) {
         this.answers[key] = [];
@@ -513,7 +512,7 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
     });
-    console.log("Stage 3");
+   
     let data = [];
     Object.keys(this.dataGridColumnsAnswerList).forEach(key => {
       let newFiled = {};
@@ -545,7 +544,7 @@ export class QuestionnaireComponent implements OnInit {
         'answer': newFiled
       });
     });
-    console.log("Stage 4");
+   
     Object.keys(this.answers).forEach(key => {
       this.apiError[key] = [];
       let newMap = {};
@@ -572,10 +571,20 @@ export class QuestionnaireComponent implements OnInit {
         });
       }
     });
-    const postData = {
+    console.log(this.questionnaireList[0])
+    let postData;
+    if(this.source === 'proLeadafter'){
+      postData = {
+        'questionnaireId': (this.questionnaireList[0].id) ? this.questionnaireList[0].id : this.questionnaireList[0].questionnaireId,
+        'answerLine': data
+      }
+    }
+  else{
+   postData = {
       'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
       'answerLine': data
     }
+  }
     console.log("Postdata:", postData);
     const passData = { 'answers': postData, 'files': this.selectedMessage, 'audioVideo': this.audioVideoFiles, 'filestoUpload': this.filestoUpload, 'dataGridColumnsAnswerList': this.dataGridColumnsAnswerList, 'comments': this.comments };
     if (keytype === 'inputChange') {
@@ -583,7 +592,7 @@ export class QuestionnaireComponent implements OnInit {
     }
     if (keytype === 'submit') {
       if (this.changeHappened) {
-        console.log("Result pass:", passData);
+      
         this.submitQuestionnaire(passData);
       } else {
         if (!this.type) {
@@ -822,6 +831,22 @@ export class QuestionnaireComponent implements OnInit {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }
+  resubmitProviderLeadafterQuestionnaire(body) {
+    this.providerService.resubmitProviderLeadafterQuestionnaire(body, this.uuid).subscribe(data => {
+      this.uploadAudioVideo(data, 'proLeadafter');
+    }, error => {
+      this.buttonDisable = false;
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
+  submitProviderLeadafterQuestionnaire(body) {
+    this.providerService.submitProviderLeadafterQuestionnaire(body, this.uuid).subscribe(data => {
+      this.uploadAudioVideo(data, 'proLeadafter');
+    }, error => {
+      this.buttonDisable = false;
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+    });
+  }
   resubmitProviderApptQuestionnaire(body) {
     this.providerService.resubmitProviderApptQuestionnaire(body, this.uuid).subscribe(data => {
       this.uploadAudioVideo(data, 'proAppt');
@@ -904,6 +929,16 @@ export class QuestionnaireComponent implements OnInit {
               }
               else if (type === 'proLead') {
                 this.providerService.providerLeadQnrUploadStatusUpdate(this.uuid, postData)
+                  .subscribe((data) => {
+                    this.successGoback();
+                  },
+                    error => {
+                      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                      this.buttonDisable = false;
+                    });
+              }
+              else if (type === 'proLeadafter') {
+                this.providerService.providerLeadQnrafterUploadStatusUpdate(this.uuid, postData)
                   .subscribe((data) => {
                     this.successGoback();
                   },
@@ -1001,6 +1036,13 @@ export class QuestionnaireComponent implements OnInit {
             this.resubmitProviderLeadQuestionnaire(dataToSend);
           } else {
             this.submitProviderLeadQuestionnaire(dataToSend);
+          }
+        }
+        else if (this.source === 'proLeadafter') {
+          if (this.qnrStatus === 'submitted') {
+            this.resubmitProviderLeadafterQuestionnaire(dataToSend);
+          } else {
+            this.submitProviderLeadafterQuestionnaire(dataToSend);
           }
         }
         else if (this.source === 'proOrder') {
@@ -1334,7 +1376,7 @@ export class QuestionnaireComponent implements OnInit {
   }
   getMaxdate(data) {
     let date;
-    console.log("tday" + this.tday);
+   
     if (this.getQuestion(data).dateProperties && this.getQuestion(data).dateProperties.endDate) {
       const dt = this.reverse(this.getQuestion(data).dateProperties.endDate);
       date = new Date(dt)
@@ -1351,7 +1393,7 @@ export class QuestionnaireComponent implements OnInit {
     } else {
       date = this.minday;
     }
-    // console.log(date);
+  
     return date;
   }
   reverse(s) {
