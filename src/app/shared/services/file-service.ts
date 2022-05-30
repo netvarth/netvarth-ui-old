@@ -31,6 +31,8 @@ export class FileService {
     'audio/ogg',
     'application/vnd.ms-excel',
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/doc',
+    'application/ms-doc',
     'application/msword',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     'docx',
@@ -126,7 +128,7 @@ export class FileService {
       return './assets/images/audio.png';
     } else if (type == 'mp4' || type == 'mpeg') {
       return './assets/images/video.png';
-    } else if (type == 'application/msword' || type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || type=='docx' || type=='doc') {
+    } else if (type == 'application/msword' || type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || type=='docx' || type=='doc' || type=='msword') {
       return './assets/images/ImgeFileIcon/wordDocsBgWhite.jpg';
     } else if (type=='txt') {
       return './assets/images/ImgeFileIcon/docTxt.png';
