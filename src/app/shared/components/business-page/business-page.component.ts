@@ -499,8 +499,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                             } else {
                               _this.globalLoading= false;
                             }                            
-                          }
-                          
+                          } else {
+                            _this.globalLoading= false;
+                          }                          
                           if (uiconfig['pwaEnabled']) {
                             _this.pwaEnabled = true;
                           }

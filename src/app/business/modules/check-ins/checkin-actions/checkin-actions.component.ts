@@ -147,11 +147,11 @@ export class CheckinActionsComponent implements OnInit {
         this.setMinMaxDate();
         this.getLabel();
         this.checkin = this.data.checkinData;
-        console.log('multiSelection:' , this.data.multiSelection)
-        console.log('releasedQnr:' , this.checkin.releasedQnr && this.checkin.releasedQnr.length > 1)
-        console.log('waitlistStatus:' , this.checkin.waitlistStatus !== 'cancelled')
+        console.log('multiSelection:', this.data.multiSelection)
+        console.log('releasedQnr:', this.checkin.releasedQnr && this.checkin.releasedQnr.length > 1)
+        console.log('waitlistStatus:', this.checkin.waitlistStatus !== 'cancelled')
         if (!this.data.multiSelection && this.checkin.releasedQnr && this.checkin.releasedQnr.length > 0 && this.checkin.waitlistStatus !== 'cancelled') {
-           this.showQnr = true;
+            this.showQnr = true;
         }
         this.statusBooking = this.data.statusBooking;
         if (!this.data.multiSelection) {
@@ -169,7 +169,7 @@ export class CheckinActionsComponent implements OnInit {
             if (this.checkin.service.virtualCallingModes && this.checkin.service.virtualCallingModes[0].callingMode && this.checkin.virtualService[this.checkin.service.virtualCallingModes[0].callingMode]) {
                 this.callingNumber = this.teleService.getTeleNumber(this.checkin.virtualService[this.checkin.service.virtualCallingModes[0].callingMode]);
             }
-            
+
 
             this.getPos();
             this.getInternStatus();
@@ -230,7 +230,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     printCheckin() {
         this.dialogRef.close();
-        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid, 'print'],{queryParams:{bookingType:'checkin'}});
+        this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid, 'print'], { queryParams: { bookingType: 'checkin' } });
         // this.qrCodegeneration(this.checkin);
         // const bprof = this.groupService.getitemFromGroupStorage('ynwbp');
         // const bname = bprof.bn;
@@ -297,7 +297,7 @@ export class CheckinActionsComponent implements OnInit {
         this.action = 'slotChange';
         // this.selectedTime = '';
         this.activeDate = this.checkin_date;
-        console.log("activeDate :",this.activeDate)
+        console.log("activeDate :", this.activeDate)
         this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.accountid);
         this.getQueuesbyLocationandServiceIdavailability(this.location_id, this.serv_id, this.accountid);
     }
@@ -341,7 +341,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     handleFutureDateChange(e) {
         const tdate = e.targetElement.value;
-        console.log("Toadya :",tdate)
+        console.log("Toadya :", tdate)
         const newdate = tdate.split('/').reverse().join('-');
         const futrDte = new Date(newdate);
         const obtmonth = (futrDte.getMonth() + 1);
@@ -372,7 +372,7 @@ export class CheckinActionsComponent implements OnInit {
         const ndate3 = moment(ndate2, 'YYYY-MM-DD HH:mm').format();
         const strtDt = new Date(ndate3);
         const nDt = new Date(ndate);
-     
+
         if (type === 'pre') {
             if (strtDt.getTime() >= nDt.getTime()) {
                 this.checkin_date = ndate;
@@ -397,15 +397,15 @@ export class CheckinActionsComponent implements OnInit {
         if (startdate >= selecttdate) {
             return true;
         }
-         else {
+        else {
             return false;
         }
     }
-    disableReshedule(){
-        if(this.checkin_date === this.activeDate){
+    disableReshedule() {
+        if (this.checkin_date === this.activeDate) {
             return true;
         }
-        else{
+        else {
             return false;
         }
     }
@@ -428,15 +428,15 @@ export class CheckinActionsComponent implements OnInit {
             'queue': this.sel_queue_id,
             'date': this.checkin_date
         };
-        
-        if(this.checkin_date === this.activeDate){
-            this.snackbarService.openSnackBar("Please select other day for reschedule",{ 'panelClass': 'snackbarerror' });
-        }
-        else{
-            this.provider_services.rescheduleConsumerWaitlist(data)
+
+        // if(this.checkin_date === this.activeDate){
+        //     this.snackbarService.openSnackBar("Please select other day for reschedule",{ 'panelClass': 'snackbarerror' });
+        // }
+        // else{
+        this.provider_services.rescheduleConsumerWaitlist(data)
             .subscribe(
                 () => {
-                    
+
                     if (this.showToken) {
                         this.snackbarService.openSnackBar('Token rescheduled to ' + this.dateformat.transformToMonthlyDate(this.checkin_date));
                     } else {
@@ -448,8 +448,8 @@ export class CheckinActionsComponent implements OnInit {
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 });
-        }
-      
+        // }
+
     }
     qrCodegeneration(valuetogenerate) {
         this.qr_value = this.path + 'status/' + valuetogenerate.checkinEncId;
@@ -567,7 +567,7 @@ export class CheckinActionsComponent implements OnInit {
         });
         addnotedialogRef.afterClosed().subscribe(result => {
             this.dialogRef.close('reload');
-            
+
         });
     }
     changeWaitlistStatus(action) {
@@ -1171,7 +1171,7 @@ export class CheckinActionsComponent implements OnInit {
     }
     // showQnr() {
     //     console.log(!this.data.multiSelection && this.checkin.releasedQnr && this.checkin.releasedQnr.length > 1 && this.checkin.waitlistStatus !== 'cancelled')
-        
+
     //     return false;
     // }
     showQuestionnaires() {
@@ -1185,7 +1185,7 @@ export class CheckinActionsComponent implements OnInit {
                     this.location = data;
                 });
     }
-     changeStatusToCompleted() {
+    changeStatusToCompleted() {
         let msg = '';
         msg = 'Do you want to change all booking Statuses to Completed.?'
         const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
@@ -1201,13 +1201,13 @@ export class CheckinActionsComponent implements OnInit {
             if (result) {
                 const waitList = []
                 this.checkin.forEach(element => {
-                    if(element.ynwUuid){
+                    if (element.ynwUuid) {
                         waitList.push(element.ynwUuid);
                     }
                 });
                 this.provider_services.changestatustowaitlistComplete(waitList, 'DONE')
-                    .subscribe((result:any )=> {
-                       console.log(result);
+                    .subscribe((result: any) => {
+                        console.log(result);
                         this.dialogRef.close('reload');
                         this.router.navigate(['provider', 'check-ins']);
                     })
@@ -1217,11 +1217,11 @@ export class CheckinActionsComponent implements OnInit {
     followUpClicked() {
         const navigationExtras: NavigationExtras = {
             queryParams: {
-              type: 'followup',
-              followup_uuid : this.checkin.ynwUuid,
+                type: 'followup',
+                followup_uuid: this.checkin.ynwUuid,
             }
-          };
-          this.dialogRef.close();
-          this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
-      }
+        };
+        this.dialogRef.close();
+        this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras);
+    }
 }
