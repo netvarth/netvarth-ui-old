@@ -1,14 +1,13 @@
-<section class="card">
+<section class="card" *ngIf="type==='LEAD'">
   <div class="title-gb no-padding">
     <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
        <i style="color:#555 !important" class="fa fa-arrow-left " aria-hidden="true" (click)="goback()"></i>
       <span></span>&nbsp;&nbsp;&nbsp;
-      Lead
-     
+     {{headerName}}
     </div>
   </div>
 </section>
-<section class="card col-md-12">
+<section class="card col-md-12" *ngIf="type==='LEAD'">
   <div class="col-md-12 btnClass divDisp">
     <!----mat tab change to mat select start-->
     <!-- <div class="statusSelectDiv">
@@ -144,12 +143,10 @@
                   <thead>
                     <tr class="tble-filtr-tr heght">
                       <!-- <th></th> -->
-                      <th class="head_color">Lead Details</th>
-                      <th class="head_color">Assignee</th>
-                      <!-- <th class="head_color">Duration</th> -->
-                      <th class="head_color">Status</th>
-                      <th class="head_color">Category</th>
-                      <th class="head_color">Type</th>
+                      <th class="head_color">Lead Id</th>
+                        <th class="head_color">Customer Name</th>
+                        <th class="head_color">Employee</th>
+                        <th class="head_color">Status</th>
                       <th class="filter-fx-col">
                         <!-- <table class="fltr-tbl">
                           <tr>
@@ -297,22 +294,13 @@
                       </tr>
                     </ng-container>
                     <ng-container *ngIf="totalLeadList.length>0">
-                      <tr *ngFor="let lead of totalLeadList; let i=index" (click)="viewLead(lead.uid,lead)">
-                        <!-- <td>
-                              <circle-progress class="circle__progress" [percent]="lead.progress" [animation]="true"
-                                [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
-                                [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
-                                [unitsFontWeight]="'700'" [subtitle]="lead.status.name" [subtitleFontSize]="'7'"
-                                [lazy]="false"></circle-progress>
-                            </td> -->
+                      <!-- <tr *ngFor="let lead of totalLeadList; let i=index" (click)="viewLead(lead.uid,lead)">
+                        
 
                         <td data-title="Lead Details" class="td1">{{lead.title}}</td>
                         <td data-title="Lead Details" class="td2"><span
                             *ngIf="lead.assignee">{{lead.assignee.name}}</span></td>
-                        <!-- <td data-title="Duration" class="td3"><span
-                                *ngIf="lead.estDuration && lead.estDuration.days">{{lead.estDuration.days}} Days</span>&nbsp;
-                              <span *ngIf="lead.estDuration && lead.estDuration.hours">{{lead.estDuration.hours}}
-                                Hours</span></td> -->
+                        
                         <td data-title="Status" *ngIf="lead.status" [class]="lead.status.name" class="td3">
                           {{lead.status.name}}</td>
                         <td data-title="Status" class="td3" *ngIf="!lead.status">--</td>
@@ -320,7 +308,7 @@
                         <td data-title="Category" class="td3" *ngIf="!lead.category">--</td>
                         <td data-title="Type" class="td5" *ngIf="lead.type">{{lead.type.name}}</td>
                         <td data-title="Type" class="td3" *ngIf="!lead.type">--</td>
-                        <!-- <td class="filter-fx-col"></td> -->
+                        
                         <td>
                           <div class="copy">
                             <span class="">
@@ -330,12 +318,7 @@
                               </button>
                             </span>
                             <mat-menu #appMenu="matMenu">
-                              <!-- <button mat-menu-item (click)="openLeadCompletion(lead)" *ngIf="lead.status.name !='Completed'">
-                                    <i class="text-success fa fa-check-square"></i> Mark as Done
-                                  </button> -->
-                              <!-- <button mat-menu-item (click)="openEditLead(lead,'Update')"  *ngIf="lead.status.name !='Completed'">
-                                    <i class="text-info fa fa-edit"></i>Edit
-                                  </button> -->
+                              
                               <button mat-menu-item (click)="openDialogStatusChange(lead)">
                                 <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
                               </button>
@@ -343,6 +326,47 @@
                             </mat-menu>
                           </div>
                         </td>
+                      </tr> -->
+                      <tr *ngFor="let lead of totalLeadList; let i=index" (click)="viewLead(lead.uid,lead)">
+                        <!-- <td data-title="Lead Details" class="td1">{{lead.uid}}</td> -->
+                        <td data-title="Lead Details" class="td1">L-{{lead.id}}</td>
+                        <td data-title="Lead Details" class="td2"><span
+                          *ngIf="lead.customer">{{lead.customer.name}}</span></td>
+                        <td data-title="Lead Details" class="td2"><span
+                            *ngIf="lead.assignee">{{lead.assignee.name}}</span></td>
+                            <td>
+                              <div *ngIf="lead.status.name==='New'" style="
+                        padding: 10px !important;
+                        color: #00D1FF !important;
+                        background: #D6F5FF !important;
+                        border-radius: 7px!important">
+                          {{lead.status.name}}
+                        </div>
+                        <div *ngIf="lead.status.name !=='New'" style="
+                        padding: 10px !important;color: #38C984 !important;background: #D7FEE9;border: 1px solid #D7FFE9;border-radius: 7px!important">
+                          {{lead.status.name}}
+                        </div>
+                            </td>
+                        <!-- <td data-title="Status" *ngIf="lead.status" [class]="lead.status.name" class="td3">
+                          {{lead.status.name}}</td> -->
+                        
+                        <!-- <td>
+                          <div class="copy">
+                            <span class="">
+                              <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
+                                (click)="stopprop($event);">
+                                <mat-icon>more_vert</mat-icon>
+                              </button>
+                            </span>
+                            <mat-menu #appMenu="matMenu">
+                              <button mat-menu-item (click)="openDialogStatusChange(lead)">
+                                <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status
+                                change
+                              </button>
+
+                            </mat-menu>
+                          </div>
+                        </td> -->
                       </tr>
                     </ng-container>
                   </tbody>
@@ -603,7 +627,7 @@
                     </ng-container>
                   </tbody>
                 </table>
-                <div class="search_paging" *ngIf="inprogressCount >10">
+                <div class="search_paging" *ngIf="totalInprogressList.length>10">
                   <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                     (pagerclick)="handle_pageclick_inprogress($event)" [curpage]="pagination.startpageval">
                   </app-pager>
@@ -1507,14 +1531,14 @@
                           <td data-title="Lead Details" class="td2"><span
                               *ngIf="lead.assignee">{{lead.assignee.name}}</span></td>
                               <td>
-                                <div *ngIf="lead.status.name==='New'" style="width: min-content !important;
+                                <div *ngIf="lead.status.name==='New'" style="
                           padding: 10px !important;
                           color: #00D1FF !important;
                           background: #D6F5FF !important;
                           border-radius: 7px!important">
                             {{lead.status.name}}
                           </div>
-                          <div *ngIf="lead.status.name !=='New'" style="width: min-content !important;
+                          <div *ngIf="lead.status.name !=='New'" style="
                           padding: 10px !important;color: #38C984 !important;background: #D7FEE9;border: 1px solid #D7FFE9;border-radius: 7px!important">
                             {{lead.status.name}}
                           </div>
@@ -1807,4 +1831,541 @@
     </div>
     <!--assigned start-->
   </div>
+</section>
+<section class="card" *ngIf="type==='CRIF'">
+  <div class="title-gb no-padding">
+    <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
+       <i style="color:#555 !important" class="fa fa-arrow-left " aria-hidden="true" (click)="goback()"></i>
+      <span></span>&nbsp;&nbsp;&nbsp;
+     {{headerName}}
+    </div>
+  </div>
+</section>
+<section class="card col-md-12"  *ngIf="type==='CRIF'">
+  <!-- ffff{{kycLeadData | json}} -->
+  <div>
+    <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+    <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
+      <div class="col-md-12 no-padding-small">
+        <div class="row">
+          <div class="card p0 w-dta">
+            <div class="table-responsive dash-list">
+              <table class="table">
+                <thead>
+                  <tr class="tble-filtr-tr heght">
+                    <th class="head_color">Lead Id</th>
+                    <th class="head_color">Leads</th>
+                    <th class="head_color">Assignee</th>
+                    <!-- <th class="filter-fx-col">
+                      <table class="fltr-tbl">
+                        <tr>
+                          <td>
+                            <span>
+                              <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                [matTooltip]="filtericonTooltip" style="cursor: pointer;"></i>
+                            </span>
+                          </td>
+                        </tr>
+                      </table>
+                    </th> -->
+                  </tr>
+                </thead>
+                <!-- <tbody>
+                  <tr>
+
+                    <div>
+                      <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
+                        <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                          <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+                            <span class="filter-head-title">Filters</span>
+                            <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                              (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                              [matTooltip]="'Close filter window'"></i>
+                          </div>
+                          <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
+                          <ul class="sidebar-menu accordion" id="accordion1">
+                            <div class="card">
+                              <div class="card-header">
+                                <h2 class="mb-0">
+                                  <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    data-target="#collapseCategory3" aria-expanded="false">
+                                    <div>
+                                      <div style="display: inline-block !important;">
+                                        <i class="fa fa-circle-o-notch"></i>
+                                      </div>
+                                      <span>&nbsp;Category</span>
+                                    </div>
+                                    <i class="fa fa-angle-down"></i>
+                                  </button>
+                                </h2>
+                              </div>
+                              <div id="collapseCategory3" class="collapse in" data-parent="#accordion2">
+                                <div class="card-body">
+                                  <div class="filter-checkbox-input">
+                                    <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                    </li>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                      *ngFor="let cat of categoryListData[0];let index=i">
+                                      <mat-checkbox [checked]="categories.indexOf(cat) !== -1"
+                                        [checked]="categories.indexOf(cat.id) !== -1"
+                                        (change)="setFilterDataCheckbox('category', cat.id)">
+                                        {{cat.name}}</mat-checkbox>
+                                    </li>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="card">
+                              <div class="card-header">
+                                <h2 class="mb-0">
+                                  <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    data-target="#collapseType3" aria-expanded="false">
+                                    <div>
+                                      <div style="display: inline-block !important;">
+                                        <i class="fa fa-circle-o-notch"></i>
+                                      </div>
+                                      <span>&nbsp;Type</span>
+                                    </div>
+                                    <i class="fa fa-angle-down"></i>
+                                  </button>
+                                </h2>
+                              </div>
+                              <div id="collapseType3" class="collapse in" data-parent="#accordion2">
+                                <div class="card-body">
+                                  <div class="filter-checkbox-input">
+                                    <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                    </li>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                      *ngFor="let typ of leadTypeList[0];let index=i">
+                                      <mat-checkbox [checked]="types.indexOf(typ) !== -1"
+                                        [checked]="types.indexOf(typ.id) !== -1"
+                                        (change)="setFilterDataCheckbox('type', typ.id)">
+                                        {{typ.name}}</mat-checkbox>
+                                    </li>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </ul>
+                        </section>
+                        <div class="filter-footer mt-1 mx-auto text-center" *ngIf="filterapplied === true">
+                          <button class="btn reset-btn mt-4" (click)="clearFilter()">
+                            <i class="fa fa-undo"></i>&nbsp;Reset
+                          </button>
+                          <button class="btn apply-btn" (click)="getInprogressLead()">
+                            <i class="fa fa-check"></i>&nbsp;Apply
+                          </button>
+                        </div>
+                      </aside>
+                    </div>
+
+                  </tr>
+                </tbody> -->
+                <tbody>
+                  <ng-container *ngIf="kycLeadData.length === 0">
+                    <tr>
+                      <td class="nodatafound" colspan="5">{{no_leads_cap}}</td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="kycLeadData.length>0">
+                    <tr *ngFor="let lead of kycLeadData; let i=index" (click)="viewLead(lead.uid,lead)">
+                      <!-- <td data-title="Lead Details" class="td1">{{lead.uid}}</td> -->
+                       <td data-title="Lead Details" class="td1">L-{{lead.id}}</td>
+                      <td data-title="Lead Details" class="td2"><span
+                          *ngIf="lead.customer">{{lead.customer.name}}</span></td>
+                      <td data-title="Lead Details" class="td2"><span
+                            *ngIf="lead.assignee">{{lead.assignee.name}}</span></td>
+      
+                      
+                      
+                      <!-- <td>
+                        <div class="copy">
+                          <span class="">
+                            <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
+                              (click)="stopprop($event);">
+                              <mat-icon>more_vert</mat-icon>
+                            </button>
+                          </span>
+                          <mat-menu #appMenu="matMenu">
+                            <button mat-menu-item (click)="openDialogStatusChange(lead)">
+                              <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
+                            </button>
+
+                          </mat-menu>
+                        </div>
+                      </td> -->
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+              <div class="search_paging" *ngIf="kycLeadData.length >10">
+                <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                  (pagerclick)="handle_pageclick_kyc($event)" [curpage]="pagination.startpageval">
+                </app-pager>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</section>
+<section class="card" *ngIf="type==='SALESVERIFICATION'">
+  <div class="title-gb no-padding">
+    <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
+       <i style="color:#555 !important" class="fa fa-arrow-left " aria-hidden="true" (click)="goback()"></i>
+      <span></span>&nbsp;&nbsp;&nbsp;
+     {{headerName}}
+    </div>
+  </div>
+</section>
+<section class="card col-md-12"  *ngIf="type==='SALESVERIFICATION'">
+  <!-- ffff{{kycLeadData | json}} -->
+  <div>
+    <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+    <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
+      <div class="col-md-12 no-padding-small">
+        <div class="row">
+          <div class="card p0 w-dta">
+            <div class="table-responsive dash-list">
+              <table class="table">
+                <thead>
+                  <tr class="tble-filtr-tr heght">
+                    <th class="head_color">Lead Id</th>
+                    <th class="head_color">Leads</th>
+                    <th class="head_color">Employee</th>
+                    <!-- <th class="filter-fx-col">
+                      <table class="fltr-tbl">
+                        <tr>
+                          <td>
+                            <span>
+                              <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                [matTooltip]="filtericonTooltip" style="cursor: pointer;"></i>
+                            </span>
+                          </td>
+                        </tr>
+                      </table>
+                    </th> -->
+                  </tr>
+                </thead>
+                <!-- <tbody>
+                  <tr>
+
+                    <div>
+                      <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
+                        <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                          <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+                            <span class="filter-head-title">Filters</span>
+                            <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                              (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                              [matTooltip]="'Close filter window'"></i>
+                          </div>
+                          <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
+                          <ul class="sidebar-menu accordion" id="accordion1">
+                            <div class="card">
+                              <div class="card-header">
+                                <h2 class="mb-0">
+                                  <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    data-target="#collapseCategory3" aria-expanded="false">
+                                    <div>
+                                      <div style="display: inline-block !important;">
+                                        <i class="fa fa-circle-o-notch"></i>
+                                      </div>
+                                      <span>&nbsp;Category</span>
+                                    </div>
+                                    <i class="fa fa-angle-down"></i>
+                                  </button>
+                                </h2>
+                              </div>
+                              <div id="collapseCategory3" class="collapse in" data-parent="#accordion2">
+                                <div class="card-body">
+                                  <div class="filter-checkbox-input">
+                                    <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                    </li>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                      *ngFor="let cat of categoryListData[0];let index=i">
+                                      <mat-checkbox [checked]="categories.indexOf(cat) !== -1"
+                                        [checked]="categories.indexOf(cat.id) !== -1"
+                                        (change)="setFilterDataCheckbox('category', cat.id)">
+                                        {{cat.name}}</mat-checkbox>
+                                    </li>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="card">
+                              <div class="card-header">
+                                <h2 class="mb-0">
+                                  <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    data-target="#collapseType3" aria-expanded="false">
+                                    <div>
+                                      <div style="display: inline-block !important;">
+                                        <i class="fa fa-circle-o-notch"></i>
+                                      </div>
+                                      <span>&nbsp;Type</span>
+                                    </div>
+                                    <i class="fa fa-angle-down"></i>
+                                  </button>
+                                </h2>
+                              </div>
+                              <div id="collapseType3" class="collapse in" data-parent="#accordion2">
+                                <div class="card-body">
+                                  <div class="filter-checkbox-input">
+                                    <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                    </li>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                      *ngFor="let typ of leadTypeList[0];let index=i">
+                                      <mat-checkbox [checked]="types.indexOf(typ) !== -1"
+                                        [checked]="types.indexOf(typ.id) !== -1"
+                                        (change)="setFilterDataCheckbox('type', typ.id)">
+                                        {{typ.name}}</mat-checkbox>
+                                    </li>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </ul>
+                        </section>
+                        <div class="filter-footer mt-1 mx-auto text-center" *ngIf="filterapplied === true">
+                          <button class="btn reset-btn mt-4" (click)="clearFilter()">
+                            <i class="fa fa-undo"></i>&nbsp;Reset
+                          </button>
+                          <button class="btn apply-btn" (click)="getInprogressLead()">
+                            <i class="fa fa-check"></i>&nbsp;Apply
+                          </button>
+                        </div>
+                      </aside>
+                    </div>
+
+                  </tr>
+                </tbody> -->
+                <tbody>
+                  <ng-container *ngIf="salesVerificationData.length === 0">
+                    <tr>
+                      <td class="nodatafound" colspan="5">{{no_leads_cap}}</td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="salesVerificationData.length>0">
+                    <tr *ngFor="let lead of salesVerificationData; let i=index" (click)="viewLead(lead.uid,lead)">
+                      <!-- <td data-title="Lead Details" class="td1">{{lead.uid}}</td> -->
+                       <td data-title="Lead Details" class="td1">L-{{lead.id}}</td>
+                      <td data-title="Lead Details" class="td2"><span
+                          *ngIf="lead.customer">{{lead.customer.name}}</span></td>
+                      <td data-title="Lead Details" class="td2"><span
+                            *ngIf="lead.assignee">{{lead.assignee.name}}</span></td>
+      
+                      
+                      
+                      <!-- <td>
+                        <div class="copy">
+                          <span class="">
+                            <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
+                              (click)="stopprop($event);">
+                              <mat-icon>more_vert</mat-icon>
+                            </button>
+                          </span>
+                          <mat-menu #appMenu="matMenu">
+                            <button mat-menu-item (click)="openDialogStatusChange(lead)">
+                              <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
+                            </button>
+
+                          </mat-menu>
+                        </div>
+                      </td> -->
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+              <div class="search_paging" *ngIf="salesVerificationData.length >10">
+                <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                  (pagerclick)="handle_pageclick_SalesVerification($event)" [curpage]="pagination.startpageval">
+                </app-pager>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</section>
+<section class="card" *ngIf="type==='DOCUMENTUPLOD'">
+  <div class="title-gb no-padding">
+    <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
+       <i style="color:#555 !important" class="fa fa-arrow-left " aria-hidden="true" (click)="goback()"></i>
+      <span></span>&nbsp;&nbsp;&nbsp;
+     {{headerName}}
+    </div>
+  </div>
+</section>
+<section class="card col-md-12"  *ngIf="type==='DOCUMENTUPLOD'">
+  <!-- ffff{{kycLeadData | json}} -->
+  <div>
+    <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+    <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
+      <div class="col-md-12 no-padding-small">
+        <div class="row">
+          <div class="card p0 w-dta">
+            <div class="table-responsive dash-list">
+              <table class="table">
+                <thead>
+                  <tr class="tble-filtr-tr heght">
+                    <th class="head_color">Lead Id</th>
+                    <th class="head_color">Leads</th>
+                    <th class="head_color">Employee</th>
+                    <!-- <th class="filter-fx-col">
+                      <table class="fltr-tbl">
+                        <tr>
+                          <td>
+                            <span>
+                              <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
+                                [matTooltip]="filtericonTooltip" style="cursor: pointer;"></i>
+                            </span>
+                          </td>
+                        </tr>
+                      </table>
+                    </th> -->
+                  </tr>
+                </thead>
+                <!-- <tbody>
+                  <tr>
+
+                    <div>
+                      <aside class="filterSidebar filter-sidebar" *ngIf="filter_sidebar">
+                        <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+                          <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+                            <span class="filter-head-title">Filters</span>
+                            <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                              (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                              [matTooltip]="'Close filter window'"></i>
+                          </div>
+                          <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
+                          <ul class="sidebar-menu accordion" id="accordion1">
+                            <div class="card">
+                              <div class="card-header">
+                                <h2 class="mb-0">
+                                  <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    data-target="#collapseCategory3" aria-expanded="false">
+                                    <div>
+                                      <div style="display: inline-block !important;">
+                                        <i class="fa fa-circle-o-notch"></i>
+                                      </div>
+                                      <span>&nbsp;Category</span>
+                                    </div>
+                                    <i class="fa fa-angle-down"></i>
+                                  </button>
+                                </h2>
+                              </div>
+                              <div id="collapseCategory3" class="collapse in" data-parent="#accordion2">
+                                <div class="card-body">
+                                  <div class="filter-checkbox-input">
+                                    <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                    </li>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                      *ngFor="let cat of categoryListData[0];let index=i">
+                                      <mat-checkbox [checked]="categories.indexOf(cat) !== -1"
+                                        [checked]="categories.indexOf(cat.id) !== -1"
+                                        (change)="setFilterDataCheckbox('category', cat.id)">
+                                        {{cat.name}}</mat-checkbox>
+                                    </li>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="card">
+                              <div class="card-header">
+                                <h2 class="mb-0">
+                                  <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    data-target="#collapseType3" aria-expanded="false">
+                                    <div>
+                                      <div style="display: inline-block !important;">
+                                        <i class="fa fa-circle-o-notch"></i>
+                                      </div>
+                                      <span>&nbsp;Type</span>
+                                    </div>
+                                    <i class="fa fa-angle-down"></i>
+                                  </button>
+                                </h2>
+                              </div>
+                              <div id="collapseType3" class="collapse in" data-parent="#accordion2">
+                                <div class="card-body">
+                                  <div class="filter-checkbox-input">
+                                    <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
+                                    </li>
+                                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                                      *ngFor="let typ of leadTypeList[0];let index=i">
+                                      <mat-checkbox [checked]="types.indexOf(typ) !== -1"
+                                        [checked]="types.indexOf(typ.id) !== -1"
+                                        (change)="setFilterDataCheckbox('type', typ.id)">
+                                        {{typ.name}}</mat-checkbox>
+                                    </li>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </ul>
+                        </section>
+                        <div class="filter-footer mt-1 mx-auto text-center" *ngIf="filterapplied === true">
+                          <button class="btn reset-btn mt-4" (click)="clearFilter()">
+                            <i class="fa fa-undo"></i>&nbsp;Reset
+                          </button>
+                          <button class="btn apply-btn" (click)="getInprogressLead()">
+                            <i class="fa fa-check"></i>&nbsp;Apply
+                          </button>
+                        </div>
+                      </aside>
+                    </div>
+
+                  </tr>
+                </tbody> -->
+                <tbody>
+                  <ng-container *ngIf="documentVerificationData.length === 0">
+                    <tr>
+                      <td class="nodatafound" colspan="5">{{no_leads_cap}}</td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="documentVerificationData.length>0">
+                    <tr *ngFor="let lead of documentVerificationData; let i=index" (click)="viewLead(lead.uid,lead)">
+                      <!-- <td data-title="Lead Details" class="td1">{{lead.uid}}</td> -->
+                       <td data-title="Lead Details" class="td1">L-{{lead.id}}</td>
+                      <td data-title="Lead Details" class="td2"><span
+                          *ngIf="lead.customer">{{lead.customer.name}}</span></td>
+                      <td data-title="Lead Details" class="td2"><span
+                            *ngIf="lead.assignee">{{lead.assignee.name}}</span></td>
+      
+                      
+                      
+                      <!-- <td>
+                        <div class="copy">
+                          <span class="">
+                            <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
+                              (click)="stopprop($event);">
+                              <mat-icon>more_vert</mat-icon>
+                            </button>
+                          </span>
+                          <mat-menu #appMenu="matMenu">
+                            <button mat-menu-item (click)="openDialogStatusChange(lead)">
+                              <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
+                            </button>
+
+                          </mat-menu>
+                        </div>
+                      </td> -->
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+              <div class="search_paging" *ngIf="documentVerificationData.length >10">
+                <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+                  (pagerclick)="handle_pageclick_DocumentVerification($event)" [curpage]="pagination.startpageval">
+                </app-pager>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </section>

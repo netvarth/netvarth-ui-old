@@ -188,7 +188,10 @@ export class TasksComponent implements OnInit {
   public suspendedTaskList:any=[];
   public inProgressListData:any=[];
   public totalActivity:any='Total activity';
-  public headerName:any='Activity'
+  public headerName:any='Activity';
+  public suspendTaskCount:any;
+  public cancelledTaskCount:any;
+  public assignedTaskCount:any;
 
   constructor(
     private locationobj: Location,
@@ -239,7 +242,6 @@ export class TasksComponent implements OnInit {
       this.bCancelledTask=false;
       this.bSuspendedTask=false;
       this.getInprogressTask()
-      // this.getInprogressTaskData()
     }
     else if(statusValue===5){
       this.bCompltedTask=true;
@@ -302,54 +304,234 @@ export class TasksComponent implements OnInit {
       this.getTotalTask()
     }
   }
-  getInprogressTaskData(from_oninit=true){
-    this.inProgressListData=[]
-    this.totalTaskList.forEach((element:any)=>{
-      if(element.status.name==='In Progress'){
-        this.inProgressListData.push(element);
-      }
-    })
+  //new task method
+  // getNewTask(from_oninit=true){
+  //   this.totalNewTaskList=[]
+  //   this.totalTaskList.forEach((element:any)=>{
+  //     if(element.status.name==='New'){
+  //       this.totalNewTaskList.push(element);
+  //     }
+  //   })
+  // }
+  handle_pageclick_New(pg){
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getNewTask();
+  }
+  getNewTask(from_oninit = true){
+    let filter = this.setFilterForApi();
+    this.getNewTaskCount(filter)
+      .then(
+        result => {
+          if (from_oninit) { this.assignedTaskCount = result; }
+          filter = this.setPaginationNewFilter(filter);
+          this.crmService.getNewTask(filter)
+            .subscribe(
+              data => {
+                this.totalNewTaskList = data;
+                console.log('totalNewTaskList',this.totalNewTaskList)
+                this.totalNewTaskList = this.totalNewTaskList.filter(obj => !obj.originId);
+                // this.loadComplete2 = true;
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                // this.loadComplete2 = true;
+             
+              }
+            );
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getNewTaskCount(filter){
+    return new Promise((resolve, reject) => {
+      this.crmService.getNewTaskCount(filter)
+        .subscribe(
+          data => {
+            this.pagination.totalCnt = data;
+            this.assignedTaskCount = this.pagination.totalCnt;
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+  }
+  setPaginationNewFilter(api_filter){
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
+  }
+  handle_pageclick_new(pg){
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getCancelledTask();
+  }
+  //assigneed task method
+  getAssignedTask(from_oninit = true){
+    let filter = this.setFilterForApi();
+    this.getAssigneedTaskCount(filter)
+      .then(
+        result => {
+          if (from_oninit) { this.assignedTaskCount = result; }
+          filter = this.setPaginationAssignedFilter(filter);
+          this.crmService.getAssignedTask(filter)
+            .subscribe(
+              data => {
+                this.assignedTaskList = data;
+                console.log('assignedTaskList',this.assignedTaskList)
+                this.assignedTaskList = this.assignedTaskList.filter(obj => !obj.originId);
+                // this.loadComplete2 = true;
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                // this.loadComplete2 = true;
+             
+              }
+            );
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getAssigneedTaskCount(filter){
+    return new Promise((resolve, reject) => {
+      this.crmService.getAssigneedTaskCount(filter)
+        .subscribe(
+          data => {
+            this.pagination.totalCnt = data;
+            this.assignedTaskCount = this.pagination.totalCnt;
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+  }
+  setPaginationAssignedFilter(api_filter){
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
+  }
+  handle_pageclick_assigned(pg){
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getCancelledTask();
+  }
+  //cancelle4d task method
+  getCancelledTask(from_oninit = true){
+    let filter = this.setFilterForApi();
+    this.getCancelledTaskCount(filter)
+      .then(
+        result => {
+          if (from_oninit) { this.cancelledTaskCount = result; }
+          filter = this.setPaginationCancelledFilter(filter);
+          this.crmService.getCancelledTask(filter)
+            .subscribe(
+              data => {
+                this.canceledTaskList = data;
+                console.log('canceledTaskList',this.canceledTaskList)
+                this.canceledTaskList = this.canceledTaskList.filter(obj => !obj.originId);
+                // this.loadComplete2 = true;
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                // this.loadComplete2 = true;
+             
+              }
+            );
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getCancelledTaskCount(filter){
+    return new Promise((resolve, reject) => {
+      this.crmService.getCancelledTaskCount(filter)
+        .subscribe(
+          data => {
+            this.pagination.totalCnt = data;
+            this.cancelledTaskCount = this.pagination.totalCnt;
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+  }
+  setPaginationCancelledFilter(api_filter){
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
+  }
+  handle_pageclick_cancelled(pg){
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getCancelledTask();
+  }
+  //suspended task method
+  getSuspendedTask(from_oninit=true){
+  let filter = this.setFilterForApi();
+    this.getSuspendedTaskCount(filter)
+      .then(
+        result => {
+          if (from_oninit) { this.suspendTaskCount = result; }
+          filter = this.setPaginationSuspendFilter(filter);
+          this.crmService.getSuspendedTask(filter)
+            .subscribe(
+              data => {
+                this.suspendedTaskList = data;
+                console.log('suspendedTaskList',this.suspendedTaskList)
+                this.suspendedTaskList = this.suspendedTaskList.filter(obj => !obj.originId);
+                // this.loadComplete2 = true;
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                // this.loadComplete2 = true;
+             
+              }
+            );
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
 
   }
-  getNewTask(from_oninit=true){
-    this.totalNewTaskList=[]
-    this.totalTaskList.forEach((element:any)=>{
-      if(element.status.name==='New'){
-        this.totalNewTaskList.push(element);
-      }
-    })
+  getSuspendedTaskCount(filter){
+    return new Promise((resolve, reject) => {
+      this.crmService.getSuspendedTaskCount(filter)
+        .subscribe(
+          data => {
+            this.pagination.totalCnt = data;
+            this.suspendTaskCount = this.pagination.totalCnt;
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
   }
-  getAssignedTask(from_oninit=true){
-    this.assignedTaskList=[]
-    this.totalTaskList.forEach((element:any)=>{
-      //  console.log('element:.',element)
-      if(element.status.name ==='Assigned'){
-        this.assignedTaskList.push(element);
-      }
-      // console.log('this.assignedTaskList',this.assignedTaskList)
-    })
+  setPaginationSuspendFilter(api_filter){
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
   }
-  getCancelledTask(from_oninit = true){
-    this.canceledTaskList=[]
-    this.totalTaskList.forEach((element:any)=>{
-      // console.log('element:.',element)
-     if(element.status.name ==='Cancelled'){
-       this.canceledTaskList.push(element);
-       this.canceledTaskList = this.canceledTaskList.filter(obj => !obj.originId);
-     }
-    //  console.log('this.canceledTaskList',this.canceledTaskList)
-   })
+  handle_pageclick_suspended(pg){
+    this.pagination.startpageval=pg;
+    this.filter.page = pg;
+    this.getSuspendedTask()
+
   }
-  getSuspendedTask(from_oninit=true){
-    this.suspendedTaskList=[]
-    this.totalTaskList.forEach((element:any)=>{
-      // console.log('element:.',element)
-     if(element.status.name ==='Suspended'){
-       this.suspendedTaskList.push(element);
-     }
-    //  console.log('this.suspendedTaskList',this.suspendedTaskList)
-   })
-  }
+  //total task methiod
   getTotalTask(from_oninit = true) {
     let filter = this.setFilterForApi();
     this.getTotalTaskCount(filter)
@@ -363,12 +545,12 @@ export class TasksComponent implements OnInit {
                 this.totalTaskList = data;
                 console.log("Task List :",this.totalTaskList)
                 this.totalTaskList = this.totalTaskList.filter(obj => !obj.originId);
-                this.getInprogressTask();
-                this.getCompletedTask();
-                this.getNewTask()
-                this.getAssignedTask()
-                this. getCancelledTask()
-                this. getSuspendedTask()
+                // this.getInprogressTask();
+                // this.getCompletedTask();
+                // this.getNewTask()
+                // this.getAssignedTask()
+                // this. getCancelledTask()
+                // this. getSuspendedTask()
                 
                 this.loadComplete = true;
               },
@@ -384,36 +566,6 @@ export class TasksComponent implements OnInit {
         }
       );
   } 
- 
-
-
-  getColor(status){
-    if(status){
-    if(status === 'New'){
-      return 'blue'
-    }
-    else if(status === 'Assigned'){
-      return 'pink';
-    }
-    else if(status === 'In Progress'){
-      return '#fcce2b';
-    }
-    else if(status === 'Cancelled'){
-      return 'red';
-    }
-    else if(status === 'Suspended'){
-      return 'orange';
-    }
-    else if(status === 'Completed'){
-      return 'green';
-    }
-    else{
-      return 'black'
-    }
-  }
-}
-   // return this.totalTaskList.status.name === 'New' ? 'red' : 'green';}
-
   getTotalTaskCount(filter) {
     return new Promise((resolve, reject) => {
       this.crmService.getTotalTaskCount(filter)
@@ -439,6 +591,32 @@ export class TasksComponent implements OnInit {
     this.filter.page = pg;
     this.getTotalTask();
   }
+  getColor(status){
+    if(status){
+    if(status === 'New'){
+      return 'blue'
+    }
+    else if(status === 'Assigned'){
+      return 'pink';
+    }
+    else if(status === 'In Progress'){
+      return '#fcce2b';
+    }
+    else if(status === 'Cancelled'){
+      return 'red';
+    }
+    else if(status === 'Suspended'){
+      return 'orange';
+    }
+    else if(status === 'Completed'){
+      return 'green';
+    }
+    else{
+      return 'black'
+    }
+  }
+}
+//inprogress task method
   getInprogressTask(from_oninit = true) {
     console.log('from_oninit',from_oninit)
     let filter = this.setFilterForApi();
@@ -492,6 +670,7 @@ export class TasksComponent implements OnInit {
     this.filter.page = pg;
     this.getInprogressTask();
   }
+  //completed task method
   getCompletedTask(from_oninit = true) {
     let filter = this.setFilterForApi();
     this.getCompletedTaskCount(filter)
@@ -504,11 +683,11 @@ export class TasksComponent implements OnInit {
               data => {
                 this.totalCompletedList = data;
                 this.totalCompletedList = this.totalCompletedList.filter(obj => !obj.originId);
-                this.loadComplete2 = true;
+                // this.loadComplete2 = true;
               },
               error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                this.loadComplete2 = true;
+                // this.loadComplete2 = true;
              
               }
             );
@@ -543,6 +722,7 @@ export class TasksComponent implements OnInit {
     this.filter.page = pg;
     this.getCompletedTask();
   }
+  //delayed task method
   getDelayedTask(from_oninit = true) {
     let filter = this.setFilterForApi();
     this.getDelayedTaskCount(filter)
@@ -593,27 +773,8 @@ export class TasksComponent implements OnInit {
     this.filter.page = pg;
     this.getDelayedTask();
   }
-  handle_pageclick_assigned(pg) {
-    this.pagination.startpageval = pg;
-    this.filter.page = pg;
-    this.getAssignedTask();
-  }
-  handle_pageclick_New(pg){
-    this.pagination.startpageval = pg;
-    this.filter.page = pg;
-    this.getNewTask();
-  }
-  handle_pageclick_cancelled(pg){
-    this.pagination.startpageval = pg;
-    this.filter.page = pg;
-    this.getCancelledTask();
-  }
-  handle_pageclick_suspended(pg){
-    this.pagination.startpageval=pg;
-    this.filter.page = pg;
-    this.getSuspendedTask()
-
-  }
+ 
+  
   goback() {
     this.locationobj.back();
   }

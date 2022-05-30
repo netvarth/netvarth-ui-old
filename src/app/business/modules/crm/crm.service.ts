@@ -95,9 +95,9 @@ export class CrmService {
       const url = 'provider/task/provider?isSubTask-eq=false'
       return this.servicemeta.httpGet(url, null, filter);
     }
-    getTotalLead(filter = {}) {
+    getTotalLead() {
       const url = 'provider/lead/'
-      return this.servicemeta.httpGet(url, null, filter);
+      return this.servicemeta.httpGet(url, null);
     }
 
     getTotalTaskCount(filter) {
@@ -149,6 +149,38 @@ export class CrmService {
     {
       const url = 'provider/task/' + taskUid;
       return this.servicemeta.httpGet(url);
+    }
+    getSuspendedTask(filter={}){
+      const url = 'provider/task/provider?status-eq=12';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+    getSuspendedTaskCount(filter){
+      const url = 'provider/task/provider/count?status-eq=12';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+    getCancelledTask(filter={}){
+      const url = 'provider/task/provider?status-eq=4';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+    getCancelledTaskCount(filter){
+      const url = 'provider/task/provider/count?status-eq=4';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+    getAssignedTask(filter={}){
+      const url = 'provider/task/provider?status-eq=2';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+    getAssigneedTaskCount(filter){
+      const url = 'provider/task/provider/count?status-eq=2';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+    getNewTask(filter={}){
+      const url = 'provider/task/provider?status-eq=1';
+      return this.servicemeta.httpGet(url, null, filter);
+    }
+    getNewTaskCount(filter){
+      const url = 'provider/task/provider/count?status-eq=1';
+      return this.servicemeta.httpGet(url, null, filter);
     }
 
 
@@ -423,5 +455,30 @@ export class CrmService {
   }
   crifVerification(data){
     return this.servicemeta.httpPost('provider/crif/processinquiry', data);
+  }
+  getCRIFKycUpdateLead(filter = {}) {
+    const url = 'provider/lead?status-eq=17';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+  getCRIFKycUpdateLeadCount(filter) {
+    const url = 'provider/lead/count?status-eq=17';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+  getSalesVerificationLead(filter = {}) {
+    const url = 'provider/lead?status-eq=19';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+  getSalesVerificationLeadCount(filter) {
+    const url = 'provider/lead/count?status-eq=19';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+  //upload fgile status need to change
+  getDocUploadLead(filter = {}) {
+    const url = 'provider/lead?status-eq=19';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+  getDocUploadLeadCount(filter) {
+    const url = 'provider/lead/count?status-eq=19';
+    return this.servicemeta.httpGet(url, null, filter);
   }
 }

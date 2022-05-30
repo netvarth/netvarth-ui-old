@@ -5,6 +5,7 @@ import { Messages } from '../../../../../../src/app/shared/constants/project-mes
 import { Location } from '@angular/common';
 import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
 import { Router,NavigationExtras } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SnackbarService } from '../../../../../../src/app/shared/services/snackbar.service';
 import { CrmService } from '../crm.service';
 import { WordProcessor } from '../../../../../../src/app/shared/services/word-processor.service';
@@ -156,6 +157,14 @@ export class LeadsComponent implements OnInit {
   public UnassignedLeadList:any=[]
   public sucessListLead:any=[]
   public totalActivity:any='Total leads';
+  public type:any;
+  public headerName:any;
+  public kycLeadData:any=[];
+  public kycLeadDataCount:any;
+  public salesVerificationData:any=[];
+  public salesVErificationDataCount:any;
+  public documentVerificationData:any=[];
+  public documentVerificationDataCount:any;
   constructor(
     private locationobj: Location,
     private groupService: GroupStorageService,
@@ -165,6 +174,7 @@ export class LeadsComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private crmService: CrmService,
+    private activated_route: ActivatedRoute,
 
   ) {
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
@@ -178,10 +188,36 @@ export class LeadsComponent implements OnInit {
     } else {
       this.selectedTab = 1;
     }
+    this.activated_route.queryParams.subscribe(qparams => {
+      console.log('qparams',qparams)
+      if (qparams.type) {
+          this.type = qparams.type;
+      }
+    });
+    if(this.type==='LEAD'){
+      this.headerName='LEAD';
+      this.crmService.getTotalLead().subscribe((res:any)=>{
+        console.log(res);
+        this.totalLeadList = res;
+      })
+    }
+    else if(this.type==='CRIF'){
+      this.headerName='CRIF';
+      this.getKycUpdateLead()
+    }
+    else if(this.type==='SALESVERIFICATION'){
+      this.headerName='Sales Field Verification';
+      this.getSalesVerificationLead()
+    }
+    else if(this.type==='DOCUMENTUPLOD'){
+      this.headerName='Document Upload';
+      this.getDocumentVerificationLead()
+      // this.getSalesVerificationLead()
+    }
+    console.log('this.type',this.type)
     this.getLeadStatusListData();
     this.getCategoryListData();
     this.getLeadTypeListData();
-    // this.getTotalLead();
     this.getInprogressLead();
     this.getCompletedLead();
     this.getDelayedLead();
@@ -192,12 +228,169 @@ export class LeadsComponent implements OnInit {
     this.getSucessListLead()
     this.getNewGenerateLead()
     this.getUnassignedLead()
-    this.crmService.getTotalLead().subscribe((res)=>{
-      console.log(res);
-      this.totalLeadList = res;
-
-    })
+    
   }
+  //Doc upload start
+  getDocumentVerificationLead(from_oninit = true) {
+    let filter = this.setFilterForApi();
+    this.getDocumentVerificationLeadCount(filter)
+      .then(
+        result => {
+          if (from_oninit) { this.documentVerificationDataCount = result; }
+          filter = this.setPaginationDocumentVerificationFilter(filter);
+          this.crmService.getDocUploadLead(filter)
+            .subscribe(
+              data => {
+                console.log('dataDocument',data)
+                this.documentVerificationData = data;
+                // this.loadComplete1 = true;
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                // this.loadComplete1 = true;
+             
+              }
+            );
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getDocumentVerificationLeadCount(filter) {
+    return new Promise((resolve, reject) => {
+      this.crmService.getDocUploadLeadCount(filter)
+        .subscribe(
+          data => {
+            this.pagination.totalCnt = data;
+            this.documentVerificationDataCount = this.pagination.totalCnt;
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+  }
+  setPaginationDocumentVerificationFilter(api_filter) {
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
+  }
+  handle_pageclick_DocumentVerification(pg) {
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getDocumentVerificationLead();
+  }
+
+  //Doc upload end
+  //crif with status kyc method start
+  getSalesVerificationLead(from_oninit = true) {
+    let filter = this.setFilterForApi();
+    this.getSalesVerificationLeadCount(filter)
+      .then(
+        result => {
+          if (from_oninit) { this.salesVErificationDataCount = result; }
+          filter = this.setPaginationSalesVerificationFilter(filter);
+          this.crmService.getSalesVerificationLead(filter)
+            .subscribe(
+              data => {
+                console.log('dataSales',data)
+                this.salesVerificationData = data;
+                // this.loadComplete1 = true;
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                // this.loadComplete1 = true;
+             
+              }
+            );
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getSalesVerificationLeadCount(filter) {
+    return new Promise((resolve, reject) => {
+      this.crmService.getSalesVerificationLeadCount(filter)
+        .subscribe(
+          data => {
+            this.pagination.totalCnt = data;
+            this.salesVErificationDataCount = this.pagination.totalCnt;
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+  }
+  setPaginationSalesVerificationFilter(api_filter) {
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
+  }
+  handle_pageclick_SalesVerification(pg) {
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getSalesVerificationLead();
+  }
+  //crif methos end
+  //sales field varification method start
+  getKycUpdateLead(from_oninit = true) {
+    let filter = this.setFilterForApi();
+    this.getCRIFKycUpdateLeadCount(filter)
+      .then(
+        result => {
+          if (from_oninit) { this.kycLeadDataCount = result; }
+          filter = this.setPaginationKycFilter(filter);
+          this.crmService.getCRIFKycUpdateLead(filter)
+            .subscribe(
+              data => {
+                console.log('dataKYC',data)
+                this.kycLeadData = data;
+                // this.loadComplete1 = true;
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                // this.loadComplete1 = true;
+             
+              }
+            );
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getCRIFKycUpdateLeadCount(filter) {
+    return new Promise((resolve, reject) => {
+      this.crmService.getCRIFKycUpdateLeadCount(filter)
+        .subscribe(
+          data => {
+            this.pagination.totalCnt = data;
+            this.kycLeadDataCount = this.pagination.totalCnt;
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+  }
+  setPaginationKycFilter(api_filter) {
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
+  }
+  handle_pageclick_kyc(pg) {
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getKycUpdateLead();
+  }
+  //sales field varification method end
+
   getTotalLead(from_oninit = true) {
     let filter = this.setFilterForApi();
     console.log("filter is : ",filter)
@@ -208,7 +401,7 @@ export class LeadsComponent implements OnInit {
             console.log("Lead Count : ",result)
             this.totalCount = result; }
           filter = this.setPaginationFilter(filter);
-          this.crmService.getTotalLead(filter)
+          this.crmService.getTotalLead()
             .subscribe(
               data => {
                 this.totalLeadList = data;
@@ -675,6 +868,8 @@ export class LeadsComponent implements OnInit {
 
   // }
   viewLead(leadUid,leadData:any) {
+    console.log('leadUid',leadUid)
+    console.log('leadData',leadData)
     this.crmService.leadToCraeteViaServiceData = leadData;
     this.router.navigate(['/provider/viewleadqnr/' + leadUid]);
 

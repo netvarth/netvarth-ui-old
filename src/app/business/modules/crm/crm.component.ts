@@ -37,28 +37,28 @@ export class CRMComponent implements OnInit {
     },
     {
       id: 5,
-      activityName: 'Sales Field Verification Processing Files'
+      activityName: 'Sales Verification'
     },
     {
       id: 6,
       activityName: 'Document Upload'
     },
-    {
-      id: 7,
-      activityName: 'Document Verification'
-    },
-    {
-      id: 8,
-      activityName: 'Credit field verification and recommendation'
-    },
-    {
-      id: 9,
-      activityName: 'Loan Sanction'
-    },
-    {
-      id: 10,
-      activityName: 'Loan Disbursement'
-    }
+    // {
+    //   id: 7,
+    //   activityName: 'Document Verification'
+    // },
+    // {
+    //   id: 8,
+    //   activityName: 'Credit field verification and recommendation'
+    // },
+    // {
+    //   id: 9,
+    //   activityName: 'Loan Sanction'
+    // },
+    // {
+    //   id: 10,
+    //   activityName: 'Loan Disbursement'
+    // }
   ]
   public api_loading: boolean = true;
 
@@ -147,7 +147,37 @@ export class CRMComponent implements OnInit {
   redirectionSeperateTemplate(templateName:any){
     console.log('templateName',templateName)
     if(templateName==='Leads'){
-      this.router.navigate(['provider','lead']);
+      const navigationExtras: NavigationExtras =  {
+        queryParams: {
+          type: 'LEAD'
+        }
+      }
+      this.router.navigate(['provider','lead'],navigationExtras);
+    }
+    else if(templateName==='CRIF'){
+      const navigationExtras: NavigationExtras =  {
+        queryParams: {
+          type: 'CRIF'
+        }
+      }
+      this.router.navigate(['provider','lead'],navigationExtras);
+    }
+    else if(templateName==='Sales Verification'){
+      const navigationExtras: NavigationExtras =  {
+        queryParams: {
+          type: 'SALESVERIFICATION'
+        }
+      }
+      this.router.navigate(['provider','lead'],navigationExtras);
+
+    }
+    else if(templateName==='Document Upload'){
+      const navigationExtras: NavigationExtras =  {
+        queryParams: {
+          type: 'DOCUMENTUPLOD'
+        }
+      }
+      this.router.navigate(['provider','lead'],navigationExtras);
     }
   }
   buttonClicked (type) {
