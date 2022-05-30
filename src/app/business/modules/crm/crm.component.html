@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-        <div class="customCard" id="B" (click)="fnChangeBorder('B')">
+        <div class="customCard" id="B" (click)="fnChangeBorder('B')" style="display:none">
             <div class="eachTab">
                 <div >
                     <mat-icon class="iconBackgroundMatIcon">home</mat-icon>
@@ -46,7 +46,7 @@
     </div>
     <!--three tab end-->
     <!---mat pannel start-->
-    <div class="mgn-up-15">
+    <div class="mgn-up-15" *ngIf="bLosFieldOpen">
         <mat-accordion class="example-headers-align">
             <mat-expansion-panel 
             (closed)="panelOpenState = false">
@@ -118,7 +118,7 @@
     </div>
     <!---mat pannel end-->
     <!----tempates strat-->
-    <div  class="mgn-up-15">
+    <div  class="mgn-up-15" *ngIf="bLosFieldOpen">
         <div>
             <!-- (click)="buttonClicked('LOS')" -->
             <div class="customCard" (click)="redirectionToEnquiry()" >
@@ -208,5 +208,31 @@
 
     </div>
     <!----templates end-->
+    <div class="mgn-up-15" *ngIf="bREportsFieldOpen">
+        <div class="threeTab">
+            <div class="customCard" (click)="createActivity()">
+                    <div class="eachTab">
+                        <div>
+                            <img height="25px" width="25px" src="/assets/images/crmImages/craeteActivity.png"/>
+                        </div>
+                        <div class="topicName">
+                            Activity Report
+                          
+                        </div>
+                    </div>
+            </div>
+            <div class="customCard" (click)="craeteLeadReport()">
+                <div class="eachTab">
+                    <div>
+                        <img height="25px" width="25px" src="/assets/images/crmImages/leadReporterMob.png" />
+                    </div>
+                    <div class="topicName">
+                        Lead Report
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
 
 </section>

@@ -336,13 +336,13 @@
                             *ngIf="lead.assignee">{{lead.assignee.name}}</span></td>
                             <td>
                               <div *ngIf="lead.status.name==='New'" style="
-                        padding: 10px !important;
+                        padding: 10px !important;width: 12rem;
                         color: #00D1FF !important;
                         background: #D6F5FF !important;
                         border-radius: 7px!important">
                           {{lead.status.name}}
                         </div>
-                        <div *ngIf="lead.status.name !=='New'" style="
+                        <div *ngIf="lead.status.name !=='New'" style="width: 12rem;
                         padding: 10px !important;color: #38C984 !important;background: #D7FEE9;border: 1px solid #D7FFE9;border-radius: 7px!important">
                           {{lead.status.name}}
                         </div>

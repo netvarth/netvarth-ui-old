@@ -61,6 +61,9 @@ export class CRMComponent implements OnInit {
     // }
   ]
   public api_loading: boolean = true;
+  public bLosFieldOpen:boolean=true;
+  public bREportsFieldOpen:boolean=false;
+
 
   constructor(
     // private groupService: GroupStorageService,
@@ -203,6 +206,8 @@ export class CRMComponent implements OnInit {
       document.getElementById(boxId).style.borderBottom = "2px solid #1D3E77";
       document.getElementById('B').style.borderBottom = "0px solid #1D3E77";
       document.getElementById('C').style.borderBottom = "0px solid #1D3E77";
+      this.bREportsFieldOpen=false;
+      this.bLosFieldOpen=true;
     }
     else if (boxId === 'B') {
       document.getElementById(boxId).style.borderBottom = "2px solid #1D3E77";
@@ -213,6 +218,25 @@ export class CRMComponent implements OnInit {
       document.getElementById('B').style.borderBottom = "0px solid #1D3E77";
       document.getElementById('A').style.borderBottom = "0px solid #1D3E77";
       document.getElementById(boxId).style.borderBottom = "2px solid #1D3E77";
+      this.bREportsFieldOpen=true;
+      this.bLosFieldOpen=false;
+
     }
+  }
+  createActivity(){
+    const navigationExtras: NavigationExtras =  {
+      queryParams: {
+        report_type: 'crm'
+      }
+    }
+    this.router.navigate(['provider','reports','new-report'],navigationExtras);
+  }
+  craeteLeadReport(){
+    const navigationExtras: NavigationExtras =  {
+      queryParams: {
+        report_type: 'lead'
+      }
+    }
+    this.router.navigate(['provider','reports','new-report'],navigationExtras);
   }
 }

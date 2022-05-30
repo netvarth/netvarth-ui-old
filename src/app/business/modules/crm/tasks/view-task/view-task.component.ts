@@ -333,6 +333,13 @@ export class ViewTaskComponent implements OnInit {
           else{
             this.bTaskBusinessPotential=false
           }
+          if(this.taskDetails.actualResult){
+            this.bActualResult= true;
+            this.actualResult= this.taskDetails.actualResult
+          }
+          else{
+            this.bActualResult= true;
+          }
         this.headerName=this.taskDetails.title
         if (this.taskDetails.originUid) {
           this.taskType = "SubTask";
@@ -883,6 +890,7 @@ export class ViewTaskComponent implements OnInit {
         this.crmService.updateTask(this.taskDetails.taskUid, updateTaskData).subscribe((response)=>{
           console.log('afterUpdateList',response);
           setTimeout(() => {
+            this.snackbarService.openSnackBar('Successfull updated activity');
             this.taskDetailsForm.reset();
           this.router.navigate(['provider', 'task']);
           }, projectConstants.TIMEOUT_DELAY);
@@ -925,6 +933,7 @@ export class ViewTaskComponent implements OnInit {
         this.crmService.updateTask(this.taskDetails.taskUid, updateFollowUpData).subscribe((response)=>{
           console.log('afterupdateFollowUpData',response);
           setTimeout(() => {
+            this.snackbarService.openSnackBar('Successfull updated activity');
             this.taskDetailsForm.reset();
           this.router.navigate(['provider', 'crm']);
           }, projectConstants.TIMEOUT_DELAY);

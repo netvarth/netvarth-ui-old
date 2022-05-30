@@ -195,7 +195,7 @@ export class LeadsComponent implements OnInit {
       }
     });
     if(this.type==='LEAD'){
-      this.headerName='LEAD';
+      this.headerName='Lead';
       this.crmService.getTotalLead().subscribe((res:any)=>{
         console.log(res);
         this.totalLeadList = res;

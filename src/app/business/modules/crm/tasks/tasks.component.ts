@@ -594,26 +594,41 @@ export class TasksComponent implements OnInit {
   getColor(status){
     if(status){
     if(status === 'New'){
-      return 'blue'
+      return '#05CDE9'
     }
     else if(status === 'Assigned'){
-      return 'pink';
+      return '#FEDC28';
     }
     else if(status === 'In Progress'){
-      return '#fcce2b';
+      return '#FFA439';
     }
     else if(status === 'Cancelled'){
-      return 'red';
+      return '#FF5740';
     }
     else if(status === 'Suspended'){
-      return 'orange';
+      return '#FF540B';
     }
     else if(status === 'Completed'){
+      return '#38C984';
+    }
+    else if(status === 'Pending'){
       return 'green';
     }
-    else{
-      return 'black'
+    else if(status === 'Rejected'){
+      return 'green';
     }
+    else if(status === 'Proceed'){
+      return 'green';
+    }
+    else if(status === 'Verified'){
+      return 'green';
+    }
+    // else if(status === 'Completed'){
+    //   return 'green';
+    // }
+    // else{
+    //   return 'black'
+    // }
   }
 }
 //inprogress task method
