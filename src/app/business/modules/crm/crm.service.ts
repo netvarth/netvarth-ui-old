@@ -92,7 +92,7 @@ export class CrmService {
     // }
     
     getTotalTask(filter = {}) {
-      const url = 'provider/task/provider?isSubTask-eq=false'
+      const url = 'provider/task/provider'
       return this.servicemeta.httpGet(url, null, filter);
     }
     getTotalLead() {
@@ -485,4 +485,53 @@ export class CrmService {
     const url = 'provider/lead/questionnaire/' + uuId ;
     return this.servicemeta.httpGet(url);
   }
+  creditScoreGenerated(filter={}){
+    const url = 'provider/lead?status-eq=18';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+  creditScoreGeneratedCount(filter){
+    const url = 'provider/lead/count?status-eq=18';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+  // getDelayedTask(filter = {}) {
+  //   const url = 'provider/task/provider?status-eq=4';
+  //   return this.servicemeta.httpGet(url, null, filter);
+  // }
+  // getDelayedTaskCount(filter) {
+  //   const url = 'provider/task/provider/count?status-eq=4';
+  //   return this.servicemeta.httpGet(url, null, filter);
+  // }
+  getPendingTask(filter = {}){
+    const url = 'provider/task/provider?status-eq=4=13';
+      return this.servicemeta.httpGet(url, null, filter);
+  }
+  getPendingTaskCount(filter){
+    const url = 'provider/task/provider/count?status-eq=13';
+      return this.servicemeta.httpGet(url, null, filter);
+  }
+  getRejectedTask(filter={}){
+    const url = 'provider/task/provider?status-eq=4=14';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+  getRejectedTaskCount(filter){
+    const url = 'provider/task/provider/count?status-eq=14';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+  getProceedTask(filter={}){
+    const url = 'provider/task/provider?status-eq=4=15';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+  getProceedTaskCount(filter){
+    const url = 'provider/task/provider/count?status-eq=15';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+  getVerifiedTask(filter={}){
+    const url = 'provider/task/provider?status-eq=4=16';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+  getVerifiedTaskCount(filter){
+    const url = 'provider/task/provider/count?status-eq=16';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+
 }

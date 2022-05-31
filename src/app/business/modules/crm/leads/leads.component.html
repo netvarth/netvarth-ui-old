@@ -288,13 +288,13 @@
                     </tr>
                   </tbody> -->
                   <tbody>
-                    <ng-container *ngIf="totalLeadList.length === 0">
+                    <ng-container *ngIf="documentVerificationData.length === 0">
                       <tr>
                         <td class="nodatafound" colspan="5">{{no_leads_cap}}</td>
                       </tr>
                     </ng-container>
-                    <ng-container *ngIf="totalLeadList.length>0">
-                      <!-- <tr *ngFor="let lead of totalLeadList; let i=index" (click)="viewLead(lead.uid,lead)">
+                    <ng-container *ngIf="documentVerificationData.length>0">
+                      <!-- <tr *ngFor="let lead of documentVerificationData; let i=index" (click)="viewLead(lead.uid,lead)">
                         
 
                         <td data-title="Lead Details" class="td1">{{lead.title}}</td>
@@ -327,7 +327,7 @@
                           </div>
                         </td>
                       </tr> -->
-                      <tr *ngFor="let lead of totalLeadList; let i=index" (click)="viewLead(lead.uid,lead)">
+                      <tr *ngFor="let lead of documentVerificationData; let i=index" (click)="viewLead(lead.uid,lead)">
                         <!-- <td data-title="Lead Details" class="td1">{{lead.uid}}</td> -->
                         <td data-title="Lead Details" class="td1">L-{{lead.id}}</td>
                         <td data-title="Lead Details" class="td2"><span
@@ -2138,13 +2138,13 @@
                   </tr>
                 </tbody> -->
                 <tbody>
-                  <ng-container *ngIf="salesVerificationData.length === 0">
+                  <ng-container *ngIf="creditScoreGeneratetdData.length === 0">
                     <tr>
                       <td class="nodatafound" colspan="5">{{no_leads_cap}}</td>
                     </tr>
                   </ng-container>
-                  <ng-container *ngIf="salesVerificationData.length>0">
-                    <tr *ngFor="let lead of salesVerificationData; let i=index" (click)="viewLead(lead.uid,lead)">
+                  <ng-container *ngIf="creditScoreGeneratetdData.length>0">
+                    <tr *ngFor="let lead of creditScoreGeneratetdData; let i=index" (click)="viewLead(lead.uid,lead)">
                       <!-- <td data-title="Lead Details" class="td1">{{lead.uid}}</td> -->
                        <td data-title="Lead Details" class="td1">L-{{lead.id}}</td>
                       <td data-title="Lead Details" class="td2"><span
@@ -2174,9 +2174,9 @@
                   </ng-container>
                 </tbody>
               </table>
-              <div class="search_paging" *ngIf="salesVerificationData.length >10">
+              <div class="search_paging" *ngIf="creditScoreGeneratetdData.length >10">
                 <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-                  (pagerclick)="handle_pageclick_SalesVerification($event)" [curpage]="pagination.startpageval">
+                  (pagerclick)="handle_pageclick_creditScore($event)" [curpage]="pagination.startpageval">
                 </app-pager>
               </div>
             </div>
@@ -2317,13 +2317,13 @@
                   </tr>
                 </tbody> -->
                 <tbody>
-                  <ng-container *ngIf="documentVerificationData.length === 0">
+                  <ng-container *ngIf="salesVerificationData.length === 0">
                     <tr>
                       <td class="nodatafound" colspan="5">{{no_leads_cap}}</td>
                     </tr>
                   </ng-container>
-                  <ng-container *ngIf="documentVerificationData.length>0">
-                    <tr *ngFor="let lead of documentVerificationData; let i=index" (click)="openTaskOverView(lead.uid,lead)">
+                  <ng-container *ngIf="salesVerificationData.length>0">
+                    <tr *ngFor="let lead of salesVerificationData; let i=index" (click)="openTaskOverView(lead.uid,lead)">
                       <!-- <td data-title="Lead Details" class="td1">{{lead.uid}}</td> -->
                        <td data-title="Lead Details" class="td1">L-{{lead.id}}</td>
                       <td data-title="Lead Details" class="td2"><span
@@ -2353,7 +2353,7 @@
                   </ng-container>
                 </tbody>
               </table>
-              <div class="search_paging" *ngIf="documentVerificationData.length >10">
+              <div class="search_paging" *ngIf="salesVerificationData.length >10">
                 <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                   (pagerclick)="handle_pageclick_DocumentVerification($event)" [curpage]="pagination.startpageval">
                 </app-pager>

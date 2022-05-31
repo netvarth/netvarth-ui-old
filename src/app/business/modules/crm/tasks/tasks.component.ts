@@ -192,6 +192,19 @@ export class TasksComponent implements OnInit {
   public suspendTaskCount:any;
   public cancelledTaskCount:any;
   public assignedTaskCount:any;
+  public pendingTaskData:any=[];
+  public pendingTaskDataCount:any;
+  public bPendingData:boolean=false;
+  public rejectedTaskData:any=[];
+  public rejectedTaskDataCount:any;
+  public bRejectedData:boolean=false;
+  public proceedTaskData:any=[];
+  public proceedTaskDataCount:any;
+  public bProceedTaskData:boolean=false;
+  public verifiedTaskData:any=[];
+  public verifiedTaskDataCount:any;
+  public bVerifiedTaskData:boolean=false;
+
 
   constructor(
     private locationobj: Location,
@@ -227,6 +240,9 @@ export class TasksComponent implements OnInit {
     this.getAssignedTask()
     this.getCancelledTask()
     this.getSuspendedTask()
+    this.getPendingTask()
+    this.getProceedTask()
+    this.getVerifiedTask()
   }
   handleTaskStatus(statusValue:any,statusText,statusFilter){
     console.log('statusValue',statusValue);
@@ -293,7 +309,7 @@ export class TasksComponent implements OnInit {
       this.bSuspendedTask=true;
       this.getSuspendedTask()
     }
-    else{
+    else if(statusValue===0){
       this.bCancelledTask=false;
       this.bAssignedTask=false;
       this.bNewTask=false;
@@ -303,27 +319,52 @@ export class TasksComponent implements OnInit {
       this.bSuspendedTask=false;
       this.getTotalTask()
     }
+    else if(statusValue===13){
+      this.bCancelledTask=false;
+      this.bAssignedTask=false;
+      this.bNewTask=false;
+      this.bTotalTask=false;
+      this.bCompltedTask=false;
+      this.bInprogressTask=false;
+      this.bSuspendedTask=false;
+      this.bPendingData=true;
+      this.getPendingTask()
+    }
+    else if(statusValue===15){
+      this.bCancelledTask=false;
+      this.bAssignedTask=false;
+      this.bNewTask=false;
+      this.bTotalTask=false;
+      this.bCompltedTask=false;
+      this.bInprogressTask=false;
+      this.bSuspendedTask=false;
+      this.bPendingData=false;
+      this.bRejectedData=false;
+      this.bProceedTaskData=true;
+      this.getProceedTask()
+    }
+    else if(statusValue===16){
+      this.bCancelledTask=false;
+      this.bAssignedTask=false;
+      this.bNewTask=false;
+      this.bTotalTask=false;
+      this.bCompltedTask=false;
+      this.bInprogressTask=false;
+      this.bSuspendedTask=false;
+      this.bPendingData=false;
+      this.bRejectedData=false;
+      this.bProceedTaskData=false;
+      this.bVerifiedTaskData=true;
+      this.getVerifiedTask()
+    }
   }
-  //new task method
-  // getNewTask(from_oninit=true){
-  //   this.totalNewTaskList=[]
-  //   this.totalTaskList.forEach((element:any)=>{
-  //     if(element.status.name==='New'){
-  //       this.totalNewTaskList.push(element);
-  //     }
-  //   })
-  // }
-  handle_pageclick_New(pg){
-    this.pagination.startpageval = pg;
-    this.filter.page = pg;
-    this.getNewTask();
-  }
+ //new task method
   getNewTask(from_oninit = true){
     let filter = this.setFilterForApi();
     this.getNewTaskCount(filter)
       .then(
         result => {
-          if (from_oninit) { this.assignedTaskCount = result; }
+          if (from_oninit) { this.newTaskCount = result; }
           filter = this.setPaginationNewFilter(filter);
           this.crmService.getNewTask(filter)
             .subscribe(
@@ -351,7 +392,7 @@ export class TasksComponent implements OnInit {
         .subscribe(
           data => {
             this.pagination.totalCnt = data;
-            this.assignedTaskCount = this.pagination.totalCnt;
+            this.newTaskCount = this.pagination.totalCnt;
             resolve(data);
           },
           error => {
@@ -365,10 +406,10 @@ export class TasksComponent implements OnInit {
     api_filter['count'] = this.filter.page_count;
     return api_filter;
   }
-  handle_pageclick_new(pg){
+  handle_pageclick_New(pg){
     this.pagination.startpageval = pg;
     this.filter.page = pg;
-    this.getCancelledTask();
+    this.getNewTask();
   }
   //assigneed task method
   getAssignedTask(from_oninit = true){
@@ -421,7 +462,7 @@ export class TasksComponent implements OnInit {
   handle_pageclick_assigned(pg){
     this.pagination.startpageval = pg;
     this.filter.page = pg;
-    this.getCancelledTask();
+    this.getAssignedTask();
   }
   //cancelle4d task method
   getCancelledTask(from_oninit = true){
@@ -545,14 +586,16 @@ export class TasksComponent implements OnInit {
                 this.totalTaskList = data;
                 console.log("Task List :",this.totalTaskList)
                 this.totalTaskList = this.totalTaskList.filter(obj => !obj.originId);
-                // this.getInprogressTask();
-                // this.getCompletedTask();
-                // this.getNewTask()
-                // this.getAssignedTask()
-                // this. getCancelledTask()
-                // this. getSuspendedTask()
-                
-                // this.loadComplete = true;
+    //             this.getInprogressTask();
+    // this.getCompletedTask();
+    // this.getTaskmaster()
+    // this.getNewTask()
+    // this.getAssignedTask()
+    // this.getCancelledTask()
+    // this.getSuspendedTask()
+    // this.getPendingTask()
+    // this.getProceedTask()
+    // this.getVerifiedTask()
               },
               error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -646,11 +689,11 @@ export class TasksComponent implements OnInit {
                 console.log('data',data)
                 this.totalInprogressList = data;
                 this.totalInprogressList = this.totalInprogressList.filter(obj => !obj.originId);
-                this.loadComplete1 = true;
+                // this.loadComplete1 = true;
               },
               error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                this.loadComplete1 = true;
+                // this.loadComplete1 = true;
              
               }
             );
@@ -697,6 +740,7 @@ export class TasksComponent implements OnInit {
             .subscribe(
               data => {
                 this.totalCompletedList = data;
+                console.log('totalCompletedList',this.totalCompletedList)
                 this.totalCompletedList = this.totalCompletedList.filter(obj => !obj.originId);
                 // this.loadComplete2 = true;
               },
@@ -749,11 +793,12 @@ export class TasksComponent implements OnInit {
             .subscribe(
               data => {
                 this.totalDelayedList = data;
-                this.loadComplete3 = true;
+                this.totalDelayedList = this.totalDelayedList.filter(obj => !obj.originId);
+                // this.loadComplete3 = true;
               },
               error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                this.loadComplete3 = true;
+                // this.loadComplete3 = true;
              
               }
             );
@@ -787,6 +832,219 @@ export class TasksComponent implements OnInit {
     this.pagination.startpageval = pg;
     this.filter.page = pg;
     this.getDelayedTask();
+  }
+  //pending task method
+  getPendingTask(from_oninit = true) {
+    let filter = this.setFilterForApi();
+    this.getPendingTaskCount(filter)
+      .then(
+        result => {
+          if (from_oninit) { this.pendingTaskDataCount = result; }
+          filter = this.setPaginationPendingFilter(filter);
+          this.crmService.getPendingTask(filter)
+            .subscribe(
+              data => {
+                this.pendingTaskData = data;
+                console.log('this.pendingTaskData',this.pendingTaskData)
+                this.pendingTaskData = this.pendingTaskData.filter(obj => !obj.originId);
+                
+                // this.loadComplete3 = true;
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                // this.loadComplete3 = true;
+             
+              }
+            );
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getPendingTaskCount(filter) {
+    return new Promise((resolve, reject) => {
+      this.crmService.getPendingTaskCount(filter)
+        .subscribe(
+          data => {
+            this.pagination.totalCnt = data;
+            this.pendingTaskDataCount = this.pagination.totalCnt;
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+  }
+  setPaginationPendingFilter(api_filter) {
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
+  }
+  handle_pageclick_pending(pg) {
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getPendingTask();
+  }
+  //rejected method start
+  getRejectedTask(from_oninit = true){
+    let filter = this.setFilterForApi();
+    this.getRejectedTaskCount(filter)
+      .then(
+        result => {
+          if (from_oninit) { this.rejectedTaskDataCount = result; }
+          filter = this.setPaginationRejectedFilter(filter);
+          this.crmService.getRejectedTask(filter)
+            .subscribe(
+              data => {
+                this.rejectedTaskData = data;
+                console.log('this.rejectedTaskData',this.rejectedTaskData)
+                this.rejectedTaskData = this.rejectedTaskData.filter(obj => !obj.originId);
+                // this.loadComplete3 = true;
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                // this.loadComplete3 = true;
+             
+              }
+            );
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getRejectedTaskCount(filter) {
+    return new Promise((resolve, reject) => {
+      this.crmService.getRejectedTaskCount(filter)
+        .subscribe(
+          data => {
+            this.pagination.totalCnt = data;
+            this.rejectedTaskDataCount = this.pagination.totalCnt;
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+  }
+  setPaginationRejectedFilter(api_filter) {
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
+  }
+  handle_pageclick_rejected(pg) {
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getRejectedTask();
+  }
+  //proceed method start
+  getProceedTask(from_oninit = true){
+    let filter = this.setFilterForApi();
+    this.getProceedTaskCount(filter)
+      .then(
+        result => {
+          if (from_oninit) { this.proceedTaskDataCount = result; }
+          filter = this.setPaginationProceedFilter(filter);
+          this.crmService.getProceedTask(filter)
+            .subscribe(
+              data => {
+                this.proceedTaskData = data;
+                console.log('this.proceedTaskData',this.proceedTaskData)
+                this.proceedTaskData = this.proceedTaskData.filter(obj => !obj.originId);
+                // this.loadComplete3 = true;
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                // this.loadComplete3 = true;
+             
+              }
+            );
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getProceedTaskCount(filter) {
+    return new Promise((resolve, reject) => {
+      this.crmService.getRejectedTaskCount(filter)
+        .subscribe(
+          data => {
+            this.pagination.totalCnt = data;
+            this.proceedTaskDataCount = this.pagination.totalCnt;
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+  }
+  setPaginationProceedFilter(api_filter) {
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
+  }
+  handle_pageclick_proceed(pg) {
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getProceedTask();
+  }
+  //verified method start
+  getVerifiedTask(from_oninit = true){
+    let filter = this.setFilterForApi();
+    this.getVerifiedTaskCount(filter)
+      .then(
+        result => {
+          if (from_oninit) { this.verifiedTaskDataCount = result; }
+          filter = this.setPaginationVerifiedFilter(filter);
+          this.crmService.getVerifiedTask(filter)
+            .subscribe(
+              data => {
+                this.verifiedTaskData = data;
+                console.log('this.verifiedTaskData',this.verifiedTaskData)
+                this.verifiedTaskData = this.verifiedTaskData.filter(obj => !obj.originId);
+                // this.loadComplete3 = true;
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                // this.loadComplete3 = true;
+             
+              }
+            );
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getVerifiedTaskCount(filter) {
+    return new Promise((resolve, reject) => {
+      this.crmService.getVerifiedTaskCount(filter)
+        .subscribe(
+          data => {
+            this.pagination.totalCnt = data;
+            this.verifiedTaskDataCount = this.pagination.totalCnt;
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+  }
+  setPaginationVerifiedFilter(api_filter) {
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
+  }
+  handle_pageclick_verified(pg) {
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.getVerifiedTask();
   }
  
   
@@ -1045,6 +1303,18 @@ export class TasksComponent implements OnInit {
         },
         {
           id: 12, name: 'Suspended',image:'./assets/images/crmImages/suspended.png',
+        },
+        {
+          id: 13, name: 'Pending',image:'./assets/images/crmImages/suspended.png',
+        },
+        {
+          id: 14, name: 'Rejected',image:'./assets/images/crmImages/suspended.png',
+        },
+        {
+          id: 15, name: 'Proceed',image:'./assets/images/crmImages/suspended.png',
+        },
+        {
+          id: 16, name: 'Verified',image:'./assets/images/crmImages/suspended.png',
         },
         );
     },

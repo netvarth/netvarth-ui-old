@@ -165,7 +165,9 @@ export class LeadsComponent implements OnInit {
   public salesVErificationDataCount:any;
   public documentVerificationData:any=[];
   public documentVerificationDataCount:any;
-  public newLeadList:any=[]
+  public newLeadList:any=[];
+  public creditScoreGeneratetdData:any=[];
+  public creditScoreGeneratedScoreDataCount:any;
   constructor(
     private locationobj: Location,
     private groupService: GroupStorageService,
@@ -195,14 +197,20 @@ export class LeadsComponent implements OnInit {
           this.type = qparams.type;
       }
     });
-    if(this.type==='LEAD'){
-      this.headerName='All Leads';
-      // this.getTotalLead()
-      this.crmService.getTotalLead().subscribe((res:any)=>{
+    this.crmService.getTotalLead().subscribe((res:any)=>{
         console.log(res);
         this.totalLeadList = this.totalLeadList.filter(obj => !obj.originId);
         this.totalLeadList = res;
       })
+    if(this.type==='LEAD'){
+      this.headerName='All Leads';
+      // this.getDocumentVerificationLead()
+      this.getSalesVerificationLead()
+      // this.crmService.getTotalLead().subscribe((res:any)=>{
+      //   console.log(res);
+      //   this.totalLeadList = this.totalLeadList.filter(obj => !obj.originId);
+      //   this.totalLeadList = res;
+      // })
     }
     else if(this.type==='CRIF'){
       this.headerName='CRIF';
@@ -210,12 +218,12 @@ export class LeadsComponent implements OnInit {
     }
     else if(this.type==='SALESVERIFICATION'){
       this.headerName='Sales Field Verification';
-      this.getSalesVerificationLead()
+     this.creditScoreGenerated()
     }
     else if(this.type==='DOCUMENTUPLOD'){
       this.headerName='Login';
-      this.getDocumentVerificationLead()
       // this.getSalesVerificationLead()
+      this.getDocumentVerificationLead()
     }
     else if(this.type==='NEWLEAD'){
       this.headerName='Leads';
@@ -235,7 +243,60 @@ export class LeadsComponent implements OnInit {
     this.getSucessListLead()
     this.getNewGenerateLead()
     this.getUnassignedLead()
+    this.creditScoreGenerated()
     
+  }
+  //creditn score generweted
+  creditScoreGenerated(from_oninit = true) {
+    let filter = this.setFilterForApi();
+    this.creditScoreGeneratedCount(filter)
+      .then(
+        result => {
+          if (from_oninit) { this.creditScoreGeneratedScoreDataCount = result; }
+          filter = this.setPaginationDocumentVerificationFilter(filter);
+          this.crmService.creditScoreGenerated(filter)
+            .subscribe(
+              data => {
+                console.log('creditScore',data)
+                this.creditScoreGeneratetdData = data;
+                // this.loadComplete1 = true;
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                // this.loadComplete1 = true;
+             
+              }
+            );
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  creditScoreGeneratedCount(filter) {
+    return new Promise((resolve, reject) => {
+      this.crmService.creditScoreGeneratedCount(filter)
+        .subscribe(
+          data => {
+            this.pagination.totalCnt = data;
+            this.creditScoreGeneratedScoreDataCount = this.pagination.totalCnt;
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+  }
+  setPaginationCreditScoreFilter(api_filter) {
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
+  }
+  handle_pageclick_creditScore(pg) {
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+    this.creditScoreGenerated();
   }
   //Doc upload start
   getDocumentVerificationLead(from_oninit = true) {

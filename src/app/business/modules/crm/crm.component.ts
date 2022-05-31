@@ -28,8 +28,8 @@ export class CRMComponent implements OnInit {
     //   activityName:'Follow UPS'
     // },
     {
-      id: 3,
-      activityName: 'All Leads'
+      id: 7,
+      activityName: 'Leads'
     },
     {
       id: 4,
@@ -44,9 +44,10 @@ export class CRMComponent implements OnInit {
       activityName: 'Login'
     },
     {
-      id: 7,
-      activityName: 'Leads'
+      id: 3,
+      activityName: 'All Leads'
     },
+    
     // {
     //   id: 8,
     //   activityName: 'Credit field verification and recommendation'
