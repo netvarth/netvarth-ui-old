@@ -165,6 +165,7 @@ export class LeadsComponent implements OnInit {
   public salesVErificationDataCount:any;
   public documentVerificationData:any=[];
   public documentVerificationDataCount:any;
+  public newLeadList:any=[]
   constructor(
     private locationobj: Location,
     private groupService: GroupStorageService,
@@ -195,9 +196,11 @@ export class LeadsComponent implements OnInit {
       }
     });
     if(this.type==='LEAD'){
-      this.headerName='Lead';
+      this.headerName='All Leads';
+      // this.getTotalLead()
       this.crmService.getTotalLead().subscribe((res:any)=>{
         console.log(res);
+        this.totalLeadList = this.totalLeadList.filter(obj => !obj.originId);
         this.totalLeadList = res;
       })
     }
@@ -213,6 +216,10 @@ export class LeadsComponent implements OnInit {
       this.headerName='Login';
       this.getDocumentVerificationLead()
       // this.getSalesVerificationLead()
+    }
+    else if(this.type==='NEWLEAD'){
+      this.headerName='Leads';
+      this.getNewGenerateLead()
     }
     console.log('this.type',this.type)
     this.getLeadStatusListData();
@@ -571,7 +578,8 @@ export class LeadsComponent implements OnInit {
             .subscribe(
               data => {
                 console.log('dataNew',data)
-                this.UnassignedLeadList = data;
+                // this.UnassignedLeadList = data;
+                this.newLeadList=data;
                 this.loadComplete2 = true;
               },
               error => {
@@ -873,6 +881,10 @@ export class LeadsComponent implements OnInit {
     this.crmService.leadToCraeteViaServiceData = leadData;
     this.router.navigate(['/provider/viewleadqnr/' + leadUid]);
 
+  }
+  openTaskOverView(leadUid,leadData:any){
+    this.crmService.leadToCraeteViaServiceData = leadData;
+      this.router.navigate(['/provider/viewlead/' + leadUid]);
   }
   getLeadmaster(){
     this.crmService.getLeadMasterList().subscribe((response)=>{

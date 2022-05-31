@@ -71,7 +71,8 @@ import { Subject } from 'rxjs';
       public activityListCategoryDialogValue:any;
       public activityListTypeDialogValue:any
       public activityListStatusDialogValue:any
-      public activityListpriorityDialogValue:any
+      public activityListpriorityDialogValue:any;
+      public enquiryCreateIdAfterRes:any;
 
 
 
@@ -157,6 +158,7 @@ import { Subject } from 'rxjs';
            this.createEnquiryForm.controls.phoneNoValue.setValue('');
            this.createEnquiryForm.controls.emailValue.setValue('');
            this.createEnquiryForm.controls.userTaskCategory.setValue('');
+           this.customerActivityText='New';
         }
       }
       searchCustomer() {
@@ -410,7 +412,7 @@ import { Subject } from 'rxjs';
       }
       saveCreateEnquiry(){
         console.log('this.customer_data.id',this.customer_data);
-        if(this.enquiryArr.length !==0){
+        if(this.enquiryArr.length !==0 && this.customer_data !== undefined){
         const createEnquiry:any = {
         //   "title" : this.activityListTitleDialogValue,
     		// "description" : this.activityListDescriptionDialogValue,
@@ -443,8 +445,57 @@ import { Subject } from 'rxjs';
           }, projectConstants.TIMEOUT_DELAY);
         })
         }
-        else{
-          this.createCustomer()
+         if(this.customer_data === undefined){
+          // this.createCustomer();
+          const afterCompleteAddData:any = {
+            "firstName": this.createEnquiryForm.controls.firstNameValue.value,
+            "lastName": this.createEnquiryForm.controls.lastNameValue.value,
+            "phoneNo": this.createEnquiryForm.controls.phoneNoValue.value,
+            "email": this.createEnquiryForm.controls.emailValue.value,
+            "countryCode": '+91',
+            "userTaskCategory":this.createEnquiryForm.controls.userTaskCategory.value,
+            // "customer" : {"id" :  this.enquiryCreateIdAfterRes},
+          }
+          console.log('afterCompleteAddData',afterCompleteAddData)
+          this.crmService.createProviderCustomer(afterCompleteAddData).subscribe((response:any)=>{
+            setTimeout(() => {
+              console.log('afterCompleteAddData',response);
+              this.enquiryCreateIdAfterRes= response;
+              const createEnquiry:any = {
+                "location" : { "id" : this.activityLocationIdDialogValue},
+                "customer" : {"id" :  this.enquiryCreateIdAfterRes},
+                "enquireMasterId":this.enquiryTemplateId,
+                "leadMasterId": this.createEnquiryForm.controls.userTaskCategory.value,
+                "isLeadAutogenerate":true,
+                "originUid":this.activityOriginUidDialogValue
+              }
+              console.log('createEnquiry',createEnquiry);
+              this.crmService.createEnquiry(createEnquiry).subscribe((response)=>{
+                console.log('createEnquiry',response);
+                setTimeout(() => {
+                  this.api_loading = true;
+                  this.snackbarService.openSnackBar('Successfull created enquiry');
+                  this.createEnquiryForm.reset();
+                this.router.navigate(['provider', 'crm']);
+                }, projectConstants.TIMEOUT_DELAY);
+              },
+              (error)=>{
+                setTimeout(() => {
+                  console.log('error',error)
+                  this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
+                }, projectConstants.TIMEOUT_DELAY);
+              })
+              // this.api_loading = true;
+              // this.snackbarService.openSnackBar('Successfull created enquiry');
+            // this.createEnquiryForm.reset();
+          // this.router.navigate(['provider', 'crm']);
+            }, projectConstants.TIMEOUT_DELAY);
+          },
+          (error)=>{
+            console.log('error1',error)
+            this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+          })
+          
         }
         
         
@@ -456,16 +507,18 @@ import { Subject } from 'rxjs';
             "phoneNo": this.createEnquiryForm.controls.phoneNoValue.value,
             "email": this.createEnquiryForm.controls.emailValue.value,
             "countryCode": '+91',
-            "userTaskCategory":this.createEnquiryForm.controls.userTaskCategory.value
+            "userTaskCategory":this.createEnquiryForm.controls.userTaskCategory.value,
+            // "customer" : {"id" :  this.enquiryCreateIdAfterRes},
           }
           console.log('afterCompleteAddData',afterCompleteAddData)
           this.crmService.createProviderCustomer(afterCompleteAddData).subscribe((response:any)=>{
             setTimeout(() => {
               console.log('afterCompleteAddData',response);
-              this.api_loading = true;
-              this.snackbarService.openSnackBar('Successfull created enquiry');
+              this.enquiryCreateIdAfterRes= response
+              // this.api_loading = true;
+              // this.snackbarService.openSnackBar('Successfull created enquiry');
             this.createEnquiryForm.reset();
-          this.router.navigate(['provider', 'crm']);
+          // this.router.navigate(['provider', 'crm']);
             }, projectConstants.TIMEOUT_DELAY);
           },
           (error)=>{

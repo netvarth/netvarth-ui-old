@@ -29,7 +29,7 @@ export class CRMComponent implements OnInit {
     // },
     {
       id: 3,
-      activityName: 'Leads'
+      activityName: 'All Leads'
     },
     {
       id: 4,
@@ -43,10 +43,10 @@ export class CRMComponent implements OnInit {
       id: 6,
       activityName: 'Login'
     },
-    // {
-    //   id: 7,
-    //   activityName: 'Document Verification'
-    // },
+    {
+      id: 7,
+      activityName: 'Leads'
+    },
     // {
     //   id: 8,
     //   activityName: 'Credit field verification and recommendation'
@@ -149,7 +149,7 @@ export class CRMComponent implements OnInit {
   }
   redirectionSeperateTemplate(templateName:any){
     console.log('templateName',templateName)
-    if(templateName==='Leads'){
+    if(templateName==='All Leads'){
       const navigationExtras: NavigationExtras =  {
         queryParams: {
           type: 'LEAD'
@@ -174,10 +174,18 @@ export class CRMComponent implements OnInit {
       this.router.navigate(['provider','lead'],navigationExtras);
 
     }
-    else if(templateName==='Document Upload'){
+    else if(templateName==='Login'){
       const navigationExtras: NavigationExtras =  {
         queryParams: {
           type: 'DOCUMENTUPLOD'
+        }
+      }
+      this.router.navigate(['provider','lead'],navigationExtras);
+    }
+    else if(templateName==='Leads'){
+      const navigationExtras: NavigationExtras =  {
+        queryParams: {
+          type: 'NEWLEAD'
         }
       }
       this.router.navigate(['provider','lead'],navigationExtras);

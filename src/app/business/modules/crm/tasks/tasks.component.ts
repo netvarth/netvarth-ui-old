@@ -552,7 +552,7 @@ export class TasksComponent implements OnInit {
                 // this. getCancelledTask()
                 // this. getSuspendedTask()
                 
-                this.loadComplete = true;
+                // this.loadComplete = true;
               },
               error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

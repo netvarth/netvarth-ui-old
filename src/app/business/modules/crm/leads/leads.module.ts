@@ -21,6 +21,7 @@ import { FormsModule } from "@angular/forms";
 import { MatSelectModule } from "@angular/material/select";
 import { MatOptionModule } from "@angular/material/core";
 import { MatDatepickerModule } from "@angular/material/datepicker";
+import {MatPaginatorModule} from '@angular/material/paginator';
 const routes: Routes = [
   { path: '', component: LeadsComponent },
   // {path:'viewlead/:id',loadChildren:()=>import('./view-lead/view-lead.module').then((m)=>m.ViewLeadModule)},
@@ -49,6 +50,7 @@ const routes: Routes = [
         MatSelectModule,
         MatOptionModule,
         MatDatepickerModule,
+        MatPaginatorModule,
         NgCircleProgressModule.forRoot({
           backgroundColor: "#e9ecef",
           backgroundPadding: 2,

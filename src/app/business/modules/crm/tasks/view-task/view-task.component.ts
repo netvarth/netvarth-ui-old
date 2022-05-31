@@ -17,6 +17,7 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
+import { WordProcessor } from '../../../../../../../src/app/shared/services/word-processor.service';
 @Component({
   selector: "app-view-task",
   templateUrl: "./view-task.component.html",
@@ -146,6 +147,10 @@ export class ViewTaskComponent implements OnInit {
   public followUPStatus:any
   public bActualResult:boolean=true;
   public actualResult:any;
+  public customer_label: any;
+  public customerName:any;
+  public customerPhNo:any;
+  public firstCustomerName:any;
 
 
  
@@ -161,6 +166,7 @@ export class ViewTaskComponent implements OnInit {
     private createTaskFormBuilder: FormBuilder,
     private groupService:GroupStorageService,
     private datePipe:DatePipe,
+    private wordProcessor: WordProcessor,
 
   ) {}
 
@@ -187,6 +193,7 @@ export class ViewTaskComponent implements OnInit {
 
    })
    const user = this.groupService.getitemFromGroupStorage('ynw-user');
+   this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
    console.log("User is :", user);
    this.selectMember= user.firstName + user.lastName;
    this.selectTaskManger=user.firstName + user.lastName;
@@ -362,8 +369,11 @@ export class ViewTaskComponent implements OnInit {
       if(this.activityType==='UpdateFollowUP'){
         this.getUpdateFollowUPValue()
       }
-        
-        
+      if(this.taskDetails.customer){
+        this.firstCustomerName=this.taskDetails.customer.name.charAt(0);
+        this.customerName= this.taskDetails.customer.name;
+        this.customerPhNo= '+917003921734' 
+      } 
       });
     });
     this.getAssignMemberList();
@@ -605,7 +615,7 @@ export class ViewTaskComponent implements OnInit {
           this.bTaskTitle=true;
           this.bTaskDescription=true;
           this.bAssigneeName=true;
-          this.bTaskDate=true;
+          this.bTaskDate=false;
           this.bTaskAreaName=true;
           this.bTaskFollowUpResult=true;
           

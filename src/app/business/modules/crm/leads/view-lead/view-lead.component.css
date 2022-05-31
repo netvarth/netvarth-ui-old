@@ -355,3 +355,123 @@
 ::-webkit-scrollbar-thumb {
   background: #888
 }
+.leadTitle{
+  color: #000000;
+    font-weight: 600;
+    height: 35px;
+    border-bottom: 1px solid #E3E3E3;
+}
+.customerDetails{
+  display: flex;
+    padding: 10px;
+    background: #FFFFFF;
+    border: 0.698152px solid #E4E4E4;
+    border-radius: 6.10474px;
+    margin-top: 20px;
+    justify-content: space-between;
+    align-items: center;
+}
+.customerName{
+  display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.customer{
+  color: #1D3E77;
+  font-size: 15px;
+}
+.leadDetails{
+  color: #1D3E77;
+  font-size: 15px;
+}
+.assignCustomer{
+  font-size: 12px;
+  color: #000000;
+    mix-blend-mode: normal;
+    opacity: 0.5;
+}
+.customerLead{
+  width: 8rem;
+    display: flex;
+    justify-content: center;
+  gap: 5px;
+  align-items: center;
+  background: #E6EEFF;
+    border-radius: 25px;
+    padding: 5px;
+}
+.leadDetails{
+  font-size: 12px;
+  color: #0D53DA;
+}
+.leadDetailsDot{
+  color: #000000;
+}
+.eachTab{
+  display: flex;
+  gap:10px;align-items: center;
+}
+.customCard{
+  padding: 20px;
+  /* box-shadow: 0 0 10px rgb(0 0 0 / 5%) !important; */
+  border-radius: 5px;
+  background: #FFFFFF;
+  box-shadow: 0px 24.6462px 44.8113px rgb(142 151 164 / 19%);
+  background-clip: padding-box;
+  /* border: none !important; */
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: end;
+  gap: 10px;
+}
+@media  (max-width:764px){
+  .redirectionList{
+    width: 100% !important;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+}
+.redirectionList{
+  width: 49.5%;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  /* height: ; */
+}
+.activityTemplate{
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.imgTempalte{
+  height: 15px;
+  width: 15px;
+  object-fit: cover;
+}
+.topicNameedirectionList{
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13.0896px;
+  color: #404650;
+  cursor: pointer;
+}
+.textareaStart{
+  background: #FFFFFF;
+    border: 0.82945px solid #D9D5D5;
+    border-radius: 7.25282px;
+}
+textarea .form-control{
+  height: 100px !important;
+  background: #FCFCFC !important;
+    border: 1.07315px solid #C9C9C9 !important;
+    border-radius: 11.8046px !important;
+}
+.fiesWithIcon{
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd !important;
+}

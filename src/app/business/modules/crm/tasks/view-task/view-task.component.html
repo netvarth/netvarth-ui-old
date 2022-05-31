@@ -14,14 +14,29 @@
     <div class="headerName">
       {{headerName}}
     </div>
-    <hr />
+    <hr  *ngIf="((this.taskDetails.title ==='Follow Up 1')  || (this.taskDetails.title ==='Follow Up 2')) && (taskDetails.customer) "/>
   </div>
   <!----task details start-->
   <div class="taskAndNote">
     <div class="formWidth">
-    <div class="taskDetailsEnterHeader">
-      {{taskDetailsDescription}}
-    </div>
+      <div style="display: flex;
+      align-items: center;
+      gap: 10px;" *ngIf="((this.taskDetails.title ==='Follow Up 1')  || (this.taskDetails.title ==='Follow Up 2')) && (taskDetails.customer) ">
+        <div class="imageClass">
+          <div style="color: #8A8383;">{{firstCustomerName | capitalizeFirst}}</div>
+        </div>
+      <div>
+        <div> 
+          <div style="font-size: 14px;
+          color: #000000;
+          font-weight: bold;
+          margin-bottom: 4px;">{{customerName | capitalizeFirst}}</div>
+        </div>
+        <div>
+          <div style="font-size: 12px;color: #000000;">{{customerPhNo}}</div>
+        </div>
+      </div>
+      </div>
     <hr />
     <form [formGroup]="taskDetailsForm">
       <div >
@@ -75,7 +90,7 @@
       <!---assignee start-->
       <div class="formTop" *ngIf="bAssigneeName">
         <div class="taskTitle">
-            <div>Assign Member</div>
+            <div>Employee</div>
             <div class="astericColor">*</div>
         </div>
         <div class="fieldPadding">
@@ -91,7 +106,7 @@
     </div>
       <!---assignee end-->
       <!----date start-->
-      <div class="formTop" *ngIf="bTaskDate">
+      <div class="formTop"  *ngIf="(bTaskDate) ">
         <div class="taskTitle">
             <div>Due Date</div>
         </div>
@@ -272,7 +287,7 @@
         </div>
     </div>
       <!---business potential end-->
-      <div >
+      <div class="formTop">
         <div *ngIf="taskDetails.title ==='Follow Up 1' || taskDetails.title ==='Follow Up 2'" >
           <div class="card" style="border: 0.772915px solid #D9D5D5 !important;" >
             <div class="statusResult">
@@ -324,7 +339,7 @@
   </div>
   <!----\files start-->
   <div class="notesWidth">
-    <div class="notesSection">
+    <div class="notesSection" *ngIf="!(this.taskDetails.title ==='Follow Up 1') && !(this.taskDetails.title ==='Follow Up 2') ">
       <div class="fiesWithIcon">
         <div>
           <span class="card-title"><b>Files</b></span> 
@@ -371,7 +386,7 @@
       </div>
     </div>
     <!---notes start-->
-  <div style="margin-top:10px" >
+  <div style="margin-top:10px" *ngIf="!(this.taskDetails.title ==='Follow Up 1') && !(this.taskDetails.title ==='Follow Up 2') ">
     <div class="textareaStart">
       <div class="fiesWithIcon">
         <div>
@@ -428,7 +443,7 @@
   </div>
   <!---notes end-->
   <!----enter result start-->
-  <div class="formTop" *ngIf="bActualResult">
+  <div class="formTop" *ngIf="bActualResult && (!(this.taskDetails.title ==='Follow Up 1') && !(this.taskDetails.title ==='Follow Up 2'))">
     <div class="taskTitle">
         <div>Enter Result</div>
     </div>
@@ -444,7 +459,7 @@
   </div>
   <!----task details end -->
   <!----for mobile cancel & save btn-->
-  <div style="text-align: center;margin-top: 15px;" class="forMobile">
+  <div style="text-align: center;margin-top: 15px;" class="forMobile" *ngIf=" !bTaskFollowUpResult">
     <ng-container >
         <div class=" mgn-bt-20 mgn-up-10">
             <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()"

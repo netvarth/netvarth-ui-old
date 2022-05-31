@@ -179,9 +179,15 @@ export class NewReportComponent implements OnInit {
     this.activated_route.queryParams.subscribe(qparams => {
       if (qparams.report_type) {
         this.report_type = qparams.report_type;
-        this.reportTitle = this.report_type;
+        // this.reportTitle = this.report_type;
         if (this.report_type === 'token') {
-          this.reportTitle = 'Check-in/Token';
+          this.reportTitle = 'New Check-in/Token';
+        }
+        else if(this.report_type==='crm'){
+          this.reportTitle='Activity '
+        }
+        else if(this.report_type==='lead'){
+          this.reportTitle='Lead '
         }
 
       }

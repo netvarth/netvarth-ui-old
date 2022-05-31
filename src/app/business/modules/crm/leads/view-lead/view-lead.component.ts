@@ -173,10 +173,34 @@ action: any;
   search_input: any;
   hideSearch = false;
   leadMasterData: any;
-  leadId:any;
   public innerWidth:any;
   public customerInfoError:any='';
   public editable:boolean=true;
+  //new ui
+  public customerName:string;
+  public customerId:any;
+  public leadId:any;
+  public customerAssigneeName:any;
+  public leadTitle:any;
+  public redirectionListStatus: any = [
+    {
+      id: 3,
+      activityName: 'KYC Details'
+    },
+    {
+      id: 4,
+      activityName: 'CRIF'
+    },
+    {
+      id: 5,
+      activityName: 'Sales Verification'
+    },
+    {
+      id: 6,
+      activityName: 'Login'
+    },
+  ]
+  public notesTextarea:any;
 constructor(
   private locationobj: Location,
    private crmService: CrmService,
@@ -198,6 +222,7 @@ ngOnInit(): void {
     this.crmService.getLeadDetails(this.leadUid).subscribe(data => {
     
       this.leadDetails = data;
+      console.log('this.leadDetails',this.leadDetails)
       this.leadkid = this.leadDetails.uid
       this.api_loading = false;
       this.getLeadToken();
@@ -208,9 +233,14 @@ ngOnInit(): void {
         this.notesList.push(notesdata)
       })
       console.log('this.notesList',this.notesList)
+      //new ui start
+      this.customerName= this.leadDetails.customer.name;
+      this.leadId= this.leadDetails.id;
+      this.customerAssigneeName= this.leadDetails.assignee.name;
+      this.leadTitle = this.leadDetails.title
   })
   })
-  this.crmService.leadToCraeteViaServiceData = this.updateLeadData;
+   this.updateLeadData=this.crmService.leadToCraeteViaServiceData ;
  
   this._Activatedroute.queryParams.subscribe(qparams => {
     if (qparams.parentUid) {
@@ -335,6 +365,40 @@ chnageStatus(){
       // this.ngOnInit()
       }
     })
+}
+handleNotesDescription(textValue:any){
+  console.log('taskDescription',textValue)
+  
+}
+saveCreateNote(notesValue:any){
+  if(this.notesTextarea !==undefined){
+    console.log('this.notesTextarea',this.notesTextarea);
+    const createNoteData:any = {
+      "note" :this.notesTextarea
+    }
+      console.log('createNoteData',createNoteData)
+      this.crmService.addNotes(this.leadDetails.taskUid,createNoteData).subscribe((response:any)=>{
+        console.log('response',response)
+        this.api_loading = true;
+        setTimeout(() => {
+          // this.dialogRef.close(notesValue)
+          this.ngOnInit()
+          // this.getNotesDetails()
+          this.api_loading = false;
+        }, projectConstants.TIMEOUT_DELAY);
+        this.snackbarService.openSnackBar('Remarks added successfully');
+      },
+      (error)=>{
+        this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+      })
+    // }
+    
+  }
+}
+autoGrowTextZone(e) {
+  // console.log('textarea',e)
+  e.target.style.height = "0px";
+  e.target.style.height = (e.target.scrollHeight + 15)+"px";
 }
 
 
