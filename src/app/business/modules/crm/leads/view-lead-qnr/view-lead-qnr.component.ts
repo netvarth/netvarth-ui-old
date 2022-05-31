@@ -5,7 +5,7 @@ import { Messages } from '../../../../../../../src/app/shared/constants/project-
 import { Location,DatePipe } from '@angular/common';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 // import { LocalStorageService } from '../../../../../../../src/app/shared/services/local-storage.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router ,NavigationExtras } from '@angular/router';
 import { CrmService } from '../../crm.service';
 import { FormBuilder } from '@angular/forms';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
@@ -175,6 +175,8 @@ export class ViewLeadQnrComponent implements OnInit{
   unreleased_arr:any;
   unreleased_question_arr: any;
   released_arr: any;
+  released_arr1: any;
+  qnrData:  any;
   constructor(private locationobj: Location,
   
     // private lStorageService: LocalStorageService,
@@ -213,7 +215,10 @@ export class ViewLeadQnrComponent implements OnInit{
         
         this.api_loading = false;
         this.getLeadToken();
-        this.catId = this.leadDetails.category.id
+        if(this.leadDetails && this.leadDetails.category && this.leadDetails.category.id){
+          this.catId = this.leadDetails.category.id
+        }
+        
       
         if(this.leadDetails && this.leadDetails.customer && this.leadDetails.customer.id) {
           this.custId = this.leadDetails.customer.id;
@@ -370,12 +375,7 @@ export class ViewLeadQnrComponent implements OnInit{
     
   })
   }
-  getleadDetails(){
-    this.crmService.getLeadDetails(this.leadkid).subscribe(data => {
-      
-      this.leadDetails = data;
-    });
-  }
+  
   
   getLeadQnr(){
     this.crmService.getLeadQnrDetails(this.catId).subscribe(data => {
@@ -383,7 +383,6 @@ export class ViewLeadQnrComponent implements OnInit{
       if (this.leadquestionnaireList && this.leadquestionnaireList.labels && this.leadquestionnaireList.labels.length > 0) {
         this.showQuestionnaire = true;
     } 
-      console.log(this.leadquestionnaireList)
   })
   }
   getQuestionAnswers(event) {
@@ -403,9 +402,7 @@ export class ViewLeadQnrComponent implements OnInit{
     return `${value.substring(0, 4)}`;
   }
   getLeadmaster(){
-    // this.crmService.getLeadMasterList().subscribe((response)=>{
-    //   console.log('LeadMasterList :',response);
-    // })
+   
   }
   getAssignMemberList(){
     this.crmService.getMemberList().subscribe((memberList:any)=>{
@@ -418,7 +415,7 @@ export class ViewLeadQnrComponent implements OnInit{
   }
   getCategoryListData(){
     this.crmService.getLeadCategoryList().subscribe((categoryList:any)=>{
-      // console.log('category',categoryList);
+    
       this.categoryListData.push(categoryList)
     },
     (error:any)=>{
@@ -428,7 +425,7 @@ export class ViewLeadQnrComponent implements OnInit{
   }
   getLeadTypeListData(){
     this.crmService.getLeadType().subscribe((leadTypeList:any)=>{
-      // console.log('leadTypeList',leadTypeList);
+     
       this.leadTypeList.push(leadTypeList)
     },
     (error:any)=>{
@@ -848,7 +845,12 @@ export class ViewLeadQnrComponent implements OnInit{
         setTimeout(() => {
           this.api_loading = true;
           this.createLeadForm.reset();
-        this.router.navigate(['provider', 'lead']);
+          const navigationExtras: NavigationExtras =  {
+            queryParams: {
+              type: 'LEAD'
+            }
+          }
+        this.router.navigate(['provider', 'lead'],navigationExtras);
         }, projectConstants.TIMEOUT_DELAY);
       },
       (error)=>{
@@ -1008,7 +1010,6 @@ export class ViewLeadQnrComponent implements OnInit{
   }
   }
   submitafterQnr(){
-    console.log(this.unreleased_question_arr)
     if (this.unreleased_question_arr[0].labels && this.unreleased_question_arr[0].labels.length > 0) {
       this.submitAfterQuestionnaire(this.leadDetails.uid);
   }
@@ -1037,7 +1038,12 @@ export class ViewLeadQnrComponent implements OnInit{
                             this.provider_services.providerLeadQnrUploadStatusUpdate(uuid, postData)
                                 .subscribe((data) => {
                                     // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
-                                    this.router.navigate(['provider', 'crm']);
+                                    const navigationExtras: NavigationExtras =  {
+                                      queryParams: {
+                                        type: 'LEAD'
+                                      }
+                                    }
+                                     this.router.navigate(['provider', 'lead'], navigationExtras);
                                 },
                                     error => {
                                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1056,7 +1062,12 @@ export class ViewLeadQnrComponent implements OnInit{
            
         } else {
             // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
-            this.router.navigate(['provider', 'crm']);
+            const navigationExtras: NavigationExtras =  {
+              queryParams: {
+                type: 'LEAD'
+              }
+            }
+             this.router.navigate(['provider', 'lead'], navigationExtras);
         }
     }, error => {
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1088,7 +1099,13 @@ export class ViewLeadQnrComponent implements OnInit{
                             this.provider_services.providerLeadQnrafterUploadStatusUpdate(uuid, postData)
                                 .subscribe((data) => {
                                     // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
-                                    this.router.navigate(['provider', 'crm']);
+                                   
+                                    const navigationExtras: NavigationExtras =  {
+                                      queryParams: {
+                                        type: 'LEAD'
+                                      }
+                                    }
+                                     this.router.navigate(['provider', 'lead'], navigationExtras);
                                 },
                                     error => {
                                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1107,7 +1124,12 @@ export class ViewLeadQnrComponent implements OnInit{
            
         } else {
             // this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
-            this.router.navigate(['provider', 'crm']);
+            const navigationExtras: NavigationExtras =  {
+              queryParams: {
+                type: 'LEAD'
+              }
+            }
+            this.router.navigate(['provider', 'lead'], navigationExtras);
         }
     }, error => {
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1119,37 +1141,32 @@ export class ViewLeadQnrComponent implements OnInit{
     this.unreleased_arr = this.leadDetails.releasedQnr.filter(releasedQn => releasedQn.status === 'unReleased');
     if(this.unreleased_arr.length !== 0){
       if(this.unreleased_arr && this.unreleased_arr[0].status === 'unReleased'){
-        console.log(this.leadDetails.releasedQnr[0])
+      
         this.providerservices.changeLeadQuestionnaireStatus('released',this.leadkid, this.unreleased_arr[0].id).subscribe(data => {
-          this.getleadDetails();
-          this.getAfterQnr()
+          this.qnrData = data;
+          if(this.qnrData === true){
+            this.getleadDetails();
+          }
+         
         },
         
           error => {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
-          // setTimeout(() => {
-          //   this.getleadDetails();
-          // 1000});
-         
-          // setTimeout(() => {
-          //   this.getAfterQnr()
-          // 1000});
          
       }
     }
    
     else{
       this.getleadDetails();
-          this.getAfterQnr()
+          
     }
      
   }
  
   getAfterQnr(){
-   console.log(this.leadDetails)
-    this.released_arr = this.leadDetails.releasedQnr.filter(releasedQn => releasedQn.status === 'released');
-  console.log(this.released_arr)
+  this.released_arr = this.leadDetails.releasedQnr.filter(releasedQn => releasedQn.status === 'released');
+         console.log( this.released_arr + ' this.released_arr')
   if(this.released_arr.length !==0){
     this.crmService.getLeadafterQnrDetails(this.leadkid).subscribe(data => {
       this.leadafterquestionnaireList = data;
@@ -1225,9 +1242,20 @@ saveCrif(){
 };
 this.crmService.crifVerification(post_data).subscribe(
   () => {
-    this.router.navigate(['provider', 'lead']);
+    const navigationExtras: NavigationExtras =  {
+      queryParams: {
+        type: 'LEAD'
+      }
+    }
+    this.router.navigate(['provider', 'lead'], navigationExtras);
   },
   error => {
+  });
+}
+getleadDetails(){
+  this.crmService.getLeadDetails(this.leadkid).subscribe(data => {
+    this.leadDetails = data;
+    this.getAfterQnr()
   });
 }
 }
