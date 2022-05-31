@@ -597,8 +597,8 @@ export class FolderFilesComponent implements OnInit {
       width: "100%",
       panelClass: [
         "popup-class",
-        "commonpopupmainclass"
-        // "uploadfilecomponentclass"
+        "commonpopupmainclass",
+       "uploadfilecomponentclass"
       ],
       disableClose: true,
       data: {

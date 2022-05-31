@@ -1012,7 +1012,7 @@
     <div class="header">
         <div class="d-flex" style="gap:10px">
             <div> <i class="fa fa-share-square fa-2x" aria-hidden="true"></i></div>
-            <div class="headerText">Share with people and groups </div>
+            <div class="headerText">Share with people</div>
         </div>
         <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
             <mat-icon>clear</mat-icon>
@@ -1026,11 +1026,11 @@
                 <div class="customerInfo">
                     <!-- [ngModelOptions]="{standalone: true}" [(ngModel)]="search_input"-->
                     <input type="text" autocomplete="off"
-                        class="form-control inputSize" name="search" (ngModelChange)="createCustomerData(customerDetails)" [(ngModel)]="customerDetails" placeholder="Search {{customer_label}}"/>
+                        class="form-control inputSize" name="search" (ngModelChange)="createCustomerData(customerDetails)" [(ngModel)]="customerDetails" placeholder="Search people by id/name/email/phone number"/>
                         <!--  -->
-                        <!-- {{searchby}} -->
+                        <!-- {{searchby}} [disabled]="!customerDetails"-->
                         <div>
-                            <button type="button" class="btn confirmBtnFind" [disabled]="!customerDetails" title="Search" (click)="searchCustomer(customerList)"><i style="color:#fff;margin-left: 5px;" class="fa fa-search"></i> </button>
+                            <button type="button" class="btn confirmBtnFind"  title="Search" (click)="searchCustomer(customerList)"><i style="color:#fff;margin-left: 5px;" class="fa fa-search"></i> </button>
                         </div>
                             <!-- (click)="
                               searchCustomer()" -->
@@ -1044,8 +1044,8 @@
                         <!-- <input  type="text" autocomplete="off" class="form-control inputSize" name="search"
                         [(ngModel)]="customerName" placeholder="Add consumer or provider"
                              /> appearance="fill"-->
-                             <label *ngIf="customerList.length === 0">Add people</label>
-                             <label *ngIf="customerList.length>0">Added people</label>
+                             <!-- <label *ngIf="customerList.length === 0">Add people</label> -->
+                             <label *ngIf="customerList.length>0" style="color: #1D3E77; margin-bottom: 0px !important;">Share To: </label>
                              <mat-form-field class="formSize" *ngIf="customerList.length>0">
                                 <!-- <mat-label>Add people</mat-label> -->
                                 <mat-chip-list #chipList aria-label="Fruit selection" class="maxDiv">
@@ -1106,12 +1106,11 @@
 
            
         
- <div *ngIf="data.file">
-    <mat-chip class="mt-4 mb-2"  matTooltipPosition="above" matTooltip="{{data.file.fileName}}"  class="matChipSize">
+ <div *ngIf="data.file" style="margin-bottom: 0px;">
+    <button class="mt-4 mb-0"  matTooltipPosition="above" matTooltip="{{data.file.fileName}}"  class="matChipSize">
         <img class="imgIcon" [src]="getImageType(data.file.fileType)" alt="">
         {{data.file.fileName?.length>10 ? data.file.fileName.slice(0, 10)+'...' : data.file.fileName}}
-       
-      </mat-chip>
+    </button>
 </div>
        
         <div mat-dialog-actions style="display: flex; margin-top: 5; padding: 0px !important;" class="pull-left">
@@ -1122,7 +1121,6 @@
                         <button type="button" class="btn btn-primary font-weight-bold confirmBtn" [disabled]="customerList.length === 0" (click)="shareFileToConsumerOrProvider()">Send</button>
                     </div>
                     <!-- <i class="fa fa-share-alt"  aria-hidden="true"></i> -->
-                    <!-- (click)="shareFileToConsumerOrProvider(customer_data,data.file)" -->
                 </ng-container>
             </div>
         </div>

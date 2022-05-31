@@ -33,6 +33,11 @@ export class PreviewuploadedfilesComponent implements OnInit {
   ngOnInit() {
   }
 
+  getImageType(fileType) {
+    // console.log(fileType);
+     return this.fileService.getImageByType(fileType);
+ }
+
   // showimg(imgurl) {
   //   let logourl = '';
   //   if (imgurl) {
@@ -63,10 +68,7 @@ export class PreviewuploadedfilesComponent implements OnInit {
     }
   }
 
-  getImage(fileType) {
-    console.log(fileType);
-    return this.fileService.getImageByType(fileType);
-}
+
 
 
 showFile(file) {

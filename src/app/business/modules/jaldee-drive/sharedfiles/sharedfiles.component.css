@@ -23,7 +23,15 @@
   .fa {
     font-family: 'FontAwesome' !important;
   }
-  
+  .iconSize{
+    height: 90px!important;
+    width: 65%!important;
+    line-height: 100px!important;
+    margin: 10px auto!important;
+    font-size: 90px!important;
+    transition: .2s all ease-out;
+    margin-left: 5px;
+  }
   .folder i.fa-folder {
     height: 90px!important;
     width: 100%!important;

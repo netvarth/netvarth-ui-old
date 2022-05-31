@@ -74,21 +74,46 @@
         <div class="row bgcolor">
           <div class="col-xs-12 col-sm-12 col-12 col-md-12  col-lg-12 no-padding bgcolor">
             <div class="card no-padding-small bgcolor">
+                <div class="mx-2 mt-4" *ngIf="!sharedFolder">
+                  <h4 class="textColor">Files</h4>
+                </div>
+                
+                <div class="divSpace">
+                  <button class="buttonSize" (click)="publicfolder('private')" title="My Files" *ngIf="!sharedFolder">
+                    <span class="pull-left textPlace">
+                      <img src="/assets/images/folderImage.png" class="iconSize"  alt="">  My Files
+                    </span>
+                  </button>
+    
+                  <button class="buttonSize" (click)="onClicked('Shared')" title="Shared Files" *ngIf="!sharedFolder">
+                    <span class="pull-left textPlace">
+                      <img src="/assets/images/folderImage.png" class="iconSize" alt="">  Shared Files
+                    </span>
+                  </button>
+                </div>
+             
               <div class="mx-2 mt-4" *ngIf="!sharedFolder">
-                <h4>Statistics</h4>
+                <h4 class="textColor">Storage</h4>
               </div>
               <div class="mx-2" *ngIf="!sharedFolder">
                 <div class="row">
-                  <div class="col-sm-12 col-md-6 col-lg-6  col-xs-12 col-12 disp-flex">
+                  <div class="col-sm-12 col-md-7 col-lg-7  col-xs-12 col-12 disp-flex">
                     <div class="card color" style="word-wrap: normal !important;">
                       <div class="my-2 d-flex justify-content-between">
                         <span class="pull-left">
-                          <img src="./assets/images/Availablespace.png" style="width:50px; height:50px" alt="">  Available Space
+                          <img src="/assets/images/AvailableSpace.png" style="width:50px; height:50px" alt="">&nbsp;  Available Space
                         </span>
                         <span class="pull-right my-3">{{remainingStorage}} GB left</span>
                       </div>
                       <div class="progress mb-1" style="height:6px ;color:#004AD7;">
                         <div class="progress-bar bg-primary" style="width:50%;color:#004AD7;"></div>
+                      </div>
+                      <div class="mt-3 mb-1 d-flex justify-content-between">
+                        <div class="prov-name-txt my-2" style="text-transform:none !important;">
+                          Unlock More Space!
+                        </div>
+                        <button (click)="gotoSmsAddon()" title="Upgrade Now" class="btn btn-warning text-dark p-button-rounded"> Upgrade Now
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -118,46 +143,34 @@
                 </div>
               </div>
               <div class="mx-2">
-                <div class=" row cust-name">
-                  <!-- <div (click)="publicfolder('private')" *ngIf="!sharedFolder"
+                <!-- <div class=" row cust-name">
+                  <div (click)="publicfolder('private')" *ngIf="!sharedFolder"
                     class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
                     id="folder2">
                     <i class="fa fa-folder" aria-hidden="true">
                       <p (click)="publicfolder('private')">My Files</p>
                     </i>
                   </div> -->
-                  <div class="d-flex col-md-6 col-lg-6 col-sm-12 col-12">
+                  <!-- <div class="d-flex col-md-6 col-lg-6 col-sm-12 col-12">
                   <mat-card class="example-card" (click)="publicfolder('private')">
-                    <!-- <mat-card-header>
-                      <div mat-card-avatar class="example-header-image"></div>
-                      <mat-card-title>Shiba Inu</mat-card-title>
-                      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-                    </mat-card-header> -->
-                    <img mat-card-image src="./assets/images/Myfile.png" alt="Photo of a Shiba Inu">
-                    <!-- <mat-card-content >
-                     
-                    </mat-card-content> -->
+                 
+                    <img mat-card-image src="/assets/images/Myfile.png" alt="Photo of a Shiba Inu">
+      
                     <mat-card-actions class="textInfo">
                       My Files
                     </mat-card-actions>
                   </mat-card>
 
                   <mat-card class="example-card" (click)="onClicked('Shared')">
-                    <!-- <mat-card-header>
-                      <div mat-card-avatar class="example-header-image"></div>
-                      <mat-card-title>Shiba Inu</mat-card-title>
-                      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-                    </mat-card-header> -->
-                    <img mat-card-image src="./assets/images/sharedfiles.png" alt="Photo of a Shiba Inu">
-                    <!-- <mat-card-content class="textInfo">
-                      Shared Files
-                    </mat-card-content> -->
+                    
+                    <img mat-card-image src="/assets/images/sharedfiles.png" alt="Photo of a Shiba Inu">
+                  
                     <mat-card-actions class="textInfo">
                       Shared Files
                     </mat-card-actions>
                   </mat-card>
 
-                </div>
+                </div> -->
                   
                   <!-- <div (click)="onClicked('Shared')" *ngIf="!sharedFolder"
                     class="pointer-cursor top-droppable folder tooltiper tooltiper-up" data-tooltip="0 file"
@@ -167,7 +180,7 @@
 
                       <p (click)="onClicked('Shared')">Shared Files</p>
                     </i>
-                  </div> -->
+                  </div>
                   <div class="col-md-6 col-lg-6 col-12 col-sm-12" style="text-align: center;" class="my-3">
                     <div class="prov-name-txt my-2" style="text-transform:none !important;">
                       Unlock More Space!
@@ -175,7 +188,7 @@
                     <button (click)="gotoSmsAddon()" class="btn btn-warning text-dark p-button-rounded"> Upgrade Now
                     </button>
                   </div>
-                </div>
+                </div> -->
                 
                
               </div>
@@ -345,9 +358,26 @@
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-12 col-md-8  col-lg-8 no-padding">
             <div class="card no-mgn-bt card_addon txt_centr no-padding-small">
+              <div class="mx-4 mt-4" *ngIf="!sharedFolder">
+                <h4 class="textColor">Files</h4>
+              </div>
+              
+              <div class="d-flex divSmallSpace">
+                <button class="buttonSmallSize" (click)="publicfolder('private')" title="My Files" *ngIf="!sharedFolder">
+                  <span class="pull-left textPlace">
+                    <img src="/assets/images/folderImage.png" class="iconSize"  alt="">  My Files
+                  </span>
+                </button>
+  
+                <button class="buttonSmallSize" (click)="onClicked('Shared')" title="Shared Files" *ngIf="!sharedFolder">
+                  <span class="pull-left textPlace">
+                    <img src="/assets/images/folderImage.png" class="iconSize" alt="">  Shared Files
+                  </span>
+                </button>
+              </div>
               <div>
                 <div class="mx-4 mt-4" *ngIf="!sharedFolder">
-                  <h4>Statistics</h4>
+                  <h4 class="textColor">Storage</h4>
                 </div>
                 <div *ngIf="!sharedFolder">
                   <div class="row">
@@ -355,13 +385,20 @@
                       <div class="card color" style="word-wrap: normal !important;">
                         <div class="my-2 d-flex justify-content-between">
                           <span class="pull-left">
-                            <img src="./assets/images/Availablespace.png" style="width:50px; height:50px" alt="">  Available Space
+                            <img src="/assets/images/AvailableSpace.png" style="width:50px; height:50px" alt="">&nbsp;  Available Space
                           </span>
                           <span class="pull-right my-3">{{remainingStorage}} GB left</span>
                         </div>
                         <div class="progress mb-1" style="height:6px ;color:#004AD7;">
                           <div class="progress-bar bg-primary" style="width:50%;color:#004AD7;"></div>
                         </div>
+                        <div class="mt-3 mb-1 d-flex justify-content-between">
+                        <div class="prov-name-txt my-2" style="text-transform:none !important;">
+                          Unlock More Space!
+                        </div>
+                        <button (click)="gotoSmsAddon()" title="Upgrade Now" class="btn btn-warning text-dark p-button-rounded"> Upgrade Now
+                        </button>
+                      </div>
                       </div>
                     </div>
                   </div>
@@ -409,47 +446,41 @@
                       </i>
                     </div> -->
 
-                    <mat-card class="example-card" (click)="publicfolder('private')">
-                      <!-- <mat-card-header>
-                        <div mat-card-avatar class="example-header-image"></div>
-                        <mat-card-title>Shiba Inu</mat-card-title>
-                        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-                      </mat-card-header> -->
-                      <img mat-card-image src="./assets/images/Myfile.png" alt="Photo of a Shiba Inu">
+                    <!-- <mat-card class="example-card" (click)="publicfolder('private')">
+                   
+                      <img mat-card-image src="/assets/images/Myfile.png" alt="Photo of a Shiba Inu">
                       <mat-card-content class="textInfo">
                         My Files
                       </mat-card-content>
-                      <!-- <mat-card-actions>
-                        <button mat-button class="text-center">My Files</button>
-                        <button mat-button>SHARE</button>
-                      </mat-card-actions> -->
-                    </mat-card>
-  
-                    <mat-card class="example-card" (click)="onClicked('Shared')">
-                      <!-- <mat-card-header>
+                      
+                    </mat-card> -->
+     <!-- <mat-card-header>
                         <div mat-card-avatar class="example-header-image"></div>
                         <mat-card-title>Shiba Inu</mat-card-title>
                         <mat-card-subtitle>Dog Breed</mat-card-subtitle>
                       </mat-card-header> -->
-                      <img mat-card-image src="./assets/images/sharedfiles.png" alt="Photo of a Shiba Inu">
-                      <mat-card-content class="textInfo">
-                        Shared Files
-                      </mat-card-content>
-                      <!-- <mat-card-actions>
+                         <!-- <mat-card-actions>
                         <button mat-button >Shared Files</button>
                         <button mat-button>SHARE</button>
                       </mat-card-actions> -->
-                    </mat-card>
+                    <!-- <mat-card class="example-card" (click)="onClicked('Shared')">
+                   
+                      <img mat-card-image src="/assets/images/sharedfiles.png" alt="Photo of a Shiba Inu">
+                      <mat-card-content class="textInfo">
+                        Shared Files
+                      </mat-card-content>
+                   
+                    </mat-card> -->
                   </div>
                 </div>
               </div>
-              <div style="text-align: center;" class="my-3">
+              <!-- <div style="text-align: center;" class="my-3">
                 <div class="prov-name-txt" style="text-transform:none !important;">
                   Unlock More Space!
                 </div>
                 <button (click)="gotoSmsAddon()" class="btn btn-warning p-button-rounded text-dark my-2"> Upgrade Now
                 </button>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

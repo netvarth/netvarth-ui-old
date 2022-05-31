@@ -920,7 +920,7 @@ export class CrmSelectMemberComponent implements OnInit {
         .subscribe(
           (data: any) => {
             this.customer_data = [];
-            // console.log("Customer dataaaa :", data);
+            console.log("Customer dataaaa :", data);
             this.searchedData = data;
             this.customerArray.push(data[0].id);
             //this.customerList.push(data[0]);
@@ -929,7 +929,7 @@ export class CrmSelectMemberComponent implements OnInit {
             } else {
               const customer = this.customerData.find(x => x.id === data[0].id);
               if (customer) {
-                this.snackbarService.openSnackBar("Already existed!",{'panelClass': 'snackbarerror'})
+                this.snackbarService.openSnackBar("Searched people already existed!",{'panelClass': 'snackbarerror'})
               } else {
                 this.customerList.push(data[0]);
               }

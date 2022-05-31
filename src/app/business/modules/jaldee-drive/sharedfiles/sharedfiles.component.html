@@ -25,17 +25,22 @@
                                         class="pointer-cursor top-droppable folder tooltiper tooltiper-up"
                                         data-tooltip="0 file" id="folder2" data-bs-toggle="tooltip"
                                         data-bs-placement="bottom" title="From Provider">
-                                        <i class="fa fa-folder" aria-hidden="true">
+                                        <img src="/assets/images/folderImage.png" title="{{customer_label}} Files" class="iconSize" alt=""> 
+                                        <p (click)="publicfolder('public')" title="{{customer_label}} Files">From {{provider_label | capitalizeFirst}}</p>
+                                        <!-- <i class="fa fa-folder" aria-hidden="true"> 
                                             <p (click)="publicfolder('public')">From {{provider_label | capitalizeFirst}}</p>
-                                        </i>
+                                        </i> -->
                                     </div> &nbsp; &nbsp; &nbsp;
                                     <div (click)="publicfolder('shared')"
                                         class="pointer-cursor top-droppable folder tooltiper tooltiper-up"
                                         data-tooltip="0 file" id="folder2" data-bs-toggle="tooltip"
                                         data-bs-placement="bottom" title="From Consumer">
-                                        <i class="fa fa-folder" aria-hidden="true">
+                                        <img src="/assets/images/folderImage.png" class="iconSize" title="{{customer_label}} Files" alt=""> 
+                                        <p (click)="publicfolder('shared')" title="{{customer_label}} Files">From {{customer_label | capitalizeFirst}}</p>
+
+                                        <!-- <i class="fa fa-folder" aria-hidden="true">
                                             <p (click)="publicfolder('shared')">From {{customer_label | capitalizeFirst}}</p>
-                                        </i>
+                                        </i> -->
                                     </div>
                                 </div>
                             </div>
