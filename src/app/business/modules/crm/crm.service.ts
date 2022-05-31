@@ -92,7 +92,7 @@ export class CrmService {
     // }
     
     getTotalTask(filter = {}) {
-      const url = 'provider/task/provider'
+      const url = 'provider/task/provider?isSubTask-eq=false'
       return this.servicemeta.httpGet(url, null, filter);
     }
     getTotalLead() {
