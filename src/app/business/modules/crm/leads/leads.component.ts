@@ -204,8 +204,8 @@ export class LeadsComponent implements OnInit {
       })
     if(this.type==='LEAD'){
       this.headerName='All Leads';
-      // this.getDocumentVerificationLead()
-      this.getSalesVerificationLead()
+      this.getDocumentVerificationLead()
+      // this.getSalesVerificationLead()
       // this.crmService.getTotalLead().subscribe((res:any)=>{
       //   console.log(res);
       //   this.totalLeadList = this.totalLeadList.filter(obj => !obj.originId);
@@ -222,8 +222,8 @@ export class LeadsComponent implements OnInit {
     }
     else if(this.type==='DOCUMENTUPLOD'){
       this.headerName='Login';
-      // this.getSalesVerificationLead()
-      this.getDocumentVerificationLead()
+      this.getSalesVerificationLead()
+      // this.getDocumentVerificationLead()
     }
     else if(this.type==='NEWLEAD'){
       this.headerName='Leads';

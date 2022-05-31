@@ -327,7 +327,7 @@
                           </div>
                         </td>
                       </tr> -->
-                      <tr *ngFor="let lead of documentVerificationData; let i=index" (click)="viewLead(lead.uid,lead)">
+                      <tr *ngFor="let lead of documentVerificationData; let i=index"(click)="openTaskOverView(lead.uid,lead)">
                         <!-- <td data-title="Lead Details" class="td1">{{lead.uid}}</td> -->
                         <td data-title="Lead Details" class="td1">L-{{lead.id}}</td>
                         <td data-title="Lead Details" class="td2"><span
@@ -2323,7 +2323,11 @@
                     </tr>
                   </ng-container>
                   <ng-container *ngIf="salesVerificationData.length>0">
-                    <tr *ngFor="let lead of salesVerificationData; let i=index" (click)="openTaskOverView(lead.uid,lead)">
+                    <tr *ngFor="let lead of salesVerificationData; let i=index"
+                    (click)="viewLead(lead.uid,lead)"
+                     
+                     >
+                     <!-- (click)="openTaskOverView(lead.uid,lead)" -->
                       <!-- <td data-title="Lead Details" class="td1">{{lead.uid}}</td> -->
                        <td data-title="Lead Details" class="td1">L-{{lead.id}}</td>
                       <td data-title="Lead Details" class="td2"><span
