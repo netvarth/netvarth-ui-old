@@ -9,7 +9,7 @@ import { PreviewuploadedfilesModule } from './previewuploadedfiles/previewupload
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
  import { CapitalizeFirstPipeModule } from "../../../shared/pipes/capitalize.module";
- import {MatCardModule} from '@angular/material/card';
+
 
 
 const routes: Routes = [
@@ -30,7 +30,6 @@ const routes: Routes = [
     FormsModule,
     PreviewuploadedfilesModule,
     CapitalizeFirstPipeModule,
-    MatCardModule,
     [RouterModule.forChild(routes)],
   ],
   exports: [JaldeeDriveComponent],

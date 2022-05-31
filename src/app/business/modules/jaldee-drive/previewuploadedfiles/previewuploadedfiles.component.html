@@ -30,7 +30,7 @@
   </ul>
 </ng-container> -->
 <div class="pad-20 image-scroll" *ngIf="details.fileType && details.fileType != 'pdf'">
-  <img style="width:100%;margin-top: -20px;" [src]="details.filePath"
+  <img style="width:100%;margin-top: -20px;" [src]="details.filePath" onerror="this.src='/assets/images/NoImageFound.jpg'"
     *ngIf="details.fileType && details.fileType == 'bmp'|| details.fileType =='image/png' || details.fileType =='png' || details.fileType == 'gif' || details.fileType == 'jpg' ||details.fileType =='jpeg' || details.fileType =='jfif' ||details.fileType == 'webp'" />
 </div>
 

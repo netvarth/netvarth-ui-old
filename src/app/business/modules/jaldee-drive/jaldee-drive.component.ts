@@ -238,8 +238,6 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
         this.totalStorage = Math.round(this.storageleft.totalStorage);
         console.log("Total Space  :", Math.round(this.storageleft.totalStorage))
         console.log("Used Space  :", Math.round(this.storageleft.usedStorage))
-
-
         this.weightageValue = 4;
       }
     );

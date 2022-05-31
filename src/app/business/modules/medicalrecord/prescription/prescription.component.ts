@@ -97,6 +97,7 @@ export class PrescriptionComponent implements OnInit {
     this.bookingType = this.activatedRoute.parent.snapshot.params['type'];
     this.bookingId = this.activatedRoute.parent.snapshot.params['uid'];
     this.provider_user_Id = this.medicalrecord_service.getDoctorId();
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     if (!this.provider_user_Id) {
       const user = this.groupService.getitemFromGroupStorage('ynw-user');
       this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
