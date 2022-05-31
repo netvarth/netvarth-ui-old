@@ -12,6 +12,26 @@
 
 <section class="card" *ngIf="showKyc">
   <div class=" card bgColor">
+    <!-- ((this.leadDetails.title ==='Follow Up 1')  || (this.leadDetails.title ==='Follow Up 2')) &&  -->
+    <div style="display: flex;
+    align-items: center;
+    gap: 10px;" *ngIf="(leadDetails.customer)">
+      <div class="imageClass">
+        <div style="color: #8A8383;">{{firstCustomerName | capitalizeFirst}}</div>
+      </div>
+    <div>
+      <div> 
+        <div style="font-size: 14px;
+        color: #000000;
+        font-weight: bold;
+        margin-bottom: 4px;">{{customerName | capitalizeFirst}}</div>
+      </div>
+      <div>
+        <div style="font-size: 12px;color: #000000;">{{customerPhNo}}</div>
+      </div>
+    </div>
+    </div>
+  <hr />
     <div class="inputwithImg">
       <form [formGroup]="createLeadForm">
         <!-- <span class="group-head">Add Details</span><br>
@@ -908,6 +928,25 @@
 </section>
 <section class="card" *ngIf="showupdateKyc">
   <div class=" card bgColor">
+    <div style="display: flex;
+    align-items: center;
+    gap: 10px;" *ngIf="(leadDetails.customer)">
+      <div class="imageClass">
+        <div style="color: #8A8383;">{{firstCustomerName | capitalizeFirst}}</div>
+      </div>
+    <div>
+      <div> 
+        <div style="font-size: 14px;
+        color: #000000;
+        font-weight: bold;
+        margin-bottom: 4px;">{{customerName | capitalizeFirst}}</div>
+      </div>
+      <div>
+        <div style="font-size: 12px;color: #000000;">{{customerPhNo}}</div>
+      </div>
+    </div>
+    </div>
+  <hr />
     <div class="inputwithImg">
       <form [formGroup]="createLeadForm">
         <span class="group-head">KYC Details</span><br>
@@ -1561,8 +1600,29 @@
 </section>
 
 <section *ngIf="showqnr">
+  
   <div class="row d-lg-flex justify-content-lg-start" *ngIf="showQuestionnaire && showqnr">
-
+    <div class="card">
+      <div style="display: flex;
+      align-items: center;background-color: #fff;
+      gap: 10px;margin-left: 30px;" *ngIf="(leadDetails.customer)">
+        <div class="imageClass">
+          <div style="color: #8A8383;">{{firstCustomerName | capitalizeFirst}}</div>
+        </div>
+      <div>
+        <div> 
+          <div style="font-size: 14px;
+          color: #000000;
+          font-weight: bold;
+          margin-bottom: 4px;">{{customerName | capitalizeFirst}}</div>
+        </div>
+        <div>
+          <div style="font-size: 12px;color: #000000;">{{customerPhNo}}</div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <hr />
 
     <app-questionnaire [questionnaireList]="leadquestionnaireList" [source]="'proLead'"
       [questionAnswers]="questionAnswers" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
@@ -1583,7 +1643,27 @@
 <section *ngIf="showafterqnr" style="width: 100%;">
   <div class="row d-lg-flex justify-content-lg-start" *ngIf="showQuestionnaire && showafterqnr">
 
-
+    <div class="card">
+    <div style="display: flex;
+    align-items: center;background-color: #fff;
+    gap: 10px;margin-left: 30px;" *ngIf="(leadDetails.customer)">
+      <div class="imageClass">
+        <div style="color: #8A8383;">{{firstCustomerName | capitalizeFirst}}</div>
+      </div>
+    <div>
+      <div> 
+        <div style="font-size: 14px;
+        color: #000000;
+        font-weight: bold;
+        margin-bottom: 4px;">{{customerName | capitalizeFirst}}</div>
+      </div>
+      <div>
+        <div style="font-size: 12px;color: #000000;">{{customerPhNo}}</div>
+      </div>
+    </div>
+    </div>
+  </div>
+  <hr />
     <app-questionnaire [questionnaireList]="unreleased_question_arr" [source]="'proLeadafter'"
       [questionAnswers]="questionAnswers" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
 

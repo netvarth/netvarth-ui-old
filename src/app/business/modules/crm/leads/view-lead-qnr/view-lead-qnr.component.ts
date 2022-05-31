@@ -181,6 +181,9 @@ export class ViewLeadQnrComponent implements OnInit{
   crifDetails: any;
   crifScore: any;
   fileviewdialogRef: any;
+  firstCustomerName:any;
+  customerName:any;
+  customerPhNo:any;
   constructor(private locationobj: Location,
   
     // private lStorageService: LocalStorageService,
@@ -214,7 +217,7 @@ export class ViewLeadQnrComponent implements OnInit{
       this.crmService.getLeadDetails(this.leadUid).subscribe(data => {
       
         this.leadDetails = data;
-        console.log(this.leadDetails)
+        console.log("leadDetails",this.leadDetails)
         this.leadkid = this.leadDetails.uid
         
         this.api_loading = false;
@@ -223,11 +226,18 @@ export class ViewLeadQnrComponent implements OnInit{
           this.catId = this.leadDetails.category.id
         }
         
-      
+
+
+
         if(this.leadDetails && this.leadDetails.customer && this.leadDetails.customer.id) {
           this.custId = this.leadDetails.customer.id;
           
         }
+        if(this.leadDetails.customer){
+          this.firstCustomerName=this.leadDetails.customer.name.charAt(0);
+          this.customerName= this.leadDetails.customer.name;
+          this.customerPhNo= '+917003921734' 
+        } 
         if(this.leadDetails && this.leadDetails.customer && this.leadDetails.customer.name) {
           this.custname = this.leadDetails.customer.name;
           

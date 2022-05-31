@@ -126,6 +126,7 @@ export class QuestionnaireComponent implements OnInit {
   }
   ngOnInit(): void {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    console.log("questionnaireList :",this.questionnaireList)
     if (this.questionnaireList) {
       if (this.source === 'customer-create' || this.source === 'onetime') {
         if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
