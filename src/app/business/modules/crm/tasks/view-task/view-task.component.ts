@@ -902,7 +902,7 @@ export class ViewTaskComponent implements OnInit {
           setTimeout(() => {
             this.snackbarService.openSnackBar('Successfull updated activity');
             this.taskDetailsForm.reset();
-          this.router.navigate(['provider', 'task']);
+          // this.router.navigate(['provider', 'task']);
           }, projectConstants.TIMEOUT_DELAY);
         },
         (error)=>{
@@ -911,6 +911,18 @@ export class ViewTaskComponent implements OnInit {
           }, projectConstants.TIMEOUT_DELAY);
         })
       }
+      this.crmService.taskStatusCloseDone(this.taskDetails.taskUid).subscribe((response)=>{
+        setTimeout(() => {
+          this.snackbarService.openSnackBar('Successfull updated activity');
+          // this.taskDetailsForm.reset();
+        this.router.navigate(['provider', 'task']);
+        }, projectConstants.TIMEOUT_DELAY);
+      },
+      (error)=>{
+        setTimeout(() => {
+          this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
+        }, projectConstants.TIMEOUT_DELAY);
+      })
     }
    
    

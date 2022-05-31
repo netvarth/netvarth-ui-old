@@ -10,7 +10,7 @@
 <br>
 <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
 
-<section class="card" *ngIf="showKyc">
+<section class="container card mt-4 mx-auto" *ngIf="showKyc">
   <div class=" card bgColor">
     <!-- ((this.leadDetails.title ==='Follow Up 1')  || (this.leadDetails.title ==='Follow Up 2')) &&  -->
     <div style="display: flex;
@@ -27,7 +27,7 @@
         margin-bottom: 4px;">{{customerName | capitalizeFirst}}</div>
       </div>
       <div>
-        <div style="font-size: 12px;color: #000000;">{{customerPhNo}}</div>
+        <div style="font-size: 12px;color: #000000;">+91{{customerPhNo}}</div>
       </div>
     </div>
     </div>
@@ -926,7 +926,7 @@
 
 
 </section>
-<section class="card" *ngIf="showupdateKyc">
+<section class="container card mt-4 mx-auto" *ngIf="showupdateKyc">
   <div class=" card bgColor">
     <div style="display: flex;
     align-items: center;
@@ -942,7 +942,7 @@
         margin-bottom: 4px;">{{customerName | capitalizeFirst}}</div>
       </div>
       <div>
-        <div style="font-size: 12px;color: #000000;">{{customerPhNo}}</div>
+        <div style="font-size: 12px;color: #000000;">+91{{customerPhNo}}</div>
       </div>
     </div>
     </div>
@@ -1617,7 +1617,7 @@
           margin-bottom: 4px;">{{customerName | capitalizeFirst}}</div>
         </div>
         <div>
-          <div style="font-size: 12px;color: #000000;">{{customerPhNo}}</div>
+          <div style="font-size: 12px;color: #000000;">+91{{customerPhNo}}</div>
         </div>
       </div>
       </div>
@@ -1658,7 +1658,7 @@
         margin-bottom: 4px;">{{customerName | capitalizeFirst}}</div>
       </div>
       <div>
-        <div style="font-size: 12px;color: #000000;">{{customerPhNo}}</div>
+        <div style="font-size: 12px;color: #000000;">+91{{customerPhNo}}</div>
       </div>
     </div>
     </div>

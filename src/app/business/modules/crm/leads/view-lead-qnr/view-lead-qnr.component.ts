@@ -236,7 +236,7 @@ export class ViewLeadQnrComponent implements OnInit{
         if(this.leadDetails.customer){
           this.firstCustomerName=this.leadDetails.customer.name.charAt(0);
           this.customerName= this.leadDetails.customer.name;
-          this.customerPhNo= '+917003921734' 
+          this.customerPhNo= this.leadDetails.customer.phoneNo;
         } 
         if(this.leadDetails && this.leadDetails.customer && this.leadDetails.customer.name) {
           this.custname = this.leadDetails.customer.name;
@@ -869,7 +869,8 @@ export class ViewLeadQnrComponent implements OnInit{
               type: 'LEAD'
             }
           }
-        this.router.navigate(['provider', 'lead'],navigationExtras);
+          console.log(navigationExtras)
+        this.router.navigate(['provider', 'crm']);
         }, projectConstants.TIMEOUT_DELAY);
       },
       (error)=>{
@@ -1062,7 +1063,9 @@ export class ViewLeadQnrComponent implements OnInit{
                                         type: 'LEAD'
                                       }
                                     }
-                                     this.router.navigate(['provider', 'lead'], navigationExtras);
+                                    //  this.router.navigate(['provider', 'crm'], navigationExtras);
+                                    console.log(navigationExtras)
+        this.router.navigate(['provider', 'crm']);
                                 },
                                     error => {
                                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1086,7 +1089,9 @@ export class ViewLeadQnrComponent implements OnInit{
                 type: 'LEAD'
               }
             }
-             this.router.navigate(['provider', 'lead'], navigationExtras);
+            //  this.router.navigate(['provider', 'crm'], navigationExtras);\
+            console.log(navigationExtras)
+        this.router.navigate(['provider', 'crm']);
         }
     }, error => {
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1124,7 +1129,9 @@ export class ViewLeadQnrComponent implements OnInit{
                                         type: 'LEAD'
                                       }
                                     }
-                                     this.router.navigate(['provider', 'lead'], navigationExtras);
+                                    //  this.router.navigate(['provider', 'crm'], navigationExtras);
+                                    console.log(navigationExtras)
+        this.router.navigate(['provider', 'crm']);
                                 },
                                     error => {
                                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1148,7 +1155,9 @@ export class ViewLeadQnrComponent implements OnInit{
                 type: 'LEAD'
               }
             }
-            this.router.navigate(['provider', 'lead'], navigationExtras);
+            // this.router.navigate(['provider', 'crm'], navigationExtras);
+            console.log(navigationExtras)
+        this.router.navigate(['provider', 'crm']);
         }
     }, error => {
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1268,7 +1277,9 @@ this.crmService.crifVerification(post_data).subscribe(
         type: 'LEAD'
       }
     }
-    this.router.navigate(['provider', 'lead'], navigationExtras);
+    // this.router.navigate(['provider', 'crm'], navigationExtras);
+    console.log(navigationExtras)
+        this.router.navigate(['provider', 'crm']);
   },
   error => {
   });
