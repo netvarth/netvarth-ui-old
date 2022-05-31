@@ -24,6 +24,7 @@ import { WordProcessor } from '../../../../../../../src/app/shared/services/word
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { FileService } from '../../../../../../../src/app/shared/services/file-service';
+import { PreviewuploadedfilesComponent } from '../../../jaldee-drive/previewuploadedfiles/previewuploadedfiles.component';
 @Component({
   selector: 'app-view-lead-qnr',
   templateUrl: './view-lead-qnr.component.html',
@@ -177,6 +178,9 @@ export class ViewLeadQnrComponent implements OnInit{
   released_arr: any;
   released_arr1: any;
   qnrData:  any;
+  crifDetails: any;
+  crifScore: any;
+  fileviewdialogRef: any;
   constructor(private locationobj: Location,
   
     // private lStorageService: LocalStorageService,
@@ -342,9 +346,9 @@ export class ViewLeadQnrComponent implements OnInit{
     this.getLeadTypeListData()
   }
   getKycDetails(){
-    this.crmService.getkyc(this.custId).subscribe(data => {
+    this.crmService.getkyc(this.leadkid).subscribe(data => {
       this.kycDetails = data;
-      this.updateValue = this.kycDetails;
+      this.updateValue = this.kycDetails[0];
      
        this.createLeadForm.patchValue({
         idTypes : this.updateValue.validationIds[0].idTypes,
@@ -368,6 +372,9 @@ export class ViewLeadQnrComponent implements OnInit{
        
     })
   })
+  if(this.updateValue.panAttachments[0]){
+
+  }
   }
   getLeadToken(){
     this.crmService.getLeadTokens(this.leadDetails.uid).subscribe(data => {
@@ -795,12 +802,10 @@ export class ViewLeadQnrComponent implements OnInit{
         
       ];
     }
-    const createLeadData:any ={
+    const createLeadData:any =[{
       "originFrom": "Lead",
       "originUid": this.leadkid,
-      "customer": {
-        "id": this.custId
-      },
+      "customer": this.custId,
       "customerName": this.custname,
       "dob": "2022-05-27",
       "telephone": [
@@ -834,8 +839,12 @@ export class ViewLeadQnrComponent implements OnInit{
         }
       ],
       "panNumber": this.createLeadForm.controls.panNumber.value,
-      "panAttachments": this.fileDataPan
-    }
+      "panAttachments": this.fileDataPan,
+      // "parentid": {
+      //   "id": ''
+      // },
+      "parent": true
+    }]
   
       // this.boolenLeadError=false;
       // this.api_loading = true;
@@ -1182,6 +1191,7 @@ export class ViewLeadQnrComponent implements OnInit{
   
   }
   filesSelected(event) {
+   
     const input = event.target.files;
     if (input) {
       for (const file of input) {
@@ -1201,6 +1211,7 @@ export class ViewLeadQnrComponent implements OnInit{
     }
   }
   filesSelectedPan(event) {
+  
     const input = event.target.files;
     if (input) {
       for (const file of input) {
@@ -1252,10 +1263,54 @@ this.crmService.crifVerification(post_data).subscribe(
   error => {
   });
 }
+saveCrifApplicant(){
+  const post_data = {
+    "customer": {
+      "id": this.custId,
+      "name": this.custname,
+    },
+    'originUid': this.leadkid,
+};
+this.crmService.crifVerification(post_data).subscribe(
+  (data) => {
+    this.crifDetails = data;
+    this.crifScore =  this.crifDetails.crifScoreString
+    // const navigationExtras: NavigationExtras =  {
+    //   queryParams: {
+    //     type: 'LEAD'
+    //   }
+    // }
+    // this.router.navigate(['provider', 'lead'], navigationExtras);
+  },
+  error => {
+  });
+}
 getleadDetails(){
   this.crmService.getLeadDetails(this.leadkid).subscribe(data => {
     this.leadDetails = data;
     this.getAfterQnr()
+  });
+}
+getImageType(fileType) {
+  // console.log(fileType);
+   return this.fileService.getImageByType(fileType);
+}
+preview(file) {
+  this.fileviewdialogRef = this.dialog.open(PreviewuploadedfilesComponent, {
+    width: "100%",
+    panelClass: [
+      "popup-class",
+      "commonpopupmainclass"
+      // "uploadfilecomponentclass"
+    ],
+    disableClose: true,
+    data: {
+      file: file
+    }
+  });
+  this.fileviewdialogRef.afterClosed().subscribe(result => {
+    if (result) {
+    }
   });
 }
 }

@@ -16,7 +16,7 @@
       <form [formGroup]="createLeadForm">
         <!-- <span class="group-head">Add Details</span><br>
         <div class="bggrey my-2"> -->
-          <!-- <div>
+        <!-- <div>
             <div class="leadTitle">
               <div>Proposed Amount</div>
               <div class="astericColor">*</div>
@@ -30,171 +30,167 @@
               </app-field-error-display>
             </div>
           </div> -->
-        
-        
+
+
         <!-- </div> -->
         <span class="group-head">KYC Details</span><br>
         <div class="bggrey my-2">
-        <div style="display: flex;gap: 5px">
-          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-            <div class="leadTitle">
-              <div>Applicant KYC</div>
-              <div class="astericColor">*</div>
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Applicant KYC</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <mat-select class="form-control widthWebKit" placeholder="" #idTypes formControlName="idTypes">
+                  <mat-option [value]="'Passport'">
+                    <div>
+                      Passport
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'VoterID'">
+                    <div>
+                      VoterID
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'UID'">
+                    <div>
+                      UID
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Others'">
+                    <div>
+                      Others
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'RationCard'">
+                    <div>
+                      RationCard
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'DrivingLicenseNo'">
+                    <div>
+                      DrivingLicenseNo
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Pan'">
+                    <div>
+                      Pan
+                    </div>
+                  </mat-option>
+                </mat-select>
+              </div>
             </div>
-            <div class="fieldPadding">
-              <mat-select class="form-control widthWebKit" placeholder="" #idTypes
-              formControlName="idTypes">
-              <mat-option [value]="'Passport'">
-                <div>
-                  Passport
-                </div>
-              </mat-option>
-              <mat-option [value]="'VoterID'">
-                <div>
-                  VoterID
-                </div>
-              </mat-option>
-              <mat-option [value]="'UID'">
-                <div>
-                  UID
-                </div>
-              </mat-option>
-              <mat-option [value]="'Others'">
-                <div>
-                  Others
-                </div>
-              </mat-option>
-              <mat-option [value]="'RationCard'">
-                <div>
-                  RationCard
-                </div>
-              </mat-option>
-              <mat-option [value]="'DrivingLicenseNo'">
-                <div>
-                  DrivingLicenseNo
-                </div>
-              </mat-option>
-              <mat-option [value]="'Pan'">
-                <div>
-                  Pan
-                </div>
-              </mat-option>
-            </mat-select>
-            </div>
-          </div>
-          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-            <div class="leadTitle">
-              <div>Number</div>
-              <div class="astericColor">*</div>
-            </div>
-            <div class="fieldPadding">
-              <textarea rowa="10" class="form-control" formControlName="idValue" #idValue
-                (change)="handleidValue(idValue.value)" (keyup)="autoGrowTextZone($event)"
-                maxlength="1000" placeholder="Enter number">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Number</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="idValue" #idValue
+                  (change)="handleidValue(idValue.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                  placeholder="Enter number">
                       </textarea>
-              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
-                errorMsg="{{leadError}}">
-              </app-field-error-display>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
+            </div>
+           
+          </div>
+
+          <div class="fieldPadding">
+            <div class="">
+              <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
+                (change)="filesSelected($event)">Click / Drop your files here
+              <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i class="material-icons">
+                  attach_file</i></a>
+            </div>
+
+            <div>
+              <div class="img-section mgn-up-20" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+                <ul class="galul">
+                  <li *ngFor="let file of selectedMessage.files;let i = index ">
+                    <div class="galimg_outer">
+                      <div class="gal_img">
+                        <img [src]="getImage(selectedMessage.base64[i], file)" *ngIf="selectedMessage.base64[i]">
+                      </div>
+                      <div class="gal_action" (click)="deleteTempImage(i)">
+                        <i class="fa fa-times-circle" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
             </div>
           </div>
 
         </div>
-        <!-- <div class="fieldPadding">
-          <div class="">
-            <input #logofile type="file" accept="/*;capture=camera"
-                 style="display:none;" multiple
-                (change)="filesSelected($event)">Click / Drop your files here
-            <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i
-                    class="material-icons"> attach_file</i></a>
-        </div>
-        </div> -->
-        <!-- <div>
-          <div class="img-section mgn-up-20"
-          *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-          <ul class="galul">
-              <li *ngFor="let file of selectedMessage.files;let i = index ">
-                  <div class="galimg_outer">
-                      <div class="gal_img">
-                          <img [src]="getImage(selectedMessage.base64[i], file)"
-                              *ngIf="selectedMessage.base64[i]">
-                      </div>
-                      <div class="gal_action" (click)="deleteTempImage(i)">
-                          <i class="fa fa-times-circle" aria-hidden="true"></i>
-                      </div>
-                  </div>
-              </li>
-          </ul>
-      </div>
-        </div> -->
-       
-        </div>
-        <!-- <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+
         <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-        <div *ngIf="selectedMessage.files && selectedMessage.files.length > 0"></div> -->
+        <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+        <div *ngIf="selectedMessage.files && selectedMessage.files.length > 0"></div>
         <span class="group-head">Pancard Details</span><br>
         <div class="bggrey my-2">
-        <div style="display: flex;gap: 5px">
-          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-            <div class="leadTitle">
-              <div>Applicant KYC</div>
-              <div class="astericColor">*</div>
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Applicant KYC</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <mat-select class="form-control widthWebKit" placeholder="Pancard">
+                  <mat-option [value]="'Pancard'">
+                    <div>
+                      Pancard
+                    </div>
+                  </mat-option>
+                </mat-select>
+              </div>
             </div>
-            <div class="fieldPadding">
-              <mat-select class="form-control widthWebKit" placeholder="Pancard" 
-                >
-                <mat-option [value]="'Pancard'">
-                  <div>
-                   Pancard
-                  </div>
-                </mat-option>
-              </mat-select>
-            </div>
-          </div>
-          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-            <div class="leadTitle">
-              <div>Pancard number</div>
-              <div class="astericColor">*</div>
-            </div>
-            <div class="fieldPadding">
-              <textarea rowa="10" class="form-control" formControlName="panNumber" #panNumber
-                (change)="handlpanNumber(panNumber.value)" (keyup)="autoGrowTextZone($event)"
-                maxlength="1000" placeholder="Enter Pancard number">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Pancard number</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="panNumber" #panNumber
+                  (change)="handlpanNumber(panNumber.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                  placeholder="Enter Pancard number">
                       </textarea>
-              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
-                errorMsg="{{leadError}}">
-              </app-field-error-display>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
             </div>
           </div>
-        </div>
-        <!-- <div class="fieldPadding">
-          <div class="">
-            <input #logofile type="file" accept="/*;capture=camera"
-                 style="display:none;" multiple
+          <div class="fieldPadding">
+            <div class="">
+              <input #file type="file" accept="/*;capture=camera" style="display:none;" multiple
                 (change)="filesSelectedPan($event)">Click / Drop your files heree
-            <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i
-                    class="material-icons"> attach_file</i></a>
-        </div>
-        </div>
-        <div>
-          <div class="img-section mgn-up-20"
-          *ngIf="selectedMessagePan.files && selectedMessagePan.files.length > 0">
-          <ul class="galul">
-              <li *ngFor="let file of selectedMessagePan.files;let i = index ">
+              <a class="btn btn-clean btn-icon btn-md" (click)="file.click()"><i class="material-icons">
+                  attach_file</i></a>
+            </div>
+          </div>
+          <div>
+            <div class="img-section mgn-up-20" *ngIf="selectedMessagePan.files && selectedMessagePan.files.length > 0">
+              <ul class="galul">
+                <li *ngFor="let file of selectedMessagePan.files;let i = index ">
                   <div class="galimg_outer">
-                      <div class="gal_img">
-                          <img [src]="getImage(selectedMessagePan.base64[i], file)"
-                              *ngIf="selectedMessagePan.base64[i]">
-                      </div>
-                      <div class="gal_action" (click)="deleteTempImagePan(i)">
-                          <i class="fa fa-times-circle" aria-hidden="true"></i>
-                      </div>
+                    <div class="gal_img">
+                      <img [src]="getImage(selectedMessagePan.base64[i], file)" *ngIf="selectedMessagePan.base64[i]">
+                    </div>
+                    <div class="gal_action" (click)="deleteTempImagePan(i)">
+                      <i class="fa fa-times-circle" aria-hidden="true"></i>
+                    </div>
                   </div>
-              </li>
-          </ul>
-      </div>
-        </div> -->
-        <!-- <div class="fieldPadding">
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- <div class="fieldPadding">
           <div class="choose_file">
             <label for="choose_file" (click)="imagefile.click()">
               <input #imagefile
@@ -209,10 +205,10 @@
           </div> -->
         </div>
 
-        <!-- <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-        <div *ngIf="selectedMessage.files && selectedMessage.files.length > 0"></div> -->
+        <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+        <div *ngIf="selectedMessage.files && selectedMessage.files.length > 0"></div>
         <span class="group-head">Details</span><br>
         <div class="bggrey my-2">
           <div style="display: flex;gap: 5px">
@@ -259,8 +255,8 @@
                       Other
                     </div>
                   </mat-option>
-                
-                 
+
+
                 </mat-select>
               </div>
             </div>
@@ -287,8 +283,7 @@
             </div>
             <div class="fieldPadding">
               <input (keyup)="resetErrors()" type="text" #address (ngModelChange)="hamdleaddress(address.value)"
-                placeholder="" class="form-control" formControlName="address" autocomplete="off"
-               />
+                placeholder="" class="form-control" formControlName="address" autocomplete="off" />
               <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                 errorMsg="{{leadError}}">
               </app-field-error-display>
@@ -301,9 +296,8 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="city" #city
-                  (change)="handlecity(city.value)" (keyup)="autoGrowTextZone($event)"
-                  maxlength="1000" placeholder="">
+                <textarea rowa="10" class="form-control" formControlName="city" #city (change)="handlecity(city.value)"
+                  (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
               </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                   errorMsg="{{leadError}}">
@@ -317,8 +311,8 @@
               </div>
               <div class="fieldPadding">
                 <textarea rowa="10" class="form-control" formControlName="state" #state
-                  (change)="handlestate(state.value)" (keyup)="autoGrowTextZone($event)"
-                  maxlength="1000" placeholder="">
+                  (change)="handlestate(state.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                  placeholder="">
                 </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                   errorMsg="{{leadError}}">
@@ -333,9 +327,8 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="pin" #pin
-                  (change)="handlepin(pin.value)" (keyup)="autoGrowTextZone($event)"
-                  maxlength="1000" placeholder="">
+                <textarea rowa="10" class="form-control" formControlName="pin" #pin (change)="handlepin(pin.value)"
+                  (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
               </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                   errorMsg="{{leadError}}">
@@ -348,10 +341,9 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-              
-                <input (keyup)="resetErrors()" type="date" #dob (ngModelChange)="handledob(dob.value)"
-                placeholder="" class="form-control" formControlName="dob" autocomplete="off"
-               />
+
+                <input (keyup)="resetErrors()" type="date" #dob (ngModelChange)="handledob(dob.value)" placeholder=""
+                  class="form-control" formControlName="dob" autocomplete="off" />
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                   errorMsg="{{leadError}}">
                 </app-field-error-display>
@@ -366,8 +358,8 @@
               </div>
               <div class="fieldPadding">
                 <textarea rowa="10" class="form-control" formControlName="relationName" #relationName
-                  (change)="handlerelationName(relationName.value)" (keyup)="autoGrowTextZone($event)"
-                  maxlength="1000" placeholder="">
+                  (change)="handlerelationName(relationName.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                  placeholder="">
               </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                   errorMsg="{{leadError}}">
@@ -381,79 +373,79 @@
               </div>
               <div class="fieldPadding">
                 <mat-select class="form-control widthWebKit" placeholder="" #relationType
-                formControlName="relationType">
-                <mat-option [value]="'Father'">
-                  <div>
-                    Father
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Husband'">
-                  <div>
-                    Husband
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Mother'">
-                  <div>
-                    Mother
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Son'">
-                  <div>
-                    Son
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Daughter'">
-                  <div>
-                    Daughter
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Wife'">
-                  <div>
-                    Wife
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Brother'">
-                  <div>
-                    Brother
-                  </div>
-                </mat-option>
-                <mat-option [value]="'MotherInlaw'">
-                  <div>
-                    MotherInlaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'FatherInlaw'">
-                  <div>
-                    FatherInlaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'DaughterInlaw'">
-                  <div>
-                    DaughterInlaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'SisterInLaw'">
-                  <div>
-                    SisterInLaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'BrotherInlaw'">
-                  <div>
-                    BrotherInlaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'SonInlaw'">
-                  <div>
-                    SonInlaw
-                  </div>
-                </mat-option> 
-                <mat-option [value]="'Other'">
-                  <div>
-                    Other
-                  </div>
-                </mat-option>
-               
-              </mat-select>
+                  formControlName="relationType">
+                  <mat-option [value]="'Father'">
+                    <div>
+                      Father
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Husband'">
+                    <div>
+                      Husband
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Mother'">
+                    <div>
+                      Mother
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Son'">
+                    <div>
+                      Son
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Daughter'">
+                    <div>
+                      Daughter
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Wife'">
+                    <div>
+                      Wife
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Brother'">
+                    <div>
+                      Brother
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'MotherInlaw'">
+                    <div>
+                      MotherInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'FatherInlaw'">
+                    <div>
+                      FatherInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'DaughterInlaw'">
+                    <div>
+                      DaughterInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'SisterInLaw'">
+                    <div>
+                      SisterInLaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'BrotherInlaw'">
+                    <div>
+                      BrotherInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'SonInlaw'">
+                    <div>
+                      SonInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Other'">
+                    <div>
+                      Other
+                    </div>
+                  </mat-option>
+
+                </mat-select>
               </div>
             </div>
           </div>
@@ -468,8 +460,8 @@
               </div>
               <div class="fieldPadding">
                 <textarea rowa="10" class="form-control" formControlName="nomineeName" #nomineeName
-                  (change)="handlenomineeName(nomineeName.value)" (keyup)="autoGrowTextZone($event)"
-                  maxlength="1000" placeholder="Enter name">
+                  (change)="handlenomineeName(nomineeName.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                  placeholder="Enter name">
                     </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                   errorMsg="{{leadError}}">
@@ -482,80 +474,79 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <mat-select class="form-control widthWebKit" placeholder="" #nomineeType
-                formControlName="nomineeType">
-                <mat-option [value]="'Father'">
-                  <div>
-                    Father
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Husband'">
-                  <div>
-                    Husband
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Mother'">
-                  <div>
-                    Mother
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Son'">
-                  <div>
-                    Son
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Daughter'">
-                  <div>
-                    Daughter
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Wife'">
-                  <div>
-                    Wife
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Brother'">
-                  <div>
-                    Brother
-                  </div>
-                </mat-option>
-                <mat-option [value]="'MotherInlaw'">
-                  <div>
-                    MotherInlaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'FatherInlaw'">
-                  <div>
-                    FatherInlaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'DaughterInlaw'">
-                  <div>
-                    DaughterInlaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'SisterInLaw'">
-                  <div>
-                    SisterInLaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'BrotherInlaw'">
-                  <div>
-                    BrotherInlaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'SonInlaw'">
-                  <div>
-                    SonInlaw
-                  </div>
-                </mat-option> 
-                <mat-option [value]="'Other'">
-                  <div>
-                    Other
-                  </div>
-                </mat-option>
-               
-              </mat-select>
+                <mat-select class="form-control widthWebKit" placeholder="" #nomineeType formControlName="nomineeType">
+                  <mat-option [value]="'Father'">
+                    <div>
+                      Father
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Husband'">
+                    <div>
+                      Husband
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Mother'">
+                    <div>
+                      Mother
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Son'">
+                    <div>
+                      Son
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Daughter'">
+                    <div>
+                      Daughter
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Wife'">
+                    <div>
+                      Wife
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Brother'">
+                    <div>
+                      Brother
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'MotherInlaw'">
+                    <div>
+                      MotherInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'FatherInlaw'">
+                    <div>
+                      FatherInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'DaughterInlaw'">
+                    <div>
+                      DaughterInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'SisterInLaw'">
+                    <div>
+                      SisterInLaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'BrotherInlaw'">
+                    <div>
+                      BrotherInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'SonInlaw'">
+                    <div>
+                      SonInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Other'">
+                    <div>
+                      Other
+                    </div>
+                  </mat-option>
+
+                </mat-select>
               </div>
             </div>
           </div>
@@ -634,9 +625,9 @@
               <div class="astericColor">*</div>
             </div>
             <div class="fieldPadding">
-              <input (keyup)="resetErrors()" type="text" #permanentAddress (ngModelChange)="hamdlepermanentAddress(permanentAddress.value)"
-                placeholder="" class="form-control" formControlName="permanentAddress" autocomplete="off"
-                />
+              <input (keyup)="resetErrors()" type="text" #permanentAddress
+                (ngModelChange)="hamdlepermanentAddress(permanentAddress.value)" placeholder="" class="form-control"
+                formControlName="permanentAddress" autocomplete="off" />
               <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                 errorMsg="{{leadError}}">
               </app-field-error-display>
@@ -879,7 +870,7 @@
             </div>
           </div> -->
         </div>
-     
+
 
         <div class="bggrey my-2">
           <div style="display: flex;gap: 5px">
@@ -901,8 +892,7 @@
                               'btn btn-primary font-weight-bold cancelBtn': !createLeadForm.valid,
                               'btn btn-primary font-weight-bold confirmBtn': createLeadForm.valid
                           }" [class.spinner]="api_loading" [class.disabled]="api_loading"
-                [class.spinner-center]="api_loading" type="button"
-                (click)="saveCreateLead()">Add
+                [class.spinner-center]="api_loading" type="button" (click)="saveCreateLead()">Add
               </button>
             </div>
           </ng-container>
@@ -922,71 +912,70 @@
       <form [formGroup]="createLeadForm">
         <span class="group-head">KYC Details</span><br>
         <div class="bggrey my-2">
-        <div style="display: flex;gap: 5px">
-          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-            <div class="leadTitle">
-              <div>Applicant KYC</div>
-              <div class="astericColor">*</div>
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Applicant KYC</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <mat-select class="form-control widthWebKit" placeholder="" #idTypes formControlName="idTypes">
+                  <mat-option [value]="'Passport'">
+                    <div>
+                      Passport
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'VoterID'">
+                    <div>
+                      VoterID
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'UID'">
+                    <div>
+                      UID
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Others'">
+                    <div>
+                      Others
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'RationCard'">
+                    <div>
+                      RationCard
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'DrivingLicenseNo'">
+                    <div>
+                      DrivingLicenseNo
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Pan'">
+                    <div>
+                      Pan
+                    </div>
+                  </mat-option>
+                </mat-select>
+              </div>
             </div>
-            <div class="fieldPadding">
-              <mat-select class="form-control widthWebKit" placeholder="" #idTypes
-              formControlName="idTypes">
-              <mat-option [value]="'Passport'">
-                <div>
-                  Passport
-                </div>
-              </mat-option>
-              <mat-option [value]="'VoterID'">
-                <div>
-                  VoterID
-                </div>
-              </mat-option>
-              <mat-option [value]="'UID'">
-                <div>
-                  UID
-                </div>
-              </mat-option>
-              <mat-option [value]="'Others'">
-                <div>
-                  Others
-                </div>
-              </mat-option>
-              <mat-option [value]="'RationCard'">
-                <div>
-                  RationCard
-                </div>
-              </mat-option>
-              <mat-option [value]="'DrivingLicenseNo'">
-                <div>
-                  DrivingLicenseNo
-                </div>
-              </mat-option>
-              <mat-option [value]="'Pan'">
-                <div>
-                  Pan
-                </div>
-              </mat-option>
-            </mat-select>
-            </div>
-          </div>
-          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-            <div class="leadTitle">
-              <div>Number</div>
-              <div class="astericColor">*</div>
-            </div>
-            <div class="fieldPadding">
-              <textarea rowa="10" class="form-control" formControlName="idValue" #idValue
-                (change)="handleidValue(idValue.value)" (keyup)="autoGrowTextZone($event)"
-                maxlength="1000" placeholder="Enter number">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Number</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="idValue" #idValue
+                  (change)="handleidValue(idValue.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                  placeholder="Enter number">
                       </textarea>
-              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
-                errorMsg="{{leadError}}">
-              </app-field-error-display>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
             </div>
-          </div>
 
-        </div>
-        <!-- <div class="fieldPadding">
+          </div>
+          <!-- <div class="fieldPadding">
           <div class="">
             <input #logofile type="file" accept="/*;capture=camera"
                  style="display:none;" multiple
@@ -995,7 +984,7 @@
                     class="material-icons"> attach_file</i></a>
         </div>
         </div> -->
-        <!-- <div>
+          <!-- <div>
           <div class="img-section mgn-up-20"
           *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
           <ul class="galul">
@@ -1013,48 +1002,65 @@
           </ul>
       </div>
         </div> -->
-       
+
         </div>
+        <!-- <span class="group-head">KYC Details</span><br>
+        <div class="bggrey my-2">
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+
+              <div *ngFor="let file of updateValue.panAttachments ;let i= index">hjjguuuk,kkukjik
+                <a (click)="preview(file)">
+                  <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
+                  {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
+                </a>
+
+              </div>
+            </div>
+
+          </div>
+
+
+        </div> -->
         <!-- <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <div *ngIf="selectedMessage.files && selectedMessage.files.length > 0"></div> -->
         <span class="group-head">Pancard Details</span><br>
         <div class="bggrey my-2">
-        <div style="display: flex;gap: 5px">
-          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-            <div class="leadTitle">
-              <div>Applicant KYC</div>
-              <div class="astericColor">*</div>
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Applicant KYC</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <mat-select class="form-control widthWebKit" placeholder="Pancard">
+                  <mat-option [value]="'Pancard'">
+                    <div>
+                      Pancard
+                    </div>
+                  </mat-option>
+                </mat-select>
+              </div>
             </div>
-            <div class="fieldPadding">
-              <mat-select class="form-control widthWebKit" placeholder="Pancard" 
-                >
-                <mat-option [value]="'Pancard'">
-                  <div>
-                   Pancard
-                  </div>
-                </mat-option>
-              </mat-select>
-            </div>
-          </div>
-          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-            <div class="leadTitle">
-              <div>Pancard number</div>
-              <div class="astericColor">*</div>
-            </div>
-            <div class="fieldPadding">
-              <textarea rowa="10" class="form-control" formControlName="panNumber" #panNumber
-                (change)="handlpanNumber(panNumber.value)" (keyup)="autoGrowTextZone($event)"
-                maxlength="1000" placeholder="Enter Pancard number">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Pancard number</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="panNumber" #panNumber
+                  (change)="handlpanNumber(panNumber.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                  placeholder="Enter Pancard number">
                       </textarea>
-              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
-                errorMsg="{{leadError}}">
-              </app-field-error-display>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
             </div>
           </div>
-        </div>
-        <!-- <div class="fieldPadding">
+          <!-- <div class="fieldPadding">
           <div class="">
             <input #logofile type="file" accept="/*;capture=camera"
                  style="display:none;" multiple
@@ -1063,7 +1069,7 @@
                     class="material-icons"> attach_file</i></a>
         </div>
         </div> -->
-        <!-- <div>
+          <!-- <div>
           <div class="img-section mgn-up-20"
           *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
           <ul class="galul">
@@ -1081,7 +1087,7 @@
           </ul>
       </div>
         </div> -->
-        <!-- <div class="fieldPadding">
+          <!-- <div class="fieldPadding">
           <div class="choose_file">
             <label for="choose_file" (click)="imagefile.click()">
               <input #imagefile
@@ -1146,7 +1152,7 @@
                       Other
                     </div>
                   </mat-option>
-                 
+
                 </mat-select>
               </div>
             </div>
@@ -1173,8 +1179,7 @@
             </div>
             <div class="fieldPadding">
               <input (keyup)="resetErrors()" type="text" #address (ngModelChange)="hamdleaddress(address.value)"
-                placeholder="" class="form-control" formControlName="address" autocomplete="off"
-               />
+                placeholder="" class="form-control" formControlName="address" autocomplete="off" />
               <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                 errorMsg="{{leadError}}">
               </app-field-error-display>
@@ -1187,9 +1192,8 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="city" #city
-                  (change)="handlecity(city.value)" (keyup)="autoGrowTextZone($event)"
-                  maxlength="1000" placeholder="">
+                <textarea rowa="10" class="form-control" formControlName="city" #city (change)="handlecity(city.value)"
+                  (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
               </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                   errorMsg="{{leadError}}">
@@ -1203,8 +1207,8 @@
               </div>
               <div class="fieldPadding">
                 <textarea rowa="10" class="form-control" formControlName="state" #state
-                  (change)="handlestate(state.value)" (keyup)="autoGrowTextZone($event)"
-                  maxlength="1000" placeholder="">
+                  (change)="handlestate(state.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                  placeholder="">
                 </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                   errorMsg="{{leadError}}">
@@ -1219,9 +1223,8 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="pin" #pin
-                  (change)="handlepin(pin.value)" (keyup)="autoGrowTextZone($event)"
-                  maxlength="1000" placeholder="">
+                <textarea rowa="10" class="form-control" formControlName="pin" #pin (change)="handlepin(pin.value)"
+                  (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
               </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                   errorMsg="{{leadError}}">
@@ -1234,10 +1237,9 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-              
-                <input (keyup)="resetErrors()" type="date" #dob (ngModelChange)="handledob(dob.value)"
-                placeholder="" class="form-control" formControlName="dob" autocomplete="off"
-               />
+
+                <input (keyup)="resetErrors()" type="date" #dob (ngModelChange)="handledob(dob.value)" placeholder=""
+                  class="form-control" formControlName="dob" autocomplete="off" />
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                   errorMsg="{{leadError}}">
                 </app-field-error-display>
@@ -1252,8 +1254,8 @@
               </div>
               <div class="fieldPadding">
                 <textarea rowa="10" class="form-control" formControlName="relationName" #relationName
-                  (change)="handlerelationName(relationName.value)" (keyup)="autoGrowTextZone($event)"
-                  maxlength="1000" placeholder="">
+                  (change)="handlerelationName(relationName.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                  placeholder="">
               </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                   errorMsg="{{leadError}}">
@@ -1267,79 +1269,79 @@
               </div>
               <div class="fieldPadding">
                 <mat-select class="form-control widthWebKit" placeholder="" #relationType
-                formControlName="relationType">
-                <mat-option [value]="'Father'">
-                  <div>
-                    Father
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Husband'">
-                  <div>
-                    Husband
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Mother'">
-                  <div>
-                    Mother
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Son'">
-                  <div>
-                    Son
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Daughter'">
-                  <div>
-                    Daughter
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Wife'">
-                  <div>
-                    Wife
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Brother'">
-                  <div>
-                    Brother
-                  </div>
-                </mat-option>
-                <mat-option [value]="'MotherInlaw'">
-                  <div>
-                    MotherInlaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'FatherInlaw'">
-                  <div>
-                    FatherInlaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'DaughterInlaw'">
-                  <div>
-                    DaughterInlaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'SisterInLaw'">
-                  <div>
-                    SisterInLaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'BrotherInlaw'">
-                  <div>
-                    BrotherInlaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'SonInlaw'">
-                  <div>
-                    SonInlaw
-                  </div>
-                </mat-option> 
-                <mat-option [value]="'Other'">
-                  <div>
-                    Other
-                  </div>
-                </mat-option>
-               
-              </mat-select>
+                  formControlName="relationType">
+                  <mat-option [value]="'Father'">
+                    <div>
+                      Father
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Husband'">
+                    <div>
+                      Husband
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Mother'">
+                    <div>
+                      Mother
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Son'">
+                    <div>
+                      Son
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Daughter'">
+                    <div>
+                      Daughter
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Wife'">
+                    <div>
+                      Wife
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Brother'">
+                    <div>
+                      Brother
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'MotherInlaw'">
+                    <div>
+                      MotherInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'FatherInlaw'">
+                    <div>
+                      FatherInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'DaughterInlaw'">
+                    <div>
+                      DaughterInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'SisterInLaw'">
+                    <div>
+                      SisterInLaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'BrotherInlaw'">
+                    <div>
+                      BrotherInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'SonInlaw'">
+                    <div>
+                      SonInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Other'">
+                    <div>
+                      Other
+                    </div>
+                  </mat-option>
+
+                </mat-select>
               </div>
             </div>
           </div>
@@ -1354,8 +1356,8 @@
               </div>
               <div class="fieldPadding">
                 <textarea rowa="10" class="form-control" formControlName="nomineeName" #nomineeName
-                  (change)="handlenomineeName(nomineeName.value)" (keyup)="autoGrowTextZone($event)"
-                  maxlength="1000" placeholder="Enter name">
+                  (change)="handlenomineeName(nomineeName.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                  placeholder="Enter name">
                     </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                   errorMsg="{{leadError}}">
@@ -1368,99 +1370,98 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <mat-select class="form-control widthWebKit" placeholder="" #nomineeType
-                formControlName="nomineeType">
-                <mat-option [value]="'Father'">
-                  <div>
-                    Father
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Husband'">
-                  <div>
-                    Husband
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Mother'">
-                  <div>
-                    Mother
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Son'">
-                  <div>
-                    Son
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Daughter'">
-                  <div>
-                    Daughter
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Wife'">
-                  <div>
-                    Wife
-                  </div>
-                </mat-option>
-                <mat-option [value]="'Brother'">
-                  <div>
-                    Brother
-                  </div>
-                </mat-option>
-                <mat-option [value]="'MotherInlaw'">
-                  <div>
-                    MotherInlaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'FatherInlaw'">
-                  <div>
-                    FatherInlaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'DaughterInlaw'">
-                  <div>
-                    DaughterInlaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'SisterInLaw'">
-                  <div>
-                    SisterInLaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'BrotherInlaw'">
-                  <div>
-                    BrotherInlaw
-                  </div>
-                </mat-option>
-                <mat-option [value]="'SonInlaw'">
-                  <div>
-                    SonInlaw
-                  </div>
-                </mat-option> 
-                <mat-option [value]="'Other'">
-                  <div>
-                    Other
-                  </div>
-                </mat-option>
-               
-              </mat-select>
+                <mat-select class="form-control widthWebKit" placeholder="" #nomineeType formControlName="nomineeType">
+                  <mat-option [value]="'Father'">
+                    <div>
+                      Father
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Husband'">
+                    <div>
+                      Husband
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Mother'">
+                    <div>
+                      Mother
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Son'">
+                    <div>
+                      Son
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Daughter'">
+                    <div>
+                      Daughter
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Wife'">
+                    <div>
+                      Wife
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Brother'">
+                    <div>
+                      Brother
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'MotherInlaw'">
+                    <div>
+                      MotherInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'FatherInlaw'">
+                    <div>
+                      FatherInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'DaughterInlaw'">
+                    <div>
+                      DaughterInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'SisterInLaw'">
+                    <div>
+                      SisterInLaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'BrotherInlaw'">
+                    <div>
+                      BrotherInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'SonInlaw'">
+                    <div>
+                      SonInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Other'">
+                    <div>
+                      Other
+                    </div>
+                  </mat-option>
+
+                </mat-select>
               </div>
             </div>
           </div>
-         
+
           <div>
             <div class="leadTitle">
               <div>Co-Applicant 1 Address</div>
               <div class="astericColor">*</div>
             </div>
             <div class="fieldPadding">
-              <input (keyup)="resetErrors()" type="text" #permanentAddress (ngModelChange)="hamdlepermanentAddress(permanentAddress.value)"
-                placeholder="" class="form-control" formControlName="permanentAddress" autocomplete="off"
-                />
+              <input (keyup)="resetErrors()" type="text" #permanentAddress
+                (ngModelChange)="hamdlepermanentAddress(permanentAddress.value)" placeholder="" class="form-control"
+                formControlName="permanentAddress" autocomplete="off" />
               <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                 errorMsg="{{leadError}}">
               </app-field-error-display>
             </div>
           </div>
-        
+
           <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
               <div class="leadTitle">
@@ -1510,28 +1511,30 @@
               </div>
             </div>
           </div>
-         
-        
+
+
         </div>
-        <!-- <span class="group-head">CRIF Score of Applicant</span><br>
+        <span class="group-head">CRIF Score of Applicant</span><br>
         <div class="bggrey my-2">
-        <div style="display: flex;gap: 5px">
-          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-            <div class="leadTitle">
-            </div>
-            <div class="fieldPadding">
-              <a class="navbar-item-color bold pointer-cursor disp-none-small"
-              (click)="saveCrif()">
-              <button mat-flat-button
-                  class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+              </div>
+              <div class="fieldPadding">
+                <a class="navbar-item-color bold pointer-cursor disp-none-small" *ngIf="crifScore"> CRIF SCORE :
+                  {{crifScore}} </a>
+                <button mat-flat-button style="margin-left: 25px !important;"
+                  class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn"
+                  (click)="saveCrifApplicant()">
                   Check CRIF Verification </button>
-          </a>
+
+
+              </div>
 
             </div>
+
           </div>
-         
         </div>
-        </div> -->
 
 
 
@@ -1539,20 +1542,19 @@
 
 
       </form>
+
       <div style="text-align: center;margin-top: 15px;">
         <ng-container>
           <div class=" mgn-bt-20 mgn-up-10">
             <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()">Cancel
             </button>
-            <button class="btn btn-primary font-weight-bold confirmBtn" 
-             type="button"
-              (click)="saveCrif()">Add
+            <button class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="saveCrif()">Ok
             </button>
           </div>
         </ng-container>
       </div>
     </div>
-   
+
   </div>
 
 
@@ -1560,45 +1562,39 @@
 
 <section *ngIf="showqnr">
   <div class="row d-lg-flex justify-content-lg-start" *ngIf="showQuestionnaire && showqnr">
-        
-  
+
+
     <app-questionnaire [questionnaireList]="leadquestionnaireList" [source]="'proLead'"
-                  [questionAnswers]="questionAnswers"
-                  (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
-  
-   
+      [questionAnswers]="questionAnswers" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+
+
   </div>
   <div style="text-align: center;margin-top: 15px;">
     <ng-container>
       <div class=" mgn-bt-20 mgn-up-10">
         <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()">Cancel
         </button>
-        <button class="btn btn-primary font-weight-bold confirmBtn" 
-         type="button"
-          (click)="submitQnr()">Submit
+        <button class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="submitQnr()">Submit
         </button>
       </div>
     </ng-container>
   </div>
 </section>
-<section *ngIf="showafterqnr">
+<section *ngIf="showafterqnr" style="width: 100%;">
   <div class="row d-lg-flex justify-content-lg-start" *ngIf="showQuestionnaire && showafterqnr">
-        
-  
+
+
     <app-questionnaire [questionnaireList]="unreleased_question_arr" [source]="'proLeadafter'"
-                  [questionAnswers]="questionAnswers"
-                  (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
-  
-   
+      [questionAnswers]="questionAnswers" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+
+
   </div>
   <div style="text-align: center;margin-top: 15px;">
     <ng-container>
       <div class=" mgn-bt-20 mgn-up-10">
         <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()">Cancel
         </button>
-        <button class="btn btn-primary font-weight-bold confirmBtn" 
-         type="button"
-          (click)="submitafterQnr()">Submit
+        <button class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="submitafterQnr()">Submit
         </button>
       </div>
     </ng-container>
