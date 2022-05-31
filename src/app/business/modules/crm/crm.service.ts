@@ -395,7 +395,7 @@ export class CrmService {
     return this.servicemeta.httpGet(url, null);
   }
   getLeadTemplate(){
-    const url ='provider/lead/master';
+    const url ='provider/lead/master?available-eq=true';
     return this.servicemeta.httpGet(url, null);
   }
   getFollowUPOne(filter = {}){
@@ -532,6 +532,10 @@ export class CrmService {
   getVerifiedTaskCount(filter){
     const url = 'provider/task/provider/count?status-eq=16';
     return this.servicemeta.httpGet(url, null, filter);
+  }
+  getProduct(){
+    const url = 'provider/task/provider?status-eq=4=16';
+    return this.servicemeta.httpGet(url, null);
   }
 
 }

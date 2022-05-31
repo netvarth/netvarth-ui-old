@@ -45,7 +45,7 @@ export class CRMComponent implements OnInit {
     },
     {
       id: 3,
-      activityName: 'All Leads'
+      activityName: 'All Loans'
     },
     
     // {
@@ -150,7 +150,7 @@ export class CRMComponent implements OnInit {
   }
   redirectionSeperateTemplate(templateName:any){
     console.log('templateName',templateName)
-    if(templateName==='All Leads'){
+    if(templateName==='All Loans'){
       const navigationExtras: NavigationExtras =  {
         queryParams: {
           type: 'LEAD'

@@ -297,7 +297,7 @@ export class CrmSelectMemberComponent implements OnInit {
       console.log("uploadFilesDesciption");
       this.allFilesDes.push(this.data.filesDes);
     } else if (this.data.requestType === "taskMasterList") {
-      this.taskMasterListData = this.data.taskMasterFullList[0];
+      this.taskMasterListData = this.data.data;
       console.log("TaskMasterList.............", this.taskMasterListData);
       // this.selectTemplateLength= this.taskMasterListData.templateName.length;
       // console.log('selectTemplateLength',this.selectTemplateLength)

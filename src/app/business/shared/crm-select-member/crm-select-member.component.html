@@ -720,7 +720,7 @@
         </div>
     </div>
     <!----task master list start-->
-    <div class="templateList">
+    <div class="templateList" style="justify-content: space-between;">
         <!-- [ngStyle]="{'background-color':status.id === data.taskDetails.status.id ? '#CACACA' : '#FFFFFF' }" -->
         <div *ngFor="let taskMaster of taskMasterListData;let index=i" class="singleTempalte"
               (click)="saveTaskMaster(taskMaster)">
@@ -734,7 +734,7 @@
                 </div>
             </div>
         </div>
-        <div class="singleTempalte"(click)="createTask('CreatE')">
+        <!-- <div class="singleTempalte"(click)="createTask('CreatE')">
             <div style="display:flex;justify-content: space-between;align-items: center;">
                 <div >
                     <div class="templateName">Others</div>
@@ -743,7 +743,7 @@
                     <img height="30px" width="30px" src="/assets/images/crmImages/otherTemplate.png" />
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
     <!-- <mat-dialog-content style="padding: 0px !important;">
         <div>

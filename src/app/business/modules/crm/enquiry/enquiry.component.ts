@@ -132,6 +132,7 @@ import { Subject } from 'rxjs';
       this.enquiryCategoryList()
       this.getTemplateEnuiry()
       this.getEnquiryNone()
+      this.getTaskmaster()
     }
       goback() {
         this.locationobj.back();
@@ -349,20 +350,26 @@ import { Subject } from 'rxjs';
         })
       }
       getEnquiryNone(){
-        this.crmService.getTotalEnquiryNone().subscribe((response)=>{
+        // this.crmService.getTotalEnquiryNone().subscribe((response)=>{
+        //   this.activityList.push(response);
+        //   console.log('response',response);
+        // })
+      }
+      getTaskmaster(){
+        this.crmService.getTaskMasterList().subscribe((response)=>{
+          console.log('TaskMasterList :',response);
           this.activityList.push(response);
-          console.log('response',response);
         })
       }
       selectActivityListDialog(activityListData:any){
         console.log('activityList',activityListData)
         const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
-          width: '100%',
+          width: '745px',
       panelClass: ['popup-class', 'confirmationmainclass'],
       data:{
-        requestType:'createTaskActivityList',
+        requestType:'taskMasterList',
         // this.totalFollowUpList = this.activityList.filter(obj => !obj.originId);
-        data:this.activityList,
+        data:this.activityList[0],
         noneData:'None'
        
       }
@@ -370,10 +377,10 @@ import { Subject } from 'rxjs';
         dialogRef.afterClosed().subscribe((response:any)=>{
           console.log('response',response);
           if(response !== undefined && response !=='None' && response !== 'Close'){
-            this.activityTitleDialogValue= response.title;
+            this.activityTitleDialogValue= response.title.value;
             this.activityIdDialogValue= response.id,
             this.activityOriginUidDialogValue= response.taskUid;
-            this.activityListTitleDialogValue=response.title;
+            this.activityListTitleDialogValue=response.title.value;
             this.activityListDescriptionDialogValue=response.description;
             this.activityListCategoryDialogValue= response.category.id;
             this.activityListTypeDialogValue= response.type.id;
@@ -426,7 +433,8 @@ import { Subject } from 'rxjs';
           "enquireMasterId":this.enquiryTemplateId,
           "leadMasterId": this.createEnquiryForm.controls.userTaskCategory.value,
           "isLeadAutogenerate":true,
-          "originUid":this.activityOriginUidDialogValue
+          "originUid":this.activityOriginUidDialogValue,
+          "taskMasterId":this.activityIdDialogValue,
         }
         console.log('createEnquiry',createEnquiry);
         this.crmService.createEnquiry(createEnquiry).subscribe((response)=>{

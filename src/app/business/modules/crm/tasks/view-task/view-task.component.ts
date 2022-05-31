@@ -372,7 +372,7 @@ export class ViewTaskComponent implements OnInit {
       if(this.taskDetails.customer){
         this.firstCustomerName=this.taskDetails.customer.name.charAt(0);
         this.customerName= this.taskDetails.customer.name;
-        this.customerPhNo= '+917003921734' 
+        this.customerPhNo= this.taskDetails.customer.phoneNo
       } 
       });
     });
