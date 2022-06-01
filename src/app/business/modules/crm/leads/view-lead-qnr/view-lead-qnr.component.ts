@@ -326,6 +326,7 @@ export class ViewLeadQnrComponent implements OnInit{
       telephoneType:[null],
       telephoneNumber:[null],
       address:[null],
+      addressType:[null],
       city:[null],
       state:[null],
       pin : [null],
@@ -855,7 +856,7 @@ export class ViewLeadQnrComponent implements OnInit{
       "nomineeName": this.createLeadForm.controls.nomineeName.value,
       "address": [
         {
-          "addressType": "Residence",
+          "addressType": this.createLeadForm.controls.addressType.value,
           "address": this.createLeadForm.controls.address.value,
           "city": this.createLeadForm.controls.city.value,
           "state": this.createLeadForm.controls.state.value,

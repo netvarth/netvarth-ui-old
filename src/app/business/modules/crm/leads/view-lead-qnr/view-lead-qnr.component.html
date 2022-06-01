@@ -401,8 +401,8 @@
               <div class="astericColor">*</div>
             </div>
             <div class="fieldPadding">
-              <input (keyup)="resetErrors()" type="text" #address (ngModelChange)="hamdleaddress(address.value)"
-                placeholder="" class="form-control" formControlName="address" autocomplete="off" />
+              <input (keyup)="resetErrors()" type="text" #permanentAddress (ngModelChange)="hamdlepermanentAddress(permanentAddress.value)"
+                placeholder="" class="form-control" formControlName="permanentAddress" autocomplete="off" />
               <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                 errorMsg="{{leadError}}">
               </app-field-error-display>
@@ -415,7 +415,7 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="city" #city (change)="handlecity(city.value)"
+                <textarea rowa="10" class="form-control" formControlName="permanentCity" #permanentCity (change)="handlepermanentCity(permanentCity.value)"
                   (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
               </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
@@ -429,8 +429,8 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="state" #state
-                  (change)="handlestate(state.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                <textarea rowa="10" class="form-control" formControlName="permanentState" #permanentState
+                  (change)="handlepermanentState(permanentState.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
                   placeholder="">
                 </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
@@ -446,7 +446,7 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="pin" #pin (change)="handlepin(pin.value)"
+                <textarea rowa="10" class="form-control" formControlName="permanentPinCode" #permanentPinCode (change)="handlepermanentPinCode(permanentPinCode.value)"
                   (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
               </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
@@ -738,18 +738,40 @@
               </div>
             </div>
           </div> -->
-          <div>
-            <div class="leadTitle">
-              <div>Nominee Address</div>
-              <!-- <div class="astericColor">*</div> -->
+         
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Address Type</div>
+                <!-- <div class="astericColor">*</div> -->
+              </div>
+              <div class="fieldPadding">
+                <mat-select class="form-control widthWebKit" placeholder="" #addressType
+                  formControlName="addressType">
+                  <mat-option [value]="'Residence'">
+                    <div>
+                      Residence
+                    </div>
+                  </mat-option>
+                 
+
+
+                </mat-select>
+              </div>
             </div>
-            <div class="fieldPadding">
-              <input (keyup)="resetErrors()" type="text" #permanentAddress
-                (ngModelChange)="hamdlepermanentAddress(permanentAddress.value)" placeholder="" class="form-control"
-                formControlName="permanentAddress" autocomplete="off" />
-              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
-                errorMsg="{{leadError}}">
-              </app-field-error-display>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Nominee Address</div>
+                <!-- <div class="astericColor">*</div> -->
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="text" #address
+                  (ngModelChange)="hamdleaddress(address.value)" placeholder="" class="form-control"
+                  formControlName="address" autocomplete="off" />
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
             </div>
           </div>
           <!-- <div>
@@ -832,8 +854,8 @@
                 <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="permanentCity" #permanentCity
-                  (change)="handlepermanentCity(permanentCity.value)" (keyup)="autoGrowTextZone($event)"
+                <textarea rowa="10" class="form-control" formControlName="city" #city
+                  (change)="handlecity(city.value)" (keyup)="autoGrowTextZone($event)"
                   maxlength="1000" placeholder="">
               </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
@@ -847,8 +869,8 @@
                 <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="permanentState" #permanentState
-                  (change)="handlepermanentState(permanentState.value)" (keyup)="autoGrowTextZone($event)"
+                <textarea rowa="10" class="form-control" formControlName="state" #state
+                  (change)="handlestate(state.value)" (keyup)="autoGrowTextZone($event)"
                   maxlength="1000" placeholder="">
                 </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
@@ -864,8 +886,8 @@
                 <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="permanentPinCode" #permanentPinCode
-                  (change)="handlepermanentPinCode(permanentPinCode.value)" (keyup)="autoGrowTextZone($event)"
+                <textarea rowa="10" class="form-control" formControlName="pin" #pin
+                  (change)="handlepin(pin.value)" (keyup)="autoGrowTextZone($event)"
                   maxlength="1000" placeholder="">
               </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
@@ -1253,7 +1275,7 @@
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
               <div class="leadTitle">
                 <div>Pancard number</div>
-                <div class="astericColor">*</div>
+                <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
                 <textarea rowa="10" class="form-control" formControlName="panNumber" #panNumber
@@ -1384,8 +1406,8 @@
               <div class="astericColor">*</div>
             </div>
             <div class="fieldPadding">
-              <input (keyup)="resetErrors()" type="text" #address (ngModelChange)="hamdleaddress(address.value)"
-                placeholder="" class="form-control" formControlName="address" autocomplete="off" />
+              <input (keyup)="resetErrors()" type="text" #permanentAddress (ngModelChange)="hamdlepermanentAddress(permanentAddress.value)"
+                placeholder="" class="form-control" formControlName="permanentAddress" autocomplete="off" />
               <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                 errorMsg="{{leadError}}">
               </app-field-error-display>
@@ -1398,7 +1420,7 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="city" #city (change)="handlecity(city.value)"
+                <textarea rowa="10" class="form-control" formControlName="permanentCity" #permanentCity (change)="handlepermanentCity(permanentCity.value)"
                   (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
               </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
@@ -1412,8 +1434,8 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="state" #state
-                  (change)="handlestate(state.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                <textarea rowa="10" class="form-control" formControlName="permanentState" #permanentState
+                  (change)="handlepermanentState(permanentState.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
                   placeholder="">
                 </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
@@ -1429,7 +1451,7 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="pin" #pin (change)="handlepin(pin.value)"
+                <textarea rowa="10" class="form-control" formControlName="permanentPinCode" #permanentPinCode (change)="handlepermanentPinCode(permanentPinCode.value)"
                   (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
               </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
@@ -1653,21 +1675,55 @@
             </div>
           </div>
 
-          <div>
+          <!-- <div>
             <div class="leadTitle">
               <div>Nominee Address</div>
-              <!-- <div class="astericColor">*</div> -->
+             
             </div>
             <div class="fieldPadding">
-              <input (keyup)="resetErrors()" type="text" #permanentAddress
-                (ngModelChange)="hamdlepermanentAddress(permanentAddress.value)" placeholder="" class="form-control"
-                formControlName="permanentAddress" autocomplete="off" />
+              <input (keyup)="resetErrors()" type="text" #address
+                (ngModelChange)="hamdleaddress(address.value)" placeholder="" class="form-control"
+                formControlName="address" autocomplete="off" />
               <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                 errorMsg="{{leadError}}">
               </app-field-error-display>
             </div>
-          </div>
+          </div> -->
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Address Type</div>
+                <!-- <div class="astericColor">*</div> -->
+              </div>
+              <div class="fieldPadding">
+                <mat-select class="form-control widthWebKit" placeholder="" #addressType
+                  formControlName="addressType">
+                  <mat-option [value]="'Residence'">
+                    <div>
+                      Residence
+                    </div>
+                  </mat-option>
+                 
 
+
+                </mat-select>
+              </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Nominee Address</div>
+                <!-- <div class="astericColor">*</div> -->
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="text" #address
+                  (ngModelChange)="hamdleaddress(address.value)" placeholder="" class="form-control"
+                  formControlName="address" autocomplete="off" />
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
+            </div>
+          </div>
           <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
               <div class="leadTitle">
@@ -1675,8 +1731,8 @@
                 <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="permanentCity" #permanentCity
-                  (change)="handlepermanentCity(permanentCity.value)" (keyup)="autoGrowTextZone($event)"
+                <textarea rowa="10" class="form-control" formControlName="city" #city
+                  (change)="handlecity(city.value)" (keyup)="autoGrowTextZone($event)"
                   maxlength="1000" placeholder="">
               </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
@@ -1690,8 +1746,8 @@
                 <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="permanentState" #permanentState
-                  (change)="handlepermanentState(permanentState.value)" (keyup)="autoGrowTextZone($event)"
+                <textarea rowa="10" class="form-control" formControlName="state" #state
+                  (change)="handlestate(state.value)" (keyup)="autoGrowTextZone($event)"
                   maxlength="1000" placeholder="">
                 </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
@@ -1707,8 +1763,8 @@
                 <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="permanentPinCode" #permanentPinCode
-                  (change)="handlepermanentPinCode(permanentPinCode.value)" (keyup)="autoGrowTextZone($event)"
+                <textarea rowa="10" class="form-control" formControlName="pin" #pin
+                  (change)="handlepin(pin.value)" (keyup)="autoGrowTextZone($event)"
                   maxlength="1000" placeholder="">
               </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
