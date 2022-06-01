@@ -184,6 +184,8 @@ export class ViewLeadQnrComponent implements OnInit{
   firstCustomerName:any;
   customerName:any;
   customerPhNo:any;
+  filestoUpload: any = [];
+  kycresponse: ArrayBuffer;
   constructor(private locationobj: Location,
   
     // private lStorageService: LocalStorageService,
@@ -317,7 +319,9 @@ export class ViewLeadQnrComponent implements OnInit{
     this.api_loading=false;
     this.createLeadForm=this.createLeadFB.group({
       idTypes:[null],
+      idTypes1:[null],
       idValue:[null],
+      idValue1:[null],
       panNumber:[null],
       telephoneType:[null],
       telephoneNumber:[null],
@@ -359,10 +363,12 @@ export class ViewLeadQnrComponent implements OnInit{
     this.crmService.getkyc(this.leadkid).subscribe(data => {
       this.kycDetails = data;
       this.updateValue = this.kycDetails[0];
-     
+     console.log(this.updateValue)
        this.createLeadForm.patchValue({
         idTypes : this.updateValue.validationIds[0].idTypes,
+        idTypes1 : this.updateValue.validationIds[1].idTypes,
         idValue:this.updateValue.validationIds[0].idValue,
+        idValue1:this.updateValue.validationIds[1].idValue,
         telephoneType:this.updateValue.telephone[0].telephoneType,
         telephoneNumber:this.updateValue.telephone[0].telephoneNumber,
         relationType:this.updateValue.relationType,
@@ -378,13 +384,11 @@ export class ViewLeadQnrComponent implements OnInit{
         address:this.updateValue.address[0].address,
         state:this.updateValue.address[0].state,
         pin:this.updateValue.address[0].pin,
-        panNumber:this.updateValue.panNumber
+        panNumber:this.updateValue.panNumber,
+        dob:this.updateValue.dob
        
     })
   })
-  if(this.updateValue.panAttachments[0]){
-
-  }
   }
   getLeadToken(){
     this.crmService.getLeadTokens(this.leadDetails.uid).subscribe(data => {
@@ -475,6 +479,11 @@ export class ViewLeadQnrComponent implements OnInit{
 
   }
   handleidValue(textareaValue) {
+    // console.log(textareaValue)
+    this.leadError=null
+    this.boolenLeadError=false
+  }
+  handleidValue1(textareaValue) {
     // console.log(textareaValue)
     this.leadError=null
     this.boolenLeadError=false
@@ -817,7 +826,7 @@ export class ViewLeadQnrComponent implements OnInit{
       "originUid": this.leadkid,
       "customer": this.custId,
       "customerName": this.custname,
-      "dob": "2022-05-27",
+      "dob": this.createLeadForm.controls.dob.value,
       "telephone": [
         {
           "telephoneType": this.createLeadForm.controls.telephoneType.value,
@@ -830,6 +839,11 @@ export class ViewLeadQnrComponent implements OnInit{
         {
           "idTypes": this.createLeadForm.controls.idTypes.value,
           "idValue": this.createLeadForm.controls.idValue.value,
+          "attachments": this.fileData
+        },
+        {
+          "idTypes": this.createLeadForm.controls.idTypes1.value,
+          "idValue": this.createLeadForm.controls.idValue1.value,
           "attachments": this.fileData
         }
       ],
@@ -860,7 +874,8 @@ export class ViewLeadQnrComponent implements OnInit{
       // this.api_loading = true;
      
       this.crmService.addkyc(createLeadData).subscribe((response)=>{
-      
+        this.kycresponse = response;
+        // this.uploadAudioVideo(this.kycresponse, 'kyc');
         setTimeout(() => {
           this.api_loading = true;
           this.createLeadForm.reset();
@@ -880,7 +895,7 @@ export class ViewLeadQnrComponent implements OnInit{
         }, projectConstants.TIMEOUT_DELAY);
       })
     
-    
+      // this.uploadAudioVideo(this.kycresponse, 'kyc');
   }
    onSubmitCraeteLeadForm(){
   }
@@ -1326,7 +1341,8 @@ preview(file) {
     ],
     disableClose: true,
     data: {
-      file: file
+      file: file,
+      type : 'kyc'
     }
   });
   this.fileviewdialogRef.afterClosed().subscribe(result => {
@@ -1334,5 +1350,20 @@ preview(file) {
     }
   });
 }
+// uploadAudioVideo(data, type) {
+//   console.log(data)
+  
+//       const file = this.filestoUpload[data[0].url];
+//       this.providerService.videoaudioS3Upload(file, data[0].url)
+//         .subscribe(() => {
+         
+          
+//         },
+//           error => {
+//             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            
+//           });
+    
+// }
 }
 

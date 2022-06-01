@@ -152,6 +152,105 @@
         <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <div *ngIf="selectedMessage.files && selectedMessage.files.length > 0"></div>
+        <!-- <span class="group-head">KYC Details</span><br> -->
+        <div class="bggrey my-2">
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Applicant KYC</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <mat-select class="form-control widthWebKit" placeholder="" #idTypes1 formControlName="idTypes1">
+                  <mat-option [value]="'Passport'">
+                    <div>
+                      Passport
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'VoterID'">
+                    <div>
+                      VoterID
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'UID'">
+                    <div>
+                      UID
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Others'">
+                    <div>
+                      Others
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'RationCard'">
+                    <div>
+                      RationCard
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'DrivingLicenseNo'">
+                    <div>
+                      DrivingLicenseNo
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Pan'">
+                    <div>
+                      Pan
+                    </div>
+                  </mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Number</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="idValue1" #idValue1
+                  (change)="handleidValue1(idValue1.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                  placeholder="Enter number">
+                      </textarea>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
+            </div>
+           
+          </div>
+
+          <div class="fieldPadding">
+            <div class="">
+              <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
+                (change)="filesSelected($event)">Click / Drop your files here
+              <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i class="material-icons">
+                  attach_file</i></a>
+            </div>
+
+            <div>
+              <div class="img-section mgn-up-20" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+                <ul class="galul">
+                  <li *ngFor="let file of selectedMessage.files;let i = index ">
+                    <div class="galimg_outer">
+                      <div class="gal_img">
+                        <img [src]="getImage(selectedMessage.base64[i], file)" *ngIf="selectedMessage.base64[i]">
+                      </div>
+                      <div class="gal_action" (click)="deleteTempImage(i)">
+                        <i class="fa fa-times-circle" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+        <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+        <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+        <div *ngIf="selectedMessage.files && selectedMessage.files.length > 0"></div>
         <span class="group-head">Pancard Details</span><br>
         <div class="bggrey my-2">
           <div style="display: flex;gap: 5px">
@@ -476,7 +575,7 @@
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
               <div class="leadTitle">
                 <div>Nominee Name</div>
-                <div class="astericColor">*</div>
+                <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
                 <textarea rowa="10" class="form-control" formControlName="nomineeName" #nomineeName
@@ -491,7 +590,7 @@
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
               <div class="leadTitle">
                 <div>Nominee Type</div>
-                <div class="astericColor">*</div>
+                <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
                 <mat-select class="form-control widthWebKit" placeholder="" #nomineeType formControlName="nomineeType">
@@ -642,7 +741,7 @@
           <div>
             <div class="leadTitle">
               <div>Nominee Address</div>
-              <div class="astericColor">*</div>
+              <!-- <div class="astericColor">*</div> -->
             </div>
             <div class="fieldPadding">
               <input (keyup)="resetErrors()" type="text" #permanentAddress
@@ -730,7 +829,7 @@
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
               <div class="leadTitle">
                 <div>District</div>
-                <div class="astericColor">*</div>
+                <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
                 <textarea rowa="10" class="form-control" formControlName="permanentCity" #permanentCity
@@ -745,7 +844,7 @@
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
               <div class="leadTitle">
                 <div>State</div>
-                <div class="astericColor">*</div>
+                <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
                 <textarea rowa="10" class="form-control" formControlName="permanentState" #permanentState
@@ -762,7 +861,7 @@
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
               <div class="leadTitle">
                 <div>Pin code</div>
-                <div class="astericColor">*</div>
+                <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
                 <textarea rowa="10" class="form-control" formControlName="permanentPinCode" #permanentPinCode
@@ -1043,13 +1142,81 @@
         </div> -->
 
         </div>
-        <!-- <span class="group-head">KYC Details</span><br>
+        <div class="bggrey my-2">
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Applicant KYC</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <mat-select class="form-control widthWebKit" placeholder="" #idTypes1 formControlName="idTypes1">
+                  <mat-option [value]="'Passport'">
+                    <div>
+                      Passport
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'VoterID'">
+                    <div>
+                      VoterID
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'UID'">
+                    <div>
+                      UID
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Others'">
+                    <div>
+                      Others
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'RationCard'">
+                    <div>
+                      RationCard
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'DrivingLicenseNo'">
+                    <div>
+                      DrivingLicenseNo
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Pan'">
+                    <div>
+                      Pan
+                    </div>
+                  </mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Number</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="idValue1" #idValue1
+                  (change)="handleidValue1(idValue1.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                  placeholder="Enter number">
+                      </textarea>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
+            </div>
+           
+          </div>
+
+         
+
+        </div>
+        <!-- <span class="group-head">KYC File Details</span><br>
         <div class="bggrey my-2">
           <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
 
-              <div *ngFor="let file of updateValue.panAttachments ;let i= index">hjjguuuk,kkukjik
-                <a (click)="preview(file)">
+              <div *ngFor="let file of updateValue.panAttachments ;let i= index">
+                <a  href="{{file.s3path}}" target="_blank">
                   <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
                   {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                 </a>
@@ -1391,7 +1558,7 @@
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
               <div class="leadTitle">
                 <div>Nominee Name</div>
-                <div class="astericColor">*</div>
+                <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
                 <textarea rowa="10" class="form-control" formControlName="nomineeName" #nomineeName
@@ -1406,7 +1573,7 @@
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
               <div class="leadTitle">
                 <div>Nominee Type</div>
-                <div class="astericColor">*</div>
+                <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
                 <mat-select class="form-control widthWebKit" placeholder="" #nomineeType formControlName="nomineeType">
@@ -1489,7 +1656,7 @@
           <div>
             <div class="leadTitle">
               <div>Nominee Address</div>
-              <div class="astericColor">*</div>
+              <!-- <div class="astericColor">*</div> -->
             </div>
             <div class="fieldPadding">
               <input (keyup)="resetErrors()" type="text" #permanentAddress
@@ -1505,7 +1672,7 @@
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
               <div class="leadTitle">
                 <div>District</div>
-                <div class="astericColor">*</div>
+                <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
                 <textarea rowa="10" class="form-control" formControlName="permanentCity" #permanentCity
@@ -1520,7 +1687,7 @@
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
               <div class="leadTitle">
                 <div>State</div>
-                <div class="astericColor">*</div>
+                <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
                 <textarea rowa="10" class="form-control" formControlName="permanentState" #permanentState
@@ -1537,7 +1704,7 @@
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
               <div class="leadTitle">
                 <div>Pin code</div>
-                <div class="astericColor">*</div>
+                <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
                 <textarea rowa="10" class="form-control" formControlName="permanentPinCode" #permanentPinCode
