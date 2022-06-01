@@ -1026,14 +1026,18 @@
 
         <div style="text-align: center;margin-top: 15px;">
           <ng-container>
-            <div class=" mgn-bt-20 mgn-up-10">
+            <div class=" mgn-bt-20 mgn-up-10"style="display: flex;
+            justify-content: center;
+            gap: 10px;" >
               <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()">Cancel
               </button>
               <button [ngClass]="{
                               'btn btn-primary font-weight-bold cancelBtn': !createLeadForm.valid,
                               'btn btn-primary font-weight-bold confirmBtn': createLeadForm.valid
                           }" [class.spinner]="api_loading" [class.disabled]="api_loading"
-                [class.spinner-center]="api_loading" type="button" (click)="saveCreateLead()">Add
+                [class.spinner-center]="api_loading" type="button" (click)="saveCreateLead()">Save
+              </button>
+              <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #FADDDD !important;color:black !important" (click)="failedStatus()">Rejected
               </button>
             </div>
           </ng-container>
@@ -1807,10 +1811,15 @@
 
       <div style="text-align: center;margin-top: 15px;">
         <ng-container>
-          <div class=" mgn-bt-20 mgn-up-10">
+          <div class=" mgn-bt-20 mgn-up-10" style="display: flex;
+          justify-content: center;
+          gap: 10px;
+      ">
             <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()">Cancel
             </button>
-            <button class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="saveCrif()">Ok
+            <button class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="saveCrif()">save
+            </button>
+            <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #FADDDD !important;color:black !important" (click)="failedStatus()">Rejected
             </button>
           </div>
         </ng-container>
@@ -1859,6 +1868,8 @@
         </button>
         <button class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="submitQnr()">Submit
         </button>
+        <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="margin-left: 10px;;background: #FADDDD !important;color:black !important" (click)="failedStatus()">Rejected
+        </button>
       </div>
     </ng-container>
   </div>
@@ -1898,6 +1909,8 @@
         <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()">Cancel
         </button>
         <button class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="submitafterQnr()">Submit
+        </button>
+        <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="margin-left: 10px;;background: #FADDDD !important;color:black !important" (click)="failedStatus()">Rejected
         </button>
       </div>
     </ng-container>

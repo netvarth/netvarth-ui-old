@@ -537,5 +537,10 @@ export class CrmService {
     const url = 'provider/task/provider?status-eq=4=16';
     return this.servicemeta.httpGet(url, null);
   }
+  statusToFailed(leadUid){
+    // console.log(data)
+      const url='provider/lead/'+ leadUid + '/status/rejected'
+      return this.servicemeta.httpPut(url);
+  }
 
 }

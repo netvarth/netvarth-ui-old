@@ -186,6 +186,7 @@ export class ViewLeadQnrComponent implements OnInit{
   customerPhNo:any;
   filestoUpload: any = [];
   kycresponse: ArrayBuffer;
+  failedStatusId:any;
   constructor(private locationobj: Location,
   
     // private lStorageService: LocalStorageService,
@@ -359,6 +360,7 @@ export class ViewLeadQnrComponent implements OnInit{
     this.getAssignMemberList()
     this.getCategoryListData()
     this.getLeadTypeListData()
+    this.leadStatus()
   }
   getKycDetails(){
     this.crmService.getkyc(this.leadkid).subscribe(data => {
@@ -1350,6 +1352,26 @@ preview(file) {
     if (result) {
     }
   });
+}
+leadStatus(){
+  this.crmService.getLeadStatus().subscribe((response:any)=>{
+    console.log(response);
+    this.failedStatusId= response[3].id
+    console.log('this.failedStatusId',this.failedStatusId)
+  })
+}
+failedStatus(){
+  this.crmService.addLeadStatus(this.leadDetails.uid,this.failedStatusId).subscribe((response)=>{
+    console.log('afterupdateFollowUpData',response);
+    setTimeout(() => {
+    this.router.navigate(['provider', 'crm']);
+    }, projectConstants.TIMEOUT_DELAY);
+  },
+  (error)=>{
+    setTimeout(() => {
+      this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
+    }, projectConstants.TIMEOUT_DELAY);
+  })
 }
 // uploadAudioVideo(data, type) {
 //   console.log(data)

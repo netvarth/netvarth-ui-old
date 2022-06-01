@@ -162,6 +162,9 @@ import { Subject } from 'rxjs';
            this.customerActivityText='New';
         }
       }
+      handleProposedAmount(value){
+        console.log('value',value)
+      }
       searchCustomer() {
         this.emptyFielderror = false;
         if (this.createEnquiryForm.controls.enquiryDetails.value && this.createEnquiryForm.controls.enquiryDetails.value === '') {
