@@ -13,7 +13,8 @@ import { projectConstants } from "../../../../app.component";
 import { ConfirmBoxComponent } from "../../../../business/shared/confirm-box/confirm-box.component";
 import { FileService } from "../../../../shared/services/file-service";
 import { DateTimeProcessor } from "../../../../shared/services/datetime-processor.service";
-import { CrmSelectMemberComponent } from "../../../../../../src/app/business/shared/crm-select-member/crm-select-member.component";
+import { CrmSelectMemberComponent } from "../../../../business/shared/crm-select-member/crm-select-member.component";
+import { projectConstantsLocal } from "../../../../shared/constants/project-constants";
 // import { ServiceQRCodeGeneratordetailComponent } from "../../../../shared/modules/service/serviceqrcodegenerator/serviceqrcodegeneratordetail.component";
 
 // import { ConfirmDeleteBoxComponent } from '../confirm-delete-box/confirm-delete-box.component';
@@ -44,7 +45,7 @@ export class FolderFilesComponent implements OnInit {
   selectedTeam;
   addUser = false;
   tooltipcls = "";
-  fileTypeDisplayName = projectConstants.FilE_TYPES;
+  // fileTypeDisplayName = projectConstantsLocal.FilE_TYPES;
   apiloading = false;
   dataLoading = false;
   foldertype: any;
@@ -126,7 +127,7 @@ export class FolderFilesComponent implements OnInit {
   user_count_filterApplied: any;
   availabileSelected: boolean;
   notAvailabileSelected: boolean;
-  tooltipcl = projectConstants.TOOLTIP_CLS;
+  tooltipcl = projectConstantsLocal.TOOLTIP_CLS;
   customer_label = "";
   provider_label = "";
   isHealthCare = false;
@@ -677,7 +678,7 @@ export class FolderFilesComponent implements OnInit {
       this.foldername = "Consumer";
     }
     console.log(filter);
-    console.log("Types :", this.fileTypeDisplayName);
+    // console.log("Types :", this.fileTypeDisplayName);
     this.provider_servicesobj
       .getAllFilterAttachments(filter)
       .subscribe((data: any) => {
@@ -854,7 +855,7 @@ export class FolderFilesComponent implements OnInit {
     let i = 0;
     if (input) {
       for (const file of input) {
-        if (file.size > projectConstants.FILE_MAX_SIZE) {
+        if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
           this.snackbarService.openSnackBar(
             "Please upload images with size < 10mb",
             { panelClass: "snackbarerror" }
