@@ -220,21 +220,21 @@
 
           <div class="fieldPadding">
             <div class="">
-              <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
-                (change)="filesSelected($event)">Click / Drop your files here
-              <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i class="material-icons">
+              <input #files type="file" accept="/*;capture=camera" style="display:none;" multiple
+                (change)="filesSelectedkyc($event)">Click / Drop your files here
+              <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
                   attach_file</i></a>
             </div>
 
             <div>
-              <div class="img-section mgn-up-20" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+              <div class="img-section mgn-up-20" *ngIf="selectedMessagekyc.files && selectedMessagekyc.files.length > 0">
                 <ul class="galul">
-                  <li *ngFor="let file of selectedMessage.files;let i = index ">
+                  <li *ngFor="let file of selectedMessagekyc.files;let i = index ">
                     <div class="galimg_outer">
                       <div class="gal_img">
-                        <img [src]="getImage(selectedMessage.base64[i], file)" *ngIf="selectedMessage.base64[i]">
+                        <img [src]="getImage(selectedMessagekyc.base64[i], file)" *ngIf="selectedMessagekyc.base64[i]">
                       </div>
-                      <div class="gal_action" (click)="deleteTempImage(i)">
+                      <div class="gal_action" (click)="deleteTempImagekyc(i)">
                         <i class="fa fa-times-circle" aria-hidden="true"></i>
                       </div>
                     </div>
@@ -247,10 +247,10 @@
 
         </div>
 
-        <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-        <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-        <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-        <div *ngIf="selectedMessage.files && selectedMessage.files.length > 0"></div>
+        <br *ngIf="selectedMessagekyc.files && selectedMessagekyc.files.length > 0">
+        <br *ngIf="selectedMessagekyc.files && selectedMessagekyc.files.length > 0">
+        <br *ngIf="selectedMessagekyc.files && selectedMessagekyc.files.length > 0">
+        <div *ngIf="selectedMessagekyc.files && selectedMessagekyc.files.length > 0"></div>
         <span class="group-head">Pancard Details</span><br>
         <div class="bggrey my-2">
           <div style="display: flex;gap: 5px">
@@ -324,10 +324,10 @@
           </div> -->
         </div>
 
-        <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-        <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-        <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-        <div *ngIf="selectedMessage.files && selectedMessage.files.length > 0"></div>
+        <br *ngIf="selectedMessagePan.files && selectedMessagePan.files.length > 0">
+        <br *ngIf="selectedMessagePan.files && selectedMessagePan.files.length > 0">
+        <br *ngIf="selectedMessagePan.files && selectedMessagePan.files.length > 0">
+        <div *ngIf="selectedMessagePan.files && selectedMessagePan.files.length > 0"></div>
         <span class="group-head">Details</span><br>
         <div class="bggrey my-2">
           <div style="display: flex;gap: 5px">
@@ -1236,24 +1236,7 @@
          
 
         </div>
-        <!-- <span class="group-head">KYC File Details</span><br>
-        <div class="bggrey my-2">
-          <div style="display: flex;gap: 5px">
-            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-
-              <div *ngFor="let file of updateValue.panAttachments ;let i= index">
-                <a  href="{{file.s3path}}" target="_blank">
-                  <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
-                  {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
-                </a>
-
-              </div>
-            </div>
-
-          </div>
-
-
-        </div> -->
+       
         <!-- <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
@@ -1292,48 +1275,26 @@
               </div>
             </div>
           </div>
-          <!-- <div class="fieldPadding">
-          <div class="">
-            <input #logofile type="file" accept="/*;capture=camera"
-                 style="display:none;" multiple
-                (change)="filesSelected($event)">Click / Drop your files here
-            <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i
-                    class="material-icons"> attach_file</i></a>
+         
         </div>
-        </div> -->
-          <!-- <div>
-          <div class="img-section mgn-up-20"
-          *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-          <ul class="galul">
-              <li *ngFor="let file of selectedMessage.files;let i = index ">
-                  <div class="galimg_outer">
-                      <div class="gal_img">
-                          <img [src]="getImage(selectedMessage.base64[i], file)"
-                              *ngIf="selectedMessage.base64[i]">
-                      </div>
-                      <div class="gal_action" (click)="deleteTempImage(i)">
-                          <i class="fa fa-times-circle" aria-hidden="true"></i>
-                      </div>
-                  </div>
-              </li>
-          </ul>
-      </div>
-        </div> -->
-          <!-- <div class="fieldPadding">
-          <div class="choose_file">
-            <label for="choose_file" (click)="imagefile.click()">
-              <input #imagefile
-              type="file" accept="/*;capture=camera"
-              style="display:none;" multiple
-              (change)="filesSelected($event)"><i
-              class="fa fa-paperclip mgn-rt-5"
-              aria-hidden="true"></i>
-              <span>Choose Files</span>
-            </label>
-          </div>
-          </div> -->
-        </div>
+        <!-- <span class="group-head">Pnacard File Details</span><br>
+        <div class="bggrey my-2" *ngIf="updateValue.panAttachments">
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
 
+              <div *ngFor="let file of updateValue.panAttachments ;let i= index">
+                <a  href="{{file.s3path}}" target="_blank">
+                  <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
+                  {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
+                </a>
+
+              </div>
+            </div>
+
+          </div>
+
+
+        </div> -->
         <!-- <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">

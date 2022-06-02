@@ -163,8 +163,14 @@ export class ViewLeadQnrComponent implements OnInit {
     base64: [],
     caption: []
   };
+  selectedMessagekyc = {
+    files: [],
+    base64: [],
+    caption: []
+  };
   fileData: any;
   fileDataPan: any;
+  fileDatakyc1: any;
   active_user: any;
   showKyc = false;
   kycDetails: any = []
@@ -794,6 +800,58 @@ export class ViewLeadQnrComponent implements OnInit {
 
       ];
     }
+    let k = 0;
+    this.fileDatakyc1 = [
+      {
+        owner: "",
+        fileName: "",
+        fileSize: "",
+        caption: "",
+        fileType: "",
+        order: ""
+      }
+    ];
+    for (const pic of this.selectedMessagekyc.files) {
+      // console.log("Uploaded Image : ", captions[i]);
+      const size = pic["size"] / 1024;
+
+      //parseInt(((Math.round(size/1024 * 100) / 100).toFixed(2))),
+
+      if (pic["type"]) {
+        this.fileDatakyc1 = [
+          {
+            owner: this.active_user.id,
+            fileName: pic["name"],
+            fileSize: size / 1024,
+            caption: "",
+            fileType: pic["type"].split("/")[1],
+            order: k++
+          }
+        ];
+      } else {
+        const picType = "jpeg";
+        this.fileDatakyc1 = [
+          {
+            owner: this.active_user.id,
+            fileName: pic["name"],
+            fileSize: size / 1024,
+            caption: "",
+            fileType: picType,
+            order: k++
+          }
+        ];
+      }
+      // console.log("Selected File Is : ", this.fileData)
+      // captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
+      // i++;
+      // dataToSend.append('attachments', this.fileData);
+
+    }
+    if (this.selectedMessagekyc.files.length === 0) {
+      this.fileDatakyc1 = [
+
+      ];
+    }
     const createLeadData: any = [{
       "originFrom": "Lead",
       "originUid": this.leadkid,
@@ -1128,6 +1186,25 @@ export class ViewLeadQnrComponent implements OnInit {
       }
     }
   }
+  filesSelectedkyc(event) {
+    const input = event.target.files;
+    if (input) {
+      for (const file of input) {
+        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+        } else if (file.size > projectConstants.FILE_MAX_SIZE) {
+          this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+        } else {
+          this.selectedMessagekyc.files.push(file);
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            this.selectedMessagekyc.base64.push(e.target['result']);
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    }
+  }
   deleteTempImage(i) {
     this.selectedMessage.files.splice(i, 1);
     this.selectedMessage.base64.splice(i, 1);
@@ -1137,6 +1214,11 @@ export class ViewLeadQnrComponent implements OnInit {
     this.selectedMessagePan.files.splice(i, 1);
     this.selectedMessagePan.base64.splice(i, 1);
     this.selectedMessagePan.caption.splice(i, 1);
+  }
+  deleteTempImagekyc(i) {
+    this.selectedMessagekyc.files.splice(i, 1);
+    this.selectedMessagekyc.base64.splice(i, 1);
+    this.selectedMessagekyc.caption.splice(i, 1);
   }
   getImage(url, file) {
     return this.fileService.getImage(url, file);
