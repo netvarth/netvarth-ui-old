@@ -1021,7 +1021,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     if (domain === 'All') {
     }
     this.selected_domain = domain;
-    this.domainSuggestionPlaceholder = projectConstants.DOMAIN_SEARCH_SUGGESTIONS[domain.toLowerCase()];
+    this.domainSuggestionPlaceholder = projectConstantsLocal.DOMAIN_SEARCH_SUGGESTIONS[domain.toLowerCase()];
     if (avoidclear === 1) {
     } else {
       this.kw_autoname = '';

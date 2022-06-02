@@ -33,7 +33,7 @@ export class SignUpComponent implements OnInit {
   i_agree_cap = Messages.I_AGREE_CAP;
   terms_cond_cap = Messages.TERMS_CONDITIONS_CAP;
   sign_up_cap = Messages.SIGN_UP_CAP;
-  license_packages = projectConstants.LICENSE_PACKAGES;
+  license_packages = projectConstantsLocal.LICENSE_PACKAGES;
   cancel_btn_cap = Messages.CANCEL_BTN;
   ok_btn_cap = Messages.OK_BTN;
   signupp_cap = Messages.SIGNUPP_CAP;
@@ -45,7 +45,7 @@ export class SignUpComponent implements OnInit {
   packages;
   activeDomainIndex;
   activeSubDomainIndex;
-  subdomainSettings = projectConstants.SUBDOMAIN_ICONS;
+  subdomainSettings = projectConstantsLocal.SUBDOMAIN_ICONS;
   subDomainList = [];
   countryCodes = projectConstantsLocal.CONSUMER_COUNTRY_CODES;
   selectedCountryCode;

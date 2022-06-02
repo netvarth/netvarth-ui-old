@@ -25,6 +25,7 @@ import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { JaldeeTimeService } from '../../services/jaldee-time-service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
+import { projectConstantsLocal } from '../../constants/project-constants';
 
 @Component({
   selector: 'app-search-detail',
@@ -184,6 +185,11 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   checkinProviderList: any = [];
   providerLogos: any = [];
+
+
+  selectCriteria = projectConstantsLocal.searchpass_criteria;
+  weekDaysLong = projectConstantsLocal.myweekdays;
+  
   private subs = new SubSink();
   constructor(private routerobj: Router,
     private location: Location,
@@ -787,7 +793,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
       const retcoordinates = this.shared_functions.getNearByLocation(this.latitude, this.longitude, distanceMetrix, this.loctype);
       const coordinates = retcoordinates['locationRange'];
-      projectConstants.searchpass_criteria.distance = 'haversin(' + this.latitude + ',' + this.longitude + ',location1.latitude,location1.longitude)';
+      this.selectCriteria.distance = 'haversin(' + this.latitude + ',' + this.longitude + ',location1.latitude,location1.longitude)';
       locstr = 'location1:' + coordinates;
       q_str = q_str + locstr;
     }
@@ -856,7 +862,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       enddatetime.setMinutes(enddatetime.getMinutes() + 2); // adding 2 minutes to current time
       const starttime = this.dateTimeProcessor.addZero(curdatetime.getHours()) + '' + this.dateTimeProcessor.addZero(curdatetime.getMinutes());
       const endtime = this.dateTimeProcessor.addZero(enddatetime.getHours()) + '' + this.dateTimeProcessor.addZero(enddatetime.getMinutes());
-      time_qstr = projectConstants.myweekdays[curdatetime.getDay()] + '_time:[' + starttime + ',' + endtime + ']';
+      time_qstr = this.weekDaysLong[curdatetime.getDay()] + '_time:[' + starttime + ',' + endtime + ']';
     } else if (this.commonfilters === 'always_open1') { // case of opennow clicked
       time_qstr = time_qstr + ' ' + this.commonfilters + ':1 ';
     }
@@ -871,15 +877,15 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
       }
     }
     // Creating criteria to be passed via get
-    projectConstants.searchpass_criteria.q = q_str;
-    projectConstants.searchpass_criteria.sort = sortval;
-    projectConstants.searchpass_criteria.fq = this.refined_querystr;
+    this.selectCriteria.q = q_str;
+    this.selectCriteria.sort = sortval;
+    this.selectCriteria.fq = this.refined_querystr;
     this.nosearch_results = false;
     // Finding the start row value for paging
     if (this.startpageval) {
-      projectConstants.searchpass_criteria.start = (this.startpageval - 1) * projectConstants.searchpass_criteria.size;
+      this.selectCriteria.start = (this.startpageval - 1) * this.selectCriteria.size;
     } else {
-      projectConstants.searchpass_criteria.start = 0;
+      this.selectCriteria.start = 0;
     }
     if (this.search_return) {
       this.search_return.unsubscribe();
@@ -889,7 +895,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     } else {
       this.shared_functions.getCloudUrl()
         .then(url => {
-          this.search_return = this.shared_service.DocloudSearch(url, projectConstants.searchpass_criteria, this.kwtyp)
+          this.search_return = this.shared_service.DocloudSearch(url, this.selectCriteria, this.kwtyp)
             .subscribe(res => {
               this.search_data = res;
               this.result_provid = [];
@@ -1292,7 +1298,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
     return this.search_result_count;
   }
   public pass_pagesize() {
-    return projectConstants.searchpass_criteria.size;
+    return this.selectCriteria.size;
   }
   public handle_pageclick(pg) {
     this.startpageval = pg;
@@ -1629,7 +1635,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           enddatetime.setMinutes(enddatetime.getMinutes() + projectConstants.OPEN_NOW_INTERVAL); // adding minutes from project constants file to current time
           const starttime = this.dateTimeProcessor.addZero(curdatetime.getHours()) + '' + this.dateTimeProcessor.addZero(curdatetime.getMinutes());
           const endtime = this.dateTimeProcessor.addZero(enddatetime.getHours()) + '' + this.dateTimeProcessor.addZero(enddatetime.getMinutes());
-          time_qstr = projectConstants.myweekdays[curdatetime.getDay()] + '_time:[' + starttime + ',' + endtime + '] ';
+          time_qstr = this.weekDaysLong[curdatetime.getDay()] + '_time:[' + starttime + ',' + endtime + '] ';
           retstr += ' ' + time_qstr;
         } else {
           if (fieldname === 'coupon_enabled') {

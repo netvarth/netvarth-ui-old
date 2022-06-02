@@ -37,12 +37,13 @@ export class ProviderSystemAuditLogComponent implements OnInit {
   auditlog_details: any = [];
   load_complete = 0;
   api_loading = true;
+
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
-
-  logCategories = projectConstants.AUDITLOG_FILTER_CATEGORIES;
+  logActions = projectConstantsLocal.AUDITLOG_FILTER_ACTION;
+  logCategories = projectConstantsLocal.AUDITLOG_FILTER_CATEGORIES;
   logSubcategories: any = [];
-  logActions = projectConstants.AUDITLOG_FILTER_ACTION;
+  
   logSelcat = '';
   logSelsubcat = '';
   logSeldate = '';

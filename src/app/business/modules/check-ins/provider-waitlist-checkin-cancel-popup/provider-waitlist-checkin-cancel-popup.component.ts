@@ -4,7 +4,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
-// import { projectConstants } from '../../../../app.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
@@ -68,7 +67,6 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
   ngOnInit() {
     const reasons_list = [];
     const type = this.groupService.getitemFromGroupStorage('pdtyp');
-    // const reasons = projectConstants.WAITLIST_CANCEL_RESON;
     const reasons = projectConstantsLocal.WAITLIST_CANCEL_REASON;
     for (let i = 0; i < reasons.length; i++) {
       if (type !== reasons[i].type) {

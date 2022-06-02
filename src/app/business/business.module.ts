@@ -8,7 +8,6 @@ import { ProviderSharedFuctions } from './functions/provider-shared-functions';
 import { ProviderResolver } from './services/provider-resolver.service';
 import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { projectConstants } from '../app.component';
 import { BusinessComponent } from './business.component';
 import { CommonModule } from '@angular/common';
 import { LoadingSpinnerModule } from '../shared/modules/loading-spinner/loading-spinner.module';
@@ -18,6 +17,7 @@ import { MenuModule } from './home/menu/menu.module';
 import { BusinessHeaderModule } from './home/header/header.module';
 import { ReportDataService } from './modules/reports/reports-data.service';
 import { DomainConfigGenerator } from '../shared/services/domain-config-generator.service';
+import { projectConstantsLocal } from '../shared/constants/project-constants';
 const routes: Routes = [
     {
       path: '', component: BusinessComponent, resolve: { terminologies: ProviderResolver },
@@ -100,7 +100,7 @@ const routes: Routes = [
         DomainConfigGenerator,
         { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-        { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS }
+        { provide: MAT_DATE_FORMATS, useValue: projectConstantsLocal.MY_DATE_FORMATS }
     ]
 })
 

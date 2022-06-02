@@ -33,8 +33,8 @@ export class ProviderReimburseReportComponent implements OnInit {
   req_payment_cap = Messages.REQ_PAYMENT_CAP;
   couponreport: any = [];
   query_executed = false;
-  report_statuses = projectConstants.REPORT_STATUSES;
-  report_status_filter = projectConstants.REPORT_STATUS_FILTER;
+  report_statuses = projectConstantsLocal.REPORT_STATUSES;
+  report_status_filter = projectConstantsLocal.REPORT_STATUS_FILTER;
   api_error = null;
   api_success = null;
   filtericonTooltip:any;

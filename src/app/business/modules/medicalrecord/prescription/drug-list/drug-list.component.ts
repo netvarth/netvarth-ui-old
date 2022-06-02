@@ -6,7 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MedicalrecordService } from '../../medicalrecord.service';
 import { AddDrugComponent } from '../add-drug/add-drug.component';
 import { ShareRxComponent } from '../share-rx/share-rx.component';
-import { projectConstants } from '../../../../../app.component';
 import { InstructionsComponent } from '../instructions/instructions.component';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { ConfirmBoxComponent } from '../../../../shared/confirm-box/confirm-box.component';
@@ -281,10 +280,10 @@ console.log(this.drugList);
     const input = event.target.files;
     if (input) {
       for (const file of input) {
-        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-          this.wordProcessor.apiErrorAutoHide(this, 'Selected image type not supported');
-        } else if (file.size > projectConstants.FILE_MAX_SIZE) {
-          this.wordProcessor.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
+        if (projectConstantsLocal.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+          this.wordProcessor.apiErrorAutoHide(this, 'Selected file type not supported');
+        } else if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
+          this.wordProcessor.apiErrorAutoHide(this, 'Please upload files with size < 10mb');
         } else {
           this.selectedMessage.files.push(file);
           const reader = new FileReader();

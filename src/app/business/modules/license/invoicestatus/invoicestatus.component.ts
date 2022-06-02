@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../app.component';
 import { NavigationExtras, Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
-// import { SOURCE } from '@angular/core/src/di/injector';
-
 
 @Component({
 
@@ -21,7 +18,7 @@ export class InvoiceStatusComponent {
   selected = 0;
   check_status;
   invoiceStatus = [];
-  invoice_status_filter = projectConstants.INVOICE_STATUS_FILTER;
+  invoice_status_filter = projectConstantsLocal.INVOICE_STATUS_FILTER;
   statusDialogRef;
   open_filter = false;
   filterapplied = false;

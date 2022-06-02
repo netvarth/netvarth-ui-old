@@ -4,7 +4,6 @@ import { ProviderServices } from '../../../../../services/provider-services.serv
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../../../app.component';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
@@ -37,7 +36,7 @@ export class PosCouponsComponent implements OnInit, OnDestroy {
   value_cap = Messages.VALUE_CAP;
   enable_cap = Messages.ENABLE_CAP;
   disable_cap = Messages.DISABLE_CAP;
-  jcoupon_states = projectConstants.JCOUPON_STATES;
+  jcoupon_states = projectConstantsLocal.JCOUPON_STATES;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
 
   upgrade_license = Messages.COUPON_UPGRADE_LICENSE;

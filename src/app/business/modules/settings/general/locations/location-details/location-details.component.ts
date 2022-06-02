@@ -64,7 +64,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   badge_map_arr: any = [];
   display_schedule: any = [];
   schedule_ar: any = [];
-  parking_types = projectConstants.PARKING_TYPES;
+  parking_types = projectConstantsLocal.PARKING_TYPES;
   editlocdialogRef;
   isCheckin;
   active_Schedules: any = [];
@@ -124,7 +124,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     });
   }
   ngOnInit() {
-    this.badgeIcons = projectConstants.LOCATION_BADGE_ICON;
+    this.badgeIcons = projectConstantsLocal.LOCATION_BADGE_ICON;
     this.getLocationBadges();
     if (this.location_id !== 'add') {
       this.getLocationDetail();

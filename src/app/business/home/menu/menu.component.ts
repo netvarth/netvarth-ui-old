@@ -3,13 +3,13 @@ import { Subscription } from 'rxjs';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Router } from '@angular/router';
 import { SharedServices } from '../../../shared/services/shared-services';
-import { projectConstants } from '../../../app.component';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ProviderSharedFuctions } from '../../functions/provider-shared-functions';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { AuthService } from '../../../shared/services/auth-service';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-menu',
@@ -183,7 +183,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       if (this.isCheckin === 0 || this.isCheckin > 3) {
         return true;
       } else {
-        this.snackbarService.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
+        this.snackbarService.openSnackBar(projectConstantsLocal.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
         return false;
       }
     } else {
@@ -195,7 +195,7 @@ export class MenuComponent implements OnInit, OnDestroy {
             if (this.isCheckin === 0) {
               return true;
             } else {
-              this.snackbarService.openSnackBar(projectConstants.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
+              this.snackbarService.openSnackBar(projectConstantsLocal.PROFILE_ERROR_STACK[this.isCheckin], { 'panelClass': 'snackbarerror' });
               return false;
             }
           },

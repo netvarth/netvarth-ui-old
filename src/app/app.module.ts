@@ -17,7 +17,6 @@ import {  DatePipe, LocationStrategy, PathLocationStrategy } from '../../node_mo
 import { GlobalService } from './shared/services/global-service';
 import { WindowRefService } from './shared/services/windowRef.service';
 import { ProviderDataStorageService } from './business/services/provider-datastorage.service';
-// import { ShareService } from 'ngx-sharebuttons';
 import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 import { SessionStorageService } from './shared/services/session-storage.service';
 import { LocalStorageService } from './shared/services/local-storage.service';
@@ -46,7 +45,6 @@ export function init_app(globalService: GlobalService) {
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { projectConstantsLocal } from './shared/constants/project-constants';
-// import { LoadingSpinnerModule } from './shared/modules/loading-spinner/loading-spinner.module';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, projectConstantsLocal.PATH + 'assets/i18n/home/', '.json');
 }
@@ -64,7 +62,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     DateFormatPipeModule,
     MatSnackBarModule,
-    // LoadingSpinnerModule,
     ForceDialogModule,
     TranslateModule.forRoot({
       loader: {
@@ -72,7 +69,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       },
-      // isolate: true,
     }),
     ScrollToModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
@@ -101,7 +97,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     ErrorMessagingService,
     SearchDetailServices,
     ProviderDataStorageService,
-    // ShareService,
     SessionStorageService,
     LocalStorageService,
     GroupStorageService,

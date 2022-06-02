@@ -5,9 +5,9 @@ import { CrmService } from "../../../crm.service";
 import { Observable } from "rxjs";
 import { HttpEventType, HttpResponse } from "@angular/common/http";
 import { SnackbarService } from "../../../../../../shared/services/snackbar.service";
-import { projectConstants } from "../../../../../../../../src/app/app.component";
 import { SharedServices } from "../../../../../../shared/services/shared-services";
 import { FileService } from "../../../../../../shared/services/file-service";
+import { projectConstantsLocal } from "../../../../../../shared/constants/project-constants";
 // import { Router } from '@angular/router';
 
 @Component({
@@ -94,12 +94,7 @@ export class SelectAttachmentComponent implements OnInit {
   
     if (input) {
       for (const file of input) {
-        // if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-        //     this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-        //     return;
-        // } else
-
-        if (file.size > projectConstants.FILE_MAX_SIZE) {
+        if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
           this.snackbarService.openSnackBar(
             "Please upload images with size < 10mb",
             { panelClass: "snackbarerror" }

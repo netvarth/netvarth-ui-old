@@ -68,7 +68,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   cancel_cap = Messages.CANCEL_BTN;
   view_cap = Messages.VIEW_CAP;
   no_cap = Messages.NO_CAP;
-  check_in_statuses = projectConstants.CHECK_IN_STATUSES;
+  check_in_statuses = projectConstantsLocal.CHECK_IN_STATUSES;
   wait_time_caption = Messages.WAIT_TIME;
   no_result_found = Messages.NO_RESULT_FOUND;
   manage_labels = Messages.MANAGE_LABELS;
@@ -256,7 +256,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   locateCustomerdialogRef;
   trackDetail: any = [];
   customerMsg = '';
-  tooltipcls = projectConstants.TOOLTIP_CLS;
+  tooltipcls = projectConstantsLocal.TOOLTIP_CLS;
   qr_value;
   path = projectConstantsLocal.PATH;
   showQR = false;

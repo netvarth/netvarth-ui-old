@@ -23,7 +23,7 @@ export class ProviderUserBprofileSearchSocialMediaComponent implements OnInit {
   api_error = null;
   api_success = null;
   show_addsection = true;
-  orgsocial_list = projectConstants.SOCIAL_MEDIA;
+  orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA;
   social_list: any = [];
   social_arr: any = [];
   curmod;

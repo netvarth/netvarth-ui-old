@@ -55,7 +55,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   proceedwithschedule = false;
   api_loading = true;
   api_loading1 = true;
-  parking_types = projectConstants.PARKING_TYPES;
+  parking_types = projectConstantsLocal.PARKING_TYPES;
   disableButton = false;
 
   constructor(
@@ -116,7 +116,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
         if (this.general_schedule.length > 0) {
           this.schedule_arr = this.general_schedule;
         } else {
-          this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
+          this.schedule_arr = projectConstantsLocal.BASE_SCHEDULE; // get base schedule from constants file
         }
         this.proceedwithschedule = true;
         this.api_loading1 = false;

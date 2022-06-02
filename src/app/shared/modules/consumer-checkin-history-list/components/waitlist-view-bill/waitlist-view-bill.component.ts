@@ -11,6 +11,7 @@ import { S3UrlProcessor } from '../../../../services/s3-url-processor.service';
 import { SubSink } from 'subsink';
 import { CheckInHistoryServices } from '../checkin-history-list/checkin-history-list.service';
 import { JcCouponNoteComponent } from '../../../jc-coupon-note/jc-coupon-note.component';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 @Component({
   selector: 'app-consumer-waitlist-checkin-bill',
   templateUrl: './waitlist-view-bill.component.html'
@@ -51,7 +52,7 @@ export class ViewConsumerWaitlistCheckInBillComponent implements OnInit, OnDestr
   status_cap = Messages.PAY_STATUS;
   mode_cap = Messages.MODE_CAP;
   refunds_cap = Messages.REFUNDS_CAP;
-  coupon_notes = projectConstants.COUPON_NOTES;
+  coupon_notes = projectConstantsLocal.COUPON_NOTES;
   // page_heading = 'Bill';
   api_error = null;
   api_success = null;

@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Messages } from '../../../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../../../app.component';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ProviderServices } from '../../../../../services/provider-services.service';
@@ -12,6 +11,7 @@ import { WordProcessor } from '../../../../../../shared/services/word-processor.
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { LocalStorageService } from '../../../../../../shared/services/local-storage.service';
 import { SubSink } from 'subsink';
+import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-additems',
@@ -32,7 +32,7 @@ export class AddItemsComponent implements OnInit, OnDestroy {
   emptyMsg = '';
   domain;
   frm_items_cap = Messages.FRM_LEVEL_ITEMS_MSG;
-  item_status = projectConstants.ITEM_STATUS;
+  item_status = projectConstantsLocal.ITEM_STATUS;
   itemnameTooltip = Messages.ITEMNAME_TOOLTIP;
   additemdialogRef;
   edititemdialogRef;

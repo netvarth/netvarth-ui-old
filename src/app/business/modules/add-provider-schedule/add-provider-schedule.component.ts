@@ -6,6 +6,7 @@ import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { Messages } from '../../../shared/constants/project-messages';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { JaldeeTimeService } from '../../../shared/services/jaldee-time-service';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-provider-schedule',
@@ -34,7 +35,7 @@ export class AddProviderSchedulesComponent implements OnInit {
   update_btn = Messages.UPDATE_BTN;
   api_error = null;
   api_success = null;
-  weekdays_arr = projectConstants.myweekdaysSchedule;
+  weekdays_arr = projectConstantsLocal.myweekdaysSchedule;
   dstart_time;
   dend_time;
   selday_arr: any = [];
@@ -110,7 +111,7 @@ export class AddProviderSchedulesComponent implements OnInit {
     this.weekdays_arr = wkdaystemp;
   }
   getDay(num) {
-    return projectConstants.myweekdaysSchedule[num];
+    return projectConstantsLocal.myweekdaysSchedule[num];
   }
   onsaveScheduleClick() {
     this.api_error = this.api_success = '';

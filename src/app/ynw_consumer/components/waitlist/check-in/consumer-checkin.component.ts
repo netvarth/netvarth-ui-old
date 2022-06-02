@@ -480,7 +480,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
 
     goThroughLogin() {
-        if (this.lStorageService.getitemfromLocalStorage('reqFrom')) {
+        if (this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA') {
             const _this = this;
             console.log("Entered to goThroughLogin Method");
             return new Promise((resolve) => {
@@ -838,7 +838,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.goBack('backy');
                 }
             });
-        } else {            
+        } else {
             console.log('inisdeeeeee');
             if (this.waitlist_for.length !== 0) {
                 for (const list of this.waitlist_for) {
@@ -1366,34 +1366,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
         }
     }
-    // getProviderDepart(id) {
-    //     this.subs.sink = this.shared_services.getProviderDept(id).
-    //         subscribe(data => {
-    //             this.departmentlist = data;
-    //             this.departmentEnabled = this.departmentlist.filterByDept;
-    //             for (let i = 0; i < this.departmentlist['departments'].length; i++) {
-    //                 if (this.departmentlist['departments'][i].departmentStatus !== 'INACTIVE') {
-    //                     this.departments.push(this.departmentlist['departments'][i]);
-    //                     if (this.selectedDeptId && this.selectedDeptId === this.departmentlist['departments'][i].departmentId) {
-    //                         this.selectedDept = this.departmentlist['departments'][i];
-    //                     }
-    //                 }
-    //             }
-    //             if (!this.selectedDeptId) {
-    //                 this.selectedDept = this.departments[0];
-    //             }
-    //         });
-    // }
     filesSelected(event, type?) {
         const input = event.target.files;
         if (input) {
             for (const file of input) {
-                // if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-                //     this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-                //     return;
-                // } else
-
-                if (file.size > projectConstants.FILE_MAX_SIZE) {
+                if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
                     this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
                     return;
                 } else {
@@ -1462,47 +1439,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     );
                 }
             )
-
-
-
-
-            // let count = 0;
-            // for (const uuid of uuids) {
-            // _this.subs.sink = _this.shared_services.addConsumerWaitlistAttachment(_this.account_id, uuid, dataToSend)
-            //     .subscribe(
-            //         () => {
-            //             if (_this.type !== 'waitlistreschedule') {
-            //                 count++;
-            //                 if (count === uuids.length) {
-            //                     // if (_this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
-            //                     //     _this.submitQuestionnaire(parentUid, paymenttype);
-            //                     // } else {
-            //                     //     _this.paymentOperation(paymenttype);
-            //                     // }
-            //                 }
-            //             } else {
-            //                 let queryParams = {
-            //                     account_id: _this.account_id,
-            //                     uuid: _this.rescheduleUserId,
-            //                     type: 'waitlistreschedule',
-            //                     theme: _this.theme
-            //                 }
-            //                 if (_this.businessId) {
-            //                     queryParams['customId'] = _this.customId;
-            //                 }
-            //                 let navigationExtras: NavigationExtras = {
-            //                     queryParams: queryParams
-            //                 };
-            //                 _this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
-            //             }
-            //         },
-            //         error => {
-            //             _this.isClickedOnce = false;
-            //             _this.wordProcessor.apiErrorAutoHide(_this, error);
-            //             _this.disablebutton = false;
-            //         }
-            //     );
-            // }
         });
     }
     getAvailableTimeSlots(QStartTime, QEndTime, interval) {
@@ -1616,11 +1552,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 if (this.businessjson.uniqueId === 128007) {
                     this.heartfulnessAccount = true;
                 }
-                // this.accountType = this.businessjson.accountType;
-                // if (this.accountType === 'BRANCH') {
-                //     // this.getbusinessprofiledetails_json('departmentProviders', true);
-                //     this.getProviderDepart(this.businessjson.id);
-                // }
                 this.domain = this.businessjson.serviceSector.domain;
                 if (this.domain === 'foodJoints') {
                     this.note_placeholder = 'Item No Item Name Item Quantity';
@@ -1861,7 +1792,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         console.log(this.scheduledWaitlist.queue.id);
         console.log(this.queueId);
         if (this.queuesLoaded && this.checkinDate === this.scheduledWaitlist.date && this.scheduledWaitlist.queue && this.scheduledWaitlist.queue.id === this.queueId) {
-            
+
             return true;
         } else {
             return false;
@@ -2009,22 +1940,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     getImage(url, file) {
         return this.fileService.getImage(url, file);
     }
-    // getImage(url, file) {
-    //     console.log("File Type :", file.type)
-    //     if (file.type == 'application/pdf') {
-    //         return './assets/images/pdf.png';
-    //     }
-    //     else if (file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg') {
-    //         return './assets/images/audio.png';
-
-    //     }
-    //     else if (file.type == 'video/mp4' || file.type == 'video/mpeg') {
-    //         return './assets/images/video.png';
-    //     }s
-    //     else {
-    //         return url;
-    //     }
-    // }
     getThumbUrl(attachment) {
         if (attachment && attachment.s3path) {
             if (attachment.s3path.indexOf('.pdf') !== -1) {
@@ -2158,165 +2073,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             )
         })
     }
-
-    /**
-     * Update Customer/Member Details 
-     * @param formdata customer/member data
-     * @param isParent true/false
-     * @returns data/false
-     */
-    // updateCustomer(formdata, isParent, type) {
-    //     const _this = this;
-    //     return new Promise(function (resolve, reject) {
-    //         let customerInfo = {};
-    //         let whatsup = {};
-    //         let telegram = {}
-    //         if (formdata.whatsappnumber !== undefined && formdata.whatsappnumber.trim().length > 0 && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length > 0) {
-    //             if (formdata.countryCode_whtsap.startsWith('+')) {
-    //                 whatsup["countryCode"] = formdata.countryCode_whtsap
-    //             } else {
-    //                 whatsup["countryCode"] = '+' + formdata.countryCode_whtsap
-    //             }
-    //             whatsup["number"] = formdata.whatsappnumber
-    //         }
-    //         if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length > 0 && formdata.countryCode_telegram !== undefined && formdata.countryCode_telegram.trim().length > 0) {
-    //             if (formdata.countryCode_telegram.startsWith('+')) {
-    //                 telegram["countryCode"] = formdata.countryCode_telegram
-    //             } else {
-    //                 telegram["countryCode"] = '+' + formdata.countryCode_telegram
-    //             }
-    //             telegram["number"] = formdata.telegramnumber
-    //         }
-    //         if (isParent) {
-    //             customerInfo['id'] = _this.parentCustomer.id;
-    //             customerInfo['gender'] = formdata.gender;
-    //             customerInfo['age'] = formdata.age;
-    //             customerInfo['firstName'] = _this.parentCustomer.userProfile.firstName;
-    //             customerInfo['lastName'] = _this.parentCustomer.userProfile.lastName;
-    //             customerInfo['whatsAppNum'] = whatsup;
-    //             customerInfo['telegramNum'] = telegram;
-    //             // customerInfo['pinCode'] = formdata.pincode;
-    //             if (formdata.email !== '' && formdata.updateEmail) {
-    //                 customerInfo['email'] = formdata.email
-    //             }
-    //             if (formdata.islanguage === 'yes') {
-    //                 customerInfo['preferredLanguages'] = ['English'];
-    //             } else {
-    //                 customerInfo['preferredLanguages'] = formdata.preferredLanguage;
-    //             }
-    //             customerInfo['bookingLocation'] = {};
-    //             if (_this.parentCustomer.userProfile.countryCode !== '+91' && formdata.localarea !== '') {
-    //                 customerInfo['bookingLocation']['district'] = formdata.localarea;
-    //                 customerInfo['city'] = formdata.localarea;
-    //             }
-    //             if (_this.parentCustomer.userProfile.countryCode !== '+91' && formdata.state) {
-    //                 customerInfo['bookingLocation']['state'] = formdata.state;
-    //                 customerInfo['state'] = formdata.state;
-    //             }
-    //             _this.customerService.updateProfile(customerInfo, 'consumer').subscribe(
-    //                 (data) => {
-    //                     _this.setWaitlistFor(customerInfo, isParent);
-    //                     _this.commObj['communicationEmail'] = formdata.email;
-    //                     _this.commObj['comWhatsappNo'] = whatsup["number"];
-    //                     _this.commObj['comWhatsappCountryCode'] = whatsup["countryCode"];
-    //                     resolve(data);
-    //                 }, (error) => {
-    //                     _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //                     resolve(false);
-    //                 }
-    //             )
-    //         } else {
-    //             customerInfo['userProfile'] = {}
-    //             console.log("Chosen Person:", _this.chosen_person);
-    //             console.log("Form Data:", formdata);
-    //             if (formdata.islanguage === 'yes') {
-    //                 customerInfo['preferredLanguages'] = ['English'];
-    //             } else {
-    //                 customerInfo['preferredLanguages'] = formdata.preferredLanguage;
-    //             }
-    //             customerInfo['userProfile']['gender'] = formdata.gender;
-    //             customerInfo['userProfile']['age'] = formdata.age;
-    //             customerInfo['userProfile']['firstName'] = formdata.firstName;
-    //             customerInfo['userProfile']['lastName'] = formdata.lastName;
-    //             customerInfo['userProfile']['whatsAppNum'] = whatsup;
-    //             customerInfo['userProfile']['telegramNum'] = telegram;
-    //             if (formdata.email !== '' && formdata.updateEmail) {
-    //                 customerInfo['userProfile']['email'] = formdata.email;
-    //             }
-    //             customerInfo['bookingLocation'] = {};
-    //             // customerInfo['bookingLocation']['pincode'] = formdata.pincode;
-    //             if (_this.parentCustomer.countryCode !== '+91' && formdata.localarea && formdata.localarea !== '') {
-    //                 customerInfo['bookingLocation']['district'] = formdata.localarea;
-    //             }
-    //             if (_this.parentCustomer.countryCode !== '+91' && formdata.state) {
-    //                 customerInfo['bookingLocation']['state'] = formdata.state;
-    //             }
-    //             if (type === 'new') {
-    //                 _this.customerService.addMember(customerInfo).subscribe(
-    //                     (data) => {
-    //                         _this.setWaitlistFor(customerInfo, isParent, data);
-    //                         _this.initCommunications(customerInfo);
-    //                         resolve(data);
-    //                     }, (error) => {
-    //                         _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //                         resolve(false);
-    //                     }
-    //                 )
-    //             } else {
-    //                 customerInfo['userProfile']['id'] = formdata.serviceFor;
-    //                 _this.customerService.editMember(customerInfo).subscribe(
-    //                     (data) => {
-    //                         _this.setWaitlistFor(customerInfo, isParent, data);
-    //                         _this.initCommunications(customerInfo);
-    //                         resolve(data);
-    //                     }, (error) => {
-    //                         _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //                         resolve(false);
-    //                     }
-    //                 )
-    //             }
-
-    //         }
-    //     })
-    // }
-
-    /**
-     * To store virtual for details for checkin
-     * @param customerInfo 
-     * @param isParent 
-     * @param id 
-     */
-    // setWaitlistFor(customerInfo, isParent, id?) {
-    //     this.waitlist_for = [];
-    //     let member = {};
-    //     if (isParent) {
-    //         member['id'] = customerInfo.id;
-    //         member['gender'] = customerInfo.gender;
-    //         member['age'] = customerInfo.age;
-    //         member['firstName'] = customerInfo.firstName;
-    //         member['lastName'] = customerInfo.lastName;
-    //         member['whatsAppNum'] = customerInfo['whatsAppNum'];
-    //         member['telegramNum'] = customerInfo['telegramNum'];
-    //         member['preferredLanguages'] = customerInfo['preferredLanguages'];
-    //         const bookingLocation = {};
-    //         // bookingLocation['pincode'] = customerInfo['pinCode'];
-    //         bookingLocation['district'] = customerInfo['bookingLocation']['district'];
-    //         bookingLocation['state'] = customerInfo['bookingLocation']['state'];
-    //         member['bookingLocation'] = bookingLocation;
-    //     } else {
-    //         member['id'] = id;
-    //         member['gender'] = customerInfo['userProfile']['gender'];
-    //         member['age'] = customerInfo['userProfile']['age'];
-    //         member['firstName'] = customerInfo['userProfile']['firstName'];
-    //         member['lastName'] = customerInfo['userProfile']['lastName'];
-    //         member['whatsAppNum'] = customerInfo['userProfile']['whatsAppNum'];
-    //         member['telegramNum'] = customerInfo['userProfile']['telegramNum'];
-    //         member['preferredLanguages'] = customerInfo['preferredLanguages'];
-    //         member['bookingLocation'] = customerInfo['bookingLocation'];
-    //     }
-    //     this.waitlist_for.push(member);
-    // }
-
     saveMemberDetails() {
         this.resetApiErrors();
         this.emailerror = '';
@@ -2392,7 +2148,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
      * Set communication parameters
      * @param parentCustomer logged in customer
      */
-     initCommunications(parentCustomer) {
+    initCommunications(parentCustomer) {
         console.log("initCommunications", parentCustomer);
         const _this = this;
         if (parentCustomer.userProfile.email) {
@@ -2562,10 +2318,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 let source = this.lStorageService.getitemfromLocalStorage('source');
                 if (source) {
                     window.location.href = source;
+                    this.lStorageService.removeitemfromLocalStorage('reqFrom');
                     this.lStorageService.removeitemfromLocalStorage('source');
                 } else {
                     this.location.back();
-                }      
+                }
             } else {
                 this.goToStep('prev');
             }
@@ -2666,17 +2423,17 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 } else {
                     console.log("Hererer");
                     const providerConsumer_parent = _this.providerConsumerList.filter(user => user.firstName === _this.activeUser.firstName && user.LastName === _this.activeUser.LastName);
-                    console.log("Family Members:",  _this.familyMembers);    
-                    console.log("Member Id", member.id);    
-                    console.log("Parent:", providerConsumer_parent); 
+                    console.log("Family Members:", _this.familyMembers);
+                    console.log("Member Id", member.id);
+                    console.log("Parent:", providerConsumer_parent);
                     if (providerConsumer_parent && providerConsumer_parent.length > 0) {
-                        parentId =  providerConsumer_parent[0].id;
+                        parentId = providerConsumer_parent[0].id;
                     }
                     const selectedMember = _this.familyMembers.filter(memb => memb.user === member.id);
                     console.log("Selected Member:", selectedMember);
                     if (selectedMember && selectedMember.length > 0) {
                         if (selectedMember[0].parent) {
-                            memberId = member.id; 
+                            memberId = member.id;
                         } else {
                             memberId = 0;
                             parentId = _this.activeUser.id;
@@ -2728,37 +2485,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 const blobpost_Data = new Blob([JSON.stringify(_this.oneTimeInfo.answers)], { type: 'application/json' });
                 dataToSend.append('question', blobpost_Data);
                 _this.subs.sink = _this.shared_services.submitCustomerOnetimeInfo(dataToSend, activeUser.id, _this.account_id).subscribe((data: any) => {
-                    // let postData = {
-                    //     urls: []
-                    // };
-                    // if (data.urls && data.urls.length > 0) {
-                    //     for (const url of data.urls) {
-                    //         this.api_loading_video = true;
-                    //         const file = _this.oneTimeInfo.filestoUpload[url.labelName][url.document];
-                    //         _this.provider_services.videoaudioS3Upload(file, url.url)
-                    //             .subscribe(() => {
-                    //                 postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-                    //                 if (data.urls.length === postData['urls'].length) {
-                    //                     this.shared_services.consumerApptQnrUploadStatusUpdate(uuid, this.account_id, postData)
-                    //                         .subscribe((data) => {
-                    //                             this.paymentOperation(paymenttype);
-                    //                         },
-                    //                             error => {
-                    //                                 this.isClickedOnce = false;
-                    //                                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                    //                                 this.disablebutton = false;
-                    //                                 this.api_loading_video = false;
-                    //                             });
-                    //                 }
-                    //             },
-                    //                 error => {
-                    //                     this.isClickedOnce = false;
-                    //                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                    //                     this.disablebutton = false;
-                    //                     this.api_loading_video = false;
-                    //                 });
-                    //     }
-                    // }
                     resolve(true);
                 },
                     error => {
@@ -2766,7 +2492,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                         _this.disablebutton = false;
                         resolve(false);
-                        // this.api_loading_video = false;
                     });
             } else {
                 resolve(true);

@@ -4,7 +4,6 @@ import { ProviderSharedFuctions } from '../../../../functions/provider-shared-fu
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../services/provider-services.service';
 import { Messages } from '../../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../../app.component';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
@@ -30,7 +29,7 @@ export class DonationCauseListComponent implements OnInit, OnDestroy {
     api_error = null;
     api_success = null;
     add_button ='Click to create a cause';
-    tooltipcls = projectConstants.TOOLTIP_CLS;
+    tooltipcls = projectConstantsLocal.TOOLTIP_CLS;
     domain: any;
     trackStatus: string;
     cause_list: any = [];

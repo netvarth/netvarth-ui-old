@@ -3,7 +3,6 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { DomSanitizer } from '@angular/platform-browser';
-import { projectConstants } from '../../../../../app.component';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
@@ -64,7 +63,7 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
     status_cap = Messages.PAY_STATUS;
     mode_cap = Messages.MODE_CAP;
     refunds_cap = Messages.REFUNDS_CAP;
-    coupon_notes = projectConstants.COUPON_NOTES;
+    coupon_notes = projectConstantsLocal.COUPON_NOTES;
     api_error = null;
     api_success = null;
     checkin = null;

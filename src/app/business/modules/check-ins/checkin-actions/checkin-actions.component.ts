@@ -111,7 +111,7 @@ export class CheckinActionsComponent implements OnInit {
     changeService = true;
     userid: any;
     active_user: any;
-    check_in_statuses = projectConstants.CHECK_IN_STATUSES;
+    check_in_statuses = projectConstantsLocal.CHECK_IN_STATUSES;
     user_arr: any;
     isUserdisable;
     meet_data: any;
@@ -522,7 +522,7 @@ export class CheckinActionsComponent implements OnInit {
     locateCustomerMsg(details) {
         if (details && details.jaldeeDistance) {
             const distance = details.jaldeeDistance.distance;
-            const unit = projectConstants.LIVETRACK_CONST[details.jaldeeDistance.unit];
+            const unit = projectConstantsLocal.LIVETRACK_CONST[details.jaldeeDistance.unit];
             const travelTime = details.jaldeelTravelTime.travelTime;
             const hours = Math.floor(travelTime / 60);
             const mode = details.jaldeelTravelTime.travelMode;

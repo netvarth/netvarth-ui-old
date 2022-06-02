@@ -668,7 +668,7 @@ export class ProviderbWizardComponent implements OnInit, AfterViewInit {
         this.getSpecializations(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['subDomain']);
         this.setBprofile_to_object(data);
         this.tbprof = data;
-        this.name_placeholder = projectConstants.PROFILE_ERROR_STACK[this.tbprof.serviceSector.domain];
+        this.name_placeholder = projectConstantsLocal.PROFILE_ERROR_STACK[this.tbprof.serviceSector.domain];
         // const subsectorname = this.shared_functions.retSubSectorNameifRequired(data['serviceSector']['domain'], data['serviceSubSector']['displayName']);
         this.shared_functions.setBusinessDetailsforHeaderDisp(data['businessName'] || '', data['serviceSector']['displayName'], data['serviceSubSector']['displayName'], '');
         const pdata = { 'ttype': 'updateuserdetails' };
@@ -791,7 +791,7 @@ export class ProviderbWizardComponent implements OnInit, AfterViewInit {
   }
 
   getDay(num) {
-    return projectConstants.myweekdaysSchedule[num];
+    return projectConstantsLocal.myweekdaysSchedule[num];
   }
 
   showGooglemap() {
@@ -962,7 +962,7 @@ export class ProviderbWizardComponent implements OnInit, AfterViewInit {
     if (this.general_schedule.length > 0) {
       this.schedule_arr = this.general_schedule;
     } else {
-      this.schedule_arr = projectConstants.BASE_SCHEDULE; // get base schedule from constants file
+      this.schedule_arr = projectConstantsLocal.BASE_SCHEDULE; // get base schedule from constants file
     }
   }
   handlekeyup(mod) {

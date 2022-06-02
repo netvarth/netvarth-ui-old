@@ -118,7 +118,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   langdialogRef;
   social_arr: any = [];
   social_list: any = [];
-  showaddsocialmedia = false;
   normal_socialmedia_show = 1;
   orgsocial_list: any = [];
   socialdialogRef;
@@ -183,7 +182,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   badgeIcons: any = [];
   badgeArray: any = [];
   show_passcode = false;
-  tooltipcls = projectConstants.TOOLTIP_CLS;
+  tooltipcls = projectConstantsLocal.TOOLTIP_CLS;
   normal_profile_active = 1; // [1 - loading] [2 - no info] [3 - info available]
   normal_basicinfo_show = 1;
   loadingParams: any = { 'diameter': 40, 'strokewidth': 15 };
@@ -304,11 +303,11 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.domain = user.sector;
     this.jaldee_acc_url = Messages.JALDEE_URL.replace('[customer]', this.customer_label);
-    this.badgeIcons = projectConstants.LOCATION_BADGE_ICON;
+    this.badgeIcons = projectConstantsLocal.LOCATION_BADGE_ICON;
     this.getUser();
     this.getUserPublicSearch();
     this.getBusinessConfiguration();
-    this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
+    this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA;
     this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     this.frm_gallery_cap = Messages.FRM_LEVEL_GALLERY_MSG.replace('[customer]', this.customer_label);
     this.frm_social_cap = Messages.FRM_LEVEL_SOCIAL_MSG.replace('[customer]', this.customer_label);
@@ -501,7 +500,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
           } else {
             this.normal_basicinfo_show = 2;
           }
-          this.showaddsocialmedia = false;
           this.user_datastorage.set('bProfile', this.bProfile);
           this.normal_socialmedia_show = 2;
           this.social_arr = [];
@@ -514,9 +512,6 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
                 }
               }
             }
-          }
-          if (this.social_arr.length < this.orgsocial_list.length) {
-            this.showaddsocialmedia = true;
           }
           this.user_datastorage.set('bProfile', this.bProfile);
           this.user_datastorage.setUserBusinessProfileWeightage(this.bProfile);

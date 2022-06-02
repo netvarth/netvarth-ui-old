@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../../app.component';
 import { ProviderServices } from '../../../../services/provider-services.service';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { ProviderSharedFuctions } from '../../../../functions/provider-shared-functions';
@@ -8,6 +7,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 @Component({
     selector: 'app-locations',
@@ -33,7 +33,7 @@ export class LocationsListComponent implements OnInit {
     query_executed = false;
     emptyMsg = '';
     subdomain_fields: any = [];
-    loc_icon = projectConstants.LOCATION_BADGE_ICON;
+    loc_icon = projectConstantsLocal.LOCATION_BADGE_ICON;
     show_addlocationButton = false;
     multipeLocationAllowed = false;
     businessConfig: any = [];

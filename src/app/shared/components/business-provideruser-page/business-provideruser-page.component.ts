@@ -380,6 +380,7 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
   }
   ngOnInit() {
     this.api_loading = true;
+    this.lStorageService.setitemonLocalStorage('reqFrom', 'WEB_LINK');
     this.accountIdExists = false;
     this.userId = null;
     this.provider_id = null;
@@ -611,6 +612,9 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
     this.customAppIOSPopup.nativeElement.style.display = 'none';
   }
   ngOnDestroy() {
+    if (this.lStorageService.getitemfromLocalStorage('reqFrom')!=='cuA') {
+      this.lStorageService.removeitemfromLocalStorage('reqFrom');
+    }
     if (this.commdialogRef) {
       this.commdialogRef.close();
     }

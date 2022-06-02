@@ -369,7 +369,7 @@ export class AuthService {
      * @returns true/false
      */
     goThroughLogin() {
-        if (this.lStorageService.getitemfromLocalStorage('reqFrom')) {
+        if (this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA') {
             const _this = this;
             console.log("Entered to goThroughLogin Method");
             return new Promise((resolve) => {

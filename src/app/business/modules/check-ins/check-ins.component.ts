@@ -81,7 +81,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   cancel_cap = Messages.CANCEL_BTN;
   view_cap = Messages.VIEW_CAP;
   no_cap = Messages.NO_CAP;
-  check_in_statuses = projectConstants.CHECK_IN_STATUSES;
+  check_in_statuses = projectConstantsLocal.CHECK_IN_STATUSES;
   wait_time_caption = Messages.WAIT_TIME;
   no_result_found = Messages.NO_RESULT_FOUND;
   manage_labels = Messages.MANAGE_LABELS;
@@ -92,7 +92,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   no_completed_checkin_msg = '';
   no_cancelled_checkin_msg = '';
   check_in_statuses_filter = projectConstantsLocal.CHECK_IN_STATUSES_FILTER;
-  future_check_in_statuses_filter = projectConstants.FUTURE_CHECK_IN_STATUSES_FILTER;
+  future_check_in_statuses_filter = projectConstantsLocal.FUTURE_CHECK_IN_STATUSES_FILTER;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   newTimeDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   locations: any = [];
@@ -577,65 +577,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
         () => { }
       );
   }
-  // getAgent(fileName){
-  //   return fileName.toLocaleLowerCase();
-  // }
-  //   getReqFrom(browser,agent) {
-  //     let browserName = ''
-  //      if(browser){
-
-  //   if(browser.includes("Android")){
-  //     browserName = 'Android'
-  //     return browserName.toLocaleLowerCase();
-
-  //   }
-  //   if(browser.includes("iPhone")){
-  //     browserName = 'IOS'
-  //     return browserName.toLocaleLowerCase();
-
-  //   }
-  //   if(browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("iPhone")){
-  //     browserName = 'Web'
-  //     return browserName.toLocaleLowerCase();
-
-  //   }
-
-
-  //    }
-  //   if(browser === undefined && agent === "BROWSER"){
-  //     browserName = 'web'
-  //     return browserName;
-  //   }
-
-
-
-  // }
-  //   getBookingReqFrom(browser) {
-  //     let browserName = ''
-  //     if(browser){
-
-  //   }
-
-  //     return browserName.toLocaleLowerCase();
-  //   }
-  //   getRequestedFrom(browser,reqFrom){
-  //     let browserName = ''
-  //     if(browser){
-  //     browserName = browser.slice(0, 3);
-  //     }
-  //     if(browser === 'WEB_LINK'){
-  //       browserName = 'IOS'
-  //     }
-  //     if(browser){
-  //      if(browser.length >8){
-  //       browserName = browser.slice(0,8);
-  //     }
-  //   }
-
-  //     return reqFrom.toLocaleLowerCase() + ', ' + browserName.toLocaleLowerCase();
-  //   }
-
-
   showText() {
     this.showMore = true;
   }
@@ -2664,7 +2605,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   locateCustomerMsg(details) {
     if (details && details.jaldeeDistance) {
       const distance = details.jaldeeDistance.distance;
-      const unit = projectConstants.LIVETRACK_CONST[details.jaldeeDistance.unit];
+      const unit = projectConstantsLocal.LIVETRACK_CONST[details.jaldeeDistance.unit];
       const travelTime = details.jaldeelTravelTime.travelTime;
       const hours = Math.floor(travelTime / 60);
       const mode = details.jaldeelTravelTime.travelMode;

@@ -286,9 +286,9 @@ export class InboxOuterComponent implements OnInit {
     const input = event.target.files;
     if (input) {
       for (const file of input) {
-        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+        if (projectConstantsLocal.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
           this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-        } else if (file.size > projectConstants.FILE_MAX_SIZE) {
+        } else if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
           this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
         } else {
           this.selectedMessage.files.push(file);

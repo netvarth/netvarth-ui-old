@@ -2,9 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../../../services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
-// import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../../../shared/services/shared-services';
-import { projectConstants } from '../../../../../../app.component';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
@@ -36,7 +34,7 @@ export class ViewReportComponent implements OnInit {
   reimburse_amt_cap = Messages.REPORT_REIMBURSE_AMT_CAP;
   j_acct_cap = Messages.REPORT_JALDEE_ACCT_CAP;
   consumer_cap = Messages.REPORT_CONSUMER_CAP;
-  report_status = projectConstants.REPORT_STATUSES;
+  report_status = projectConstantsLocal.REPORT_STATUSES;
   s3url;
   retval;
   viewreport;

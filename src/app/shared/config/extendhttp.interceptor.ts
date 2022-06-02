@@ -285,11 +285,22 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.androidpro) });
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.iospro) });
     const customId = this.lStorageService.getitemfromLocalStorage('customId');
+    const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+    
     if (customId) {
-      req = req.clone({ headers: req.headers.append('BOOKING_REQ_FROM', 'WEB_LINK'), withCredentials: true });
-    } else {
-      req = req.clone({ headers: req.headers.append('BOOKING_REQ_FROM', 'WEB_UI'), withCredentials: true });
+      if (reqFrom==='cuA') {
+        req = req.clone({ headers: req.headers.append('BOOKING_REQ_FROM', 'CUSTOM_APP'), withCredentials: true });
+      } else {
+        req = req.clone({ headers: req.headers.append('BOOKING_REQ_FROM', 'WEB_LINK'), withCredentials: true });
+      }
+    } else if (reqFrom){
+      req = req.clone({ headers: req.headers.append('BOOKING_REQ_FROM', reqFrom), withCredentials: true });
+      if (reqFrom === 'CUSTOM_WEBSITE') {
+        req = req.clone({ headers: req.headers.append('website-link', this.lStorageService.getitemfromLocalStorage('source')), withCredentials: true });
+      }
+      
     }
+
     if (this.sessionStorageService.getitemfromSessionStorage('tabId')) {
       req = req.clone({ headers: req.headers.append('tab', this.sessionStorageService.getitemfromSessionStorage('tabId')), withCredentials: true });
     } else {

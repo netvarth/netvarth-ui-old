@@ -70,7 +70,7 @@ export class LicenseComponent implements OnInit, OnDestroy {
     unpaid_invoice_show = 0;
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
     newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
-    tooltipcls = projectConstants.TOOLTIP_CLS;
+    tooltipcls = projectConstantsLocal.TOOLTIP_CLS;
     reload_adword_api = { status: true };
     type = null;
     loading = true;

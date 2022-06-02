@@ -65,7 +65,7 @@ export class CustomersListComponent implements OnInit {
   minday = new Date(1900, 0, 1);
   maxday = new Date();
 
-  tooltipcls = projectConstants.TOOLTIP_CLS;
+  tooltipcls = projectConstantsLocal.TOOLTIP_CLS;
   apiloading = false;
   srchcustdialogRef;
   crtCustdialogRef;
