@@ -116,7 +116,7 @@ export class CrmService {
     }
 
     getInprogressLead(filter = {}) {
-      const url = 'provider/lead?status-eq=8';
+      const url = 'provider/lead/?statusName-eq=In Progress';
       return this.servicemeta.httpGet(url, null, filter);
     }
 
@@ -187,7 +187,8 @@ export class CrmService {
 
 
     getCompletedLead(filter = {}) {
-      const url = 'provider/lead?status-eq=10';
+      // const url = 'provider/lead?status-eq=10';\
+      const url = 'provider/lead/?statusName-eq=Failed';
       return this.servicemeta.httpGet(url, null, filter);
     }
     getCompletedLeadCount(filter) {
@@ -195,16 +196,16 @@ export class CrmService {
       return this.servicemeta.httpGet(url, null, filter);
     }
     getNewLead(filter){
-      const url = 'provider/lead/?status-eq=6';
+      const url = 'provider/lead/?statusName-eq=New';
       return this.servicemeta.httpGet(url, null, filter);
     }
     getNewLeadCount(filter){
-      const url = 'provider/lead/count?status-eq=6';
+      const url = 'provider/lead/?statusName-eq=New&from=0&count=10';
       return this.servicemeta.httpGet(url, null, filter);
     }
 
     getFailedLead(filter = {}) {
-      const url = 'provider/lead?status-eq=9';
+      const url = 'provider/lead/?statusName-eq=Failed';
       return this.servicemeta.httpGet(url, null, filter);
     }
     getFailedLeadCount(filter) {
@@ -213,7 +214,7 @@ export class CrmService {
     }
 
     getTransferredLead(filter = {}) {
-      const url = 'provider/lead?status-eq=11';
+      const url = 'provider/lead/?statusName-eq=Transferred';
       return this.servicemeta.httpGet(url, null, filter);
     }
     getTransferredLeadCount(filter) {
@@ -457,7 +458,8 @@ export class CrmService {
     return this.servicemeta.httpPost('provider/crif/processinquiry', data);
   }
   getCRIFKycUpdateLead(filter = {}) {
-    const url = 'provider/lead?status-eq=17';
+    // const url = 'provider/lead?status-eq=17';\
+    const url = 'provider/lead/?statusName-eq=KYC Updated';
     return this.servicemeta.httpGet(url, null, filter);
   }
   getCRIFKycUpdateLeadCount(filter) {
@@ -465,7 +467,8 @@ export class CrmService {
     return this.servicemeta.httpGet(url, null, filter);
   }
   getSalesVerificationLead(filter = {}) {
-    const url = 'provider/lead?status-eq=19';
+    // const url = 'provider/lead?status-eq=19';
+    const url = 'provider/lead/?statusName-eq=Sales Verified';
     return this.servicemeta.httpGet(url, null, filter);
   }
   getSalesVerificationLeadCount(filter) {
@@ -474,7 +477,7 @@ export class CrmService {
   }
   //upload fgile status need to change
   getDocUploadLead(filter = {}) {
-    const url = 'provider/lead?status-eq=21';
+    const url = 'provider/lead/?statusName-eq=Login';
     return this.servicemeta.httpGet(url, null, filter);
   }
   getDocUploadLeadCount(filter) {
