@@ -187,6 +187,17 @@ export class ViewLeadQnrComponent implements OnInit{
   filestoUpload: any = [];
   kycresponse: ArrayBuffer;
   failedStatusId:any;
+  idvalue1: any;
+  idTypes1: any;
+  idtypes1: any;
+  addressType1: any;
+  city1: any;
+  address1: any;
+  state1: any;
+  pin1: any;
+  nomineeType1: any;
+  nomineeName1: any;
+  panNumber1: any;
   constructor(private locationobj: Location,
   
     // private lStorageService: LocalStorageService,
@@ -366,12 +377,45 @@ export class ViewLeadQnrComponent implements OnInit{
     this.crmService.getkyc(this.leadkid).subscribe(data => {
       this.kycDetails = data;
       this.updateValue = this.kycDetails[0];
+      console.log(this.updateValue +'this.updateValue')
+      if(this.updateValue && this.updateValue.validationIds && this.updateValue.validationIds[1].idValue){
+         this.idvalue1 =  this.updateValue.validationIds[1].idValue
+      }
+       if(this.updateValue && this.updateValue.validationIds && this.updateValue.validationIds[1].idTypes){
+         this.idtypes1 =  this.updateValue.validationIds[1].idTypes
+      }
+      if(this.updateValue && this.updateValue.address && this.updateValue.address[0].addressType){
+        this.addressType1 =  this.updateValue.address[0].addressType
+     }
+     if(this.updateValue && this.updateValue.address && this.updateValue.address[0].city){
+      this.city1 = this.updateValue.address[0].city
+   }
+   if(this.updateValue && this.updateValue.address && this.updateValue.address[0].address){
+    this.address1 =  this.updateValue.address[0].address
+ }
+ if(this.updateValue && this.updateValue.address && this.updateValue.address[0].state){
+  this.state1 =  this.updateValue.address[0].state
+}
+if(this.updateValue && this.updateValue.address && this.updateValue.address[0].pin){
+  this.pin1 =  this.updateValue.address[0].pin
+}
+
+if(this.updateValue && this.updateValue.nomineeType){
+  this.nomineeType1 =  this.updateValue.nomineeType
+}
+if(this.updateValue && this.updateValue.nomineeName){
+  this.nomineeName1 =  this.updateValue.nomineeName
+}
+if(this.updateValue && this.updateValue.panNumber){
+  this.panNumber1 =  this.updateValue.panNumber
+}
      console.log(this.updateValue)
        this.createLeadForm.patchValue({
         idTypes : this.updateValue.validationIds[0].idTypes,
-        idTypes1 : this.updateValue.validationIds[1].idTypes,
+        idTypes1 : this.idtypes1,
         idValue:this.updateValue.validationIds[0].idValue,
-        idValue1:this.updateValue.validationIds[1].idValue,
+       
+        idValue1:this.idvalue1,
         telephoneType:this.updateValue.telephone[0].telephoneType,
         telephoneNumber:this.updateValue.telephone[0].telephoneNumber,
         relationType:this.updateValue.relationType,
@@ -380,14 +424,14 @@ export class ViewLeadQnrComponent implements OnInit{
         permanentCity:this.updateValue.permanentCity,
         permanentState:this.updateValue.permanentState,
         permanentPinCode:this.updateValue.permanentPinCode,
-        nomineeType:this.updateValue.nomineeType,
-        nomineeName:this.updateValue.nomineeName,
-        addressType:this.updateValue.address[0].addressType,
-        city:this.updateValue.address[0].city,
-        address:this.updateValue.address[0].address,
-        state:this.updateValue.address[0].state,
-        pin:this.updateValue.address[0].pin,
-        panNumber:this.updateValue.panNumber,
+        nomineeType:this.nomineeType1,
+        nomineeName:this.nomineeName1,
+        addressType:this.addressType1,
+        city:this.city1,
+        address:this.address1,
+        state:this.state1,
+        pin:this.pin1,
+        panNumber:this.panNumber1,
         dob:this.updateValue.dob
        
     })
