@@ -45,9 +45,12 @@
                                                 [matTooltip]="'Token'"></i>
                                         </td>
                                         <td> {{record.waitlist.date | date: newDateFormat}}
+                                        </td>
+                                        <td> 
                                             <div *ngIf="record.waitlist.token">Token#
                                                 {{record.waitlist.token}} </div>
                                         </td>
+                                        
                                         <td> <i *ngIf="record.waitlist.service.serviceType === 'virtualService' && record.waitlist.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
                                                 class="fa meet-icon"></i>
                                             <i *ngIf="record.waitlist.service.serviceType === 'virtualService' && record.waitlist.service.virtualCallingModes[0].callingMode === 'Zoom'"

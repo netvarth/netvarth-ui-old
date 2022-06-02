@@ -125,6 +125,8 @@ export class CustomerDetailComponent implements OnInit {
     whatsappNumber: any;
     number: any;
     orderVisits: any = [];
+    todayorderVisitDetailsArray: any = [];
+    todayordervisitDetails: any;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -313,7 +315,8 @@ export class CustomerDetailComponent implements OnInit {
         this.provider_services.getCustomerOrderVisit(this.customerId).subscribe(
             (data: any) => {
                 this.ordervisitDetails = data;
-                this.OrdersVisitDetailsArray = this.OrdersvisitDetails = data.todayOrders.concat(data.futureOrders,data.historyOrders);
+                this.todayorderVisitDetailsArray = this.todayordervisitDetails = data.todayOrders;
+                // this.OrdersVisitDetailsArray = this.OrdersvisitDetails = data.todayOrders.concat(data.futureOrders,data.historyOrders);
                 // console.log("Object.assign(data.todayOrders, data.futureOrders)",data.todayOrders.concat(data.futureOrders))
                 // this.OrdersvisitDetails = this.OrdersVisitDetailsArray.slice(0, 5);
                 this.futureorderVisitDetailsArray = this.futureordervisitDetails = data.futureOrders;
@@ -497,7 +500,8 @@ export class CustomerDetailComponent implements OnInit {
     }
     showorderMore(type) {
         if (type === 'today') {
-            this.OrdersvisitDetails = this.OrdersVisitDetailsArray;
+            this.todayordervisitDetails = this.todayorderVisitDetailsArray;
+            // this.OrdersvisitDetails = this.OrdersVisitDetailsArray;
             this.showMoreorderToday = true;
         } else if (type === 'future') {
             this.futureordervisitDetails = this.futureorderVisitDetailsArray;
@@ -509,7 +513,8 @@ export class CustomerDetailComponent implements OnInit {
     }
     showorderLess(type) {
         if (type === 'today') {
-            this.OrdersvisitDetails = this.OrdersVisitDetailsArray.slice(0, 5);
+            this.todayordervisitDetails = this.todayorderVisitDetailsArray.slice(0, 5);
+            // this.OrdersvisitDetails = this.OrdersVisitDetailsArray.slice(0, 5);
             this.showMoreorderToday = false;
         } else if (type === 'future') {
             this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);

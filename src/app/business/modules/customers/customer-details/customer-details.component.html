@@ -75,7 +75,7 @@
                     </div>
                 </div>
             </div>
-            <div class="cards-div">
+            <!-- <div class="cards-div">
                 <div class="col-xl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 mgn-bt-20 no-padding prt-10">
                     <app-records-datagrid [records]="todayvisitDetails" [heading]="'Today'"
                         [source]="'customer-waitlist'" [timeType]="1" [showMore]="showMoreToday"
@@ -88,7 +88,7 @@
                         (actionPerformed)="actionPerformed($event)" [view]="'small'">
                     </app-records-datagrid>
                 </div>
-            </div>
+            </div> -->
             <div class="clearfix"></div>
         </div>
         <!-- <div class="col-lg-4 col-md-4 no-padding">
@@ -102,13 +102,13 @@
     </div>
     <div class="row records-sec pt-0">
         <div class="column">
-            <app-records-datagrid [records]="historyvisitDetails" [heading]="'History'" [source]="'customer-waitlist'"
+            <app-records-datagrid [records]="todayvisitDetails.concat(futurevisitDetails,historyvisitDetails)" [heading]="'Tokens & Appointments'" [source]="'customer-waitlist'"
                 [showMore]="showMoreHistory" [timeType]="3" (actionPerformed)="actionPerformed($event)"
                 [view]="'small'">
             </app-records-datagrid>
         </div>
         <div class="column" *ngIf="domain != 'finance'">
-            <app-records-datagrid [records]="OrdersvisitDetails" [heading]="'Orders'" [source]="'order'"
+            <app-records-datagrid [records]="todayordervisitDetails.concat(futureordervisitDetails,historyOrdervisitDetails)" [heading]="'Orders'" [source]="'order'"
                 [showMore]="showMoreorderToday" [timeType]="1" (actionPerformed)="actionPerformed($event)"
                 [view]="'small'">
             </app-records-datagrid>
