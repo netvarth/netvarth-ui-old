@@ -106,7 +106,7 @@
                                                 currency:'&#8377;' }} Paid</span>
                                         </td>
                                     </ng-container>
-                                    <ng-container *ngIf="source == 'order'">
+                                    <ng-container class="orders" *ngIf="source == 'order'">
                                         <td class="consumer-appthistory"> <i *ngIf="record.storePickup"
                                                 class="storepickup-icon" [matTooltip]="'Store Pickup'"
                                                 aria-hidden="true"></i> <i *ngIf="record.homeDelivery"
@@ -134,8 +134,37 @@
                                         </td>
                                         <td><span class="rupee-font" *ngIf="record.totalAmountPaid > 0">
                                                 {{record.totalAmountPaid |
-                                                currency:'&#8377;' }} Paid</span> </td>
+                                                currency:'&#8377;' }} Paid</span> 
+                                        </td>
+                                            <!-- <div class="m-1 p-2 card d-flex justify-content-between">
+                                                <div class="">
+                                                    <div>
+                                                        <div class="">
+                                                            <i *ngIf="record.storePickup"
+                                                                class="storepickup-icon" [matTooltip]="'Store Pickup'"
+                                                                aria-hidden="true"></i> <i *ngIf="record.homeDelivery"
+                                                                class="delivery-icon" [matTooltip]="'Home Delivery'"
+                                                                aria-hidden="true">
+                                                            </i> 
+                                                            {{record.orderDate | date: newDateFormat}}
+                                                        </div>
+                                                        <div *ngIf="record.orderNumber">Order#
+                                                            {{record.orderNumber}} 
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div>
+                                                            {{record.orderStatus}}
+                                                        </div>
+                                                        <div>
+                                                            <span *ngIf="record.storePickup">Store Pickup</span>
+                                                            <span *ngIf="record.homeDelivery">Home Delivery</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> -->
                                     </ng-container>
+                                    
                                     <ng-container *ngIf="source == 'waitlist'">
                                         <td> {{record.date | date: newDateFormat}}
                                             <div *ngIf="record.token">Token#

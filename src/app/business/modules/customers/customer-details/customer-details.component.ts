@@ -76,7 +76,7 @@ export class CustomerDetailComponent implements OnInit {
     futurevisitDetails: any = [];
     historyvisitDetails: any = [];
     ordervisitDetails: any = [];
-    todayordervisitDetails: any = [];
+    OrdersvisitDetails: any = [];
     futureordervisitDetails: any = [];
     historyOrdervisitDetails: any = [];
     customerAction = '';
@@ -97,7 +97,7 @@ export class CustomerDetailComponent implements OnInit {
     communication_history: any = [];
     todayVisitDetailsArray: any = [];
     futureVisitDetailsArray: any = [];
-    todayorderVisitDetailsArray: any = [];
+    OrdersVisitDetailsArray: any = [];
     futureorderVisitDetailsArray: any = [];
     showMoreFuture = false;
     showMoreToday = false;
@@ -124,6 +124,7 @@ export class CustomerDetailComponent implements OnInit {
     whatsappCountryCode: any;
     whatsappNumber: any;
     number: any;
+    orderVisits: any = [];
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -179,6 +180,8 @@ export class CustomerDetailComponent implements OnInit {
                                         this.getCustomerFutureVisit();
                                         this.getCustomerHistoryVisit();
                                         this.getCustomerOrderVisit();
+                                        console.log("Order Details",this.orderVisits)
+
                                     }
                                 }
                             );
@@ -299,16 +302,20 @@ export class CustomerDetailComponent implements OnInit {
             (data: any) => {
                 this.historyvisitDetails = data;
                 this.loading = false;
+                this.orderVisits = data;
             }
         );
+        console.log("historyvisitDetails",this.historyvisitDetails)
+
     }
     getCustomerOrderVisit() {
         this.loading = true;
         this.provider_services.getCustomerOrderVisit(this.customerId).subscribe(
             (data: any) => {
                 this.ordervisitDetails = data;
-                this.todayorderVisitDetailsArray = this.todayordervisitDetails = data.todayOrders;
-                // this.todayordervisitDetails = this.todayorderVisitDetailsArray.slice(0, 5);
+                this.OrdersVisitDetailsArray = this.OrdersvisitDetails = data.todayOrders.concat(data.futureOrders,data.historyOrders);
+                // console.log("Object.assign(data.todayOrders, data.futureOrders)",data.todayOrders.concat(data.futureOrders))
+                // this.OrdersvisitDetails = this.OrdersVisitDetailsArray.slice(0, 5);
                 this.futureorderVisitDetailsArray = this.futureordervisitDetails = data.futureOrders;
                 // this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);
                 this.historyorderVisitDetailsArray = this.historyOrdervisitDetails = data.historyOrders;
@@ -490,7 +497,7 @@ export class CustomerDetailComponent implements OnInit {
     }
     showorderMore(type) {
         if (type === 'today') {
-            this.todayordervisitDetails = this.todayorderVisitDetailsArray;
+            this.OrdersvisitDetails = this.OrdersVisitDetailsArray;
             this.showMoreorderToday = true;
         } else if (type === 'future') {
             this.futureordervisitDetails = this.futureorderVisitDetailsArray;
@@ -502,7 +509,7 @@ export class CustomerDetailComponent implements OnInit {
     }
     showorderLess(type) {
         if (type === 'today') {
-            this.todayordervisitDetails = this.todayorderVisitDetailsArray.slice(0, 5);
+            this.OrdersvisitDetails = this.OrdersVisitDetailsArray.slice(0, 5);
             this.showMoreorderToday = false;
         } else if (type === 'future') {
             this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);

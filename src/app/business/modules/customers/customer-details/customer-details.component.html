@@ -91,6 +91,14 @@
             </div>
             <div class="clearfix"></div>
         </div>
+        <!-- <div class="col-lg-4 col-md-4 no-padding">
+            <div class="column">
+                <app-records-datagrid [records]="OrdersvisitDetails" [heading]="'Orders'" [source]="'order'"
+                    [showMore]="showMoreorderToday" [timeType]="1" (actionPerformed)="actionPerformed($event)"
+                    [view]="'small'">
+                </app-records-datagrid>
+            </div>
+        </div> -->
     </div>
     <div class="row records-sec pt-0">
         <div class="column">
@@ -100,12 +108,12 @@
             </app-records-datagrid>
         </div>
         <div class="column" *ngIf="domain != 'finance'">
-            <app-records-datagrid [records]="todayordervisitDetails" [heading]="'Todays_Order'" [source]="'order'"
+            <app-records-datagrid [records]="OrdersvisitDetails" [heading]="'Orders'" [source]="'order'"
                 [showMore]="showMoreorderToday" [timeType]="1" (actionPerformed)="actionPerformed($event)"
                 [view]="'small'">
             </app-records-datagrid>
         </div>
-        <div class="column" *ngIf="domain != 'finance'">
+        <!-- <div class="column" *ngIf="domain != 'finance'">
             <app-records-datagrid [records]="futureordervisitDetails" [heading]="'Future_Order'" [source]="'order'"
                 [showMore]="showMoreorderFuture" [timeType]="2" (actionPerformed)="actionPerformed($event)"
                 [view]="'small'">
@@ -116,7 +124,7 @@
                 [showMore]="showMoreOrderHistory" [timeType]="3" (actionPerformed)="actionPerformed($event)"
                 [view]="'small'">
             </app-records-datagrid>
-        </div>
+        </div> -->
         <div class="column" *ngIf="domain != 'finance'">
             <app-records-datagrid [heading]="'Bills'" [source]="'bill'" [records]="consumerBills"
                 [customerId]="customer[0].id" [view]="'small'">
