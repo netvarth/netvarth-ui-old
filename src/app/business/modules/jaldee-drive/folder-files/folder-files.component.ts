@@ -14,6 +14,8 @@ import { ConfirmBoxComponent } from "../../../../business/shared/confirm-box/con
 import { FileService } from "../../../../shared/services/file-service";
 import { DateTimeProcessor } from "../../../../shared/services/datetime-processor.service";
 import { CrmSelectMemberComponent } from "../../../../../../src/app/business/shared/crm-select-member/crm-select-member.component";
+//import { projectConstantsLocal } from "../../../../shared/constants/project-constants";
+
 // import { ServiceQRCodeGeneratordetailComponent } from "../../../../shared/modules/service/serviceqrcodegenerator/serviceqrcodegeneratordetail.component";
 
 // import { ConfirmDeleteBoxComponent } from '../confirm-delete-box/confirm-delete-box.component';
@@ -26,9 +28,11 @@ import { CrmSelectMemberComponent } from "../../../../../../src/app/business/sha
 export class FolderFilesComponent implements OnInit {
   driveFiles: any[] = [];
   allFileTypesSelected = false;
-  fileTypes: any[] = ["png", "jpg", "jpeg", "pdf"];
+ // fileTypes: any[] = ["png", "jpg", "jpeg", "pdf"];
   filterFileType: any;
   fileSizeFilter: any;
+  contextTypes:any=[]
+  fileTypes:any=[]
   loading = true;
   blogo = "";
   bname;
@@ -187,6 +191,25 @@ export class FolderFilesComponent implements OnInit {
       totalItems: this.driveFiles.length
     };
   }
+  contextModes = [
+    { mode: "appointment", value: "Appointment" },
+    { mode: "waitlist", value: "Token" },
+    { mode: "order", value: "Order" },
+    { mode: "donation", value: "Donation" },
+    { mode: "medicalRecord", value: "Medical Record" },
+    { mode: "communication", value: "Communication" },
+    { mode: "massCommunication", value: "Mass Communication" },
+    // { mode: "jaldeeDrive", value: "Jaldee Drive" },
+    { mode: "itemCreation", value: "Item Creation" },
+    { mode: "consumerTask", value: "Consumer Task" },
+    { mode: "providerTask", value: "Provider Task" },
+    { mode: "serviceCreation", value: "Service Creation" },
+    { mode: "profileCreation", value: "Profile Creation" },
+    { mode: "catalogCreation", value: "Catalog Creation" },
+    { mode: "lead", value: "Lead" },
+    { mode: "KYC", value: "KYC" },
+
+  ];
   pageChanged(event) {
     this.config.currentPage = event;
   }
@@ -235,7 +258,7 @@ export class FolderFilesComponent implements OnInit {
       this.filter.serviceId ||
       this.selectedLanguages.length > 0 ||
       this.selectedLocations.length > 0 ||
-      this.selectedSpecialization.length > 0
+      this.selectedSpecialization.length > 0 || this.contextTypes.length>0
     ) {
       this.filterapplied = true;
     } else {
@@ -261,7 +284,7 @@ export class FolderFilesComponent implements OnInit {
       .subscribe(
         data => {
           // this.auditlog_details = data;
-          console.log("Date Range Data :", data);
+          //console.log("Date Range Data :", data);
           // if (this.auditlog_details.length > 0) {
           //   this.auditStatus = 3;
           // } else {
@@ -317,6 +340,10 @@ export class FolderFilesComponent implements OnInit {
         api_filter["folderName-eq"] = this.foldertype;
       }
     }
+    if (this.contextTypes.length > 0) {
+      api_filter['contextType-eq'] = this.contextTypes.toString();
+      api_filter["folderName-eq"] = this.foldertype;
+    }
     if (this.holdauditStartdate !== "") {
       api_filter["uploadedDate-ge"] = this.holdauditStartdate;
       api_filter["folderName-eq"] = this.foldertype;
@@ -341,10 +368,10 @@ export class FolderFilesComponent implements OnInit {
     if (this.filter.folderName !== "") {
       api_filter["folderName-eq"] = this.filter.folderName;
     }
-    if (this.filter.context !== "") {
-      api_filter["contextType-eq"] = this.filter.context;
-      api_filter["folderName-eq"] = this.foldertype;
-    }
+    // if (this.filter.context !== "") {
+    //   api_filter["contextType-eq"] = this.filter.context;
+    //   api_filter["folderName-eq"] = this.foldertype;
+    // }
     if (this.filter.serviceId !== "") {
       api_filter["serviceId-eq"] = this.filter.serviceId;
       api_filter["folderName-eq"] = this.foldertype;
@@ -436,6 +463,7 @@ export class FolderFilesComponent implements OnInit {
     this.selectedSpecialization = [];
     this.selectedLanguages = [];
     this.selectedLocations = [];
+    this.contextTypes = [];
   }
   setFilterFileTypeCheckbox(type, value, event) {
     if (type === "fileType") {
@@ -467,6 +495,18 @@ export class FolderFilesComponent implements OnInit {
     this.doSearch();
   }
   setFilterDataCheckbox(type, value) {
+    // if(type === 'contextMode')
+    // {
+    //   console.log("contextMode value :",value)
+    // }
+    if (type === 'contextMode') {
+      const indx = this.contextTypes.indexOf(value);
+      console.log("contextMode value :",value)
+      this.contextTypes = [];
+      if (indx === -1) {
+        this.contextTypes.push(value);
+      }
+    }
     if (type === "folder") {
       if (value === "true") {
         this.availabileSelected = true;
@@ -598,7 +638,7 @@ export class FolderFilesComponent implements OnInit {
       panelClass: [
         "popup-class",
         "commonpopupmainclass",
-       "uploadfilecomponentclass"
+        "uploadfilecomponentclass"
       ],
       disableClose: true,
       data: {
@@ -890,13 +930,13 @@ export class FolderFilesComponent implements OnInit {
   }
 
   getImage(url, file) {
-    console.log("URL :",url)
+    console.log("URL :", url);
     return this.fileService.getImage(url, file);
   }
   getImageType(fileType) {
-   // console.log(fileType);
+    // console.log(fileType);
     return this.fileService.getImageByType(fileType);
-}
+  }
   // getFileTypeImage(url,file){
   //   return this.fileService.getImg(url,file);
   // }
@@ -925,21 +965,27 @@ export class FolderFilesComponent implements OnInit {
       disableClose: true,
       data: {
         requestType: "fileShare",
-        file:file
+        file: file
       }
     });
     dialogRef.afterClosed().subscribe(result => {
       //Messages.ATTACHMENT_UPLOAD
-      if(result){
+      if (result) {
         this.snackbarService.openSnackBar("Shared successfully!", {
           panelClass: "snackbarnormal"
         });
       }
-      // else{
-      //   this.snackbarService.openSnackBar("", {
+      else {
+        this.snackbarService.openSnackBar("Error in sharing file", {
+          panelClass: "snackbarerror"
+        });
+      }
+      // if(result === 'Close'){
+      //   this.snackbarService.openSnackBar("Cancelled sharing file", {
       //     panelClass: "snackbarerror"
       //   });
       // }
+     
     });
   }
   onBack() {}
@@ -966,19 +1012,19 @@ export class FolderFilesComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe((res: any) => {
-      console.log("resssssssss", res);
+      // console.log("resssssssss", res);
       // this.getCompletedTask();
-      if (
-        res === "In Progress" ||
-        res === "Completed" ||
-        res === "Assigned" ||
-        res === "New" ||
-        res === "Cancelled" ||
-        res === "Suspended"
-      ) {
-        // this.getInprogressTask();
-        this.ngOnInit();
-      }
+      // if (
+      //   res === "In Progress" ||
+      //   res === "Completed" ||
+      //   res === "Assigned" ||
+      //   res === "New" ||
+      //   res === "Cancelled" ||
+      //   res === "Suspended"
+      // ) {
+      //   // this.getInprogressTask();
+      //   this.ngOnInit();
+      // }
       // else if(res==='Completed'){
       //   this.ngOnInit()
       // }
