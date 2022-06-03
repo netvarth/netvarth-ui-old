@@ -7,7 +7,7 @@
 }
 .height-limit
 {
-    height: 250px!important;
+    height: 100px!important;
     overflow-y: scroll!important;
 }
 .text-primary
@@ -329,6 +329,7 @@
     border-radius: 3.93969px;
     margin-bottom: 5px;
     margin-right: 5px;
+    margin-left: 5px;
   }
   .dropdown-menu {
     position: absolute;
@@ -446,7 +447,7 @@ background: #FFFFFF;
 box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
 border-radius: 3.75916px !important;
 border: 0px solid  !important;
-margin-right: 10px !important;
+/* margin-right: 10px !important; */
 padding: 6px 10px;
 color: #fff;
 font-weight: bold;
@@ -716,7 +717,7 @@ background: #A8ABAF !important;
 box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
 border-radius: 3.75916px !important;
 border: 0px solid  !important;
-margin-right: 10px !important;
+/* margin-right: 10px !important; */
 padding: 6px 10px;
 color: #fff;
 font-weight: bold;
@@ -874,4 +875,22 @@ border: 2px solid #04A5FF;
     gap: 5px;
     align-items: center;
     flex-direction: row-reverse;
+}
+.textareaStart{
+  background: #FFFFFF;
+    border: 0.82945px solid #D9D5D5;
+    border-radius: 7.25282px;
+}
+textarea .form-control{
+  height: 100px !important;
+  background: #FCFCFC !important;
+    border: 1.07315px solid #C9C9C9 !important;
+    border-radius: 11.8046px !important;
+}
+.fiesWithIcon{
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd !important;
 }
