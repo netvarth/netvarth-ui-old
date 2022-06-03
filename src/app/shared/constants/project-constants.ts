@@ -7,15 +7,15 @@ export const projectConstantsLocal = {
   SMALL_DEVICE_BOUNDARY: 991,
   PROVIDER_SMALL_DEVICE_BOUNDARY: 767,
   searchpass_criteria: {
-    'start': 0,
-    'return': 'title,sector,logo,place1,business_phone_no,unique_id',
-    'fq': '',
-    'q': '',
-    'size': 10,
-    'parser': 'structured', // 'q.parser'
-    'options': '', // 'q.options'
-    'sort': '',
-    'distance': ''
+    "start": 0,
+		"return": "title,sector,logo,place1,business_phone_no,unique_id",
+		"fq": "",
+		"q": "",
+		"size": 10,
+		"parser": "structured",
+		"options": "",
+		"sort": "",
+		"distance": ""
   },
   myweekdays: [
     'sunday',
@@ -363,62 +363,136 @@ export const projectConstantsLocal = {
   DISTANCE_CAPITAL: 20, // in Km
 
   AUDITLOG_CNT: 10,
-  AUDITLOG_FILTER_CATEGORIES: [
-    {
-      name: 'SETTINGS',
-      displayName: 'Settings',
-      subcat: [
-        { name: 'LOCATION', dispName: 'Location' },
-        { name: 'QUEUE', dispName: 'Queues' },
-        { name: 'SERVICE', dispName: 'Service' },
-        { name: 'HOLIDAY', dispName: 'Holiday' },
-        { name: 'WAITLIST', dispName: 'Waitlist' },
-        { name: 'PAYMENT', dispName: 'Payment' },
-        { name: 'COUPOUN', dispName: 'Coupon' },
-        { name: 'ITEM', dispName: 'Item' },
-        { name: 'ADDWORD', dispName: 'Jaldee Adword' },
-        { name: 'TAX', dispName: 'Tax' },
-        { name: 'DISCOUNT', dispName: 'Discount' },
-        { name: 'ACCOUNT', dispName: 'Account' }
-      ]
-    },
-    {
-      name: 'WAITLIST',
-      displayName: 'Waitlist',
-      subcat: [
-        { name: 'CANCEL', dispName: 'Cancel' },
-        { name: 'WAIT', dispName: 'Wait' },
-        { name: 'DELAY', dispName: 'Delay' },
-        { name: 'WAITLIST', dispName: 'Waitlist' },
-        { name: 'RATING', dispName: 'Rating' },
-        { name: 'BILL', dispName: 'Bill' }
-      ]
-    },
-    {
-      name: 'LICENSE',
-      displayName: 'License',
-      subcat: [
-        { name: 'ADDON', dispName: 'Add-on' },
-        { name: 'INVOICE', dispName: 'Invoice' },
-        { name: 'LICENSE', dispName: 'License' }
-      ]
-    },
-    {
-      name: 'SIGNUP',
-      displayName: 'Signup',
-      subcat: [
-        { name: 'PROVIDER', dispName: 'Provider' },
-        { name: 'CONSUMER', dispName: 'Consumer' }
-      ]
-    }
-  ],
-  AUDITLOG_FILTER_ACTION: [
-    { name: 'ADD', dispName: 'Add' },
-    { name: 'DELETE', dispName: 'Delete' },
-    { name: 'EDIT', dispName: 'Edit' },
-    // { name: 'COPY', dispName: 'Copy' },
-    { name: 'VIEW', dispName: 'View' }
-  ],
+  AUDITLOG_FILTER_CATEGORIES: [{
+    "name": "SETTINGS",
+    "displayName": "Settings",
+    "subcat": [{
+        "name": "LOCATION",
+        "dispName": "Location"
+      },
+      {
+        "name": "QUEUE",
+        "dispName": "Queues"
+      },
+      {
+        "name": "SERVICE",
+        "dispName": "Service"
+      },
+      {
+        "name": "HOLIDAY",
+        "dispName": "Holiday"
+      },
+      {
+        "name": "WAITLIST",
+        "dispName": "Waitlist"
+      },
+      {
+        "name": "PAYMENT",
+        "dispName": "Payment"
+      },
+      {
+        "name": "COUPOUN",
+        "dispName": "Coupon"
+      },
+      {
+        "name": "ITEM",
+        "dispName": "Item"
+      },
+      {
+        "name": "ADDWORD",
+        "dispName": "Jaldee Adword"
+      },
+      {
+        "name": "TAX",
+        "dispName": "Tax"
+      },
+      {
+        "name": "DISCOUNT",
+        "dispName": "Discount"
+      },
+      {
+        "name": "ACCOUNT",
+        "dispName": "Account"
+      }
+    ]
+  },
+  {
+    "name": "WAITLIST",
+    "displayName": "Waitlist",
+    "subcat": [{
+        "name": "CANCEL",
+        "dispName": "Cancel"
+      },
+      {
+        "name": "WAIT",
+        "dispName": "Wait"
+      },
+      {
+        "name": "DELAY",
+        "dispName": "Delay"
+      },
+      {
+        "name": "WAITLIST",
+        "dispName": "Waitlist"
+      },
+      {
+        "name": "RATING",
+        "dispName": "Rating"
+      },
+      {
+        "name": "BILL",
+        "dispName": "Bill"
+      }
+    ]
+  },
+  {
+    "name": "LICENSE",
+    "displayName": "License",
+    "subcat": [{
+        "name": "ADDON",
+        "dispName": "Add-on"
+      },
+      {
+        "name": "INVOICE",
+        "dispName": "Invoice"
+      },
+      {
+        "name": "LICENSE",
+        "dispName": "License"
+      }
+    ]
+  },
+  {
+    "name": "SIGNUP",
+    "displayName": "Signup",
+    "subcat": [{
+        "name": "PROVIDER",
+        "dispName": "Provider"
+      },
+      {
+        "name": "CONSUMER",
+        "dispName": "Consumer"
+      }
+    ]
+  }
+],
+  AUDITLOG_FILTER_ACTION: [{
+    "name": "ADD",
+    "dispName": "Add"
+  },
+  {
+    "name": "DELETE",
+    "dispName": "Delete"
+  },
+  {
+    "name": "EDIT",
+    "dispName": "Edit"
+  },
+  {
+    "name": "VIEW",
+    "dispName": "View"
+  }
+],
   ALERT_CNT: 10,
   BUSINESS_NAME_MAX_LENGTH: 50,
   BUSINESS_DESC_MAX_LENGTH: 2000,
@@ -436,14 +510,6 @@ export const projectConstantsLocal = {
     { displayName: 'Valet Parking', value: 'valet' },
     { displayName: 'Paid Parking', value: 'paid' }
   ],
-  PARKING_TYPES_DISPLAY: {
-    none: 'None',
-    free: 'Free Parking',
-    street: 'Street Parking',
-    privatelot: 'Private Parking',
-    valet: 'Valet Parking',
-    paid: 'Paid Parking'
-  },
   REPORT_STATUS_FILTER: [
     { displayName: 'Payment Pending', value: 'PAYMENTPENDING' },
     { displayName: 'Requested', value: 'REQUESTED' },
@@ -597,7 +663,6 @@ export const projectConstantsLocal = {
     17: 'Jaldee_Discount_Network',
     18: 'Status_Board',
     19: 'Jaldee_Messaging'
-
   },
   MONTH: [
     { value: '01', name: 'Jan' },
@@ -1072,5 +1137,3 @@ export const projectConstantsLocal = {
   // PATH:'https://www.jaldee.com/',,
   // PATH:'https://test.jaldee.com/jaldee/',
 };
-
-
