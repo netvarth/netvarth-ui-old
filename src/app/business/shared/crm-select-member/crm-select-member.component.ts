@@ -125,6 +125,8 @@ export class CrmSelectMemberComponent implements OnInit {
   selectable = true;
   removable = true;
   showDone = true;
+  showSelect = true;
+  showInput = true;
   showId = false;
   showEmail = false;
   showName = false;
@@ -914,9 +916,15 @@ showFileView(file){
   // }
 
   handleDeptSelction(obj){
+    this.showSelect=true;
+    this.showInput=false;
     console.log("selected Data:",obj)
     const filter = { "id-eq": obj };
-   
+    const customer = this.newData.splice(this.newData.find(x => x.id === obj),1);
+    console.log("customer reomve",customer)
+
+    //this.newData.splice(this.newData.findIndex(item => item.id === obj), 1);
+
     this.providerServiceObj.getCustomer(filter).subscribe((res)=>{
      
       this.selected_customer=res;
@@ -1037,10 +1045,18 @@ showFileView(file){
               // this.newData = this.searchedData;
               data.forEach((newElement)=>{
                 console.log("multiple Data",newElement)
-              
-              //  this.customerList = []
-                this.newData.push(newElement)
+              this.showSelect=false;
+              this.showInput = true;
+              const customer = this.newData.find(x => x.id === newElement.id);
+              if (customer) {
+               // this.newData.push('')
+               // this.snackbarService.openSnackBar("Searched people already existed!",{'panelClass': 'snackbarerror'})
+              } else {
+                 this.newData.push(newElement)
                this.customerArray.push(newElement.id);
+              }
+              //  this.customerList = []
+               
               })
             }
             if(data.length === 1){

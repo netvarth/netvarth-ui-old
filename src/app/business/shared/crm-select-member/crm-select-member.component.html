@@ -1024,13 +1024,13 @@
        
          
             <div>
-                <div class="customerInfo">
+                <div class="customerInfo" *ngIf="showSelect">
                     <!-- [ngModelOptions]="{standalone: true}" [(ngModel)]="search_input" (change)="searchCustomer(customerList)"-->
-                    <input type="text" autocomplete="off"
+                    <input type="text" autocomplete="off" 
                         class="form-control inputSize" name="search"   (ngModelChange)="createCustomerData(customerDetails)" [(ngModel)]="customerDetails" placeholder="Search people by id/name/email/phone number"/><br>
                        
                         <!-- {{searchby}} [disabled]="!customerDetails"-->
-                        <div>
+                        <div >
                             <button type="button" class="confirmBtnFind"  title="Search" (click)="searchCustomer(customerList)"><i style="color:#fff;margin-left: 5px;" class="fa fa-search"></i> </button>
                         </div>
  <!--  [ngModel]="customerDetails"  #deptsel
@@ -1059,16 +1059,17 @@
                               searchCustomer()" -->
                 </div>
 
-                <div  class="customerInfo mt-1" *ngIf="newData.length > 1">
+                <div  class="customerInfo" *ngIf="newData.length >= 1 && showInput">
                     <!-- <mat-select class="inputSize" multiple>
                       <mat-option *ngFor="let customer of customerList" [value]="customer.id">
                               <span> {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}</span>
                       </mat-option>
                     </mat-select> -->
-                    <select class="selectSize" aria-label="Default select example"
-                      [ngModel]="customerDetails"  #deptsel
-                                (change)="handleDeptSelction(deptsel.value)">
-                        <option selected>None</option>
+                   
+                    <select class="selectSize" 
+                        #deptsel
+                                (change)="handleDeptSelction(deptsel.value)" placeholder="Select people">
+                         <option selected>Select people</option>
                         <option *ngFor="let customer of newData" [value]="customer.id">
                             <span> {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}</span>
                         </option>
