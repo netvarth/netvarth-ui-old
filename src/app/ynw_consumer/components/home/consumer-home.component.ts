@@ -93,7 +93,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   timeFormat = projectConstants.PIPE_DISPLAY_TIME_FORMAT;
   loadcomplete = { waitlist: false, fav_provider: false, history: false, donations: false, appointment: false };
-  tooltipcls = projectConstants.TOOLTIP_CLS;
+  tooltipcls = projectConstantsLocal.TOOLTIP_CLS;
   pagination: any = {
     startpageval: 1,
     totalCnt: 0,
@@ -1733,7 +1733,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeeDistance.distance === 0) {
       message += 'You are about to reach ' + waitlist.providerAccount.businessName;
     } else {
-      message += 'You are ' + waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeeDistance.distance + ' ' + projectConstants.LIVETRACK_CONST[waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeeDistance.unit] + ' away and will take around';
+      message += 'You are ' + waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeeDistance.distance + ' ' + projectConstantsLocal.LIVETRACK_CONST[waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeeDistance.unit] + ' away and will take around';
       message += ' ' + this.getMintuesToHour(waitlist.jaldeeWaitlistDistanceTime.jaldeeDistanceTime.jaldeelTravelTime.travelTime);
       message += ' to reach ' + waitlist.providerAccount.businessName;
     }
@@ -2386,6 +2386,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     console.log(source);
     if (source) {
       window.location.href = source;
+      this.lStorageService.removeitemfromLocalStorage('reqFrom');
       this.lStorageService.removeitemfromLocalStorage('source');
     } else if (this.customId && reqFrom) {
       this.router.navigate(['customapp', this.customId]);

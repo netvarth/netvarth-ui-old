@@ -42,6 +42,7 @@ export class CrmSelectMemberComponent implements OnInit {
   public noteDescription: any;
   public noteDescriptionTime: any;
   public taskDes: any;
+  public selected_customer :any = []
   //for status change variable
   public taskDescription: any;
   public taskTitle: any;
@@ -94,6 +95,8 @@ export class CrmSelectMemberComponent implements OnInit {
   customerDetails: any;
   customerName: any;
   customerList: any = [];
+  public newCustomerList:any=[]
+  public newData:any=[]
   notify: boolean = false;
   message: any;
   searchby = "";
@@ -107,6 +110,7 @@ export class CrmSelectMemberComponent implements OnInit {
   create_customer = false;
   disabledNextbtn = true;
   jaldeeId: any;
+  name:any
   formMode: string;
   countryCode;
   customer_email: any;
@@ -114,7 +118,9 @@ export class CrmSelectMemberComponent implements OnInit {
   hideSearch = false;
   customerArray: any = [];
   public customerData: any = [];
+  public customerViewData:any;
   searchedData: any = [];
+  firstCustomerName:any;
   addOnBlur = true;
   selectable = true;
   removable = true;
@@ -146,6 +152,7 @@ export class CrmSelectMemberComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     this.customer_label = this.wordProcessor.getTerminologyTerm("customer");
     this.provider_label = this.wordProcessor.getTerminologyTerm("provider");
     const user = this.groupService.getitemFromGroupStorage("ynw-user");
@@ -315,11 +322,23 @@ export class CrmSelectMemberComponent implements OnInit {
     if (this.data.requestType === "fileShare") {
       //console.log("this.data", this.data.file);
     }
-    if (this.data.requestType === "customerSearch") {
-      this.customerData = this.data.customerList;
+    if (this.data.requestType === "customerView") {
+      this.customerViewData = this.data.customer;
+      this.firstCustomerName=this.customerViewData.firstName.charAt(0);
+      if(this.customerViewData.phoneNo === undefined || this.customerViewData.phoneNo === '' || this.customerViewData.phoneNo === ' '){
+        this.showDone = false
+      }
+      if(this.customerViewData.email === undefined || this.customerViewData.email === '' || this.customerViewData.email === ' '){
+        this.showDone = false
+      }
+    }
+    if (this.data.requestType === "fileView") {
+      this.customerViewData = this.data.file;
     }
   }
-
+  getFileSize(fileSize) {
+    return Math.round(fileSize);
+  }
   getImageType(fileType) {
     //console.log("fileType",fileType);
     return this.fileService.getImageByType(fileType);
@@ -761,72 +780,107 @@ export class CrmSelectMemberComponent implements OnInit {
   messageData(message: any) {
     console.log("Message :", message);
   }
-
-  openCustomerSearchDialog(customerList) {
-    console.log("openCustomerSearchDialog", customerList);
-    const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
-      width: "100%",
+showCustomerView(customer){
+     const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
+      width: "50%",
       panelClass: ["commonpopupmainclass", "confirmationmainclass"],
       disableClose: true,
       data: {
-        requestType: "customerSearch",
-        customerList: customerList
+        requestType: "customerView",
+        customer: customer
       }
     });
     dialogRef.afterClosed().subscribe((res: any) => {
       if (res) {
-        console.log("searched ", res);
-        this.customerName =
-          (res.firstName ? res.firstName : "") +
-          " " +
-          (res.lastName ? res.lastName : "");
-        console.log("Customer Name :", this.customerName);
-        this.customerList.push(res);
-        this.customerArray.push(res.id);
-
-        if (
-          this.customerList["firstName"] ||
-          this.customerList["lastName"] === ""
-        ) {
-          this.snackbarService.openSnackBar("Shared person must have name", {
-            panelClass: "snackbarerror"
-          });
-        }
-
-        if (customerList["id"] === res.id) {
-          this.snackbarService.openSnackBar("Already Existed", {
-            panelClass: "snackbarerror"
-          });
-        }
       }
-      // this.customerData.push(res.id)
-      // console.log("Customer List :",this.customerData);
-      //   this.customerData.forEach((element,index)=>{
-      //     console.log("Element , Index :",element,index)
-      //     if(this.customerData[index] === this.customerData[index+1]){
-      //       console.log("Existedddd:")
-      //       this.customerData=[]
-      //       //this.customerList['id'] = []
-      //       //this.customerArray = []
-      //     }
-      //       //alert("Alredy")
-      //   })
-      // if(this.customerList['id'] === res.id){
-      //   this.snackbarService.openSnackBar("Already existed!",{'panelClass': 'snackbarerror'})
-      // }
-      if (res === "") {
-        //alert("please selecte atleast one consumer or provider")
-        error => {
-          this.snackbarService.openSnackBar(error, {
-            panelClass: "snackbarerror"
-          });
-        };
-      }
-      // this.getCompletedTask();
+    })
+}
+showFileView(file){
+  console.log("File View :",file)
+  const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
+   width: "50%",
+   panelClass: ["commonpopupmainclass", "confirmationmainclass"],
+   disableClose: true,
+   data: {
+     requestType: "fileView",
+     file: file
+   }
+ });
+ dialogRef.afterClosed().subscribe((res: any) => {
+   if (res) {
+   }
+ })
+}
+  // openCustomerSearchDialog(customerList) {
+  //   console.log("openCustomerSearchDialog", customerList);
+  //   const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
+  //     width: "100%",
+  //     panelClass: ["commonpopupmainclass", "confirmationmainclass"],
+  //     disableClose: true,
+  //     data: {
+  //       requestType: "customerSearch",
+  //       customerList: customerList
+  //     }
+  //   });
+  //   dialogRef.afterClosed().subscribe((res: any) => {
+  //     if (res) {
+  //       console.log("searched ", res);
+  //       this.customerName =
+  //         (res.firstName ? res.firstName : "") +
+  //         " " +
+  //         (res.lastName ? res.lastName : "");
+  //       console.log("Customer Name :", this.customerName);
+  //       this.customerList.push(res);
+  //       this.customerArray.push(res.id);
 
-      // this.getInprogressTask();
-      //this.ngOnInit();
-    });
+  //       if (
+  //         this.customerList["firstName"] ||
+  //         this.customerList["lastName"] === ""
+  //       ) {
+  //         this.snackbarService.openSnackBar("Shared person must have name", {
+  //           panelClass: "snackbarerror"
+  //         });
+  //       }
+
+  //       if (customerList["id"] === res.id) {
+  //         this.snackbarService.openSnackBar("Already Existed", {
+  //           panelClass: "snackbarerror"
+  //         });
+  //       }
+  //     }
+  //     // this.customerData.push(res.id)
+  //     // console.log("Customer List :",this.customerData);
+  //     //   this.customerData.forEach((element,index)=>{
+  //     //     console.log("Element , Index :",element,index)
+  //     //     if(this.customerData[index] === this.customerData[index+1]){
+  //     //       console.log("Existedddd:")
+  //     //       this.customerData=[]
+  //     //       //this.customerList['id'] = []
+  //     //       //this.customerArray = []
+  //     //     }
+  //     //       //alert("Alredy")
+  //     //   })
+  //     // if(this.customerList['id'] === res.id){
+  //     //   this.snackbarService.openSnackBar("Already existed!",{'panelClass': 'snackbarerror'})
+  //     // }
+  //     if (res === "") {
+  //       //alert("please selecte atleast one consumer or provider")
+  //       error => {
+  //         this.snackbarService.openSnackBar(error, {
+  //           panelClass: "snackbarerror"
+  //         });
+  //       };
+  //     }
+  //     // this.getCompletedTask();
+
+  //     // this.getInprogressTask();
+  //     //this.ngOnInit();
+  //   });
+  // }
+  
+  makeNone(makeNone){
+    makeNone = [];
+    this.newData = makeNone
   }
   remove(customer) {
     const index = this.customerList.indexOf(customer);
@@ -834,7 +888,16 @@ export class CrmSelectMemberComponent implements OnInit {
       this.customerList.splice(index, 1);
     }
   }
-
+  removeNewCustomer(customer){
+    const index = this.newCustomerList.indexOf(customer);
+    if (index >= 0) {
+      this.newCustomerList.splice(index, 1);
+    }
+    if(index === 0){
+      this.newCustomerList = []
+      this.newData = []
+    }
+  }
   // add(event: MatChipInputEvent): void {
   //   const value = (event.value || '').trim();
 
@@ -847,14 +910,42 @@ export class CrmSelectMemberComponent implements OnInit {
   //   event.chipInput!.clear();
   // }
 
+  handleDeptSelction(obj){
+    console.log("selected Data:",obj)
+    const filter = { "id-eq": obj };
+   
+    this.providerServiceObj.getCustomer(filter).subscribe((res)=>{
+     
+      this.selected_customer=res;
+      // this.selected_customer.forEach((newElement)=>{
+      //   console.log("New ",newElement)
+       
+        const customer = this.newCustomerList.find(x => x.id === res[0].id);
+        if (customer) {
+          this.snackbarService.openSnackBar("Searched people already existed!",{'panelClass': 'snackbarerror'})
+        } else {
+          this.selected_customer.forEach((newElement)=>{
+            console.log("New ELSE",newElement)
+            this.newCustomerList.push(newElement)
+            this.customerArray.push(newElement.id);
+          })
+        }
+      //})
+      console.log("Selected Customer :",this.selected_customer)
+     
+      
+    })
+
+  }
+
   searchCustomer(customers) {
     console.log("Dattt:", customers);
     this.customerData = customers;
     this.emptyFielderror = false;
-    if (this.customerDetails && this.customerDetails === "") {
+    if (this.customerDetails === "") {
       this.emptyFielderror = true;
       this.snackbarService.openSnackBar(
-        "Please search atleast one consumer or provider",
+        "Please select atleast one people",
         { panelClass: "snackbarerror" }
       );
     } else {
@@ -886,6 +977,10 @@ export class CrmSelectMemberComponent implements OnInit {
           mode = "id";
           this.prefillnewCustomerwithfield = "id";
         }
+        // else{
+        //   mode = "name";
+        //   this.prefillnewCustomerwithfield = "name";
+        // }
       }
 
       switch (mode) {
@@ -903,15 +998,22 @@ export class CrmSelectMemberComponent implements OnInit {
           break;
         case "id":
           post_data["or=jaldeeId-eq"] =
-            this.customerDetails + ",firstName-eq=" + this.customerDetails;
+            this.customerDetails + ",firstName-eq=" + this.customerDetails
+            // + ",lastName-eq="+this.customerDetails;
           // post_data = {
           //   'jaldeeId-eq': form_data.search_input
           // };
           break;
-      }
+          // case "name":
+          //   post_data["firstName-like"] = this.customerDetails+ ",lastName-eq=" + this.customerDetails;
+          //   break;
+            
+           
+          }
+          
       // console.log("Post Data :", post_data);
       // if(post_data === '' || post_data === undefined){
-      //   this.snackbarService.openSnackBar("Please search atleast one consumer or provider",{'panelClass': 'snackbarerror'})
+      //   this.snackbarService.openSnackBar("Please select atleast one people",{'panelClass': 'snackbarerror'})
       // }
       this.customerDetails = "";
       this.providerServiceObj
@@ -922,17 +1024,47 @@ export class CrmSelectMemberComponent implements OnInit {
             this.customer_data = [];
             console.log("Customer dataaaa :", data);
             this.searchedData = data;
-            this.customerArray.push(data[0].id);
+            
+            if(data === '' || undefined){
+              this.snackbarService.openSnackBar("No matches found",{'panelClass': 'snackbarerror'})
+            }
+            //this.customerArray.push(data[0].id);
             //this.customerList.push(data[0]);
-            if (this.customerList.length === 0) {
-              this.customerList.push(data[0]);
-            } else {
-              const customer = this.customerData.find(x => x.id === data[0].id);
-              if (customer) {
-                this.snackbarService.openSnackBar("Searched people already existed!",{'panelClass': 'snackbarerror'})
-              } else {
-                this.customerList.push(data[0]);
-              }
+            if(data.length > 1){
+              // this.newData = this.searchedData;
+              data.forEach((newElement)=>{
+                console.log("multiple Data",newElement)
+              
+              //  this.customerList = []
+                this.newData.push(newElement)
+               this.customerArray.push(newElement.id);
+              })
+            }
+            if(data.length === 1){
+            // if (this.customerList.length === 0) {
+            //   this.searchedData.forEach((newElement)=>{
+            //     console.log("One Data ",newElement)
+            //   //  this.newData = []
+            //     this.customerList.push(newElement)
+            //     this.customerArray.push(newElement.id);
+            //   })
+            //   //this.customerList.push(data[0]);
+            // } else {
+              
+            
+                //this.newData = newElement
+                const customer = this.customerData.find(x => x.id === data[0].id);
+                if (customer) {
+                  this.snackbarService.openSnackBar("Searched people already existed!",{'panelClass': 'snackbarerror'})
+                } else {
+                  this.searchedData.forEach((newElement)=>{
+                    console.log("New ELSE",newElement)
+                    this.newData = []
+                    this.customerList.push(newElement)
+                    this.customerArray.push(newElement.id);
+                  })
+                }
+            
               // for(let i=0;i<this.customerData.length;i++){
               //   if(this.customerData[i].id === data[0].id){
               //     console.log("Existed:")
@@ -942,7 +1074,9 @@ export class CrmSelectMemberComponent implements OnInit {
 
               // }
               //   this.customerList.push(data[0]);
-            }
+           // }
+           
+          }
             // console.log("Array :",this.customerData)
             //              if(this.customerList.length===0){
             //              }
@@ -1009,9 +1143,11 @@ export class CrmSelectMemberComponent implements OnInit {
               }
               if (
                 this.customer_data.firstName &&
-                this.customer_data.firstName !== "null"
+                this.customer_data.firstName !== "null" 
+                //|| this.customer_data.lastName
               ) {
-                this.jaldeeId = this.customer_data.firstName;
+                this.jaldeeId = this.customer_data.firstNameValue
+                // + '' + this.customer_data.lastName;
               }
             }
           },
@@ -1020,7 +1156,7 @@ export class CrmSelectMemberComponent implements OnInit {
           //   this.wordProcessor.apiErrorAutoHide(this, error);
           // }
           error => {
-            //this.snackbarService.openSnackBar("Please select atleast one consumer",{'panelClass': 'snackbarerror'})
+            //this.snackbarService.openSnackBar("",{'panelClass': 'snackbarerror'})
           }
         );
     }
@@ -1085,6 +1221,11 @@ export class CrmSelectMemberComponent implements OnInit {
       "File Id :",
       attachments[0]
     );
+    if(this.fileArray === '' || attachments[0] === ''){
+      this.snackbarService.openSnackBar("please select atleast one people", {
+        panelClass: "snackbarerror"
+      });
+    }
     let dataToSend = new FormData();
     const newBlobArray = new Blob([JSON.stringify(this.fileArray, null, 2)], {
       type: "application/json"
@@ -1095,6 +1236,7 @@ export class CrmSelectMemberComponent implements OnInit {
     });
     dataToSend.append("attachments", newBlob);
 
+    
     this.providerServiceObj.shareProviderFiles(dataToSend).subscribe(
       res => {
         //   console.log("Ressssssssssssult:", res);

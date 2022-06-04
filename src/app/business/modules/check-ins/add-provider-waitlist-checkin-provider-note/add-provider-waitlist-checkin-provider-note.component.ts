@@ -7,6 +7,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-provider-waitlist-checkin-provider-note',
@@ -152,10 +153,10 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
     const input = event.target.files;
     if (input) {
       for (const file of input) {
-        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-          this.wordProcessor.apiErrorAutoHide(this, 'Selected image type not supported');
-        } else if (file.size > projectConstants.FILE_MAX_SIZE) {
-          this.wordProcessor.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
+        if (projectConstantsLocal.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+          this.wordProcessor.apiErrorAutoHide(this, 'Selected file type not supported');
+        } else if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
+          this.wordProcessor.apiErrorAutoHide(this, 'Please upload files with size < 10mb');
         } else {
           this.selectedMessage.files.push(file);
           const reader = new FileReader();

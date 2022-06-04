@@ -101,7 +101,7 @@ export class AppointmentActionsComponent implements OnInit {
   buttonClicked = false;
   accountType: any;
   changeService = true;
-  check_in_statuses = projectConstants.CHECK_IN_STATUSES;
+  check_in_statuses = projectConstantsLocal.CHECK_IN_STATUSES;
   meet_data: any;
   id: any;
   providerMeetingUrl: any;
@@ -425,7 +425,7 @@ export class AppointmentActionsComponent implements OnInit {
     if (details && details.jaldeeDistance) {
       const distance = details.jaldeeDistance.distance;
       const unit =
-        projectConstants.LIVETRACK_CONST[details.jaldeeDistance.unit];
+        projectConstantsLocal.LIVETRACK_CONST[details.jaldeeDistance.unit];
       const travelTime = details.jaldeelTravelTime.travelTime;
       const hours = Math.floor(travelTime / 60);
       const mode = details.jaldeelTravelTime.travelMode;

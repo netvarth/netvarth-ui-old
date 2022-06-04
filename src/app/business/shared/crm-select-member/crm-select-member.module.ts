@@ -15,6 +15,10 @@ import { MatIconModule } from "@angular/material/icon";
 import {MatChipsModule} from '@angular/material/chips';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatSelectModule } from "@angular/material/select";
+import { MatOptionModule } from "@angular/material/core";
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+
 
 import { NgCircleProgressModule } from "ng-circle-progress";
 import { FilterPipe } from './filter.pipe';
@@ -35,6 +39,8 @@ const routes: Routes = [
     MatDialogModule,
     MatButtonModule,
     FormsModule,
+    MatSelectModule,
+    MatOptionModule,
     MatCheckboxModule,
     RouterModule,
     CapitalizeFirstPipeModule,
@@ -44,6 +50,7 @@ const routes: Routes = [
     MatChipsModule,
     MatFormFieldModule,
     MatTooltipModule,
+    MatAutocompleteModule,
     NgCircleProgressModule.forRoot({
       // set defaults here
       backgroundColor: "#e9ecef",

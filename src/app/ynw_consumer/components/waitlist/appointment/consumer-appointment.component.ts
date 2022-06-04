@@ -460,6 +460,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 let source = this.lStorageService.getitemfromLocalStorage('source');
                 if (source) {
                     window.location.href = source;
+                    this.lStorageService.removeitemfromLocalStorage('reqFrom');
                     this.lStorageService.removeitemfromLocalStorage('source');
                 } else {
                     this.location.back();

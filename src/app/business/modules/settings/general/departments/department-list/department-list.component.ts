@@ -4,10 +4,10 @@ import { Messages } from '../../../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderSharedFuctions } from '../../../../../functions/provider-shared-functions';
 import { ProviderServices } from '../../../../../services/provider-services.service';
-import { projectConstants } from '../../../../../../app.component';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
+import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 
 @Component({
     'selector': 'app-department-list',
@@ -17,7 +17,7 @@ export class DepartmentListComponent implements OnInit {
     departments: any = [];
     deptObj;
     loading = true;
-    tooltipcls = projectConstants.TOOLTIP_CLS;
+    tooltipcls = projectConstantsLocal.TOOLTIP_CLS;
     add_button = Messages.ADD_DEPT;
     isCheckin;
     domain: any;

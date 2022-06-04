@@ -33,7 +33,7 @@ export class CheckYourStatusComponent implements OnInit, OnDestroy {
   token_no = Messages.TOKEN_NO;
   server_date;
   placeText;
-  check_in_statuses = projectConstants.CHECK_IN_STATUSES;
+  check_in_statuses = projectConstantsLocal.CHECK_IN_STATUSES;
   provider_label = '';
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;

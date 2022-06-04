@@ -3,7 +3,6 @@ import { ProviderAddonAuditlogsComponent } from '../../provider-addon-auditlogs/
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../app.component';
 import { Router, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { Location } from '@angular/common';
@@ -26,7 +25,7 @@ export class AddonsComponent implements OnInit, OnDestroy {
     addonhistorydialogRef;
     license_message = '';
     currentlicense_details: any = [];
-    tooltipcls = projectConstants.TOOLTIP_CLS;
+    tooltipcls = projectConstantsLocal.TOOLTIP_CLS;
     current_lic;
     addonTooltip = '';
     domain;

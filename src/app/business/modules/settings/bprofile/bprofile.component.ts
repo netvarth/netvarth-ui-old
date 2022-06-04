@@ -257,7 +257,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   adwords_maxremaining = 0;
   adwords_remaining = 0;
   adwordshow_list: any = [];
-  tooltipcls = projectConstants.TOOLTIP_CLS;
+  tooltipcls = projectConstantsLocal.TOOLTIP_CLS;
   normal_adworkds_active = false;
   normal_search_display = false;
   normal_search_active = false;

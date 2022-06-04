@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../../app.component';
 import { ProviderServices } from '../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ConfirmBoxComponent } from '../../../../../shared/components/confirm-box/confirm-box.component';
@@ -34,7 +33,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     emptyMsg = '';
     domain;
     frm_items_cap = 'Catalog creation and management';
-    item_status = projectConstants.ITEM_STATUS;
+    item_status = projectConstantsLocal.ITEM_STATUS;
     itemnameTooltip = 'Click here to edit catalog';
     additemdialogRef;
     edititemdialogRef;

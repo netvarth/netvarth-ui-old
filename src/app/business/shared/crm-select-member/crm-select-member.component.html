@@ -1011,7 +1011,8 @@
 <section  *ngIf="data.requestType==='fileShare'" style="padding: 20px;">
     <div class="header">
         <div class="d-flex" style="gap:10px">
-            <div> <i class="fa fa-share-square fa-2x" aria-hidden="true"></i></div>
+            <!-- <div> <i class="fa fa-share-square fa-2x" aria-hidden="true"></i></div> -->
+            <img src="/assets/images/share.svg" style="height: 3opx;width: 30px;" alt="">
             <div class="headerText">Share with people</div>
         </div>
         <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
@@ -1024,19 +1025,55 @@
          
             <div>
                 <div class="customerInfo">
-                    <!-- [ngModelOptions]="{standalone: true}" [(ngModel)]="search_input"-->
+                    <!-- [ngModelOptions]="{standalone: true}" [(ngModel)]="search_input" (change)="searchCustomer(customerList)"-->
                     <input type="text" autocomplete="off"
-                        class="form-control inputSize" name="search" (ngModelChange)="createCustomerData(customerDetails)" [(ngModel)]="customerDetails" placeholder="Search people by id/name/email/phone number"/>
-                        <!--  -->
+                        class="form-control inputSize" name="search"   (ngModelChange)="createCustomerData(customerDetails)" [(ngModel)]="customerDetails" placeholder="Search people by id/name/email/phone number"/><br>
+                       
                         <!-- {{searchby}} [disabled]="!customerDetails"-->
                         <div>
-                            <button type="button" class="btn confirmBtnFind"  title="Search" (click)="searchCustomer(customerList)"><i style="color:#fff;margin-left: 5px;" class="fa fa-search"></i> </button>
+                            <button type="button" class="confirmBtnFind"  title="Search" (click)="searchCustomer(customerList)"><i style="color:#fff;margin-left: 5px;" class="fa fa-search"></i> </button>
                         </div>
+ <!--  [ngModel]="customerDetails"  #deptsel
+                              (selectionChange)="handleDeptSelction(deptsel.value)" -->
+                             
+
+                        <!-- <ng-container class="inputSize">
+                            <span class="p-0 m-0 sel-dept">{{select_deptment_cap}}</span>
+                            <span class="required">*</span>
+                            <mat-form-field *ngIf="deptLength == 1">
+                              <input matInput class="inputbox" *ngFor="let dept of customerList" [readonly]="true"
+                                placeholder="Department" value="{{dept.departmentName | capitalizeFirst}}">
+                            </mat-form-field>
+                            <mat-form-field *ngIf="customerList.length > 1">
+                              <mat-select class="inputbox" [ngModel]="customerDetails" #deptsel
+                                (selectionChange)="handleDeptSelction(deptsel.value)">
+                                <mat-option *ngFor="let customer of customerList" [value]="customer.id">
+                                        <span> {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}</span>
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </ng-container>
+                           -->
+                     
                             <!-- (click)="
                               searchCustomer()" -->
                 </div>
 
-                
+                <div  class="customerInfo mt-1" *ngIf="newData.length > 1">
+                    <!-- <mat-select class="inputSize" multiple>
+                      <mat-option *ngFor="let customer of customerList" [value]="customer.id">
+                              <span> {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}</span>
+                      </mat-option>
+                    </mat-select> -->
+                    <select class="selectSize" aria-label="Default select example"
+                      [ngModel]="customerDetails"  #deptsel
+                                (change)="handleDeptSelction(deptsel.value)">
+                        <option selected>None</option>
+                        <option *ngFor="let customer of newData" [value]="customer.id">
+                            <span> {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}</span>
+                        </option>
+                      </select>
+                </div>
                 <div class="fileInfo">
                  
                    
@@ -1045,13 +1082,12 @@
                         [(ngModel)]="customerName" placeholder="Add consumer or provider"
                              /> appearance="fill"-->
                              <!-- <label *ngIf="customerList.length === 0">Add people</label> -->
-                             <label *ngIf="customerList.length>0" style="color: #1D3E77; margin-bottom: 0px !important;">Share To : </label>
-                             <mat-form-field class="formSize" *ngIf="customerList.length>0">
-                                <!-- <mat-label>Add people</mat-label> -->
+                             <!-- <label *ngIf="newCustomerList.length>=1" style="color: #1D3E77; margin-bottom: 0px !important;">Share To : </label> -->
+                             <label *ngIf="customerList.length>0 || newCustomerList.length>=1" style="color: #1D3E77; margin-bottom: 0px !important;">Share To : </label>
+                             <mat-form-field class="formSize" *ngIf="customerList.length>0 || newCustomerList.length>=1">
                                 <mat-chip-list #chipList aria-label="Fruit selection" class="maxDiv">
-                                
                                <div *ngFor="let customer of customerList">
-                                    <mat-chip  matTooltipPosition="above" matTooltip="{{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}"  *ngIf="(customer.firstName || customer.lastName) || customer.email" class="matChipFilterSze"  [selectable]="selectable" [removable]="removable" (removed)="remove(customer)">
+                                    <mat-chip (click)="showCustomerView(customer)" matTooltipPosition="above" matTooltip="{{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}"  *ngIf="(customer.firstName || customer.lastName) || customer.email" class="matChipFilterSze"  [selectable]="selectable" [removable]="removable" (removed)="remove(customer)">
                                    <span> {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}</span>
                             
                                     <button matChipRemove>
@@ -1059,9 +1095,21 @@
                                     </button>
                                   </mat-chip>
                                 </div>
-                                
-                              
+                                <div *ngFor="let customer of newCustomerList">
+                                    <mat-chip (click)="showCustomerView(customer)"  matTooltipPosition="above" matTooltip="{{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}"  *ngIf="(customer.firstName || customer.lastName) || customer.email" class="matChipFilterSze"  [selectable]="selectable" [removable]="removable" (removed)="removeNewCustomer(customer)">
+                                   <span> {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}</span>
+                            
+                                    <button matChipRemove>
+                                      <mat-icon >cancel</mat-icon>
+                                    </button>
+                                  </mat-chip>
+                                </div>
                                 </mat-chip-list>
+                           
+
+
+                            
+                                    
                                 <!-- <input placeholder="Add people" readonly class="textField mt-4"
                                 [matChipInputFor]="chipList"
                                > -->
@@ -1080,6 +1128,22 @@
                                         class="fa fa-plus"></i> </button></mat-icon> -->
 
                               </mat-form-field>
+                              
+                              <!-- <mat-form-field class="formSize" *ngIf="newCustomerList.length>0">
+    
+                                <mat-chip-list #chipList1 aria-label="Fruit" class="maxDiv" *ngIf="newCustomerList.length>=1">
+                                
+                                    <div *ngFor="let customer of newCustomerList">
+                                         <mat-chip  matTooltipPosition="above" matTooltip="{{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}"  *ngIf="(customer.firstName || customer.lastName) || customer.email" class="matChipFilterSze"  [selectable]="selectable" [removable]="removable" (removed)="removeNewCustomer(customer)">
+                                        <span> {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}</span>
+                                 
+                                         <button matChipRemove>
+                                           <mat-icon >cancel</mat-icon>
+                                         </button>
+                                       </mat-chip>
+                                     </div>
+                                     </mat-chip-list>
+                                    </mat-form-field> -->
                              
                             <!-- <span *ngIf="customerList.length === 0" class="text-center">No people added</span> -->
 
@@ -1107,7 +1171,7 @@
            
         
  <div *ngIf="data.file" style="margin-bottom: 0px;">
-    <button class="mt-4 mb-0"  matTooltipPosition="above" matTooltip="{{data.file.fileName}}"  class="matChipSize">
+    <button class="mt-4 mb-0" (click)="showFileView(data.file)"  matTooltipPosition="above" matTooltip="{{data.file.fileName}}"  class="matChipSize">
         <img class="imgIcon" [src]="getImageType(data.file.fileType)" alt="">
         {{data.file.fileName?.length>10 ? data.file.fileName.slice(0, 10)+'...' : data.file.fileName}}
     </button>
@@ -1117,10 +1181,10 @@
             <div class="cancelShareBtn">
                 <ng-container>
                     <div class="mt-4">
-                        <button type="button" class="btn font-weight-bold" mat-dialog-close>Cancel</button>&nbsp; &nbsp;
-                        <button type="button" class="btn btn-primary font-weight-bold confirmBtn" [disabled]="customerList.length === 0" (click)="shareFileToConsumerOrProvider()">Send</button>
+                        <button type="button" class="btn font-weight-bold" mat-dialog-close >Cancel</button>&nbsp; &nbsp;
+                        <button type="button" class="btn btn-primary font-weight-bold confirmBtn"  (click)="shareFileToConsumerOrProvider()">Send</button>
                     </div>
-                    <!-- <i class="fa fa-share-alt"  aria-hidden="true"></i> -->
+                    <!-- <i class="fa fa-share-alt"  [disabled]="customerDetails === ''" aria-hidden="true"></i> -->
                 </ng-container>
             </div>
         </div>
@@ -1128,74 +1192,54 @@
 </section>
 
 
-<section *ngIf="data.requestType==='customerSearch'"  style="padding: 20px;">
+<section *ngIf="data.requestType==='fileView'"  style="padding: 5px;">
     <div class="header">
-        <div class="headerText">Search {{customer_label | capitalizeFirst}}</div>
+        <div class="headerText"><i class="fa fa-file fa-2x"></i>  {{customerViewData.fileName?.length>10 ? customerViewData.fileName.slice(0, 10)+'...' : customerViewData.fileName}}
+        </div>
         <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
             <mat-icon>clear</mat-icon>
         </div>
     </div>
-    <mat-dialog-content class="matContainer">
-        <div >
-            <div class="leadTitle mb-1" *ngIf="!hideSearch"  >
-                <div>{{customer_label | capitalizeFirst}} <span class="astericColor">*</span></div>
-            </div>
-            <div class="fieldPadding" *ngIf=" !hideSearch" >
-                <div>
-                    <div class="customerInfo" *ngIf="!hideSearch">
-                        <!-- [ngModelOptions]="{standalone: true}" [(ngModel)]="search_input"-->
-                        <input type="text" autocomplete="off"
-                            class="form-control inputSize" name="search" (ngModelChange)="createCustomerData(customerDetails)" [(ngModel)]="customerDetails" placeholder="Search {{customer_label}}"/>
-                            <!--  -->
-                            <!-- {{searchby}} -->
-                            <!-- <div>
-                                <button type="button" class="btn confirmBtnFind" [disabled]="!customerDetails" title="Search" (click)="searchCustomer()"><i style="color:#fff;margin-left: 5px;" class="fa fa-search"></i> </button>
-                            </div> -->
-                                <!-- (click)="
-                                  searchCustomer()" -->
-                    </div>
-                </div>
-                <!-- <div>
-                    <br>
-                    <div class="disp-flex" *ngIf="!hideSearch"> -->
-                        <!-- <a>*ngIf="!hideSearch"
-                            <span (click)="createNew()"><u>Create Customer</u></span>(click)="createNew()"
-                        </a> -->
-                        <!-- <button type="button" class="btn confirmBtnCustomerInfo px-8 py-1" (click)="createNew()">
-                          <span>
-                            <img class="customImg" src="/assets/images/crmImages/Group28024.png"/>
-                          </span>
-                          Create {{customer_label | capitalizeFirst}} </button> -->
+    <mat-dialog-content>
 
-                    <!-- </div>
+        <div >
+            <div class="bggrey">
+                 <!-- style="display: flex;gap: 5px;flex-wrap: wrap;" -->
+                <!-- <div class="leadTitle">
+                   
+                    <i class="fa fa-file"></i>
+                 {{customerViewData.fileName?.length>10 ? customerViewData.fileName.slice(0, 10)+'...' : customerViewData.fileName}}
                 </div> -->
-                <!-- <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="createCustomerForm.customerDetails === '' || data.file === ''"
-                    errorMsg="{{emptyFielderror}}">
-                </app-field-error-display> -->
-            </div>
-            <!-- {{data| json}} -->
-            <!-- <div *ngFor="let note of allNotes[0];let index=i" class="note">
-                {{note.note }}
-            </div> -->
-            <div class="bggrey my-2" *ngIf="hideSearch">
-                <div class="leadTitle" *ngIf="customer_data.firstName || customer_data.lastName">
-                    <!-- style="display: flex;gap: 5px;flex-wrap: wrap;" -->
-                    <i class="fa fa-user"></i>
-                    {{customer_data.firstName}} {{customer_data.lastName}}
-                </div>
-                <div *ngIf="customer_data">
-                    <div class="leadTitle" *ngIf="customer_data.jaldeeId">
-                        <i class="fa fa-id-card-o icon"></i>
-                        <span>{{customer_label}} id : {{customer_data.jaldeeId}}</span>
+                <div *ngIf="customerViewData">
+                    <div class="leadTitle">
+                        <i class="fa fa-file"></i>
+                        <span>Id : {{customerViewData.id}}</span>
                     </div>
-                    <div class="leadTitle" *ngIf="customer_data.phoneNo !== ' ' || customer_data.phoneNo === undefined || customer_data.phoneNo === ''">
-                        <i class="fa fa-mobile icon" ></i>
-                        <span>{{customer_data.phoneNo}}</span>
+                    <div class="leadTitle" *ngIf="customerViewData.fileType">
+                        <i class="fa fa-file"></i>
+                        <span>Type : {{customerViewData.fileType}}</span>
+                    </div>
+                    <div class="leadTitle" *ngIf="customerViewData.fileSize !== ' ' || customerViewData.fileSize !== undefined || customerViewData.fileSize !== ''">
+                        <i class="fa fa-archive" ></i>
+                        <span class="text-dark-75 d-block" *ngIf="customerViewData.fileSize >=1">
+                           Size : {{getFileSize(customerViewData.fileSize)}}MB
+                          </span>
+                          <span class="text-dark-75 d-block" *ngIf="customerViewData.fileSize <1">
+                            Size : {{getFileSize(customerViewData.fileSize*1024)}}KB
+                          </span>
                     </div>
                     
-                    <div class="leadTitle" *ngIf="customer_data.email !== '' || customer_data.email === undefined">
-                        <i class="fa fa-envelope icon" ></i>
-                        <span>{{customer_data.email}}</span>
+                    <div class="leadTitle" *ngIf="customerViewData.ownerType !== '' || customerViewData.ownerType !== undefined || customerViewData.fileSize !== ''">
+                        <i class="fa fa-user" ></i>
+                        <span>Owner type : {{customerViewData.ownerType}}</span>
+                    </div>
+                    <div class="leadTitle" *ngIf="customerViewData.sharedType !== '' || customerViewData.sharedType !== undefined || customerViewData.fileSize !== ''">
+                        <i class="fa fa-share" ></i>
+                        <span>Share type : {{customerViewData.sharedType}}</span>
+                    </div>
+                    <div class="leadTitle" *ngIf="customerViewData.contextDisplayName !== '' || customerViewData.contextDisplayName !== undefined || customerViewData.fileSize !== ''">
+                        <i class="fa fa-tasks" ></i>
+                        <span>Context : {{customerViewData.contextDisplayName}}</span>
                     </div>
                 </div>
                 <!-- <div style="margin-top:5px;">
@@ -1211,8 +1255,7 @@
         </div>
     <!-- </form> -->
         <!---cancel save btn start-->
-        <div mat-dialog-actions style="display: flex; margin-top: 5; padding: 0px !important;">
-            <!---cancel save btn start-->
+        <!-- <div mat-dialog-actions style="display: flex; margin-top: 5; padding: 0px !important;">
             <div class="cancelSaveBtn">
                 <ng-container>
                     <div class=" mgn-bt-20 mgn-up-10 mt-4">
@@ -1224,13 +1267,82 @@
                             class="btn btn action-button  btn-primary action-button-add confirmBtn">
                             Search Again </button>
                     </div>
-                    <!--<i class="fa fa-search" aria-hidden="true"></i> (click)="shareFileToConsumerOrProvider(customer_data,data.file)" -->
                 </ng-container>
             </div>
 
-            <!---cancel save btn end-->
-        </div>
+           
+        </div> -->
     </mat-dialog-content>
 </section>
+
+
+<section *ngIf="data.requestType==='customerView'"  style="padding: 5px;">
+    <!-- <div class="imageClass">
+                <div style="color: #8A8383;">{{firstCustomerName | capitalizeFirst}} {{customerViewData.firstName | capitalizeFirst}} {{customerViewData.lastName | capitalizeFirst}}</div>
+              </div> -->
+    <div class="header">
+        <div class="headerText"><i class="fa fa-user fa-2x"></i> {{customerViewData.firstName | capitalizeFirst}} {{customerViewData.lastName | capitalizeFirst}}</div>
+        <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+            <mat-icon>clear</mat-icon>
+        </div>
+    </div>
+    <mat-dialog-content>
+
+        <div >
+            <div class="bggrey">
+                <div class="leadTitle" *ngIf="customerViewData.firstName || customerViewData.lastName">
+                    <!-- style="display: flex;gap: 5px;flex-wrap: wrap;" -->
+                    <i class="fa fa-user"></i>
+                    {{customerViewData.firstName | capitalizeFirst}} {{customerViewData.lastName | capitalizeFirst}}
+                </div>
+                <div *ngIf="customerViewData">
+                    <div class="leadTitle" *ngIf="customerViewData.jaldeeId">
+                        <i class="fa fa-id-card-o icon"></i>
+                        <span>{{customer_label | capitalizeFirst}} id : {{customerViewData.jaldeeId}}</span>
+                    </div>
+                    <div class="leadTitle" *ngIf="showDone">
+                        <!-- *ngIf="customerViewData.phoneNo !== ' ' || customerViewData.phoneNo !== undefined || customerViewData.phoneNo !== ''" -->
+                        <i class="fa fa-mobile icon" ></i>
+                        <span>{{customerViewData.phoneNo}}</span>
+                    </div>
+                    <!-- *ngIf="customerViewData.email !== '' || customerViewData.email !== undefined" -->
+                    <div class="leadTitle" *ngIf="showDone">
+                        <i class="fa fa-envelope icon" ></i>
+                        <span>{{customerViewData.email}}</span>
+                    </div>
+                </div>
+                <!-- <div style="margin-top:5px;">
+                    <a class="navbar-item-color bold pointer-cursor disp-none-small"
+                        (click)="search()">
+                        <button mat-flat-button
+                            class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
+                            Search Again </button>
+                    </a>
+
+                </div> -->
+            </div>
+        </div>
+    <!-- </form> -->
+        <!---cancel save btn start-->
+        <!-- <div mat-dialog-actions style="display: flex; margin-top: 5; padding: 0px !important;">
+            <div class="cancelSaveBtn">
+                <ng-container>
+                    <div class=" mgn-bt-20 mgn-up-10 mt-4">
+                        <button type="button" class="btn font-weight-bold"
+                            mat-dialog-close>Cancel</button>&nbsp; &nbsp;
+                            <button type="button" [disabled]="!customer_data" *ngIf="showDone" class="btn btn-primary font-weight-bold confirmBtn"
+                            (click)="getCustomerDetail(customer_data)" >Done</button>
+                            <button mat-flat-button *ngIf="!showDone" (click)="search()"
+                            class="btn btn action-button  btn-primary action-button-add confirmBtn">
+                            Search Again </button>
+                    </div>
+                </ng-container>
+            </div>
+
+           
+        </div> -->
+    </mat-dialog-content>
+</section>
+
 
 

@@ -88,7 +88,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   changeqty_cap = Messages.CHANGE_QTY;
   removeservice_cap = Messages.REMOVE_SERVICE;
   removeitem_cap = Messages.REMOVE_ITEM;
-  coupon_notes = projectConstants.COUPON_NOTES;
+  coupon_notes = projectConstantsLocal.COUPON_NOTES;
   paybycash_cap = Messages.PAYBYCASH;
   paybyothers_cap = Messages.PAYBYOTHERS;
   paybycashothers_cap = Messages.PAYBYCASH_OTHERS;

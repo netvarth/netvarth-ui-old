@@ -184,7 +184,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.subs.unsubscribe();
     }
     goThroughLogin() {
-        if (this.lStorageService.getitemfromLocalStorage('reqFrom')) {
+        if (this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA') {
             const _this = this;
             console.log("Entered to goThroughLogin Method");
             return new Promise((resolve) => {

@@ -77,10 +77,11 @@
       <div class="card card-custom card-stretch gutter-b no-padding">
         <div class="p-3">
           <h3 class="align-items-start flex-column">
-            <span class="fa fa-arrow-left pointer-cursor mgn-rt-10" *ngIf="hideGroups"
+            <span class="fa fa-arrow-left pointer-cursor mgn-rt-10" 
               (click)="hideGroups = false"></span>
+              <!-- *ngIf="selectedGroup == 'all' && groups.length > 0" -->
             <span class="card-label font-1 font-weight-bolder text-dark"
-              *ngIf="selectedGroup == 'all' && groups.length > 0">All
+            *ngIf="selectedGroup == 'all' && groups.length > 0" >All
               {{customer_label | capitalizeFirst}}s</span>
             <span class="card-label font-1 font-weight-bolder text-dark"
               *ngIf="selectedGroup !== 'all'">{{selectedGroup.groupName}}</span>

@@ -388,7 +388,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.translate.use(JSON.parse(localStorage.getItem('translatevariable')))
-
+    this.lStorageService.setitemonLocalStorage('reqFrom', 'WEB_LINK');
     this.api_loading = true;
     this.accountIdExists = false;
     this.userId = null;
@@ -687,6 +687,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.extChecindialogRef.close();
     }
     this.subscriptions.unsubscribe();
+    if (this.lStorageService.getitemfromLocalStorage('reqFrom')!=='cuA') {
+      this.lStorageService.removeitemfromLocalStorage('reqFrom');
+    }
+    
   }
 
   getSocialdet(key, field) {
@@ -1692,7 +1696,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   goThroughLogin() {
-    if (this.lStorageService.getitemfromLocalStorage('reqFrom')) {
+    if (this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA') {
       const _this = this;
       console.log("Entered to goThroughLogin Method");
       return new Promise((resolve) => {

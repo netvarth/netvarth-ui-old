@@ -47,7 +47,7 @@ export class DonationsComponent implements OnInit {
   minday = new Date(2015, 0, 1);
   maxday = new Date();
 
-  tooltipcls = projectConstants.TOOLTIP_CLS;
+  tooltipcls = projectConstantsLocal.TOOLTIP_CLS;
   date_cap = Messages.DATE_CAP;
   amount_cap = Messages.AMOUNT_CAP;
   apiloading = false;

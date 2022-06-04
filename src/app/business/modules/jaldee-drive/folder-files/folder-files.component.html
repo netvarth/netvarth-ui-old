@@ -128,14 +128,14 @@
                     <th style="min-width: 160px" class="head_color">
                       Name
                     </th>
-                    <th style="min-width: 100px" *ngIf="foldertype === 'shared'" class="head_color">
+                    <th style="min-width: 100px" *ngIf="foldertype !== 'private'" class="head_color">
                       Owner
                     </th>
                     <!--style="min-width: 65px" style="min-width: 45px" style="min-width: 55px"   -->
                     <th class="head_color">Date</th>
-                    <th class="head_color">Type</th>
+                    <!-- <th class="head_color">Type</th> -->
                     <th class="head_color">Size</th>
-                    <th style="min-width: 110px" class="head_color">
+                    <th style="min-width: 110px" class="head_color" *ngIf="foldertype !== 'private'">
                       Context
                     </th>
                     <!-- <th *ngIf="foldertype === 'private'" class="head_color">Remove</th> -->
@@ -178,26 +178,29 @@
                         -
                       </span>
                     </td>
-                    <td (click)="preview(file)" *ngIf="foldertype === 'shared' && file.ownerName !==''">
-                      <span class="text-dark-75 d-block ">
-                        {{file.ownerName}}
+                    <td (click)="preview(file)" *ngIf="foldertype !== 'private'">
+                      <span class="text-dark-75 d-block " *ngIf="file.ownerName !==''">
+                        {{file.ownerName | capitalizeFirst}}
                       </span>
-                    </td>
-                    <td *ngIf="foldertype === 'shared' && file.ownerName === ''">
-                      <span class="text-dark-75 d-block ">
+                      <span class="text-dark-75 d-block " *ngIf="file.ownerName === undefined">
                         -
                       </span>
                     </td>
+                    <!-- <td *ngIf="foldertype !== 'private' && file.ownerName === '' || file.ownerName === undefined">
+                      <span class="text-dark-75 d-block ">
+                        --
+                      </span>
+                    </td> -->
                     <td (click)="preview(file)">
                       <span class="text-dark-75 d-block ">
                         {{file.uploadedDate | date:"dd/MM/yy" }}
                       </span>
                     </td>
-                    <td (click)="preview(file)">
+                    <!-- <td (click)="preview(file)">
                       <span class="text-dark-75 d-block">
                         {{file.fileType ? file.fileType : 'document'}}
                       </span>
-                    </td>
+                    </td> -->
                     <td (click)="preview(file)">
                       <span class="text-dark-75 d-block" *ngIf="file.fileSize >=1">
                         {{getFileSize(file.fileSize)}}MB
@@ -206,9 +209,10 @@
                         {{getFileSize(file.fileSize*1024)}}KB
                       </span>
                     </td>
-                    <td (click)="preview(file)">
+                    <td (click)="preview(file)" *ngIf="foldertype !== 'private'">
                       <span class="text-dark-75 d-block">
-                        {{file.context}}
+                        <!-- {{file.context}} -->
+                         {{file.contextDisplayName }}
                       </span>
                     </td>
                     <!-- <td *ngIf="foldertype === 'private'">
@@ -326,7 +330,7 @@
                 </div>
               </div>
             </div>
-            <div class="card side">
+            <div class="card side" *ngIf="foldertype !== 'private'">
               <div class="card-header">
                 <h2 class="mb-0">
                   <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOwnerName"
@@ -505,7 +509,7 @@
               </div>
 
             </div>
-            <div class="card side">
+            <div class="card side" *ngIf="foldertype !== 'private'">
               <div class="card-header">
                 <h2 class="mb-0">
                   <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseBNo1"
@@ -522,14 +526,26 @@
               </div>
               <div id="collapseBNo1" class="collapse in" data-parent="#accordion1">
                 <div class="card-body">
-                  <div class="filterTextinput filter-text-input">
-                    <li class="filterli filter-li">
-                      <input type="text" id="txt_mobile" [(ngModel)]="filter.context" (keyup)="doSearch()"
+                  <div class="filterTextinput filter-text-input" *ngIf="foldertype === 'private'">
+                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize" >
+                      <!-- <input type="text" id="txt_mobile" [(ngModel)]="filter.context" (keyup)="doSearch()"
                         [ngModelOptions]="{standalone: true}" class="filterTextbox filter-textbox"
-                        placeholder="Enter business context">
-                    </li>
+                        placeholder="Enter business context"> -->
+                        <mat-checkbox class="filter-checkbox" [checked]="contextTypes.indexOf('jaldeeDrive') !== -1 "
+                        (change)="setFilterDataCheckbox('contextMode', 'jaldeeDrive')">
+                        Jaldee Drive</mat-checkbox>
+                    </li></div>
+                    <div class="filterTextinput filter-text-input" *ngIf="foldertype !== 'private'">
+                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize" 
+                    *ngFor="let mode of contextModes">
+                    <!-- contextTypes.indexOf(mode.mode) !== -1  *ngIf="foldertype !== 'private'" setFilterDataCheckbox('waitlistMode', mode.mode, $event)-->
+                    <mat-checkbox class="filter-checkbox" [checked]="contextTypes.indexOf(mode.mode) !== -1 "
+                      (change)="setFilterDataCheckbox('contextMode', mode.mode)">
+                      {{mode.value}}</mat-checkbox>
+                  </li>
                   </div>
                 </div>
+                
               </div>
             </div>
             <!-- <div class="card side">

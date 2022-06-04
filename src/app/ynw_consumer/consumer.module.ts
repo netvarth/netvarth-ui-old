@@ -8,12 +8,12 @@ import { ConsumerDataStorageService } from './services/consumer-datastorage.serv
 import { WaitlistDetailResolver } from './services/waitlist-detail-resolver.service';
 import { SharedServices } from '../shared/services/shared-services';
 import { ConsumerComponent } from './consumer.component';
-import { projectConstants } from '../app.component';
 import { ProviderSharedFuctions } from '../business/functions/provider-shared-functions';
 import { MatBadgeModule } from '@angular/material/badge';
 import { UpdateProfilePopupModule } from '../shared/components/update-profile-popup/update-profile-popup.module';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { CheckInHistoryServices } from '../shared/modules/consumer-checkin-history-list/components/checkin-history-list/checkin-history-list.service';
+import { projectConstantsLocal } from '../shared/constants/project-constants';
 @NgModule({
   imports: [
     ConsumerRoutingModule,
@@ -37,7 +37,7 @@ import { CheckInHistoryServices } from '../shared/modules/consumer-checkin-histo
     CheckInHistoryServices,
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: projectConstants.MY_DATE_FORMATS }
+    { provide: MAT_DATE_FORMATS, useValue: projectConstantsLocal.MY_DATE_FORMATS }
   ]
 })
 export class ConsumerModule { }

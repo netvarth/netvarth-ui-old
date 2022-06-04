@@ -154,13 +154,16 @@ import { Subject } from 'rxjs';
         console.log('value',value);
         if(!value){
           console.log('kkk');
-          this.createEnquiryForm.controls.firstNameValue.setValue('');
-           this.createEnquiryForm.controls.lastNameValue.setValue('');
-           this.createEnquiryForm.controls.phoneNoValue.setValue('');
-           this.createEnquiryForm.controls.emailValue.setValue('');
-           this.createEnquiryForm.controls.userTaskCategory.setValue('');
+          // this.createEnquiryForm.controls.firstNameValue.setValue('');
+          //  this.createEnquiryForm.controls.lastNameValue.setValue('');
+          //  this.createEnquiryForm.controls.phoneNoValue.setValue('');
+          //  this.createEnquiryForm.controls.emailValue.setValue('');
+          //  this.createEnquiryForm.controls.userTaskCategory.setValue('');
            this.customerActivityText='New';
         }
+      }
+      handleProposedAmount(value){
+        console.log('value',value)
       }
       searchCustomer() {
         this.emptyFielderror = false;
@@ -412,6 +415,7 @@ import { Subject } from 'rxjs';
           console.log('category',category)
           this.categoryList.push(category)
           this.createEnquiryForm.controls.userTaskCategory.setValue(this.categoryList[0][0].id);
+          console.log('this.createEnquiryForm.controls.userTaskCategory',this.createEnquiryForm.controls.userTaskCategory.value)
         })
       }
       search(){
@@ -442,7 +446,7 @@ import { Subject } from 'rxjs';
           setTimeout(() => {
             this.api_loading = true;
             this.snackbarService.openSnackBar('Successfull created enquiry');
-            this.createEnquiryForm.reset();
+            // this.createEnquiryForm.reset();
           this.router.navigate(['provider', 'crm']);
           }, projectConstants.TIMEOUT_DELAY);
         },
@@ -483,7 +487,7 @@ import { Subject } from 'rxjs';
                 setTimeout(() => {
                   this.api_loading = true;
                   this.snackbarService.openSnackBar('Successfull created enquiry');
-                  this.createEnquiryForm.reset();
+                  // this.createEnquiryForm.reset();
                 this.router.navigate(['provider', 'crm']);
                 }, projectConstants.TIMEOUT_DELAY);
               },
@@ -525,7 +529,7 @@ import { Subject } from 'rxjs';
               this.enquiryCreateIdAfterRes= response
               // this.api_loading = true;
               // this.snackbarService.openSnackBar('Successfull created enquiry');
-            this.createEnquiryForm.reset();
+            // this.createEnquiryForm.reset();
           // this.router.navigate(['provider', 'crm']);
             }, projectConstants.TIMEOUT_DELAY);
           },
