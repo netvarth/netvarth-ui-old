@@ -27,7 +27,6 @@ export class PreviewpdfComponent implements OnInit {
   ngOnInit() {
   }
 
-  
   closeDialog() {
     this.dialogRef.close();
   }
