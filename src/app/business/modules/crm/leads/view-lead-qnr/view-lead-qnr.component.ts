@@ -24,8 +24,10 @@ import { WordProcessor } from '../../../../../../../src/app/shared/services/word
 // import { takeUntil } from 'rxjs/operators';
 // import { Subject } from 'rxjs';
 import { FileService } from '../../../../../../../src/app/shared/services/file-service';
-import { PreviewuploadedfilesComponent } from '../../../jaldee-drive/previewuploadedfiles/previewuploadedfiles.component';
+// import { PreviewuploadedfilesComponent } from '../../../jaldee-drive/previewuploadedfiles/previewuploadedfiles.component';
 import { CrmSelectMemberComponent } from '../../../../shared/crm-select-member/crm-select-member.component';
+// import { PreviewuploadedfilesComponent } from '../../../jaldee-drive/previewuploadedfiles/previewuploadedfiles.component';
+import { PreviewpdfComponent } from '../../../../../../../src/app/business/modules/crm/leads/view-lead-qnr/previewpdf/previewpdf.component';
 @Component({
   selector: 'app-view-lead-qnr',
   templateUrl: './view-lead-qnr.component.html',
@@ -236,6 +238,8 @@ export class ViewLeadQnrComponent implements OnInit {
   coApplicantText:any;
   updateValueCoApplicant:any=[];
   stateList:any=[]
+  crifHTML: any;
+  showPdfIcon: boolean;
   constructor(private locationobj: Location,
 
     // private lStorageService: LocalStorageService,
@@ -1000,28 +1004,28 @@ export class ViewLeadQnrComponent implements OnInit {
 
       ];
     }
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.dob.value)
-    console.log('this.createLeadForm.controls.telephoneType.value',this.createLeadForm.controls.telephoneType.value)
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.telephoneNumber.value)
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.relationType.value)
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.relationName.value)
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.idTypes.value)
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.idValue.value)
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.idTypes1.value)
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.idValue1.value)
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.permanentAddress.value)
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.permanentCity.value)
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.permanentState.value)
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.permanentPinCode.value)
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.nomineeType.value)
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.nomineeName.value)
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.addressType.value)
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.address.value)
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.city.value)
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.pin.value)
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.state.value)
-    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.panNumber.value)
-    console.log('fileDataPan',this.fileDataPan)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.dob.value)
+    // console.log('this.createLeadForm.controls.telephoneType.value',this.createLeadForm.controls.telephoneType.value)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.telephoneNumber.value)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.relationType.value)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.relationName.value)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.idTypes.value)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.idValue.value)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.idTypes1.value)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.idValue1.value)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.permanentAddress.value)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.permanentCity.value)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.permanentState.value)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.permanentPinCode.value)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.nomineeType.value)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.nomineeName.value)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.addressType.value)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.address.value)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.city.value)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.pin.value)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.state.value)
+    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.panNumber.value)
+    // console.log('fileDataPan',this.fileDataPan)
     
     const createLeadData: any = {
       "originFrom": "Lead",
@@ -1086,15 +1090,19 @@ export class ViewLeadQnrComponent implements OnInit {
       // this.uploadAudioVideo(this.kycresponse, 'kyc');
       setTimeout(() => {
         this.api_loading = true;
+        this.crmService.getproceedStatus(this.coApplicantListFormSubmit).subscribe((response)=>{
+          console.log('response',response)
+        })
         this.createLeadForm.reset();
-        const navigationExtras: NavigationExtras = {
-          queryParams: {
-            type: 'LEAD'
-          }
-        }
-        console.log(navigationExtras)
+        // const navigationExtras: NavigationExtras = {
+        //   queryParams: {
+        //     type: 'LEAD'
+        //   }
+        // }
+        // console.log(navigationExtras)
         this.router.navigate(['provider', 'crm']);
       }, projectConstants.TIMEOUT_DELAY);
+      
     },
       (error) => {
         setTimeout(() => {
@@ -1630,28 +1638,28 @@ export class ViewLeadQnrComponent implements OnInit {
       error => {
       });
   }
-  saveCrifApplicant() {
-    const post_data = {
-      "customer": {
-        "id": this.custId,
-        "name": this.custname,
-      },
-      'originUid': this.leadkid,
-    };
-    this.crmService.crifVerification(post_data).subscribe(
-      (data) => {
-        this.crifDetails = data;
-        this.crifScore = this.crifDetails.crifScoreString
-        // const navigationExtras: NavigationExtras =  {
-        //   queryParams: {
-        //     type: 'LEAD'
-        //   }
-        // }
-        // this.router.navigate(['provider', 'lead'], navigationExtras);
-      },
-      error => {
-      });
-  }
+  // saveCrifApplicant() {
+  //   const post_data = {
+  //     "customer": {
+  //       "id": this.custId,
+  //       "name": this.custname,
+  //     },
+  //     'originUid': this.leadkid,
+  //   };
+  //   this.crmService.crifVerification(post_data).subscribe(
+  //     (data) => {
+  //       this.crifDetails = data;
+  //       this.crifScore = this.crifDetails.crifScoreString
+  //       // const navigationExtras: NavigationExtras =  {
+  //       //   queryParams: {
+  //       //     type: 'LEAD'
+  //       //   }
+  //       // }
+  //       // this.router.navigate(['provider', 'lead'], navigationExtras);
+  //     },
+  //     error => {
+  //     });
+  // }
   getleadDetails() {
     this.crmService.getLeadDetails(this.leadkid).subscribe(data => {
       this.leadDetails = data;
@@ -1662,25 +1670,25 @@ export class ViewLeadQnrComponent implements OnInit {
     // console.log(fileType);
     return this.fileService.getImageByType(fileType);
   }
-  preview(file) {
-    this.fileviewdialogRef = this.dialog.open(PreviewuploadedfilesComponent, {
-      width: "100%",
-      panelClass: [
-        "popup-class",
-        "commonpopupmainclass"
-        // "uploadfilecomponentclass"
-      ],
-      disableClose: true,
-      data: {
-        file: file,
-        type: 'kyc'
-      }
-    });
-    this.fileviewdialogRef.afterClosed().subscribe(result => {
-      if (result) {
-      }
-    });
-  }
+  // preview(file) {
+  //   this.fileviewdialogRef = this.dialog.open(PreviewuploadedfilesComponent, {
+  //     width: "100%",
+  //     panelClass: [
+  //       "popup-class",
+  //       "commonpopupmainclass"
+  //       // "uploadfilecomponentclass"
+  //     ],
+  //     disableClose: true,
+  //     data: {
+  //       file: file,
+  //       type: 'kyc'
+  //     }
+  //   });
+  //   this.fileviewdialogRef.afterClosed().subscribe(result => {
+  //     if (result) {
+  //     }
+  //   });
+  // }
   leadStatus() {
     this.crmService.getLeadStatus().subscribe((response: any) => {
       console.log(response);
@@ -1766,6 +1774,8 @@ export class ViewLeadQnrComponent implements OnInit {
     this.isShown = ! this.isShown;
     
     }
+
+    
   // uploadAudioVideo(data, type) {
   //   console.log(data)
 
@@ -1781,5 +1791,47 @@ export class ViewLeadQnrComponent implements OnInit {
   //           });
 
   // }
+
+  saveCrifApplicant() {
+    const post_data = {
+      "customer": {
+        "id": this.custId,
+        "name": this.custname,
+      },
+      'originUid': this.leadkid,
+    };
+    this.crmService.crifVerification(post_data).subscribe(
+      (data) => {
+        this.crifDetails = data;
+        this.crifHTML = this.crifDetails.crifHTML;
+        this.crifScore =  this.crifDetails.crifScoreString
+        // const navigationExtras: NavigationExtras =  {
+        //   queryParams: {
+        //     type: 'LEAD'
+        //   }
+        // }
+        // this.router.navigate(['provider', 'lead'], navigationExtras);
+      },
+      error => {
+      });
+      this.showPdfIcon = true;
+  }
+  preview(crif_data) {
+    console.log("Files : ", this.customers)
+    this.fileviewdialogRef = this.dialog.open(PreviewpdfComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'uploadfilecomponentclass'],
+      disableClose: true,
+      data: {
+        crif: crif_data,
+    type:'pdf_view'
+      }
+    });
+    this.fileviewdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+
+      }
+    });
+  }
 }
 

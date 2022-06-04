@@ -2577,10 +2577,194 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="permanentState" #permanentState
+                <!-- <textarea rowa="10" class="form-control" formControlName="permanentState" #permanentState
                   (change)="handlepermanentState(permanentState.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
                   placeholder="">
-                </textarea>
+                </textarea> -->
+                <mat-select class="form-control widthWebKit" placeholder="" #relationType
+                formControlName="permanentState">
+                <mat-option [value]="'Andhra Pradesh'">
+                  <div>
+                    Andhra Pradesh
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Arunachal Pradesh'">
+                  <div>
+                    Arunachal Pradesh
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Assam'">
+                  <div>
+                    Assam
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Bihar'">
+                  <div>
+                    Bihar
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Chattisgarh'">
+                  <div>
+                    Chattisgarh
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Goa'">
+                  <div>
+                    Goa
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Gujarat'">
+                  <div>
+                    Gujarat
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Haryana'">
+                  <div>
+                    Haryana
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Himachal Pradesh'">
+                  <div>
+                    Himachal Pradesh
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Jammu & Kashmir'">
+                  <div>
+                    Jammu & Kashmir
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Jharkhand'">
+                  <div>
+                    Jharkhand
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Karnataka'">
+                  <div>
+                    Karnataka
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Kerala'">
+                  <div>
+                    Kerala
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Madhya Pradesh'">
+                  <div>
+                    Madhya Pradesh
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Maharashtra'">
+                  <div>
+                    Maharashtra
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Manipur'">
+                  <div>
+                    Manipur
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Meghalaya'">
+                  <div>
+                    Meghalaya
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Mizoram'">
+                  <div>
+                    Mizoram
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Nagaland'">
+                  <div>
+                    Nagaland
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Orissa'">
+                  <div>
+                    Orissa
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Punjab'">
+                  <div>
+                    Punjab
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Rajasthan'">
+                  <div>
+                    Rajasthan
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Nagaland'">
+                  <div>
+                    Nagaland
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Sikkim'">
+                  <div>
+                    Sikkim
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Tamil Nadu'">
+                  <div>
+                    Tamil Nadu
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Telangana'">
+                  <div>
+                    Telangana
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Tripura'">
+                  <div>
+                    Tripura
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Uttarakhand'">
+                  <div>
+                    Uttarakhand
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Uttar Pradesh'">
+                  <div>
+                    Uttar Pradesh
+                  </div>
+                </mat-option>
+                <mat-option [value]="'West Bengal'">
+                  <div>
+                    West Bengal
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Andaman & Nicobar'">
+                  <div>
+                    Andaman & Nicobar
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Dadra and Nagar Haveli'">
+                  <div>
+                    Dadra and Nagar Haveli
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Daman & Diu'">
+                  <div>
+                    Daman & Diu
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Delhi'">
+                  <div>
+                    Delhi
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Lakshadweep'">
+                  <div>
+                    Lakshadweep
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Pondicherry'">
+                  <div>
+                    Pondicherry
+                  </div>
+                </mat-option>
+
+              </mat-select>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                   errorMsg="{{leadError}}">
                 </app-field-error-display>
@@ -2889,10 +3073,194 @@
                 <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="state" #state
+                <!-- <textarea rowa="10" class="form-control" formControlName="state" #state
                   (change)="handlestate(state.value)" (keyup)="autoGrowTextZone($event)"
                   maxlength="1000" placeholder="">
-                </textarea>
+                </textarea> -->
+                <mat-select class="form-control widthWebKit" placeholder="" #relationType
+                formControlName="state">
+                <mat-option [value]="'Andhra Pradesh'">
+                  <div>
+                    Andhra Pradesh
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Arunachal Pradesh'">
+                  <div>
+                    Arunachal Pradesh
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Assam'">
+                  <div>
+                    Assam
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Bihar'">
+                  <div>
+                    Bihar
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Chattisgarh'">
+                  <div>
+                    Chattisgarh
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Goa'">
+                  <div>
+                    Goa
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Gujarat'">
+                  <div>
+                    Gujarat
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Haryana'">
+                  <div>
+                    Haryana
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Himachal Pradesh'">
+                  <div>
+                    Himachal Pradesh
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Jammu & Kashmir'">
+                  <div>
+                    Jammu & Kashmir
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Jharkhand'">
+                  <div>
+                    Jharkhand
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Karnataka'">
+                  <div>
+                    Karnataka
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Kerala'">
+                  <div>
+                    Kerala
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Madhya Pradesh'">
+                  <div>
+                    Madhya Pradesh
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Maharashtra'">
+                  <div>
+                    Maharashtra
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Manipur'">
+                  <div>
+                    Manipur
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Meghalaya'">
+                  <div>
+                    Meghalaya
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Mizoram'">
+                  <div>
+                    Mizoram
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Nagaland'">
+                  <div>
+                    Nagaland
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Orissa'">
+                  <div>
+                    Orissa
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Punjab'">
+                  <div>
+                    Punjab
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Rajasthan'">
+                  <div>
+                    Rajasthan
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Nagaland'">
+                  <div>
+                    Nagaland
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Sikkim'">
+                  <div>
+                    Sikkim
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Tamil Nadu'">
+                  <div>
+                    Tamil Nadu
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Telangana'">
+                  <div>
+                    Telangana
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Tripura'">
+                  <div>
+                    Tripura
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Uttarakhand'">
+                  <div>
+                    Uttarakhand
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Uttar Pradesh'">
+                  <div>
+                    Uttar Pradesh
+                  </div>
+                </mat-option>
+                <mat-option [value]="'West Bengal'">
+                  <div>
+                    West Bengal
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Andaman & Nicobar'">
+                  <div>
+                    Andaman & Nicobar
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Dadra and Nagar Haveli'">
+                  <div>
+                    Dadra and Nagar Haveli
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Daman & Diu'">
+                  <div>
+                    Daman & Diu
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Delhi'">
+                  <div>
+                    Delhi
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Lakshadweep'">
+                  <div>
+                    Lakshadweep
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Pondicherry'">
+                  <div>
+                    Pondicherry
+                  </div>
+                </mat-option>
+
+              </mat-select>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                   errorMsg="{{leadError}}">
                 </app-field-error-display>
@@ -2920,7 +3288,7 @@
 
         </div>
         <span class="group-head">CRIF Score of Applicant</span><br>
-        <div class="bggrey my-2">
+        <!-- <div class="bggrey my-2">
           <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
               <div class="leadTitle">
@@ -2936,6 +3304,32 @@
 
               </div>
 
+            </div>
+
+          </div>
+        </div> -->
+        <div class="bggrey my-2">
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+              </div>
+              <div class="fieldPadding">
+                <a class="navbar-item-color bold pointer-cursor disp-none-small" *ngIf="crifScore"> CRIF SCORE :
+                  {{crifScore}} </a>
+                <button mat-flat-button style="margin-left: 25px !important;"
+                  class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn"
+                  (click)="saveCrifApplicant()">
+                  Check CRIF Verification </button>
+
+
+              </div>
+              <div *ngIf="showPdfIcon">
+    
+                <a (click)="preview(crifHTML)">
+                 <img class="img" style="height: 50px; width: 50px;"
+                 src="/assets/images/ImgeFileIcon/pdf.png" />
+               </a>
+                </div>
             </div>
 
           </div>
@@ -3712,7 +4106,7 @@
     </div>
     </form>
 
-      <div style="margin-top:10px" *ngIf="isShown">
+      <div style="margin-top:10px" >
         <div class="textareaStart">
           <div class="fiesWithIcon">
             <div>
@@ -3774,8 +4168,8 @@
             </button>
             <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #FADDDD !important;color:black !important" (click)="failedStatus()">Rejected
             </button>
-            <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="toggleShow()">Remarks
-            </button>
+            <!-- <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="toggleShow()">Remarks
+            </button> -->
           </div>
         </ng-container>
       </div>

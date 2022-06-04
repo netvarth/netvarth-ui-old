@@ -549,5 +549,8 @@ export class CrmService {
     const url = 'provider/crif/indianstates';
     return this.servicemeta.httpGet(url, null);
   }
+  getproceedStatus(data){
+    return this.servicemeta.httpPost('provider/customers/KYC/proceed', data);
+  }
 
 }
