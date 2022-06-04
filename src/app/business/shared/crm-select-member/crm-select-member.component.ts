@@ -1028,7 +1028,7 @@ showFileView(file){
             console.log("Customer dataaaa :", data);
             this.searchedData = data;
             
-            if(data === '' || undefined){
+            if(data.length === 0 || data === undefined){
               this.snackbarService.openSnackBar("No matches found",{'panelClass': 'snackbarerror'})
             }
             //this.customerArray.push(data[0].id);
@@ -1062,6 +1062,9 @@ showFileView(file){
                 } else {
                   this.searchedData.forEach((newElement)=>{
                     console.log("New ELSE",newElement)
+                    // if(newElement === '' || newElement === null){
+                    //   this.snackbarService.openSnackBar("No matches found!",{'panelClass': 'snackbarerror'})
+                    // }
                     if(newElement && (newElement.firstName !== '' || newElement.firstName !== undefined) || (newElement.lastName !== '' || newElement.lastName !== undefined)){
                       this.showName = true
                       this.showEmail = false;

@@ -30,8 +30,14 @@
                                 <a (click)="editCustomerDetails()">Edit Details</a>
                             </div>
                         </div>
-                        <div class="user-img">
+                        <div class="user-img" *ngIf="customer[0].gender === 'male'">
                             <img src="assets/images/avatar5.png" />
+                        </div>
+                        <div class="user-img" *ngIf="customer[0].gender === 'female'">
+                            <img src="assets/images/femalePic.png" />
+                        </div>
+                        <div class="user-img" *ngIf="customer[0].gender === undefined || customer[0].gender === ''">
+                            <img src="assets/images/undefinedUser.png" />
                         </div>
                         <div class="booking-details-body">
                             <div class="jaldee-id" *ngIf="customer[0].jaldeeId">
