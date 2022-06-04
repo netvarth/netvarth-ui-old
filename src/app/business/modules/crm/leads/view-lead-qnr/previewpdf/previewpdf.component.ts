@@ -25,7 +25,6 @@ export class PreviewpdfComponent implements OnInit {
     this.type = this.data.type;
   }
   ngOnInit() {
-    alert('1111')
   }
 
   
