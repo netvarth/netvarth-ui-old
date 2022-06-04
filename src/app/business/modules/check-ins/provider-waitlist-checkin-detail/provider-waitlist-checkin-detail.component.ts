@@ -130,20 +130,11 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     private communicationService: CommunicationService,
     private provider_shared_functions: ProviderSharedFuctions) {
     this.activated_route.params.subscribe(params => {
-      this.waitlist_id = params.id;
-      // this.provider_services.getProviderWaitlistNotesnew(this.waitlist_id)
-      // .subscribe(
-      //   data => {
-      //     this.waitlist_notes = data;
-         
-      //   },
-      //   () => {
-      //   }
-      // );
+      this.waitlist_id = params.id;      
     });
     this.activated_route.queryParams.subscribe(params => {
       this.timetype = JSON.parse(params.timetype);
-      
+
     });
     this.getWaitlistDetail();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -152,41 +143,10 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.checkin_upper = this.wordProcessor.firstToUpper(this.checkin_label);
     this.cust_notes_cap = Messages.CHECK_DET_CUST_NOTES_CAP.replace('[customer]', this.customer_label);
     this.no_cus_notes_cap = Messages.CHECK_DET_NO_CUS_NOTES_FOUND_CAP.replace('[customer]', this.customer_label);
-    
+
   }
   ngOnInit() {
-    // this.provider_services.getProviderWaitlistDetailById(this.waitlist_id)
-    //   .subscribe(
-    //     data => {
-    //       this.waitlist_data = data;
-    //       this.provider_services.getProviderWaitlistNotesnew(this.waitlist_id)
-    //       .subscribe(
-    //         data => {
-    //           this.waitlist_notes = data;
-             
-    //         },
-    //         () => {
-    //           //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
-    //         }
-    //       );
-    //     })
-
-    // this.activated_route.paramMap.subscribe(params => { 
-    //   this.waitlist_id = params.get('id');
-    // this.provider_services.getProviderWaitlistNotesnew(this.waitlist_id)
-    // .subscribe(
-    //   data => {
-    //     this.waitlist_notes = data;
-       
-    //   },
-    //   () => {
-    //     //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
-    //   }
-    // );
-    // })
-  // this.getWaitlistDetail()
     this.getPos();
-    // this.getDisplayboardCount();
     this.api_loading = true;
     this.getWaitlistNotes(this.waitlist_id)
     this.pdtype = this.groupService.getitemFromGroupStorage('pdtyp');
@@ -195,17 +155,15 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     }
     this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
     if (this.waitlist_id) {
-     //  this.getWaitlistDetail();
-     this.provider_services.getProviderWaitlistNotesnew(this.waitlist_id)
-     .subscribe(
-       data => {
-         this.waitlist_notes = data;
-         console.log("Data got :",this.waitlist_notes)
-       },
-       () => {
-         //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
-       }
-     );
+      this.provider_services.getProviderWaitlistNotesnew(this.waitlist_id)
+        .subscribe(
+          data => {
+            this.waitlist_notes = data;
+            console.log("Data got :", this.waitlist_notes)
+          },
+          () => {
+          }
+        );
       this.getProviderSettings();
     } else {
       this.goBack();
@@ -226,120 +184,86 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       this.small_device_display = false;
     }
   }
- 
 
-  getAgent(fileName){
+
+  getAgent(fileName) {
     //'BROWSER' || 'IOS' || 'ANDROID'
-    if(fileName){
-    return fileName.toLocaleLowerCase();
+    if (fileName) {
+      return fileName.toLocaleLowerCase();
     }
   }
-  getReqFrom(browser,agent) {
+  getReqFrom(browser, agent) {
     let browserName = ''
-     if(browser){
-  //   if(browser === "WEB_UI"){
-  //   browserName = browser.slice(0, 3);
-  //   }
-  //   if(browser === 'WEB_LINK'){
-  //     browserName = 'IOS'
-  //   }
-  //   if(browser){
-  //    if(browser.length >8){
-  //     browserName = browser.slice(0,8);
-  //   }
-  // }
-      
-    if(browser.includes("Android")){
-      browserName = 'Android'
-      return browserName.toLocaleLowerCase();
+    if (browser) {
+      if (browser.includes("Android")) {
+        browserName = 'Android'
+        return browserName.toLocaleLowerCase();
 
-    }
-    if(browser.includes("iPhone")){
-      browserName = 'IOS'
-      return browserName.toLocaleLowerCase();
-
-    }
-    if(browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("iPhone")){
-      browserName = 'Web'
-      return browserName.toLocaleLowerCase();
-
-    }
-   
-  
-
-  }
-  if(browser === undefined && agent === "BROWSER"){
-    browserName = 'web'
-    return browserName;
-  }
-    
-  
-  
-}
-
-getConsumerBills() {
-  const filter = { 'providerConsumer-eq': this.waitlist_data.waitlistingFor[0].id };
-  this.provider_services.getProviderBills(filter).subscribe(data => {
-      this.consumerBills = data;
-  })
-  console.log("consumer bills called")
-}
-
-getCustomerHistoryVisit() {
-  this.provider_services.getCustomerHistoryVisit(this.waitlist_data.waitlistingFor[0].id).subscribe(
-      (data: any) => {
-          this.historyvisitDetails = data;
       }
-  );
-}
+      if (browser.includes("iPhone")) {
+        browserName = 'IOS'
+        return browserName.toLocaleLowerCase();
+      }
+      if (browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("iPhone")) {
+        browserName = 'Web'
+        return browserName.toLocaleLowerCase();
+      }
+    }
+    if (browser === undefined && agent === "BROWSER") {
+      browserName = 'web'
+      return browserName;
+    }
+  }
 
-editCustomerDetails() {
-  const navigationExtras: NavigationExtras = {
-      queryParams: { action: 'edit', id: this.waitlist_data.waitlistingFor[0].id}
-  };
-  this.router.navigate(['/provider/customers/create'], navigationExtras);
-}
+  getConsumerBills() {
+    const filter = { 'providerConsumer-eq': this.waitlist_data.waitlistingFor[0].id };
+    this.provider_services.getProviderBills(filter).subscribe(data => {
+      this.consumerBills = data;
+    })
+    console.log("consumer bills called")
+  }
+
+  getCustomerHistoryVisit() {
+    this.provider_services.getCustomerHistoryVisit(this.waitlist_data.waitlistingFor[0].id).subscribe(
+      (data: any) => {
+        this.historyvisitDetails = data;
+      }
+    );
+  }
+
+  editCustomerDetails() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: { action: 'edit', id: this.waitlist_data.waitlistingFor[0].id }
+    };
+    this.router.navigate(['/provider/customers/create'], navigationExtras);
+  }
 
   getBookingReqFrom(browser, reqFrom) {
     let browserName = ''
-    //let status;
-    if(browser){
-      if(browser.includes("Android")){
+    if (browser) {
+      if (browser.includes("Android")) {
         browserName = 'Android'
         return browserName.toLocaleLowerCase();
-  
       }
-      if(browser.includes("iPhone")){
+      if (browser.includes("iPhone")) {
         browserName = 'IOS'
         return browserName.toLocaleLowerCase();
-  
       }
-      if(browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("Linux") || browser.includes("CrOS")){
+      if (browser.includes("Windows") || browser.includes("Intel Mac OS") || browser.includes("Linux") || browser.includes("CrOS")) {
         browserName = 'Web'
         return browserName.toLocaleLowerCase();
-  
+
       }
-     
-     
     }
     if (browser === undefined && reqFrom === "SP_APP" || "CONSUMER_APP") {
       browserName = "App";
       return browserName.toLocaleLowerCase();
     }
-    // if(browser === 'WEB_LINK'){
-    //   browserName = 'IOS'
-    // }
-    // if(browser){
-    //  if(browser.length >8){
-    //   browserName = browser.slice(0,8);
-    // }
-  
-
     return browserName.toLocaleLowerCase();
   }
   getWaitListMode(mode) {
-    let currentmode=[];
-    currentmode=this.waitlistModes.filter(obj=>obj.mode===mode);
+    let currentmode = [];
+    currentmode = this.waitlistModes.filter(obj => obj.mode === mode);
     return currentmode[0].value;
 
   }
@@ -371,15 +295,14 @@ editCustomerDetails() {
       .subscribe(
         data => {
           this.waitlist_data = data;
-          if(this.waitlist_data.virtualService)
-          {
+          if (this.waitlist_data.virtualService) {
             this.whatsappNumber = this.waitlist_data.virtualService.WhatsApp;
           }
           this.mobileNumber = this.waitlist_data.waitlistingFor[0].phoneNo;
           this.email = this.waitlist_data.waitlistingFor[0].email;
           this.getConsumerBills();
           this.getCustomerHistoryVisit();
-          console.log('waitlist dtata',this.waitlist_data)
+          console.log('waitlist dtata', this.waitlist_data)
           this.getWaitlistNotes(this.waitlist_data.ynwUuid);
           if (this.waitlist_data.questionnaires && this.waitlist_data.questionnaires.length > 0) {
             this.questionnaires = this.waitlist_data.questionnaires;
@@ -442,17 +365,9 @@ editCustomerDetails() {
           }
           this.getCheckInHistory(this.waitlist_data.ynwUuid).then(data => {
             this.waitlist_history = data;
-            console.log('waitlisthistory',this.waitlist_history)
+            console.log('waitlisthistory', this.waitlist_history)
             this.getInternalStatusLog(this.waitlist_data.ynwUuid).then((status: any) => {
-              this.internalStatuslog = status;
-              // for(let stat of status){
-
-              // const newStatus={'waitlistStatus':stat.InternalStatus,'time':stat.DateTime,'user':stat.User}
-              // this.internalStatuslog.push(newStatus)
-              // }
-
-              // this.statusLog=this.waitlist_history.concat(this.internalStatuslog);
-              //this.statusLog =  this.statusLog.sort((a,b) => 0 - (a.DateTime > b.DateTime ? -1 : 1));            
+              this.internalStatuslog = status;                   
             });
           });
           this.getCommunicationHistory(this.waitlist_data.ynwUuid);
@@ -460,7 +375,7 @@ editCustomerDetails() {
             if (this.waitlist_data.provider && this.waitlist_data.provider.businessName) {
               this.spName = (this.waitlist_data.provider.businessName) ? this.waitlist_data.provider.businessName : this.waitlist_data.provider.firstName + ' ' + this.waitlist_data.provider.lastName;
             }
-           
+
             this.spfname = this.waitlist_data.provider.firstName;
             this.splname = this.waitlist_data.provider.lastName;
           }
@@ -488,24 +403,22 @@ editCustomerDetails() {
     });
   }
   showCommunications() {
-    if(this.whatsappNumber && this.mobileNumber && this.email)
-    {
+    if (this.whatsappNumber && this.mobileNumber && this.email) {
       console.log("communication data : 1");
       this.dialog.open(CommunicationPopupComponent, {
-          width: '50%',
-          panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
-          disableClose: true,
-          data: {
-              whatsappNumber: this.whatsappNumber,
-              number: this.mobileNumber,
-              customerId: this.waitlist_data.waitlistingFor[0].id,
-              email: this.email,
-              type: 'customer'
-          }
+        width: '50%',
+        panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
+        disableClose: true,
+        data: {
+          whatsappNumber: this.whatsappNumber,
+          number: this.mobileNumber,
+          customerId: this.waitlist_data.waitlistingFor[0].id,
+          email: this.email,
+          type: 'customer'
+        }
       });
     }
-    else if(!this.whatsappNumber && this.mobileNumber == 'null' && this.email)
-    {
+    else if (!this.whatsappNumber && this.mobileNumber == 'null' && this.email) {
       console.log("communication data : 2");
       this.dialog.open(CommunicationPopupComponent, {
         width: '50%',
@@ -518,8 +431,7 @@ editCustomerDetails() {
         }
       });
     }
-    else if(!this.whatsappNumber && this.mobileNumber && !this.email)
-    {
+    else if (!this.whatsappNumber && this.mobileNumber && !this.email) {
       console.log("communication data : 3");
       this.dialog.open(CommunicationPopupComponent, {
         width: '50%',
@@ -532,8 +444,7 @@ editCustomerDetails() {
         }
       });
     }
-    else if(!this.whatsappNumber && this.mobileNumber && this.email)
-    {
+    else if (!this.whatsappNumber && this.mobileNumber && this.email) {
       console.log("communication data : 4");
       this.dialog.open(CommunicationPopupComponent, {
         width: '50%',
@@ -547,9 +458,8 @@ editCustomerDetails() {
         }
       });
     }
-    else if(this.whatsappNumber && this.mobileNumber == 'null' && !this.email)
-    {
-      console.log("communication data : 5",this.email);
+    else if (this.whatsappNumber && this.mobileNumber == 'null' && !this.email) {
+      console.log("communication data : 5", this.email);
       this.dialog.open(CommunicationPopupComponent, {
         width: '50%',
         panelClass: ['commonpopupmainclass', 'confirmationmainclass', 'newPopupClass'],
@@ -561,8 +471,7 @@ editCustomerDetails() {
         }
       });
     }
-    else if(this.whatsappNumber && this.mobileNumber == 'null' && this.email)
-    {
+    else if (this.whatsappNumber && this.mobileNumber == 'null' && this.email) {
       console.log("communication data : 6");
       this.dialog.open(CommunicationPopupComponent, {
         width: '50%',
@@ -576,8 +485,7 @@ editCustomerDetails() {
         }
       });
     }
-    else if(this.whatsappNumber && this.mobileNumber && !this.email)
-    {
+    else if (this.whatsappNumber && this.mobileNumber && !this.email) {
       console.log("communication data : 7");
       this.dialog.open(CommunicationPopupComponent, {
         width: '50%',
@@ -591,7 +499,7 @@ editCustomerDetails() {
         }
       });
     }
-}
+  }
 
   getInternalStatusLog(uuid) {
     const _this = this;
@@ -615,42 +523,27 @@ editCustomerDetails() {
       width: '60%',
       height: 'auto',
       data: {
-        type:'Token History',
-        providername:this.spName,
-        appointmentby:this.waitlist_data.waitlistedBy,
-        bookingmode:this.getWaitListMode(this.waitlist_data.waitlistMode),
-        consumername:this.waitlist_data.consumer.firstName+" "+this.waitlist_data.consumer.lastName,
-        details:this.waitlist_history,
-        booking_stat : this.booking_stat
+        type: 'Token History',
+        providername: this.spName,
+        appointmentby: this.waitlist_data.waitlistedBy,
+        bookingmode: this.getWaitListMode(this.waitlist_data.waitlistMode),
+        consumername: this.waitlist_data.consumer.firstName + " " + this.waitlist_data.consumer.lastName,
+        details: this.waitlist_history,
+        booking_stat: this.booking_stat
       }
     })
   }
-  // getWaitlistNotes() {
-  //   this.provider_services.getProviderWaitlistNotes(this.waitlist_data.consumer.id)
   getWaitlistNotes(uuid) {
     this.provider_services.getProviderWaitlistNotesnew(uuid)
       .subscribe(
         data => {
           this.waitlist_notes = data;
-          console.log(this.waitlist_notes,';;;;;;;;;;;;')
+          console.log(this.waitlist_notes, ';;;;;;;;;;;;')
         },
         () => {
-          //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
         }
       );
   }
-  // getCheckInHistory(uuid) {
-  //   this.provider_services.getProviderWaitlistHistroy(uuid)
-  //     .subscribe(
-  //       data => {
-  //         this.waitlist_history = data;
-  //       },
-  //       () => {
-  //         //  this.snackbarService.openSnackBar(error.error, {'panelClass': 'snackbarerror'});
-  //       }
-  //     );
-  // }
-
   getCommunicationHistory(uuid) {
     this.provider_services.getProviderInbox()
       .subscribe(
@@ -700,20 +593,19 @@ editCustomerDetails() {
     });
 
     this.notedialogRef.afterClosed().subscribe(result => {
-      console.log("result ..",result)
+      console.log("result ..", result)
       if (result === 'reloadlist') {
         //this.getWaitlistNotes();
         console.log("dialog box losed")
         this.getWaitlistNotes(checkin.ynwUuid);
-      
+
 
       }
     });
   }
 
   changeWaitlistStatus(action) {
-    if(action == "STARTED")
-    {
+    if (action == "STARTED") {
       this.showStart = false;
     }
     this.provider_shared_functions.changeWaitlistStatus(this, this.waitlist_data, action);
@@ -795,12 +687,6 @@ editCustomerDetails() {
     }
   }
   getAppxTime(waitlist, retcap?) {
-    /*if (!waitlist.future && waitlist.appxWaitingTime === 0) {
-      return 'Now';
-    } else if (!waitlist.future && waitlist.appxWaitingTime !== 0) {
-      return this.shared_Functionsobj.convertMinutesToHourMinute(waitlist.appxWaitingTime);
-    }  else {*/
-    // if (waitlist.waitlistStatus === 'arrived' || waitlist.waitlistStatus === 'checkedIn') {
     if (this.checkTimedisplayAllowed(waitlist)) {
       if (waitlist.queue.queueStartTime !== undefined) {
         if (waitlist.hasOwnProperty('serviceTime')) {
@@ -810,14 +696,8 @@ editCustomerDetails() {
             return waitlist.serviceTime;
           }
         } else {
-          // const moment_date =  this.AMHourto24(waitlist.date, waitlist.queue.queueStartTime);
-          // return moment_date.add(waitlist.appxWaitingTime, 'minutes') ;
           if (retcap) {
-            // if (this.settings['calculationMode'] !== 'NoCalc') {
-            //   return 'Date-Est Wait Time'; // this.minCaption;
-            // } else {
             return 'Date'; // this.minCaption;
-            // }
           } else {
             return this.dateTimeProcessor.convertMinutesToHourMinute(waitlist.appxWaitingTime);
           }
@@ -948,12 +828,12 @@ editCustomerDetails() {
     this.view_more = !this.view_more;
   }
   gotoActions(checkin?) {
-    console.log("opend",checkin)
+    console.log("opend", checkin)
     let waitlist = [];
     if (checkin) {
       waitlist = checkin;
     }
-    console.log("Action Data ...",checkin)
+    console.log("Action Data ...", checkin)
     const actiondialogRef = this.dialog.open(CheckinActionsComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
@@ -968,8 +848,8 @@ editCustomerDetails() {
     actiondialogRef.afterClosed().subscribe(data => {
       // console.log("data....",data);
       this.getProviderSettings();
-      
-      
+
+
     });
   }
   showImagesection(index) {
@@ -1029,5 +909,4 @@ editCustomerDetails() {
       return userObject[0].name;
     }
   }
-
 }

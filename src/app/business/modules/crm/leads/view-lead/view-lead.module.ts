@@ -19,13 +19,14 @@ import { NgCircleProgressModule } from "ng-circle-progress";
 import { FileService } from "../../../../../shared/services/file-service";
 import { TasksComponent } from "./tasks/tasks.component";
 import { MatMenuModule } from "@angular/material/menu";
+
 import { MatIconModule } from "@angular/material/icon";
 import { SelectAttachmentModule } from "../../tasks/view-task/select-attachment/select-attachment.module";
 const routes: Routes = [
   { path: '', component: ViewLeadComponent },
   {path:'create-lead',loadChildren:()=>import('../create-lead/create-lead.module').then((m)=>m.CreateLeadModule)},
   {path:'viewlead/:id',loadChildren:()=>import('../view-lead/view-lead.module').then((m)=>m.ViewLeadModule)},
-  // {path:'create-task/:id',loadChildren:()=>import('../../tasks/create-task/create-task.module').then((m)=>m.CreateTaskModule)},
+   {path:'create-task/:id',loadChildren:()=>import('../../tasks/create-task/create-task.module').then((m)=>m.CreateTaskModule)},
 ];
 
 @NgModule({

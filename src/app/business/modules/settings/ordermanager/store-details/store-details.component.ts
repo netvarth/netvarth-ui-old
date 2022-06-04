@@ -1,16 +1,16 @@
 import { Component, OnInit, Inject, HostListener , OnDestroy} from '@angular/core';
-import { projectConstants } from '../../../../../app.component';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Router,NavigationExtras } from '@angular/router';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../services/provider-services.service';
 import { SubSink } from 'subsink';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 @Component({
   selector: 'app-store-details',
   templateUrl: './store-details.component.html'
 })
 export class StoreDetailsComponent implements OnInit, OnDestroy {
-  privacypermissiontxt = projectConstants.PRIVACY_PERMISSIONS;
+  privacypermissiontxt = projectConstantsLocal.PRIVACY_PERMISSIONS;
   small_device_display = false;
   screenWidth;
   disableButton = false;

@@ -2,7 +2,6 @@ import { Location } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { projectConstants } from '../../../../app.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../services/provider-services.service';
@@ -35,7 +34,7 @@ export class OrderDetailsComponent implements OnInit {
   newTimeDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
   screenWidth;
   small_device_display = false;
-  tooltipcls = projectConstants.TOOLTIP_CLS;
+  tooltipcls = projectConstantsLocal.TOOLTIP_CLS;
   image_list_popup: Image[];
   imagelist: any = [];
   orderlist_history: any = [];

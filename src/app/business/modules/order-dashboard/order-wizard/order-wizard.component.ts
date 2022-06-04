@@ -1332,9 +1332,9 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
     const input = event.target.files;
     if (input) {
       for (const file of input) {
-        if (projectConstants.IMAGE_FORMATS.indexOf(file.type) === -1) {
+        if (projectConstantsLocal.IMAGE_FORMATS.indexOf(file.type) === -1) {
           this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-        } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
+        } else if (file.size > projectConstantsLocal.IMAGE_MAX_SIZE) {
           this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
         } else {
           this.selectedImagelist.files.push(file);

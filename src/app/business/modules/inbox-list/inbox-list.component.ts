@@ -430,10 +430,10 @@ export class BusinessInboxListComponent implements OnInit, OnDestroy {
     const input = event.target.files;
     if (input) {
       for (const file of input) {
-        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-        } else if (file.size > projectConstants.FILE_MAX_SIZE) {
-          this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+        if (projectConstantsLocal.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+          this.snackbarService.openSnackBar('Selected file type not supported', { 'panelClass': 'snackbarerror' });
+        } else if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
+          this.snackbarService.openSnackBar('Please upload files with size < 10mb', { 'panelClass': 'snackbarerror' });
         } else {
           this.selectedMessage.files.push(file);
           const reader = new FileReader();

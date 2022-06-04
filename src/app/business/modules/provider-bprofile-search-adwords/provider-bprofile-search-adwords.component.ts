@@ -10,6 +10,7 @@ import { GroupStorageService } from '../../../shared/services/group-storage.serv
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { ProviderServices } from '../../services/provider-services.service';
 import { ConfirmBoxComponent } from '../../shared/confirm-box/confirm-box.component';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-provider-bprofile-search-adwords',
@@ -25,7 +26,7 @@ export class ProviderBprofileSearchAdwordsComponent implements OnInit, OnChanges
   showadword_list: any = [];
   adwordsmaxcount: any = 0;
   remaining_adword = 0;
-  tooltipcls = projectConstants.TOOLTIP_CLS;
+  tooltipcls = projectConstantsLocal.TOOLTIP_CLS;
   query_executed = false;
   addwordTooltip = '';
   adwords_mincnt = 5;

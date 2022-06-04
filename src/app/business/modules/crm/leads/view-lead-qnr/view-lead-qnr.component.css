@@ -861,3 +861,17 @@ padding: 10px;
 /* width: -webkit-fill-available; */
 border-radius: 5px;
 }
+.coApplicantForm{
+  background: #FFFFFF;
+box-shadow: 1.15808px 4.63232px 11.5808px rgba(179, 179, 179, 0.25);
+border-radius: 8px;
+color: #04A5FF;
+border: 2px solid #04A5FF;
+}
+.applicantBtn{
+  display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: center;
+    flex-direction: row-reverse;
+}

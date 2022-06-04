@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../../services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
-import { projectConstants } from '../../../../../../app.component';
 import { ProviderSharedFuctions } from '../../../../../functions/provider-shared-functions';
 import { UserDataStorageService } from './user-datastorage.service';
 import { Subscription } from 'rxjs';
@@ -103,7 +102,6 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
   userAdditionalInfoDomainFields: any[];
   specialization_arr: any = [];
   languages_arr: any = [];
-  orgsocial_list: any = [];
   domain_fields;
   domain_questions = [];
   subdomain_fields = [];
@@ -135,7 +133,7 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
   profimg_exists = false;
   badgeIcons: any = [];
   badgeArray: any = [];
-  tooltipcls = projectConstants.TOOLTIP_CLS;
+  tooltipcls = projectConstantsLocal.TOOLTIP_CLS;
   normal_profile_active = 1;  // [1 - loading]  [2 - no info] [3 - info available]
   normal_basicinfo_show = 1;
   loadingParams: any = { 'diameter': 40, 'strokewidth': 15 };
@@ -197,7 +195,6 @@ export class ManageSettingsComponent implements OnInit, AfterViewChecked {
     this.getServiceCount();
     this.getQueuesCount();
     this.getProviderSettings();
-    this.orgsocial_list = projectConstants.SOCIAL_MEDIA;
     this.frm_set_ser_cap = Messages.FRM_LEVEL_SETT_SERV_MSG.replace('[customer]', this.customer_label);
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     this.provider_domain_name = Messages.PROVIDER_NAME.replace('[provider]', this.provider_label);

@@ -33,6 +33,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatOptionModule } from "@angular/material/core";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatCardModule } from "@angular/material/card";
+import { PreviewpdfModule } from "./previewpdf/previewpdf.module";
 const routes: Routes = [
   { path: '', component: ViewLeadQnrComponent },
   {path:'create-lead',loadChildren:()=>import('../create-lead/create-lead.module').then((m)=>m.CreateLeadModule)},
@@ -64,6 +65,7 @@ const routes: Routes = [
     MatMenuModule,
     QuestionnaireModule,
     MatIconModule,
+    PreviewpdfModule,
     LoadingSpinnerModule,
         MatTooltipModule,
         MatCheckboxModule,

@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { projectConstants } from '../../../../../app.component';
 import { ProviderServices } from '../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,12 +8,13 @@ import { NavigationExtras } from '@angular/router';
 import { Router } from '@angular/router';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 @Component({
     selector: 'app-privacy',
     templateUrl: './privacy.component.html'
 })
 export class PrivacyComponent implements OnInit, OnDestroy {
-    privacypermissiontxt = projectConstants.PRIVACY_PERMISSIONS;
+    privacypermissiontxt = projectConstantsLocal.PRIVACY_PERMISSIONS;
     normal_privacy_settings_show = 1;
     frm_privacy_cap = Messages.FRM_LEVEL_PRIVACY_MSG;
 

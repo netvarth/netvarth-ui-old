@@ -46,7 +46,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
   dstart_time;
   dend_time;
   selday_arr: any = [];
-  weekdays = projectConstants.myweekdaysSchedule;
+  weekdays = projectConstantsLocal.myweekdaysSchedule;
   deptObj;
   departments: any = [];
   Selall = false;

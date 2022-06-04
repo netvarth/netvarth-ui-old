@@ -170,6 +170,7 @@ export class ServiceViewComponent implements OnInit {
       this.activaterouterobj.queryParams.subscribe(qparams => {
         if (qparams.src) {
           this.lStorageService.setitemonLocalStorage('source', qparams.src);
+          this.lStorageService.setitemonLocalStorage('reqFrom', 'CUSTOM_WEBSITE');
         }
         if (qparams.type) {
           this.serviceType = qparams.type;

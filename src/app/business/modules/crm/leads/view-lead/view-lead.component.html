@@ -91,7 +91,7 @@
             </div> -->
           </div>
           <!-- <span class="label" ><b></b></span> -->
-          <div *ngIf="leadDetails.attachments.length>0" style="display: flex;align-items: center;margin-left: 10px;gap:5px" >
+          <div *ngIf="leadDetails.attachments.length>0" style="display: flex;align-items: center;margin-top: 10px;gap:5px" >
             <div>
               <img style="height:25px" src="/assets/images/crmImages/fileUploADHeader.png" />
             </div>
@@ -112,7 +112,7 @@
       </div>
     </div>
     <!---notes start-->
-  <div style="margin-top:10px" >
+  <div style="margin-top:10px"class="notesSection" >
     <div class="textareaStart">
       <div class="fiesWithIcon">
         <div>
@@ -166,6 +166,13 @@
   </div>
   <!---notes end-->
   </div>
+  <div style="margin-top: 10px;
+  display: flex;
+  justify-content: center;">
+    <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #FADDDD !important;color:black !important" (click)="failedStatus()">Rejected
+    </button>
+  </div>
+  
   <!----files end-->
  </section> 
   

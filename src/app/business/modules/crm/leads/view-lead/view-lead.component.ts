@@ -201,6 +201,7 @@ action: any;
     },
   ]
   public notesTextarea:any;
+  failedStatusId:any;
 constructor(
   private locationobj: Location,
    private crmService: CrmService,
@@ -249,6 +250,7 @@ ngOnInit(): void {
   });
   
 this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+this.leadStatus()
 }
 
 uploadFiles() {
@@ -371,8 +373,10 @@ handleNotesDescription(textValue:any){
   
 }
 saveCreateNote(notesValue:any){
+  console.log('notesValue',notesValue)
+  console.log('this.notesTextarea',this.notesTextarea);
   if(this.notesTextarea !==undefined){
-    console.log('this.notesTextarea',this.notesTextarea);
+   
     const createNoteData:any = {
       "note" :this.notesTextarea
     }
@@ -701,6 +705,26 @@ getLeadToken(){
 }
 goCheckinDetail(id){
   this.router.navigate(['provider', 'check-ins', id]);
+}
+leadStatus(){
+  this.crmService.getLeadStatus().subscribe((response:any)=>{
+    console.log(response);
+    this.failedStatusId= response[3].id
+    console.log('this.failedStatusId',this.failedStatusId)
+  })
+}
+failedStatus(){
+  this.crmService.addLeadStatus(this.leadDetails.uid,this.failedStatusId).subscribe((response)=>{
+    console.log('afterupdateFollowUpData',response);
+    setTimeout(() => {
+    this.router.navigate(['provider', 'crm']);
+    }, projectConstants.TIMEOUT_DELAY);
+  },
+  (error)=>{
+    setTimeout(() => {
+      this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
+    }, projectConstants.TIMEOUT_DELAY);
+  })
 }
 
 }

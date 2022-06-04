@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { projectConstants } from '../../../../../../app.component';
 import { ProviderServices } from '../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
@@ -82,9 +81,9 @@ export class UploadSignatureComponent implements OnInit {
     const input = event.target.files;
     if (input) {
       for (const file of input) {
-       if (projectConstants.IMAGE_FORMATS.indexOf(file.type) === -1) {
+       if (projectConstantsLocal.IMAGE_FORMATS.indexOf(file.type) === -1) {
           this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-        } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
+        } else if (file.size > projectConstantsLocal.IMAGE_MAX_SIZE) {
           this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
         } else {
           this.selectedMessage.files.push(file);

@@ -28,7 +28,7 @@ export class ItemDetailsComponent implements OnInit {
     taxable_cap = Messages.TAXABLE_CAP;
     cancel_btn_cap = Messages.CANCEL_BTN;
     save_btn_cap = Messages.SAVE_BTN;
-    item_status = projectConstants.ITEM_STATUS;
+    item_status = projectConstantsLocal.ITEM_STATUS;
     detail_desc_cap = Messages.DETAIL_DESC_CAP;
     status_cap = Messages.COUPONS_STATUS_CAP;
     item_detail_cap = Messages.ITEM_DETAIL_CAP;
@@ -659,9 +659,9 @@ export class ItemDetailsComponent implements OnInit {
         const input = event.target.files;
         if (input) {
             for (const file of input) {
-                if (projectConstants.IMAGE_FORMATS.indexOf(file.type) === -1) {
+                if (projectConstantsLocal.IMAGE_FORMATS.indexOf(file.type) === -1) {
                     this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-                } else if (file.size > projectConstants.IMAGE_MAX_SIZE) {
+                } else if (file.size > projectConstantsLocal.IMAGE_MAX_SIZE) {
                     this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
                 } else {
                     if (type) {

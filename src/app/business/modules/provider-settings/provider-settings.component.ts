@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, AfterViewChecked, ChangeDetectorRef } fro
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
-import { projectConstants } from '../../../app.component';
 import { Subscription } from 'rxjs';
 import { Messages } from '../../../shared/constants/project-messages';
 import { ProviderStartTourComponent } from '../provider-start-tour/provider-start-tour.component';
@@ -119,7 +118,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   queues_count: any = 0;
   cause_count: any = 0;
   checkin_label = '';
-  tooltipcls = projectConstants.TOOLTIP_CLS;
+  tooltipcls = projectConstantsLocal.TOOLTIP_CLS;
   subscription: Subscription;
   customer_label = '';
   isCheckin;

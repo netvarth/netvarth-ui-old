@@ -54,7 +54,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     delete_btn = Messages.DELETE_BTN;
     cancel_btn = Messages.CANCEL_BTN;
     service_price_cap = Messages.SERVPRICE_CAP;
-    end_of_service_notify = projectConstants.PROFILE_ERROR_STACK;
+    end_of_service_notify = projectConstantsLocal.PROFILE_ERROR_STACK;
     pre_pay_amt = Messages.PREPAYMENT_CAP;
     enable_cap = Messages.ENABLE_CAP;
     disbale_cap = Messages.DISABLE_CAP;

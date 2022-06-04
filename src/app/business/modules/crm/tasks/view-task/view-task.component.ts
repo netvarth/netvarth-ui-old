@@ -151,6 +151,7 @@ export class ViewTaskComponent implements OnInit {
   public customerName:any;
   public customerPhNo:any;
   public firstCustomerName:any;
+  public updateResponse:any;
 
 
  
@@ -875,6 +876,8 @@ export class ViewTaskComponent implements OnInit {
   }
   saveCreateTask(){
     console.log('this.updteLocationId',this.updteLocationId)
+    console.log('this.activityType ',this.activityType )
+    console.log('this.updateUserType',this.updateUserType)
     if(this.activityType !=='UpdateFollowUP'){
       const updateTaskData:any = {
         "title":this.taskDetailsForm.controls.taskTitle.value,
@@ -899,34 +902,48 @@ export class ViewTaskComponent implements OnInit {
         console.log('updateTaskData',updateTaskData)
         this.crmService.updateTask(this.taskDetails.taskUid, updateTaskData).subscribe((response)=>{
           console.log('afterUpdateList',response);
-          setTimeout(() => {
-            this.snackbarService.openSnackBar('Successfull updated activity');
-            this.taskDetailsForm.reset();
-          // this.router.navigate(['provider', 'task']);
-          }, projectConstants.TIMEOUT_DELAY);
+          this.updateResponse= response;
+          if(this.updateResponse=true){
+            this.crmService.taskStatusCloseDone(this.taskDetails.taskUid).subscribe((response)=>{
+              console.log(response)
+              setTimeout(() => {
+                this.snackbarService.openSnackBar('Successfull updated activity');
+                // this.taskDetailsForm.reset();
+              this.router.navigate(['provider', 'task']);
+              }, projectConstants.TIMEOUT_DELAY);
+            },
+            (error)=>{
+              setTimeout(() => {
+                this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
+              }, projectConstants.TIMEOUT_DELAY);
+            })
+          }
         },
         (error)=>{
           setTimeout(() => {
             this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
           }, projectConstants.TIMEOUT_DELAY);
         })
+        
+
+
       }
-      this.crmService.taskStatusCloseDone(this.taskDetails.taskUid).subscribe((response)=>{
-        setTimeout(() => {
-          this.snackbarService.openSnackBar('Successfull updated activity');
-          // this.taskDetailsForm.reset();
-        this.router.navigate(['provider', 'task']);
-        }, projectConstants.TIMEOUT_DELAY);
-      },
-      (error)=>{
-        setTimeout(() => {
-          this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
-        }, projectConstants.TIMEOUT_DELAY);
-      })
+      // this.crmService.taskStatusCloseDone(this.taskDetails.taskUid).subscribe((response)=>{
+      //   setTimeout(() => {
+      //     this.snackbarService.openSnackBar('Successfull updated activity');
+      //     // this.taskDetailsForm.reset();
+      //   this.router.navigate(['provider', 'task']);
+      //   }, projectConstants.TIMEOUT_DELAY);
+      // },
+      // (error)=>{
+      //   setTimeout(() => {
+      //     this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
+      //   }, projectConstants.TIMEOUT_DELAY);
+      // })
     }
    
    
-    console.log(' this.updateUserType', this.updateUserType)
+    // console.log(' this.updateUserType', this.updateUserType)
     if(this.activityType==='UpdateFollowUP'){
       const updateFollowUpData={
         "title":this.taskDetailsForm.controls.taskTitle.value,

@@ -7,7 +7,6 @@ import { MedicalrecordService } from '../medicalrecord.service';
 import { InstructionsComponent } from './instructions/instructions.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { ImagesviewComponent } from './imagesview/imagesview.component';
-import { projectConstants } from '../..../../../../../app.component';
 import { ShareRxComponent } from './share-rx/share-rx.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
@@ -134,9 +133,9 @@ export class PrescriptionComponent implements OnInit {
     const input = event.target.files;
     if (input) {
       for (const file of input) {
-        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+        if (projectConstantsLocal.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
           this.wordProcessor.apiErrorAutoHide(this, 'Selected image type not supported');
-        } else if (file.size > projectConstants.FILE_MAX_SIZE) {
+        } else if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
           this.wordProcessor.apiErrorAutoHide(this, 'Please upload images with size < 10mb');
         } else {
           this.selectedMessage.files.push(file);

@@ -49,7 +49,7 @@ export class PrivacyDetailComponent implements OnInit {
   emailpermission;
   disableButton = false;
   api_loading = true;
-  privacypermissiontxt = projectConstants.PRIVACY_PERMISSIONS;
+  privacypermissiontxt = projectConstantsLocal.PRIVACY_PERMISSIONS;
   tooltiphone = projectConstants.TOOLTIP_PRIVACYPHONE;
   tooltemail = projectConstants.TOOLTIP_PRIVACYEMAIL;
   loadData: ArrayBuffer;

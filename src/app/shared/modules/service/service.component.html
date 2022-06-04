@@ -260,11 +260,11 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
           <!-- </mat-form-field> -->
         </div>
         
-        <div class="form-group service-options" *ngIf="!is_donation"
-          [ngClass]="{'tel-serv-flex':is_virtual_serv, 'virtual-serv-div':(service_data && service_data.serviceType==='virtualService' && is_physical ===0)}">
+        <div class="form-group service-options d-lg-flex" *ngIf="!is_donation"
+          >
           <div class="example-full-width" [ngClass]="{'mat-select-virtualsrvcategory':is_virtual_serv}">
             <label class="label">Type</label>
-            <mat-select formControlName="serviceType" placeholder="Type" #virtual
+            <!-- <mat-select formControlName="serviceType" placeholder="Type" #virtual
               (selectionChange)="selectServiceHandler(virtual.value)" class="form-control">
               <mat-option *ngIf="!is_donation && is_virtual_enable" [value]="'virtualService'">
                 Teleservice
@@ -272,22 +272,20 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
               <mat-option *ngIf="!is_donation" [value]="'physicalService'">
                 Onsite Service
               </mat-option>
-            </mat-select>
+            </mat-select> -->
 
-            <!-- <mat-radio-group formControlName="serviceType" class="d-flex">
-              <mat-radio-button disableRipple="true" (change)="selectServiceHandler(virtual.value)" *ngIf="!is_donation && is_virtual_enable" [value]="'virtualService'" #virtual class="radio-btn form-control">
-                Teleservice
-              </mat-radio-button>
+            <mat-radio-group formControlName="serviceType" class="d-flex">
               <mat-radio-button disableRipple="true" (change)="selectServiceHandler(virtual.value)" *ngIf="!is_donation" [value]="'physicalService'" #virtual class="radio-btn form-control">
                 Onsite Service
               </mat-radio-button>
-            </mat-radio-group> -->
-
+              <mat-radio-button disableRipple="true" (change)="selectServiceHandler(virtual.value)" *ngIf="!is_donation && is_virtual_enable" [value]="'virtualService'" #virtual class="radio-btn form-control">
+                Teleservice
+              </mat-radio-button>
+            </mat-radio-group>
 
           </div>
-          <div
-            *ngIf="is_virtual_serv ||(service_data && service_data.serviceType==='virtualService' && is_physical ===0)"
-            class="example-full-width mat-select-virtualservice">
+          <div *ngIf="is_virtual_serv ||(service_data && service_data.serviceType==='virtualService' && is_physical ===0)"
+            class="example-full-width mat-select-virtualservice no-padding">
             <label class="label">Mode</label>
             <mat-select formControlName="virtualServiceType" placeholder="Select mode" #type
               (selectionChange)="selectServiceTypeHandler(type.value)" class="form-control">
@@ -300,6 +298,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </mat-select>
           </div>
         </div>
+        
         <div class="form-group"
           [ngClass]="{'tel-serv-flex':is_tool, 'virtual-serv-div':(service_data && service_data.serviceType==='virtualService' && is_physical ===0)}"
           *ngIf="modeselected || (service_data && service_data.serviceType==='virtualService' && is_physical ===0 )">
