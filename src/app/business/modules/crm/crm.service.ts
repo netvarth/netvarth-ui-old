@@ -545,5 +545,9 @@ export class CrmService {
       const url='provider/lead/'+ leadUid + '/status/rejected'
       return this.servicemeta.httpPut(url);
   }
+  getStateName(){
+    const url = 'provider/crif/indianstates';
+    return this.servicemeta.httpGet(url, null);
+  }
 
 }
