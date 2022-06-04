@@ -762,8 +762,32 @@ width: 200px;
   gap: 5px;
   display: flex;
 }
+.smallDisp{
+  display: flex;
+  
+}
+.textSmall{
+  margin-top: 10px;
+  margin-left: 3px;
+}
 .textPlace{
   padding: 10px;
+}
+
+@media (max-width: 300px){
+  .textPlace {
+      padding: 0px;
+  }
+  .smallDisp{
+    display: flex;
+    margin-top: 10px;
+   
+  }
+  .textSmall{
+    text-overflow: ellipsis !important;
+    margin-top: 4px;
+  
+  }
 }
 .textColor{
   color:#0a3078fa;

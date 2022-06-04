@@ -12,6 +12,7 @@ import { ProviderServices } from '../../../business/services/provider-services.s
 import { PreviewuploadedfilesComponent } from './previewuploadedfiles/previewuploadedfiles.component';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { FileService } from '../../../shared/services/file-service';
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 
 
 @Component({
@@ -72,39 +73,10 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     'folderName': false,
   };
   filtericonTooltip = '';
-  // breadcrumb_moreoptions: any = [];
   domain;
   open_filter = false;
   onSharedClicked = false;
-  // breadcrumbs = [
-  //   {
-  //     url: '/provider/settings',
-  //     title: 'Settings'
-
-  //   },
-  //   {
-  //     title: Messages.GENERALSETTINGS,
-  //     url: '/provider/settings/general'
-  //   },
-  //   {
-  //     title: 'Users'
-  //   }
-  // ];
-  // userTypesFormfill: any = [
-  //   {
-  //     name: 'ASSISTANT',
-  //     displayName: 'Assistant'
-  //   },
-  //   {
-  //     name: 'PROVIDER',
-  //     displayName: 'Provider'
-  //   },
-  //   {
-  //     name: 'ADMIN',
-  //     displayName: 'Admin'
-  //   }];
   api_loading: boolean;
-  // departments: any;
   loadComplete = false;
   user_count: any = 0;
   pagination: any = {
@@ -211,12 +183,6 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.getPatientFiles();
     this.getfiles();
-    // console.log(this.provider_servicesobj.getTotalFileShareCounts().subscribe(
-    //   (data: any) => {
-    //    console.log("Files Count",data);
-    //     this.totalcount = data
-    //   }
-    // ));
     this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log(this.active_user);
@@ -374,10 +340,10 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
     console.log("Selected File :", input);
     if (input) {
       for (const file of input) {
-        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+        if (projectConstantsLocal.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
           this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
           return;
-        } else if (file.size > projectConstants.FILE_MAX_SIZE) {
+        } else if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
           this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
           return;
         } else {
