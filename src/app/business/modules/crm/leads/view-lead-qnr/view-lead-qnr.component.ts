@@ -25,6 +25,7 @@ import { WordProcessor } from '../../../../../../../src/app/shared/services/word
 // import { Subject } from 'rxjs';
 import { FileService } from '../../../../../../../src/app/shared/services/file-service';
 import { PreviewuploadedfilesComponent } from '../../../jaldee-drive/previewuploadedfiles/previewuploadedfiles.component';
+import { CrmSelectMemberComponent } from '../../../../shared/crm-select-member/crm-select-member.component';
 @Component({
   selector: 'app-view-lead-qnr',
   templateUrl: './view-lead-qnr.component.html',
@@ -205,6 +206,15 @@ export class ViewLeadQnrComponent implements OnInit {
   nomineeName1: any;
   panNumber1: any;
   crifStatusId: any;
+  public notesTextarea:any;
+  public isShown: boolean = false ;
+  createCoApplicantForm:any;
+  fromGroupListDynamic:any;
+  count:number=0;
+  formControlArray:any=[];
+  formControlarr:any=[];
+  coApplicantSubmitList:any=[];
+  coApplicantListFormSubmit:any=[];
   constructor(private locationobj: Location,
 
     // private lStorageService: LocalStorageService,
@@ -246,22 +256,17 @@ export class ViewLeadQnrComponent implements OnInit {
         if (this.leadDetails && this.leadDetails.category && this.leadDetails.category.id) {
           this.catId = this.leadDetails.category.id
         }
-
-
-
-
         if (this.leadDetails && this.leadDetails.customer && this.leadDetails.customer.id) {
           this.custId = this.leadDetails.customer.id;
-
         }
-        if (this.leadDetails.customer) {
-          this.firstCustomerName = this.leadDetails.customer.name.charAt(0);
-          this.customerName = this.leadDetails.customer.name;
+        if (this.leadDetails&&this.leadDetails.customer&&this.leadDetails.customer.phoneNo) {
+                  
           this.customerPhNo = this.leadDetails.customer.phoneNo;
         }
         if (this.leadDetails && this.leadDetails.customer && this.leadDetails.customer.name) {
           this.custname = this.leadDetails.customer.name;
-
+          this.firstCustomerName = this.leadDetails.customer.name.charAt(0);
+          this.customerName = this.leadDetails.customer.name;
         }
         if (this.leadDetails.status.name === 'New') {
           this.showKyc = true;
@@ -378,7 +383,41 @@ export class ViewLeadQnrComponent implements OnInit {
     this.getCategoryListData()
     this.getLeadTypeListData()
     this.leadStatus()
+    // this.getNotesDetails()
+    this.createCoApplicantForm=this.createLeadFB.group({
+      proposedAmmount:[''],
+      nameCoApplicant:[''],
+      idTypesCoApplicant:[''],
+      phNOCoApplicant:[''],
+      idValueCoApplicant:[''],
+      panNumberCoApplicant:[''],
+      telephoneTypeCoApplicant:[''],
+      telephoneNumberCoApplicant:[''],
+      addressCoAplicant:[''],
+      cityCoApplicant:[''],
+      stateCoApplicant:[''],
+      pinCoApplicant:[''],
+      dobCoApplicant:[''],
+      relationNameCoApplicant:[''],
+      relationTypeCoApplicant:[''],
+      nomineeNameCoApplicant:[''],
+      nomineeTypeCoApplicant:[''],
+      permanentAddressCoApplicant:[''],
+      permanentCityCoApplicant:[''],
+      permanentStateCoApplicant:[''],
+      permanentPinCodeCoApplicant:[''],
+      idValue1CoApplicant:[''],
+      idTypes1CoApplicant:[''],
+      addressTypeCoApplicant:['']
+
+    })
+
   }
+  // getNotesDetails(){
+  //   this.leadDetails.notes.forEach((notesdata: any) => {
+  //     this.notesList.push(notesdata)
+  //   })
+  // }
   getKycDetails() {
     this.crmService.getkyc(this.leadkid).subscribe(data => {
       this.kycDetails = data;
@@ -800,59 +839,7 @@ export class ViewLeadQnrComponent implements OnInit {
 
       ];
     }
-    let k = 0;
-    this.fileDatakyc1 = [
-      {
-        owner: "",
-        fileName: "",
-        fileSize: "",
-        caption: "",
-        fileType: "",
-        order: ""
-      }
-    ];
-    for (const pic of this.selectedMessagekyc.files) {
-      // console.log("Uploaded Image : ", captions[i]);
-      const size = pic["size"] / 1024;
-
-      //parseInt(((Math.round(size/1024 * 100) / 100).toFixed(2))),
-
-      if (pic["type"]) {
-        this.fileDatakyc1 = [
-          {
-            owner: this.active_user.id,
-            fileName: pic["name"],
-            fileSize: size / 1024,
-            caption: "",
-            fileType: pic["type"].split("/")[1],
-            order: k++
-          }
-        ];
-      } else {
-        const picType = "jpeg";
-        this.fileDatakyc1 = [
-          {
-            owner: this.active_user.id,
-            fileName: pic["name"],
-            fileSize: size / 1024,
-            caption: "",
-            fileType: picType,
-            order: k++
-          }
-        ];
-      }
-      // console.log("Selected File Is : ", this.fileData)
-      // captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
-      // i++;
-      // dataToSend.append('attachments', this.fileData);
-
-    }
-    if (this.selectedMessagekyc.files.length === 0) {
-      this.fileDatakyc1 = [
-
-      ];
-    }
-    const createLeadData: any = [{
+    const createLeadData: any = {
       "originFrom": "Lead",
       "originUid": this.leadkid,
       "customer": this.custId,
@@ -899,13 +886,19 @@ export class ViewLeadQnrComponent implements OnInit {
       //   "id": ''
       // },
       "parent": true
-    }]
+    }
+    this.coApplicantListFormSubmit.push(createLeadData)
+    this.submitCoApplicant()
+    console.log('coApplicantListFormSubmit',this.coApplicantListFormSubmit)
+    console.log('createLeadData',createLeadData)
+    console.log('this.coApplicantSubmitList',this.coApplicantSubmitList)
 
     // this.boolenLeadError=false;
     // this.api_loading = true;
 
-    this.crmService.addkyc(createLeadData).subscribe((response) => {
+    this.crmService.addkyc(this.coApplicantListFormSubmit).subscribe((response) => {
       this.kycresponse = response;
+      console.log('response',response)
       // this.uploadAudioVideo(this.kycresponse, 'kyc');
       setTimeout(() => {
         this.api_loading = true;
@@ -921,6 +914,7 @@ export class ViewLeadQnrComponent implements OnInit {
     },
       (error) => {
         setTimeout(() => {
+        //  this.coApplicantListFormSubmit=[]
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           // this.router.navigate(['provider', 'lead']);
         }, projectConstants.TIMEOUT_DELAY);
@@ -928,7 +922,166 @@ export class ViewLeadQnrComponent implements OnInit {
 
     // this.uploadAudioVideo(this.kycresponse, 'kyc');
   }
-  onSubmitCraeteLeadForm() {
+  proposedAmmount(value){
+    console.log('valueeeeeeeeeee',value)
+    // console.log('value',this.createCoApplicantForm.controls.proposedAmmount.value)
+  }
+  deleteDynamicForm(length){
+    console.log('length',length)
+    const index: number = this.formControlArray.indexOf(length);
+    console.log('index',index)
+      if (index === -1) {
+          this.formControlArray.splice(index, 1);
+      } 
+  }
+  addCoApplicant(){
+    // document.getElementById("reset").innerHTML;
+    // this.count++;
+    console.log(this.count)
+    if(this.count++){
+      this.formGroup()
+    }
+    // this.formGroup()
+    // if(this.count++){ 
+      // this.fromGroupListDynamic.push(this.createCoApplicantForm)
+      // console.log(' this.fromGroupListDynamic', this.fromGroupListDynamic)
+      // this.fromGroupListDynamic.forEach((item,index)=>{
+      //   console.log(item,index)
+      //   if(this.fromGroupListDynamic){
+      //     this.createCoApplicantForm.patchValue({
+      //       proposedAmmount:item.controls.proposedAmmount.value,
+      //       nameCoApplicant:item.controls.nameCoApplicant.value,
+      //       phNOCoApplicant:item.controls.phNOCoApplicant.value,
+      //       idTypesCoApplicant:item.controls.idTypesCoApplicant.value,
+      //       idValueCoApplicant:item.controls.idValueCoApplicant.value,
+      //       panNumberCoApplicant:item.controls.telephoneTypeCoApplicant.value,
+      //       telephoneTypeCoApplicant:item.controls.telephoneTypeCoApplicant.value,
+      //       telephoneNumberCoApplicant:item.controls.telephoneNumberCoApplicant.value,
+      //       addressCoAplicant:item.controls.addressCoAplicant.value,
+      //       cityCoApplicant:item.controls.cityCoApplicant.value,
+      //       stateCoApplicant:item.controls.stateCoApplicant.value,
+      //       pinCoApplicant:item.controls.pinCoApplicant.value,
+      //       dobCoApplicant:item.controls.dobCoApplicant.value,
+      //       relationNameCoApplicant:item.controls.relationNameCoApplicant.value,
+      //       relationTypeCoApplicant:item.controls.relationTypeCoApplicant.value,
+      //       nomineeNameCoApplicant:item.controls.nomineeNameCoApplicant.value,
+      //       nomineeTypeCoApplicant:item.controls.nomineeTypeCoApplicant.value,
+      //       permanentAddressCoApplicant:item.controls.permanentAddressCoApplicant.value,
+      //       permanentCityCoApplicant:item.controls.permanentCityCoApplicant.value,
+      //       permanentStateCoApplicant:item.controls.permanentStateCoApplicant.value,
+      //       permanentPinCodeCoApplicant:item.controls.permanentPinCodeCoApplicant.value,
+      //     })
+      //   }
+      // })
+      // this.createCoApplicantForm=''
+      
+    // }
+  }
+  formGroup(){
+    this.fromGroupListDynamic = this.createLeadFB.array(this.getFormFields().map(item => this.createLeadFB.group(item)));
+
+    this.createCoApplicantForm = this.createLeadFB.group({
+      formField: this.fromGroupListDynamic
+    });
+    console.log(this.createCoApplicantForm);
+  }
+  getFormFields() {
+    // this.formControlArray = [];
+    const arrLength:number=1
+    for (let i = 0; i < arrLength; i++) {
+      this.formControlArray.push({ 
+        proposedAmmount:[''],
+      nameCoApplicant:[''],
+      idTypesCoApplicant:[''],
+      phNOCoApplicant:[''],
+      idValueCoApplicant:[''],
+      panNumberCoApplicant:[''],
+      telephoneTypeCoApplicant:[''],
+      telephoneNumberCoApplicant:[''],
+      addressCoAplicant:[''],
+      cityCoApplicant:[''],
+      stateCoApplicant:[''],
+      pinCoApplicant:[''],
+      dobCoApplicant:[''],
+      relationNameCoApplicant:[''],
+      relationTypeCoApplicant:[''],
+      nomineeNameCoApplicant:[''],
+      nomineeTypeCoApplicant:[''],
+      permanentAddressCoApplicant:[''],
+      permanentCityCoApplicant:[''],
+      permanentStateCoApplicant:[''],
+      permanentPinCodeCoApplicant:[''],
+      idValue1CoApplicant:[''],
+      idTypes1CoApplicant:[''],
+      addressTypeCoApplicant:['']
+
+      });
+    }
+    console.log('formControlArray',this.formControlArray)
+    return this.formControlArray;
+  }
+  submitCoApplicant(){
+   this.coApplicantSubmitList= this.createCoApplicantForm.controls.formField.value
+    console.log('proposedAmmount',this.coApplicantSubmitList)
+    // console.log('proposedAmmount',this.coApplicantSubmitList[0].proposedAmmount)
+    this.coApplicantSubmitList.forEach((item:any)=>{
+      console.log(item)
+      const createKycCoApplicantData: any = {
+        // "proposedAmmount":item.proposedAmmount,
+        "originFrom": "Lead",
+        "originUid": this.leadkid,
+        "customer": this.custId,
+        "customerName": this.custname,
+        "dob": item.dobCoApplicant,
+        "telephone": [
+          {
+            "telephoneType": item.telephoneTypeCoApplicant,
+            "telephoneNumber": item.telephoneNumberCoApplicant
+          }
+        ],
+        "relationType": item.relationTypeCoApplicant,
+        "relationName": item.relationNameCoApplicant,
+        "validationIds": [
+          {
+            "idTypes": item.idTypesCoApplicant,
+            "idValue": item.idValueCoApplicant,
+            "attachments": this.fileData
+          },
+          {
+            "idTypes": item.idTypes1CoApplicant,
+            "idValue": item.idValue1CoApplicant,
+            "attachments": this.fileData
+          }
+        ],
+        "permanentAddress": item.permanentAddressCoApplicant,
+        "permanentCity": item.permanentCityCoApplicant,
+        "permanentState": item.permanentStateCoApplicant,
+        "permanentPinCode": item.permanentPinCodeCoApplicant,
+        "nomineeType": item.nomineeTypeCoApplicant,
+        "nomineeName": item.nomineeNameCoApplicant,
+        "address": [
+          {
+            "addressType": item.addressTypeCoApplicant,
+            "address": item.addressCoAplicant,
+            "city": item.cityCoApplicant,
+            "state": item.stateCoApplicant,
+            "pin": item.pinCoApplicant
+          }
+        ],
+        "panNumber": item.panNumberCoApplicant,
+        "panAttachments": this.fileDataPan,
+        "parentid": {
+          "id": this.custId
+        },
+        "parent": false
+      }
+      console.log('createKycCoApplicantDataaaa',createKycCoApplicantData)
+      this.coApplicantListFormSubmit.push(createKycCoApplicantData)
+      console.log('coApplicantListFormSubmit',this.coApplicantListFormSubmit)
+
+    })
+    
+    
   }
 
   // createNew() {
@@ -1331,6 +1484,57 @@ export class ViewLeadQnrComponent implements OnInit {
         }, projectConstants.TIMEOUT_DELAY);
       })
   }
+
+  noteView(noteDetails: any) {
+    console.log("notedetails", noteDetails);
+    const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
+      width: "100%",
+      panelClass: ["popup-class", "confirmationmainclass"],
+      data: {
+        requestType: "noteDetails",
+        header: "Remarks Details",
+        noteDetails: noteDetails
+      }
+    });
+    dialogRef.afterClosed().subscribe((response: any) => {
+      this.ngOnInit();
+      console.log("response", response);
+    });
+  }
+  handleNotesDescription(textValue:any){
+    console.log('taskDescription',textValue)
+    
+  }
+  saveCreateNote(notesValue:any){
+    if(this.notesTextarea !==undefined){
+      console.log('this.notesTextarea',this.notesTextarea);
+      const createNoteData:any = {
+        "note" :this.notesTextarea
+      }
+        console.log('createNoteData',createNoteData)
+        this.crmService.addLeadNotes(this.updateValue.originUid,createNoteData).subscribe((response:any)=>{
+          console.log('response',response)
+          this.api_loading = true;
+          setTimeout(() => {
+            // this.dialogRef.close(notesValue)
+            this.ngOnInit()
+            // this.getNotesDetails()
+            this.api_loading = false;
+          }, projectConstants.TIMEOUT_DELAY);
+          this.snackbarService.openSnackBar('Remarks added successfully');
+        },
+        (error)=>{
+          this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+        })
+      // }
+      
+    }
+  }
+  toggleShow() {
+
+    this.isShown = ! this.isShown;
+    
+    }
   // uploadAudioVideo(data, type) {
   //   console.log(data)
 

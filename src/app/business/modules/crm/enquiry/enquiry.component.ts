@@ -64,7 +64,7 @@ import { Subject } from 'rxjs';
       public enterSecondName:string='Enter Second Name';
       public enterPhoNeNo:string='Enter Phone No';
       public enterEmailId:string='Enter Email Id';
-      public selectProduct:string='Selet Product';
+      public selectProduct:string='Select Product';
       public enquiryArr:any=[];
       public activityListTitleDialogValue:any;
       public activityListDescriptionDialogValue:any;
@@ -73,6 +73,7 @@ import { Subject } from 'rxjs';
       public activityListStatusDialogValue:any
       public activityListpriorityDialogValue:any;
       public enquiryCreateIdAfterRes:any;
+      public enterproposedAmount:string='Enter Propsed Amount'
 
 
 
@@ -116,7 +117,8 @@ import { Subject } from 'rxjs';
         lastNameValue:[''],
         phoneNoValue:[''],
         emailValue:[''],
-        userTaskCategory:['']
+        userTaskCategory:[''],
+        proposedAmount:[0]
         // activityList:[],
 
        })
@@ -164,6 +166,9 @@ import { Subject } from 'rxjs';
       }
       handleProposedAmount(value){
         console.log('value',value)
+      }
+      hamdleproposedAmount(value){
+        console.log(value)
       }
       searchCustomer() {
         this.emptyFielderror = false;
@@ -389,6 +394,10 @@ import { Subject } from 'rxjs';
             this.activityListTypeDialogValue= response.type.id;
             this.activityListStatusDialogValue= response.status.id;
             this.activityListpriorityDialogValue= response.priority.id;
+            this.createEnquiryForm.patchValue({
+              proposedAmount:response.targetPotential.value
+            })
+            // this.createEnquiryForm.controls.proposedAmount.value= response.targetPotential.value
 
 
 
@@ -399,7 +408,7 @@ import { Subject } from 'rxjs';
             this.activityTitleDialogValue= 'None'
           }
           else if(response==='Close' && response !== undefined){
-            this.activityTitleDialogValue='Select Channel'
+            this.activityTitleDialogValue='None'
           }
           // else{
           //   this.activityTitleDialogValue==='None'
@@ -425,13 +434,6 @@ import { Subject } from 'rxjs';
         console.log('this.customer_data.id',this.customer_data);
         if(this.enquiryArr.length !==0 && this.customer_data !== undefined){
         const createEnquiry:any = {
-        //   "title" : this.activityListTitleDialogValue,
-    		// "description" : this.activityListDescriptionDialogValue,
-    		// "category" : { "id": this.activityListCategoryDialogValue },
-    		// "type" : { "id": this.activityListTypeDialogValue},
-    		// "status" : { "id":  this.activityListStatusDialogValue},
-    		// "priority" : { "id": this.activityListpriorityDialogValue },
-
           "location" : { "id" : this.activityLocationIdDialogValue},
           "customer" : {"id" :  this.customer_data.id},
           "enquireMasterId":this.enquiryTemplateId,
@@ -439,13 +441,14 @@ import { Subject } from 'rxjs';
           "isLeadAutogenerate":true,
           "originUid":this.activityOriginUidDialogValue,
           "taskMasterId":this.activityIdDialogValue,
+          "targetpotential":this.createEnquiryForm.controls.proposedAmount.value,
         }
         console.log('createEnquiry',createEnquiry);
         this.crmService.createEnquiry(createEnquiry).subscribe((response)=>{
           console.log('createEnquiry',response);
           setTimeout(() => {
             this.api_loading = true;
-            this.snackbarService.openSnackBar('Successfull created enquiry');
+            this.snackbarService.openSnackBar('Successfully created enquiry');
             // this.createEnquiryForm.reset();
           this.router.navigate(['provider', 'crm']);
           }, projectConstants.TIMEOUT_DELAY);
@@ -466,6 +469,7 @@ import { Subject } from 'rxjs';
             "email": this.createEnquiryForm.controls.emailValue.value,
             "countryCode": '+91',
             "userTaskCategory":this.createEnquiryForm.controls.userTaskCategory.value,
+            "targetpotential":this.createEnquiryForm.controls.proposedAmount.value,
             // "customer" : {"id" :  this.enquiryCreateIdAfterRes},
           }
           console.log('afterCompleteAddData',afterCompleteAddData)
@@ -479,14 +483,15 @@ import { Subject } from 'rxjs';
                 "enquireMasterId":this.enquiryTemplateId,
                 "leadMasterId": this.createEnquiryForm.controls.userTaskCategory.value,
                 "isLeadAutogenerate":true,
-                "originUid":this.activityOriginUidDialogValue
+                "originUid":this.activityOriginUidDialogValue,
+                "targetpotential":this.createEnquiryForm.controls.proposedAmount.value,
               }
               console.log('createEnquiry',createEnquiry);
               this.crmService.createEnquiry(createEnquiry).subscribe((response)=>{
                 console.log('createEnquiry',response);
                 setTimeout(() => {
                   this.api_loading = true;
-                  this.snackbarService.openSnackBar('Successfull created enquiry');
+                  this.snackbarService.openSnackBar('Successfully created enquiry');
                   // this.createEnquiryForm.reset();
                 this.router.navigate(['provider', 'crm']);
                 }, projectConstants.TIMEOUT_DELAY);
@@ -520,6 +525,7 @@ import { Subject } from 'rxjs';
             "email": this.createEnquiryForm.controls.emailValue.value,
             "countryCode": '+91',
             "userTaskCategory":this.createEnquiryForm.controls.userTaskCategory.value,
+            "targetpotential":this.createEnquiryForm.controls.proposedAmount.value,
             // "customer" : {"id" :  this.enquiryCreateIdAfterRes},
           }
           console.log('afterCompleteAddData',afterCompleteAddData)

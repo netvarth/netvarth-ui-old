@@ -153,6 +153,18 @@
                             </div>
                         </div>
                     </div>
+                    <div class="formField">
+                        <div class="taskInputField" style="margin-top: 5px;">
+                            <div class="taskTitle">
+                                <div>Proposed Amount</div>
+                            </div>
+                            <div class="fieldPadding">
+                                <input min="0" autocomplete="off" formControlName="proposedAmount" type="number" #proposedAmount 
+                                    (ngModelChange)="hamdleproposedAmount(proposedAmount.value)" placeholder="{{enterproposedAmount}}"
+                                    class="form-control" autocomplete="off"  [value]="proposedAmount" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div style="text-align: center;margin-top: 15px;">
                     <ng-container >
