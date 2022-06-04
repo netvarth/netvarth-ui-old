@@ -240,6 +240,7 @@ export class ViewLeadQnrComponent implements OnInit {
   stateList:any=[]
   crifHTML: any;
   showPdfIcon: boolean;
+  isAnyCoapp: boolean = false ;
   constructor(private locationobj: Location,
 
     // private lStorageService: LocalStorageService,
@@ -1076,7 +1077,9 @@ export class ViewLeadQnrComponent implements OnInit {
       "parent": true
     }
     this.coApplicantListFormSubmit.push(createLeadData)
-    this.submitCoApplicant()
+    if(this.isAnyCoapp){
+      this.submitCoApplicant()
+    }
     console.log('coApplicantListFormSubmit',this.coApplicantListFormSubmit)
     console.log('createLeadData',createLeadData)
     console.log('this.coApplicantSubmitList',this.coApplicantSubmitList)
@@ -1119,6 +1122,7 @@ export class ViewLeadQnrComponent implements OnInit {
     // console.log('value',this.createCoApplicantForm.controls.proposedAmmount.value)
   }
   deleteDynamicForm(length){
+    this.isAnyCoapp = false;
     console.log('length',length)
     const index: number = this.formControlArray.indexOf(length);
     console.log('index',index)
@@ -1127,6 +1131,7 @@ export class ViewLeadQnrComponent implements OnInit {
       } 
   }
   addCoApplicant(){
+    this.isAnyCoapp = true;
     // document.getElementById("reset").innerHTML;
     
     console.log(' this.coApplicantText', this.coApplicantText)
