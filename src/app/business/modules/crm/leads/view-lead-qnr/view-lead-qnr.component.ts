@@ -411,7 +411,7 @@ export class ViewLeadQnrComponent implements OnInit {
     this.leadStatus()
     // this.getNotesDetails()
     this.createCoApplicantForm=this.createLeadFB.group({
-      proposedAmmount:[null],
+      // proposedAmmount:[null],
       nameCoApplicant:[null],
       phNOCoApplicant:[null],
       idTypesCoApplicant:[null],
@@ -1154,7 +1154,7 @@ export class ViewLeadQnrComponent implements OnInit {
     const arrLength:number=1
     for (let i = 0; i < arrLength; i++) {
       this.formControlArray.push({ 
-        proposedAmmount:[null],
+        // proposedAmmount:[null],
       nameCoApplicant:[null],
       phNOCoApplicant:[null],
       idTypesCoApplicant:[null],
