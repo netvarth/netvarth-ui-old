@@ -107,13 +107,13 @@
         </div> -->
     </div>
     <div class="row records-sec pt-0">
-        <div class="column">
-            <app-records-datagrid [records]="todayvisitDetails.concat(futurevisitDetails,historyvisitDetails)" [heading]="'Tokens & Appointments'" [source]="'customer-waitlist'"
-                [showMore]="showMoreHistory" [timeType]="3" (actionPerformed)="actionPerformed($event)"
-                [view]="'small'">
+        <div class="column"  *ngIf="globalSettings.waitlist || globalSettings.appointment">
+            <app-records-datagrid [records]="todayvisitDetails.concat(futurevisitDetails,historyvisitDetails)"  [source]="'customer-waitlist'"
+                [showMore]="showMoreHistory" [timeType]="3" (actionPerformed)="actionPerformed($event)" [view]="'small'"
+                [heading]="globalSettings.waitlist && globalSettings.appointment ? 'Tokens & Appointments' : globalSettings.waitlist && !globalSettings.appointment ? 'Tokens' : 'Appointments'">
             </app-records-datagrid>
         </div>
-        <div class="column" *ngIf="domain != 'finance'">
+        <div class="column" *ngIf="domain != 'finance' && orderstatus">
             <app-records-datagrid [records]="todayordervisitDetails.concat(futureordervisitDetails,historyOrdervisitDetails)" [heading]="'Orders'" [source]="'order'"
                 [showMore]="showMoreorderToday" [timeType]="1" (actionPerformed)="actionPerformed($event)"
                 [view]="'small'">

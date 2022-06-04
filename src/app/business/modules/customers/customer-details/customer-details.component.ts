@@ -127,6 +127,8 @@ export class CustomerDetailComponent implements OnInit {
     orderVisits: any = [];
     todayorderVisitDetailsArray: any = [];
     todayordervisitDetails: any;
+    orderstatus: any;
+    globalSettings: any;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -182,8 +184,8 @@ export class CustomerDetailComponent implements OnInit {
                                         this.getCustomerFutureVisit();
                                         this.getCustomerHistoryVisit();
                                         this.getCustomerOrderVisit();
-                                        console.log("Order Details",this.orderVisits)
-
+                                        this.getOrderStatus();
+                                        this.getGlobalSettings();
                                     }
                                 }
                             );
@@ -545,7 +547,21 @@ export class CustomerDetailComponent implements OnInit {
             queryParams: { action: 'edit', id: this.customer[0].id }
         };
         this.router.navigate(['/provider/customers/create'], navigationExtras);
-    }
+}
+
+    getOrderStatus() {
+        this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
+          this.orderstatus = data.enableOrder;
+          console.log("OrderStatus : ",this.orderstatus);
+        });
+      }
+
+      getGlobalSettings() {
+        this.provider_services.getGlobalSettings().subscribe((data: any) => {
+          this.globalSettings = data;
+          console.log("Global Settings : ",this.globalSettings);
+        });
+      }
 
     actionPerformed(event) {
         if (event.type === 'details') {
