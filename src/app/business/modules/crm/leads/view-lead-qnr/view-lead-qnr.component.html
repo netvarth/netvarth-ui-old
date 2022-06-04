@@ -1386,7 +1386,7 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <mat-select class="form-control widthWebKit" placeholder="" #telephoneType
+                <mat-select  class="form-control widthWebKit" placeholder="" #telephoneType
                   formControlName="telephoneTypeCoApplicant">
                   <mat-option [value]="'Residence'">
                     <div>
@@ -2944,7 +2944,7 @@
 
       <form [formGroup]="createCoApplicantForm" >
         <div [formArrayName]="'formField'">
-        <div *ngFor="let item of formControlArray.formField;let i = index;" [formGroupName]="i">
+        <div *ngFor="let item of formControlArray;let i = index;" [formGroupName]="i">
          
          <div style="border-bottom: 1px solid #04A5FF;height: 30px;">
           <div style="display: flex;justify-content: space-between;align-items: center;">

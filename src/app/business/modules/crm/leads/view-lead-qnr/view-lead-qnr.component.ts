@@ -658,6 +658,7 @@ export class ViewLeadQnrComponent implements OnInit {
     this.boolenLeadError = false
   }
   handledob(textareaValue) {
+    console.log('textareaValue',textareaValue)
     this.leadError = null
     this.boolenLeadError = false
   }
@@ -683,10 +684,12 @@ export class ViewLeadQnrComponent implements OnInit {
     this.boolenLeadError = false
   }
   hamdleaddress(textareaValue) {
+    console.log('textareaValue',textareaValue)
     this.leadError = null
     this.boolenLeadError = false
   }
   handlecity(textareaValue) {
+    console.log('textareaValue',textareaValue)
     this.leadError = null
     this.boolenLeadError = false
   }
@@ -799,6 +802,9 @@ export class ViewLeadQnrComponent implements OnInit {
       return caption;
     }
 
+  }
+  addressType(value){
+    console.log('value',value)
   }
   saveCreateLead() {
     let i = 0;
@@ -994,6 +1000,29 @@ export class ViewLeadQnrComponent implements OnInit {
 
       ];
     }
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.dob.value)
+    console.log('this.createLeadForm.controls.telephoneType.value',this.createLeadForm.controls.telephoneType.value)
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.telephoneNumber.value)
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.relationType.value)
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.relationName.value)
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.idTypes.value)
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.idValue.value)
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.idTypes1.value)
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.idValue1.value)
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.permanentAddress.value)
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.permanentCity.value)
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.permanentState.value)
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.permanentPinCode.value)
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.nomineeType.value)
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.nomineeName.value)
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.addressType.value)
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.address.value)
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.city.value)
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.pin.value)
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.state.value)
+    console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.panNumber.value)
+    console.log('fileDataPan',this.fileDataPan)
+    
     const createLeadData: any = {
       "originFrom": "Lead",
       "originUid": this.leadkid,
