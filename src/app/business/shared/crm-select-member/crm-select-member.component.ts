@@ -125,6 +125,9 @@ export class CrmSelectMemberComponent implements OnInit {
   selectable = true;
   removable = true;
   showDone = true;
+  showId = false;
+  showEmail = false;
+  showName = false;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   private onDestroy$: Subject<void> = new Subject<void>();
   public activityList: any = [];
@@ -1059,6 +1062,22 @@ showFileView(file){
                 } else {
                   this.searchedData.forEach((newElement)=>{
                     console.log("New ELSE",newElement)
+                    if(newElement && (newElement.firstName !== '' || newElement.firstName !== undefined) || (newElement.lastName !== '' || newElement.lastName !== undefined)){
+                      this.showName = true
+                      this.showEmail = false;
+                      this.showId = false;
+                    }
+                    if(newElement && (newElement.firstName === '' || newElement.firstName === undefined ) && (newElement.lastName === '' || newElement.lastName === undefined)){
+                      this.showEmail = true
+                      this.showId = false;
+                      this.showName = false
+                    }
+                    if(newElement && (newElement.firstName === '' || newElement.firstName === undefined ) && (newElement.lastName === '' || newElement.lastName === undefined) && (newElement.email === '' || newElement.email === undefined)){
+                      this.showId = true;
+                      this.showName = false
+                      this.showEmail = false;
+                      
+                    }
                     this.newData = []
                     this.customerList.push(newElement)
                     this.customerArray.push(newElement.id);

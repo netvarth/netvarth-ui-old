@@ -974,11 +974,11 @@ export class FolderFilesComponent implements OnInit {
           panelClass: "snackbarnormal"
         });
       }
-      else {
-        this.snackbarService.openSnackBar("Error in sharing file", {
-          panelClass: "snackbarerror"
-        });
-      }
+      // else {
+      //   this.snackbarService.openSnackBar("Error in sharing file", {
+      //     panelClass: "snackbarerror"
+      //   });
+      // }
       // if(result === 'Close'){
       //   this.snackbarService.openSnackBar("Cancelled sharing file", {
       //     panelClass: "snackbarerror"
