@@ -36,7 +36,7 @@
                         <div class="user-img" *ngIf="customer[0].gender === 'female'">
                             <img src="assets/images/femalePic.png" />
                         </div>
-                        <div class="user-img" *ngIf="customer[0].gender === undefined || customer[0].gender === ''">
+                        <div class="user-img" *ngIf="customer[0].gender != 'male' && customer[0].gender != 'female'">
                             <img src="assets/images/undefinedUser.png" />
                         </div>
                         <div class="booking-details-body">

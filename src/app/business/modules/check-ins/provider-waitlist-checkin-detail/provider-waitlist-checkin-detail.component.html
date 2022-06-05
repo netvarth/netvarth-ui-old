@@ -130,9 +130,18 @@
         <div class="rowcard card">
           <div>
             <div>
-              <div *ngIf="waitlist_data.waitlistingFor" class="user-img float-left">
+              <!-- <div *ngIf="waitlist_data.waitlistingFor" class="user-img float-left">
                 <img src="assets/images/avatar5.png" />
-              </div>
+              </div> -->
+              <div class="user-img float-left" *ngIf="waitlist_data.waitlistingFor && waitlist_data.waitlistingFor[0].gender === 'male'">
+                <img src="assets/images/avatar5.png" />
+            </div>
+            <div class="user-img float-left" *ngIf="waitlist_data.waitlistingFor && waitlist_data.waitlistingFor[0].gender === 'female'">
+                <img src="assets/images/femalePic.png" />
+            </div>
+            <div class="user-img float-left" *ngIf="waitlist_data.waitlistingFor && waitlist_data.waitlistingFor[0].gender != 'male' && waitlist_data.waitlistingFor[0].gender != 'female'">
+                <img src="assets/images/undefinedUser.png" />
+            </div>
               <span class="ml-0 pl-0"
                 *ngIf="waitlist_data.waitlistingFor[0].firstName || waitlist_data.waitlistingFor[0].lastName">
                 &nbsp;<b>{{waitlist_data.waitlistingFor[0].firstName | capitalizeFirst}}

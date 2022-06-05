@@ -102,9 +102,18 @@
         <div class="rowcard customer-details-card card">
           <div class="booking-details">
             <div class="row">
-              <div *ngIf="waitlist_data.appmtFor" class="user-img float-left">
+              <!-- <div *ngIf="waitlist_data.appmtFor" class="user-img float-left">
                 <img src="assets/images/avatar5.png" />
-              </div>
+              </div> -->
+              <div class="user-img float-left" *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].gender === 'male'">
+                <img src="assets/images/avatar5.png" />
+            </div>
+            <div class="user-img float-left" *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].gender === 'female'">
+                <img src="assets/images/femalePic.png" />
+            </div>
+            <div class="user-img float-left" *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].gender != 'male' && waitlist_data.appmtFor[0].gender != 'female'">
+                <img src="assets/images/undefinedUser.png" />
+            </div>
               <div class="float-right">
                 <a (click)="editCustomerDetails()" style="font-size:13px!important;"
                   class="edit-btn pointer-cursor"><b>Edit Details</b></a>
