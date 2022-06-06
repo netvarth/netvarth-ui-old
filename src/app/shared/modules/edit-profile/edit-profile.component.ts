@@ -165,7 +165,7 @@ export class EditProfileComponent implements OnInit {
                 whatsappnumber: data['userProfile']['whatsAppNum']['number'],
               });
             }
-            if (data['userProfile']['telegramNum']) {
+            if (data['userProfile']['telegramNum'] && data['userProfile']['telegramNum']['number'].trim()!='') {
               this.editProfileForm.patchValue({
                 countryCode_telegram: data['userProfile']['telegramNum']['countryCode'],
                 telegramnumber: data['userProfile']['telegramNum']['number'],

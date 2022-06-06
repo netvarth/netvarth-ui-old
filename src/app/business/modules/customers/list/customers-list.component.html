@@ -28,7 +28,8 @@
             capitalizeFirst}}
           </button>
           <button  mat-menu-item *ngIf="customers.length > 0 && selectedGroup === 'all'" (click)="sendmsgToAll()">
-            To all {{customer_label | capitalizeFirst}}s
+            <i class="flaticon2-chat-1" aria-hidden="true"></i> {{customer_label | capitalizeFirst}}s
+            <!-- To all  -->
           </button>
           
         </mat-menu>
@@ -93,7 +94,8 @@
             </a>
               <a (click)="sendmsgToAll()" *ngIf="customers.length > 0 && selectedGroup === 'all'"  class="disp-none-small btn mb-2 action-button mgn-lt-5 pull-right ">
                 <i
-                class="flaticon2-chat-1" aria-hidden="true"></i> To all {{customer_label | capitalizeFirst}}s
+                class="flaticon2-chat-1" aria-hidden="true"></i>{{customer_label | capitalizeFirst}}s
+                <!-- To all  -->
             </a>
             <a (click)="sendmsgToGroup()" *ngIf="selectedGroup !== 'all'"  class="btn mb-2 action-button mgn-lt-5 pull-right ">
               <i

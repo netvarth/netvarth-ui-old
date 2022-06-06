@@ -1319,8 +1319,27 @@ color: red;
 .card-inner-img-cont {
     height: 100%;
 }
+.card-inner-img i {
+    height: 60px !important;
+    width: 60px !important;
+    vertical-align: middle !important;
+    box-shadow: 0 4px 8px rgb(0 0 0 / 20%), 0 6px 20px rgb(0 0 0 / 19%);
+    padding: 5px;
+    border-radius: 50%;
+    float: right;
+}
+.card-inner-img img{
+    height: 60px !important;
+    width: 60px !important;
+    vertical-align: middle !important;
+    box-shadow: 0 4px 8px rgb(0 0 0 / 20%), 0 6px 20px rgb(0 0 0 / 19%);
+    padding: 5px;
+    border-radius: 50%;
+    float: right;
+}
+
 .card-timings-cont {
-    height:50px;
+    height:100px;
 }
 .card-timings-cont h6 {
     font-size: 0.98rem !important;

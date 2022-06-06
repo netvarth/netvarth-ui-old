@@ -93,6 +93,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 break;
             case 'appt':
                 this.service = this.item.item;
+                console.log("Appointment Info :",this.service)
                 this.timingCaption = 'Next Available Time';
                 this.timings = this.getAvailabilityforAppt(this.service.serviceAvailability.nextAvailableDate, this.service.serviceAvailability.nextAvailable);
                 this.buttonCaption = 'Get Appointment';

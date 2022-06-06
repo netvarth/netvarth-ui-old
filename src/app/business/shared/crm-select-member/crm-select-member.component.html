@@ -1198,7 +1198,7 @@
 
 <section *ngIf="data.requestType==='fileView'"  style="padding: 5px;">
     <div class="header">
-        <div class="headerText"><i class="fa fa-file fa-2x"></i>  {{customerViewData.fileName?.length>10 ? customerViewData.fileName.slice(0, 10)+'...' : customerViewData.fileName}}
+        <div class="headerText"> <img class="imgIcon" [src]="getImageType(data.file.fileType)" alt=""> {{customerViewData.fileName?.length>10 ? customerViewData.fileName.slice(0, 10)+'...' : customerViewData.fileName}}
         </div>
         <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
             <mat-icon>clear</mat-icon>

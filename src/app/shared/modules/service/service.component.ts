@@ -1027,7 +1027,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         console.log("UrlData :",urlData)
         if (this.tool_id && (this.selctd_tool === 'GoogleMeet' || this.selctd_tool === 'Zoom')) {
             const tempvar = urlData.substring(0, 4);
-            if (tempvar !== 'http') {
+            if (tempvar == 'http') {
                 this.tool_id = '';
                 this.tool_id = 'https://' + urlData;
             }

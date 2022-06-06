@@ -24,7 +24,7 @@ export class PaymentModeComponent implements OnInit {
   // }
   
   getPayTMmodesByGroup(indiamodes) {
-    console.log(indiamodes)
+   // console.log(indiamodes)
     const groupedGateway = indiamodes.reduce(function (r, a) {
         r[a.gateway] = r[a.gateway] || [];
         r[a.gateway].push(a);
