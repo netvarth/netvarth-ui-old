@@ -73,9 +73,9 @@
                       VoterID
                     </div>
                   </mat-option>
-                  <mat-option [value]="'UID'">
+                  <mat-option [value]="'Aadhaar'">
                     <div>
-                      UID
+                      Aadhaar
                     </div>
                   </mat-option>
                   <mat-option [value]="'Others'">
@@ -172,9 +172,9 @@
                       VoterID
                     </div>
                   </mat-option>
-                  <mat-option [value]="'UID'">
+                  <mat-option [value]="'Aadhaar'">
                     <div>
-                      UID
+                      Aadhaar
                     </div>
                   </mat-option>
                   <mat-option [value]="'Others'">
@@ -802,7 +802,7 @@
               </mat-option>
               <mat-option>
                 <div>
-                  UID
+                  Aadhaar
                 </div>
               </mat-option>
               <mat-option>
@@ -1130,9 +1130,9 @@
                       VoterID
                     </div>
                   </mat-option>
-                  <mat-option [value]="'UID'">
+                  <mat-option [value]="'Aadhaar'">
                     <div>
-                      UID
+                      Aadhaar
                     </div>
                   </mat-option>
                   <mat-option [value]="'Others'">
@@ -1231,9 +1231,9 @@
                       VoterID
                     </div>
                   </mat-option>
-                  <mat-option [value]="'UID'">
+                  <mat-option [value]="'Aadhaar'">
                     <div>
-                      UID
+                      Aadhaar
                     </div>
                   </mat-option>
                   <mat-option [value]="'Others'">
@@ -2272,9 +2272,9 @@
                       VoterID
                     </div>
                   </mat-option>
-                  <mat-option [value]="'UID'">
+                  <mat-option [value]="'Aadhaar'">
                     <div>
-                      UID
+                      Aadhaar
                     </div>
                   </mat-option>
                   <mat-option [value]="'Others'">
@@ -2365,9 +2365,9 @@
                       VoterID
                     </div>
                   </mat-option>
-                  <mat-option [value]="'UID'">
+                  <mat-option [value]="'Aadhaar'">
                     <div>
-                      UID
+                      Aadhaar
                     </div>
                   </mat-option>
                   <mat-option [value]="'Others'">
@@ -3284,44 +3284,32 @@
               </div>
             </div>
           </div>
-
-
         </div>
+        <!---crif btn start-->
+       <div class=" my-2">
+        <button type="button" class="font-weight-bold confirmBtn" style="background: #32de84 !important;
+        border: 1px solid #D7FFE9 !important;
+        color: #fff;
+        width: -webkit-fill-available;" (click)="crifBtnStatus()">Generate CRIF Score of Applicant
+        </button>
+       </div>
+        <!----crif btn end-->
+        <div *ngIf="generateCrifScore">
         <span class="group-head">CRIF Score of Applicant</span><br>
-        <!-- <div class="bggrey my-2">
-          <div style="display: flex;gap: 5px">
-            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-              <div class="leadTitle">
-              </div>
-              <div class="fieldPadding">
-                <a class="navbar-item-color bold pointer-cursor disp-none-small" *ngIf="crifScore"> CRIF SCORE :
-                  {{crifScore}} </a>
-                <button mat-flat-button style="margin-left: 25px !important;"
-                  class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn"
-                  (click)="saveCrifApplicant()">
-                  Check CRIF Verification </button>
-
-
-              </div>
-
-            </div>
-
-          </div>
-        </div> -->
         <div class="bggrey my-2">
           <div style="display: flex;gap: 5px">
-            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding" style="display: flex;
+            flex-direction: row-reverse;
+            justify-content: left;">
               <div class="leadTitle">
               </div>
               <div class="fieldPadding">
                 <a class="navbar-item-color bold pointer-cursor disp-none-small" *ngIf="crifScore"> CRIF SCORE :
                   {{crifScore}} </a>
                 <button mat-flat-button style="margin-left: 25px !important;"
-                  class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn"
+                  class="btn btn mb-2 action-button action-button-add confirmBtn"
                   (click)="saveCrifApplicant()">
                   Check CRIF Verification </button>
-
-
               </div>
               <div *ngIf="showPdfIcon">
     
@@ -3334,11 +3322,12 @@
 
           </div>
         </div>
+      </div>
       </form>
 
       <form [formGroup]="createCoApplicantForm" >
-        <div [formArrayName]="'formField'">
-        <div *ngFor="let item of formControlArray;let i = index;" [formGroupName]="i">
+        <div >
+        <div *ngFor="let item of updateValueCoApplicant[0];let i = index;" >
          
          <div style="border-bottom: 1px solid #04A5FF;height: 30px;">
           <div style="display: flex;justify-content: space-between;align-items: center;">
@@ -3423,9 +3412,9 @@
                       VoterID
                     </div>
                   </mat-option>
-                  <mat-option [value]="'UID'">
+                  <mat-option [value]="'Aadhaar'">
                     <div>
-                      UID
+                      Aadhaar
                     </div>
                   </mat-option>
                   <mat-option [value]="'Others'">
@@ -3524,9 +3513,9 @@
                       VoterID
                     </div>
                   </mat-option>
-                  <mat-option [value]="'UID'">
+                  <mat-option [value]="'Aadhaar'">
                     <div>
-                      UID
+                      Aadhaar
                     </div>
                   </mat-option>
                   <mat-option [value]="'Others'">

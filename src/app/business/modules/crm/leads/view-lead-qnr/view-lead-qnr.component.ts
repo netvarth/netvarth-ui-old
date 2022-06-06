@@ -235,12 +235,13 @@ export class ViewLeadQnrComponent implements OnInit {
   formControlarr:any=[];
   coApplicantSubmitList:any=[];
   coApplicantListFormSubmit:any=[];
-  coApplicantText:any;
+  coApplicantList:any=[];
   updateValueCoApplicant:any=[];
   stateList:any=[]
   crifHTML: any;
   showPdfIcon: boolean;
   isAnyCoapp: boolean = false ;
+  generateCrifScore:boolean=false;
   constructor(private locationobj: Location,
 
     // private lStorageService: LocalStorageService,
@@ -411,7 +412,6 @@ export class ViewLeadQnrComponent implements OnInit {
     this.leadStatus()
     // this.getNotesDetails()
     this.createCoApplicantForm=this.createLeadFB.group({
-      // proposedAmmount:[null],
       nameCoApplicant:[null],
       phNOCoApplicant:[null],
       idTypesCoApplicant:[null],
@@ -453,12 +453,12 @@ export class ViewLeadQnrComponent implements OnInit {
   // }
   getKycDetails() {
     this.crmService.getkyc(this.leadkid).subscribe(data => {
+      console.log('data',data)
       this.kycDetails = data;
       console.log(' this.kycDetails', this.kycDetails)
       this.updateValue = this.kycDetails[0];
-      // this.updateValueCoApplicant= this.
-      console.log(this.kycDetails)
-      
+      console.log(this.updateValue)
+      console.log('this.kycDetails.length',this.kycDetails.length)
       
       if (this.updateValue && this.updateValue.address && this.updateValue.address[0].addressType) {
         this.addressType1 = this.updateValue.address[0].addressType
@@ -516,38 +516,52 @@ export class ViewLeadQnrComponent implements OnInit {
         dob: this.updateValue.dob
 
       })
-      // this.kycDetails.forEach((item:any)=>{
-      //   this.createCoApplicantForm.patchValue({
-      //     nameCoApplicant:item.customerName,
-      //     phNOCoApplicant:item.permanentPhoneNumber,
-      //     idTypes1CoApplicant:item.validationIds.idTypes,
-      //     idValue1CoApplicant:item.validationIds.idValue,
-      //     idTypes2CoApplicant:item.validationIds.idTypes,
-      //     idValue2CoApplicant:item.validationIds.idValue,
-      //     panNumberCoApplicant:item.panNumber,
-      //     telephoneTypeCoApplicant:item.telephone.telephoneType,
-      //     telephoneNumberCoApplicant:item.telephone.telephoneNumber,
-      //     permanentAddressCoApplicant:item.permanentAddress,
-      //     permanentCityCoApplicant:item.permanentCity,
-      //     permanentStateCoApplicant:item.permanentState,
-      //     permanentPinCodeCoApplicant:item.permanentPinCode,
-      //     dobCoApplicant:item.dob,
-      //     relationNameCoApplicant:item.relationName,
-      //     relationTypeCoApplicant:item.relationType,
-      //     nomineeNameCoApplicant:item.nomineeName,
-      //     nomineeTypeCoApplicant:item.nomineeType,
-      //     addressTypeCoApplicant:item.address.addressType,
-      //     addressCoAplicant:item.address.address,
-      //     cityCoApplicant:item.address.city,
-      //     stateCoApplicant:item.address.state,
-      //     pinCoApplicant:item.address.pin
-      //   })
+
+      if(this.kycDetails.length>=2 ){
+        this.isAnyCoapp=true;
+        const arr= this.kycDetails.splice(1);
+        console.log('arr',arr)
+        this.updateValueCoApplicant.push(arr);
+        console.log(' this.updateValueCoApplicant', this.updateValueCoApplicant)
+        console.log('this.kycDetails.length-1',this.kycDetails.length-1)
+        this.coApplicantList.length=2;
+        this.updateValueCoApplicant[0].forEach((item:any)=>{
+          console.log('elemnrt',item);
+            this.createCoApplicantForm.patchValue({
+          nameCoApplicant:item.customerName,
+          phNOCoApplicant:item.permanentPhoneNumber,
+          idTypes1CoApplicant:item.validationIds[0].idTypes,
+          idValue1CoApplicant:item.validationIds[0].idValue,
+          idTypes2CoApplicant:item.validationIds[0].idTypes,
+          idValue2CoApplicant:item.validationIds[0].idValue,
+          panNumberCoApplicant:item.panNumber,
+          telephoneTypeCoApplicant:item.telephone[0].telephoneType,
+          telephoneNumberCoApplicant:item.telephone[0].telephoneNumber,
+          permanentAddressCoApplicant:item.permanentAddress,
+          permanentCityCoApplicant:item.permanentCity,
+          permanentStateCoApplicant:item.permanentState,
+          permanentPinCodeCoApplicant:item.permanentPinCode,
+          dobCoApplicant:item.dob,
+          relationNameCoApplicant:item.relationName,
+          relationTypeCoApplicant:item.relationType,
+          nomineeNameCoApplicant:item.nomineeName,
+          nomineeTypeCoApplicant:item.nomineeType,
+          addressTypeCoApplicant:item.address[0].addressType,
+          addressCoAplicant:item.address[0].address,
+          cityCoApplicant:item.address[0].city,
+          stateCoApplicant:item.address[0].state,
+          pinCoApplicant:item.address[0].pin
+        })
+        // this.getFormFields()
+      // this.addCoApplicant()
+        })
 
        
-
-      // })
-      // this.getFormFields()
-      // this.addCoApplicant()
+      }else{
+        this.isAnyCoapp=false;
+        this.updateValueCoApplicant=[]
+      }
+      
       // this.createCoApplicantForm.controls.nameCoApplicant.value=this.kycDetails[1].customerName
 
     })
@@ -1082,11 +1096,6 @@ export class ViewLeadQnrComponent implements OnInit {
     }
     console.log('coApplicantListFormSubmit',this.coApplicantListFormSubmit)
     console.log('createLeadData',createLeadData)
-    console.log('this.coApplicantSubmitList',this.coApplicantSubmitList)
-
-    // this.boolenLeadError=false;
-    // this.api_loading = true;
-
     this.crmService.addkyc(this.coApplicantListFormSubmit).subscribe((response) => {
       this.kycresponse = response;
       console.log('response',response)
@@ -1117,6 +1126,9 @@ export class ViewLeadQnrComponent implements OnInit {
 
     // this.uploadAudioVideo(this.kycresponse, 'kyc');
   }
+  crifBtnStatus(){
+    this.generateCrifScore = !this.generateCrifScore
+  }
   proposedAmmount(value){
     console.log('valueeeeeeeeeee',value)
     // console.log('value',this.createCoApplicantForm.controls.proposedAmmount.value)
@@ -1132,10 +1144,6 @@ export class ViewLeadQnrComponent implements OnInit {
   }
   addCoApplicant(){
     this.isAnyCoapp = true;
-    // document.getElementById("reset").innerHTML;
-    
-    console.log(' this.coApplicantText', this.coApplicantText)
-    // this.count++;
     console.log(this.count)
     if(this.count++){
       this.formGroup()
@@ -1154,7 +1162,6 @@ export class ViewLeadQnrComponent implements OnInit {
     const arrLength:number=1
     for (let i = 0; i < arrLength; i++) {
       this.formControlArray.push({ 
-        // proposedAmmount:[null],
       nameCoApplicant:[null],
       phNOCoApplicant:[null],
       idTypesCoApplicant:[null],
