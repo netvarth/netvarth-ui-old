@@ -14,6 +14,7 @@ import { ProviderServices } from "../../../../business/services/provider-service
 export class RecordsDatagridComponent implements OnInit {
   @Input() records;
   @Input() heading;
+  @Input() waitlist_heading;
   @Input() source;
   @Input() showMore;
   @Input() waitlistMgrSettings;
@@ -205,6 +206,10 @@ export class RecordsDatagridComponent implements OnInit {
     }
   }
   getHeading() {
+    if(this.source == 'customer-waitlist')
+    {
+      return this.waitlist_heading;
+    }
     return this.heading.replace('_', ' ');
   }
 }

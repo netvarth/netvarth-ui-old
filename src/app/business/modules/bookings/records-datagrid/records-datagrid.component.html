@@ -2,7 +2,8 @@
     <div class="card title-gb">
         <h5 class="mgn-up-10">
             <span class="fa fa-arrow-left pointer-cursor text-capitalize" (click)="gotoPrev()"></span>&nbsp;&nbsp;
-            <span>{{heading}}</span>
+            <span *ngIf="waitlist_heading">{{waitlist_heading}}</span>
+            <span *ngIf="!waitlist_heading">{{heading}}1</span>
         </h5>
     </div>
 </section>

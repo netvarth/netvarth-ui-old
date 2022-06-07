@@ -110,7 +110,7 @@
         <div class="column"  *ngIf="globalSettings.waitlist || globalSettings.appointment">
             <app-records-datagrid [records]="todayvisitDetails.concat(futurevisitDetails,historyvisitDetails)"  [source]="'customer-waitlist'"
                 [showMore]="showMoreHistory" [timeType]="3" (actionPerformed)="actionPerformed($event)" [view]="'small'"
-                [heading]="globalSettings.waitlist && globalSettings.appointment ? 'Tokens & Appointments' : globalSettings.waitlist && !globalSettings.appointment ? 'Tokens' : 'Appointments'">
+                [heading]="'Today'" [waitlist_heading]="globalSettings.waitlist && globalSettings.appointment ? 'Tokens & Appointments' : globalSettings.waitlist && !globalSettings.appointment ? 'Tokens' : 'Appointments'">
             </app-records-datagrid>
         </div>
         <div class="column" *ngIf="domain != 'finance' && orderstatus">
