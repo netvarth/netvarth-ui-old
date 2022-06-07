@@ -1056,7 +1056,7 @@
               Co-Applicant {{i}} Name
              </div>
             <div>
-             <i (click)="deleteDynamicForm(fromGroupListDynamic.length)" style="cursor:pointer" class="fa fa-trash" aria-hidden="true"></i>
+             <i (click)="deleteDynamicForm(i)" style="cursor:pointer" class="fa fa-trash" aria-hidden="true"></i>
             </div>
           </div>
          </div>
@@ -1478,10 +1478,7 @@
                 <div class="astericColor">*</div>
               </div>
               <div>
-                <!-- <textarea rowa="10" class="form-control" formControlName="permanentStateCoApplicant" #permanentState
-                  (change)="handlepermanentState(permanentState.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
-                  placeholder="">
-                </textarea> --><div class="fieldPadding">
+                <div class="fieldPadding">
                 <mat-select class="form-control widthWebKit" placeholder="" #relationType
                 formControlName="permanentStateCoApplicant">
                 <mat-option [value]="'Andhra Pradesh'">
@@ -1667,16 +1664,6 @@
 
               </mat-select>
             </div>
-                <!-- <mat-select class="form-control" placeholder="Enter State"
-                (ngModelChange)="handleLeadTypeSelection(permanentState.value)"
-                                        #permanentState formControlName="permanentState">
-                                        <mat-option *ngFor="let item of stateList[0];let index=i" [value]="item.name"
-                                            >
-                                            <div>
-                                                {{item.name}}
-                                            </div>
-                                        </mat-option>
-                                    </mat-select> -->
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                   errorMsg="{{leadError}}">
                 </app-field-error-display>
@@ -2214,8 +2201,10 @@
                           'btn btn-primary font-weight-bold cancelBtn': !createLeadForm.valid,
                           'btn btn-primary font-weight-bold confirmBtn': createLeadForm.valid
                       }" [class.spinner]="api_loading" [class.disabled]="api_loading"
-            [class.spinner-center]="api_loading" type="button" (click)="saveCreateLead()">Proceed
+            [class.spinner-center]="api_loading" type="button" (click)="saveCreateLead()">Save
           </button>
+          <!-- <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="ProceedStatus()">Proceed
+          </button> -->
           <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #FADDDD !important;color: #D50000 !important" (click)="failedStatus()">Reject
           </button>
         </div>
@@ -2456,9 +2445,9 @@
          
         </div>
         <span class="group-head">Pnacard File Details</span><br>
-        <div class="bggrey my-2">
+        <div class="bggrey my-2" *ngIf="updateValue.panAttachments">
           <div style="display: flex;gap: 5px">
-            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding" >
 
               <div *ngFor="let file of updateValue.panAttachments ;let i= index">
                 <a  href="{{file.s3path}}" target="_blank" download>
@@ -3336,7 +3325,7 @@
               Co-Applicant {{i}} Name
              </div>
             <div>
-             <i (click)="deleteDynamicForm(fromGroupListDynamic.length)" style="cursor:pointer" class="fa fa-trash" aria-hidden="true"></i>
+             <i (click)="deleteDynamicForm(i)" style="cursor:pointer" class="fa fa-trash" aria-hidden="true"></i>
             </div>
           </div>
          </div>
@@ -4151,7 +4140,9 @@
       ">
             <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()">Cancel
             </button>
-            <button class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="crifStatus()">Proceed
+            <button class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="crifStatus()">Save
+            </button>
+            <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="ProceedStatus()">Proceed
             </button>
             <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #FADDDD !important;color:black !important" (click)="failedStatus()">Rejected
             </button>
@@ -4166,7 +4157,6 @@
 
 
 </section>
-
 <section *ngIf="showqnr">
   
   <div class="row d-lg-flex justify-content-lg-start" *ngIf="showQuestionnaire && showqnr">

@@ -552,5 +552,4 @@ export class CrmService {
   getproceedStatus(data){
     return this.servicemeta.httpPost('provider/customers/KYC/proceed', data);
   }
-
 }

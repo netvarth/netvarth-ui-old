@@ -330,14 +330,14 @@
                       </tr> -->
                       <tr *ngFor="let lead of documentVerificationData; let i=index"(click)="openTaskOverView(lead.uid,lead)">
                         <!-- <td data-title="Lead Details" class="td1">{{lead.uid}}</td> -->
-                        <td data-title="Lead Details" class="td1">L-{{lead.id}}</td>
+                        <td data-title="Lead Details" class="td1">{{lead.leadId}}</td>
                         <td data-title="Lead Details" class="td2"><span
                           *ngIf="lead.customer">{{lead.customer.name}}</span></td>
                         <td data-title="Lead Details" class="td2"><span
                             *ngIf="lead.assignee">{{lead.assignee.name}}</span></td>
-                            <th data-title="Lead Details" class="td2" *ngIf="lead.createdDate">
+                            <td data-title="Lead Details" class="td2" *ngIf="lead.createdDate">
                               {{lead.createdDate}}
-                            </th>
+                            </td>
                             <td>
                               <div *ngIf="lead.status.name==='New'" style="
                         padding: 10px !important;width: 12rem;
@@ -375,8 +375,8 @@
                     </ng-container>
                   </tbody>
                 </table>
-                <div >
-                  <app-pager  [total_pages]="totalCount" [pagesize]="pagination.perPage"
+                <div class="search_paging" *ngIf="pagination.totalCnt">
+                  <app-pager  [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                     (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
                   </app-pager>
                 </div>
@@ -628,7 +628,7 @@
                     </ng-container>
                   </tbody>
                 </table>
-                <div class="search_paging" *ngIf="totalInprogressList.length>10">
+                <div class="search_paging" *ngIf="pagination.totalCnt">
                   <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                     (pagerclick)="handle_pageclick_inprogress($event)" [curpage]="pagination.startpageval">
                   </app-pager>
@@ -893,7 +893,7 @@
                     </ng-container>
                   </tbody>
                 </table>
-                <div class="search_paging" *ngIf="completedCount>10">
+                <div class="search_paging" *ngIf="pagination.totalCnt">
                   <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                     (pagerclick)="handle_pageclick_completed($event)" [curpage]="pagination.startpageval">
                   </app-pager>
@@ -1137,7 +1137,7 @@
                     </ng-container>
                   </tbody>
                 </table>
-                <div class="search_paging" *ngIf="FailedCount>10">
+                <div class="search_paging" *ngIf="pagination.totalCnt">
                   <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                     (pagerclick)="handle_pageclick_failed($event)" [curpage]="pagination.startpageval">
                   </app-pager>
@@ -1381,7 +1381,7 @@
                     </ng-container>
                   </tbody>
                 </table>
-                <div class="search_paging" *ngIf="TransferredCount>10">
+                <div class="search_paging" *ngIf="pagination.totalCnt">
                   <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                     (pagerclick)="handle_pageclick_Transferred($event)" [curpage]="pagination.startpageval">
                   </app-pager>
@@ -1568,7 +1568,7 @@
                       </ng-container>
                     </tbody>
                   </table>
-                  <div class="search_paging" *ngIf="UnassignedLeadList.length >0">
+                  <div class="search_paging" *ngIf="pagination.totalCnt">
                     <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                       (pagerclick)="handle_pageclick_Unassigned($event)" [curpage]="pagination.startpageval">
                     </app-pager>
@@ -1817,7 +1817,7 @@
                         </ng-container>
                       </tbody>
                     </table>
-                    <div class="search_paging" *ngIf=" assignedLeadList.length>10">
+                    <div class="search_paging" *ngIf="pagination.totalCnt">
                       <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                         (pagerclick)="handle_pageclick_ASsigned($event)" [curpage]="pagination.startpageval">
                       </app-pager>
@@ -1972,7 +1972,7 @@
                   <ng-container *ngIf="kycLeadData.length>0">
                     <tr *ngFor="let lead of kycLeadData; let i=index" (click)="viewLead(lead.uid,lead)">
                       <!-- <td data-title="Lead Details" class="td1">{{lead.uid}}</td> -->
-                       <td data-title="Lead Details" class="td1">L-{{lead.id}}</td>
+                       <td data-title="Lead Details" class="td1">{{lead.leadId}}</td>
                       <td data-title="Lead Details" class="td2"><span
                           *ngIf="lead.customer">{{lead.customer.name}}</span></td>
                       <td data-title="Lead Details" class="td2"><span
@@ -2002,7 +2002,7 @@
                   </ng-container>
                 </tbody>
               </table>
-              <div class="search_paging" *ngIf="kycLeadData.length >10">
+              <div class="search_paging" *ngIf="pagination.totalCnt">
                 <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                   (pagerclick)="handle_pageclick_kyc($event)" [curpage]="pagination.startpageval">
                 </app-pager>
@@ -2154,7 +2154,7 @@
                   <ng-container *ngIf="creditScoreGeneratetdData.length>0">
                     <tr *ngFor="let lead of creditScoreGeneratetdData; let i=index" (click)="viewLead(lead.uid,lead)">
                       <!-- <td data-title="Lead Details" class="td1">{{lead.uid}}</td> -->
-                       <td data-title="Lead Details" class="td1">L-{{lead.id}}</td>
+                       <td data-title="Lead Details" class="td1">{{lead.leadId}}</td>
                       <td data-title="Lead Details" class="td2"><span
                           *ngIf="lead.customer">{{lead.customer.name}}</span></td>
                       <td data-title="Lead Details" class="td2"><span
@@ -2184,7 +2184,7 @@
                   </ng-container>
                 </tbody>
               </table>
-              <div class="search_paging" *ngIf="creditScoreGeneratetdData.length >10">
+              <div class="search_paging" *ngIf="pagination.totalCnt">
                 <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                   (pagerclick)="handle_pageclick_creditScore($event)" [curpage]="pagination.startpageval">
                 </app-pager>
@@ -2340,7 +2340,7 @@
                      >
                      <!-- (click)="openTaskOverView(lead.uid,lead)" -->
                       <!-- <td data-title="Lead Details" class="td1">{{lead.uid}}</td> -->
-                       <td data-title="Lead Details" class="td1">L-{{lead.id}}</td>
+                       <td data-title="Lead Details" class="td1">{{lead.leadId}}</td>
                       <td data-title="Lead Details" class="td2"><span
                           *ngIf="lead.customer">{{lead.customer.name}}</span></td>
                       <td data-title="Lead Details" class="td2"><span
@@ -2370,7 +2370,7 @@
                   </ng-container>
                 </tbody>
               </table>
-              <div class="search_paging" *ngIf="salesVerificationData.length >10">
+              <div class="search_paging" *ngIf="pagination.totalCnt">
                 <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                   (pagerclick)="handle_pageclick_DocumentVerification($event)" [curpage]="pagination.startpageval">
                 </app-pager>
@@ -2561,7 +2561,7 @@
                     <ng-container *ngIf="newLeadList.length>0">
                       <tr *ngFor="let lead of newLeadList; let i=index" (click)="viewLead(lead.uid,lead)">
                         <!-- <td data-title="Lead Details" class="td1">{{lead.uid}}</td> -->
-                        <td data-title="Lead Details" class="td1">L-{{lead.id}}</td>
+                        <td data-title="Lead Details" class="td1">{{lead.leadId}}</td>
                         <td data-title="Lead Details" class="td2"><span
                           *ngIf="lead.customer">{{lead.customer.name}}</span></td>
                         <td data-title="Lead Details" class="td2"><span
@@ -2606,8 +2606,8 @@
                     </ng-container>
                   </tbody>
                 </table>
-                <div *ngIf="newLeadList.length >10">
-                  <app-pager  [total_pages]="totalCount" [pagesize]="pagination.perPage"
+                <div class="search_paging" *ngIf="pagination.totalCnt">
+                  <app-pager [total_pages]="pagination.totalCount" [pagesize]="pagination.perPage"
                     (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
                   </app-pager>
                 </div>

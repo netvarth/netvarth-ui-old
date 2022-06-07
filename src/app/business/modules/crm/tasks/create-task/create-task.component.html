@@ -188,7 +188,7 @@
                         </div>
                         <div class="pickerouter fieldPadding dt dateWithMatDtae" >
                             <input formControlName="taskDate" class="form-control widthWebKit positionNameInput" type="text"  [ngClass]="{'highlight': !(taskMasterData && taskMasterData.dueDate && taskMasterData.dueDate.iseditable)}" matInput
-                                [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
+                                [matDatepicker]="picker"
                                 [value]="ddate" (dateChange)="handleDateChange($event)" placeholder="Enter Date" #taskDate>
                             <mat-datepicker-toggle matSuffix [for]="picker">
                             </mat-datepicker-toggle>
@@ -484,7 +484,7 @@
                         </div>
                         <div class="pickerouter fieldPadding dt dateWithMatDtae" >
                             <input  formControlName="taskDate" class="form-control widthWebKit positionNameInput" type="text"  matInput
-                                [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
+                                [matDatepicker]="picker" 
                                 [value]="ddate" (dateChange)="handleDateChange($event)" placeholder="Enter Date" #taskDate>
                             <mat-datepicker-toggle matSuffix [for]="picker">
                             </mat-datepicker-toggle>
@@ -797,7 +797,7 @@
                         </div>
                         <div class="pickerouter fieldPadding dt dateWithMatDtae" >
                             <input  formControlName="taskDate" class="form-control widthWebKit positionNameInput" type="text"  matInput
-                                [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
+                                [matDatepicker]="picker" 
                                 [value]="ddate" (dateChange)="handleDateChange($event)" placeholder="Enter Date" #taskDate>
                             <mat-datepicker-toggle matSuffix [for]="picker">
                             </mat-datepicker-toggle>

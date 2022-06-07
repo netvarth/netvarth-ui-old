@@ -8,6 +8,13 @@
     }
 }
 
+.dashboard .card.w-dta .dash-list .table tbody tr td{
+    border: none;
+}
+tr{
+    border: 1px solid #ddd;
+}
+
 .mobileDisplay{
     display: none;
 }

@@ -252,8 +252,8 @@ export class LeadsComponent implements OnInit {
     this.creditScoreGeneratedCount(filter)
       .then(
         result => {
-          if (from_oninit) { this.creditScoreGeneratedScoreDataCount = result; }
-          filter = this.setPaginationDocumentVerificationFilter(filter);
+          if (from_oninit) { this.creditScoreGeneratedScoreDataCount = result}
+          filter = this.setPaginationCreditScoreFilter(filter);
           this.crmService.creditScoreGenerated(filter)
             .subscribe(
               data => {

@@ -242,6 +242,12 @@ export class ViewLeadQnrComponent implements OnInit {
   showPdfIcon: boolean;
   isAnyCoapp: boolean = false ;
   generateCrifScore:boolean=false;
+  showupdateKycProceed:boolean=false;
+  addKycResponse:any=[];
+  idtypes2: any;
+  idValue2: any;
+  idtypes1Coapplixcant: any;
+  idvalue1Coapplixcant: any;
   constructor(private locationobj: Location,
 
     // private lStorageService: LocalStorageService,
@@ -296,7 +302,16 @@ export class ViewLeadQnrComponent implements OnInit {
           this.customerName = this.leadDetails.customer.name;
         }
         if (this.leadDetails.status.name === 'New') {
-          this.showKyc = true;
+          // this.showKyc = true;
+          if(this.leadDetails.kycCreated===true){
+            this.showupdateKyc = true;
+            this.showKyc = false;
+            this.getKycDetails();
+          }
+          else{
+            this.showKyc = true;
+            this.showupdateKyc = false;
+          }
         }
         if (this.leadDetails.status.name === 'KYC Updated') {
           this.showupdateKyc = true;
@@ -314,6 +329,11 @@ export class ViewLeadQnrComponent implements OnInit {
 
           // this.showqnr = true;
         }
+        // if(this.addKycResponse.length === 0){
+        //   this.showupdateKycProceed = true;
+        //   this.getKycDetails();
+        //   // this.addKycDetails()
+        // }
 
         this.leadDetails.notes.forEach((notesdata: any) => {
           this.notesList.push(notesdata)
@@ -505,14 +525,14 @@ export class ViewLeadQnrComponent implements OnInit {
         permanentCity: this.updateValue.permanentCity,
         permanentState: this.updateValue.permanentState,
         permanentPinCode: this.updateValue.permanentPinCode,
-        nomineeType: this.nomineeType1,
-        nomineeName: this.nomineeName1,
-        addressType: this.addressType1,
-        city: this.city1,
-        address: this.address1,
-        state: this.state1,
-        pin: this.pin1,
-        panNumber: this.panNumber1,
+        nomineeType: this.updateValue.nomineeType,
+        nomineeName: this.updateValue.nomineeName,
+        addressType: this.updateValue.address[0].addressType,
+        city: this.updateValue.address[0].city,
+        address:this.updateValue.address[0].address,
+        state: this.updateValue.address[0].state,
+        pin: this.updateValue.address[0].pin,
+        panNumber: this.updateValue.panNumber,
         dob: this.updateValue.dob
 
       })
@@ -527,13 +547,25 @@ export class ViewLeadQnrComponent implements OnInit {
         this.coApplicantList.length=2;
         this.updateValueCoApplicant[0].forEach((item:any)=>{
           console.log('elemnrt',item);
+          if (item && item.validationIds[0] && item.validationIds[0].idTypes) {
+            this.idtypes1Coapplixcant = item.validationIds[0].idTypes
+          }
+          if (item && item.validationIds[0] && item.validationIds[0].idTypes) {
+            this.idvalue1Coapplixcant = item.validationIds[0].idTypes
+          }
+          if (item && item.validationIds[1] && item.validationIds[1].idTypes) {
+            this.idtypes2 = item.validationIds[1].idTypes
+          }
+          if (item && item.validationIds[1] && item.validationIds[1].idTypes) {
+            this.idValue2 = item.validationIds[1].idValue
+          }
             this.createCoApplicantForm.patchValue({
           nameCoApplicant:item.customerName,
           phNOCoApplicant:item.permanentPhoneNumber,
-          idTypes1CoApplicant:item.validationIds[0].idTypes,
-          idValue1CoApplicant:item.validationIds[0].idValue,
-          idTypes2CoApplicant:item.validationIds[0].idTypes,
-          idValue2CoApplicant:item.validationIds[0].idValue,
+          idTypes1CoApplicant:this.idtypes1Coapplixcant,
+          idValue1CoApplicant:this.idvalue1Coapplixcant,
+          idTypes2CoApplicant: this.idtypes2 ,
+          idValue2CoApplicant:this.idValue2 ,
           panNumberCoApplicant:item.panNumber,
           telephoneTypeCoApplicant:item.telephone[0].telephoneType,
           telephoneNumberCoApplicant:item.telephone[0].telephoneNumber,
@@ -1019,29 +1051,6 @@ export class ViewLeadQnrComponent implements OnInit {
 
       ];
     }
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.dob.value)
-    // console.log('this.createLeadForm.controls.telephoneType.value',this.createLeadForm.controls.telephoneType.value)
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.telephoneNumber.value)
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.relationType.value)
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.relationName.value)
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.idTypes.value)
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.idValue.value)
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.idTypes1.value)
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.idValue1.value)
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.permanentAddress.value)
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.permanentCity.value)
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.permanentState.value)
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.permanentPinCode.value)
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.nomineeType.value)
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.nomineeName.value)
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.addressType.value)
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.address.value)
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.city.value)
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.pin.value)
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.state.value)
-    // console.log('this.createLeadForm.controls.dob.value',this.createLeadForm.controls.panNumber.value)
-    // console.log('fileDataPan',this.fileDataPan)
-    
     const createLeadData: any = {
       "originFrom": "Lead",
       "originUid": this.leadkid,
@@ -1096,35 +1105,104 @@ export class ViewLeadQnrComponent implements OnInit {
     }
     console.log('coApplicantListFormSubmit',this.coApplicantListFormSubmit)
     console.log('createLeadData',createLeadData)
-    this.crmService.addkyc(this.coApplicantListFormSubmit).subscribe((response) => {
+    this.crmService.addkyc(this.coApplicantListFormSubmit).subscribe((response:any) => {
       this.kycresponse = response;
       console.log('response',response)
       this.uploadAudioVideo(this.kycresponse, 'kyc');
-      setTimeout(() => {
-        this.api_loading = true;
-        this.crmService.getproceedStatus(this.coApplicantListFormSubmit).subscribe((response)=>{
-          console.log('response',response)
-        })
-        this.createLeadForm.reset();
-        // const navigationExtras: NavigationExtras = {
-        //   queryParams: {
-        //     type: 'LEAD'
-        //   }
-        // }
-        // console.log(navigationExtras)
-        this.router.navigate(['provider', 'crm']);
-      }, projectConstants.TIMEOUT_DELAY);
+      this.addKycResponse= response;
+      if(response=[]){
+        setTimeout(() => {
+          // this.api_loading = true;
+          // const navigationExtras: NavigationExtras = {
+          //   queryParams: {
+          //     type: 'NEWLEAD'
+          //   }
+          // }
+          //  this.router.navigate(['provider', 'lead'], navigationExtras);
+          // this.createLeadForm.reset();
+          this.router.navigate(['provider', 'crm']);
+        }, projectConstants.TIMEOUT_DELAY);
+        // this.showupdateKycProceed = true;
+        // this.ngOnInit();
+        // this.getKycDetails()
+      }
+      
       
     },
       (error) => {
         setTimeout(() => {
-        //  this.coApplicantListFormSubmit=[]
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          // this.router.navigate(['provider', 'lead']);
         }, projectConstants.TIMEOUT_DELAY);
       })
-
-    // this.uploadAudioVideo(this.kycresponse, 'kyc');
+  }
+  ProceedStatus(){
+    const createLeadData: any = {
+      "originFrom": "Lead",
+      "originUid": this.leadkid,
+      "customer": this.custId,
+      "customerName": this.custname,
+      "dob": this.createLeadForm.controls.dob.value,
+      "telephone": [
+        {
+          "telephoneType": this.createLeadForm.controls.telephoneType.value,
+          "telephoneNumber": this.createLeadForm.controls.telephoneNumber.value
+        }
+      ],
+      "relationType": this.createLeadForm.controls.relationType.value,
+      "relationName": this.createLeadForm.controls.relationName.value,
+      "validationIds": [
+        {
+          "idTypes": this.createLeadForm.controls.idTypes.value,
+          "idValue": this.createLeadForm.controls.idValue.value,
+          "attachments": this.fileData
+        },
+        {
+          "idTypes": this.createLeadForm.controls.idTypes1.value,
+          "idValue": this.createLeadForm.controls.idValue1.value,
+          "attachments": this.fileData
+        }
+      ],
+      "permanentAddress": this.createLeadForm.controls.permanentAddress.value,
+      "permanentCity": this.createLeadForm.controls.permanentCity.value,
+      "permanentState": this.createLeadForm.controls.permanentState.value,
+      "permanentPinCode": this.createLeadForm.controls.permanentPinCode.value,
+      "nomineeType": this.createLeadForm.controls.nomineeType.value,
+      "nomineeName": this.createLeadForm.controls.nomineeName.value,
+      "address": [
+        {
+          "addressType": this.createLeadForm.controls.addressType.value,
+          "address": this.createLeadForm.controls.address.value,
+          "city": this.createLeadForm.controls.city.value,
+          "state": this.createLeadForm.controls.state.value,
+          "pin": this.createLeadForm.controls.pin.value
+        }
+      ],
+      "panNumber": this.createLeadForm.controls.panNumber.value,
+      "panAttachments": this.fileDataPan,
+      // "parentid": {
+      //   "id": ''
+      // },
+      "parent": true
+    }
+    if(this.isAnyCoapp){
+      this.submitCoApplicant()
+    }
+    this.coApplicantListFormSubmit.push(createLeadData)
+    
+    this.crmService.getproceedStatus(this.coApplicantListFormSubmit).subscribe((response) => {
+      this.kycresponse = response;
+      console.log('response',response)
+      setTimeout(() => {
+        this.api_loading = true;
+        this.createLeadForm.reset();
+        this.router.navigate(['provider', 'crm']);
+      }, projectConstants.TIMEOUT_DELAY);
+    },
+      (error) => {
+        setTimeout(() => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }, projectConstants.TIMEOUT_DELAY);
+      })
   }
   crifBtnStatus(){
     this.generateCrifScore = !this.generateCrifScore
@@ -1135,19 +1213,14 @@ export class ViewLeadQnrComponent implements OnInit {
   }
   deleteDynamicForm(length){
     this.isAnyCoapp = false;
-    console.log('length',length)
-    const index: number = this.formControlArray.indexOf(length);
-    console.log('index',index)
-      if (index === -1) {
-          this.formControlArray.splice(index, 1);
-      } 
+          this.formControlArray.splice(length, 1);
   }
   addCoApplicant(){
     this.isAnyCoapp = true;
     console.log(this.count)
-    if(this.count++){
+    // if(this.count++){
       this.formGroup()
-    }
+    // }
   }
   formGroup(){
     this.fromGroupListDynamic = this.createLeadFB.array(this.getFormFields().map(item => this.createLeadFB.group(item)));
