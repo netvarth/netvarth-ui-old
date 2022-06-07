@@ -248,6 +248,8 @@ export class ViewLeadQnrComponent implements OnInit {
   idValue2: any;
   idtypes1Coapplixcant: any;
   idvalue1Coapplixcant: any;
+  telephoneTYpeCoapplicant: any;
+  telephoneNumberCoapplicant: any;
   constructor(private locationobj: Location,
 
     // private lStorageService: LocalStorageService,
@@ -559,6 +561,12 @@ export class ViewLeadQnrComponent implements OnInit {
           if (item && item.validationIds[1] && item.validationIds[1].idTypes) {
             this.idValue2 = item.validationIds[1].idValue
           }
+          if (item && item.telephone[0] && item.telephone[0].telephoneType) {
+            this.telephoneTYpeCoapplicant = item.telephone[0].telephoneType
+          }
+          if (item && item.telephone[0] && item.telephone[0].telephoneNumber) {
+            this.telephoneNumberCoapplicant = item.telephone[0].telephoneNumber
+          }
             this.createCoApplicantForm.patchValue({
           nameCoApplicant:item.customerName,
           phNOCoApplicant:item.permanentPhoneNumber,
@@ -567,8 +575,8 @@ export class ViewLeadQnrComponent implements OnInit {
           idTypes2CoApplicant: this.idtypes2 ,
           idValue2CoApplicant:this.idValue2 ,
           panNumberCoApplicant:item.panNumber,
-          telephoneTypeCoApplicant:item.telephone[0].telephoneType,
-          telephoneNumberCoApplicant:item.telephone[0].telephoneNumber,
+          telephoneTypeCoApplicant:this.telephoneTYpeCoapplicant ,
+          telephoneNumberCoApplicant:this.telephoneNumberCoapplicant,
           permanentAddressCoApplicant:item.permanentAddress,
           permanentCityCoApplicant:item.permanentCity,
           permanentStateCoApplicant:item.permanentState,
@@ -1184,11 +1192,12 @@ export class ViewLeadQnrComponent implements OnInit {
       // },
       "parent": true
     }
+    console.log('createLeadData',createLeadData)
     if(this.isAnyCoapp){
       this.submitCoApplicant()
     }
-    this.coApplicantListFormSubmit.push(createLeadData)
-    
+    this.coApplicantListFormSubmit.push(createLeadData);
+    console.log('this.coApplicantListFormSubmit',this.coApplicantListFormSubmit)
     this.crmService.getproceedStatus(this.coApplicantListFormSubmit).subscribe((response) => {
       this.kycresponse = response;
       console.log('response',response)
