@@ -250,6 +250,7 @@ export class ViewLeadQnrComponent implements OnInit {
   idvalue1Coapplixcant: any;
   telephoneTYpeCoapplicant: any;
   telephoneNumberCoapplicant: any;
+  afterCreatetKycproceed:boolean=false
   constructor(private locationobj: Location,
 
     // private lStorageService: LocalStorageService,
@@ -1119,20 +1120,21 @@ export class ViewLeadQnrComponent implements OnInit {
       this.uploadAudioVideo(this.kycresponse, 'kyc');
       this.addKycResponse= response;
       if(response=[]){
+        // this.afterCreatetKycproceed=true;
         setTimeout(() => {
-          // this.api_loading = true;
-          // const navigationExtras: NavigationExtras = {
-          //   queryParams: {
-          //     type: 'NEWLEAD'
-          //   }
-          // }
-          //  this.router.navigate(['provider', 'lead'], navigationExtras);
+          this.api_loading = true;
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              type: 'NEWLEAD'
+            }
+          }
+           this.router.navigate(['provider', 'lead'], navigationExtras);
           // this.createLeadForm.reset();
-          this.router.navigate(['provider', 'crm']);
+          // this.router.navigate(['/provider/viewleadqnr/' +  this.leadkid]);
+          // this.router.navigate(['/provider', 'crm']);
+        
         }, projectConstants.TIMEOUT_DELAY);
         // this.showupdateKycProceed = true;
-        // this.ngOnInit();
-        // this.getKycDetails()
       }
       
       
