@@ -1099,7 +1099,7 @@ export class ViewLeadQnrComponent implements OnInit {
     this.crmService.addkyc(this.coApplicantListFormSubmit).subscribe((response) => {
       this.kycresponse = response;
       console.log('response',response)
-      // this.uploadAudioVideo(this.kycresponse, 'kyc');
+      this.uploadAudioVideo(this.kycresponse, 'kyc');
       setTimeout(() => {
         this.api_loading = true;
         this.crmService.getproceedStatus(this.coApplicantListFormSubmit).subscribe((response)=>{
@@ -1788,21 +1788,24 @@ export class ViewLeadQnrComponent implements OnInit {
     }
 
     
-  // uploadAudioVideo(data, type) {
-  //   console.log(data)
+    uploadAudioVideo(data, type) {
+      for (const url of data) {
+        this.api_loading_video = true;
+        const file = this.filestoUpload[url.url];
+        this.provider_services.videoaudioS3Upload(file, url.url)
+          .subscribe(() => {
+           
+          },
 
-  //       const file = this.filestoUpload[data[0].url];
-  //       this.providerService.videoaudioS3Upload(file, data[0].url)
-  //         .subscribe(() => {
+            error => {
+              this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+              this.api_loading = false;
+              this.api_loading_video = false;
+            });
+      }
 
-
-  //         },
-  //           error => {
-  //             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-
-  //           });
-
-  // }
+    
+}
 
   saveCrifApplicant() {
     const post_data = {

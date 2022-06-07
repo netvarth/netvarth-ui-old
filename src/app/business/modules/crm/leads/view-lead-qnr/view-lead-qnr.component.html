@@ -2455,13 +2455,13 @@
           </div>
          
         </div>
-        <!-- <span class="group-head">Pnacard File Details</span><br>
-        <div class="bggrey my-2" *ngIf="updateValue.panAttachments">
+        <span class="group-head">Pnacard File Details</span><br>
+        <div class="bggrey my-2">
           <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
 
               <div *ngFor="let file of updateValue.panAttachments ;let i= index">
-                <a  href="{{file.s3path}}" target="_blank">
+                <a  href="{{file.s3path}}" target="_blank" download>
                   <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
                   {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                 </a>
@@ -2470,9 +2470,7 @@
             </div>
 
           </div>
-
-
-        </div> -->
+        </div>
         <!-- <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
         <br *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
