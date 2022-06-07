@@ -1026,7 +1026,7 @@ showFileView(file){
       // if(post_data === '' || post_data === undefined){
       //   this.snackbarService.openSnackBar("Please select atleast one people",{'panelClass': 'snackbarerror'})
       // }
-      this.customerDetails = "";
+     // this.customerDetails = "";
       this.providerServiceObj
         .getCustomer(post_data)
         .pipe(takeUntil(this.onDestroy$))
@@ -1053,7 +1053,7 @@ showFileView(file){
                // this.snackbarService.openSnackBar("Searched people already existed!",{'panelClass': 'snackbarerror'})
               } else {
                  this.newData.push(newElement)
-               this.customerArray.push(newElement.id);
+               //this.customerArray.push(newElement.id);
               }
               //  this.customerList = []
                

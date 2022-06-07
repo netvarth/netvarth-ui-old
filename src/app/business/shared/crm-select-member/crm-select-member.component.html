@@ -1024,10 +1024,12 @@
        
          
             <div>
-                <div class="customerInfo" *ngIf="showSelect">
+                <div class="customerInfo" >
+                    <!-- *ngIf="showSelect" -->
                     <!-- [ngModelOptions]="{standalone: true}" [(ngModel)]="search_input" (change)="searchCustomer(customerList)"-->
                     <input type="text" autocomplete="off" 
-                        class="form-control inputSize" name="search"   (ngModelChange)="createCustomerData(customerDetails)" [(ngModel)]="customerDetails" placeholder="Search people by id/name/email/phone number"/><br>
+                        class="form-control inputSize" name="search"   (ngModelChange)="createCustomerData(customerDetails)" [(ngModel)]="customerDetails" placeholder="Search people by id/name/email/phone number"/>
+                       <br>
                        
                         <!-- {{searchby}} [disabled]="!customerDetails"-->
                         <div >
@@ -1059,22 +1061,40 @@
                               searchCustomer()" -->
                 </div>
 
-                <div  class="customerInfo" *ngIf="newData.length >= 1 && showInput">
+                <div  class="customerInfo" *ngIf="newData.length >= 1">
+                    <!--  && showInput -->
                     <!-- <mat-select class="inputSize" multiple>
                       <mat-option *ngFor="let customer of customerList" [value]="customer.id">
                               <span> {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}</span>
                       </mat-option>
                     </mat-select> -->
                    
-                    <select class="selectSize" 
+                    <!-- <select class="selectSize" 
                         #deptsel
                                 (change)="handleDeptSelction(deptsel.value)" placeholder="Select people">
                          <option selected>Select people</option>
                         <option *ngFor="let customer of newData" [value]="customer.id">
                             <span> {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}</span>
                         </option>
-                      </select>
+                      </select> -->
+                            
+                        <!-- <select class="selectSize" 
+                        #deptsel
+                                (change)="handleDeptSelction(deptsel.value)" placeholder="Select people">
+                         <option selected>Select people</option>
+                        <option *ngFor="let customer of newData" [value]="customer.id">
+                            <span> {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}</span>
+                        </option>
+                      </select> -->
+                      <mat-selection-list class="selectSize" [multiple]="false" #deptsel (selectionChange)="handleDeptSelction(deptsel.selectedOptions.selected[0]?.value)">
+                        <mat-list-option *ngFor="let customer of newData" [value]="customer.id">
+                           <span > {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}</span>
+                        </mat-list-option>
+                      </mat-selection-list>
+               
+                    
                 </div>
+               
                 <div class="fileInfo">
                  
                    
@@ -1186,7 +1206,7 @@
                 <ng-container>
                     <div class="mt-4">
                         <button type="button" class="btn font-weight-bold" mat-dialog-close >Cancel</button>&nbsp; &nbsp;
-                        <button type="button" class="btn btn-primary font-weight-bold confirmBtn"  (click)="shareFileToConsumerOrProvider()">Send</button>
+                        <button type="button" class="btn btn-primary font-weight-bold confirmBtn" [disabled]="newCustomerList.length === 0 && customerList.length === 0"   (click)="shareFileToConsumerOrProvider()">Send</button>
                     </div>
                     <!-- <i class="fa fa-share-alt"  [disabled]="customerDetails === ''" aria-hidden="true"></i> -->
                 </ng-container>

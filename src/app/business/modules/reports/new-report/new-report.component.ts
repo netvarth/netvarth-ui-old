@@ -1122,6 +1122,7 @@ export class NewReportComponent implements OnInit {
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
     } else if (reportType === 'user') {
+      console.log("Report Type :",reportType)
       if (this.user_timePeriod === 'DATE_RANGE' && (this.user_startDate === undefined || this.user_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -1176,6 +1177,7 @@ export class NewReportComponent implements OnInit {
       this.provider_services.generateReport(payload)
         .subscribe(
           data => {
+            console.log("Generated Report :",data)
             resolve(data);
           },
           error => {
@@ -1190,6 +1192,7 @@ export class NewReportComponent implements OnInit {
       this.provider_services.generateUserReport(payload.filter)
         .subscribe(
           data => {
+            console.log("Generated User Report :",data)
             resolve(data);
           },
           error => {
@@ -1207,21 +1210,25 @@ export class NewReportComponent implements OnInit {
     console.log("Payload :",payload)
     this.btn_disabled = true;
     this.report_loading = true;
+     // user generate report is in progression please dont remove it!
     if (this.report_type === 'user') {
       this.generateUserReportByCriteria(payload).then(res => {
         this.report_loading = false;
         this.btn_disabled = false;
         this.report_data_service.storeSelectedValues(res);
-        console.log("Resss...",this.report_data_service.storeSelectedValues(res))
+        console.log("Resss... User",this.report_data_service.storeSelectedValues(res))
         this.lStorageService.setitemonLocalStorage('reportCriteria', payload);
-        this.generateUserReport(res, payload);
+       // this.generateUserReport(res, payload);
+       // user generate report is in progression please dont remove it!
+        this.generatedReport(res);
       },
         (error) => {
           this.report_loading = false;
           this.btn_disabled = false;
           this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
         });
-    } else {
+    }
+     else {
       this.generateReportByCriteria(payload).then(res => {
         this.report_loading = false;
         this.btn_disabled = false;
@@ -1236,7 +1243,7 @@ export class NewReportComponent implements OnInit {
           this.btn_disabled = false;
           this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
         });
-    }
+   }
   }
   goToSelectionPage(type, selected_id) {
     this.setSelectedData().then(res => {
