@@ -14,7 +14,7 @@ import { GroupStorageService } from '../../../../../src/app/shared/services/grou
 export class CRMComponent implements OnInit {
 
   crmTitle = '';
-
+  isadminPrivilege: any;
 
 
   public step: any = 0;
@@ -55,8 +55,55 @@ export class CRMComponent implements OnInit {
    }
   ngOnInit(): void {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
-    console.log(user.userType)
+    console.log(user)
+    this.isadminPrivilege = user.adminPrivilege
     if(user.userType === 2){
+      this.showActivity = false;
+      this.redirectionList = [
+        // {
+        //   id:1,
+        //   activityName:'Enquiry'
+        // },
+        // {
+        //   id:2,
+        //   activityName:'Follow UPS'
+        // },
+        {
+          id: 7,
+          activityName: 'Leads'
+        },
+        {
+          id: 4,
+          activityName: 'CRIF'
+        },
+        {
+          id: 5,
+          activityName: 'Sales Verification'
+        },
+        {
+          id: 6,
+          activityName: 'Login'
+        },
+        {
+          id: 3,
+          activityName: 'All Loans'
+        },
+        
+        // {
+        //   id: 8,
+        //   activityName: 'Credit field verification and recommendation'
+        // },
+        // {
+        //   id: 9,
+        //   activityName: 'Loan Sanction'
+        // },
+        // {
+        //   id: 10,
+        //   activityName: 'Loan Disbursement'
+        // }
+      ]
+    }
+    else if(user.userType === 1 && this.isadminPrivilege){
       this.showActivity = false;
       this.redirectionList = [
         // {
