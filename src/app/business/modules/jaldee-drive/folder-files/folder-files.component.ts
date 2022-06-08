@@ -16,9 +16,6 @@ import { DateTimeProcessor } from "../../../../shared/services/datetime-processo
 import { CrmSelectMemberComponent } from "../../../../../../src/app/business/shared/crm-select-member/crm-select-member.component";
 import { projectConstantsLocal } from "../../../../shared/constants/project-constants";
 
-// import { ServiceQRCodeGeneratordetailComponent } from "../../../../shared/modules/service/serviceqrcodegenerator/serviceqrcodegeneratordetail.component";
-// import { ConfirmDeleteBoxComponent } from '../confirm-delete-box/confirm-delete-box.component';
-
 @Component({
   selector: "app-folder-files",
   templateUrl: "./folder-files.component.html",
@@ -27,11 +24,10 @@ import { projectConstantsLocal } from "../../../../shared/constants/project-cons
 export class FolderFilesComponent implements OnInit {
   driveFiles: any[] = [];
   allFileTypesSelected = false;
- // fileTypes: any[] = ["png", "jpg", "jpeg", "pdf"];
   filterFileType: any;
   fileSizeFilter: any;
-  contextTypes:any=[]
-  fileTypes:any=[]
+  contextTypes: any = []
+  fileTypes: any = []
   loading = true;
   blogo = "";
   bname;
@@ -47,7 +43,6 @@ export class FolderFilesComponent implements OnInit {
   selectedTeam;
   addUser = false;
   tooltipcls = "";
-  // fileTypeDisplayName = projectConstantsLocal.FilE_TYPES;
   apiloading = false;
   dataLoading = false;
   foldertype: any;
@@ -136,17 +131,6 @@ export class FolderFilesComponent implements OnInit {
   fileData: any;
   fileExisted: string;
   isExistFile: boolean = false;
-
-  // fileData:any =[
-  //   {
-  //     owner:'',
-  //     fileName: '',
-  //     fileSize: '',
-  //     caption:'',
-  //     fileType: '',
-  //     order: '',
-  //   }
-  // ]
   folderTypeName: any;
   tday = new Date();
   minday = new Date(2015, 0, 1);
@@ -257,7 +241,7 @@ export class FolderFilesComponent implements OnInit {
       this.filter.serviceId ||
       this.selectedLanguages.length > 0 ||
       this.selectedLocations.length > 0 ||
-      this.selectedSpecialization.length > 0 || this.contextTypes.length>0
+      this.selectedSpecialization.length > 0 || this.contextTypes.length > 0
     ) {
       this.filterapplied = true;
     } else {
@@ -272,32 +256,15 @@ export class FolderFilesComponent implements OnInit {
     } else {
       pageval = 0;
     }
-    // this.auditlog_details = [];
-    this.provider_servicesobj
-      .getFilterFileslogs(
-        sdate,
-        edate,
-        Number(pageval),
-        this.config.itemsPerPage
-      )
-      .subscribe(
-        data => {
-          // this.auditlog_details = data;
-          //console.log("Date Range Data :", data);
-          // if (this.auditlog_details.length > 0) {
-          //   this.auditStatus = 3;
-          // } else {
-          //   this.auditStatus = 2;
-          // }
-        },
-        error => {
-          this.snackbarService.openSnackBar(error, {
-            panelClass: "snackbarerror"
-          });
-          // this.load_complete = 2;
-          // this.auditStatus = 0;
-        }
-      );
+    this.provider_servicesobj.getFilterFileslogs(sdate, edate, Number(pageval), this.config.itemsPerPage).subscribe(
+      data => {
+      },
+      error => {
+        this.snackbarService.openSnackBar(error, {
+          panelClass: "snackbarerror"
+        });
+      }
+    );
   }
 
   stopprop(event) {
@@ -500,7 +467,7 @@ export class FolderFilesComponent implements OnInit {
     // }
     if (type === 'contextMode') {
       const indx = this.contextTypes.indexOf(value);
-      console.log("contextMode value :",value)
+      console.log("contextMode value :", value)
       this.contextTypes = [];
       if (indx === -1) {
         this.contextTypes.push(value);
@@ -525,14 +492,6 @@ export class FolderFilesComponent implements OnInit {
         this.pdf = false;
         this.doc = false;
         this.filter.fileType = " ";
-        console.log(
-          "Type :",
-          type,
-          "Value Null :",
-          value,
-          "Filter",
-          this.filter.fileType
-        );
       }
       if (value === "png") {
         this.png = true;
@@ -716,7 +675,6 @@ export class FolderFilesComponent implements OnInit {
       this.foldername = "Consumer";
     }
     console.log(filter);
-    // console.log("Types :", this.fileTypeDisplayName);
     this.provider_servicesobj
       .getAllFilterAttachments(filter)
       .subscribe((data: any) => {
@@ -763,122 +721,117 @@ export class FolderFilesComponent implements OnInit {
     console.log("this.action", this.driveFiles);
     console.log("this.selectedMessage", this.selectedMessage.files);
     this.apiloading = true;
-    //  this.driveFiles.forEach((element:any)=>{
-    //    if(element.fileName === this.selectedMessage.files[0]['name']){
-    //      this.isExistFile = true;
-    //      this.fileExisted = 'File already existed';
-    //      alert(this.fileExisted)
-    //    }
-    //   //  else{
-    //   //   this.isExistFile = false;
-    //   //   this.fileExisted = ''
-
-    //   //  }
-
-    //  })
-    // if(this.selectedMessage.files['name'] === this.driveFiles)
-    if (
-      this.action === "attachment" &&
-      this.folderTypeName &&
-      this.selectedMessage
-    ) {
-      console.log(
-        "After Click of OK Button :",
-        this.folderTypeName,
-        this.action,
-        this.selectedMessage
-      );
-      const dataToSend: FormData = new FormData();
-      //const captions = {};
+    if (this.action === "attachment" && this.folderTypeName && this.selectedMessage) {
+      // const dataToSend: FormData = new FormData();
       let i = 0;
-      this.fileData = [
-        {
-          owner: "",
-          fileName: "",
-          fileSize: "",
-          caption: "",
-          fileType: "",
-          order: ""
+      let captions = [];
+      if (this.selectedMessage) {
+        for (const file of this.selectedMessage.files) {
+          const size = file["size"] / 1024;
+          const caption =  {owner:this.active_user.id, fileName: file["name"], fileSize: size/1024, 
+          caption: "", fileType: file["type"].split("/")[1], 
+          order: i++}
+          captions.push(caption);
+          // dataToSend.append('attachments', file);
+          // captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
+          // i++;
         }
-      ];
-      for (const pic of this.selectedMessage.files) {
-        // console.log("Uploaded Image : ", captions[i]);
-        const size = pic["size"] / 1024;
-
-        //parseInt(((Math.round(size/1024 * 100) / 100).toFixed(2))),
-        console.log("Pic Type ", pic["type"]);
-        if (pic["type"]) {
-          this.fileData = [
-            {
-              owner: this.active_user.id,
-              fileName: pic["name"],
-              fileSize: size / 1024,
-              caption: this.imgCaptions[i] ? this.imgCaptions[i] : "",
-              fileType: pic["type"].split("/")[1],
-              order: i++
-            }
-          ];
-        } else {
-          const picType = "doc";
-          this.fileData = [
-            {
-              owner: this.active_user.id,
-              fileName: pic["name"],
-              fileSize: size / 1024,
-              caption: this.imgCaptions[i] ? this.imgCaptions[i] : "",
-              fileType: picType,
-              order: i++
-            }
-          ];
-        }
-        // console.log("Selected File Is : ", this.fileData)
-        // captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
-        // i++;
-        // dataToSend.append('attachments', this.fileData);
-        console.log("Json Daata :", JSON.stringify(this.fileData));
       }
-      // const blobPropdata = new Blob([JSON.stringify(this.fileData)], {
+
+      // const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
+      // dataToSend.append('captions', blobPropdata);
+      // let i = 0;
+      // this.fileData = [{owner: "", fileName: "", fileSize: "", caption: "", fileType: "", order: ""}];
+      // for (const pic of this.selectedMessage.files) {
+      // const size = pic["size"] / 1024;
+      // console.log("Pic Type ", pic["type"]);
+      // if (pic["type"]) {
+      //   this.fileData = [
+      //     {
+      //       owner: this.active_user.id,
+      //       fileName: pic["name"],
+      //       fileSize: size / 1024,
+      //       caption: this.imgCaptions[i] ? this.imgCaptions[i] : "",
+      //       fileType: pic["type"].split("/")[1],
+      //       order: i++
+      //     }
+      //   ];
+      // } else {
+      //   const picType = "doc";
+      //   this.fileData = [
+      //     {
+      //       owner: this.active_user.id,
+      //       fileName: pic["name"],
+      //       fileSize: size / 1024,
+      //       caption: this.imgCaptions[i] ? this.imgCaptions[i] : "",
+      //       fileType: picType,
+      //       order: i++
+      //     }
+      //   ];
+      // }
+      //   console.log("Json Daata :", JSON.stringify(this.fileData));
+      // }
+      // const newBlobData = new Blob([JSON.stringify(this.fileData, null, 2)], {
       //   type: "application/json"
       // });
-      const newBlobData = new Blob([JSON.stringify(this.fileData, null, 2)], {
-        type: "application/json"
-      });
-      dataToSend.append("fileData", newBlobData);
-      // console.log("Uploaded File : ", this.fileData);
-      // const blobPropdata = new Blob([JSON.stringify(captions)], {
-      //   type: "application/json"
-      // });
-      // dataToSend.append("captions", blobPropdata);
-      this.provider_servicesobj
-        .uploadAttachments(
-          this.folderTypeName,
-          this.active_user.id,
-          this.fileData
-        )
-        .subscribe(
-          res => {
-            this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, {
-              panelClass: "snackbarnormal"
-            });
-            this.selectedMessage = {
-              files: [],
-              base64: [],
-              caption: []
-            };
-            this.getfiles();
-            this.apiloading = false;
-          },
-          error => {
-            this.snackbarService.openSnackBar(error.error, {
-              panelClass: "snackbarerror"
-            });
-            this.apiloading = false;
-          }
-        );
+      // dataToSend.append("fileData", newBlobData);
+      this.provider_servicesobj.uploadAttachments(this.folderTypeName, this.active_user.id, captions).subscribe(
+        (s3UrlsObj: any) => {
+          // this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { panelClass: "snackbarnormal" });
+          // this.selectedMessage = { files: [], base64: [], caption: [] };
+          // this.getfiles();
+          // this.apiloading = false;
+          this.uploadFilesToS3(s3UrlsObj);
+        },
+        error => {
+          this.snackbarService.openSnackBar(error.error, { panelClass: "snackbarerror" });
+          this.apiloading = false;
+        }
+      );
     } else {
       alert("Please attach atleast one file.");
     }
   }
+  
+  
+  uploadFile(file, url) {
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.provider_servicesobj.videoaudioS3Upload(file, url).subscribe(
+      () => {
+        resolve(true);
+      }, () => {
+        resolve(false);
+      }
+    );   
+  })
+}
+  async uploadFilesToS3(s3Urls) {
+    const _this = this;
+    let count = 0;
+    for (let i = 0; i < s3Urls.length; i++) {
+      // this.provider_servicesobj.videoaudioS3Upload(this.selectedMessage['files'][s3Urls[i].orderId], s3Urls[i].url).subscribe(
+      //   () => {
+          
+      //   // }, () => {
+      //     // resolve(false);
+      //   })
+      // }
+      await _this.uploadFile(this.selectedMessage['files'][s3Urls[i].orderId], s3Urls[i].url).then(
+          () => {      
+            count++;        
+            console.log("Count=", count);
+            console.log(s3Urls.length);
+            if (count === s3Urls.length) { 
+              _this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { panelClass: "snackbarnormal" });
+              _this.selectedMessage = { files: [], base64: [], caption: [] };
+              _this.getfiles();
+              _this.apiloading = false;
+            }
+          });   
+        }
+  }
+
   getFolderfiles() {
     this.provider_servicesobj.getAllFileAttachments().subscribe((data: any) => {
       console.log(data);
@@ -888,33 +841,34 @@ export class FolderFilesComponent implements OnInit {
   }
 
   filesSelected(event, type?) {
-    const input = event.target.files;
-    console.log("File Selected :", input);
-    let i = 0;
-    if (input) {
-      for (const file of input) {
-        if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
-          this.snackbarService.openSnackBar(
-            "Please upload images with size < 10mb",
-            { panelClass: "snackbarerror" }
-          );
-          return;
-        } else {
-          this.selectedMessage.files.push(file);
-          const reader = new FileReader();
-          reader.onload = e => {
-            this.selectedMessage.base64.push(e.target["result"]);
-            this.imgCaptions[i] = "";
-            console.log("Caption: ", this.imgCaptions[i]);
-          };
-          reader.readAsDataURL(file);
-          this.action = "attachment";
-        }
+    this.fileService.filesSelected(event, this.selectedMessage).then(
+      () => {
+        this.action = "attachment";
+        this.modal.nativeElement.click();
       }
-      // if (type && this.selectedMessage.files && this.selectedMessage.files.length > 0 && input.length > 0) {
-      this.modal.nativeElement.click();
-      // }
-    }
+    )
+    // const input = event.target.files;
+    // console.log("File Selected :", input);
+    // let i = 0;
+    // if (input) {
+    //   for (const file of input) {
+    //     if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
+    //       this.snackbarService.openSnackBar("Please upload images with size < 10mb", { panelClass: "snackbarerror" });
+    //       return;
+    //     } else {
+    //       this.selectedMessage.files.push(file);
+    //       const reader = new FileReader();
+    //       reader.onload = e => {
+    //         this.selectedMessage.base64.push(e.target["result"]);
+    //         this.imgCaptions[i] = "";
+    //         console.log("Caption: ", this.imgCaptions[i]);
+    //       };
+    //       reader.readAsDataURL(file);
+    //       this.action = "attachment";
+    //     }
+    //   }
+    //   this.modal.nativeElement.click();
+    // }
   }
   getCaption(caption) {
     const captions = {};
@@ -933,31 +887,10 @@ export class FolderFilesComponent implements OnInit {
     return this.fileService.getImage(url, file);
   }
   getImageType(fileType) {
-    // console.log(fileType);
     return this.fileService.getImageByType(fileType);
   }
-  // getFileTypeImage(url,file){
-  //   return this.fileService.getImg(url,file);
-  // }
-  // getImage(url, file) {
-  //   console.log("File Type :",file.type);
-  //   if (file.type == 'application/pdf') {
-  //     return '../../../../../assets/images/pdf.png';
-  //   }
-  //   else if(file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg'){
-  //     return '../../../../../assets/images/audio.png';
-
-  //   }
-  //   else if(file.type == 'video/mp4' || file.type == 'video/mpeg'){
-  //     return '../../../../../assets/images/video.png';
-  //   }
-  //   else {
-  //     return url;
-  //   }
-  // }
 
   openShareFileWindow(file) {
-    //console.log("File Selected :",file)
     const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
       width: "100%",
       panelClass: ["commonpopupmainclass", "confirmationmainclass"],
@@ -974,24 +907,13 @@ export class FolderFilesComponent implements OnInit {
           panelClass: "snackbarnormal"
         });
       }
-      // else {
-      //   this.snackbarService.openSnackBar("Error in sharing file", {
-      //     panelClass: "snackbarerror"
-      //   });
-      // }
-      // if(result === 'Close'){
-      //   this.snackbarService.openSnackBar("Cancelled sharing file", {
-      //     panelClass: "snackbarerror"
-      //   });
-      // }
-     
     });
   }
-  onBack() {}
+  onBack() { }
   onCancel() {
     this._location.back();
   }
-  popupClosed() {}
+  popupClosed() { }
   deleteTempImage(i) {
     this.selectedMessage.files.splice(i, 1);
     this.selectedMessage.base64.splice(i, 1);
@@ -1011,34 +933,6 @@ export class FolderFilesComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe((res: any) => {
-      // console.log("resssssssss", res);
-      // this.getCompletedTask();
-      // if (
-      //   res === "In Progress" ||
-      //   res === "Completed" ||
-      //   res === "Assigned" ||
-      //   res === "New" ||
-      //   res === "Cancelled" ||
-      //   res === "Suspended"
-      // ) {
-      //   // this.getInprogressTask();
-      //   this.ngOnInit();
-      // }
-      // else if(res==='Completed'){
-      //   this.ngOnInit()
-      // }
-      // else if(res==='Assigned'){
-      //   this.ngOnInit()
-      // }
-      // else if(res === 'New'){
-      //   this.ngOnInit()
-      // }
-      // else if( res === 'Cancelled'){
-      //   this.ngOnInit()
-      // }
-      // else if( res ==='Suspended'){
-      //   this.ngOnInit()
-      // }
     });
   }
 }

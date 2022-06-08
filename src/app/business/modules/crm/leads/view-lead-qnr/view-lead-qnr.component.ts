@@ -145,40 +145,43 @@ export class ViewLeadQnrComponent implements OnInit {
   public notesList: any = []
   parentUid: any;
   updateLeadData: any;
+  filesToUpload = [];
   selectedMessage = {
-    files: [],
-    base64: [],
-    caption: []
-  };
-  selectedMessageCoApplicant = {
-    files: [],
-    base64: [],
-    caption: []
-  };
-  selectedMessagePan = {
-    files: [],
-    base64: [],
-    caption: []
-  };
-  selectedMessageCoApplicantPan={
-    files: [],
-    base64: [],
-    caption: []
-  }
-  selectedMessagekyc = {
-    files: [],
-    base64: [],
-    caption: []
-  };
-  selectedMessagekycCoApplicant = {
-    files: [],
-    base64: [],
-    caption: []
+    "applicant": {
+      files: [],
+      base64: [],
+      caption: []
+    },
+    "coApplicant": {
+      files: [],
+      base64: [],
+      caption: []
+    },
+    "pan": {
+      files: [],
+      base64: [],
+      caption: []
+    },
+    "coApplicantPan": {
+      files: [],
+      base64: [],
+      caption: []
+    },
+    "kyc": {
+      files: [],
+      base64: [],
+      caption: []
+    },
+    "coApplicantKyc": {
+      files: [],
+      base64: [],
+      caption: []
+    }
   };
   fileData: any;
   fileDataCoApplicant: any;
   fileDataPan: any;
-  fileDataPanCoApplicant:any;
+  fileDataPanCoApplicant: any;
   fileDatakyc1: any;
   fileDatakyc1CoApplicant: any;
   active_user: any;
@@ -200,7 +203,7 @@ export class ViewLeadQnrComponent implements OnInit {
   firstCustomerName: any;
   customerName: any;
   customerPhNo: any;
-  filestoUpload: any = [];
+  // filestoUpload: any = [];
   kycresponse: ArrayBuffer;
   failedStatusId: any;
   idvalue1: any;
@@ -215,32 +218,38 @@ export class ViewLeadQnrComponent implements OnInit {
   nomineeName1: any;
   panNumber1: any;
   crifStatusId: any;
-  public notesTextarea:any;
-  public isShown: boolean = false ;
-  createCoApplicantForm:any;
-  fromGroupListDynamic:any;
-  count:number=0;
-  formControlArray:any=[];
-  formControlarr:any=[];
-  coApplicantSubmitList:any=[];
-  coApplicantListFormSubmit:any=[];
-  coApplicantList:any=[];
-  updateValueCoApplicant:any=[];
-  stateList:any=[]
+  public notesTextarea: any;
+  public isShown: boolean = false;
+  createCoApplicantForm: any;
+  fromGroupListDynamic: any;
+  count: number = 0;
+  formControlArray: any = [];
+  formControlarr: any = [];
+  coApplicantSubmitList: any = [];
+  coApplicantListFormSubmit: any = [];
+  coApplicantList: any = [];
+  updateValueCoApplicant: any = [];
+  stateList: any = []
   crifHTML: any;
   showPdfIcon: boolean;
-  isAnyCoapp: boolean = false ;
-  generateCrifScore:boolean=false;
-  showupdateKycProceed:boolean=false;
-  addKycResponse:any=[];
+  isAnyCoapp: boolean = false;
+  generateCrifScore: boolean = false;
+  showupdateKycProceed: boolean = false;
+  addKycResponse: any = [];
   idtypes2: any;
   idValue2: any;
   idtypes1Coapplixcant: any;
   idvalue1Coapplixcant: any;
   telephoneTYpeCoapplicant: any;
   telephoneNumberCoapplicant: any;
-  afterCreatetKycproceed:boolean=false;
+  afterCreatetKycproceed: boolean = false;
+  states = projectConstantsLocal.INDIAN_STATES;
+  relations = projectConstantsLocal.RELATIONSHIPS;
+  kyc_list = projectConstantsLocal.KYC_LIST;
   proceedList:any=[]
+  // fileKycData: { owner: any; fileName: any; fileSize: number; caption: string; fileType: any; order: number; }[];
+  fileKycData: any=[];
+  filesCount = 0;
   constructor(private locationobj: Location,
 
     // private lStorageService: LocalStorageService,
@@ -256,16 +265,9 @@ export class ViewLeadQnrComponent implements OnInit {
     private _Activatedroute: ActivatedRoute,
     private providerService: ProviderServices,
     private groupService: GroupStorageService,
-    private fileService: FileService,
-    //  private dateTimeProcessor: DateTimeProcessor
-
+    private fileService: FileService
   ) {
-    //this.router.navigate(['provider', 'lead','create-lead'])
   }
-  // ngOnDestroy(): void {
-  //   throw new Error('Method not implemented.');
-  // }
-
   ngOnInit(): void {
     this.active_user = this.groupService.getitemFromGroupStorage("ynw-user");
     this.api_loading = false;
@@ -285,8 +287,8 @@ export class ViewLeadQnrComponent implements OnInit {
         if (this.leadDetails && this.leadDetails.customer && this.leadDetails.customer.id) {
           this.custId = this.leadDetails.customer.id;
         }
-        if (this.leadDetails&&this.leadDetails.customer&&this.leadDetails.customer.phoneNo) {
-                  
+        if (this.leadDetails && this.leadDetails.customer && this.leadDetails.customer.phoneNo) {
+
           this.customerPhNo = this.leadDetails.customer.phoneNo;
         }
         if (this.leadDetails && this.leadDetails.customer && this.leadDetails.customer.name) {
@@ -295,14 +297,13 @@ export class ViewLeadQnrComponent implements OnInit {
           this.customerName = this.leadDetails.customer.name;
         }
         if (this.leadDetails.status.name === 'New') {
-          // this.showKyc = true;
-          if(this.leadDetails.kycCreated===true){
+          if (this.leadDetails.kycCreated === true) {
             this.afterCreatetKycproceed=true;
             this.showKyc = false;
             this.getKycDetails();
             
           }
-          else{
+          else {
             this.afterCreatetKycproceed=false;
             this.showKyc = true;
             // this.showupdateKyc = false;
@@ -317,15 +318,10 @@ export class ViewLeadQnrComponent implements OnInit {
           this.showqnr = true;
           this.getLeadQnr()
         }
-
-
         if (this.leadDetails.status.name === 'Sales Verified') {
           this.changeQnrStatus()
           this.showafterqnr = true;
-
-          // this.showqnr = true;
         }
-
         this.leadDetails.notes.forEach((notesdata: any) => {
           this.notesList.push(notesdata)
         })
@@ -372,7 +368,7 @@ export class ViewLeadQnrComponent implements OnInit {
     this.api_loading = false;
     this.createLeadForm = this.createLeadFB.group({
       idTypes: ['Passport'],
-      idTypes1: ['Aadhaar'],
+      idTypes1: ['UID'],
       idValue: [null],
       idValue1: [null],
       panNumber: [null],
@@ -414,48 +410,51 @@ export class ViewLeadQnrComponent implements OnInit {
     this.getLeadTypeListData()
     this.leadStatus()
     // this.getNotesDetails()
-    this.createCoApplicantForm=this.createLeadFB.group({
-      nameCoApplicant:[null],
-      phNOCoApplicant:[null],
-      panNumberCoApplicant:[null],
-      telephoneTypeCoApplicant:[null],
-      telephoneNumberCoApplicant:[null],
-      addressCoAplicant:[null],
-      cityCoApplicant:[null],
-      stateCoApplicant:[null],
-      pinCoApplicant:[null],
-      dobCoApplicant:[null],
-      relationNameCoApplicant:[null],
-      relationTypeCoApplicant:['Father'],
-      nomineeNameCoApplicant:[null],
-      nomineeTypeCoApplicant:[null],
-      permanentAddressCoApplicant:[null],
-      permanentCityCoApplicant:[null],
-      permanentStateCoApplicant:[null],
-      permanentPinCodeCoApplicant:[null],
-      idValue1CoApplicant:[null],
-      idTypes1CoApplicant:['Passport'],
-      addressTypeCoApplicant:[null],
-      idTypes2CoApplicant:['Aadhaar'],
-      idValue2CoApplicant:[null],
+    this.createCoApplicantForm = this.createLeadFB.group({
+      nameCoApplicant: [null],
+      phNOCoApplicant: [null],
+      panNumberCoApplicant: [null],
+      telephoneTypeCoApplicant: [null],
+      telephoneNumberCoApplicant: [null],
+      addressCoAplicant: [null],
+      cityCoApplicant: [null],
+      stateCoApplicant: [null],
+      pinCoApplicant: [null],
+      dobCoApplicant: [null],
+      relationNameCoApplicant: [null],
+      relationTypeCoApplicant: ['Father'],
+      nomineeNameCoApplicant: [null],
+      nomineeTypeCoApplicant: [null],
+      permanentAddressCoApplicant: [null],
+      permanentCityCoApplicant: [null],
+      permanentStateCoApplicant: [null],
+      permanentPinCodeCoApplicant: [null],
+      idValue1CoApplicant: [null],
+      idTypes1CoApplicant: ['Passport'],
+      addressTypeCoApplicant: [null],
+      idTypes2CoApplicant: ['UID'],
+      idValue2CoApplicant: [null],
 
     })
     this.getStateName()
   }
-  getStateName(){
-    this.crmService.getStateName().subscribe((res:any)=>{
+  getStateName() {
+    this.crmService.getStateName().subscribe((res: any) => {
       this.stateList.push(res)
     })
   }
   getKycDetails() {
     this.crmService.getkyc(this.leadkid).subscribe(data => {
-      console.log('data',data)
+      console.log('data', data)
       this.kycDetails = data;
+      // this.formGroup();
       console.log(' this.kycDetails', this.kycDetails)
       this.updateValue = this.kycDetails[0];
       console.log(this.updateValue)
-      console.log('this.kycDetails.length',this.kycDetails.length)
+      console.log('this.kycDetails.length', this.kycDetails.length)
+
       
+
       if (this.updateValue && this.updateValue.address && this.updateValue.address[0].addressType) {
         this.addressType1 = this.updateValue.address[0].addressType
       }
@@ -505,7 +504,7 @@ export class ViewLeadQnrComponent implements OnInit {
         nomineeName: this.updateValue.nomineeName,
         addressType: this.updateValue.address[0].addressType,
         city: this.updateValue.address[0].city,
-        address:this.updateValue.address[0].address,
+        address: this.updateValue.address[0].address,
         state: this.updateValue.address[0].state,
         pin: this.updateValue.address[0].pin,
         panNumber: this.updateValue.panNumber,
@@ -513,16 +512,16 @@ export class ViewLeadQnrComponent implements OnInit {
 
       })
 
-      if(this.kycDetails.length>=2 ){
-        this.isAnyCoapp=true;
-        const arr= this.kycDetails.splice(1);
-        console.log('arr',arr)
+      if (this.kycDetails.length >= 2) {
+        this.isAnyCoapp = true;
+        const arr = this.kycDetails.splice(1);
+        console.log('arr', arr)
         this.updateValueCoApplicant.push(arr);
         console.log(' this.updateValueCoApplicant', this.updateValueCoApplicant)
-        console.log('this.kycDetails.length-1',this.kycDetails.length-1)
-        // this.coApplicantList.length=2;
-        this.updateValueCoApplicant[0].forEach((item:any)=>{
-          console.log('elemnrt',item);
+        console.log('this.kycDetails.length-1', this.kycDetails.length - 1)
+        // this.coApplicantList.length = 2;
+        this.updateValueCoApplicant[0].forEach((item: any) => {
+          console.log('elemnrt', item);
           if (item && item.validationIds[0] && item.validationIds[0].idTypes) {
             this.idtypes1Coapplixcant = item.validationIds[0].idTypes
           }
@@ -541,41 +540,41 @@ export class ViewLeadQnrComponent implements OnInit {
           if (item && item.telephone[0] && item.telephone[0].telephoneNumber) {
             this.telephoneNumberCoapplicant = item.telephone[0].telephoneNumber
           }
-            this.createCoApplicantForm.patchValue({
-          nameCoApplicant:item.customerName,
-          phNOCoApplicant:item.permanentPhoneNumber,
-          idTypes1CoApplicant:this.idtypes1Coapplixcant,
-          idValue1CoApplicant:this.idvalue1Coapplixcant,
-          idTypes2CoApplicant: this.idtypes2 ,
-          idValue2CoApplicant:this.idValue2 ,
-          panNumberCoApplicant:item.panNumber,
-          telephoneTypeCoApplicant:this.telephoneTYpeCoapplicant ,
-          telephoneNumberCoApplicant:this.telephoneNumberCoapplicant,
-          permanentAddressCoApplicant:item.permanentAddress,
-          permanentCityCoApplicant:item.permanentCity,
-          permanentStateCoApplicant:item.permanentState,
-          permanentPinCodeCoApplicant:item.permanentPinCode,
-          dobCoApplicant:item.dob,
-          relationNameCoApplicant:item.relationName,
-          relationTypeCoApplicant:item.relationType,
-          nomineeNameCoApplicant:item.nomineeName,
-          nomineeTypeCoApplicant:item.nomineeType,
-          addressTypeCoApplicant:item.address[0].addressType,
-          addressCoAplicant:item.address[0].address,
-          cityCoApplicant:item.address[0].city,
-          stateCoApplicant:item.address[0].state,
-          pinCoApplicant:item.address[0].pin
-        })
-        // this.getFormFields()
-      // this.addCoApplicant()
+          this.createCoApplicantForm.patchValue({
+            nameCoApplicant: item.customerName,
+            phNOCoApplicant: item.permanentPhoneNumber,
+            idTypes1CoApplicant: this.idtypes1Coapplixcant,
+            idValue1CoApplicant: this.idvalue1Coapplixcant,
+            idTypes2CoApplicant: this.idtypes2,
+            idValue2CoApplicant: this.idValue2,
+            panNumberCoApplicant: item.panNumber,
+            telephoneTypeCoApplicant: this.telephoneTYpeCoapplicant,
+            telephoneNumberCoApplicant: this.telephoneNumberCoapplicant,
+            permanentAddressCoApplicant: item.permanentAddress,
+            permanentCityCoApplicant: item.permanentCity,
+            permanentStateCoApplicant: item.permanentState,
+            permanentPinCodeCoApplicant: item.permanentPinCode,
+            dobCoApplicant: item.dob,
+            relationNameCoApplicant: item.relationName,
+            relationTypeCoApplicant: item.relationType,
+            nomineeNameCoApplicant: item.nomineeName,
+            nomineeTypeCoApplicant: item.nomineeType,
+            addressTypeCoApplicant: item.address[0].addressType,
+            addressCoAplicant: item.address[0].address,
+            cityCoApplicant: item.address[0].city,
+            stateCoApplicant: item.address[0].state,
+            pinCoApplicant: item.address[0].pin
+          })
+          // this.getFormFields()
+          // this.addCoApplicant()
         })
 
-       
-      }else{
-        this.isAnyCoapp=false;
-        this.updateValueCoApplicant=[]
+
+      } else {
+        this.isAnyCoapp = false;
+        this.updateValueCoApplicant = []
       }
-      
+
       // this.createCoApplicantForm.controls.nameCoApplicant.value=this.kycDetails[1].customerName
 
     })
@@ -691,7 +690,7 @@ export class ViewLeadQnrComponent implements OnInit {
     this.boolenLeadError = false
   }
   handledob(textareaValue) {
-    console.log('textareaValue',textareaValue)
+    console.log('textareaValue', textareaValue)
     this.leadError = null
     this.boolenLeadError = false
   }
@@ -704,7 +703,7 @@ export class ViewLeadQnrComponent implements OnInit {
     this.boolenLeadError = false
   }
   handlepermanentState(textareaValue) {
-    console.log('textareaValue',textareaValue)
+    console.log('textareaValue', textareaValue)
     this.leadError = null
     this.boolenLeadError = false
   }
@@ -717,12 +716,12 @@ export class ViewLeadQnrComponent implements OnInit {
     this.boolenLeadError = false
   }
   hamdleaddress(textareaValue) {
-    console.log('textareaValue',textareaValue)
+    console.log('textareaValue', textareaValue)
     this.leadError = null
     this.boolenLeadError = false
   }
   handlecity(textareaValue) {
-    console.log('textareaValue',textareaValue)
+    console.log('textareaValue', textareaValue)
     this.leadError = null
     this.boolenLeadError = false
   }
@@ -744,7 +743,7 @@ export class ViewLeadQnrComponent implements OnInit {
 
   }
   handleLeadTypeSelection(leadType: any) {
-    console.log('leadType',leadType)
+    console.log('leadType', leadType)
 
   }
   handleLeadPrioritySelection(leadPriority, leadPriorityText: any) {
@@ -780,18 +779,6 @@ export class ViewLeadQnrComponent implements OnInit {
     return api_filter;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
   handleLeadStatus(leadStatus) {
     // console.log(leadStatus)
 
@@ -812,7 +799,7 @@ export class ViewLeadQnrComponent implements OnInit {
     min = (min + '').length == 1 ? `0${min}` : min;
     hour = hour > 24 ? hour - 24 : hour;
     hour = (hour + '').length == 1 ? `0${hour}` : hour;
-  
+
     return `${hour}:${min} ${part}`
     // }
 
@@ -836,293 +823,33 @@ export class ViewLeadQnrComponent implements OnInit {
     }
 
   }
-  addressType(value){
-    console.log('value',value)
+  addressType(value) {
+    console.log('value', value)
   }
+
+  getFileInfo(type) {
+    let fileInfo = this.filesToUpload.filter((fileObj) => {
+      return fileObj.type === type ? fileObj : '';
+    });
+    // delete fileInfo[0]['file'];
+    // delete fileInfo[0]['type'];
+    return fileInfo;
+  }
+
   saveCreateLead() {
-    let i = 0;
-    this.fileData = [
-      {
-        owner: "",
-        fileName: "",
-        fileSize: "",
-        caption: "",
-        fileType: "",
-        order: ""
-      }
-    ];
-    this.fileDataCoApplicant = [
-      {
-        owner: "",
-        fileName: "",
-        fileSize: "",
-        caption: "",
-        fileType: "",
-        order: ""
-      }
-    ];
-    for (const pic of this.selectedMessage.files) {
-      // console.log("Uploaded Image : ", captions[i]);
-      const size = pic["size"] / 1024;
-
-      //parseInt(((Math.round(size/1024 * 100) / 100).toFixed(2))),
-
-      if (pic["type"]) {
-        this.fileData = [
-          {
-            owner: this.active_user.id,
-            fileName: pic["name"],
-            fileSize: size / 1024,
-            caption: "",
-            fileType: pic["type"].split("/")[1],
-            order: i++
-          }
-        ];
-      } else {
-        const picType = "jpeg";
-        this.fileData = [
-          {
-            owner: this.active_user.id,
-            fileName: pic["name"],
-            fileSize: size / 1024,
-            caption: "",
-            fileType: picType,
-            order: i++
-          }
-        ];
-      }
-    }
-    for (const pic of this.selectedMessageCoApplicant.files) {
-      // console.log("Uploaded Image : ", captions[i]);
-      const size = pic["size"] / 1024;
-
-      //parseInt(((Math.round(size/1024 * 100) / 100).toFixed(2))),
-
-      if (pic["type"]) {
-        this.fileDataCoApplicant = [
-          {
-            owner: this.active_user.id,
-            fileName: pic["name"],
-            fileSize: size / 1024,
-            caption: "",
-            fileType: pic["type"].split("/")[1],
-            order: i++
-          }
-        ];
-      } else {
-        const picType = "jpeg";
-        this.fileDataCoApplicant = [
-          {
-            owner: this.active_user.id,
-            fileName: pic["name"],
-            fileSize: size / 1024,
-            caption: "",
-            fileType: picType,
-            order: i++
-          }
-        ];
-      }
-    }
-    if (this.selectedMessage.files.length === 0) {
-      this.fileData = [
-
-      ];
-    }
-    if (this.selectedMessageCoApplicant.files.length === 0) {
-      this.fileDataCoApplicant = [
-
-      ];
-    }
-    let j = 0;
-    this.fileDataPan = [
-      {
-        owner: "",
-        fileName: "",
-        fileSize: "",
-        caption: "",
-        fileType: "",
-        order: ""
-      }
-    ];
-    this.fileDataPanCoApplicant = [
-      {
-        owner: "",
-        fileName: "",
-        fileSize: "",
-        caption: "",
-        fileType: "",
-        order: ""
-      }
-    ];
+    console.log("In Save create Lead");
     
-    for (const pic of this.selectedMessagePan.files) {
-      // console.log("Uploaded Image : ", captions[i]);
-      const size = pic["size"] / 1024;
+    this.coApplicantListFormSubmit = [];
 
-      //parseInt(((Math.round(size/1024 * 100) / 100).toFixed(2))),
+  this.fileData = this.getFileInfo('applicant');
+  this.fileData[0]['order']=this.filesCount++;
+  this.fileKycData = this.getFileInfo('kyc');
+  this.fileKycData[0]['order']=this.filesCount++;
+  this.fileDataPan = this.getFileInfo('pan');
+  this.fileDataPan[0]['order']=this.filesCount++;
 
-      if (pic["type"]) {
-        this.fileDataPan = [
-          {
-            owner: this.active_user.id,
-            fileName: pic["name"],
-            fileSize: size / 1024,
-            caption: "",
-            fileType: pic["type"].split("/")[1],
-            order: j++
-          }
-        ];
-      } else {
-        const picType = "jpeg";
-        this.fileDataPan = [
-          {
-            owner: this.active_user.id,
-            fileName: pic["name"],
-            fileSize: size / 1024,
-            caption: "",
-            fileType: picType,
-            order: j++
-          }
-        ];
-      }
-      // console.log("Selected File Is : ", this.fileData)
-      // captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
-      // i++;
-      // dataToSend.append('attachments', this.fileData);
-
-    }
-    for (const pic of this.selectedMessageCoApplicantPan.files) {
-      // console.log("Uploaded Image : ", captions[i]);
-      const size = pic["size"] / 1024;
-
-      //parseInt(((Math.round(size/1024 * 100) / 100).toFixed(2))),
-
-      if (pic["type"]) {
-        this.fileDataPanCoApplicant = [
-          {
-            owner: this.active_user.id,
-            fileName: pic["name"],
-            fileSize: size / 1024,
-            caption: "",
-            fileType: pic["type"].split("/")[1],
-            order: j++
-          }
-        ];
-      } else {
-        const picType = "jpeg";
-        this.fileDataPanCoApplicant = [
-          {
-            owner: this.active_user.id,
-            fileName: pic["name"],
-            fileSize: size / 1024,
-            caption: "",
-            fileType: picType,
-            order: j++
-          }
-        ];
-      }
-
-    }
-    if (this.selectedMessageCoApplicantPan.files.length === 0) {
-      this.fileDataPanCoApplicant = [
-
-      ];
-    }
-    if (this.selectedMessagePan.files.length === 0) {
-      this.fileDataPan = [
-
-      ];
-    }
-   
-    if( this.createLeadForm.controls.idTypes1.value='Aadhaar'){
+    // if( this.createLeadForm.controls.idTypes1.value='Aadhaar'){
       console.log(' this.createLeadForm.controls.idTypes1.value', this.createLeadForm.controls.idTypes1.value)
-      const createLeadData: any = {
-        "originFrom": "Lead",
-        "originUid": this.leadkid,
-        "customer": this.custId,
-        "customerName": this.custname,
-        "dob": this.createLeadForm.controls.dob.value,
-        "telephone": [
-          {
-            "telephoneType": this.createLeadForm.controls.telephoneType.value,
-            "telephoneNumber": this.createLeadForm.controls.telephoneNumber.value
-          }
-        ],
-        "relationType": this.createLeadForm.controls.relationType.value,
-        "relationName": this.createLeadForm.controls.relationName.value,
-        "validationIds": [
-          {
-            "idTypes": this.createLeadForm.controls.idTypes.value,
-            "idValue": this.createLeadForm.controls.idValue.value,
-            "attachments": this.fileData
-          },
-          {
-            "idTypes": 'UID',
-            "idValue": this.createLeadForm.controls.idValue1.value,
-            "attachments": this.fileData
-          }
-        ],
-        "permanentAddress": this.createLeadForm.controls.permanentAddress.value,
-        "permanentCity": this.createLeadForm.controls.permanentCity.value,
-        "permanentState": this.createLeadForm.controls.permanentState.value,
-        "permanentPinCode": this.createLeadForm.controls.permanentPinCode.value,
-        "nomineeType": this.createLeadForm.controls.nomineeType.value,
-        "nomineeName": this.createLeadForm.controls.nomineeName.value,
-        "address": [
-          {
-            "addressType": this.createLeadForm.controls.addressType.value,
-            "address": this.createLeadForm.controls.address.value,
-            "city": this.createLeadForm.controls.city.value,
-            "state": this.createLeadForm.controls.state.value,
-            "pin": this.createLeadForm.controls.pin.value
-          }
-        ],
-        "panNumber": this.createLeadForm.controls.panNumber.value,
-        "panAttachments": this.fileDataPan,
-        // "parentid": {
-        //   "id": ''
-        // },
-        "parent": true
-      }
-      this.coApplicantListFormSubmit.push(createLeadData)
-      if(this.isAnyCoapp){
-        this.submitCoApplicant()
-      }
-      console.log('coApplicantListFormSubmit',this.coApplicantListFormSubmit)
-      console.log('createLeadData',createLeadData)
-      console.log(' this.createLeadForm.controls.idTypes1.value', this.createLeadForm.controls.idTypes1.value)
-      this.crmService.addkyc(this.coApplicantListFormSubmit).subscribe((response:any) => {
-        this.kycresponse = response;
-        console.log('response',response)
-        this.uploadAudioVideo(this.kycresponse, 'kyc');
-        this.addKycResponse= response;
-        if(response=[]){
-          // this.afterCreatetKycproceed=true;
-          setTimeout(() => {
-            this.api_loading = true;
-            const navigationExtras: NavigationExtras = {
-              queryParams: {
-                type: 'NEWLEAD'
-              }
-            }
-             this.router.navigate(['provider', 'lead'], navigationExtras);
-            // this.createLeadForm.reset();
-            // this.router.navigate(['/provider/viewleadqnr/' +  this.leadkid]);
-            // this.router.navigate(['/provider', 'crm']);
-          
-          }, projectConstants.TIMEOUT_DELAY);
-          // this.showupdateKycProceed = true;
-        }
-        
-        
-      },
-        (error) => {
-          setTimeout(() => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }, projectConstants.TIMEOUT_DELAY);
-        })
-    }
-    else{
       const createLeadData: any = {
         "originFrom": "Lead",
         "originUid": this.leadkid,
@@ -1146,7 +873,7 @@ export class ViewLeadQnrComponent implements OnInit {
           {
             "idTypes": this.createLeadForm.controls.idTypes1.value,
             "idValue": this.createLeadForm.controls.idValue1.value,
-            "attachments": this.fileData
+            "attachments": this.fileKycData
           }
         ],
         "permanentAddress": this.createLeadForm.controls.permanentAddress.value,
@@ -1208,7 +935,94 @@ export class ViewLeadQnrComponent implements OnInit {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }, projectConstants.TIMEOUT_DELAY);
         })
-    }
+    // }
+    // else{
+    //   const createLeadData: any = {
+    //     "originFrom": "Lead",
+    //     "originUid": this.leadkid,
+    //     "customer": this.custId,
+    //     "customerName": this.custname,
+    //     "dob": this.createLeadForm.controls.dob.value,
+    //     "telephone": [
+    //       {
+    //         "telephoneType": this.createLeadForm.controls.telephoneType.value,
+    //         "telephoneNumber": this.createLeadForm.controls.telephoneNumber.value
+    //       }
+    //     ],
+    //     "relationType": this.createLeadForm.controls.relationType.value,
+    //     "relationName": this.createLeadForm.controls.relationName.value,
+    //     "validationIds": [
+    //       {
+    //         "idTypes": this.createLeadForm.controls.idTypes.value,
+    //         "idValue": this.createLeadForm.controls.idValue.value,
+    //         "attachments": this.fileData
+    //       },
+    //       {
+    //         "idTypes": this.createLeadForm.controls.idTypes1.value,
+    //         "idValue": this.createLeadForm.controls.idValue1.value,
+    //         "attachments": this.fileData
+    //       }
+    //     ],
+    //     "permanentAddress": this.createLeadForm.controls.permanentAddress.value,
+    //     "permanentCity": this.createLeadForm.controls.permanentCity.value,
+    //     "permanentState": this.createLeadForm.controls.permanentState.value,
+    //     "permanentPinCode": this.createLeadForm.controls.permanentPinCode.value,
+    //     "nomineeType": this.createLeadForm.controls.nomineeType.value,
+    //     "nomineeName": this.createLeadForm.controls.nomineeName.value,
+    //     "address": [
+    //       {
+    //         "addressType": this.createLeadForm.controls.addressType.value,
+    //         "address": this.createLeadForm.controls.address.value,
+    //         "city": this.createLeadForm.controls.city.value,
+    //         "state": this.createLeadForm.controls.state.value,
+    //         "pin": this.createLeadForm.controls.pin.value
+    //       }
+    //     ],
+    //     "panNumber": this.createLeadForm.controls.panNumber.value,
+    //     "panAttachments": this.fileDataPan,
+    //     // "parentid": {
+    //     //   "id": ''
+    //     // },
+    //     "parent": true
+    //   }
+    //   this.coApplicantListFormSubmit.push(createLeadData)
+    //   if(this.isAnyCoapp){
+    //     this.submitCoApplicant()
+    //   }
+    //   console.log('coApplicantListFormSubmit',this.coApplicantListFormSubmit)
+    //   console.log('createLeadData',createLeadData)
+    //   console.log(' this.createLeadForm.controls.idTypes1.value', this.createLeadForm.controls.idTypes1.value)
+    //   this.crmService.addkyc(this.coApplicantListFormSubmit).subscribe((response:any) => {
+    //     this.kycresponse = response;
+    //     console.log('response',response)
+    //     this.uploadAudioVideo(this.kycresponse, 'kyc');
+    //     this.addKycResponse= response;
+    //     if(response=[]){
+    //       // this.afterCreatetKycproceed=true;
+    //       setTimeout(() => {
+    //         this.api_loading = true;
+    //         const navigationExtras: NavigationExtras = {
+    //           queryParams: {
+    //             type: 'NEWLEAD'
+    //           }
+    //         }
+    //          this.router.navigate(['provider', 'lead'], navigationExtras);
+    //         // this.createLeadForm.reset();
+    //         // this.router.navigate(['/provider/viewleadqnr/' +  this.leadkid]);
+    //         // this.router.navigate(['/provider', 'crm']);
+          
+    //       }, projectConstants.TIMEOUT_DELAY);
+    //       // this.showupdateKycProceed = true;
+    //     }
+        
+        
+    //   },
+    //     (error) => {
+    //       setTimeout(() => {
+    //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //       }, projectConstants.TIMEOUT_DELAY);
+    //     })
+    // }
     
   }
   ProceedStatusToSales(){
@@ -1226,26 +1040,25 @@ export class ViewLeadQnrComponent implements OnInit {
         }, projectConstants.TIMEOUT_DELAY);
       })
   }
-  crifBtnStatus(){
+  crifBtnStatus() {
     this.generateCrifScore = !this.generateCrifScore
   }
-  proposedAmmount(value){
-    console.log('valueeeeeeeeeee',value)
+  proposedAmmount(value) {
+    console.log('valueeeeeeeeeee', value)
     // console.log('value',this.createCoApplicantForm.controls.proposedAmmount.value)
   }
-  deleteDynamicForm(length){
+  deleteDynamicForm(length) {
     this.isAnyCoapp = false;
-          this.formControlArray.splice(length, 1);
+    this.formControlArray.splice(length, 1);
   }
-  addCoApplicant(){
-    console.log('gggg')
+  addCoApplicant() {
     this.isAnyCoapp = true;
     console.log(this.count)
     // if(this.count++){
-      this.formGroup()
+    this.formGroup()
     // }
   }
-  formGroup(){
+  formGroup() {
     this.fromGroupListDynamic = this.createLeadFB.array(this.getFormFields().map(item => this.createLeadFB.group(item)));
 
     this.createCoApplicantForm = this.createLeadFB.group({
@@ -1255,45 +1068,53 @@ export class ViewLeadQnrComponent implements OnInit {
   }
   getFormFields() {
     // this.formControlArray = [];
-    const arrLength:number=1
+    const arrLength: number = 1
     for (let i = 0; i < arrLength; i++) {
-      this.formControlArray.push({ 
-        nameCoApplicant:[null],
-        phNOCoApplicant:[null],
-        panNumberCoApplicant:[null],
-        telephoneTypeCoApplicant:[null],
-        telephoneNumberCoApplicant:[null],
-        addressCoAplicant:[null],
-        cityCoApplicant:[null],
-        stateCoApplicant:[null],
-        pinCoApplicant:[null],
-        dobCoApplicant:[null],
-        relationNameCoApplicant:[null],
-        relationTypeCoApplicant:['Father'],
-        nomineeNameCoApplicant:[null],
-        nomineeTypeCoApplicant:[null],
-        permanentAddressCoApplicant:[null],
-        permanentCityCoApplicant:[null],
-        permanentStateCoApplicant:[null],
-        permanentPinCodeCoApplicant:[null],
-        idValue1CoApplicant:[null],
-        idTypes1CoApplicant:['Passport'],
-        addressTypeCoApplicant:[null],
-        idTypes2CoApplicant:['Aadhaar'],
-        idValue2CoApplicant:[null],
+      this.formControlArray.push({
+        nameCoApplicant: [null],
+        phNOCoApplicant: [null],
+        panNumberCoApplicant: [null],
+        telephoneTypeCoApplicant: [null],
+        telephoneNumberCoApplicant: [null],
+        addressCoAplicant: [null],
+        cityCoApplicant: [null],
+        stateCoApplicant: [null],
+        pinCoApplicant: [null],
+        dobCoApplicant: [null],
+        relationNameCoApplicant: [null],
+        relationTypeCoApplicant: ['Father'],
+        nomineeNameCoApplicant: [null],
+        nomineeTypeCoApplicant: [null],
+        permanentAddressCoApplicant: [null],
+        permanentCityCoApplicant: [null],
+        permanentStateCoApplicant: [null],
+        permanentPinCodeCoApplicant: [null],
+        idValue1CoApplicant: [null],
+        idTypes1CoApplicant: ['Passport'],
+        addressTypeCoApplicant: [null],
+        idTypes2CoApplicant: ['Aadhaar'],
+        idValue2CoApplicant: [null],
 
       });
     }
-    console.log('formControlArray',this.formControlArray)
+    console.log('formControlArray', this.formControlArray)
     return this.formControlArray;
   }
-  submitCoApplicant(){
-   this.coApplicantSubmitList= this.createCoApplicantForm.controls.formField.value
-    console.log('proposedAmmount',this.coApplicantSubmitList)
+  submitCoApplicant() {
+    // console.log("Here:",this.createCoApplicantForm.controls.value);
+    this.coApplicantSubmitList = this.createCoApplicantForm.controls.formField.value;
+    console.log("SubmitCoApplicant:", this.coApplicantSubmitList);
+    let fileData = this.getFileInfo('coApplicant');
+    fileData[0]['order']=this.filesCount++;
+    let fileKycData = this.getFileInfo('coApplicantKyc');
+    fileKycData[0]['order']=this.filesCount++;
+    let fileDataPan = this.getFileInfo('coApplicantPan');
+    fileDataPan[0]['order']=this.filesCount++;
+    // console.log('proposedAmmount', this.coApplicantSubmitList)
     // console.log('proposedAmmount',this.coApplicantSubmitList[0].proposedAmmount)
-    this.coApplicantSubmitList.forEach((item:any)=>{
+    this.coApplicantSubmitList.forEach((item: any) => {
       console.log(item)
-      if(item.idTypes2CoApplicant='Aadhaar'){
+    // if(item.idTypes2CoApplicant='Aadhaar'){
         const createKycCoApplicantData: any = {
           // "proposedAmmount":item.proposedAmmount,
           "originFrom": "Lead",
@@ -1314,71 +1135,12 @@ export class ViewLeadQnrComponent implements OnInit {
             {
               "idTypes": item.idTypes1CoApplicant,
               "idValue": item.idValue1CoApplicant,
-              "attachments": this.fileDataCoApplicant
-            },
-            {
-              "idTypes": 'UID',
-              "idValue": item.idValue2CoApplicant,
-              "attachments": this.fileDataCoApplicant
-            }
-          ],
-          "permanentAddress": item.permanentAddressCoApplicant,
-          "permanentCity": item.permanentCityCoApplicant,
-          "permanentState": item.permanentStateCoApplicant,
-          "permanentPinCode": item.permanentPinCodeCoApplicant,
-          "nomineeType": item.nomineeTypeCoApplicant,
-          "nomineeName": item.nomineeNameCoApplicant,
-          "address": [
-            {
-              "addressType": item.addressTypeCoApplicant,
-              "address": item.addressCoAplicant,
-              "city": item.cityCoApplicant,
-              "state": item.stateCoApplicant,
-              "pin": item.pinCoApplicant
-            }
-          ],
-          "panNumber": item.panNumberCoApplicant,
-          "panAttachments": this.fileDataPanCoApplicant,
-          "parentid": {
-            "id": this.custId
-          },
-          "parent": false
-        }
-
-        console.log('createKycCoApplicantDataaaa',createKycCoApplicantData)
-      this.coApplicantListFormSubmit.push(createKycCoApplicantData)
-      console.log('coApplicantListFormSubmit',this.coApplicantListFormSubmit)
-      this.proceedList.push(createKycCoApplicantData)
-
-
-      }
-      else{
-        const createKycCoApplicantData: any = {
-          // "proposedAmmount":item.proposedAmmount,
-          "originFrom": "Lead",
-          "originUid": this.leadkid,
-          // "customer": this.custId,
-          "customerName": item.nameCoApplicant,
-          "permanentPhoneNumber": item.phNOCoApplicant,
-          "dob": item.dobCoApplicant,
-          "telephone": [
-            {
-              "telephoneType": item.telephoneTypeCoApplicant,
-              "telephoneNumber": item.telephoneNumberCoApplicant
-            }
-          ],
-          "relationType": item.relationTypeCoApplicant,
-          "relationName": item.relationNameCoApplicant,
-          "validationIds": [
-            {
-              "idTypes": item.idTypes1CoApplicant,
-              "idValue": item.idValue1CoApplicant,
-              "attachments": this.fileDataCoApplicant
+              "attachments": fileData
             },
             {
               "idTypes": item.idTypes2CoApplicant,
               "idValue": item.idValue2CoApplicant,
-              "attachments": this.fileDataCoApplicant
+              "attachments": fileKycData
             }
           ],
           "permanentAddress": item.permanentAddressCoApplicant,
@@ -1397,17 +1159,76 @@ export class ViewLeadQnrComponent implements OnInit {
             }
           ],
           "panNumber": item.panNumberCoApplicant,
-          "panAttachments": this.fileDataPanCoApplicant,
+          "panAttachments": fileDataPan,
           "parentid": {
             "id": this.custId
           },
           "parent": false
         }
+
         console.log('createKycCoApplicantDataaaa',createKycCoApplicantData)
       this.coApplicantListFormSubmit.push(createKycCoApplicantData)
       console.log('coApplicantListFormSubmit',this.coApplicantListFormSubmit)
       this.proceedList.push(createKycCoApplicantData)
-      }
+
+
+      // }
+      // else{
+      //   const createKycCoApplicantData: any = {
+      //     // "proposedAmmount":item.proposedAmmount,
+      //     "originFrom": "Lead",
+      //     "originUid": this.leadkid,
+      //     // "customer": this.custId,
+      //     "customerName": item.nameCoApplicant,
+      //     "permanentPhoneNumber": item.phNOCoApplicant,
+      //     "dob": item.dobCoApplicant,
+      //     "telephone": [
+      //       {
+      //         "telephoneType": item.telephoneTypeCoApplicant,
+      //         "telephoneNumber": item.telephoneNumberCoApplicant
+      //       }
+      //     ],
+      //     "relationType": item.relationTypeCoApplicant,
+      //     "relationName": item.relationNameCoApplicant,
+      //     "validationIds": [
+      //       {
+      //         "idTypes": item.idTypes1CoApplicant,
+      //         "idValue": item.idValue1CoApplicant,
+      //         "attachments": this.fileDataCoApplicant
+      //       },
+      //       {
+      //         "idTypes": item.idTypes2CoApplicant,
+      //         "idValue": item.idValue2CoApplicant,
+      //         "attachments": this.fileDataCoApplicant
+      //       }
+      //     ],
+      //     "permanentAddress": item.permanentAddressCoApplicant,
+      //     "permanentCity": item.permanentCityCoApplicant,
+      //     "permanentState": item.permanentStateCoApplicant,
+      //     "permanentPinCode": item.permanentPinCodeCoApplicant,
+      //     "nomineeType": item.nomineeTypeCoApplicant,
+      //     "nomineeName": item.nomineeNameCoApplicant,
+      //     "address": [
+      //       {
+      //         "addressType": item.addressTypeCoApplicant,
+      //         "address": item.addressCoAplicant,
+      //         "city": item.cityCoApplicant,
+      //         "state": item.stateCoApplicant,
+      //         "pin": item.pinCoApplicant
+      //       }
+      //     ],
+      //     "panNumber": item.panNumberCoApplicant,
+      //     "panAttachments": this.fileDataPanCoApplicant,
+      //     "parentid": {
+      //       "id": this.custId
+      //     },
+      //     "parent": false
+      //   }
+      //   console.log('createKycCoApplicantDataaaa',createKycCoApplicantData)
+      // this.coApplicantListFormSubmit.push(createKycCoApplicantData)
+      // console.log('coApplicantListFormSubmit',this.coApplicantListFormSubmit)
+      // this.proceedList.push(createKycCoApplicantData)
+      // }
       // const createKycCoApplicantData: any = {
       //   // "proposedAmmount":item.proposedAmmount,
       //   "originFrom": "Lead",
@@ -1544,11 +1365,6 @@ export class ViewLeadQnrComponent implements OnInit {
   }
   submitAfterQuestionnaire(uuid) {
     const dataToSend: FormData = new FormData();
-    // if (this.questionAnswers.files) {
-    //     for (const pic of this.questionAnswers.files) {
-    //         dataToSend.append('files', pic['name']);
-    //     }
-    // }
     const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
     this.providerService.submitProviderLeadQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
@@ -1652,157 +1468,179 @@ export class ViewLeadQnrComponent implements OnInit {
     }
 
   }
-  filesSelected(event) {
-    console.log('eventFileSelected',event);
-    const input = event.target.files;
-    if (input) {
-      for (const file of input) {
-        if (projectConstantsLocal.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-        } else if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
-          this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
-        } else {
-          this.selectedMessage.files.push(file);
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.selectedMessage.base64.push(e.target['result']);
-          };
-          reader.readAsDataURL(file);
+  filesSelected(event, type) {
+    this.fileService.filesSelected(event, this.selectedMessage[type]).then(
+      () => {
+        for (const pic of this.selectedMessage[type].files) {
+          let fileObjFinal;
+          const size = pic["size"] / 1024;
+          if (pic["type"]) {
+            const fileObj = {
+              owner: this.active_user.id,
+              fileName: pic["name"],
+              fileSize: size / 1024,
+              caption: "",
+              fileType: pic["type"].split("/")[1],
+              // order: this.filesCount++
+            }
+            // this.fileData.push(fileObj);
+            fileObjFinal = fileObj;                     
+          } else {
+            const picType = "jpeg";
+            const fileObj = {
+              owner: this.active_user.id,
+              fileName: pic["name"],
+              fileSize: size / 1024,
+              caption: "",
+              fileType: picType,
+              // order: this.filesCount++
+            }
+            // this.fileData.push(fileObj);
+            fileObjFinal = fileObj;           
+          }
+          fileObjFinal['file'] = pic;
+          fileObjFinal['type'] = type;
+          this.filesToUpload.push(fileObjFinal);
         }
-      }
-    }
+          
+    // this.fileData = [{ owner: "", fileName: "", fileSize: "", caption: "", fileType: "", order: "" }];
+    // this.fileDataCoApplicant = [{ owner: "", fileName: "", fileSize: "", caption: "", fileType: "", order: "" }];
+    // if (this.selectedMessage['applicant'].files.length === 0) {
+    //   this.fileData = [];
+    // }
+    // if (this.selectedMessage['coApplicant'].files.length === 0) {
+    //   this.fileDataCoApplicant = [];
+    // }
+    // if (this.selectedMessage['coApplicantPan'].files.length === 0) {
+    //   this.fileDataPanCoApplicant = [
+    //   ];
+    // }
+    // if (this.selectedMessage['pan'].files.length === 0) {
+    //   this.fileDataPan = [
+    //   ];
+    // }
+    
+    // for (const pic of this.selectedMessage['kyc'].files) {
+    //   const size = pic["size"] / 1024;
+    //   if (pic["type"]) {
+    //     this.fileKycData = [{
+    //       owner: this.active_user.id,
+    //       fileName: pic["name"],
+    //       fileSize: size / 1024,
+    //       caption: "",
+    //       fileType: pic["type"].split("/")[1],
+    //       order: i++
+    //     }];
+    //     this.filesToUpload.push(this.fileKycData[0]);
+    //   } else {
+    //     const picType = "jpeg";
+    //     this.fileKycData = [
+    //       {
+    //         owner: this.active_user.id,
+    //         fileName: pic["name"],
+    //         fileSize: size / 1024,
+    //         caption: "",
+    //         fileType: picType,
+    //         order: i++
+    //       }
+    //     ];
+    //     this.filesToUpload.push(this.fileKycData[0]);
+    //   }
+    // }
+
+    // // let j = 0;
+    // this.fileDataPan = [{ owner: "", fileName: "", fileSize: "", caption: "", fileType: "", order: "" }];
+    // this.fileDataPanCoApplicant = [{ owner: "", fileName: "", fileSize: "", caption: "", fileType: "", order: "" }];
+
+    // for (const pic of this.selectedMessage['pan'].files) {
+    //   const size = pic["size"] / 1024;
+    //   if (pic["type"]) {
+    //     this.fileDataPan = [{
+    //       owner: this.active_user.id,
+    //       fileName: pic["name"],
+    //       fileSize: size / 1024,
+    //       caption: "",
+    //       fileType: pic["type"].split("/")[1],
+    //       order: i++
+    //     }];
+    //     this.filesToUpload.push(this.fileDataPan[0]);
+    //   } else {
+    //     const picType = "jpeg";
+    //     this.fileDataPan = [
+    //       {
+    //         owner: this.active_user.id,
+    //         fileName: pic["name"],
+    //         fileSize: size / 1024,
+    //         caption: "",
+    //         fileType: picType,
+    //         order: i++
+    //       }
+    //     ];
+    //     this.filesToUpload.push(this.fileDataPan[0]);
+    //   }
+    // }
+    // for (const pic of this.selectedMessage['coApplicant'].files) {
+    //   const size = pic["size"] / 1024;
+    //   if (pic["type"]) {
+    //     this.fileDataCoApplicant = [
+    //       {
+    //         owner: this.active_user.id,
+    //         fileName: pic["name"],
+    //         fileSize: size / 1024,
+    //         caption: "",
+    //         fileType: pic["type"].split("/")[1],
+    //         order: i++
+    //       }
+    //     ];
+    //     this.filesToUpload.push(this.fileDataCoApplicant[0]);
+    //   } else {
+    //     const picType = "jpeg";
+    //     this.fileDataCoApplicant = [
+    //       {
+    //         owner: this.active_user.id,
+    //         fileName: pic["name"],
+    //         fileSize: size / 1024,
+    //         caption: "",
+    //         fileType: picType,
+    //         order: i++
+    //       }
+    //     ];
+    //     this.filesToUpload.push(this.fileDataCoApplicant[0]);
+    //   }
+    // }
+    // for (const pic of this.selectedMessage['coApplicantPan'].files) {
+    //   const size = pic["size"] / 1024;
+    //   if (pic["type"]) {
+    //     this.fileDataPanCoApplicant = [{
+    //       owner: this.active_user.id,
+    //       fileName: pic["name"],
+    //       fileSize: size / 1024,
+    //       caption: "",
+    //       fileType: pic["type"].split("/")[1],
+    //       order: i++
+    //     }];
+    //     this.filesToUpload.push(this.fileDataPanCoApplicant[0]);
+    //   } else {
+    //     const picType = "jpeg";
+    //     this.fileDataPanCoApplicant = [{
+    //       owner: this.active_user.id,
+    //       fileName: pic["name"],
+    //       fileSize: size / 1024,
+    //       caption: "",
+    //       fileType: picType,
+    //       order: i++
+    //     }];
+    //     this.filesToUpload.push(this.fileDataPanCoApplicant[0]);
+    //   }
+    // }
+      }).catch((error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      })
   }
-  filesSelectedCoApplicant(event){
-    console.log('eventFileSelected',event);
-    const input = event.target.files;
-    if (input) {
-      for (const file of input) {
-        if (projectConstantsLocal.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-        } else if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
-          this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
-        } else {
-          this.selectedMessageCoApplicant.files.push(file);
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.selectedMessageCoApplicant.base64.push(e.target['result']);
-          };
-          reader.readAsDataURL(file);
-        }
-      }
-    }
-  }
-  filesSelectedPan(event) {
-    console.log('filesSelectedPan',event);
-    const input = event.target.files;
-    if (input) {
-      for (const file of input) {
-        if (projectConstantsLocal.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-        } else if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
-          this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
-        } else {
-          this.selectedMessagePan.files.push(file);
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.selectedMessagePan.base64.push(e.target['result']);
-          };
-          reader.readAsDataURL(file);
-        }
-      }
-    }
-  }
-  filesSelectedPanCoApplicant(event){
-    console.log('filesSelectedPan',event);
-    const input = event.target.files;
-    if (input) {
-      for (const file of input) {
-        if (projectConstantsLocal.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-        } else if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
-          this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
-        } else {
-          this.selectedMessageCoApplicantPan.files.push(file);
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.selectedMessageCoApplicantPan.base64.push(e.target['result']);
-          };
-          reader.readAsDataURL(file);
-        }
-      }
-    }
-  }
-  filesSelectedkycCoApplicant(event){
-    console.log('filesSelectedkyc',event);
-    const input = event.target.files;
-    if (input) {
-      for (const file of input) {
-        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-        } else if (file.size > projectConstants.FILE_MAX_SIZE) {
-          this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
-        } else {
-          this.selectedMessagekycCoApplicant.files.push(file);
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.selectedMessagekycCoApplicant.base64.push(e.target['result']);
-          };
-          reader.readAsDataURL(file);
-        }
-      }
-    }
-  }
-  filesSelectedkyc(event) {
-    console.log('filesSelectedkyc',event);
-    const input = event.target.files;
-    if (input) {
-      for (const file of input) {
-        if (projectConstants.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
-          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
-        } else if (file.size > projectConstants.FILE_MAX_SIZE) {
-          this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
-        } else {
-          this.selectedMessagekyc.files.push(file);
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.selectedMessagekyc.base64.push(e.target['result']);
-          };
-          reader.readAsDataURL(file);
-        }
-      }
-    }
-  }
-  deleteTempImage(i) {
-    this.selectedMessage.files.splice(i, 1);
-    this.selectedMessage.base64.splice(i, 1);
-    this.selectedMessage.caption.splice(i, 1);
-    // selectedMessageCoApplicant
-  }
-  deleteTempImageCoApplicant(i) {
-    this.selectedMessageCoApplicant.files.splice(i, 1);
-    this.selectedMessageCoApplicant.base64.splice(i, 1);
-    this.selectedMessageCoApplicant.caption.splice(i, 1);
-    // selectedMessageCoApplicant
-  }
-  deleteTempImagePan(i) {
-    this.selectedMessagePan.files.splice(i, 1);
-    this.selectedMessagePan.base64.splice(i, 1);
-    this.selectedMessagePan.caption.splice(i, 1);
-  }
-  deleteTempImagePanCoApplicant(i) {
-    this.selectedMessageCoApplicantPan.files.splice(i, 1);
-    this.selectedMessageCoApplicantPan.base64.splice(i, 1);
-    this.selectedMessageCoApplicantPan.caption.splice(i, 1);
-  }
-  deleteTempImagekyc(i) {
-    this.selectedMessagekyc.files.splice(i, 1);
-    this.selectedMessagekyc.base64.splice(i, 1);
-    this.selectedMessagekyc.caption.splice(i, 1);
-  }
-  deleteTempImagekycCoApplicant(i) {
-    this.selectedMessagekycCoApplicant.files.splice(i, 1);
-    this.selectedMessagekycCoApplicant.base64.splice(i, 1);
-    this.selectedMessagekycCoApplicant.caption.splice(i, 1);
+  deleteTempImage(i, type) {
+    this.selectedMessage[type].files.splice(i, 1);
+    this.selectedMessage[type].base64.splice(i, 1);
+    this.selectedMessage[type].caption.splice(i, 1);
   }
   getImage(url, file) {
     return this.fileService.getImage(url, file);
@@ -1822,7 +1660,6 @@ export class ViewLeadQnrComponent implements OnInit {
             type: 'LEAD'
           }
         }
-        // this.router.navigate(['provider', 'crm'], navigationExtras);
         console.log(navigationExtras)
         this.router.navigate(['provider', 'crm']);
       },
@@ -1836,7 +1673,6 @@ export class ViewLeadQnrComponent implements OnInit {
     });
   }
   getImageType(fileType) {
-    // console.log(fileType);
     return this.fileService.getImageByType(fileType);
   }
   leadStatus() {
@@ -1844,11 +1680,11 @@ export class ViewLeadQnrComponent implements OnInit {
       console.log(response);
       this.failedStatusId = response[3].id;
       this.crifStatusId = response[6].id;
-      // this.crif
+      console.log('this.failedStatusId', this.failedStatusId)
     })
   }
   updateKyc(){
-    if(this.createLeadForm.controls.idTypes1.value='Aadhaar'){
+    // if(this.createLeadForm.controls.idTypes1.value='Aadhaar'){
       const createLeadData: any = {
         "originFrom": "Lead",
         "originUid": this.leadkid,
@@ -1914,75 +1750,75 @@ export class ViewLeadQnrComponent implements OnInit {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }, projectConstants.TIMEOUT_DELAY);
         })
-    }
+    // }
     
-      else{
-        const createLeadData: any = {
-          "originFrom": "Lead",
-          "originUid": this.leadkid,
-          "customer": this.custId,
-          "customerName": this.custname,
-          "dob": this.createLeadForm.controls.dob.value,
-          "telephone": [
-            {
-              "telephoneType": this.createLeadForm.controls.telephoneType.value,
-              "telephoneNumber": this.createLeadForm.controls.telephoneNumber.value
-            }
-          ],
-          "relationType": this.createLeadForm.controls.relationType.value,
-          "relationName": this.createLeadForm.controls.relationName.value,
-          "validationIds": [
-            {
-              "idTypes": this.createLeadForm.controls.idTypes.value,
-              "idValue": this.createLeadForm.controls.idValue.value,
-              "attachments": this.fileData
-            },
-            {
-              "idTypes": this.createLeadForm.controls.idTypes1.value,
-              "idValue": this.createLeadForm.controls.idValue1.value,
-              "attachments": this.fileData
-            }
-          ],
-          "permanentAddress": this.createLeadForm.controls.permanentAddress.value,
-          "permanentCity": this.createLeadForm.controls.permanentCity.value,
-          "permanentState": this.createLeadForm.controls.permanentState.value,
-          "permanentPinCode": this.createLeadForm.controls.permanentPinCode.value,
-          "nomineeType": this.createLeadForm.controls.nomineeType.value,
-          "nomineeName": this.createLeadForm.controls.nomineeName.value,
-          "address": [
-            {
-              "addressType": this.createLeadForm.controls.addressType.value,
-              "address": this.createLeadForm.controls.address.value,
-              "city": this.createLeadForm.controls.city.value,
-              "state": this.createLeadForm.controls.state.value,
-              "pin": this.createLeadForm.controls.pin.value
-            }
-          ],
-          "panNumber": this.createLeadForm.controls.panNumber.value,
-          "panAttachments": this.fileDataPan,
-          // "parentid": {
-          //   "id": ''
-          // },
-          "parent": true
-        }
-        console.log('createLeadData',createLeadData)
-        if(this.isAnyCoapp){
-          this.submitCoApplicant()
-        }
-        this.coApplicantListFormSubmit.push(createLeadData);
-        console.log('this.coApplicantListFormSubmit',this.coApplicantListFormSubmit)
-        this.crmService.addkyc(this.coApplicantListFormSubmit).subscribe((response) => {
-          console.log('afterupdateKYCDAta', response);
-          setTimeout(() => {
-            this.router.navigate(['provider', 'crm']);
-          }, projectConstants.TIMEOUT_DELAY);
-        },
-          (error) => {
-            setTimeout(() => {
-              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            }, projectConstants.TIMEOUT_DELAY);
-          })
-      }
+      // else{
+      //   const createLeadData: any = {
+      //     "originFrom": "Lead",
+      //     "originUid": this.leadkid,
+      //     "customer": this.custId,
+      //     "customerName": this.custname,
+      //     "dob": this.createLeadForm.controls.dob.value,
+      //     "telephone": [
+      //       {
+      //         "telephoneType": this.createLeadForm.controls.telephoneType.value,
+      //         "telephoneNumber": this.createLeadForm.controls.telephoneNumber.value
+      //       }
+      //     ],
+      //     "relationType": this.createLeadForm.controls.relationType.value,
+      //     "relationName": this.createLeadForm.controls.relationName.value,
+      //     "validationIds": [
+      //       {
+      //         "idTypes": this.createLeadForm.controls.idTypes.value,
+      //         "idValue": this.createLeadForm.controls.idValue.value,
+      //         "attachments": this.fileData
+      //       },
+      //       {
+      //         "idTypes": this.createLeadForm.controls.idTypes1.value,
+      //         "idValue": this.createLeadForm.controls.idValue1.value,
+      //         "attachments": this.fileData
+      //       }
+      //     ],
+      //     "permanentAddress": this.createLeadForm.controls.permanentAddress.value,
+      //     "permanentCity": this.createLeadForm.controls.permanentCity.value,
+      //     "permanentState": this.createLeadForm.controls.permanentState.value,
+      //     "permanentPinCode": this.createLeadForm.controls.permanentPinCode.value,
+      //     "nomineeType": this.createLeadForm.controls.nomineeType.value,
+      //     "nomineeName": this.createLeadForm.controls.nomineeName.value,
+      //     "address": [
+      //       {
+      //         "addressType": this.createLeadForm.controls.addressType.value,
+      //         "address": this.createLeadForm.controls.address.value,
+      //         "city": this.createLeadForm.controls.city.value,
+      //         "state": this.createLeadForm.controls.state.value,
+      //         "pin": this.createLeadForm.controls.pin.value
+      //       }
+      //     ],
+      //     "panNumber": this.createLeadForm.controls.panNumber.value,
+      //     "panAttachments": this.fileDataPan,
+      //     // "parentid": {
+      //     //   "id": ''
+      //     // },
+      //     "parent": true
+      //   }
+      //   console.log('createLeadData',createLeadData)
+      //   if(this.isAnyCoapp){
+      //     this.submitCoApplicant()
+      //   }
+      //   this.coApplicantListFormSubmit.push(createLeadData);
+      //   console.log('this.coApplicantListFormSubmit',this.coApplicantListFormSubmit)
+      //   this.crmService.addkyc(this.coApplicantListFormSubmit).subscribe((response) => {
+      //     console.log('afterupdateKYCDAta', response);
+      //     setTimeout(() => {
+      //       this.router.navigate(['provider', 'crm']);
+      //     }, projectConstants.TIMEOUT_DELAY);
+      //   },
+      //     (error) => {
+      //       setTimeout(() => {
+      //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      //       }, projectConstants.TIMEOUT_DELAY);
+      //     })
+      // }
   }
   failedStatus() {
     this.crmService.rejectedStatusLeadkyc(this.leadDetails.uid).subscribe((response) => {
@@ -1997,7 +1833,6 @@ export class ViewLeadQnrComponent implements OnInit {
         }, projectConstants.TIMEOUT_DELAY);
       })
   }
-
   ProceedStatus() {
     const createLeadData: any = {
       "originFrom": "Lead",
@@ -2069,6 +1904,21 @@ export class ViewLeadQnrComponent implements OnInit {
 
         this.proceedList=[]
   }
+  
+  crifStatus() {
+
+    this.crmService.addLeadStatus(this.leadDetails.uid, this.crifStatusId).subscribe((response) => {
+      console.log('afterupdateFollowUpData', response);
+      setTimeout(() => {
+        this.router.navigate(['provider', 'crm']);
+      }, projectConstants.TIMEOUT_DELAY);
+    },
+      (error) => {
+        setTimeout(() => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }, projectConstants.TIMEOUT_DELAY);
+      })
+  }
 
   noteView(noteDetails: any) {
     console.log("notedetails", noteDetails);
@@ -2086,59 +1936,67 @@ export class ViewLeadQnrComponent implements OnInit {
       console.log("response", response);
     });
   }
-  handleNotesDescription(textValue:any){
-    console.log('taskDescription',textValue)
+  handleNotesDescription(textValue: any) {
+    console.log('taskDescription', textValue)
   }
-  saveCreateNote(notesValue:any){
-    if(this.notesTextarea !==undefined){
-      console.log('this.notesTextarea',this.notesTextarea);
-      const createNoteData:any = {
-        "note" :this.notesTextarea
+  saveCreateNote(notesValue: any) {
+    if (this.notesTextarea !== undefined) {
+      console.log('this.notesTextarea', this.notesTextarea);
+      const createNoteData: any = {
+        "note": this.notesTextarea
       }
-        console.log('createNoteData',createNoteData)
-        this.crmService.addLeadNotes(this.updateValue.originUid,createNoteData).subscribe((response:any)=>{
-          console.log('response',response)
-          this.api_loading = true;
-          setTimeout(() => {
-            // this.dialogRef.close(notesValue)
-            this.ngOnInit()
-            // this.getNotesDetails()
-            this.api_loading = false;
-          }, projectConstants.TIMEOUT_DELAY);
-          this.snackbarService.openSnackBar('Remarks added successfully');
-        },
-        (error)=>{
-          this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+      console.log('createNoteData', createNoteData)
+      this.crmService.addLeadNotes(this.updateValue.originUid, createNoteData).subscribe((response: any) => {
+        console.log('response', response)
+        this.api_loading = true;
+        setTimeout(() => {
+          // this.dialogRef.close(notesValue)
+          this.ngOnInit()
+          // this.getNotesDetails()
+          this.api_loading = false;
+        }, projectConstants.TIMEOUT_DELAY);
+        this.snackbarService.openSnackBar('Remarks added successfully');
+      },
+        (error) => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
         })
       // }
-      
+
     }
   }
   toggleShow() {
 
-    this.isShown = ! this.isShown;
-    
+    this.isShown = !this.isShown;
+
+  }
+
+  uploadFiles(file, url) {
+    const _this =this;
+    return new Promise(function(resolve, reject) {
+      _this.provider_services.videoaudioS3Upload(file, url)
+      .subscribe(() => {
+        resolve(true);
+      },error => {
+        _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        _this.api_loading = false;
+        _this.api_loading_video = false;
+          resolve(false);
+        });
+    })
+  }
+
+  async uploadAudioVideo(data, type) {
+    console.log("File List:", this.filesToUpload);
+    for (const s3UrlObj of data) {
+
+      this.api_loading_video = true;
+      const file = this.filesToUpload.filter((fileObj) => {
+        return fileObj.order === s3UrlObj.orderId ? fileObj : '';
+      })[0];
+      console.log("File:", file);
+      await this.uploadFiles(file['file'], s3UrlObj.url).then();
     }
-
-    
-    uploadAudioVideo(data, type) {
-      for (const url of data) {
-        this.api_loading_video = true;
-        const file = this.filestoUpload[url.url];
-        this.provider_services.videoaudioS3Upload(file, url.url)
-          .subscribe(() => {
-           
-          },
-
-            error => {
-              this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-              this.api_loading = false;
-              this.api_loading_video = false;
-            });
-      }
-
-    
-}
+  }
 
   saveCrifApplicant() {
     const post_data = {
@@ -2152,7 +2010,7 @@ export class ViewLeadQnrComponent implements OnInit {
       (data) => {
         this.crifDetails = data;
         this.crifHTML = this.crifDetails.crifHTML;
-        this.crifScore =  this.crifDetails.crifScoreString
+        this.crifScore = this.crifDetails.crifScoreString
         // const navigationExtras: NavigationExtras =  {
         //   queryParams: {
         //     type: 'LEAD'
@@ -2162,7 +2020,7 @@ export class ViewLeadQnrComponent implements OnInit {
       },
       error => {
       });
-      this.showPdfIcon = true;
+    this.showPdfIcon = true;
   }
   preview(crif_data) {
     console.log("Files : ", this.customers)
@@ -2172,12 +2030,11 @@ export class ViewLeadQnrComponent implements OnInit {
       disableClose: true,
       data: {
         crif: crif_data,
-    type:'pdf_view'
+        type: 'pdf_view'
       }
     });
     this.fileviewdialogRef.afterClosed().subscribe(result => {
       if (result) {
-
       }
     });
   }
