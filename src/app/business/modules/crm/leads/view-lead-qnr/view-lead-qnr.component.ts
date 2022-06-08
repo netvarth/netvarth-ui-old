@@ -239,7 +239,8 @@ export class ViewLeadQnrComponent implements OnInit {
   idvalue1Coapplixcant: any;
   telephoneTYpeCoapplicant: any;
   telephoneNumberCoapplicant: any;
-  afterCreatetKycproceed:boolean=false
+  afterCreatetKycproceed:boolean=false;
+  proceedList:any=[]
   constructor(private locationobj: Location,
 
     // private lStorageService: LocalStorageService,
@@ -1119,68 +1120,12 @@ export class ViewLeadQnrComponent implements OnInit {
         }, projectConstants.TIMEOUT_DELAY);
       })
   }
-  ProceedStatus(){
-    const createLeadData: any = {
-      "originFrom": "Lead",
-      "originUid": this.leadkid,
-      "customer": this.custId,
-      "customerName": this.custname,
-      "dob": this.createLeadForm.controls.dob.value,
-      "telephone": [
-        {
-          "telephoneType": this.createLeadForm.controls.telephoneType.value,
-          "telephoneNumber": this.createLeadForm.controls.telephoneNumber.value
-        }
-      ],
-      "relationType": this.createLeadForm.controls.relationType.value,
-      "relationName": this.createLeadForm.controls.relationName.value,
-      "validationIds": [
-        {
-          "idTypes": this.createLeadForm.controls.idTypes.value,
-          "idValue": this.createLeadForm.controls.idValue.value,
-          "attachments": this.fileData
-        },
-        {
-          "idTypes": this.createLeadForm.controls.idTypes1.value,
-          "idValue": this.createLeadForm.controls.idValue1.value,
-          "attachments": this.fileData
-        }
-      ],
-      "permanentAddress": this.createLeadForm.controls.permanentAddress.value,
-      "permanentCity": this.createLeadForm.controls.permanentCity.value,
-      "permanentState": this.createLeadForm.controls.permanentState.value,
-      "permanentPinCode": this.createLeadForm.controls.permanentPinCode.value,
-      "nomineeType": this.createLeadForm.controls.nomineeType.value,
-      "nomineeName": this.createLeadForm.controls.nomineeName.value,
-      "address": [
-        {
-          "addressType": this.createLeadForm.controls.addressType.value,
-          "address": this.createLeadForm.controls.address.value,
-          "city": this.createLeadForm.controls.city.value,
-          "state": this.createLeadForm.controls.state.value,
-          "pin": this.createLeadForm.controls.pin.value
-        }
-      ],
-      "panNumber": this.createLeadForm.controls.panNumber.value,
-      "panAttachments": this.fileDataPan,
-      // "parentid": {
-      //   "id": ''
-      // },
-      "parent": true
-    }
-    console.log('createLeadData',createLeadData)
-    if(this.isAnyCoapp){
-      this.submitCoApplicant()
-    }
-    this.coApplicantListFormSubmit.push(createLeadData);
-    console.log('this.coApplicantListFormSubmit',this.coApplicantListFormSubmit)
-    this.crmService.getproceedStatus(this.coApplicantListFormSubmit).subscribe((response) => {
-      this.kycresponse = response;
-      console.log('response',response)
+  ProceedStatusToSales(){
+    this.crmService.ProceedStatusToSales( this.leadDetails.uid).subscribe((response) => {
+      // this.kycresponse = response;
+      console.log('responseProceedStatusToSales',response)
       setTimeout(() => {
         this.api_loading = true;
-        // this.createLeadForm.reset();
-        // this.crifStatus()
         this.router.navigate(['provider', 'crm']);
       }, projectConstants.TIMEOUT_DELAY);
     },
@@ -1202,6 +1147,7 @@ export class ViewLeadQnrComponent implements OnInit {
           this.formControlArray.splice(length, 1);
   }
   addCoApplicant(){
+    console.log('gggg')
     this.isAnyCoapp = true;
     console.log(this.count)
     // if(this.count++){
@@ -1311,6 +1257,7 @@ export class ViewLeadQnrComponent implements OnInit {
       console.log('createKycCoApplicantDataaaa',createKycCoApplicantData)
       this.coApplicantListFormSubmit.push(createKycCoApplicantData)
       console.log('coApplicantListFormSubmit',this.coApplicantListFormSubmit)
+      this.proceedList.push(createKycCoApplicantData)
 
     })
     
@@ -1767,20 +1714,7 @@ export class ViewLeadQnrComponent implements OnInit {
       })
   }
   failedStatus() {
-    this.crmService.addLeadStatus(this.leadDetails.uid, this.failedStatusId).subscribe((response) => {
-      console.log('afterupdateFollowUpData', response);
-      setTimeout(() => {
-        this.router.navigate(['provider', 'crm']);
-      }, projectConstants.TIMEOUT_DELAY);
-    },
-      (error) => {
-        setTimeout(() => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }, projectConstants.TIMEOUT_DELAY);
-      })
-  }
-  ProceedStatusToCrif(){
-    this.crmService.addLeadStatus(this.leadDetails.uid, this.crifStatusId).subscribe((response) => {
+    this.crmService.rejectedStatusLeadkyc(this.leadDetails.uid).subscribe((response) => {
       console.log('afterupdateFollowUpData', response);
       setTimeout(() => {
         this.router.navigate(['provider', 'crm']);
@@ -1793,7 +1727,7 @@ export class ViewLeadQnrComponent implements OnInit {
       })
   }
 
-  crifStatus() {
+  ProceedStatus() {
     // this.crmService.addLeadStatus(this.leadDetails.uid, this.crifStatusId).subscribe((response) => {
     //   console.log('afterupdateFollowUpData', response);
     //   setTimeout(() => {
@@ -1805,8 +1739,63 @@ export class ViewLeadQnrComponent implements OnInit {
     //       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     //     }, projectConstants.TIMEOUT_DELAY);
     //   })
+    const createLeadData: any = {
+      "originFrom": "Lead",
+      "originUid": this.leadkid,
+      "customer": this.custId,
+      "customerName": this.custname,
+      "dob": this.createLeadForm.controls.dob.value,
+      "telephone": [
+        {
+          "telephoneType": this.createLeadForm.controls.telephoneType.value,
+          "telephoneNumber": this.createLeadForm.controls.telephoneNumber.value
+        }
+      ],
+      "relationType": this.createLeadForm.controls.relationType.value,
+      "relationName": this.createLeadForm.controls.relationName.value,
+      "validationIds": [
+        {
+          "idTypes": this.createLeadForm.controls.idTypes.value,
+          "idValue": this.createLeadForm.controls.idValue.value,
+          "attachments": this.fileData
+        },
+        {
+          "idTypes": this.createLeadForm.controls.idTypes1.value,
+          "idValue": this.createLeadForm.controls.idValue1.value,
+          "attachments": this.fileData
+        }
+      ],
+      "permanentAddress": this.createLeadForm.controls.permanentAddress.value,
+      "permanentCity": this.createLeadForm.controls.permanentCity.value,
+      "permanentState": this.createLeadForm.controls.permanentState.value,
+      "permanentPinCode": this.createLeadForm.controls.permanentPinCode.value,
+      "nomineeType": this.createLeadForm.controls.nomineeType.value,
+      "nomineeName": this.createLeadForm.controls.nomineeName.value,
+      "address": [
+        {
+          "addressType": this.createLeadForm.controls.addressType.value,
+          "address": this.createLeadForm.controls.address.value,
+          "city": this.createLeadForm.controls.city.value,
+          "state": this.createLeadForm.controls.state.value,
+          "pin": this.createLeadForm.controls.pin.value
+        }
+      ],
+      "panNumber": this.createLeadForm.controls.panNumber.value,
+      "panAttachments": this.fileDataPan,
+      // "parentid": {
+      //   "id": ''
+      // },
+      "parent": true
+    }
 
-      this.crmService.getproceedStatus(this.coApplicantListFormSubmit).subscribe((response) => {
+    console.log('createLeadData',createLeadData)
+    if(this.isAnyCoapp){
+      this.submitCoApplicant()
+    }
+    this.proceedList.push(createLeadData);
+    console.log('this.coApplicantListFormSubmit',this.proceedList)
+
+      this.crmService.getproceedStatus(this.proceedList).subscribe((response) => {
         console.log('afterupdateFollowUpData', response);
         setTimeout(() => {
           this.router.navigate(['provider', 'crm']);
@@ -1817,6 +1806,8 @@ export class ViewLeadQnrComponent implements OnInit {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }, projectConstants.TIMEOUT_DELAY);
         })
+
+        this.proceedList=[]
   }
 
   noteView(noteDetails: any) {
@@ -1929,6 +1920,30 @@ export class ViewLeadQnrComponent implements OnInit {
 
       }
     });
+  }
+  createCoApplicant(){
+    this.crmService.addkyc(this.coApplicantListFormSubmit).subscribe((response:any) => {
+      this.kycresponse = response;
+      console.log('response',response)
+      this.uploadAudioVideo(this.kycresponse, 'kyc');
+      this.addKycResponse= response;
+      if(response=[]){
+        setTimeout(() => {
+          this.api_loading = true;
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              type: 'DOCUMENTUPLOD'
+            }
+          }
+           this.router.navigate(['provider', 'lead'], navigationExtras);        
+        }, projectConstants.TIMEOUT_DELAY);
+      } 
+    },
+      (error) => {
+        setTimeout(() => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }, projectConstants.TIMEOUT_DELAY);
+      })
   }
 }
 

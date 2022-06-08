@@ -1043,7 +1043,7 @@
 
         <!----co applicant start-->
       </form>
-      <form [formGroup]="createCoApplicantForm" >
+      <form [formGroup]="createCoApplicantForm" *ngIf="isAnyCoapp">
         <div  [formArrayName]="'formField'" >
         <div *ngFor="let item of formControlArray;let i = index;" [formGroupName]="i">
          
@@ -2220,7 +2220,6 @@
 
 </section>
 <section class="container card mt-4 mx-auto" *ngIf="showupdateKyc">
-  showupdateKyc
   <div class=" card bgColor">
     <div style="display: flex;
     align-items: center;
@@ -4145,7 +4144,7 @@
             <!-- <button class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="crifStatus()">Save
             </button> -->
             <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #D7FEE9 !important;
-            border: 1.0803px solid #D7FFE9 !important;color: #38C984 !important;" (click)="ProceedStatus()">Proceed
+            border: 1.0803px solid #D7FFE9 !important;color: #38C984 !important;" (click)="ProceedStatusToSales()">Proceed
             </button>
             <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #FADDDD !important;color:black !important" (click)="failedStatus()">Rejected
             </button>
@@ -4161,7 +4160,6 @@
 
 </section>
 <section *ngIf="showqnr">
-  
   <div class="row d-lg-flex justify-content-lg-start" *ngIf="showQuestionnaire && showqnr">
     <div class="card">
       <div style="display: flex;
@@ -4205,8 +4203,8 @@
 </section>
 <section *ngIf="showafterqnr" style="width: 100%;">
   <div class="row d-lg-flex justify-content-lg-start" *ngIf="showQuestionnaire && showafterqnr">
-
-    <div class="card">
+    <div class="container card mt-4 mx-auto">
+    <div >
     <div style="display: flex;
     align-items: center;background-color: #fff;
     gap: 10px;margin-left: 30px;" *ngIf="(leadDetails.customer)">
@@ -4225,7 +4223,1938 @@
       </div>
     </div>
     </div>
+
+    <!---coapplicant start-->
+    <div class="inputwithImg" style="margin-top:10px">
+      <form [formGroup]="createCoApplicantForm" *ngIf="leadDetails">
+        <div>
+        <div *ngFor="let item of updateValueCoApplicant[0];let i = index;" >
+         
+         <div style="border-bottom: 1px solid #04A5FF;height: 30px;">
+          <div style="display: flex;justify-content: space-between;align-items: center;">
+            <div style="font-size: 15px!important;font-weight: bold!important" *ngIf="i===0">
+             Co-Applicant Name
+            </div>
+            <div style="font-size: 15px!important;font-weight: bold!important" *ngIf="i>0">
+              Co-Applicant {{i}} Name
+             </div>
+            <div>
+             <i (click)="deleteDynamicForm(i)" style="cursor:pointer" class="fa fa-trash" aria-hidden="true"></i>
+            </div>
+          </div>
+         </div>
+         <!--propiosed ammount start--->
+          <!-- <div>
+            <div class="leadTitle" style="margin-top: 10px;">
+              <div>Proposed Amount</div>
+            </div>
+            <div class="fieldPadding">
+              <input style="width:100% !important" (keyup)="resetErrors()" type="number" #proposedAmmounts
+                 placeholder="" class="form-control" (ngModelChange)="proposedAmmount(proposedAmmounts.value)"
+                formControlName="proposedAmmount" autocomplete="off" min="0" />
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div> -->
+          <!--propiosed ammount end--->
+          <!--co applicant name phno start-->
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Name</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="nameCoApplicant" #nameCoApplicant
+                   (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                  placeholder="Enter name">
+                      </textarea>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Phone Number</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <input  class="form-control" formControlName="phNOCoApplicant" #phNOCoApplicant
+                  type="tel"
+                  placeholder="Enter number"
+                      />
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div> 
+            </div>
+          </div>
+          <!--coapplicant name phno end-->
+
+          <span class="group-head">KYC Details</span><br>
+        <div class="bggrey my-2">
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Applicant KYC</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <mat-select class="form-control widthWebKit" placeholder="" #idTypes formControlName="idTypes1CoApplicant">
+                  <mat-option [value]="'Passport'">
+                    <div>
+                      Passport
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'VoterID'">
+                    <div>
+                      VoterID
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Aadhaar'">
+                    <div>
+                      Aadhaar
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Others'">
+                    <div>
+                      Others
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'RationCard'">
+                    <div>
+                      RationCard
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'DrivingLicenseNo'">
+                    <div>
+                      DrivingLicenseNo
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Pan'">
+                    <div>
+                      Pan
+                    </div>
+                  </mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Number</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="idValue1CoApplicant" #idValue 
+                  (change)="handleidValue(idValue.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                  placeholder="Enter number">
+                      </textarea>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
+            </div>
+           
+          </div>
+
+          <div class="fieldPadding">
+            <div class="">
+              <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
+                (change)="filesSelectedCoApplicant($event)">Click / Drop your files here
+              <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i class="material-icons">
+                  attach_file</i></a>
+            </div>
+
+            <div>
+              <div class="img-section mgn-up-20" *ngIf="selectedMessageCoApplicant.files && selectedMessageCoApplicant.files.length > 0">
+                <ul class="galul">
+                  <li *ngFor="let file of selectedMessageCoApplicant.files;let i = index ">
+                    <div class="galimg_outer">
+                      <div class="gal_img">
+                        <img [src]="getImage(selectedMessageCoApplicant.base64[i], file)" *ngIf="selectedMessageCoApplicant.base64[i]">
+                      </div>
+                      <div class="gal_action" (click)="deleteTempImageCoApplicant(i)">
+                        <i class="fa fa-times-circle" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <br *ngIf="selectedMessageCoApplicant.files && selectedMessageCoApplicant.files.length > 0">
+        <br *ngIf="selectedMessageCoApplicant.files && selectedMessageCoApplicant.files.length > 0">
+        <br *ngIf="selectedMessageCoApplicant.files && selectedMessageCoApplicant.files.length > 0">
+        <div *ngIf="selectedMessageCoApplicant.files && selectedMessageCoApplicant.files.length > 0"></div>
+        <!-- <span class="group-head">KYC Details</span><br> -->
+
+        <!------kyc part start coapplicant-->
+        <div class="bggrey my-2">
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Applicant KYC</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <mat-select class="form-control widthWebKit" placeholder="" #idTypes1 formControlName="idTypes2CoApplicant">
+                  <mat-option [value]="'Passport'">
+                    <div>
+                      Passport
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'VoterID'">
+                    <div>
+                      VoterID
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Aadhaar'">
+                    <div>
+                      Aadhaar
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Others'">
+                    <div>
+                      Others
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'RationCard'">
+                    <div>
+                      RationCard
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'DrivingLicenseNo'">
+                    <div>
+                      DrivingLicenseNo
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Pan'">
+                    <div>
+                      Pan
+                    </div>
+                  </mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Number</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="idValue2CoApplicant" #idValue1
+                  (change)="handleidValue1(idValue1.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                  placeholder="Enter number">
+                      </textarea>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
+            </div>
+           
+          </div>
+
+          <div class="fieldPadding">
+            <div class="">
+              <input #files type="file" accept="/*;capture=camera" style="display:none;" multiple
+                (change)="filesSelectedkycCoApplicant($event)">Click / Drop your files here
+              <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
+                  attach_file</i></a>
+            </div>
+
+            <div>
+              <div class="img-section mgn-up-20" *ngIf="selectedMessagekycCoApplicant.files && selectedMessagekycCoApplicant.files.length > 0">
+                <ul class="galul">
+                  <li *ngFor="let file of selectedMessagekycCoApplicant.files;let i = index ">
+                    <div class="galimg_outer">
+                      <div class="gal_img">
+                        <img [src]="getImage(selectedMessagekycCoApplicant.base64[i], file)" *ngIf="selectedMessagekycCoApplicant.base64[i]">
+                      </div>
+                      <div class="gal_action" (click)="deleteTempImagekycCoApplicant(i)">
+                        <i class="fa fa-times-circle" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br *ngIf="selectedMessagekycCoApplicant.files && selectedMessagekycCoApplicant.files.length > 0">
+        <br *ngIf="selectedMessagekycCoApplicant.files && selectedMessagekycCoApplicant.files.length > 0">
+        <br *ngIf="selectedMessagekycCoApplicant.files && selectedMessagekycCoApplicant.files.length > 0">
+        <div *ngIf="selectedMessagekycCoApplicant.files && selectedMessagekycCoApplicant.files.length > 0"></div>
+        <!----kycpart coappliocant end-->
+
+        <!--pancard start-->
+        <span class="group-head">Pancard Details</span><br>
+        <div class="bggrey my-2">
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Applicant KYC</div>
+                <!-- <div class="astericColor">*</div> -->
+              </div>
+              <div class="fieldPadding">
+                <mat-select class="form-control widthWebKit" placeholder="Pancard">
+                  <mat-option [value]="'Pancard'">
+                    <div>
+                      Pancard
+                    </div>
+                  </mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Pancard number</div>
+                <!-- <div class="astericColor">*</div> -->
+              </div>
+              <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="panNumberCoApplicant" #panNumber
+                  (change)="handlpanNumber(panNumber.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                  placeholder="Enter Pancard number">
+                      </textarea>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
+            </div>
+          </div>
+          <div class="fieldPadding">
+            <div class="">
+              <input #file type="file" accept="/*;capture=camera" style="display:none;" multiple
+                (change)="filesSelectedPanCoApplicant($event)">Click / Drop your files heree
+              <a class="btn btn-clean btn-icon btn-md" (click)="file.click()"><i class="material-icons">
+                  attach_file</i></a>
+            </div>
+          </div>
+          <div>
+            <div class="img-section mgn-up-20" *ngIf="selectedMessageCoApplicantPan.files && selectedMessageCoApplicantPan.files.length > 0">
+              <ul class="galul">
+                <li *ngFor="let file of selectedMessageCoApplicantPan.files;let i = index ">
+                  <div class="galimg_outer">
+                    <div class="gal_img">
+                      <img [src]="getImage(selectedMessageCoApplicantPan.base64[i], file)" *ngIf="selectedMessageCoApplicantPan.base64[i]">
+                    </div>
+                    <div class="gal_action" (click)="deleteTempImagePanCoApplicant(i)">
+                      <i class="fa fa-times-circle" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <br *ngIf="selectedMessageCoApplicantPan.files && selectedMessageCoApplicantPan.files.length > 0">
+        <br *ngIf="selectedMessageCoApplicantPan.files && selectedMessageCoApplicantPan.files.length > 0">
+        <br *ngIf="selectedMessageCoApplicantPan.files && selectedMessageCoApplicantPan.files.length > 0">
+        <div *ngIf="selectedMessageCoApplicantPan.files && selectedMessageCoApplicantPan.files.length > 0"></div>
+        
+        <!--pancard end-->
+        
+        <span class="group-head">Details</span><br>
+        <div class="bggrey my-2">
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Telephone Type</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <mat-select class="form-control widthWebKit" placeholder="" #telephoneType
+                  formControlName="telephoneTypeCoApplicant">
+                  <mat-option [value]="'Residence'">
+                    <div>
+                      Residence
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Company'">
+                    <div>
+                      Company
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Mobile'">
+                    <div>
+                      Mobile
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Permanent'">
+                    <div>
+                      Permanent
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Foreign'">
+                    <div>
+                      Foreign
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Untagged'">
+                    <div>
+                      Untagged
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Other'">
+                    <div>
+                      Other
+                    </div>
+                  </mat-option>
+
+
+                </mat-select>
+              </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Telephone number</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="telephoneNumberCoApplicant" #telephoneNumber
+                  (change)="handletelephoneNumber(telephoneNumber.value)" (keyup)="autoGrowTextZone($event)"
+                  maxlength="10" placeholder="Enter number">
+                    </textarea>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="leadTitle">
+              <div>House Name</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <input (keyup)="resetErrors()" type="text" #permanentAddress (ngModelChange)="hamdlepermanentAddress(permanentAddress.value)"
+                placeholder="" class="form-control" formControlName="permanentAddressCoApplicant" autocomplete="off" />
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>City</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="permanentCityCoApplicant" #permanentCity (change)="handlepermanentCity(permanentCity.value)"
+                  (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
+              </textarea>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>State</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="permanentStateCoApplicant" #permanentState
+                  (change)="handlepermanentState(permanentState.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                  placeholder="">
+                </textarea>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Pin code</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="permanentPinCodeCoApplicant" #permanentPinCode (change)="handlepermanentPinCode(permanentPinCode.value)"
+                  (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
+              </textarea>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Date of birth</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+
+                <input (keyup)="resetErrors()" type="date" #dob (ngModelChange)="handledob(dob.value)" placeholder=""
+                  class="form-control" formControlName="dobCoApplicant" autocomplete="off" />
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Relation name</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="relationNameCoApplicant" #relationName
+                  (change)="handlerelationName(relationName.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                  placeholder="">
+              </textarea>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Relationship Type</div>
+                <div class="astericColor">*</div>
+              </div>
+              <div class="fieldPadding">
+                <mat-select class="form-control widthWebKit" placeholder="" #relationType
+                  formControlName="relationTypeCoApplicant">
+                  <mat-option [value]="'Father'">
+                    <div>
+                      Father
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Husband'">
+                    <div>
+                      Husband
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Mother'">
+                    <div>
+                      Mother
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Son'">
+                    <div>
+                      Son
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Daughter'">
+                    <div>
+                      Daughter
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Wife'">
+                    <div>
+                      Wife
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Brother'">
+                    <div>
+                      Brother
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'MotherInlaw'">
+                    <div>
+                      MotherInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'FatherInlaw'">
+                    <div>
+                      FatherInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'DaughterInlaw'">
+                    <div>
+                      DaughterInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'SisterInLaw'">
+                    <div>
+                      SisterInLaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'BrotherInlaw'">
+                    <div>
+                      BrotherInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'SonInlaw'">
+                    <div>
+                      SonInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Other'">
+                    <div>
+                      Other
+                    </div>
+                  </mat-option>
+
+                </mat-select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <span class="group-head">Co-Applicant Details</span><br> -->
+        <div class="bggrey my-2">
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Nominee Name</div>
+                <!-- <div class="astericColor">*</div> -->
+              </div>
+              <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="nomineeNameCoApplicant" #nomineeName
+                  (change)="handlenomineeName(nomineeName.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                  placeholder="Enter name">
+                    </textarea>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Nominee Type</div>
+                <!-- <div class="astericColor">*</div> -->
+              </div>
+              <div class="fieldPadding">
+                <mat-select class="form-control widthWebKit" placeholder="" #nomineeType formControlName="nomineeTypeCoApplicant">
+                  <mat-option [value]="'Father'">
+                    <div>
+                      Father
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Husband'">
+                    <div>
+                      Husband
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Mother'">
+                    <div>
+                      Mother
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Son'">
+                    <div>
+                      Son
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Daughter'">
+                    <div>
+                      Daughter
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Wife'">
+                    <div>
+                      Wife
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Brother'">
+                    <div>
+                      Brother
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'MotherInlaw'">
+                    <div>
+                      MotherInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'FatherInlaw'">
+                    <div>
+                      FatherInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'DaughterInlaw'">
+                    <div>
+                      DaughterInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'SisterInLaw'">
+                    <div>
+                      SisterInLaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'BrotherInlaw'">
+                    <div>
+                      BrotherInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'SonInlaw'">
+                    <div>
+                      SonInlaw
+                    </div>
+                  </mat-option>
+                  <mat-option [value]="'Other'">
+                    <div>
+                      Other
+                    </div>
+                  </mat-option>
+
+                </mat-select>
+              </div>
+            </div>
+          </div>
+         
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Address Type</div>
+                <!-- <div class="astericColor">*</div> -->
+              </div>
+              <div class="fieldPadding">
+                <mat-select class="form-control widthWebKit" placeholder="" #addressType
+                  formControlName="addressTypeCoApplicant">
+                  <mat-option [value]="'Residence'">
+                    <div>
+                      Residence
+                    </div>
+                  </mat-option>
+                 
+
+
+                </mat-select>
+              </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Nominee Address</div>
+                <!-- <div class="astericColor">*</div> -->
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="text" #address
+                  (ngModelChange)="hamdleaddress(address.value)" placeholder="" class="form-control"
+                  formControlName="addressCoAplicant" autocomplete="off" />
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>District</div>
+                <!-- <div class="astericColor">*</div> -->
+              </div>
+              <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="cityCoApplicant" #city
+                  (change)="handlecity(city.value)" (keyup)="autoGrowTextZone($event)"
+                  maxlength="1000" placeholder="">
+              </textarea>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>State</div>
+                <!-- <div class="astericColor">*</div> -->
+              </div>
+              <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="stateCoApplicant" #state
+                  (change)="handlestate(state.value)" (keyup)="autoGrowTextZone($event)"
+                  maxlength="1000" placeholder="">
+                </textarea>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+              <div class="leadTitle">
+                <div>Pin code</div>
+                <!-- <div class="astericColor">*</div> -->
+              </div>
+              <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="pinCoApplicant" #pin
+                  (change)="handlepin(pin.value)" (keyup)="autoGrowTextZone($event)"
+                  maxlength="1000" placeholder="">
+              </textarea>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                  errorMsg="{{leadError}}">
+                </app-field-error-display>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!----co applicant end-->
+        <!----for second form btn start-->
+      
+       <!----for second form btn end-->
+      
+      </div>
+    </div>
+    </form>
+
+    <form [formGroup]="createCoApplicantForm" *ngIf="isAnyCoapp">
+      <div  [formArrayName]="'formField'" >
+      <div *ngFor="let item of formControlArray;let i = index;" [formGroupName]="i">
+       
+       <div style="border-bottom: 1px solid #04A5FF;height: 30px;">
+        <div style="display: flex;justify-content: space-between;align-items: center;">
+          <div style="font-size: 15px!important;font-weight: bold!important" *ngIf="i===0">
+           Co-Applicant Name
+          </div>
+          <div style="font-size: 15px!important;font-weight: bold!important" *ngIf="i>0">
+            Co-Applicant {{i}} Name
+           </div>
+          <div>
+           <i (click)="deleteDynamicForm(i)" style="cursor:pointer" class="fa fa-trash" aria-hidden="true"></i>
+          </div>
+        </div>
+       </div>
+       
+        <!--co applicant name phno start-->
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Name</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="nameCoApplicant" #nameCoApplicant
+                 (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                placeholder="Enter name">
+                    </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Phone Number</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <input  class="form-control" formControlName="phNOCoApplicant" #phNOCoApplicant
+                type="tel"
+                placeholder="Enter number"
+                    />
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div> 
+          </div>
+        </div>
+        <!--coapplicant name phno end-->
+
+        <span class="group-head">KYC Details</span><br>
+      <div class="bggrey my-2">
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Applicant KYC</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <mat-select class="form-control widthWebKit" placeholder="" #idTypes formControlName="idTypes1CoApplicant">
+                <mat-option [value]="'Passport'">
+                  <div>
+                    Passport
+                  </div>
+                </mat-option>
+                <mat-option [value]="'VoterID'">
+                  <div>
+                    VoterID
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Aadhaar'">
+                  <div>
+                    Aadhaar
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Others'">
+                  <div>
+                    Others
+                  </div>
+                </mat-option>
+                <mat-option [value]="'RationCard'">
+                  <div>
+                    RationCard
+                  </div>
+                </mat-option>
+                <mat-option [value]="'DrivingLicenseNo'">
+                  <div>
+                    DrivingLicenseNo
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Pan'">
+                  <div>
+                    Pan
+                  </div>
+                </mat-option>
+              </mat-select>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Number</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="idValue1CoApplicant" #idValue 
+                (change)="handleidValue(idValue.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                placeholder="Enter number">
+                    </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+         
+        </div>
+
+        <div class="fieldPadding">
+          <div class="">
+            <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
+              (change)="filesSelectedCoApplicant($event)">Click / Drop your files here
+            <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i class="material-icons">
+                attach_file</i></a>
+          </div>
+
+          <div>
+            <div class="img-section mgn-up-20" *ngIf="selectedMessageCoApplicant.files && selectedMessageCoApplicant.files.length > 0">
+              <ul class="galul">
+                <li *ngFor="let file of selectedMessageCoApplicant.files;let i = index ">
+                  <div class="galimg_outer">
+                    <div class="gal_img">
+                      <img [src]="getImage(selectedMessageCoApplicant.base64[i], file)" *ngIf="selectedMessageCoApplicant.base64[i]">
+                    </div>
+                    <div class="gal_action" (click)="deleteTempImageCoApplicant(i)">
+                      <i class="fa fa-times-circle" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <br *ngIf="selectedMessageCoApplicant.files && selectedMessageCoApplicant.files.length > 0">
+      <br *ngIf="selectedMessageCoApplicant.files && selectedMessageCoApplicant.files.length > 0">
+      <br *ngIf="selectedMessageCoApplicant.files && selectedMessageCoApplicant.files.length > 0">
+      <div *ngIf="selectedMessageCoApplicant.files && selectedMessageCoApplicant.files.length > 0"></div>
+      <!-- <span class="group-head">KYC Details</span><br> -->
+
+      <!------kyc part start coapplicant-->
+      <div class="bggrey my-2">
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Applicant KYC</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <mat-select class="form-control widthWebKit" placeholder="" #idTypes1 formControlName="idTypes2CoApplicant">
+                <mat-option [value]="'Passport'">
+                  <div>
+                    Passport
+                  </div>
+                </mat-option>
+                <mat-option [value]="'VoterID'">
+                  <div>
+                    VoterID
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Aadhaar'">
+                  <div>
+                    Aadhaar
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Others'">
+                  <div>
+                    Others
+                  </div>
+                </mat-option>
+                <mat-option [value]="'RationCard'">
+                  <div>
+                    RationCard
+                  </div>
+                </mat-option>
+                <mat-option [value]="'DrivingLicenseNo'">
+                  <div>
+                    DrivingLicenseNo
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Pan'">
+                  <div>
+                    Pan
+                  </div>
+                </mat-option>
+              </mat-select>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Number</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="idValue2CoApplicant" #idValue1
+                (change)="handleidValue1(idValue1.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                placeholder="Enter number">
+                    </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+         
+        </div>
+
+        <div class="fieldPadding">
+          <div class="">
+            <input #files type="file" accept="/*;capture=camera" style="display:none;" multiple
+              (change)="filesSelectedkycCoApplicant($event)">Click / Drop your files here
+            <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
+                attach_file</i></a>
+          </div>
+
+          <div>
+            <div class="img-section mgn-up-20" *ngIf="selectedMessagekycCoApplicant.files && selectedMessagekycCoApplicant.files.length > 0">
+              <ul class="galul">
+                <li *ngFor="let file of selectedMessagekycCoApplicant.files;let i = index ">
+                  <div class="galimg_outer">
+                    <div class="gal_img">
+                      <img [src]="getImage(selectedMessagekycCoApplicant.base64[i], file)" *ngIf="selectedMessagekycCoApplicant.base64[i]">
+                    </div>
+                    <div class="gal_action" (click)="deleteTempImagekycCoApplicant(i)">
+                      <i class="fa fa-times-circle" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br *ngIf="selectedMessagekycCoApplicant.files && selectedMessagekycCoApplicant.files.length > 0">
+      <br *ngIf="selectedMessagekycCoApplicant.files && selectedMessagekycCoApplicant.files.length > 0">
+      <br *ngIf="selectedMessagekycCoApplicant.files && selectedMessagekycCoApplicant.files.length > 0">
+      <div *ngIf="selectedMessagekycCoApplicant.files && selectedMessagekycCoApplicant.files.length > 0"></div>
+      <!----kycpart coappliocant end-->
+
+      <!--pancard start-->
+      <span class="group-head">Pancard Details</span><br>
+      <div class="bggrey my-2">
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Applicant KYC</div>
+              <!-- <div class="astericColor">*</div> -->
+            </div>
+            <div class="fieldPadding">
+              <mat-select class="form-control widthWebKit" placeholder="Pancard">
+                <mat-option [value]="'Pancard'">
+                  <div>
+                    Pancard
+                  </div>
+                </mat-option>
+              </mat-select>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Pancard number</div>
+              <!-- <div class="astericColor">*</div> -->
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="panNumberCoApplicant" #panNumber
+                (change)="handlpanNumber(panNumber.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                placeholder="Enter Pancard number">
+                    </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+        </div>
+        <div class="fieldPadding">
+          <div class="">
+            <input #file type="file" accept="/*;capture=camera" style="display:none;" multiple
+              (change)="filesSelectedPanCoApplicant($event)">Click / Drop your files heree
+            <a class="btn btn-clean btn-icon btn-md" (click)="file.click()"><i class="material-icons">
+                attach_file</i></a>
+          </div>
+        </div>
+        <div>
+          <div class="img-section mgn-up-20" *ngIf="selectedMessageCoApplicantPan.files && selectedMessageCoApplicantPan.files.length > 0">
+            <ul class="galul">
+              <li *ngFor="let file of selectedMessageCoApplicantPan.files;let i = index ">
+                <div class="galimg_outer">
+                  <div class="gal_img">
+                    <img [src]="getImage(selectedMessageCoApplicantPan.base64[i], file)" *ngIf="selectedMessageCoApplicantPan.base64[i]">
+                  </div>
+                  <div class="gal_action" (click)="deleteTempImagePanCoApplicant(i)">
+                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <br *ngIf="selectedMessageCoApplicantPan.files && selectedMessageCoApplicantPan.files.length > 0">
+      <br *ngIf="selectedMessageCoApplicantPan.files && selectedMessageCoApplicantPan.files.length > 0">
+      <br *ngIf="selectedMessageCoApplicantPan.files && selectedMessageCoApplicantPan.files.length > 0">
+      <div *ngIf="selectedMessageCoApplicantPan.files && selectedMessageCoApplicantPan.files.length > 0"></div>
+      
+      <!--pancard end-->
+      
+      <span class="group-head">Details</span><br>
+      <div class="bggrey my-2">
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Telephone Type</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <mat-select  class="form-control widthWebKit" placeholder="" #telephoneType
+                formControlName="telephoneTypeCoApplicant">
+                <mat-option [value]="'Residence'">
+                  <div>
+                    Residence
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Company'">
+                  <div>
+                    Company
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Mobile'">
+                  <div>
+                    Mobile
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Permanent'">
+                  <div>
+                    Permanent
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Foreign'">
+                  <div>
+                    Foreign
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Untagged'">
+                  <div>
+                    Untagged
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Other'">
+                  <div>
+                    Other
+                  </div>
+                </mat-option>
+
+
+              </mat-select>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Telephone number</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="telephoneNumberCoApplicant" #telephoneNumber
+                (change)="handletelephoneNumber(telephoneNumber.value)" (keyup)="autoGrowTextZone($event)"
+                maxlength="10" placeholder="Enter number">
+                  </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="leadTitle">
+            <div>House Name</div>
+            <div class="astericColor">*</div>
+          </div>
+          <div class="fieldPadding">
+            <input (keyup)="resetErrors()" type="text" #permanentAddress (ngModelChange)="hamdlepermanentAddress(permanentAddress.value)"
+              placeholder="" class="form-control" formControlName="permanentAddressCoApplicant" autocomplete="off" />
+            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+              errorMsg="{{leadError}}">
+            </app-field-error-display>
+          </div>
+        </div>
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>City</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="permanentCityCoApplicant" #permanentCity (change)="handlepermanentCity(permanentCity.value)"
+                (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
+            </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>State</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div>
+              <div class="fieldPadding">
+              <mat-select class="form-control widthWebKit" placeholder="" #relationType
+              formControlName="permanentStateCoApplicant">
+              <mat-option [value]="'Andhra Pradesh'">
+                <div>
+                  Andhra Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Arunachal Pradesh'">
+                <div>
+                  Arunachal Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Assam'">
+                <div>
+                  Assam
+                </div>
+              </mat-option>
+              <mat-option [value]="'Bihar'">
+                <div>
+                  Bihar
+                </div>
+              </mat-option>
+              <mat-option [value]="'Chattisgarh'">
+                <div>
+                  Chattisgarh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Goa'">
+                <div>
+                  Goa
+                </div>
+              </mat-option>
+              <mat-option [value]="'Gujarat'">
+                <div>
+                  Gujarat
+                </div>
+              </mat-option>
+              <mat-option [value]="'Haryana'">
+                <div>
+                  Haryana
+                </div>
+              </mat-option>
+              <mat-option [value]="'Himachal Pradesh'">
+                <div>
+                  Himachal Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Jammu & Kashmir'">
+                <div>
+                  Jammu & Kashmir
+                </div>
+              </mat-option>
+              <mat-option [value]="'Jharkhand'">
+                <div>
+                  Jharkhand
+                </div>
+              </mat-option>
+              <mat-option [value]="'Karnataka'">
+                <div>
+                  Karnataka
+                </div>
+              </mat-option>
+              <mat-option [value]="'Kerala'">
+                <div>
+                  Kerala
+                </div>
+              </mat-option>
+              <mat-option [value]="'Madhya Pradesh'">
+                <div>
+                  Madhya Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Maharashtra'">
+                <div>
+                  Maharashtra
+                </div>
+              </mat-option>
+              <mat-option [value]="'Manipur'">
+                <div>
+                  Manipur
+                </div>
+              </mat-option>
+              <mat-option [value]="'Meghalaya'">
+                <div>
+                  Meghalaya
+                </div>
+              </mat-option>
+              <mat-option [value]="'Mizoram'">
+                <div>
+                  Mizoram
+                </div>
+              </mat-option>
+              <mat-option [value]="'Nagaland'">
+                <div>
+                  Nagaland
+                </div>
+              </mat-option>
+              <mat-option [value]="'Orissa'">
+                <div>
+                  Orissa
+                </div>
+              </mat-option>
+              <mat-option [value]="'Punjab'">
+                <div>
+                  Punjab
+                </div>
+              </mat-option>
+              <mat-option [value]="'Rajasthan'">
+                <div>
+                  Rajasthan
+                </div>
+              </mat-option>
+              <mat-option [value]="'Nagaland'">
+                <div>
+                  Nagaland
+                </div>
+              </mat-option>
+              <mat-option [value]="'Sikkim'">
+                <div>
+                  Sikkim
+                </div>
+              </mat-option>
+              <mat-option [value]="'Tamil Nadu'">
+                <div>
+                  Tamil Nadu
+                </div>
+              </mat-option>
+              <mat-option [value]="'Telangana'">
+                <div>
+                  Telangana
+                </div>
+              </mat-option>
+              <mat-option [value]="'Tripura'">
+                <div>
+                  Tripura
+                </div>
+              </mat-option>
+              <mat-option [value]="'Uttarakhand'">
+                <div>
+                  Uttarakhand
+                </div>
+              </mat-option>
+              <mat-option [value]="'Uttar Pradesh'">
+                <div>
+                  Uttar Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'West Bengal'">
+                <div>
+                  West Bengal
+                </div>
+              </mat-option>
+              <mat-option [value]="'Andaman & Nicobar'">
+                <div>
+                  Andaman & Nicobar
+                </div>
+              </mat-option>
+              <mat-option [value]="'Dadra and Nagar Haveli'">
+                <div>
+                  Dadra and Nagar Haveli
+                </div>
+              </mat-option>
+              <mat-option [value]="'Daman & Diu'">
+                <div>
+                  Daman & Diu
+                </div>
+              </mat-option>
+              <mat-option [value]="'Delhi'">
+                <div>
+                  Delhi
+                </div>
+              </mat-option>
+              <mat-option [value]="'Lakshadweep'">
+                <div>
+                  Lakshadweep
+                </div>
+              </mat-option>
+              <mat-option [value]="'Pondicherry'">
+                <div>
+                  Pondicherry
+                </div>
+              </mat-option>
+
+            </mat-select>
+          </div>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Pin code</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="permanentPinCodeCoApplicant" #permanentPinCode (change)="handlepermanentPinCode(permanentPinCode.value)"
+                (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
+            </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Date of birth</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+
+              <input (keyup)="resetErrors()" type="date" #dob (ngModelChange)="handledob(dob.value)" placeholder=""
+                class="form-control" formControlName="dobCoApplicant" autocomplete="off" />
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Relation name</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="relationNameCoApplicant" #relationName
+                (change)="handlerelationName(relationName.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                placeholder="">
+            </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Relationship Type</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <mat-select class="form-control widthWebKit" placeholder="" #relationType
+                formControlName="relationTypeCoApplicant">
+                <mat-option [value]="'Father'">
+                  <div>
+                    Father
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Husband'">
+                  <div>
+                    Husband
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Mother'">
+                  <div>
+                    Mother
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Son'">
+                  <div>
+                    Son
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Daughter'">
+                  <div>
+                    Daughter
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Wife'">
+                  <div>
+                    Wife
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Brother'">
+                  <div>
+                    Brother
+                  </div>
+                </mat-option>
+                <mat-option [value]="'MotherInlaw'">
+                  <div>
+                    MotherInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'FatherInlaw'">
+                  <div>
+                    FatherInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'DaughterInlaw'">
+                  <div>
+                    DaughterInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'SisterInLaw'">
+                  <div>
+                    SisterInLaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'BrotherInlaw'">
+                  <div>
+                    BrotherInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'SonInlaw'">
+                  <div>
+                    SonInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Other'">
+                  <div>
+                    Other
+                  </div>
+                </mat-option>
+
+              </mat-select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <span class="group-head">Co-Applicant Details</span><br> -->
+      <div class="bggrey my-2">
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Nominee Name</div>
+              <!-- <div class="astericColor">*</div> -->
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="nomineeNameCoApplicant" #nomineeName
+                (change)="handlenomineeName(nomineeName.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                placeholder="Enter name">
+                  </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Nominee Type</div>
+              <!-- <div class="astericColor">*</div> -->
+            </div>
+            <div class="fieldPadding">
+              <mat-select class="form-control widthWebKit" placeholder="" #nomineeType formControlName="nomineeTypeCoApplicant">
+                <mat-option [value]="'Father'">
+                  <div>
+                    Father
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Husband'">
+                  <div>
+                    Husband
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Mother'">
+                  <div>
+                    Mother
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Son'">
+                  <div>
+                    Son
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Daughter'">
+                  <div>
+                    Daughter
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Wife'">
+                  <div>
+                    Wife
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Brother'">
+                  <div>
+                    Brother
+                  </div>
+                </mat-option>
+                <mat-option [value]="'MotherInlaw'">
+                  <div>
+                    MotherInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'FatherInlaw'">
+                  <div>
+                    FatherInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'DaughterInlaw'">
+                  <div>
+                    DaughterInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'SisterInLaw'">
+                  <div>
+                    SisterInLaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'BrotherInlaw'">
+                  <div>
+                    BrotherInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'SonInlaw'">
+                  <div>
+                    SonInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Other'">
+                  <div>
+                    Other
+                  </div>
+                </mat-option>
+
+              </mat-select>
+            </div>
+          </div>
+        </div>
+       
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Address Type</div>
+              <!-- <div class="astericColor">*</div> -->
+            </div>
+            <div class="fieldPadding">
+              <mat-select class="form-control widthWebKit" placeholder="" #addressType
+                formControlName="addressTypeCoApplicant">
+                <mat-option [value]="'Residence'">
+                  <div>
+                    Residence
+                  </div>
+                </mat-option>
+               
+
+
+              </mat-select>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Nominee Address</div>
+              <!-- <div class="astericColor">*</div> -->
+            </div>
+            <div class="fieldPadding">
+              <input (keyup)="resetErrors()" type="text" #address
+                (ngModelChange)="hamdleaddress(address.value)" placeholder="" class="form-control"
+                formControlName="addressCoAplicant" autocomplete="off" />
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>District</div>
+              <!-- <div class="astericColor">*</div> -->
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="cityCoApplicant" #city
+                (change)="handlecity(city.value)" (keyup)="autoGrowTextZone($event)"
+                maxlength="1000" placeholder="">
+            </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>State</div>
+              <!-- <div class="astericColor">*</div> -->
+            </div>
+            <div class="fieldPadding">
+              <!-- <textarea rowa="10" class="form-control" formControlName="stateCoApplicant" #state
+                (change)="handlestate(state.value)" (keyup)="autoGrowTextZone($event)"
+                maxlength="1000" placeholder="">
+              </textarea> -->
+              <mat-select class="form-control widthWebKit" placeholder="" #relationType
+              formControlName="stateCoApplicant">
+              <mat-option [value]="'Andhra Pradesh'">
+                <div>
+                  Andhra Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Arunachal Pradesh'">
+                <div>
+                  Arunachal Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Assam'">
+                <div>
+                  Assam
+                </div>
+              </mat-option>
+              <mat-option [value]="'Bihar'">
+                <div>
+                  Bihar
+                </div>
+              </mat-option>
+              <mat-option [value]="'Chattisgarh'">
+                <div>
+                  Chattisgarh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Goa'">
+                <div>
+                  Goa
+                </div>
+              </mat-option>
+              <mat-option [value]="'Gujarat'">
+                <div>
+                  Gujarat
+                </div>
+              </mat-option>
+              <mat-option [value]="'Haryana'">
+                <div>
+                  Haryana
+                </div>
+              </mat-option>
+              <mat-option [value]="'Himachal Pradesh'">
+                <div>
+                  Himachal Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Jammu & Kashmir'">
+                <div>
+                  Jammu & Kashmir
+                </div>
+              </mat-option>
+              <mat-option [value]="'Jharkhand'">
+                <div>
+                  Jharkhand
+                </div>
+              </mat-option>
+              <mat-option [value]="'Karnataka'">
+                <div>
+                  Karnataka
+                </div>
+              </mat-option>
+              <mat-option [value]="'Kerala'">
+                <div>
+                  Kerala
+                </div>
+              </mat-option>
+              <mat-option [value]="'Madhya Pradesh'">
+                <div>
+                  Madhya Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Maharashtra'">
+                <div>
+                  Maharashtra
+                </div>
+              </mat-option>
+              <mat-option [value]="'Manipur'">
+                <div>
+                  Manipur
+                </div>
+              </mat-option>
+              <mat-option [value]="'Meghalaya'">
+                <div>
+                  Meghalaya
+                </div>
+              </mat-option>
+              <mat-option [value]="'Mizoram'">
+                <div>
+                  Mizoram
+                </div>
+              </mat-option>
+              <mat-option [value]="'Nagaland'">
+                <div>
+                  Nagaland
+                </div>
+              </mat-option>
+              <mat-option [value]="'Orissa'">
+                <div>
+                  Orissa
+                </div>
+              </mat-option>
+              <mat-option [value]="'Punjab'">
+                <div>
+                  Punjab
+                </div>
+              </mat-option>
+              <mat-option [value]="'Rajasthan'">
+                <div>
+                  Rajasthan
+                </div>
+              </mat-option>
+              <mat-option [value]="'Nagaland'">
+                <div>
+                  Nagaland
+                </div>
+              </mat-option>
+              <mat-option [value]="'Sikkim'">
+                <div>
+                  Sikkim
+                </div>
+              </mat-option>
+              <mat-option [value]="'Tamil Nadu'">
+                <div>
+                  Tamil Nadu
+                </div>
+              </mat-option>
+              <mat-option [value]="'Telangana'">
+                <div>
+                  Telangana
+                </div>
+              </mat-option>
+              <mat-option [value]="'Tripura'">
+                <div>
+                  Tripura
+                </div>
+              </mat-option>
+              <mat-option [value]="'Uttarakhand'">
+                <div>
+                  Uttarakhand
+                </div>
+              </mat-option>
+              <mat-option [value]="'Uttar Pradesh'">
+                <div>
+                  Uttar Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'West Bengal'">
+                <div>
+                  West Bengal
+                </div>
+              </mat-option>
+              <mat-option [value]="'Andaman & Nicobar'">
+                <div>
+                  Andaman & Nicobar
+                </div>
+              </mat-option>
+              <mat-option [value]="'Dadra and Nagar Haveli'">
+                <div>
+                  Dadra and Nagar Haveli
+                </div>
+              </mat-option>
+              <mat-option [value]="'Daman & Diu'">
+                <div>
+                  Daman & Diu
+                </div>
+              </mat-option>
+              <mat-option [value]="'Delhi'">
+                <div>
+                  Delhi
+                </div>
+              </mat-option>
+              <mat-option [value]="'Lakshadweep'">
+                <div>
+                  Lakshadweep
+                </div>
+              </mat-option>
+              <mat-option [value]="'Pondicherry'">
+                <div>
+                  Pondicherry
+                </div>
+              </mat-option>
+
+            </mat-select>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Pin code</div>
+              <!-- <div class="astericColor">*</div> -->
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="pinCoApplicant" #pin
+                (change)="handlepin(pin.value)" (keyup)="autoGrowTextZone($event)"
+                maxlength="1000" placeholder="">
+            </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!----co applicant end-->
+      <!----for second form btn start-->
+    
+     <!----for second form btn end-->
+    
+    </div>
   </div>
+  </form>
+
+    <div>
+      <button id="reset" type="button" class="btn btn-primary font-weight-bold coApplicantForm" (click)="addCoApplicant()">
+        <div class="applicantBtn">
+          <div>
+            Add Co-Applicant
+          </div>
+          <div>
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </div>
+        </div>
+      </button>
+     </div>
+
+      <div style="text-align: center;margin-top: 15px;">
+        <ng-container>
+          <div class=" mgn-bt-20 mgn-up-10" style="display: flex;
+          justify-content: center;
+          gap: 10px;
+      ">
+            <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()">Cancel
+            </button>
+            <!-- (click)="crifStatus()" -->
+            <button class="btn btn-primary font-weight-bold confirmBtn" type="button"(click)="createCoApplicant()">Save
+            </button>
+            <!-- <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #D7FEE9 !important;
+            border: 1.0803px solid #D7FFE9 !important;color: #38C984 !important;" (click)="ProceedStatus()">Proceed
+            </button> -->
+            <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #FADDDD !important;color:black !important" (click)="failedStatus()">Rejected
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <!---coapplicant end-->
+
+  </div>
+</div>
   <hr />
     <app-questionnaire [questionnaireList]="unreleased_question_arr" [source]="'proLeadafter'"
       [questionAnswers]="questionAnswers" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
@@ -5259,8 +7188,8 @@
         </div>
       </form>
 
-      <form [formGroup]="createCoApplicantForm" >
-        <div >
+      <form [formGroup]="createCoApplicantForm" *ngIf="leadDetails">
+        <div>
         <div *ngFor="let item of updateValueCoApplicant[0];let i = index;" >
          
          <div style="border-bottom: 1px solid #04A5FF;height: 30px;">
@@ -6028,6 +7957,1142 @@
       </div>
     </div>
     </form>
+
+    <form [formGroup]="createCoApplicantForm" *ngIf="isAnyCoapp">
+      <div  [formArrayName]="'formField'" >
+      <div *ngFor="let item of formControlArray;let i = index;" [formGroupName]="i">
+       
+       <div style="border-bottom: 1px solid #04A5FF;height: 30px;">
+        <div style="display: flex;justify-content: space-between;align-items: center;">
+          <div style="font-size: 15px!important;font-weight: bold!important" *ngIf="i===0">
+           Co-Applicant Name
+          </div>
+          <div style="font-size: 15px!important;font-weight: bold!important" *ngIf="i>0">
+            Co-Applicant {{i}} Name
+           </div>
+          <div>
+           <i (click)="deleteDynamicForm(i)" style="cursor:pointer" class="fa fa-trash" aria-hidden="true"></i>
+          </div>
+        </div>
+       </div>
+       <!--propiosed ammount start--->
+        <!-- <div>
+          <div class="leadTitle" style="margin-top: 10px;">
+            <div>Proposed Amount</div>
+          </div>
+          <div class="fieldPadding">
+            <input style="width:100% !important" (keyup)="resetErrors()" type="number" #proposedAmmounts
+               placeholder="" class="form-control" (ngModelChange)="proposedAmmount(proposedAmmounts.value)"
+              formControlName="proposedAmmount" autocomplete="off" min="0" />
+            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+              errorMsg="{{leadError}}">
+            </app-field-error-display>
+          </div>
+        </div> -->
+        <!--propiosed ammount end--->
+        <!--co applicant name phno start-->
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Name</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="nameCoApplicant" #nameCoApplicant
+                 (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                placeholder="Enter name">
+                    </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Phone Number</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <input  class="form-control" formControlName="phNOCoApplicant" #phNOCoApplicant
+                type="tel"
+                placeholder="Enter number"
+                    />
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div> 
+          </div>
+        </div>
+        <!--coapplicant name phno end-->
+
+        <span class="group-head">KYC Details</span><br>
+      <div class="bggrey my-2">
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Applicant KYC</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <mat-select class="form-control widthWebKit" placeholder="" #idTypes formControlName="idTypes1CoApplicant">
+                <mat-option [value]="'Passport'">
+                  <div>
+                    Passport
+                  </div>
+                </mat-option>
+                <mat-option [value]="'VoterID'">
+                  <div>
+                    VoterID
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Aadhaar'">
+                  <div>
+                    Aadhaar
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Others'">
+                  <div>
+                    Others
+                  </div>
+                </mat-option>
+                <mat-option [value]="'RationCard'">
+                  <div>
+                    RationCard
+                  </div>
+                </mat-option>
+                <mat-option [value]="'DrivingLicenseNo'">
+                  <div>
+                    DrivingLicenseNo
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Pan'">
+                  <div>
+                    Pan
+                  </div>
+                </mat-option>
+              </mat-select>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Number</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="idValue1CoApplicant" #idValue 
+                (change)="handleidValue(idValue.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                placeholder="Enter number">
+                    </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+         
+        </div>
+
+        <div class="fieldPadding">
+          <div class="">
+            <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
+              (change)="filesSelectedCoApplicant($event)">Click / Drop your files here
+            <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i class="material-icons">
+                attach_file</i></a>
+          </div>
+
+          <div>
+            <div class="img-section mgn-up-20" *ngIf="selectedMessageCoApplicant.files && selectedMessageCoApplicant.files.length > 0">
+              <ul class="galul">
+                <li *ngFor="let file of selectedMessageCoApplicant.files;let i = index ">
+                  <div class="galimg_outer">
+                    <div class="gal_img">
+                      <img [src]="getImage(selectedMessageCoApplicant.base64[i], file)" *ngIf="selectedMessageCoApplicant.base64[i]">
+                    </div>
+                    <div class="gal_action" (click)="deleteTempImageCoApplicant(i)">
+                      <i class="fa fa-times-circle" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <br *ngIf="selectedMessageCoApplicant.files && selectedMessageCoApplicant.files.length > 0">
+      <br *ngIf="selectedMessageCoApplicant.files && selectedMessageCoApplicant.files.length > 0">
+      <br *ngIf="selectedMessageCoApplicant.files && selectedMessageCoApplicant.files.length > 0">
+      <div *ngIf="selectedMessageCoApplicant.files && selectedMessageCoApplicant.files.length > 0"></div>
+      <!-- <span class="group-head">KYC Details</span><br> -->
+
+      <!------kyc part start coapplicant-->
+      <div class="bggrey my-2">
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Applicant KYC</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <mat-select class="form-control widthWebKit" placeholder="" #idTypes1 formControlName="idTypes2CoApplicant">
+                <mat-option [value]="'Passport'">
+                  <div>
+                    Passport
+                  </div>
+                </mat-option>
+                <mat-option [value]="'VoterID'">
+                  <div>
+                    VoterID
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Aadhaar'">
+                  <div>
+                    Aadhaar
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Others'">
+                  <div>
+                    Others
+                  </div>
+                </mat-option>
+                <mat-option [value]="'RationCard'">
+                  <div>
+                    RationCard
+                  </div>
+                </mat-option>
+                <mat-option [value]="'DrivingLicenseNo'">
+                  <div>
+                    DrivingLicenseNo
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Pan'">
+                  <div>
+                    Pan
+                  </div>
+                </mat-option>
+              </mat-select>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Number</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="idValue2CoApplicant" #idValue1
+                (change)="handleidValue1(idValue1.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                placeholder="Enter number">
+                    </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+         
+        </div>
+
+        <div class="fieldPadding">
+          <div class="">
+            <input #files type="file" accept="/*;capture=camera" style="display:none;" multiple
+              (change)="filesSelectedkycCoApplicant($event)">Click / Drop your files here
+            <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
+                attach_file</i></a>
+          </div>
+
+          <div>
+            <div class="img-section mgn-up-20" *ngIf="selectedMessagekycCoApplicant.files && selectedMessagekycCoApplicant.files.length > 0">
+              <ul class="galul">
+                <li *ngFor="let file of selectedMessagekycCoApplicant.files;let i = index ">
+                  <div class="galimg_outer">
+                    <div class="gal_img">
+                      <img [src]="getImage(selectedMessagekycCoApplicant.base64[i], file)" *ngIf="selectedMessagekycCoApplicant.base64[i]">
+                    </div>
+                    <div class="gal_action" (click)="deleteTempImagekycCoApplicant(i)">
+                      <i class="fa fa-times-circle" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br *ngIf="selectedMessagekycCoApplicant.files && selectedMessagekycCoApplicant.files.length > 0">
+      <br *ngIf="selectedMessagekycCoApplicant.files && selectedMessagekycCoApplicant.files.length > 0">
+      <br *ngIf="selectedMessagekycCoApplicant.files && selectedMessagekycCoApplicant.files.length > 0">
+      <div *ngIf="selectedMessagekycCoApplicant.files && selectedMessagekycCoApplicant.files.length > 0"></div>
+      <!----kycpart coappliocant end-->
+
+      <!--pancard start-->
+      <span class="group-head">Pancard Details</span><br>
+      <div class="bggrey my-2">
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Applicant KYC</div>
+              <!-- <div class="astericColor">*</div> -->
+            </div>
+            <div class="fieldPadding">
+              <mat-select class="form-control widthWebKit" placeholder="Pancard">
+                <mat-option [value]="'Pancard'">
+                  <div>
+                    Pancard
+                  </div>
+                </mat-option>
+              </mat-select>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Pancard number</div>
+              <!-- <div class="astericColor">*</div> -->
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="panNumberCoApplicant" #panNumber
+                (change)="handlpanNumber(panNumber.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                placeholder="Enter Pancard number">
+                    </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+        </div>
+        <div class="fieldPadding">
+          <div class="">
+            <input #file type="file" accept="/*;capture=camera" style="display:none;" multiple
+              (change)="filesSelectedPanCoApplicant($event)">Click / Drop your files heree
+            <a class="btn btn-clean btn-icon btn-md" (click)="file.click()"><i class="material-icons">
+                attach_file</i></a>
+          </div>
+        </div>
+        <div>
+          <div class="img-section mgn-up-20" *ngIf="selectedMessageCoApplicantPan.files && selectedMessageCoApplicantPan.files.length > 0">
+            <ul class="galul">
+              <li *ngFor="let file of selectedMessageCoApplicantPan.files;let i = index ">
+                <div class="galimg_outer">
+                  <div class="gal_img">
+                    <img [src]="getImage(selectedMessageCoApplicantPan.base64[i], file)" *ngIf="selectedMessageCoApplicantPan.base64[i]">
+                  </div>
+                  <div class="gal_action" (click)="deleteTempImagePanCoApplicant(i)">
+                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <br *ngIf="selectedMessageCoApplicantPan.files && selectedMessageCoApplicantPan.files.length > 0">
+      <br *ngIf="selectedMessageCoApplicantPan.files && selectedMessageCoApplicantPan.files.length > 0">
+      <br *ngIf="selectedMessageCoApplicantPan.files && selectedMessageCoApplicantPan.files.length > 0">
+      <div *ngIf="selectedMessageCoApplicantPan.files && selectedMessageCoApplicantPan.files.length > 0"></div>
+      
+      <!--pancard end-->
+      
+      <span class="group-head">Details</span><br>
+      <div class="bggrey my-2">
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Telephone Type</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <mat-select  class="form-control widthWebKit" placeholder="" #telephoneType
+                formControlName="telephoneTypeCoApplicant">
+                <mat-option [value]="'Residence'">
+                  <div>
+                    Residence
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Company'">
+                  <div>
+                    Company
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Mobile'">
+                  <div>
+                    Mobile
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Permanent'">
+                  <div>
+                    Permanent
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Foreign'">
+                  <div>
+                    Foreign
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Untagged'">
+                  <div>
+                    Untagged
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Other'">
+                  <div>
+                    Other
+                  </div>
+                </mat-option>
+
+
+              </mat-select>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Telephone number</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="telephoneNumberCoApplicant" #telephoneNumber
+                (change)="handletelephoneNumber(telephoneNumber.value)" (keyup)="autoGrowTextZone($event)"
+                maxlength="10" placeholder="Enter number">
+                  </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="leadTitle">
+            <div>House Name</div>
+            <div class="astericColor">*</div>
+          </div>
+          <div class="fieldPadding">
+            <input (keyup)="resetErrors()" type="text" #permanentAddress (ngModelChange)="hamdlepermanentAddress(permanentAddress.value)"
+              placeholder="" class="form-control" formControlName="permanentAddressCoApplicant" autocomplete="off" />
+            <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+              errorMsg="{{leadError}}">
+            </app-field-error-display>
+          </div>
+        </div>
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>City</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="permanentCityCoApplicant" #permanentCity (change)="handlepermanentCity(permanentCity.value)"
+                (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
+            </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>State</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div>
+              <div class="fieldPadding">
+              <mat-select class="form-control widthWebKit" placeholder="" #relationType
+              formControlName="permanentStateCoApplicant">
+              <mat-option [value]="'Andhra Pradesh'">
+                <div>
+                  Andhra Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Arunachal Pradesh'">
+                <div>
+                  Arunachal Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Assam'">
+                <div>
+                  Assam
+                </div>
+              </mat-option>
+              <mat-option [value]="'Bihar'">
+                <div>
+                  Bihar
+                </div>
+              </mat-option>
+              <mat-option [value]="'Chattisgarh'">
+                <div>
+                  Chattisgarh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Goa'">
+                <div>
+                  Goa
+                </div>
+              </mat-option>
+              <mat-option [value]="'Gujarat'">
+                <div>
+                  Gujarat
+                </div>
+              </mat-option>
+              <mat-option [value]="'Haryana'">
+                <div>
+                  Haryana
+                </div>
+              </mat-option>
+              <mat-option [value]="'Himachal Pradesh'">
+                <div>
+                  Himachal Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Jammu & Kashmir'">
+                <div>
+                  Jammu & Kashmir
+                </div>
+              </mat-option>
+              <mat-option [value]="'Jharkhand'">
+                <div>
+                  Jharkhand
+                </div>
+              </mat-option>
+              <mat-option [value]="'Karnataka'">
+                <div>
+                  Karnataka
+                </div>
+              </mat-option>
+              <mat-option [value]="'Kerala'">
+                <div>
+                  Kerala
+                </div>
+              </mat-option>
+              <mat-option [value]="'Madhya Pradesh'">
+                <div>
+                  Madhya Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Maharashtra'">
+                <div>
+                  Maharashtra
+                </div>
+              </mat-option>
+              <mat-option [value]="'Manipur'">
+                <div>
+                  Manipur
+                </div>
+              </mat-option>
+              <mat-option [value]="'Meghalaya'">
+                <div>
+                  Meghalaya
+                </div>
+              </mat-option>
+              <mat-option [value]="'Mizoram'">
+                <div>
+                  Mizoram
+                </div>
+              </mat-option>
+              <mat-option [value]="'Nagaland'">
+                <div>
+                  Nagaland
+                </div>
+              </mat-option>
+              <mat-option [value]="'Orissa'">
+                <div>
+                  Orissa
+                </div>
+              </mat-option>
+              <mat-option [value]="'Punjab'">
+                <div>
+                  Punjab
+                </div>
+              </mat-option>
+              <mat-option [value]="'Rajasthan'">
+                <div>
+                  Rajasthan
+                </div>
+              </mat-option>
+              <mat-option [value]="'Nagaland'">
+                <div>
+                  Nagaland
+                </div>
+              </mat-option>
+              <mat-option [value]="'Sikkim'">
+                <div>
+                  Sikkim
+                </div>
+              </mat-option>
+              <mat-option [value]="'Tamil Nadu'">
+                <div>
+                  Tamil Nadu
+                </div>
+              </mat-option>
+              <mat-option [value]="'Telangana'">
+                <div>
+                  Telangana
+                </div>
+              </mat-option>
+              <mat-option [value]="'Tripura'">
+                <div>
+                  Tripura
+                </div>
+              </mat-option>
+              <mat-option [value]="'Uttarakhand'">
+                <div>
+                  Uttarakhand
+                </div>
+              </mat-option>
+              <mat-option [value]="'Uttar Pradesh'">
+                <div>
+                  Uttar Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'West Bengal'">
+                <div>
+                  West Bengal
+                </div>
+              </mat-option>
+              <mat-option [value]="'Andaman & Nicobar'">
+                <div>
+                  Andaman & Nicobar
+                </div>
+              </mat-option>
+              <mat-option [value]="'Dadra and Nagar Haveli'">
+                <div>
+                  Dadra and Nagar Haveli
+                </div>
+              </mat-option>
+              <mat-option [value]="'Daman & Diu'">
+                <div>
+                  Daman & Diu
+                </div>
+              </mat-option>
+              <mat-option [value]="'Delhi'">
+                <div>
+                  Delhi
+                </div>
+              </mat-option>
+              <mat-option [value]="'Lakshadweep'">
+                <div>
+                  Lakshadweep
+                </div>
+              </mat-option>
+              <mat-option [value]="'Pondicherry'">
+                <div>
+                  Pondicherry
+                </div>
+              </mat-option>
+
+            </mat-select>
+          </div>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Pin code</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="permanentPinCodeCoApplicant" #permanentPinCode (change)="handlepermanentPinCode(permanentPinCode.value)"
+                (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
+            </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Date of birth</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+
+              <input (keyup)="resetErrors()" type="date" #dob (ngModelChange)="handledob(dob.value)" placeholder=""
+                class="form-control" formControlName="dobCoApplicant" autocomplete="off" />
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Relation name</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="relationNameCoApplicant" #relationName
+                (change)="handlerelationName(relationName.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                placeholder="">
+            </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Relationship Type</div>
+              <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+              <mat-select class="form-control widthWebKit" placeholder="" #relationType
+                formControlName="relationTypeCoApplicant">
+                <mat-option [value]="'Father'">
+                  <div>
+                    Father
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Husband'">
+                  <div>
+                    Husband
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Mother'">
+                  <div>
+                    Mother
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Son'">
+                  <div>
+                    Son
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Daughter'">
+                  <div>
+                    Daughter
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Wife'">
+                  <div>
+                    Wife
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Brother'">
+                  <div>
+                    Brother
+                  </div>
+                </mat-option>
+                <mat-option [value]="'MotherInlaw'">
+                  <div>
+                    MotherInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'FatherInlaw'">
+                  <div>
+                    FatherInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'DaughterInlaw'">
+                  <div>
+                    DaughterInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'SisterInLaw'">
+                  <div>
+                    SisterInLaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'BrotherInlaw'">
+                  <div>
+                    BrotherInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'SonInlaw'">
+                  <div>
+                    SonInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Other'">
+                  <div>
+                    Other
+                  </div>
+                </mat-option>
+
+              </mat-select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <span class="group-head">Co-Applicant Details</span><br> -->
+      <div class="bggrey my-2">
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Nominee Name</div>
+              <!-- <div class="astericColor">*</div> -->
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="nomineeNameCoApplicant" #nomineeName
+                (change)="handlenomineeName(nomineeName.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                placeholder="Enter name">
+                  </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Nominee Type</div>
+              <!-- <div class="astericColor">*</div> -->
+            </div>
+            <div class="fieldPadding">
+              <mat-select class="form-control widthWebKit" placeholder="" #nomineeType formControlName="nomineeTypeCoApplicant">
+                <mat-option [value]="'Father'">
+                  <div>
+                    Father
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Husband'">
+                  <div>
+                    Husband
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Mother'">
+                  <div>
+                    Mother
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Son'">
+                  <div>
+                    Son
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Daughter'">
+                  <div>
+                    Daughter
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Wife'">
+                  <div>
+                    Wife
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Brother'">
+                  <div>
+                    Brother
+                  </div>
+                </mat-option>
+                <mat-option [value]="'MotherInlaw'">
+                  <div>
+                    MotherInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'FatherInlaw'">
+                  <div>
+                    FatherInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'DaughterInlaw'">
+                  <div>
+                    DaughterInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'SisterInLaw'">
+                  <div>
+                    SisterInLaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'BrotherInlaw'">
+                  <div>
+                    BrotherInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'SonInlaw'">
+                  <div>
+                    SonInlaw
+                  </div>
+                </mat-option>
+                <mat-option [value]="'Other'">
+                  <div>
+                    Other
+                  </div>
+                </mat-option>
+
+              </mat-select>
+            </div>
+          </div>
+        </div>
+       
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Address Type</div>
+              <!-- <div class="astericColor">*</div> -->
+            </div>
+            <div class="fieldPadding">
+              <mat-select class="form-control widthWebKit" placeholder="" #addressType
+                formControlName="addressTypeCoApplicant">
+                <mat-option [value]="'Residence'">
+                  <div>
+                    Residence
+                  </div>
+                </mat-option>
+               
+
+
+              </mat-select>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Nominee Address</div>
+              <!-- <div class="astericColor">*</div> -->
+            </div>
+            <div class="fieldPadding">
+              <input (keyup)="resetErrors()" type="text" #address
+                (ngModelChange)="hamdleaddress(address.value)" placeholder="" class="form-control"
+                formControlName="addressCoAplicant" autocomplete="off" />
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>District</div>
+              <!-- <div class="astericColor">*</div> -->
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="cityCoApplicant" #city
+                (change)="handlecity(city.value)" (keyup)="autoGrowTextZone($event)"
+                maxlength="1000" placeholder="">
+            </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>State</div>
+              <!-- <div class="astericColor">*</div> -->
+            </div>
+            <div class="fieldPadding">
+              <!-- <textarea rowa="10" class="form-control" formControlName="stateCoApplicant" #state
+                (change)="handlestate(state.value)" (keyup)="autoGrowTextZone($event)"
+                maxlength="1000" placeholder="">
+              </textarea> -->
+              <mat-select class="form-control widthWebKit" placeholder="" #relationType
+              formControlName="stateCoApplicant">
+              <mat-option [value]="'Andhra Pradesh'">
+                <div>
+                  Andhra Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Arunachal Pradesh'">
+                <div>
+                  Arunachal Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Assam'">
+                <div>
+                  Assam
+                </div>
+              </mat-option>
+              <mat-option [value]="'Bihar'">
+                <div>
+                  Bihar
+                </div>
+              </mat-option>
+              <mat-option [value]="'Chattisgarh'">
+                <div>
+                  Chattisgarh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Goa'">
+                <div>
+                  Goa
+                </div>
+              </mat-option>
+              <mat-option [value]="'Gujarat'">
+                <div>
+                  Gujarat
+                </div>
+              </mat-option>
+              <mat-option [value]="'Haryana'">
+                <div>
+                  Haryana
+                </div>
+              </mat-option>
+              <mat-option [value]="'Himachal Pradesh'">
+                <div>
+                  Himachal Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Jammu & Kashmir'">
+                <div>
+                  Jammu & Kashmir
+                </div>
+              </mat-option>
+              <mat-option [value]="'Jharkhand'">
+                <div>
+                  Jharkhand
+                </div>
+              </mat-option>
+              <mat-option [value]="'Karnataka'">
+                <div>
+                  Karnataka
+                </div>
+              </mat-option>
+              <mat-option [value]="'Kerala'">
+                <div>
+                  Kerala
+                </div>
+              </mat-option>
+              <mat-option [value]="'Madhya Pradesh'">
+                <div>
+                  Madhya Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'Maharashtra'">
+                <div>
+                  Maharashtra
+                </div>
+              </mat-option>
+              <mat-option [value]="'Manipur'">
+                <div>
+                  Manipur
+                </div>
+              </mat-option>
+              <mat-option [value]="'Meghalaya'">
+                <div>
+                  Meghalaya
+                </div>
+              </mat-option>
+              <mat-option [value]="'Mizoram'">
+                <div>
+                  Mizoram
+                </div>
+              </mat-option>
+              <mat-option [value]="'Nagaland'">
+                <div>
+                  Nagaland
+                </div>
+              </mat-option>
+              <mat-option [value]="'Orissa'">
+                <div>
+                  Orissa
+                </div>
+              </mat-option>
+              <mat-option [value]="'Punjab'">
+                <div>
+                  Punjab
+                </div>
+              </mat-option>
+              <mat-option [value]="'Rajasthan'">
+                <div>
+                  Rajasthan
+                </div>
+              </mat-option>
+              <mat-option [value]="'Nagaland'">
+                <div>
+                  Nagaland
+                </div>
+              </mat-option>
+              <mat-option [value]="'Sikkim'">
+                <div>
+                  Sikkim
+                </div>
+              </mat-option>
+              <mat-option [value]="'Tamil Nadu'">
+                <div>
+                  Tamil Nadu
+                </div>
+              </mat-option>
+              <mat-option [value]="'Telangana'">
+                <div>
+                  Telangana
+                </div>
+              </mat-option>
+              <mat-option [value]="'Tripura'">
+                <div>
+                  Tripura
+                </div>
+              </mat-option>
+              <mat-option [value]="'Uttarakhand'">
+                <div>
+                  Uttarakhand
+                </div>
+              </mat-option>
+              <mat-option [value]="'Uttar Pradesh'">
+                <div>
+                  Uttar Pradesh
+                </div>
+              </mat-option>
+              <mat-option [value]="'West Bengal'">
+                <div>
+                  West Bengal
+                </div>
+              </mat-option>
+              <mat-option [value]="'Andaman & Nicobar'">
+                <div>
+                  Andaman & Nicobar
+                </div>
+              </mat-option>
+              <mat-option [value]="'Dadra and Nagar Haveli'">
+                <div>
+                  Dadra and Nagar Haveli
+                </div>
+              </mat-option>
+              <mat-option [value]="'Daman & Diu'">
+                <div>
+                  Daman & Diu
+                </div>
+              </mat-option>
+              <mat-option [value]="'Delhi'">
+                <div>
+                  Delhi
+                </div>
+              </mat-option>
+              <mat-option [value]="'Lakshadweep'">
+                <div>
+                  Lakshadweep
+                </div>
+              </mat-option>
+              <mat-option [value]="'Pondicherry'">
+                <div>
+                  Pondicherry
+                </div>
+              </mat-option>
+
+            </mat-select>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex;gap: 5px">
+          <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+              <div>Pin code</div>
+              <!-- <div class="astericColor">*</div> -->
+            </div>
+            <div class="fieldPadding">
+              <textarea rowa="10" class="form-control" formControlName="pinCoApplicant" #pin
+                (change)="handlepin(pin.value)" (keyup)="autoGrowTextZone($event)"
+                maxlength="1000" placeholder="">
+            </textarea>
+              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
+                errorMsg="{{leadError}}">
+              </app-field-error-display>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!----co applicant end-->
+      <!----for second form btn start-->
+    
+     <!----for second form btn end-->
+    
+    </div>
+  </div>
+  </form>
 
     <div>
       <button id="reset" type="button" class="btn btn-primary font-weight-bold coApplicantForm" (click)="addCoApplicant()">

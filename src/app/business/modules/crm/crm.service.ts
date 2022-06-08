@@ -555,8 +555,16 @@ export class CrmService {
   getproceedStatus(data){
     return this.servicemeta.httpPost('provider/customers/KYC/proceed', data);
   }
+  ProceedStatusToSales(leadUid){
+    const url='provider/lead/'+ leadUid + '/status/creditscoregenerated'
+      return this.servicemeta.httpPut(url);
+  }
   statusChangeTioProceed(){
     const url = 'provider/customers/KYC/proceed';
     return this.servicemeta.httpPost(url,null)
+  }
+  rejectedStatusLeadkyc(leadUid){
+    const url ='provider/lead/'+leadUid+'/status/rejected'
+      return this.servicemeta.httpPut(url)
   }
 }
