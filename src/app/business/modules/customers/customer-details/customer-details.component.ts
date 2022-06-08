@@ -194,7 +194,7 @@ export class CustomerDetailComponent implements OnInit {
                 }
             }
         );
-
+        localStorage.setItem('Detail', 'All');
     }
     // getCustomers(customerId) {
     //     const _this = this;

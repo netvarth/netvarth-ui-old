@@ -456,6 +456,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngOnInit() {
+    //this.getUsersList(this.check_in_filtered_list['teamId'])
     if (this.groupService.getitemFromGroupStorage('selected_type')) {
       this.selected_type = this.groupService.getitemFromGroupStorage('selected_type');
     } else {
@@ -1490,6 +1491,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                   _this.check_in_filtered_list = _this.getActiveAppointments(_this.futureAppointments, _this.statusAction);
                   _this.setFutureCounts(_this.futureAppointments);
                 }
+                  this.getUsersList(_this.check_in_filtered_list['teamId'])
+
               },
               () => {
               },
@@ -1500,6 +1503,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       _this.loading = false;
     }
+    
   }
   getHistoryAppointmentes() {
     const _this = this;

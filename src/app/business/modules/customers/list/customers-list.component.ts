@@ -123,6 +123,7 @@ export class CustomersListComponent implements OnInit {
   separateDialCode = true;
   smsdialogRef;
   grup_custmer;
+  allList:any;
   constructor(private provider_services: ProviderServices,
     private router: Router,
     public dialog: MatDialog,
@@ -136,6 +137,9 @@ export class CustomersListComponent implements OnInit {
     private snackbarService: SnackbarService,
     public common_datastorage: CommonDataStorageService,
     private dateTimeProcessor: DateTimeProcessor) {
+      // this.allList = localStorage.getItem('Detail');
+      // console.log("All List",this.allList)
+
     this.onResize();
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
     this.filtericonclearTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
@@ -161,8 +165,10 @@ export class CustomersListComponent implements OnInit {
     const screenWidth = window.innerWidth;
     if (screenWidth <= 893) {
       this.small_device_display = true;
+      this.allList = localStorage.getItem('Detail');
     } else {
       this.small_device_display = false;
+      localStorage.removeItem(this.allList);
     }
   }
   ngOnInit() {
@@ -980,8 +986,12 @@ export class CustomersListComponent implements OnInit {
       }
     });
   }
+  goBack(){
+    this.small_device_display = false;
+    this.hideGroups = false
+  }
   showCustomersSection() {
-    if (!this.groupLoaded && ((this.small_device_display && this.hideGroups) || !this.small_device_display || this.groups.length === 0)) {
+    if (!this.groupLoaded || ((this.small_device_display && this.hideGroups && this.allList && this.groupLoaded) || !this.small_device_display || this.groups.length === 0)) {
       return true;
     } else {
       return false;

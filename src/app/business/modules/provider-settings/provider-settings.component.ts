@@ -975,8 +975,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       case 'ordermanager':
         this.routerobj.navigate(['provider', 'settings', 'ordermanager']);
         break;
-        case 'taskmanager':
-          this.routerobj.navigate(['provider', 'settings', 'taskmanager']);
+        case 'lms':
+          this.routerobj.navigate(['provider', 'settings', 'lms']);
           break;
         case 'leadmanager':
           this.routerobj.navigate(['provider', 'settings', 'leadmanager']);

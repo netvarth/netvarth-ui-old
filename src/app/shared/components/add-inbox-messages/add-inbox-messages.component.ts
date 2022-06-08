@@ -30,6 +30,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   user_id = null;
   uuid = null;
   message = '';
+  smsGlobalStatus;
+  notificationStatus;
   source = null;
   message_label = null;
   api_loading = true;
@@ -180,6 +182,12 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit() {
+    this.provider_services.getSMSglobalSettings().subscribe(data => {
+      this.smsGlobalStatus = data['enableSms'];
+      this.notificationStatus = data['sendNotification'];
+      //this.smsGlobalStatusStr = (this.smsGlobalStatus) ? 'On' : 'Off';
+      console.log("Sms and Notify status :",this.smsGlobalStatus, this.notificationStatus )
+  });
     this.createForm();
     this.ynw_credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
     if (this.phone) {

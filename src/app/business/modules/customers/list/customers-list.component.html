@@ -42,7 +42,7 @@
     <div class="card" *ngIf="groupLoaded">
       <app-common-innerloading-spinner></app-common-innerloading-spinner>
     </div>
-    <div class="col-lg-4" *ngIf="!groupLoaded && groups.length > 0 && !hideGroups">
+    <div class="col-lg-4" *ngIf="!groupLoaded && groups.length > 0 && !hideGroups && !small_device_display">
       <div class="card card-custom card-stretch gutter-b pitch_blu">
         <div class="card grp_label mb-2 pointer-cursor" (click)="customerGroupSelection('all')"
           [ngClass]="{'highlights': selectedGroup == 'all'}">All {{customer_label | capitalizeFirst}}s</div>
@@ -78,9 +78,9 @@
       <div class="card card-custom card-stretch gutter-b no-padding">
         <div class="p-3">
           <h3 class="align-items-start flex-column">
-            <span class="fa fa-arrow-left pointer-cursor mgn-rt-10" 
-              (click)="hideGroups = false"></span>
-              <!-- *ngIf="selectedGroup == 'all' && groups.length > 0" -->
+            <span class="fa fa-arrow-left pointer-cursor mgn-rt-10" *ngIf="small_device_display"
+              (click)="goBack()"></span>
+              <!-- hideGroups = false *ngIf="selectedGroup == 'all' && groups.length > 0" -->
             <span class="card-label font-1 font-weight-bolder text-dark"
             *ngIf="selectedGroup == 'all' && groups.length > 0" >All
               {{customer_label | capitalizeFirst}}s</span>
