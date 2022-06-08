@@ -185,6 +185,7 @@ export class LeadsComponent implements OnInit {
   }
 
   ngOnInit() {
+   
     this.api_loading = false;
     if (this.groupService.getitemFromGroupStorage('tabIndex')) {
       this.selectedTab = this.groupService.getitemFromGroupStorage('tabIndex');
@@ -192,13 +193,13 @@ export class LeadsComponent implements OnInit {
       this.selectedTab = 1;
     }
     this.activated_route.queryParams.subscribe(qparams => {
-      console.log('qparams',qparams)
+      //console.log('qparams',qparams)
       if (qparams.type) {
           this.type = qparams.type;
       }
     });
     this.crmService.getTotalLead().subscribe((res:any)=>{
-        console.log(res);
+      //  console.log(res);
         this.totalLeadList = this.totalLeadList.filter(obj => !obj.originId);
         this.totalLeadList = res;
       })
@@ -229,7 +230,7 @@ export class LeadsComponent implements OnInit {
       this.headerName='Leads';
       this.getNewGenerateLead()
     }
-    console.log('this.type',this.type)
+   // console.log('this.type',this.type)
     this.getLeadStatusListData();
     this.getCategoryListData();
     this.getLeadTypeListData();
@@ -241,7 +242,7 @@ export class LeadsComponent implements OnInit {
     this.getLeadmaster()
     this.getAssignedLead()
     this.getSucessListLead()
-    this.getNewGenerateLead()
+   // this.getNewGenerateLead()
     this.getUnassignedLead()
     this.creditScoreGenerated()
     
@@ -257,7 +258,7 @@ export class LeadsComponent implements OnInit {
           this.crmService.creditScoreGenerated(filter)
             .subscribe(
               data => {
-                console.log('creditScore',data)
+               // console.log('creditScore',data)
                 this.creditScoreGeneratetdData = data;
                 // this.loadComplete1 = true;
               },
@@ -309,7 +310,7 @@ export class LeadsComponent implements OnInit {
           this.crmService.getDocUploadLead(filter)
             .subscribe(
               data => {
-                console.log('dataDocument',data)
+              //  console.log('dataDocument',data)
                 this.documentVerificationData = data;
                 // this.loadComplete1 = true;
               },
@@ -363,7 +364,7 @@ export class LeadsComponent implements OnInit {
           this.crmService.getSalesVerificationLead(filter)
             .subscribe(
               data => {
-                console.log('dataSales',data)
+              //  console.log('dataSales',data)
                 this.salesVerificationData = data;
                 // this.loadComplete1 = true;
               },
@@ -416,7 +417,7 @@ export class LeadsComponent implements OnInit {
           this.crmService.getCRIFKycUpdateLead(filter)
             .subscribe(
               data => {
-                console.log('dataKYC',data)
+               // console.log('dataKYC',data)
                 this.kycLeadData = data;
                 // this.loadComplete1 = true;
               },
@@ -461,26 +462,26 @@ export class LeadsComponent implements OnInit {
 
   getTotalLead(from_oninit = true) {
     let filter = this.setFilterForApi();
-    console.log("filter is : ",filter)
+    //console.log("filter is : ",filter)
     this.getTotalLeadCount(filter)
       .then(
         result => {
           if (from_oninit) { 
-            console.log("Lead Count : ",result)
+          //  console.log("Lead Count : ",result)
             this.totalCount = result; }
           filter = this.setPaginationFilter(filter);
           this.crmService.getTotalLead()
             .subscribe(
               data => {
                 this.totalLeadList = data;
-                console.log('totalLeadList',this.totalLeadList)
+             //   console.log('totalLeadList',this.totalLeadList)
                 // this.getUnassignedLead()
                 // this.getAssignedLead()
                 // this.getSucessListLead()
                 // this.getTransferredLead()
                 // this.getFailedLead()
                 // this.getInprogressLead()
-                // this.getNewGenerateLead()
+                 //this.getNewGenerateLead()
                 this.totalLeadList = this.totalLeadList.filter(obj => !obj.originId);
                 this.loadComplete = true;
               },
@@ -520,6 +521,18 @@ export class LeadsComponent implements OnInit {
     this.pagination.startpageval = pg;
     this.filter.page = pg;
     this.getTotalLead();
+   // this.getNewGenerateLead()
+   // this.doSearch()
+  }
+  handle_pageclick_new(pg){
+    console.log("page :",pg)
+    this.pagination.startpageval = pg;
+   // this.groupService.setitemToGroupStorage('tabIndex', pg);
+    this.filter.page = pg;
+   // this.getTotalLead();
+   this.getNewGenerateLead();
+    //this.doSearch()
+
   }
   getInprogressLead(from_oninit = true) {
     let filter = this.setFilterForApi();
@@ -638,14 +651,19 @@ export class LeadsComponent implements OnInit {
           this.crmService.getNewLead(filter)
             .subscribe(
               data => {
-                console.log('dataNew',data)
+                // this.pagination.startpageval = 1;
+                // this.pagination.totalCnt = 0
+              //  console.log('dataNew',data)
                 // this.UnassignedLeadList = data;
                 this.newLeadList=data;
-                this.loadComplete2 = true;
+                this.newLeadList = this.newLeadList.filter(obj => !obj.originId);
+
+               // this.pagination.totalCnt=this.newLeadList;
+                //this.loadComplete2 = true;
               },
               error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                this.loadComplete2 = true;
+                //this.loadComplete2 = true;
              
               }
             );
@@ -660,9 +678,9 @@ export class LeadsComponent implements OnInit {
       this.crmService.getNewLeadCount(filter)
         .subscribe(
           data => {
-            console.log('dataUnassigned',data)
+            console.log('New Data',data)
             this.pagination.totalCnt = data;
-            // this. = this.pagination.totalCnt;
+            this.completedCount = this.pagination.totalCnt;
             resolve(data);
           },
           error => {
@@ -689,11 +707,11 @@ export class LeadsComponent implements OnInit {
   getSucessListLead(){
     this.sucessListLead=[]
     this.totalLeadList.forEach((Success)=>{
-      console.log('Success',Success)
+     // console.log('Success',Success)
       if(Success.status.name ==='Success'){
         this.sucessListLead.push(Success)
       }
-      console.log('this.sucessListLead',this.sucessListLead)
+    //  console.log('this.sucessListLead',this.sucessListLead)
       
     })
   }
@@ -707,7 +725,7 @@ export class LeadsComponent implements OnInit {
         result => {
           if (from_oninit) { this.FailedCount = result; }
           filter = this.setPaginationFailedFilter(filter);
-          console.log("Failed List data 1")
+         // console.log("Failed List data 1")
           this.crmService.getFailedLead(filter)
             .subscribe(
               data => {
@@ -743,8 +761,12 @@ export class LeadsComponent implements OnInit {
   }
 
   setPaginationCompletedFilter(api_filter) {
+    if (this.completedCount <= 10) {
+      this.pagination.startpageval = 1;
+    }
     api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
     api_filter['count'] = this.filter.page_count;
+    console.log("pagination filter :",this.filter.page_count)
     return api_filter;
   }
 
@@ -756,7 +778,7 @@ export class LeadsComponent implements OnInit {
         result => {
           if (from_oninit) { this.TransferredCount = result; }
           filter = this.setPaginationTransferredFilter(filter);
-          console.log("Transferred List data 1")
+         // console.log("Transferred List data 1")
           this.crmService.getTransferredLead(filter)
             .subscribe(
               data => {
@@ -870,7 +892,7 @@ export class LeadsComponent implements OnInit {
     this.pagination.startpageval = pg;
     this.filter.page = pg;
     // this.getUnassignedLead();
-    this.getNewGenerateLead()
+    //this.getNewGenerateLead()
   }
   handle_pageclick_ASsigned(pg){
     this.pagination.startpageval = pg;
@@ -901,6 +923,7 @@ export class LeadsComponent implements OnInit {
     this.filter_sidebar = false;
   }
   tabChange(event) {
+    console.log('event.index + 1',event.index + 1)
     this.setTabSelection(event.index + 1);
   }
   setTabSelection(type) {
@@ -909,6 +932,7 @@ export class LeadsComponent implements OnInit {
     switch (type) {
       case 1: {
         this.getTotalLead();
+       
         break;
       }
       case 2: {
@@ -928,8 +952,22 @@ export class LeadsComponent implements OnInit {
         this.getTransferredLead();
         break;
       }
+      case 6: {
+        this.getNewGenerateLead();
+        break;
+      }
+      
+      case 7: {
+        this.getKycUpdateLead();
+        break;
+      }
+      case 8: {
+        this.getSalesVerificationLead();
+        break;
+      }
     }
   }
+ 
 
   // viewLead(leadUid,leadData:any) {
   //   this.crmService.leadToCraeteViaServiceData = leadData;
@@ -937,8 +975,8 @@ export class LeadsComponent implements OnInit {
 
   // }
   viewLead(leadUid,leadData:any) {
-    console.log('leadUid',leadUid)
-    console.log('leadData',leadData)
+  //  console.log('leadUid',leadUid)
+  //  console.log('leadData',leadData)
     this.crmService.leadToCraeteViaServiceData = leadData;
     this.router.navigate(['/provider/viewleadqnr/' + leadUid]);
 
@@ -949,14 +987,14 @@ export class LeadsComponent implements OnInit {
   }
   getLeadmaster(){
     this.crmService.getLeadMasterList().subscribe((response)=>{
-      console.log('LeadMasterList :',response);
+     // console.log('LeadMasterList :',response);
       this.leadMasterList.push(response)
     })
   }
 
   createLead(createText: any) {
       if(this.leadMasterList.length>0){
-      console.log('........')
+    //  console.log('........')
       // this.router.navigate(['provider','lead', 'leadtemplate'])
       if(this.leadMasterList[0].length>0){
         const navigationExtras: NavigationExtras = {
@@ -995,7 +1033,7 @@ export class LeadsComponent implements OnInit {
       // }
       // })
     }else{
-      console.log('kkkk')
+     // console.log('kkkk')
       this.crmService.leadActivityName = 'CreteLeadMaster'
       this.router.navigate(['provider', 'lead', 'create-lead'])
     }
@@ -1058,7 +1096,10 @@ export class LeadsComponent implements OnInit {
     if (this.filter.title !== '') {
       api_filter['title-eq'] = this.filter.title;
     }
-    console.log(api_filter)
+    if(this.filter.page_count !== ''){
+      api_filter
+    }
+    //console.log(api_filter)
     return api_filter;
   }
   setFilterDataCheckbox(type, value?, event?) {
@@ -1096,10 +1137,10 @@ export class LeadsComponent implements OnInit {
     this.getTotalLead();
   }
   handleLeadStatus(statusValue:any,statusText,statusFilter){
-    console.log('statusValue',statusValue);
-    console.log('statusValue',statusText);
-    console.log('statusFilter',statusFilter)
-    console.log('this.leadStatusList',this.leadStatusList)
+   // console.log('statusValue',statusValue);
+   // console.log('statusValue',statusText);
+   // console.log('statusFilter',statusFilter)
+   // console.log('this.leadStatusList',this.leadStatusList)
     if(statusValue===6){
       this.bUnassigned=true;
       this.bTransferredLead=false
@@ -1184,7 +1225,7 @@ export class LeadsComponent implements OnInit {
   
   getLeadStatusListData(){
     this.crmService.getLeadStatus().subscribe((leadStatus:any)=>{
-      console.log('leadStatus',leadStatus);
+     // console.log('leadStatus',leadStatus);
       this.leadStatusList.push(
         {
         id:0,   name:'Total Lead',image:'./assets/images/crmImages/total.png',
@@ -1242,7 +1283,7 @@ export class LeadsComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe((res)=>{
-      console.log('resssssssssCom',res);
+    //  console.log('resssssssssCom',res);
        if(res==='Completed'){
         this.getCompletedLead()
         // this.completedCount=this.completedCount+1
@@ -1251,7 +1292,7 @@ export class LeadsComponent implements OnInit {
   
   }
   openDialogStatusChange(leadData:any){
-    console.log('openDialogStatusChange',leadData)
+   // console.log('openDialogStatusChange',leadData)
     const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
       width:'100%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
@@ -1262,7 +1303,7 @@ export class LeadsComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe((res:any)=>{
-      console.log('resssssssss',res);
+     // console.log('resssssssss',res);
       // this.getCompletedLead();
       if(res==='In Progress'){
         this.ngOnInit()   

@@ -57,15 +57,38 @@
                         <div>
                             <aside class="filterSidebar" *ngIf="filter_sidebar">
                                 <section class="sidebar sidebar-bottom" style="overflow:auto;height:568px">
-                                    <div class="filterClosebtn">
-                                        <i class="icon-filter-one-op ng-star-inserted pointer-cursor "
+                                    <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied" style="padding: 15px;background: #d8e2f3;height: 44px;">
+                                        <span  style=" color: #374957 !important;font-size: 14px !important;">FILTERS</span>
+                                        <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right" (click)="hideFilterSidebar()"
+                                          [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                                      </div>
+                                    <div class="" *ngIf="filterapplied === true" style="
+                                    top: 44px ;
+                                    right: 0 ;
+                                    width: 100% ;
+                                    height: 50px ;
+                                    display: flex ;
+                                    align-items: center;  
+                                    background-color: white ;
+                                    border-bottom: 1px solid #e3e9ed ;
+                                    box-shadow: 0px 2px 20px -10px #bbb ">
+                                        <!-- <i class="icon-filter-one-op ng-star-inserted pointer-cursor "
                                             (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
-                                            [matTooltip]="'Close filter window'"></i>
-                                        <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
+                                            [matTooltip]="'Close filter window'"></i> -->
+                                        <!-- <span *ngIf="filterapplied === true" class="clearFilter" (click)="clearFilter()"
                                             [matTooltipClass]="tooltipcls" [matTooltip]="'Reset filter'"> Clear
-                                            All</span>
+                                            All</span> -->
+                                            <!-- <div class="filter-footer" *ngIf="filterapplied === true"> -->
+                                                <button class="reset-btn" style="margin: 8px;height: 40px;border: none;border-radius: 3px;
+                                                 background: #f3f6f9;color: #374957;font-weight: 700;font-size: 14px;line-height: 1; width: 45%" (click)="clearFilter()">
+                                                  <i class="fa fa-undo"></i>&nbsp;Reset
+                                                </button>
+                                                <!-- <button class="btn apply-btn" (click)="doSearch()">
+                                                  <i class="fa fa-check"></i>&nbsp;Apply
+                                                </button> -->
+                                              <!-- </div> -->
                                     </div>
-                                    <ul class="sidebar-menu">
+                                    <ul class="sidebar-menu" style="top: 50px">
                                         <li>
                                             <div>
                                                 <label class="filterHeaders">{{invoice_status_cap}}</label>
@@ -85,6 +108,7 @@
                         </li>
                         </ul>
 </section>
+
 </aside>
 
 </div>
