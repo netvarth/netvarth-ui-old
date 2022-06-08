@@ -34,25 +34,6 @@
   <hr />
     <div class="inputwithImg">
       <form [formGroup]="createLeadForm">
-        <!-- <span class="group-head">Add Details</span><br>
-        <div class="bggrey my-2"> -->
-        <!-- <div>
-            <div class="leadTitle">
-              <div>Proposed Amount</div>
-              <div class="astericColor">*</div>
-            </div>
-            <div class="fieldPadding">
-              <input (keyup)="resetErrors()" type="text" #leadTitle (ngModelChange)="hamdleLeadTitle(leadTitle.value)"
-                placeholder="Enter amount" class="form-control" formControlName="leadTitle" autocomplete="off"
-                [value]="leadTitle" />
-              <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
-                errorMsg="{{leadError}}">
-              </app-field-error-display>
-            </div>
-          </div> -->
-
-
-        <!-- </div> -->
         <span class="group-head">KYC Details</span><br>
         <div class="bggrey my-2">
           <div style="display: flex;gap: 5px">
@@ -2203,9 +2184,9 @@
                       }" [class.spinner]="api_loading" [class.disabled]="api_loading"
             [class.spinner-center]="api_loading" type="button" (click)="saveCreateLead()">Save
           </button>
-          <!-- <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #D7FEE9 !important;
-          border: 1.0803px solid #D7FFE9 !important;color: #38C984 !important;" (click)="ProceedStatus()">Proceed
-          </button> -->
+          <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #D7FEE9 !important;
+          border: 1.0803px solid #D7FFE9 !important;color: #38C984 !important;" (click)="ProceedStatussHOWkYC(custId)">Proceed
+          </button>
           <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #FADDDD !important;color: #D50000 !important" (click)="failedStatus()">Reject
           </button>
         </div>

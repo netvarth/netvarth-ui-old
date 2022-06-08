@@ -371,8 +371,8 @@ export class ViewLeadQnrComponent implements OnInit {
     });
     this.api_loading = false;
     this.createLeadForm = this.createLeadFB.group({
-      idTypes: [null],
-      idTypes1: [null],
+      idTypes: ['Passport'],
+      idTypes1: ['Aadhaar'],
       idValue: [null],
       idValue1: [null],
       panNumber: [null],
@@ -385,7 +385,7 @@ export class ViewLeadQnrComponent implements OnInit {
       pin: [null],
       dob: [null],
       relationName: [null],
-      relationType: [null],
+      relationType: ['Father'],
       nomineeName: [null],
       nomineeType: [null],
       permanentAddress: [null],
@@ -417,8 +417,6 @@ export class ViewLeadQnrComponent implements OnInit {
     this.createCoApplicantForm=this.createLeadFB.group({
       nameCoApplicant:[null],
       phNOCoApplicant:[null],
-      idTypesCoApplicant:[null],
-      idValueCoApplicant:[null],
       panNumberCoApplicant:[null],
       telephoneTypeCoApplicant:[null],
       telephoneNumberCoApplicant:[null],
@@ -428,7 +426,7 @@ export class ViewLeadQnrComponent implements OnInit {
       pinCoApplicant:[null],
       dobCoApplicant:[null],
       relationNameCoApplicant:[null],
-      relationTypeCoApplicant:[null],
+      relationTypeCoApplicant:['Father'],
       nomineeNameCoApplicant:[null],
       nomineeTypeCoApplicant:[null],
       permanentAddressCoApplicant:[null],
@@ -436,9 +434,9 @@ export class ViewLeadQnrComponent implements OnInit {
       permanentStateCoApplicant:[null],
       permanentPinCodeCoApplicant:[null],
       idValue1CoApplicant:[null],
-      idTypes1CoApplicant:[null],
+      idTypes1CoApplicant:['Passport'],
       addressTypeCoApplicant:[null],
-      idTypes2CoApplicant:[null],
+      idTypes2CoApplicant:['Aadhaar'],
       idValue2CoApplicant:[null],
 
     })
@@ -1035,90 +1033,183 @@ export class ViewLeadQnrComponent implements OnInit {
 
       ];
     }
-    const createLeadData: any = {
-      "originFrom": "Lead",
-      "originUid": this.leadkid,
-      "customer": this.custId,
-      "customerName": this.custname,
-      "dob": this.createLeadForm.controls.dob.value,
-      "telephone": [
-        {
-          "telephoneType": this.createLeadForm.controls.telephoneType.value,
-          "telephoneNumber": this.createLeadForm.controls.telephoneNumber.value
-        }
-      ],
-      "relationType": this.createLeadForm.controls.relationType.value,
-      "relationName": this.createLeadForm.controls.relationName.value,
-      "validationIds": [
-        {
-          "idTypes": this.createLeadForm.controls.idTypes.value,
-          "idValue": this.createLeadForm.controls.idValue.value,
-          "attachments": this.fileData
-        },
-        {
-          "idTypes": this.createLeadForm.controls.idTypes1.value,
-          "idValue": this.createLeadForm.controls.idValue1.value,
-          "attachments": this.fileData
-        }
-      ],
-      "permanentAddress": this.createLeadForm.controls.permanentAddress.value,
-      "permanentCity": this.createLeadForm.controls.permanentCity.value,
-      "permanentState": this.createLeadForm.controls.permanentState.value,
-      "permanentPinCode": this.createLeadForm.controls.permanentPinCode.value,
-      "nomineeType": this.createLeadForm.controls.nomineeType.value,
-      "nomineeName": this.createLeadForm.controls.nomineeName.value,
-      "address": [
-        {
-          "addressType": this.createLeadForm.controls.addressType.value,
-          "address": this.createLeadForm.controls.address.value,
-          "city": this.createLeadForm.controls.city.value,
-          "state": this.createLeadForm.controls.state.value,
-          "pin": this.createLeadForm.controls.pin.value
-        }
-      ],
-      "panNumber": this.createLeadForm.controls.panNumber.value,
-      "panAttachments": this.fileDataPan,
-      // "parentid": {
-      //   "id": ''
-      // },
-      "parent": true
-    }
-    this.coApplicantListFormSubmit.push(createLeadData)
-    if(this.isAnyCoapp){
-      this.submitCoApplicant()
-    }
-    console.log('coApplicantListFormSubmit',this.coApplicantListFormSubmit)
-    console.log('createLeadData',createLeadData)
-    this.crmService.addkyc(this.coApplicantListFormSubmit).subscribe((response:any) => {
-      this.kycresponse = response;
-      console.log('response',response)
-      this.uploadAudioVideo(this.kycresponse, 'kyc');
-      this.addKycResponse= response;
-      if(response=[]){
-        // this.afterCreatetKycproceed=true;
-        setTimeout(() => {
-          this.api_loading = true;
-          const navigationExtras: NavigationExtras = {
-            queryParams: {
-              type: 'NEWLEAD'
-            }
+   
+    if( this.createLeadForm.controls.idTypes1.value='Aadhaar'){
+      console.log(' this.createLeadForm.controls.idTypes1.value', this.createLeadForm.controls.idTypes1.value)
+      const createLeadData: any = {
+        "originFrom": "Lead",
+        "originUid": this.leadkid,
+        "customer": this.custId,
+        "customerName": this.custname,
+        "dob": this.createLeadForm.controls.dob.value,
+        "telephone": [
+          {
+            "telephoneType": this.createLeadForm.controls.telephoneType.value,
+            "telephoneNumber": this.createLeadForm.controls.telephoneNumber.value
           }
-           this.router.navigate(['provider', 'lead'], navigationExtras);
-          // this.createLeadForm.reset();
-          // this.router.navigate(['/provider/viewleadqnr/' +  this.leadkid]);
-          // this.router.navigate(['/provider', 'crm']);
-        
-        }, projectConstants.TIMEOUT_DELAY);
-        // this.showupdateKycProceed = true;
+        ],
+        "relationType": this.createLeadForm.controls.relationType.value,
+        "relationName": this.createLeadForm.controls.relationName.value,
+        "validationIds": [
+          {
+            "idTypes": this.createLeadForm.controls.idTypes.value,
+            "idValue": this.createLeadForm.controls.idValue.value,
+            "attachments": this.fileData
+          },
+          {
+            "idTypes": 'UID',
+            "idValue": this.createLeadForm.controls.idValue1.value,
+            "attachments": this.fileData
+          }
+        ],
+        "permanentAddress": this.createLeadForm.controls.permanentAddress.value,
+        "permanentCity": this.createLeadForm.controls.permanentCity.value,
+        "permanentState": this.createLeadForm.controls.permanentState.value,
+        "permanentPinCode": this.createLeadForm.controls.permanentPinCode.value,
+        "nomineeType": this.createLeadForm.controls.nomineeType.value,
+        "nomineeName": this.createLeadForm.controls.nomineeName.value,
+        "address": [
+          {
+            "addressType": this.createLeadForm.controls.addressType.value,
+            "address": this.createLeadForm.controls.address.value,
+            "city": this.createLeadForm.controls.city.value,
+            "state": this.createLeadForm.controls.state.value,
+            "pin": this.createLeadForm.controls.pin.value
+          }
+        ],
+        "panNumber": this.createLeadForm.controls.panNumber.value,
+        "panAttachments": this.fileDataPan,
+        // "parentid": {
+        //   "id": ''
+        // },
+        "parent": true
       }
-      
-      
-    },
-      (error) => {
-        setTimeout(() => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }, projectConstants.TIMEOUT_DELAY);
-      })
+      this.coApplicantListFormSubmit.push(createLeadData)
+      if(this.isAnyCoapp){
+        this.submitCoApplicant()
+      }
+      console.log('coApplicantListFormSubmit',this.coApplicantListFormSubmit)
+      console.log('createLeadData',createLeadData)
+      console.log(' this.createLeadForm.controls.idTypes1.value', this.createLeadForm.controls.idTypes1.value)
+      this.crmService.addkyc(this.coApplicantListFormSubmit).subscribe((response:any) => {
+        this.kycresponse = response;
+        console.log('response',response)
+        this.uploadAudioVideo(this.kycresponse, 'kyc');
+        this.addKycResponse= response;
+        if(response=[]){
+          // this.afterCreatetKycproceed=true;
+          setTimeout(() => {
+            this.api_loading = true;
+            const navigationExtras: NavigationExtras = {
+              queryParams: {
+                type: 'NEWLEAD'
+              }
+            }
+             this.router.navigate(['provider', 'lead'], navigationExtras);
+            // this.createLeadForm.reset();
+            // this.router.navigate(['/provider/viewleadqnr/' +  this.leadkid]);
+            // this.router.navigate(['/provider', 'crm']);
+          
+          }, projectConstants.TIMEOUT_DELAY);
+          // this.showupdateKycProceed = true;
+        }
+        
+        
+      },
+        (error) => {
+          setTimeout(() => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }, projectConstants.TIMEOUT_DELAY);
+        })
+    }
+    else{
+      const createLeadData: any = {
+        "originFrom": "Lead",
+        "originUid": this.leadkid,
+        "customer": this.custId,
+        "customerName": this.custname,
+        "dob": this.createLeadForm.controls.dob.value,
+        "telephone": [
+          {
+            "telephoneType": this.createLeadForm.controls.telephoneType.value,
+            "telephoneNumber": this.createLeadForm.controls.telephoneNumber.value
+          }
+        ],
+        "relationType": this.createLeadForm.controls.relationType.value,
+        "relationName": this.createLeadForm.controls.relationName.value,
+        "validationIds": [
+          {
+            "idTypes": this.createLeadForm.controls.idTypes.value,
+            "idValue": this.createLeadForm.controls.idValue.value,
+            "attachments": this.fileData
+          },
+          {
+            "idTypes": this.createLeadForm.controls.idTypes1.value,
+            "idValue": this.createLeadForm.controls.idValue1.value,
+            "attachments": this.fileData
+          }
+        ],
+        "permanentAddress": this.createLeadForm.controls.permanentAddress.value,
+        "permanentCity": this.createLeadForm.controls.permanentCity.value,
+        "permanentState": this.createLeadForm.controls.permanentState.value,
+        "permanentPinCode": this.createLeadForm.controls.permanentPinCode.value,
+        "nomineeType": this.createLeadForm.controls.nomineeType.value,
+        "nomineeName": this.createLeadForm.controls.nomineeName.value,
+        "address": [
+          {
+            "addressType": this.createLeadForm.controls.addressType.value,
+            "address": this.createLeadForm.controls.address.value,
+            "city": this.createLeadForm.controls.city.value,
+            "state": this.createLeadForm.controls.state.value,
+            "pin": this.createLeadForm.controls.pin.value
+          }
+        ],
+        "panNumber": this.createLeadForm.controls.panNumber.value,
+        "panAttachments": this.fileDataPan,
+        // "parentid": {
+        //   "id": ''
+        // },
+        "parent": true
+      }
+      this.coApplicantListFormSubmit.push(createLeadData)
+      if(this.isAnyCoapp){
+        this.submitCoApplicant()
+      }
+      console.log('coApplicantListFormSubmit',this.coApplicantListFormSubmit)
+      console.log('createLeadData',createLeadData)
+      console.log(' this.createLeadForm.controls.idTypes1.value', this.createLeadForm.controls.idTypes1.value)
+      this.crmService.addkyc(this.coApplicantListFormSubmit).subscribe((response:any) => {
+        this.kycresponse = response;
+        console.log('response',response)
+        this.uploadAudioVideo(this.kycresponse, 'kyc');
+        this.addKycResponse= response;
+        if(response=[]){
+          // this.afterCreatetKycproceed=true;
+          setTimeout(() => {
+            this.api_loading = true;
+            const navigationExtras: NavigationExtras = {
+              queryParams: {
+                type: 'NEWLEAD'
+              }
+            }
+             this.router.navigate(['provider', 'lead'], navigationExtras);
+            // this.createLeadForm.reset();
+            // this.router.navigate(['/provider/viewleadqnr/' +  this.leadkid]);
+            // this.router.navigate(['/provider', 'crm']);
+          
+          }, projectConstants.TIMEOUT_DELAY);
+          // this.showupdateKycProceed = true;
+        }
+        
+        
+      },
+        (error) => {
+          setTimeout(() => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }, projectConstants.TIMEOUT_DELAY);
+        })
+    }
+    
   }
   ProceedStatusToSales(){
     this.crmService.ProceedStatusToSales( this.leadDetails.uid).subscribe((response) => {
@@ -1167,31 +1258,29 @@ export class ViewLeadQnrComponent implements OnInit {
     const arrLength:number=1
     for (let i = 0; i < arrLength; i++) {
       this.formControlArray.push({ 
-      nameCoApplicant:[null],
-      phNOCoApplicant:[null],
-      idTypesCoApplicant:[null],
-      idValueCoApplicant:[null],
-      panNumberCoApplicant:[null],
-      telephoneTypeCoApplicant:[null],
-      telephoneNumberCoApplicant:[null],
-      addressCoAplicant:[null],
-      cityCoApplicant:[null],
-      stateCoApplicant:[null],
-      pinCoApplicant:[null],
-      dobCoApplicant:[null],
-      relationNameCoApplicant:[null],
-      relationTypeCoApplicant:[null],
-      nomineeNameCoApplicant:[null],
-      nomineeTypeCoApplicant:[null],
-      permanentAddressCoApplicant:[null],
-      permanentCityCoApplicant:[null],
-      permanentStateCoApplicant:[null],
-      permanentPinCodeCoApplicant:[null],
-      idValue1CoApplicant:[null],
-      idTypes1CoApplicant:[null],
-      addressTypeCoApplicant:[null],
-      idTypes2CoApplicant:[null],
-      idValue2CoApplicant:[null],
+        nameCoApplicant:[null],
+        phNOCoApplicant:[null],
+        panNumberCoApplicant:[null],
+        telephoneTypeCoApplicant:[null],
+        telephoneNumberCoApplicant:[null],
+        addressCoAplicant:[null],
+        cityCoApplicant:[null],
+        stateCoApplicant:[null],
+        pinCoApplicant:[null],
+        dobCoApplicant:[null],
+        relationNameCoApplicant:[null],
+        relationTypeCoApplicant:['Father'],
+        nomineeNameCoApplicant:[null],
+        nomineeTypeCoApplicant:[null],
+        permanentAddressCoApplicant:[null],
+        permanentCityCoApplicant:[null],
+        permanentStateCoApplicant:[null],
+        permanentPinCodeCoApplicant:[null],
+        idValue1CoApplicant:[null],
+        idTypes1CoApplicant:['Passport'],
+        addressTypeCoApplicant:[null],
+        idTypes2CoApplicant:['Aadhaar'],
+        idValue2CoApplicant:[null],
 
       });
     }
@@ -1204,60 +1293,172 @@ export class ViewLeadQnrComponent implements OnInit {
     // console.log('proposedAmmount',this.coApplicantSubmitList[0].proposedAmmount)
     this.coApplicantSubmitList.forEach((item:any)=>{
       console.log(item)
-      const createKycCoApplicantData: any = {
-        // "proposedAmmount":item.proposedAmmount,
-        "originFrom": "Lead",
-        "originUid": this.leadkid,
-        // "customer": this.custId,
-        "customerName": item.nameCoApplicant,
-        "permanentPhoneNumber": item.phNOCoApplicant,
-        "dob": item.dobCoApplicant,
-        "telephone": [
-          {
-            "telephoneType": item.telephoneTypeCoApplicant,
-            "telephoneNumber": item.telephoneNumberCoApplicant
-          }
-        ],
-        "relationType": item.relationTypeCoApplicant,
-        "relationName": item.relationNameCoApplicant,
-        "validationIds": [
-          {
-            "idTypes": item.idTypes1CoApplicant,
-            "idValue": item.idValue1CoApplicant,
-            "attachments": this.fileDataCoApplicant
+      if(item.idTypes2CoApplicant='Aadhaar'){
+        const createKycCoApplicantData: any = {
+          // "proposedAmmount":item.proposedAmmount,
+          "originFrom": "Lead",
+          "originUid": this.leadkid,
+          // "customer": this.custId,
+          "customerName": item.nameCoApplicant,
+          "permanentPhoneNumber": item.phNOCoApplicant,
+          "dob": item.dobCoApplicant,
+          "telephone": [
+            {
+              "telephoneType": item.telephoneTypeCoApplicant,
+              "telephoneNumber": item.telephoneNumberCoApplicant
+            }
+          ],
+          "relationType": item.relationTypeCoApplicant,
+          "relationName": item.relationNameCoApplicant,
+          "validationIds": [
+            {
+              "idTypes": item.idTypes1CoApplicant,
+              "idValue": item.idValue1CoApplicant,
+              "attachments": this.fileDataCoApplicant
+            },
+            {
+              "idTypes": 'UID',
+              "idValue": item.idValue2CoApplicant,
+              "attachments": this.fileDataCoApplicant
+            }
+          ],
+          "permanentAddress": item.permanentAddressCoApplicant,
+          "permanentCity": item.permanentCityCoApplicant,
+          "permanentState": item.permanentStateCoApplicant,
+          "permanentPinCode": item.permanentPinCodeCoApplicant,
+          "nomineeType": item.nomineeTypeCoApplicant,
+          "nomineeName": item.nomineeNameCoApplicant,
+          "address": [
+            {
+              "addressType": item.addressTypeCoApplicant,
+              "address": item.addressCoAplicant,
+              "city": item.cityCoApplicant,
+              "state": item.stateCoApplicant,
+              "pin": item.pinCoApplicant
+            }
+          ],
+          "panNumber": item.panNumberCoApplicant,
+          "panAttachments": this.fileDataPanCoApplicant,
+          "parentid": {
+            "id": this.custId
           },
-          {
-            "idTypes": item.idTypes2CoApplicant,
-            "idValue": item.idValue2CoApplicant,
-            "attachments": this.fileDataCoApplicant
-          }
-        ],
-        "permanentAddress": item.permanentAddressCoApplicant,
-        "permanentCity": item.permanentCityCoApplicant,
-        "permanentState": item.permanentStateCoApplicant,
-        "permanentPinCode": item.permanentPinCodeCoApplicant,
-        "nomineeType": item.nomineeTypeCoApplicant,
-        "nomineeName": item.nomineeNameCoApplicant,
-        "address": [
-          {
-            "addressType": item.addressTypeCoApplicant,
-            "address": item.addressCoAplicant,
-            "city": item.cityCoApplicant,
-            "state": item.stateCoApplicant,
-            "pin": item.pinCoApplicant
-          }
-        ],
-        "panNumber": item.panNumberCoApplicant,
-        "panAttachments": this.fileDataPanCoApplicant,
-        "parentid": {
-          "id": this.custId
-        },
-        "parent": false
-      }
-      console.log('createKycCoApplicantDataaaa',createKycCoApplicantData)
+          "parent": false
+        }
+
+        console.log('createKycCoApplicantDataaaa',createKycCoApplicantData)
       this.coApplicantListFormSubmit.push(createKycCoApplicantData)
       console.log('coApplicantListFormSubmit',this.coApplicantListFormSubmit)
       this.proceedList.push(createKycCoApplicantData)
+
+
+      }
+      else{
+        const createKycCoApplicantData: any = {
+          // "proposedAmmount":item.proposedAmmount,
+          "originFrom": "Lead",
+          "originUid": this.leadkid,
+          // "customer": this.custId,
+          "customerName": item.nameCoApplicant,
+          "permanentPhoneNumber": item.phNOCoApplicant,
+          "dob": item.dobCoApplicant,
+          "telephone": [
+            {
+              "telephoneType": item.telephoneTypeCoApplicant,
+              "telephoneNumber": item.telephoneNumberCoApplicant
+            }
+          ],
+          "relationType": item.relationTypeCoApplicant,
+          "relationName": item.relationNameCoApplicant,
+          "validationIds": [
+            {
+              "idTypes": item.idTypes1CoApplicant,
+              "idValue": item.idValue1CoApplicant,
+              "attachments": this.fileDataCoApplicant
+            },
+            {
+              "idTypes": item.idTypes2CoApplicant,
+              "idValue": item.idValue2CoApplicant,
+              "attachments": this.fileDataCoApplicant
+            }
+          ],
+          "permanentAddress": item.permanentAddressCoApplicant,
+          "permanentCity": item.permanentCityCoApplicant,
+          "permanentState": item.permanentStateCoApplicant,
+          "permanentPinCode": item.permanentPinCodeCoApplicant,
+          "nomineeType": item.nomineeTypeCoApplicant,
+          "nomineeName": item.nomineeNameCoApplicant,
+          "address": [
+            {
+              "addressType": item.addressTypeCoApplicant,
+              "address": item.addressCoAplicant,
+              "city": item.cityCoApplicant,
+              "state": item.stateCoApplicant,
+              "pin": item.pinCoApplicant
+            }
+          ],
+          "panNumber": item.panNumberCoApplicant,
+          "panAttachments": this.fileDataPanCoApplicant,
+          "parentid": {
+            "id": this.custId
+          },
+          "parent": false
+        }
+        console.log('createKycCoApplicantDataaaa',createKycCoApplicantData)
+      this.coApplicantListFormSubmit.push(createKycCoApplicantData)
+      console.log('coApplicantListFormSubmit',this.coApplicantListFormSubmit)
+      this.proceedList.push(createKycCoApplicantData)
+      }
+      // const createKycCoApplicantData: any = {
+      //   // "proposedAmmount":item.proposedAmmount,
+      //   "originFrom": "Lead",
+      //   "originUid": this.leadkid,
+      //   // "customer": this.custId,
+      //   "customerName": item.nameCoApplicant,
+      //   "permanentPhoneNumber": item.phNOCoApplicant,
+      //   "dob": item.dobCoApplicant,
+      //   "telephone": [
+      //     {
+      //       "telephoneType": item.telephoneTypeCoApplicant,
+      //       "telephoneNumber": item.telephoneNumberCoApplicant
+      //     }
+      //   ],
+      //   "relationType": item.relationTypeCoApplicant,
+      //   "relationName": item.relationNameCoApplicant,
+      //   "validationIds": [
+      //     {
+      //       "idTypes": item.idTypes1CoApplicant,
+      //       "idValue": item.idValue1CoApplicant,
+      //       "attachments": this.fileDataCoApplicant
+      //     },
+      //     {
+      //       "idTypes": item.idTypes2CoApplicant,
+      //       "idValue": item.idValue2CoApplicant,
+      //       "attachments": this.fileDataCoApplicant
+      //     }
+      //   ],
+      //   "permanentAddress": item.permanentAddressCoApplicant,
+      //   "permanentCity": item.permanentCityCoApplicant,
+      //   "permanentState": item.permanentStateCoApplicant,
+      //   "permanentPinCode": item.permanentPinCodeCoApplicant,
+      //   "nomineeType": item.nomineeTypeCoApplicant,
+      //   "nomineeName": item.nomineeNameCoApplicant,
+      //   "address": [
+      //     {
+      //       "addressType": item.addressTypeCoApplicant,
+      //       "address": item.addressCoAplicant,
+      //       "city": item.cityCoApplicant,
+      //       "state": item.stateCoApplicant,
+      //       "pin": item.pinCoApplicant
+      //     }
+      //   ],
+      //   "panNumber": item.panNumberCoApplicant,
+      //   "panAttachments": this.fileDataPanCoApplicant,
+      //   "parentid": {
+      //     "id": this.custId
+      //   },
+      //   "parent": false
+      // }
+      
 
     })
     
@@ -1647,71 +1848,141 @@ export class ViewLeadQnrComponent implements OnInit {
     })
   }
   updateKyc(){
-    const createLeadData: any = {
-      "originFrom": "Lead",
-      "originUid": this.leadkid,
-      "customer": this.custId,
-      "customerName": this.custname,
-      "dob": this.createLeadForm.controls.dob.value,
-      "telephone": [
-        {
-          "telephoneType": this.createLeadForm.controls.telephoneType.value,
-          "telephoneNumber": this.createLeadForm.controls.telephoneNumber.value
-        }
-      ],
-      "relationType": this.createLeadForm.controls.relationType.value,
-      "relationName": this.createLeadForm.controls.relationName.value,
-      "validationIds": [
-        {
-          "idTypes": this.createLeadForm.controls.idTypes.value,
-          "idValue": this.createLeadForm.controls.idValue.value,
-          "attachments": this.fileData
-        },
-        {
-          "idTypes": this.createLeadForm.controls.idTypes1.value,
-          "idValue": this.createLeadForm.controls.idValue1.value,
-          "attachments": this.fileData
-        }
-      ],
-      "permanentAddress": this.createLeadForm.controls.permanentAddress.value,
-      "permanentCity": this.createLeadForm.controls.permanentCity.value,
-      "permanentState": this.createLeadForm.controls.permanentState.value,
-      "permanentPinCode": this.createLeadForm.controls.permanentPinCode.value,
-      "nomineeType": this.createLeadForm.controls.nomineeType.value,
-      "nomineeName": this.createLeadForm.controls.nomineeName.value,
-      "address": [
-        {
-          "addressType": this.createLeadForm.controls.addressType.value,
-          "address": this.createLeadForm.controls.address.value,
-          "city": this.createLeadForm.controls.city.value,
-          "state": this.createLeadForm.controls.state.value,
-          "pin": this.createLeadForm.controls.pin.value
-        }
-      ],
-      "panNumber": this.createLeadForm.controls.panNumber.value,
-      "panAttachments": this.fileDataPan,
-      // "parentid": {
-      //   "id": ''
-      // },
-      "parent": true
-    }
-    console.log('createLeadData',createLeadData)
-    if(this.isAnyCoapp){
-      this.submitCoApplicant()
-    }
-    this.coApplicantListFormSubmit.push(createLeadData);
-    console.log('this.coApplicantListFormSubmit',this.coApplicantListFormSubmit)
-    this.crmService.addkyc(this.coApplicantListFormSubmit).subscribe((response) => {
-      console.log('afterupdateKYCDAta', response);
-      setTimeout(() => {
-        this.router.navigate(['provider', 'crm']);
-      }, projectConstants.TIMEOUT_DELAY);
-    },
-      (error) => {
+    if(this.createLeadForm.controls.idTypes1.value='Aadhaar'){
+      const createLeadData: any = {
+        "originFrom": "Lead",
+        "originUid": this.leadkid,
+        "customer": this.custId,
+        "customerName": this.custname,
+        "dob": this.createLeadForm.controls.dob.value,
+        "telephone": [
+          {
+            "telephoneType": this.createLeadForm.controls.telephoneType.value,
+            "telephoneNumber": this.createLeadForm.controls.telephoneNumber.value
+          }
+        ],
+        "relationType": this.createLeadForm.controls.relationType.value,
+        "relationName": this.createLeadForm.controls.relationName.value,
+        "validationIds": [
+          {
+            "idTypes": this.createLeadForm.controls.idTypes.value,
+            "idValue": this.createLeadForm.controls.idValue.value,
+            "attachments": this.fileData
+          },
+          {
+            "idTypes": 'UID',//this.createLeadForm.controls.idTypes1.value,
+            "idValue": this.createLeadForm.controls.idValue1.value,
+            "attachments": this.fileData
+          }
+        ],
+        "permanentAddress": this.createLeadForm.controls.permanentAddress.value,
+        "permanentCity": this.createLeadForm.controls.permanentCity.value,
+        "permanentState": this.createLeadForm.controls.permanentState.value,
+        "permanentPinCode": this.createLeadForm.controls.permanentPinCode.value,
+        "nomineeType": this.createLeadForm.controls.nomineeType.value,
+        "nomineeName": this.createLeadForm.controls.nomineeName.value,
+        "address": [
+          {
+            "addressType": this.createLeadForm.controls.addressType.value,
+            "address": this.createLeadForm.controls.address.value,
+            "city": this.createLeadForm.controls.city.value,
+            "state": this.createLeadForm.controls.state.value,
+            "pin": this.createLeadForm.controls.pin.value
+          }
+        ],
+        "panNumber": this.createLeadForm.controls.panNumber.value,
+        "panAttachments": this.fileDataPan,
+        // "parentid": {
+        //   "id": ''
+        // },
+        "parent": true
+      }
+      console.log('createLeadData',createLeadData)
+      if(this.isAnyCoapp){
+        this.submitCoApplicant()
+      }
+      this.coApplicantListFormSubmit.push(createLeadData);
+      console.log('this.coApplicantListFormSubmit',this.coApplicantListFormSubmit)
+      this.crmService.addkyc(this.coApplicantListFormSubmit).subscribe((response) => {
+        console.log('afterupdateKYCDAta', response);
         setTimeout(() => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.router.navigate(['provider', 'crm']);
         }, projectConstants.TIMEOUT_DELAY);
-      })
+      },
+        (error) => {
+          setTimeout(() => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }, projectConstants.TIMEOUT_DELAY);
+        })
+    }
+    
+      else{
+        const createLeadData: any = {
+          "originFrom": "Lead",
+          "originUid": this.leadkid,
+          "customer": this.custId,
+          "customerName": this.custname,
+          "dob": this.createLeadForm.controls.dob.value,
+          "telephone": [
+            {
+              "telephoneType": this.createLeadForm.controls.telephoneType.value,
+              "telephoneNumber": this.createLeadForm.controls.telephoneNumber.value
+            }
+          ],
+          "relationType": this.createLeadForm.controls.relationType.value,
+          "relationName": this.createLeadForm.controls.relationName.value,
+          "validationIds": [
+            {
+              "idTypes": this.createLeadForm.controls.idTypes.value,
+              "idValue": this.createLeadForm.controls.idValue.value,
+              "attachments": this.fileData
+            },
+            {
+              "idTypes": this.createLeadForm.controls.idTypes1.value,
+              "idValue": this.createLeadForm.controls.idValue1.value,
+              "attachments": this.fileData
+            }
+          ],
+          "permanentAddress": this.createLeadForm.controls.permanentAddress.value,
+          "permanentCity": this.createLeadForm.controls.permanentCity.value,
+          "permanentState": this.createLeadForm.controls.permanentState.value,
+          "permanentPinCode": this.createLeadForm.controls.permanentPinCode.value,
+          "nomineeType": this.createLeadForm.controls.nomineeType.value,
+          "nomineeName": this.createLeadForm.controls.nomineeName.value,
+          "address": [
+            {
+              "addressType": this.createLeadForm.controls.addressType.value,
+              "address": this.createLeadForm.controls.address.value,
+              "city": this.createLeadForm.controls.city.value,
+              "state": this.createLeadForm.controls.state.value,
+              "pin": this.createLeadForm.controls.pin.value
+            }
+          ],
+          "panNumber": this.createLeadForm.controls.panNumber.value,
+          "panAttachments": this.fileDataPan,
+          // "parentid": {
+          //   "id": ''
+          // },
+          "parent": true
+        }
+        console.log('createLeadData',createLeadData)
+        if(this.isAnyCoapp){
+          this.submitCoApplicant()
+        }
+        this.coApplicantListFormSubmit.push(createLeadData);
+        console.log('this.coApplicantListFormSubmit',this.coApplicantListFormSubmit)
+        this.crmService.addkyc(this.coApplicantListFormSubmit).subscribe((response) => {
+          console.log('afterupdateKYCDAta', response);
+          setTimeout(() => {
+            this.router.navigate(['provider', 'crm']);
+          }, projectConstants.TIMEOUT_DELAY);
+        },
+          (error) => {
+            setTimeout(() => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }, projectConstants.TIMEOUT_DELAY);
+          })
+      }
   }
   failedStatus() {
     this.crmService.rejectedStatusLeadkyc(this.leadDetails.uid).subscribe((response) => {
@@ -1728,17 +1999,6 @@ export class ViewLeadQnrComponent implements OnInit {
   }
 
   ProceedStatus() {
-    // this.crmService.addLeadStatus(this.leadDetails.uid, this.crifStatusId).subscribe((response) => {
-    //   console.log('afterupdateFollowUpData', response);
-    //   setTimeout(() => {
-    //     this.router.navigate(['provider', 'crm']);
-    //   }, projectConstants.TIMEOUT_DELAY);
-    // },
-    //   (error) => {
-    //     setTimeout(() => {
-    //       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //     }, projectConstants.TIMEOUT_DELAY);
-    //   })
     const createLeadData: any = {
       "originFrom": "Lead",
       "originUid": this.leadkid,
@@ -1944,6 +2204,78 @@ export class ViewLeadQnrComponent implements OnInit {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }, projectConstants.TIMEOUT_DELAY);
       })
+  }
+  ProceedStatussHOWkYC(custId){
+    console.log('custId',custId)
+    const createLeadData: any = {
+      "originFrom": "Lead",
+      "originUid": this.leadkid,
+      "customer": custId,
+      "customerName": this.custname,
+      "dob": this.createLeadForm.controls.dob.value,
+      "telephone": [
+        {
+          "telephoneType": this.createLeadForm.controls.telephoneType.value,
+          "telephoneNumber": this.createLeadForm.controls.telephoneNumber.value
+        }
+      ],
+      "relationType": this.createLeadForm.controls.relationType.value,
+      "relationName": this.createLeadForm.controls.relationName.value,
+      "validationIds": [
+        {
+          "idTypes": this.createLeadForm.controls.idTypes.value,
+          "idValue": this.createLeadForm.controls.idValue.value,
+          "attachments": this.fileData
+        },
+        {
+          "idTypes": this.createLeadForm.controls.idTypes1.value,
+          "idValue": this.createLeadForm.controls.idValue1.value,
+          "attachments": this.fileData
+        }
+      ],
+      "permanentAddress": this.createLeadForm.controls.permanentAddress.value,
+      "permanentCity": this.createLeadForm.controls.permanentCity.value,
+      "permanentState": this.createLeadForm.controls.permanentState.value,
+      "permanentPinCode": this.createLeadForm.controls.permanentPinCode.value,
+      "nomineeType": this.createLeadForm.controls.nomineeType.value,
+      "nomineeName": this.createLeadForm.controls.nomineeName.value,
+      "address": [
+        {
+          "addressType": this.createLeadForm.controls.addressType.value,
+          "address": this.createLeadForm.controls.address.value,
+          "city": this.createLeadForm.controls.city.value,
+          "state": this.createLeadForm.controls.state.value,
+          "pin": this.createLeadForm.controls.pin.value
+        }
+      ],
+      "panNumber": this.createLeadForm.controls.panNumber.value,
+      "panAttachments": this.fileDataPan,
+      // "parentid": {
+      //   "id": ''
+      // },
+      "parent": true
+    }
+
+    console.log('createLeadData',createLeadData)
+    if(this.isAnyCoapp){
+      this.submitCoApplicant()
+    }
+    this.proceedList.push(createLeadData);
+    console.log('this.coApplicantListFormSubmit',this.proceedList)
+
+      this.crmService.getproceedStatus(this.proceedList).subscribe((response) => {
+        console.log('afterupdateFollowUpData', response);
+        setTimeout(() => {
+          this.router.navigate(['provider', 'crm']);
+        }, projectConstants.TIMEOUT_DELAY);
+      },
+        (error) => {
+          setTimeout(() => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }, projectConstants.TIMEOUT_DELAY);
+        })
+
+        this.proceedList=[]
   }
 }
 
