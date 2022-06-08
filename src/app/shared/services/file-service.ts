@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+// import { projectConstantsLocal } from '../constants/project-constants';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,7 @@ export class FileService {
   ];
 
   imageSize = 15000000;
+  FILE_MAX_SIZE = 10000000;
   constructor() { }
   /**
    * Method returns supported formats of files which has to be uploaded
@@ -122,18 +124,48 @@ export class FileService {
   getImageByType(type) {
     if (type == 'pdf') {
       return './assets/images/pdf.png';
-    } else if (type == 'vnd.ms-excel' || type == 'vnd.openxmlformats-officedocument.spreadsheetml.sheet' || type == 'xls' || type=='xlsx') {
+    } else if (type == 'vnd.ms-excel' || type == 'vnd.openxmlformats-officedocument.spreadsheetml.sheet' || type == 'xls' || type == 'xlsx') {
       return './assets/images/xls.png';
     } else if (type == 'mp3' || type == 'mpeg' || type == 'ogg') {
       return './assets/images/audio.png';
     } else if (type == 'mp4' || type == 'mpeg') {
       return './assets/images/video.png';
-    } else if (type == 'application/msword' || type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || type=='docx' || type=='doc' || type=='msword') {
+    } else if (type == 'application/msword' || type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || type == 'docx' || type == 'doc' || type == 'msword') {
       return './assets/images/ImgeFileIcon/wordDocsBgWhite.jpg';
-    } else if (type=='txt') {
+    } else if (type == 'txt') {
       return './assets/images/ImgeFileIcon/docTxt.png';
     } else {
       return './assets/images/img_uplod.png';
     }
+  }
+
+  filesSelected(event, selectedMessage) {
+    const _this=this;
+    return new Promise(function (resolve, reject) {
+      const input = event.target.files;
+      console.log("File Selected :", input);
+      if (input) {
+        let count = 0;
+        let filesCount = input.length;
+        for (const file of input) {
+          if (_this.FILETYPES_UPLOAD.indexOf(file.type) === -1) {
+            reject("Selected file type not supported");
+          } else if (file.size > _this.FILE_MAX_SIZE) {
+            reject("Please upload files with size < 10mb");
+          } else {
+            selectedMessage.files.push(file);
+            const reader = new FileReader();
+            reader.onload = e => {
+              selectedMessage.base64.push(e.target["result"]);
+              count++;
+              if (count === filesCount) {
+                resolve(true);
+              }
+            };
+            reader.readAsDataURL(file);
+          }
+        }
+      }
+    })
   }
 }
