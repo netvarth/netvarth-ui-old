@@ -4,6 +4,7 @@ import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { ProviderServices } from '../../services/provider-services.service';
 import { CrmService } from './crm.service';
 import { NavigationExtras, Router } from '@angular/router';
+import { GroupStorageService } from '../../../../../src/app/shared/services/group-storage.service';
 
 @Component({
   selector: 'app-crm',
@@ -18,49 +19,8 @@ export class CRMComponent implements OnInit {
 
   public step: any = 0;
   public panelOpenState: false;
-  public redirectionList: any = [
-    // {
-    //   id:1,
-    //   activityName:'Enquiry'
-    // },
-    // {
-    //   id:2,
-    //   activityName:'Follow UPS'
-    // },
-    {
-      id: 7,
-      activityName: 'Leads'
-    },
-    {
-      id: 4,
-      activityName: 'CRIF'
-    },
-    {
-      id: 5,
-      activityName: 'Sales Verification'
-    },
-    {
-      id: 6,
-      activityName: 'Login'
-    },
-    {
-      id: 3,
-      activityName: 'All Loans'
-    },
-    
-    // {
-    //   id: 8,
-    //   activityName: 'Credit field verification and recommendation'
-    // },
-    // {
-    //   id: 9,
-    //   activityName: 'Loan Sanction'
-    // },
-    // {
-    //   id: 10,
-    //   activityName: 'Loan Disbursement'
-    // }
-  ]
+  
+  public redirectionList: any = []
   public api_loading: boolean = true;
   public bLosFieldOpen:boolean=true;
   public bREportsFieldOpen:boolean=false;
@@ -72,6 +32,7 @@ export class CRMComponent implements OnInit {
     // private snackbarService: SnackbarService,
     // private lStorageService: LocalStorageService,
     private router: Router,
+    private groupService: GroupStorageService,
     private locationobj: Location,
     // public dialog: MatDialog,
     // private _location: Location,
@@ -83,6 +44,7 @@ export class CRMComponent implements OnInit {
    }
 
    initCRM() {
+   
     this.fnChangeBorder('A')
     if(this.wordProcessor.getSPTerminologyTerm('CRM')) {
       this.crmTitle = this.wordProcessor.getSPTerminologyTerm('CRM');
@@ -92,6 +54,94 @@ export class CRMComponent implements OnInit {
     this.api_loading = false;
    }
   ngOnInit(): void {
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
+    console.log(user.userType)
+    if(user.userType === 2){
+      this.redirectionList = [
+        // {
+        //   id:1,
+        //   activityName:'Enquiry'
+        // },
+        // {
+        //   id:2,
+        //   activityName:'Follow UPS'
+        // },
+        {
+          id: 7,
+          activityName: 'Leads'
+        },
+        {
+          id: 5,
+          activityName: 'Sales Verification'
+        },
+        {
+          id: 6,
+          activityName: 'Login'
+        },
+        {
+          id: 3,
+          activityName: 'All Loans'
+        },
+        
+        // {
+        //   id: 8,
+        //   activityName: 'Credit field verification and recommendation'
+        // },
+        // {
+        //   id: 9,
+        //   activityName: 'Loan Sanction'
+        // },
+        // {
+        //   id: 10,
+        //   activityName: 'Loan Disbursement'
+        // }
+      ]
+    }
+    else{
+      this.redirectionList = [
+        // {
+        //   id:1,
+        //   activityName:'Enquiry'
+        // },
+        // {
+        //   id:2,
+        //   activityName:'Follow UPS'
+        // },
+        {
+          id: 7,
+          activityName: 'Leads'
+        },
+        {
+          id: 4,
+          activityName: 'CRIF'
+        },
+        {
+          id: 5,
+          activityName: 'Sales Verification'
+        },
+        {
+          id: 6,
+          activityName: 'Login'
+        },
+        {
+          id: 3,
+          activityName: 'All Loans'
+        },
+        
+        // {
+        //   id: 8,
+        //   activityName: 'Credit field verification and recommendation'
+        // },
+        // {
+        //   id: 9,
+        //   activityName: 'Loan Sanction'
+        // },
+        // {
+        //   id: 10,
+        //   activityName: 'Loan Disbursement'
+        // }
+      ]
+    }
     const _this = this;
     _this.providerServices.getBussinessProfile().subscribe(
       (bProfile: any) => {
