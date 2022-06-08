@@ -4,29 +4,18 @@ import { projectConstants } from '../../../../../../../src/app/app.component';
 import { Messages } from '../../../../../../../src/app/shared/constants/project-messages';
 import { Location, DatePipe } from '@angular/common';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
-// import { LocalStorageService } from '../../../../../../../src/app/shared/services/local-storage.service';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { CrmService } from '../../crm.service';
 import { FormBuilder } from '@angular/forms';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import * as moment from 'moment';
-// import { CrmSelectMemberComponent } from '../../../../shared/crm-select-member/crm-select-member.component'
-// import { Inject, OnDestroy, ViewChild, NgZone, ChangeDetectorRef, HostListener } from '@angular/core';
-// import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-// import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { ProviderServices } from '../../../../../../../src/app/business/services/provider-services.service';
 import { WordProcessor } from '../../../../../../../src/app/shared/services/word-processor.service';
-// import { DateTimeProcessor } from '../../../../../../../src/app/shared/services/datetime-processor.service';
-// import { DateTimeProcessor } from '../../../../../shared/services/datetime-processor.service';
-// import { takeUntil } from 'rxjs/operators';
-// import { Subject } from 'rxjs';
 import { FileService } from '../../../../../../../src/app/shared/services/file-service';
-// import { PreviewuploadedfilesComponent } from '../../../jaldee-drive/previewuploadedfiles/previewuploadedfiles.component';
 import { CrmSelectMemberComponent } from '../../../../shared/crm-select-member/crm-select-member.component';
-// import { PreviewuploadedfilesComponent } from '../../../jaldee-drive/previewuploadedfiles/previewuploadedfiles.component';
 import { PreviewpdfComponent } from '../../../../../../../src/app/business/modules/crm/leads/view-lead-qnr/previewpdf/previewpdf.component';
 @Component({
   selector: 'app-view-lead-qnr',
@@ -307,13 +296,16 @@ export class ViewLeadQnrComponent implements OnInit {
         if (this.leadDetails.status.name === 'New') {
           // this.showKyc = true;
           if(this.leadDetails.kycCreated===true){
-            this.showupdateKyc = true;
+            this.afterCreatetKycproceed=true;
             this.showKyc = false;
             this.getKycDetails();
+            
           }
           else{
+            this.afterCreatetKycproceed=false;
             this.showKyc = true;
-            this.showupdateKyc = false;
+            // this.showupdateKyc = false;
+            
           }
         }
         if (this.leadDetails.status.name === 'KYC Updated') {
@@ -332,11 +324,6 @@ export class ViewLeadQnrComponent implements OnInit {
 
           // this.showqnr = true;
         }
-        // if(this.addKycResponse.length === 0){
-        //   this.showupdateKycProceed = true;
-        //   this.getKycDetails();
-        //   // this.addKycDetails()
-        // }
 
         this.leadDetails.notes.forEach((notesdata: any) => {
           this.notesList.push(notesdata)
@@ -381,14 +368,6 @@ export class ViewLeadQnrComponent implements OnInit {
         this.crmService.leadActivityName = "subLeadCreate";
       }
     });
-    // this._Activatedroute.paramMap.subscribe(params => { 
-    //   this.leadUid = params.get('leadid');
-    //   if(this.leadUid)
-    //   {
-    //     this.crmService.leadActivityName = "Update";
-    //   }
-    // });
-
     this.api_loading = false;
     this.createLeadForm = this.createLeadFB.group({
       idTypes: [null],
@@ -469,11 +448,6 @@ export class ViewLeadQnrComponent implements OnInit {
       this.stateList.push(res)
     })
   }
-  // getNotesDetails(){
-  //   this.leadDetails.notes.forEach((notesdata: any) => {
-  //     this.notesList.push(notesdata)
-  //   })
-  // }
   getKycDetails() {
     this.crmService.getkyc(this.leadkid).subscribe(data => {
       console.log('data',data)
@@ -547,7 +521,7 @@ export class ViewLeadQnrComponent implements OnInit {
         this.updateValueCoApplicant.push(arr);
         console.log(' this.updateValueCoApplicant', this.updateValueCoApplicant)
         console.log('this.kycDetails.length-1',this.kycDetails.length-1)
-        this.coApplicantList.length=2;
+        // this.coApplicantList.length=2;
         this.updateValueCoApplicant[0].forEach((item:any)=>{
           console.log('elemnrt',item);
           if (item && item.validationIds[0] && item.validationIds[0].idTypes) {
@@ -1205,7 +1179,8 @@ export class ViewLeadQnrComponent implements OnInit {
       console.log('response',response)
       setTimeout(() => {
         this.api_loading = true;
-        this.createLeadForm.reset();
+        // this.createLeadForm.reset();
+        // this.crifStatus()
         this.router.navigate(['provider', 'crm']);
       }, projectConstants.TIMEOUT_DELAY);
     },
@@ -1341,34 +1316,6 @@ export class ViewLeadQnrComponent implements OnInit {
     
     
   }
-
-  // createNew() {
-  //   const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
-  //     width: '100%',
-  //     panelClass: ['popup-class', 'confirmationmainclass'],
-  //     data: {
-  //       requestType: 'createCustomer',
-  //       header: 'Select' + this.customer_label,
-  //     }
-  //   })
-  //   dialogRef.afterClosed().subscribe((res: any) => {
-
-  //     if (res === '') {
-  //       this.hideSearch = false;
-  //     } else {
-  //       const filter = { 'id-eq': res };
-  //       this.provider_services.getCustomer(filter).subscribe((response: any) => {
-  //         this.customer_data = response[0];
-
-  //         this.hideSearch = true;
-  //       },
-  //         (error) => {
-  //           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
-  //         })
-  //     }
-
-  //   })
-  // }
   search() {
     this.hideSearch = false;
   }
@@ -1734,28 +1681,6 @@ export class ViewLeadQnrComponent implements OnInit {
       error => {
       });
   }
-  // saveCrifApplicant() {
-  //   const post_data = {
-  //     "customer": {
-  //       "id": this.custId,
-  //       "name": this.custname,
-  //     },
-  //     'originUid': this.leadkid,
-  //   };
-  //   this.crmService.crifVerification(post_data).subscribe(
-  //     (data) => {
-  //       this.crifDetails = data;
-  //       this.crifScore = this.crifDetails.crifScoreString
-  //       // const navigationExtras: NavigationExtras =  {
-  //       //   queryParams: {
-  //       //     type: 'LEAD'
-  //       //   }
-  //       // }
-  //       // this.router.navigate(['provider', 'lead'], navigationExtras);
-  //     },
-  //     error => {
-  //     });
-  // }
   getleadDetails() {
     this.crmService.getLeadDetails(this.leadkid).subscribe(data => {
       this.leadDetails = data;
@@ -1766,32 +1691,80 @@ export class ViewLeadQnrComponent implements OnInit {
     // console.log(fileType);
     return this.fileService.getImageByType(fileType);
   }
-  // preview(file) {
-  //   this.fileviewdialogRef = this.dialog.open(PreviewuploadedfilesComponent, {
-  //     width: "100%",
-  //     panelClass: [
-  //       "popup-class",
-  //       "commonpopupmainclass"
-  //       // "uploadfilecomponentclass"
-  //     ],
-  //     disableClose: true,
-  //     data: {
-  //       file: file,
-  //       type: 'kyc'
-  //     }
-  //   });
-  //   this.fileviewdialogRef.afterClosed().subscribe(result => {
-  //     if (result) {
-  //     }
-  //   });
-  // }
   leadStatus() {
     this.crmService.getLeadStatus().subscribe((response: any) => {
       console.log(response);
       this.failedStatusId = response[3].id;
-      this.crifStatusId = response[7].id;
-      console.log('this.failedStatusId', this.failedStatusId)
+      this.crifStatusId = response[6].id;
+      // this.crif
     })
+  }
+  updateKyc(){
+    const createLeadData: any = {
+      "originFrom": "Lead",
+      "originUid": this.leadkid,
+      "customer": this.custId,
+      "customerName": this.custname,
+      "dob": this.createLeadForm.controls.dob.value,
+      "telephone": [
+        {
+          "telephoneType": this.createLeadForm.controls.telephoneType.value,
+          "telephoneNumber": this.createLeadForm.controls.telephoneNumber.value
+        }
+      ],
+      "relationType": this.createLeadForm.controls.relationType.value,
+      "relationName": this.createLeadForm.controls.relationName.value,
+      "validationIds": [
+        {
+          "idTypes": this.createLeadForm.controls.idTypes.value,
+          "idValue": this.createLeadForm.controls.idValue.value,
+          "attachments": this.fileData
+        },
+        {
+          "idTypes": this.createLeadForm.controls.idTypes1.value,
+          "idValue": this.createLeadForm.controls.idValue1.value,
+          "attachments": this.fileData
+        }
+      ],
+      "permanentAddress": this.createLeadForm.controls.permanentAddress.value,
+      "permanentCity": this.createLeadForm.controls.permanentCity.value,
+      "permanentState": this.createLeadForm.controls.permanentState.value,
+      "permanentPinCode": this.createLeadForm.controls.permanentPinCode.value,
+      "nomineeType": this.createLeadForm.controls.nomineeType.value,
+      "nomineeName": this.createLeadForm.controls.nomineeName.value,
+      "address": [
+        {
+          "addressType": this.createLeadForm.controls.addressType.value,
+          "address": this.createLeadForm.controls.address.value,
+          "city": this.createLeadForm.controls.city.value,
+          "state": this.createLeadForm.controls.state.value,
+          "pin": this.createLeadForm.controls.pin.value
+        }
+      ],
+      "panNumber": this.createLeadForm.controls.panNumber.value,
+      "panAttachments": this.fileDataPan,
+      // "parentid": {
+      //   "id": ''
+      // },
+      "parent": true
+    }
+    console.log('createLeadData',createLeadData)
+    if(this.isAnyCoapp){
+      this.submitCoApplicant()
+    }
+    this.coApplicantListFormSubmit.push(createLeadData);
+    console.log('this.coApplicantListFormSubmit',this.coApplicantListFormSubmit)
+    this.crmService.addkyc(this.coApplicantListFormSubmit).subscribe((response) => {
+      console.log('afterupdateKYCDAta', response);
+      setTimeout(() => {
+        this.router.navigate(['provider', 'crm']);
+      }, projectConstants.TIMEOUT_DELAY);
+    },
+      (error) => {
+        setTimeout(() => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }, projectConstants.TIMEOUT_DELAY);
+      })
   }
   failedStatus() {
     this.crmService.addLeadStatus(this.leadDetails.uid, this.failedStatusId).subscribe((response) => {
@@ -1806,8 +1779,7 @@ export class ViewLeadQnrComponent implements OnInit {
         }, projectConstants.TIMEOUT_DELAY);
       })
   }
-  crifStatus() {
-   
+  ProceedStatusToCrif(){
     this.crmService.addLeadStatus(this.leadDetails.uid, this.crifStatusId).subscribe((response) => {
       console.log('afterupdateFollowUpData', response);
       setTimeout(() => {
@@ -1819,6 +1791,32 @@ export class ViewLeadQnrComponent implements OnInit {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }, projectConstants.TIMEOUT_DELAY);
       })
+  }
+
+  crifStatus() {
+    // this.crmService.addLeadStatus(this.leadDetails.uid, this.crifStatusId).subscribe((response) => {
+    //   console.log('afterupdateFollowUpData', response);
+    //   setTimeout(() => {
+    //     this.router.navigate(['provider', 'crm']);
+    //   }, projectConstants.TIMEOUT_DELAY);
+    // },
+    //   (error) => {
+    //     setTimeout(() => {
+    //       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //     }, projectConstants.TIMEOUT_DELAY);
+    //   })
+
+      this.crmService.getproceedStatus(this.coApplicantListFormSubmit).subscribe((response) => {
+        console.log('afterupdateFollowUpData', response);
+        setTimeout(() => {
+          this.router.navigate(['provider', 'crm']);
+        }, projectConstants.TIMEOUT_DELAY);
+      },
+        (error) => {
+          setTimeout(() => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }, projectConstants.TIMEOUT_DELAY);
+        })
   }
 
   noteView(noteDetails: any) {

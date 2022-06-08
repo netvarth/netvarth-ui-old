@@ -341,7 +341,10 @@ export class CrmService {
       const url ='provider/lead/'+leadUid+'/status/'+statusId
       return this.servicemeta.httpPut(url)
     }
-
+    kycUpdate(data){
+      const url='provider/customers/KYC/create'
+        return this.servicemeta.httpPut(url, data);
+    }
     getTaskMasterList(){
       const url = 'provider/task/master';
       return this.servicemeta.httpGet(url);
@@ -551,5 +554,9 @@ export class CrmService {
   }
   getproceedStatus(data){
     return this.servicemeta.httpPost('provider/customers/KYC/proceed', data);
+  }
+  statusChangeTioProceed(){
+    const url = 'provider/customers/KYC/proceed';
+    return this.servicemeta.httpPost(url,null)
   }
 }
