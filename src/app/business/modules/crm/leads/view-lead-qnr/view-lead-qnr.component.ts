@@ -250,6 +250,9 @@ export class ViewLeadQnrComponent implements OnInit {
   // fileKycData: { owner: any; fileName: any; fileSize: number; caption: string; fileType: any; order: number; }[];
   fileKycData: any=[];
   filesCount = 0;
+  fileDataCoApplicantApplicant: any[];
+  fileKycDataCoApplicant: any[];
+  fileDataPanCoApplicantPan: any[];
   constructor(private locationobj: Location,
 
     // private lStorageService: LocalStorageService,
@@ -321,6 +324,7 @@ export class ViewLeadQnrComponent implements OnInit {
         if (this.leadDetails.status.name === 'Sales Verified') {
           this.changeQnrStatus()
           this.showafterqnr = true;
+          // this.getCoApplicant()
         }
         this.leadDetails.notes.forEach((notesdata: any) => {
           this.notesList.push(notesdata)
@@ -437,6 +441,12 @@ export class ViewLeadQnrComponent implements OnInit {
 
     })
     this.getStateName()
+    
+  }
+  getCoApplicant(){
+    this.crmService.getCoApplicant(this.leadkid).subscribe((res)=>{
+      console.log('res',res)
+    })
   }
   getStateName() {
     this.crmService.getStateName().subscribe((res: any) => {
@@ -840,13 +850,16 @@ export class ViewLeadQnrComponent implements OnInit {
     console.log("In Save create Lead");
     
     this.coApplicantListFormSubmit = [];
-
+    console.log('this.fileData',this.fileData)
+if(this.fileData){
   this.fileData = this.getFileInfo('applicant');
   this.fileData[0]['order']=this.filesCount++;
   this.fileKycData = this.getFileInfo('kyc');
   this.fileKycData[0]['order']=this.filesCount++;
   this.fileDataPan = this.getFileInfo('pan');
   this.fileDataPan[0]['order']=this.filesCount++;
+}
+  
 
     // if( this.createLeadForm.controls.idTypes1.value='Aadhaar'){
       console.log(' this.createLeadForm.controls.idTypes1.value', this.createLeadForm.controls.idTypes1.value)
@@ -1135,12 +1148,12 @@ export class ViewLeadQnrComponent implements OnInit {
             {
               "idTypes": item.idTypes1CoApplicant,
               "idValue": item.idValue1CoApplicant,
-              "attachments": fileData
+              "attachments": this.fileDataCoApplicantApplicant
             },
             {
               "idTypes": item.idTypes2CoApplicant,
               "idValue": item.idValue2CoApplicant,
-              "attachments": fileKycData
+              "attachments": this.fileKycDataCoApplicant
             }
           ],
           "permanentAddress": item.permanentAddressCoApplicant,
@@ -1159,7 +1172,7 @@ export class ViewLeadQnrComponent implements OnInit {
             }
           ],
           "panNumber": item.panNumberCoApplicant,
-          "panAttachments": fileDataPan,
+          "panAttachments": this.fileDataPanCoApplicantPan,
           "parentid": {
             "id": this.custId
           },
@@ -2039,6 +2052,10 @@ export class ViewLeadQnrComponent implements OnInit {
     });
   }
   createCoApplicant(){
+    if(this.isAnyCoapp){
+      this.submitCoApplicant()
+    }
+    console.log('this.coApplicantListFormSubmit',this.coApplicantListFormSubmit)
     this.crmService.addkyc(this.coApplicantListFormSubmit).subscribe((response:any) => {
       this.kycresponse = response;
       console.log('response',response)
@@ -2061,6 +2078,28 @@ export class ViewLeadQnrComponent implements OnInit {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }, projectConstants.TIMEOUT_DELAY);
       })
+    // this.crmService.addkyc(this.coApplicantListFormSubmit).subscribe((response:any) => {
+    //   this.kycresponse = response;
+    //   console.log('response',response)
+    //   this.uploadAudioVideo(this.kycresponse, 'kyc');
+    //   this.addKycResponse= response;
+    //   if(response=[]){
+    //     setTimeout(() => {
+    //       this.api_loading = true;
+    //       const navigationExtras: NavigationExtras = {
+    //         queryParams: {
+    //           type: 'DOCUMENTUPLOD'
+    //         }
+    //       }
+    //        this.router.navigate(['provider', 'lead'], navigationExtras);        
+    //     }, projectConstants.TIMEOUT_DELAY);
+    //   } 
+    // },
+    //   (error) => {
+    //     setTimeout(() => {
+    //       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //     }, projectConstants.TIMEOUT_DELAY);
+    //   })
   }
   ProceedStatussHOWkYC(custId){
     console.log('custId',custId)

@@ -570,7 +570,13 @@ export class CrmService {
   addKycForAAdhar(data){
     return this.servicemeta.httpPost('provider/customers/KYC/create' +'UID', data);
   }
-  // addkyc(data){
-  //   return this.servicemeta.httpPost('provider/customers/KYC/create', data);
+  // getkyc(id){
+  //   const url = 'provider/customers/KYC/' + id;
+  //   return this.servicemeta.httpGet(url);
   // }
+
+  getCoApplicant(id){
+    const url = 'provider/customers/KYC/coapplicant/'+ id;
+      return this.servicemeta.httpGet(url);
+  }
 }
