@@ -2606,7 +2606,7 @@
                     </ng-container>
                   </tbody>
                 </table>
-                <div class="search_paging" *ngIf="pagination.totalCnt>10">
+                <div class="search_paging" *ngIf="pagination.totalCnt">
                   <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                     (pagerclick)="handle_pageclick_new($event)" [curpage]="pagination.startpageval">
                   </app-pager>

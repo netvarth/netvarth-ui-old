@@ -242,7 +242,7 @@ export class LeadsComponent implements OnInit {
     this.getLeadmaster()
     this.getAssignedLead()
     this.getSucessListLead()
-   // this.getNewGenerateLead()
+    //this.getNewGenerateLead()
     this.getUnassignedLead()
     this.creditScoreGenerated()
     
@@ -656,7 +656,7 @@ export class LeadsComponent implements OnInit {
               //  console.log('dataNew',data)
                 // this.UnassignedLeadList = data;
                 this.newLeadList=data;
-                this.newLeadList = this.newLeadList.filter(obj => !obj.originId);
+               // this.newLeadList = this.newLeadList.filter(obj => !obj.originId);
 
                // this.pagination.totalCnt=this.newLeadList;
                 //this.loadComplete2 = true;
