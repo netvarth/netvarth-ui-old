@@ -24,7 +24,7 @@ export class CRMComponent implements OnInit {
   public api_loading: boolean = true;
   public bLosFieldOpen:boolean=true;
   public bREportsFieldOpen:boolean=false;
-  showActivity = false;
+  showActivity = true;
 
   constructor(
     // private groupService: GroupStorageService,
@@ -57,7 +57,7 @@ export class CRMComponent implements OnInit {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log(user.userType)
     if(user.userType === 2){
-      this.showActivity = true;
+      this.showActivity = false;
       this.redirectionList = [
         // {
         //   id:1,
@@ -103,7 +103,7 @@ export class CRMComponent implements OnInit {
       ]
     }
     else{
-      this.showActivity = false;
+      this.showActivity = true;
       this.redirectionList = [
         // {
         //   id:1,
