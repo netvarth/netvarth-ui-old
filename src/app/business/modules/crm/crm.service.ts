@@ -200,7 +200,8 @@ export class CrmService {
       return this.servicemeta.httpGet(url, null, filter);
     }
     getNewLeadCount(filter){
-      const url = 'provider/lead/?statusName-eq=New&from=0&count=10';
+      const url = 'provider/lead/count?status-eq=6';
+      // const url = 'provider/lead/?statusName-eq=New&from=0&count=10';
       return this.servicemeta.httpGet(url, null, filter);
     }
 

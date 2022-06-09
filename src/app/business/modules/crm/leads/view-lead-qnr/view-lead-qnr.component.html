@@ -91,7 +91,6 @@
                   </li>
                 </ul>
               </div>
-
             </div>
           </div>
         </div>
@@ -2398,6 +2397,33 @@
             </div>
             
           </div>
+          <div  class="bggrey my-2 clearfix fieldPadding">
+            <div class="">
+              <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
+                (change)="filesSelected($event, 'applicant')">Click / Drop your files here
+              <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i class="material-icons">
+                  attach_file</i></a>
+            </div>
+  
+            <div>
+              <div class="img-section clearfix mgn-up-20"
+                *ngIf="selectedMessage['applicant'] && selectedMessage['applicant'].files && selectedMessage['applicant'].files.length > 0">
+                <ul class="galul">
+                  <li *ngFor="let file of selectedMessage['applicant'].files;let i = index ">
+                    <div class="galimg_outer">
+                      <div class="gal_img">
+                        <img [src]="getImage(selectedMessage['applicant'].base64[i], file)"
+                          *ngIf="selectedMessage['applicant'].base64[i]">
+                      </div>
+                      <div class="gal_action" (click)="deleteTempImage(i, 'applicant')">
+                        <i class="fa fa-times-circle" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="bggrey my-2 clearfix" *ngIf="updateValue && updateValue.validationIds && updateValue.validationIds[0] && updateValue.validationIds[0].attachments.length > 0">
           <div style="display: flex;gap: 5px">
@@ -2414,6 +2440,10 @@
 
           </div>
         </div>
+        <div class="mgn-bt-20"
+          *ngIf="selectedMessage['applicant'] && selectedMessage['applicant'].files && selectedMessage['applicant'].files.length > 0"></div>
+
+        <!----second appplicant start-->
         <div class="bggrey my-2">
           <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
@@ -2446,6 +2476,33 @@
             </div>
             
           </div>
+          <div class="fieldPadding">
+            <div class="">
+              <input #files type="file" accept="/*;capture=camera" style="display:none;" multiple
+                (change)="filesSelected($event,'kyc')">Click / Drop your files here
+              <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
+                  attach_file</i></a>
+            </div>
+
+            <div>
+              <div class="img-section clearfix mgn-up-20"
+                *ngIf="selectedMessage['kyc'] && selectedMessage['kyc'].files && selectedMessage['kyc'].files.length > 0">
+                <ul class="galul">
+                  <li *ngFor="let file of selectedMessage['kyc'].files;let i = index ">
+                    <div class="galimg_outer">
+                      <div class="gal_img">
+                        <img [src]="getImage(selectedMessage['kyc'].base64[i], file)"
+                          *ngIf="selectedMessage['kyc'].base64[i]">
+                      </div>
+                      <div class="gal_action" (click)="deleteTempImage(i, 'kyc')">
+                        <i class="fa fa-times-circle" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="bggrey my-2 clearfix" *ngIf="updateValue && updateValue.validationIds && updateValue.validationIds[1] && updateValue.validationIds[1].attachments.length > 0">
           <div style="display: flex;gap: 5px">
@@ -2462,6 +2519,7 @@
 
           </div>
         </div>
+        <div class="mgn-bt-20" *ngIf="selectedMessage['kyc'] && selectedMessage['kyc'].files && selectedMessage['kyc'].files.length > 0"></div>
         <span class="group-head">Pancard Details</span><br>
         <div class="bggrey my-2">
           <div style="display: flex;gap: 5px">
@@ -2495,9 +2553,35 @@
                 </app-field-error-display>
               </div>
             </div>
-          </div>         
+          </div>
+          <div class="fieldPadding">
+            <div class="">
+              <input #file type="file" accept="/*;capture=camera" style="display:none;" multiple
+                (change)="filesSelected($event, 'pan')">Click / Drop your files heree
+              <a class="btn btn-clean btn-icon btn-md" (click)="file.click()"><i class="material-icons">
+                  attach_file</i></a>
+            </div>
+          </div>
+          <div>
+            <div class="img-section clearfix mgn-up-20"
+              *ngIf="selectedMessage['pan'] && selectedMessage['pan'].files && selectedMessage['pan'].files.length > 0">
+              <ul class="galul">
+                <li *ngFor="let file of selectedMessage['pan'].files;let i = index ">
+                  <div class="galimg_outer">
+                    <div class="gal_img">
+                      <img [src]="getImage(selectedMessage['pan'].base64[i], file)"
+                        *ngIf="selectedMessage['pan'].base64[i]">
+                    </div>
+                    <div class="gal_action" (click)="deleteTempImage(i, 'pan')">
+                      <i class="fa fa-times-circle" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>     
         </div>
-        <span class="group-head">Pancard File Details</span><br>
+        <span class="group-head" *ngIf="updateValue && updateValue.panAttachments">Pancard File Details</span><br>
         <div class="bggrey my-2" *ngIf="updateValue && updateValue.panAttachments">
           <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding" >
@@ -2513,6 +2597,7 @@
 
           </div>
         </div>
+        <div class="mgn-bt-20" *ngIf="selectedMessage['pan'] && selectedMessage['pan'].files && selectedMessage['pan'].files.length > 0"></div>
         <span class="group-head">Details</span><br>
         <div class="bggrey my-2">
           <div style="display: flex;gap: 5px">

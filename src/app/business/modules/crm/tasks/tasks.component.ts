@@ -3,7 +3,7 @@ import { projectConstantsLocal } from '../../../../../../src/app/shared/constant
 import { projectConstants } from '../../../../../../src/app/app.component';
 import { Messages } from '../../../../../../src/app/shared/constants/project-messages';
 import { Location } from '@angular/common';
-import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
+// import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
 import { Router,NavigationExtras } from '@angular/router';
 import { SnackbarService } from '../../../../../../src/app/shared/services/snackbar.service';
 import { CrmService } from '../crm.service';
@@ -208,7 +208,7 @@ export class TasksComponent implements OnInit {
 
   constructor(
     private locationobj: Location,
-    private groupService: GroupStorageService,
+    // private groupService: GroupStorageService,
     public router: Router,
     private dialog: MatDialog,
     private lStorageService: LocalStorageService,
@@ -586,16 +586,6 @@ export class TasksComponent implements OnInit {
                 this.totalTaskList = data;
                 console.log("Task List :",this.totalTaskList)
                 this.totalTaskList = this.totalTaskList.filter(obj => !obj.originId);
-    //             this.getInprogressTask();
-    // this.getCompletedTask();
-    // this.getTaskmaster()
-    // this.getNewTask()
-    // this.getAssignedTask()
-    // this.getCancelledTask()
-    // this.getSuspendedTask()
-    // this.getPendingTask()
-    // this.getProceedTask()
-    // this.getVerifiedTask()
               },
               error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -1073,33 +1063,9 @@ export class TasksComponent implements OnInit {
   }
   tabChange(event) {
     console.log('event.index + 1',event.index + 1)
-    this.setTabSelection(event.index + 1);
+    // this.setTabSelection(event.index + 1);
   }
-  setTabSelection(type) {
-    this.selectedTab = type;
-    console.log('this.selectedTab',this.selectedTab)
-    this.groupService.setitemToGroupStorage('tabIndex', this.selectedTab);
-    switch (type) {
-      case 1: {
-        this.getTotalTask();
-        break;
-      }
-      case 2: {
-        this.getInprogressTask();
-        break;
-      }
-      case 3: {
-        this.getCompletedTask();
-
-        break;
-      }
-      case 4: {
-        this.getDelayedTask();
-
-        break;
-      }
-    }
-  }
+  
 
   viewTask(taskUid,taskData:any) {
     this.crmService.taskToCraeteViaServiceData = taskData;

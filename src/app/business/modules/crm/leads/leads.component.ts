@@ -168,6 +168,7 @@ export class LeadsComponent implements OnInit {
   public newLeadList:any=[];
   public creditScoreGeneratetdData:any=[];
   public creditScoreGeneratedScoreDataCount:any;
+  newLeadCount: any;
   constructor(
     private locationobj: Location,
     private groupService: GroupStorageService,
@@ -524,16 +525,7 @@ export class LeadsComponent implements OnInit {
    // this.getNewGenerateLead()
    // this.doSearch()
   }
-  handle_pageclick_new(pg){
-    console.log("page :",pg)
-    this.pagination.startpageval = pg;
-   // this.groupService.setitemToGroupStorage('tabIndex', pg);
-    this.filter.page = pg;
-   // this.getTotalLead();
-   this.getNewGenerateLead();
-    //this.doSearch()
 
-  }
   getInprogressLead(from_oninit = true) {
     let filter = this.setFilterForApi();
     this.getInprogressLeadCount(filter)
@@ -646,20 +638,13 @@ export class LeadsComponent implements OnInit {
     this.getNewLeadCount(filter)
       .then(
         result => {
-          if (from_oninit) { this.completedCount = result; }
-          filter = this.setPaginationCompletedFilter(filter);
+          if (from_oninit) { this.newLeadCount = result; }
+          filter = this.setPaginationNewFilter(filter);
           this.crmService.getNewLead(filter)
             .subscribe(
               data => {
-                // this.pagination.startpageval = 1;
-                // this.pagination.totalCnt = 0
-              //  console.log('dataNew',data)
-                // this.UnassignedLeadList = data;
                 this.newLeadList=data;
-               // this.newLeadList = this.newLeadList.filter(obj => !obj.originId);
-
-               // this.pagination.totalCnt=this.newLeadList;
-                //this.loadComplete2 = true;
+                console.log('newLeadList',this.newLeadList)
               },
               error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -680,7 +665,7 @@ export class LeadsComponent implements OnInit {
           data => {
             console.log('New Data',data)
             this.pagination.totalCnt = data;
-            this.completedCount = this.pagination.totalCnt;
+            this.newLeadCount = this.pagination.totalCnt;
             resolve(data);
           },
           error => {
@@ -693,6 +678,12 @@ export class LeadsComponent implements OnInit {
     api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
     api_filter['count'] = this.filter.page_count;
     return api_filter;
+  }
+  handle_pageclick_new(pg){
+    console.log("page :",pg)
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+   this.getNewGenerateLead();
   }
   getAssignedLead(){
     this.assignedLeadList=[]

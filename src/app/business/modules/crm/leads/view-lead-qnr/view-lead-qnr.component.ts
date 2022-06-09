@@ -518,11 +518,11 @@ export class ViewLeadQnrComponent implements OnInit {
         permanentPinCode: this.updateValue.permanentPinCode,
         nomineeType: this.updateValue.nomineeType,
         nomineeName: this.updateValue.nomineeName,
-        addressType: this.updateValue.address[0].addressType,
-        city: this.updateValue.address[0].city,
-        address: this.updateValue.address[0].address,
-        state: this.updateValue.address[0].state,
-        pin: this.updateValue.address[0].pin,
+        addressType: this.addressType1 ,
+        city: this.city1,
+        address: this.address1,
+        state:this.state1,
+        pin: this.pin1 ,
         panNumber: this.updateValue.panNumber,
         dob: this.updateValue.dob
 
@@ -1522,6 +1522,7 @@ if(this.fileData){
           fileObjFinal['file'] = pic;
           fileObjFinal['type'] = type;
           this.filesToUpload.push(fileObjFinal);
+          console.log('this.filesToUpload',this.filesToUpload)
         }
           
     // this.fileData = [{ owner: "", fileName: "", fileSize: "", caption: "", fileType: "", order: "" }];
@@ -1706,6 +1707,7 @@ if(this.fileData){
   }
   updateKyc(){
     // if(this.createLeadForm.controls.idTypes1.value='Aadhaar'){
+      this.coApplicantListFormSubmit=[]
       const createLeadData: any = {
         "originFrom": "Lead",
         "originUid": this.leadkid,
@@ -1729,7 +1731,7 @@ if(this.fileData){
           {
             "idTypes": this.createLeadForm.controls.idTypes1.value,
             "idValue": this.createLeadForm.controls.idValue1.value,
-            "attachments": this.fileData
+            "attachments": this.fileKycData
           }
         ],
         "permanentAddress": this.createLeadForm.controls.permanentAddress.value,
@@ -1754,7 +1756,6 @@ if(this.fileData){
         // },
         "parent": true
       }
-      console.log('createLeadData',createLeadData)
       if(this.isAnyCoapp){
         this.submitCoApplicant()
       }
