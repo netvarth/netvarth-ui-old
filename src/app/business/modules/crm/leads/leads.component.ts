@@ -243,7 +243,7 @@ export class LeadsComponent implements OnInit {
     this.getLeadmaster()
     this.getAssignedLead()
     this.getSucessListLead()
-    //this.getNewGenerateLead()
+    this.getNewGenerateLead()
     this.getUnassignedLead()
     this.creditScoreGenerated()
     

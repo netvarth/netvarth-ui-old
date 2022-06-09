@@ -228,11 +228,14 @@ export class TasksComponent implements OnInit {
     // } else {
     //   this.selectedTab = 1;
     // }
-    
+    // this.crmService.getTotalTask().subscribe((data)=>{
+    //   this.totalTaskList=data
+    //  })
+    this.getTotalTask();
     this.getTaskStatusListData();
     this.getCategoryListData();
     this.getTaskTypeListData();
-    this.getTotalTask();
+    
     this.getInprogressTask();
     this.getCompletedTask();
     this.getTaskmaster()
@@ -243,6 +246,7 @@ export class TasksComponent implements OnInit {
     this.getPendingTask()
     this.getProceedTask()
     this.getVerifiedTask()
+    
   }
   handleTaskStatus(statusValue:any,statusText,statusFilter){
     console.log('statusValue',statusValue);
@@ -589,7 +593,7 @@ export class TasksComponent implements OnInit {
               },
               error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                this.loadComplete = true;
+                // this.loadComplete = true;
              
               }
             );

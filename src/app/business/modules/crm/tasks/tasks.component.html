@@ -406,6 +406,8 @@
                       </ng-container>
                     </tbody>
                   </table>
+                  <!-- {{totalCount}}
+                  {{pagination.totalCnt}} -->
                   <div class="search_paging" *ngIf="pagination.totalCnt" >
                     <app-pager  [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                       (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
