@@ -446,11 +446,11 @@
   <!----enter result start-->
   <div class="formTop" *ngIf="bActualResult && (!(this.taskDetails.title ==='Follow Up 1') && !(this.taskDetails.title ==='Follow Up 2'))">
     <div class="taskTitle">
-        <div>Enter Result</div>
+        <div>No of data collected</div>
     </div>
     <div class="fieldPadding">
         <input min="0" (keyup)="resetErrors()" [(ngModel)]="actualResult" type="number"  #actualResultt (ngModelChange)="actualResultTask(actualResultt.value)"
-        placeholder="Enter result"class="form-control "   autocomplete="off" /> 
+        placeholder="No of data collected"class="form-control "   autocomplete="off" /> 
     </div>
 </div>
   <!---enter result end-->

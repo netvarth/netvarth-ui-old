@@ -419,7 +419,7 @@
 }
 ::ng-deep .mat-datepicker-toggle{
   /* position: absolute; */
-  margin-left: -40px;
+  /* margin-left: -40px; */
   /* background: url("../../../../../../assets/images/crmImages/calendarIcon.png") no-repeat !important; */
 }
 .dateWithMatDtae{
