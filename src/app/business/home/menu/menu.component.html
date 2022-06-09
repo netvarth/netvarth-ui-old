@@ -59,7 +59,7 @@
           </div>
         </li>
         <!-- target="_blank" -->
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu" *ngIf="taskStatus"> 
+        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu" (click)="showMenuSection()" *ngIf="taskStatus"> 
           <a routerLink="crm"  routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'LMS'"
             ><span class="svg-icon menu-icon">
               <i class="fa fa-file"></i>
