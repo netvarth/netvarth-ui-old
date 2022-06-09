@@ -866,7 +866,11 @@ export class CreateTaskComponent implements OnInit {
 }
   saveCreateTask(){
     // this.api_loading = true;
-    console.log('this.type',this.type)
+   
+    // if(!this.type || this.type === undefined) {
+    //   this.type = 'PROVIDER';
+    // }
+    console.log('this.type',this.userType)
     if(this.type ==='SubUpdate'){
       console.log('this.subActivityTaskUid',this.subActivityTaskUid)
       const SubUpdateTaskData:any = {
@@ -888,7 +892,7 @@ export class CreateTaskComponent implements OnInit {
         "estDuration" : this.estTime    
       }
       console.log('SubUpdateTaskData',SubUpdateTaskData)
-      if(this.updateUserType===('PROVIDER' || 'CONSUMER') && (this.createTaskForm.controls.taskTitle.value!=null)){
+      if((this.updateUserType==='PROVIDER' || this.updateUserType==='CONSUMER') && (this.createTaskForm.controls.taskTitle.value!=null)){
         // this.api_loading = true;
         console.log("2")
         this.boolenTaskError=false;
@@ -907,9 +911,7 @@ export class CreateTaskComponent implements OnInit {
           }, projectConstants.TIMEOUT_DELAY);
         })
       }
-    }
-      
-    else if(this.type ==='Update' && this.type !=='SubUpdate' || (this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' && this.crmService.taskActivityName !='CreteTaskMaster')){
+    } else if(this.type ==='Update' && this.type !=='SubUpdate' || (this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' && this.crmService.taskActivityName !='CreteTaskMaster')){
       console.log("est time update data : ",this.estTime  )
       const updateTaskData:any = {
         "title":this.createTaskForm.controls.taskTitle.value,
@@ -932,7 +934,7 @@ export class CreateTaskComponent implements OnInit {
         "estDuration" : this.estTime    
       }
       console.log('updateTaskData',updateTaskData)
-      if(this.updateUserType===('PROVIDER' || 'CONSUMER') && (this.createTaskForm.controls.taskTitle.value!=null)){
+      if((this.updateUserType==='PROVIDER' || this.updateUserType==='CONSUMER') && (this.createTaskForm.controls.taskTitle.value!=null)){
         // this.api_loading = true;
         console.log("2")
         this.boolenTaskError=false;
@@ -954,9 +956,12 @@ export class CreateTaskComponent implements OnInit {
      
       console.log(' this.updateUserType', this.updateUserType)
 
+    } else if((this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' && this.crmService.taskActivityName !='CreteTaskMaster') || this.type===undefined){
+    console.log("Here");
+    if (!this.userType || this.userType===undefined) {
+      this.userType = 'PROVIDER';
     }
-    else if((this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' && this.crmService.taskActivityName !='CreteTaskMaster') || this.type===undefined){
-    const createTaskData:any = {
+      const createTaskData:any = {
       "originUid" : this.taskUid,
       "title":this.createTaskForm.controls.taskTitle.value,
       "description":this.createTaskForm.controls.taskDescription.value,
@@ -975,10 +980,10 @@ export class CreateTaskComponent implements OnInit {
       "targetPotential" : this.createTaskForm.controls.targetPotential.value,
       "estDuration" : this.estTime   
     }
-    // console.log('createTaskData',createTaskData)
-    // console.log('this.userType',this.userType)
+    console.log('createTaskData',createTaskData)
+    console.log('this.userType',this.userType)
     if(this.taskMasterData){
-      if(this.userType===('PROVIDER' || 'CONSUMER') ){
+      if(this.userType==='PROVIDER' || this.userType==='CONSUMER' || this.userType==='ADMIN'){
         // console.log('...................kl')
         this.boolenTaskError=false;
         this.api_loading = true;
@@ -1000,7 +1005,7 @@ export class CreateTaskComponent implements OnInit {
       }
     }
     else{
-      if(this.userType===('PROVIDER' || 'CONSUMER') && (this.createTaskForm.controls.taskTitle.value != null) && (this.createTaskForm.controls.userTaskCategory.value != null)
+      if((this.userType==='PROVIDER' || this.userType==='CONSUMER' || this.userType==='ADMIN') && (this.createTaskForm.controls.taskTitle.value != null) && (this.createTaskForm.controls.userTaskCategory.value != null)
       && (this.createTaskForm.controls.userTaskType.value != null) ){
         console.log('...................kl')
         this.boolenTaskError=false;
