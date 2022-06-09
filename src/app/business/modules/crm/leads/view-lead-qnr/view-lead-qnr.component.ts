@@ -250,9 +250,7 @@ export class ViewLeadQnrComponent implements OnInit {
   // fileKycData: { owner: any; fileName: any; fileSize: number; caption: string; fileType: any; order: number; }[];
   fileKycData: any=[];
   filesCount = 0;
-  fileDataCoApplicantApplicant: any[];
-  fileKycDataCoApplicant: any[];
-  fileDataPanCoApplicantPan: any[];
+ 
   constructor(private locationobj: Location,
 
     // private lStorageService: LocalStorageService,
@@ -316,6 +314,7 @@ export class ViewLeadQnrComponent implements OnInit {
         if (this.leadDetails.status.name === 'KYC Updated') {
           this.showupdateKyc = true;
           this.getKycDetails();
+          this.editable=false;
         }
         if (this.leadDetails.status.name === 'Credit Score Generated') {
           this.showqnr = true;
@@ -371,15 +370,15 @@ export class ViewLeadQnrComponent implements OnInit {
     });
     this.api_loading = false;
     this.createLeadForm = this.createLeadFB.group({
-      idTypes: ['Passport'],
-      idTypes1: ['UID'],
+      idTypes: [null],
+      idTypes1: [null],
       idValue: [null],
       idValue1: [null],
       panNumber: [null],
-      telephoneType: [null],
+      telephoneType: ['Residence'],
       telephoneNumber: [null],
       address: [null],
-      addressType: [null],
+      addressType: ['Residence'],
       city: [null],
       state: [null],
       pin: [null],
@@ -387,12 +386,16 @@ export class ViewLeadQnrComponent implements OnInit {
       relationName: [null],
       relationType: ['Father'],
       nomineeName: [null],
-      nomineeType: [null],
+      nomineeType: ['Father'],
       permanentAddress: [null],
       permanentCity: [null],
       permanentState: [null],
       permanentPinCode: [null]
     })
+    console.log('this.kyc_list',this.kyc_list)
+   this.createLeadForm.controls.idTypes1.setValue( this.kyc_list[2].name)
+   this.createLeadForm.controls.idTypes.setValue( this.kyc_list[0].name)
+    // this.createTaskForm.controls.taskDate.setValue(this.taskDueDate);
     this.createBTimeField = true;
     this.updateBTimefield = false;
     this.selectHeader = 'Add Lead';
@@ -434,12 +437,15 @@ export class ViewLeadQnrComponent implements OnInit {
       permanentStateCoApplicant: [null],
       permanentPinCodeCoApplicant: [null],
       idValue1CoApplicant: [null],
-      idTypes1CoApplicant: ['Passport'],
+      idTypes1CoApplicant: [null],
       addressTypeCoApplicant: [null],
-      idTypes2CoApplicant: ['UID'],
+      idTypes2CoApplicant: [null],
       idValue2CoApplicant: [null],
 
     })
+
+  //  this.createLeadForm.controls.idTypes2CoApplicant.setValue( this.kyc_list[2].name)
+  //  this.createLeadForm.controls.idTypes1CoApplicant.setValue( this.kyc_list[0].name)
     this.getStateName()
     
   }
@@ -1103,12 +1109,14 @@ if(this.fileData){
         permanentStateCoApplicant: [null],
         permanentPinCodeCoApplicant: [null],
         idValue1CoApplicant: [null],
-        idTypes1CoApplicant: ['Passport'],
+        idTypes1CoApplicant: [null],
         addressTypeCoApplicant: [null],
-        idTypes2CoApplicant: ['Aadhaar'],
+        idTypes2CoApplicant: [null],
         idValue2CoApplicant: [null],
 
       });
+      this.createLeadForm.controls.idTypes2CoApplicant.setValue( this.kyc_list[2].name)
+   this.createLeadForm.controls.idTypes1CoApplicant.setValue( this.kyc_list[0].name)
     }
     console.log('formControlArray', this.formControlArray)
     return this.formControlArray;
@@ -1148,12 +1156,12 @@ if(this.fileData){
             {
               "idTypes": item.idTypes1CoApplicant,
               "idValue": item.idValue1CoApplicant,
-              "attachments": this.fileDataCoApplicantApplicant
+              "attachments": fileData
             },
             {
               "idTypes": item.idTypes2CoApplicant,
               "idValue": item.idValue2CoApplicant,
-              "attachments": this.fileKycDataCoApplicant
+              "attachments": fileKycData
             }
           ],
           "permanentAddress": item.permanentAddressCoApplicant,
@@ -1172,7 +1180,7 @@ if(this.fileData){
             }
           ],
           "panNumber": item.panNumberCoApplicant,
-          "panAttachments": this.fileDataPanCoApplicantPan,
+          "panAttachments": fileDataPan,
           "parentid": {
             "id": this.custId
           },
@@ -1719,7 +1727,7 @@ if(this.fileData){
             "attachments": this.fileData
           },
           {
-            "idTypes": 'UID',//this.createLeadForm.controls.idTypes1.value,
+            "idTypes": this.createLeadForm.controls.idTypes1.value,
             "idValue": this.createLeadForm.controls.idValue1.value,
             "attachments": this.fileData
           }
@@ -1915,7 +1923,7 @@ if(this.fileData){
           }, projectConstants.TIMEOUT_DELAY);
         })
 
-        this.proceedList=[]
+        // this.proceedList=[]
   }
   
   crifStatus() {
@@ -2171,7 +2179,7 @@ if(this.fileData){
           }, projectConstants.TIMEOUT_DELAY);
         })
 
-        this.proceedList=[]
+        // this.proceedList=[]
   }
 }
 

@@ -1178,7 +1178,7 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <mat-select class="form-control widthWebKit" placeholder="" #idTypes formControlName="idTypes">
+                <mat-select [disabled]="!editable" class="form-control widthWebKit" placeholder="" #idTypes formControlName="idTypes">
                   <mat-option [value]="kyc.name" *ngFor="let kyc of kyc_list">
                     <div>{{kyc.displayName}}</div>
                   </mat-option>
@@ -1191,7 +1191,7 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="idValue" #idValue
+                <textarea [readonly]="true"rowa="10" class="form-control" formControlName="idValue" #idValue
                   (change)="handleidValue(idValue.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
                   placeholder="Enter number">
                       </textarea>
@@ -1212,7 +1212,7 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <mat-select class="form-control widthWebKit" placeholder="" #idTypes1 formControlName="idTypes1">
+                <mat-select [disabled]="!editable" class="form-control widthWebKit" placeholder="" #idTypes1 formControlName="idTypes1">
                   <mat-option [value]="kyc.name" *ngFor="let kyc of kyc_list">
                     <div>{{kyc.displayName}}</div>
                   </mat-option>
@@ -1225,7 +1225,7 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="idValue1" #idValue1
+                <textarea [readonly]="true" rowa="10" class="form-control" formControlName="idValue1" #idValue1
                   (change)="handleidValue1(idValue1.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
                   placeholder="Enter number">
                       </textarea>
@@ -1245,7 +1245,7 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <mat-select class="form-control widthWebKit" placeholder="Pancard">
+                <mat-select [disabled]="!editable"  class="form-control widthWebKit" placeholder="Pancard">
                   <mat-option [value]="'Pancard'">
                     <div>
                       Pancard
@@ -1260,7 +1260,7 @@
                 <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="panNumber" #panNumber
+                <textarea [readonly]="true" rowa="10" class="form-control" formControlName="panNumber" #panNumber
                   (change)="handlpanNumber(panNumber.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
                   placeholder="Enter Pancard number">
                       </textarea>
@@ -1297,7 +1297,7 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <mat-select class="form-control widthWebKit" placeholder="" #telephoneType
+                <mat-select [disabled]="!editable" class="form-control widthWebKit" placeholder="" #telephoneType
                   formControlName="telephoneType">
                   <mat-option [value]="'Residence'">
                     <div>
@@ -1344,7 +1344,7 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="telephoneNumber" #telephoneNumber
+                <textarea [readonly]="true" rowa="10" class="form-control" formControlName="telephoneNumber" #telephoneNumber
                   (change)="handletelephoneNumber(telephoneNumber.value)" (keyup)="autoGrowTextZone($event)"
                   maxlength="10" placeholder="Enter number">
                     </textarea>
@@ -1360,7 +1360,7 @@
               <div class="astericColor">*</div>
             </div>
             <div class="fieldPadding">
-              <input (keyup)="resetErrors()" type="text" #permanentAddress
+              <input [readonly]="true" (keyup)="resetErrors()" type="text" #permanentAddress
                 (ngModelChange)="hamdlepermanentAddress(permanentAddress.value)" placeholder="" class="form-control"
                 formControlName="permanentAddress" autocomplete="off" />
               <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
@@ -1375,7 +1375,7 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="permanentCity" #permanentCity
+                <textarea [readonly]="true" rowa="10" class="form-control" formControlName="permanentCity" #permanentCity
                   (change)="handlepermanentCity(permanentCity.value)" (keyup)="autoGrowTextZone($event)"
                   maxlength="1000" placeholder="">
               </textarea>
@@ -1390,7 +1390,7 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <mat-select class="form-control widthWebKit" placeholder="" #relationType
+                <mat-select [disabled]="!editable" class="form-control widthWebKit" placeholder="" #relationType
                   formControlName="permanentState">
                   <mat-option *ngFor="let state of states" [value]="state.name">
                     <div>{{state.displayName}}</div>
@@ -1409,7 +1409,7 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="permanentPinCode" #permanentPinCode
+                <textarea [readonly]="true" rowa="10" class="form-control" formControlName="permanentPinCode" #permanentPinCode
                   (change)="handlepermanentPinCode(permanentPinCode.value)" (keyup)="autoGrowTextZone($event)"
                   maxlength="1000" placeholder="">
               </textarea>
@@ -1425,7 +1425,7 @@
               </div>
               <div class="fieldPadding">
 
-                <input (keyup)="resetErrors()" type="date" #dob (ngModelChange)="handledob(dob.value)" placeholder=""
+                <input [readonly]="true" (keyup)="resetErrors()" type="date" #dob (ngModelChange)="handledob(dob.value)" placeholder=""
                   class="form-control" formControlName="dob" autocomplete="off" />
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                   errorMsg="{{leadError}}">
@@ -1440,7 +1440,7 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="relationName" #relationName
+                <textarea [readonly]="true" rowa="10" class="form-control" formControlName="relationName" #relationName
                   (change)="handlerelationName(relationName.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
                   placeholder="">
               </textarea>
@@ -1455,7 +1455,7 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <mat-select class="form-control widthWebKit" placeholder="" #relationType
+                <mat-select [disabled]="!editable" class="form-control widthWebKit" placeholder="" #relationType
                   formControlName="relationType">
                   <mat-option [value]="relation.name" *ngFor="let relation of relations">
                     <div>{{relation.displayName}}</div>
@@ -1474,7 +1474,7 @@
                 <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="nomineeName" #nomineeName
+                <textarea [readonly]="true" rowa="10" class="form-control" formControlName="nomineeName" #nomineeName
                   (change)="handlenomineeName(nomineeName.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
                   placeholder="Enter name">
                     </textarea>
@@ -1489,7 +1489,7 @@
                 <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
-                <mat-select class="form-control widthWebKit" placeholder="" #nomineeType formControlName="nomineeType">
+                <mat-select [disabled]="!editable" class="form-control widthWebKit" placeholder="" #nomineeType formControlName="nomineeType">
                   <mat-option [value]="relation.name" *ngFor="let relation of relations">
                     <div>{{relation.displayName}}</div>
                   </mat-option>
@@ -1504,7 +1504,7 @@
                 <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
-                <mat-select class="form-control widthWebKit" placeholder="" #addressType formControlName="addressType">
+                <mat-select [disabled]="!editable" class="form-control widthWebKit" placeholder="" #addressType formControlName="addressType">
                   <mat-option [value]="'Residence'">
                     <div>
                       Residence
@@ -1519,7 +1519,7 @@
                 <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" #address (ngModelChange)="hamdleaddress(address.value)"
+                <input [readonly]="true" (keyup)="resetErrors()" type="text" #address (ngModelChange)="hamdleaddress(address.value)"
                   placeholder="" class="form-control" formControlName="address" autocomplete="off" />
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                   errorMsg="{{leadError}}">
@@ -1534,7 +1534,7 @@
                 <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="city" #city (change)="handlecity(city.value)"
+                <textarea [readonly]="true" rowa="10" class="form-control" formControlName="city" #city (change)="handlecity(city.value)"
                   (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
               </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
@@ -1548,7 +1548,7 @@
                 <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
-                <mat-select class="form-control widthWebKit" placeholder="" #relationType formControlName="state">
+                <mat-select [disabled]="!editable"  class="form-control widthWebKit" placeholder="" #relationType formControlName="state">
                   <mat-option *ngFor="let state of states" [value]="state.name">
                     <div>{{state.displayName}}</div>
                   </mat-option>
@@ -1566,7 +1566,7 @@
                 <!-- <div class="astericColor">*</div> -->
               </div>
               <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="pin" #pin (change)="handlepin(pin.value)"
+                <textarea [readonly]="true" rowa="10" class="form-control" formControlName="pin" #pin (change)="handlepin(pin.value)"
                   (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
               </textarea>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
@@ -1654,7 +1654,7 @@
                   <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                  <textarea rowa="10" class="form-control" formControlName="nameCoApplicant" #nameCoApplicant
+                  <textarea [readonly]="true" rowa="10" class="form-control" formControlName="nameCoApplicant" #nameCoApplicant
                     (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="Enter name">
                       </textarea>
                   <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
@@ -1668,7 +1668,7 @@
                   <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                  <input class="form-control" formControlName="phNOCoApplicant" #phNOCoApplicant type="tel"
+                  <input [readonly]="true"  class="form-control" formControlName="phNOCoApplicant" #phNOCoApplicant type="tel"
                     placeholder="Enter number" />
                   <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                     errorMsg="{{leadError}}">
@@ -1686,7 +1686,7 @@
                     <div class="astericColor">*</div>
                   </div>
                   <div class="fieldPadding">
-                    <mat-select class="form-control widthWebKit" placeholder="" #idTypes
+                    <mat-select [disabled]="!editable"  class="form-control widthWebKit" placeholder="" #idTypes
                       formControlName="idTypes1CoApplicant">
                       <mat-option [value]="kyc.name" *ngFor="let kyc of kyc_list">
                         <div>{{kyc.displayName}}</div>
@@ -1700,7 +1700,7 @@
                     <div class="astericColor">*</div>
                   </div>
                   <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="idValue1CoApplicant" #idValue
+                    <textarea [readonly]="true" rowa="10" class="form-control" formControlName="idValue1CoApplicant" #idValue
                       (change)="handleidValue(idValue.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
                       placeholder="Enter number">
                       </textarea>
@@ -1751,7 +1751,7 @@
                     <div class="astericColor">*</div>
                   </div>
                   <div class="fieldPadding">
-                    <mat-select class="form-control widthWebKit" placeholder="" #idTypes1
+                    <mat-select [disabled]="!editable" class="form-control widthWebKit" placeholder="" #idTypes1
                       formControlName="idTypes2CoApplicant">
                       <mat-option [value]="kyc.name" *ngFor="let kyc of kyc_list">
                         <div>{{kyc.displayName}}</div>
@@ -1765,7 +1765,7 @@
                     <div class="astericColor">*</div>
                   </div>
                   <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="idValue2CoApplicant" #idValue1
+                    <textarea [readonly]="true" rowa="10" class="form-control" formControlName="idValue2CoApplicant" #idValue1
                       (change)="handleidValue1(idValue1.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
                       placeholder="Enter number">
                       </textarea>
@@ -1779,7 +1779,7 @@
 
               <div class="fieldPadding">
                 <div class="">
-                  <input #files type="file" accept="/*;capture=camera" style="display:none;" multiple
+                  <input [readonly]="true" #files type="file" accept="/*;capture=camera" style="display:none;" multiple
                     (change)="filesSelected($event, 'coApplicantKyc')">Click / Drop your files here
                   <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
                       attach_file</i></a>
@@ -1820,7 +1820,7 @@
                     <!-- <div class="astericColor">*</div> -->
                   </div>
                   <div class="fieldPadding">
-                    <mat-select class="form-control widthWebKit" placeholder="Pancard">
+                    <mat-select [disabled]="!editable" class="form-control widthWebKit" placeholder="Pancard">
                       <mat-option [value]="'Pancard'">
                         <div>
                           Pancard
@@ -1835,7 +1835,7 @@
                     <!-- <div class="astericColor">*</div> -->
                   </div>
                   <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="panNumberCoApplicant" #panNumber
+                    <textarea [readonly]="true" rowa="10" class="form-control" formControlName="panNumberCoApplicant" #panNumber
                       (change)="handlpanNumber(panNumber.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
                       placeholder="Enter Pancard number">
                       </textarea>
@@ -1847,7 +1847,7 @@
               </div>
               <div class="fieldPadding">
                 <div class="">
-                  <input #file type="file" accept="/*;capture=camera" style="display:none;" multiple
+                  <input [readonly]="true" #file type="file" accept="/*;capture=camera" style="display:none;" multiple
                     (change)="filesSelected($event, 'coApplicantPan')">Click / Drop your files heree
                   <a class="btn btn-clean btn-icon btn-md" (click)="file.click()"><i class="material-icons">
                       attach_file</i></a>
@@ -1887,7 +1887,7 @@
                     <div class="astericColor">*</div>
                   </div>
                   <div class="fieldPadding">
-                    <mat-select class="form-control widthWebKit" placeholder="" #telephoneType
+                    <mat-select [disabled]="!editable" class="form-control widthWebKit" placeholder="" #telephoneType
                       formControlName="telephoneTypeCoApplicant">
                       <mat-option [value]="'Residence'">
                         <div>
@@ -1935,7 +1935,7 @@
                     <div class="astericColor">*</div>
                   </div>
                   <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="telephoneNumberCoApplicant"
+                    <textarea [readonly]="true" rowa="10" class="form-control" formControlName="telephoneNumberCoApplicant"
                       #telephoneNumber (change)="handletelephoneNumber(telephoneNumber.value)"
                       (keyup)="autoGrowTextZone($event)" maxlength="10" placeholder="Enter number">
                     </textarea>
@@ -1951,7 +1951,7 @@
                   <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" type="text" #permanentAddress
+                  <input [readonly]="true" (keyup)="resetErrors()" type="text" #permanentAddress
                     (ngModelChange)="hamdlepermanentAddress(permanentAddress.value)" placeholder="" class="form-control"
                     formControlName="permanentAddressCoApplicant" autocomplete="off" />
                   <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
@@ -1966,7 +1966,7 @@
                     <div class="astericColor">*</div>
                   </div>
                   <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="permanentCityCoApplicant" #permanentCity
+                    <textarea [readonly]="true" rowa="10" class="form-control" formControlName="permanentCityCoApplicant" #permanentCity
                       (change)="handlepermanentCity(permanentCity.value)" (keyup)="autoGrowTextZone($event)"
                       maxlength="1000" placeholder="">
               </textarea>
@@ -1981,7 +1981,7 @@
                     <div class="astericColor">*</div>
                   </div>
                   <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="permanentStateCoApplicant" #permanentState
+                    <textarea [readonly]="true" rowa="10" class="form-control" formControlName="permanentStateCoApplicant" #permanentState
                       (change)="handlepermanentState(permanentState.value)" (keyup)="autoGrowTextZone($event)"
                       maxlength="1000" placeholder="">
                 </textarea>
@@ -1998,7 +1998,7 @@
                     <div class="astericColor">*</div>
                   </div>
                   <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="permanentPinCodeCoApplicant"
+                    <textarea [readonly]="true" rowa="10" class="form-control" formControlName="permanentPinCodeCoApplicant"
                       #permanentPinCode (change)="handlepermanentPinCode(permanentPinCode.value)"
                       (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
               </textarea>
@@ -2014,7 +2014,7 @@
                   </div>
                   <div class="fieldPadding">
 
-                    <input (keyup)="resetErrors()" type="date" #dob (ngModelChange)="handledob(dob.value)"
+                    <input [readonly]="true" (keyup)="resetErrors()" type="date" #dob (ngModelChange)="handledob(dob.value)"
                       placeholder="" class="form-control" formControlName="dobCoApplicant" autocomplete="off" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                       errorMsg="{{leadError}}">
@@ -2029,7 +2029,7 @@
                     <div class="astericColor">*</div>
                   </div>
                   <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="relationNameCoApplicant" #relationName
+                    <textarea [readonly]="true" rowa="10" class="form-control" formControlName="relationNameCoApplicant" #relationName
                       (change)="handlerelationName(relationName.value)" (keyup)="autoGrowTextZone($event)"
                       maxlength="1000" placeholder="">
               </textarea>
@@ -2044,7 +2044,7 @@
                     <div class="astericColor">*</div>
                   </div>
                   <div class="fieldPadding">
-                    <mat-select class="form-control widthWebKit" placeholder="" #relationType
+                    <mat-select [disabled]="!editable" class="form-control widthWebKit" placeholder="" #relationType
                       formControlName="relationTypeCoApplicant">
                       <mat-option [value]="relation.name" *ngFor="let relation of relations">
                         <div>{{relation.displayName}}</div>
@@ -2063,7 +2063,7 @@
                     <!-- <div class="astericColor">*</div> -->
                   </div>
                   <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="nomineeNameCoApplicant" #nomineeName
+                    <textarea [readonly]="true" rowa="10" class="form-control" formControlName="nomineeNameCoApplicant" #nomineeName
                       (change)="handlenomineeName(nomineeName.value)" (keyup)="autoGrowTextZone($event)"
                       maxlength="1000" placeholder="Enter name">
                     </textarea>
@@ -2078,7 +2078,7 @@
                     <!-- <div class="astericColor">*</div> -->
                   </div>
                   <div class="fieldPadding">
-                    <mat-select class="form-control widthWebKit" placeholder="" #nomineeType
+                    <mat-select [disabled]="!editable" class="form-control widthWebKit" placeholder="" #nomineeType
                       formControlName="nomineeTypeCoApplicant">
                       <mat-option [value]="relation.name" *ngFor="let relation of relations">
                         <div>
@@ -2097,7 +2097,7 @@
                     <!-- <div class="astericColor">*</div> -->
                   </div>
                   <div class="fieldPadding">
-                    <mat-select class="form-control widthWebKit" placeholder="" #addressType
+                    <mat-select [disabled]="!editable" class="form-control widthWebKit" placeholder="" #addressType
                       formControlName="addressTypeCoApplicant">
                       <mat-option [value]="'Residence'">
                         <div>
@@ -2116,7 +2116,7 @@
                     <!-- <div class="astericColor">*</div> -->
                   </div>
                   <div class="fieldPadding">
-                    <input (keyup)="resetErrors()" type="text" #address (ngModelChange)="hamdleaddress(address.value)"
+                    <input [readonly]="true" (keyup)="resetErrors()" type="text" #address (ngModelChange)="hamdleaddress(address.value)"
                       placeholder="" class="form-control" formControlName="addressCoAplicant" autocomplete="off" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="leadError"
                       errorMsg="{{leadError}}">
@@ -2131,7 +2131,7 @@
                     <!-- <div class="astericColor">*</div> -->
                   </div>
                   <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="cityCoApplicant" #city
+                    <textarea [readonly]="true" rowa="10" class="form-control" formControlName="cityCoApplicant" #city
                       (change)="handlecity(city.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
                       placeholder="">
               </textarea>
@@ -2146,7 +2146,7 @@
                     <!-- <div class="astericColor">*</div> -->
                   </div>
                   <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="stateCoApplicant" #state
+                    <textarea [readonly]="true" rowa="10" class="form-control" formControlName="stateCoApplicant" #state
                       (change)="handlestate(state.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
                       placeholder="">
                 </textarea>
@@ -2163,7 +2163,7 @@
                     <!-- <div class="astericColor">*</div> -->
                   </div>
                   <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="pinCoApplicant" #pin
+                    <textarea [readonly]="true" rowa="10" class="form-control" formControlName="pinCoApplicant" #pin
                       (change)="handlepin(pin.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
                       placeholder="">
               </textarea>
@@ -2241,8 +2241,8 @@
           <div class=" mgn-bt-20 mgn-up-10" style="display: flex;justify-content: center;gap: 10px;">
             <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()">Cancel
             </button>
-            <button class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="crifStatus()">Save
-            </button>
+            <!-- <button class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="crifStatus()">Save
+            </button> -->
             <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #D7FEE9 !important;
             border: 1.0803px solid #D7FFE9 !important;color: #38C984 !important;" (click)="ProceedStatusToSales()">CrifProceed
             </button>
@@ -2320,46 +2320,6 @@
       </div>
     </div>
     </div>
-
-    <!---coapplicant start-->
-    <div class="inputwithImg" style="margin-top:10px">
-     
-
-    <div>
-      <button id="reset" type="button" class="btn btn-primary font-weight-bold coApplicantForm" (click)="addCoApplicant()">
-        <div class="applicantBtn">
-          <div>
-            Add Co-Applicant
-          </div>
-          <div>
-            <i class="fa fa-plus" aria-hidden="true"></i>
-          </div>
-        </div>
-      </button>
-     </div>
-
-      <div style="text-align: center;margin-top: 15px;">
-        <ng-container>
-          <div class=" mgn-bt-20 mgn-up-10" style="display: flex;
-          justify-content: center;
-          gap: 10px;
-      ">
-            <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()">Cancel
-            </button>
-            <!-- (click)="crifStatus()" -->
-            <button class="btn btn-primary font-weight-bold confirmBtn" type="button"(click)="createCoApplicant()">Save
-            </button>
-            <!-- <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #D7FEE9 !important;
-            border: 1.0803px solid #D7FFE9 !important;color: #38C984 !important;" (click)="ProceedStatus()">Proceed
-            </button> -->
-            <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #FADDDD !important;color:black !important" (click)="failedStatus()">Rejected
-            </button>
-          </div>
-        </ng-container>
-      </div>
-    </div>
-    <!---coapplicant end-->
-
   </div>
 </div>
   <hr />
