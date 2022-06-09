@@ -378,7 +378,7 @@ export class ViewLeadQnrComponent implements OnInit {
       telephoneType: ['Residence'],
       telephoneNumber: [null],
       address: [null],
-      addressType: ['Residence'],
+      addressType: [null],
       city: [null],
       state: [null],
       pin: [null],
@@ -386,7 +386,7 @@ export class ViewLeadQnrComponent implements OnInit {
       relationName: [null],
       relationType: ['Father'],
       nomineeName: [null],
-      nomineeType: ['Father'],
+      nomineeType: [null],
       permanentAddress: [null],
       permanentCity: [null],
       permanentState: [null],
@@ -1855,6 +1855,7 @@ if(this.fileData){
       })
   }
   ProceedStatus() {
+    this.proceedList=[]
     const createLeadData: any = {
       "originFrom": "Lead",
       "originUid": this.leadkid,
@@ -2111,6 +2112,7 @@ if(this.fileData){
   }
   ProceedStatussHOWkYC(custId){
     console.log('custId',custId)
+    this.proceedList=[]
     const createLeadData: any = {
       "originFrom": "Lead",
       "originUid": this.leadkid,
