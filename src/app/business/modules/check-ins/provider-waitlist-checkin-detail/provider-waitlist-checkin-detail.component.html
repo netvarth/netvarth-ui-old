@@ -53,9 +53,12 @@
                 <span class="text-dark" style="font-size:12px">Token No : <b>{{waitlist_data.token}}</b></span>
               </div>
               <div *ngIf="spName" style="display: flex;gap: 5px;align-items: center;margin-top: 5px;">
-                <span style="font-size:12px" class="text-dark">Assigned to <b>{{waitlist_data.provider.businessName ?
-                    waitlist_data.provider.businessName : waitlist_data.provider.firstName + ' ' +
-                    waitlist_data.provider.lastName}}</b></span>
+                <span *ngIf="waitlist_data && waitlist_data.provider && waitlist_data.provider.businessName"
+                  style="font-size:12px" class="text-dark">Assigned to <b>
+                    <span
+                      *ngIf="waitlist_data && waitlist_data.provider && waitlist_data.provider.businessName">{{waitlist_data.provider.businessName}}</span>
+                  </b>
+                </span>
               </div>
             </div>
             <div>
@@ -71,21 +74,21 @@
               </div>
             </div>
           </span>
-          <div style="display: flex;gap: 5px;align-items: center;margin-top: 5px;">
+          <div style="display: flex;gap: 5px;align-items: center;">
             <span class="text-light"><b>Booking Via : </b>
               {{getAgent(waitlist_data.requestInfo.agent) | capitalizeFirst}},
               {{getBookingReqFrom(waitlist_data.requestInfo.browser,waitlist_data.requestInfo.bookingReqFrom) |
               capitalizeFirst}}</span>
           </div>
-          <div style="display: flex;gap: 5px;align-items: center;margin-top: 5px;">
+          <div style="display: flex;gap: 5px;align-items: center;">
             <span *ngIf="waitlist_data.waitlistMode" class="text-light"><b>Booking id :</b>
               {{waitlist_data.checkinEncId}}</span>
           </div>
-          <div style="display: flex;gap: 5px;align-items: center;margin-top: 5px;">
+          <div style="display: flex;gap: 5px;align-items: center;">
             <span *ngIf="waitlist_data.waitlistMode" class="text-light"><b>Booking Mode :</b>
               {{getWaitListMode(waitlist_data.waitlistMode)}}</span>
           </div>
-          <div *ngIf="label_length>0" style="display: flex;gap: 5px;align-items: center;margin-top: 3px;">
+          <div *ngIf="label_length>0" style="display: flex;gap: 5px;align-items: center;">
             <span class="text-light"><b>Labels :&nbsp;</b>
               <span *ngFor="let label of waitlist_data.label | keyvalue;let last = last">{{label.key}}
                 <span *ngIf="!last">, </span>

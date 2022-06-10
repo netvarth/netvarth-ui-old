@@ -375,7 +375,10 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           this.getCommunicationHistory(this.waitlist_data.ynwUuid);
           if (this.waitlist_data.provider) {
             if (this.waitlist_data.provider && this.waitlist_data.provider.businessName) {
-              this.spName = (this.waitlist_data.provider.businessName) ? this.waitlist_data.provider.businessName : this.waitlist_data.provider.firstName + ' ' + this.waitlist_data.provider.lastName;
+              this.spName = this.waitlist_data.provider.businessName;
+            }
+            else {
+              this.spName = this.waitlist_data.provider.firstName + ' ' + this.waitlist_data.provider.lastName;
             }
 
             this.spfname = this.waitlist_data.provider.firstName;
