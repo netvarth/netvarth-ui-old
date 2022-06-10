@@ -144,15 +144,15 @@
                 <img src="assets/images/avatar5.png" />
               </div> -->
               <div class="user-img float-left"
-                *ngIf="waitlist_data.waitlistingFor && waitlist_data.waitlistingFor[0].gender === 'male'">
+                *ngIf="waitlist_data.consumer && waitlist_data.consumer.gender === 'male'">
                 <img src="assets/images/avatar5.png" />
               </div>
               <div class="user-img float-left"
-                *ngIf="waitlist_data.waitlistingFor && waitlist_data.waitlistingFor[0].gender === 'female'">
+                *ngIf="waitlist_data.consumer && waitlist_data.consumer.gender === 'female'">
                 <img src="assets/images/femalePic.png" />
               </div>
               <div class="user-img float-left"
-                *ngIf="waitlist_data.waitlistingFor && waitlist_data.waitlistingFor[0].gender != 'male' && waitlist_data.waitlistingFor[0].gender != 'female'">
+                *ngIf="waitlist_data.consumer && waitlist_data.consumer.gender != 'male' && waitlist_data.consumer.gender != 'female'">
                 <img src="assets/images/undefinedUser.png" />
               </div>
               <span class="ml-0 pl-0"
