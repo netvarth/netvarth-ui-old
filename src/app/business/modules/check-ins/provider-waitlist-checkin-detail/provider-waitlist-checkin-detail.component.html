@@ -53,10 +53,13 @@
                 <span class="text-dark" style="font-size:12px">Token No : <b>{{waitlist_data.token}}</b></span>
               </div>
               <div *ngIf="spName" style="display: flex;gap: 5px;align-items: center;margin-top: 5px;">
-                <span *ngIf="waitlist_data && waitlist_data.provider && waitlist_data.provider.businessName"
-                  style="font-size:12px" class="text-dark">Assigned to <b>
+                <span *ngIf="waitlist_data && waitlist_data.provider" style="font-size:12px" class="text-dark">Assigned
+                  to <b>
                     <span
                       *ngIf="waitlist_data && waitlist_data.provider && waitlist_data.provider.businessName">{{waitlist_data.provider.businessName}}</span>
+                    <span
+                      *ngIf="waitlist_data && waitlist_data.provider && !waitlist_data.provider.businessName">{{waitlist_data.provider.firstName}}
+                      {{waitlist_data.provider.lastName}}</span>
                   </b>
                 </span>
               </div>
