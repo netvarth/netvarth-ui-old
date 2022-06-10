@@ -157,7 +157,7 @@
                 <tbody>
                   <tr class="py-4" class="trRow pointer-cursor"
                     *ngFor="let file of driveFiles | filter:searchTerm | paginate: config;   let i= index">
-                    <td (click)="preview(file)">
+                    <td  (click)="preview(file)">
                       <span class="text-dark-75 text-hover-primary mb-1 cust-name" >
                         <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
                         <!--[href]="file.filePath"  download <i class="fa fa-file-video-o" aria-hidden="true" *ngIf="file.fileType == 'mp4'"
@@ -318,7 +318,8 @@
                   </button>
                 </h2>
               </div>
-              <div id="collapseLocation1" class="collapse in" data-parent="#accordion1">
+              <!-- class="collapse in" -->
+              <div id="collapseLocation1"   class="collapse" data-parent="#accordion1">
                 <div class="card-body">
                   <div class="filterTextinput filter-text-input">
                     <li class="filterli filter-li">
@@ -345,7 +346,7 @@
                   </button>
                 </h2>
               </div>
-              <div id="collapseOwnerName" class="collapse in" data-parent="#accordion1">
+              <div id="collapseOwnerName"  data-toggle="false" class="collapse" data-parent="#accordion1">
                 <div class="card-body">
                   <div class="filterTextinput filter-text-input">
                     <li class="filterli filter-li">
@@ -372,7 +373,7 @@
                   </button>
                 </h2>
               </div>
-              <div id="collapsePin1" class="collapse in" data-parent="#accordion1">
+              <div id="collapsePin1" class="collapse" data-parent="#accordion1">
                 <div class="card-body">
                   <div class="filterTextinput filter-text-input">
                     <li class="filterli filter-li">
@@ -380,7 +381,7 @@
                         class="filterTextbox filter-textbox" placeholder="Enter file type">
                     </li>
                   </div>
-                  <div class="filter-checkbox-input  justify-content-between">
+                  <!-- <div class="filter-checkbox-input  justify-content-between">
                     <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                       <mat-checkbox class="filter-checkbox" [checked]="jpg"
                         (change)="setFilterDataCheckbox('fileType', 'jpg')">
@@ -416,6 +417,15 @@
                         (change)="setFilterDataCheckbox('fileType', 'doc')">
                         DOC</mat-checkbox>
                     </li>
+                  </div> -->
+                  <div class="filterTextinput filter-text-input">
+                    <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize" 
+                    *ngFor="let mode of fileTypeModes">
+                    <!-- contextTypes.indexOf(mode.mode) !== -1  *ngIf="foldertype !== 'private'" setFilterDataCheckbox('waitlistMode', mode.mode, $event)-->
+                    <mat-checkbox class="filter-checkbox" [checked]="fileTypes.indexOf(mode.mode) !== -1 "
+                      (change)="setFilterDataCheckbox('fileType', mode.mode)">
+                      {{mode.value}}</mat-checkbox>
+                  </li>
                   </div>
                 </div>
               </div>
@@ -435,7 +445,7 @@
                   </button>
                 </h2>
               </div>
-              <div id="collapseName1" class="collapse in" data-parent="#accordion1">
+              <div id="collapseName1" class="collapse" data-parent="#accordion1">
                 <div class="card-body">
                   <div class="filterTextinput filter-text-input">
                     <li class="filterli filter-li">
@@ -473,7 +483,7 @@
                   </button>
                 </h2>
               </div>
-              <div id="collapseId1" class="collapse in" data-parent="#accordion1">
+              <div id="collapseId1" class="collapse" data-parent="#accordion1">
                 <div class="card-body">
                   <div class="filterTextinput filter-text-input">
                     <div style="color: #374957 !important;
@@ -524,7 +534,7 @@
                   </button>
                 </h2>
               </div>
-              <div id="collapseBNo1" class="collapse in" data-parent="#accordion1">
+              <div id="collapseBNo1" class="collapse" data-parent="#accordion1">
                 <div class="card-body">
                   <div class="filterTextinput filter-text-input" *ngIf="foldertype === 'private'">
                     <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize" >

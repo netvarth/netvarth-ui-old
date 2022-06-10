@@ -26,8 +26,8 @@ export class FolderFilesComponent implements OnInit {
   allFileTypesSelected = false;
   filterFileType: any;
   fileSizeFilter: any;
-  contextTypes: any = []
-  fileTypes: any = []
+  contextTypes: any = [];
+  fileTypes: any = [];
   loading = true;
   blogo = "";
   bname;
@@ -190,8 +190,22 @@ export class FolderFilesComponent implements OnInit {
     { mode: "profileCreation", value: "Profile Creation" },
     { mode: "catalogCreation", value: "Catalog Creation" },
     { mode: "lead", value: "Lead" },
-    { mode: "KYC", value: "KYC" },
-
+    { mode: "KYC", value: "KYC" }
+  ];
+  fileTypeModes = [
+    { mode: "jpg", value: "JPG" },
+    { mode: "jpeg", value: "JPEG" },
+    { mode: "png", value: "PNG" },
+    { mode: "mp3", value: "MP3" },
+    { mode: "mp4", value: "MP4" },
+    { mode: "pdf", value: "PDF" },
+    { mode: "doc", value: "DOC" },
+    { mode: "xlsx", value: "XLSX" },
+    { mode: "bmp", value: "BMP" },
+    { mode: "txt", value: "TXT" },
+    { mode: "mpeg", value: "MPEG" },
+    { mode: "msword", value: "MSWORD" },
+    { mode: "webp", value: "WEBP" }
   ];
   pageChanged(event) {
     this.config.currentPage = event;
@@ -241,7 +255,9 @@ export class FolderFilesComponent implements OnInit {
       this.filter.serviceId ||
       this.selectedLanguages.length > 0 ||
       this.selectedLocations.length > 0 ||
-      this.selectedSpecialization.length > 0 || this.contextTypes.length > 0
+      this.selectedSpecialization.length > 0 ||
+      this.contextTypes.length > 0 ||
+      this.fileTypes.length > 0
     ) {
       this.filterapplied = true;
     } else {
@@ -256,15 +272,21 @@ export class FolderFilesComponent implements OnInit {
     } else {
       pageval = 0;
     }
-    this.provider_servicesobj.getFilterFileslogs(sdate, edate, Number(pageval), this.config.itemsPerPage).subscribe(
-      data => {
-      },
-      error => {
-        this.snackbarService.openSnackBar(error, {
-          panelClass: "snackbarerror"
-        });
-      }
-    );
+    this.provider_servicesobj
+      .getFilterFileslogs(
+        sdate,
+        edate,
+        Number(pageval),
+        this.config.itemsPerPage
+      )
+      .subscribe(
+        data => {},
+        error => {
+          this.snackbarService.openSnackBar(error, {
+            panelClass: "snackbarerror"
+          });
+        }
+      );
   }
 
   stopprop(event) {
@@ -307,7 +329,11 @@ export class FolderFilesComponent implements OnInit {
       }
     }
     if (this.contextTypes.length > 0) {
-      api_filter['contextType-eq'] = this.contextTypes.toString();
+      api_filter["contextType-eq"] = this.contextTypes.toString();
+      api_filter["folderName-eq"] = this.foldertype;
+    }
+    if (this.fileTypes.length > 0) {
+      api_filter["fileType-eq"] = this.fileTypes.toString();
       api_filter["folderName-eq"] = this.foldertype;
     }
     if (this.holdauditStartdate !== "") {
@@ -430,6 +456,7 @@ export class FolderFilesComponent implements OnInit {
     this.selectedLanguages = [];
     this.selectedLocations = [];
     this.contextTypes = [];
+    this.fileTypes = [];
   }
   setFilterFileTypeCheckbox(type, value, event) {
     if (type === "fileType") {
@@ -465,12 +492,21 @@ export class FolderFilesComponent implements OnInit {
     // {
     //   console.log("contextMode value :",value)
     // }
-    if (type === 'contextMode') {
+    if (type === "contextMode") {
       const indx = this.contextTypes.indexOf(value);
-      console.log("contextMode value :", value)
+      console.log("contextMode value :", value);
       this.contextTypes = [];
       if (indx === -1) {
         this.contextTypes.push(value);
+      }
+    }
+    if (type === "fileType") {
+      const indx = this.fileTypes.indexOf(value);
+      this.filter.fileType = value;
+      console.log("fileTypeMode value :", value);
+      this.fileTypes = [];
+      if (indx === -1) {
+        this.fileTypes.push(value);
       }
     }
     if (type === "folder") {
@@ -484,77 +520,77 @@ export class FolderFilesComponent implements OnInit {
         this.filter.folderName = "Private";
       }
     }
-    if (type === "fileType") {
-      if (value === false) {
-        this.png = false;
-        this.jpeg = false;
-        this.jpg = false;
-        this.pdf = false;
-        this.doc = false;
-        this.filter.fileType = " ";
-      }
-      if (value === "png") {
-        this.png = true;
-        this.jpeg = false;
-        this.jpg = false;
-        this.pdf = false;
-        this.filter.fileType = "png";
-      } else if (value === "jpeg") {
-        this.png = false;
-        this.jpeg = true;
-        this.jpg = false;
-        this.pdf = false;
-        this.filter.fileType = "jpeg";
-      } else if (value === "jpg") {
-        this.png = false;
-        this.jpeg = false;
-        this.jpg = true;
-        this.pdf = false;
-        this.filter.fileType = "jpg";
-      } else if (value === "pdf") {
-        this.png = false;
-        this.jpeg = false;
-        this.jpg = false;
-        this.doc = false;
-        this.pdf = true;
-        this.filter.fileType = "pdf";
-      } else if (value === "doc") {
-        this.doc = true;
-        this.png = false;
-        this.jpeg = false;
-        this.jpg = false;
-        this.pdf = false;
-        this.mp4 = false;
-        this.mp3 = false;
-        this.filter.fileType = "doc";
-      } else if (value === "mp3") {
-        this.mp3 = true;
-        this.png = false;
-        this.jpeg = false;
-        this.jpg = false;
-        this.pdf = false;
-        this.mp4 = false;
-        this.doc = false;
-        this.filter.fileType = "mp3";
-      } else if (value === "mp4") {
-        this.mp4 = true;
-        this.png = false;
-        this.jpeg = false;
-        this.jpg = false;
-        this.pdf = false;
-        this.mp3 = false;
-        this.filter.fileType = "mp4";
-      } else {
-        this.png = false;
-        this.jpeg = false;
-        this.jpg = false;
-        this.pdf = false;
-        this.mp3 = false;
-        this.mp4 = false;
-        this.doc = false;
-        this.filter.fileType = "";
-      }
-    }
+    // if (type === "fileType") {
+    //   if (value === false) {
+    //     this.png = false;
+    //     this.jpeg = false;
+    //     this.jpg = false;
+    //     this.pdf = false;
+    //     this.doc = false;
+    //     this.filter.fileType = " ";
+    //   }
+    //   if (value === "png") {
+    //     this.png = true;
+    //     this.jpeg = false;
+    //     this.jpg = false;
+    //     this.pdf = false;
+    //     this.filter.fileType = "png";
+    //   } else if (value === "jpeg") {
+    //     this.png = false;
+    //     this.jpeg = true;
+    //     this.jpg = false;
+    //     this.pdf = false;
+    //     this.filter.fileType = "jpeg";
+    //   } else if (value === "jpg") {
+    //     this.png = false;
+    //     this.jpeg = false;
+    //     this.jpg = true;
+    //     this.pdf = false;
+    //     this.filter.fileType = "jpg";
+    //   } else if (value === "pdf") {
+    //     this.png = false;
+    //     this.jpeg = false;
+    //     this.jpg = false;
+    //     this.doc = false;
+    //     this.pdf = true;
+    //     this.filter.fileType = "pdf";
+    //   } else if (value === "doc") {
+    //     this.doc = true;
+    //     this.png = false;
+    //     this.jpeg = false;
+    //     this.jpg = false;
+    //     this.pdf = false;
+    //     this.mp4 = false;
+    //     this.mp3 = false;
+    //     this.filter.fileType = "doc";
+    //   } else if (value === "mp3") {
+    //     this.mp3 = true;
+    //     this.png = false;
+    //     this.jpeg = false;
+    //     this.jpg = false;
+    //     this.pdf = false;
+    //     this.mp4 = false;
+    //     this.doc = false;
+    //     this.filter.fileType = "mp3";
+    //   } else if (value === "mp4") {
+    //     this.mp4 = true;
+    //     this.png = false;
+    //     this.jpeg = false;
+    //     this.jpg = false;
+    //     this.pdf = false;
+    //     this.mp3 = false;
+    //     this.filter.fileType = "mp4";
+    //   } else {
+    //     this.png = false;
+    //     this.jpeg = false;
+    //     this.jpg = false;
+    //     this.pdf = false;
+    //     this.mp3 = false;
+    //     this.mp4 = false;
+    //     this.doc = false;
+    //     this.filter.fileType = "";
+    //   }
+    // }
     if (type === "fileSize") {
       console.log("Checked", type, value);
       if (value === true) {
@@ -591,22 +627,40 @@ export class FolderFilesComponent implements OnInit {
   }
   preview(file) {
     console.log("Files : ", this.driveFiles);
-    this.fileviewdialogRef = this.dialog.open(PreviewuploadedfilesComponent, {
-      width: "100%",
-      panelClass: [
-        "popup-class",
-        "commonpopupmainclass",
-        "uploadfilecomponentclass"
-      ],
-      disableClose: true,
-      data: {
-        file: file
-      }
-    });
-    this.fileviewdialogRef.afterClosed().subscribe(result => {
-      if (result) {
-      }
-    });
+    if (
+      file.fileType === "jpg" ||
+      file.fileType === "jpeg" ||
+      file.fileType === "png" ||
+      file.fileType === "bmp" ||
+      file.fileType === "webp"
+    ) {
+      this.fileviewdialogRef = this.dialog.open(PreviewuploadedfilesComponent, {
+        width: "100%",
+        panelClass: [
+          "popup-class",
+          "commonpopupmainclass",
+          "uploadfilecomponentclass"
+        ],
+        disableClose: true,
+        data: {
+          file: file
+        }
+      });
+      this.fileviewdialogRef.afterClosed().subscribe(result => {
+        if (result) {
+        }
+      });
+    } else {
+      const a = document.createElement("a");
+      a.href = file.filePath;
+      a.download = file.filePath.split("/").pop();
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      // console.log("Type :",file.fileType)
+
+      return '<a [href]="file.filePath" target="_blank" [download]="file.fileName"></a>';
+    }
   }
   deleteFile(id, fileName) {
     console.log("ID : ", id);
@@ -721,16 +775,25 @@ export class FolderFilesComponent implements OnInit {
     console.log("this.action", this.driveFiles);
     console.log("this.selectedMessage", this.selectedMessage.files);
     this.apiloading = true;
-    if (this.action === "attachment" && this.folderTypeName && this.selectedMessage) {
+    if (
+      this.action === "attachment" &&
+      this.folderTypeName &&
+      this.selectedMessage
+    ) {
       // const dataToSend: FormData = new FormData();
       let i = 0;
       let captions = [];
       if (this.selectedMessage) {
         for (const file of this.selectedMessage.files) {
           const size = file["size"] / 1024;
-          const caption =  {owner:this.active_user.id, fileName: file["name"], fileSize: size/1024, 
-          caption: "", fileType: file["type"].split("/")[1], 
-          order: i++}
+          const caption = {
+            owner: this.active_user.id,
+            fileName: file["name"],
+            fileSize: size / 1024,
+            caption: this.imgCaptions[i] ? this.imgCaptions[i] : "",
+            fileType: file["type"].split("/")[1],
+            order: i++
+          };
           captions.push(caption);
           // dataToSend.append('attachments', file);
           // captions[i] = (this.imgCaptions[i]) ? this.imgCaptions[i] : '';
@@ -775,61 +838,71 @@ export class FolderFilesComponent implements OnInit {
       //   type: "application/json"
       // });
       // dataToSend.append("fileData", newBlobData);
-      this.provider_servicesobj.uploadAttachments(this.folderTypeName, this.active_user.id, captions).subscribe(
-        (s3UrlsObj: any) => {
-          // this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { panelClass: "snackbarnormal" });
-          // this.selectedMessage = { files: [], base64: [], caption: [] };
-          // this.getfiles();
-          // this.apiloading = false;
-          this.uploadFilesToS3(s3UrlsObj);
-        },
-        error => {
-          this.snackbarService.openSnackBar(error.error, { panelClass: "snackbarerror" });
-          this.apiloading = false;
-        }
-      );
+      this.provider_servicesobj
+        .uploadAttachments(this.folderTypeName, this.active_user.id, captions)
+        .subscribe(
+          (s3UrlsObj: any) => {
+            // this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { panelClass: "snackbarnormal" });
+            // this.selectedMessage = { files: [], base64: [], caption: [] };
+            // this.getfiles();
+            // this.apiloading = false;
+            this.uploadFilesToS3(s3UrlsObj);
+          },
+          error => {
+            this.snackbarService.openSnackBar(error.error, {
+              panelClass: "snackbarerror"
+            });
+            this.apiloading = false;
+          }
+        );
     } else {
       alert("Please attach atleast one file.");
     }
   }
-  
-  
+
   uploadFile(file, url) {
     const _this = this;
     return new Promise(function(resolve, reject) {
       _this.provider_servicesobj.videoaudioS3Upload(file, url).subscribe(
-      () => {
-        resolve(true);
-      }, () => {
-        resolve(false);
-      }
-    );   
-  })
-}
+        () => {
+          resolve(true);
+        },
+        () => {
+          resolve(false);
+        }
+      );
+    });
+  }
   async uploadFilesToS3(s3Urls) {
     const _this = this;
     let count = 0;
     for (let i = 0; i < s3Urls.length; i++) {
       // this.provider_servicesobj.videoaudioS3Upload(this.selectedMessage['files'][s3Urls[i].orderId], s3Urls[i].url).subscribe(
       //   () => {
-          
+
       //   // }, () => {
       //     // resolve(false);
       //   })
       // }
-      await _this.uploadFile(this.selectedMessage['files'][s3Urls[i].orderId], s3Urls[i].url).then(
-          () => {      
-            count++;        
-            console.log("Count=", count);
-            console.log(s3Urls.length);
-            if (count === s3Urls.length) { 
-              _this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { panelClass: "snackbarnormal" });
-              _this.selectedMessage = { files: [], base64: [], caption: [] };
-              _this.getfiles();
-              _this.apiloading = false;
-            }
-          });   
-        }
+      await _this
+        .uploadFile(
+          this.selectedMessage["files"][s3Urls[i].orderId],
+          s3Urls[i].url
+        )
+        .then(() => {
+          count++;
+          console.log("Count=", count);
+          console.log(s3Urls.length);
+          if (count === s3Urls.length) {
+            _this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, {
+              panelClass: "snackbarnormal"
+            });
+            _this.selectedMessage = { files: [], base64: [], caption: [] };
+            _this.getfiles();
+            _this.apiloading = false;
+          }
+        });
+    }
   }
 
   getFolderfiles() {
@@ -841,12 +914,10 @@ export class FolderFilesComponent implements OnInit {
   }
 
   filesSelected(event, type?) {
-    this.fileService.filesSelected(event, this.selectedMessage).then(
-      () => {
-        this.action = "attachment";
-        this.modal.nativeElement.click();
-      }
-    )
+    this.fileService.filesSelected(event, this.selectedMessage).then(() => {
+      this.action = "attachment";
+      this.modal.nativeElement.click();
+    });
     // const input = event.target.files;
     // console.log("File Selected :", input);
     // let i = 0;
@@ -883,7 +954,7 @@ export class FolderFilesComponent implements OnInit {
   }
 
   getImage(url, file) {
-    console.log("URL :", url);
+    //console.log("URL :", url);
     return this.fileService.getImage(url, file);
   }
   getImageType(fileType) {
@@ -909,11 +980,11 @@ export class FolderFilesComponent implements OnInit {
       }
     });
   }
-  onBack() { }
+  onBack() {}
   onCancel() {
     this._location.back();
   }
-  popupClosed() { }
+  popupClosed() {}
   deleteTempImage(i) {
     this.selectedMessage.files.splice(i, 1);
     this.selectedMessage.base64.splice(i, 1);
@@ -932,7 +1003,6 @@ export class FolderFilesComponent implements OnInit {
         file: file
       }
     });
-    dialogRef.afterClosed().subscribe((res: any) => {
-    });
+    dialogRef.afterClosed().subscribe((res: any) => {});
   }
 }

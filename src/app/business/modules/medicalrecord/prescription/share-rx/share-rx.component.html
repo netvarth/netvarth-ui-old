@@ -78,8 +78,9 @@
     <mat-dialog-actions>
         <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
             <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">Cancel</button>
-            <button type="submit" mat-button [disabled]="!amForm.valid || disable " class="cs-btn bt1 mr10">Share<i
+            <button type="submit" mat-button [disabled]="!amForm.valid || disable " class="cs-btn btn btn-primary mr10" style="margin-left: 10px">Share<i
                     class="fa fa-spinner fa-spin" *ngIf="sharebtnloading"></i></button>
+                    <!-- btn btn-info -->
         </div>
     </mat-dialog-actions>
     <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
