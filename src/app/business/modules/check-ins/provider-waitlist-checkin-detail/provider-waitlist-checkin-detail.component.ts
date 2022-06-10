@@ -115,6 +115,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   whatsappNumber: any;
   mobileNumber: any;
   email: any;
+  label_length: number;
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -130,7 +131,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     private communicationService: CommunicationService,
     private provider_shared_functions: ProviderSharedFuctions) {
     this.activated_route.params.subscribe(params => {
-      this.waitlist_id = params.id;      
+      this.waitlist_id = params.id;
     });
     this.activated_route.queryParams.subscribe(params => {
       this.timetype = JSON.parse(params.timetype);
@@ -303,6 +304,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           this.getConsumerBills();
           this.getCustomerHistoryVisit();
           console.log('waitlist dtata', this.waitlist_data)
+          this.label_length = Object.keys(this.waitlist_data.label).length
           this.getWaitlistNotes(this.waitlist_data.ynwUuid);
           if (this.waitlist_data.questionnaires && this.waitlist_data.questionnaires.length > 0) {
             this.questionnaires = this.waitlist_data.questionnaires;
@@ -367,7 +369,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
             this.waitlist_history = data;
             console.log('waitlisthistory', this.waitlist_history)
             this.getInternalStatusLog(this.waitlist_data.ynwUuid).then((status: any) => {
-              this.internalStatuslog = status;                   
+              this.internalStatuslog = status;
             });
           });
           this.getCommunicationHistory(this.waitlist_data.ynwUuid);

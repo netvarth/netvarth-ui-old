@@ -59,6 +59,11 @@
             {{waitlist_data.appointmentEncId}}</span>
           <span *ngIf="waitlist_data.appointmentMode" class="text-light"><b>Booking Mode :</b>
             {{getAppointmentMode(waitlist_data.appointmentMode)}}</span>
+          <span *ngIf="label_length>0" class="text-light"><b>Labels :&nbsp;</b>
+            <span *ngFor="let label of waitlist_data.label | keyvalue;let last = last">{{label.key}}
+              <span *ngIf="!last">, </span>
+            </span>
+          </span>
           <div>
             <a *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'"
               (click)="changeWaitlistStatus('Started')"
@@ -105,15 +110,18 @@
               <!-- <div *ngIf="waitlist_data.appmtFor" class="user-img float-left">
                 <img src="assets/images/avatar5.png" />
               </div> -->
-              <div class="user-img float-left" *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].gender === 'male'">
+              <div class="user-img float-left"
+                *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].gender === 'male'">
                 <img src="assets/images/avatar5.png" />
-            </div>
-            <div class="user-img float-left" *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].gender === 'female'">
+              </div>
+              <div class="user-img float-left"
+                *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].gender === 'female'">
                 <img src="assets/images/femalePic.png" />
-            </div>
-            <div class="user-img float-left" *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].gender != 'male' && waitlist_data.appmtFor[0].gender != 'female'">
+              </div>
+              <div class="user-img float-left"
+                *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].gender != 'male' && waitlist_data.appmtFor[0].gender != 'female'">
                 <img src="assets/images/undefinedUser.png" />
-            </div>
+              </div>
               <div class="float-right">
                 <a (click)="editCustomerDetails()" style="font-size:13px!important;"
                   class="edit-btn pointer-cursor"><b>Edit Details</b></a>
@@ -229,8 +237,8 @@
   <div class="content comn-cls checkin-details" *ngIf="!api_loading && questionnaires.length > 0">
     <div class="card-header text-capitalize card pointer-cursor d-flex" data-toggle="collapse" data-target="#moreinfo">
       <div>
-       <span class="font-weight-bold grouping-heading float-left">{{customer_label | capitalizeFirst}} info</span>
-       <span class="float-right arrow font-weight-bolder"><span class="fa fa-angle-down"></span></span>
+        <span class="font-weight-bold grouping-heading float-left">{{customer_label | capitalizeFirst}} info</span>
+        <span class="float-right arrow font-weight-bolder"><span class="fa fa-angle-down"></span></span>
       </div>
     </div>
   </div>

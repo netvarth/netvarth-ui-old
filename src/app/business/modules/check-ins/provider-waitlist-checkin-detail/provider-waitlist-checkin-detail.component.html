@@ -85,6 +85,13 @@
             <span *ngIf="waitlist_data.waitlistMode" class="text-light"><b>Booking Mode :</b>
               {{getWaitListMode(waitlist_data.waitlistMode)}}</span>
           </div>
+          <div *ngIf="label_length>0" style="display: flex;gap: 5px;align-items: center;margin-top: 3px;">
+            <span class="text-light"><b>Labels :&nbsp;</b>
+              <span *ngFor="let label of waitlist_data.label | keyvalue;let last = last">{{label.key}}
+                <span *ngIf="!last">, </span>
+              </span>
+            </span>
+          </div>
           <div>
             <a *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Cancelled'"
               (click)="changeWaitlistStatus('STARTED')"
@@ -133,15 +140,18 @@
               <!-- <div *ngIf="waitlist_data.waitlistingFor" class="user-img float-left">
                 <img src="assets/images/avatar5.png" />
               </div> -->
-              <div class="user-img float-left" *ngIf="waitlist_data.waitlistingFor && waitlist_data.waitlistingFor[0].gender === 'male'">
+              <div class="user-img float-left"
+                *ngIf="waitlist_data.waitlistingFor && waitlist_data.waitlistingFor[0].gender === 'male'">
                 <img src="assets/images/avatar5.png" />
-            </div>
-            <div class="user-img float-left" *ngIf="waitlist_data.waitlistingFor && waitlist_data.waitlistingFor[0].gender === 'female'">
+              </div>
+              <div class="user-img float-left"
+                *ngIf="waitlist_data.waitlistingFor && waitlist_data.waitlistingFor[0].gender === 'female'">
                 <img src="assets/images/femalePic.png" />
-            </div>
-            <div class="user-img float-left" *ngIf="waitlist_data.waitlistingFor && waitlist_data.waitlistingFor[0].gender != 'male' && waitlist_data.waitlistingFor[0].gender != 'female'">
+              </div>
+              <div class="user-img float-left"
+                *ngIf="waitlist_data.waitlistingFor && waitlist_data.waitlistingFor[0].gender != 'male' && waitlist_data.waitlistingFor[0].gender != 'female'">
                 <img src="assets/images/undefinedUser.png" />
-            </div>
+              </div>
               <span class="ml-0 pl-0"
                 *ngIf="waitlist_data.waitlistingFor[0].firstName || waitlist_data.waitlistingFor[0].lastName">
                 &nbsp;<b>{{waitlist_data.waitlistingFor[0].firstName | capitalizeFirst}}
@@ -288,13 +298,14 @@
   <div class="content comn-cls checkin-details" *ngIf="!api_loading && questionnaires.length > 0">
     <div class="card-header text-capitalize card pointer-cursor d-flex" data-toggle="collapse" data-target="#moreinfo">
       <div>
-       <span class="font-weight-bold grouping-heading float-left">More info</span>
-       <span class="float-right arrow font-weight-bolder"><span class="fa fa-angle-down"></span></span>
+        <span class="font-weight-bold grouping-heading float-left">More info</span>
+        <span class="float-right arrow font-weight-bolder"><span class="fa fa-angle-down"></span></span>
       </div>
     </div>
   </div>
 
-  <div class="collapse content comn-cls checkin-details" id="moreinfo" *ngIf="!api_loading && questionnaires.length > 0">
+  <div class="collapse content comn-cls checkin-details" id="moreinfo"
+    *ngIf="!api_loading && questionnaires.length > 0">
     <div class="card cardBorder">
       <div class="">
         <h3 class="">
