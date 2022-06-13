@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { MatDialogModule } from "@angular/material/dialog";
-import {  MatTableModule } from "@angular/material/table";
+import { MatTableModule } from "@angular/material/table";
 import { CapitalizeFirstPipeModule } from "../../../../../shared/pipes/capitalize.module";
 import { LoadingSpinnerModule } from "../../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { CrmService } from "../../crm.service";
@@ -34,22 +34,17 @@ import { MatOptionModule } from "@angular/material/core";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatCardModule } from "@angular/material/card";
 import { PreviewpdfModule } from "./previewpdf/previewpdf.module";
+import { ApplicantModule } from "./applicant/applicant.module";
 const routes: Routes = [
   { path: '', component: ViewLeadQnrComponent },
-  {path:'create-lead',loadChildren:()=>import('../create-lead/create-lead.module').then((m)=>m.CreateLeadModule)},
-  {path:'viewleadqnr/:id',loadChildren:()=>import('../view-lead-qnr/view-lead-qnr.module').then((m)=>m.ViewLeadQnrModule)},
+  { path: 'create-lead', loadChildren: () => import('../create-lead/create-lead.module').then((m) => m.CreateLeadModule) },
+  { path: 'viewleadqnr/:id', loadChildren: () => import('../view-lead-qnr/view-lead-qnr.module').then((m) => m.ViewLeadQnrModule) },
   // {path:'create-task/:id',loadChildren:()=>import('../../tasks/create-task/create-task.module').then((m)=>m.CreateTaskModule)},
 ];
 
 @NgModule({
   declarations: [
-    ViewLeadQnrComponent,
-    // AppointmentsComponent,
-    // LeadActivityComponent,
-    // ConnectionsComponent,
-    // SubleadsComponent,
-    // ActivitylogComponent,
-    // SelectAttachmentComponent
+    ViewLeadQnrComponent
   ],
   imports: [
     CommonModule,
@@ -67,23 +62,23 @@ const routes: Routes = [
     MatIconModule,
     PreviewpdfModule,
     LoadingSpinnerModule,
-        MatTooltipModule,
-        MatCheckboxModule,
-        FormsModule,
-        CapitalizeFirstPipeModule,
-        MatDialogModule,
-        MatRadioModule,
-        MatSlideToggleModule,
-        MatFormFieldModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        FormMessageDisplayModule,
-        MatSelectModule,
-        MatOptionModule,
-        MatDatepickerModule,
-        MatIconModule,
-        // MatSelectSearchModule,
-        MatCardModule,
+    MatTooltipModule,
+    MatCheckboxModule,
+    FormsModule,
+    CapitalizeFirstPipeModule,
+    MatDialogModule,
+    MatRadioModule,
+    MatSlideToggleModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    FormMessageDisplayModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatDatepickerModule,
+    MatIconModule,
+    MatCardModule,
+    ApplicantModule,
     NgCircleProgressModule.forRoot({
       // set defaults here
       backgroundColor: "#e9ecef",
@@ -100,15 +95,15 @@ const routes: Routes = [
       subtitleColor: "teal",
     }),
     [RouterModule.forChild(routes)],
-    
+
   ],
   providers: [
     CrmService,
     FileService
   ],
   schemas: [
-      CUSTOM_ELEMENTS_SCHEMA,
-      NO_ERRORS_SCHEMA
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
   ]
 })
 export class ViewLeadQnrModule { }

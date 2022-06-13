@@ -1,13 +1,71 @@
-.overLap {
-    display: inline-flex;
+.dropdown.notifications-menu a {
+    height: 100px !important;
+    margin-bottom: 12px !important;
+    border: 0 !important;
+    background: white !important;
+    border-radius: 0 !important;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12) !important;
+    color: #1E4079 !important;
+    width: 100px !important;
+    text-align: center !important;
 }
-@media (max-width: 576px) {
-    .dropdown.notifications-menu a i {
-        margin-bottom: 0px !important;
-        font-size: medium !important;
-    }
+.overLap{
+display: inline-flex;    
 }
 
+.dropdown.notifications-menu a i {
+    display: block !important;
+    font-size: 50px !important;
+    text-align: center !important;
+    margin-top: 5px !important;
+    color: #1E4079 !important;
+    margin-bottom: 10px !important;
+}
+
+@media (max-width: 576px) {
+    .dropdown.notifications-menu a {
+        padding-top: 2px !important;
+        line-height: 1.4 !important;
+        height: 60px !important;
+        width: 60px !important;
+    }
+    
+    .dropdown.notifications-menu a i {
+        font-size: 30px !important;
+        margin-bottom: 0px !important;
+    }    
+}
+
+.dropdown.customized-dd button {
+    background-color: white !important;
+}
+
+.dropdown.customized-dd:hover button{
+    background-color: #f4f4f4 !important;
+    color: #444 !important;
+}
+
+.dropdown.customized-dd .dd-menu {
+    list-style-type: none !important;
+    padding: 5px !important;
+    width: max-content !important;
+}
+
+.dropdown.customized-dd .dd-menu h4 {
+    font-size: 15px !important;
+    text-transform: capitalize !important;
+    color: #777 !important;
+    font-weight: 500 !important;
+}
+
+.dropdown.customized-dd .manage-views {
+    background: #f0f0f0 !important;
+    height: 30px !important;
+}
+.location {
+    font-weight: normal !important;
+    font-size: .8rem !important;
+}
 .dashboard .card.w-dta .dash-list .table tbody tr td{
     border: none;
 }
@@ -938,7 +996,6 @@ a:hover {
 nav {
     display: table;
     table-layout: fixed;
-    width: 70%;
     margin: 0 auto;
 }
 
@@ -1510,53 +1567,9 @@ span.tab-text.ng-star-inserted {
     display: flex;
 }
 
-.taskTitle{
-    display: flex;
-    align-items: center;
-    grid-gap: 5px;
-    gap: 5px;
-    font-weight: 400;
-    font-size: 12px;
-    color: rgb(109, 108, 108);
-}
-.form-control{
-    /* background-color: #f6f6f6!important; */
-    display: block;
-    width: 35%;
-    height: 35px;
-    padding: 6px 12px!important;
-    font-size: 14px !important;
-    line-height: 1.42857143!important;
-    /* color: #555!important; */
-    background-image: none !important;
-    /* background: #F1F1F1 !important; */
-    border-radius: 5.73504px !important;
-    /* box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%) !important;
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important; */
-    border: 1.23426px solid #F8F8F8;
-    box-shadow: 3.8295px 3.8295px 7.659px -3.0636px rgba(136, 136, 136, 0.25);
-    color: #4B4B4B;
-    font-weight: 600;
-}
-::ng-deep .form-control:focus {
-    border: 1.23426px solid #F8F8F8 !important;
-  }
-  .statusSelectDiv{
-    width: -webkit-fill-available;
-}
-.form-control:focus{
-    border: 1.23426px solid #F8F8F8 !important;
-}
-.statusImg{
-    display: flex;
-    gap: 5px;
-    align-items: center;
-}
-::ng-deep .mat-select-placeholder{
-    color: rgba(0, 0, 0, 0.87) !important;
-}
 td{
     white-space: normal !important;
+    height: 50px;
   }
   .lead{
       display: flex;
@@ -1570,3 +1583,9 @@ td{
   .filterBtn{
     float: right;margin-top: -30px;
   }
+  .dashboard .card.w-dta .dash-list .table tbody tr:nth-child(odd) {
+    background: transparent;
+}
+.dashboard .card.w-dta .dash-list .table tbody tr {
+    transition: all 500ms;
+}

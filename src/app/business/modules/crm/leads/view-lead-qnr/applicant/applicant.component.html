@@ -1,0 +1,520 @@
+<form [formGroup]="applicantForm" id="{{applicantId}}" (focusout)="sendApplicantInfo()">
+    <div style="display: flex; align-items: center;  gap: 10px;" *ngIf="applicant.parent">
+        <div class="imageClass">
+            <div style="color: #8A8383;">{{customerName[0] | capitalizeFirst}}</div>
+        </div>
+        <div>
+            <div>
+                <div style="font-size: 14px;color: #000000;font-weight: bold;margin-bottom: 4px;">{{customerName |
+                    capitalizeFirst}}</div>
+            </div>
+            <div>
+                <div style="font-size: 12px;color: #000000;">{{phoneNumber}}</div>
+            </div>
+        </div>
+    </div>
+    <hr *ngIf="applicant.parent" />
+    <div style="border-bottom: 1px solid #04A5FF;height: 30px;" *ngIf="!applicant.parent">
+        <div style="display: flex;justify-content: space-between;align-items: center;">
+            <div style="font-size: 15px!important;font-weight: bold!important">
+                Co-Applicant Name
+            </div>
+            <div>
+                <i (click)="removApplicant(applicantId)" style="cursor:pointer" class="fa fa-trash"
+                    aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+    <div style="display: flex;gap: 5px" *ngIf="!applicant.parent">
+        <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+                <div>Name</div>
+                <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+                <textarea rowa="10" class="form-control" formControlName="customerName" #applicantName
+                    (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="Enter name">
+                </textarea>
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="errorMessage"
+                    errorMsg="{{errorMessage}}">
+                </app-field-error-display>
+            </div>
+        </div>
+        <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="leadTitle">
+                <div>Phone Number</div>
+                <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+                <input class="form-control" formControlName="permanentPhoneNumber" #applicantPhone type="tel"
+                    placeholder="Enter number" />
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="errorMessage"
+                    errorMsg="{{errorMessage}}">
+                </app-field-error-display>
+            </div>
+        </div>
+    </div>
+    <span class="group-head">KYC Details</span><br>
+    <div class="bggrey my-2 mgn-bt-20">
+        <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>Applicant KYC</div>
+                    <div class="astericColor">*</div>
+                </div>
+                <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" placeholder="" #idTypes formControlName="idTypes">
+                        <mat-option [value]="kyc.name" *ngFor="let kyc of kycList">
+                            <div>{{kyc.displayName}}</div>
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>Number</div>
+                    <div class="astericColor">*</div>
+                </div>
+                <div class="fieldPadding">
+                    <textarea rowa="10" class="form-control" formControlName="idValue" #idValue
+                        (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="Enter number">
+                  </textarea>
+                    <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                        *ngIf="errorMessage" errorMsg="{{errorMessage}}">
+                    </app-field-error-display>
+                </div>
+            </div>
+        </div>
+        <div class="fieldPadding" *ngIf="applicant">
+            <div class="" [hidden]="applicant && applicant.validationIds && applicant.validationIds[0] && applicant.validationIds[0].attachments && applicant.validationIds[0].attachments.length > 0 && applicant.validationIds[0].attachments[0]['s3path']">
+                <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
+                    (change)="filesSelected($event, 'kyc1')">Click / Drop your files here
+                <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i class="material-icons">
+                        attach_file</i></a>
+            </div>
+            <div *ngIf="applicant && applicant.validationIds && applicant.validationIds[0] && applicant.validationIds[0].attachments && applicant.validationIds[0].attachments.length > 0 && !applicant.validationIds[0].attachments[0]['s3path']">
+                <div class="img-section clearfix mgn-up-20"
+                    *ngIf="selectedFiles['kyc1'] && selectedFiles['kyc1'].files && selectedFiles['kyc1'].files.length > 0">
+                    <ul class="galul">
+                        <li *ngFor="let file of selectedFiles['kyc1'].files;let i = index ">
+                            <div class="galimg_outer">
+                                <div class="gal_img">
+                                    <img [src]="getImage(selectedFiles['kyc1'].base64[i], file)"
+                                        *ngIf="selectedFiles['kyc1'].base64[i]">
+                                </div>
+                                <div class="gal_action" (click)="deleteTempImage(i, 'kyc1')">
+                                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bggrey my-2 clearfix"
+        *ngIf="applicant && applicant.validationIds && applicant.validationIds[0] && applicant.validationIds[0].attachments && applicant.validationIds[0].attachments.length > 0 && applicant.validationIds[0].attachments[0]['s3path']">
+        <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+
+                <div *ngFor="let file of applicant.validationIds[0].attachments">
+                    <a href="{{file.s3path}}" target="_blank" download>
+                        <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
+                        {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="bggrey my-2 mgn-bt-20">
+        <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>Applicant KYC</div>
+                    <div class="astericColor">*</div>
+                </div>
+                <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" placeholder="" #idTypes1 formControlName="idTypes1">
+                        <mat-option [value]="kyc.name" *ngFor="let kyc of kycList">
+                            <div>{{kyc.displayName}}</div>
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>Number</div>
+                    <div class="astericColor">*</div>
+                </div>
+                <div class="fieldPadding">
+                    <textarea rowa="10" class="form-control" formControlName="idValue1" #idValue1
+                        (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="Enter number">
+                  </textarea>
+                    <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                        *ngIf="errorMessage" errorMsg="{{errorMessage}}">
+                    </app-field-error-display>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="fieldPadding" *ngIf="applicant">
+            <div class="" [hidden]="applicant && applicant.validationIds && applicant.validationIds[1] && applicant.validationIds[1].attachments && applicant.validationIds[1].attachments.length > 0 && applicant.validationIds[1].attachments[0]['s3path']">
+                <input #files type="file" accept="/*;capture=camera" style="display:none;" multiple
+                    (change)="filesSelected($event,'kyc2')">Click / Drop your files here
+                <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
+                        attach_file</i></a>
+            </div>
+            <div *ngIf="applicant && applicant.validationIds && applicant.validationIds[1] && applicant.validationIds[1].attachments && applicant.validationIds[1].attachments.length > 0 && !applicant.validationIds[1].attachments[0]['s3path']">
+                <div class="img-section clearfix mgn-up-20"
+                    *ngIf="selectedFiles['kyc2'] && selectedFiles['kyc2'].files && selectedFiles['kyc2'].files.length > 0">
+                    <ul class="galul">
+                        <li *ngFor="let file of selectedFiles['kyc2'].files;let i = index ">
+                            <div class="galimg_outer">
+                                <div class="gal_img">
+                                    <img [src]="getImage(selectedFiles['kyc2'].base64[i], file)"
+                                        *ngIf="selectedFiles['kyc2'].base64[i]">
+                                </div>
+                                <div class="gal_action" (click)="deleteTempImage(i, 'kyc2')">
+                                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bggrey my-2 clearfix"
+    *ngIf="applicant && applicant.validationIds && applicant.validationIds[1] && applicant.validationIds[1].attachments && applicant.validationIds[1].attachments.length > 0 && applicant.validationIds[1].attachments[0]['s3path']">
+        <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div *ngFor="let file of applicant.validationIds[1].attachments">
+                    <a href="{{file.s3path}}" target="_blank" download>
+                        <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
+                        {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <span class="group-head">Pancard Details</span><br>
+    <div class="bggrey my-2">
+        <div style="display: flex;gap: 5px">
+            <!-- <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>Applicant KYC</div>
+                </div>
+                <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" placeholder="Pancard">
+                        <mat-option [value]="'Pancard'">
+                            <div>Pancard</div>
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </div> -->
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>Pancard number</div>
+                </div>
+                <div class="fieldPadding col-xs-6 col-md-6 col-lg-6">
+                    <textarea rowa="10" class="form-control" formControlName="panNumber" #panNumber
+                        (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="Enter Pancard number">
+                  </textarea>
+                    <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                        *ngIf="errorMessage" errorMsg="{{errorMessage}}">
+                    </app-field-error-display>
+                </div>
+            </div>
+        </div>
+        <div class="fieldPadding"
+        [hidden]="applicant && applicant.panAttachments && applicant.panAttachments.length > 0 && applicant.panAttachments[0]['s3path']">
+            <div class="">
+                <input #file type="file" accept="/*;capture=camera" style="display:none;" multiple
+                    (change)="filesSelected($event, 'pan')">Click / Drop your files heree
+                <a class="btn btn-clean btn-icon btn-md" (click)="file.click()"><i class="material-icons">
+                        attach_file</i></a>
+            </div>
+        </div>
+        <div
+            *ngIf="applicant &&  (!applicant.panAttachments || (applicant.panAttachments && applicant.panAttachments.length>0 && !applicant.panAttachments[0]['s3path']))">
+            <div class="img-section clearfix mgn-up-20"
+                *ngIf="selectedFiles['pan'] && selectedFiles['pan'].files && selectedFiles['pan'].files.length > 0">
+                <ul class="galul">
+                    <li *ngFor="let file of selectedFiles['pan'].files;let i = index ">
+                        <div class="galimg_outer">
+                            <div class="gal_img">
+                                <img [src]="getImage(selectedFiles['pan'].base64[i], file)"
+                                    *ngIf="selectedFiles['pan'].base64[i]">
+                            </div>
+                            <div class="gal_action" (click)="deleteTempImage(i, 'pan')">
+                                <i class="fa fa-times-circle" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="bggrey my-2 clearfix"
+        *ngIf="applicant && applicant.panAttachments && applicant.panAttachments.length > 0 && applicant.panAttachments[0]['s3path']">
+        <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div *ngFor="let file of applicant.panAttachments">
+                    <a href="{{file.s3path}}" target="_blank" download>
+                        <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
+                        {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <span class="group-head">Details</span><br>
+    <div class="bggrey my-2">
+        <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>Telephone Type</div>
+                    <div class="astericColor">*</div>
+                </div>
+                <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" placeholder="" #telephoneType
+                        formControlName="telephoneType">
+                        <mat-option *ngFor="let telephone of telePhoneTypeList" [value]="telephone.name">
+                            <div>{{telephone.displayName}}</div>
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>Telephone number</div>
+                    <div class="astericColor">*</div>
+                </div>
+                <div class="fieldPadding">
+                    <textarea rowa="10" class="form-control" formControlName="telephoneNumber" #telephoneNumber
+                        (keyup)="autoGrowTextZone($event)" maxlength="10" placeholder="Enter number">
+                </textarea>
+                    <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                        *ngIf="errorMessage" errorMsg="{{errorMessage}}">
+                    </app-field-error-display>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="leadTitle">
+                <div>House Name</div>
+                <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="text" #permanentAddress placeholder="" class="form-control"
+                    formControlName="permanentAddress" autocomplete="off" />
+                <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="errorMessage"
+                    errorMsg="{{errorMessage}}">
+                </app-field-error-display>
+            </div>
+        </div>
+        <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>City</div>
+                    <div class="astericColor">*</div>
+                </div>
+                <div class="fieldPadding">
+                    <textarea rowa="10" class="form-control" formControlName="permanentCity" #permanentCity
+                        (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
+          </textarea>
+                    <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                        *ngIf="errorMessage" errorMsg="{{errorMessage}}">
+                    </app-field-error-display>
+                </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>State</div>
+                    <div class="astericColor">*</div>
+                </div>
+                <div class="fieldPadding">
+                    <mat-select class="form-control" placeholder="Enter State" #permanentState
+                        formControlName="permanentState">
+                        <mat-option *ngFor="let item of stateList;let index=i" [value]="item.name">
+                            <div>
+                                {{item.name}}
+                            </div>
+                        </mat-option>
+                    </mat-select>
+                    <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                        *ngIf="errorMessage" errorMsg="{{errorMessage}}">
+                    </app-field-error-display>
+                </div>
+            </div>
+        </div>
+        <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>Pin code</div>
+                    <div class="astericColor">*</div>
+                </div>
+                <div class="fieldPadding">
+                    <textarea rowa="10" class="form-control" formControlName="permanentPinCode" #permanentPinCode
+                        (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
+          </textarea>
+                    <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                        *ngIf="errorMessage" errorMsg="{{errorMessage}}">
+                    </app-field-error-display>
+                </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>Date of birth</div>
+                    <div class="astericColor">*</div>
+                </div>
+                <div class="fieldPadding">
+                    <input (keyup)="resetErrors()" type="date" #dob placeholder="" class="form-control"
+                        formControlName="dob" autocomplete="off" />
+                    <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                        *ngIf="errorMessage" errorMsg="{{errorMessage}}">
+                    </app-field-error-display>
+                </div>
+            </div>
+        </div>
+        <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>Relation name</div>
+                    <div class="astericColor">*</div>
+                </div>
+                <div class="fieldPadding">
+                    <textarea rowa="10" class="form-control" formControlName="relationName" #relationName
+                        (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
+          </textarea>
+                    <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                        *ngIf="errorMessage" errorMsg="{{errorMessage}}">
+                    </app-field-error-display>
+                </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>Relationship Type</div>
+                    <div class="astericColor">*</div>
+                </div>
+                <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" placeholder="" #relationType
+                        formControlName="relationType">
+                        <mat-option [value]="relation.name" *ngFor="let relation of relations">
+                            <div>{{relation.displayName}}</div>
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bggrey my-2">
+        <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>Nominee Name</div>
+                </div>
+                <div class="fieldPadding">
+                    <textarea rowa="10" class="form-control" formControlName="nomineeName" #nomineeName
+                        (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="Enter name">
+                </textarea>
+                    <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                        *ngIf="errorMessage" errorMsg="{{errorMessage}}">
+                    </app-field-error-display>
+                </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>Nominee Type</div>
+                </div>
+                <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" placeholder="" #nomineeType
+                        formControlName="nomineeType">
+                        <mat-option [value]="relation.name" *ngFor="let relation of relations">
+                            <div>{{relation.displayName}}</div>
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+        </div>
+        <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>Address Type</div>
+                </div>
+                <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" placeholder="" #addressType
+                        formControlName="addressType">
+                        <mat-option [value]="'Residence'">
+                            <div>
+                                Residence
+                            </div>
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>Nominee Address</div>
+                </div>
+                <div class="fieldPadding">
+                    <input (keyup)="resetErrors()" type="text" #address placeholder="" class="form-control"
+                        formControlName="address" autocomplete="off" />
+                    <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                        *ngIf="errorMessage" errorMsg="{{errorMessage}}">
+                    </app-field-error-display>
+                </div>
+            </div>
+        </div>
+        <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>District</div>
+                </div>
+                <div class="fieldPadding">
+                    <textarea rowa="10" class="form-control" formControlName="city" #city
+                        (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
+          </textarea>
+                    <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                        *ngIf="errorMessage" errorMsg="{{errorMessage}}">
+                    </app-field-error-display>
+                </div>
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>State</div>
+                </div>
+                <div class="fieldPadding">
+                    <mat-select class="form-control" placeholder="Enter State" #state formControlName="state">
+                        <mat-option *ngFor="let item of stateList;let index=i" [value]="item.name">
+                            <div>
+                                {{item.name}}
+                            </div>
+                        </mat-option>
+                    </mat-select>
+                    <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                        *ngIf="errorMessage" errorMsg="{{errorMessage}}">
+                    </app-field-error-display>
+                </div>
+            </div>
+        </div>
+        <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>Pin code</div>
+                </div>
+                <div class="fieldPadding">
+                    <textarea rowa="10" class="form-control" formControlName="pin" #pin
+                        (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
+          </textarea>
+                    <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                        *ngIf="errorMessage" errorMsg="{{errorMessage}}">
+                    </app-field-error-display>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

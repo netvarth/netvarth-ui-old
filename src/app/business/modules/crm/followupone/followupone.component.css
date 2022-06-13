@@ -17,4 +17,13 @@
   .dashboard .card.w-dta .dash-list .table tbody tr:nth-child(even){
     /* background:none; */
   }
+  .dashboard .card.w-dta .dash-list .table tbody tr:nth-child(odd) {
+    background: transparent;
+}
+.dashboard .card.w-dta .dash-list .table tbody tr {
+    transition: all 500ms;
+}
+.dashboard .card.w-dta .dash-list .table tbody tr:hover {
+  box-shadow: 0 3px 15px rgb(0 0 0 / 20%);
+}
   

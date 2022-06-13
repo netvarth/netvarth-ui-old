@@ -1,0 +1,155 @@
+.form-control {
+    display: block;
+    width: 100%;
+    height: 35px;
+    padding: 6px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.42857143 !important;
+    color: #555 !important;
+    border-radius: 5.73504px !important;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s !important;
+    background: #FFFFFF !important;
+    border: 1px solid #E9E9E9;
+    box-shadow: 0px 4px 11px rgb(0 0 0 / 15%) !important;
+}
+
+.bggrey {
+    background-color: #f8f8f8 !important;
+    padding: 15px !important;
+    border-radius: 10px !important;
+}
+
+.group-head {
+    font-size: 15px !important;
+    font-weight: bold !important;
+}
+
+.leadTitle {
+    display: flex;
+    align-items: center;
+    grid-gap: 5px;
+    gap: 5px;
+    font-weight: 400;
+    font-size: 12px;
+    color: rgb(109, 108, 108);
+}
+
+input[type="number"],
+input[type="time"] {
+    width: 100px !important;
+}
+
+.fieldPadding {
+    padding: 5px;
+}
+
+textarea {
+    resize: none;
+    background: #f5f5f5;
+    border-radius: 10px;
+}
+
+.inputwithImg {
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.lbl {
+    width: -webkit-fill-available !important;
+}
+
+@media(min-width: 768px) {
+    .form-control {
+        width: 100%;
+    }
+
+    .mat-select {
+        width: 100%;
+    }
+}
+
+@media(max-width: 768px) {
+    .form-control {
+        width: 100%;
+    }
+
+    .mat-select {
+        width: 100% !important;
+    }
+}
+
+@media(max-width: 768px) {
+    .leadImg {
+        display: none;
+    }
+
+    input[type="number"],
+    input[type="time"] {
+        width: 80px !important;
+    }
+
+    .inputwithImg {
+        width: 100% !important;
+    }
+}
+
+::ng-deep .form-control:focus {
+    border: 3px solid #96d3e2 !important;
+}
+
+::ng-deep .mat-select-arrow {
+    transform: rotate(0deg) !important;
+}
+
+::ng-deep .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+    transform: rotate(-180deg) !important;
+}
+
+.img-section img {
+    width: 70px !important;
+    height: 70px !important;
+    cursor: auto !important;
+}
+
+.galul {
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+.galul li {
+    float: left !important;
+}
+
+.galimg_outer {
+    position: relative !important;
+    padding: 5px 10px 10px 5px !important;
+}
+
+.gal-input input {
+    width: 70px !important;
+    font-size: .7rem !important;
+}
+
+.gal_action {
+    position: absolute !important;
+    top: -5px !important;
+    right: -3px !important;
+    background: rgba(0, 0, 0, .5) !important;
+    width: 15px !important;
+    height: 15px !important;
+    text-align: center !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+}
+.imageClass{
+    width: 4rem;
+    height: 4rem;
+    padding: 20px;
+    border-radius: 50%;
+    text-align: center;
+    background: #D9D8D8;
+}
+.astericColor{
+    color: #f24949 !important;
+  }
