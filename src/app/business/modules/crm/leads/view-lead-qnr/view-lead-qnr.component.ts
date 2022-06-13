@@ -338,6 +338,8 @@ export class ViewLeadQnrComponent implements OnInit {
     this.providerServices.providerLeadQnrUploadStatusUpdate(uuid, postData)
       .subscribe((data) => {
         this.router.navigate(['provider', 'crm']);
+
+        // this.initLead();
       },
         error => {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -545,9 +547,10 @@ export class ViewLeadQnrComponent implements OnInit {
       const createNoteData: any = {
         "note": this.notes
       }
-      this.crmService.addLeadNotes(this.leadInfo.originUid, createNoteData).subscribe((response: any) => {
+      this.crmService.addLeadNotes(this.leadInfo.uid, createNoteData).subscribe((response: any) => {
         console.log('response', response)
         // this.api_loading = true;
+        this.notes = '';
         setTimeout(() => {
           this.initLead();
           // this.api_loading = false;
