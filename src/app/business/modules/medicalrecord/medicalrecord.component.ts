@@ -57,7 +57,7 @@ export class MedicalrecordComponent implements OnInit {
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
 
-  mrCreatedDate: string;
+  mrCreatedDate: any;
   consultationMode = 'Out Patient';
   bookingType: any;
   patientConsultationType = 'OP';
@@ -547,6 +547,20 @@ export class MedicalrecordComponent implements OnInit {
     }
     return serviceName;
 
+  }
+  getDate(mrCreatedDate) {
+    if (typeof mrCreatedDate === 'string') {
+      const dateCreated = mrCreatedDate.split(' ');
+      return dateCreated[0];
+    }
+    else {
+      return mrCreatedDate;
+    }
+    // const created = new Date(dateCreated)
+    // const created = this.datePipe.transform(dateCreated, 'yyyy-MM-ddTHH:mm');
+    // const mrDate = new Date(dateCreated[0])
+    // const formattedDate = mrDate.getFullYear() + "-" + (mrDate.getMonth() + 1) + "-" + mrDate.getDate()
+    // console.log("typeof(dateCreated)", typeof (mrDate))
   }
   getMedicalRecord(visitDetails) {
     // this.selectedRowIndex = visitDetails.mrId;
