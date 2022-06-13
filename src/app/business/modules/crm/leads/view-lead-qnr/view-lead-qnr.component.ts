@@ -337,7 +337,7 @@ export class ViewLeadQnrComponent implements OnInit {
   updateSalesStatus(uuid, postData) {
     this.providerServices.providerLeadQnrUploadStatusUpdate(uuid, postData)
       .subscribe((data) => {
-        this.initLead();
+        this.router.navigate(['provider', 'crm']);
       },
         error => {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -433,7 +433,8 @@ export class ViewLeadQnrComponent implements OnInit {
     if (this.leadInfo.status.name === 'KYC Updated') {
       this.crmService.ProceedStatusToSales(this.leadInfo.uid).subscribe(
         () => {
-          this.initLead();
+          // this.initLead();
+          this.router.navigate(['provider', 'crm']);
         }
         , (error) => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -452,7 +453,7 @@ export class ViewLeadQnrComponent implements OnInit {
         this.uploadAudioVideo(response);
         this.crmService.getproceedStatus(applicantsList).subscribe((response) => {
           console.log('afterupdateFollowUpData', response);
-          this.initLead();
+          this.router.navigate(['provider', 'crm']);
         },
           (error) => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
