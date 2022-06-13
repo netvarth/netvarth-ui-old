@@ -120,7 +120,7 @@
         <div class="clearfix"></div>
         <hr>
       </div> -->
-      <div class="mt-2 col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding no-padding-small">
+      <!-- <div class="mt-2 col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding no-padding-small">
         <div class="shadow">
           <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12">
             <label *ngIf="department">Department :</label><span *ngIf="department">
@@ -141,8 +141,7 @@
           </div>
           <div class="clearfix"></div>
         </div>
-        <!-- <hr> -->
-      </div>
+      </div> -->
       <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
 
 
@@ -161,11 +160,13 @@
               <i style="font-size: 100px!important;color: #1E4079!important;" class="fa fa-cloud-upload"
                 aria-hidden="true"></i>
             </div><br>
-            <div class="my-5 ml-1 pointer-cursor" *ngIf="uploadFiles && uploadFiles.length > 0">
+            <div class="my-3 ml-1 pointer-cursor" *ngIf="uploadFiles && uploadFiles.length > 0">
               <i style="font-size: 30px!important;color: #1E4079!important;" class="fa fa-upload"
                 aria-hidden="true"></i>
               <span class="pointer-cursor" (click)="uploadedFileforMr()">&nbsp;&nbsp;<u style="color: #1E4079;">Uploaded
-                  files</u></span>
+                  files</u></span><br>
+              <span class="mt-4 pointer-cursor btn btn-primary" (click)="uploadFileforMr()">&nbsp;&nbsp;Upload
+                file</span>
             </div><br>
             <div class="clearfix"></div>
             <!-- <div>
@@ -192,7 +193,8 @@
           <router-outlet></router-outlet> -->
           <div class="p-1 pt-0 px-0 col-md-12 col-xs-12 col-sm-12 col-lg-12">
             <div class="shadow">
-              <app-clinicalnotes></app-clinicalnotes>
+              <app-clinicalnotes [details]='customerDetails' [type]='bookingType' [b_id]="bookingId">
+              </app-clinicalnotes>
               <div class="clearfix"></div>
             </div>
           </div>

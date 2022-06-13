@@ -19,6 +19,9 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
 
   @Input() showClinicalNotesDetails;
   @Input() changes;
+  @Input() details;
+  @Input() type;
+  @Input() b_id;
   mrId = 0;
   clinicalNotes: any[];
   allergies: any;
@@ -163,7 +166,10 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
       data: {
         'data': JSON.stringify(object),
         'clinicalNotes': JSON.stringify(this.clinicalNotes),
-        'mrId': this.mrId
+        'mrId': this.mrId,
+        'details': this.details,
+        'type': this.type,
+        'uid': this.b_id
       }
     });
     dialogref.afterClosed().subscribe((data: any) =>

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../services/provider-services.service';
-import { NavigationExtras } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { MedicalrecordService } from '../medicalrecord.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
@@ -28,7 +28,6 @@ export class GeneralComponent implements OnInit {
   customerDetails: any;
   userId: any;
   today = new Date();
-  patientid: any;
   department: any;
   serviceName: any;
   display_dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
@@ -36,13 +35,14 @@ export class GeneralComponent implements OnInit {
   navigationParams: any = {};
   navigationExtras: NavigationExtras;
   customer_label = '';
+  patientDetails: any;
   constructor(
     public dialogref: MatDialogRef<GeneralComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     // private activated_route: ActivatedRoute,
-    // private router: Router,
+    private router: Router,
     private medicalrecordService: MedicalrecordService,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor
@@ -68,6 +68,7 @@ export class GeneralComponent implements OnInit {
     this.clinicalNotes = JSON.parse(this.data.clinicalNotes);
   }
   ngOnInit() {
+
     // this.activated_route.paramMap.subscribe(params => {
     //   this.patientId = params.get('id');
     //   this.bookingType = params.get('type');
@@ -76,15 +77,19 @@ export class GeneralComponent implements OnInit {
     //   this.mrId = parseInt(medicalrecordId, 0);
     // });
     console.log("data", this.data)
-    this.patientId = this.data.id;
+    this.patientId = this.data.details.id;
+    this.patientDetails = this.data.details;
     this.bookingType = this.data.type;
     this.bookingId = this.data.uid;
     const medicalrecordId = this.data.mrId
     this.mrId = parseInt(medicalrecordId, 0);
+    console.log("this.patientDetails", this.patientDetails, this.bookingType, this.bookingId)
   }
   redirecToClinicalNotes() {
     this.dialogref.close();
-    // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId]);
+    console.log('redirecToClinicalNotes successfully')
+
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId]);
   }
   updateClinicalNotes(notes) {
     console.log("Entered into notes record")
@@ -100,8 +105,9 @@ export class GeneralComponent implements OnInit {
       this.medicalrecordService.createMR('clinicalNotes', payloadObject).then(res => {
         this.mrId = res;
         this.snackbarService.openSnackBar('Medical Record Created Successfully');
-        // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId])
-        this.dialogref.close()
+        this.dialogref.close(this.mrId)
+        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId])
+
       },
         error => {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -115,8 +121,13 @@ export class GeneralComponent implements OnInit {
     this.provider_services.updateMrClinicalNOtes(payload, mrId)
       .subscribe((data) => {
         this.snackbarService.openSnackBar(this.displayTitle + ' updated successfully');
-        this.dialogref.close()
-        // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId]);
+        this.dialogref.close(mrId)
+        console.log('updated successfully')
+        console.log(' this.patientId', this.display_PatientId)
+        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId]).then(() => {
+          console.log("navigation true")
+          this.ngOnInit()
+        });
       },
         error => {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
