@@ -1,24 +1,60 @@
+.card {
+  padding: 15px !important;
+}
+
 .arrow {
-    border: solid black;
-    border-width: 0 3px 3px 0;
-    display: inline-block;
-    padding: 3px;
-  }
-  .down {
-    transform: rotate(45deg);
-   -webkit-transform: rotate(45deg);
-  }
-  .mat-tab-link {
-    opacity: 1 !important;
-  }
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.mat-tab-link {
+  opacity: 1 !important;
+}
+
 .mat-tab-link-active,
 .mat-tab-label-active {
-  color:	#3c8dbc !important;
+  color: #3c8dbc !important;
   /* border: 1px solid #6B7F7F; */
   font-weight: bold;
-    /* border-radius:20px !important; */
+  /* border-radius:20px !important; */
   /* margin:5px!important; */
 }
+
+.btn-primary {
+  background-color: #1E4079 !important;
+  border-radius: 10px !important;
+}
+
+.prescription {
+  /* height: 230px!important; */
+  max-height: 300px !important;
+  overflow: auto;
+}
+
+.pl-0 {
+  padding-left: 0px !important;
+}
+
+.pl0 {
+  padding-left: 0px !important;
+}
+
+.pr-0 {
+  padding-right: 0px !important;
+}
+
+.px-0 {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
 /* .mat-tab .active{
   color:	#0000FF;
   border: 1px solid #6B7F7F;
@@ -38,16 +74,137 @@
 } */
 
 .tabContentContainer {
-  border: 1px solid 	#0000FF;;
+  border: 1px solid #0000FF;
+  ;
   background: #ffffff 50% 50% repeat-x;
 }
 
 .mat-tab-nav-bar {
-    white-space: nowrap;
-    overflow: auto;
+  white-space: nowrap;
+  overflow: auto;
+}
+
+.table-heading {
+  font-size: 15px !important;
+}
+
+
+
+.border {
+  border: 1px solid black !important;
+}
+
+.shadow {
+  /* box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)!important; */
+  /* margin: 10px 0 0 10px!important; */
+  padding: 10px !important;
+  border: 1px solid rgb(231, 228, 228) !important;
+}
+
+
+
+
+
+
+.mat-scrool {
+  max-height: 500px;
+  overflow: auto;
+}
+
+.style-padding {
+  padding-left: 20px;
+}
+
+.highlight {
+  background: rgb(148, 198, 238);
+  /* blue */
+}
+
+mat-row:hover {
+  background-color: #c8e9f3 !important;
+}
+
+mat-cell:first-of-type,
+mat-header-cell:first-of-type,
+mat-footer-cell:first-of-type {
+  padding-left: 10px !important;
+}
+
+.mat-column-consultationDate {
+  flex: 0 0 165px;
+}
+
+.mat-column-serviceName {
+  flex: 0 0 140px;
+}
+
+.mat-column-userName {
+  flex: 0 0 140px;
+}
+
+.mat-column-mr {
+  flex: 0 0 100px;
+}
+
+.mat-column-rx {
+  flex: 0 0 100px;
+}
+
+.mat-column-rx i,
+.mat-column-mr i {
+  margin: auto;
+}
+
+
+.mat-table {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  max-height: 300px !important;
+}
+
+.mat-cell {
+  font-size: 12px !important;
+}
+
+.details-card {
+  min-height: 364px !important;
+  max-height: 364px !important;
+}
+
+
+.prescription-details {
+  min-height: 255px !important;
+  max-height: 255px !important;
+  overflow: auto !important;
+  overflow-x: hidden !important;
+}
+
+
+
+
+@media(max-width: 600px) {
+  .table-heading {
+    font-size: 15px !important;
   }
-  /* @media(max-width: 600px) {
-    .mat-tab-link {
-     font-size: 15px !important;
-    }
-  } */
+
+  .prescription-details {
+    overflow: auto !important;
+  }
+
+  .mat-table {
+    overflow: auto !important;
+  }
+
+  .pl-0 {
+    padding-left: 15px !important;
+  }
+
+  .pr-0 {
+    padding-right: 0px !important;
+  }
+
+  .px-0 {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+}

@@ -1,32 +1,37 @@
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
 <ng-container *ngIf="!loading">
-  <div class="mgn-up-30" *ngIf="prescList">
+  <div class="mgn-up-10" *ngIf="prescList">
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mgn-bt-10">
-      <span class="b-link">
-        <h5 class="heading3b">You can create prescription in two ways:</h5>
-        <p>1.Upload a paper prescription image </p>
-        <p>2.Create a prescription digitally signed </p>
+      <span class="">
+        <h4 class="font-weight-bold">Prescriptions</h4>
+        <!-- <p>1.Upload a paper prescription image </p>
+        <p>2.Create a prescription digitally signed </p> -->
       </span>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
-      <div class="card mrcreate pointlist">
-        <span (click)="uploadRx()">
-          <h5 class="heading3b" style="color:#3c8dbc;"><u>I will Upload paper prescription image</u><i
-              class="fa fa-arrow-right pull-right" aria-hidden="true"></i></h5>
-          <span class="form-level-settings">You can scan or take a picture of prescription</span>
+      <div class="">
+        <span>
+          <h6 class="text-primary text-capitalize">Upload paper prescription image
+            <!-- <i class="fa fa-arrow-right pull-right" aria-hidden="true"></i> -->
+          </h6>
+          <!-- <span class="form-level-settings">You can scan or take a picture of prescription</span> -->
+          <button class="btn btn-primary" (click)="uploadRx()">Upload Image</button>
         </span>
       </div>
-      <div class="card mrcreate pointlist">
-        <span (click)="addDrug()">
-          <h5 class="heading3b" style="color:#3c8dbc;"><u>I will create a prescription manually</u><i
-              class="fa fa-arrow-right pull-right" aria-hidden="true"></i></h5>
-          <span class="form-level-settings">Create prescription manually </span>
+      <div class="mt-4">
+        <span>
+          <h6 class="text-primary text-capitalize">create a prescription manually
+            <!-- <i class="fa fa-arrow-right pull-right" aria-hidden="true"></i> -->
+          </h6>
+          <!-- <span class="form-level-settings">Create prescription manually </span> -->
+          <button class="btn btn-primary" (click)="addDrug()">Create Prescription</button>
         </span>
       </div>
     </div>
   </div>
   <ng-container>
-    <div class="mgn-up-20" *ngIf="drugList && drugList.length>0">
+    <div class="" *ngIf="drugList && drugList.length>0">
+      <span><b>Prescription Details</b></span>
       <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i
           class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on
           {{prescriptionSharedTimestamp | date:dateFormatSp}}</i></div>
@@ -53,7 +58,7 @@
                       <td data-title="Frequency">{{drug.frequency? drug.frequency : ''}}</td>
                       <td data-title="Instructions" *ngIf="instrutionType(drug.instructions) === 0">
                         <span>{{truncateInst(drug.instructions)}}...<span (click)="instructPopUp(drug)"><u
-                              style="color: #3c8dbc ; font-size: smaller;cursor: pointer;">more</u></span></span>
+                              style="color: #1E4079 ; font-size: smaller;cursor: pointer;">more</u></span></span>
                       </td>
                       <td data-title="Instructions" *ngIf="instrutionType(drug.instructions) === 1">
                         {{drug.instructions? drug.instructions : ''}}
@@ -62,28 +67,35 @@
                   </tbody>
                 </table>
                 <span *ngIf="!note" (click)="addNote()" class="lnk action pointlist"
-                  style="color: #3c8dbc; font-size: smaller"><u>Instructions to the {{customer_label}}</u></span>
-                <span *ngIf="note" style="color: #3c8dbc;">Instructions to the {{customer_label}}</span><br>
-                <span style="font-size: smaller">{{note}}</span><br>
-                <span (click)="updatePrescription()" class="lnk action pointlist"
-                  style="color: #3c8dbc; font-size: smaller"><u>Edit Prescription</u></span>
+                  style="color: #1E4079; font-size: smaller"><u>Instructions to the {{customer_label}}</u></span>
+                <span *ngIf="note" style="color: #1E4079;">Instructions to the {{customer_label}}</span><br>
+                <span style="font-size: smaller">{{note}}</span>
+                <!-- <span (click)="updatePrescription()" class="lnk action pointlist"
+                  style="color: #1E4079; font-size: smaller"><u>Edit Prescription</u></span> -->
               </div>
-              <div class="mgn-up-10">
+              <div class="mgn-up-10 pl-2">
                 <span *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0">
-                  <u class="lnk action pointlist" (click)="uploadSign()" style="color: #3c8dbc;font-size: smaller">
+                  <u class="lnk action pointlist" (click)="uploadSign()" style="color: #1E4079;font-size: smaller">
                     Upload digital signature for sharing Prescription</u>
                 </span>
                 <span *ngIf="digitalSign">
-                  <u class="lnk action pointlist" (click)="uploadSign()" style="color: #3c8dbc; font-size: smaller">
+                  <u class="lnk action pointlist" (click)="uploadSign()" style="color: #1E4079; font-size: smaller">
                     Update digital signature</u>
                 </span>
               </div>
-              <div *ngIf="digitalSign" class="mgn-up-10">
-                <button type="button" mat-button class="cs-btn bt1" (click)="shareManualRx('adddrug')">
-                  Share Prescription</button>
+              <div class="d-md-flex d-lg-flex">
+                <div class="mgn-up-10 pl-2">
+                  <button type="button" mat-button class="cs-btn bt1 btn btn-primary" (click)="updatePrescription()">
+                    Edit Prescription</button>
+                </div>
+                <div *ngIf="digitalSign" class="mgn-up-10 pl-2">
+                  <button type="button" mat-button class="cs-btn bt1 btn btn-primary"
+                    (click)="shareManualRx('adddrug')">
+                    Share Prescription</button>
+                </div>
               </div>
-              <div *ngIf="!digitalSign" class="mgn-up-10">
-                <button type="button" class="cs-btn bt2">
+              <div *ngIf="!digitalSign" class="mgn-up-10 pl-2">
+                <button type="button" class="cs-btn bt2 btn btn-primary">
                   Share Prescription</button>
               </div>
             </div>
@@ -92,7 +104,9 @@
       </div>
     </div>
   </ng-container>
-  <div class="mgn-up-20" *ngIf="uploadlist && uploadlist.length>0">
+  <div class="" *ngIf="uploadlist && uploadlist.length>0">
+    <span><b>Prescription Details</b></span>
+
     <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i
         class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on
         {{prescriptionSharedTimestamp | date:dateFormatSp}}</i></div>
@@ -113,7 +127,7 @@
                   <tr *ngFor="let file of uploadlist; let i = index;">
                     <td data-title="File" class="pointlist" *ngIf="file.type === '.pdf'&& file">
                       <a [href]="file.url" download><i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;<u
-                          style="color: #3c8dbc; ">{{file.originalName}}</u></a>
+                          style="color: #1E4079; ">{{file.originalName}}</u></a>
                     </td>
                     <td data-title="File" class="pointlist"
                       *ngIf="file && file.type == '.png'|| file.type == '.jpg' ||file.type == '.PNG'|| file.type == '.jpeg' ">
@@ -130,18 +144,24 @@
                   </tr>
                 </tbody>
               </table>
-              <div (click)="updatePaperPrescription()" class="lnk action pointlist normal-sz pad-10"
-                style="color: #3c8dbc;">
+              <!-- <div (click)="updatePaperPrescription()" class="lnk action pointlist normal-sz pad-10"
+                style="color: #1E4079;">
                 <u>Edit Prescription</u>
-              </div>
+              </div> -->
             </div>
             <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0"
               [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
               [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
               (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
-            <div class="mgn-up-10">
-              <button type="button" mat-button class="cs-btn bt1" (click)="shareManualRx('uploadrx')">
-                Share Prescription</button>
+            <div class="d-md-flex d-lg-flex">
+              <div class="mgn-up-10 pl-2">
+                <button type="button" mat-button class="cs-btn bt1 btn btn-primary" (click)="updatePaperPrescription()">
+                  Edit Prescription</button>
+              </div>
+              <div class="mgn-up-10 pl-2">
+                <button type="button" mat-button class="cs-btn bt1 btn btn-primary" (click)="shareManualRx('uploadrx')">
+                  Share Prescription</button>
+              </div>
             </div>
           </div>
         </div>

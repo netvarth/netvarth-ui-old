@@ -1,38 +1,53 @@
-<div class="col-md-10 col-xs-12 col-sm-12 col-lg-9 no-padding-small">
+<div class="mt-2 col-md-12 col-xs-12 col-sm-12 col-lg-12">
   <section class="">
-    <div class="card title-gb">
+    <div class=" title-gb">
       <h5 class="mgn-up-10">
-        <span class="fa fa-arrow-left pointer-cursor"
-          (click)="redirecToClinicalNotes()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        {{displayTitle}}
+        <span class="fa fa-times pointer-cursor pull-right" (click)="redirecToClinicalNotes()"></span>&nbsp;&nbsp;
+        <span class="pull-left"><b>{{displayTitle}}</b></span>
       </h5>
+      <hr>
       <div class="mgn-up-10" class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
-        <hr>
-        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-          <label>{{customer_label | capitalizeFirst}} Name :</label><span> {{customerDetails.firstName | capitalizeFirst}}
+        <div class="mt-4">
+          <img src="assets/images/Asset1@300x.png" width="100" height="100" style="border-radius: 50%!important;" />
+        </div>
+        <div class="">
+          <label *ngIf="customerDetails.firstName ||customerDetails.lastName">
+            <span><b>{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</b>
+            </span></label><br>
+          <span *ngIf="display_PatientId"><b>{{customer_label | capitalizeFirst}} Id
+              :</b>&nbsp;{{display_PatientId}}</span>
+        </div><br>
+        <!-- <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+          <label>{{customer_label | capitalizeFirst}} Name :</label><span> {{customerDetails.firstName |
+            capitalizeFirst}}
             {{customerDetails.lastName}}</span><br>
-          <label>{{customer_label | capitalizeFirst}} Id :</label> <span> {{display_PatientId}}</span><br *ngIf="display_PatientId">
+          <label>{{customer_label | capitalizeFirst}} Id :</label> <span> {{display_PatientId}}</span><br
+            *ngIf="display_PatientId">
           <label *ngIf="customerDetails.dob">DOB :</label><span>
-            {{customerDetails.dob  | date:newDateFormat}}</span><br *ngIf="customerDetails.dob">
+            {{customerDetails.dob | date:newDateFormat}}</span><br *ngIf="customerDetails.dob">
           <label *ngIf="customerDetails.gender">Gender :</label><span>
             {{customerDetails.gender | capitalizeFirst}}</span>
+        </div> -->
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding">
+          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 no-padding">
+            <label *ngIf="serviceName"><b>Service/Consultation :</b></label>&nbsp;<span
+              *ngIf="serviceName">{{serviceName}}</span>
+          </div>
+          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 no-padding">
+            <label *ngIf="department"><b>Department :</b></label> &nbsp;<span *ngIf="department"> {{department}}</span>
+          </div>
         </div>
-        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-          <label *ngIf="serviceName">Service/Consultation :</label>&nbsp;<span *ngIf="serviceName">{{serviceName}}</span><br>
-          <label *ngIf="department">Department :</label> &nbsp;<span *ngIf="department"> {{department}}</span>
-        </div>
-        <div class="clearfix"></div>
-        <hr>
+        <div class="clearfix"></div><br>
       </div>
-      <h6 class="mgn-lt-15">Enter {{displayTitle}} <span class="word-hint">(1000 words)</span></h6>
-      <div class="col-md-12 col-sm-12 col-xs-12 mr-area">
+      <h6 class="">Enter {{displayTitle}} <span class="word-hint">(1000 words)</span></h6>
+      <div class="col-md-12 col-sm-12 col-xs-12 mr-area no-padding">
         <textarea [(ngModel)]="edit_data" name="paragraph_text" maxlength="1000" cols="30" rows="5"></textarea>
-      </div>
-      <div>
-        <button type="button" style="margin: 10px" class="cs-btn bt2 sm"
+      </div><br>
+      <div class="mt-2">
+        <button type="button" class="cs-btn bt2 sm btn btn-light mr-2"
           (click)="redirecToClinicalNotes()">cancel</button>
         <button type="button" mat-button (click)="updateClinicalNotes(edit_data)" [disabled]="edit_data == ''"
-          class="cs-btn bt1 sm">Save</button>
+          class="cs-btn bt1 sm btn btn-primary">Save</button>
       </div>
     </div>
   </section>

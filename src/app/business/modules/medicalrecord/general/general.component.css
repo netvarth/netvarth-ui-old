@@ -1,6 +1,17 @@
 .pad-bt {
- padding: 10px 30px
+    padding: 10px 30px
 }
+
 .genral-st {
- padding-left: 30px !important;
+    padding-left: 30px !important;
+}
+
+.btn-primary {
+    background-color: #1E4079 !important;
+    border-radius: 10px !important;
+}
+
+.btn-light {
+    background-color: #C2C2C2 !important;
+    border-radius: 10px !important;
 }

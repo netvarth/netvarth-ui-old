@@ -1,27 +1,73 @@
-<div class="mat-expansion-panel-content" *ngIf="isLoaded">
+<div class="mat-expansion-panel-content" *ngIf="isLoaded && showClinicalNotesDetails!='true'">
   <div class="w-dta">
+    <h5 class="ml-1 mb-1"><b>Clinical Notes</b></h5>
     <div class="row no-padding-small">
-      <div class="copy one col-xs-12 col-sm-12 no-padding">
-        <div class="col-a col-b cd-b pl0 col-md-12 col-lg-12 col-xs-12 col-md-12 ">
-          <div class="card p0 w-dta active no-padding mgn-up-10">
-            <div class="mgn-bt-10" *ngFor="let entry of clinicalNotes">
-              <div class="div-outline custId-cursor" (click)="addOrEditClinicalNotes(entry)">
+      <div class="bggrey copy one col-xs-12 col-sm-12 no-padding">
+        <h5 class="mb-3"><b></b></h5>
+        <div class="mgn-bt-10" *ngFor="let entry of clinicalNotes">
+          <div class="col-a col-b cd-b pl0 my-3 col-md-6 col-lg-6 col-xs-12 col-sm-12">
+            <div class="p0 w-dta active no-padding">
+              <div class="custId-cursor" (click)="addOrEditClinicalNotes(entry)">
                 <div>
                   <div>
                     <i [className]="'mricons pull-left fa mr-'+entry.id +'-icon'"></i>
                   </div>
                   <div class="pull-left heading3 p6">{{entry.displayName}}</div>
                   <div>
-                    <button type="button" mat-button style="float: right;"
-                      class="cs-btn bt1 pull-right">{{ entry.value == '' ? 'Add' : 'Edit' }}</button>
+                    <button type="button" mat-button style="float: right;" class="pull-right btn btn-primary">{{
+                      entry.value == '' ? 'Add' : 'Edit' }}</button>
                   </div>
                 </div>
                 <div class="clearfix"></div>
-                <div *ngIf="entry.value" class="mgn-up-10 pad-top-10 brd-tp">
+                <!-- <div *ngIf="entry.value" class="mgn-up-10 pad-top-10 brd-tp">
                   <p>{{entry.value}}</p>
+                </div> -->
+                <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="mat-expansion-panel-content" *ngIf="isLoaded && showClinicalNotesDetails=='true'">
+  <div class="w-dta">
+    <h5 class="ml-1 mb-1"><b>Clinical Notes</b></h5>
+    <div class="row no-padding-small">
+      <div class="bggrey copy one col-xs-12 col-sm-12 no-padding">
+        <h5 class="mb-3"><b></b></h5>
+        <div class="mgn-bt-10" *ngFor="let entry of clinicalNotes">
+          <div class="card col-a col-b cd-b my-3 col-md-12 col-lg-12 col-xs-12 col-sm-12">
+            <div class="p0 w-dta active no-padding">
+              <div class="custId-cursor">
+                <div data-toggle="collapse" [attr.data-target]="'#collapse'+entry.displayName.replace(' ', '')"
+                  aria-expanded="true" [attr.aria-controls]="'#collapse'+entry.displayName.replace(' ', '')">
+                  <div>
+                    <i [className]="'mricons pull-left fa mr-'+entry.id +'-icon'"></i>
+                  </div>
+                  <div class="pull-left heading3 p6">{{entry.displayName}}</div>
+                  <div class="pull-right fa-angle"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
+                  <!-- <div>
+                    <button type="button" mat-button style="float: right;" class="pull-right btn btn-primary">{{
+                      entry.value == '' ? 'Add' : 'Edit' }}</button>
+                  </div> -->
                 </div>
                 <div class="clearfix"></div>
-              </div>              
+                <div [id]="'collapse'+entry.displayName.replace(' ', '')" class="collapse mgn-up-10 pad-top-10 brd-tp"
+                  data-parent="#accordion">
+                  <p *ngIf="entry.value">{{entry.value}}</p>
+                  <p *ngIf="!entry.value">No {{entry.displayName}} Added</p>
+                </div>
+
+                <div class="clearfix"></div>
+              </div>
             </div>
           </div>
         </div>

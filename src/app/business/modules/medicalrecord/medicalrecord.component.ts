@@ -15,6 +15,7 @@ import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { MrfileuploadpopupComponent } from './uploadfile/mrfileuploadpopup/mrfileuploadpopup.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-medicalrecord',
@@ -22,7 +23,8 @@ import { MrfileuploadpopupComponent } from './uploadfile/mrfileuploadpopup/mrfil
   styleUrls: ['./medicalrecord.component.css']
 })
 export class MedicalrecordComponent implements OnInit {
-
+  public lastVisit_dataSource = new MatTableDataSource<any>([]);
+  lastVisit_displayedColumns = ['consultationDate', 'serviceName', 'userName', 'mr', 'rx'];
   accountType: any;
   bookingId: string;
   patientId: string;
@@ -99,6 +101,9 @@ export class MedicalrecordComponent implements OnInit {
   removemrfileuploaddialogRef;
   showtable = false;
   uploadfiledialogRef;
+  orderstatus: any;
+  loading_table: boolean;
+  viewVisitDetails: boolean;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -130,6 +135,7 @@ export class MedicalrecordComponent implements OnInit {
       this.mrId = parseInt(medicalrecordId, 0);
       this.medicalService.setParams(this.bookingType, this.bookingId);
       this.getPatientVisitListCount();
+      this.getPatientVisitList();
       if (this.mrId !== 0) {
         this.getMedicalRecordUsingId(this.mrId);
       } else {
@@ -138,7 +144,7 @@ export class MedicalrecordComponent implements OnInit {
         } else if (this.bookingType === 'TOKEN') {
           this.getWaitlistDetails(this.bookingId);
         } else if (this.bookingType === 'FOLLOWUP') {
-           this.getPatientDetails(this.patientId);
+          this.getPatientDetails(this.patientId);
         }
       }
       const clinical_link = '/provider/customers/' + this.patientId + '/' + this.bookingType + '/' + this.bookingId + '/medicalrecord/' + this.mrId + '/clinicalnotes';
@@ -251,6 +257,16 @@ export class MedicalrecordComponent implements OnInit {
 
   }
 
+  getPatientVisitList() {
+    this.provider_services.getPatientVisitList(this.patientId)
+      .subscribe((data: any) => {
+        this.lastVisit_dataSource = data;
+        this.loading_table = false;
+      },
+        error => {
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+  }
 
   getPatientVisitListCount() {
     if (this.patientId !== null && this.patientId !== undefined) {
@@ -258,6 +274,7 @@ export class MedicalrecordComponent implements OnInit {
         .subscribe((data: any) => {
           this.visitcount = data;
           this.showLastvisitorNot();
+          this.loading_table = true;
         },
           error => {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -297,6 +314,8 @@ export class MedicalrecordComponent implements OnInit {
 
 
   }
+
+
 
 
   getMedicalRecordUsingId(mrId) {
@@ -388,10 +407,11 @@ export class MedicalrecordComponent implements OnInit {
   goback(type_from) {
 
     const back_type = this.medicalService.getReturnTo();
-    if(type_from === 'medical'){
+    if (type_from === 'medical') {
+      this.viewVisitDetails = false;
       this.location.back();
     }
-    else{
+    else {
       if (back_type === 'waitlist') {
         this.router.navigate(['provider', 'check-ins']);
       } else if (back_type === 'appt') {
@@ -475,6 +495,121 @@ export class MedicalrecordComponent implements OnInit {
         this.getMedicalRecordUsingId(result);
       }
     });
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  getLastVisitDate(visit) {
+    let visitdate = '';
+    if (visit.waitlist) {
+      visitdate = visit.waitlist.consLastVisitedDate;
+    } else if (visit.appointmnet) {
+      visitdate = visit.appointmnet.consLastVisitedDate;
+    } else {
+      visitdate = visit.consLastVisitedDate;
+    }
+    return visitdate;
+  }
+  isMRCreated(visit) {
+    let mrCreated = false;
+    if (visit.mrCreated) {
+      mrCreated = visit.mrCreated;
+    }
+    return mrCreated;
+
+  }
+  isRxCreated(visit) {
+    let rxCreated = false;
+    if (visit.prescriptionCreated) {
+      rxCreated = visit.prescriptionCreated;
+    }
+    return rxCreated;
+
+  }
+  getServiceName(visit) {
+    let serviceName = 'Consultation';
+    if (visit.waitlist) {
+      serviceName = visit.waitlist.service.name;
+    } else if (visit.appointmnet) {
+      serviceName = visit.appointmnet.service.name;
+    }
+    return serviceName;
+
+  }
+  getMedicalRecord(visitDetails) {
+    // this.selectedRowIndex = visitDetails.mrId;
+    if (visitDetails.waitlist) {
+      let mrId = 0;
+      if (visitDetails.waitlist.mrId) {
+        mrId = visitDetails.waitlist.mrId;
+      }
+
+      const customerDetails = visitDetails.waitlist.waitlistingFor[0];
+      const customerId = customerDetails.id;
+      const bookingId = visitDetails.waitlist.ynwUuid;
+      const bookingType = 'TOKEN';
+      //  this.dialogRef.close();
+      this.viewVisitDetails = true;
+      this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId]);
+
+    } else if (visitDetails.appointmnet) {
+
+      let mrId = 0;
+      if (visitDetails.appointmnet.mrId) {
+        mrId = visitDetails.appointmnet.mrId;
+      }
+
+      const customerDetails = visitDetails.appointmnet.appmtFor[0];
+      const customerId = customerDetails.id;
+      const bookingId = visitDetails.appointmnet.uid;
+      const bookingType = 'APPT';
+      //  this.dialogRef.close();
+      this.viewVisitDetails = true;
+      this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId]);
+
+
+    } else {
+
+      const mrId = visitDetails.mrId;
+      const customerDetails = visitDetails.providerConsumer;
+      const customerId = customerDetails.id;
+      const bookingId = 0;
+      const bookingType = 'FOLLOWUP';
+      // this.dialogRef.close();
+      this.viewVisitDetails = true;
+      console.log("visit Details", visitDetails)
+
+      this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId]);
+
+    }
+  }
+  getProviderName(visit) {
+    let providerName;
+    if (visit.providerName) {
+      providerName = visit.providerName;
+    } else {
+      providerName = 'Nil';
+    }
+    return providerName;
+  }
+
+  reloadComponent() {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
   }
 }
 

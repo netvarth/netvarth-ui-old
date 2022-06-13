@@ -75,7 +75,7 @@ export class PrescriptionComponent implements OnInit {
   note = '';
   prescList = true;
   doctorName;
-  customer_label:any
+  customer_label: any
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -149,25 +149,26 @@ export class PrescriptionComponent implements OnInit {
     }
   }
   uploadSign() {
-    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadsign' ]);
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadsign']);
 
   }
   getDigitalSign() {
-     
-      this.provider_services.getDigitalSign(this.provider_user_Id)
-        .subscribe((data) => {
-          this.digitalSign = true;
-        },
-          error => {
-            this.digitalSign = false;
 
-          });
+    this.provider_services.getDigitalSign(this.provider_user_Id)
+      .subscribe((data) => {
+        this.digitalSign = true;
+      },
+        error => {
+          this.digitalSign = false;
+
+        });
 
   }
 
 
   uploadRx() {
-    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadRx' ]);
+    this.ngOnInit();
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadRx']);
   }
 
   shareManualRx(type) {
@@ -179,7 +180,7 @@ export class PrescriptionComponent implements OnInit {
         mrId: this.mrId,
         type: type,
         patientId: this.patientId,
-        docname:this.doctorName
+        docname: this.doctorName
       }
     });
     this.sharedialogRef.afterClosed().subscribe(result => {
@@ -195,27 +196,27 @@ export class PrescriptionComponent implements OnInit {
         if (Object.keys(data).length === 0 && data.constructor === Object) {
           this.loading = false;
           this.prescList = true;
-        }else{
-        if (data['prescriptionsList'] && data['prescriptionsList'][0].keyName) {
-          this.uploadlist = data['prescriptionsList'];
-          this.prescList = false;
-          this.image_list_popup = [];
-          const imgobj = new Image(0,
-            { // modal
-              img: this.uploadlist[0].url,
-              description: this.uploadlist[0].caption || ''
-            });
-          this.image_list_popup.push(imgobj);
-
         } else {
-          this.drugList = data['prescriptionsList'];
-          this.prescList = false;
-          this.note = data['notes'];
-          this.getDigitalSign();
+          if (data['prescriptionsList'] && data['prescriptionsList'][0].keyName) {
+            this.uploadlist = data['prescriptionsList'];
+            this.prescList = false;
+            this.image_list_popup = [];
+            const imgobj = new Image(0,
+              { // modal
+                img: this.uploadlist[0].url,
+                description: this.uploadlist[0].caption || ''
+              });
+            this.image_list_popup.push(imgobj);
+
+          } else {
+            this.drugList = data['prescriptionsList'];
+            this.prescList = false;
+            this.note = data['notes'];
+            this.getDigitalSign();
+          }
+          this.loading = false;
         }
-        this.loading = false;
-      }
-    },
+      },
         error => {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
@@ -245,23 +246,23 @@ export class PrescriptionComponent implements OnInit {
     this.addDrugdialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.saveRx(result);
-    //     setTimeout(() => {       
-    //     const addnotedialogRef = this.dialog.open(AddNoteComponent, {
-    //       width: '50%',
-    //       panelClass: ['popup-class', 'commonpopupmainclass'],
-    //       disableClose: true,
-    //       data: {
-    //         message:''
-    //       }
-    //   });
-    //   addnotedialogRef.afterClosed().subscribe(result1 => {
-    //       if(result1){
-    //         console.log(result1);
-    //         this.note = result1.message;
-    //       }
-    //       
-    //   });
-    // }, 500);
+        //     setTimeout(() => {       
+        //     const addnotedialogRef = this.dialog.open(AddNoteComponent, {
+        //       width: '50%',
+        //       panelClass: ['popup-class', 'commonpopupmainclass'],
+        //       disableClose: true,
+        //       data: {
+        //         message:''
+        //       }
+        //   });
+        //   addnotedialogRef.afterClosed().subscribe(result1 => {
+        //       if(result1){
+        //         console.log(result1);
+        //         this.note = result1.message;
+        //       }
+        //       
+        //   });
+        // }, 500);
       }
     });
   }
@@ -269,7 +270,7 @@ export class PrescriptionComponent implements OnInit {
   saveRx(result) {
     this.loading = true;
     let passdata = {
-      "prescriptionsList":result,
+      "prescriptionsList": result,
       "notes": this.note
     }
     if (this.mrId) {
@@ -299,38 +300,38 @@ export class PrescriptionComponent implements OnInit {
           });
     }
   }
-  addNote(){
+  addNote() {
     const addnotedialogRef = this.dialog.open(AddNoteComponent, {
-            width: '50%',
-            panelClass: ['popup-class', 'commonpopupmainclass'],
-            disableClose: true,
-            data: {
-              message:''
-            }
-        });
-        addnotedialogRef.afterClosed().subscribe(result1 => {
-            if(result1){
-              console.log(result1);
-             // this.note = result1.message;
-              this.loading = true;
-              let passdata = {
-                "prescriptionsList":this.drugList,
-                "notes": result1.message
-              }
-              this.provider_services.updateMRprescription(passdata, this.mrId).
-              subscribe(res => {
-                this.snackbarService.openSnackBar('Prescription updated Successfully');
-                this.getMrprescription(this.mrId);
-                this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
-      
-              },
-                error => {
-                  this.loading = false;
-                  this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                });
-            }
-            
-        });
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        message: ''
+      }
+    });
+    addnotedialogRef.afterClosed().subscribe(result1 => {
+      if (result1) {
+        console.log(result1);
+        // this.note = result1.message;
+        this.loading = true;
+        let passdata = {
+          "prescriptionsList": this.drugList,
+          "notes": result1.message
+        }
+        this.provider_services.updateMRprescription(passdata, this.mrId).
+          subscribe(res => {
+            this.snackbarService.openSnackBar('Prescription updated Successfully');
+            this.getMrprescription(this.mrId);
+            this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+
+          },
+            error => {
+              this.loading = false;
+              this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
+      }
+
+    });
   }
   updatePrescription() {
     this.disable = true;
@@ -338,7 +339,7 @@ export class PrescriptionComponent implements OnInit {
       relativeTo: this.activatedRoute,
       queryParams: { mode: 'view' }
     };
-    this.router.navigate(['../addrxlist'], navigationExtras);
+    this.router.navigate(['./addrxlist'], navigationExtras);
 
 
   }
@@ -348,7 +349,7 @@ export class PrescriptionComponent implements OnInit {
       relativeTo: this.activatedRoute,
       queryParams: { mode: 'view' }
     };
-    this.router.navigate(['../uploadRx'], navigationExtras);
+    this.router.navigate(['./uploadRx'], navigationExtras);
   }
   imageSize(val) {
     let imgsize;

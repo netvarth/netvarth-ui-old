@@ -1,10 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { ProviderServices } from '../../../../business/services/provider-services.service';
+import { GeneralComponent } from '../general/general.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 
@@ -15,7 +17,8 @@ import { ProviderServices } from '../../../../business/services/provider-service
 })
 export class ClinicalnotesComponent implements OnInit, OnDestroy {
 
-
+  @Input() showClinicalNotesDetails;
+  @Input() changes;
   mrId = 0;
   clinicalNotes: any[];
   allergies: any;
@@ -37,6 +40,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
 
     public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
+    private dialog: MatDialog,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private snackbarService: SnackbarService,
@@ -50,30 +54,57 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
     this.mrId = parseInt(medicalrecordId, 0);
 
-      if (this.mrId === 0 || this.mrId === undefined) {
-        this.isLoaded = true;
-        for (let i = 0; i < this.clinical_constant.length; i++) {
-          this.clinical_constant[i].value = '';
+    if (this.mrId === 0 || this.mrId === undefined) {
+      this.isLoaded = true;
+      for (let i = 0; i < this.clinical_constant.length; i++) {
+        this.clinical_constant[i].value = '';
 
-        }
-        this.clinicalNotes = this.clinical_constant;
-
-
-      } else if (this.mrId !== 0) {
-        for (let i = 0; i < this.clinical_constant.length; i++) {
-          this.clinical_constant[i].value = '';
-
-        }
-        this.clinicalNotes = this.clinical_constant;
-        this.getMRClinicalNotes(this.mrId).then((res: any) => {
-          this.clinicalNotes = res;
-          this.isLoaded = true;
-
-        });
       }
+      this.clinicalNotes = this.clinical_constant;
+
+
+    } else if (this.mrId !== 0) {
+      for (let i = 0; i < this.clinical_constant.length; i++) {
+        this.clinical_constant[i].value = '';
+
+      }
+      this.clinicalNotes = this.clinical_constant;
+      this.getMRClinicalNotes(this.mrId).then((res: any) => {
+        this.clinicalNotes = res;
+        this.isLoaded = true;
+
+      });
+    }
 
 
 
+  }
+
+  ngOnChanges() {
+    const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
+    this.mrId = parseInt(medicalrecordId, 0);
+
+    if (this.mrId === 0 || this.mrId === undefined) {
+      this.isLoaded = true;
+      for (let i = 0; i < this.clinical_constant.length; i++) {
+        this.clinical_constant[i].value = '';
+
+      }
+      this.clinicalNotes = this.clinical_constant;
+
+
+    } else if (this.mrId !== 0) {
+      for (let i = 0; i < this.clinical_constant.length; i++) {
+        this.clinical_constant[i].value = '';
+
+      }
+      this.clinicalNotes = this.clinical_constant;
+      this.getMRClinicalNotes(this.mrId).then((res: any) => {
+        this.clinicalNotes = res;
+        this.isLoaded = true;
+
+      });
+    }
   }
 
   getMRClinicalNotes(mrId) {
@@ -116,13 +147,34 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   }
   addOrEditClinicalNotes(object) {
 
-    const navigationExtras: NavigationExtras = {
-      relativeTo: this.activatedRoute,
-      queryParams: {
+    // const navigationExtras: NavigationExtras = {
+    //   relativeTo: this.activatedRoute,
+    //   queryParams: {
+    //     'data': JSON.stringify(object),
+    //     'clinicalNotes': JSON.stringify(this.clinicalNotes)
+    //   }
+    // };
+    // this.router.navigate(['./edit'], navigationExtras);
+    console.log('object', object);
+    const dialogref = this.dialog.open(GeneralComponent, {
+      width: '100%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
         'data': JSON.stringify(object),
-        'clinicalNotes': JSON.stringify(this.clinicalNotes)
+        'clinicalNotes': JSON.stringify(this.clinicalNotes),
+        'mrId': this.mrId
       }
-    };
-    this.router.navigate(['../edit'], navigationExtras);
+    });
+    dialogref.afterClosed().subscribe((data: any) =>
+      console.log(data)
+    );
+  }
+
+  reloadComponent() {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
   }
 }

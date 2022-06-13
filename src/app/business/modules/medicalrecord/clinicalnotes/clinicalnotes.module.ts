@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 // import { RouterModule, Routes } from "@angular/router";
 // import { MedicalrecordService } from "../medicalrecord.service";
 // import { MedicalrecordService } from "../medicalrecord.service";
@@ -11,7 +12,8 @@ import { ClinicalnotesComponent } from "./clinicalnotes.component";
 @NgModule({
     imports: [
         CommonModule,
-        MatButtonModule
+        MatButtonModule,
+        NgbModule
         // [RouterModule.forChild(routes)]
     ],
     exports: [ClinicalnotesComponent],
@@ -20,4 +22,4 @@ import { ClinicalnotesComponent } from "./clinicalnotes.component";
     //     MedicalrecordService
     // ]
 })
-export class ClinicalnotesModule {}
+export class ClinicalnotesModule { }
