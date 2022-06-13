@@ -83,6 +83,10 @@
                                                  background: #f3f6f9;color: #374957;font-weight: 700;font-size: 14px;line-height: 1; width: 45%" (click)="clearFilter()">
                                                   <i class="fa fa-undo"></i>&nbsp;Reset
                                                 </button>
+                                                <button class="apply-btn"style="margin: 8px;height: 40px;border: none;border-radius: 3px;
+                                                background: #476073 ;color: white;font-weight: 700;font-size: 14px;line-height: 1; width: 45%"  (click)="getInvoiceStatus()">
+                                                    <i class="fa fa-check" style="color: white !important;"></i>&nbsp;Apply
+                                                  </button>
                                                 <!-- <button class="btn apply-btn" (click)="doSearch()">
                                                   <i class="fa fa-check"></i>&nbsp;Apply
                                                 </button> -->
@@ -95,13 +99,20 @@
                                         <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                                         </li>
 
-                                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                        <!-- <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                                             <mat-checkbox *ngFor="let status of invoice_status_filter"
-                                                [checked]="check_status" (click)="setFilterData(
+                                                [checked]="check_status"
+                                                
+                                                (click)="setFilterDataCheckbox(
                                                                           'invoiceStatus',status.value)"
                                                 [value]="status.value">
-                                                {{status.displayName}}</mat-checkbox>
-                                        </li>
+                                                {{status.displayName}}{{status.displayName}}</mat-checkbox>
+                                        </li> -->
+                                        <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
+                                        <mat-checkbox *ngFor="let status of invoice_status_filter" [checked]="invoiceStatus.indexOf(status.value) !== -1"
+                            (change)="setFilterDataCheckbox('statusMode', status.value)">
+                            {{status.displayName}}</mat-checkbox>
+                            </li>
 
                         </div>
 

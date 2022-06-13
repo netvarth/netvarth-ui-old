@@ -146,6 +146,7 @@ export class EditProfileComponent implements OnInit {
     this.shared_functions.getProfile()
       .then(
         data => {
+          console.log("Profile Data :",data)
           this.loading = false;
           if (typ === 'consumer') {
             this.editProfileForm.patchValue({

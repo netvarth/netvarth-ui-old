@@ -409,7 +409,7 @@
                 <ng-container>
                     <div>
                         <button type="button" class="btn btn-primary font-weight-bold cancelBtn"
-                        (click)="cancelCreateNote('Cancel')">Cancel</button>
+                            (click)="cancelCreateNote('Cancel')">Cancel</button>
                         <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
                             (click)="completeTaskStatus()">Save</button>
                     </div>
@@ -424,7 +424,7 @@
 
 </section>
 
-<section *ngIf="data.requestType === 'statusChangeLeadToTask'"style="padding: 20px;">
+<section *ngIf="data.requestType === 'statusChangeLeadToTask'" style="padding: 20px;">
     <div class="header">
         <div class="headerText" style="color: #22242C !important;font-size: 18px;">Change Status</div>
         <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
@@ -450,15 +450,15 @@
                 [subtitle]="status" [subtitleFontSize]="'7'" [lazy]="false"></circle-progress>
         </div>
         <div>
-            <div style="display: flex;align-items: center;gap: 5px;"  *ngIf="data.taskDetails.assignee !== undefined">
+            <div style="display: flex;align-items: center;gap: 5px;" *ngIf="data.taskDetails.assignee !== undefined">
                 <div class="assignee">Assignee :</div>
                 <div class="assignee">{{assigneeName}}</div>
             </div>
-            <div style="display: flex;align-items: center;gap: 11px;"  *ngIf="data.taskDetails.manager != undefined">
+            <div style="display: flex;align-items: center;gap: 11px;" *ngIf="data.taskDetails.manager != undefined">
                 <div class="manager">Manager :</div>
                 <div class="manager">{{managerName}}</div>
             </div>
-            <div style="display: flex;align-items: center;gap: 27px;"  *ngIf="data.taskDetails.priority != undefined">
+            <div style="display: flex;align-items: center;gap: 27px;" *ngIf="data.taskDetails.priority != undefined">
                 <div class="prioprity">Priority :</div>
                 <div class="prioprity">{{priorityName}}</div>
             </div>
@@ -470,7 +470,7 @@
         <!-- <div>
             <mat-icon>clear</mat-icon>
         </div> -->
-        <div class="currentStatus" >
+        <div class="currentStatus">
             Current status : {{currentStatus}}
         </div>
 
@@ -479,7 +479,7 @@
     <!-----external status s\tart-->
     <div class="extStatus">
         <!-- <div class="extStatus1">External status</div> -->
-        <div  class="extStatus2">External Status is public and visible for your {{customer_label}}</div>
+        <div class="extStatus2">External Status is public and visible for your {{customer_label}}</div>
         <!--status start-->
         <div class="statusList" *ngIf="data.taskDetails.status != undefined">
             <!-- [ngStyle]="{'background-color':status.id === data.taskDetails.status.id ? '#CACACA' : '#FFFFFF' }" -->
@@ -506,7 +506,7 @@
                 <ng-container>
                     <div>
                         <button type="button" class="btn btn-primary font-weight-bold cancelBtn"
-                        (click)="cancelCreateNote('Cancel')">Cancel</button>
+                            (click)="cancelCreateNote('Cancel')">Cancel</button>
                         <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
                             (click)="completeTaskStatus()">Save</button>
                     </div>
@@ -529,18 +529,18 @@
             <mat-icon>clear</mat-icon>
         </div>
     </div>
-  
+
     <!--task name start-->
     <div class="titleTask">
         <div>{{leadTitle}}</div>
     </div>
-      <!---task name end-->
-        <!---task des start-->
-     <div>
+    <!---task name end-->
+    <!---task des start-->
+    <div>
         <div class="taskDes">{{leadDescription}}</div>
     </div>
 
-  <!---task des end-->
+    <!---task des end-->
     <!---spinner start-->
     <div style="margin-top: 10px;display: flex;gap:10px">
         <div>
@@ -610,7 +610,7 @@
                 <ng-container>
                     <div>
                         <button type="button" class="btn btn-primary font-weight-bold cancelBtn"
-                        (click)="cancelCreateNote('Cancel')">Cancel</button>
+                            (click)="cancelCreateNote('Cancel')">Cancel</button>
                         <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
                             (click)="completeLeadStatus()">Save</button>
                     </div>
@@ -666,29 +666,36 @@
                 {{files.size }}MB
             </div>
             <div *ngIf="files.type ==='pdf'" class="fileType pointerClass">
-                <img class="imageIconType"src="/assets/images/ImgeFileIcon/pdfDwnld.png" (click)="downloadFile(files)" />
+                <img class="imageIconType" src="/assets/images/ImgeFileIcon/pdfDwnld.png"
+                    (click)="downloadFile(files)" />
             </div>
             <div *ngIf="files.type ==='jpg'" class="fileType pointerClass">
-                <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png" (click)="downloadFile(files)" />
+                <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png"
+                    (click)="downloadFile(files)" />
             </div>
             <div *ngIf="files.type ==='PNG'" class="fileType pointerClass">
-                <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png" (click)="downloadFile(files)"/>
+                <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png"
+                    (click)="downloadFile(files)" />
             </div>
             <div *ngIf="files.type ==='docx'" class="fileType pointerClass">
-                <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png" (click)="downloadFile(files)"/>
+                <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png"
+                    (click)="downloadFile(files)" />
             </div>
             <div *ngIf="files.type ==='xlsx'" class="fileType pointerClass">
-                <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png" (click)="downloadFile(files)"/>
+                <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png"
+                    (click)="downloadFile(files)" />
             </div>
             <div *ngIf="files.type ==='txt'" class="fileType pointerClass">
-                <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png" (click)="downloadFile(files)"/>
+                <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png"
+                    (click)="downloadFile(files)" />
             </div>
             <div *ngIf="files.type ==='mp4'" class="fileType pointerClass">
                 <img class="imageIconType" src="/assets/images/ImgeFileIcon/videoDownload.png" />
             </div>
             <div *ngIf="( files.type !=='pdf' &&  files.type !=='txt' &&  files.type !=='xlsx' &&  files.type !=='docx' && files.type !=='PNG' && files.type !=='jpg' && files.type !=='mp4'  )"
                 class="fileType pointerClass">
-                <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png" (click)="downloadFile(files)"/>
+                <img class="imageIconType" src="/assets/images/ImgeFileIcon/otherFileDownld.png"
+                    (click)="downloadFile(files)" />
             </div>
         </div>
     </mat-dialog-content>
@@ -723,9 +730,9 @@
     <div class="templateList" style="justify-content: space-between;">
         <!-- [ngStyle]="{'background-color':status.id === data.taskDetails.status.id ? '#CACACA' : '#FFFFFF' }" -->
         <div *ngFor="let taskMaster of taskMasterListData;let index=i" class="singleTempalte"
-              (click)="saveTaskMaster(taskMaster)">
-            <div style="display: flex;justify-content: space-between;align-items: center;" >
-                <div >
+            (click)="saveTaskMaster(taskMaster)">
+            <div style="display: flex;justify-content: space-between;align-items: center;">
+                <div>
                     <div class="templateName">{{taskMaster.templateName}}</div>
                     <div class="templateName">{{taskMaster.description.value}}</div>
                 </div>
@@ -806,9 +813,9 @@
     </div>
     <div class="templateList">
         <div *ngFor="let leadMaster of leadMasterListData;let index=i" class="singleTempalte"
-              (click)="saveLeadMaster(leadMaster)">
-            <div style="display: flex;justify-content: space-between;align-items: center;" >
-                <div >
+            (click)="saveLeadMaster(leadMaster)">
+            <div style="display: flex;justify-content: space-between;align-items: center;">
+                <div>
                     <div class="templateName">{{leadMaster.templateName}}</div>
                     <div class="templateName">{{leadMaster.description.value}}</div>
                 </div>
@@ -817,9 +824,9 @@
                 </div>
             </div>
         </div>
-        <div class="singleTempalte"(click)="createTask('CreatE')">
+        <div class="singleTempalte" (click)="createTask('CreatE')">
             <div style="display:flex;justify-content: space-between;align-items: center;">
-                <div >
+                <div>
                     <div class="templateName">Others</div>
                 </div>
                 <div>
@@ -890,7 +897,7 @@
     </div>
     <mat-dialog-content class="dialogContent">
         <div>
-           
+
             <div>
                 <div class="formField">
                     <div>
@@ -921,7 +928,8 @@
                     <div class="fieldPadding">
                         <input [(ngModel)]="phoneNoValue" type="tel" #phoneNo
                             (ngModelChange)="hamdlephoneNo(phoneNoValue)" placeholder="Enter Phone Number"
-                            class="form-controls" autocomplete="off" minlength="10" maxlength="10" [value]="phoneNoValue" />
+                            class="form-controls" autocomplete="off" minlength="10" maxlength="10"
+                            [value]="phoneNoValue" />
                     </div>
                 </div>
                 <div>
@@ -929,9 +937,8 @@
                         <div>Email</div>
                     </div>
                     <div class="fieldPadding">
-                        <input [(ngModel)]="emailValue" type="text" #email
-                            (ngModelChange)="hamdleemail(emailValue)" placeholder="Enter Email"
-                            class="form-controls" autocomplete="off" [value]="emailValue" />
+                        <input [(ngModel)]="emailValue" type="text" #email (ngModelChange)="hamdleemail(emailValue)"
+                            placeholder="Enter Email" class="form-controls" autocomplete="off" [value]="emailValue" />
                     </div>
                 </div>
                 <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;">
@@ -958,57 +965,60 @@
 <section *ngIf="data.requestType==='createTaskActivityList'" style="padding: 20px;">
     <div class="header">
         <div class="headerText">Activity List</div>
-        <div style=" cursor: pointer;" >
+        <div style=" cursor: pointer;">
             <mat-icon (click)="selectTaskActivity('Close')">clear</mat-icon>
         </div>
     </div>
     <mat-dialog-content class="dialogContent">
-        <div >
-                        <div class="table-responsive dash-list">
-                            <table class="table" style="background-color: white;">
-                              <thead>
-                                <tr class="tble-filtr-tr heght">
-                                  <!-- <th></th> -->
-                                  <th class="head_color">Activity</th>
-                                  <th class="head_color">Assignee</th>
-                                  <th class="head_color">Status</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <ng-container *ngIf="data.data[0].length === 0">
-                                  <tr>
-                                    <td class="nodatafound" colspan="5">NO data </td>
-                                  </tr>
-                                </ng-container>
-                                <ng-container *ngIf="data.data[0].length>0">
-                                  <tr *ngFor="let task of data.data[0]; let i=index" class="pointer-cursor" (click)="selectTaskActivity(task)">
-            
-                                    <!-- <td>
+        <div>
+            <div class="table-responsive dash-list">
+                <table class="table" style="background-color: white;">
+                    <thead>
+                        <tr class="tble-filtr-tr heght">
+                            <!-- <th></th> -->
+                            <th class="head_color">Activity</th>
+                            <th class="head_color">Assignee</th>
+                            <th class="head_color">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="data.data[0].length === 0">
+                            <tr>
+                                <td class="nodatafound" colspan="5">NO data </td>
+                            </tr>
+                        </ng-container>
+                        <ng-container *ngIf="data.data[0].length>0">
+                            <tr *ngFor="let task of data.data[0]; let i=index" class="pointer-cursor"
+                                (click)="selectTaskActivity(task)">
+
+                                <!-- <td>
                                       <circle-progress class="circle__progress" [percent]="task.progress" [animation]="true"
                                         [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
                                         [titleFontSize]="'10'" [titleFontWeight]="'900'"[unitsFontSize]="'10'"
                                         [unitsFontWeight]="'700'" [subtitle]="task.status.name" [subtitleFontSize]="'7'"
                                         [lazy]="false"></circle-progress>
                                     </td> -->
-            
-                                    <td data-title="Task Details" class="td1">{{task.title}}</td>
-                                    <td data-title="Task Details" class="td2"><span
+
+                                <td data-title="Task Details" class="td1">{{task.title}}</td>
+                                <td data-title="Task Details" class="td2"><span
                                         *ngIf="task.assignee">{{task.assignee.name}}</span></td>
-                                    <td data-title="Status" class="td3" [ngStyle]="{'color': getColor(task.status.name)}">{{task.status.name}}</td>
-                                    
-                                  </tr>
-                                  <tr>
-                                    <td data-title="Task Details" class="td4" (click)="selectTaskActivity('None')">{{data.noneData}}</td>
-                                  </tr>
-                                </ng-container>
-                              </tbody>
-                            </table>
-                          </div>
+                                <td data-title="Status" class="td3" [ngStyle]="{'color': getColor(task.status.name)}">
+                                    {{task.status.name}}</td>
+
+                            </tr>
+                            <tr>
+                                <td data-title="Task Details" class="td4" (click)="selectTaskActivity('None')">
+                                    {{data.noneData}}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </mat-dialog-content>
 </section>
 
-<section  *ngIf="data.requestType==='fileShare'" style="padding: 20px;">
+<section *ngIf="data.requestType==='fileShare'" style="padding: 20px;">
     <div class="header">
         <div class="d-flex" style="gap:10px">
             <!-- <div> <i class="fa fa-share-square fa-2x" aria-hidden="true"></i></div> -->
@@ -1021,25 +1031,28 @@
     </div>
 
     <mat-dialog-content class="matSiZe">
-       
-         
-            <div>
-                <div class="customerInfo" >
-                    <!-- *ngIf="showSelect" -->
-                    <!-- [ngModelOptions]="{standalone: true}" [(ngModel)]="search_input" (change)="searchCustomer(customerList)"-->
-                    <input type="text" autocomplete="off" 
-                        class="form-control inputSize" name="search"   (ngModelChange)="createCustomerData(customerDetails)" [(ngModel)]="customerDetails" placeholder="Search people by id/name/email/phone number"/>
-                       <br>
-                       
-                        <!-- {{searchby}} [disabled]="!customerDetails"-->
-                        <div >
-                            <button type="button" class="confirmBtnFind"  title="Search" (click)="searchCustomer(customerList)"><i style="color:#fff;margin-left: 5px;" class="fa fa-search"></i> </button>
-                        </div>
- <!--  [ngModel]="customerDetails"  #deptsel
-                              (selectionChange)="handleDeptSelction(deptsel.value)" -->
-                             
 
-                        <!-- <ng-container class="inputSize">
+
+        <div>
+            <div class="customerInfo">
+                <!-- *ngIf="showSelect" -->
+                <!-- [ngModelOptions]="{standalone: true}" [(ngModel)]="search_input" (change)="searchCustomer(customerList)"-->
+                <input type="text" autocomplete="off" class="form-control inputSize" name="search"
+                    (ngModelChange)="createCustomerData(customerDetails)" [(ngModel)]="customerDetails"
+                    placeholder="Search people by id/name/email/phone number" />
+                <br>
+
+                <!-- {{searchby}} [disabled]="!customerDetails"-->
+                <div>
+                    <button type="button" class="confirmBtnFind" title="Search"
+                        (click)="searchCustomer(customerList)"><i style="color:#fff;margin-left: 5px;"
+                            class="fa fa-search"></i> </button>
+                </div>
+                <!--  [ngModel]="customerDetails"  #deptsel
+                              (selectionChange)="handleDeptSelction(deptsel.value)" -->
+
+
+                <!-- <ng-container class="inputSize">
                             <span class="p-0 m-0 sel-dept">{{select_deptment_cap}}</span>
                             <span class="required">*</span>
                             <mat-form-field *ngIf="deptLength == 1">
@@ -1056,20 +1069,20 @@
                             </mat-form-field>
                           </ng-container>
                            -->
-                     
-                            <!-- (click)="
-                              searchCustomer()" -->
-                </div>
 
-                <div  class="customerInfo" *ngIf="newData.length >= 1">
-                    <!--  && showInput -->
-                    <!-- <mat-select class="inputSize" multiple>
+                <!-- (click)="
+                              searchCustomer()" -->
+            </div>
+
+            <div class="customerInfo" *ngIf="newData.length >= 1">
+                <!--  && showInput -->
+                <!-- <mat-select class="inputSize" multiple>
                       <mat-option *ngFor="let customer of customerList" [value]="customer.id">
                               <span> {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}</span>
                       </mat-option>
                     </mat-select> -->
-                   
-                    <!-- <select class="selectSize" 
+
+                <!-- <select class="selectSize" 
                         #deptsel
                                 (change)="handleDeptSelction(deptsel.value)" placeholder="Select people">
                          <option selected>Select people</option>
@@ -1077,8 +1090,8 @@
                             <span> {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}</span>
                         </option>
                       </select> -->
-                            
-                        <!-- <select class="selectSize" 
+
+                <!-- <select class="selectSize" 
                         #deptsel
                                 (change)="handleDeptSelction(deptsel.value)" placeholder="Select people">
                          <option selected>Select people</option>
@@ -1086,74 +1099,89 @@
                             <span> {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}</span>
                         </option>
                       </select> -->
-                      <mat-selection-list class="selectSize" [multiple]="false" #deptsel (selectionChange)="handleDeptSelction(deptsel.selectedOptions.selected[0]?.value)">
-                        <mat-list-option *ngFor="let customer of newData" [value]="customer.id">
-                           <span > {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}</span>
-                        </mat-list-option>
-                      </mat-selection-list>
-               
-                    
-                </div>
-               
-                <div class="fileInfo">
-                 
-                   
-                        <!--[(ngModel)]="customerDetails" (ngModelChange)="createCustomerData(customerDetails)" [ngModelOptions]="{standalone: true}" [(ngModel)]="search_input"-->
-                        <!-- <input  type="text" autocomplete="off" class="form-control inputSize" name="search"
+                <mat-selection-list class="selectSize" [multiple]="false" #deptsel
+                    (selectionChange)="handleDeptSelction(deptsel.selectedOptions.selected[0]?.value)">
+                    <mat-list-option *ngFor="let customer of newData" [value]="customer.id">
+                        <span> {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ?
+                            customer.firstName + ' ' + (customer.lastName?customer.lastName:'') : customer.email)
+                            }}</span>
+                    </mat-list-option>
+                </mat-selection-list>
+
+
+            </div>
+
+            <div class="fileInfo">
+
+
+                <!--[(ngModel)]="customerDetails" (ngModelChange)="createCustomerData(customerDetails)" [ngModelOptions]="{standalone: true}" [(ngModel)]="search_input"-->
+                <!-- <input  type="text" autocomplete="off" class="form-control inputSize" name="search"
                         [(ngModel)]="customerName" placeholder="Add consumer or provider"
                              /> appearance="fill"-->
-                             <!-- <label *ngIf="customerList.length === 0">Add people</label> -->
-                             <!-- <label *ngIf="newCustomerList.length>=1" style="color: #1D3E77; margin-bottom: 0px !important;">Share To : </label> -->
-                             <label *ngIf="customerList.length>0 || newCustomerList.length>=1" style="color: #1D3E77; margin-bottom: 0px !important;">Share To : </label>
-                             <mat-form-field class="formSize" *ngIf="customerList.length>0 || newCustomerList.length>=1">
-                                <mat-chip-list #chipList aria-label="Fruit selection" class="maxDiv">
-                               <div *ngFor="let customer of customerList">
-                                    <mat-chip (click)="showCustomerView(customer)" matTooltipPosition="above" matTooltip="{{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}"  *ngIf="(customer.firstName || customer.lastName) || customer.email || customer.jaldeeId" class="matChipFilterSze"  [selectable]="selectable" [removable]="removable" (removed)="remove(customer)">
-                                   <span *ngIf="showName"> {{customer.firstName + ' ' + (customer.lastName?customer.lastName:'')}}</span>
-                                   <!--  ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email)  -->
-                                   <span *ngIf="showEmail"> {{customer.email}}</span>
-                                   <span *ngIf="showId"> {{customer.jaldeeId}}</span>
+                <!-- <label *ngIf="customerList.length === 0">Add people</label> -->
+                <!-- <label *ngIf="newCustomerList.length>=1" style="color: #1D3E77; margin-bottom: 0px !important;">Share To : </label> -->
+                <label *ngIf="customerList.length>0 || newCustomerList.length>=1"
+                    style="color: #1D3E77; margin-bottom: 0px !important;">Share To : </label>
+                <mat-form-field class="formSize" *ngIf="customerList.length>0 || newCustomerList.length>=1">
+                    <mat-chip-list #chipList aria-label="Fruit selection" class="maxDiv">
+                        <div *ngFor="let customer of customerList">
+                            <mat-chip (click)="showCustomerView(customer)" matTooltipPosition="above"
+                                matTooltip="{{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}"
+                                *ngIf="(customer.firstName || customer.lastName) || customer.email || customer.jaldeeId"
+                                class="matChipFilterSze" [selectable]="selectable" [removable]="removable"
+                                (removed)="remove(customer)">
+                                <span *ngIf="showName"> {{customer.firstName + ' ' +
+                                    (customer.lastName?customer.lastName:'')}}</span>
+                                <!--  ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email)  -->
+                                <span *ngIf="showEmail"> {{customer.email}}</span>
+                                <span *ngIf="showId"> {{customer.jaldeeId ? customer.jaldeeId : customer.id}}</span>
 
-                                    <button matChipRemove>
-                                      <mat-icon >cancel</mat-icon>
-                                    </button>
-                                  </mat-chip>
-                                </div>
-                                <div *ngFor="let customer of newCustomerList">
-                                    <mat-chip (click)="showCustomerView(customer)"  matTooltipPosition="above" matTooltip="{{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}"  *ngIf="(customer.firstName || customer.lastName) || customer.email" class="matChipFilterSze"  [selectable]="selectable" [removable]="removable" (removed)="removeNewCustomer(customer)">
-                                   <span> {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}</span>
-                            
-                                    <button matChipRemove>
-                                      <mat-icon >cancel</mat-icon>
-                                    </button>
-                                  </mat-chip>
-                                </div>
-                                </mat-chip-list>
-                           
+                                <button matChipRemove>
+                                    <mat-icon>cancel</mat-icon>
+                                </button>
+                            </mat-chip>
+                        </div>
+                        <div *ngFor="let customer of newCustomerList">
+                            <mat-chip (click)="showCustomerView(customer)" matTooltipPosition="above"
+                                matTooltip="{{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}"
+                                *ngIf="(customer.firstName || customer.lastName) || customer.email"
+                                class="matChipFilterSze" [selectable]="selectable" [removable]="removable"
+                                (removed)="removeNewCustomer(customer)">
+                                <span> {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ?
+                                    customer.firstName + ' ' + (customer.lastName?customer.lastName:'') :
+                                    customer.email) }}</span>
+
+                                <button matChipRemove>
+                                    <mat-icon>cancel</mat-icon>
+                                </button>
+                            </mat-chip>
+                        </div>
+                    </mat-chip-list>
 
 
-                            
-                                    
-                                <!-- <input placeholder="Add people" readonly class="textField mt-4"
+
+
+
+                    <!-- <input placeholder="Add people" readonly class="textField mt-4"
                                 [matChipInputFor]="chipList"
                                > -->
-                               
-                                 
-                                         <!-- <input type="text" matInput class="form-control" id="bname" 
+
+
+                    <!-- <input type="text" matInput class="form-control" id="bname" 
                                           autocomplete="off"
                                          placeholder="A"> -->
-                                        <!--   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    <!--   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                                          [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" -->
-                                
 
-                                <!-- <mat-icon matSuffix class="pull-right">
+
+                    <!-- <mat-icon matSuffix class="pull-right">
                                     <button type="button" class="btn searchBtnFind" title="Search"
                                     (click)="openCustomerSearchDialog(customerList)"><i style="color:#fff;margin-left: 5px;"
                                         class="fa fa-plus"></i> </button></mat-icon> -->
 
-                              </mat-form-field>
-                              
-                              <!-- <mat-form-field class="formSize" *ngIf="newCustomerList.length>0">
+                </mat-form-field>
+
+                <!-- <mat-form-field class="formSize" *ngIf="newCustomerList.length>0">
     
                                 <mat-chip-list #chipList1 aria-label="Fruit" class="maxDiv" *ngIf="newCustomerList.length>=1">
                                 
@@ -1168,12 +1196,12 @@
                                      </div>
                                      </mat-chip-list>
                                     </mat-form-field> -->
-                             
-                            <!-- <span *ngIf="customerList.length === 0" class="text-center">No people added</span> -->
 
-                            
-                   
-                    <!-- <div>
+                <!-- <span *ngIf="customerList.length === 0" class="text-center">No people added</span> -->
+
+
+
+                <!-- <div>
                        
                             <div>
                                 <button type="button" class="btn confirmBtnFind" title="Search"
@@ -1182,43 +1210,66 @@
                             </div>
                           
                     </div> -->
-                  
-                    <!-- <input type="checkbox" [(ngModel)]="notify" (ngModelChange)="notifyied(notify)" class="mb-2 mt-2" name="" id="">&nbsp; Notify
-                    <br>
-                    <label for="" class="mb-2 mt-2">Messages</label>
-                    <textarea class="textArea" [(ngModel)]="message" (ngModelChange)="messageData(message)" (keyup)="autoGrowTextZone($event)" name="" id="" cols="" rows="5" placeholder="message"
-                        style="width: 90% !important;border-radius: 5.73504px !important"></textarea> -->
-                </div>
-            </div>
-            <!-- <span *ngIf="customer.firstName === '' || customer.lastName ===''" style="color:red;">Already existed!</span> -->
 
-           
-        
- <div *ngIf="data.file" style="margin-bottom: 0px;">
-    <button class="mt-4 mb-0" (click)="showFileView(data.file)"  matTooltipPosition="above" matTooltip="{{data.file.fileName}}"  class="matChipSize">
-        <img class="imgIcon" [src]="getImageType(data.file.fileType)" alt="">
-        {{data.file.fileName?.length>10 ? data.file.fileName.slice(0, 10)+'...' : data.file.fileName}}
-    </button>
-</div>
-       
-        <div mat-dialog-actions style="display: flex; margin-top: 5; padding: 0px !important;" class="pull-left">
-            <div class="cancelShareBtn">
+                <!-- <input type="checkbox" [(ngModel)]="notify" (ngModelChange)="notifyied(notify)" class="mb-2 mt-2" name="" id="">&nbsp; Notify
+                    <br> -->
+                <!-- <label for="" class="mb-2 mt-2">Messages</label> -->
+                <textarea class="messageArea" [(ngModel)]="message" (ngModelChange)="messageData(message)"
+                (keyup)="autoGrowTextZone($event)" name="" id="" cols="" rows="2" placeholder="message"></textarea>
+                <!-- <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Leave a comment</mat-label>
+                            <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+                          </mat-form-field>
+                         -->
+            </div>
+        </div>
+    
+        <!-- <span *ngIf="customer.firstName === '' || customer.lastName ===''" style="color:red;">Already existed!</span> -->
+
+
+
+        <div *ngIf="data.file" style="margin-bottom: 0px;">
+            <button class="mt-4 mb-0" (click)="showFileView(data.file)" matTooltipPosition="above"
+                matTooltip="{{data.file.fileName}}" class="matChipSize">
+                <img class="imgIcon" [src]="getImageType(data.file.fileType)" alt="">
+                {{data.file.fileName?.length>10 ? data.file.fileName.slice(0, 10)+'...' : data.file.fileName}}
+            </button>
+        </div>
+
+        <div mat-dialog-actions style="display: block; margin-top: 5; padding: 0px !important;" class="pull-left">
+            <!-- <div class="cancelShareBtn"> -->
                 <ng-container>
-                    <div class="mt-4">
-                        <button type="button" class="btn font-weight-bold" mat-dialog-close >Cancel</button>&nbsp; &nbsp;
-                        <button type="button" class="btn btn-primary font-weight-bold confirmBtn" [disabled]="newCustomerList.length === 0 && customerList.length === 0"   (click)="shareFileToConsumerOrProvider()">Send</button>
+                    <div class="mt-2 mb-0">Share file via</div>
+                    <div class="matCheckBox">
+                        <mat-checkbox [(ngModel)]="email" (ngModelChange)="emailBox(email)"
+                            [ngModelOptions]="{standalone: true}" [checked]="email">Email
+                        </mat-checkbox>
+                        <!--  [disabled]="notificationStatus && ((source === 'customer-list' || source === 'donation-list') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list') && !email_id && (!phone || phone === 'null' || phone === '') || !jaldeeConsumer))" class="mgright25 example-margin" [(ngModel)]="pushnotify" -->
+                        <mat-checkbox [(ngModel)]="pushnotify" (ngModelChange)="pushnotifyData(pushnotify)"
+                            [ngModelOptions]="{standalone: true}" [checked]="pushnotify">App
+                            notification
+                        </mat-checkbox>
+
+                    </div>
+                    <div class="mt-3 mb-0">
+                        <button type="button" class="btn font-weight-bold" mat-dialog-close>Cancel</button>&nbsp; &nbsp;
+                        <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
+                            [disabled]="newCustomerList.length === 0 && customerList.length === 0"
+                            (click)="shareFileToConsumerOrProvider()">Send</button>
                     </div>
                     <!-- <i class="fa fa-share-alt"  [disabled]="customerDetails === ''" aria-hidden="true"></i> -->
                 </ng-container>
-            </div>
+            <!-- </div> -->
         </div>
     </mat-dialog-content>
 </section>
 
 
-<section *ngIf="data.requestType==='fileView'"  style="padding: 5px;">
+<section *ngIf="data.requestType==='fileView'" style="padding: 5px;">
     <div class="header">
-        <div class="headerText"> <img class="imgIcon" [src]="getImageType(data.file.fileType)" alt=""> {{customerViewData.fileName?.length>10 ? customerViewData.fileName.slice(0, 10)+'...' : customerViewData.fileName}}
+        <div class="headerText"> <img class="imgIcon" [src]="getImageType(data.file.fileType)" alt="">
+            {{customerViewData.fileName?.length>10 ? customerViewData.fileName.slice(0, 10)+'...' :
+            customerViewData.fileName}}
         </div>
         <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
             <mat-icon>clear</mat-icon>
@@ -1226,9 +1277,9 @@
     </div>
     <mat-dialog-content>
 
-        <div >
+        <div>
             <div class="bggrey">
-                 <!-- style="display: flex;gap: 5px;flex-wrap: wrap;" -->
+                <!-- style="display: flex;gap: 5px;flex-wrap: wrap;" -->
                 <!-- <div class="leadTitle">
                    
                     <i class="fa fa-file"></i>
@@ -1243,26 +1294,30 @@
                         <i class="fa fa-file"></i>
                         <span>Type : {{customerViewData.fileType}}</span>
                     </div>
-                    <div class="leadTitle" *ngIf="customerViewData.fileSize !== ' ' || customerViewData.fileSize !== undefined || customerViewData.fileSize !== ''">
-                        <i class="fa fa-archive" ></i>
+                    <div class="leadTitle"
+                        *ngIf="customerViewData.fileSize !== ' ' || customerViewData.fileSize !== undefined || customerViewData.fileSize !== ''">
+                        <i class="fa fa-archive"></i>
                         <span class="text-dark-75 d-block" *ngIf="customerViewData.fileSize >=1">
-                           Size : {{getFileSize(customerViewData.fileSize)}}MB
-                          </span>
-                          <span class="text-dark-75 d-block" *ngIf="customerViewData.fileSize <1">
+                            Size : {{getFileSize(customerViewData.fileSize)}}MB
+                        </span>
+                        <span class="text-dark-75 d-block" *ngIf="customerViewData.fileSize <1">
                             Size : {{getFileSize(customerViewData.fileSize*1024)}}KB
-                          </span>
+                        </span>
                     </div>
-                    
-                    <div class="leadTitle" *ngIf="customerViewData.ownerType !== '' || customerViewData.ownerType !== undefined || customerViewData.fileSize !== ''">
-                        <i class="fa fa-user" ></i>
+
+                    <div class="leadTitle"
+                        *ngIf="customerViewData.ownerType !== '' || customerViewData.ownerType !== undefined || customerViewData.fileSize !== ''">
+                        <i class="fa fa-user"></i>
                         <span>Owner type : {{customerViewData.ownerType}}</span>
                     </div>
-                    <div class="leadTitle" *ngIf="customerViewData.sharedType !== '' || customerViewData.sharedType !== undefined || customerViewData.fileSize !== ''">
-                        <i class="fa fa-share" ></i>
+                    <div class="leadTitle"
+                        *ngIf="customerViewData.sharedType !== '' || customerViewData.sharedType !== undefined || customerViewData.fileSize !== ''">
+                        <i class="fa fa-share"></i>
                         <span>Share type : {{customerViewData.sharedType}}</span>
                     </div>
-                    <div class="leadTitle" *ngIf="customerViewData.contextDisplayName !== '' || customerViewData.contextDisplayName !== undefined || customerViewData.fileSize !== ''">
-                        <i class="fa fa-tasks" ></i>
+                    <div class="leadTitle"
+                        *ngIf="customerViewData.contextDisplayName !== '' || customerViewData.contextDisplayName !== undefined || customerViewData.fileSize !== ''">
+                        <i class="fa fa-tasks"></i>
                         <span>Context : {{customerViewData.contextDisplayName}}</span>
                     </div>
                 </div>
@@ -1277,7 +1332,7 @@
                 </div> -->
             </div>
         </div>
-    <!-- </form> -->
+        <!-- </form> -->
         <!---cancel save btn start-->
         <!-- <div mat-dialog-actions style="display: flex; margin-top: 5; padding: 0px !important;">
             <div class="cancelSaveBtn">
@@ -1300,19 +1355,20 @@
 </section>
 
 
-<section *ngIf="data.requestType==='customerView'"  style="padding: 5px;">
+<section *ngIf="data.requestType==='customerView'" style="padding: 5px;">
     <!-- <div class="imageClass">
                 <div style="color: #8A8383;">{{firstCustomerName | capitalizeFirst}} {{customerViewData.firstName | capitalizeFirst}} {{customerViewData.lastName | capitalizeFirst}}</div>
               </div> -->
     <div class="header">
-        <div class="headerText"><i class="fa fa-user fa-2x"></i> {{customerViewData.firstName | capitalizeFirst}} {{customerViewData.lastName | capitalizeFirst}}</div>
+        <div class="headerText"><i class="fa fa-user fa-2x"></i> {{customerViewData.firstName | capitalizeFirst}}
+            {{customerViewData.lastName | capitalizeFirst}}</div>
         <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
             <mat-icon>clear</mat-icon>
         </div>
     </div>
     <mat-dialog-content>
 
-        <div >
+        <div>
             <div class="bggrey">
                 <!-- <div class="leadTitle" *ngIf="customerViewData.firstName || customerViewData.lastName">
                     <i class="fa fa-user"></i>
@@ -1325,12 +1381,12 @@
                     </div>
                     <div class="leadTitle" *ngIf="showDone">
                         <!-- *ngIf="customerViewData.phoneNo !== ' ' || customerViewData.phoneNo !== undefined || customerViewData.phoneNo !== ''" -->
-                        <i class="fa fa-mobile icon" ></i>
+                        <i class="fa fa-mobile icon"></i>
                         <span>{{customerViewData.phoneNo}}</span>
                     </div>
                     <!-- *ngIf="customerViewData.email !== '' || customerViewData.email !== undefined" -->
                     <div class="leadTitle" *ngIf="showDone">
-                        <i class="fa fa-envelope icon" ></i>
+                        <i class="fa fa-envelope icon"></i>
                         <span>{{customerViewData.email}}</span>
                     </div>
                 </div>
@@ -1345,7 +1401,7 @@
                 </div> -->
             </div>
         </div>
-    <!-- </form> -->
+        <!-- </form> -->
         <!---cancel save btn start-->
         <!-- <div mat-dialog-actions style="display: flex; margin-top: 5; padding: 0px !important;">
             <div class="cancelSaveBtn">
@@ -1366,6 +1422,3 @@
         </div> -->
     </mat-dialog-content>
 </section>
-
-
-

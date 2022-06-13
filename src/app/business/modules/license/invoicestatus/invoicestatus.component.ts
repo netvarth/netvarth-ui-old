@@ -79,42 +79,58 @@ export class InvoiceStatusComponent {
 
 
   }
-
-  setFilterData(type, status) {
-    let passingStatus;
-    if (status && this.selected === 0) {
-      this.selected = 1;
-      this.invoiceStatus.push(status);
-      passingStatus = this.invoiceStatus.toString();
-      this.filter[type] = passingStatus;
-      this.doSearch();
-    } else if (status && this.selected === 1) {
-      if (this.invoiceStatus.indexOf(status) !== -1) {
-        const indexofStatus = this.invoiceStatus.indexOf(status);
-        this.invoiceStatus.splice(indexofStatus, 1)
-        passingStatus = this.invoiceStatus.toString();
-        this.filter[type] = passingStatus;
-        if (this.filter[type] === '') {
-          this.resetFilter();
-        }
-        this.doSearch();
-      } else {
-        this.invoiceStatus.push(status);
-        passingStatus = this.invoiceStatus.toString();
-        this.filter[type] = passingStatus;
-        this.doSearch();
+  setFilterDataCheckbox(type, value) {
+    //this.filter[type] = value;
+    if (type === "statusMode") {
+      const indx = this.invoiceStatus.indexOf(value);
+      console.log("statusMode value :", value);
+      this.invoiceStatus = [];
+      if (indx === -1) {
+        this.invoiceStatus.push(value);
       }
-
     }
-
-    this.check_status = '';
-
-
+    this.doSearch();
+    // this.keyPressed()
   }
+  // setFilterData(type, status) {
+  //   let passingStatus;
+  //   if (status && this.selected === 0) {
+  //     this.selected = 1;
+  //     this.invoiceStatus.push(status);
+  //     passingStatus = this.invoiceStatus.toString();
+  //     this.filter[type] = passingStatus;
+  //     this.doSearch();
+  //   } else if (status && this.selected === 1) {
+  //     if (this.invoiceStatus.indexOf(status) !== -1) {
+  //       const indexofStatus = this.invoiceStatus.indexOf(status);
+  //       this.invoiceStatus.splice(indexofStatus, 1)
+  //       passingStatus = this.invoiceStatus.toString();
+  //       this.filter[type] = passingStatus;
+  //       if (this.filter[type] === '') {
+  //         this.resetFilter();
+  //       }
+  //       this.doSearch();
+  //     } else {
+  //       this.invoiceStatus.push(status);
+  //       passingStatus = this.invoiceStatus.toString();
+  //       this.filter[type] = passingStatus;
+  //       this.doSearch();
+  //     }
+
+  //   }
+
+  //   this.check_status = '';
+
+
+  // }
   setFilterForApi() {
     const api_filter = {};
-    if (this.filter.invoiceStatus !== 'all') {
-      api_filter['invoiceStatus-eq'] = this.filter.invoiceStatus;
+    // if (this.filter.invoiceStatus !== 'all') {
+    //   api_filter['invoiceStatus-eq'] = this.filter.invoiceStatus;
+    // }
+    if (this.invoiceStatus.length > 0) {
+      api_filter["invoiceStatus-eq"] = this.invoiceStatus.toString();
+    //  api_filter["folderName-eq"] = this.foldertype;
     }
     return api_filter;
   }
@@ -128,14 +144,16 @@ export class InvoiceStatusComponent {
         });
   }
   doSearch() {
-    if (this.filter.invoiceStatus !== 'all') {
+    
+  
+    if (this.filter.invoiceStatus !== 'all' || this.invoiceStatus.length > 0) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
     }
-    this.getInvoiceStatus();
+   // this.getInvoiceStatus();
   }
-
+ 
   resetFilter() {
     this.filters = {
       Paid: false,
@@ -155,6 +173,7 @@ export class InvoiceStatusComponent {
       // Obsolete: '',
       invoiceStatus: 'all',
     };
+    this.invoiceStatus = []
   }
   clearFilter() {
     this.check_status = false;

@@ -98,7 +98,7 @@ export class CrmSelectMemberComponent implements OnInit {
   public newCustomerList:any=[]
   public newData:any=[]
   notify: boolean = false;
-  message: any;
+  message = "";
   searchby = "";
   form_data: any;
   emptyFielderror = false;
@@ -124,12 +124,16 @@ export class CrmSelectMemberComponent implements OnInit {
   addOnBlur = true;
   selectable = true;
   removable = true;
-  showDone = true;
+  showDone = false;
   showSelect = true;
   showInput = true;
   showId = false;
   showEmail = false;
   showName = false;
+  email = false;
+  sms = false;
+  pushnotify = false;
+  telegram = false;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   private onDestroy$: Subject<void> = new Subject<void>();
   public activityList: any = [];
@@ -330,11 +334,11 @@ export class CrmSelectMemberComponent implements OnInit {
     if (this.data.requestType === "customerView") {
       this.customerViewData = this.data.customer;
       this.firstCustomerName=this.customerViewData.firstName.charAt(0);
-      if(this.customerViewData.phoneNo === undefined || this.customerViewData.phoneNo === '' || this.customerViewData.phoneNo === ' '){
-        this.showDone = false
+      if(this.customerViewData.phoneNo !== undefined || this.customerViewData.phoneNo !== '' || this.customerViewData.phoneNo !== ' '){
+        this.showDone = true;
       }
-      if(this.customerViewData.email === undefined || this.customerViewData.email === '' || this.customerViewData.email === ' '){
-        this.showDone = false
+      if(this.customerViewData.email !== undefined || this.customerViewData.email !== '' || this.customerViewData.email !== ' '){
+        this.showDone = true;
       }
     }
     if (this.data.requestType === "fileView") {
@@ -785,6 +789,13 @@ export class CrmSelectMemberComponent implements OnInit {
   messageData(message: any) {
     console.log("Message :", message);
   }
+  emailBox(email:any){
+    console.log("email :", email);
+  }
+  pushnotifyData(pushnotify){
+    console.log("pushnotify :", pushnotify);
+
+  }
 showCustomerView(customer){
      const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
       width: "50%",
@@ -1233,6 +1244,12 @@ showFileView(file){
     //   this.customerError= null
     //   this.customerErrorMsg = 'Please add cunsumer or provider info'
     // }
+    if(!this.email && !this.pushnotify){
+      this.snackbarService.openSnackBar("Share via options are not selected", {
+        panelClass: "snackbarerror"
+      });
+    }
+    else{
     console.log("Submit Share :", this.customerArray, this.data.file.id);
 
     this.customerArray.forEach(element => {
@@ -1264,6 +1281,17 @@ showFileView(file){
         panelClass: "snackbarerror"
       });
     }
+    const communication = {
+     
+      'medium': {
+        'email': this.email,
+        // 'sms': this.sms,
+        'pushNotification': this.pushnotify,
+       // 'telegram': this.telegram
+      },
+      'communicationMessage': this.message
+    };
+    console.log("Communication Mode :",communication)
     let dataToSend = new FormData();
     const newBlobArray = new Blob([JSON.stringify(this.fileArray, null, 2)], {
       type: "application/json"
@@ -1273,6 +1301,10 @@ showFileView(file){
       type: "application/json"
     });
     dataToSend.append("attachments", newBlob);
+    const newBlobCommunication = new Blob([JSON.stringify(communication, null, 2)], {
+      type: "application/json"
+    });
+    dataToSend.append("communication", newBlobCommunication);
 
     
     this.providerServiceObj.shareProviderFiles(dataToSend).subscribe(
@@ -1291,6 +1323,9 @@ showFileView(file){
         });
       }
     );
+  
+
+    }
   }
   search() {
     this.hideSearch = false;
