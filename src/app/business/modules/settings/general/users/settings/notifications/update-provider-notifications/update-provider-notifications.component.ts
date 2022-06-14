@@ -151,6 +151,7 @@ export class UpdateProviderUserNotificationsComponent implements OnInit {
         }
         if (cancelList[0].sms && cancelList[0].sms.length !== 0) {
           this.ph1_arr = cancelList[0].sms;
+          console.log("Phone Array :",this.ph1_arr)
           // this.SelchkincnclNotify = true;
         }
         if (cancelList[0].telegramPhone && cancelList[0].telegramPhone.length !== 0) {

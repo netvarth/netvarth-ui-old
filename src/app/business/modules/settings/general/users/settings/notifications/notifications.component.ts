@@ -14,6 +14,8 @@ import { SnackbarService } from '../../../../../../../shared/services/snackbar.s
 export class NotificationsUserComponent implements OnInit {
     smsGlobalStatus;
     smsGlobalStatusStr;
+    notificationStatus;
+    notificationStatusEnable;
     domain;
     smsCredits;
     genrl_notification_cap = '';
@@ -69,7 +71,9 @@ export class NotificationsUserComponent implements OnInit {
     getSMSglobalSettings() {
         this.provider_services.getSMSglobalSettings().subscribe(data => {
             this.smsGlobalStatus = data['enableSms'];
+            this.notificationStatus = data['sendNotification'];
             this.smsGlobalStatusStr = (this.smsGlobalStatus) ? 'On' : 'Off';
+            this.notificationStatusEnable = (this.notificationStatus) ? 'On' : 'Off';
         });
     }
     handleGlobalSMSSettings(event) {

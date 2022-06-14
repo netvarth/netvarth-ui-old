@@ -456,6 +456,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngOnInit() {
+    const _this = this;
     //this.getUsersList(this.check_in_filtered_list['teamId'])
     if (this.groupService.getitemFromGroupStorage('selected_type')) {
       this.selected_type = this.groupService.getitemFromGroupStorage('selected_type');
@@ -489,11 +490,11 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getServices();
     if (this.active_user.accountType === 'BRANCH') {
       this.getTeams().then((data) => {
-        this.teams = data;
+        _this.teams = data;
       });
     }
     this.cronHandle = observableInterval(this.refreshTime * 500).subscribe(() => {
-      this.refresh();
+      //this.refresh();
     });
   }
   getServiceName(serviceName) {
@@ -745,17 +746,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   selectLocationFromCookies(cookie_location_id) {
+    const _this= this;
     this.locationSelected(this.selectLocationFromCookie(cookie_location_id)).then(
       (schedules: any) => {
-        this.initViews(schedules, '').then(
+        _this.initViews(schedules, '').then(
           (view) => {
-            this.initView(view, 'changeLocation');
+            _this.initView(view, 'changeLocation');
           }
         );
       }
     );
   }
   getLocationList() {
+
     const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
     const self = this;
     return new Promise<void>(function (resolve, reject) {
@@ -790,9 +793,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               if (self.locations[0]) {
                 self.locationSelected(self.locations[0]).then(
                   (schedules: any) => {
-                    this.initViews(schedules, 'changeLocation').then(
+                    self.initViews(schedules, 'changeLocation').then(
                       (view) => {
-                        this.initView(view, 'changeLocation');
+                        self.initView(view, 'changeLocation');
                       }
                     );
                   }
@@ -1053,11 +1056,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   getCounts() {
+   const _this = this;
     if (this.time_type !== 2 && this.activeSchedules.length > 0) {
       this.getFutureAppointmentsCount()
         .then(
           (result) => {
-            this.future_waitlist_count = result;
+            _this.future_waitlist_count = result;
           }
         );
     }
@@ -1065,7 +1069,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getHistoryAppointmentsCount()
         .then(
           (result) => {
-            this.history_waitlist_count = result;
+            _this.history_waitlist_count = result;
           }
         );
     }
@@ -1073,7 +1077,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getTodayAppointmentsCount()
         .then(
           (result) => {
-            this.today_waitlist_count = result;
+            _this.today_waitlist_count = result;
           }
         );
     }
@@ -1391,7 +1395,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
                 _this.setCounts(this.appt_list);
                 _this.check_in_filtered_list = _this.getActiveAppointments(_this.todayAppointments, _this.statusAction);
-                _this.apptByTimeSlot = this.shared_functions.groupBy(_this.check_in_filtered_list, 'appmtTime');
+                _this.apptByTimeSlot = _this.shared_functions.groupBy(_this.check_in_filtered_list, 'appmtTime');
                 _this.handleApptSelectionType();
                 _this.startedAppts = _this.getActiveAppointments(_this.todayAppointments, 'started');
               },
@@ -1491,7 +1495,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                   _this.check_in_filtered_list = _this.getActiveAppointments(_this.futureAppointments, _this.statusAction);
                   _this.setFutureCounts(_this.futureAppointments);
                 }
-                  this.getUsersList(_this.check_in_filtered_list['teamId'])
+                // _this.getUsersList(_this.check_in_filtered_list['teamId'])
 
               },
               () => {
@@ -2333,14 +2337,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
   changeWaitlistStatusApi(waitlist, action, post_data = {}) {
+    const _this = this;
     this.statusChangeClicked = true;
     this.provider_shared_functions.changeApptStatusApi(this, waitlist, action, post_data)
       .then(
         result => {
-          this.statusChangeClicked = false;
-          this.loadApiSwitch(result);
+          _this.statusChangeClicked = false;
+          _this.loadApiSwitch(result);
         }, error => {
-          this.statusChangeClicked = false;
+          _this.statusChangeClicked = false;
         }
       );
   }
@@ -2350,14 +2355,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   printHistoryCheckin() {
+    const _this= this;
     const Mfilter = this.setFilterForApi();
     const promise = this.getHistoryAppointmentsCount(Mfilter);
     promise.then(
       result => {
-        this.provider_services.getHistoryAppointments(Mfilter)
+        _this.provider_services.getHistoryAppointments(Mfilter)
           .subscribe(
             data => {
-              this.historyCheckins = data;
+              _this.historyCheckins = data;
               console.log(this.historyCheckins);
               const params = [
                 'height=' + screen.height,
@@ -2373,9 +2379,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               checkin_html += '<td style="padding:10px;">Service</td>';
               checkin_html += '<td style="padding:10px;">Label</td>';
               checkin_html += '</thead>';
-              for (let i = 0; i < this.historyCheckins.length; i++) {
-                const fname = (this.historyCheckins[i].appmtFor[0].firstName) ? this.historyCheckins[i].appmtFor[0].firstName : '';
-                const lname = (this.historyCheckins[i].appmtFor[0].lastName) ? this.historyCheckins[i].appmtFor[0].lastName : '';
+              for (let i = 0; i < _this.historyCheckins.length; i++) {
+                const fname = (_this.historyCheckins[i].appmtFor[0].firstName) ? _this.historyCheckins[i].appmtFor[0].firstName : '';
+                const lname = (_this.historyCheckins[i].appmtFor[0].lastName) ? _this.historyCheckins[i].appmtFor[0].lastName : '';
                 let name = '';
                 if (fname !== '' && lname !== '') {
                   name = fname + '' + lname;
@@ -2384,22 +2390,22 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
                   name = 'Nil';
                 }
                 checkin_html += '<tr style="line-height:20px;padding:10px">';
-                checkin_html += '<td style="padding:10px">' + (this.historyCheckins.indexOf(this.historyCheckins[i]) + 1) + '</td>';
-                checkin_html += '<td style="padding:10px">' + moment(this.historyCheckins[i].appmtDate).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + this.getSingleTime(this.historyCheckins[i].appmtTime) + '</td>';
+                checkin_html += '<td style="padding:10px">' + (_this.historyCheckins.indexOf(_this.historyCheckins[i]) + 1) + '</td>';
+                checkin_html += '<td style="padding:10px">' + moment(_this.historyCheckins[i].appmtDate).format(projectConstants.DISPLAY_DATE_FORMAT) + ' ' + _this.getSingleTime(_this.historyCheckins[i].appmtTime) + '</td>';
                 checkin_html += '<td style="padding:10px">' + name + '</td>';
-                checkin_html += '<td style="padding:10px">' + this.historyCheckins[i].service.name + '</td>';
-                if (this.historyCheckins[i].label && Object.keys(this.historyCheckins[i].label).length > 0) {
+                checkin_html += '<td style="padding:10px">' + _this.historyCheckins[i].service.name + '</td>';
+                if (_this.historyCheckins[i].label && Object.keys(_this.historyCheckins[i].label).length > 0) {
                   const labels = [];
-                  Object.keys(this.historyCheckins[i].label).forEach(key => {
-                    labels.push(this.getDisplayname(key));
+                  Object.keys(_this.historyCheckins[i].label).forEach(key => {
+                    labels.push(_this.getDisplayname(key));
                   });
                   checkin_html += '<td style="padding:10px">' + labels.toString() + '</td></tr>';
                 }
               }
               checkin_html += '</table>';
               checkin_html += '<div style="margin:10px">';
-              if (!this.labelFilterData.match('$') && this.labelsCount.length > 1) {
-                for (const count of this.labelsCount) {
+              if (!_this.labelFilterData.match('$') && _this.labelsCount.length > 1) {
+                for (const count of _this.labelsCount) {
                   checkin_html += '<div style="padding-bottom:10px;">' + count + ' Records</div>';
                 }
               }
@@ -2419,14 +2425,15 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onChangeLocationSelect(event) {
+    const _this= this;
     const value = event;
     this.resetFields();
     this.clearApptIdsFromStorage();
     this.locationSelected(this.locations[value] || []).then(
       (schedules: any) => {
-        this.initViews(schedules, 'changeLocation').then(
+        _this.initViews(schedules, 'changeLocation').then(
           (view) => {
-            this.initView(view, 'changeLocation');
+            _this.initView(view, 'changeLocation');
           }
         );
       }
@@ -2697,15 +2704,16 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getAllShedules() {
+    const _this= this;
     this.provider_services.getProviderSchedules().subscribe(
       (schedules: any) => {
         if (schedules.length > 0) {
           this.scheduleExist = true;
           this.getGlobalSettings().then(
             () => {
-              this.getAllServices().then(
+              _this.getAllServices().then(
                 () => {
-                  this.getBusinessdetFromLocalstorage();
+                  _this.getBusinessdetFromLocalstorage();
                 }
               );
             }
