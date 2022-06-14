@@ -51,10 +51,10 @@ export class ApplicantComponent implements OnInit {
     } else {
       this.customerName = this.applicant['customerName'];
     }
-    if (this.applicant && this.applicant['phone']) {
+    if (this.applicant.parent && this.applicant['phone']) {
       this.phoneNumber = '+91' + this.applicant['phone'];
     } else {
-      this.phoneNumber = this.applicant['permanentPhoneNumber'];
+      this.phoneNumber = this.applicant['permanentPhone'];
     }
     this.applicantForm = this.formBuilder.group({
       customerName: [null],
@@ -86,10 +86,8 @@ export class ApplicantComponent implements OnInit {
     } else {
       this.applicantForm.controls.customerName.setValue(this.applicant.customerName);
     }
-    if (this.phoneNumber) {
-      this.applicantForm.controls.permanentPhoneNumber.setValue(this.phoneNumber);
-    } else {
-      this.applicantForm.controls.permanentPhoneNumber.setValue(this.applicant.permanentPhoneNumber);
+    if (this.applicant.permanentPhone) {
+      this.applicantForm.controls.permanentPhoneNumber.setValue(this.applicant.permanentPhone);
     }
     if (this.applicant.validationIds && this.applicant.validationIds[0]) {
       this.applicantForm.controls.idTypes.setValue(this.applicant.validationIds[0].idTypes);
@@ -289,14 +287,16 @@ export class ApplicantComponent implements OnInit {
       applicantInfo['customerName'] = this.applicantForm.controls.customerName.value;
     }
     if (this.applicantForm.controls.permanentPhoneNumber) {
-      applicantInfo['permanentPhoneNumber'] = this.applicantForm.controls.permanentPhoneNumber.value;
+      applicantInfo['permanentPhone'] = this.applicantForm.controls.permanentPhoneNumber.value;
+    } else if (this.applicant['phone']) {
+      applicantInfo['permanentPhone'] = this.applicant['phone'];
     }
     if (this.applicant['name']) {
       applicantInfo['customerName'] = this.applicant['name'];
-    }
-    if (this.applicant['phone']) {
-      applicantInfo['permanentPhoneNumber'] = this.applicant['phone'];
-    }
+    }  
+    if (this.applicant['id']) {
+      applicantInfo['id'] = this.applicant['id'];
+    } 
     return applicantInfo;
   }
 

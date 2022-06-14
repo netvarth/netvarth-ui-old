@@ -81,7 +81,7 @@ export class ViewLeadQnrComponent implements OnInit {
           } else {
             let applicant = {
               parent: true,
-              id: _this.leadInfo.customer.id,
+              // id: _this.leadInfo.customer.id,
               name: _this.leadInfo.customer.name,
               phone: _this.leadInfo.customer.phoneNo
             }
@@ -116,9 +116,9 @@ export class ViewLeadQnrComponent implements OnInit {
       if (!applicant.customerName) {
         applicant['customerName'] = this.leadInfo.customer.name;
       }
-      if (!applicant.permanentPhoneNumber) {
-        applicant['permanentPhoneNumber'] = this.leadInfo.customer.phoneNo;
-      }
+      // if (!applicant.permanentPhone) {
+      //   applicant['permanentPhone'] = this.leadInfo.customer.phoneNo;
+      // }
       this.applicantsInfo[kycIndex] = applicant;
       console.log(this.applicantsInfo);
       this.applicants.push(kycIndex);
@@ -279,6 +279,10 @@ export class ViewLeadQnrComponent implements OnInit {
     }
     this.applicantsInfo[applicantIndex]['originUid'] = this.leadInfo.uid;
     this.applicantsInfo[applicantIndex]['originFrom'] = "Lead";
+
+    if (applicantIndex === 0 && !this.applicantsInfo[applicantIndex]['permanentPhone']) {
+      this.applicantsInfo[applicantIndex]['permanentPhone'] = this.leadInfo.customer.phoneNo;
+    }
     console.log(applicantIndex);
     console.log(this.applicantsInfo);
     // console.log(this.applicants);
