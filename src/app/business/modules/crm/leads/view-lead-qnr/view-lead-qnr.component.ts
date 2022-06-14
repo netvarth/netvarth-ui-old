@@ -213,6 +213,7 @@ export class ViewLeadQnrComponent implements OnInit {
       this.crmService.addkyc(applicantsList).subscribe((response) => {
         console.log('afterupdateKYCDAta', response);
         this.uploadAudioVideo(response);
+        this.snackbarService.openSnackBar('KYC updated successfully');
         this.initLead();
       },
         (error) => {
@@ -247,7 +248,7 @@ export class ViewLeadQnrComponent implements OnInit {
         let fileData = this.getFileInfo('kyc1', filesObj);
         if (fileData && fileData.length > 0 && !fileData[0]['order']) {
           fileData[0]['order'] = this.filesCount++;
-          this.filesToUpload.push(fileData);
+          this.filesToUpload.push(fileData[0]);
           this.applicantsInfo[applicantIndex].validationIds[0].attachments = fileData;
         }
       }
@@ -256,7 +257,7 @@ export class ViewLeadQnrComponent implements OnInit {
         let fileData = this.getFileInfo('kyc2', filesObj);
         if (fileData && fileData.length > 0 && !fileData[0]['order']) {
           fileData[0]['order'] = this.filesCount++;
-          this.filesToUpload.push(fileData);
+          this.filesToUpload.push(fileData[0]);
           this.applicantsInfo[applicantIndex].validationIds[1].attachments = fileData;
         }
       }
@@ -265,7 +266,7 @@ export class ViewLeadQnrComponent implements OnInit {
         let fileData = this.getFileInfo('pan', filesObj);
         if (fileData && fileData.length > 0 && !fileData[0]['order']) {
           fileData[0]['order'] = this.filesCount++;
-          this.filesToUpload.push(fileData);
+          this.filesToUpload.push(fileData[0]);
           this.applicantsInfo[applicantIndex].panAttachments = fileData;
         }
       }

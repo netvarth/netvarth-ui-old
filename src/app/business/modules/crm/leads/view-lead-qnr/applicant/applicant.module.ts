@@ -6,6 +6,7 @@ import { FormMessageDisplayModule } from '../../../../../../shared/modules/form-
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { CapitalizeFirstPipeModule } from '../../../../../../shared/pipes/capitalize.module';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 
@@ -20,7 +21,8 @@ import { CapitalizeFirstPipeModule } from '../../../../../../shared/pipes/capita
     FormMessageDisplayModule,
     MatSelectModule,
     MatOptionModule,
-    CapitalizeFirstPipeModule
+    CapitalizeFirstPipeModule,
+    MatDatepickerModule
   ],
   exports: [
     ApplicantComponent

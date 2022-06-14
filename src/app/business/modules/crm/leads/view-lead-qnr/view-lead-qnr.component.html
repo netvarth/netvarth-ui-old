@@ -9,6 +9,7 @@
 </section>
 
 <section *ngIf="leadInfo" class="container card mt-4 mx-auto">
+  <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
   <ng-container *ngIf="this.leadInfo.status.name==='New' || this.leadInfo.status.name==='KYC Updated'">
     <ng-container *ngFor="let applicant of applicants; let i=index">
       <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
@@ -122,8 +123,7 @@
             ( Saved Remarks)
           </div>
         </div>
-        <div class="my-2  height-limit" *ngIf="leadInfo.notes.length>0 ">
-          <!-- <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner> -->
+        <div class="my-2  height-limit" *ngIf="leadInfo.notes.length>0 ">          
           <div>
             <div *ngFor="let note of leadInfo.notes;let i=index" class="allNotesList"
               style="display: flex;justify-content: space-between;align-items: center;">
