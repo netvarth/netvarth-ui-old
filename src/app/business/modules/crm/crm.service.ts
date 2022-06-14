@@ -179,7 +179,7 @@ export class CrmService {
       const url = 'provider/task/provider?status-eq=1';
       return this.servicemeta.httpGet(url, null, filter);
     }
-    getNewTaskCount(filter){
+    getNewTaskCount(filter={}){
       const url = 'provider/task/provider/count?status-eq=1';
       return this.servicemeta.httpGet(url, null, filter);
     }
