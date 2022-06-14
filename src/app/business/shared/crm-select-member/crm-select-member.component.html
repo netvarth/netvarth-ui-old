@@ -1124,12 +1124,12 @@
                     style="color: #1D3E77; margin-bottom: 0px !important;">Share To : </label>
                 <mat-form-field class="formSize" *ngIf="customerList.length>0 || newCustomerList.length>=1">
                     <mat-chip-list #chipList aria-label="Fruit selection" class="maxDiv">
-                        <div *ngFor="let customer of customerList">
+                        <div *ngFor="let customer of customerList; let i= index">
                             <mat-chip (click)="showCustomerView(customer)" matTooltipPosition="above"
                                 matTooltip="{{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}"
                                 *ngIf="(customer.firstName || customer.lastName) || customer.email || customer.jaldeeId"
                                 class="matChipFilterSze" [selectable]="selectable" [removable]="removable"
-                                (removed)="remove(customer)">
+                                (removed)="remove(i)">
                                 <span *ngIf="showName"> {{customer.firstName + ' ' +
                                     (customer.lastName?customer.lastName:'')}}</span>
                                 <!--  ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email)  -->
@@ -1141,12 +1141,12 @@
                                 </button>
                             </mat-chip>
                         </div>
-                        <div *ngFor="let customer of newCustomerList">
+                        <div *ngFor="let customer of newCustomerList; let i = index">
                             <mat-chip (click)="showCustomerView(customer)" matTooltipPosition="above"
                                 matTooltip="{{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ? customer.firstName + ' ' + (customer.lastName?customer.lastName:'')  : customer.email) }}"
                                 *ngIf="(customer.firstName || customer.lastName) || customer.email"
                                 class="matChipFilterSze" [selectable]="selectable" [removable]="removable"
-                                (removed)="removeNewCustomer(customer)">
+                                (removed)="removeNewCustomer(i)">
                                 <span> {{(customer.firstName + ' ' + (customer.lastName?customer.lastName:'') ?
                                     customer.firstName + ' ' + (customer.lastName?customer.lastName:'') :
                                     customer.email) }}</span>

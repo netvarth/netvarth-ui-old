@@ -797,6 +797,7 @@ export class CrmSelectMemberComponent implements OnInit {
 
   }
 showCustomerView(customer){
+  console.log("customerView :",customer)
      const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
       width: "50%",
       panelClass: ["commonpopupmainclass", "confirmationmainclass"],
@@ -898,21 +899,25 @@ showFileView(file){
     makeNone = [];
     this.newData = makeNone
   }
-  remove(customer) {
-    const index = this.customerList.indexOf(customer);
-    if (index >= 0) {
+  remove(index) {
+    console.log("ID :",index)
+    //const index = this.customerList.indexOf();
+   // if (index >= 0) {
       this.customerList.splice(index, 1);
-    }
+      this.customerArray.splice(index, 1);
+
+   // }
   }
-  removeNewCustomer(customer){
-    const index = this.newCustomerList.indexOf(customer);
-    if (index >= 0) {
+  removeNewCustomer(index){
+    // const index = this.newCustomerList.indexOf(customer);
+    // if (index >= 0) {
       this.newCustomerList.splice(index, 1);
-    }
-    if(index === 0){
-      this.newCustomerList = []
-      this.newData = []
-    }
+      this.customerArray.splice(index, 1);
+    // }
+    // if(index === 0){
+    //   
+    //   this.newData = []
+    // }
   }
   // add(event: MatChipInputEvent): void {
   //   const value = (event.value || '').trim();
@@ -950,8 +955,11 @@ showFileView(file){
             console.log("New ELSE",newElement)
             this.newCustomerList.push(newElement)
             this.customerArray.push(newElement.id);
+           // this.customerArray = []
+
           })
         }
+       // this.customerArray = []
       //})
       console.log("Selected Customer :",this.selected_customer)
      
@@ -1261,6 +1269,7 @@ showFileView(file){
 
       this.fileArray.push(newObj);
     });
+    //this.customerArray = [];
     console.log("Custome :", this.fileArray);
 
     // const newArray = []
