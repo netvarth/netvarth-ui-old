@@ -1186,10 +1186,19 @@ export const projectConstantsLocal = {
     {name: 'Passport', displayName: 'Passport'},
     {name: 'VoterID', displayName: 'VoterID'},
     {name: 'UID', displayName: 'Aadhaar'},
-    {name: 'Others', displayName: 'Others'},
     {name: 'RationCard', displayName: 'RationCard'},
     {name: 'DrivingLicenseNo', displayName: 'DrivingLicenseNo'},
-    {name: 'Pan', displayName: 'Pan'}
+    {name: 'Pan', displayName: 'Pan'},
+    {name: 'Others', displayName: 'Others'}
+  ],
+  PHONE_TYPES:[
+    {name: 'Residence', displayName: 'Residence'},
+    {name: 'Company', displayName: 'Company'},
+    {name: 'Mobile', displayName: 'Mobile'},
+    {name: 'Permanent', displayName: 'Permanent'},
+    {name: 'Foreign', displayName: 'Foreign'},
+    {name: 'Untagged', displayName: 'Untagged'},
+    {name: 'Others', displayName: 'Others'},
   ],
   UIS3PATH: "https://jaldeeuiscale.s3.ap-south-1.amazonaws.com/",
   // UIS3PATH: "https://jaldeeuitest.s3.ap-south-1.amazonaws.com/",

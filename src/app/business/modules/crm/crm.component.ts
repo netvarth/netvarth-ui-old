@@ -87,7 +87,7 @@ export class CRMComponent implements OnInit {
         {
           id: 3,
           activityName: 'All Loans'
-        },
+        }
         
         // {
         //   id: 8,
@@ -253,10 +253,10 @@ export class CRMComponent implements OnInit {
     if(templateName==='All Loans'){
       const navigationExtras: NavigationExtras =  {
         queryParams: {
-          type: 'LEAD'
+          type: 'LOGIN'
         }
       }
-      this.router.navigate(['provider','lead'],navigationExtras);
+      this.router.navigate(['provider','lead'], navigationExtras);
     }
     else if(templateName==='CRIF'){
       const navigationExtras: NavigationExtras =  {

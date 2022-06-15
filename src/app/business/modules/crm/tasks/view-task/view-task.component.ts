@@ -138,7 +138,7 @@ export class ViewTaskComponent implements OnInit {
   public notesTextarea:any;
   public errorMsg:boolean=false;
   public assignMemberErrorMsg:string='';
-  public bTaskFollowUpResult:boolean=true;
+  public bTaskFollowUpResult:boolean=false;
   public editable:boolean=true;
   public followUpStatusComplToProceed:any;
   public followUpStatusInProgressToPending:any;
@@ -156,7 +156,7 @@ export class ViewTaskComponent implements OnInit {
 
  
   constructor(
-    private locationobj: Location,
+    // private locationobj: Location,
     private crmService: CrmService,
     public _location: Location,
     public dialog: MatDialog,
@@ -189,31 +189,25 @@ export class ViewTaskComponent implements OnInit {
     taskStatus:[],
     targetResult:[],
     targetPotential:[],
-
-
-
    })
    const user = this.groupService.getitemFromGroupStorage('ynw-user');
    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
    console.log("User is :", user);
    this.selectMember= user.firstName + user.lastName;
    this.selectTaskManger=user.firstName + user.lastName;
-   // console.log(' this.selectMember', this.selectMember)
-   // console.log(' this.selectMember', this.selectTaskManger)
    this.assigneeId=user.id;
    this.updateMemberId=this.assigneeId;
-  //  this.selectTaskMangerId=user.id;
    this.locationId= user.bussLocs[0]
    if(user.userType === 1){
      this.userType='PROVIDER'
    }
-  //  console.log('this.crmService.followUpTableToOverView',this.crmService.followUpTableToOverView)
   this._Activatedroute.queryParams.subscribe((qparams:any)=>{
     // console.log('qparams',qparams)
     if(qparams.dataType){
       this.activityType=qparams.dataType;
     }
   })
+  
   
   console.log('this.activityType',this.activityType)
     this._Activatedroute.paramMap.subscribe(params => {
@@ -229,6 +223,13 @@ export class ViewTaskComponent implements OnInit {
         this.api_loading = false;
         console.log("Task Details : ", this.taskDetails);
         this.updateUserType=this.taskDetails.userTypeEnum;
+        if(this.activityType ==='UpdateFollowUP' && this.taskDetails.status.name !=='Completed'){
+          this.bTaskFollowUpResult=false;
+        }
+        if(this.taskDetails.status.name !=='Completed' && this.activityType === undefined){
+          this.bTaskFollowUpResult=true;
+        }
+        
         if(this.activityType !=='UpdateFollowUP'){
           if(this.taskDetails.title != undefined){
             this.bTaskTitle=true;
@@ -357,12 +358,12 @@ export class ViewTaskComponent implements OnInit {
           this.crmService.taskToCraeteViaServiceData = this.taskDetailsData 
           console.log('this.crmService.taskToCraeteViaServiceData;',this.crmService.taskToCraeteViaServiceData)
         }
-        console.log('taskType',this.taskType)
-        console.log("taskDetails.status", this.taskDetails.status.name);
-        console.log('this.taskDetails.notes',this.taskDetails.notes)
-        this.taskDetails.notes.forEach((notesdata: any) => {
-          this.notesList.push(notesdata);
-        });
+        // console.log('taskType',this.taskType)
+        // console.log("taskDetails.status", this.taskDetails.status.name);
+        // console.log('this.taskDetails.notes',this.taskDetails.notes)
+        // this.taskDetails.notes.forEach((notesdata: any) => {
+        //   this.notesList.push(notesdata);
+        // });
         console.log("this.notesList", this.notesList);
         this.crmService.taskToCraeteViaServiceData = this.taskDetails
     console.log('this.crmService.taskToCraeteViaServiceData;',this.crmService.taskToCraeteViaServiceData)
@@ -376,6 +377,7 @@ export class ViewTaskComponent implements OnInit {
         this.customerPhNo= this.taskDetails.customer.phoneNo
       } 
       });
+      this.getNotesDetails()
     });
     this.getAssignMemberList();
     this.getLocation()
@@ -400,7 +402,7 @@ export class ViewTaskComponent implements OnInit {
     this.taskDetailsForm.controls.taskDescription.value= this.taskDetails.description;
     this.taskDetailsForm.controls.areaName.value=(this.taskDetails.locationArea);
     this.taskDetailsForm.controls.taskDate.value= this.taskDetails.dueDate;
-    this.bTaskFollowUpResult=true;
+    // this.bTaskFollowUpResult=true;
     this.getTaskmaster()
 
   }
@@ -417,7 +419,7 @@ export class ViewTaskComponent implements OnInit {
         // console.log(item.title.value)
         if((this.taskDetails.title === item.title.value) && (this.taskDetails.title !=='Follow Up 1') && (this.taskDetails.title !=='Follow Up 2') ){
           console.log('Matched',item.title.isvisible);
-          this.bTaskFollowUpResult=false;
+          // this.bTaskFollowUpResult=false;
           console.log('this.taskDetails.title',this.taskDetails.title)
           //est duration start
           if( item.estDuration.isvisible===false){
@@ -618,7 +620,7 @@ export class ViewTaskComponent implements OnInit {
           this.bAssigneeName=true;
           this.bTaskDate=false;
           this.bTaskAreaName=true;
-          this.bTaskFollowUpResult=true;
+          // this.bTaskFollowUpResult=true;
           
         }
       })
@@ -677,7 +679,7 @@ export class ViewTaskComponent implements OnInit {
   }
   getAssignMemberList(){
     this.crmService.getMemberList().subscribe((memberList:any)=>{
-      // console.log('memberList',memberList)
+      console.log('memberList',memberList)
       this.allMemberList.push(memberList)
     },(error:any)=>{
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -705,7 +707,7 @@ export class ViewTaskComponent implements OnInit {
     }else{
       this.updateAssignMemberDetailsToDialog=res;
     console.log('this.updateAssignMemberDetailsToDialog',this.updateAssignMemberDetailsToDialog)
-    this.selectMember = (res.firstName + res.lastName);
+    this.selectMember = (res.firstName + ' ' + res.lastName);
     this.userType = res.userType;
     // this.locationName = res.locationName;
     this.locationId = res.bussLocations[0];
@@ -925,21 +927,7 @@ export class ViewTaskComponent implements OnInit {
           }, projectConstants.TIMEOUT_DELAY);
         })
         
-
-
       }
-      // this.crmService.taskStatusCloseDone(this.taskDetails.taskUid).subscribe((response)=>{
-      //   setTimeout(() => {
-      //     this.snackbarService.openSnackBar('Successfull updated activity');
-      //     // this.taskDetailsForm.reset();
-      //   this.router.navigate(['provider', 'task']);
-      //   }, projectConstants.TIMEOUT_DELAY);
-      // },
-      // (error)=>{
-      //   setTimeout(() => {
-      //     this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
-      //   }, projectConstants.TIMEOUT_DELAY);
-      // })
     }
    
    
@@ -1000,33 +988,19 @@ export class ViewTaskComponent implements OnInit {
   }
   saveCreateNote(notesValue:any){
     if(this.notesTextarea !==undefined){
-      console.log('this.notesTextarea',this.notesTextarea);
       this.errorMsg=false;
       this.assignMemberErrorMsg='';
       const createNoteData:any = {
         "note" :this.notesTextarea
       }
         console.log('createNoteData',createNoteData)
-      // if(this.data.source == "Lead")
-      // {
-      //   this.crmService.addLeadNotes(this.taskDetails.taskUid,createNoteData).subscribe((response:any)=>{
-      //     console.log('response',response)
-      //     setTimeout(() => {
-      //       // this.dialogRef.close(notesValue)
-      //     }, projectConstants.TIMEOUT_DELAY);
-      //   },
-      //   (error)=>{
-      //     this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
-      //   })
-      // }
-      // else{
         this.crmService.addNotes(this.taskDetails.taskUid,createNoteData).subscribe((response:any)=>{
           console.log('response',response)
           this.api_loading = true;
           setTimeout(() => {
             // this.dialogRef.close(notesValue)
-            this.ngOnInit()
             // this.getNotesDetails()
+            this.ngOnInit()
             this.api_loading = false;
           }, projectConstants.TIMEOUT_DELAY);
           this.snackbarService.openSnackBar('Remarks added successfully');
@@ -1063,9 +1037,6 @@ export class ViewTaskComponent implements OnInit {
       "location" : { "id" : this.taskDetails.location.id},
       "locationArea" : this.taskDetailsForm.controls.areaName.value,
       "assignee":{"id":this.updateMemberId },
-      // "manager":{"id":this.updateManagerId},
-      // "targetResult" : this.taskDetailsForm.controls.targetResult.value,
-      // "targetPotential" : this.taskDetailsForm.controls.targetPotential.value,
       "estDuration" : this.estTime
 
       }
@@ -1073,6 +1044,7 @@ export class ViewTaskComponent implements OnInit {
         console.log('afterupdateFollowUpData',response);
         setTimeout(() => {
           this.taskDetailsForm.reset();
+          this.snackbarService.openSnackBar('Successfully updated to '+ status.name.toLowerCase() +' mode');
         this.router.navigate(['provider', 'crm']);
         }, projectConstants.TIMEOUT_DELAY);
       },
@@ -1101,16 +1073,13 @@ export class ViewTaskComponent implements OnInit {
       "location" : { "id" : this.taskDetails.location.id},
       "locationArea" : this.taskDetailsForm.controls.areaName.value,
       "assignee":{"id":this.updateMemberId },
-      // "manager":{"id":this.updateManagerId},
-      // "targetResult" : this.taskDetailsForm.controls.targetResult.value,
-      // "targetPotential" : this.taskDetailsForm.controls.targetPotential.value,
       "estDuration" : this.estTime
-
       }
       this.crmService.statusToRejected(this.taskDetails.taskUid, updateFollowUpData).subscribe((response)=>{
         console.log('afterupdateFollowUpData',response);
         setTimeout(() => {
           this.taskDetailsForm.reset();
+          this.snackbarService.openSnackBar('Successfully updated to '+ status.name.toLowerCase() +' mode');
         this.router.navigate(['provider', 'crm']);
         }, projectConstants.TIMEOUT_DELAY);
       },
@@ -1139,9 +1108,6 @@ export class ViewTaskComponent implements OnInit {
       "location" : { "id" : this.taskDetails.location.id},
       "locationArea" : this.taskDetailsForm.controls.areaName.value,
       "assignee":{"id":this.updateMemberId },
-      // "manager":{"id":this.updateManagerId},
-      // "targetResult" : this.taskDetailsForm.controls.targetResult.value,
-      // "targetPotential" : this.taskDetailsForm.controls.targetPotential.value,
       "estDuration" : this.estTime
 
       }
@@ -1150,7 +1116,14 @@ export class ViewTaskComponent implements OnInit {
       this.crmService.statusToProceed(this.taskDetails.taskUid).subscribe((response)=>{
         console.log('afterupdateFollowUpData',response);
         setTimeout(() => {
-          // this.taskDetailsForm.reset();
+          this.taskDetailsForm.reset();
+          if(updateFollowUpData.title==='Follow Up 2'){
+            this.snackbarService.openSnackBar('Successfully updated ' + updateFollowUpData.title +' & Lead Created' );
+          }
+          else{
+            this.snackbarService.openSnackBar('Successfully updated ' + updateFollowUpData.title );
+          }
+            
         this.router.navigate(['provider', 'crm']);
         }, projectConstants.TIMEOUT_DELAY);
       },
@@ -1343,10 +1316,6 @@ export class ViewTaskComponent implements OnInit {
     this.router.navigate(["provider", "task", "create-subtask", taskid]);
   }
 
-  goback() {
-    this.locationobj.back();
-  }
-
   getformatedTime(time) {
     let timeDate;
     timeDate = time.replace(/\s/, "T");
@@ -1453,7 +1422,8 @@ export class ViewTaskComponent implements OnInit {
     this.filter_sidebar = false;
   }
   goBack() {
-    this._location.back();
+    this.router.navigate(['provider', 'crm']);
+    // this._location.back();
   }
 
   //notes start

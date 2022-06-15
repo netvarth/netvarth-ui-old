@@ -19,6 +19,7 @@ export class CrmService {
   public updateSubTaskData:any;
   public followUpTableToOverView:any;
   
+  PERPAGING_LIMIT= 10;
 
   constructor(
     private servicemeta: ServiceMeta,
@@ -95,9 +96,9 @@ export class CrmService {
       const url = 'provider/task/provider?isSubTask-eq=false'
       return this.servicemeta.httpGet(url, null, filter);
     }
-    getTotalLead() {
+    getTotalLead(filter) {
       const url = 'provider/lead/'
-      return this.servicemeta.httpGet(url, null);
+      return this.servicemeta.httpGet(url, null, filter);
     }
 
     getTotalTaskCount(filter) {
@@ -178,7 +179,7 @@ export class CrmService {
       const url = 'provider/task/provider?status-eq=1';
       return this.servicemeta.httpGet(url, null, filter);
     }
-    getNewTaskCount(filter){
+    getNewTaskCount(filter={}){
       const url = 'provider/task/provider/count?status-eq=1';
       return this.servicemeta.httpGet(url, null, filter);
     }
@@ -347,7 +348,7 @@ export class CrmService {
         return this.servicemeta.httpPut(url, data);
     }
     getTaskMasterList(){
-      const url = 'provider/task/master';
+      const url = 'provider/task/master?originFrom-eq=None&isSubTask-eq=false&available-eq=true';
       return this.servicemeta.httpGet(url);
     }
 
@@ -403,26 +404,36 @@ export class CrmService {
     const url ='provider/lead/master?available-eq=true';
     return this.servicemeta.httpGet(url, null);
   }
-  getFollowUPOne(filter = {}){
-    const url ='provider/task/provider?originFrom-eq=Enquire&title-eq=Follow Up 1';
-    return this.servicemeta.httpGet(url, null,filter);
-  }
-  getFollowUPTwo(filter = {}){
-    const url ='provider/task/provider?originFrom-eq=Enquire&title-eq=Follow Up 2';
-    return this.servicemeta.httpGet(url, null,filter);
-  }
+  // getFollowUPOne(filter = {}){
+  //   const url ='provider/task/provider?originFrom-eq=Enquire&title-eq=Follow Up 1';
+  //   return this.servicemeta.httpGet(url, null,filter);
+  // }
+  // getFollowUPTwo(filter = {}){
+  //   const url ='provider/task/provider?originFrom-eq=Enquire&title-eq=Follow Up 2';
+  //   return this.servicemeta.httpGet(url, null,filter);
+  // }
   // getTotalLeadCount(filter) {
   //   const url = 'provider/lead/count';
   //   return this.servicemeta.httpGet(url, null, filter);
   // }
-  getTotalFollowUPOneCount(filter){
-    const url = 'provider/task/provider/count?originFrom-eq=Enquire&title-eq=Follow Up 1';
-      return this.servicemeta.httpGet(url, null, filter);
+
+  getFollowups(filter) {
+    const url ='provider/task/provider';
+    return this.servicemeta.httpGet(url, null, filter);
   }
-  getTotalFollowUPTwoCount(filter){
-    const url = 'provider/task/provider/count?originFrom-eq=Enquire&title-eq=Follow Up 2';
-      return this.servicemeta.httpGet(url, null, filter);
+  getFollowupsCount(filter) {
+    const url ='provider/task/provider/count';
+    return this.servicemeta.httpGet(url, null, filter);
   }
+
+  // getTotalFollowUPOneCount(filter){
+  //   const url = 'provider/task/provider/count?originFrom-eq=Enquire&title-eq=Follow Up 1';
+  //     return this.servicemeta.httpGet(url, null, filter);
+  // }
+  // getTotalFollowUPTwoCount(filter){
+  //   const url = 'provider/task/provider/count?originFrom-eq=Enquire&title-eq=Follow Up 2';
+  //     return this.servicemeta.httpGet(url, null, filter);
+  // }
   getTotalEnquiryNone(filter = {}) {
     const url = 'provider/task/provider?isSubTask-eq=false&originFrom-eq=None'
     return this.servicemeta.httpGet(url, null, filter);
@@ -487,6 +498,10 @@ export class CrmService {
   getDocUploadLeadCount(filter) {
     const url = 'provider/lead/count?status-eq=21';
     return this.servicemeta.httpGet(url, null, filter);
+  }
+  releaseLeadQnr(status, uid, id) {
+    const url = 'provider/lead/questionnaire/change/' + status + '/' + uid + '/' + id;
+    return this.servicemeta.httpPut(url);
   }
   getLeadafterQnrDetails(uuId){
     const url = 'provider/lead/questionnaire/' + uuId ;
@@ -579,5 +594,9 @@ export class CrmService {
   getCoApplicant(id){
     const url = 'provider/customers/KYC/coapplicant/'+ id;
       return this.servicemeta.httpGet(url);
+  }
+  proceedStatusForQuestionry(leadUid,body){
+    const url ='provider/lead/questionnaire/proceed/'+leadUid
+    return this.servicemeta.httpPut(url,body)
   }
 }

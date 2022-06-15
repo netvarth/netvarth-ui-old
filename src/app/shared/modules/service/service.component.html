@@ -274,7 +274,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
               </mat-option>
             </mat-select> -->
 
-            <mat-radio-group formControlName="serviceType" class="d-flex">
+            <mat-radio-group formControlName="serviceType" class="d-flex service-radio">
               <mat-radio-button disableRipple="true" (change)="selectServiceHandler(virtual.value)" *ngIf="!is_donation" [value]="'physicalService'" #virtual class="radio-btn form-control">
                 Onsite Service
               </mat-radio-button>

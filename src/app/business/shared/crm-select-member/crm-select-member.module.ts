@@ -18,11 +18,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatSelectModule } from "@angular/material/select";
 import { MatOptionModule } from "@angular/material/core";
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-
-
-
 import { NgCircleProgressModule } from "ng-circle-progress";
 import { FilterPipe } from './filter.pipe';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
 
 const routes: Routes = [
   { path: '', component: CrmSelectMemberComponent }
@@ -52,6 +51,7 @@ const routes: Routes = [
     MatFormFieldModule,
     MatTooltipModule,
     MatAutocompleteModule,
+    Ng2SearchPipeModule,
     NgCircleProgressModule.forRoot({
       // set defaults here
       backgroundColor: "#e9ecef",

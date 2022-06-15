@@ -30,8 +30,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   user_id = null;
   uuid = null;
   message = '';
-  smsGlobalStatus;
-  notificationStatus;
+  smsGlobalStatusEnable;
+  notificationStatusEnable;
   source = null;
   message_label = null;
   api_loading = true;
@@ -123,7 +123,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       if (!this.email_id) {
         this.email = false;
       }
-      if ((!this.phone && !this.phone_history) || this.phone === '' || this.countryCode != '+91') {
+      if ((!this.phone && !this.phone_history) || this.phone === '' || this.countryCode != '+91' || this.smsGlobalStatusEnable) {
         this.sms = false;
       }
       if ((!this.phone && !this.phone_history) || this.phone === '') {
@@ -183,10 +183,10 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.provider_services.getSMSglobalSettings().subscribe(data => {
-      this.smsGlobalStatus = data['enableSms'];
-      this.notificationStatus = data['sendNotification'];
+      this.smsGlobalStatusEnable = data['enableSms'];
+      this.notificationStatusEnable = data['sendNotification'];
       //this.smsGlobalStatusStr = (this.smsGlobalStatus) ? 'On' : 'Off';
-      console.log("Sms and Notify status :",this.smsGlobalStatus, this.notificationStatus )
+      console.log("Sms and Notify status :",this.smsGlobalStatusEnable, this.notificationStatusEnable )
   });
     this.createForm();
     this.ynw_credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');

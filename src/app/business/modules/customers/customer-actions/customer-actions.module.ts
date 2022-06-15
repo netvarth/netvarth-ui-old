@@ -8,6 +8,11 @@ import { LastVisitModule } from "../../medicalrecord/last-visit/last-visit.modul
 import { VoiceConfirmModule } from "../voice-confirm/voice-confirm.module";
 import { CustomerActionsComponent } from "./customer-actions.component";
 import { CommunicationService } from "../../../../business/services/communication-service";
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
     imports: [
@@ -17,7 +22,11 @@ import { CommunicationService } from "../../../../business/services/communicatio
         LoadingSpinnerModule,
         LastVisitModule,
         VoiceConfirmModule,
-        CapitalizeFirstPipeModule
+        CapitalizeFirstPipeModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule
     ],
     exports: [CustomerActionsComponent],
     declarations: [CustomerActionsComponent],

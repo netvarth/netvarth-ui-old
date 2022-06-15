@@ -48,5 +48,7 @@
   
 }
 div.paddingLeft{
-    padding-left:250px!important;
+    /* padding-left:250px!important; */
+    margin: 5px !important;
+  
 }

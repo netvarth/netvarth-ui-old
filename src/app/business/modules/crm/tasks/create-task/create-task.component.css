@@ -57,14 +57,14 @@
   ::ng-deep .mat-select-arrow {
     transform: rotate(0deg) !important;
   }
-  
+
   ::ng-deep .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
     transform: rotate(-180deg) !important;
   }
   ::ng-deep .form-group .pickerouter .mat-datepicker-toggle button{
     height: auto !important;
       background: #B2B2B2 !important;
-  
+
   }
   .cancelBtn{
     background: #A8ABAF !important;
@@ -129,11 +129,11 @@ input[type=number] {
 
 }
 ::ng-deep .mat-datepicker-toggle{
-  position: absolute;
+  /* position: absolute; */
 }
 .dateWithMatDtae{
   display: flex;
-  flex-direction: row-reverse;
+  /* flex-direction: row-reverse; */
   align-items: center;
   justify-content: space-between;
 
@@ -162,7 +162,7 @@ textarea {
 {
   font-size: 15px!important;
   font-weight: bold!important;
-  
+
 }
 .bggrey
 {

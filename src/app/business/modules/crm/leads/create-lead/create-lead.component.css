@@ -126,11 +126,11 @@ input[type=number] {
 
 }
 ::ng-deep .mat-datepicker-toggle{
-  position: absolute;
+  /* position: absolute; */
 }
 .dateWithMatDtae{
   display: flex;
-  flex-direction: row-reverse;
+  /* flex-direction: row-reverse; */
   align-items: center;
   justify-content: space-between;
 
@@ -396,11 +396,11 @@ position: relative;
 
 }
 ::ng-deep .mat-datepicker-toggle{
-position: absolute;
+/* position: absolute; */
 }
 .dateWithMatDtae{
 display: flex;
-flex-direction: row-reverse;
+/* flex-direction: row-reverse; */
 align-items: center;
 justify-content: space-between;
 

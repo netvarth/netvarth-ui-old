@@ -12,7 +12,7 @@
         <div class="notification-box col-md-8 col-xs-12 col-sm-12 col-lg-9 no-margin-small">
             <div class="col-md-6 col-xs-12 col-sm-7 col-lg-9 no-padding">
                 <i class="fa fa-bell dark-blue" aria-hidden="true"></i>
-                Notifications
+                Notifications <span  [ngClass] = "notificationStatusEnable === 'Off' ? 'bold colr' : 'greenc bold'"> {{notificationStatusEnable}}</span> 
                 <div class="form-level-settings mgn-lt-20"> {{cust_domain_name | capitalizeFirst}} and
                     {{provdr_domain_name}}
                     notification settings<a class="learnmore-pointer" id="customer-help"
@@ -22,7 +22,7 @@
             <div class="col-md-6 col-xs-12 col-sm-5 col-lg-3 no-padding small-device-style">
                 <div class="sms-notify">
                     <label class="toggle-label">Send SMS&nbsp;&nbsp;
-                        <span class="greenc bold"> {{smsGlobalStatusStr}}</span>
+                        <span [ngClass] = "smsGlobalStatusStr === 'Off' ? 'bold' : 'greenc bold'"> {{smsGlobalStatusStr}}</span>
                     </label>
                 </div>
             </div>

@@ -22,21 +22,23 @@
             <div class="card-head-grey">Send message via</div>
             <div class="coupon-outer">
                 <!-- countryCode !='+91' -->
-                <mat-checkbox *ngIf="smsGlobalStatus" [disabled]="smsGlobalStatus && ((source === 'customer-list' || source === 'donation-list') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list') && ((!phone && !phone_history )|| phone === 'null' || phone === '' || countryCode !='+91' ) || is_noSMS))"   class="mgright25 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
+                <mat-checkbox  [disabled]="!smsGlobalStatusEnable || ((source === 'customer-list' || source === 'donation-list') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list') && ((!phone && !phone_history )|| phone === 'null' || phone === '' || countryCode !='+91' ) || is_noSMS))"   class="mgright25 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
                     SMS
                 </mat-checkbox>
-                <!-- <mat-checkbox *ngIf="smsGlobalStatus" [disabled]="true"> SMS</mat-checkbox> -->
+
+                <!-- <mat-checkbox *ngIf="smsGlobalStatusEnable" [disabled]="true"> SMS</mat-checkbox> -->
                 <mat-checkbox [disabled]="((source === 'customer-list' || source === 'donation-list') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list') && !email_id))" class="mgright25 example-margin" [(ngModel)]="email"
                     [ngModelOptions]="{standalone: true}">Email
                 </mat-checkbox>
-                <mat-checkbox  [disabled]="notificationStatus && ((source === 'customer-list' || source === 'donation-list') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list') && !email_id && (!phone || phone === 'null' || phone === '') || !jaldeeConsumer))" class="mgright25 example-margin" [(ngModel)]="pushnotify"
+                <mat-checkbox  [disabled]="!notificationStatusEnable || ((source === 'customer-list' || source === 'donation-list') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list') && !email_id && (!phone || phone === 'null' || phone === '') || !jaldeeConsumer))" class="mgright25 example-margin" [(ngModel)]="pushnotify"
                     [ngModelOptions]="{standalone: true}">App
                     notification
                 </mat-checkbox>
-                <!-- <mat-checkbox *ngIf="notificationStatus" [disabled]="true"> SMS</mat-checkbox> -->
+                <!-- <mat-checkbox *ngIf="notificationStatusEnable" [disabled]="true"> SMS</mat-checkbox> -->
                 <mat-checkbox  [disabled]="((source === 'customer-list' || source === 'donation-list') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list') && ((!phone && !phone_history )|| phone === 'null' || phone === '' )))" class="mgright25 example-margin" [(ngModel)]="telegram" [ngModelOptions]="{standalone: true}">
                     Telegram
                 </mat-checkbox>
+
                 <!-- *ngIf="!IsTelegramDisable"  || IsTelegramDisable-->
                 <!-- typeOfMsg !== 'multiple' && -->
             </div>

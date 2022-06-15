@@ -729,7 +729,8 @@ export class CreateTaskComponent implements OnInit {
     }else{
       this.updateAssignMemberDetailsToDialog=res;
     console.log('this.updateAssignMemberDetailsToDialog',this.updateAssignMemberDetailsToDialog)
-    this.selectMember = (res.firstName + res.lastName);
+    // this.selectMember = (res.firstName + res.lastName);
+    this.selectMember = (res.firstName + ' ' + res.lastName);
     this.userType = res.userType;
     // this.locationName = res.locationName;
     this.locationId = res.bussLocations[0];

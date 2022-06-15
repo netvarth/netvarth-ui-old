@@ -51,6 +51,20 @@
                 </div>
             </div>
         </div>
+        <div class="action-box pointer-cursor" *ngIf="data.generateMemberId && !isMemberIdExisted" (click)="showGenerateMemberIds()">
+            <div class="action-box-sub">
+                <span class="mr-rx-icon"></span>
+                <div class="icon-text"> Generate Member Id
+                </div>
+            </div>
+        </div>
+        <div class="action-box pointer-cursor" *ngIf="data.generateMemberId && isMemberIdExisted" (click)="showGenerateMemberIds()">
+            <div class="action-box-sub">
+                <span class="mr-rx-icon"></span>
+                <div class="icon-text"> Edit Member Id
+                </div>
+            </div>
+        </div>
         <div class="action-box pointer-cursor" (click)="showLabelSection()">
             <div class="action-box-sub">
                 <span class="label-icon"></span>
@@ -98,4 +112,53 @@
         <a class="" (click)="gotoLabel()" *ngIf="!showApply">Manage labels</a>
         <a class="" (click)="applyLabel()" *ngIf="showApply">Apply</a>
     </div>
+</div>
+
+<h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'generateMemberIds'">
+    Generate Member Id
+    <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
+            aria-hidden="true"></i></button>
+</h1>
+<div *ngIf="action === 'generateMemberIds'">
+    <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-30 no-padding queue-outer" *ngIf="loading">
+        <app-common-innerloading-spinner></app-common-innerloading-spinner>
+    </div>
+
+    <!-- <h1 class="mat-dialog-title">{{caption}} <button mat-dialog-close class="modal_close" tabindex="-1"><i
+                class="fa fa-window-close" aria-hidden="true"></i></button></h1> -->
+    <mat-dialog-content class="ynw-common-form apply-label">
+        <div class="form-group col-md-12">
+            <mat-form-field>
+                <input matInput type="text" class="form-control" id="displayName" placeholder="Enter member id"
+                    [(ngModel)]="groupMemberId" (ngModelChange)="changeGroupMemberId(groupMemberId)" [ngModelOptions]="{standalone: true}" autocomplete="off">
+                <!-- <app-field-error-display [displayError]="true" *ngIf="api_error['label']"
+                    errorMsg="{{api_error['label']}}">
+                </app-field-error-display> -->
+            </mat-form-field>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button type="button" mat-dialog-close class="cs-btn bt2">Cancel</button>
+        <button (click)="createMemberId(groupMemberId)" [disabled]="groupMemberId.length === 0" type="button" mat-button class="cs-btn bt1">{{isMemberIdExisted ? 'Update' : 'Create' }}</button>
+    </mat-dialog-actions>
+    <!-- <app-field-error-display [displayError]="true" *ngIf="api_error['error']" errorMsg="{{api_error['error']}}">{{isMemberIdExisted ? 'Update' : ' {{groupMemberId ? 'Update' : 'Create'}}
+    </app-field-error-display> -->
+    <!-- <h4>Generate Member Id</h4> -->
+    <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 scro"
+        *ngIf="providerLabels.length > 0 && !loading">
+        <div class="mgn-bt-5" *ngFor="let label of providerLabels;let i = index">
+            <mat-checkbox [checked]="label.selected" (change)="addLabeltoPatient(label.label, $event)">
+                {{label.displayName | capitalizeFirst}}</mat-checkbox>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-30 scro"
+        *ngIf="providerLabels.length === 0 && !loading">
+        No labels created till now
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-10 mgn-bt-20 footerlinks">
+        <a class="mgn-rt-25" (click)="addLabelvalue('newlabel')" *ngIf="!showApply">Create new</a>
+        <a class="" (click)="gotoLabel()" *ngIf="!showApply">Manage labels</a>
+        <a class="" (click)="applyLabel()" *ngIf="showApply">Apply</a>
+    </div> -->
 </div>
