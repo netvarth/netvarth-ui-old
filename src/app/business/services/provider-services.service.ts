@@ -854,6 +854,18 @@ export class ProviderServices {
     const url = 'provider/waitlist/label/' + labelId;
     return this.servicemeta.httpDelete(url);
   }
+  getMemberId(groupName,proConId){
+    const url = `provider/customers/groupMemId/${groupName}/${proConId}`
+    return this.servicemeta.httpGet(url);
+  }
+  createGroupMemberId(body){
+    const url = `provider/customers/groupMemId/${body.groupName}/${body.proConId}/${body.memId}`
+    return this.servicemeta.httpPost(url);
+  }
+  updateGroupMemberId(body){
+    const url = `provider/customers/groupMemId/${body.groupName}/${body.proConId}/${body.memId}`
+    return this.servicemeta.httpPut(url);
+  }
   getDisplayboardQSets() {
     const url = 'provider/statusBoard';
     return this.servicemeta.httpGet(url);

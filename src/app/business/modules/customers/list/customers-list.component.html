@@ -377,6 +377,10 @@
                             <!-- <span class="text-dark-75 text-hover-primary mb-1 cust-name" *ngIf="customer.firstName && customer.lastName === undefined">
                               {{'-'}}                    
                              </span> -->
+                             <!-- <div>
+                              <span *ngIf="isMemberIdExisted"
+                                >Group Member Id : {{isMemberIdExisted}}</span>
+                            </div> -->
                           <div>
                             <span *ngFor="let label of customer.label | keyvalue"
                               [class.appliedLabel]="getDisplayname(label.key)">{{getDisplayname(label.key)}}</span>
@@ -441,6 +445,16 @@
               <label for="exampleTextarea">Description</label>
               <textarea class="form-control1" id="exampleTextarea" rows="4" [(ngModel)]="groupDescription"
                 (keypress)="resetError()"></textarea>
+            </div>
+            <div class="form-group mb-1">
+              <!-- <checkbox type="checkbox" class="form-control1" id="exampleTextarea" (ngModelChange)="changeGroupMemberId(generateGrpMemId)" [(ngModel)]="generateGrpMemId"
+                (keypress)="resetError()"></checkbox> -->
+                <input type="checkbox" name="Checkboxes4" [(ngModel)]="generateGrpMemId"
+                              (click)="stopprop($event)" (change)="changeGroupMemberId(generateGrpMemId)"
+                               >  
+
+                               <label for="exampleTextarea" style="margin-right:10px; margin-top:10px; margin-left:5px">Generate Group Member Id</label>
+
             </div>
           </div>
           <div class="modal-footer" *ngIf="!showAddCustomerHint">

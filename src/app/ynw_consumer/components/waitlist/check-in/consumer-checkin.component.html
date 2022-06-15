@@ -128,7 +128,7 @@
                                                 <button type="button"
                                                     class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
                                                     (click)="goToStep('next');actionCompleted()"
-                                                    [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1)">
+                                                    [class.disabled]="(queuejson && queuejson.length == 0)">
                                                     Next
                                                 </button>
                                             </div>

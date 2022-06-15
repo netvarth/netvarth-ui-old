@@ -621,8 +621,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         const _this = this;
         _this.selectedSlots = [];
         this.slotLoaded = false;
-        console.log(_this.selectedService);
+        console.log("selectedService",_this.selectedService);
         const showOnlyAvailable = _this.selectedService.showOnlyAvailableSlots;
+        _this.isSlotAvailable = showOnlyAvailable;
         console.log("showOnlyAvailable:", showOnlyAvailable);
         this.subs.sink = _this.sharedServices.getSlotsByLocationServiceandDate(locid, servid, appmtDate, accountid)
             .subscribe((data: any) => {
