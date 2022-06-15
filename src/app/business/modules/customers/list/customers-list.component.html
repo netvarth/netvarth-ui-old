@@ -42,7 +42,8 @@
     <div class="card" *ngIf="groupLoaded">
       <app-common-innerloading-spinner></app-common-innerloading-spinner>
     </div>
-    <div class="col-lg-4" *ngIf="!groupLoaded && groups.length > 0 && !hideGroups && !small_device_display">
+    <div class="col-lg-4" *ngIf="!groupLoaded && groups.length > 0 && !hideGroups">
+      <!-- && !small_device_display -->
       <div class="card card-custom card-stretch gutter-b pitch_blu">
         <div class="card grp_label mb-2 pointer-cursor" (click)="customerGroupSelection('all')"
           [ngClass]="{'highlights': selectedGroup == 'all'}">All {{customer_label | capitalizeFirst}}s</div>
@@ -74,12 +75,14 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-8" [class.col-lg-12]="groups.length==0" *ngIf="showCustomersSection()">
+    <div class="col-lg-8" [class.col-lg-12]="groups.length==0" *ngIf="showCustomersSection() || hideGroups">
       <div class="card card-custom card-stretch gutter-b no-padding">
         <div class="p-3">
           <h3 class="align-items-start flex-column">
-            <span class="fa fa-arrow-left pointer-cursor mgn-rt-10" *ngIf="small_device_display"
-              (click)="goBack()"></span>
+            <!-- <span class="fa fa-arrow-left pointer-cursor mgn-rt-10" *ngIf="small_device_display"
+              (click)="goBack()"></span> -->
+              <span class="fa fa-arrow-left pointer-cursor mgn-rt-10" *ngIf="hideGroups"
+              (click)="hideGroups = false"></span>
               <!-- hideGroups = false *ngIf="selectedGroup == 'all' && groups.length > 0" -->
             <span class="card-label font-1 font-weight-bolder text-dark"
             *ngIf="selectedGroup == 'all' && groups.length > 0" >All
@@ -104,7 +107,7 @@
             <div class="sel-group-desc" [class.mgn-lt-28]="hideGroups">{{selectedGroup.description}}</div>
           </h3>
         </div>
-        <div class="row displayblock">
+        <div class="row displayblock" >
           <div class="col-sm-12 col-lg-8 col-xs-12 col-md-12 mb-4">
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
               *ngIf="selectedGroup !== 'all' && !showCustomers && selectedcustomersformsg.length == 0">Add
@@ -333,7 +336,7 @@
             </aside>
           </div>
         </div>
-        <div class="card-body pt-0 pb-3">
+        <div class="card-body pt-0 pb-3" >
           <div class="tab-content">
             <div class="table-responsive1">
               <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
@@ -451,9 +454,8 @@
                 (keypress)="resetError()"></checkbox> -->
                 <input type="checkbox" name="Checkboxes4" [(ngModel)]="generateGrpMemId"
                               (click)="stopprop($event)" (change)="changeGroupMemberId(generateGrpMemId)"
-                               >  
-
-                               <label for="exampleTextarea" style="margin-right:10px; margin-top:10px; margin-left:5px">Generate Group Member Id</label>
+                               >     
+                                  <label for="exampleTextarea" style="margin-right:10px; margin-top:10px;margin-left: 5px;">Generate Group Member Id</label>
 
             </div>
           </div>

@@ -1016,8 +1016,15 @@ export class CustomersListComponent implements OnInit {
     this.small_device_display = false;
     this.hideGroups = false
   }
+  // showCustomersSection() {
+  //   if (!this.groupLoaded || ((this.small_device_display && this.hideGroups && this.allList && this.groupLoaded) || !this.small_device_display || this.groups.length === 0)) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
   showCustomersSection() {
-    if (!this.groupLoaded || ((this.small_device_display && this.hideGroups && this.allList && this.groupLoaded) || !this.small_device_display || this.groups.length === 0)) {
+    if (!this.groupLoaded && ((this.small_device_display && this.hideGroups) || !this.small_device_display || this.groups.length === 0)) {
       return true;
     } else {
       return false;
