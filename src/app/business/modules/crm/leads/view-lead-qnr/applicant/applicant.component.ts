@@ -72,7 +72,7 @@ export class ApplicantComponent implements OnInit {
       telephoneType: ['Residence'],
       telephoneNumber: [null],
       address: [null],
-      addressType: [null],
+      addressType: ['Residence'],
       city: [null],
       state: [null],
       pin: [null],

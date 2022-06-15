@@ -138,7 +138,7 @@ export class ViewTaskComponent implements OnInit {
   public notesTextarea:any;
   public errorMsg:boolean=false;
   public assignMemberErrorMsg:string='';
-  public bTaskFollowUpResult:boolean=true;
+  public bTaskFollowUpResult:boolean=false;
   public editable:boolean=true;
   public followUpStatusComplToProceed:any;
   public followUpStatusInProgressToPending:any;
@@ -208,6 +208,7 @@ export class ViewTaskComponent implements OnInit {
     }
   })
   
+  
   console.log('this.activityType',this.activityType)
     this._Activatedroute.paramMap.subscribe(params => {
       // console.log('params',params)
@@ -222,6 +223,13 @@ export class ViewTaskComponent implements OnInit {
         this.api_loading = false;
         console.log("Task Details : ", this.taskDetails);
         this.updateUserType=this.taskDetails.userTypeEnum;
+        if(this.activityType ==='UpdateFollowUP' && this.taskDetails.status.name !=='Completed'){
+          this.bTaskFollowUpResult=false;
+        }
+        if(this.taskDetails.status.name !=='Completed' && this.activityType === undefined){
+          this.bTaskFollowUpResult=true;
+        }
+        
         if(this.activityType !=='UpdateFollowUP'){
           if(this.taskDetails.title != undefined){
             this.bTaskTitle=true;
@@ -394,7 +402,7 @@ export class ViewTaskComponent implements OnInit {
     this.taskDetailsForm.controls.taskDescription.value= this.taskDetails.description;
     this.taskDetailsForm.controls.areaName.value=(this.taskDetails.locationArea);
     this.taskDetailsForm.controls.taskDate.value= this.taskDetails.dueDate;
-    this.bTaskFollowUpResult=true;
+    // this.bTaskFollowUpResult=true;
     this.getTaskmaster()
 
   }
@@ -411,7 +419,7 @@ export class ViewTaskComponent implements OnInit {
         // console.log(item.title.value)
         if((this.taskDetails.title === item.title.value) && (this.taskDetails.title !=='Follow Up 1') && (this.taskDetails.title !=='Follow Up 2') ){
           console.log('Matched',item.title.isvisible);
-          this.bTaskFollowUpResult=false;
+          // this.bTaskFollowUpResult=false;
           console.log('this.taskDetails.title',this.taskDetails.title)
           //est duration start
           if( item.estDuration.isvisible===false){
@@ -612,7 +620,7 @@ export class ViewTaskComponent implements OnInit {
           this.bAssigneeName=true;
           this.bTaskDate=false;
           this.bTaskAreaName=true;
-          this.bTaskFollowUpResult=true;
+          // this.bTaskFollowUpResult=true;
           
         }
       })

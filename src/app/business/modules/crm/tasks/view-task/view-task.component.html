@@ -320,7 +320,7 @@
       </div>
       
       <!----for web cancel save btn-->
-      <div style="text-align: center;margin-top: 15px;" class="forWeb" *ngIf="!bTaskFollowUpResult">
+      <div style="text-align: center;margin-top: 15px;" class="forWeb" *ngIf="bTaskFollowUpResult">
         <ng-container >
             <div class=" mgn-bt-20 mgn-up-10">
                 <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goBack()"
@@ -460,7 +460,7 @@
   </div>
   <!----task details end -->
   <!----for mobile cancel & save btn-->
-  <div style="text-align: center;margin-top: 15px;" class="forMobile" *ngIf="!bTaskFollowUpResult">
+  <div style="text-align: center;margin-top: 15px;" class="forMobile" *ngIf="bTaskFollowUpResult">
     <ng-container >
         <div class=" mgn-bt-20 mgn-up-10">
             <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goBack()"

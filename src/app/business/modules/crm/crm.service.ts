@@ -595,4 +595,8 @@ export class CrmService {
     const url = 'provider/customers/KYC/coapplicant/'+ id;
       return this.servicemeta.httpGet(url);
   }
+  proceedStatusForQuestionry(leadUid,body){
+    const url ='provider/lead/questionnaire/proceed/'+leadUid
+    return this.servicemeta.httpPut(url,body)
+  }
 }

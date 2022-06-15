@@ -11,9 +11,8 @@
      <!----mat tab change to mat select start-->
     <div class="statusSelectDiv"> 
       <div class="fieldPadding" >
-          <mat-select class="form-control" placeholder="{{totalActivity}}" 
-              #userTaskStatus [(ngModel)]="statusFilter"  (ngModelChange)="handleTaskStatus(userTaskStatus.value)">
-              <mat-option   *ngFor="let stat of taskStatusList;let index=i" [value]="stat.id" >
+          <mat-select class="form-control" placeholder="{{totalActivity}}" #userTaskStatus [(ngModel)]="statusFilter" >
+              <mat-option *ngFor="let stat of taskStatusList;let index=i" [value]="stat.id"  (click)="handleTaskStatus(userTaskStatus.value)">
                 <span style="display:flex;gap:10px">
                   <div>
                     <img width="25px"  src={{stat.image}}/>
@@ -31,11 +30,6 @@
           Create Activity <i class="fa fa-plus" aria-hidden="true"></i></button>
           
       </a>
-      <!-- <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small"
-        [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'crm'}">
-        <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
-          Generate Report <i class="fa fa-plus" aria-hidden="true"></i></button>
-      </a> -->
     </div>
     <div class="mobileDisplay">
       <a [matTooltipClass]="tooltipcls"
@@ -272,9 +266,9 @@
                       </ng-container>
                     </tbody>
                   </table>
-                  <div class="search_paging" *ngIf="pagination.totalCnt>10" >
+                  <div class="search_paging" *ngIf="pagination.totalCnt>10 " >
                     <app-pager  [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-                      (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
+                      (pagerclick)="handle_pageclick($event,userTaskStatus.value)" [curpage]="pagination.startpageval">
                     </app-pager>
                   </div>
                 </div>

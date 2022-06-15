@@ -23,6 +23,8 @@ const routes: Routes = [
 @NgModule({
     imports: [
         CommonModule,
+        MatSelectModule,
+        MatOptionModule,
         PagerModule,
         MatDialogModule,
         CapitalizeFirstPipeModule,
@@ -30,8 +32,6 @@ const routes: Routes = [
         MatMenuModule,
         MatCheckboxModule,
         LoadingSpinnerModule,
-        MatSelectModule,
-        MatOptionModule,
         NgCircleProgressModule.forRoot({
           backgroundColor: "#e9ecef",
           backgroundPadding: 2,

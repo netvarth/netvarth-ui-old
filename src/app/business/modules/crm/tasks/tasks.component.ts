@@ -213,53 +213,55 @@ export class TasksComponent implements OnInit {
       )
     })
   }
-  handle_pageclick(pg){
+  handle_pageclick(pg,statusValue){
+    console.log('statusValue',statusValue)
     this.pagination.startpageval = pg;
     this.filter.page = pg;
-    const filter = this.handleTaskStatus(this.statusFilter);
-    if(this.statusFilter===0){
+    console.log('this.statusFilter',this.statusFilter)
+    // const filter = this.handleTaskStatus(statusValue);
+    if(statusValue===0){
       this.api_loading=true
-      this.getTotalTaskActivity(filter)
+      this.getTotalTaskActivity(statusValue)
     }
-    else if(this.statusFilter===1){
+    else if(statusValue===1){
       this.api_loading=true
-      this.getNewTask(filter)
+      this.getNewTask(statusValue)
     }
-    else if(this.statusFilter===2){
+    else if(statusValue===2){
       this.api_loading=true
-      this.getAssignedTask(filter)
+      this.getAssignedTask(statusValue)
     }
-    else if(this.statusFilter===4){
+    else if(statusValue===4){
       this.api_loading=true
-      this.getCancelledTask(filter)
+      this.getCancelledTask(statusValue)
     }
-    else if(this.statusFilter===12){
+    else if(statusValue===12){
       this.api_loading=true;
-      this.getSuspendedTask(filter)
+      this.getSuspendedTask(statusValue)
     }
-    else if(this.statusFilter===3){
+    else if(statusValue===3){
       this.api_loading=true;
-      this.getInprogressTask(filter)
+      this.getInprogressTask(statusValue)
     }
-    else if(this.statusFilter===5){
+    else if(statusValue===5){
       this.api_loading=true;
-      this.getCompletedTask(filter)
+      this.getCompletedTask(statusValue)
     }
-    else if(this.statusFilter===13){
+    else if(statusValue===13){
       this.api_loading=true;
-      this.getPendingTask(filter)
+      this.getPendingTask(statusValue)
     }
-    else if(this.statusFilter===14){
+    else if(statusValue===14){
       this.api_loading=true;
-      this.getRejectedTask(filter)
+      this.getRejectedTask(statusValue)
     }
-    else if(this.statusFilter===15){
+    else if(statusValue===15){
       this.api_loading=true;
-      this.getProceedTask(filter)
+      this.getProceedTask(statusValue)
     }
-    else if(this.statusFilter===16){
+    else if(statusValue===16){
       this.api_loading=true;
-      this.getVerifiedTask(filter)
+      this.getVerifiedTask(statusValue)
     }
     
   }
