@@ -213,6 +213,7 @@ export class CustomersListComponent implements OnInit {
     this.routerobj.navigate(['/provider/' + this.domain + '/customer']);
   }
   selectedRow(customer) {
+    localStorage.setItem('groupId', this.selectedGroup.id);
     if (!this.showCustomers) {
       this.router.navigate(['/provider/customers/' + customer.id]);
     }

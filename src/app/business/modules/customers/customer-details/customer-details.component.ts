@@ -178,21 +178,8 @@ export class CustomerDetailComponent implements OnInit {
                                 (customer) => {
                                     this.customer = customer;
                                     this.getConsumerBills();
-                                    this.groupId = this.customer[0].groups.substr(2,3)
-                                    console.log("Customer Details :",this.customer[0].groups.substr(2,3))
-                                    if(this.groupId){
-                                    this.provider_services.getCustomerGroupById(this.groupId).subscribe((res : any)=>{
-                                        console.log("getCustomerGroup ",res)
-                                        this.groupName = res.groupName;
-                                        console.log("getCustomerGroup Name", this.groupName)
-                                        this.provider_services.getMemberId(this.groupName,this.customerId).subscribe((res : any)=>{
-                                            this.groupMemberId = res;
-                                            console.log("groupMemberId :",this.groupMemberId)
-                                        })
-                                    })
-                                }
-                                    
-                                   
+                                   // this.groupId = this.customer[0].groups.substr(2,3)
+                                  //  console.log("Customer Details :",this.customer[0].groups.substr(2,3))
                                     console.log("Customer groups :",this.customer)
                                     this.customerName = this.customer[0].firstName;
                                     this.viewCustomer = true;
@@ -212,7 +199,8 @@ export class CustomerDetailComponent implements OnInit {
                 }
             }
         );
-        localStorage.setItem('Detail', 'All');
+      localStorage.setItem('Detail', 'All');
+    
 
 
        
@@ -267,7 +255,19 @@ export class CustomerDetailComponent implements OnInit {
     }
     ngOnInit() {
         // this.getCustomerQnr();
-    
+       console.log("localstorage :", localStorage.getItem('groupId')) 
+        this.groupId = localStorage.getItem('groupId')
+        if(this.groupId){
+          this.provider_services.getCustomerGroupById(this.groupId).subscribe((res : any)=>{
+             // console.log("getCustomerGroup ",res)
+              this.groupName = res.groupName;
+//console.log("getCustomerGroup Name", this.groupName)
+              this.provider_services.getMemberId(this.groupName,this.customerId).subscribe((res : any)=>{
+                  this.groupMemberId = res;
+                 // console.log("groupMemberId :",this.groupMemberId)
+              })
+          })
+      }
     }
     onCancel() {
         if (this.source === 'checkin' || this.source === 'token') {
