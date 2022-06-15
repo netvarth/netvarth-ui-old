@@ -202,7 +202,7 @@ box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%) !important;
 transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;
 }
 ::ng-deep .form-control:focus {
-border: 3px solid #96d3e2 !important;
+border: 2px solid #96d3e2 !important;
 }
 textarea {
 resize: none !important;

@@ -348,7 +348,7 @@ export class CrmService {
         return this.servicemeta.httpPut(url, data);
     }
     getTaskMasterList(){
-      const url = 'provider/task/master';
+      const url = 'provider/task/master?originFrom-eq=None&isSubTask-eq=false&available-eq=true';
       return this.servicemeta.httpGet(url);
     }
 

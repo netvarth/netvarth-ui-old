@@ -372,8 +372,17 @@
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <input (keyup)="resetErrors()" type="date" #dob placeholder="" class="form-control"
-                        formControlName="dob" autocomplete="off" />
+                    <!-- <input (keyup)="resetErrors()" type="date" #dob placeholder="" class="form-control"
+                        formControlName="dob" autocomplete="off" /> -->
+                            <div class="matDatePicker" >
+                                <input  formControlName="dob" class="form-control" type="text"  matInput
+                                    [matDatepicker]="picker"
+                                     placeholder="Enter Date" #dob>
+                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
+                                </mat-datepicker>
+                            </div>
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
                     </app-field-error-display>

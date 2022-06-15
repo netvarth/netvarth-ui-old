@@ -11,7 +11,7 @@
      <!----mat tab change to mat select start-->
     <div class="statusSelectDiv"> 
       <div class="fieldPadding" >
-          <mat-select class="form-control" placeholder="{{totalActivity}} ({{totalTaskActivityList.length}})" 
+          <mat-select class="form-control" placeholder="{{totalActivity}}" 
               #userTaskStatus [(ngModel)]="statusFilter"  (ngModelChange)="handleTaskStatus(userTaskStatus.value)">
               <mat-option   *ngFor="let stat of taskStatusList;let index=i" [value]="stat.id" >
                 <span style="display:flex;gap:10px">
@@ -246,7 +246,7 @@
                           <td data-title="Type" class="td5">{{task.type.name}}</td>
                           <td data-title="Due Date" class="td6" *ngIf="task.dueDate">{{task.dueDate | date:newDateFormat}}</td>
                           <td data-title="Due Date" class="td6" *ngIf="!task.dueDate">--</td>
-                          <td >
+                          <!-- <td  style="display:none">
                             <div class="copy">
                               <span class="">
                                 <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
@@ -267,7 +267,7 @@
 
                               </mat-menu>
                             </div>
-                          </td>
+                          </td> -->
                         </tr>
                       </ng-container>
                     </tbody>

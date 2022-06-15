@@ -2,30 +2,28 @@
     style="padding: 20px;">
     <!-- <form [formGroup]="assignMemberForm"> -->
     <!--header start-->
-    <div class="header">
+    <div class="header" style="border-bottom: none !important">
         <div class="headerText">{{data.header | capitalizeFirst}}</div>
         <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
             <mat-icon>clear</mat-icon>
         </div>
     </div>
+    <!----search filter start-->
+    <!--search filter end-->
     <!--header end-->
     <mat-dialog-content style="max-height: 75vh!important">
         <div>
-
             <div>
-                <!----radio btn start-->
                 <div>
+                    <input [value]="seacrchFilterEmployee" (ngModelChange)="transform(seacrchFilterEmployee)" type="text" class="form-control" [(ngModel)]="seacrchFilterEmployee" placeholder="Search by employee details" style="height: 35px !important;width: -webkit-fill-available !important;margin-bottom: 10px;"/>
                     <mat-radio-group [(ngModel)]="assignMemberDetails">
                         <div>
-                            <mat-radio-button class="example-radio-button" *ngFor="let assignMember of memberList"
+                            <mat-radio-button class="example-radio-button" *ngFor="let assignMember of memberList |filter:seacrchFilterEmployee"
                                 [value]="assignMember" (change)="handleMemberSelect(assignMember,'Selected')">
                                 <div class="allMember">
                                     <div>
                                         <img class="img" [src]="getUserImg(assignMember)" />
                                     </div>
-                                    <!-- <div>
-                            {{assignMember.profilePicture | json}}
-                        </div> -->
                                     <div class="members">
                                         {{assignMember.firstName}}{{assignMember.lastName}}
                                     </div>
@@ -40,9 +38,11 @@
                         </div>
                     </mat-radio-group>
                 </div>
-                <!----radio btn end-->
             </div>
         </div>
+        
+          
+    
     </mat-dialog-content>
     <div *ngIf="errorMsg" class="errorMsg">
         <div>{{assignMemberErrorMsg}}</div>
@@ -82,10 +82,12 @@
         <div>
 
             <div>
+                <!-- <input [value]="seacrchFilterEmployee" (ngModelChange)="transform(seacrchFilterEmployee)" type="text" class="form-control" [(ngModel)]="seacrchFilterEmployee" placeholder="Search by employee details" style="height: 35px !important;width: -webkit-fill-available !important;margin-bottom: 10px;"/> -->
                 <!----radio btn start-->
                 <div>
                     <mat-radio-group [(ngModel)]="assignMemberDetails">
                         <div>
+                            <!-- |filter:seacrchFilterEmployee -->
                             <mat-radio-button class="example-radio-button" *ngFor="let assignMember of memberList"
                                 [value]="assignMember" (change)="handleMemberSelect(assignMember,'Selected')">
                                 <div class="allMember">
@@ -330,6 +332,7 @@
             <mat-icon>clear</mat-icon>
         </div>
     </div>
+    <mat-dialog-content style="max-height: 75vh!important">
     <!--task name start-->
     <div class="titleTask">
         <div>{{taskTitle}}</div>
@@ -361,10 +364,6 @@
                 <div class="prioprity">Priority :</div>
                 <div class="prioprity">{{priorityName}}</div>
             </div>
-            <!-- <div style="display: flex;align-items: center;gap: 5px;">
-                <div class="lastUpdate">Last updated on</div>
-                <div class="lastUpdate">{{lastUpdate}}</div>
-            </div> -->
         </div>
     </div>
     <!---spinner end-->
@@ -421,6 +420,7 @@
     </div>
 
     <!----external status end-->
+</mat-dialog-content>
 
 </section>
 
@@ -1279,12 +1279,7 @@
 
         <div>
             <div class="bggrey">
-                <!-- style="display: flex;gap: 5px;flex-wrap: wrap;" -->
-                <!-- <div class="leadTitle">
-                   
-                    <i class="fa fa-file"></i>
-                 {{customerViewData.fileName?.length>10 ? customerViewData.fileName.slice(0, 10)+'...' : customerViewData.fileName}}
-                </div> -->
+               
                 <div *ngIf="customerViewData">
                     <div class="leadTitle">
                         <i class="fa fa-file"></i>
@@ -1321,36 +1316,10 @@
                         <span>Context : {{customerViewData.contextDisplayName}}</span>
                     </div>
                 </div>
-                <!-- <div style="margin-top:5px;">
-                    <a class="navbar-item-color bold pointer-cursor disp-none-small"
-                        (click)="search()">
-                        <button mat-flat-button
-                            class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
-                            Search Again </button>
-                    </a>
-
-                </div> -->
+                
             </div>
         </div>
-        <!-- </form> -->
-        <!---cancel save btn start-->
-        <!-- <div mat-dialog-actions style="display: flex; margin-top: 5; padding: 0px !important;">
-            <div class="cancelSaveBtn">
-                <ng-container>
-                    <div class=" mgn-bt-20 mgn-up-10 mt-4">
-                        <button type="button" class="btn font-weight-bold"
-                            mat-dialog-close>Cancel</button>&nbsp; &nbsp;
-                            <button type="button" [disabled]="!customer_data" *ngIf="showDone" class="btn btn-primary font-weight-bold confirmBtn"
-                            (click)="getCustomerDetail(customer_data)" >Done</button>
-                            <button mat-flat-button *ngIf="!showDone" (click)="search()"
-                            class="btn btn action-button  btn-primary action-button-add confirmBtn">
-                            Search Again </button>
-                    </div>
-                </ng-container>
-            </div>
-
-           
-        </div> -->
+        
     </mat-dialog-content>
 </section>
 

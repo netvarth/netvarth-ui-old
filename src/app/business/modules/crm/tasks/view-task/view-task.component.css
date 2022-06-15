@@ -417,11 +417,6 @@
     background: #B2B2B2 !important;
 
 }
-::ng-deep .mat-datepicker-toggle{
-  /* position: absolute; */
-  /* margin-left: -40px; */
-  /* background: url("../../../../../../assets/images/crmImages/calendarIcon.png") no-repeat !important; */
-}
 .dateWithMatDtae{
   display: flex;
   /* flex-direction: row-reverse; */

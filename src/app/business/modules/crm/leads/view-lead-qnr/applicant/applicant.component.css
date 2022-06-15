@@ -153,3 +153,8 @@ textarea {
 .astericColor{
     color: #f24949 !important;
   }
+  .matDatePicker{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+  }

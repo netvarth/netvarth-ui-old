@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit } from "@angular/core";
-// import { FormBuilder } from '@angular/forms';
 import { CrmService } from "../../modules/crm/crm.service";
 import {
   MAT_DIALOG_DATA,
@@ -8,19 +7,13 @@ import {
 } from "@angular/material/dialog";
 import { projectConstants } from "../../../../../src/app/app.component";
 import { SnackbarService } from "../../../shared/services/snackbar.service";
-// import { FormBuilder } from '@angular/forms';
-// import { DatePipe } from '@angular/common';
-// import { Router } from '@angular/router';
 import { CrmMarkasDoneComponent } from "../../shared/crm-markas-done/crm-markas-done.component";
 import { WordProcessor } from "../../../shared/services/word-processor.service";
 import { GroupStorageService } from "../../../shared/services/group-storage.service";
 import { Router } from "@angular/router";
 import { ProviderServices } from "../../../business/services/provider-services.service";
-//import { FormBuilder, FormControl, Validators } from "@angular/forms";
-//import {MatChipInputEvent} from '@angular/material/chips';
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import { FileService } from "../../../shared/services/file-service";
-
 import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
 import { projectConstantsLocal } from "../../../../../src/app/shared/constants/project-constants";
@@ -31,7 +24,7 @@ import { projectConstantsLocal } from "../../../../../src/app/shared/constants/p
   styleUrls: ["./crm-select-member.component.css"]
 })
 export class CrmSelectMemberComponent implements OnInit {
-  public memberList: any = [];
+  public memberList: any = []
   public assignMemberDetails: any;
   public handleAssignMemberSelectText: string = "";
   public assignMemberErrorMsg: string = "";
@@ -137,6 +130,7 @@ export class CrmSelectMemberComponent implements OnInit {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   private onDestroy$: Subject<void> = new Subject<void>();
   public activityList: any = [];
+  seacrchFilterEmployee:any;
 
   constructor(
     public dialogRef: MatDialogRef<CrmSelectMemberComponent>,
@@ -199,21 +193,6 @@ export class CrmSelectMemberComponent implements OnInit {
         }
       });
     } else if (this.data.requestType === "createleadSelectCustomer") {
-      // this.data.memberList[0].forEach((singleMember:any)=>{
-
-      //   this.memberList.push(singleMember)
-      //   if(this.data.requestType==='createleadSelectCustomer'){
-      //     if(singleMember.id==this.data.updateAssignMemberId){
-      //       if(this.crmService.taskActivityName==='Update'){
-      //         this.assignCustomerDetails=singleMember;
-      //       }
-      //       else{
-      //         this.assignCustomerDetails = this.data.updateSelectedMember;
-      //       }
-      //     }
-      //   }
-
-      // })
       this.memberList = this.data.memberList;
       console.log("customermemberlist", this.memberList);
     } else if (this.data.requestType === "createUpdateNotes") {
@@ -371,9 +350,7 @@ export class CrmSelectMemberComponent implements OnInit {
   }
   saveAssignMember(res) {
     if (this.assignMemberDetails !== "") {
-      // console.log('response',res)
       this.errorMsg = false;
-      // console.log('assignMemberDetails',this.assignMemberDetails)
       this.dialogRef.close(res);
     } else {
       if (this.assignMemberDetails === "") {
@@ -593,6 +570,7 @@ export class CrmSelectMemberComponent implements OnInit {
               setTimeout(() => {
                 this.dialogRef.close(this.status);
                 this.showHideTickMark = false;
+                this.snackbarService.openSnackBar("Sucessfully updated your status",{'panelClass': 'snackbarerror'})
               }, projectConstants.TIMEOUT_DELAY);
             },
             error => {
@@ -603,21 +581,6 @@ export class CrmSelectMemberComponent implements OnInit {
           );
       }
     }
-    // if(this.selectedStatusId != undefined){
-    //   this.crmService.addStatus( this.selectedStatusUID,this.selectedStatusId).subscribe((response)=>{
-    //     console.log('response',response)
-    //     setTimeout(() => {
-    //       this.dialogRef.close();
-    //       this.showHideTickMark=false
-    //     }, projectConstants.TIMEOUT_DELAY);
-    //   },
-    //   (error)=>{
-    //     this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
-    //   })
-    // }
-    // else{
-    //   this.selectText='Please select one status'
-    // }
   }
 
   completeLeadStatus() {
@@ -666,28 +629,17 @@ export class CrmSelectMemberComponent implements OnInit {
   saveTaskMaster(taskMasterValue) {
     console.log("taskMasterValue", taskMasterValue);
     if (taskMasterValue !== undefined) {
-      // console.log('response',res)
-      // this.errorMsg=false;
-      // console.log('assignMemberDetails',this.assignMemberDetails)
       this.dialogRef.close(taskMasterValue);
-      // this.router.navigate(['provider', 'task', 'create-task'])
-    } else if (this.newTask === "CreatE") {
-      // this.router.navigate(['provider', 'task', 'create-task'])
-      this.dialogRef.close("CreatE");
-      // this.router.navigate(['provider', 'task', 'create-task'])
-    }
-    // else{
-    //     this.errorMsg=true;
-    //     this.assignMemberErrorMsg='Please select activity template'
 
-    // }
+    } else if (this.newTask === "CreatE") {
+
+      this.dialogRef.close("CreatE");
+
+    }
   }
   saveLeadMaster(leadMasterValue) {
     console.log("leadMasterValue", leadMasterValue);
     if (leadMasterValue !== undefined) {
-      // console.log('response',res)
-      // this.errorMsg=false;
-      // console.log('assignMemberDetails',this.assignMemberDetails)
       this.dialogRef.close(leadMasterValue);
     } else if (this.newTask === "CreatE") {
       // this.router.navigate(['provider', 'task', 'create-task'])
@@ -745,9 +697,6 @@ export class CrmSelectMemberComponent implements OnInit {
   downloadFile(fileDes: any) {
     console.log("file", fileDes);
     window.open(fileDes.s3path);
-    // if(fileDes.type ==='pdf'){
-    //   window.open(fileDes.s3path)
-    // }
   }
   getColor(status) {
     if (status) {
@@ -773,10 +722,6 @@ export class CrmSelectMemberComponent implements OnInit {
     this.dialogRef.close(taskData);
   }
   getTotalTaskActivity() {
-    // this.crmService.getTotalTask().subscribe((response)=>{
-    //   console.log('response',response);
-    //   this.activityList.push(response);
-    // })
   }
 
   createCustomerData(customer: any) {
@@ -828,72 +773,7 @@ showFileView(file){
    }
  })
 }
-  // openCustomerSearchDialog(customerList) {
-  //   console.log("openCustomerSearchDialog", customerList);
-  //   const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
-  //     width: "100%",
-  //     panelClass: ["commonpopupmainclass", "confirmationmainclass"],
-  //     disableClose: true,
-  //     data: {
-  //       requestType: "customerSearch",
-  //       customerList: customerList
-  //     }
-  //   });
-  //   dialogRef.afterClosed().subscribe((res: any) => {
-  //     if (res) {
-  //       console.log("searched ", res);
-  //       this.customerName =
-  //         (res.firstName ? res.firstName : "") +
-  //         " " +
-  //         (res.lastName ? res.lastName : "");
-  //       console.log("Customer Name :", this.customerName);
-  //       this.customerList.push(res);
-  //       this.customerArray.push(res.id);
-
-  //       if (
-  //         this.customerList["firstName"] ||
-  //         this.customerList["lastName"] === ""
-  //       ) {
-  //         this.snackbarService.openSnackBar("Shared person must have name", {
-  //           panelClass: "snackbarerror"
-  //         });
-  //       }
-
-  //       if (customerList["id"] === res.id) {
-  //         this.snackbarService.openSnackBar("Already Existed", {
-  //           panelClass: "snackbarerror"
-  //         });
-  //       }
-  //     }
-  //     // this.customerData.push(res.id)
-  //     // console.log("Customer List :",this.customerData);
-  //     //   this.customerData.forEach((element,index)=>{
-  //     //     console.log("Element , Index :",element,index)
-  //     //     if(this.customerData[index] === this.customerData[index+1]){
-  //     //       console.log("Existedddd:")
-  //     //       this.customerData=[]
-  //     //       //this.customerList['id'] = []
-  //     //       //this.customerArray = []
-  //     //     }
-  //     //       //alert("Alredy")
-  //     //   })
-  //     // if(this.customerList['id'] === res.id){
-  //     //   this.snackbarService.openSnackBar("Already existed!",{'panelClass': 'snackbarerror'})
-  //     // }
-  //     if (res === "") {
-  //       //alert("please selecte atleast one consumer or provider")
-  //       error => {
-  //         this.snackbarService.openSnackBar(error, {
-  //           panelClass: "snackbarerror"
-  //         });
-  //       };
-  //     }
-  //     // this.getCompletedTask();
-
-  //     // this.getInprogressTask();
-  //     //this.ngOnInit();
-  //   });
-  // }
+  
   
   makeNone(makeNone){
     makeNone = [];
@@ -909,27 +789,10 @@ showFileView(file){
    // }
   }
   removeNewCustomer(index){
-    // const index = this.newCustomerList.indexOf(customer);
-    // if (index >= 0) {
       this.newCustomerList.splice(index, 1);
       this.customerArray.splice(index, 1);
-    // }
-    // if(index === 0){
-    //   
-    //   this.newData = []
-    // }
   }
-  // add(event: MatChipInputEvent): void {
-  //   const value = (event.value || '').trim();
-
-  //   // Add our fruit
-  //   if (value) {
-  //     this.customerList.push({customer: value});
-  //   }
-
-  //   // Clear the input value
-  //   event.chipInput!.clear();
-  // }
+  
 
   handleDeptSelction(obj){
     this.showSelect=true;
@@ -939,13 +802,12 @@ showFileView(file){
     const customer = this.newData.splice(this.newData.find(x => x.id === obj),1);
     console.log("customer reomve",customer)
 
-    //this.newData.splice(this.newData.findIndex(item => item.id === obj), 1);
+    
 
     this.providerServiceObj.getCustomer(filter).subscribe((res)=>{
      
       this.selected_customer=res;
-      // this.selected_customer.forEach((newElement)=>{
-      //   console.log("New ",newElement)
+     
        
         const customer = this.newCustomerList.find(x => x.id === res[0].id);
         if (customer) {
@@ -955,12 +817,11 @@ showFileView(file){
             console.log("New ELSE",newElement)
             this.newCustomerList.push(newElement)
             this.customerArray.push(newElement.id);
-           // this.customerArray = []
+           
 
           })
         }
-       // this.customerArray = []
-      //})
+      
       console.log("Selected Customer :",this.selected_customer)
      
       
@@ -1029,23 +890,12 @@ showFileView(file){
         case "id":
           post_data["or=jaldeeId-eq"] =
             this.customerDetails + ",firstName-eq=" + this.customerDetails
-            // + ",lastName-eq="+this.customerDetails;
-          // post_data = {
-          //   'jaldeeId-eq': form_data.search_input
-          // };
           break;
-          // case "name":
-          //   post_data["firstName-like"] = this.customerDetails+ ",lastName-eq=" + this.customerDetails;
-          //   break;
-            
+         
            
           }
           
-      // console.log("Post Data :", post_data);
-      // if(post_data === '' || post_data === undefined){
-      //   this.snackbarService.openSnackBar("Please select atleast one people",{'panelClass': 'snackbarerror'})
-      // }
-     // this.customerDetails = "";
+     
       this.providerServiceObj
         .getCustomer(post_data)
         .pipe(takeUntil(this.onDestroy$))
@@ -1072,22 +922,13 @@ showFileView(file){
                // this.snackbarService.openSnackBar("Searched people already existed!",{'panelClass': 'snackbarerror'})
               } else {
                  this.newData.push(newElement)
-               //this.customerArray.push(newElement.id);
+              
               }
-              //  this.customerList = []
-               
+             
               })
             }
             if(data.length === 1){
-            // if (this.customerList.length === 0) {
-            //   this.searchedData.forEach((newElement)=>{
-            //     console.log("One Data ",newElement)
-            //   //  this.newData = []
-            //     this.customerList.push(newElement)
-            //     this.customerArray.push(newElement.id);
-            //   })
-            //   //this.customerList.push(data[0]);
-            // } else {
+            
               
             
                 //this.newData = newElement
@@ -1121,40 +962,8 @@ showFileView(file){
                     this.customerArray.push(newElement.id);
                   })
                 }
-            
-              // for(let i=0;i<this.customerData.length;i++){
-              //   if(this.customerData[i].id === data[0].id){
-              //     console.log("Existed:")
-              //     this.customerList.push('');
-              //     break;
-              //   }
-
-              // }
-              //   this.customerList.push(data[0]);
-           // }
-           
           }
-            // console.log("Array :",this.customerData)
-            //              if(this.customerList.length===0){
-            //              }
-            //             else{
-            //               this.customerList.forEach((element,index)=>{
-            //                 console.log("forEach 1 : ", index)
-            //                 data.forEach((element1,index1)=>{
-            //                   console.log("forEach 2 : ", index1)
-            //                   if(element.id === element1.id){
-            //                     console.log("Existedddddddd:")
-            //                     this.customerDetails = ''
-            //                     this.customerList.push('');
-            //                     this.snackbarService.openSnackBar("Already existed!",{'panelClass': 'snackbarerror'})
-            //                   }
-            //                   else{
-            //                     this.customerList.push(data[0]);
-            //                   }
-
-            //                 })
-            //               })
-            //             }
+            
             if (data.length === 0) {
               this.show_customer = false;
               this.create_customer = true;
@@ -1209,11 +1018,9 @@ showFileView(file){
             }
           },
 
-          // error => {
-          //   this.wordProcessor.apiErrorAutoHide(this, error);
-          // }
+          
           error => {
-            //this.snackbarService.openSnackBar("",{'panelClass': 'snackbarerror'})
+           
           }
         );
     }
@@ -1221,19 +1028,10 @@ showFileView(file){
 
   getCustomerDetail(customer) {
     console.log("Customerrrrr...", customer);
-    // if(customer === '' || customer === undefined){
-    //   this.snackbarService.openSnackBar("Please select atleast one consumer or provider",{'panelClass': 'snackbarerror'})
-    // }
+   
     let newData = [];
     newData = this.customerData;
-    //console.log("Array : ",newData)
-    // this.customerArray.forEach((element,index)=>{
-    //   console.log("Element , Index :",element,index)
-    //   if(this.customerArray[index] === this.customerArray[index+1]){
-    //     console.log("Existedddd:")
-    //   }
-    //     //alert("Alredy")
-    // })
+    
     console.log("Data From:", newData);
     if (customer.id !== this.customerData) {
       setTimeout(() => {
@@ -1379,4 +1177,13 @@ showFileView(file){
         console.log("Ressssssssssss:", res);
       });
   }
-}
+
+  transform(seacrchFilterEmployee){
+    console.log('assignMemberDetails',this.seacrchFilterEmployee)
+    
+  }
+
+   
+
+
+  }

@@ -4,6 +4,9 @@ import { FileService } from '../../../../../../shared/services/file-service';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { CrmService } from '../../../crm.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
+import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
+import * as moment from 'moment';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-applicant',
@@ -35,12 +38,14 @@ export class ApplicantComponent implements OnInit {
   @Output() addApplicant = new EventEmitter<any>();
   failedStatusId: any;
   crifStatusId: any;
+  availableDates: any = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private fileService: FileService,
     private crmService: CrmService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private datePipe:DatePipe,
   ) { }
 
   ngOnInit(): void {
@@ -229,7 +234,7 @@ export class ApplicantComponent implements OnInit {
     let applicantInfo: any = {
       "originFrom": "Lead",
       "originUid": this.parentId,
-      "dob": this.applicantForm.controls.dob.value,
+      "dob": this.datePipe.transform(this.applicantForm.controls.dob.value,'yyyy-MM-dd'),
       "telephone": [
         {
           "telephoneType": this.applicantForm.controls.telephoneType.value,
@@ -321,5 +326,8 @@ export class ApplicantComponent implements OnInit {
   }
   getImageType(fileType) {
     return this.fileService.getImageByType(fileType);
+  }
+  dateClass(date: Date): MatCalendarCellCssClasses {
+    return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
   }
 }

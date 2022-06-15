@@ -156,7 +156,7 @@ export class ViewTaskComponent implements OnInit {
 
  
   constructor(
-    private locationobj: Location,
+    // private locationobj: Location,
     private crmService: CrmService,
     public _location: Location,
     public dialog: MatDialog,
@@ -1343,10 +1343,6 @@ export class ViewTaskComponent implements OnInit {
     this.router.navigate(["provider", "task", "create-subtask", taskid]);
   }
 
-  goback() {
-    this.locationobj.back();
-  }
-
   getformatedTime(time) {
     let timeDate;
     timeDate = time.replace(/\s/, "T");
@@ -1453,7 +1449,8 @@ export class ViewTaskComponent implements OnInit {
     this.filter_sidebar = false;
   }
   goBack() {
-    this._location.back();
+    this.router.navigate(['provider', 'crm']);
+    // this._location.back();
   }
 
   //notes start

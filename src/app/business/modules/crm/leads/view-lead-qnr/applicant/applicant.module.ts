@@ -22,7 +22,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatSelectModule,
     MatOptionModule,
     CapitalizeFirstPipeModule,
-    MatDatepickerModule
+    MatDatepickerModule,
   ],
   exports: [
     ApplicantComponent

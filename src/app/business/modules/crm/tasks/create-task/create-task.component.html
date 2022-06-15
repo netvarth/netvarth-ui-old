@@ -111,10 +111,10 @@
                 <!-- <span class="group-head" >Select Activity Assignee and Manager</span><br> -->
                 <div style="display: flex;gap: 5px;">
                     <div class="group-head" *ngIf="taskMasterData && taskMasterData.assignee && taskMasterData.assignee.isvisible ===true">
-                        Select Activity Assign Member
+                        Select Activity Employee
                     </div>
                     <div class="group-head" style="display: none;" *ngIf="taskMasterData && taskMasterData.assignee && taskMasterData.assignee.isvisible === false">
-                        Select Activity Assign Member
+                        Select Activity Employee
                     </div>
                     <div class="group-head" *ngIf="taskMasterData && taskMasterData.manager && taskMasterData.manager.isvisible===true">
                         and Manager
@@ -126,7 +126,7 @@
             <div class="bggrey my-2">
                 <div *ngIf="taskMasterData && taskMasterData.assignee && taskMasterData.assignee.isvisible">
                     <div class="taskTitle">
-                        <div>Assign Member</div>
+                        <div>Employee</div>
                         <div class="astericColor">*</div>
                     </div>
                     <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.assignee && taskMasterData.assignee.iseditable)}">
@@ -439,11 +439,11 @@
             </div>
 
 
-            <span class="group-head">Select Activity Assignee and Manager</span><br>
+            <span class="group-head">Select Activity Employee and Manager</span><br>
             <div class="bggrey my-2">
                 <div>
                     <div class="taskTitle">
-                        <div>Assign Member</div>
+                        <div>Employee</div>
                         <div class="astericColor">*</div>
                     </div>
                     <div class="fieldPadding">
@@ -752,11 +752,11 @@
             </div>
 
 
-            <span class="group-head">Select Activity Assignee and Manager</span><br>
+            <span class="group-head">Select Activity Employee and Manager</span><br>
             <div class="bggrey my-2">
                 <div>
                     <div class="taskTitle">
-                        <div>Assign Member</div>
+                        <div>Employee</div>
                         <div class="astericColor">*</div>
                     </div>
                     <div class="fieldPadding">
