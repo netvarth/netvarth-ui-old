@@ -153,6 +153,7 @@ export class TasksComponent implements OnInit {
     
   }
   handleTaskStatus(statusValue:any){
+    console.log('statusValue',statusValue);
     let filter = {}
     filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
     filter['count'] = this.pagination.perPage;
@@ -769,12 +770,6 @@ export class TasksComponent implements OnInit {
     dialogRef.afterClosed().subscribe((res:any)=>{
       console.log('resssssssss',res);
       this.ngOnInit()
-      // if(res==='In Progress' ||res==='Completed' || res==='Assigned' || res==='New' || res === 'Cancelled' || res === 'Suspended'  ){
-
-      //   this.ngOnInit()
-      //   this.handleStatus()
-      // }
-      
     })
   }
 }

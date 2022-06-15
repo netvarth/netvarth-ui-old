@@ -170,8 +170,10 @@ export class CrmSelectMemberComponent implements OnInit {
       this.data.memberList[0].forEach((singleMember: any) => {
         // console.log('singleMember',singleMember)
         if (singleMember.userType === "PROVIDER") {
-          // console.log('this.data.assignMembername',this.data.updateAssignMemberId)
-          this.memberList.push(singleMember);
+          if(singleMember.status==='ACTIVE'){
+            this.memberList.push(singleMember);
+          }
+          
           if (this.data.requestType === "createtaskSelectMember") {
             if (singleMember.id == this.data.updateAssignMemberId) {
               if (this.crmService.taskActivityName === "Update") {

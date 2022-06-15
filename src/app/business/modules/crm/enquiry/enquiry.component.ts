@@ -441,7 +441,7 @@ import { Subject } from 'rxjs';
           "isLeadAutogenerate":true,
           "originUid":this.activityOriginUidDialogValue,
           "taskMasterId":this.activityIdDialogValue,
-          "targetpotential":this.createEnquiryForm.controls.proposedAmount.value,
+          "targetPotential":this.createEnquiryForm.controls.proposedAmount.value,
         }
         console.log('createEnquiry',createEnquiry);
         this.crmService.createEnquiry(createEnquiry).subscribe((response)=>{
@@ -469,7 +469,7 @@ import { Subject } from 'rxjs';
             "email": this.createEnquiryForm.controls.emailValue.value,
             "countryCode": '+91',
             "userTaskCategory":this.createEnquiryForm.controls.userTaskCategory.value,
-            "targetpotential":this.createEnquiryForm.controls.proposedAmount.value,
+            "targetPotential":this.createEnquiryForm.controls.proposedAmount.value,
             // "customer" : {"id" :  this.enquiryCreateIdAfterRes},
           }
           console.log('afterCompleteAddData',afterCompleteAddData)
@@ -484,7 +484,7 @@ import { Subject } from 'rxjs';
                 "leadMasterId": this.createEnquiryForm.controls.userTaskCategory.value,
                 "isLeadAutogenerate":true,
                 "originUid":this.activityOriginUidDialogValue,
-                "targetpotential":this.createEnquiryForm.controls.proposedAmount.value,
+                "targetPotential":this.createEnquiryForm.controls.proposedAmount.value,
               }
               console.log('createEnquiry',createEnquiry);
               this.crmService.createEnquiry(createEnquiry).subscribe((response)=>{
@@ -525,7 +525,7 @@ import { Subject } from 'rxjs';
             "email": this.createEnquiryForm.controls.emailValue.value,
             "countryCode": '+91',
             "userTaskCategory":this.createEnquiryForm.controls.userTaskCategory.value,
-            "targetpotential":this.createEnquiryForm.controls.proposedAmount.value,
+            "targetPotential":this.createEnquiryForm.controls.proposedAmount.value,
             // "customer" : {"id" :  this.enquiryCreateIdAfterRes},
           }
           console.log('afterCompleteAddData',afterCompleteAddData)

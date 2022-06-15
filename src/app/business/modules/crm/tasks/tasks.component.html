@@ -246,7 +246,7 @@
                           <td data-title="Type" class="td5">{{task.type.name}}</td>
                           <td data-title="Due Date" class="td6" *ngIf="task.dueDate">{{task.dueDate | date:newDateFormat}}</td>
                           <td data-title="Due Date" class="td6" *ngIf="!task.dueDate">--</td>
-                          <!-- <td  style="display:none">
+                          <!-- <td  >
                             <div class="copy">
                               <span class="">
                                 <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"

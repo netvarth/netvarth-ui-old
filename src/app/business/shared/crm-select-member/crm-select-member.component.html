@@ -8,8 +8,6 @@
             <mat-icon>clear</mat-icon>
         </div>
     </div>
-    <!----search filter start-->
-    <!--search filter end-->
     <!--header end-->
     <mat-dialog-content style="max-height: 75vh!important">
         <div>
@@ -24,13 +22,14 @@
                                     <div>
                                         <img class="img" [src]="getUserImg(assignMember)" />
                                     </div>
-                                    <div class="members">
-                                        {{assignMember.firstName}}{{assignMember.lastName}}
+                                    <div class="members" style="display:flex;align-items: center;gap:5px">
+                                        <div *ngIf="assignMember && assignMember.firstName" >{{assignMember.firstName}}</div>
+                                        <div *ngIf="assignMember && assignMember.lastName">{{assignMember.lastName}}</div>
                                     </div>
-                                    <div class="members">
+                                    <div class="members" *ngIf="assignMember && assignMember.countryCode && assignMember.mobileNo">
                                         +{{assignMember.countryCode}}{{assignMember.mobileNo}}
                                     </div>
-                                    <div class="members">
+                                    <div class="members" *ngIf="assignMember && assignMember.locationName">
                                         {{assignMember.locationName}}
                                     </div>
                                 </div>
