@@ -31,7 +31,6 @@ const routes: Routes = [
   { path: 'uploadsignature', loadChildren: () => import('./prescription/upload-digital-signature/uploadsignature/uploadsignature.module').then(m => m.UploadSignatureModule) },
   { path: 'manualsignature', loadChildren: () => import('./prescription/upload-digital-signature/manualsignature/manualsignature.module').then(m => m.ManualSignatureModule) },
   { path: 'fileupload', loadChildren: () => import('./uploadfile/uploadfile.module').then(m => m.UploadfileModule) },
-  // { path: 'view', loadChildren: () => import('./viewmedicalrecord/viewmedicalrecord.module').then(m => m.ViewmedicalrecordModule) }
 
 ];
 @NgModule({

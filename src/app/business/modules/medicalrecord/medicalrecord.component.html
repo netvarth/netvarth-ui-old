@@ -154,20 +154,20 @@
 
         <div class="prescription p-1 pr-0 col-md-4 col-xs-12 col-sm-12 col-lg-4">
           <div class="shadow">
-            <span class="normal-sz mgn-bt-10 p-1 details-card"><b>Upload Your Files</b></span><br>
+            <span class="normal-sz p-1 details-card"><b>Upload Your Files</b></span><br>
             <div class="text-dark text-center my-3 pointer-cursor" *ngIf="uploadFiles.length == 0"
               (click)="uploadFileforMr()">
               <i style="font-size: 100px!important;color: #1E4079!important;" class="fa fa-cloud-upload"
                 aria-hidden="true"></i>
-            </div><br>
-            <div class="my-3 ml-1 pointer-cursor" *ngIf="uploadFiles && uploadFiles.length > 0">
+            </div><br class="no-need">
+            <div class="my-3 ml-1 pointer-cursor fileUpload" *ngIf="uploadFiles && uploadFiles.length > 0">
               <i style="font-size: 30px!important;color: #1E4079!important;" class="fa fa-upload"
                 aria-hidden="true"></i>
               <span class="pointer-cursor" (click)="uploadedFileforMr()">&nbsp;&nbsp;<u style="color: #1E4079;">Uploaded
                   files</u></span><br>
               <span class="mt-4 pointer-cursor btn btn-primary" (click)="uploadFileforMr()">&nbsp;&nbsp;Upload
                 file</span>
-            </div><br>
+            </div><br class="no-need">
             <div class="clearfix"></div>
             <!-- <div>
               <button class="btn btn-primary m-2 ml-0 mb-auto">Upload Files</button>
