@@ -2582,6 +2582,10 @@ buildFilesParams(sdate, edate) {
     const url = 'provider/lead/questionnaire/upload/status/' + uid;
     return this.servicemeta.httpPut(url, data);
   }
+  getActiveQuestionaire(uid) {
+    const url = 'provider/lead/questionnaire/status/' + uid;
+    return this.servicemeta.httpGet(url);
+  }
   changeLeadQuestionnaireStatus(status,uuid, id) {
     const url = 'provider/lead/questionnaire/change/' + status + '/' + uuid + '/' + id;
     return this.servicemeta.httpPut(url);

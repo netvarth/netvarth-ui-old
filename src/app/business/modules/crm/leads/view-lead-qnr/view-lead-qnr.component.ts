@@ -55,18 +55,16 @@ export class ViewLeadQnrComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router
   ) {
-
     this.activatedRoute.params.subscribe(
       (params: any) => {
         this.leadUID = params.id;
       }
     )
-
   }
 
   initLead() {
     const _this = this;
-
+    _this.questionaire = {};
     this.fetchLeadInfo(this.leadUID).then(
       (leadInfo: any) => {
         _this.leadInfo = leadInfo; // Setting Lead information.
@@ -87,13 +85,9 @@ export class ViewLeadQnrComponent implements OnInit {
             _this.applicants = [0];
             _this.applicantsInfo[0] = applicant;
           }
-        } else if (leadInfo.status.name === 'Credit Score Generated') {
-          _this.getQuestionaire();
-        } else if (leadInfo.status.name === 'Sales Verified') {
-          console.log("Here");
-          _this.getAfterQuestionaire();
+        } else {
+          this.getQuestionaire();
         }
-
       }
     );
   }
@@ -117,7 +111,6 @@ export class ViewLeadQnrComponent implements OnInit {
       console.log(this.applicantsInfo);
       this.applicants.push(kycIndex);
     }
-
   }
 
   removeApplicant(applicantId, applicationIndex) {
@@ -132,19 +125,15 @@ export class ViewLeadQnrComponent implements OnInit {
   }
 
   addCoApplicant() {
-
     let maxVal = parseInt(Object.keys(this.applicantsInfo).reduce((a, b) => this.applicantsInfo[a] > this.applicantsInfo[b] ? a : b)) + 1;
     console.log(maxVal);
-
     this.applicants.push(maxVal);
-
     this.applicantsInfo[maxVal] = {
       parent: false,
       parentid: {
         id: this.leadInfo.customer.id
-      },
+      }
     }
-
   }
 
   /**
@@ -184,7 +173,6 @@ export class ViewLeadQnrComponent implements OnInit {
         }
       }
     })
-
   }
   uploadFiles(file, url) {
     const _this = this;
@@ -208,14 +196,19 @@ export class ViewLeadQnrComponent implements OnInit {
       Object.keys(this.applicantsInfo).forEach((key) => {
         applicantsList.push(this.applicantsInfo[key]);
       })
-      this.crmService.addkyc(applicantsList).subscribe((response) => {
-        console.log('afterupdateKYCDAta', response);
-        this.uploadAudioVideo(response).then(
-          () => {
-            this.snackbarService.openSnackBar('KYC updated successfully');
-            this.initLead();
-          }
-        );
+      this.crmService.addkyc(applicantsList).subscribe((s3urls: any) => {
+        console.log('afterupdateKYCDAta', s3urls);
+        if (s3urls.length > 0) {
+          this.uploadAudioVideo(s3urls).then(
+            () => {
+              this.snackbarService.openSnackBar('KYC updated successfully');
+              this.initLead();
+            }
+          );
+        } else {
+          this.snackbarService.openSnackBar('KYC updated successfully');
+          this.initLead();
+        }
       },
         (error) => {
           setTimeout(() => {
@@ -328,11 +321,12 @@ export class ViewLeadQnrComponent implements OnInit {
     let postData = {
       urls: []
     };
+    console.log("uplod:",_this.questionAnswers.filestoUpload);
     return new Promise(async function (resolve, reject) {
       if (s3UrlObj.urls && s3UrlObj.urls.length > 0) {
         for (const s3Obj of s3UrlObj.urls) {
           postData['urls'].push({ uid: s3Obj.uid, labelName: s3Obj.labelName });
-          console.log(_this.questionAnswers.filestoUpload);
+          
           const file = _this.questionAnswers.filestoUpload[s3Obj.labelName][s3Obj.document];
           await _this.uploadFiles(file, s3Obj.url).then(
             () => {
@@ -351,7 +345,8 @@ export class ViewLeadQnrComponent implements OnInit {
   uploadFileStatus(uuid, data) {
     const _this = this;
     return new Promise(function (resolve, reject) {
-      if (data.length > 0) {
+      console.log("Data:",data);
+      if (data.urls.length > 0) {
         _this.uploadAudioVideoQNR(data).then(
           (uploadInput) => {
             _this.providerServices.providerLeadQnrUploadStatusUpdate(uuid, uploadInput).subscribe((data) => {
@@ -383,20 +378,20 @@ export class ViewLeadQnrComponent implements OnInit {
     const dataToSend: FormData = new FormData();
     const blobpost_Data = new Blob([JSON.stringify(_this.questionAnswers.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
-
-    if (_this.leadInfo.questionnaire.labels) {
-      _this.providerServices.submitProviderLeadQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
-        this.uploadFileStatus(uuid, data).then(
-          () => {
-            _this.complete(uuid);
-          }
-        );
-      });
-    } else {
+    if (this.questionaire.questionAnswers && this.questionaire.questionAnswers[0].answerLine) {
       _this.providerServices.resubmitProviderLeadQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
         this.uploadFileStatus(uuid, data).then(
           () => {
-            _this.complete(uuid);
+            _this.complete(uuid, type);
+          }
+        );
+      });
+    }
+    else {
+      _this.providerServices.submitProviderLeadQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
+        this.uploadFileStatus(uuid, data).then(
+          () => {
+            _this.complete(uuid, type);
           }
         );
       });
@@ -433,50 +428,16 @@ export class ViewLeadQnrComponent implements OnInit {
         (error) => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         })
-
     }
-  }
-  getAfterQuestionaire() {
-    this.released_arr = this.leadInfo.releasedQnr.filter(releasedQn => releasedQn.status === 'released');
-    console.log(this.released_arr);
-
-    if (this.released_arr.length === 0) {
-      let unreleased_arr = this.leadInfo.releasedQnr.filter(releasedQn => releasedQn.status === 'unReleased');
-      this.crmService.releaseLeadQnr('released', this.leadInfo.uid, unreleased_arr[0].id).subscribe(
-        () => {
-          this.initLead();
-        }
-      )
-    } else {
-      this.crmService.getLeadafterQnrDetails(this.leadInfo.uid).subscribe(data => {
-        this.afterQuestionaire = data;
-        console.log(this.afterQuestionaire);
-        let questionaire = this.afterQuestionaire.filter(releasedquestion => releasedquestion.id === this.released_arr[0].id);
-        console.log(questionaire[0]);
-        if (questionaire.length > 0) {
-          this.unreleased_question_arr = questionaire[0];
-          if (this.unreleased_question_arr.labels && this.unreleased_question_arr.labels.length > 0) {
-            this.showQuestionnaire = true;
-          }
-        }
-      })
-    }
-
   }
   getQuestionaire() {
-    if (this.leadInfo.questionnaire['questionAnswers']) {
-      this.questionaire = this.leadInfo.questionnaire;
-      this.showQuestionnaire = true;
-
-    } else {
-      this.crmService.getLeadQnrDetails(this.leadInfo.category.id).subscribe(data => {
-        this.questionaire = data;
-        console.log("Here.....", this.questionaire);
-        if (this.questionaire && this.questionaire.labels && this.questionaire.labels.length > 0) {
-          this.showQuestionnaire = true;
-        }
-      })
-    }
+    this.providerServices.getActiveQuestionaire(this.leadInfo.uid).subscribe(
+      (questionaire: any) => {
+        this.questionaire = questionaire;
+        console.log("Current Questionaire:", this.questionaire);
+        this.showQuestionnaire = true;
+      }
+    )
   }
   getQuestionAnswers(event) {
     console.log('event', event)
@@ -502,23 +463,7 @@ export class ViewLeadQnrComponent implements OnInit {
       },
       error => {
       });
-   
   }
-  // preview(crif_data) {
-  //   this.crifDialog = this.dialog.open(PreviewpdfComponent, {
-  //     width: '50%',
-  //     panelClass: ['popup-class', 'commonpopupmainclass', 'uploadfilecomponentclass'],
-  //     disableClose: true,
-  //     data: {
-  //       crif: crif_data,
-  //       type: 'pdf_view'
-  //     }
-  //   });
-  //   this.crifDialog.afterClosed().subscribe(result => {
-  //     if (result) {
-  //     }
-  //   });
-  // }
   autoGrowTextZone(e) {
     e.target.style.height = "0px";
     e.target.style.height = (e.target.scrollHeight + 15) + "px";
@@ -565,13 +510,12 @@ export class ViewLeadQnrComponent implements OnInit {
       'fullscreen=yes'
     ].join(',');
     const printWindow = window.open('', '', params);
-    printWindow.document.write(this.crifHTML);    
+    printWindow.document.write(this.crifHTML);
     printWindow.moveTo(0, 0);
     printWindow.print();
     printWindow.document.close();
     setTimeout(() => {
       printWindow.close();
     }, 500);
-   
   }
 }

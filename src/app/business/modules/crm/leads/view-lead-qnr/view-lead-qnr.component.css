@@ -20,7 +20,11 @@
   }
 }
 
-
+::ng-deep .quest .section-shadow {
+  padding: 10px !important;
+  box-shadow: none !important;
+  margin:5px !important;
+}
 
 .border-cirlce
 {

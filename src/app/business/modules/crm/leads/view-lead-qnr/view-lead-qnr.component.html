@@ -78,14 +78,14 @@
         </div>
       </div>
       <hr />
-      <div *ngIf="leadInfo.status.name=== 'Credit Score Generated' && showQuestionnaire && questionaire">
+      <div *ngIf="showQuestionnaire && questionaire" class="quest">
         <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [uuid]="this.leadInfo.uid"
           (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
       </div>
-      <div *ngIf="leadInfo.status.name=== 'Sales Verified' && showQuestionnaire && unreleased_question_arr">
+      <!-- <div *ngIf="leadInfo.status.name=== 'Sales Verified' && showQuestionnaire && unreleased_question_arr">
         <app-questionnaire [questionnaireList]="unreleased_question_arr" [source]="'proLead'" [uuid]="this.leadInfo.uid"
           [questionAnswers]="questionAnswers" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
-      </div>
+      </div> -->
     </div>
   </ng-container>
   <ng-container class="remarksSection" *ngIf="leadInfo.status.name === 'KYC Updated'">
