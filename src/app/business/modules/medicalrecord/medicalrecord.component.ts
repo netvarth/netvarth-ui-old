@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
 import { LastVisitComponent } from './last-visit/last-visit.component';
@@ -104,6 +104,7 @@ export class MedicalrecordComponent implements OnInit {
   orderstatus: any;
   loading_table: boolean;
   viewVisitDetails: boolean;
+  someSubscription: any;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -120,6 +121,17 @@ export class MedicalrecordComponent implements OnInit {
     this.activated_route.queryParams.subscribe(queryParams => {
       if (queryParams['calledfrom']) {
         this.medicalService.setCalledFrom(queryParams['calledfrom']);
+      }
+    });
+
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    this.someSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Here is the dashing line comes in the picture.
+        // You need to tell the router that, you didn't visit or load the page previously, so mark the navigated flag to false as below.
+        this.router.navigated = false;
       }
     });
   }
@@ -168,6 +180,14 @@ export class MedicalrecordComponent implements OnInit {
 
 
   }
+
+
+  ngOnDestroy() {
+    if (this.someSubscription) {
+      this.someSubscription.unsubscribe();
+    }
+  }
+
   getAppointmentById(uid) {
     this.provider_services.getAppointmentById(uid)
       .subscribe((data: any) => {
