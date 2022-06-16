@@ -11,6 +11,7 @@ import { ImagesviewComponent } from '../imagesview/imagesview.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -80,6 +81,7 @@ export class UploadPrescriptionComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
+    private location: Location,
     private medicalrecord_service: MedicalrecordService) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.activatedRoute.queryParams.subscribe(queryParams => {
@@ -108,7 +110,9 @@ export class UploadPrescriptionComponent implements OnInit {
     }
   }
   goBack() {
-    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+    // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+    this.location.back();
+
   }
   getMrprescription(mrId) {
     this.provider_services.getMRprescription(mrId)
