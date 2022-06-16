@@ -81,14 +81,11 @@ export class ViewLeadQnrComponent implements OnInit {
           } else {
             let applicant = {
               parent: true,
-              // id: _this.leadInfo.customer.id,
               name: _this.leadInfo.customer.name,
               phone: _this.leadInfo.customer.phoneNo
             }
             _this.applicants = [0];
             _this.applicantsInfo[0] = applicant;
-            // console.log("Applicants:", _this.applicants);
-            // console.log("Applicants:", _this.applicantsInfo[0]);
           }
         } else if (leadInfo.status.name === 'Credit Score Generated') {
           _this.getQuestionaire();
@@ -116,9 +113,6 @@ export class ViewLeadQnrComponent implements OnInit {
       if (!applicant.customerName) {
         applicant['customerName'] = this.leadInfo.customer.name;
       }
-      // if (!applicant.permanentPhone) {
-      //   applicant['permanentPhone'] = this.leadInfo.customer.phoneNo;
-      // }
       this.applicantsInfo[kycIndex] = applicant;
       console.log(this.applicantsInfo);
       this.applicants.push(kycIndex);
@@ -169,20 +163,28 @@ export class ViewLeadQnrComponent implements OnInit {
       )
     })
   }
-  async uploadAudioVideo(data) {
-    // console.log("File List:", this.filesToUpload);
-    for (const s3UrlObj of data) {
-      console.log(this.filesToUpload);
-      console.log(s3UrlObj);
-      // this.api_loading_video = true;
-      const file = this.filesToUpload.filter((fileObj) => {
-        return ((fileObj.order === s3UrlObj.orderId) ? fileObj : '');
-      })[0];
-      console.log("File:", file);
-      if (file) {
-        await this.uploadFiles(file['file'], s3UrlObj.url).then();
+  uploadAudioVideo(data) {
+    const _this = this;
+    let count = 0;
+    return new Promise(async function (resolve, reject) {
+      for (const s3UrlObj of data) {
+        const file = _this.filesToUpload.filter((fileObj) => {
+          return ((fileObj.order === s3UrlObj.orderId) ? fileObj : '');
+        })[0];
+        console.log("File:", file);
+        if (file) {
+          await _this.uploadFiles(file['file'], s3UrlObj.url).then(
+            () => {
+              count++;
+            }
+          );
+        }
+        if (count === s3UrlObj.length) {
+          resolve(true);
+        }
       }
-    }
+    })
+
   }
   uploadFiles(file, url) {
     const _this = this;
@@ -191,19 +193,15 @@ export class ViewLeadQnrComponent implements OnInit {
         .subscribe(() => {
           resolve(true);
         }, error => {
+          console.log(error);
           _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-          // _this.api_loading = false;
-          // _this.api_loading_video = false;
           resolve(false);
         });
     })
   }
   updateKyc() {
-    if (this.leadInfo.status.name === 'Credit Score Generated') {
-      this.submitQnr('save');
-    } else if (this.leadInfo.status.name === 'Sales Verified') {
-      console.log("AFter QRN");
-      this.submitAfterQnr('save');
+    if (this.leadInfo.status.name === 'Credit Score Generated' || this.leadInfo.status.name === 'Sales Verified') {
+      this.submitQuestionnaire(this.leadInfo.uid, 'save');
     } else if (this.leadInfo.status.name === 'New' || this.leadInfo.status.name === 'KYC Updated') {
       console.log("Applicants Update", this.applicantsInfo);
       let applicantsList = [];
@@ -212,9 +210,12 @@ export class ViewLeadQnrComponent implements OnInit {
       })
       this.crmService.addkyc(applicantsList).subscribe((response) => {
         console.log('afterupdateKYCDAta', response);
-        this.uploadAudioVideo(response);
-        this.snackbarService.openSnackBar('KYC updated successfully');
-        this.initLead();
+        this.uploadAudioVideo(response).then(
+          () => {
+            this.snackbarService.openSnackBar('KYC updated successfully');
+            this.initLead();
+          }
+        );
       },
         (error) => {
           setTimeout(() => {
@@ -235,10 +236,8 @@ export class ViewLeadQnrComponent implements OnInit {
     return fileInfo;
   }
   receivedApplicantInfo(applicant, applicantIndex) {
-    // console.log("Applicant11:", applicantIndex);
     console.log(applicant);
     let filesObj = applicant.files;
-    // console.log(filesObj);
     if (applicant.info) {
       this.applicantsInfo[applicantIndex] = applicant.info;
     }
@@ -285,8 +284,6 @@ export class ViewLeadQnrComponent implements OnInit {
     }
     console.log(applicantIndex);
     console.log(this.applicantsInfo);
-    // console.log(this.applicants);
-    // console.log("OVerr");
   }
 
   /**
@@ -313,22 +310,9 @@ export class ViewLeadQnrComponent implements OnInit {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       })
   }
-  submitQnr(type?) {
-    console.log(this.questionaire);
-    if (this.questionaire.labels && this.questionaire.labels.length > 0) {
-      this.submitQuestionnaire(this.leadInfo.uid, type);
-    }
-  }
-  submitAfterQnr(type?) {
-    console.log(this.unreleased_question_arr);
-    if (this.unreleased_question_arr[0].labels && this.unreleased_question_arr[0].labels.length > 0) {
-      console.log("submit after qnr");
-      this.submitAfterQuestionnaire(this.leadInfo.uid, type);
-    }
-  }
 
-  updateLoginStatus(uuid, postData) {
-    this.providerServices.providerLeadQnrafterUploadStatusUpdate(uuid, postData)
+  updateQNRProceedStatus(uuid) {
+    this.providerServices.updateQNRProceedStatus(uuid)
       .subscribe((data) => {
         this.router.navigate(['provider', 'crm']);
       },
@@ -338,118 +322,98 @@ export class ViewLeadQnrComponent implements OnInit {
           this.api_loading_video = false;
         });
   }
-
-  updateSalesStatus(uuid, postData) {
-    this.providerServices.providerLeadQnrUploadStatusUpdate(uuid, postData)
-      .subscribe((data) => {
-        this.router.navigate(['provider', 'crm']);
-
-        // this.initLead();
-      },
-        error => {
-          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-          this.api_loading = false;
-          this.api_loading_video = false;
-        });
-  }
-
-  submitAfterQuestionnaire(uuid, type) {
-    console.log("Gererere");
-    const dataToSend: FormData = new FormData();
-    const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
-    dataToSend.append('question', blobpost_Data);
-    this.providerServices.submitProviderLeadQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
-      let postData = {
-        urls: []
-      };
-      if (data.urls && data.urls.length > 0) {
-        for (const url of data.urls) {
-          this.api_loading_video = true;
-          const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
-          this.providerServices.videoaudioS3Upload(file, url.url)
-            .subscribe(() => {
-              postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-              if (data.urls.length === postData['urls'].length) {
-                if (!type) {
-                  this.updateLoginStatus(uuid, postData);
-                }
-              }
-            },
-
-              error => {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                this.api_loading = false;
-                this.api_loading_video = false;
-              });
+  uploadAudioVideoQNR(s3UrlObj) {
+    const _this = this;
+    let count = 0;
+    let postData = {
+      urls: []
+    };
+    return new Promise(async function (resolve, reject) {
+      if (s3UrlObj.urls && s3UrlObj.urls.length > 0) {
+        for (const s3Obj of s3UrlObj.urls) {
+          postData['urls'].push({ uid: s3Obj.uid, labelName: s3Obj.labelName });
+          console.log(_this.questionAnswers.filestoUpload);
+          const file = _this.questionAnswers.filestoUpload[s3Obj.labelName][s3Obj.document];
+          await _this.uploadFiles(file, s3Obj.url).then(
+            () => {
+              count++;
+              console.log(count);
+            }
+          );
         }
-
-      } else {
-        if (!type) {
-          this.updateLoginStatus(uuid, postData);
+        if (count == s3UrlObj.urls.length) {
+          resolve(postData);
         }
       }
-    }, error => {
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-      this.api_loading = false;
-      this.api_loading_video = false;
     });
   }
 
+  uploadFileStatus(uuid, data) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      if (data.length > 0) {
+        _this.uploadAudioVideoQNR(data).then(
+          (uploadInput) => {
+            _this.providerServices.providerLeadQnrUploadStatusUpdate(uuid, uploadInput).subscribe((data) => {
+              resolve(true);
+            },
+              error => {
+                _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                _this.api_loading = false;
+                _this.api_loading_video = false;
+              });
+          }
+        );
+      } else {
+        resolve(true);
+      }
+    })
+  }
+
+  complete(uuid, type?) {
+    if (type) {
+      this.snackbarService.openSnackBar('saved successfully');
+      this.initLead();
+    } else {
+      this.updateQNRProceedStatus(uuid);
+    }
+  }
   submitQuestionnaire(uuid, type?) {
+    const _this = this;
     const dataToSend: FormData = new FormData();
-    const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+    const blobpost_Data = new Blob([JSON.stringify(_this.questionAnswers.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
-    this.providerServices.submitProviderLeadQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
-      let postData = {
-        urls: []
-      };
-      if (data.urls && data.urls.length > 0) {
-        for (const url of data.urls) {
-          this.api_loading_video = true;
-          const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
-          this.providerServices.videoaudioS3Upload(file, url.url)
-            .subscribe(() => {
-              postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-              if (data.urls.length === postData['urls'].length) {
-                if (!type) {
-                  this.updateSalesStatus(uuid, postData);
-                }
-              }
-            },
-              error => {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                this.api_loading = false;
-                this.api_loading_video = false;
-              });
-        }
 
-      } else {
-        if (!type) {
-          this.updateSalesStatus(uuid, postData);
-        }
-      }
-    }, error => {
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-      this.api_loading = false;
-      this.api_loading_video = false;
-    });
+    if (_this.leadInfo.questionnaire.labels) {
+      _this.providerServices.submitProviderLeadQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
+        this.uploadFileStatus(uuid, data).then(
+          () => {
+            _this.complete(uuid);
+          }
+        );
+      });
+    } else {
+      _this.providerServices.resubmitProviderLeadQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
+        this.uploadFileStatus(uuid, data).then(
+          () => {
+            _this.complete(uuid);
+          }
+        );
+      });
+    }
   }
-
 
   ProceedStatus() {
     if (this.leadInfo.status.name === 'KYC Updated') {
       this.crmService.ProceedStatusToSales(this.leadInfo.uid).subscribe(
         () => {
-          // this.initLead();
           this.router.navigate(['provider', 'crm']);
         }
         , (error) => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         })
-    } else if (this.leadInfo.status.name === 'Credit Score Generated') {
-      this.submitQnr();
-    } else if (this.leadInfo.status.name === 'Sales Verified') {
-      this.submitAfterQnr();
+    } else if (this.leadInfo.status.name === 'Credit Score Generated' || this.leadInfo.status.name === 'Sales Verified') {
+      this.submitQuestionnaire(this.leadInfo.uid);
     } else {
       let applicantsList = [];
       Object.keys(this.applicantsInfo).forEach((key) => {
@@ -457,7 +421,7 @@ export class ViewLeadQnrComponent implements OnInit {
       })
       this.crmService.addkyc(applicantsList).subscribe((response) => {
         console.log('afterupdateKYCDAta', response);
-        this.uploadAudioVideo(response);
+        this.uploadAudioVideo(response).then();
         this.crmService.getproceedStatus(applicantsList).subscribe((response) => {
           console.log('afterupdateFollowUpData', response);
           this.router.navigate(['provider', 'crm']);
@@ -487,23 +451,35 @@ export class ViewLeadQnrComponent implements OnInit {
       this.crmService.getLeadafterQnrDetails(this.leadInfo.uid).subscribe(data => {
         this.afterQuestionaire = data;
         console.log(this.afterQuestionaire);
-        this.unreleased_question_arr = this.afterQuestionaire.filter(releasedquestion => releasedquestion.id === this.released_arr[0].id);
-        if (this.unreleased_question_arr && this.unreleased_question_arr[0].labels && this.unreleased_question_arr[0].labels.length > 0) {
-          this.showQuestionnaire = true;
+        let questionaire = this.afterQuestionaire.filter(releasedquestion => releasedquestion.id === this.released_arr[0].id);
+        console.log(questionaire[0]);
+        if (questionaire.length > 0) {
+          this.unreleased_question_arr = questionaire[0];
+          if (this.unreleased_question_arr.labels && this.unreleased_question_arr.labels.length > 0) {
+            this.showQuestionnaire = true;
+          }
         }
       })
     }
 
   }
   getQuestionaire() {
-    this.crmService.getLeadQnrDetails(this.leadInfo.category.id).subscribe(data => {
-      this.questionaire = data;
-      if (this.questionaire && this.questionaire.labels && this.questionaire.labels.length > 0) {
-        this.showQuestionnaire = true;
-      }
-    })
+    if (this.leadInfo.questionnaire['questionAnswers']) {
+      this.questionaire = this.leadInfo.questionnaire;
+      this.showQuestionnaire = true;
+
+    } else {
+      this.crmService.getLeadQnrDetails(this.leadInfo.category.id).subscribe(data => {
+        this.questionaire = data;
+        console.log("Here.....", this.questionaire);
+        if (this.questionaire && this.questionaire.labels && this.questionaire.labels.length > 0) {
+          this.showQuestionnaire = true;
+        }
+      })
+    }
   }
   getQuestionAnswers(event) {
+    console.log('event', event)
     this.questionAnswers = event;
   }
   showCrifscoreSection() {
@@ -528,7 +504,6 @@ export class ViewLeadQnrComponent implements OnInit {
     this.showPdfIcon = true;
   }
   preview(crif_data) {
-    // console.log("Files : ", this.customers)
     this.crifDialog = this.dialog.open(PreviewpdfComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'uploadfilecomponentclass'],
@@ -554,19 +529,15 @@ export class ViewLeadQnrComponent implements OnInit {
       }
       this.crmService.addLeadNotes(this.leadInfo.uid, createNoteData).subscribe((response: any) => {
         console.log('response', response)
-        // this.api_loading = true;
         this.notes = '';
         setTimeout(() => {
           this.initLead();
-          // this.api_loading = false;
         }, projectConstants.TIMEOUT_DELAY);
         this.snackbarService.openSnackBar('Remarks added successfully');
       },
         (error) => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
         })
-      // }
-
     }
   }
   noteView(noteDetails: any) {

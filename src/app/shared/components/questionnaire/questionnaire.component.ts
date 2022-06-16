@@ -126,7 +126,7 @@ export class QuestionnaireComponent implements OnInit {
   }
   ngOnInit(): void {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    console.log("questionnaireList :",this.questionnaireList)
+    console.log("questionnaireList :", this.questionnaireList);
     if (this.questionnaireList) {
       if (this.source === 'customer-create' || this.source === 'onetime') {
         if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
@@ -140,18 +140,19 @@ export class QuestionnaireComponent implements OnInit {
       } else if (this.source === 'qnrDetails') {
         this.questions = this.questionnaireList.questions;
         this.groupQuestionsBySection();
-      } 
-      else if (this.source === 'proLead') {
-        this.questions = this.questionnaireList.labels;
-      
-        this.groupQuestionsBySection();
       }
-      else if (this.source === 'proLeadafter') {
-        this.questions = this.questionnaireList[0].labels;
-       
-        this.groupQuestionsBySection();
-      } else if (!this.uuid) {
-      
+      // else if (this.source === 'proLead') {
+      //   this.questions = this.questionnaireList.labels;
+
+      //   this.groupQuestionsBySection();
+      // }
+      // else if (this.source === 'proLeadafter') {
+      //   this.questions = this.questionnaireList[0].labels;
+
+      //   this.groupQuestionsBySection();
+      // }
+      else if (!this.uuid) {
+
         this.questions = this.questionnaireList.labels;
         this.groupQuestionsBySection();
       } else if (this.source === 'qnrView') {
@@ -233,7 +234,7 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   getAnswers(answerData, type?) {
- 
+
     this.answers = new Object();
     this.dataGridColumns = {};
     if (type === 'get') {
@@ -241,7 +242,7 @@ export class QuestionnaireComponent implements OnInit {
       this.uploadedImages = [];
       this.uploadedFiles = [];
       for (let answ of answerData) {
-     
+
         if (answ.answerLine) {
           if (answ.question.fieldDataType === 'fileUpload') {
             if (answ.answerLine.answer && answ.answerLine.answer[answ.question.fieldDataType] && answ.answerLine.answer[answ.question.fieldDataType].length > 0) {
@@ -298,7 +299,7 @@ export class QuestionnaireComponent implements OnInit {
               this.uploadFilesTemp[key] = [];
             }
             const type = this.uploadedFiles[key][key1].type.split('/');
-         
+
             if (type[0] !== 'audio' && type[0] !== 'video' || ((type[0] === 'audio' || type[0] === 'video') && this.uploadedFiles[key][key1].status === 'COMPLETE')) {
               this.uploadFilesTemp[key].push(key1);
             }
@@ -321,16 +322,12 @@ export class QuestionnaireComponent implements OnInit {
   }
   filesSelected(event, question, document) {
     const input = event.target.files;
-   
+
     if (input) {
       for (const file of input) {
         let type = file.type.split('/');
-       
-        this.apiError[question.labelName] = [];
-        // if (question.filePropertie.fileTypes.indexOf(type[1]) === -1) {
-        //   this.snackbarService.openSnackBar('Selected file type not supported', { 'panelClass': 'snackbarerror' });
-        // } else {
 
+        this.apiError[question.labelName] = [];
         if (!this.filestoUpload[question.labelName]) {
           this.filestoUpload[question.labelName] = {};
         }
@@ -431,7 +428,7 @@ export class QuestionnaireComponent implements OnInit {
     return this.sharedFunctionobj.isNumeric(evt);
   }
   onSubmit(keytype?) {
-  
+
     Object.keys(this.filestoUpload).forEach(key => {
       if (!this.answers[key]) {
         this.answers[key] = [];
@@ -488,7 +485,7 @@ export class QuestionnaireComponent implements OnInit {
         delete this.answers[key];
       }
     });
-   
+
     Object.keys(this.uploadedFiles).forEach(key => {
       if (!this.answers[key]) {
         this.answers[key] = [];
@@ -513,7 +510,7 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
     });
-   
+
     let data = [];
     Object.keys(this.dataGridColumnsAnswerList).forEach(key => {
       let newFiled = {};
@@ -545,7 +542,7 @@ export class QuestionnaireComponent implements OnInit {
         'answer': newFiled
       });
     });
-   
+
     Object.keys(this.answers).forEach(key => {
       this.apiError[key] = [];
       let newMap = {};
@@ -572,20 +569,20 @@ export class QuestionnaireComponent implements OnInit {
         });
       }
     });
-    console.log(this.questionnaireList[0])
+    console.log(this.questionnaireList[0]);
     let postData;
-    if(this.source === 'proLeadafter'){
+    // if (this.source === 'proLeadafter') {
+    //   postData = {
+    //     'questionnaireId': (this.questionnaireList[0].id) ? this.questionnaireList[0].id : this.questionnaireList[0].questionnaireId,
+    //     'answerLine': data
+    //   }
+    // }
+    // else {
       postData = {
-        'questionnaireId': (this.questionnaireList[0].id) ? this.questionnaireList[0].id : this.questionnaireList[0].questionnaireId,
+        'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
         'answerLine': data
       }
-    }
-  else{
-   postData = {
-      'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
-      'answerLine': data
-    }
-  }
+    // }
     console.log("Postdata:", postData);
     const passData = { 'answers': postData, 'files': this.selectedMessage, 'audioVideo': this.audioVideoFiles, 'filestoUpload': this.filestoUpload, 'dataGridColumnsAnswerList': this.dataGridColumnsAnswerList, 'comments': this.comments };
     if (keytype === 'inputChange') {
@@ -593,7 +590,7 @@ export class QuestionnaireComponent implements OnInit {
     }
     if (keytype === 'submit') {
       if (this.changeHappened) {
-      
+
         this.submitQuestionnaire(passData);
       } else {
         if (!this.type) {
@@ -708,15 +705,6 @@ export class QuestionnaireComponent implements OnInit {
   }
   submitQuestionnaire(passData) {
     const dataToSend: FormData = new FormData();
-    // if (passData.files && passData.files.length > 0) {
-    //   for (let pic of passData.files) {
-    //     let type = pic.type.split('/');
-    //     type = type[0];
-    //     if (type === 'application' || type === 'image') {
-    //       dataToSend.append('files', pic['name']);
-    //     }
-    //   }
-    // }
     const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
     this.buttonDisable = true;
@@ -816,38 +804,38 @@ export class QuestionnaireComponent implements OnInit {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }
-  resubmitProviderLeadQuestionnaire(body) {
-    this.providerService.resubmitProviderLeadQuestionnaire(body, this.uuid).subscribe(data => {
-      this.uploadAudioVideo(data, 'proLead');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  submitProviderLeadQuestionnaire(body) {
-    this.providerService.submitProviderLeadQuestionnaire(body, this.uuid).subscribe(data => {
-      this.uploadAudioVideo(data, 'proLead');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  resubmitProviderLeadafterQuestionnaire(body) {
-    this.providerService.resubmitProviderLeadafterQuestionnaire(body, this.uuid).subscribe(data => {
-      this.uploadAudioVideo(data, 'proLeadafter');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  submitProviderLeadafterQuestionnaire(body) {
-    this.providerService.submitProviderLeadafterQuestionnaire(body, this.uuid).subscribe(data => {
-      this.uploadAudioVideo(data, 'proLeadafter');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
+  // resubmitProviderLeadQuestionnaire(body) {
+  //   this.providerService.resubmitProviderLeadQuestionnaire(body, this.uuid).subscribe(data => {
+  //     this.uploadAudioVideo(data, 'proLead');
+  //   }, error => {
+  //     this.buttonDisable = false;
+  //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+  //   });
+  // }
+  // submitProviderLeadQuestionnaire(body) {
+  //   this.providerService.submitProviderLeadQuestionnaire(body, this.uuid).subscribe(data => {
+  //     this.uploadAudioVideo(data, 'proLead');
+  //   }, error => {
+  //     this.buttonDisable = false;
+  //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+  //   });
+  // }
+  // resubmitProviderLeadafterQuestionnaire(body) {
+  //   this.providerService.resubmitProviderLeadafterQuestionnaire(body, this.uuid).subscribe(data => {
+  //     this.uploadAudioVideo(data, 'proLeadafter');
+  //   }, error => {
+  //     this.buttonDisable = false;
+  //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+  //   });
+  // }
+  // submitProviderLeadafterQuestionnaire(body) {
+  //   this.providerService.submitProviderLeadafterQuestionnaire(body, this.uuid).subscribe(data => {
+  //     this.uploadAudioVideo(data, 'proLeadafter');
+  //   }, error => {
+  //     this.buttonDisable = false;
+  //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+  //   });
+  // }
   resubmitProviderApptQuestionnaire(body) {
     this.providerService.resubmitProviderApptQuestionnaire(body, this.uuid).subscribe(data => {
       this.uploadAudioVideo(data, 'proAppt');
@@ -928,26 +916,26 @@ export class QuestionnaireComponent implements OnInit {
                       this.buttonDisable = false;
                     });
               }
-              else if (type === 'proLead') {
-                this.providerService.providerLeadQnrUploadStatusUpdate(this.uuid, postData)
-                  .subscribe((data) => {
-                    this.successGoback();
-                  },
-                    error => {
-                      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                      this.buttonDisable = false;
-                    });
-              }
-              else if (type === 'proLeadafter') {
-                this.providerService.providerLeadQnrafterUploadStatusUpdate(this.uuid, postData)
-                  .subscribe((data) => {
-                    this.successGoback();
-                  },
-                    error => {
-                      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                      this.buttonDisable = false;
-                    });
-              }
+              // else if (type === 'proLead') {
+              //   this.providerService.providerLeadQnrUploadStatusUpdate(this.uuid, postData)
+              //     .subscribe((data) => {
+              //       this.successGoback();
+              //     },
+              //       error => {
+              //         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+              //         this.buttonDisable = false;
+              //       });
+              // }
+              // else if (type === 'proLeadafter') {
+              //   this.providerService.providerLeadQnrafterUploadStatusUpdate(this.uuid, postData)
+              //     .subscribe((data) => {
+              //       this.successGoback();
+              //     },
+              //       error => {
+              //         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+              //         this.buttonDisable = false;
+              //       });
+              // }
               else if (type === 'consOrder') {
                 this.sharedService.consumerOrderQnrUploadStatusUpdate(this.uuid, this.accountId, postData)
                   .subscribe((data) => {
@@ -1032,20 +1020,20 @@ export class QuestionnaireComponent implements OnInit {
             this.submitProviderWaitlistQuestionnaire(dataToSend);
           }
         }
-        else if (this.source === 'proLead') {
-          if (this.qnrStatus === 'submitted') {
-            this.resubmitProviderLeadQuestionnaire(dataToSend);
-          } else {
-            this.submitProviderLeadQuestionnaire(dataToSend);
-          }
-        }
-        else if (this.source === 'proLeadafter') {
-          if (this.qnrStatus === 'submitted') {
-            this.resubmitProviderLeadafterQuestionnaire(dataToSend);
-          } else {
-            this.submitProviderLeadafterQuestionnaire(dataToSend);
-          }
-        }
+        // else if (this.source === 'proLead') {
+        //   if (this.qnrStatus === 'submitted') {
+        //     this.resubmitProviderLeadQuestionnaire(dataToSend);
+        //   } else {
+        //     this.submitProviderLeadQuestionnaire(dataToSend);
+        //   }
+        // }
+        // else if (this.source === 'proLeadafter') {
+        //   if (this.qnrStatus === 'submitted') {
+        //     this.resubmitProviderLeadafterQuestionnaire(dataToSend);
+        //   } else {
+        //     this.submitProviderLeadafterQuestionnaire(dataToSend);
+        //   }
+        // }
         else if (this.source === 'proOrder') {
           if (this.qnrStatus === 'submitted') {
             this.resubmitProviderOrderQuestionnaire(dataToSend);
@@ -1102,7 +1090,7 @@ export class QuestionnaireComponent implements OnInit {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }
- 
+
   getImg(question, document) {
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
       let type = this.filestoUpload[question.labelName][document].type.split('/');
@@ -1119,37 +1107,17 @@ export class QuestionnaireComponent implements OnInit {
         if (path && path !== null) {
           return path;
         }
-        // if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc') {
-        //   path = 'assets/images/pdf.png';
-        // } else if (type[0] === 'video') {
-        //   path = 'assets/images/video.png';
-        // } else if (type[0] === 'audio') {
-        //   path = 'assets/images/audio.png';
-        // } else {
-          path = file[indx].path;
-        // }
+        path = file[indx].path;
         return path;
       }
     } else if (this.uploadedFiles[question.labelName] && this.uploadedFiles[question.labelName][document]) {
       const indx = this.uploadedImages.indexOf(this.uploadedFiles[question.labelName][document]);
       if (indx !== -1) {
-        // let path;
-        // let type = this.uploadedImages[indx].type.split('/');
-        
-        // if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc') {
-        //   path = 'assets/images/pdf.png';
-        // } else if (this.uploadedImages[indx].status === 'COMPLETE' && type[0] === 'video') {
-        //   path = 'assets/images/video.png';
-        // } else if (this.uploadedImages[indx].status === 'COMPLETE' && type[0] === 'audio') {
-        //   path = 'assets/images/audio.png';
-        // } else {
-          let path = this.fileService.getImage(null, this.uploadedImages[indx]);
-
+        let path = this.fileService.getImage(null, this.uploadedImages[indx]);
         if (path && path !== null) {
           return path;
         }
-          path = this.uploadedImages[indx].s3path;
-        // }
+        path = this.uploadedImages[indx].s3path;
         return path;
       }
     }
@@ -1377,7 +1345,7 @@ export class QuestionnaireComponent implements OnInit {
   }
   getMaxdate(data) {
     let date;
-   
+
     if (this.getQuestion(data).dateProperties && this.getQuestion(data).dateProperties.endDate) {
       const dt = this.reverse(this.getQuestion(data).dateProperties.endDate);
       date = new Date(dt)
@@ -1394,7 +1362,7 @@ export class QuestionnaireComponent implements OnInit {
     } else {
       date = this.minday;
     }
-  
+
     return date;
   }
   reverse(s) {
