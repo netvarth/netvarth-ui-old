@@ -7,7 +7,7 @@
   </div>
 </section>
 <section class="container card mt-4 mx-auto" *ngIf="taskDetails">
-  <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+  <!-- <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner> -->
   <div >
   <div stye="padding:10px">
     <div class="headerName">
@@ -373,6 +373,7 @@
              ( Uploaded Files )
             </div>
           </div>
+          <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
           <div class="my-2  height-limit" *ngIf="taskDetails.attachments.length>0">
             <div >
               <div *ngFor="let attachment of taskDetails.attachments;let i=index" class="allNotesList">
@@ -387,7 +388,7 @@
     </div>
     <!---notes start-->
     <!-- *ngIf="!(this.taskDetails.title ==='BA Follow Up') && !(this.taskDetails.title ==='BA Recruitment') " -->
-  <div style="margin-top:10px" >
+  <div style="margin-top:10px" *ngIf="activityType !=='UpdateFollowUP'">
     <div class="textareaStart">
       <div class="fiesWithIcon">
         <div>
@@ -406,7 +407,17 @@
         <div>{{assignMemberErrorMsg}}</div>
     </div>
       <!---cancel save btn start-->
-    <div style="display: flex;justify-content: flex-end;align-items: center;margin-right: 10px;margin-bottom: 10px;">
+    <div style="display: flex;justify-content: flex-end;align-items: center;margin-right: 10px;margin-bottom: 10px;" *ngIf="activityType ===undefined && taskDetails.status.name !=='New'">
+      <div style="text-align: center;">
+          <ng-container>
+              <div>
+                  <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
+                      (click)="saveCreateNote(notesTextarea)">Add Remarks</button>
+              </div>
+          </ng-container>
+      </div>
+    </div>
+    <div style="display: flex;justify-content: flex-end;align-items: center;margin-right: 10px;margin-bottom: 10px;" *ngIf="activityType ==='UpdateFollowUP'">
       <div style="text-align: center;">
           <ng-container>
               <div>
@@ -428,7 +439,7 @@
     </div>
   </div>
           <div class="my-2  height-limit" *ngIf="taskDetails.notes.length>0 ">
-            <!-- <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner> -->
+            <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
             <div >
               <div *ngFor="let note of taskDetails.notes;let i=index" class="allNotesList" style="display: flex;justify-content: space-between;align-items: center;">
                 <div class="notesListSection">

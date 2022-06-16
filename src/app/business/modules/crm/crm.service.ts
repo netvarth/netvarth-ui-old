@@ -273,6 +273,10 @@ export class CrmService {
       const url ='provider/task/'+taskUid+'/notes';
       return this.servicemeta.httpPut(url,notesData)
     }
+    enquiryNotes(enuiryUid,notesData){
+      const url ='provider/enquiry/'+enuiryUid+'/notes';
+      return this.servicemeta.httpPut(url,notesData)
+    }
 
     addLeadNotes(leadUid,notesData){
       const url ='provider/lead/'+leadUid+'/note';

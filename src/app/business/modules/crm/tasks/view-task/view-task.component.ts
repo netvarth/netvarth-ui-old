@@ -155,6 +155,7 @@ export class ViewTaskComponent implements OnInit {
   public enquiryId:any;
   public enquiryDetails:any;
   bFollowupButtonAfterEnquiry:boolean=false;
+  enquiryUid:any;
  
 
 
@@ -220,24 +221,48 @@ export class ViewTaskComponent implements OnInit {
       this.taskUid=params.get("id");
       console.log('this.enquiryId',this.enquiryId)
       if(this.activityType==='UpdateFollowUP'){
-        this.crmService.getEnquiryDetails(this.enquiryId).subscribe((enquiryList)=>{
-        console.log('enquiryList',enquiryList);
-        this.taskDetails= enquiryList;
-        if(this.taskDetails.customer){
-          this.firstCustomerName=this.taskDetails.customer.name.charAt(0);
-          this.customerName= this.taskDetails.customer.name;
-          this.customerPhNo= this.taskDetails.customer.phoneNo
-        } 
-        this.getUpdateFollowUPValue();
-        this.headerName='Follow Up';
-        console.log('this.taskDetails.priority.id',this.taskDetails.priority.id)
-      })
-      
-        
-        
+        this.getEnquiryDetailsRefresh()
       }
       else{
-      if(this.activityType ===undefined){
+      this.getTaskDetailsRefresh()
+      }
+  
+    });
+
+    if(this.activityType ==='UpdateFollowUP'){
+      this.bTaskFollowUpResult=false;
+    }
+
+    this.getAssignMemberList();
+    this.getLocation()
+    this.getCategoryListData()
+    this.getTaskTypeListData()
+    this.getTaskPriorityListData()
+    this.getTaskStatusListData()
+    // this.getTaskmaster()
+    // this.getNotesDetails()
+    // this.getNotesDetails()
+    
+    
+  }
+  getEnquiryDetailsRefresh(){
+    this.crmService.getEnquiryDetails(this.enquiryId).subscribe((enquiryList:any)=>{
+      console.log('enquiryList',enquiryList);
+      this.taskDetails= enquiryList;
+      this.enquiryUid= enquiryList.uid;
+      if(this.taskDetails.customer){
+        this.firstCustomerName=this.taskDetails.customer.name.charAt(0);
+        this.customerName= this.taskDetails.customer.name;
+        this.customerPhNo= this.taskDetails.customer.phoneNo
+      } 
+      this.getUpdateFollowUPValue();
+      this.headerName='Follow Up';
+      console.log('this.taskDetails.priority.id',this.taskDetails.priority.id)
+    })
+  }
+
+  getTaskDetailsRefresh(){
+    if(this.activityType ===undefined){
       this.crmService.getTaskDetails(this.taskUid).subscribe(data => {
         console.log(' this.taskType ', this.taskType )
         this.taskDetails = data;
@@ -394,44 +419,15 @@ export class ViewTaskComponent implements OnInit {
       }
       
       });
-    }
-    if(this.taskDetails.customer){
-      this.firstCustomerName=this.taskDetails.customer.name.charAt(0);
-      this.customerName= this.taskDetails.customer.name;
-      this.customerPhNo= this.taskDetails.customer.phoneNo
-    } 
-      }
-  
-    });
+      if(this.taskDetails.customer){
+        this.firstCustomerName=this.taskDetails.customer.name.charAt(0);
+        this.customerName= this.taskDetails.customer.name;
+        this.customerPhNo= this.taskDetails.customer.phoneNo
+      } 
 
-    if(this.activityType ==='UpdateFollowUP'){
-      this.bTaskFollowUpResult=false;
     }
-    // else{
-    //   console.log('this.taskDetails.status.name',this.taskDetails.status.name)
-    //   if(this.taskDetails.status.name ==='Completed'){
-    //     this.bTaskFollowUpResult=false;
-    //   }
-    //   else{
-    //     this.bTaskFollowUpResult=true;
-    //   }
-  
-    // }
 
-    this.getAssignMemberList();
-    this.getLocation()
-    this.getCategoryListData()
-    this.getTaskTypeListData()
-    this.getTaskPriorityListData()
-    this.getTaskStatusListData()
-    // this.getTaskmaster()
-    // this.getNotesDetails()
-    // this.getNotesDetails()
-    
-    
   }
-
-  getTaskEnquiryDetails(){}
 
   //mew ui method start
   getUpdateFollowUPValue(){
@@ -1022,6 +1018,8 @@ export class ViewTaskComponent implements OnInit {
     
   }
   saveCreateNote(notesValue:any){
+    console.log('this.taskDetails.taskUid',this.taskUid)
+    console.log('this.enquiryId',this.enquiryId)
     if(this.notesTextarea !==undefined){
       this.errorMsg=false;
       this.assignMemberErrorMsg='';
@@ -1029,21 +1027,37 @@ export class ViewTaskComponent implements OnInit {
         "note" :this.notesTextarea
       }
         console.log('createNoteData',createNoteData)
-        this.crmService.addNotes(this.taskDetails.taskUid,createNoteData).subscribe((response:any)=>{
-          console.log('response',response)
-          this.api_loading = true;
-          this.notesTextarea = '';
-          setTimeout(() => {
-            // this.dialogRef.close(notesValue)
-            // this.getNotesDetails()
-            this.ngOnInit()
-            this.api_loading = false;
-          }, projectConstants.TIMEOUT_DELAY);
-          this.snackbarService.openSnackBar('Remarks added successfully');
-        },
-        (error)=>{
-          this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
-        })
+        if(this.activityType==='UpdateFollowUP'){
+          this.crmService.enquiryNotes( this.enquiryUid,createNoteData).subscribe((response:any)=>{
+            console.log('response',response)
+            this.api_loading = true;
+            this.notesTextarea = '';
+            setTimeout(() => {
+              this.getEnquiryDetailsRefresh()
+              this.api_loading = false;
+            }, projectConstants.TIMEOUT_DELAY);
+            this.snackbarService.openSnackBar('Remarks added successfully');
+          },
+          (error)=>{
+            this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+          })
+        }
+        else{
+          this.crmService.addNotes(this.taskDetails.taskUid,createNoteData).subscribe((response:any)=>{
+            console.log('response',response)
+            this.api_loading = true;
+            this.notesTextarea = '';
+            setTimeout(() => {
+              this.getTaskDetailsRefresh()
+              this.api_loading = false;
+            }, projectConstants.TIMEOUT_DELAY);
+            this.snackbarService.openSnackBar('Remarks added successfully');
+          },
+          (error)=>{
+            this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+          })
+        }
+        
       // }
       
     }
@@ -1160,7 +1174,15 @@ export class ViewTaskComponent implements OnInit {
       else{
         this.api_loading = true;
         setTimeout(() => {
-          this.ngOnInit();
+          if(this.activityType==='UpdateFollowUP'){
+            this.getEnquiryDetailsRefresh()
+          }
+          else{
+            this.getTaskDetailsRefresh()
+          }
+         
+          
+          // this.ngOnInit();
           this.api_loading = false;
           this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { 'panelClass': 'snackbarnormal' });
         }, 5000);
@@ -1444,7 +1466,13 @@ export class ViewTaskComponent implements OnInit {
       if(response==='Cancel'){
       setTimeout(() => {
         this.api_loading = false;
-        this.ngOnInit();
+        if(this.activityType==='UpdateFollowUP'){
+          this.getEnquiryDetailsRefresh()
+        }
+        else{
+          this.getTaskDetailsRefresh()
+        }
+        // this.ngOnInit();
         // this.getTaskDetails();
       }, projectConstants.TIMEOUT_DELAY);
       }
@@ -1452,7 +1480,13 @@ export class ViewTaskComponent implements OnInit {
         this.api_loading = true;
         setTimeout(() => {
           this.api_loading = false;
-          this.ngOnInit();
+          if(this.activityType==='UpdateFollowUP'){
+            this.getEnquiryDetailsRefresh()
+          }
+          else{
+            this.getTaskDetailsRefresh()
+          }
+          // this.ngOnInit();
           // this.getTaskDetails();
         }, projectConstants.TIMEOUT_DELAY);
       }
@@ -1525,7 +1559,13 @@ export class ViewTaskComponent implements OnInit {
       if(res==='Cancel'){
         setTimeout(() => {
           this.api_loading = false;
-          this.ngOnInit();
+          if(this.activityType==='UpdateFollowUP'){
+            this.getEnquiryDetailsRefresh()
+          }
+          else{
+            this.getTaskDetailsRefresh()
+          }
+          // this.ngOnInit();
           // this.getTaskDetails();
         }, projectConstants.TIMEOUT_DELAY);
         }
@@ -1533,7 +1573,13 @@ export class ViewTaskComponent implements OnInit {
           this.api_loading = true;
           setTimeout(() => {
             this.api_loading = false;
-            this.ngOnInit();
+            if(this.activityType==='UpdateFollowUP'){
+              this.getEnquiryDetailsRefresh()
+            }
+            else{
+              this.getTaskDetailsRefresh()
+            }
+            // this.ngOnInit();
             // this.getTaskDetails();
           }, projectConstants.TIMEOUT_DELAY);
         }
@@ -1557,7 +1603,13 @@ export class ViewTaskComponent implements OnInit {
       if(res==='Cancel'){
         setTimeout(() => {
           this.api_loading = false;
-          this.ngOnInit();
+          if(this.activityType==='UpdateFollowUP'){
+            this.getEnquiryDetailsRefresh()
+          }
+          else{
+            this.getTaskDetailsRefresh()
+          }
+          // this.ngOnInit();
           // this.getTaskDetails();
         }, projectConstants.TIMEOUT_DELAY);
         }
@@ -1565,7 +1617,13 @@ export class ViewTaskComponent implements OnInit {
           this.api_loading = true;
           setTimeout(() => {
             this.api_loading = false;
-            this.ngOnInit();
+            if(this.activityType==='UpdateFollowUP'){
+              this.getEnquiryDetailsRefresh()
+            }
+            else{
+              this.getTaskDetailsRefresh()
+            }
+            // this.ngOnInit();
             // this.getTaskDetails();
           }, projectConstants.TIMEOUT_DELAY);
         }

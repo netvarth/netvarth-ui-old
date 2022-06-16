@@ -124,10 +124,7 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 } */
-.positionNameInput{
-  position: relative;
 
-}
 ::ng-deep .mat-datepicker-toggle{
   /* position: absolute; */
 }
