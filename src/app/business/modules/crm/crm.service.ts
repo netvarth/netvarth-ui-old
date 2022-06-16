@@ -597,6 +597,14 @@ export class CrmService {
     const url ='provider/task/'+taskUid+'/status/closedwithnotes';
     return this.servicemeta.httpPut(url,notesData)
   }
+  proceedToLoginVerified(uid) {
+    const url ='provider/lead/questionnaire/proceed/'+uid;
+    return this.servicemeta.httpPut(url)
+  }
+  proceedToRedirect(uid) {
+    const url ='provider/lead/' + uid + '/redirect';
+    return this.servicemeta.httpPut(url)
+  }
   // activityCloseWithNotes(body){
   //   const url ='provider/task/{taskUid}/status/closedwithnotes'+body
   //   return this.servicemeta.httpPut(url,body)
