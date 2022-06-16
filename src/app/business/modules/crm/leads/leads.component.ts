@@ -176,8 +176,9 @@ export class LeadsComponent implements OnInit {
    * @param leadUID 
    */
   openLead(leadUID) {
-    // if (this.type === 'LOGIN')
-    //   return false; 
+    if (this.type === 'LoanDisbursement'){
+      return false; 
+    }  
     this.router.navigate(['/provider/viewleadqnr/' + leadUID]);
   }
 
