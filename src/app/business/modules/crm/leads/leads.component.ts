@@ -160,6 +160,10 @@ export class LeadsComponent implements OnInit {
         filter['statusName-eq'] = 'Credit Recommendation';
         this.headerName = 'Loan Sanction';
         break;
+        case 'LoanDisbursement':
+        filter['statusName-eq'] = 'Loan Sanction';
+        this.headerName = 'Loan Disbursement';
+        break;
     }
     return filter;
   }

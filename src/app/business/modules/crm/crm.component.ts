@@ -82,10 +82,10 @@ export class CRMComponent implements OnInit {
           id: 9,
           activityName: 'Loan Sanction'
         },
-        // {
-        //   id: 10,
-        //   activityName: 'Loan Disbursement'
-        // }
+        {
+          id: 10,
+          activityName: 'Loan Disbursement'
+        }
       ]
     }
     else if(user.userType === 1 && this.isadminPrivilege){
@@ -120,10 +120,10 @@ export class CRMComponent implements OnInit {
           id: 9,
           activityName: 'Loan Sanction'
         },
-        // {
-        //   id: 10,
-        //   activityName: 'Loan Disbursement'
-        // }
+        {
+          id: 10,
+          activityName: 'Loan Disbursement'
+        }
       ]
     }
     else{
@@ -155,10 +155,10 @@ export class CRMComponent implements OnInit {
           id: 9,
           activityName: 'Loan Sanction'
         },
-        // {
-        //   id: 10,
-        //   activityName: 'Loan Disbursement'
-        // }
+        {
+          id: 10,
+          activityName: 'Loan Disbursement'
+        }
       ]
     }
     const _this = this;
@@ -272,6 +272,14 @@ export class CRMComponent implements OnInit {
       const navigationExtras: NavigationExtras =  {
         queryParams: {
           type: 'LoanSanction'
+        }
+      }
+      this.router.navigate(['provider','lead'],navigationExtras);
+    }
+    else if(templateName==='Loan Disbursement'){
+      const navigationExtras: NavigationExtras =  {
+        queryParams: {
+          type: 'LoanDisbursement'
         }
       }
       this.router.navigate(['provider','lead'],navigationExtras);
