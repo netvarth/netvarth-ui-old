@@ -75,7 +75,7 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-8" [class.col-lg-12]="groups.length==0" *ngIf="showCustomersSection() || hideGroups">
+    <div class="col-lg-8" [class.col-lg-12]="groups.length==0" *ngIf="showCustomersSection()">
       <div class="card card-custom card-stretch gutter-b no-padding">
         <div class="p-3">
           <h3 class="align-items-start flex-column">
@@ -100,7 +100,7 @@
                 class="flaticon2-chat-1" aria-hidden="true"></i>{{customer_label | capitalizeFirst}}s
                 <!-- To all  -->
             </a>
-            <a (click)="sendmsgToGroup()" *ngIf="selectedGroup !== 'all'"  class="btn mb-2 action-button mgn-lt-5 pull-right ">
+            <a (click)="sendmsgToGroup()" *ngIf="selectedGroup !== 'all' && customers.length > 0"  class="btn mb-2 action-button mgn-lt-5 pull-right ">
               <i
               class="flaticon2-chat-1" aria-hidden="true"></i> GROUP
           </a>

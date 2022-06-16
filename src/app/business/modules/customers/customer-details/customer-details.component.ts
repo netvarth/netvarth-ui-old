@@ -130,8 +130,9 @@ export class CustomerDetailComponent implements OnInit {
     orderstatus: any;
     globalSettings: any;
     groupId;
+    grpId;
     groupName : string;
-    groupMemberId;
+    groupMemberTextId;
     constructor(
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices,
@@ -146,6 +147,7 @@ export class CustomerDetailComponent implements OnInit {
         const customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.customer_label = customer_label.charAt(0).toUpperCase() + customer_label.slice(1).toLowerCase();
         this.customernotes = this.customer_label + ' note';
+
         this.activated_route.queryParams.subscribe(qparams => {
             const user = this.groupService.getitemFromGroupStorage('ynw-user');
             this.domain = user.sector;
@@ -177,10 +179,37 @@ export class CustomerDetailComponent implements OnInit {
                             this.getCustomers(this.customerId).then(
                                 (customer) => {
                                     this.customer = customer;
+                                   this.groupId = localStorage.getItem('groupId')
+                                   console.log("localstorage :", localStorage.getItem('groupId')) 
                                     this.getConsumerBills();
+                                    this.customer.forEach(element => {
+                                        console.log("groupMemberId :",element.groupMemberId)
+                                        element.groupMemberId.forEach(el =>{
+                                           // this.grpId = el.groupId
+                                           if(this.groupId === el.groupId){
+                                            this.grpId = el.groupId
+                                            console.log("this.grpId :", this.grpId);
+                                            if(this.grpId){
+                                              this.provider_services.getCustomerGroupById(this.groupId).subscribe((res : any)=>{
+                                                  console.log("getCustomerGroup ",res)
+                                                  this.groupName = res.groupName;
+                                                   console.log("getCustomerGroup Name", this.groupName)
+                                                  this.provider_services.getMemberId(this.groupName,this.customerId).subscribe((res : any)=>{
+                                                      this.groupMemberTextId = res;
+                                                      console.log("groupMemberTextId :",this.groupMemberTextId)
+                                                  })
+                                              })
+                                          }
+                                        
+                                           }
+                                            
+                                            // this.groupId.find(x => x === el.groupId);
+
+                                        })
+                                      });
                                    // this.groupId = this.customer[0].groups.substr(2,3)
                                   //  console.log("Customer Details :",this.customer[0].groups.substr(2,3))
-                                    console.log("Customer groups :",this.customer)
+                                    console.log("Custome:",this.customer)
                                     this.customerName = this.customer[0].firstName;
                                     this.viewCustomer = true;
                                     this.loading = false;
@@ -255,19 +284,9 @@ export class CustomerDetailComponent implements OnInit {
     }
     ngOnInit() {
         // this.getCustomerQnr();
-       console.log("localstorage :", localStorage.getItem('groupId')) 
-        this.groupId = localStorage.getItem('groupId')
-        if(this.groupId){
-          this.provider_services.getCustomerGroupById(this.groupId).subscribe((res : any)=>{
-             // console.log("getCustomerGroup ",res)
-              this.groupName = res.groupName;
-//console.log("getCustomerGroup Name", this.groupName)
-              this.provider_services.getMemberId(this.groupName,this.customerId).subscribe((res : any)=>{
-                  this.groupMemberId = res;
-                 // console.log("groupMemberId :",this.groupMemberId)
-              })
-          })
-      }
+
+       // console.log("this.grpId :", this.customer.groupMemberId);
+
     }
     onCancel() {
         if (this.source === 'checkin' || this.source === 'token') {
