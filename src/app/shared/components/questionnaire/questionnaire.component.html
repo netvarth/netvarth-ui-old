@@ -14,8 +14,9 @@
         [class.no-padding]="uuid && (source === 'consCheckin' || source === 'consAppt' || source === 'consDonationDetails')">
         <div class="col-xl-12 force_center" [class.no-padding]="uuid">
             <div class="">
-                <div class="qnrsec" *ngFor="let qnr of groupedQnr | keyvalue"
+                <div class="qnrsec" *ngFor="let qnr of groupedQnr | keyvalue: asIsOrder"
                     [class.section-shadow]="getSectionCount() > 1">
+                    <!-- {{qnr | json}} -->
                     <!-- <div class="qnr-section" *ngIf="getSectionCount() > 1">{{qnr.key}}</div> -->
                     <div class="form-group card mgn-0" *ngFor="let question of qnr.value">
                         <!-- <div class="qnr-section" *ngIf="getSectionCount() > 1">{{getQuestion(question).sectionName}}</div> -->

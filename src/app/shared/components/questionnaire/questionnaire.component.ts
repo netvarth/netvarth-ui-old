@@ -195,10 +195,12 @@ export class QuestionnaireComponent implements OnInit {
       }
     }
     if (this.uuid) {
+
       if (this.questionnaireList.questionAnswers) {
         this.questions = this.questionnaireList.questionAnswers;
         this.qnrStatus = 'submitted';
         this.groupQuestionsBySection();
+        console.log("Sequence :", this.groupedQnr);
       } else {
         this.questions = this.questionnaireList.labels;
         this.qnrStatus = 'released';
@@ -209,12 +211,15 @@ export class QuestionnaireComponent implements OnInit {
       }
     }
   }
+  // *.component.ts
+asIsOrder(a, b) {
+  return 1;
+}
   groupQuestionsBySection() {
     if (this.source === 'customer-create' || this.source === 'qnrDetails' || this.source === 'onetime') {
       this.groupedQnr = this.sharedFunctionobj.groupBy(this.questions, 'sectionName');
     } 
-    else if(this.source === 'proLead' || this.source === 'proLeadafter') {
-     
+    else if(this.source === 'proLead') {     
       this.groupedQnr = this.questions.reduce(function (rv, x) {
         (rv[x.question['sequnceId']] = rv[x.question['sequnceId']] || []).push(x);
         return rv;
