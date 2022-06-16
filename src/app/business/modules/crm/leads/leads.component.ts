@@ -150,7 +150,15 @@ export class LeadsComponent implements OnInit {
         break;
       case 'LOGIN':
         filter['statusName-eq'] = 'Login';
-        this.headerName = 'All Loans';
+        this.headerName = 'Login Verification';
+        break;
+      case 'CreditRecommendation':
+        filter['statusName-eq'] = 'Login Verified';
+        this.headerName = 'Credit Recommendation';
+        break;
+        case 'LoanSanction':
+        filter['statusName-eq'] = 'Credit Recommendation';
+        this.headerName = 'Loan Sanction';
         break;
     }
     return filter;
@@ -160,8 +168,8 @@ export class LeadsComponent implements OnInit {
    * @param leadUID 
    */
   openLead(leadUID) {
-    if (this.type === 'LOGIN')
-      return false; 
+    // if (this.type === 'LOGIN')
+    //   return false; 
     this.router.navigate(['/provider/viewleadqnr/' + leadUID]);
   }
 

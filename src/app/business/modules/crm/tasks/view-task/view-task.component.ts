@@ -431,6 +431,8 @@ export class ViewTaskComponent implements OnInit {
     
   }
 
+  getTaskEnquiryDetails(){}
+
   //mew ui method start
   getUpdateFollowUPValue(){
     console.log('UpdateValueFollowup')
@@ -1030,6 +1032,7 @@ export class ViewTaskComponent implements OnInit {
         this.crmService.addNotes(this.taskDetails.taskUid,createNoteData).subscribe((response:any)=>{
           console.log('response',response)
           this.api_loading = true;
+          this.notesTextarea = '';
           setTimeout(() => {
             // this.dialogRef.close(notesValue)
             // this.getNotesDetails()

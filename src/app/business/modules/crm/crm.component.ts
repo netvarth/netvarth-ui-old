@@ -27,20 +27,13 @@ export class CRMComponent implements OnInit {
   showActivity = true;
 
   constructor(
-    // private groupService: GroupStorageService,
     private providerServices: ProviderServices,
-    // private snackbarService: SnackbarService,
-    // private lStorageService: LocalStorageService,
     private router: Router,
     private groupService: GroupStorageService,
     private locationobj: Location,
-    // public dialog: MatDialog,
-    // private _location: Location,
      private wordProcessor:WordProcessor,
      private crmService: CrmService
-    // private fileService:FileService
   ) {
-    // this.fnChangeBorder('A')
    }
 
    initCRM() {
@@ -60,14 +53,6 @@ export class CRMComponent implements OnInit {
     if(user.userType === 2){
       this.showActivity = false;
       this.redirectionList = [
-        // {
-        //   id:1,
-        //   activityName:'Enquiry'
-        // },
-        // {
-        //   id:2,
-        //   activityName:'Follow UPS'
-        // },
         {
           id: 7,
           activityName: 'Leads'
@@ -86,17 +71,17 @@ export class CRMComponent implements OnInit {
         },
         {
           id: 3,
-          activityName: 'All Loans'
-        }
+          activityName: 'Login Verification'
+        },
         
-        // {
-        //   id: 8,
-        //   activityName: 'Credit field verification and recommendation'
-        // },
-        // {
-        //   id: 9,
-        //   activityName: 'Loan Sanction'
-        // },
+        {
+          id: 8,
+          activityName: 'Credit Recommendation'
+        },
+        {
+          id: 9,
+          activityName: 'Loan Sanction'
+        },
         // {
         //   id: 10,
         //   activityName: 'Loan Disbursement'
@@ -106,14 +91,6 @@ export class CRMComponent implements OnInit {
     else if(user.userType === 1 && this.isadminPrivilege){
       this.showActivity = false;
       this.redirectionList = [
-        // {
-        //   id:1,
-        //   activityName:'Enquiry'
-        // },
-        // {
-        //   id:2,
-        //   activityName:'Follow UPS'
-        // },
         {
           id: 7,
           activityName: 'Leads'
@@ -132,17 +109,17 @@ export class CRMComponent implements OnInit {
         },
         {
           id: 3,
-          activityName: 'All Loans'
+          activityName: 'Login Verification'
         },
         
-        // {
-        //   id: 8,
-        //   activityName: 'Credit field verification and recommendation'
-        // },
-        // {
-        //   id: 9,
-        //   activityName: 'Loan Sanction'
-        // },
+        {
+          id: 8,
+          activityName: 'Credit Recommendation'
+        },
+        {
+          id: 9,
+          activityName: 'Loan Sanction'
+        },
         // {
         //   id: 10,
         //   activityName: 'Loan Disbursement'
@@ -152,14 +129,6 @@ export class CRMComponent implements OnInit {
     else{
       this.showActivity = true;
       this.redirectionList = [
-        // {
-        //   id:1,
-        //   activityName:'Enquiry'
-        // },
-        // {
-        //   id:2,
-        //   activityName:'Follow UPS'
-        // },
         {
           id: 7,
           activityName: 'Leads'
@@ -175,17 +144,17 @@ export class CRMComponent implements OnInit {
         },
         {
           id: 3,
-          activityName: 'All Loans'
+          activityName: 'Login Verification'
         },
         
-        // {
-        //   id: 8,
-        //   activityName: 'Credit field verification and recommendation'
-        // },
-        // {
-        //   id: 9,
-        //   activityName: 'Loan Sanction'
-        // },
+        {
+          id: 8,
+          activityName: 'Credit Recommendation'
+        },
+        {
+          id: 9,
+          activityName: 'Loan Sanction'
+        },
         // {
         //   id: 10,
         //   activityName: 'Loan Disbursement'
@@ -250,7 +219,7 @@ export class CRMComponent implements OnInit {
   }
   redirectionSeperateTemplate(templateName:any){
     console.log('templateName',templateName)
-    if(templateName==='All Loans'){
+    if(templateName==='Login Verification'){
       const navigationExtras: NavigationExtras =  {
         queryParams: {
           type: 'LOGIN'
@@ -287,6 +256,22 @@ export class CRMComponent implements OnInit {
       const navigationExtras: NavigationExtras =  {
         queryParams: {
           type: 'NEWLEAD'
+        }
+      }
+      this.router.navigate(['provider','lead'],navigationExtras);
+    }
+    else if(templateName==='Credit Recommendation'){
+      const navigationExtras: NavigationExtras =  {
+        queryParams: {
+          type: 'CreditRecommendation'
+        }
+      }
+      this.router.navigate(['provider','lead'],navigationExtras);
+    }
+    else if(templateName==='Loan Sanction'){
+      const navigationExtras: NavigationExtras =  {
+        queryParams: {
+          type: 'LoanSanction'
         }
       }
       this.router.navigate(['provider','lead'],navigationExtras);

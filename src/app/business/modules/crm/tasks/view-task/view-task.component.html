@@ -339,7 +339,7 @@
   </div>
   <!----\files start-->
   <div class="notesWidth">
-    <div class="notesSection" *ngIf="!(this.taskDetails.title ==='BA Follow Up') && !(this.taskDetails.title ==='BA Recruitment') ">
+    <div class="notesSection" *ngIf="!(this.taskDetails.title ==='BA Follow Up') && !(this.taskDetails.title ==='BA Recruitment') && activityType !=='UpdateFollowUP' ">
       <div class="fiesWithIcon">
         <div>
           <span class="card-title"><b>Files</b></span> 
@@ -406,7 +406,7 @@
         <div>{{assignMemberErrorMsg}}</div>
     </div>
       <!---cancel save btn start-->
-    <div style="display: flex;justify-content: flex-end;align-items: center;margin-right: 10px;margin-bottom: 10px;" *ngIf="taskDetails.status.name !=='New'">
+    <div style="display: flex;justify-content: flex-end;align-items: center;margin-right: 10px;margin-bottom: 10px;">
       <div style="text-align: center;">
           <ng-container>
               <div>
@@ -444,7 +444,7 @@
   </div>
   <!---notes end-->
   <!----enter result start-->
-  <div class="formTop" *ngIf="bActualResult && (!(this.taskDetails.title ==='BA Follow Up') && !(this.taskDetails.title ==='BA Recruitment'))">
+  <div class="formTop" *ngIf="bActualResult && (!(this.taskDetails.title ==='BA Follow Up') && !(this.taskDetails.title ==='BA Recruitment'))&& activityType !=='UpdateFollowUP'">
     <div class="taskTitle">
         <div>No of data collected</div>
     </div>
