@@ -404,25 +404,14 @@ export class CrmService {
     const url ='provider/lead/master?available-eq=true';
     return this.servicemeta.httpGet(url, null);
   }
-  // getFollowUPOne(filter = {}){
-  //   const url ='provider/task/provider?originFrom-eq=Enquire&title-eq=Follow Up 1';
-  //   return this.servicemeta.httpGet(url, null,filter);
-  // }
-  // getFollowUPTwo(filter = {}){
-  //   const url ='provider/task/provider?originFrom-eq=Enquire&title-eq=Follow Up 2';
-  //   return this.servicemeta.httpGet(url, null,filter);
-  // }
-  // getTotalLeadCount(filter) {
-  //   const url = 'provider/lead/count';
-  //   return this.servicemeta.httpGet(url, null, filter);
-  // }
 
   getFollowups(filter) {
-    const url ='provider/task/provider';
+    // const url ='provider/task/provider';
+    const url ='provider/enquire'
     return this.servicemeta.httpGet(url, null, filter);
   }
   getFollowupsCount(filter) {
-    const url ='provider/task/provider/count';
+    const url ='provider/enquire/count';
     return this.servicemeta.httpGet(url, null, filter);
   }
 
@@ -438,26 +427,31 @@ export class CrmService {
     const url = 'provider/task/provider?isSubTask-eq=false&originFrom-eq=None'
     return this.servicemeta.httpGet(url, null, filter);
   }
-  // updateTask(taskUid ,updateTaskData){
-  //   console.log(updateTaskData)
-  //   const url='provider/task/'+ taskUid
-  //   return this.servicemeta.httpPut(url, updateTaskData);
-  // }
   statusToPending(taskUid,data){
     console.log(data)
       const url='provider/task/'+ taskUid + '/status/pending'
       return this.servicemeta.httpPut(url, data);
   }
+  statusToPendingFollowUp(id){
+    const url='provider/enquire/'+id + '/status/pending'
+      return this.servicemeta.httpPut(url);
+  }
   statusToRejected(taskUid,data){
-    console.log(data)
       const url='provider/task/'+ taskUid + '/status/rejected'
       return this.servicemeta.httpPut(url, data);
   }
+  statusToRejectedFollowUP(taskUid){
+    const url='provider/enquire/'+ taskUid + '/status/rejected'
+    return this.servicemeta.httpPut(url);
+}
   statusToProceed(taskUid){
-    // console.log(data)
-      const url='provider/task/'+ taskUid + '/status/closed'
+      const url='provider/enquire/'+ taskUid + '/status/done'
       return this.servicemeta.httpPut(url);
   }
+  statusToProceedFollowUp2(taskUid){
+    const url='provider/enquire/'+ taskUid + '/status/closed'
+    return this.servicemeta.httpPut(url);
+}
   getLeadQnrDetails(categoryId){
     const url = 'provider/questionnaire/lead/' + categoryId + '/WALKIN';
     return this.servicemeta.httpGet(url);
@@ -515,14 +509,6 @@ export class CrmService {
     const url = 'provider/lead/count?status-eq=18';
     return this.servicemeta.httpGet(url, null, filter);
   }
-  // getDelayedTask(filter = {}) {
-  //   const url = 'provider/task/provider?status-eq=4';
-  //   return this.servicemeta.httpGet(url, null, filter);
-  // }
-  // getDelayedTaskCount(filter) {
-  //   const url = 'provider/task/provider/count?status-eq=4';
-  //   return this.servicemeta.httpGet(url, null, filter);
-  // }
   getPendingTask(filter = {}){
     const url = 'provider/task/provider?status-eq=4=13';
       return this.servicemeta.httpGet(url, null, filter);
@@ -599,4 +585,21 @@ export class CrmService {
     const url ='provider/lead/questionnaire/proceed/'+leadUid
     return this.servicemeta.httpPut(url,body)
   }
+  getEnquiryDetails(enquiryUid){
+    const url = 'provider/enquire/' + enquiryUid;
+    return this.servicemeta.httpGet(url);
+  }
+  enquiryCategory(){
+    const url = 'provider/enquire/category';
+    return this.servicemeta.httpGet(url);
+  }
+  activityCloseWithNotes(taskUid,notesData){
+    const url ='provider/task/'+taskUid+'/status/closedwithnotes';
+    return this.servicemeta.httpPut(url,notesData)
+  }
+  // activityCloseWithNotes(body){
+  //   const url ='provider/task/{taskUid}/status/closedwithnotes'+body
+  //   return this.servicemeta.httpPut(url,body)
+  // }
+
 }

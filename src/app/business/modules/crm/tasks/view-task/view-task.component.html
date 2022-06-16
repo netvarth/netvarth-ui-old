@@ -13,14 +13,14 @@
     <div class="headerName">
       {{headerName}}
     </div>
-    <hr  *ngIf="((this.taskDetails.title ==='Follow Up 1')  || (this.taskDetails.title ==='Follow Up 2')) && (taskDetails.customer) "/>
+    <hr />
   </div>
   <!----task details start-->
   <div class="taskAndNote">
     <div class="formWidth">
       <div style="display: flex;
       align-items: center;
-      gap: 10px;" *ngIf="((this.taskDetails.title ==='Follow Up 1')  || (this.taskDetails.title ==='Follow Up 2')) && (taskDetails.customer) ">
+      gap: 10px;" *ngIf="(taskDetails.customer) ">
         <div class="imageClass">
           <div style="color: #8A8383;">{{firstCustomerName | capitalizeFirst}}</div>
         </div>
@@ -37,7 +37,7 @@
         </div>
       </div>
       </div>
-    <hr />
+    <!-- <hr /> -->
     <form [formGroup]="taskDetailsForm">
       <div >
       <!---activityu name start-->
@@ -287,8 +287,8 @@
         </div>
     </div>
       <!---business potential end-->
-      <div class="formTop">
-        <div *ngIf="taskDetails.title ==='Follow Up 1' || taskDetails.title ==='Follow Up 2'" >
+      <div class="formTop" *ngIf="bFollowupButtonAfterEnquiry">
+        <div>
           <div class="card" style="border: 0.772915px solid #D9D5D5 !important;" >
             <div class="statusResult">
               <div style="font-size: 12px;font-weight: bold;">Enter Result</div>
@@ -300,12 +300,12 @@
                     <img class="imageStatus" src="/assets/images/crmImages/completed2.png" />
                   </div>
                 </div>
-                <div *ngIf="item.name==='Pending'" class="statusClass2" (click)="selectStatus(item)" id="B">
+                <!-- <div *ngIf="item.name==='Pending'" class="statusClass2" (click)="selectStatus(item)" id="B">
                   <div>{{item.name}}</div>
                   <div>
                     <img class="imageStatus" src="/assets/images/crmImages/inProgress2.png" />
                   </div>
-                </div>
+                </div> -->
                 <div *ngIf="item.name==='Rejected'" class="statusClass3" (click)="selectStatus(item)" id="C">
                   <div>{{item.name}}</div>
                   <div>
@@ -328,7 +328,7 @@
                 </button>
                 <button class="btn btn-primary font-weight-bold confirmBtn"
                   [class.spinner]="api_loading" 
-                    [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateTask()">Save
+                    [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateTask()">Complete
                 </button>
             </div>
         </ng-container>
@@ -339,7 +339,7 @@
   </div>
   <!----\files start-->
   <div class="notesWidth">
-    <div class="notesSection" *ngIf="!(this.taskDetails.title ==='Follow Up 1') && !(this.taskDetails.title ==='Follow Up 2') ">
+    <div class="notesSection" *ngIf="!(this.taskDetails.title ==='BA Follow Up') && !(this.taskDetails.title ==='BA Recruitment') ">
       <div class="fiesWithIcon">
         <div>
           <span class="card-title"><b>Files</b></span> 
@@ -386,7 +386,7 @@
       </div>
     </div>
     <!---notes start-->
-    <!-- *ngIf="!(this.taskDetails.title ==='Follow Up 1') && !(this.taskDetails.title ==='Follow Up 2') " -->
+    <!-- *ngIf="!(this.taskDetails.title ==='BA Follow Up') && !(this.taskDetails.title ==='BA Recruitment') " -->
   <div style="margin-top:10px" >
     <div class="textareaStart">
       <div class="fiesWithIcon">
@@ -406,7 +406,7 @@
         <div>{{assignMemberErrorMsg}}</div>
     </div>
       <!---cancel save btn start-->
-    <div style="display: flex;justify-content: flex-end;align-items: center;margin-right: 10px;margin-bottom: 10px;">
+    <div style="display: flex;justify-content: flex-end;align-items: center;margin-right: 10px;margin-bottom: 10px;" *ngIf="taskDetails.status.name !=='New'">
       <div style="text-align: center;">
           <ng-container>
               <div>
@@ -444,7 +444,7 @@
   </div>
   <!---notes end-->
   <!----enter result start-->
-  <div class="formTop" *ngIf="bActualResult && (!(this.taskDetails.title ==='Follow Up 1') && !(this.taskDetails.title ==='Follow Up 2'))">
+  <div class="formTop" *ngIf="bActualResult && (!(this.taskDetails.title ==='BA Follow Up') && !(this.taskDetails.title ==='BA Recruitment'))">
     <div class="taskTitle">
         <div>No of data collected</div>
     </div>
@@ -468,7 +468,7 @@
             </button>
             <button class="btn btn-primary font-weight-bold confirmBtn"
               [class.spinner]="api_loading" 
-                [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateTask()">Save
+                [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateTask()">Complete
             </button>
         </div>
     </ng-container>

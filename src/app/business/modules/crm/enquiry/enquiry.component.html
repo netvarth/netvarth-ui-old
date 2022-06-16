@@ -121,19 +121,22 @@
                     </div>
                     <div class="formField">
                         <div style="margin-top: 5px;width: -webkit-fill-available;">
-                            <div class="taskTitle">
-                                <div>Sourcing Channel </div>
-                            </div>
-                            <div class="fieldPadding">
-                                <div>
-                                    <div  class="form-control" style="display: flex;justify-content: space-between;"(click)="selectActivityListDialog(activityList)" >
-                                        <div >{{activityTitleDialogValue}}</div>
-                                        <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
-                                    </div>
+                            <div> 
+                                <div class="taskTitle">
+                                    <div>Sourcing Channel</div>
                                 </div>
-                                <!-- <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
-                                </app-field-error-display>   -->
-                            </div> 
+                                <div class="fieldPadding">
+                                    <mat-select class="form-control" placeholder="{{sourcingChannelPlaceholder}}"
+                                        #sourcingChannel formControlName="sourcingChannel">
+                                        <!-- {{sourcingChhannelCatListNew[0] | json}} -->
+                                        <mat-option  *ngFor="let item of sourcingChhannelCatList[0];let index=i" [value]="item.id" >
+                                            <div>
+                                                {{item.name}}
+                                            </div>
+                                        </mat-option>
+                                    </mat-select>
+                                </div>
+                            </div>
                         </div>
                         <div style="margin-top: 5px;width: -webkit-fill-available;">
                             <div> 

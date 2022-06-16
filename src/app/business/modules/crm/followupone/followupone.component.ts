@@ -30,6 +30,7 @@ export class FollowUpOneComponent implements OnInit {
       console.log('qparams', qparams)
       if (qparams.type) {
         this.type = qparams.type;
+        console.log('this.type',this.type)
       }
     });
   }
@@ -42,9 +43,16 @@ export class FollowUpOneComponent implements OnInit {
     let filter = {}
     filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
     filter['count'] = this.pagination.perPage;
-    filter['originFrom-eq'] = 'Enquire';
-    filter['title-eq'] = this.headerName;
-    filter['statusName-neq']='Rejected';
+    if(this.type==='followUpOne'){
+      filter['statusName-eq'] = ['New','Assigned'];
+    } else{
+      filter['statusName-eq'] = 'Proceed'
+    }
+    
+
+    // filter['statusName-eq'] = 'Assigned';
+    // filter['title-eq'] = this.headerName;
+    // filter['statusName-neq']='Rejected';
     return filter;
   }
   /**
@@ -83,7 +91,7 @@ export class FollowUpOneComponent implements OnInit {
         dataType: 'UpdateFollowUP'
       }
     }
-    this.router.navigate(['/provider/viewtask/' + task.taskUid], navigationExtras);
+    this.router.navigate(['/provider/viewtask/' + task.uid], navigationExtras);
   }
   ngOnInit(): void {
     const _this = this;
