@@ -32,9 +32,7 @@
                 <div class="astericColor">*</div>
             </div>
             <div class="fieldPadding">
-                <textarea rowa="10" class="form-control" formControlName="customerName" #applicantName
-                    (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="Enter name">
-                </textarea>
+                <input  class="form-control" formControlName="customerName" #applicantName  placeholder="Enter name" />
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="errorMessage"
                     errorMsg="{{errorMessage}}">
                 </app-field-error-display>
@@ -76,9 +74,8 @@
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="idValue" #idValue
-                        (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="Enter number">
-                  </textarea>
+                    <input  class="form-control" formControlName="idValue" #idValue
+  placeholder="Enter number" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
                     </app-field-error-display>
@@ -149,9 +146,8 @@
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="idValue1" #idValue1
-                        (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="Enter number">
-                  </textarea>
+                    <input  class="form-control" formControlName="idValue1" #idValue1
+  placeholder="Enter number" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
                     </app-field-error-display>
@@ -220,9 +216,8 @@
                     <div>Pancard number</div>
                 </div>
                 <div class="fieldPadding col-xs-6 col-md-6 col-lg-6">
-                    <textarea rowa="10" class="form-control" formControlName="panNumber" #panNumber
-                        (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="Enter Pancard number">
-                  </textarea>
+                    <input  class="form-control" formControlName="panNumber" #panNumber
+  placeholder="Enter Pancard number" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
                     </app-field-error-display>
@@ -294,9 +289,8 @@
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="telephoneNumber" #telephoneNumber
-                        (keyup)="autoGrowTextZone($event)" maxlength="10" placeholder="Enter number">
-                </textarea>
+                    <input  class="form-control" formControlName="telephoneNumber" #telephoneNumber
+                         maxlength="10" placeholder="Enter number" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
                     </app-field-error-display>
@@ -323,9 +317,9 @@
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="permanentCity" #permanentCity
-                        (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
-          </textarea>
+                    <input  class="form-control" formControlName="permanentCity" #permanentCity
+  placeholder="" />
+         
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
                     </app-field-error-display>
@@ -358,9 +352,8 @@
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="permanentPinCode" #permanentPinCode
-                        (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
-          </textarea>
+                    <input  class="form-control" formControlName="permanentPinCode" #permanentPinCode
+  placeholder="" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
                     </app-field-error-display>
@@ -396,9 +389,8 @@
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="relationName" #relationName
-                        (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
-          </textarea>
+                    <input  class="form-control" formControlName="relationName" #relationName
+  placeholder="" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
                     </app-field-error-display>
@@ -427,9 +419,8 @@
                     <div>Nominee Name</div>
                 </div>
                 <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="nomineeName" #nomineeName
-                        (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="Enter name">
-                </textarea>
+                    <input  class="form-control" formControlName="nomineeName" #nomineeName
+  placeholder="Enter name" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
                     </app-field-error-display>
@@ -484,9 +475,8 @@
                     <div>District</div>
                 </div>
                 <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="city" #city
-                        (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
-          </textarea>
+                    <input   class="form-control" formControlName="city" #city
+  placeholder="" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
                     </app-field-error-display>
@@ -516,9 +506,8 @@
                     <div>Pin code</div>
                 </div>
                 <div class="fieldPadding">
-                    <textarea rowa="10" class="form-control" formControlName="pin" #pin
-                        (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="">
-          </textarea>
+                    <input  class="form-control" formControlName="pin" #pin
+  placeholder="" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
                     </app-field-error-display>
