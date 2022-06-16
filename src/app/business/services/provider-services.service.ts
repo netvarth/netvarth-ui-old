@@ -2562,6 +2562,10 @@ buildFilesParams(sdate, edate) {
     const url = 'provider/lead/questionnaire/' + uuid;
     return this.servicemeta.httpPost(url, body);
   }
+  submitLeadLoginVerifyQuestionnaire(body, uuid) {
+    const url = 'provider/lead/status/questionnaire/' + uuid;
+    return this.servicemeta.httpPost(url, body);
+  }
   resubmitProviderLeadQuestionnaire(body, uuid) {
     const url = 'provider/lead/questionnaire/resubmit/' + uuid;
     return this.servicemeta.httpPost(url, body);

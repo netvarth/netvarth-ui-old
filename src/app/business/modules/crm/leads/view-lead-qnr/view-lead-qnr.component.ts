@@ -68,7 +68,7 @@ export class ViewLeadQnrComponent implements OnInit {
     this.fetchLeadInfo(this.leadUID).then(
       (leadInfo: any) => {
         _this.leadInfo = leadInfo; // Setting Lead information.
-        if (leadInfo.status.name === 'New' || leadInfo.status.name === 'KYC Updated') {
+        if (leadInfo.status.name === 'New' || leadInfo.status.name === 'KYC Updated' || leadInfo.status.name === 'Login') {
           if (leadInfo.kycCreated) {
             _this.crmService.getkyc(leadInfo.uid).subscribe(
               (kycInfo) => {
@@ -378,7 +378,15 @@ export class ViewLeadQnrComponent implements OnInit {
     const dataToSend: FormData = new FormData();
     const blobpost_Data = new Blob([JSON.stringify(_this.questionAnswers.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
-    if (this.questionaire.questionAnswers && this.questionaire.questionAnswers[0].answerLine) {
+    if (this.leadInfo.status.name==='Login Verified'){
+      _this.providerServices.submitLeadLoginVerifyQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
+        this.uploadFileStatus(uuid, data).then(
+          () => {
+            _this.complete(uuid, type);
+          }
+        );
+      });
+    } else if (this.questionaire.questionAnswers && this.questionaire.questionAnswers[0].answerLine) {
       _this.providerServices.resubmitProviderLeadQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
         this.uploadFileStatus(uuid, data).then(
           () => {
