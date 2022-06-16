@@ -85,6 +85,10 @@ export class CRMComponent implements OnInit {
         {
           id: 10,
           activityName: 'Loan Disbursement'
+        },
+        {
+          id:11,
+          activityName: 'Redirect'
         }
       ]
     }
@@ -123,6 +127,10 @@ export class CRMComponent implements OnInit {
         {
           id: 10,
           activityName: 'Loan Disbursement'
+        },
+        {
+          id:11,
+          activityName: 'Redirect'
         }
       ]
     }
@@ -158,6 +166,10 @@ export class CRMComponent implements OnInit {
         {
           id: 10,
           activityName: 'Loan Disbursement'
+        },
+        {
+          id:11,
+          activityName: 'Redirect'
         }
       ]
     }
@@ -280,6 +292,14 @@ export class CRMComponent implements OnInit {
       const navigationExtras: NavigationExtras =  {
         queryParams: {
           type: 'LoanDisbursement'
+        }
+      }
+      this.router.navigate(['provider','lead'],navigationExtras);
+    }
+    else if(templateName==='Redirect'){
+      const navigationExtras: NavigationExtras =  {
+        queryParams: {
+          type: 'Redirect'
         }
       }
       this.router.navigate(['provider','lead'],navigationExtras);
