@@ -18,7 +18,7 @@
                     [class.section-shadow]="getSectionCount() > 1">
                     <!-- <div class="qnr-section" *ngIf="getSectionCount() > 1">{{qnr.key}}</div> -->
                     <div class="form-group card mgn-0" *ngFor="let question of qnr.value">
-                        <div class="qnr-section" *ngIf="getSectionCount() > 1">{{getQuestion(question).sectionName}}</div>
+                        <!-- <div class="qnr-section" *ngIf="getSectionCount() > 1">{{getQuestion(question).sectionName}}</div> -->
                         <label class="col-12 quest">{{getQuestion(question).label}}
                             <i class="fa fa-plus-circle pull-right" aria-hidden="true"
                                 [class.addicon]="!buttonDisable && !disableInput()"

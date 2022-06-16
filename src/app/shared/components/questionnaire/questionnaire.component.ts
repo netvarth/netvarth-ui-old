@@ -212,6 +212,13 @@ export class QuestionnaireComponent implements OnInit {
   groupQuestionsBySection() {
     if (this.source === 'customer-create' || this.source === 'qnrDetails' || this.source === 'onetime') {
       this.groupedQnr = this.sharedFunctionobj.groupBy(this.questions, 'sectionName');
+    } 
+    else if(this.source === 'proLead' || this.source === 'proLeadafter') {
+     
+      this.groupedQnr = this.questions.reduce(function (rv, x) {
+        (rv[x.question['sequnceId']] = rv[x.question['sequnceId']] || []).push(x);
+        return rv;
+      }, {});
     } else {
       // this.groupedQnr = this.questions.reduce(function (rv, x) {
       //   (rv[x.question['sectionName']] = rv[x.question['sectionName']] || []).push(x);
