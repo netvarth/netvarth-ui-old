@@ -3,7 +3,7 @@ import { MedicalrecordService } from '../medicalrecord.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ProviderServices } from '../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
@@ -12,6 +12,7 @@ import { ShowuploadfileComponent } from './showuploadfile/showuploadfile.compone
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { SubSink } from 'subsink';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -70,7 +71,8 @@ export class UploadFileComponent implements OnInit {
     public provider_services: ProviderServices,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
-    private router: Router,
+    private location: Location,
+    // private router: Router,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private medicalrecord_service: MedicalrecordService) {
@@ -128,7 +130,9 @@ export class UploadFileComponent implements OnInit {
     return imgsrc;
   }
   goBack() {
-    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+    // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+    this.location.back();
+
   }
   deleteFile(file) {
     this.removefiledialogRef = this.dialog.open(ConfirmBoxComponent, {
