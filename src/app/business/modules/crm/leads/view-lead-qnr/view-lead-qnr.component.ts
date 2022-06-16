@@ -389,7 +389,7 @@ export class ViewLeadQnrComponent implements OnInit {
     const dataToSend: FormData = new FormData();
     const blobpost_Data = new Blob([JSON.stringify(_this.questionAnswers.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
-    if (this.leadInfo.status.name==='Login Verified' || this.leadInfo.status.name === 'Credit Recommendation'){
+    if (this.leadInfo.status.name==='Login Verified'){
       _this.providerServices.submitLeadLoginVerifyQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
         this.uploadFileStatus(uuid, data).then(
           () => {
@@ -397,7 +397,7 @@ export class ViewLeadQnrComponent implements OnInit {
           }
         );
       });
-    } else if (this.questionaire.questionAnswers && this.questionaire.questionAnswers[0].answerLine) {
+    } else if ((this.questionaire.questionAnswers && this.questionaire.questionAnswers[0].answerLine) || this.leadInfo.status.name === 'Credit Recommendation') {
       _this.providerServices.resubmitProviderLeadQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
         this.uploadFileStatus(uuid, data).then(
           () => {
@@ -405,8 +405,7 @@ export class ViewLeadQnrComponent implements OnInit {
           }
         );
       });
-    }
-    else {
+    } else {
       _this.providerServices.submitProviderLeadQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
         this.uploadFileStatus(uuid, data).then(
           () => {
