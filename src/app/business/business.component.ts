@@ -64,7 +64,9 @@ export class BusinessComponent implements OnInit {
                   setTimeout(() => {
                      console.log("constructor")
                     if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
-                      if (settings.waitlist) {
+                      if(settings.enableTask) {
+                        router.navigate(['provider', 'crm']);
+                      } else if (settings.waitlist) {
                         router.navigate(['provider', 'check-ins']);
                       } else if (settings.appointment) {
                         router.navigate(['provider', 'appointments']);
@@ -72,10 +74,10 @@ export class BusinessComponent implements OnInit {
                         router.navigate(['provider', 'orders']);
                       } else {
                         router.navigate(['provider', 'settings']);
-                      }
+                      } 
                     } else {
                       router.navigate(['provider', 'settings']);
-                    }
+                    } 
                   }, 500);
                 }
               });

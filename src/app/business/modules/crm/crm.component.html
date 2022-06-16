@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <div class="customCard" id="C" (click)="fnChangeBorder('C')">
+        <div class="customCard" id="C" (click)="fnChangeBorder('C')" *ngIf="!showActivity">
             <div class="eachTab">
                 <div >
                     <mat-icon class="iconBackgroundMatIcon">home</mat-icon>

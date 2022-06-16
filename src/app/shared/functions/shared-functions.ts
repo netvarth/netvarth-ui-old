@@ -986,7 +986,9 @@ export class SharedFunctions {
       .then(
         (settings: any) => {
           if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
-            if (settings.waitlist) {
+            if (settings.enableTask) {
+              this.router.navigate(['provider', 'crm']);
+            } else if (settings.waitlist) {
               this.router.navigate(['provider', 'check-ins']);
             } else if (settings.appointment) {
               this.router.navigate(['provider', 'appointments']);

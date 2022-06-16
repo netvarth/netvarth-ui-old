@@ -7,7 +7,7 @@ import { GroupStorageService } from "../../../../../shared/services/group-storag
 import { CrmService } from "../../crm.service";
 import { ProviderServices } from "../../../../../business/services/provider-services.service";
 import { WordProcessor } from "../../../../../shared/services/word-processor.service";
-import { PreviewpdfComponent } from "./previewpdf/previewpdf.component";
+// import { PreviewpdfComponent } from "./previewpdf/previewpdf.component";
 import { MatDialog } from "@angular/material/dialog";
 import { CrmSelectMemberComponent } from "../../../../../business/shared/crm-select-member/crm-select-member.component";
 
@@ -498,26 +498,27 @@ export class ViewLeadQnrComponent implements OnInit {
         this.crifDetails = data;
         this.crifHTML = this.crifDetails.crifHTML;
         this.crifScore = this.crifDetails.crifScoreString
+        this.showPdfIcon = true;
       },
       error => {
       });
-    this.showPdfIcon = true;
+   
   }
-  preview(crif_data) {
-    this.crifDialog = this.dialog.open(PreviewpdfComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'uploadfilecomponentclass'],
-      disableClose: true,
-      data: {
-        crif: crif_data,
-        type: 'pdf_view'
-      }
-    });
-    this.crifDialog.afterClosed().subscribe(result => {
-      if (result) {
-      }
-    });
-  }
+  // preview(crif_data) {
+  //   this.crifDialog = this.dialog.open(PreviewpdfComponent, {
+  //     width: '50%',
+  //     panelClass: ['popup-class', 'commonpopupmainclass', 'uploadfilecomponentclass'],
+  //     disableClose: true,
+  //     data: {
+  //       crif: crif_data,
+  //       type: 'pdf_view'
+  //     }
+  //   });
+  //   this.crifDialog.afterClosed().subscribe(result => {
+  //     if (result) {
+  //     }
+  //   });
+  // }
   autoGrowTextZone(e) {
     e.target.style.height = "0px";
     e.target.style.height = (e.target.scrollHeight + 15) + "px";
@@ -555,5 +556,22 @@ export class ViewLeadQnrComponent implements OnInit {
       this.ngOnInit();
       console.log("response", response);
     });
+  }
+
+  printCRIF() {
+    const params = [
+      'height=' + screen.height,
+      'width=' + screen.width,
+      'fullscreen=yes'
+    ].join(',');
+    const printWindow = window.open('', '', params);
+    printWindow.document.write(this.crifHTML);    
+    printWindow.moveTo(0, 0);
+    printWindow.print();
+    printWindow.document.close();
+    setTimeout(() => {
+      printWindow.close();
+    }, 500);
+   
   }
 }

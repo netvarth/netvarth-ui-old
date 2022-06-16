@@ -27,6 +27,23 @@ export class PreviewpdfComponent implements OnInit {
   ngOnInit() {
   }
 
+  printCRIF() {
+    const params = [
+      'height=' + screen.height,
+      'width=' + screen.width,
+      'fullscreen=yes'
+    ].join(',');
+    const printWindow = window.open('', '', params);
+    printWindow.document.write(this.crifHTML);    
+    printWindow.moveTo(0, 0);
+    printWindow.print();
+    printWindow.document.close();
+    setTimeout(() => {
+      printWindow.close();
+    }, 500);
+   
+  }
+
   closeDialog() {
     this.dialogRef.close();
   }
