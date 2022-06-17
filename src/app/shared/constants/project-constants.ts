@@ -1200,6 +1200,20 @@ export const projectConstantsLocal = {
     {name: 'Untagged', displayName: 'Untagged'},
     {name: 'Others', displayName: 'Others'},
   ],
+  CUSTOM_PROV_APP: {
+    "maben": {
+      prefix: "maben@in",
+      idCaption:"Employee Id",
+      idPlaceholder:"Enter employee id"
+    },
+    "dhyanclinic": {
+      pathref: 46805,
+      prefix: ''
+    },
+    "nanohospitals": {
+      pathref: 128621
+    }
+  },
   UIS3PATH: "https://jaldeeuiscale.s3.ap-south-1.amazonaws.com/",
   // UIS3PATH: "https://jaldeeuitest.s3.ap-south-1.amazonaws.com/",
   // UIS3PATH: "https://jaldeeui.s3.ap-south-1.amazonaws.com/",
