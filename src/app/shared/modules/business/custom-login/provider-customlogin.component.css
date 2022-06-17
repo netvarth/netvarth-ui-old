@@ -220,6 +220,7 @@
 
   .login.login-3 .login-aside .login-logo {
     text-align: center;
+    margin-bottom: 0 !important;
   }
 
   .login.login-3 .login-aside .wizard-nav {
@@ -463,7 +464,7 @@ input, button, select, optgroup, textarea {
 .text-primary {
   color: #1e4079!important;
 }
-@media (max-width: 575.98px) {
+@media (max-width: 768px) {
   .login.login-3 .login-aside .aside-img {
     /* min-height: 300px !important;
     background-size: 350px; */

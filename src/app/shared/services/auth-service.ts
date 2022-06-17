@@ -121,7 +121,7 @@ export class AuthService {
     logoutFromJaldee() {
         const promise = new Promise<void>((resolve, reject) => {
             const isProvider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
-            const isCustomProvider = this.lStorageService.getitemfromLocalStorage('maben');
+            const isCustomProvider = this.lStorageService.getitemfromLocalStorage('busLoginId');
             console.log("isProvider:" + isProvider);
             const customId = this.lStorageService.getitemfromLocalStorage('customId');
             const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
@@ -129,7 +129,7 @@ export class AuthService {
                 this.providerLogout().then(
                     () => {
                         if (isCustomProvider) {
-                            this.router.navigate(['business', 'maben', 'login']);
+                            this.router.navigate(['business', isCustomProvider, 'login']);
                         } else {
                             this.router.navigate(['business', 'login']);
                         }                        

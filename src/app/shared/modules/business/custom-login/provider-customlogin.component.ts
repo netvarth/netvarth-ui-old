@@ -43,6 +43,12 @@ export class ProviderCustomLoginComponent implements OnInit {
   qParams;
   carouselTwo;
   evnt;
+  busLoginId: any;
+  logoUrl: string;
+  graphicsUrl: string;
+  prefix = '';
+  idCaption = 'Mobile/Email';
+  idPlaceHolder = 'Enter Mobile/Email';
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     private router: Router,
@@ -60,10 +66,11 @@ export class ProviderCustomLoginComponent implements OnInit {
     private groupService: GroupStorageService,
     private authService: AuthService
   ) {
-  
+
     this.titleService.setTitle('Jaldee Business - Login');
-    this.activateRoute.queryParams.subscribe(data => {
+    this.activateRoute.params.subscribe(data => {
       this.qParams = data;
+      this.busLoginId = this.qParams.id;
     });
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -119,7 +126,27 @@ export class ProviderCustomLoginComponent implements OnInit {
   cancelForgotPassword() {
     this.step = 1;
   }
+
+  initPageValues() {
+    console.log(this.busLoginId);
+    console.log(projectConstantsLocal.CUSTOM_PROV_APP);
+    if (projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId] && projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['pathref']) {
+      this.logoUrl = projectConstantsLocal.UIS3PATH + projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['pathref'] + '/plogo.png' ;
+      console.log(this.logoUrl);
+      this.graphicsUrl = projectConstantsLocal.UIS3PATH + projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['pathref'] + '/pgraphics.png';
+      this.prefix = projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['prefix'];
+    } else {
+      this.logoUrl = 'assets/images/jaldee-businesslogo.png';
+      this.graphicsUrl = 'assets/images/login_pge.png';
+    } if (projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId] && projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['idCaption']) {
+      this.idCaption = projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['idCaption'];
+      this.idPlaceHolder = projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['idPlaceholder'];
+    }
+  }
+
   ngOnInit() {
+    
+    this.initPageValues();
     this.createForm();
     if (this.countryCodes.length !== 0) {
       this.selectedCountryCode = this.countryCodes[0].value;
@@ -155,7 +182,7 @@ export class ProviderCustomLoginComponent implements OnInit {
     });
 
   }
- 
+
 
   onSubmit(data) {
     // console.log("onsubmit function:",data)
@@ -174,7 +201,7 @@ export class ProviderCustomLoginComponent implements OnInit {
         return;
       }
     }
-    const loginId = pN + '@maben.in';
+    const loginId = pN + this.prefix;
     const post_data = {
       'countryCode': this.selectedCountryCode,
       'loginId': loginId,
@@ -191,7 +218,7 @@ export class ProviderCustomLoginComponent implements OnInit {
           const encrypted = this.shared_services.set(this.password, projectConstantsLocal.KEY);
           this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
           this.lStorageService.setitemonLocalStorage('bpwd', data.password);
-          this.lStorageService.setitemonLocalStorage('maben',true);
+          this.lStorageService.setitemonLocalStorage('busLoginId', this.busLoginId);
           if (this.qParams && this.qParams['src']) {
             if (this.qParams['src'] && this.lStorageService.getitemfromLocalStorage(this.qParams['src'])) {
               this.router.navigateByUrl(this.lStorageService.getitemfromLocalStorage(this.qParams['src']));
@@ -221,11 +248,8 @@ export class ProviderCustomLoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       emailId: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_SPACE_NOT_ALLOWED)])],
       password: ['', Validators.compose([Validators.required])]
-      
-    });
-    // this.loginForm.get('emailId').setValue('@maben.in')
-  
 
+    });
   }
   showError() {
     this.show_error = true;
