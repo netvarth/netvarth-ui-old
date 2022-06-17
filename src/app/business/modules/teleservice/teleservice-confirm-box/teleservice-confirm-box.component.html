@@ -15,12 +15,14 @@
     <button tabindex="-1" (click)="amReady()" class="cs-btn bt1 btn-grn txt-trans-none">Yes I am ready</button>
   </a>
   <a *ngIf="(callingModes === 'Phone')" target="_blank" [href]="'tel:' + starting_url">
-    <button tabindex="-1" (click)="amReady()" class="cs-btn bt1 btn-grn txt-trans-none">Yes I am ready</button>
+    <button tabindex="-1" (click)="amReady()" class="cs-btn bt1 btn-grn txt-trans-none buttonSize">Yes I am ready</button>
   </a>
   <a  *ngIf="(callingModes !== 'Phone' && callingModes !== 'VideoCall')" target="_blank" [href]="starting_url">
     <button tabindex="-1" (click)="amReady()" class="cs-btn bt1 btn-grn txt-trans-none">Yes I am ready</button>
   </a>
-  <button tabindex="2" mat-dialog-close class="cs-btn bt1 reddelete txt-trans-none">No I am not ready</button>
+  <div>
+    <button tabindex="2" mat-dialog-close class="cs-btn bt1 reddelete txt-trans-none">No I am not ready</button>
+  </div>
 </div>
 <!-- End Meeting -->
 <div mat-dialog-actions class="paddingtop actionbtns" *ngIf="data.endmsg">

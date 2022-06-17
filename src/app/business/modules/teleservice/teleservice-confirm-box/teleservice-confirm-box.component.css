@@ -16,3 +16,10 @@
 .mat-dialog-actions.actionbtns button{
   padding: 10px 25px 10px 25px !important;
 }
+@media(max-width:401px){
+  .buttonSize{
+    width: 169px;
+    margin-bottom: 10px;
+
+  }
+}
