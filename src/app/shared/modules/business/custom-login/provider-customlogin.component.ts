@@ -134,7 +134,9 @@ export class ProviderCustomLoginComponent implements OnInit {
       this.logoUrl = projectConstantsLocal.UIS3PATH + projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['pathref'] + '/plogo.png' ;
       console.log(this.logoUrl);
       this.graphicsUrl = projectConstantsLocal.UIS3PATH + projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['pathref'] + '/pgraphics.png';
-      this.prefix = projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['prefix'];
+      if (projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId] && projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['prefix']) {
+        this.prefix = projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['prefix'];
+      }     
     } else {
       this.logoUrl = 'assets/images/jaldee-businesslogo.png';
       this.graphicsUrl = 'assets/images/login_pge.png';
