@@ -40,6 +40,7 @@ export class ViewTaskComponent implements OnInit {
   auditlog_details: any = [];
   load_complete = 0;
   api_loading = true;
+  api_loading1=true;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   auditStatus = 1;
@@ -178,6 +179,7 @@ export class ViewTaskComponent implements OnInit {
 
   ngOnInit(): void {
    this.api_loading = false;
+   this.api_loading1=false
    this.taskDetailsForm= this.createTaskFormBuilder.group({
     taskTitle:[],
     taskDescription:[],
@@ -1169,10 +1171,10 @@ export class ViewTaskComponent implements OnInit {
       //   this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { 'panelClass': 'snackbarnormal' });
       // }, 5000);
       if(res === 'close'){
-        this.api_loading = false;
+        this.api_loading1 = false;
       }
       else{
-        this.api_loading = true;
+        this.api_loading1 = true;
         setTimeout(() => {
           if(this.activityType==='UpdateFollowUP'){
             this.getEnquiryDetailsRefresh()
@@ -1183,13 +1185,13 @@ export class ViewTaskComponent implements OnInit {
          
           
           // this.ngOnInit();
-          this.api_loading = false;
+          this.api_loading1 = false;
           this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { 'panelClass': 'snackbarnormal' });
         }, 5000);
       }
     });
 
-    this.getTaskDetails();
+    // this.getTaskDetails();
   }
   getTaskDetails() {
     this.crmService.getTaskDetails(this.taskUid).subscribe(data => {

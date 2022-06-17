@@ -165,10 +165,11 @@
   </div>
   <div style="text-align: center;margin-top: 15px;">
     <ng-container>
+      <!-- {{leadInfo.status | json}} -->
       <div class=" mgn-bt-20 mgn-up-10" style="display: flex; justify-content: center; gap: 10px;">
         <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goBack()">Cancel</button>
         <button class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="updateKyc()"
-          *ngIf="leadInfo.status.name!=='Login' && leadInfo.status.name==='Credit Recommendation'">Save</button>
+          *ngIf="leadInfo.status.name==='Login' || leadInfo.status.name !=='Login Verified'">Save</button>
         <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #D7FEE9 !important;
          border: 1.0803px solid #D7FFE9 !important;color: #38C984 !important;"
           (click)="ProceedStatus()">{{leadInfo.status.name==='Sales Verified' ? 'Login': 'Proceed'}}</button>
