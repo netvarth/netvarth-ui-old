@@ -33,7 +33,9 @@
 
           <label *ngIf="customerDetails.phoneNo && customerDetails.phoneNo!=' '">
             <i class="fa fa-mobile" style="font-size:20px!important" aria-hidden="true"></i>
-          </label> &nbsp;&nbsp;<span *ngIf="customerDetails.countryCode">{{customerDetails.countryCode ? customerDetails.countryCode : '+91'}} </span> <span *ngIf="customerDetails.phoneNo">{{customerDetails.phoneNo}} </span><br>
+          </label> &nbsp;&nbsp;<span *ngIf="customerDetails.countryCode">{{customerDetails.countryCode ?
+            customerDetails.countryCode : '+91'}} </span> <span
+            *ngIf="customerDetails.phoneNo">{{customerDetails.phoneNo}} </span><br>
 
           <label *ngIf="customerDetails.id">
             <i class="fa fa-id-badge" aria-hidden="true"></i>
@@ -258,8 +260,9 @@
 
           <label *ngIf="customerDetails.phoneNo">
             <i class="fa fa-mobile" style="font-size:20px!important" aria-hidden="true"></i>
-          </label> &nbsp;&nbsp;<span *ngIf="customerDetails.phoneNo">{{customerDetails.phoneNo}} </span><br>
-
+          </label> &nbsp;&nbsp;<span *ngIf="customerDetails.countryCode">
+            {{customerDetails.countryCode ? customerDetails.countryCode : '+91'}} </span> <span
+            *ngIf="customerDetails.phoneNo">{{customerDetails.phoneNo}} </span><br>
           <label *ngIf="customerDetails.id">
             <i class="fa fa-id-badge" aria-hidden="true"></i>
           </label> &nbsp;&nbsp;<span *ngIf="customerDetails.id">{{customerDetails.id}} </span><br>

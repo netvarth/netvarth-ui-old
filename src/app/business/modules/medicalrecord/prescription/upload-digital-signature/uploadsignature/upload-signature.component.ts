@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmBoxComponent } from '../../../../../shared/confirm-box/confirm-box.component';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-upload-signature',
@@ -33,7 +34,7 @@ export class UploadSignatureComponent implements OnInit {
   };
   showSave = true;
   sharedialogRef;
-  uploadImages: any =[] ;
+  uploadImages: any = [];
 
   upload_status = 'Added to list';
   disable = false;
@@ -48,20 +49,21 @@ export class UploadSignatureComponent implements OnInit {
   bookingType: any;
   patientId: any;
   removesignuploadeddialogRef;
-  
+
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,
     private activatedRoot: ActivatedRoute,
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
-    private wordProcessor: WordProcessor
-    ) {
-      const medicalrecordId = this.activatedRoot.parent.snapshot.params['mrId'];
-      this.mrId = parseInt(medicalrecordId, 0);
-      this.patientId = this.activatedRoot.parent.snapshot.params['id'];
-      this.bookingType = this.activatedRoot.parent.snapshot.params['type'];
-      this.bookingId = this.activatedRoot.parent.snapshot.params['uid'];
+    private wordProcessor: WordProcessor,
+    private location: Location,
+  ) {
+    const medicalrecordId = this.activatedRoot.parent.snapshot.params['mrId'];
+    this.mrId = parseInt(medicalrecordId, 0);
+    this.patientId = this.activatedRoot.parent.snapshot.params['id'];
+    this.bookingType = this.activatedRoot.parent.snapshot.params['type'];
+    this.bookingId = this.activatedRoot.parent.snapshot.params['uid'];
     this.activatedRoot.queryParams.subscribe(queryParams => {
       if (queryParams.providerId) {
         this.providerId = queryParams.providerId;
@@ -74,14 +76,16 @@ export class UploadSignatureComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadsign' ]);
+    // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadsign' ]);
+    this.location.back();
+
   }
 
   filesSelected(event) {
     const input = event.target.files;
     if (input) {
       for (const file of input) {
-       if (projectConstantsLocal.IMAGE_FORMATS.indexOf(file.type) === -1) {
+        if (projectConstantsLocal.IMAGE_FORMATS.indexOf(file.type) === -1) {
           this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
         } else if (file.size > projectConstantsLocal.IMAGE_MAX_SIZE) {
           this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
@@ -117,7 +121,7 @@ export class UploadSignatureComponent implements OnInit {
         this.selectedMessage.files.splice(index, 1);
       }
     });
-    
+
   }
 
 

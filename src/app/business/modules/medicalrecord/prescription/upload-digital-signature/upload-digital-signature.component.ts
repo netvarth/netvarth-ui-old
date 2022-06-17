@@ -10,6 +10,7 @@ import { ConfirmBoxComponent } from '../../../../shared/confirm-box/confirm-box.
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-upload-digital-signature',
@@ -62,6 +63,7 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
+    private location: Location,
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
@@ -121,7 +123,9 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
   drawStart() {
   }
   goBack() {
-    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+    // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+    this.location.back();
+
   }
   uploadSignature() {
     const navigationExtras: NavigationExtras = {
@@ -142,7 +146,7 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
         .subscribe((data: any) => {
           this.loading = false;
           this.digitalSign = true;
-          if(data && data !== null){
+          if (data && data !== null) {
             this.selectedMessage.files.push(data);
           }
         },

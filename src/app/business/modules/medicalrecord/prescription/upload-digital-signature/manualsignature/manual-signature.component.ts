@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SignaturePad } from 'angular2-signaturepad';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-manual-signature',
@@ -44,7 +45,7 @@ export class ManualSignatureComponent implements OnInit {
   };
   showSave = true;
   sharedialogRef;
-  uploadImages: any =[] ;
+  uploadImages: any = [];
 
   upload_status = 'Added to list';
   disable = false;
@@ -63,18 +64,19 @@ export class ManualSignatureComponent implements OnInit {
   small_device_display = false;
   constructor(public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
+    private location: Location,
     private router: Router,
     private activatedRoot: ActivatedRoute,
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor
-   // private medicalrecord_service: MedicalrecordService
-    ) {
-      const medicalrecordId = this.activatedRoot.parent.snapshot.params['mrId'];
-      this.mrId = parseInt(medicalrecordId, 0);
-      this.patientId = this.activatedRoot.parent.snapshot.params['id'];
-      this.bookingType = this.activatedRoot.parent.snapshot.params['type'];
-      this.bookingId = this.activatedRoot.parent.snapshot.params['uid'];
+    // private medicalrecord_service: MedicalrecordService
+  ) {
+    const medicalrecordId = this.activatedRoot.parent.snapshot.params['mrId'];
+    this.mrId = parseInt(medicalrecordId, 0);
+    this.patientId = this.activatedRoot.parent.snapshot.params['id'];
+    this.bookingType = this.activatedRoot.parent.snapshot.params['type'];
+    this.bookingId = this.activatedRoot.parent.snapshot.params['uid'];
     this.activatedRoot.queryParams.subscribe(queryParams => {
       if (queryParams.providerId) {
         this.providerId = queryParams.providerId;
@@ -85,7 +87,7 @@ export class ManualSignatureComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
-    console.log('window widht',window.innerWidth)
+    console.log('window widht', window.innerWidth)
     if (this.screenWidth <= 780) {
       this.small_device_display = true;
     } else {
@@ -101,7 +103,7 @@ export class ManualSignatureComponent implements OnInit {
     // this.signaturePad is now available
     this.signaturePad.set('minWidth', 5); // set signature_pad options at runtime
     this.signaturePad.clear(); // invoke functions from signature_pad API
-   
+
   }
 
   drawComplete() {
@@ -110,13 +112,13 @@ export class ManualSignatureComponent implements OnInit {
     const propertiesDetob = {};
     let i = 0;
     const blob = this.sharedfunctionObj.b64toBlobforSign(this.signaturePad.toDataURL());
-       const submit_data: FormData = new FormData();
-      submit_data.append('files', blob, signName);
-      const properties = {
-        'caption': this.selectedMessage.caption[i] || ''
-      };
-      propertiesDetob[i] = properties;
-      i++;
+    const submit_data: FormData = new FormData();
+    submit_data.append('files', blob, signName);
+    const properties = {
+      'caption': this.selectedMessage.caption[i] || ''
+    };
+    propertiesDetob[i] = properties;
+    i++;
     const propertiesDet = {
       'propertiesMap': propertiesDetob
     };
@@ -125,7 +127,7 @@ export class ManualSignatureComponent implements OnInit {
     if (this.providerId) {
       this.uploadMrDigitalsign(this.providerId, submit_data);
     }
- 
+
   }
   clearSign() {
     this.signaturePad.clear();
@@ -135,7 +137,9 @@ export class ManualSignatureComponent implements OnInit {
     this.sign = false;
   }
   goBack() {
-    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadsign' ]);
+    // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadsign' ]);
+    this.location.back();
+
   }
 
   uploadMrDigitalsign(id, submit_data) {
@@ -149,5 +153,5 @@ export class ManualSignatureComponent implements OnInit {
         });
   }
 
- 
+
 }
