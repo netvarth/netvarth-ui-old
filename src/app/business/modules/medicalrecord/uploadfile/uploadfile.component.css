@@ -1,0 +1,15 @@
+.text-primary {
+    color: #1E4079 !important;
+}
+
+.cdk-global-overlay-wrapper {
+    display: flex;
+    position: absolute;
+    z-index: 1000;
+    overflow: auto;
+    pointer-events: auto;
+}
+
+.fa-times {
+    color: red !important;
+}
