@@ -23,6 +23,7 @@ export class MedicalrecordService {
   // back_nav = this.back_type.asObservable();
 
   drugList: any = [];
+  viewVisitDetails: boolean;
 
   constructor(private provider_services: ProviderServices) {
   }

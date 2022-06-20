@@ -104,7 +104,7 @@ export class MedicalrecordComponent implements OnInit {
   uploadfiledialogRef;
   orderstatus: any;
   loading_table: boolean;
-  viewVisitDetails: boolean;
+  viewVisitDetails: boolean = this.medicalService.viewVisitDetails;
   someSubscription: any;
   uploadedfiledialogRef: any;
   constructor(private router: Router,
@@ -179,6 +179,7 @@ export class MedicalrecordComponent implements OnInit {
       ];
 
     });
+    console.log("viewVisitDetails :", this.medicalService.viewVisitDetails)
 
 
   }
@@ -430,7 +431,8 @@ export class MedicalrecordComponent implements OnInit {
 
     const back_type = this.medicalService.getReturnTo();
     if (type_from === 'medical') {
-      this.viewVisitDetails = false;
+      this.medicalService.viewVisitDetails = false;
+      this.viewVisitDetails = false
       this.location.back();
     }
     else {
@@ -615,7 +617,10 @@ export class MedicalrecordComponent implements OnInit {
       const bookingId = visitDetails.waitlist.ynwUuid;
       const bookingType = 'TOKEN';
       //  this.dialogRef.close();
-      this.viewVisitDetails = true;
+      this.medicalService.viewVisitDetails = true;
+      this.viewVisitDetails = this.medicalService.viewVisitDetails
+      console.log(this.medicalService.viewVisitDetails)
+
       this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId]);
 
     } else if (visitDetails.appointmnet) {
@@ -630,7 +635,10 @@ export class MedicalrecordComponent implements OnInit {
       const bookingId = visitDetails.appointmnet.uid;
       const bookingType = 'APPT';
       //  this.dialogRef.close();
-      this.viewVisitDetails = true;
+      this.medicalService.viewVisitDetails = true;
+      this.viewVisitDetails = this.medicalService.viewVisitDetails
+      console.log(this.medicalService.viewVisitDetails)
+
       this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId]);
 
 
@@ -642,7 +650,9 @@ export class MedicalrecordComponent implements OnInit {
       const bookingId = 0;
       const bookingType = 'FOLLOWUP';
       // this.dialogRef.close();
-      this.viewVisitDetails = true;
+      this.medicalService.viewVisitDetails = true;
+      this.viewVisitDetails = this.medicalService.viewVisitDetails
+      console.log(this.medicalService.viewVisitDetails)
       console.log("visit Details", visitDetails)
 
       this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId]);
