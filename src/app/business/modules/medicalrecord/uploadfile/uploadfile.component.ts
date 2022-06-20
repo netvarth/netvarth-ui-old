@@ -1,9 +1,9 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, Inject } from '@angular/core';
 import { MedicalrecordService } from '../medicalrecord.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProviderServices } from '../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { ActivatedRoute, NavigationExtras } from '@angular/router';
+import { NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
@@ -12,12 +12,14 @@ import { ShowuploadfileComponent } from './showuploadfile/showuploadfile.compone
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ConfirmBoxComponent } from '../../../../shared/components/confirm-box/confirm-box.component';
 import { SubSink } from 'subsink';
-import { Location } from '@angular/common';
+// import { Location } from '@angular/common';
 
 
 @Component({
   selector: 'app-upload-file',
-  templateUrl: './uploadfile.component.html'
+  templateUrl: './uploadfile.component.html',
+  styleUrls: ['./uploadfile.component.css']
+
 })
 export class UploadFileComponent implements OnInit {
 
@@ -67,14 +69,16 @@ export class UploadFileComponent implements OnInit {
   fileviewdialogRef: any;
   removefiledialogRef: any;
   private subscriptions = new SubSink();
-  constructor(public sharedfunctionObj: SharedFunctions,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+    public uploadedDialogref: MatDialogRef<UploadFileComponent>,
+    public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
-    private location: Location,
+    // private location: Location,
     // private router: Router,
     public dialog: MatDialog,
-    private activatedRoute: ActivatedRoute,
+    // private activatedRoute: ActivatedRoute,
     private medicalrecord_service: MedicalrecordService) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
@@ -101,11 +105,18 @@ export class UploadFileComponent implements OnInit {
   }
 
   ngOnInit() {
-    const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
-    this.mrId = parseInt(medicalrecordId, 0);
-    this.patientId = this.activatedRoute.parent.snapshot.params['id'];
-    this.bookingType = this.activatedRoute.parent.snapshot.params['type'];
-    this.bookingId = this.activatedRoute.parent.snapshot.params['uid'];
+
+    // const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
+    // this.mrId = parseInt(medicalrecordId, 0);
+    // this.patientId = this.activatedRoute.parent.snapshot.params['id'];
+    // this.bookingType = this.activatedRoute.parent.snapshot.params['type'];
+    // this.bookingId = this.activatedRoute.parent.snapshot.params['uid'];
+
+    this.mrId = this.data.mrid;
+    console.log("this.data.mrId", this.data.mrid)
+    this.patientId = this.data.patientid;
+    this.bookingType = this.data.bookingtype;
+    this.bookingId = this.data.bookingid;
     if (this.mrId !== 0) {
       this.getMedicalRecordUsingId(this.mrId);
     }
@@ -131,7 +142,8 @@ export class UploadFileComponent implements OnInit {
   }
   goBack() {
     // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
-    this.location.back();
+    // this.location.back();
+    this.uploadedDialogref.close();
 
   }
   deleteFile(file) {

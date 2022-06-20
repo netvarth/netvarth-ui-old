@@ -16,6 +16,7 @@ import { GroupStorageService } from '../../../shared/services/group-storage.serv
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { MrfileuploadpopupComponent } from './uploadfile/mrfileuploadpopup/mrfileuploadpopup.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { UploadFileComponent } from './uploadfile/uploadfile.component';
 
 @Component({
   selector: 'app-medicalrecord',
@@ -105,6 +106,7 @@ export class MedicalrecordComponent implements OnInit {
   loading_table: boolean;
   viewVisitDetails: boolean;
   someSubscription: any;
+  uploadedfiledialogRef: any;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -484,10 +486,10 @@ export class MedicalrecordComponent implements OnInit {
 
 
   }
-  uploadedFileforMr() {
-    const mrId = this.mrId;
-    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', mrId, 'fileupload']);
-  }
+  // uploadedFileforMr() {
+  //   const mrId = this.mrId;
+  //   this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', mrId, 'fileupload']);
+  // }
 
 
   isShowtable() {
@@ -524,7 +526,25 @@ export class MedicalrecordComponent implements OnInit {
 
 
 
-
+  uploadedFileforMr() {
+    this.uploadedfiledialogRef = this.dialog.open(UploadFileComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        mrid: this.mrId,
+        patientid: this.patientId,
+        bookingid: this.bookingId,
+        bookingtype: this.bookingType
+      }
+    });
+    this.uploadedfiledialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+      if (result) {
+        this.getMedicalRecordUsingId(result);
+      }
+    });
+  }
 
 
 
