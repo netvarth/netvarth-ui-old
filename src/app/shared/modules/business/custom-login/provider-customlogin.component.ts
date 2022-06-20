@@ -130,24 +130,25 @@ export class ProviderCustomLoginComponent implements OnInit {
   initPageValues() {
     console.log(this.busLoginId);
     console.log(projectConstantsLocal.CUSTOM_PROV_APP);
+    if (projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId] && projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['prefix']) {
+      this.prefix = projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['prefix'];
+    }
     if (projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId] && projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['pathref']) {
-      this.logoUrl = projectConstantsLocal.UIS3PATH + projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['pathref'] + '/plogo.png' ;
+      this.logoUrl = projectConstantsLocal.UIS3PATH + projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['pathref'] + '/plogo.png';
       console.log(this.logoUrl);
       this.graphicsUrl = projectConstantsLocal.UIS3PATH + projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['pathref'] + '/pgraphics.png';
-      if (projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId] && projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['prefix']) {
-        this.prefix = projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['prefix'];
-      }     
     } else {
       this.logoUrl = 'assets/images/jaldee-businesslogo.png';
       this.graphicsUrl = 'assets/images/login_pge.png';
-    } if (projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId] && projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['idCaption']) {
+    }
+    if (projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId] && projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['idCaption']) {
       this.idCaption = projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['idCaption'];
       this.idPlaceHolder = projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['idPlaceholder'];
     }
   }
 
   ngOnInit() {
-    
+
     this.initPageValues();
     this.createForm();
     if (this.countryCodes.length !== 0) {

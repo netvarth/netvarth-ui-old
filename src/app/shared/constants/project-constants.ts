@@ -1204,11 +1204,12 @@ export const projectConstantsLocal = {
     "maben": {
       prefix: "maben@in",
       idCaption:"Employee Id",
-      idPlaceholder:"Enter employee id"
+      idPlaceholder:"Enter employee id",
+      pathref:128519
     },
     "dhyanclinic": {
       pathref: 46805,
-      prefix: ''
+      prefix: "dhyan@in"
     },
     "nanohospitals": {
       pathref: 128621
