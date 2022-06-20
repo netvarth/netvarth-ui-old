@@ -383,10 +383,12 @@ export class DonationLinkComponent implements OnInit {
               _this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
             })
       } else if (response.STATUS == 'TXN_FAILURE') {
+        if (response.error && response.error.description) {
+          this.snackbarService.openSnackBar(response.error.description, { 'panelClass': 'snackbarerror' });
+        } 
         _this.finishDonation(false);
       }
     } else {
-
       if (response.STATUS == 'TXN_SUCCESS') {
         _this.paytmService.updatePaytmPay(payload, accountId)
           .then((data) => {
@@ -398,6 +400,7 @@ export class DonationLinkComponent implements OnInit {
               _this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
             })
       } else if (response.STATUS == 'TXN_FAILURE') {
+        this.snackbarService.openSnackBar(response.RESPMSG, { 'panelClass': 'snackbarerror' });
         _this.finishDonation(false);
       }
     }

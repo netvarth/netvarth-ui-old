@@ -1196,6 +1196,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             // this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
                         })
             } else if (response.STATUS == 'TXN_FAILURE') {
+                if (response.error && response.error.description) {
+                    this.snackbarService.openSnackBar(response.error.description, { 'panelClass': 'snackbarerror' });
+                  } 
                 this.finishCheckin(false);
             }
         } else {

@@ -403,6 +403,9 @@ export class PaymentLinkComponent implements OnInit {
               this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
             })
       } else if (response.STATUS == 'TXN_FAILURE') {
+        if (response.error && response.error.description) {
+          this.snackbarService.openSnackBar(response.error.description, { 'panelClass': 'snackbarerror' });
+        }        
         this.paymentCompleted(false);
       }
     } else {

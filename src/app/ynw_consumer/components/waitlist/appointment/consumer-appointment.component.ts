@@ -2059,8 +2059,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         // this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
                     })
             } else if (response.STATUS == 'TXN_FAILURE') {
-                console.log("Repsonse", response);
-                // this.snackbarService.openSnackBar(response.RESPMSG, { 'panelClass': 'snackbarerror' });
+                if (response.error && response.error.description) {
+                    this.snackbarService.openSnackBar(response.error.description, { 'panelClass': 'snackbarerror' });
+                  } 
                 this.finishAppointment(false);
             }
         } else {

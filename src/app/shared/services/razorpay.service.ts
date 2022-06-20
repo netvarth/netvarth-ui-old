@@ -184,6 +184,21 @@ export class RazorpayService {
     this.loadRazorpayScript(pData, referrer).onload = () => {
       const rzp = new this.nativeWindow.Razorpay(options);
       rzp.open();
+      rzp.on('payment.failed', function (response) {
+        let failureResponse = {
+          STATUS: 'TXN_FAILURE',
+          SRC: 'razorPay'
+        }
+        failureResponse['error'] = response.error; 
+        referrer.transactionCompleted(failureResponse, null, accountId);
+        // alert(response.error.code);
+        // alert(response.error.description);
+        // alert(response.error.source);
+        // alert(response.error.step);
+        // alert(response.error.reason);
+        // alert(response.error.metadata.order_id);
+        // alert(response.error.metadata.payment_id);
+      });
       razorInterval = setTimeout(() => {
         rzp.close();
         location.reload();

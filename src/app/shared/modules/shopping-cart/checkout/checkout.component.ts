@@ -1830,6 +1830,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
               // this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
             })
       } else if (response.STATUS == 'TXN_FAILURE') {
+        if (response.error && response.error.description) {
+          this.snackbarService.openSnackBar(response.error.description, { 'panelClass': 'snackbarerror' });
+        } 
         this.finishCheckout(false);
       }
     } else {
@@ -1844,6 +1847,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
               // this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
             })
       } else if (response.STATUS == 'TXN_FAILURE') {
+        this.snackbarService.openSnackBar(response.RESPMSG, { 'panelClass': 'snackbarerror' });
         this.finishCheckout(false);
       }
     }
