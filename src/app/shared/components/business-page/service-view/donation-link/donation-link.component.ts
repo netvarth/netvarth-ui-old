@@ -5,7 +5,7 @@ import { SharedServices } from '../../../../services/shared-services';
 import { Messages } from '../../../../constants/project-messages';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RazorpayService } from '../../../../services/razorpay.service';
-import { WindowRefService } from '../../../../services/windowRef.service';
+// import { WindowRefService } from '../../../../services/windowRef.service';
 import { WordProcessor } from '../../../../services/word-processor.service';
 import { PaytmService } from '../../../../services/paytm.service';
 import { SnackbarService } from '../../../../services/snackbar.service';
@@ -153,7 +153,7 @@ export class DonationLinkComponent implements OnInit {
     public datastorage: CommonDataStorageService,
     public _sanitizer: DomSanitizer,
     public razorpayService: RazorpayService,
-    public winRef: WindowRefService,
+    // public winRef: WindowRefService,
     private paytmService: PaytmService,
     private cdRef: ChangeDetectorRef,
     private dateTimeProcessor: DateTimeProcessor,

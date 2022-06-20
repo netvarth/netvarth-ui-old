@@ -19,7 +19,7 @@ import { ConfirmBoxLocationComponent } from './confirm-box-location/confirm-box-
 @Component({
   selector: 'app-user-service-change',
   templateUrl: './user-service-change.component.html',
-  styleUrls: ['./user-service-change.component.css', '../../../../assets/css/style.bundle.css', '../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
+  styleUrls: ['./user-service-change.component.css', '../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 
 export class UserServiceChnageComponent implements OnInit {

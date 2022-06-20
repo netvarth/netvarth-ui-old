@@ -27,10 +27,8 @@ import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegenerat
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
-// import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
 import { AuthService } from '../../services/auth-service';
 import { CheckavailabilityComponent } from '../checkavailability/checkavailability.component';
-// import { CheckavailabilityComponent } from '../checkavailability/checkavailability.component';
 
 @Component({
   selector: 'app-businessprovideruser-page',
@@ -322,7 +320,6 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
     public wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private domainConfigService: DomainConfigGenerator,
-    // private modalService: BsModalService,
     private dateTimeProcessor: DateTimeProcessor,
     private s3Processor: S3UrlProcessor,
     private authService: AuthService,

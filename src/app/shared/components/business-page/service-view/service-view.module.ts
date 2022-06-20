@@ -17,7 +17,6 @@ import { ConsumerJoinModule } from '../../../../ynw_consumer/components/consumer
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Routes, RouterModule } from '@angular/router';
 import { SignupModule } from '../../signup/signup.module';
-import { CarouselModule } from 'ngx-owl-carousel-o';
 
 import { VirtualFieldsModule } from '../../../../ynw_consumer/components/virtualfields/virtualfields.module';
 import { DomainConfigGenerator } from '../../../../shared/services/domain-config-generator.service';
@@ -28,7 +27,6 @@ const routes: Routes = [
     imports: [
         CommonModule,
         HeaderModule,
-        CarouselModule,
         FormsModule,
         RatingStarModule,
         CapitalizeFirstPipeModule,

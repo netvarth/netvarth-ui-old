@@ -8,8 +8,6 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { RouterModule, Routes } from "@angular/router";
 import { GalleryModule } from "@ks89/angular-modal-gallery";
 import { TranslateModule } from "@ngx-translate/core";
-import { OwlModule } from "ngx-owl-carousel";
-import { CarouselModule } from "ngx-owl-carousel-o";
 import { Nl2BrPipeModule } from "nl2br-pipe";
 import { CardModule } from "../../../shared/components/card/card.module";
 import { HeaderModule } from "../../../shared/modules/header/header.module";
@@ -37,11 +35,9 @@ const routes: Routes = [
         MatOptionModule,
         MatSelectModule,
         HeaderModule,
-        CarouselModule,
         SafeHtmlModule,
         CardModule,
         TranslateModule,
-        OwlModule,
         ServiceDisplayModule,
         [RouterModule.forChild(routes)]
     ],

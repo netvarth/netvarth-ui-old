@@ -4,18 +4,17 @@ import { NgModule, APP_INITIALIZER, ErrorHandler, NO_ERRORS_SCHEMA, CUSTOM_ELEME
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServiceMeta } from './shared/services/service-meta';
 import { ExtendHttpInterceptor } from './shared/config/extendhttp.interceptor';
-import {  MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { AppComponent } from './app.component';
 import { SearchDetailServices } from './shared/components/search-detail/search-detail-services.service';
-import { AuthGuardConsumer, AuthGuardProvider, AuthGuardHome, AuthGuardLogin} from './shared/guard/auth.guard';
+import { AuthGuardConsumer, AuthGuardProvider, AuthGuardHome, AuthGuardLogin } from './shared/guard/auth.guard';
 import { SharedServices } from './shared/services/shared-services';
 import { SharedFunctions } from './shared/functions/shared-functions';
-import {  MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormMessageDisplayService } from './shared/modules/form-message-display/form-message-display.service';
-import {  DatePipe, LocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
+import { DatePipe, LocationStrategy, PathLocationStrategy } from '../../node_modules/@angular/common';
 import { GlobalService } from './shared/services/global-service';
-import { WindowRefService } from './shared/services/windowRef.service';
 import { ProviderDataStorageService } from './business/services/provider-datastorage.service';
 import { GlobalErrorHandler } from './shared/modules/error-handler/error-handler.component';
 import { SessionStorageService } from './shared/services/session-storage.service';
@@ -27,11 +26,10 @@ import { ErrorMessagingService } from './shared/services/error-message.service';
 import { AuthService } from './shared/services/auth-service';
 import { CommonDataStorageService } from './shared/services/common-datastorage.service';
 import { DateTimeProcessor } from './shared/services/datetime-processor.service';
-import { BsModalService } from 'ngx-bootstrap/modal';
+// import { BsModalService } from 'ngx-bootstrap/modal';
 import { JaldeeTimeService } from './shared/services/jaldee-time-service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { ProviderServices } from './business/services/provider-services.service';
 import { DateFormatPipeModule } from './shared/pipes/date-format/date-format.module';
@@ -58,7 +56,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserAnimationsModule,
     HttpClientModule,
     MatDialogModule,
-    RouterModule,
     AppRoutingModule,
     DateFormatPipeModule,
     MatSnackBarModule,
@@ -77,13 +74,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     ChunkErrorHandler,
     ProviderServices,
     DatePipe,
-    BsModalService,
+    // TranslateService,
+    // BsModalService,
     AuthGuardConsumer,
     AuthGuardProvider,
     AuthGuardHome,
     AuthGuardLogin,
     ServiceMeta,
-    WindowRefService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ExtendHttpInterceptor,

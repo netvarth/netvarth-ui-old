@@ -19,7 +19,7 @@ import { FileService } from '../../../shared/services/file-service';
 @Component({
   selector: 'app-provider-inbox-list',
   templateUrl: './inbox-list.component.html',
-  styleUrls: ['./inbox-list.component.css', '../../../../assets/css/style.bundle.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
+  styleUrls: ['./inbox-list.component.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class BusinessInboxListComponent implements OnInit, OnDestroy {
   user_id;

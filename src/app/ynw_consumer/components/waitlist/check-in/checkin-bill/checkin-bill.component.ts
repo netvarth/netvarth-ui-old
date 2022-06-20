@@ -7,7 +7,7 @@ import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ConsumerServices } from '../../../../../ynw_consumer/services/consumer-services.service';
-import { WindowRefService } from '../../../../../shared/services/windowRef.service';
+// import { WindowRefService } from '../../../../../shared/services/windowRef.service';
 import { RazorpayService } from '../../../../../shared/services/razorpay.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
@@ -151,7 +151,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
         private locationobj: Location,
         @Inject(DOCUMENT) public document,
         public razorpayService: RazorpayService,
-        public winRef: WindowRefService,
+        // public winRef: WindowRefService,
         private cdRef: ChangeDetectorRef,
         private location: Location,
         private s3Processor: S3UrlProcessor,

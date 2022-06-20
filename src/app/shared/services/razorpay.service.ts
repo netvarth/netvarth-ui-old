@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { WindowRefService } from './windowRef.service';
 import { SharedServices } from './shared-services';
 import { SharedFunctions } from '../functions/shared-functions';
 
@@ -15,7 +14,6 @@ export class RazorpayService {
   { method: "upi" }, { method: "wallet" }];
 
   constructor(
-    public winRef: WindowRefService,
     public sharedServices: SharedServices,
     public shared_functions: SharedFunctions
   ) { }
@@ -71,7 +69,7 @@ export class RazorpayService {
 
         resolve(response);
       });
-      const rzp = new self.winRef.nativeWindow.Razorpay(options);
+      const rzp = new self.nativeWindow.Razorpay(options);
       rzp.open();
     });
   }
@@ -183,11 +181,38 @@ export class RazorpayService {
       referrer.transactionCompleted(failureResponse, null, accountId);
     });
 
-    const rzp = new this.winRef.nativeWindow.Razorpay(options);
-    rzp.open();
-    razorInterval = setTimeout(() => {
-      rzp.close();
-      location.reload();
-    }, 540000);
+    this.loadRazorpayScript(pData, referrer).onload = () => {
+      const rzp = new this.nativeWindow.Razorpay(options);
+      rzp.open();
+      razorInterval = setTimeout(() => {
+        rzp.close();
+        location.reload();
+      }, 540000);
+    };
+
+
   }
+  get nativeWindow(): ICustomWindow {
+    return this.getWindow();
+  }
+  getWindow(): any {
+    return window;
+  }
+  public loadRazorpayScript(pData, isfrom): HTMLScriptElement {
+    const url = "https://checkout.razorpay.com/v1/checkout.js";
+    console.log('preparing to load...');
+    let script = document.createElement('script');
+    script.id = pData.orderId;
+    script.src = url;
+    script.type = 'text/javascript';
+    script.async = true;
+    script['crossorigin'] = "anonymous"
+    console.log(isfrom.paytmview);
+    isfrom.paytmview.nativeElement.appendChild(script);
+    return script;
+  }
+}
+export interface ICustomWindow extends Window {
+  Razorpay: any;
+  __custom_global_stuff: string;
 }

@@ -14,7 +14,7 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss', '../../../../assets/css/style.bundle.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
+  styleUrls: ['./menu.component.scss', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class MenuComponent implements OnInit, OnDestroy {
   accountType;

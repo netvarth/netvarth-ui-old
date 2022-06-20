@@ -7,7 +7,7 @@ import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ConsumerServices } from '../../../../../ynw_consumer/services/consumer-services.service';
-import { WindowRefService } from '../../../../../shared/services/windowRef.service';
+// import { WindowRefService } from '../../../../../shared/services/windowRef.service';
 import { RazorpayService } from '../../../../../shared/services/razorpay.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
@@ -150,7 +150,7 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
         private dialog: MatDialog,
         @Inject(DOCUMENT) public document,
         public razorpayService: RazorpayService,
-        public winRef: WindowRefService,
+        // public winRef: WindowRefService,
         private cdRef: ChangeDetectorRef,
         private location: Location,
         private wordProcessor: WordProcessor,

@@ -5,7 +5,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 @Component({
     selector: 'app-not-found',
     templateUrl: './not-found.component.html',
-    styleUrls: ['../../../../assets/css/pages/error/error-3.css','../../../../assets/css/style.bundle.css','../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', './not-found.component.scss']
+    styleUrls: ['../../../../assets/css/pages/error/error-3.css','../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', './not-found.component.scss']
 })
 export class NotFoundComponent {
     constructor(

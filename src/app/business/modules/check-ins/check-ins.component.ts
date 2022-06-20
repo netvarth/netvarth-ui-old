@@ -2912,35 +2912,6 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
   }
-  // getProviders() {
-  //   alert('1')
-  //   alert(this.selected_location.id)
-  //   this.locid = this.selected_location.id;
-  //   alert(this.selected_location.id)
-  //   const _this = this;
-  //   return new Promise<void>(function (resolve) {
-  //     const apiFilter = {};
-  //     apiFilter['userType-eq'] = 'PROVIDER';
-  //     alert(this.locid + '1')  
-  //     _this.provider_services.getUsers(apiFilter).subscribe(data => {
-  //       _this.users = data;
-  //         _this.users.sort((a:any, b:any) => (a.firstName).localeCompare(b.firstName))
-  //       console.log('dataToken',data)
-  //       const tempUser = {};
-  //       tempUser['firstName'] = 'All';
-  //       tempUser['id'] = 'all';
-  //       if (_this.groupService.getitemFromGroupStorage('selectedUser')) {
-  //         _this.selectedUser = _this.groupService.getitemFromGroupStorage('selectedUser');
-  //       } else {
-  //         _this.selectedUser = tempUser;
-  //       }
-  //       resolve();
-  //     },
-  //       () => {
-  //         resolve();
-  //       });
-  //   });
-  // }
   getProviders() {
     const apiFilter = {};
     apiFilter['userType-eq'] = 'PROVIDER';

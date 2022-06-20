@@ -5,7 +5,7 @@ import { SharedServices } from '../../services/shared-services';
 import { Messages } from '../../constants/project-messages';
 import { ActivatedRoute } from '@angular/router';
 import { RazorpayService } from '../../services/razorpay.service';
-import { WindowRefService } from '../../services/windowRef.service';
+// import { WindowRefService } from '../../services/windowRef.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { PaytmService } from '../../services/paytm.service';
@@ -139,7 +139,7 @@ export class PaymentLinkComponent implements OnInit {
     public sharedServices: SharedServices,
     public razorpayService: RazorpayService,
     private paytmService: PaytmService,
-    public winRef: WindowRefService,
+    // public winRef: WindowRefService,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private cdRef: ChangeDetectorRef,

@@ -26,7 +26,7 @@ declare var $: any;
 @Component({
     selector: 'app-provider-checkin',
     templateUrl: './provider-checkin.component.html',
-    styleUrls: ['../../../../../assets/css/style.bundle.css', './provider-checkin.component.css']
+    styleUrls: ['./provider-checkin.component.css']
 })
 export class ProviderCheckinComponent implements OnInit {
     checkinSubscribtion: Subscription;

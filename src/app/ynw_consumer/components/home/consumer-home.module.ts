@@ -22,7 +22,6 @@ import { ViewRxModule } from "./view-rx/view-rx.module";
 import { NotificationListBoxModule } from "../../shared/component/notification-list-box/notification-list-box.module";
 import { AttachmentPopupModule } from "../../../shared/components/attachment-popup/attachment-popup.module";
 import { CouponsModule } from "../../../shared/components/coupons/coupons.module";
-import { ScrollToModule } from "@nicky-lenaers/ngx-scroll-to";
 const routes: Routes = [
     { path: '', component: ConsumerHomeComponent }
 ];
@@ -55,7 +54,6 @@ export function homeHttpLoaderFactory(http: HttpClient) {
         NotificationListBoxModule,
         AttachmentPopupModule,
         CouponsModule,
-        ScrollToModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         [RouterModule.forChild(routes)],
         HttpClientModule,

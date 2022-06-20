@@ -1,5 +1,5 @@
 import { Component, Inject, ViewChild, ChangeDetectorRef, OnInit, NgZone } from '@angular/core';
-import { WindowRefService } from '../../../../shared//services/windowRef.service';
+// import { WindowRefService } from '../../../../shared//services/windowRef.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -50,7 +50,7 @@ export class PaymentComponent implements OnInit {
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
     private paytmService: PaytmService,
-    public winRef: WindowRefService,
+    // public winRef: WindowRefService,
     private ngZone: NgZone,
     @Inject(DOCUMENT) public document,
     public _sanitizer: DomSanitizer,

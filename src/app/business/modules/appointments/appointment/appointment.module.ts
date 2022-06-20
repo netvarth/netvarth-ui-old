@@ -14,7 +14,6 @@ import { MatRadioModule } from "@angular/material/radio";
 import { MatSelectModule } from "@angular/material/select";
 import { RouterModule, Routes } from "@angular/router";
 import { NgxIntlTelInputModule } from "ngx-intl-tel-input";
-import { OwlModule } from "ngx-owl-carousel";
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
 import { QuestionnaireModule } from "../../../../shared/components/questionnaire/questionnaire.module";
 import { CheckinAddMemberModule } from "../../../../shared/modules/checkin-add-member/checkin-add-member.module";
@@ -45,7 +44,6 @@ const routes: Routes= [
         MatMenuModule,
         MatButtonModule,
         MatRadioModule,
-        OwlModule,
         FormMessageDisplayModule,
         CapitalizeFirstPipeModule,
         CheckinAddMemberModule,

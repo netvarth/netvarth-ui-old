@@ -3,7 +3,6 @@ import { NgModule } from "@angular/core";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { GalleryModule } from "@ks89/angular-modal-gallery";
 import { TranslateModule } from "@ngx-translate/core";
-import { OwlModule } from "ngx-owl-carousel";
 import { Nl2BrPipeModule } from "nl2br-pipe";
 import { CardModule } from "../../../shared/components/card/card.module";
 import { HeaderModule } from "../../../shared/modules/header/header.module";
@@ -37,7 +36,6 @@ import { DomainConfigGenerator } from "../../../shared/services/domain-config-ge
         MatOptionModule,
         MatSelectModule,
         HeaderModule,
-        OwlModule,
         SafeHtmlModule,
         CardModule,
         TranslateModule,

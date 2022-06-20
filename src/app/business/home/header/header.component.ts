@@ -22,7 +22,7 @@ import { AuthService } from '../../../shared/services/auth-service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss', '../../../../assets/css/style.bundle.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
+  styleUrls: ['./header.component.scss', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class BusinessHeaderComponent implements OnInit, OnDestroy {
   accountType;

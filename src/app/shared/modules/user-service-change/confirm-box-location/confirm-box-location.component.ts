@@ -45,7 +45,6 @@ export class ConfirmBoxLocationComponent implements OnInit {
         this.apiloading = false;
         this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
       });
-    // this.getProviderLocations();
   }
   ngOnInit() {
   }
@@ -80,14 +79,6 @@ export class ConfirmBoxLocationComponent implements OnInit {
       this.dialogRef.close(this.selelocId);
     }
   }
-  // getProviderLocations() {
-  //   this.provider_services.getProviderLocations()
-  //     .subscribe(data => {
-  //       console.log(data);
-  //       this.loc_list = data;
-  //       console.log(this.loc_list);
-  //     });
-  // }
   getlocname(locid) {
     let locname = '';
     const filteredArr = this.loc_list.filter(value => value.id === locid);

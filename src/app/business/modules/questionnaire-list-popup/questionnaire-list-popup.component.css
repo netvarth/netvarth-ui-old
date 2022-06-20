@@ -37,3 +37,64 @@
 .bookingQnr .content {
     padding: 0 !important;
 }
+h5 {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+.table td {
+    padding: 0.75rem;
+}
+@media (min-width: 992px)
+{
+.content {
+    padding: 25px 0;
+}
+}
+@media (min-width: 992px)
+{
+.col-lg-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+}
+@media (min-width: 768px)
+{
+.col-md-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+}
+@media (min-width: 576px)
+{
+.col-sm-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+}
+.col-lg-12, .col-sm-12, .col-md-12
+{
+    position: relative;
+    width: 100%;
+    padding-right: 12.5px;
+    padding-left: 12.5px;
+}
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #3f4254;
+    background-color: transparent;
+}
+.table-borderless td {
+    border: 0;
+}
+@media (max-width: 991.98px)
+{
+.content {
+    padding: 15px 0;
+}
+}
+i {
+    font-size: 1.25rem;
+    color: #b5b5c3;
+}

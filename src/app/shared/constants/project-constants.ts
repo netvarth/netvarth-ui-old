@@ -1202,14 +1202,14 @@ export const projectConstantsLocal = {
   ],
   CUSTOM_PROV_APP: {
     "maben": {
-      prefix: "maben@in",
+      prefix: "@maben.in",
       idCaption:"Employee Id",
       idPlaceholder:"Enter employee id",
       pathref:128519
     },
     "dhyanclinic": {
       pathref: 46805,
-      prefix: "dhyan@in"
+      prefix: "@dhyan.in"
     },
     "nanohospitals": {
       pathref: 128621

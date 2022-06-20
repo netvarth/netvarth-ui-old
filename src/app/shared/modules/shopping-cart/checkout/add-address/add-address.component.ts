@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { SharedFunctions } from '../../../../functions/shared-functions';
-import { ProviderServices } from '../../../../../business/services/provider-services.service';
 import { FormMessageDisplayService } from '../../../../modules/form-message-display/form-message-display.service';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -33,7 +32,6 @@ export class AddAddressComponent implements OnInit {
     public dialog: MatDialog,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
-    public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,
     private shared_services: SharedServices,
     private snackbarService: SnackbarService

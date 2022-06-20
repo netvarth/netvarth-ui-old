@@ -10,7 +10,7 @@ import { ReleaseQuestionnaireComponent } from './release-questionnaire/release-q
 @Component({
   selector: 'app-questionnaire-list-popup',
   templateUrl: './questionnaire-list-popup.component.html',
-  styleUrls: ['./questionnaire-list-popup.component.css', '../../../../assets/css/style.bundle.css']
+  styleUrls: ['./questionnaire-list-popup.component.css']
 })
 export class QuestionnaireListPopupComponent implements OnInit {
   @Input() source;

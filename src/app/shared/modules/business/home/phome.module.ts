@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PhomeComponent } from './phome.component';
-import { OwlModule } from 'ngx-owl-carousel';
-import { LazyModule } from '../../lazy-load/lazy.module';
 import { AuthGuardHome } from '../../../../shared/guard/auth.guard';
 const routes: Routes = [
     { path: '', component: PhomeComponent, canActivate: [AuthGuardHome] },
@@ -17,9 +15,7 @@ const routes: Routes = [
 @NgModule({
     imports: [
         CommonModule,
-        OwlModule,
-        [RouterModule.forChild(routes)],
-        LazyModule
+        [RouterModule.forChild(routes)]
     ],
     declarations: [
         PhomeComponent
