@@ -22,6 +22,7 @@ export class ThirdpartypopupComponent implements OnInit {
 
     ngOnInit() { }
     buttonclicked(res) {
+        console.log("after clikc on thirdtpary option :",res)
         this.dialogRef.close(res)
     }
     closetab(){

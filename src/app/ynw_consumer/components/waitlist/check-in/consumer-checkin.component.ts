@@ -2447,12 +2447,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     }
                 }
                 console.log("Call Started");
+                if(memberId && accountId && parentId && (parentId !== undefined || parentId !== '')){
                 _this.shared_services.createProviderCustomer(memberId, parentId, accountId).subscribe(
                     (providerConsumer: any) => {
                         _this.providerConsumerList.push(providerConsumer);
                         resolve(providerConsumer.id);
                     }
                 )
+                }
             }
         });
     }

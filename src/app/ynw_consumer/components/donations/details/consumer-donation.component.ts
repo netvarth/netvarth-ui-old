@@ -10,7 +10,7 @@ import { SharedServices } from '../../../../shared/services/shared-services';
 import { ProviderServices } from '../../../../business/services/provider-services.service';
 import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
-// import { WindowRefService } from '../../../../shared/services/windowRef.service';
+import { WindowRefService } from '../../../../shared/services/windowRef.service';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
 import { MatDialog } from '@angular/material/dialog';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
@@ -135,7 +135,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         @Inject(DOCUMENT) public document,
         public _sanitizer: DomSanitizer,
         public razorpayService: RazorpayService,
-        // public winRef: WindowRefService,
+        public winRef: WindowRefService,
         private location: Location,
         private s3Processor: S3UrlProcessor,
         private paytmService: PaytmService,
@@ -874,9 +874,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                             this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
                         })
             } else if (response.STATUS == 'TXN_FAILURE') {
-                if (response.error && response.error.description) {
-                    this.snackbarService.openSnackBar(response.error.description, { 'panelClass': 'snackbarerror' });
-                  } 
                 this.finishDonation(false);
             }
         } else {
@@ -891,7 +888,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                             this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
                         })
             } else if (response.STATUS == 'TXN_FAILURE') {
-                this.snackbarService.openSnackBar(response.RESPMSG, { 'panelClass': 'snackbarerror' });
                 this.finishDonation(false);
             }
         }
@@ -1338,12 +1334,15 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                     }
                 }
                 console.log("Call Started");
+                if(memberId && accountId && parentId && (parentId !== undefined || parentId !== '')){
                 _this.sharedServices.createProviderCustomer(memberId, parentId, accountId).subscribe(
                     (providerConsumer: any) => {
                         _this.providerConsumerList.push(providerConsumer);
                         resolve(providerConsumer.id);
                     }
                 )
+                }
+                
             }
         });
     }

@@ -89,7 +89,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
   ) {
     this.activated_route.queryParams.subscribe(
       (qParams) => {
-        console.log("Mnai")
+        console.log("Mnai",qParams.providerId)
         this.ynwUuid = qParams.uuid;
         this.providerId = qParams.providerId;
         this.type = qParams.type;
@@ -121,9 +121,11 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
     }
   }
   getApptDetails() {
+    if(this.providerId && (this.providerId !== undefined ||  this.providerId !== '')){
     this.subs.sink = this.sharedServices.getAppointmentByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
       (data) => {
         this.appt = data;
+        console.log("Appointment Details By account ID : ",this.appt)
 
         if (this.appt && this.appt.providerAccount && this.appt.providerAccount.uniqueId) {
           this.subs.sink = this.s3Processor.getJsonsbyTypes(this.appt.providerAccount.uniqueId ,
@@ -183,6 +185,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
       (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
+    }
   }
   ngOnDestroy(): void {
     this.subs.unsubscribe();
