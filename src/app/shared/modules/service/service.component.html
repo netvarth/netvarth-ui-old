@@ -131,15 +131,15 @@
         </span>
       </p>
       <p>
-        <span class="custid">
+        <span class="custid" *ngIf="service.status=='ACTIVE'">
           <i class="fa fa-qrcode custId-cursor  font-lrge" (click)="serviceqrCodegeneraterOnlineID()"
             [matTooltip]="'QR code'"></i>
         </span>
-        <span class="custid">
+        <span class="custid" *ngIf="service.status=='ACTIVE'">
           <i class="fa fa-copy custId-cursor pad-left-20 font-lrge" (click)="copyInputMessage()"
             [matTooltip]="'Copy link'"></i>
         </span>
-        <span class="custid">
+        <span class="custid" *ngIf="service.status=='ACTIVE'">
           <i class="fa fa-share-alt custId-cursor pad-left-20 font-lrge" (click)="serviceqrCodegeneraterOnlineID()"
             [matTooltip]="'Share link'"></i>
         </span>

@@ -1149,7 +1149,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 accencUid: pid,
                 path: this.wndw_path,
                 serviceid: this.service.id,
-                userid: usrid
+                userid: usrid,
+                // serviceStatus : this.service_data.status
             }
         });
         this.qrdialogRef.afterClosed().subscribe(result => {
