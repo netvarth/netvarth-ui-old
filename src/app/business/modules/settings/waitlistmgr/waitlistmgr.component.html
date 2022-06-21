@@ -15,7 +15,7 @@
                 <div class="card pos wtmgr">
                     <div style="margin-bottom: 10px"> 
                         <h4>QManager
-                            <mat-slide-toggle [(ngModel)]="waitlist_status"  (change)="handleCheckinPresence($event)">
+                            <mat-slide-toggle [disabled]="queues_count.length !== 0" [(ngModel)]="waitlist_status"  (change)="handleCheckinPresence($event)">
                             </mat-slide-toggle> &nbsp;{{waitlist_statusstr}}
                         </h4>
                         <span class="form-level-settings">

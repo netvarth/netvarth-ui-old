@@ -266,6 +266,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                 this.queues_count = data;
+                console.log("app-waitlistmgrqueues_count :",this.queues_count)
                 });
         this.loading = false;
     }

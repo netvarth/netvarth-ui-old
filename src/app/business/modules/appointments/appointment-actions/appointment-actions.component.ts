@@ -1077,9 +1077,12 @@ export class AppointmentActionsComponent implements OnInit {
         this.loading = false;
         for (const scheduleSlots of this.schedules) {
           this.availableSlots = scheduleSlots.availableSlots;
+          console.log("availableSlots",this.availableSlots)
           for (const freslot of this.availableSlots) {
             if (freslot.noOfAvailbleSlots !== "0" && freslot.active) {
               freslot["scheduleId"] = scheduleSlots["scheduleId"];
+              console.log("freslot scheduleId",freslot["scheduleId"])
+
               freslot["displayTime"] = this.getSingleTime(freslot.time);
               this.freeSlots.push(freslot);
             }

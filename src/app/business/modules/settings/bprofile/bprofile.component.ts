@@ -1532,6 +1532,7 @@ uploadLogo(passdata) {
             data => {
                 this.blogo = [];
                 this.blogo[0] = data;
+                console.log("blogo from bprofile  :",data)
                 const today = new Date();
                 const tday = today.toString().replace(/\s/g, '');
                 const blogo = this.blogo[0].url + '?' + tday;

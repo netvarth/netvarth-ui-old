@@ -213,6 +213,7 @@ export class AppointmentmanagerComponent implements OnInit {
             .subscribe(
                 data => {
                     this.schedules_count = data;
+                    console.log("app-appointmentmanager shedules :",this.schedules_count)
                 });
     }
     redirecToSettings() {

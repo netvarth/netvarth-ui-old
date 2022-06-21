@@ -15,6 +15,7 @@
                 <div class="card pos">
                     <div style="margin-bottom: 10px">
                         <h4>Appointment Manager
+                            <!-- [disabled]="schedules_count.length !== 0" -->
                             <mat-slide-toggle [(ngModel)]="createappointment_status"
                                 (change)="handle_appointmentPresence($event)">
                             </mat-slide-toggle> &nbsp;{{createappointment_statusstr}}

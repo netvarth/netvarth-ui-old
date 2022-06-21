@@ -102,9 +102,12 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
       console.log(this.wordProcessor.getTerminologies())
   }
   ngOnInit() {
+    if(this.providerId && this.providerId !== undefined){
     this.getCommunicationHistory();
     this.getApptDetails();
     this.getFavouriteProvider();
+    }
+    
   }
   processS3s(type, res) {
     let result = this.s3Processor.getJson(res);
@@ -121,7 +124,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
     }
   }
   getApptDetails() {
-    if(this.providerId && (this.providerId !== undefined ||  this.providerId !== '')){
+    // if(this.providerId && (this.providerId !== undefined ||  this.providerId !== '')){
     this.subs.sink = this.sharedServices.getAppointmentByConsumerUUID(this.ynwUuid, this.providerId).subscribe(
       (data) => {
         this.appt = data;
@@ -185,7 +188,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
       (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
-    }
+    //}
   }
   ngOnDestroy(): void {
     this.subs.unsubscribe();
