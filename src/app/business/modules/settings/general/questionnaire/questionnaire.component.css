@@ -82,3 +82,7 @@ h5
 .border-bottom {
     border-bottom: 1px solid #EBEDF3!important;
 }
+
+.wrd-brk {
+    word-break: break-word;
+}

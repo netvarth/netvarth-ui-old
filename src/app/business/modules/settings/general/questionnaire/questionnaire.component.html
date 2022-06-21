@@ -11,34 +11,40 @@
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small">
             <div class="card no-padding-small">
                 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-                <table class="table table-head-custom table-head-bg bold" *ngIf="!loading && questionnaire.length > 0">
+                <table class="table table-responsive table-head-custom table-head-bg bold" *ngIf="!loading && questionnaire.length > 0">
                     <thead>
                         <tr class="text-left text-uppercase">
-                            <th style="min-width: 50px">Name</th>
-                            <th style="min-width: 10px">Channel</th>
-                            <th style="min-width: 50px">Status</th>
-                            <th style="min-width: 10px"></th>
+                            <th style="width:12%">Id</th>
+                            <th style="width:58%">Name</th>
+                            <th style="width: 30%">Channel</th>
+                            <!-- <th style="min-width: 50px">Status</th> -->
+                            <th style="width:10%"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="row_data border-bottom pointer-cursor" *ngFor="let qnr of questionnaire"
-                            (click)="gotoDetails(qnr)">
-                            <td class="hide_th">
+                        <tr class="row_data border-bottom pointer-cursor" (click)="gotoDetails(qnr)" *ngFor="let qnr of questionnaire"
+                             [class.grid-disabled]="qnr.status=='INACTIVE'" >
+                             <td class="hide_th" >
                                 <span class="text-dark-75 d-block ">
+                                    {{qnr.id}}
+                                </span>
+                            </td>
+                            <td class="hide_th" >
+                                <span class="text-dark-75 d-block wrd-brk">
                                     {{qnr.questionnaireId}}
                                 </span>
                             </td>
                             <td class="hide_th">
-                                <span class="text-dark-75 d-block">
+                                <span class="text-dark-75 d-block wrd-brk">
                                     {{qnr.channel}}
                                 </span>
                             </td>
-                            <td class="hide_th">
+                            <!-- <td class="hide_th">
                                 <span class="d-block" [class.greenc]="qnr.status === 'ACTIVE'"
                                     [class.red]="qnr.status === 'INACTIVE'">
                                     {{(qnr.status === 'ACTIVE') ? 'Enabled' : 'Disabled'}}
                                 </span>
-                            </td>
+                            </td> -->
                             <td class="pr-0 text-right">
                                 <button type="button" mat-icon-button [matMenuTriggerFor]="menu"
                                     (click)="stopprop($event)">

@@ -1,11 +1,14 @@
-.qnr-action-btns {
+/* .qnr-action-btns {
     width: 100px
-}
+} */
 .mat-dialog-title .modal_close {
     color: black !important;
 }
 .qnr-list {
     padding: 10px;
+}
+.wrd-brk {
+    word-break: break-word;
 }
 .qnr-action-btns a {
     padding: 5px 20px;
@@ -20,6 +23,8 @@
     color: white;
     box-shadow: 0 4px 4px 0 #1e4079;
 }
+
+
 .qnr-details {
     max-height: 90vh;
     overflow: auto;
@@ -44,6 +49,15 @@ h5 {
 }
 .table td {
     padding: 0.75rem;
+}
+
+@media (max-width: 500px) {
+    .qnr-action-btns a {
+        padding: 5px !important;
+    }
+    .table td {
+        padding: 0.75rem 0.25rem 0.75rem 0.25rem;
+    }
 }
 @media (min-width: 992px)
 {

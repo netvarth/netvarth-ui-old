@@ -24,7 +24,7 @@ import { DateTimeProcessor } from '../../../../../../shared/services/datetime-pr
 @Component({
   selector: 'app-create-coupon',
   templateUrl: './create-coupon.component.html',
-  styleUrls: ['./create-coupon.component.css', '../../../../../../../assets/css/style.bundle.css', '../../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../../assets/css/pages/wizard/wizard-3.css']
+  styleUrls: ['./create-coupon.component.css', '../../../../../../../assets/plugins/custom/datatables/datatables.bundle.css', '../../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../../assets/css/pages/wizard/wizard-3.css']
 
 })
 export class CreateCouponComponent implements OnInit, OnDestroy {

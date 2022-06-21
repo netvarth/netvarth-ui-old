@@ -10,7 +10,6 @@ import { SharedServices } from '../../../../shared/services/shared-services';
 import { ProviderServices } from '../../../../business/services/provider-services.service';
 import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
-import { WindowRefService } from '../../../../shared/services/windowRef.service';
 import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
 import { MatDialog } from '@angular/material/dialog';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
@@ -135,7 +134,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         @Inject(DOCUMENT) public document,
         public _sanitizer: DomSanitizer,
         public razorpayService: RazorpayService,
-        public winRef: WindowRefService,
         private location: Location,
         private s3Processor: S3UrlProcessor,
         private paytmService: PaytmService,

@@ -1450,10 +1450,15 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   btnJoinVideoClicked(checkin, event) {
     event.stopPropagation();
     if (checkin.videoCallButton && checkin.videoCallButton !== 'DISABLED') {
+      let queryParams = {
+        account: checkin.providerAccount.id        
+    }
+    if (this.customId) {
+    queryParams['account_id'] = checkin.providerAccount.id,
+      queryParams['customId'] = this.customId;
+    }
       const navigationExtras: NavigationExtras = {
-        queryParams: {
-          account: checkin.providerAccount.id,
-        }
+        queryParams: queryParams
       };
       if (checkin.uid) {
         this.router.navigate(['meeting', this.usr_details.primaryPhoneNumber, checkin.uid], navigationExtras);

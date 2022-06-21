@@ -27,7 +27,7 @@
       </h5>
     </div>
   </section>
-  <section class="qnrlist" [class.bookingQnr]="type">
+  <section class="qnrlist " [class.bookingQnr]="type">
     <div class="content">
       <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding-small" [class.no-padding]="type">
         <div class="card no-padding-small" *ngIf="questionnaires.length >1">
@@ -39,17 +39,15 @@
         <div class="card no-padding-small" *ngIf="questionnaires.length > 0">
           <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
           <div class="table-responsive1" *ngIf="!loading">
-            <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
+            <table class="table table-head-custom table-head-bg table-borderless table-vertical-center mgn-bt-10">
               <tbody>
                 <tr class="row_data" *ngFor="let qnr of questionnaires">
-                  <td class="qnr-name">{{qnr.questionnaireId}}</td>
-                  <td>{{qnrStatuses[getQnrStatus(qnr.id)]}}</td>
-                  <td class="qnr-action-btns"> <a (click)="viewQnr(qnr, getQnrStatus(qnr.id))">View</a></td>
-                  <td class="qnr-action-btns"> <a (click)="changeReleaseStatus(qnr.id)"
+                  <td class="qnr-name wrd-brk" style="width:54%">{{qnr.questionnaireId}}</td>
+                  <td  style="width:31%" class="wrd-brk">{{qnrStatuses[getQnrStatus(qnr.id)]}}</td>
+                  <td class="qnr-action-btns"  style="width:7%"> <a (click)="viewQnr(qnr, getQnrStatus(qnr.id))">View</a></td>
+                  <td class="qnr-action-btns"  style="width:8%"> <a (click)="changeReleaseStatus(qnr.id)"
                       *ngIf="getQnrStatus(qnr.id)!='submitted'">{{(getQnrStatus(qnr.id) ===
-                      'released')
-                      ? 'Unrelease' :
-                      'Release'}}</a></td>
+                      'released') ? 'Unrelease' : 'Release'}}</a></td>
                 </tr>
               </tbody>
             </table>
