@@ -3,7 +3,7 @@ import { MedicalrecordService } from '../medicalrecord.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProviderServices } from '../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-import { NavigationExtras } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
@@ -76,7 +76,7 @@ export class UploadFileComponent implements OnInit {
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
     // private location: Location,
-    // private router: Router,
+    private router: Router,
     public dialog: MatDialog,
     // private activatedRoute: ActivatedRoute,
     private medicalrecord_service: MedicalrecordService) {
@@ -141,10 +141,15 @@ export class UploadFileComponent implements OnInit {
     return imgsrc;
   }
   goBack() {
-    // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
-    // this.location.back();
     this.uploadedDialogref.close();
-
+    let currentUrl = this.router.url.split('/');
+    let currentLocation = currentUrl[currentUrl.length - 1];
+    if (currentLocation == 'prescription') {
+      this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'clinicalnotes']);
+    }
+    else {
+      this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+    }
   }
   deleteFile(file) {
     this.removefiledialogRef = this.dialog.open(ConfirmBoxComponent, {

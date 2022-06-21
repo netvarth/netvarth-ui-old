@@ -89,7 +89,7 @@ export class GeneralComponent implements OnInit {
     this.dialogref.close();
     console.log('redirecToClinicalNotes successfully')
 
-    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId]);
+    // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId]);
   }
   updateClinicalNotes(notes) {
     console.log("Entered into notes record")
