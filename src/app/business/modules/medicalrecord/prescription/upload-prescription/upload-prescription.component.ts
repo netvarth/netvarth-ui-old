@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ShareRxComponent } from '../share-rx/share-rx.component';
 import { MedicalrecordService } from '../../medicalrecord.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProviderServices } from '../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
@@ -11,7 +11,7 @@ import { ImagesviewComponent } from '../imagesview/imagesview.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
-import { Location } from '@angular/common';
+// import { Location } from '@angular/common';
 
 
 @Component({
@@ -74,19 +74,22 @@ export class UploadPrescriptionComponent implements OnInit {
     ]
   };
   customer_label = '';
-  constructor(public sharedfunctionObj: SharedFunctions,
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public uploadprescriptionRef: MatDialogRef<UploadPrescriptionComponent>,
+    public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
     private router: Router,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private location: Location,
+    // private location: Location,
     private medicalrecord_service: MedicalrecordService) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.activatedRoute.queryParams.subscribe(queryParams => {
-      if (queryParams.mode) {
-        const type = queryParams.mode;
+      if (this.data.mode) {
+        const type = this.data.mode;
         if (type === 'view') {
           this.heading = 'Update Prescription';
         }
@@ -100,18 +103,29 @@ export class UploadPrescriptionComponent implements OnInit {
     } else if (this.patientDetails.jaldeeId) {
       this.display_PatientId = this.patientDetails.jaldeeId;
     }
-    const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
-    this.mrId = parseInt(medicalrecordId, 0);
-    this.patientId = this.activatedRoute.parent.snapshot.params['id'];
-    this.bookingType = this.activatedRoute.parent.snapshot.params['type'];
-    this.bookingId = this.activatedRoute.parent.snapshot.params['uid'];
+    // const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
+    // this.mrId = parseInt(medicalrecordId, 0);
+    // this.patientId = this.activatedRoute.parent.snapshot.params['id'];
+    // this.bookingType = this.activatedRoute.parent.snapshot.params['type'];
+    // this.bookingId = this.activatedRoute.parent.snapshot.params['uid'];
+    this.mrId = this.data.mrid;
+    this.patientId = this.data.patientid;
+    this.bookingType = this.data.bookingtype;
+    this.bookingId = this.data.bookingid;
     if (this.mrId) {
       this.getMrprescription(this.mrId);
     }
   }
   goBack() {
-    // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
-    this.location.back();
+    this.uploadprescriptionRef.close();
+    let currentUrl = this.router.url.split('/');
+    let currentLocation = currentUrl[currentUrl.length - 1];
+    if (currentLocation == 'prescription') {
+      this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'clinicalnotes']);
+    }
+    else {
+      this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+    }
 
   }
   getMrprescription(mrId) {
@@ -244,12 +258,14 @@ export class UploadPrescriptionComponent implements OnInit {
         .then((data: number) => {
           this.mrId = data;
           this.uploadMrPrescription(data, submit_data);
+          this.goBack()
         },
           error => {
             this.disable = false;
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
+
   }
   uploadMrPrescription(id, submit_data) {
     this.provider_services.uploadMRprescription(id, submit_data)
@@ -257,6 +273,7 @@ export class UploadPrescriptionComponent implements OnInit {
         this.showSave = false;
         this.upload_status = 'Uploaded';
         this.snackbarService.openSnackBar('Prescription uploaded successfully');
+        this.goBack()
         this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
       },
         error => {

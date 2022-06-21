@@ -1,6 +1,12 @@
-.style-button{
+.style-button {
     padding: 10px 10px !important
 }
-.style-button1{
+
+.style-button1 {
     padding: 10px 20px !important
+}
+
+.btn-primary {
+    background-color: #1E4079 !important;
+    border-radius: 10px !important;
 }

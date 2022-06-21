@@ -1,16 +1,18 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
 import { ProviderServices } from '../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { ImagesviewComponent } from '../imagesview/imagesview.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MedicalrecordService } from '../../medicalrecord.service';
 import { ConfirmBoxComponent } from '../../../../shared/confirm-box/confirm-box.component';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { Location } from '@angular/common';
+import { UploadSignatureComponent } from './uploadsignature/upload-signature.component';
+import { ManualSignatureComponent } from './manualsignature/manual-signature.component';
 
 @Component({
   selector: 'app-upload-digital-signature',
@@ -57,11 +59,16 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
   digitalsignature = {};
   removedsigndialogRef;
   loading = true;
+  uploadsignatureRef: MatDialogRef<unknown, any>;
+  uploadmanualsignatureRef: MatDialogRef<unknown, any>;
 
-  constructor(public sharedfunctionObj: SharedFunctions,
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public uploadsignRef: MatDialogRef<UploadDigitalSignatureComponent>,
+    public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
+    // private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
     private location: Location,
     private groupService: GroupStorageService,
@@ -80,11 +87,10 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
       const user = this.groupService.getitemFromGroupStorage('ynw-user');
       this.providerId = user.id;
     }
-    const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
-    this.mrId = parseInt(medicalrecordId, 0);
-    this.patientId = this.activatedRoute.parent.snapshot.params['id'];
-    this.bookingType = this.activatedRoute.parent.snapshot.params['type'];
-    this.bookingId = this.activatedRoute.parent.snapshot.params['uid'];
+    this.mrId = this.data.mrid;
+    this.patientId = this.data.patientid;
+    this.bookingType = this.data.bookingtype;
+    this.bookingId = this.data.bookingid;
     this.getDigitalSign();
   }
 
@@ -128,16 +134,48 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
 
   }
   uploadSignature() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { providerId: this.providerId }
-    };
-    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadsignature'], navigationExtras);
+    this.uploadsignatureRef = this.dialog.open(UploadSignatureComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        mrid: this.mrId,
+        patientid: this.patientId,
+        bookingid: this.bookingId,
+        bookingtype: this.bookingType,
+        providerid: this.providerId
+      }
+    });
+    this.uploadsignatureRef.afterClosed().subscribe(() => {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+        this.ngOnInit();
+      }, 100);
+    }
+    );
   }
   manualSignature() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { providerId: this.providerId }
-    };
-    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'manualsignature'], navigationExtras);
+    this.uploadmanualsignatureRef = this.dialog.open(ManualSignatureComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        mrid: this.mrId,
+        patientid: this.patientId,
+        bookingid: this.bookingId,
+        bookingtype: this.bookingType,
+        providerid: this.providerId
+      }
+    });
+    this.uploadmanualsignatureRef.afterClosed().subscribe(() => {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+        this.ngOnInit();
+      }, 100);
+    }
+    );
   }
 
   getDigitalSign() {

@@ -1,26 +1,27 @@
 <section>
-    <div class="card title-gb">
-        <h5 class="mgn-up-10">
-            <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;
-            {{heading}}
-        </h5>
+    <div class="card title-gb p-3">
+        <div class="d-flex justify-content-between">
+            <div class="heading font-weight-bold">{{heading}}</div>
+            <i class="fa fa-times" (click)="goBack()"></i>
+        </div>
     </div>
     <div class="card title-gb">
         <div class="no-dta" *ngIf=" selectedMessage.files && selectedMessage.files.length == 0">
-            <h5> By clicking upload Sign you will have choice of uploading a file or taking picture</h5>
+            <div class="font-weight-bold"> By clicking upload Sign you will have choice of uploading a file or taking
+                picture</div>
             <div>
-                <button mat-button style="margin-top: 10px;" class="cs-btn bt1 ">
-                    <a class="pointer-cursor" style="color: whitesmoke" (click)="imagefile.click()"><input #imagefile
+                <button mat-button style="margin-top: 10px;" class="cs-btn bt1 btn btn-primary">
+                    <a class="pointer-cursor" style="color: white" (click)="imagefile.click()"><input #imagefile
                             type="file" accept="/*;capture=camera" style="display:none;"
                             (change)="filesSelected($event)">Upload Sign</a>
                 </button>
             </div>
         </div>
-        <div class="no-dta" style="height: 200px;" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
-            <ng-container class="attachment">
-                <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
+        <div class="no-dta" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+            <ng-container class="">
+                <div class="row col-md-12 col-xs-12 col-sm-12"
                     *ngFor="let item of selectedMessage.files; let i = index">
-                    <h4>Selected Digital Signature</h4>
+                    <div class="font-weight-bold">Selected Digital Signature</div>
                     <div class="col-md-7 col-xs-9 col-sm-9 col-lg-7">
                         <span class="ln-hgt-40">{{item.name}}</span>
                     </div>
@@ -37,8 +38,8 @@
                             </mat-menu>
                         </span>
                     </div>
-                    <div class="col-md-12 col-xs-12 col-sm-12  actiondiv">
-                        <button mat-button class="cs-btn bt1 savemember mgn-lt-5"
+                    <div class="col-md-12 col-xs-12 col-sm-12 mb-2 no-padding">
+                        <button mat-button class="cs-btn bt1 btn btn-primary"
                             (click)="saveDigitalSignImages()">OK</button>
                     </div>
                 </div>

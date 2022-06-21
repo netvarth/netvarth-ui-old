@@ -1,0 +1,12 @@
+.heading {
+    font-size: 17px !important;
+}
+
+.fa-times {
+    color: red !important;
+}
+
+.btn-primary {
+    background-color: #1E4079 !important;
+    border-radius: 10px !important;
+}

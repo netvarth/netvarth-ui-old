@@ -1,24 +1,25 @@
 <section>
-  <div class="card title-gb">
-    <h5 class="mgn-up-10">
-      <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;
-      {{heading}}
-    </h5>
+  <div class="p-3">
+    <div class="d-flex justify-content-between">
+      <div class="heading font-weight-bold">{{heading}}</div>
+      <i class="fa fa-times pointer-cursor" (click)="goBack()"></i>
+    </div>
   </div>
   <div class="card title-gb mgn-up-20 mgn-rt-10 mgn-lt-5">
     <div class="no-dta">
-      <h5> Create your own signature </h5>
+      <div class="font-weight-bold"> Create your own signature </div>
       <div *ngIf="!small_device_display" class="digitalsignature-pad">
- 
+
         <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()"></signature-pad>
       </div>
       <div *ngIf="small_device_display" class="digitalsignature-pad">
-  
+
         <signature-pad [options]="smallsignaturePadOptions" (onBeginEvent)="drawStart()"></signature-pad>
       </div>
       <div>
         <button type="button" style="margin: 10px" class="cs-btn bt2 sm" (click)="clearSign()">Clear</button>
-        <button type="button" mat-button (click)="drawComplete()" [disabled]="sign" class="cs-btn bt1 sm">Save</button>
+        <button type="button" mat-button (click)="drawComplete()" [disabled]="sign"
+          class="cs-btn bt1 sm btn btn-primary">Save</button>
       </div>
     </div>
   </div>

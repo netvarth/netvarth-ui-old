@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener, Inject } from '@angular/core';
 import { ProviderServices } from '../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SignaturePad } from 'angular2-signaturepad';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
@@ -11,7 +11,9 @@ import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-manual-signature',
-  templateUrl: './manual-signature.component.html'
+  templateUrl: './manual-signature.component.html',
+  styleUrls: ['./manual-signature.component.css']
+
 })
 export class ManualSignatureComponent implements OnInit {
   @ViewChild(SignaturePad) signaturePad: SignaturePad;
@@ -62,26 +64,26 @@ export class ManualSignatureComponent implements OnInit {
   sign = true;
   screenWidth;
   small_device_display = false;
-  constructor(public sharedfunctionObj: SharedFunctions,
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public uploadmanualsignatureRef: MatDialogRef<ManualSignatureComponent>,
+    public sharedfunctionObj: SharedFunctions,
     public provider_services: ProviderServices,
     private location: Location,
     private router: Router,
-    private activatedRoot: ActivatedRoute,
+    // private activatedRoot: ActivatedRoute,
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor
     // private medicalrecord_service: MedicalrecordService
   ) {
-    const medicalrecordId = this.activatedRoot.parent.snapshot.params['mrId'];
-    this.mrId = parseInt(medicalrecordId, 0);
-    this.patientId = this.activatedRoot.parent.snapshot.params['id'];
-    this.bookingType = this.activatedRoot.parent.snapshot.params['type'];
-    this.bookingId = this.activatedRoot.parent.snapshot.params['uid'];
-    this.activatedRoot.queryParams.subscribe(queryParams => {
-      if (queryParams.providerId) {
-        this.providerId = queryParams.providerId;
-      }
-    });
+    this.mrId = this.data.mrid;
+    this.patientId = this.data.patientid;
+    this.bookingType = this.data.bookingtype;
+    this.bookingId = this.data.bookingid;
+    if (this.data.providerid) {
+      this.providerId = this.data.providerid;
+    }
 
   }
   @HostListener('window:resize', ['$event'])
@@ -146,6 +148,7 @@ export class ManualSignatureComponent implements OnInit {
     this.provider_services.uploadMrDigitalsign(id, submit_data)
       .subscribe((data) => {
         this.snackbarService.openSnackBar('Digital sign uploaded successfully');
+        this.uploadmanualsignatureRef.close();
         this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
       },
         error => {

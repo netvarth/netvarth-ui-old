@@ -1,8 +1,22 @@
-.notesize{
-    width:50%;
+.notesize {
+    width: 50%;
 }
+
+.heading {
+    font-size: 17px !important;
+}
+
+.fa-times {
+    color: red !important;
+}
+
+.btn-primary {
+    background-color: #1E4079 !important;
+    border-radius: 10px !important;
+}
+
 @media screen and (max-width: 575px) {
-    .notesize{
-        width:100%;
+    .notesize {
+        width: 100%;
     }
-  } 
+}

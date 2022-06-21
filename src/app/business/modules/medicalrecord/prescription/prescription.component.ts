@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AddDrugComponent } from './add-drug/add-drug.component';
-import { NavigationExtras, Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { MedicalrecordService } from '../medicalrecord.service';
@@ -14,6 +14,9 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { AddNoteComponent } from './add-note/add-note.component';
 import { ProviderServices } from '../../../../business/services/provider-services.service';
+import { UploadPrescriptionComponent } from './upload-prescription/upload-prescription.component';
+import { DrugListComponent } from './drug-list/drug-list.component';
+import { UploadDigitalSignatureComponent } from './upload-digital-signature/upload-digital-signature.component';
 
 @Component({
   selector: 'app-prescription',
@@ -76,6 +79,10 @@ export class PrescriptionComponent implements OnInit {
   prescList = true;
   doctorName;
   customer_label: any
+  uploadprescriptionRef: any;
+  someSubscription: any;
+  uploaddrugRef: any;
+  uploadsignRef: any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -87,7 +94,16 @@ export class PrescriptionComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService
   ) {
-
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    this.someSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Here is the dashing line comes in the picture.
+        // You need to tell the router that, you didn't visit or load the page previously, so mark the navigated flag to false as below.
+        this.router.navigated = false;
+      }
+    });
   }
   ngOnInit() {
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
@@ -129,6 +145,13 @@ export class PrescriptionComponent implements OnInit {
   deleteTempImage(index) {
     this.selectedMessage.files.splice(index, 1);
   }
+
+  ngOnDestroy() {
+    if (this.someSubscription) {
+      this.someSubscription.unsubscribe();
+    }
+  }
+
   filesSelected(event) {
     const input = event.target.files;
     if (input) {
@@ -149,8 +172,25 @@ export class PrescriptionComponent implements OnInit {
     }
   }
   uploadSign() {
-    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadsign']);
-
+    this.uploadsignRef = this.dialog.open(UploadDigitalSignatureComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        mrid: this.mrId,
+        patientid: this.patientId,
+        bookingid: this.bookingId,
+        bookingtype: this.bookingType
+      }
+    });
+    this.uploadsignRef.afterClosed().subscribe(() => {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+        this.ngOnInit();
+      }, 100);
+    }
+    );
   }
   getDigitalSign() {
 
@@ -166,9 +206,29 @@ export class PrescriptionComponent implements OnInit {
   }
 
 
+  // uploadRx() {
+  //   this.ngOnInit();
+  //   this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadRx']);
+  // }
+
   uploadRx() {
-    this.ngOnInit();
-    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadRx']);
+    // this.disable = true;
+    this.uploadprescriptionRef = this.dialog.open(UploadPrescriptionComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        mrid: this.mrId,
+        patientid: this.patientId,
+        bookingid: this.bookingId,
+        bookingtype: this.bookingType
+      }
+    });
+    this.uploadprescriptionRef.afterClosed().subscribe(() => {
+      this.prescList = false;
+      this.ngOnInit();
+    }
+    );
   }
 
   shareManualRx(type) {
@@ -299,6 +359,7 @@ export class PrescriptionComponent implements OnInit {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
   }
   addNote() {
     const addnotedialogRef = this.dialog.open(AddNoteComponent, {
@@ -322,7 +383,6 @@ export class PrescriptionComponent implements OnInit {
           subscribe(res => {
             this.snackbarService.openSnackBar('Prescription updated Successfully');
             this.getMrprescription(this.mrId);
-            this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
 
           },
             error => {
@@ -335,21 +395,51 @@ export class PrescriptionComponent implements OnInit {
   }
   updatePrescription() {
     this.disable = true;
-    const navigationExtras: NavigationExtras = {
-      relativeTo: this.activatedRoute,
-      queryParams: { mode: 'view' }
-    };
-    this.router.navigate(['./addrxlist'], navigationExtras);
+    this.uploaddrugRef = this.dialog.open(DrugListComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        mrid: this.mrId,
+        patientid: this.patientId,
+        bookingid: this.bookingId,
+        bookingtype: this.bookingType,
+        mode: 'view'
+      }
+    });
+    this.uploaddrugRef.afterClosed().subscribe(() => {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+        this.ngOnInit();
+      }, 100);
+    }
+    );
 
 
   }
   updatePaperPrescription() {
     this.disable = true;
-    const navigationExtras: NavigationExtras = {
-      relativeTo: this.activatedRoute,
-      queryParams: { mode: 'view' }
-    };
-    this.router.navigate(['./uploadRx'], navigationExtras);
+    this.uploadprescriptionRef = this.dialog.open(UploadPrescriptionComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        mrid: this.mrId,
+        patientid: this.patientId,
+        bookingid: this.bookingId,
+        bookingtype: this.bookingType,
+        mode: 'view'
+      }
+    });
+    this.uploadprescriptionRef.afterClosed().subscribe(() => {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+        this.ngOnInit();
+      }, 100);
+    }
+    );
   }
   imageSize(val) {
     let imgsize;

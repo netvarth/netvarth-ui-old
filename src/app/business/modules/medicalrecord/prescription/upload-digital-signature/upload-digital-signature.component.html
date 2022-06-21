@@ -1,62 +1,81 @@
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
 <section *ngIf="!loading">
-    <div class="card title-gb">
-      <h5 class="mgn-up-10">
-        <span class="fa fa-arrow-left pointer-cursor"  (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;
-      {{heading}}
-     </h5>
-    </div>
-    
-    <div class="card title-gb" >
-<div class="no-dta" *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0" >
-    <div >
-      <span class="b-link">
-        <h5 class="heading3b">You can create digital signature in two ways:</h5>
-        <p>1.Upload a digital signature image </p>
-        <p>2.Create a digital signature </p>
-      </span>
-    </div>
-    <div >
-      <div class="card mrcreate pointlist">
-        <span (click)="uploadSignature()">
-          <h5 class="heading3b" style="color:#3c8dbc;"><u>I will Upload digital signature image</u><i
-              class="fa fa-arrow-right pull-right" aria-hidden="true"></i></h5>
-          <span class="form-level-settings">You can scan or take a picture of signature</span>
-        </span>
-      </div>
-      <div class="card mrcreate pointlist">
-        <span (click)="manualSignature()" >
-          <h5 class="heading3b" style="color:#3c8dbc;"><u>I will create a digital signature manually</u><i
-              class="fa fa-arrow-right pull-right" aria-hidden="true"></i></h5>
-          <span class="form-level-settings">Create digital signature manually </span>
-        </span>
-      </div>
+  <div class="p-3">
+    <div class="d-flex justify-content-between">
+      <div class="heading font-weight-bold">{{heading}}</div>
+      <i class="fa fa-times pointer-cursor" (click)="goBack()"></i>
     </div>
   </div>
-  <div class="no-dta" style="height: 200px;" *ngIf="digitalSign && selectedMessage.files && selectedMessage.files.length > 0">
-    <ng-container class="attachment">
-    <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
-        *ngFor="let item of selectedMessage.files; let i = index">
-        <h4>Uploaded Digital Signature</h4>
-        <div class="col-md-7 col-xs-9 col-sm-9 col-lg-7" *ngIf="item.originalName">
-            <span class="ln-hgt-40 pointlist" (click)="showimgPopup(item)" style="color: #3c8dbc; "><i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;{{item.originalName}}</span>
-        </div>
-        <div class="col-md-5 col-xs-3 col-sm-3 col-lg-5">
-            <span class="">
-                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                    <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu">
-                    <button type="button" (click)="deleteTempImagefrmdb(item,i)" mat-menu-item>
-                        <i class="icon-delete"></i>
-                        <span>delete</span>
-                    </button>
-                </mat-menu>
-            </span>
-        </div>
-    </div>
-    </ng-container>
-    </div>
-</div>
-</section>
 
+  <div class="card title-gb">
+    <div class="no-dta" *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0">
+      <!-- <div>
+        <span class="b-link">
+          <h5 class="heading3b">You can create digital signature in two ways:</h5>
+          <p>1.Upload a digital signature image </p>
+          <p>2.Create a digital signature </p>
+        </span>
+      </div> -->
+
+
+      <div>
+        <div class="font-weight-bold">You can create digital signature in two ways:</div>
+        <div class="mt-2">
+          <span>
+            <div class="text-primary text-capitalize">Upload digital signature image</div>
+            <a class="mt-1 btn btn-primary" (click)="uploadSignature()">Upload Image</a>
+          </span>
+        </div>
+        <div class="mt-2">
+          <span>
+            <div class="text-primary text-capitalize">Create digital signature manually</div>
+            <a class="mt-1 btn btn-primary" (click)="manualSignature()">Create Signature</a>
+          </span>
+        </div>
+      </div>
+
+      <!-- <div>
+        <div class="card mrcreate pointlist">
+          <span (click)="uploadSignature()">
+            <h5 class="heading3b" style="color:#3c8dbc;"><u>I will Upload digital signature image</u><i
+                class="fa fa-arrow-right pull-right" aria-hidden="true"></i></h5>
+            <span class="form-level-settings">You can scan or take a picture of signature</span>
+          </span>
+        </div>
+        <div class="card mrcreate pointlist">
+          <span (click)="manualSignature()">
+            <h5 class="heading3b" style="color:#3c8dbc;"><u>I will create a digital signature manually</u><i
+                class="fa fa-arrow-right pull-right" aria-hidden="true"></i></h5>
+            <span class="form-level-settings">Create digital signature manually </span>
+          </span>
+        </div>
+      </div> -->
+    </div>
+    <div class="no-dta" style="height: 200px;"
+      *ngIf="digitalSign && selectedMessage.files && selectedMessage.files.length > 0">
+      <ng-container class="attachment">
+        <div class="row col-md-12 col-xs-12 col-sm-12 mgn-up-10"
+          *ngFor="let item of selectedMessage.files; let i = index">
+          <div class="font-weight-bold">Uploaded Digital Signature</div>
+          <div class="col-md-7 col-xs-9 col-sm-9 col-lg-7" *ngIf="item.originalName">
+            <span class="ln-hgt-40 pointlist" (click)="showimgPopup(item)" style="color: #3c8dbc; "><i
+                class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;{{item.originalName}}</span>
+          </div>
+          <div class="col-md-5 col-xs-3 col-sm-3 col-lg-5">
+            <span class="">
+              <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button type="button" (click)="deleteTempImagefrmdb(item,i)" mat-menu-item>
+                  <i class="icon-delete"></i>
+                  <span>delete</span>
+                </button>
+              </mat-menu>
+            </span>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</section>
