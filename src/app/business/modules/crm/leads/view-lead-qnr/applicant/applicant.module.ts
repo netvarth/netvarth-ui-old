@@ -7,6 +7,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { CapitalizeFirstPipeModule } from '../../../../../../shared/pipes/capitalize.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { LoadingSpinnerModule } from "../../../../../../shared/modules/loading-spinner/loading-spinner.module";
 
 
 
@@ -23,6 +24,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatOptionModule,
     CapitalizeFirstPipeModule,
     MatDatepickerModule,
+    LoadingSpinnerModule
   ],
   exports: [
     ApplicantComponent

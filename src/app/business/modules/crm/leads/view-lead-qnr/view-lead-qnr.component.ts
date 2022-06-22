@@ -477,27 +477,6 @@ export class ViewLeadQnrComponent implements OnInit {
     console.log('event', event)
     this.questionAnswers = event;
   }
-  showCrifscoreSection() {
-    this.showCrifSection = !this.showCrifSection
-  }
-  saveCrifApplicant() {
-    const post_data = {
-      "customer": {
-        "id": this.leadInfo.customer.id,
-        "name": this.leadInfo.customer.name,
-      },
-      'originUid': this.leadInfo.uid,
-    };
-    this.crmService.crifVerification(post_data).subscribe(
-      (data) => {
-        this.crifDetails = data;
-        this.crifHTML = this.crifDetails.crifHTML;
-        this.crifScore = this.crifDetails.crifScoreString
-        this.showPdfIcon = true;
-      },
-      error => {
-      });
-  }
   autoGrowTextZone(e) {
     e.target.style.height = "0px";
     e.target.style.height = (e.target.scrollHeight + 15) + "px";
@@ -535,22 +514,6 @@ export class ViewLeadQnrComponent implements OnInit {
       this.ngOnInit();
       console.log("response", response);
     });
-  }
-
-  printCRIF() {
-    const params = [
-      'height=' + screen.height,
-      'width=' + screen.width,
-      'fullscreen=yes'
-    ].join(',');
-    const printWindow = window.open('', '', params);
-    printWindow.document.write(this.crifHTML);
-    printWindow.moveTo(0, 0);
-    printWindow.print();
-    printWindow.document.close();
-    setTimeout(() => {
-      printWindow.close();
-    }, 500);
   }
 
   redirect() {

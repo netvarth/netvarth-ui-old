@@ -41,6 +41,13 @@ export class ApplicantComponent implements OnInit {
   crifStatusId: any;
   availableDates: any = [];
   phNumber:any;
+  @Input() leadInfo;
+  showCrifSection = false;
+  crifScore: any;
+  showPdfIcon: boolean;
+  crifHTML: any;
+  crifDetails: any;
+  api_loading: boolean=false;
   
 
   constructor(
@@ -55,6 +62,7 @@ export class ApplicantComponent implements OnInit {
   ngOnInit(): void {
     console.log("Applicant Init");
     console.log(this.applicant);
+    console.log('this.leadInfo',this.leadInfo)
     // this.phoneNumber = this.teleService.getTeleNumber(this.applicant.permanentPhone);
     //  console.log('phNumber',this.phoneNumber)
     if (this.applicant && this.applicant['name']) {
@@ -335,5 +343,51 @@ export class ApplicantComponent implements OnInit {
   }
   dateClass(date: Date): MatCalendarCellCssClasses {
     return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
+  }
+  showCrifscoreSection() {
+    this.showCrifSection = !this.showCrifSection
+  }
+  saveCrifApplicant(kycInfoList) {
+    // console.log('kycIbfoList',kycInfoList)
+    this.api_loading = true;
+      const postData:any={
+        "originUid": kycInfoList.originUid,
+        "leadKycId": kycInfoList.id,
+      }
+    this.crmService.processInquiry(postData).subscribe(
+      (data:any) => {
+        console.log('data::',data.status)
+       
+        this.getCrifInquiryVerification(kycInfoList);
+      },
+      error => {
+      });
+  }
+  getCrifInquiryVerification(kycInfoList){
+    this.crmService.getCrifInquiryVerification(kycInfoList.originUid, kycInfoList.id).subscribe(
+      (element)=>{
+        // console.log('elemnt',element)
+        this.crifDetails = element;
+        this.crifHTML = this.crifDetails.crifHTML;
+        this.crifScore = this.crifDetails.crifScoreString;
+        this.api_loading=false;
+        this.showPdfIcon = true;
+      }
+    )
+  }
+  printCRIF() {
+    const params = [
+      'height=' + screen.height,
+      'width=' + screen.width,
+      'fullscreen=yes'
+    ].join(',');
+    const printWindow = window.open('', '', params);
+    printWindow.document.write(this.crifHTML);
+    printWindow.moveTo(0, 0);
+    printWindow.print();
+    printWindow.document.close();
+    setTimeout(() => {
+      printWindow.close();
+    }, 500);
   }
 }

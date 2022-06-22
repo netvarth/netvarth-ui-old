@@ -613,5 +613,11 @@ export class CrmService {
   //   const url ='provider/task/{taskUid}/status/closedwithnotes'+body
   //   return this.servicemeta.httpPut(url,body)
   // }
-
+  getCrifInquiryVerification(originUid,leadKycId){
+    const url = 'provider/crif/inquiry/' + originUid + '/kyc/'+leadKycId;
+    return this.servicemeta.httpGet(url);
+  }
+  processInquiry(body){
+    return this.servicemeta.httpPost('provider/crif/processinquiry', body);
+  }
 }

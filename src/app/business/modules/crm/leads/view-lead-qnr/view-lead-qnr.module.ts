@@ -6,12 +6,7 @@ import { CapitalizeFirstPipeModule } from "../../../../../shared/pipes/capitaliz
 import { CrmService } from "../../crm.service";
 import { RouterModule, Routes } from "@angular/router";
 import { MatTabsModule } from "@angular/material/tabs";
-// import { AppointmentsComponent } from "./appointments/appointments.component";
-// import { LeadActivityComponent } from "./lead-activity/lead-activity.component";
-// import { ConnectionsComponent } from "./connections/connections.component";
-// import { SelectAttachmentComponent } from "./select-attachment/select-attachment.component";
 import { MatSliderModule } from "@angular/material/slider";
-// import { ActivitylogComponent } from "./activitylog/activitylog.component";
 import { FileService } from "../../../../../shared/services/file-service";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
