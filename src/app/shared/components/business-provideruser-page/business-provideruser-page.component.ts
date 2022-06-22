@@ -853,12 +853,13 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
     this.getUserApptTime(apptTimearr, waitTimearr);
   }
   setBusinesssProfile(res) {
+    console.log("business profile res :",res)
     this.onlinePresence = res['onlinePresence'];
-    console.log("response"+res);
-    console.log(res['customId']);
-    if(res['customId']){
-      this.customId = res['customId'];
-    }
+    console.log("response"+ this.onlinePresence);
+    // console.log(res['customId']);
+    // if(res['customId']){
+    //   this.customId = res['customId'];
+    // }
     this.accEncUid = res['accEncUid'];
     if (!this.userId) {
       this.api_loading = false;

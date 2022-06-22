@@ -2362,6 +2362,8 @@ export class AppointmentComponent implements OnInit {
             }
         } else {
             this.showOther = true;
+            $('.other-party-options-modal').modal('hide')
+
         }
     }
     resetError() {
@@ -2461,6 +2463,7 @@ export class AppointmentComponent implements OnInit {
             .subscribe(
                 data => {
                     this.follow_up_Details = data;
+                  //  console.log("follow_up_Details :",this.follow_up_Details)
                     if (this.follow_up_Details.appmtFor[0]) {
                         this.cusfirstname = this.follow_up_Details.appmtFor[0].firstName
                         this.cuslastname = this.follow_up_Details.appmtFor[0].lastName

@@ -146,6 +146,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         public sharedFunctons: SharedFunctions) {
         this.subs.sink = this.route.queryParams.subscribe(
             params => {
+                console.log("params from provider details :",params)
                 if (params.locname) {
                     this.businessInfo['locationName'] = params.locname;
                     this.businessInfo['googleMapUrl'] = params.googleMapUrl;
@@ -182,8 +183,9 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         this.subs.unsubscribe();
     }
     goThroughLogin() {
-        if (this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA') {
-            const _this = this;
+        const _this = this;
+
+        if (_this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA') {
             console.log("Entered to goThroughLogin Method");
             return new Promise((resolve) => {
                 if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')) {
@@ -194,8 +196,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             });
         } else {
             return new Promise((resolve) => {
-                const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
-                let qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+                const qrpw = _this.lStorageService.getitemfromLocalStorage('qrp');
+                let qrusr = _this.lStorageService.getitemfromLocalStorage('ynw-credentials');
                 qrusr = JSON.parse(qrusr);
                 if (qrusr && qrpw) {
                     const data = {
@@ -204,15 +206,17 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                         'password': qrpw,
                         'mUniqueId': null
                     };
-                    this.sharedServices.ConsumerLogin(data).subscribe(
+                    _this.sharedServices.ConsumerLogin(data).subscribe(
                         (loginInfo: any) => {
-                            this.authService.setLoginData(loginInfo, data, 'consumer');
-                            this.lStorageService.setitemonLocalStorage('qrp', data.password);
+                            _this.authService.setLoginData(loginInfo, data, 'consumer');
+                            _this.lStorageService.setitemonLocalStorage('qrp', data.password);
                             resolve(true);
                         },
                         (error) => {
-                            if (error.status === 401 && error.error === 'Session already exists.') {
-                                resolve(true);
+                            if (error.status === 401 || error.error === 'Session already exists.') {
+                                
+                                resolve(false);
+
                             } else {
                                 resolve(false);
                             }
@@ -350,6 +354,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (_this.lStorageService.getitemfromLocalStorage('ios')) {
             _this.from_iOS = true;
         }
+     //   _this.getPaymentModes();
         _this.gets3curl();
         _this.goThroughLogin().then(
             (status) => {

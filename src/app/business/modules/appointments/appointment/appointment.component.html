@@ -882,12 +882,18 @@
                         <div class="mainouter checkin-page walkin-form-fields-appointment">
                             <ng-container *ngIf="!api_loading1">
                                 <div class="service-outer p-0 m-0"
+                                *ngIf="this.follow_up_Details && this.follow_up_Details.provider && (this.follow_up_Details.provider.businessName || (this.follow_up_Details.provider.firstName || this.follow_up_Details.provider.lastName))">
+                                <ng-container><br>
+                                    <li class="block-level">
+                                        Provider : {{this.follow_up_Details.provider.businessName ? this.follow_up_Details.provider.businessName : (this.follow_up_Details.provider.firstName + ' ' + this.follow_up_Details.provider.lastName) | capitalizeFirst}}
+                                    </li>
+                                </ng-container>
+                            </div>
+                                <div class="service-outer p-0 m-0"
                                     *ngIf="this.follow_up_Details && this.follow_up_Details.service && this.follow_up_Details.service.deptName">
                                     <ng-container><br>
                                         <li class="block-level">
-                                            Department
-                                            <div>
-                                                {{this.follow_up_Details.service.deptName | capitalizeFirst}}</div>
+                                            Department : {{this.follow_up_Details.service.deptName | capitalizeFirst}}
                                         </li>
                                     </ng-container>
                                 </div>
@@ -895,9 +901,9 @@
                                     *ngIf="this.follow_up_Details && this.follow_up_Details.service">
                                     <ng-container>
                                         <li class="block-level">
-                                            Service
-                                            <div>
-                                                {{this.follow_up_Details.service.name | capitalizeFirst}}</div>
+                                            Service : {{this.follow_up_Details.service.name | capitalizeFirst}}
+                                            <!-- <div>
+                                                {{this.follow_up_Details.service.name | capitalizeFirst}}</div> -->
                                         </li>
                                     </ng-container>
                                 </div>
