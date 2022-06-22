@@ -517,7 +517,7 @@
         </div>
     </div>
 </form>
-<ng-container *ngIf="this.leadInfo.status.name==='KYC Updated'">
+<ng-container *ngIf="this.leadInfo && this.leadInfo.status && this.leadInfo.status.name==='KYC Updated'">
     <!---crif btn start-->
     <div class=" my-2">
       <!-- (click)="hideme[i] = !hideme[i]" -->

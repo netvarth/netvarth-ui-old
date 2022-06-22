@@ -417,12 +417,8 @@
     background: #B2B2B2 !important;
 
 }
-::ng-deep .mat-datepicker-toggle{
-position: absolute !important;
-}
 .dateWithMatDtae{
   display: flex;
-  flex-direction: row-reverse;
   align-items: center;
   justify-content: space-between;
   
