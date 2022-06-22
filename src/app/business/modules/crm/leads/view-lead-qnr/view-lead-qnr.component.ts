@@ -10,6 +10,8 @@ import { WordProcessor } from "../../../../../shared/services/word-processor.ser
 // import { PreviewpdfComponent } from "./previewpdf/previewpdf.component";
 import { MatDialog } from "@angular/material/dialog";
 import { CrmSelectMemberComponent } from "../../../../../business/shared/crm-select-member/crm-select-member.component";
+import { TeleBookingService } from '../../../../../shared/services/tele-bookings-service';
+
 
 @Component({
   selector: 'app-view-lead-qnr',
@@ -39,6 +41,7 @@ export class ViewLeadQnrComponent implements OnInit {
   api_loading_video: boolean;
   api_loading: boolean;
   headerName = 'Add/Update Details';
+  telephoneNumber: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -49,7 +52,8 @@ export class ViewLeadQnrComponent implements OnInit {
     private providerServices: ProviderServices,
     private wordProcessor: WordProcessor,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private teleService:TeleBookingService
   ) {
     this.activatedRoute.params.subscribe(
       (params: any) => {
@@ -64,6 +68,7 @@ export class ViewLeadQnrComponent implements OnInit {
     _this.fetchLeadInfo(_this.leadUID).then(
       (leadInfo: any) => {
         _this.leadInfo = leadInfo; // Setting Lead information.
+       _this.getTelephoneNumer(_this.leadInfo.customer.phoneNo)
         if (leadInfo.status.name === 'New' || leadInfo.status.name === 'KYC Updated') {
           if (leadInfo.kycCreated) {
             _this.crmService.getkyc(leadInfo.uid).subscribe(
@@ -100,6 +105,9 @@ export class ViewLeadQnrComponent implements OnInit {
         }
       }
     );
+  }
+  getTelephoneNumer(phNo){
+    this.telephoneNumber = this.teleService.getTeleNumber(phNo );
   }
   /**
    * Init method

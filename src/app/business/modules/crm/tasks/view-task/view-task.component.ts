@@ -18,6 +18,8 @@ import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 import { WordProcessor } from '../../../../../../../src/app/shared/services/word-processor.service';
+import { TeleBookingService } from '../../../../../shared/services/tele-bookings-service';
+
 @Component({
   selector: "app-view-task",
   templateUrl: "./view-task.component.html",
@@ -157,12 +159,62 @@ export class ViewTaskComponent implements OnInit {
   public enquiryDetails:any;
   bFollowupButtonAfterEnquiry:boolean=false;
   enquiryUid:any;
+  totalTimeDisplay:any;
+  public monthName:any=[
+    {
+      'count':'01',
+      'monthName':'January'
+    },
+    {
+      'count':'02',
+      'monthName':'February'
+    },
+    {
+      'count':'03',
+      'monthName':'March'
+    },
+    {
+      'count':'04',
+      'monthName':'April'
+    },
+    {
+      'count':'05',
+      'monthName':'May'
+    },
+    {
+      'count':'06',
+      'monthName':'June'
+    },
+    {
+      'count':'07',
+      'monthName':'July'
+    },
+    {
+      'count':'08',
+      'monthName':'August'
+    },
+    {
+      'count':'09',
+      'monthName':'September'
+    },
+    {
+      'count':'10',
+      'monthName':'October'
+    },
+    {
+      'count':'11',
+      'monthName':'November'
+    },
+    {
+      'count':'12',
+      'monthName':'December'
+    }
+    ]
  
 
 
  
   constructor(
-    // private locationobj: Location,
     private crmService: CrmService,
     public _location: Location,
     public dialog: MatDialog,
@@ -174,7 +226,7 @@ export class ViewTaskComponent implements OnInit {
     private groupService:GroupStorageService,
     private datePipe:DatePipe,
     private wordProcessor: WordProcessor,
-
+    private teleService:TeleBookingService
   ) {}
 
   ngOnInit(): void {
@@ -199,7 +251,7 @@ export class ViewTaskComponent implements OnInit {
    })
    const user = this.groupService.getitemFromGroupStorage('ynw-user');
    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-   console.log("User is :", user);
+  //  console.log("User is :", user);
    this.selectMember= user.firstName + user.lastName;
    this.selectTaskManger=user.firstName + user.lastName;
    this.assigneeId=user.id;
@@ -214,14 +266,11 @@ export class ViewTaskComponent implements OnInit {
       this.activityType=qparams.dataType;
     }
   })
-  
-  
-  console.log('this.activityType',this.activityType)
-  
+  // console.log('this.activityType',this.activityType)
     this._Activatedroute.paramMap.subscribe(params => {
       this.enquiryId= params.get("id");
       this.taskUid=params.get("id");
-      console.log('this.enquiryId',this.enquiryId)
+      // console.log('this.enquiryId',this.enquiryId)
       if(this.activityType==='UpdateFollowUP'){
         this.getEnquiryDetailsRefresh()
       }
@@ -241,37 +290,31 @@ export class ViewTaskComponent implements OnInit {
     this.getTaskTypeListData()
     this.getTaskPriorityListData()
     this.getTaskStatusListData()
-    // this.getTaskmaster()
-    // this.getNotesDetails()
-    // this.getNotesDetails()
-    
-    
+   
   }
   getEnquiryDetailsRefresh(){
     this.crmService.getEnquiryDetails(this.enquiryId).subscribe((enquiryList:any)=>{
-      console.log('enquiryList',enquiryList);
       this.taskDetails= enquiryList;
       this.enquiryUid= enquiryList.uid;
       if(this.taskDetails.customer){
         this.firstCustomerName=this.taskDetails.customer.name.charAt(0);
         this.customerName= this.taskDetails.customer.name;
-        this.customerPhNo= this.taskDetails.customer.phoneNo
+        this.customerPhNo =  this.teleService.getTeleNumber(this.taskDetails.customer.phoneNo);
       } 
       this.getUpdateFollowUPValue();
       this.headerName='Follow Up';
-      console.log('this.taskDetails.priority.id',this.taskDetails.priority.id)
     })
   }
 
   getTaskDetailsRefresh(){
     if(this.activityType ===undefined){
       this.crmService.getTaskDetails(this.taskUid).subscribe(data => {
-        console.log(' this.taskType ', this.taskType )
         this.taskDetails = data;
         this.getTaskmaster()
         this.taskkid = this.taskDetails.id;
         this.api_loading = false;
         console.log("Task Details : ", this.taskDetails);
+        this.getDate()
         this.updateUserType=this.taskDetails.userTypeEnum;
         if(this.taskDetails.status.name ==='Completed'){
           this.bTaskFollowUpResult=false;
@@ -403,28 +446,22 @@ export class ViewTaskComponent implements OnInit {
         this.headerName=this.taskDetails.title
         if (this.taskDetails.originUid) {
           this.taskType = "SubTask";
-          console.log('taskType',this.taskType)
+          // console.log('taskType',this.taskType)
           this.headerName='SubActivity Overview';
           this.taskDetailsData = this.taskDetails
           this.crmService.taskToCraeteViaServiceData = this.taskDetailsData 
           console.log('this.crmService.taskToCraeteViaServiceData;',this.crmService.taskToCraeteViaServiceData)
         }
-        // console.log('taskType',this.taskType)
-        // console.log("taskDetails.status", this.taskDetails.status.name);
-        // console.log('this.taskDetails.notes',this.taskDetails.notes)
-        // this.taskDetails.notes.forEach((notesdata: any) => {
-        //   this.notesList.push(notesdata);
-        // });
-        console.log("this.notesList", this.notesList);
+        // console.log("this.notesList", this.notesList);
         this.crmService.taskToCraeteViaServiceData = this.taskDetails
-    console.log('this.crmService.taskToCraeteViaServiceData;',this.crmService.taskToCraeteViaServiceData)
+    // console.log('this.crmService.taskToCraeteViaServiceData;',this.crmService.taskToCraeteViaServiceData)
       }
       
       });
       if(this.taskDetails.customer){
         this.firstCustomerName=this.taskDetails.customer.name.charAt(0);
         this.customerName= this.taskDetails.customer.name;
-        this.customerPhNo= this.taskDetails.customer.phoneNo
+        this.customerPhNo =  this.teleService.getTeleNumber(this.taskDetails.customer.phoneNo);
       } 
 
     }
@@ -433,7 +470,7 @@ export class ViewTaskComponent implements OnInit {
 
   //mew ui method start
   getUpdateFollowUPValue(){
-    console.log('UpdateValueFollowup')
+    // console.log('UpdateValueFollowup')
     this.headerName=this.taskDetails.title;
     if(this.taskDetails.title){
       this.taskDetailsForm.controls.taskTitle.value=this.taskDetails.title
@@ -460,15 +497,15 @@ export class ViewTaskComponent implements OnInit {
 
   }
   actualResultTask(actualRes:any){
-    console.log('actualRes',actualRes)
+    // console.log('actualRes',actualRes)
   }
 
   getTaskmaster(){
     this.crmService.getTaskMasterList().subscribe((response:any)=>{
-      console.log('TaskMasterListresponse :',response);
+      // console.log('TaskMasterListresponse :',response);
       this.taskMasterList.push(response) 
       // this.taskMasterList[0].forEach((item:any)=>{
-        console.log('this.taskDetails.title',this.taskDetails.title)
+        // console.log('this.taskDetails.title',this.taskDetails.title)
         if(this.activityType===undefined){
           if(this.taskDetails.title ==='Direct Notice Distribution'){
             this.bTaskStatus=false;
@@ -593,7 +630,7 @@ export class ViewTaskComponent implements OnInit {
         
         else if( (this.taskDetails.title ==='BA Follow Up') || (this.taskDetails.title ==='BA Recruitment') ){
           if(this.activityType===undefined){
-            console.log('2nd')
+            // console.log('2nd')
             this.bTaskStatus=false;
             this.bTaskCategory=false;
             this.bTaskType=false;
@@ -614,7 +651,7 @@ export class ViewTaskComponent implements OnInit {
           
         }
         else {
-          console.log('4thhhhh')
+          // console.log('4thhhhh')
           this.bTaskStatus=true;
           this.bTaskCategory=true;
           this.bTaskType=true;
@@ -633,7 +670,7 @@ export class ViewTaskComponent implements OnInit {
         }
       }
         else if(this.activityType==='UpdateFollowUP'){
-          console.log('3rddddddd')
+          // console.log('3rddddddd')
           this.bTaskStatus=false;
           this.bTaskCategory=false;
           this.bTaskType=false;
@@ -668,51 +705,20 @@ export class ViewTaskComponent implements OnInit {
   resetErrors(){
     this.taskError = null;
   }
-  oneField(value){
-    // console.log('value',(this.taskDetailsForm.controls.taskTitle.value ));
-    // if((this.taskDetailsForm.controls.taskTitle.value !== this.taskDetails.title) || (this.taskDetailsForm.controls.taskDescription.value !== this.taskDetails.description)
-    // || (this.taskDetailsForm.controls.areaName.value !== this.taskDetails.locationArea) || (this.selectMember !== this.taskDetails.assignee.id) 
-    //   || (this.taskDetailsForm.controls.taskDate.value !== this.taskDetails.dueDate) || (this.taskDetailsForm.controls.userTaskCategory.value !== this.taskDetails.category.id) ||
-    //   (this.taskDetailsForm.controls.userTaskType.value != this.taskDetails.type.id)){
-    //     this.taskDetailsDescription ='Enter Task Details'
-
-    // }
-    // else{
-    //   this.taskDetailsDescription ='View Task Details'
-    // }
-  }
-  handleTaskTitle(taskTitleValue,event){
-    console.log('taskTitleValue',taskTitleValue)
-    console.log('event',event);
-    // if(taskTitleValue===this.taskDetails.title){
-    //   this.taskDetailsDescription= 'View Task Details'
-    // }
-    // else{
-    //   this.taskDetailsDescription= 'Enter Task Details'
-    // }
-    
-  }
   autoGrowTextZone(e) {
-    // console.log('textarea',e)
     e.target.style.height = "0px";
     e.target.style.height = (e.target.scrollHeight + 15)+"px";
   }
-  handTaskDescription(taskDescription){
-    console.log('taskDescription',taskDescription)
-  }
-  handeAreaName(taskAreaName){
-    console.log('taskAreaName',taskAreaName)
-  }
   getLocation(){
     this.crmService.getProviderLocations().subscribe((res)=>{
-      console.log('location.........',res)
+      // console.log('location.........',res)
       this.taskDetailsForm.controls.taskLocation.setValue(res[0].place);
       this.updteLocationId= res[0].id;
     })
   }
   getAssignMemberList(){
     this.crmService.getMemberList().subscribe((memberList:any)=>{
-      console.log('memberList',memberList)
+      // console.log('memberList',memberList)
       this.allMemberList.push(memberList)
     },(error:any)=>{
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -733,51 +739,31 @@ export class ViewTaskComponent implements OnInit {
       }
   })
   dialogRef.afterClosed().subscribe((res:any)=>{
-    console.log('afterSelectPopupValue',res);
     if(res===''){
-      // console.log('Select Manager')
-      // this.selectMember =  this.updateValue.assignee.name;
     }else{
       this.updateAssignMemberDetailsToDialog=res;
-    console.log('this.updateAssignMemberDetailsToDialog',this.updateAssignMemberDetailsToDialog)
     this.selectMember = (res.firstName + ' ' + res.lastName);
     this.userType = res.userType;
-    // this.locationName = res.locationName;
     this.locationId = res.bussLocations[0];
-    console.log('this.updateAssignMemberDetailsToDialog',res)
     if(res.place)
-    {
-      // this.taskDetailsForm.controls.taskLocation.setValue(res.place);
-    }
+    {}
     this.assigneeId= res.id;
-    console.log('this.assigneeid',res.id)
     this.updateMemberId=this.assigneeId;
     this.updteLocationId= this.locationId;
     }
   })
-  }
-  handleDateChange(e){
-    console.log(e)
   }
   dateClass(date: Date): MatCalendarCellCssClasses {
     return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
   }
   getCategoryListData(){
     this.crmService.getCategoryList().subscribe((categoryList:any)=>{
-      // console.log('category',categoryList);
       this.categoryListData.push(categoryList)
     },
     (error:any)=>{
       this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
     }
     )
-  }
-  handleTaskCategorySelection(taskCategory){
-    console.log('taskCategory',taskCategory)
-  }
-  handleTaskTypeSelection(taskType:any){
-    console.log('taskType',taskType)
-
   }
   getTaskTypeListData(){
     this.crmService.getTaskType().subscribe((taskTypeList:any)=>{
@@ -788,11 +774,7 @@ export class ViewTaskComponent implements OnInit {
       this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
     })
   }
-  handleTaskLocation(taskLocation){
-    console.log(taskLocation)
-  }
   selectManagerDialog(handleSelectManager:any){
-    // console.log('handleselectMember',handleSelectManager);
     const dialogRef  = this.dialog.open(CrmSelectMemberComponent, {
       width: '100%',
       panelClass: ['popup-class', 'confirmationmainclass'],
@@ -808,13 +790,11 @@ export class ViewTaskComponent implements OnInit {
   dialogRef.afterClosed().subscribe((res:any)=>{
     console.log('afterSelectPopupValue',res)
     if(res===''){
-      // console.log('Select task manager')
       this.selectTaskManger = this.taskDetails.manager.name;//'Select task manager'
 
     }
     else{
       this.updateSelectTaskMangerDetailsToDialog=res;
-    // console.log('updateSelectTaskMangerDetailsToDialog',this.updateSelectTaskMangerDetailsToDialog)
     this.selectTaskManger=((res.firstName + res.lastName))
     this.selectTaskMangerId= res.id;
     this.updateManagerId=this.selectTaskMangerId
@@ -831,31 +811,14 @@ export class ViewTaskComponent implements OnInit {
     console.log('estDurationDay',this.estTime)
 
   }
-  handleTaskPrioritySelection(taskPriority,taskPriorityText:any){
-  }
   getTaskPriorityListData(){
     this.crmService.getTaskPriority().subscribe((taskPriority:any)=>{
-      console.log('taskPriority',taskPriority);
       this.taskPriorityList.push(taskPriority);
-      // if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName==='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster'){
-      //   this.taskDetailsForm.controls.userTaskPriority.setValue(this.taskPriorityList[0][0].id);
-      // }
-      // else if(this.type ==='SubUpdate'){
-      //   this.taskDetailsForm.controls.userTaskPriority.setValue(parseInt(this.taskDetails.priorityId))
-      // }
-      // else 
-      {
-        // this.taskDetailsForm.controls.userTaskPriority.setValue(this.taskDetails.priority.id);
-        // this.taskPriority=this.updateValue.priority.id;
-      }
     },
     (error)=>{
       this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
     }
     )
-  }
-  handleTaskStatus(taskStatus){
-    // console.log(taskStatus)
   }
   getColor(status){
     if(status){
@@ -884,35 +847,13 @@ export class ViewTaskComponent implements OnInit {
   }
   getTaskStatusListData(){
     this.crmService.getTaskStatus().subscribe((taskStatus:any)=>{
-      console.log('taskStatus',taskStatus);
       this.taskStatusList.push(taskStatus)
-      
-      // if((this.taskDetails.title ==='Follow Up 1') || (this.taskDetails.title ==='Follow Up 2')){
-      //   this.taskStatusList.push(
-      //     {id: 5, name: 'Proceed',image:'./assets/images/crmImages/total.png'},{id: 3, name: 'Pending',image:'./assets/images/crmImages/total.png'},{id: 4, name: 'Rejected',image:'./assets/images/crmImages/total.png'}
-      //   );
-      // }
-      // else{
-      //   this.taskStatusList.push(
-      //     {id: 1, name: 'New'},{id: 2, name: 'Assigned'},{id: 3, name: 'In Progress'},
-      //     {id: 4, name: 'Cancelled'},{id: 5, name: 'Completed'},{id: 12, name: 'Suspended'}
-      //   );
-      // }
     },
     (error)=>{
       this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
     })
   }
-  handleTargetResult(targetResult){
-    // console.log('targetResult',targetResult)
-  }
-  handleTargetPotential(targetPotential){
-  // console.log('targetPotential',targetPotential)
-  }
   saveCreateTask(){
-    console.log('this.updteLocationId',this.updteLocationId)
-    console.log('this.activityType ',this.activityType )
-    console.log('this.updateUserType',this.updateUserType)
     if(this.activityType !=='UpdateFollowUP'){
       const updateTaskData:any = {
         "title":this.taskDetailsForm.controls.taskTitle.value,
@@ -932,21 +873,16 @@ export class ViewTaskComponent implements OnInit {
         "estDuration" : this.estTime,
         "actualResult" :this.actualResult
       }
-      console.log('updateTaskData',updateTaskData)
       const createNoteData:any = {
         "note" :this.notesTextarea
       }
       if(this.updateUserType===('PROVIDER' || 'CONSUMER')){
-        console.log('updateTaskData',updateTaskData)
         this.crmService.updateTask(this.taskDetails.taskUid, updateTaskData).subscribe((response)=>{
-          console.log('afterUpdateList',response);
           this.updateResponse= response;
           if(this.updateResponse=true){
             this.crmService.activityCloseWithNotes(this.taskDetails.taskUid,createNoteData).subscribe((response)=>{
-              console.log(response)
               setTimeout(() => {
                 this.snackbarService.openSnackBar('Successfull updated activity');
-                // this.taskDetailsForm.reset();
               this.router.navigate(['provider', 'task']);
               }, projectConstants.TIMEOUT_DELAY);
             },
@@ -965,9 +901,6 @@ export class ViewTaskComponent implements OnInit {
         
       }
     }
-   
-   
-    // console.log(' this.updateUserType', this.updateUserType)
     if(this.activityType==='UpdateFollowUP'){
       const updateFollowUpData={
         "title":this.taskDetailsForm.controls.taskTitle.value,
@@ -985,11 +918,9 @@ export class ViewTaskComponent implements OnInit {
       "actualResult" :this.actualResult
 
       }
-      console.log('updateFollowUpData',updateFollowUpData)
+
       if(this.updateUserType===('PROVIDER' || 'CONSUMER')){
-        // this.api_loading = true;
-        // console.log("2")
-        console.log('updateFollowUpData',updateFollowUpData)
+  
         this.crmService.updateTask(this.taskDetails.taskUid, updateFollowUpData).subscribe((response)=>{
           console.log('afterupdateFollowUpData',response);
           setTimeout(() => {
@@ -1008,7 +939,6 @@ export class ViewTaskComponent implements OnInit {
     }
   }
   handleNotesDescription(textValue:any){
-    console.log('taskDescription',textValue)
     if(textValue != ''){
       this.errorMsg=false;
       this.assignMemberErrorMsg='';
@@ -1020,18 +950,14 @@ export class ViewTaskComponent implements OnInit {
     
   }
   saveCreateNote(notesValue:any){
-    console.log('this.taskDetails.taskUid',this.taskUid)
-    console.log('this.enquiryId',this.enquiryId)
     if(this.notesTextarea !==undefined){
       this.errorMsg=false;
       this.assignMemberErrorMsg='';
       const createNoteData:any = {
         "note" :this.notesTextarea
       }
-        console.log('createNoteData',createNoteData)
         if(this.activityType==='UpdateFollowUP'){
           this.crmService.enquiryNotes( this.enquiryUid,createNoteData).subscribe((response:any)=>{
-            console.log('response',response)
             this.api_loading = true;
             this.notesTextarea = '';
             setTimeout(() => {
@@ -1046,7 +972,6 @@ export class ViewTaskComponent implements OnInit {
         }
         else{
           this.crmService.addNotes(this.taskDetails.taskUid,createNoteData).subscribe((response:any)=>{
-            console.log('response',response)
             this.api_loading = true;
             this.notesTextarea = '';
             setTimeout(() => {
@@ -1059,8 +984,6 @@ export class ViewTaskComponent implements OnInit {
             this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
           })
         }
-        
-      // }
       
     }
     else{
@@ -1116,7 +1039,6 @@ export class ViewTaskComponent implements OnInit {
       console.log(' this.enquiryId', this.enquiryId)
       if(this.taskDetails.status.name != 'Proceed'){
         this.crmService.statusToProceed( this.enquiryId).subscribe((response)=>{
-          console.log('afterupdateFollowUpData',response);
           setTimeout(() => {
             this.taskDetailsForm.reset();
               this.snackbarService.openSnackBar('Successfully updated' );
@@ -1132,7 +1054,6 @@ export class ViewTaskComponent implements OnInit {
       }
       else{
         this.crmService.statusToProceedFollowUp2( this.enquiryId).subscribe((response)=>{
-          console.log('afterupdateFollowUpData',response);
           setTimeout(() => {
             this.taskDetailsForm.reset();
               this.snackbarService.openSnackBar('Successfully updated' );
@@ -1163,13 +1084,7 @@ export class ViewTaskComponent implements OnInit {
         type:this.taskType
       }
     });
-
     dialogRef.afterClosed().subscribe(res => {
-      // this.api_loading = true;
-      // setTimeout(() => {
-      //   this.ngOnInit();
-      //   this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { 'panelClass': 'snackbarnormal' });
-      // }, 5000);
       if(res === 'close'){
         this.api_loading1 = false;
       }
@@ -1182,21 +1097,15 @@ export class ViewTaskComponent implements OnInit {
           else{
             this.getTaskDetailsRefresh()
           }
-         
-          
-          // this.ngOnInit();
           this.api_loading1 = false;
           this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { 'panelClass': 'snackbarnormal' });
         }, 5000);
       }
     });
-
-    // this.getTaskDetails();
   }
   getTaskDetails() {
     this.crmService.getTaskDetails(this.taskUid).subscribe(data => {
       this.taskDetails = data;
-      // console.log('attdata',data)
       this.taskkid = this.taskDetails.id;
       this.taskDetails.notes.forEach((notesdata: any) => {
         this.notesList.push(notesdata);
@@ -1205,37 +1114,21 @@ export class ViewTaskComponent implements OnInit {
   }
   openEditTask(taskdata: any, editText: any,subUpdateData:any) {
     if(taskdata.originUid === undefined){
-      console.log('taskdata',taskdata)
-      console.log('editText',editText)
-      console.log('taskDetailsData',this.taskDetailsData)
-      console.log('taskdata.originUid',taskdata.originUid)
       this.crmService.taskToCraeteViaServiceData = taskdata
-  
       const newTaskData = this.crmService.taskToCraeteViaServiceData;
       this.crmService.taskActivityName = editText;
       newTaskData;
-      console.log('newTaskData',newTaskData)
-      console.log('this.taskType',this.taskType)
       const navigationExtras: NavigationExtras = {
         queryParams: {
           type: 'Update'
         }
       };
-      console.log('navigationExtras',navigationExtras)
       this.router.navigate(['provider', 'task', 'create-task'], navigationExtras);
     }
     else {
-      console.log('taskDetailsData',this.taskDetailsData)
-      console.log('subUpdateData',subUpdateData)
-      console.log('this.taskType',this.taskType)
       this.crmService.taskToCraeteViaServiceData = subUpdateData
       const newTaskData = this.crmService.taskToCraeteViaServiceData;
       this.crmService.taskActivityName = editText;
-      newTaskData;
-      console.log('newTaskData',newTaskData)
-      console.log('this.taskType',this.taskType)
-      // console.log('typeOf',typeof(newTaskData.targetResult))
-      
       const navigationExtras: NavigationExtras = {
         queryParams: {
           type: 'SubUpdate',
@@ -1253,9 +1146,6 @@ export class ViewTaskComponent implements OnInit {
           customerNotes:newTaskData.customerNotes,
           dueDate:newTaskData.dueDate,
           description:newTaskData.description,
-          // estDuration:{
-          //   days:newTaskData.estDuration.days,hours:newTaskData.estDuration.hours,minutes:newTaskData.estDuration.minutes
-          // },
           estdays:(newTaskData.estDuration.days),
           esthours:newTaskData.estDuration.hours,
           estminutes:newTaskData.estDuration.minutes,
@@ -1288,7 +1178,6 @@ export class ViewTaskComponent implements OnInit {
           locationArea:newTaskData.locationArea,
         }
       };
-      console.log('navigationExtras',navigationExtras)
       this.router.navigate(['provider', 'task', 'create-task'], navigationExtras);
     }
     
@@ -1315,13 +1204,11 @@ export class ViewTaskComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(res => {
-      console.log(res);
       this.getTaskDetails();
       this.changeAction = true;
     });
   }
   chnageStatus() {
-    console.log("openDialogStatusChange", this.taskDetails);
     const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
       width: "100%",
       panelClass: ["commonpopupmainclass", "confirmationmainclass"],
@@ -1332,7 +1219,6 @@ export class ViewTaskComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe((res: any) => {
-      console.log("resssssssss", res);
     });
   }
 
@@ -1447,12 +1333,8 @@ export class ViewTaskComponent implements OnInit {
   }
   goBack() {
     this.router.navigate(['provider', 'crm']);
-    // this._location.back();
   }
-
-  //notes start
   openAddNoteDialog(addNoteText: any) {
-    console.log("addNoteText", addNoteText);
     const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
       width: "100%",
       panelClass: ["popup-class", "confirmationmainclass"],
@@ -1464,7 +1346,6 @@ export class ViewTaskComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(response => {
       this.notesText = response;
-      console.log('response',this.notesText)
       if(response==='Cancel'){
       setTimeout(() => {
         this.api_loading = false;
@@ -1474,8 +1355,6 @@ export class ViewTaskComponent implements OnInit {
         else{
           this.getTaskDetailsRefresh()
         }
-        // this.ngOnInit();
-        // this.getTaskDetails();
       }, projectConstants.TIMEOUT_DELAY);
       }
       else{
@@ -1496,23 +1375,18 @@ export class ViewTaskComponent implements OnInit {
     });
   }
   attatchmentDialog(filesDes: any) {
-    console.log("flels", filesDes);
     const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
       width: "100%",
       panelClass: ["popup-class", "confirmationmainclass"],
       data: {
         requestType: "uploadFilesDesciption",
         filesDes: filesDes
-        // header:'Notes',
-        // taskUid:this.taskUid,
       }
     });
     dialogRef.afterClosed().subscribe((response: any) => {
-      console.log("response", response);
     });
   }
   noteView(noteDetails: any) {
-    console.log("notedetails", noteDetails);
     const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
       width: "100%",
       panelClass: ["popup-class", "confirmationmainclass"],
@@ -1524,7 +1398,6 @@ export class ViewTaskComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((response: any) => {
       this.getTaskDetails();
-      console.log("response", response);
     });
   }
   progressbarDialog() {
@@ -1537,7 +1410,6 @@ export class ViewTaskComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(response => {
-      console.log("responseDataAboutNote", response);
       this.getTaskDetails();
       this.notesText = response;
       this.notesList.push();
@@ -1545,7 +1417,6 @@ export class ViewTaskComponent implements OnInit {
   }
 
   openDialogStatusChange(taskData: any) {
-    console.log("openDialogStatusChange", taskData);
     const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
       width: "100%",
       panelClass: ["commonpopupmainclass", "confirmationmainclass"],
@@ -1556,8 +1427,6 @@ export class ViewTaskComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe((res: any) => {
-      console.log("resssssssss", res);
-      // this.getTaskDetails();
       if(res==='Cancel'){
         setTimeout(() => {
           this.api_loading = false;
@@ -1567,8 +1436,6 @@ export class ViewTaskComponent implements OnInit {
           else{
             this.getTaskDetailsRefresh()
           }
-          // this.ngOnInit();
-          // this.getTaskDetails();
         }, projectConstants.TIMEOUT_DELAY);
         }
         else{
@@ -1581,14 +1448,11 @@ export class ViewTaskComponent implements OnInit {
             else{
               this.getTaskDetailsRefresh()
             }
-            // this.ngOnInit();
-            // this.getTaskDetails();
           }, projectConstants.TIMEOUT_DELAY);
         }
     });
   }
   openDialogStatusChangeLeadToTask(taskData: any){
-    console.log("openDialogStatusChange", taskData);
     const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
       width: "100%",
       panelClass: ["commonpopupmainclass", "confirmationmainclass"],
@@ -1599,9 +1463,6 @@ export class ViewTaskComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe((res: any) => {
-      console.log("resssssssss", res);
-      // this.ngOnInit()
-      // this.getTaskDetails();
       if(res==='Cancel'){
         setTimeout(() => {
           this.api_loading = false;
@@ -1611,8 +1472,6 @@ export class ViewTaskComponent implements OnInit {
           else{
             this.getTaskDetailsRefresh()
           }
-          // this.ngOnInit();
-          // this.getTaskDetails();
         }, projectConstants.TIMEOUT_DELAY);
         }
         else{
@@ -1625,10 +1484,47 @@ export class ViewTaskComponent implements OnInit {
             else{
               this.getTaskDetailsRefresh()
             }
-            // this.ngOnInit();
-            // this.getTaskDetails();
           }, projectConstants.TIMEOUT_DELAY);
         }
     });
+  }
+  getDate() {
+    console.log(this.taskDetails.notes[0].createdDate)
+    this.taskDetails.notes.forEach(
+      (date:any)=>{
+        console.log('dateTime',date);
+        console.log('date.createdDate',date.createdDate)
+        let dateHour=date.createdDate.slice(11,13)
+        console.log('dateHour',Number(dateHour))
+        let  dateHr1:any;
+        let dateHr12:any;
+        let dateHr2:any;
+        let dateMonth:any;
+        let meridianAm:string='am';
+        let meridianPm:string='pm';
+        dateMonth=date.createdDate.slice(3,5);
+        console.log('dateMonth',dateMonth);
+        if(dateHour<12){
+          dateHr1=dateHour;
+          console.log('dateHr1',dateHr1);
+          this.totalTimeDisplay= dateHr1 + ':' + dateMonth +' '+ meridianAm;
+          console.log('totalTimeDisplayHr1',this.totalTimeDisplay)
+        }
+        else if(dateHour===12){
+        dateHr12=dateHour;
+          console.log('dateHr12',dateHr12);
+          this.totalTimeDisplay= dateHr12 + ':' + dateMonth +' ' + meridianPm;
+          console.log('totalTimeDisplayHr12',this.totalTimeDisplay)
+        
+        }
+        else{
+          dateHr2=dateHour-12;
+          console.log('dateHr2',dateHr1);
+          this.totalTimeDisplay= dateHr2 + ':' + dateMonth +' ' + meridianPm;
+          console.log('totalTimeDisplayHr2',this.totalTimeDisplay)
+        }
+      }
+    )
+    
   }
 }

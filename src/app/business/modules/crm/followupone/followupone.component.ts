@@ -82,6 +82,7 @@ export class FollowUpOneComponent implements OnInit {
   getFollowups(filter) {
     this.crmService.getFollowups(filter).subscribe((res: any) => {
       this.followups = res;
+      console.log('dataTableres',res)
       this.api_loading = false;
     });
   }

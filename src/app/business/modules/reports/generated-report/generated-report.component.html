@@ -58,7 +58,8 @@
                   <br>
                 </label>
                 <label class=" col-md-10 col-form-label">Total Records Found :
-                  <span> &nbsp;{{reportHeader.count}}</span>
+                  <!-- <span> &nbsp;{{reportHeader.count}}</span> -->
+                  <span *ngIf="new_report && new_report.reportContent && new_report.reportContent.data">&nbsp;{{new_report.reportContent.data.length}}</span>
                   <br>
                 </label>
                 <label class=" col-md-10 col-form-label" *ngIf="reportHeader.bank">Bank :

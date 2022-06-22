@@ -7,6 +7,7 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
+import { TeleBookingService } from '../../../../../../shared/services/tele-bookings-service';
 
 @Component({
   selector: 'app-applicant',
@@ -39,6 +40,8 @@ export class ApplicantComponent implements OnInit {
   failedStatusId: any;
   crifStatusId: any;
   availableDates: any = [];
+  phNumber:any;
+  
 
   constructor(
     private formBuilder: FormBuilder,
@@ -46,20 +49,23 @@ export class ApplicantComponent implements OnInit {
     private crmService: CrmService,
     private snackbarService: SnackbarService,
     private datePipe:DatePipe,
+    private teleService:TeleBookingService
   ) { }
 
   ngOnInit(): void {
     console.log("Applicant Init");
     console.log(this.applicant);
+    // this.phoneNumber = this.teleService.getTeleNumber(this.applicant.permanentPhone);
+    //  console.log('phNumber',this.phoneNumber)
     if (this.applicant && this.applicant['name']) {
       this.customerName = this.applicant['name'];
     } else {
       this.customerName = this.applicant['customerName'];
     }
     if (this.applicant.parent && this.applicant['phone']) {
-      this.phoneNumber = '+91' + this.applicant['phone'];
+      this.phoneNumber =  this.teleService.getTeleNumber(this.applicant['phone']);  //'+91' + this.applicant['phone'];
     } else {
-      this.phoneNumber = this.applicant['permanentPhone'];
+      this.phoneNumber =  this.teleService.getTeleNumber(this.applicant['permanentPhone']) //this.applicant['permanentPhone'];
     }
     this.applicantForm = this.formBuilder.group({
       customerName: [null],

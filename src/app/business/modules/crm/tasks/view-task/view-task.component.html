@@ -48,8 +48,7 @@
         </div>
         <div>
           <div class="fieldPadding">
-            <input (keyup)="resetErrors()" type="text" #taskTitle (ngModelChange)="oneField(taskTitle.value)"
-                (ngModelChange)="handleTaskTitle(taskTitle.value,$event)" placeholder="Enter task title"
+            <input (keyup)="resetErrors()" type="text" #taskTitle placeholder="Enter task title"
                 class="form-control" formControlName="taskTitle" autocomplete="off"
                 [value]="taskTitle" />
             <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
@@ -65,9 +64,8 @@
           <div>Description</div>
         </div>
       <div class="fieldPadding">
-          <textarea rowa="10" class="form-control" formControlName="taskDescription" #taskDescription
-              (ngModelChange)="handTaskDescription(taskDescription.value)"(keyup)="autoGrowTextZone($event)"
-              maxlength="1000" placeholder="Enter task description" [value]="taskDescription" (ngModelChange)="oneField(taskDescription.value)">
+          <textarea rowa="10" class="form-control" formControlName="taskDescription" #taskDescription (keyup)="autoGrowTextZone($event)"
+              maxlength="1000" placeholder="Enter task description" [value]="taskDescription">
       </textarea>
           <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
               *ngIf="taskError" errorMsg="{{taskError}}">
@@ -81,7 +79,7 @@
             <div>Area</div>
         </div>
         <div class="fieldPadding">
-            <input (keyup)="resetErrors()"[value]="areaName" #areaName (ngModelChange)="oneField(areaName.value)" (ngModelChange)="handeAreaName(areaName.value)" type="text"placeholder=""class="form-control" formControlName="areaName" autocomplete="off" placeholder="Enter area name" /> 
+            <input (keyup)="resetErrors()"[value]="areaName" #areaName type="text"placeholder=""class="form-control" formControlName="areaName" autocomplete="off" placeholder="Enter area name" /> 
             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
             </app-field-error-display>    
         </div>
@@ -97,7 +95,7 @@
             <div>
                 <div formControlName="selectMember" class="form-control" style="display: flex;justify-content: space-between;" >
                     <div >{{selectMember}}</div>
-                    <div style="cursor: pointer;" (ngModelChange)="oneField(selectMember)" (click)="selectMemberDialog(selectMember)" ><i  class="fa fa-user" aria-hidden="true"></i></div>
+                    <div style="cursor: pointer;"  (click)="selectMemberDialog(selectMember)" ><i  class="fa fa-user" aria-hidden="true"></i></div>
                 </div>
             </div>
             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
@@ -112,7 +110,7 @@
         </div>
         <div class="pickerouter fieldPadding dt dateWithMatDtae"  >
             <input formControlName="taskDate" class="form-control positionNameInput" type="text" matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
-              [value]="ddate" (ngModelChange)="oneField(taskDate.value)" (dateChange)="handleDateChange($event)" placeholder="Enter Date" #taskDate>
+              [value]="ddate"  placeholder="Enter Date" #taskDate>
             <mat-datepicker-toggle matSuffix [for]="picker">
               <!-- <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon> -->
             </mat-datepicker-toggle>
@@ -131,15 +129,14 @@
         </div>
         <div class="fieldPadding">
         <mat-select class="form-control " placeholder="Enter Category"
-            #userTaskCategory formControlName="userTaskCategory" (ngModelChange)="oneField(userTaskCategory.value)" (selectionChange)="handleTaskCategorySelection(userTaskCategory.value)" >
-            <mat-option *ngFor="let item of categoryListData[0];let index=i" [value]="item.id"  (ngModelChange)="handleTaskCategorySelection(userTaskCategory.value)" >
+            #userTaskCategory formControlName="userTaskCategory" >
+            <mat-option *ngFor="let item of categoryListData[0];let index=i" [value]="item.id" >
                 <div>
                     {{item.name}}
                 </div>
             </mat-option>
         </mat-select>
         </div>
-        <!-- <div *ngIf="bErrormsgCategory" style="color: #f24949 !important;font-size: 12px;">{{errorMsgAnyCategory}}</div> -->
     </div>
       <!----category end-->
       <!----tasktype start-->
@@ -150,8 +147,8 @@
         </div>
         <div class="fieldPadding">
         <mat-select class="form-control" placeholder="Enter Type"
-            #userTaskType formControlName="userTaskType" (ngModelChange)="oneField(userTaskType.value)" (selectionChange)="handleTaskTypeSelection(userTaskType.value)">
-            <mat-option *ngFor="let item of taskTypeList[0];let index=i" [value]="item.id"  (ngModelChange)="handleTaskTypeSelection(userTaskType.value)">
+            #userTaskType formControlName="userTaskType">
+            <mat-option *ngFor="let item of taskTypeList[0];let index=i" [value]="item.id" >
                 <div>
                     {{item.name}}
                 </div>
@@ -167,7 +164,7 @@
             <div class="astericColor">*</div>
         </div>
         <div class="fieldPadding">
-            <input (keyup)="resetErrors()" (ngModelChange)="oneField(taskLocation.value)"  type="text" #taskLocation (ngModelChange)="handleTaskLocation(taskLocation.value)"
+            <input (keyup)="resetErrors()"   type="text" #taskLocation 
             placeholder="Enter activity location"class="form-control" formControlName="taskLocation" autocomplete="off" [value]="taskLocation.name" /> 
             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
             </app-field-error-display>    
@@ -181,7 +178,7 @@
         </div>
         <div class="fieldPadding">
             <div>
-                <div (ngModelChange)="oneField(selectTaskManger)"  [formControlName]="selectTaskManger" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectManagerDialog(selectTaskManger)" >
+                <div   [formControlName]="selectTaskManger" class="form-control" style="display: flex;justify-content: space-between;"(click)="selectManagerDialog(selectTaskManger)" >
                     <div>{{selectTaskManger}}</div>
                     <div style="cursor: pointer;"  ><i class="fa fa-user" aria-hidden="true"></i></div>
                 </div>
@@ -199,21 +196,21 @@
         <div class="fieldPadding d-flex" style="gap: 5px;flex-wrap: wrap;"  >
             <div class="estField">
                 <div class="secondEst">
-                    <input id="days" (ngModelChange)="oneField(taskDays.value)" [value]="taskDays" (keyup)="resetErrors()"  type="number" #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
+                    <input id="days" [value]="taskDays" (keyup)="resetErrors()"  type="number" #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
                 placeholder="Days" class="form-control " formControlName="taskDays"   autocomplete="off" min="0"/>
                 </div>
                 <div class="timeField">Days</div>
             </div>
             <div class="estField">
                 <div class="secondEst">
-                    <input id="hrs" (ngModelChange)="oneField(taskHrs.value)" [value]="taskHrs" (keyup)="resetErrors()"  type="number" #taskHrs (ngModelChange)="handleTaskEstDuration(taskHrs.value)"
+                    <input id="hrs"  [value]="taskHrs" (keyup)="resetErrors()"  type="number" #taskHrs (ngModelChange)="handleTaskEstDuration(taskHrs.value)"
             placeholder="Hours" class="form-control " formControlName="taskHrs"   autocomplete="off" min="0" max="23"/>
                 </div>
                 <div class="timeField"> Hours </div>
             </div>
             <div class="estField">
                 <div class="secondEst">
-                    <input id="min" (ngModelChange)="oneField(taskMin.value)" [value]="taskMin" (keyup)="resetErrors()"  type="number" #taskMin (ngModelChange)="handleTaskEstDuration(taskMin.value)"
+                    <input id="min" [value]="taskMin" (keyup)="resetErrors()"  type="number" #taskMin (ngModelChange)="handleTaskEstDuration(taskMin.value)"
                     placeholder="Minutes" class="form-control" formControlName="taskMin"   autocomplete="off" min="0" max="59"/>
                 </div>
                 <div class="timeField">
@@ -232,7 +229,7 @@
         </div>
         <div class="fieldPadding">
             <mat-select class="form-control" placeholder="Select Priority"
-                #userTaskPriority formControlName="userTaskPriority" (ngModelChange)="oneField(userTaskPriority.value)" (ngModelChange)="handleTaskPrioritySelection(userTaskPriority.value,'taskPriority')">
+                #userTaskPriority formControlName="userTaskPriority">
                 <mat-option  *ngFor="let item of taskPriorityList[0];let index=i" [value]="item.id" >
                     <div>
                         {{item.name}}
@@ -250,7 +247,7 @@
         <div class="fieldPadding">
           <!-- [disabled]="!editable" -->
             <mat-select [disabled]="!editable"  class="form-control" placeholder="Enter activity status"
-                #taskStatus formControlName="taskStatus" name="item" (ngModelChange)="oneField(taskStatus.value)"  (selectionChange)="handleTaskStatus(taskStatus.value)">
+                #taskStatus formControlName="taskStatus" name="item">
                 <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id"  >
                     <!-- <div>
                         {{item.name | capitalizeFirst}}
@@ -271,7 +268,7 @@
             <div>Target Potential</div>
         </div>
         <div class="fieldPadding">
-            <input (keyup)="resetErrors()" type="text" (ngModelChange)="oneField(targetResult.value)" #targetResult (ngModelChange)="handleTargetResult(targetResult.value)"
+            <input (keyup)="resetErrors()" type="text" #targetResult 
             placeholder="Enter potential"class="form-control "formControlName="targetResult"  autocomplete="off" /> 
         </div>
     </div>
@@ -282,7 +279,7 @@
             <div>Business Potential</div>
         </div>
         <div class="fieldPadding" >
-            <input #targetPotential min="0" (ngModelChange)="oneField(targetPotential.value)" (keyup)="resetErrors()" type="number"  (ngModelChange)="handleTargetPotential(targetPotential.value)" 
+            <input #targetPotential min="0" (keyup)="resetErrors()" type="number"   
             placeholder="Enter ({{rupee_symbol}})"class="form-control "formControlName="targetPotential"autocomplete="off" />           
         </div>
     </div>
@@ -300,12 +297,6 @@
                     <img class="imageStatus" src="/assets/images/crmImages/completed2.png" />
                   </div>
                 </div>
-                <!-- <div *ngIf="item.name==='Pending'" class="statusClass2" (click)="selectStatus(item)" id="B">
-                  <div>{{item.name}}</div>
-                  <div>
-                    <img class="imageStatus" src="/assets/images/crmImages/inProgress2.png" />
-                  </div>
-                </div> -->
                 <div *ngIf="item.name==='Rejected'" class="statusClass3" (click)="selectStatus(item)" id="C">
                   <div>{{item.name}}</div>
                   <div>
@@ -441,13 +432,29 @@
           <div class="my-2  height-limit" *ngIf="taskDetails.notes.length>0 ">
             <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
             <div >
-              <div *ngFor="let note of taskDetails.notes;let i=index" class="allNotesList" style="display: flex;justify-content: space-between;align-items: center;">
-                <div class="notesListSection">
-                  {{note.note}}
-                </div>
-                <div class="notesListSection">
-                   <div>{{note.createdDate}}</div>
-                </div>
+              <div *ngFor="let note of taskDetails.notes;let i=index" class="allNotesList">
+                  <div class="notesListSection">
+                    <div >
+                      {{note.note}}
+                    </div>
+                  </div>
+                  <div class="notesListSection" style="gap:0.5px;justify-content:flex-start !important">
+                    <div>({{note.createdDate.slice(0,2) }}</div>
+                    <div *ngFor="let month of monthName">
+                     <div *ngIf="month.count===note.createdDate.slice(3,5)">
+                       {{month.monthName}},
+                     </div>
+                    </div>
+                    <div *ngIf="note.createdDate.slice(11,13)<12">
+                     {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} am
+                    </div>
+                    <div *ngIf="note.createdDate.slice(11,13)===12">
+                     {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} pm
+                    </div>
+                    <div *ngIf="note.createdDate.slice(11,13)>12">
+                     {{note.createdDate.slice(11,13)-12}} : {{note.createdDate.slice(14,16)}} pm )
+                    </div>
+                 </div>
                </div>
             </div>
           </div>

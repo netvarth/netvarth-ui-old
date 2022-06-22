@@ -175,6 +175,9 @@
       align-items: center;
       gap: 10px;
     }
-    /* ::ng-deep .mat-select{
-      width: 50% ;
-    } */
+    .astericColor{
+      color: #f24949 !important;
+    }
+    .errorClass{
+      color: #f24949 !important;font-size: 12px;
+    }

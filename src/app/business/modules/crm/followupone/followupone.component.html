@@ -32,22 +32,18 @@
                 <ng-container *ngIf="followups.length > 0">
                   <tr *ngFor="let task of followups; let i=index" class="pointer-cursor"
                     (click)="followupClicked(task)">
-                    <td class="td2"><span *ngIf="task.customer">{{task.customer.name}}</span></td>
+                    <td class="td2" *ngIf="task.customer">
+                      <span *ngIf="task.customer && task.customer.name != undefined">{{task.customer.name}}</span>
+                      <span *ngIf="task.customer && task.customer.name===undefined">Location-{{task.location.name}}</span>
+                    </td>
                     <td class="td3"><span *ngIf="task.generatedBy">{{task.generatedBy.name}}</span></td>
                     <td *ngIf="task.createdDate">{{task.createdDate}}</td>
                     <td class="td4" *ngIf="task.status" [ngStyle]="{'color': getColor(task.status.name)}">
-                      {{task.status.name}}
-                      <!-- <div *ngIf="task.status.name==='New'" style="width: min-content !important;
+                      <!-- {{task.status.name}} -->
+                      <div *ngIf="task.status.name==='New'" style="width: min-content !important;
                           padding: 10px !important;
                           color: #00D1FF !important;
                           background: #D6F5FF !important;
-                          border-radius: 7px!important;text-align:center;width: 7rem !important;">
-                        {{task.status.name}}
-                      </div>
-                      <div *ngIf="task.status.name==='Pending'" style="width: min-content !important;
-                          padding: 10px !important;
-                          color: #FF9549 !important;
-                          background: #FEECD7 !important;
                           border-radius: 7px!important;text-align:center;width: 7rem !important;">
                         {{task.status.name}}
                       </div>
@@ -67,20 +63,12 @@
                           border-radius: 7px!important">
                         {{task.status.name}}
                       </div>
-                      <div *ngIf="task.status.name==='Proceed'" style="width: min-content !important;
-                          padding: 10px !important;text-align:center;width: 7rem !important;
-                          background: #D7FEE9 !important;
-    border: 1px solid #D7FFE9 !important;
-    color: #38C984 !important;
-                          border-radius: 7px!important">
-                        {{task.status.name}}
-                      </div>
                       <div
-                        *ngIf="(task.status.name !=='New') && (task.status.name !=='Pending') && (task.status.name !== 'Completed') && (task.status.name !== 'Assigned') && (task.status.name !== 'Proceed')"
+                        *ngIf="(task.status.name !=='New')&& (task.status.name !== 'Completed') && (task.status.name !== 'Assigned')"
                         style="width: min-content !important;
                           padding: 10px !important;color: #38C984 !important;background: #D7FEE9;text-align:center;width: 7rem !important;border: 1px solid #D7FFE9;border-radius: 7px!important">
                         {{task.status.name}}
-                      </div> -->
+                      </div>
                     </td>
                   </tr>
                 </ng-container>

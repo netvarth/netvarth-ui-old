@@ -51,7 +51,7 @@
                   <th class="head_color">Lead Id</th>
                   <th class="head_color">Customer Name</th>
                   <th class="head_color">Employee</th>
-                  <th>Lead Creted Date</th>
+                  <th class="head_color">Lead Created Date</th>
                 </tr>
               </thead>
               <tbody>
@@ -59,7 +59,7 @@
                   <tr><td class="nodatafound" colspan="5">{{no_leads_cap}}</td></tr>
                 </ng-container>
                 <ng-container *ngIf="leads.length>0">
-                  <tr *ngFor="let lead of leads; let i=index" (click)="openLead(lead.uid)">
+                  <tr *ngFor="let lead of leads; let i=index" (click)="openLead(lead.uid)" style="cursor:pointer">
                     <td data-title="Lead Details" class="td1">{{lead.leadId}}</td>
                     <td data-title="Lead Details" class="td2"><span *ngIf="lead.customer">{{lead.customer.name}}</span>
                     </td>
