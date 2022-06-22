@@ -126,6 +126,7 @@ export class ViewLeadQnrComponent implements OnInit {
               (kycInfo) => {
                 console.log("KYC Info:", kycInfo);
                 _this.initApplicantForm(kycInfo);
+                // this.api_loading=false;
               }
             )
           } else {
@@ -277,6 +278,7 @@ export class ViewLeadQnrComponent implements OnInit {
           );
         } else {
           this.snackbarService.openSnackBar('KYC updated successfully');
+          // this.api_loading=true;
           this.initLead();
         }
       },

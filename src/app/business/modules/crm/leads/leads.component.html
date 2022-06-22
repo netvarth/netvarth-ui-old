@@ -60,10 +60,12 @@
                 </ng-container>
                 <ng-container *ngIf="leads.length>0">
                   <tr *ngFor="let lead of leads; let i=index" (click)="openLead(lead.uid)" style="cursor:pointer">
-                    <td data-title="Lead Details" class="td1">{{lead.leadId}}</td>
-                    <td data-title="Lead Details" class="td2"><span *ngIf="lead.customer">{{lead.customer.name}}</span>
+                    <td data-title="Lead Details" class="td1" *ngIf="lead.leadId">{{lead.leadId}}</td>
+                    <td data-title="Lead Details" class="td2">
+                      <span *ngIf="lead.customer && lead.customer.name">{{lead.customer.name}}</span>
+                      <span *ngIf="lead.customer && (lead.customer.name===undefined)">---------</span>
                     </td>
-                    <td data-title="Lead Details" class="td2"><span *ngIf="lead.assignee">{{lead.assignee.name}}</span>
+                    <td data-title="Lead Details" class="td2"><span *ngIf="lead.assignee && lead.assignee.name">{{lead.assignee.name}}</span>
                     </td>
                     <td data-title="Lead Details" class="td2" *ngIf="lead.createdDate">
                       {{lead.createdDate}}

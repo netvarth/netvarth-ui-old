@@ -134,6 +134,31 @@ export class CRMComponent implements OnInit {
         }
       ]
     }
+    else if(user.userType===1){
+      this.showActivity = true;
+      this.redirectionList = [
+        {
+          id: 7,
+          activityName: 'Leads'
+        },
+        {
+          id: 4,
+          activityName: 'CRIF'
+        },
+        {
+          id: 5,
+          activityName: 'Sales Verification'
+        },
+        {
+          id: 6,
+          activityName: 'Login'
+        },
+        {
+          id:11,
+          activityName: 'Redirect'
+        }
+      ]
+    }
     else{
       this.showActivity = true;
       this.redirectionList = [

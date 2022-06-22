@@ -296,9 +296,12 @@ export class ViewTaskComponent implements OnInit {
     this.crmService.getEnquiryDetails(this.enquiryId).subscribe((enquiryList:any)=>{
       this.taskDetails= enquiryList;
       this.enquiryUid= enquiryList.uid;
-      if(this.taskDetails.customer){
+      if(this.taskDetails && this.taskDetails.customer && this.taskDetails.customer.name){
         this.firstCustomerName=this.taskDetails.customer.name.charAt(0);
         this.customerName= this.taskDetails.customer.name;
+        // this.customerPhNo =  this.teleService.getTeleNumber(this.taskDetails.customer.phoneNo);
+      } 
+      if(this.taskDetails && this.taskDetails.customer && this.taskDetails.customer.phoneNo){
         this.customerPhNo =  this.teleService.getTeleNumber(this.taskDetails.customer.phoneNo);
       } 
       this.getUpdateFollowUPValue();
