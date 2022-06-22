@@ -9,7 +9,7 @@
 <section class="card col-md-12">
   <div class="col-md-12 btnClass">
     <!----mat tab change to mat select start-->
-    <div class="statusSelectDiv">
+    <div class="statusSelectDiv d-none">
       <div class="fieldPadding">
         <mat-select class="form-control" placeholder="{{totalActivity}}" #userTaskStatus [(ngModel)]="statusFilter">
           <mat-option *ngFor="let stat of taskStatusList;let index=i" [value]="stat.id"
@@ -62,7 +62,7 @@
                 <table class="table" style="background-color: white;">
                   <thead>
                     <tr class="tble-filtr-tr heght">
-                      <th></th>
+                      <!-- <th></th> -->
                       <th class="head_color">Activity</th>
                       <th class="head_color">Employee</th>
                       <!-- <th class="head_color">Category</th>
@@ -217,13 +217,13 @@
                       <tr *ngFor="let task of totalTaskActivityList; let i=index" class="pointer-cursor"
                         (click)="viewTask(task.taskUid,task)">
 
-                        <td>
+                        <!-- <td>
                           <circle-progress class="circle__progress" [percent]="task.progress" [animation]="true"
                             [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
                             [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
                             [unitsFontWeight]="'700'" [subtitle]="task.status.name" [subtitleFontSize]="'7'"
                             [lazy]="false"></circle-progress>
-                        </td>
+                        </td> -->
 
                         <td data-title="Task Details" class="td1">{{task.title}}</td>
                         <td data-title="Task Details" class="td2"><span
