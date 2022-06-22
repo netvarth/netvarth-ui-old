@@ -1,15 +1,15 @@
 <section class="card">
     <div class="title-gb no-padding">
-      <div class="mgn-up-15 dash-head">&nbsp;&nbsp;&nbsp;
-          <div style="display:flex;gap:5px">
-            <!-- <div>
+        <div class="mgn-up-15 dash-head">&nbsp;&nbsp;&nbsp;
+            <div style="display:flex;gap:5px">
+                <!-- <div>
                 <i style="color:#1D3E77 !important" class="fa fa-arrow-left pointer-cursor" (click)="goback()"></i>
             </div> -->
-          <div style="color: #1D3E77;">{{crmTitle}}</div>
-          </div>
-      </div>
+                <div style="color: #1D3E77;">{{crmTitle}}</div>
+            </div>
+        </div>
     </div>
-</section> 
+</section>
 <section class="card mgn-up-15">
     <!----threee tab start-->
     <div class="threeTab">
@@ -25,17 +25,17 @@
         </div>
         <div class="customCard" id="B" (click)="fnChangeBorder('B')" style="display:none">
             <div class="eachTab">
-                <div >
+                <div>
                     <mat-icon class="iconBackgroundMatIcon">home</mat-icon>
                 </div>
-                <div class="topicName" >
+                <div class="topicName">
                     LMS
                 </div>
             </div>
         </div>
         <div class="customCard" id="C" (click)="fnChangeBorder('C')" *ngIf="!showActivity">
             <div class="eachTab">
-                <div >
+                <div>
                     <mat-icon class="iconBackgroundMatIcon">home</mat-icon>
                 </div>
                 <div class="topicName">
@@ -48,24 +48,24 @@
     <!---mat pannel start-->
     <div class="mgn-up-15" *ngIf="bLosFieldOpen">
         <mat-accordion class="example-headers-align">
-            <mat-expansion-panel 
-            (closed)="panelOpenState = false">
+            <mat-expansion-panel (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
-                  <mat-panel-title>
-                   <div style="display:flex;gap:10px;align-items: center;">
-                    <div class="plusOutside">
-                        <i style="color: #D92323;" class="fa fa-plus" aria-hidden="true"></i>
-                       </div>
-                       <div class="marketActivity">
-                           <div>Marketing Activity</div>
-                       </div>
-                   </div>
-                  </mat-panel-title>
-                  <mat-panel-description>
-                  </mat-panel-description>
+                    <mat-panel-title>
+                        <div style="display:flex;gap:10px;align-items: center;">
+                            <div class="plusOutside">
+                                <i style="color: #D92323;" class="fa fa-plus" aria-hidden="true"></i>
+                            </div>
+                            <div class="marketActivity">
+                                <div>Marketing Activity</div>
+                            </div>
+                        </div>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                    </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="allTabInPannel">
-                    <div class="customCard box" style="margin-bottom: 5px;" tabindex="1"(click)="redirectionTaskTemplate()" *ngIf="!showActivity">
+                    <div class="customCard box" style="margin-bottom: 5px;" tabindex="1"
+                        (click)="redirectionTaskTemplate()" *ngIf="!showActivity">
                         <!-- (click)="buttonClicked('CREATETASK')" -->
                         <div>
                             <div style="padding: 6px;
@@ -75,13 +75,13 @@
                             <div style="padding:8px" class="topicName">
                                 Schedule Marketing Activity
                             </div>
-                            <div  class="imgClick">
-                                <div  class="clickHere">
+                            <div class="imgClick">
+                                <!-- <div  class="clickHere">
                                     Click here 
                                 </div>
                                 <div>
                                     <img class="img "  src="/assets/images/crmImages/handsLeftArrow.png" />
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -95,12 +95,12 @@
                                 Marketing Activity Updation
                             </div>
                             <div class="imgClick" (click)="templateUpdation(' Marketing Activity Updation')">
-                               <div class="clickHere">
+                                <!-- <div class="clickHere">
                                 Click here 
                                </div>
                                <div style="cursor: pointer;">
                                    <img class="img"   src="/assets/images/crmImages/handsLeftArrow.png" />
-                               </div>
+                               </div> -->
                             </div>
                         </div>
                     </div>
@@ -115,92 +115,96 @@
                         </div>
                     </div> -->
                 </div>
-              </mat-expansion-panel>
+            </mat-expansion-panel>
         </mat-accordion>
     </div>
     <!---mat pannel end-->
     <!----tempates strat-->
-    <div  class="mgn-up-15" *ngIf="bLosFieldOpen">
+    <div class="mgn-up-15" *ngIf="bLosFieldOpen">
         <div>
             <!-- (click)="buttonClicked('LOS')" -->
-            <div class="customCard" (click)="redirectionToEnquiry()" >
-                <div >
+            <div class="customCard" (click)="redirectionToEnquiry()">
+                <div>
                     <img class="imgTempalte" src="/assets/images/crmImages/navbarIcon.png" />
                 </div>
-                <div class="topicNameedirectionList" >
+                <div class="topicNameedirectionList">
                     Enquiry
                 </div>
-               </div>
-               <!----follow ups pannel start-->
-               <!---mat pannel start-->
-    <div class="mgn-up-15">
-        <mat-accordion class="example-headers-align">
-            <mat-expansion-panel 
-            (closed)="panelOpenState = false">
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                   <div style="display:flex;gap:10px;align-items: center;">
-                    <div class="plusOutside">
-                        <i style="color: #D92323;" class="fa fa-plus" aria-hidden="true"></i>
-                       </div>
-                       <div class="marketActivity">
-                           <div>Follow UPs</div>
-                       </div>
-                   </div>
-                  </mat-panel-title>
-                  <mat-panel-description>
-                  </mat-panel-description>
-                </mat-expansion-panel-header>
-                <div class="allTabInPannel">
-                    <div class="customCard box" style="margin-bottom: 5px;" tabindex="1" (click)="templateViewActivity('Follow UP 1')">
-                        <div>
-                            <div style="padding: 6px;width: max-content;border-radius: 50%;background: #E9EBEC;">
-                                <img class="img iconBackground" src="/assets/images/crmImages/followUPP.png" />
-                            </div>
-                            <div style="padding:8px" class="topicName">
-                                Follow UP 1
-                            </div>
-                            <div  class="imgClick" >
-                                <div  class="clickHere">
+            </div>
+            <!----follow ups pannel start-->
+            <!---mat pannel start-->
+            <div class="mgn-up-15">
+                <mat-accordion class="example-headers-align">
+                    <mat-expansion-panel (closed)="panelOpenState = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <div style="display:flex;gap:10px;align-items: center;">
+                                    <div class="plusOutside">
+                                        <i style="color: #D92323;" class="fa fa-plus" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="marketActivity">
+                                        <div>Follow UPs</div>
+                                    </div>
+                                </div>
+                            </mat-panel-title>
+                            <mat-panel-description>
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <div class="allTabInPannel">
+                            <div class="customCard box" style="margin-bottom: 5px;" tabindex="1"
+                                (click)="templateViewActivity('Follow UP 1')">
+                                <div>
+                                    <div
+                                        style="padding: 6px;width: max-content;border-radius: 50%;background: #E9EBEC;">
+                                        <img class="img iconBackground" src="/assets/images/crmImages/followUPP.png" />
+                                    </div>
+                                    <div style="padding:8px" class="topicName">
+                                        Follow UP 1
+                                    </div>
+                                    <div class="imgClick">
+                                        <!-- <div  class="clickHere">
                                     Click here 
                                 </div>
                                 <div>
                                     <img class="img "  src="/assets/images/crmImages/handsLeftArrow.png" />
+                                </div> -->
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="customCard box" style="margin-bottom: 5px;" (click)="templateViewActivity('Follow UP 2')">
-                        <div>
-                            <div style="padding: 6px;width: max-content;border-radius: 50%;background: #E9EBEC;">
-                                <img class="img iconBackground" src="/assets/images/crmImages/followUPP.png" />
-                            </div>
-                            <div class="topicName" style="padding:8px">
-                                Follow UP 2
-                            </div>
-                            <div class="imgClick" (click)="templateUpdation('Follow UP 2')">
-                               <div class="clickHere">
+                            <div class="customCard box" style="margin-bottom: 5px;"
+                                (click)="templateViewActivity('Follow UP 2')">
+                                <div>
+                                    <div
+                                        style="padding: 6px;width: max-content;border-radius: 50%;background: #E9EBEC;">
+                                        <img class="img iconBackground" src="/assets/images/crmImages/followUPP.png" />
+                                    </div>
+                                    <div class="topicName" style="padding:8px">
+                                        Follow UP 2
+                                    </div>
+                                    <div class="imgClick" (click)="templateUpdation('Follow UP 2')">
+                                        <!-- <div class="clickHere">
                                 Click here 
                                </div>
                                <div style="cursor: pointer;">
                                    <img class="img"   src="/assets/images/crmImages/handsLeftArrow.png" />
-                               </div>
+                               </div> -->
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-              </mat-expansion-panel>
-        </mat-accordion>
-    </div>
-    <!---mat pannel end-->
-               <!----follow ups pannel end-->
-            <div class="eachTab mgn-up-15" style="flex-wrap: wrap;" >
-                <div class="customCard redirectionList" *ngFor="let item of redirectionList"(click)="redirectionSeperateTemplate(item.activityName)">
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+            <!---mat pannel end-->
+            <!----follow ups pannel end-->
+            <div class="eachTab mgn-up-15" style="flex-wrap: wrap;">
+                <div class="customCard redirectionList" *ngFor="let item of redirectionList"
+                    (click)="redirectionSeperateTemplate(item.activityName)">
                     <div class="activityTemplate">
-                        <div >
+                        <div>
                             <img class="imgTempalte" src="/assets/images/crmImages/navbarIcon.png" />
                         </div>
-                        <div class="topicNameedirectionList" >
+                        <div class="topicNameedirectionList">
                             {{item.activityName}}
                         </div>
                     </div>
@@ -213,15 +217,15 @@
     <div class="mgn-up-15" *ngIf="bREportsFieldOpen">
         <div class="threeTab">
             <div class="customCard" (click)="createActivity()">
-                    <div class="eachTab">
-                        <div>
-                            <img height="25px" width="25px" src="/assets/images/crmImages/craeteActivity.png"/>
-                        </div>
-                        <div class="topicName">
-                            Activity Report
-                          
-                        </div>
+                <div class="eachTab">
+                    <div>
+                        <img height="25px" width="25px" src="/assets/images/crmImages/craeteActivity.png" />
                     </div>
+                    <div class="topicName">
+                        Activity Report
+
+                    </div>
+                </div>
             </div>
             <div class="customCard" (click)="craeteLeadReport()">
                 <div class="eachTab">
@@ -232,7 +236,7 @@
                         Lead Report
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
