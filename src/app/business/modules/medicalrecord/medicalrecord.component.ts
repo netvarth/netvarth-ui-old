@@ -107,6 +107,7 @@ export class MedicalrecordComponent implements OnInit {
   viewVisitDetails: boolean = this.medicalService.viewVisitDetails;
   someSubscription: any;
   uploadedfiledialogRef: any;
+  provider: string;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -140,6 +141,7 @@ export class MedicalrecordComponent implements OnInit {
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
+    this.provider = user.userName
     this.medicalService.setDoctorId(user.id);
     this.activated_route.paramMap.subscribe(params => {
       this.patientId = params.get('id');
@@ -664,7 +666,7 @@ export class MedicalrecordComponent implements OnInit {
     if (visit.providerName) {
       providerName = visit.providerName;
     } else {
-      providerName = 'Nil';
+      providerName = this.provider;
     }
     return providerName;
   }
