@@ -141,10 +141,10 @@ export class CRMComponent implements OnInit {
           id: 7,
           activityName: 'Leads'
         },
-        {
-          id: 4,
-          activityName: 'CRIF'
-        },
+        // {
+        //   id: 4,
+        //   activityName: 'CRIF'
+        // },
         {
           id: 5,
           activityName: 'Sales Verification'
