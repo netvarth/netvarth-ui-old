@@ -21,7 +21,7 @@ import { DomainConfigGenerator } from "../../services/domain-config-generator.se
 const routes: Routes = [
     { path: '', component: BusinessprovideruserPageComponent},
     { path: 'home', loadChildren: () => import('../business-page-home/business-page-home.module').then(m => m.BusinessPageHomeModule) },
-    { path: ':id', component: BusinessprovideruserPageComponent}
+    { path: ':userEncId', component: BusinessprovideruserPageComponent}
 ];
 @NgModule({
     imports: [

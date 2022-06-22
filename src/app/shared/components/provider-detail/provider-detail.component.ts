@@ -2093,12 +2093,11 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         src: 'bp'
       }
     };
-    // if(this.router.url.includes("searchdetail")){
-    //   this.routerobj.navigate(['provideruser',this.accountEncId, userId], navigationExtras);
-    // } else {
-    // }
+    if(this.router.url.includes("searchdetail")){
+      this.routerobj.navigate(['provideruser',this.accountEncId, userId], navigationExtras);
+    } else {
       this.routerobj.navigate([this.accountEncId, userId], navigationExtras);
-    
+    }
     
    
     // this.routerobj.navigate([account], navigationExtras);
@@ -2410,7 +2409,6 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         this.appointmentClicked(actionObj['location'], actionObj['service']);
       }
     } else if (actionObj['type'] === 'donation') {
-      console.log("donation :",actionObj)
       if (actionObj['action'] === 'view') {
         // this.showServiceDetail(actionObj['service'], this.businessjson.name);
         // this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id]);

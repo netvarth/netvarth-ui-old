@@ -146,7 +146,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         public sharedFunctons: SharedFunctions) {
         this.subs.sink = this.route.queryParams.subscribe(
             params => {
-                console.log("params from provider details :",params)
                 if (params.locname) {
                     this.businessInfo['locationName'] = params.locname;
                     this.businessInfo['googleMapUrl'] = params.googleMapUrl;
@@ -181,52 +180,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     }
     ngOnDestroy(): void {
         this.subs.unsubscribe();
-    }
-    goThroughLogin() {
-        const _this = this;
-
-        if (_this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA') {
-            console.log("Entered to goThroughLogin Method");
-            return new Promise((resolve) => {
-                if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')) {
-                    resolve(true);
-                } else {
-                    resolve(false);
-                }
-            });
-        } else {
-            return new Promise((resolve) => {
-                const qrpw = _this.lStorageService.getitemfromLocalStorage('qrp');
-                let qrusr = _this.lStorageService.getitemfromLocalStorage('ynw-credentials');
-                qrusr = JSON.parse(qrusr);
-                if (qrusr && qrpw) {
-                    const data = {
-                        'countryCode': qrusr.countryCode,
-                        'loginId': qrusr.loginId,
-                        'password': qrpw,
-                        'mUniqueId': null
-                    };
-                    _this.sharedServices.ConsumerLogin(data).subscribe(
-                        (loginInfo: any) => {
-                            _this.authService.setLoginData(loginInfo, data, 'consumer');
-                            _this.lStorageService.setitemonLocalStorage('qrp', data.password);
-                            resolve(true);
-                        },
-                        (error) => {
-                            if (error.status === 401 || error.error === 'Session already exists.') {
-                                
-                                resolve(false);
-
-                            } else {
-                                resolve(false);
-                            }
-                        }
-                    );
-                } else {
-                    resolve(false);
-                }
-            });
-        }
     }
     setSystemDate() {
         this.sharedServices.getSystemDate()
@@ -268,22 +221,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 if (qparams && qparams.theme) {
                     _this.theme = qparams.theme;
                 }
-                // _this.businessjson = [];
                 _this.services = [];
                 _this.image_list_popup = [];
-                // _this.catalogimage_list_popup = [];
-                // _this.galleryjson = [];
-                // _this.deptUsers = [];
-                // if (qparams.psource) {
-                //     _this.pSource = qparams.psource;
-                //     if (qparams.psource === 'business') {
-                //         _this.loading = true;
-                //         _this.showDepartments = false;
-                //         setTimeout(() => {
-                //             _this.loading = false;
-                //         }, 2500);
-                //     }
-                // }
             });
             const activeUser = _this.groupService.getitemFromGroupStorage('ynw-user');
             if (activeUser) {
@@ -312,19 +251,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                         );
                     }
                 ); // Load Family Members
-
-
-
-
-                // _this.getConsumerQuestionnaire().then(
-                //     (data) => {
-                //         if (data) {
-                //             _this.questionnaireList = data;
-                //         }
-                //         _this.loading = false;
-                //         resolve(true);
-                //     }
-                // );
             });
         })
 
@@ -354,9 +280,8 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (_this.lStorageService.getitemfromLocalStorage('ios')) {
             _this.from_iOS = true;
         }
-     //   _this.getPaymentModes();
         _this.gets3curl();
-        _this.goThroughLogin().then(
+        _this.authService.goThroughLogin().then(
             (status) => {
                 console.log("Status:", status);
                 if (status) {
@@ -530,46 +455,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     onButtonBeforeHook() {
     }
     onButtonAfterHook() { }
-
-    // setAccountGallery(res) {
-    //     console.log('response.........', res);
-    //     this.galleryenabledArr = []; // For showing gallery
-    //     this.image_list_popup = [];
-    //     this.tempgalleryjson = res;
-    //     if (this.tempgalleryjson.length > 5) {
-    //         this.extra_img_count = this.tempgalleryjson.length - 5;
-    //     }
-    //     let indx = 0;
-    //     // if (this.bLogo !== '../../../assets/images/img-null.svg') {
-    //     //     this.galleryjson[0] = { keyName: 'logo', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
-    //     //     indx = 1;
-    //     // }
-    //     for (let i = 0; i < this.tempgalleryjson.length; i++) {
-    //         this.galleryjson[(i + indx)] = this.tempgalleryjson[i];
-    //     }
-    //     if (this.galleryjson.length > 0) {
-    //         console.log('this.galleryjson', this.galleryjson)
-    //         this.galleryExists = true;
-    //         for (let i = 0; i < this.galleryjson.length; i++) {
-    //             const imgobj = new Image(
-    //                 i,
-    //                 { // modal
-    //                     img: this.galleryjson[i].url,
-    //                     description: this.galleryjson[i].caption || ''
-    //                 });
-    //             // this.image_list_popup.push(imgobj);
-    //             this.image_list_popup.push(imgobj);
-    //         }
-    //         console.log('image_list_popup..', this.image_list_popup)
-    //     }
-    //     this.imgLength = this.image_list_popup.length;
-    //     const imgLength = this.image_list_popup.length > 5 ? 5 : this.image_list_popup.length;
-    //     console.log(imgLength)
-    //     for (let i = 0; i < imgLength; i++) {
-    //         this.galleryenabledArr.push(i);
-    //         console.log("......", this.galleryenabledArr)
-    //     }
-    // }
     private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
         return image ? images.indexOf(image) : -1;
     }
@@ -1337,15 +1222,12 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                     }
                 }
                 console.log("Call Started");
-                if(memberId && accountId && parentId && (parentId !== undefined || parentId !== '')){
                 _this.sharedServices.createProviderCustomer(memberId, parentId, accountId).subscribe(
                     (providerConsumer: any) => {
                         _this.providerConsumerList.push(providerConsumer);
                         resolve(providerConsumer.id);
                     }
-                )
-                }
-                
+                )    
             }
         });
     }
