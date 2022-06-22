@@ -1,11 +1,11 @@
-
 <section class="">
     <div class="card title-gb">
-        <h5 class="mgn-up-10"> 
-            <span class="fa fa-arrow-left pointer-cursor"(click)="redirecToSettings()" ></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Jaldee QManager
-          <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
-        </h5>     
+            <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>
+        </h5>
     </div>
 </section>
 <section>
@@ -13,15 +13,15 @@
         <div class="col-md-12 no-padding-small" *ngIf="waitlist_manager != null">
             <div class="row">
                 <div class="card pos wtmgr">
-                    <div style="margin-bottom: 10px"> 
+                    <div style="margin-bottom: 10px">
                         <h4>QManager
-                            <mat-slide-toggle [disabled]="queues_count.length !== 0" [(ngModel)]="waitlist_status"  (change)="handleCheckinPresence($event)">
+                            <mat-slide-toggle [(ngModel)]="waitlist_status" (change)="handleCheckinPresence($event)">
                             </mat-slide-toggle> &nbsp;{{waitlist_statusstr}}
                         </h4>
                         <span class="form-level-settings">
                             Use the Jaldee QManager to manage the services you offer using a queue system.
                         </span>
-                    </div> 
+                    </div>
                     <div class="mgn-bt-30" *ngIf="domain !=='healthCare'">
                         <div class="mgn-bt-10" style="font-weight: 600"> Choose your Queue system </div>
                         <mat-radio-group [(ngModel)]="qSystem">
@@ -66,7 +66,8 @@
                                             <span class="jd_btn_spn mgn-lt-5" *ngIf="is_data_chnge===1"><button
                                                     type="button" (click)="cancelChange()"
                                                     class="jd-btn bt2">Reset</button>
-                                                <button (click)="updateManualMode()" type="button" class="jd-btn bt1">save</button>
+                                                <button (click)="updateManualMode()" type="button"
+                                                    class="jd-btn bt1">save</button>
                                             </span>
                                         </span>
                                     </mat-radio-group>
@@ -75,7 +76,7 @@
                             <div class="mgn-bt-5">
                                 <mat-checkbox (change)="setnumberofPersons($event)" [checked]="numberofpersons">
                                     Number of persons ahead
-                                    </mat-checkbox>
+                                </mat-checkbox>
                                 <!-- <i class="fa fa-check"></i>
                                 <span class="mgn-lt-5" style="font-weight: bold;"> Number of persons ahead </span> -->
                             </div>
@@ -122,7 +123,7 @@
                             <div class="mgn-bt-5">
                                 <mat-checkbox (change)="setnumberofPersons($event)" [checked]="numberofpersons">
                                     Number of persons ahead
-                                    </mat-checkbox>
+                                </mat-checkbox>
                                 <!-- <i class="fa fa-check"></i>
                                 <span class="mgn-lt-5" style="font-weight: bold;"> Number of persons ahead </span> -->
                             </div>
@@ -142,7 +143,8 @@
                         <div class="">
                             <div class="mgn-bt-10" style="font-weight: 600;font-size: 1rem;"> Issue online tokens
                                 <i [matTooltip]="'Your ' + customer_label + 's can get tokens using Jaldee App, Jaldee.com, by scanning Jaldee QR code or clicking Jaldee link that you shared with your ' + customer_label +'s'"
-                                    class="fa fa-info-circle" style="font-size: 1rem;"></i> </div>
+                                    class="fa fa-info-circle" style="font-size: 1rem;"></i>
+                            </div>
                             <div>
                                 <mat-checkbox [checked]="online_checkin" [(ngModel)]="online_checkin"
                                     (change)="handle_waitliststatus($event)">
