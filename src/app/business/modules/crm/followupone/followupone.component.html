@@ -33,7 +33,10 @@
                   <tr *ngFor="let task of followups; let i=index" class="pointer-cursor"
                     (click)="followupClicked(task)">
                     <td class="td2" *ngIf="task.customer">
-                      <span *ngIf="task.customer && task.customer.name != undefined">{{task.customer.name}}</span>
+                      <span *ngIf="task.customer && task.customer.name &&task.customer.name.startsWith('null')&& task.customer.name != undefined">
+                        {{task.customer.name | slice:4: task.customer.name.length}}
+                      </span>
+                      <span *ngIf="task.customer && task.customer.name != undefined && task.customer.name &&(!task.customer.name.startsWith('null'))">{{task.customer.name}}</span>
                       <span *ngIf="task.customer && task.customer.name===undefined">Location-{{task.location.name}}</span>
                     </td>
                     <td class="td3"><span *ngIf="task.generatedBy">{{task.generatedBy.name}}</span></td>

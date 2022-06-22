@@ -89,16 +89,30 @@
             ( Saved Remarks)
           </div>
         </div>
+        <app-common-innerloading-spinner *ngIf="api_loadingNotes"></app-common-innerloading-spinner>
         <div class="my-2  height-limit" *ngIf="leadInfo.notes.length>0 ">
           <div>
-            <div *ngFor="let note of leadInfo.notes;let i=index" class="allNotesList"
-              style="display: flex;justify-content: space-between;align-items: center;">
+            <div *ngFor="let note of leadInfo.notes;let i=index" class="allNotesList">
               <div class="notesListSection">
                 {{note.note}}
               </div>
-              <div class="notesListSection">
-                <div>{{note.createdDate}}</div>
-              </div>
+              <div class="notesListSection" style="gap:0.5px;justify-content:flex-start !important">
+                <div>({{note.createdDate.slice(0,2) }}</div>
+                <div *ngFor="let month of monthName">
+                 <div *ngIf="month.count===note.createdDate.slice(3,5)">
+                   {{month.monthName}},
+                 </div>
+                </div>
+                <div *ngIf="note.createdDate.slice(11,13)<12">
+                 {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} am
+                </div>
+                <div *ngIf="note.createdDate.slice(11,13)===12">
+                 {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} pm
+                </div>
+                <div *ngIf="note.createdDate.slice(11,13)>12">
+                 {{note.createdDate.slice(11,13)-12}} : {{note.createdDate.slice(14,16)}} pm )
+                </div>
+             </div>
             </div>
           </div>
         </div>

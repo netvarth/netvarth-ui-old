@@ -42,6 +42,57 @@ export class ViewLeadQnrComponent implements OnInit {
   api_loading: boolean;
   headerName = 'Add/Update Details';
   telephoneNumber: any;
+  api_loadingNotes:boolean=false;
+  public monthName:any=[
+    {
+      'count':'01',
+      'monthName':'January'
+    },
+    {
+      'count':'02',
+      'monthName':'February'
+    },
+    {
+      'count':'03',
+      'monthName':'March'
+    },
+    {
+      'count':'04',
+      'monthName':'April'
+    },
+    {
+      'count':'05',
+      'monthName':'May'
+    },
+    {
+      'count':'06',
+      'monthName':'June'
+    },
+    {
+      'count':'07',
+      'monthName':'July'
+    },
+    {
+      'count':'08',
+      'monthName':'August'
+    },
+    {
+      'count':'09',
+      'monthName':'September'
+    },
+    {
+      'count':'10',
+      'monthName':'October'
+    },
+    {
+      'count':'11',
+      'monthName':'November'
+    },
+    {
+      'count':'12',
+      'monthName':'December'
+    }
+    ]
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -483,6 +534,7 @@ export class ViewLeadQnrComponent implements OnInit {
   }
   saveNotes() {
     if (this.notes !== undefined) {
+      this.api_loadingNotes = true;
       const createNoteData: any = {
         "note": this.notes
       }
@@ -491,6 +543,7 @@ export class ViewLeadQnrComponent implements OnInit {
         this.notes = '';
         setTimeout(() => {
           this.initLead();
+          this.api_loadingNotes = false;
         }, projectConstants.TIMEOUT_DELAY);
         this.snackbarService.openSnackBar('Remarks added successfully');
       },

@@ -69,6 +69,7 @@ import { Subject } from 'rxjs';
       public sourcingChannelPlaceholder:string='None';
       public sourcingChhannelCatList:any=[];
       sourcingChhannelCatListNew:any=[]
+  errorMsg: string;
       constructor(
         private locationobj: Location,
         private router: Router,
@@ -135,11 +136,23 @@ import { Subject } from 'rxjs';
         this.locationobj.back();
       }
       enquiryDetailsInput(value:any){
+        console.log('value',value)
         if(!value){
            this.customerActivityText='New';
+           this.createEnquiryForm.patchValue({
+            firstNameValue:'',
+            lastNameValue:'',
+            phoneNoValue:'',
+            emailValue:'',
+          })
+          this.errorMsg='Please give some valid input'
+        }
+        else{
+          this.errorMsg=''
         }
       }
       searchCustomer() {
+        console.log('this.customer_data',this.customer_data)
         this.emptyFielderror = false;
         if (this.createEnquiryForm.controls.enquiryDetails.value && this.createEnquiryForm.controls.enquiryDetails.value === '') {
           this.emptyFielderror = true;
@@ -492,5 +505,9 @@ import { Subject } from 'rxjs';
         this.crmService.getEnquiryTemplate().subscribe((template:any)=>{
           this.enquiryTemplateId = template[0].id;
         })
+      }
+      handleFirstName(nnumberText){
+        console.log(nnumberText)
+        this.errorMsg=''
       }
   }

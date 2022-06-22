@@ -1489,7 +1489,7 @@ export class ViewTaskComponent implements OnInit {
     });
   }
   getDate() {
-    console.log(this.taskDetails.notes[0].createdDate)
+    // console.log(this.taskDetails.notes[0].createdDate)
     this.taskDetails.notes.forEach(
       (date:any)=>{
         console.log('dateTime',date);

@@ -25,6 +25,8 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatOptionModule } from "@angular/material/core";
 import { PreviewpdfModule } from "./previewpdf/previewpdf.module";
 import { ApplicantModule } from "./applicant/applicant.module";
+import { LoadingSpinnerModule } from "../../../../../shared/modules/loading-spinner/loading-spinner.module";
+
 const routes: Routes = [
   { path: '', component: ViewLeadQnrComponent },
   { path: 'create-lead', loadChildren: () => import('../create-lead/create-lead.module').then((m) => m.CreateLeadModule) },
@@ -62,6 +64,7 @@ const routes: Routes = [
     MatIconModule,
     ApplicantModule,
     [RouterModule.forChild(routes)],
+    LoadingSpinnerModule,
 
   ],
   providers: [

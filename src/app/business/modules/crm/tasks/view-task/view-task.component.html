@@ -29,7 +29,13 @@
           <div style="font-size: 14px;
           color: #000000;
           font-weight: bold;
-          margin-bottom: 4px;">{{customerName | capitalizeFirst}}</div>
+          margin-bottom: 4px;">
+
+<span *ngIf="taskDetails.customer && taskDetails.customer.name &&taskDetails.customer.name.startsWith('null')">
+  {{taskDetails.customer.name | slice:4: taskDetails.customer.name.length}}
+</span>
+<span *ngIf="taskDetails.customer && taskDetails.customer.name &&(!taskDetails.customer.name.startsWith('null'))">{{taskDetails.customer.name}}</span>
+        </div>
         </div>
         <div>
           <!-- <div style="font-size: 12px;color: #000000;" >{{customerPhNo}}</div> -->
@@ -382,8 +388,10 @@
   <div style="margin-top:10px" *ngIf="activityType !=='UpdateFollowUP'">
     <div class="textareaStart">
       <div class="fiesWithIcon">
-        <div>
-          <span class="card-title"><b>Remarks</b></span> 
+        <div style="display:flex;gap:5px">
+          <div class="card-title"><b>Remarks</b></div> 
+          <!-- <span class="asteric">*</span> -->
+          <div *ngIf="this.taskDetails.status.name==='New'" class="astericColor">*</div>
         </div>
         <div *ngIf="taskDetails.notes.length>0">
           <span (click)="noteView(taskDetails)" class="pointer-cursor fa fa-external-link"></span>
@@ -429,8 +437,8 @@
      ( Saved Remarks)
     </div>
   </div>
+  <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
           <div class="my-2  height-limit" *ngIf="taskDetails.notes.length>0 ">
-            <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
             <div >
               <div *ngFor="let note of taskDetails.notes;let i=index" class="allNotesList">
                   <div class="notesListSection">

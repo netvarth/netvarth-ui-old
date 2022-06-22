@@ -26,6 +26,9 @@
                               searchCustomer()"><i style="color:#fff;" class="fa fa-search"></i> </button>
                             </div>
                 </div>
+                <div class="errorClass">
+                    {{errorMsg}}
+                </div>
                 <div class="mgn-up-15">
                     <div class="customer">
                         <div class="infoHeader ">{{customerActivityText}} {{ customer_label | capitalizeFirst}}</div>
@@ -38,7 +41,7 @@
                                 <div>First Name</div>
                             </div>
                             <div class="fieldPadding">
-                                <input autocomplete="off" formControlName="firstNameValue" type="text" #firstName
+                                <input (click)="handleFirstName('first')" autocomplete="off" formControlName="firstNameValue" type="text" #firstName
                                     placeholder="{{enterFirstName}}"
                                     class="form-control" autocomplete="off" [value]="firstName" />
                             </div>
@@ -48,7 +51,7 @@
                                 <div>Last Name</div>
                             </div>
                             <div class="fieldPadding">
-                                <input autocomplete="off" formControlName="lastNameValue" type="text" #lastName
+                                <input (click)="handleFirstName('second')" autocomplete="off" formControlName="lastNameValue" type="text" #lastName
                                     placeholder="{{enterSecondName}}"
                                     class="form-control" autocomplete="off" [value]="lastName" />
                             </div>
@@ -60,7 +63,7 @@
                                 <div>Phone Number</div>
                             </div>
                             <div class="fieldPadding">
-                                <input autocomplete="off" formControlName="phoneNoValue" type="tel" #phoneNo type="tel"
+                                <input (click)="handleFirstName('third')" autocomplete="off" formControlName="phoneNoValue" type="tel" #phoneNo type="tel"
                                      placeholder="{{enterPhoNeNo}}"
                                     class="form-control" autocomplete="off" minlength="10" maxlength="10" [value]="phoneNo" />
                             </div>
@@ -70,7 +73,7 @@
                                 <div>Email</div>
                             </div>
                             <div class="fieldPadding">
-                                <input autocomplete="off" formControlName="emailValue" type="email" #email
+                                <input (click)="handleFirstName('fourth')" autocomplete="off" formControlName="emailValue" type="email" #email
                                      placeholder="{{enterEmailId}}"
                                     class="form-control" autocomplete="off" [value]="email" />
                             </div>
@@ -83,7 +86,7 @@
                                     <div>Sourcing Channel</div>
                                 </div>
                                 <div class="fieldPadding">
-                                    <mat-select class="form-control" placeholder="{{sourcingChannelPlaceholder}}"
+                                    <mat-select (click)="handleFirstName('fifth')" class="form-control" placeholder="{{sourcingChannelPlaceholder}}"
                                         #sourcingChannel formControlName="sourcingChannel">
                                         <!-- {{sourcingChhannelCatListNew[0] | json}} -->
                                         <mat-option  *ngFor="let item of sourcingChhannelCatList[0];let index=i" [value]="item.id" >
@@ -101,7 +104,7 @@
                                     <div>Select Product</div>
                                 </div>
                                 <div class="fieldPadding">
-                                    <mat-select class="form-control" placeholder="{{selectProduct}}"
+                                    <mat-select (click)="handleFirstName('sixth')" class="form-control" placeholder="{{selectProduct}}"
                                         #userTaskCategory formControlName="userTaskCategory">
                                         <mat-option  *ngFor="let item of categoryList[0];let index=i" [value]="item.id" >
                                             <div>
@@ -119,7 +122,7 @@
                                 <div>Proposed Amount</div>
                             </div>
                             <div class="fieldPadding">
-                                <input min="0" autocomplete="off" formControlName="proposedAmount" type="number" #proposedAmount 
+                                <input (click)="handleFirstName('seventh')" min="0" autocomplete="off" formControlName="proposedAmount" type="number" #proposedAmount 
                                      placeholder="{{enterproposedAmount}}"
                                     class="form-control" autocomplete="off"  [value]="proposedAmount" />
                             </div>
