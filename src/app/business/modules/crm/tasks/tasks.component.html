@@ -56,6 +56,11 @@
     <div>
       <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
         <div class="col-md-12 no-padding-small">
+          <span (click)="showFilterSidebar()" class="btn btn-primary pull-right mb-2">
+            <i class="icon-filter-one mt-2" [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
+              style="cursor: pointer;"></i>
+            <span>Filter</span>
+          </span>
           <div class="row">
             <div class="card p0 w-dta">
               <div class="table-responsive dash-list">
@@ -69,18 +74,7 @@
                         <th class="head_color">Type</th> -->
                       <th class="head_color">Date</th>
                       <th class="head_color">Status</th>
-                      <th class="filter-fx-col">
-                        <table class="fltr-tbl">
-                          <tr>
-                            <td>
-                              <span>
-                                <i class="icon-filter-one" (click)="showFilterSidebar()" [matTooltipClass]="tooltipcls"
-                                  [matTooltip]="filtericonTooltip" style="cursor: pointer;"></i>
-                              </span>
-                            </td>
-                          </tr>
-                        </table>
-                      </th>
+
                     </tr>
                   </thead>
                   <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
