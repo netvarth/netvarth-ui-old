@@ -6,7 +6,6 @@ import {  MatTableModule } from "@angular/material/table";
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
 import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { CrmService } from "../crm.service";
-// import { TasksComponent } from "./tasks.component";
 import {enquiryComponent} from "./enquiry.component" 
 import { RouterModule, Routes } from "@angular/router";
 import { MatTabsModule } from "@angular/material/tabs";

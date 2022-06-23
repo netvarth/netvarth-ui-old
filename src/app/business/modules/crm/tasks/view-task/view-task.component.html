@@ -22,7 +22,7 @@
       align-items: center;
       gap: 10px;" *ngIf="(taskDetails.customer) ">
         <div class="imageClass">
-          <div style="color: #8A8383;">{{firstCustomerName | capitalizeFirst}}</div>
+          <div style="color: #8A8383;" *ngIf="firstCustomerName">{{firstCustomerName | capitalizeFirst}}</div>
         </div>
       <div>
         <div> 
@@ -39,7 +39,7 @@
         </div>
         <div>
           <!-- <div style="font-size: 12px;color: #000000;" >{{customerPhNo}}</div> -->
-          <div style="font-size: 12px;color: #000000;" >{{customerPhNo}}</div>
+          <div style="font-size: 12px;color: #000000;"*ngIf="customerPhNo" >{{customerPhNo}}</div>
         </div>
       </div>
       </div>
@@ -336,7 +336,8 @@
   </div>
   <!----\files start-->
   <div class="notesWidth">
-    <div class="notesSection" *ngIf="!(this.taskDetails.title ==='BA Follow Up') && !(this.taskDetails.title ==='BA Recruitment') && activityType !=='UpdateFollowUP' ">
+    <!-- !(this.taskDetails.title ==='BA Follow Up') && !(this.taskDetails.title ==='BA Recruitment') && -->
+    <div class="notesSection" *ngIf=" activityType !=='UpdateFollowUP' ">
       <div class="fiesWithIcon">
         <div>
           <span class="card-title"><b>Files</b></span> 
@@ -470,7 +471,8 @@
   </div>
   <!---notes end-->
   <!----enter result start-->
-  <div class="formTop" *ngIf="bActualResult && (!(this.taskDetails.title ==='BA Follow Up') && !(this.taskDetails.title ==='BA Recruitment'))&& activityType !=='UpdateFollowUP'">
+  <!-- && (!(this.taskDetails.title ==='BA Follow Up') && !(this.taskDetails.title ==='BA Recruitment')) -->
+  <div class="formTop" *ngIf="activityType !=='UpdateFollowUP' &&  taskDetails.status.name==='New'">
     <div class="taskTitle">
         <div>No of data collected</div>
     </div>
@@ -493,8 +495,11 @@
                 >Cancel
             </button>
             <button class="btn btn-primary font-weight-bold confirmBtn"
-              [class.spinner]="api_loading" 
-                [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateTask()">Complete
+              type="button"  (click)="saveCreateTask()">
+                <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loadingSaveTask"></app-common-innerloading-spinner>
+                                    <span *ngIf="!api_loadingSaveTask">Complete</span>
+                
+                
             </button>
         </div>
     </ng-container>

@@ -99,6 +99,7 @@
       color: #fff;
       font-weight: bold;
         font-size: 14px;
+        height: 2.5rem;
       }
       .confirmBtn{
         background: #0D2348 !important;
@@ -107,10 +108,13 @@
       border: 0px solid  !important;
       padding: 6px 12px;
       color: #fff;
+      height: 2.5rem;
       }
       .taskTitle{
         font-size: 12px;
         color: #949191;
+        display: flex;
+        gap: 3px;
     }
     .formField{
       display: flex;
@@ -177,6 +181,8 @@
     }
     .astericColor{
       color: #f24949 !important;
+      font-size: large;
+    margin-top: -3px;
     }
     .errorClass{
       color: #f24949 !important;font-size: 12px;

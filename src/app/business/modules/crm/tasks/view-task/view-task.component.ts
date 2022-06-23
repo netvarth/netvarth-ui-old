@@ -210,6 +210,7 @@ export class ViewTaskComponent implements OnInit {
       'monthName':'December'
     }
     ]
+  api_loadingSaveTask: boolean;
  
 
 
@@ -461,9 +462,18 @@ export class ViewTaskComponent implements OnInit {
       }
       
       });
-      if(this.taskDetails.customer){
+      // if(this.taskDetails && this.taskDetails.customer){
+      //   this.firstCustomerName=this.taskDetails.customer.name.charAt(0);
+      //   this.customerName= this.taskDetails.customer.name;
+      //   this.customerPhNo =  this.teleService.getTeleNumber(this.taskDetails.customer.phoneNo);
+      // } 
+
+      if(this.taskDetails && this.taskDetails.customer && this.taskDetails.customer.name){
         this.firstCustomerName=this.taskDetails.customer.name.charAt(0);
         this.customerName= this.taskDetails.customer.name;
+        // this.customerPhNo =  this.teleService.getTeleNumber(this.taskDetails.customer.phoneNo);
+      } 
+      if(this.taskDetails && this.taskDetails.customer && this.taskDetails.customer.phoneNo){
         this.customerPhNo =  this.teleService.getTeleNumber(this.taskDetails.customer.phoneNo);
       } 
 
@@ -858,6 +868,7 @@ export class ViewTaskComponent implements OnInit {
   }
   saveCreateTask(){
     if(this.activityType !=='UpdateFollowUP'){
+      this.api_loadingSaveTask=true;
       const updateTaskData:any = {
         "title":this.taskDetailsForm.controls.taskTitle.value,
         "description":this.taskDetailsForm.controls.taskDescription.value,
@@ -881,16 +892,19 @@ export class ViewTaskComponent implements OnInit {
       }
       if(this.updateUserType===('PROVIDER' || 'CONSUMER')){
         this.crmService.updateTask(this.taskDetails.taskUid, updateTaskData).subscribe((response)=>{
+          this.api_loadingSaveTask=true;
           this.updateResponse= response;
           if(this.updateResponse=true){
             this.crmService.activityCloseWithNotes(this.taskDetails.taskUid,createNoteData).subscribe((response)=>{
               setTimeout(() => {
+                this.api_loadingSaveTask=true;
                 this.snackbarService.openSnackBar('Successfull updated activity');
               this.router.navigate(['provider', 'task']);
               }, projectConstants.TIMEOUT_DELAY);
             },
             (error)=>{
               setTimeout(() => {
+                this.api_loadingSaveTask=false;
                 this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
               }, projectConstants.TIMEOUT_DELAY);
             })
@@ -898,6 +912,7 @@ export class ViewTaskComponent implements OnInit {
         },
         (error)=>{
           setTimeout(() => {
+            this.api_loadingSaveTask=false;
             this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
           }, projectConstants.TIMEOUT_DELAY);
         })
