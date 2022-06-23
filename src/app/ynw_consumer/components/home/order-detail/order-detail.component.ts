@@ -77,6 +77,7 @@ buttons: [
   delivery_address: any;
   private subs=new SubSink();
   questionnaires: any = [];
+  history: boolean = false;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -93,6 +94,9 @@ buttons: [
     this.subs.sink=this.activated_route.queryParams.subscribe(
       (qParams) => {
         this.ynwUuid = qParams.uuid;
+        if (this.ynwUuid.startsWith('h_')) {
+          this.history = true;
+        }
         this.providerId = qParams.providerId;
       });
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');

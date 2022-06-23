@@ -72,6 +72,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
   customId: any;
   questionnaires: any = [];
   whatsAppNumber: any;
+  history: boolean  =false;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -93,6 +94,9 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
         this.ynwUuid = qParams.uuid;
         this.providerId = qParams.providerId;
         this.type = qParams.type;
+        if (this.ynwUuid.startsWith('h_')) {
+          this.history = true;
+        }
         this.accountId = qParams.accountId;
         if (qParams && qParams.customId) {
           this.customId = qParams.customId;

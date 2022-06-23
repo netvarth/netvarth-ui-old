@@ -438,6 +438,39 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
         }
       );
   }
+  showBookingDetails(booking, type?) {
+    let queryParams = {};
+    if (this.customId) {
+      queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
+    if (booking.apptStatus) {
+      queryParams['uuid'] = booking.uid;
+      queryParams['providerId'] = booking.providerAccount.id;
+      queryParams['type'] = type;
+      const navigationExtras: NavigationExtras = {
+        queryParams: queryParams
+      };
+      this.router.navigate(['consumer', 'apptdetails'], navigationExtras);
+    } else if (booking.waitlistStatus) {
+      queryParams['uuid'] = booking.ynwUuid;
+      queryParams['providerId'] = booking.providerAccount.id;
+      queryParams['type'] = type;
+      const navigationExtras: NavigationExtras = {
+        queryParams: queryParams
+      };
+      this.router.navigate(['consumer', 'checkindetails'], navigationExtras);
+    } else {
+      console.log('this is order');
+      console.log(booking);
+      queryParams['uuid'] = booking.uid;
+      queryParams['providerId'] = booking.providerAccount.id;
+      const navigationExtras: NavigationExtras = {
+        queryParams: queryParams
+      };
+      this.router.navigate(['consumer', 'orderdetails'], navigationExtras);
+    }
+  }
   addordertMessage(waitlist) {
     const pass_ob = {};
     pass_ob['source'] = 'consumer-waitlist';

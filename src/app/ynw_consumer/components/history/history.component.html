@@ -36,9 +36,9 @@
                                     </thead>
                                     <tbody>
                                         <!-- Checkin + Appointment -->
-                                        <tr *ngFor="let his_wait of entire_history">
+                                        <tr *ngFor="let his_wait of entire_history" >
                                             <ng-container *ngIf="his_wait.waitlistStatus">
-                                                <td data-title="Date & Time" >
+                                                <td data-title="Date & Time" class="pointer-cursor"  (click)="showBookingDetails(his_wait)">
                                                     <div class="disp-flex">
                                                         <div class="circle-htokens" *ngIf="!small_device_display">
                                                             <i *ngIf="his_wait.token" [matTooltip]="'Token'"  class="fa token-icon"></i>
@@ -92,6 +92,8 @@
                                                         <mat-icon>more_vert</mat-icon>
                                                     </button>
                                                     <mat-menu #appMenu="matMenu">
+                                                        <button class="pointer-cursor" mat-menu-item (click)="showBookingDetails(his_wait)">
+                                                            <i class="fa fa-file-text"></i>&nbsp;View Booking</button>
                                                         <button mat-menu-item   (click)="addWaitlistMessage(his_wait)">
                                                             <i class="fa chat-icon"></i>
                                                             {{send_message_cap}}</button>
@@ -118,7 +120,7 @@
                                                 </td>
                                             </ng-container>
                                             <ng-container *ngIf="his_wait.apptStatus">
-                                                <td data-title="Date & Time" >
+                                                <td data-title="Date & Time" class="pointer-cursor"  (click)="showBookingDetails(his_wait)">
                                                     <div class="disp-flex">
                                                         <div class="circle-htokens" *ngIf="!small_device_display">
                                                             <i class="fa appt-icon"  [matTooltip]="'Appointment'"></i>
@@ -169,6 +171,8 @@
                                                        Actions
                                                     </button> -->
                                                     <mat-menu #appMenu="matMenu">
+                                                        <button class="pointer-cursor" mat-menu-item (click)="showBookingDetails(his_wait)">
+                                                            <i class="fa fa-file-text"></i>&nbsp;View Booking</button>
                                                         <button mat-menu-item   (click)="addApptMessage(his_wait)">
                                                             <i class="fa chat-icon"></i>
                                                             {{send_message_cap}}</button>
@@ -199,7 +203,7 @@
 
                                             <!-- order history -->
                                             <ng-container *ngIf="his_wait.orderStatus">
-                                                <td data-title="Date & Time" class="td3">
+                                                <td data-title="Date & Time" class="td3" class="pointer-cursor"  (click)="showBookingDetails(his_wait)">
                                                     <div class="disp-flex">
                                                         <div class="circle-htokens" *ngIf="!small_device_display">
                                                                 <div *ngIf="his_wait.storePickup"> <img class="ordericon home"
@@ -239,6 +243,8 @@
                                                         <mat-icon>more_vert</mat-icon>
                                                     </button>
                                                     <mat-menu #appMenu="matMenu">
+                                                        <button class="pointer-cursor" mat-menu-item (click)="showBookingDetails(his_wait)">
+                                                            <i class="fa fa-file-text"></i>&nbsp;View Order</button>
                                                         <button mat-menu-item   (click)="addordertMessage(his_wait)">
                                                             <i class="fa chat-icon"></i>
                                                             {{send_message_cap}}</button>
@@ -249,7 +255,7 @@
                                                         <button mat-menu-item *ngIf="his_wait.bill && his_wait.bill.billViewStatus == 'Show' && his_wait.bill.billStatus == 'Settled'"
                                                             (click)="getOrderBill(his_wait)">
                                                             <i class="bill-icon-history"></i>
-                                                            Receipt</button>
+                                                            Receipt</button>                                                        
                                                         <button mat-menu-item *ngIf="his_wait.bill && his_wait.bill.billViewStatus == 'Show' && his_wait.bill.billStatus !== 'Settled'"
                                                             (click)="getOrderBill(his_wait)">
                                                             <i class="bill-icon-history"></i>

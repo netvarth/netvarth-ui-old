@@ -75,6 +75,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
   customId: any;
   questionnaires: any = [];
   whatsAppNumber: any;
+  history: boolean = false;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -93,6 +94,9 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
     this.subs.sink = this.activated_route.queryParams.subscribe(
       (qParams) => {
         this.ynwUuid = qParams.uuid;
+        if (this.ynwUuid.startsWith('h_')) {
+          this.history = true;
+        }
         this.providerId = qParams.providerId;
         this.type = qParams.type;
         this.accountId = qParams.accountId;
