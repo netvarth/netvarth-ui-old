@@ -180,8 +180,12 @@ export class LeadsComponent implements OnInit {
    * @param leadUID 
    */
   openLead(leadUID) {
-    if (this.type === 'LoanDisbursement' || 'Rejected'){
+    // console.log('this.type',this.type)
+    if (this.type === 'LoanDisbursement'){
       return false; 
+    }
+    else if(this.type ===  'Rejected'){
+      return false;
     }  
     this.router.navigate(['/provider/viewleadqnr/' + leadUID]);
   }
