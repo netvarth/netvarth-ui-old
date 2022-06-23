@@ -1,6 +1,6 @@
 {
   "name": "jaldee.com",
-  "version": "1.11.14",
+  "version": "1.11.19",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -87,7 +87,6 @@
     "ngx-mat-select-search": "^3.3.0",
     "ngx-order-pipe": "^2.1.0",
     "ngx-owl-carousel": "^2.0.7",
-    "ngx-owl-carousel-o": "^6.0.1",
     "ngx-pagination": "^5.1.1",
     "ngx-qrcode2": "^9.0.0",
     "ngx-scrollbar": "^2.3.0",
