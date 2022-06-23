@@ -4,11 +4,11 @@ import { Location } from '@angular/common';
 import {  Router } from '@angular/router';
 import { CrmService } from '../crm.service';
 import { FormBuilder } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+// import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../../src/app/shared/services/word-processor.service';
-import { CrmSelectMemberComponent } from '../../../shared/crm-select-member/crm-select-member.component';
+// import { CrmSelectMemberComponent } from '../../../shared/crm-select-member/crm-select-member.component';
 import { projectConstantsLocal } from '../../../../../../src/app/shared/constants/project-constants';
 import { ProviderServices } from '../../../../../../src/app/business/services/provider-services.service';
 import { takeUntil } from 'rxjs/operators';
@@ -71,13 +71,12 @@ import { Subject } from 'rxjs';
       sourcingChhannelCatListNew:any=[]
       errorMsg: string;
       newCusReqField:boolean=true;
-      public editable:boolean=true;
       constructor(
         private locationobj: Location,
         private router: Router,
          private crmService: CrmService,
          private createEnquiryFB: FormBuilder,
-         private dialog: MatDialog, 
+        //  private dialog: MatDialog, 
         private snackbarService: SnackbarService,
          private groupService:GroupStorageService,
          private wordProcessor: WordProcessor,
@@ -104,7 +103,6 @@ import { Subject } from 'rxjs';
        })
       this.enquiryCategoryList()
       this.getTemplateEnuiry()
-      this.getTaskmaster()
       this.sourcingChannelCategory()
 
       console.log('this.innerWidth = window.innerWidth;',this.innerWidth = window.innerWidth)
@@ -141,23 +139,14 @@ import { Subject } from 'rxjs';
         // console.log('value',value)
         if(!value){
            this.customerActivityText='New';
-          //  this.newCusReqField=true
            this.createEnquiryForm.patchValue({
             firstNameValue:'',
             lastNameValue:'',
             phoneNoValue:'',
             emailValue:'',
-            // enquiryDetails:'',
           })
           this.newCusReqField=true;
-          this.editable=true;
-          this.createEnquiryForm.controls['firstNameValue'].enable();
-          this.createEnquiryForm.controls['lastNameValue'].enable();
-          this.createEnquiryForm.controls['phoneNoValue'].enable();
-          this.createEnquiryForm.controls['emailValue'].enable();
-          this.createEnquiryForm.controls['proposedAmount'].enable();
-          this.createEnquiryForm.controls['userTaskCategory'].enable();
-          this.createEnquiryForm.controls['sourcingChannel'].enable();
+          this.enableFormControl()
         }
         else{
           this.newCusReqField=false;
@@ -173,10 +162,6 @@ import { Subject } from 'rxjs';
             phoneNoValue:'',
             emailValue:'',
           })
-          // if(this.createEnquiryForm.controls.firstNameValue.value !=''){
-          //   this.errorMsg=''
-          // }
-          // this.errorMsg='Please give some valid input 2'
         }
         this.emptyFielderror = false;
         if (this.createEnquiryForm.controls.enquiryDetails.value && this.createEnquiryForm.controls.enquiryDetails.value === '') {
@@ -257,23 +242,9 @@ import { Subject } from 'rxjs';
                   this.selectProduct='Select Product';
                   this.errorMsg='Please give some valid input or clear input'
                   this.newCusReqField=true;
-                  this.editable=true;
-                  this.createEnquiryForm.controls['firstNameValue'].disable();
-                  this.createEnquiryForm.controls['lastNameValue'].disable();
-                  this.createEnquiryForm.controls['phoneNoValue'].disable();
-                  this.createEnquiryForm.controls['emailValue'].disable();
-                  this.createEnquiryForm.controls['proposedAmount'].disable();
-                  this.createEnquiryForm.controls['userTaskCategory'].disable();
-                  this.createEnquiryForm.controls['sourcingChannel'].disable();
+                  this.disableFormControl()
                 } else {
-                  this.editable=false;
-                  this.createEnquiryForm.controls['firstNameValue'].disable();
-                  this.createEnquiryForm.controls['lastNameValue'].disable();
-                  this.createEnquiryForm.controls['phoneNoValue'].disable();
-                  this.createEnquiryForm.controls['emailValue'].disable();
-                  this.createEnquiryForm.controls['proposedAmount'].disable();
-                  this.createEnquiryForm.controls['userTaskCategory'].disable();
-                  this.createEnquiryForm.controls['sourcingChannel'].disable();
+                  this.disableFormControl()
                   this.createEnquiryForm.patchValue({
                     firstNameValue:data[0].firstName,
                     lastNameValue:data[0].lastName,
@@ -319,51 +290,6 @@ import { Subject } from 'rxjs';
               }
             );
         }
-      }
-      getTemplateList(){
-        this.crmService.getTaskMasterList().subscribe((response:any)=>{
-          this.templateList.push(response)
-        }) 
-      }
-      
-      getTaskmaster(){
-        this.crmService.getTaskMasterList().subscribe((response)=>{
-          this.activityList.push(response);
-        })
-      }
-      selectActivityListDialog(activityListData:any){
-        const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
-          width: '745px',
-      panelClass: ['popup-class', 'confirmationmainclass'],
-      data:{
-        requestType:'taskMasterList',
-        data:this.activityList[0],
-        noneData:'None'
-       
-      }
-        })
-        dialogRef.afterClosed().subscribe((response:any)=>{
-          if(response !== undefined && response !=='None' && response !== 'Close'){
-            this.activityTitleDialogValue= response.title.value;
-            this.activityIdDialogValue= response.id,
-            this.activityOriginUidDialogValue= response.taskUid;
-            this.activityListTitleDialogValue=response.title.value;
-            this.activityListDescriptionDialogValue=response.description;
-            this.activityListCategoryDialogValue= response.category.id;
-            this.activityListTypeDialogValue= response.type.id;
-            this.activityListStatusDialogValue= response.status.id;
-            this.activityListpriorityDialogValue= response.priority.id;
-            this.createEnquiryForm.patchValue({
-              proposedAmount:response.targetPotential.value
-            })
-          }
-          else if(response==='None' && response !== undefined && response !== 'Close'){
-            this.activityTitleDialogValue= 'None'
-          }
-          else if(response==='Close' && response !== undefined){
-            this.activityTitleDialogValue='None'
-          }
-        })
       }
       enquiryCategoryList(){
         this.crmService.getLeadTemplate().subscribe((category:any)=>{
@@ -603,51 +529,51 @@ import { Subject } from 'rxjs';
         //   } 
         // }
       }
-      createCustomer(){
-        console.log('this.createEnquiryForm.controls.firstNameValue.value',this.createEnquiryForm.controls.firstNameValue.value)
-          const afterCompleteAddData:any = {
-            "firstName": this.createEnquiryForm.controls.firstNameValue.value,
-            "lastName": this.createEnquiryForm.controls.lastNameValue.value,
-            "phoneNo": this.createEnquiryForm.controls.phoneNoValue.value,
-            "email": this.createEnquiryForm.controls.emailValue.value,
-            "countryCode": '+91',
-            "userTaskCategory":this.createEnquiryForm.controls.userTaskCategory.value,
-            "targetPotential":this.createEnquiryForm.controls.proposedAmount.value,
-            "category":{"id":this.createEnquiryForm.controls.sourcingChannel.value}
-          }
-          if(afterCompleteAddData.category.id===''){
-            console.log('productId not required')
-            this.crmService.createProviderCustomer(afterCompleteAddData).subscribe((response:any)=>{
-              setTimeout(() => {
-                this.enquiryCreateIdAfterRes= response
-                this.snackbarService.openSnackBar('Successfull created enquiry');
-              this.createEnquiryForm.reset();
-            this.router.navigate(['provider', 'crm']);
-              }, projectConstants.TIMEOUT_DELAY);
-            },
-            (error)=>{
-              this.api_loading = false
-              this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
-            })
-          }
-          else{
-            console.log('productId')
-            this.crmService.createProviderCustomer(afterCompleteAddData).subscribe((response:any)=>{
-              setTimeout(() => {
-                this.api_loading = true;
-                this.enquiryCreateIdAfterRes= response;
-                console.log('enquiryCreateIdAfterRes',this.enquiryCreateIdAfterRes)
-                this.snackbarService.openSnackBar('Successfull created enquiry');
-              this.createEnquiryForm.reset();
-            this.router.navigate(['provider', 'crm']);
-              }, projectConstants.TIMEOUT_DELAY);
-            },
-            (error)=>{
-              this.api_loading = false
-              this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
-            })
-          }
-      }
+      // createCustomer(){
+      //   console.log('this.createEnquiryForm.controls.firstNameValue.value',this.createEnquiryForm.controls.firstNameValue.value)
+      //     const afterCompleteAddData:any = {
+      //       "firstName": this.createEnquiryForm.controls.firstNameValue.value,
+      //       "lastName": this.createEnquiryForm.controls.lastNameValue.value,
+      //       "phoneNo": this.createEnquiryForm.controls.phoneNoValue.value,
+      //       "email": this.createEnquiryForm.controls.emailValue.value,
+      //       "countryCode": '+91',
+      //       "userTaskCategory":this.createEnquiryForm.controls.userTaskCategory.value,
+      //       "targetPotential":this.createEnquiryForm.controls.proposedAmount.value,
+      //       "category":{"id":this.createEnquiryForm.controls.sourcingChannel.value}
+      //     }
+      //     if(afterCompleteAddData.category.id===''){
+      //       console.log('productId not required')
+      //       this.crmService.createProviderCustomer(afterCompleteAddData).subscribe((response:any)=>{
+      //         setTimeout(() => {
+      //           this.enquiryCreateIdAfterRes= response
+      //           this.snackbarService.openSnackBar('Successfull created enquiry');
+      //         this.createEnquiryForm.reset();
+      //       this.router.navigate(['provider', 'crm']);
+      //         }, projectConstants.TIMEOUT_DELAY);
+      //       },
+      //       (error)=>{
+      //         this.api_loading = false
+      //         this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+      //       })
+      //     }
+      //     else{
+      //       console.log('productId')
+      //       this.crmService.createProviderCustomer(afterCompleteAddData).subscribe((response:any)=>{
+      //         setTimeout(() => {
+      //           this.api_loading = true;
+      //           this.enquiryCreateIdAfterRes= response;
+      //           console.log('enquiryCreateIdAfterRes',this.enquiryCreateIdAfterRes)
+      //           this.snackbarService.openSnackBar('Successfull created enquiry');
+      //         this.createEnquiryForm.reset();
+      //       this.router.navigate(['provider', 'crm']);
+      //         }, projectConstants.TIMEOUT_DELAY);
+      //       },
+      //       (error)=>{
+      //         this.api_loading = false
+      //         this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'})
+      //       })
+      //     }
+      // }
       getTemplateEnuiry(){
         this.crmService.getEnquiryTemplate().subscribe((template:any)=>{
           this.enquiryTemplateId = template[0].id;
@@ -656,5 +582,23 @@ import { Subject } from 'rxjs';
       handleFirstName(nnumberText){
         console.log(nnumberText)
         this.errorMsg=''
+      }
+      enableFormControl(){
+        this.createEnquiryForm.controls['firstNameValue'].enable()
+        this.createEnquiryForm.controls['lastNameValue'].enable();
+        this.createEnquiryForm.controls['phoneNoValue'].enable()
+        this.createEnquiryForm.controls['emailValue'].enable();
+        this.createEnquiryForm.controls['sourcingChannel'].enable()
+        this.createEnquiryForm.controls['userTaskCategory'].enable();
+        this.createEnquiryForm.controls['proposedAmount'].enable()
+      }
+      disableFormControl(){
+        this.createEnquiryForm.controls['firstNameValue'].disable()
+        this.createEnquiryForm.controls['lastNameValue'].disable();
+        this.createEnquiryForm.controls['phoneNoValue'].disable()
+        this.createEnquiryForm.controls['emailValue'].disable();
+        this.createEnquiryForm.controls['sourcingChannel'].disable()
+        this.createEnquiryForm.controls['userTaskCategory'].disable();
+        this.createEnquiryForm.controls['proposedAmount'].disable()
       }
   }
