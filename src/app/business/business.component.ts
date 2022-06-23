@@ -64,15 +64,15 @@ export class BusinessComponent implements OnInit {
                   setTimeout(() => {
                      console.log("constructor")
                     if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
-                      if(settings.enableTask) {
-                        router.navigate(['provider', 'crm']);
+                      if (settings.appointment) {
+                        router.navigate(['provider', 'appointments']);
                       } else if (settings.waitlist) {
                         router.navigate(['provider', 'check-ins']);
-                      } else if (settings.appointment) {
-                        router.navigate(['provider', 'appointments']);
-                      } else if (settings.order) {
+                      }  else if (settings.order) {
                         router.navigate(['provider', 'orders']);
-                      } else {
+                      } else if(settings.enableTask) {
+                        router.navigate(['provider', 'crm']);
+                      }  else {
                         router.navigate(['provider', 'settings']);
                       } 
                     } else {

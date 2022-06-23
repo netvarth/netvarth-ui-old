@@ -29,13 +29,15 @@ export class PhomeComponent implements OnInit {
                 if (router.url === '\/business') {
                   setTimeout(() => {
                     if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
-                      if (settings.waitlist) {
-                        router.navigate(['provider', 'check-ins']);
-                      } else if (settings.appointment) {
+                      if (settings.appointment) {
                         router.navigate(['provider', 'appointments']);
-                      } else if (settings.order) {
+                      } else if (settings.waitlist) {
+                        router.navigate(['provider', 'check-ins']);
+                      }  else if (settings.order) {
                         router.navigate(['provider', 'orders']);
-                      } else {
+                      } else if(settings.enableTask) {
+                        router.navigate(['provider', 'crm']);
+                      }  else {
                         router.navigate(['provider', 'settings']);
                       }
                     } else {

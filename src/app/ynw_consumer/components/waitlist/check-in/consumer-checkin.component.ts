@@ -2402,15 +2402,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         parentId = _this.activeUser.id;
                     }
                 }
-                console.log("Call Started");
-                if(memberId && accountId && parentId && (parentId !== undefined || parentId !== '')){
+                console.log("Call Started");                
                 _this.shared_services.createProviderCustomer(memberId, parentId, accountId).subscribe(
                     (providerConsumer: any) => {
                         _this.providerConsumerList.push(providerConsumer);
                         resolve(providerConsumer.id);
                     }
                 )
-                }
             }
         });
     }

@@ -986,15 +986,15 @@ export class SharedFunctions {
       .then(
         (settings: any) => {
           if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
-            if (settings.enableTask) {
-              this.router.navigate(['provider', 'crm']);
+            if (settings.appointment) {
+              this.router.navigate(['provider', 'appointments']);
             } else if (settings.waitlist) {
               this.router.navigate(['provider', 'check-ins']);
-            } else if (settings.appointment) {
-              this.router.navigate(['provider', 'appointments']);
-            } else if (settings.order) {
+            }  else if (settings.order) {
               this.router.navigate(['provider', 'orders']);
-            } else {
+            } else if(settings.enableTask) {
+              this.router.navigate(['provider', 'crm']);
+            }  else {
               this.router.navigate(['provider', 'settings']);
             }
           } else {
