@@ -8,7 +8,6 @@
   </section>
   <section class="card mgn-up-15">
       <div>
-        
         <div>
             <form [formGroup]="createEnquiryForm">
                 <div class="customer">
@@ -39,7 +38,6 @@
                         <div class="taskInputField" style="margin-top: 5px;">
                             <div class="taskTitle">
                                 <div>First Name</div>
-                                <div *ngIf="newCusReqField" class="astericColor">*</div>
                             </div>
                             <div class="fieldPadding">
                                 <input (click)="handleFirstName('first')" autocomplete="off" formControlName="firstNameValue" type="text" #firstName
@@ -50,7 +48,6 @@
                         <div class="taskInputField" style="margin-top: 5px;">
                             <div class="taskTitle">
                                 <div>Last Name</div>
-                                <div *ngIf="newCusReqField" class="astericColor">*</div>
                             </div>
                             <div class="fieldPadding">
                                 <input (click)="handleFirstName('second')" autocomplete="off" formControlName="lastNameValue" type="text" #lastName
@@ -63,7 +60,6 @@
                         <div class="taskInputField" style="margin-top: 5px;">
                             <div class="taskTitle">
                                 <div>Phone Number</div>
-                                <div *ngIf="newCusReqField" class="astericColor">*</div>
                             </div>
                             <div class="fieldPadding">
                                 <input (click)="handleFirstName('third')" autocomplete="off" formControlName="phoneNoValue" type="tel" #phoneNo type="tel"
@@ -74,7 +70,6 @@
                         <div class="taskInputField" style="margin-top: 5px;">
                             <div class="taskTitle">
                                 <div>Email</div>
-                                <div *ngIf="newCusReqField" class="astericColor">*</div>
                             </div>
                             <div class="fieldPadding">
                                 <input (click)="handleFirstName('fourth')" autocomplete="off" formControlName="emailValue" type="email" #email
@@ -88,7 +83,6 @@
                             <div> 
                                 <div class="taskTitle">
                                     <div>Sourcing Channel</div>
-                                    <div *ngIf="newCusReqField" class="astericColor">*</div>
                                 </div>
                                 <div class="fieldPadding">
                                     <mat-select  (click)="handleFirstName('fifth')" class="form-control" placeholder="{{sourcingChannelPlaceholder}}"
@@ -107,7 +101,6 @@
                             <div> 
                                 <div class="taskTitle">
                                     <div>Select Product</div>
-                                    <div *ngIf="newCusReqField" class="astericColor">*</div>
                                 </div>
                                 <div class="fieldPadding">
                                     <mat-select  (click)="handleFirstName('sixth')" class="form-control" placeholder="{{selectProduct}}"
@@ -126,7 +119,6 @@
                         <div class="taskInputField" style="margin-top: 5px;">
                             <div class="taskTitle">
                                 <div>Proposed Amount</div>
-                                <div *ngIf="newCusReqField" class="astericColor">*</div>
                             </div>
                             <div class="fieldPadding">
                                 <input (click)="handleFirstName('seventh')" min="0" autocomplete="off" formControlName="proposedAmount" type="number" #proposedAmount 
@@ -142,10 +134,6 @@
                             <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()"
                                 >Cancel
                             </button>
-                            <!-- [ngClass]="{
-                                'btn btn-primary font-weight-bold cancelBtn': !createEnquiryForm.valid,
-                                'btn btn-primary font-weight-bold confirmBtn': createEnquiryForm.valid
-                            }" -->
                             <button class="btn btn-primary font-weight-bold confirmBtn" type="button"  (click)="saveCreateEnquiry()">
                                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading"></app-common-innerloading-spinner>
                                     <span *ngIf="!api_loading">Save</span>
