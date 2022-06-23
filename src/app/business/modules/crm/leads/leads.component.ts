@@ -168,6 +168,10 @@ export class LeadsComponent implements OnInit {
         filter['isRedirected-eq'] = true;
         this.headerName = 'Redirect';
         break;
+        case 'Rejected':
+        filter['statusName-eq'] = 'rejected';
+        this.headerName = 'Rejected';
+        break;
     }
     return filter;
   }

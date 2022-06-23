@@ -89,6 +89,10 @@ export class CRMComponent implements OnInit {
         {
           id:11,
           activityName: 'Redirect'
+        },
+        {
+          id:11,
+          activityName: 'Rejected'
         }
       ]
     }
@@ -131,6 +135,10 @@ export class CRMComponent implements OnInit {
         {
           id:11,
           activityName: 'Redirect'
+        },
+        {
+          id:11,
+          activityName: 'Rejected'
         }
       ]
     }
@@ -156,6 +164,10 @@ export class CRMComponent implements OnInit {
         {
           id:11,
           activityName: 'Redirect'
+        },
+        {
+          id:11,
+          activityName: 'Rejected'
         }
       ]
     }
@@ -195,6 +207,10 @@ export class CRMComponent implements OnInit {
         {
           id:11,
           activityName: 'Redirect'
+        },
+        {
+          id:11,
+          activityName: 'Rejected'
         }
       ]
     }
@@ -329,6 +345,14 @@ export class CRMComponent implements OnInit {
       }
       this.router.navigate(['provider','lead'],navigationExtras);
     }
+    else if(templateName==='Rejected'){
+      const navigationExtras: NavigationExtras =  {
+        queryParams: {
+          type: 'Rejected'
+        }
+      }
+      this.router.navigate(['provider','lead'], navigationExtras);
+    }
   }
   buttonClicked (type) {
     switch(type) {
@@ -386,4 +410,5 @@ export class CRMComponent implements OnInit {
     }
     this.router.navigate(['provider','reports','new-report'],navigationExtras);
   }
+  
 }

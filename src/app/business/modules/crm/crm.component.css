@@ -167,3 +167,6 @@ img{
     align-items: baseline;
     gap: 10px;
 }
+.borderBottom{
+    border-bottom: 2px solid #1D3E77;
+}

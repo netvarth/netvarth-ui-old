@@ -206,7 +206,10 @@ import { Subject } from 'rxjs';
                 this.enquiryArr=data;
                 if(data.length===0){
                   this.defaultPlaceHolder()
-                  this.errorMsg='Customer not found, Please create customer and continue'
+                  this.errorMsg='Customer not found, Please create customer and continue';
+                  this.createEnquiryForm.patchValue({
+                    enquiryDetails:''
+                  })
                }
                 this.customer_data = [];
                 if (data.length === 0) {
