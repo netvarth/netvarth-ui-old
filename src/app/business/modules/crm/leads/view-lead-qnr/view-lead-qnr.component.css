@@ -590,6 +590,9 @@ padding: 6px 12px;
 color: #fff;
 height: 2.5rem;
 }
+.cursorDiasable{
+cursor: not-allowed;
+}
 
 
 

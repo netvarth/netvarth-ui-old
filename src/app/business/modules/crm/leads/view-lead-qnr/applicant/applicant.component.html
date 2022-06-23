@@ -2,15 +2,15 @@
 <form [formGroup]="applicantForm" id="{{applicantId}}" (focusout)="sendApplicantInfo()">
     <div style="display: flex; align-items: center;  gap: 10px;" *ngIf="applicant.parent">
         <div class="imageClass">
-            <div style="color: #8A8383;">{{customerName[0] | capitalizeFirst}}</div>
+            <div style="color: #8A8383;" *ngIf="customerName">{{customerName[0] | capitalizeFirst}}</div>
         </div>
         <div>
             <div>
-                <div style="font-size: 14px;color: #000000;font-weight: bold;margin-bottom: 4px;">{{customerName |
+                <div style="font-size: 14px;color: #000000;font-weight: bold;margin-bottom: 4px;" *ngIf="customerName">{{customerName |
                     capitalizeFirst}}</div>
             </div>
             <div>
-                <div style="font-size: 12px;color: #000000;">{{phoneNumber}}</div>
+                <div style="font-size: 12px;color: #000000;" *ngIf="phoneNumber">{{phoneNumber}}</div>
             </div>
         </div>
     </div>
