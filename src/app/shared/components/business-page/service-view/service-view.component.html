@@ -1,8 +1,15 @@
 <section class="content bus-page" [ngClass]="accountProperties?accountProperties['theme']:''">
-    <div class="container">
-        <div class="row pad-bt-10 bus-page-header">
-            <div class="panel panel-default">
-                <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row" *ngIf="!loading">
+    <div class="panel panel-default" *ngIf="loading || loading_direct" class="full-height">
+        <div class="child">
+            <app-common-innerloading-spinner>
+            </app-common-innerloading-spinner>
+        </div>
+    </div>
+    <div class="container" *ngIf="!loading">
+        <div class="row pad-bt-10 bus-page-header">            
+            <div class="panel panel-default" >
+                <!-- *ngIf="!loading" -->
+                <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <a class="pull-left back-btn mgn-up-5" *ngIf="userId || back==='1'" (click)="goBack()"><i
                                 class="fa fa-arrow-left"></i></a>
@@ -24,7 +31,8 @@
                     [ngStyle]="{ 'background-image': (!profileSettings || (profileSettings && profileSettings['showCoverPicture'])) ? 'url(' + bgCover + ')': ''}">
                 </div>
                 <div class="panel-body">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="!loading">
+                    <!-- *ngIf="!loading" -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="col-md-2 col-xs-12 col-sm-12 col-lg-2">
                             <div class="" [ngClass]="{'cvr-dp-mgn': bgCover}">
                                 <img alt="Profile Image" src="{{bLogo}}" id="profile-image1"
@@ -72,7 +80,7 @@
                                             <b>{{businessjson.businessDesc |
                                                 capitalizeFirst}}</b> <br>
                                         </p>
-                                       
+
                                     </div>
                                     <p *ngIf="businessjson.status === 'INACTIVE'">
                                         <b>Online bookings disabled.</b>
@@ -82,7 +90,8 @@
                         </div>
                     </div>
                     <br>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding" *ngIf="!loading">
+                    <!-- *ngIf="!loading" -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding">
                         <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 card-outer-cont no-margin"
                             style="background-color: #1e4079;">
                             <div class="col-md-2 col-xs-3 col-sm-3 col-lg-1 no-padding card-inner-img-cont">
@@ -166,8 +175,6 @@
                         </div>
                     </div>
                     <br>
-                    <app-common-innerloading-spinner *ngIf="loading || loading_direct">
-                    </app-common-innerloading-spinner>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10"
                         *ngIf="servicesAndProviders && servicesAndProviders.length >0 && !loading && !loading_direct">
                         <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">

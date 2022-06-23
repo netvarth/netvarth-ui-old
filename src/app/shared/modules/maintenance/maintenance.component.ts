@@ -30,6 +30,11 @@ export class MaintenanceComponent implements OnInit {
             if (this.lStorageService.getitemfromLocalStorage('customId')) {
               if(this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA') {
                 window.location.href = 'customapp/' + this.lStorageService.getitemfromLocalStorage('customId') + '?at=' +  this.lStorageService.getitemfromLocalStorage('authToken');
+              } else if (this.lStorageService.getitemfromLocalStorage('reqFrom')==='CUSTOM_WEBSITE'){
+                let source = this.lStorageService.getitemfromLocalStorage('source');
+                this.lStorageService.removeitemfromLocalStorage('reqFrom');
+                this.lStorageService.removeitemfromLocalStorage('source');
+                window.location.href = source;
               } else {
                 window.location.href = this.lStorageService.getitemfromLocalStorage('customId');
               }

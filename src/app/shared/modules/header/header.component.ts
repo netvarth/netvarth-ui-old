@@ -174,7 +174,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.scrollhideclass.emit(false);
   }
   ngOnInit() {
-    if (this.lStorageService.getitemfromLocalStorage('reqFrom')=== 'cuA') {
+    if (this.lStorageService.getitemfromLocalStorage('reqFrom')=== 'cuA' || this.lStorageService.getitemfromLocalStorage('reqFrom')=== 'CUSTOM_WEBSITE') {
       this.appLogo = true;
     }
     this.pageSource = this.includedfrom;

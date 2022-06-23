@@ -17,6 +17,11 @@ export class NotFoundComponent {
         if (customId) {
             if (reqFrom === 'cuA') {
                 this.router.navigate(['customapp', customId]);
+            } else if (reqFrom==='CUSTOM_WEBSITE'){
+                let source = this.lStorageService.getitemfromLocalStorage('source');
+                this.lStorageService.removeitemfromLocalStorage('reqFrom');
+                this.lStorageService.removeitemfromLocalStorage('source');
+                window.location.href = source;
             } else {
                 this.router.navigate([customId]);
             }

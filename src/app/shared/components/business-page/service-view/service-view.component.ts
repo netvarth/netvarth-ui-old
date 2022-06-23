@@ -248,6 +248,7 @@ export class ServiceViewComponent implements OnInit {
               (id: any) => {
                 _this.provider_id = id;      
                 _this.customId = _this.accountEncId;
+                this.lStorageService.setitemonLocalStorage('customId', _this.customId);
                 _this.accEncUid = _this.accountEncId;     
                 _this.accountIdExists = true;      
                 _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
@@ -637,12 +638,16 @@ export class ServiceViewComponent implements OnInit {
           },
             error => {
               _this.wordProcessor.apiErrorAutoHide(_this, error);
-              _this.loading = false;
+              if (!_this.serviceType) {
+                _this.loading = false;
+              }              
             });
       }, 
         error => {
           _this.wordProcessor.apiErrorAutoHide(_this, error);
-          _this.loading = false;
+          if (!_this.serviceType) {
+            _this.loading = false;
+          }  
         });
   }
   getduration(servicedetails: any) {
@@ -901,7 +906,9 @@ export class ServiceViewComponent implements OnInit {
       console.log(activeService);
       this.checkinClicked(this.selectedLocation, activeService);
     }
-    this.loading = false;
+    if (!this.serviceType) {
+      this.loading = false;
+    }  
   }
   setUserWaitTime() {
     let apptTimearr = [];

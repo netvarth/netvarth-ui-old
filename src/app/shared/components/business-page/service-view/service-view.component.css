@@ -1382,3 +1382,14 @@ ul.service-ul li {
   flex-direction: column;
   width: 100%;
 }
+.full-height{
+  height: 100vh;
+  margin: auto;
+  position: relative;
+}
+.full-height .child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -25px 0 0 -25px;
+}
