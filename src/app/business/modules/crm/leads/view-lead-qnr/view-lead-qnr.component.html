@@ -146,18 +146,25 @@
     <ng-container>
       <!-- {{leadInfo.status | json}} -->
       <div class=" mgn-bt-20 mgn-up-10" style="display: flex; justify-content: center; gap: 10px;">
-        <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goBack()">Cancel</button>
-        <button class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="updateKyc()"
-          *ngIf="leadInfo.status.name==='Login' || leadInfo.status.name !=='Login Verified'">Save</button>
-        <button type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #D7FEE9 !important;
+        <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loading_UpdateKyc && goBack()"[ngClass]="{'cursorDiasable': api_loading_UpdateKyc || api_loading_UpdateKycProceed}">Cancel</button>
+        <button [ngClass]="{'cursorDiasable':  api_loading_UpdateKycProceed}" class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)=" !api_loading_UpdateKyc && updateKyc()"
+          *ngIf="leadInfo.status.name==='Login' || leadInfo.status.name !=='Login Verified'" [disabled]="api_loading_UpdateKyc">
+        <span *ngIf="!api_loading_UpdateKyc">Save</span>
+        <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading_UpdateKyc">
+        </app-common-innerloading-spinner>
+        </button>
+        <button [ngClass]="{'cursorDiasable': api_loading_UpdateKyc}" type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #D7FEE9 !important;
          border: 1.0803px solid #D7FFE9 !important;color: #38C984 !important;"
-          (click)="ProceedStatus()">{{leadInfo.status.name==='Sales Verified' ? 'Login': 'Proceed'}}</button>
-        <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
-          style="background: #FADDDD !important;color:black !important" (click)="reject()"
+          (click)="!api_loading_UpdateKyc && ProceedStatus()"[disabled]="api_loading_UpdateKycProceed">
+          <span *ngIf="!api_loading_UpdateKycProceed">{{leadInfo.status.name==='Sales Verified' ? 'Login': 'Proceed'}}</span>
+          <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading_UpdateKycProceed"></app-common-innerloading-spinner>
+        </button>
+        <button [ngClass]="{'cursorDiasable': api_loading_UpdateKyc || api_loading_UpdateKycProceed}" type="button" class="btn btn-primary font-weight-bold confirmBtn"
+          style="background: #FADDDD !important;color:black !important" (click)="!api_loading_UpdateKyc && reject()"
           *ngIf="leadInfo.status.name!=='Login'">Rejected
         </button>
-        <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
-          style="background: #FADDDD !important;color:black !important" (click)="redirect()"
+        <button [ngClass]="{'cursorDiasable': api_loading_UpdateKyc || api_loading_UpdateKycProceed}" type="button" class="btn btn-primary font-weight-bold confirmBtn"
+          style="background: #FADDDD !important;color:black !important" (click)="!api_loading_UpdateKyc && redirect()"
           *ngIf="leadInfo.status.name==='Login'">Redirect
         </button>
       </div>
