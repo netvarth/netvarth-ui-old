@@ -9,10 +9,10 @@
 <section class="card col-md-12">
   <div class="col-md-12 btnClass">
     <!----mat tab change to mat select start-->
-    <div class="statusSelectDiv">
+    <div class="statusSelectDiv d-none">
       <div class="fieldPadding">
-        <mat-select class="form-control" placeholder="{{newActivity}}" #userTaskStatus [(ngModel)]="statusFilter">
-          <mat-option *ngFor="let stat of UpdationStatusList;let index=i" [value]="stat.id"
+        <mat-select class="form-control" placeholder="{{totalActivity}}" #userTaskStatus [(ngModel)]="statusFilter">
+          <mat-option *ngFor="let stat of taskStatusList;let index=i" [value]="stat.id"
             (click)="handleTaskStatus(userTaskStatus.value)">
             <span style="display:flex;gap:10px">
               <div>

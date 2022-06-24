@@ -46,7 +46,6 @@ export class TasksComponent implements OnInit {
   };
   msg = 'Do you really want to mark as done this activity? ';
   public taskStatusList: any = [];
-  public UpdationStatusList: any = [{ id: 1, name: 'New' }, { id: 5, name: 'Completed' }];
   public categoryListData: any = [];
   public taskTypeList: any = [];
   types: any = [];
@@ -57,7 +56,6 @@ export class TasksComponent implements OnInit {
   public arr: any;
   public statusFilter: any = 0;
   public totalActivity: any = 'Total activity';
-  public newActivity: any = 'New';
   public headerName: any = 'Activity';
   totalTaskActivityList: any = [];
   pagination: any = {
@@ -84,21 +82,20 @@ export class TasksComponent implements OnInit {
     this.getCategoryListData();
     this.getTaskTypeListData();
     this.getTaskmaster();
-    this.handleStatus();
+    this.handleStatus()
 
   }
   handleStatus() {
     const _this = this;
     const filter = this.handleTaskStatus(this.statusFilter);
-    console.log("filter", filter)
     this.getTaskStatusListData().then(
       (statuses: any) => {
         _this.statuses = statuses;
 
-        _this.getNewTaskCount(filter).then(
+        _this.getTotalTaskActivityCount(filter).then(
           (count) => {
             if (count > 0) {
-              _this.getNewTask(filter);
+              _this.getTotalTaskActivity(filter);
             } else {
               _this.api_loading = false;
             }
