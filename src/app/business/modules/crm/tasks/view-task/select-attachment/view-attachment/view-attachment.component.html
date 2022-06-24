@@ -1,0 +1,13 @@
+<div class="card">
+    <div class="d-flex justify-content-between">
+        <div class="text-capitalize font-weight-bold">{{type}} Preview</div>
+        <div class="pointer-cursor" (click)="goBack()"><i class="fa fa-times"></i></div>
+    </div>
+</div>
+<div class="">
+    <mat-dialog-content>
+        <img *ngIf="type == 'image'" class="img-fluid" src="{{filePath}}" alt="Loading">
+        <!-- <embed *ngIf="type == 'pdf'" src="{{filePath}}" height="100%" width="100%"> -->
+        <span class="font-weight-bold" *ngIf="type == 'file'">Preview is supporting for only images now</span>
+    </mat-dialog-content>
+</div>
