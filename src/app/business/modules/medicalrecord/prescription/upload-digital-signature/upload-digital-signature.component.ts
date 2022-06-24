@@ -10,7 +10,7 @@ import { ConfirmBoxComponent } from '../../../../shared/confirm-box/confirm-box.
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
-import { Location } from '@angular/common';
+// import { Location } from '@angular/common';
 import { UploadSignatureComponent } from './uploadsignature/upload-signature.component';
 import { ManualSignatureComponent } from './manualsignature/manual-signature.component';
 
@@ -70,7 +70,7 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
     private router: Router,
     // private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
-    private location: Location,
+    // private location: Location,
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
@@ -129,8 +129,9 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
   drawStart() {
   }
   goBack() {
-    // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
-    this.location.back();
+    this.uploadsignRef.close();
+    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+    // this.location.back();
 
   }
   uploadSignature() {
