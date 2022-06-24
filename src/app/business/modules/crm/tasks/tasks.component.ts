@@ -92,10 +92,10 @@ export class TasksComponent implements OnInit {
       (statuses: any) => {
         _this.statuses = statuses;
 
-        _this.getTotalTaskActivityCount(filter).then(
+        _this.getNewTaskCount(filter).then(
           (count) => {
             if (count > 0) {
-              _this.getTotalTaskActivity(filter);
+              _this.getNewTask(filter);
             } else {
               _this.api_loading = false;
             }
@@ -111,39 +111,39 @@ export class TasksComponent implements OnInit {
         console.log('taskStatus', taskStatus);
         resolve(taskStatus);
         _this.taskStatusList.push(
-          {
-            id: 0, name: 'Total Activity', image: './assets/images/crmImages/total.png',
-          },
+          // {
+          //   id: 0, name: 'Total Activity', image: './assets/images/crmImages/total.png',
+          // },
           {
             id: 1, name: 'New', image: './assets/images/crmImages/new.png',
           },
-          {
-            id: 2, name: 'Assigned', image: './assets/images/tokenDetailsIcon/assignedTo.png',
-          },
-          {
-            id: 3, name: 'In Progress', image: './assets/images/crmImages/inProgress2.png',
-          },
-          {
-            id: 4, name: 'Cancelled', image: './assets/images/crmImages/cancelled.png',
-          },
+          // {
+          //   id: 2, name: 'Assigned', image: './assets/images/tokenDetailsIcon/assignedTo.png',
+          // },
+          // {
+          //   id: 3, name: 'In Progress', image: './assets/images/crmImages/inProgress2.png',
+          // },
+          // {
+          //   id: 4, name: 'Cancelled', image: './assets/images/crmImages/cancelled.png',
+          // },
           {
             id: 5, name: 'Completed', image: './assets/images/crmImages/completed2.png',
           },
-          {
-            id: 12, name: 'Suspended', image: './assets/images/crmImages/suspended.png',
-          },
-          {
-            id: 13, name: 'Pending', image: './assets/images/crmImages/suspended.png',
-          },
-          {
-            id: 14, name: 'Rejected', image: './assets/images/crmImages/suspended.png',
-          },
-          {
-            id: 15, name: 'Proceed', image: './assets/images/crmImages/suspended.png',
-          },
-          {
-            id: 16, name: 'Verified', image: './assets/images/crmImages/suspended.png',
-          },
+          // {
+          //   id: 12, name: 'Suspended', image: './assets/images/crmImages/suspended.png',
+          // },
+          // {
+          //   id: 13, name: 'Pending', image: './assets/images/crmImages/suspended.png',
+          // },
+          // {
+          //   id: 14, name: 'Rejected', image: './assets/images/crmImages/suspended.png',
+          // },
+          // {
+          //   id: 15, name: 'Proceed', image: './assets/images/crmImages/suspended.png',
+          // },
+          // {
+          //   id: 16, name: 'Verified', image: './assets/images/crmImages/suspended.png',
+          // },
         );
       },
         (error) => {
