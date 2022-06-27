@@ -25,6 +25,8 @@ export class CRMComponent implements OnInit {
   public bLosFieldOpen:boolean=true;
   public bREportsFieldOpen:boolean=false;
   showActivity = true;
+  bBorderBottomTYpeA:boolean=false;
+  bBorderBottomTypeC:boolean=false;
 
   constructor(
     private providerServices: ProviderServices,
@@ -38,7 +40,7 @@ export class CRMComponent implements OnInit {
 
    initCRM() {
    
-    this.fnChangeBorder('A')
+    // this.fnChangeBorder('A')
     if(this.wordProcessor.getSPTerminologyTerm('CRM')) {
       this.crmTitle = this.wordProcessor.getSPTerminologyTerm('CRM');
     } else {
@@ -47,6 +49,7 @@ export class CRMComponent implements OnInit {
     this.api_loading = false;
    }
   ngOnInit(): void {
+    this.bBorderBottomTYpeA=true;
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log(user)
     this.isadminPrivilege = user.adminPrivilege
@@ -374,23 +377,16 @@ export class CRMComponent implements OnInit {
   fnChangeBorder(boxId) {
     console.log('boxId', boxId)
     if (boxId === 'A') {
-      document.getElementById(boxId).style.borderBottom = "2px solid #1D3E77";
-      document.getElementById('B').style.borderBottom = "0px solid #1D3E77";
-      document.getElementById('C').style.borderBottom = "0px solid #1D3E77";
       this.bREportsFieldOpen=false;
       this.bLosFieldOpen=true;
-    }
-    else if (boxId === 'B') {
-      document.getElementById(boxId).style.borderBottom = "2px solid #1D3E77";
-      document.getElementById('A').style.borderBottom = "0px solid #1D3E77";
-      document.getElementById('C').style.borderBottom = "0px solid #1D3E77";
+      this.bBorderBottomTYpeA=true;
+      this.bBorderBottomTypeC=false;
     }
     else if (boxId === 'C') {
-      document.getElementById('B').style.borderBottom = "0px solid #1D3E77";
-      document.getElementById('A').style.borderBottom = "0px solid #1D3E77";
-      document.getElementById(boxId).style.borderBottom = "2px solid #1D3E77";
       this.bREportsFieldOpen=true;
       this.bLosFieldOpen=false;
+      this.bBorderBottomTypeC=true;
+      this.bBorderBottomTYpeA=false;
 
     }
   }

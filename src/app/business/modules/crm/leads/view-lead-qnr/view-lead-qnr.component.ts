@@ -335,6 +335,15 @@ export class ViewLeadQnrComponent implements OnInit {
           this.applicantsInfo[applicantIndex].validationIds[1].attachments = fileData;
         }
       }
+      if (this.applicantsInfo[applicantIndex].validationIds[2].attachments && this.applicantsInfo[applicantIndex].validationIds[2].attachments.length > 0) {
+      } else {
+        let fileData = this.getFileInfo('kyc3', filesObj);
+        if (fileData && fileData.length > 0 && !fileData[0]['order']) {
+          fileData[0]['order'] = this.filesCount++;
+          this.filesToUpload.push(fileData[0]);
+          this.applicantsInfo[applicantIndex].validationIds[2].attachments = fileData;
+        }
+      }
       if (this.applicantsInfo[applicantIndex].panAttachments && this.applicantsInfo[applicantIndex].panAttachments.length > 0) {
       } else {
         let fileData = this.getFileInfo('pan', filesObj);

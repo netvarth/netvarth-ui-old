@@ -96,7 +96,7 @@ import { Subject } from 'rxjs';
         phoneNoValue:[''],
         emailValue:[''],
         userTaskCategory:[''],
-        proposedAmount:[0],
+        proposedAmount:[100000],
         sourcingChannel:['']
 
        })

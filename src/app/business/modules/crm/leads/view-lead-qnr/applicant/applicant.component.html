@@ -197,21 +197,83 @@
             </div>
         </div>
     </div>
-    <span class="group-head">Pancard Details</span><br>
-    <div class="bggrey my-2">
+
+
+    <div class="bggrey my-2 mgn-bt-20">
         <div style="display: flex;gap: 5px">
-            <!-- <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                 <div class="leadTitle">
                     <div>Applicant KYC</div>
+                    <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <mat-select class="form-control widthWebKit" placeholder="Pancard">
-                        <mat-option [value]="'Pancard'">
-                            <div>Pancard</div>
+                    <mat-select class="form-control widthWebKit" placeholder="" #idTypes2 formControlName="idTypes2">
+                        <mat-option [value]="kyc.name" *ngFor="let kyc of kycList">
+                            <div>{{kyc.displayName}}</div>
                         </mat-option>
                     </mat-select>
                 </div>
-            </div> -->
+            </div>
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div class="leadTitle">
+                    <div>Number</div>
+                    <div class="astericColor">*</div>
+                </div>
+                <div class="fieldPadding">
+                    <input  class="form-control" formControlName="idValue2" #idValue2
+  placeholder="Enter number" />
+                    <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
+                        *ngIf="errorMessage" errorMsg="{{errorMessage}}">
+                    </app-field-error-display>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="fieldPadding" *ngIf="applicant">
+            <div class="" [hidden]="applicant && applicant.validationIds && applicant.validationIds[2] && applicant.validationIds[2].attachments && applicant.validationIds[2].attachments.length > 0 && applicant.validationIds[2].attachments[0]['s3path']">
+                <input #files type="file" accept="/*;capture=camera" style="display:none;" multiple
+                    (change)="filesSelected($event,'kyc3')">Click & Upload your files here
+                <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
+                        attach_file</i></a>
+            </div>
+            <div *ngIf="applicant && applicant.validationIds && applicant.validationIds[2] && applicant.validationIds[2].attachments && applicant.validationIds[2].attachments.length > 0 && !applicant.validationIds[2].attachments[0]['s3path']">
+                <div class="img-section clearfix mgn-up-20"
+                    *ngIf="selectedFiles['kyc3'] && selectedFiles['kyc3'].files && selectedFiles['kyc3'].files.length > 0">
+                    <ul class="galul">
+                        <li *ngFor="let file of selectedFiles['kyc3'].files;let i = index ">
+                            <div class="galimg_outer">
+                                <div class="gal_img">
+                                    <img [src]="getImage(selectedFiles['kyc3'].base64[i], file)"
+                                        *ngIf="selectedFiles['kyc3'].base64[i]">
+                                </div>
+                                <div class="gal_action" (click)="deleteTempImage(i, 'kyc3')">
+                                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bggrey my-2 clearfix"
+    *ngIf="applicant && applicant.validationIds && applicant.validationIds[2] && applicant.validationIds[2].attachments && applicant.validationIds[2].attachments.length > 0 && applicant.validationIds[2].attachments[0]['s3path']">
+        <div style="display: flex;gap: 5px">
+            <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                <div *ngFor="let file of applicant.validationIds[2].attachments">
+                    <a href="{{file.s3path}}" target="_blank" download>
+                        <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
+                        {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <span class="group-head">Pancard Details</span><br>
+    <div class="bggrey my-2">
+        <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                 <div class="leadTitle">
                     <div>Pancard number</div>
@@ -266,7 +328,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
+
+
     <span class="group-head">Details</span><br>
     <div class="bggrey my-2">
         <div style="display: flex;gap: 5px">

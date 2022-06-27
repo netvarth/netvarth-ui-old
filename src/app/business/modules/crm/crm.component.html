@@ -13,7 +13,7 @@
 <section class="card mgn-up-15">
     <!----threee tab start-->
     <div class="threeTab">
-        <div class="customCard" id="A" (click)="fnChangeBorder('A')">
+        <div class="customCard" id="A" (click)="fnChangeBorder('A')" [ngClass]="{'borderBottom':  bBorderBottomTYpeA}">
             <div class="eachTab">
                 <div>
                     <mat-icon class="iconBackgroundMatIcon">home</mat-icon>
@@ -23,17 +23,7 @@
                 </div>
             </div>
         </div>
-        <div class="customCard" id="B" (click)="fnChangeBorder('B')" style="display:none">
-            <div class="eachTab">
-                <div>
-                    <mat-icon class="iconBackgroundMatIcon">home</mat-icon>
-                </div>
-                <div class="topicName">
-                    LMS
-                </div>
-            </div>
-        </div>
-        <div class="customCard" id="C" (click)="fnChangeBorder('C')" *ngIf="!showActivity">
+        <div class="customCard" id="C" (click)="fnChangeBorder('C')" *ngIf="!showActivity" [ngClass]="{'borderBottom': bBorderBottomTypeC}">
             <div class="eachTab">
                 <div>
                     <mat-icon class="iconBackgroundMatIcon">home</mat-icon>

@@ -27,6 +27,7 @@ export class ApplicantComponent implements OnInit {
   selectedFiles = {
     "kyc1": { files: [], base64: [], caption: [] },
     "kyc2": { files: [], base64: [], caption: [] },
+    "kyc3": { files: [], base64: [], caption: [] },
     "pan": { files: [], base64: [], caption: [] }
   }
   filesToUpload: any = [];
@@ -82,6 +83,8 @@ export class ApplicantComponent implements OnInit {
       idTypes1: [null],
       idValue: [null],
       idValue1: [null],
+      idTypes2:[null],
+      idValue2:[null],
       panNumber: [null],
       telephoneType: ['Residence'],
       telephoneNumber: [null],
@@ -124,9 +127,24 @@ export class ApplicantComponent implements OnInit {
     if (this.applicant.validationIds && this.applicant.validationIds[1]) {
       this.applicantForm.controls.idValue1.setValue(this.applicant.validationIds[1].idValue);
     }
-    if (this.applicant.panNumber) {
-      this.applicantForm.controls.panNumber.setValue(this.applicant.panNumber);
+
+    if (this.applicant.validationIds && this.applicant.validationIds[2]) {
+      this.applicantForm.controls.idTypes2.setValue(this.applicant.validationIds[2].idTypes);
+    } else {
+      this.applicantForm.controls.idTypes2.setValue(this.kycList[2].name);
     }
+    if (this.applicant.validationIds && this.applicant.validationIds[2]) {
+      this.applicantForm.controls.idValue2.setValue(this.applicant.validationIds[2].idValue);
+    }
+
+
+
+
+
+
+    // if (this.applicant.panNumber) {
+    //   this.applicantForm.controls.panNumber.setValue(this.applicant.panNumber);
+    // }
     if (this.applicant.telephone && this.applicant.telephone[0].telephoneType) {
       this.applicantForm.controls.telephoneType.setValue(this.applicant.telephone[0].telephoneType);
     }
@@ -267,6 +285,10 @@ export class ApplicantComponent implements OnInit {
           "idTypes": this.applicantForm.controls.idTypes1.value,
           "idValue": this.applicantForm.controls.idValue1.value,
           // "attachments": this.fileKycData
+        },
+        {
+          "idTypes": this.applicantForm.controls.idTypes2.value,
+          "idValue": this.applicantForm.controls.idValue2.value,
         }
       ],
       "permanentAddress": this.applicantForm.controls.permanentAddress.value,
@@ -285,7 +307,7 @@ export class ApplicantComponent implements OnInit {
           "pin": this.applicantForm.controls.pin.value
         }
       ],
-      "panNumber": this.applicantForm.controls.panNumber.value,
+      // "panNumber": this.applicantForm.controls.panNumber.value,
       // "panAttachments": this.fileDataPan,
     }
     if (this.applicant.validationIds && this.applicant.validationIds[0].attachments) {
@@ -294,9 +316,12 @@ export class ApplicantComponent implements OnInit {
     if (this.applicant.validationIds && this.applicant.validationIds[1].attachments) {
       applicantInfo.validationIds[1].attachments = this.applicant.validationIds[1].attachments;
     }
-    if (this.applicant.panAttachments) {
-      applicantInfo.panAttachments = this.applicant.panAttachments;
+    if (this.applicant.validationIds && this.applicant.validationIds[2].attachments) {
+      applicantInfo.validationIds[2].attachments = this.applicant.validationIds[2].attachments;
     }
+    // if (this.applicant.panAttachments) {
+    //   applicantInfo.panAttachments = this.applicant.panAttachments;
+    // }
     if (this.applicant['parent']) {
       applicantInfo['parent'] = this.applicant['parent'];
     } else {
@@ -330,7 +355,12 @@ export class ApplicantComponent implements OnInit {
       this.applicant.validationIds[0].attachments = [];
     } else if (type === 'kyc2') {
       this.applicant.validationIds[1].attachments = [];
-    } else if (type === 'pan') {
+    } 
+    else if (type === 'kyc3') {
+      this.applicant.validationIds[2].attachments = [];
+    } 
+    
+    else if (type === 'pan') {
       this.applicant.panAttachments = [];
     }
     this.sendApplicantInfo();
