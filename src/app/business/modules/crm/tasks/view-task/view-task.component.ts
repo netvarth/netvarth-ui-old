@@ -898,7 +898,7 @@ export class ViewTaskComponent implements OnInit {
             this.crmService.activityCloseWithNotes(this.taskDetails.taskUid, createNoteData).subscribe((response) => {
               setTimeout(() => {
                 this.api_loadingSaveTask = true;
-                this.snackbarService.openSnackBar('Successfull updated activity');
+                this.snackbarService.openSnackBar('Successfully updated activity');
                 this.router.navigate(['provider', 'task']);
               }, projectConstants.TIMEOUT_DELAY);
             },
@@ -942,7 +942,7 @@ export class ViewTaskComponent implements OnInit {
         this.crmService.updateTask(this.taskDetails.taskUid, updateFollowUpData).subscribe((response) => {
           console.log('afterupdateFollowUpData', response);
           setTimeout(() => {
-            this.snackbarService.openSnackBar('Successfull updated activity');
+            this.snackbarService.openSnackBar('Successfully updated activity');
             this.taskDetailsForm.reset();
             this.router.navigate(['provider', 'crm']);
           }, projectConstants.TIMEOUT_DELAY);
