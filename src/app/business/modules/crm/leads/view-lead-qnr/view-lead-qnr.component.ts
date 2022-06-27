@@ -123,6 +123,7 @@ export class ViewLeadQnrComponent implements OnInit {
         _this.leadInfo = leadInfo; // Setting Lead information.
        _this.getTelephoneNumer(_this.leadInfo.customer.phoneNo);
        this.api_loading_UpdateKyc=false;
+       console.log('leadInfostatus::::::', _this.leadInfo.status)
         if (leadInfo.status.name === 'New' || leadInfo.status.name === 'KYC Updated') {
           if (leadInfo.kycCreated) {
             _this.crmService.getkyc(leadInfo.uid).subscribe(
@@ -151,11 +152,32 @@ export class ViewLeadQnrComponent implements OnInit {
             }
             
           )
-        } else {
+        } 
+        // else if (leadInfo.status.name === 'Credit Recommendation') {
+        //   _this.headerName = 'Loan Sanction';
+        //   // _this.headerName = "Login Verification";
+        // _this.crmService.getkyc(leadInfo.uid).subscribe(
+        //   (kycInfo) => {
+        //     console.log("KYC Info:", kycInfo);
+        //     _this.initApplicantForm(kycInfo);
+        //   }
+          
+        // )
+        // }
+        else {
           if (leadInfo.status.name === 'Login Verified') {
             this.headerName = 'Credit Recommendation';
-          } else if (leadInfo.status.name === 'Credit Recommendation') {
+          }
+           else if (leadInfo.status.name === 'Credit Recommendation') {
             this.headerName = 'Loan Sanction';
+            _this.headerName = "Login Verification";
+          _this.crmService.getkyc(leadInfo.uid).subscribe(
+            (kycInfo) => {
+              console.log("KYC Info:", kycInfo);
+              _this.initApplicantForm(kycInfo);
+            }
+            
+          )
           }
           _this.getQuestionaire();
         }
@@ -516,7 +538,8 @@ export class ViewLeadQnrComponent implements OnInit {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         })
     } else if (this.leadInfo.status.name === 'Credit Score Generated' || this.leadInfo.status.name === 'Sales Verified'
-     || this.leadInfo.status.name === 'Login Verified'  || this.leadInfo.status.name === 'Credit Recommendation') {
+     || this.leadInfo.status.name === 'Login Verified'  || this.leadInfo.status.name === 'Credit Recommendation'
+     ) {
       // this.api_loading_UpdateKyc=true;
       this.api_loading_UpdateKycProceed=true;
       this.submitQuestionnaire(this.leadInfo.uid);
@@ -528,7 +551,21 @@ export class ViewLeadQnrComponent implements OnInit {
         this.api_loading_UpdateKycProceed=false;
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
-    } else {
+    }
+
+    // else if (this.leadInfo.status.name === 'Credit Recommendation' ) {
+    //   this.crmService.proceedToLoginVerified(this.leadInfo.uid).subscribe((response) => {
+    //     this.api_loading_UpdateKycProceed=true;
+    //     this.router.navigate(['provider', 'crm']);
+    //   }, (error) => {
+    //     this.api_loading_UpdateKycProceed=false;
+    //     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    //   });
+    // }
+    
+    
+    
+    else {
       let applicantsList = [];
       Object.keys(this.applicantsInfo).forEach((key) => {
         applicantsList.push(this.applicantsInfo[key]);

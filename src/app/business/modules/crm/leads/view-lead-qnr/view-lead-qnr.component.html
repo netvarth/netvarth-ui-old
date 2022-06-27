@@ -21,7 +21,8 @@
   
 
   <ng-container
-    *ngIf="leadInfo.status.name==='Credit Score Generated' || leadInfo.status.name==='Sales Verified' || leadInfo.status.name==='Login Verified'  || this.leadInfo.status.name === 'Credit Recommendation'">
+    *ngIf="leadInfo.status.name==='Credit Score Generated' || leadInfo.status.name==='Sales Verified' || leadInfo.status.name==='Login Verified'">
+    <!-- || this.leadInfo.status.name === 'Credit Recommendation' -->
     <div class="row d-lg-flex justify-content-lg-start">
       <div class="card">
         <div style="display: flex;
@@ -48,10 +49,6 @@
         <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [uuid]="this.leadInfo.uid"
           (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
       </div>
-      <!-- <div *ngIf="leadInfo.status.name=== 'Sales Verified' && showQuestionnaire && unreleased_question_arr">
-        <app-questionnaire [questionnaireList]="unreleased_question_arr" [source]="'proLead'" [uuid]="this.leadInfo.uid"
-          [questionAnswers]="questionAnswers" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
-      </div> -->
     </div>
   </ng-container>
   <ng-container class="remarksSection" *ngIf="leadInfo.status.name === 'KYC Updated'">
@@ -130,6 +127,25 @@
       <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [uuid]="this.leadInfo.uid"
         (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
     </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="leadInfo.status.name==='Credit Recommendation'">
+    <ng-container *ngFor="let applicant of applicants; let i=index">
+      <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
+        [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
+        (addApplicant)="receivedApplicantInfo($event, applicant)"
+        (removeApplicant)="removeApplicant($event, applicant)"></app-applicant>
+    </ng-container>
+    <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
+      <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [uuid]="this.leadInfo.uid"
+        (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+    </ng-container>
+    <!-- <ng-container>
+      <div *ngIf="showQuestionnaire && questionaire" class="quest">
+        <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [uuid]="this.leadInfo.uid"
+          (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+      </div>
+    </ng-container> -->
   </ng-container>
   <div *ngIf="leadInfo.status.name==='New'" class="mgn-up-20">
     <button id="reset" type="button" class="btn btn-primary font-weight-bold coApplicantForm"
