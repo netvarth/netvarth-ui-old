@@ -11,7 +11,7 @@
     <!----mat tab change to mat select start-->
     <div class="statusSelectDiv">
       <div class="fieldPadding">
-        <mat-select class="form-control" placeholder="New" #userTaskStatus [(ngModel)]="statusFilter">
+        <mat-select class="form-control" placeholder="New" #userTaskStatus [(value)]="statusFilter">
           <mat-option *ngFor="let stat of taskStatusList;let index=i" [value]="stat.id"
             (click)="handleTaskStatus(userTaskStatus.value)">
             <span style="display:flex;gap:10px">
@@ -262,7 +262,7 @@
                 </table>
                 <div class="search_paging" *ngIf="pagination.totalCnt>10 ">
                   <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-                    (pagerclick)="handle_pageclick($event,userTaskStatus.value)" [curpage]="pagination.startpageval">
+                    (pagerclick)="handle_pageclick($event,statusFilter)" [curpage]="pagination.startpageval">
                   </app-pager>
                 </div>
               </div>

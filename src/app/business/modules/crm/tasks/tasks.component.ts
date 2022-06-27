@@ -54,7 +54,7 @@ export class TasksComponent implements OnInit {
   filtericonclearTooltip: any;
   public taskMasterList: any = [];
   public arr: any;
-  public statusFilter: any = 0;
+  public statusFilter: any = 1;
   public totalActivity: any = 'Total activity';
   public headerName: any = 'Activity';
   totalTaskActivityList: any = [];
@@ -94,6 +94,7 @@ export class TasksComponent implements OnInit {
 
         _this.getNewTaskCount(filter).then(
           (count) => {
+            console.log(" Task Count : ", count)
             if (count > 0) {
               _this.getNewTask(filter);
             } else {
@@ -157,7 +158,8 @@ export class TasksComponent implements OnInit {
     let filter = {}
     filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
     filter['count'] = this.pagination.perPage;
-    console.log('statusValue', statusValue);
+    console.log("filter['from']", filter['from'])
+    console.log("filter['count']", filter['count'])
     if (statusValue === 0) {
       this.getTotalTaskActivity(filter)
     }
@@ -217,51 +219,51 @@ export class TasksComponent implements OnInit {
     console.log('statusValue', statusValue)
     this.pagination.startpageval = pg;
     this.filter.page = pg;
-    console.log('this.statusFilter', this.statusFilter)
-    // const filter = this.handleTaskStatus(statusValue);
+    console.log('this.pagination.startpageval', this.pagination.startpageval)
+    const filter = this.handleTaskStatus(statusValue);
     if (statusValue === 0) {
       this.api_loading = true
-      this.getTotalTaskActivity(statusValue)
+      this.getTotalTaskActivity(filter)
     }
     else if (statusValue === 1) {
       this.api_loading = true
-      this.getNewTask(statusValue)
+      this.getNewTask(filter)
     }
     else if (statusValue === 2) {
       this.api_loading = true
-      this.getAssignedTask(statusValue)
+      this.getAssignedTask(filter)
     }
     else if (statusValue === 4) {
       this.api_loading = true
-      this.getCancelledTask(statusValue)
+      this.getCancelledTask(filter)
     }
     else if (statusValue === 12) {
       this.api_loading = true;
-      this.getSuspendedTask(statusValue)
+      this.getSuspendedTask(filter)
     }
     else if (statusValue === 3) {
       this.api_loading = true;
-      this.getInprogressTask(statusValue)
+      this.getInprogressTask(filter)
     }
     else if (statusValue === 5) {
       this.api_loading = true;
-      this.getCompletedTask(statusValue)
+      this.getCompletedTask(filter)
     }
     else if (statusValue === 13) {
       this.api_loading = true;
-      this.getPendingTask(statusValue)
+      this.getPendingTask(filter)
     }
     else if (statusValue === 14) {
       this.api_loading = true;
-      this.getRejectedTask(statusValue)
+      this.getRejectedTask(filter)
     }
     else if (statusValue === 15) {
       this.api_loading = true;
-      this.getProceedTask(statusValue)
+      this.getProceedTask(filter)
     }
     else if (statusValue === 16) {
       this.api_loading = true;
-      this.getVerifiedTask(statusValue)
+      this.getVerifiedTask(filter)
     }
 
   }
