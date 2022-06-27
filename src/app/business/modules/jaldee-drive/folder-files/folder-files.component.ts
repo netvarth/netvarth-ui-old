@@ -488,10 +488,6 @@ export class FolderFilesComponent implements OnInit {
     this.doSearch();
   }
   setFilterDataCheckbox(type, value) {
-    // if(type === 'contextMode')
-    // {
-    //   console.log("contextMode value :",value)
-    // }
     if (type === "contextMode") {
       const indx = this.contextTypes.indexOf(value);
       console.log("contextMode value :", value);
@@ -520,77 +516,7 @@ export class FolderFilesComponent implements OnInit {
         this.filter.folderName = "Private";
       }
     }
-    // if (type === "fileType") {
-    //   if (value === false) {
-    //     this.png = false;
-    //     this.jpeg = false;
-    //     this.jpg = false;
-    //     this.pdf = false;
-    //     this.doc = false;
-    //     this.filter.fileType = " ";
-    //   }
-    //   if (value === "png") {
-    //     this.png = true;
-    //     this.jpeg = false;
-    //     this.jpg = false;
-    //     this.pdf = false;
-    //     this.filter.fileType = "png";
-    //   } else if (value === "jpeg") {
-    //     this.png = false;
-    //     this.jpeg = true;
-    //     this.jpg = false;
-    //     this.pdf = false;
-    //     this.filter.fileType = "jpeg";
-    //   } else if (value === "jpg") {
-    //     this.png = false;
-    //     this.jpeg = false;
-    //     this.jpg = true;
-    //     this.pdf = false;
-    //     this.filter.fileType = "jpg";
-    //   } else if (value === "pdf") {
-    //     this.png = false;
-    //     this.jpeg = false;
-    //     this.jpg = false;
-    //     this.doc = false;
-    //     this.pdf = true;
-    //     this.filter.fileType = "pdf";
-    //   } else if (value === "doc") {
-    //     this.doc = true;
-    //     this.png = false;
-    //     this.jpeg = false;
-    //     this.jpg = false;
-    //     this.pdf = false;
-    //     this.mp4 = false;
-    //     this.mp3 = false;
-    //     this.filter.fileType = "doc";
-    //   } else if (value === "mp3") {
-    //     this.mp3 = true;
-    //     this.png = false;
-    //     this.jpeg = false;
-    //     this.jpg = false;
-    //     this.pdf = false;
-    //     this.mp4 = false;
-    //     this.doc = false;
-    //     this.filter.fileType = "mp3";
-    //   } else if (value === "mp4") {
-    //     this.mp4 = true;
-    //     this.png = false;
-    //     this.jpeg = false;
-    //     this.jpg = false;
-    //     this.pdf = false;
-    //     this.mp3 = false;
-    //     this.filter.fileType = "mp4";
-    //   } else {
-    //     this.png = false;
-    //     this.jpeg = false;
-    //     this.jpg = false;
-    //     this.pdf = false;
-    //     this.mp3 = false;
-    //     this.mp4 = false;
-    //     this.doc = false;
-    //     this.filter.fileType = "";
-    //   }
-    // }
+   
     if (type === "fileSize") {
       console.log("Checked", type, value);
       if (value === true) {

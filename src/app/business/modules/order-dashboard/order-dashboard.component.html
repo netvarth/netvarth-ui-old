@@ -1402,8 +1402,17 @@
           </div>
 
             </div>
+            
           </ng-container>
+          
+
         </div>
+                 <!--  class="search_paging" -->
+                 <div  class="search_paging"  *ngIf="historyOrders.length !== 0">
+                  <app-pager  [total_pages]="pagination.totalCnt"
+                  [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
+                </app-pager>
+              </div>
         <div class="clearfix"></div>
       </mat-tab>
     </mat-tab-group>

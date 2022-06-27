@@ -23,7 +23,8 @@ export class ServiceQRCodeGeneratordetailComponent implements OnInit, OnDestroy 
   customId: any;
   serviceId;
   userId;
-  serviceStatus: any;
+  catalogId: any;
+  itemId: any;
   constructor(private changeDetectorRef: ChangeDetectorRef,
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<ServiceQRCodeGeneratordetailComponent>,
@@ -43,11 +44,20 @@ export class ServiceQRCodeGeneratordetailComponent implements OnInit, OnDestroy 
     this.serviceId = this.data.serviceid;
     this.customId = this.data.customId;
     this.userId = this.data.userid;
-    this.serviceStatus = this.data.serviceStatus;
-
+    this.catalogId = this.data.catalogId;
+    this.itemId = this.data.itemId;
+    if(this.data.requestType === 'fileShare'){
+      this.shareLink = '';
+    }
+   
     if (this.userId) {
       this.shareLink = this.wpath + this.accuid + '/' + this.userId + '/service/' + this.serviceId + '/';
-    } else {
+    }
+    else  if(this.data.requestType == 'shareItem' && !this.userId && !this.serviceId && this.catalogId){
+      this.shareLink = this.wpath +  this.accuid  + '/catalog/' + this.catalogId + '/item/' + this.itemId;
+
+    }
+    else {
       this.shareLink = this.wpath + this.accuid + '/service/' + this.serviceId + '/';
     }
     this.description = 'You can book my services by just clicking this link';

@@ -15,6 +15,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DisplaylabelpopupModule } from './displaylabel/displaylabel.module';
 import { RouterModule, Routes } from '@angular/router';
 import { OrderActionsModule } from './order-actions/order-actions.module';
+import { PagerModule } from '../../../shared/modules/pager/pager.module';
+
 const routes: Routes = [
   { path: '', component: OrderDashboardComponent },
   { path: 'edit/:id', loadChildren: ()=> import('./order-edit/order-edit.module').then(m=>m.OrderEditModule)},
@@ -43,6 +45,7 @@ const routes: Routes = [
     MatDatepickerModule,
     DisplaylabelpopupModule,
     OrderActionsModule,
+    PagerModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [

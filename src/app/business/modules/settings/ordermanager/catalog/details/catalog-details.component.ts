@@ -20,6 +20,7 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 import { EditcatalogitemPopupComponent } from '../editcatalogitempopup/editcatalogitempopup.component';
 import { CreateItemPopupComponent } from '../createItem/createitempopup.component';
 import { SubSink } from 'subsink';
+import { ServiceQRCodeGeneratordetailComponent } from '../../../../../../shared/modules/service/serviceqrcodegenerator/serviceqrcodegeneratordetail.component';
 
 @Component({
     selector: 'app-catalogdetail',
@@ -69,7 +70,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
     disableButton = false;
     customer_label;
     action;
-
+    wndw_path = projectConstantsLocal.PATH;
     image_list: any = [];
     catalog;
     taxDetails: any = [];
@@ -141,6 +142,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         base64: [],
         caption: []
     };
+    qrdialogRef: any;
     showCustomlabel = false;
     haveMainImg = false;
     mainImage = false;
@@ -215,6 +217,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
     storePickUpDisabled = false;
     homeDeliveryDisabled = false;
     onlyVirtualItems=false;
+    bprofile: any = [];
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private router: Router,
@@ -272,6 +275,49 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         this.no_of_grids = Math.round(divident / divider);
     }
     ngOnInit() {
+        this.getBusinessProfile();
+    }
+    catelogItemqrCodegeneraterOnlineID(item) {
+        console.log("Item :",item)
+         let pid = '';
+        // let usrid = '';
+        if (!this.bprofile.customId) {
+            pid = this.bprofile.accEncUid;
+        } else {
+            pid = this.bprofile.customId;
+        }
+        // if (this.service && this.service.provider && this.service.provider.id) {
+        //     usrid = this.service.provider.id;
+        // } else {
+        //     usrid = '';
+                // 
+        this.qrdialogRef = this.dialog.open(ServiceQRCodeGeneratordetailComponent, {
+            width: '40%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'servceqrcodesmall'],
+            disableClose: true,
+            data: {
+                accencUid: pid,
+                path: this.wndw_path,
+               // serviceid: this.service.id,
+               // userid: usrid,
+                itemId:item.id,
+                catalogId:item.catalogId,
+                // serviceStatus : this.service_data.status
+                requestType:'shareItem'
+            }
+        });
+        this.qrdialogRef.afterClosed().subscribe(result => {
+            if (result === 'reloadlist') {
+                this.getBusinessProfile();
+            }
+        });
+    }
+    getBusinessProfile() {
+        this.provider_services.getBussinessProfile()
+            .subscribe(
+                (data :any) => {
+                    this.bprofile = data;
+                })
     }
     ngOnDestroy() {
         this.subscriptions.unsubscribe();
@@ -1561,6 +1607,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         }
     }
     selectaddItem(index) {
+        console.log("selectaddItem :",index)
         if (this.itemsforadd[index].selected === undefined || this.itemsforadd[index].selected === false) {
             this.itemsforadd[index].selected = true;
             this.selecteditemCount++;
@@ -1573,7 +1620,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
     getItemImg(item) {
         if (item.itemImages) {
             const img = item.itemImages.filter(image => image.displayImage);
-            console.log("Img URl",img[0])
+           // console.log("Img URl",img[0])
             if(img[0].imageSize === 0){
                 return '../../../../assets/images/order/Items.svg';
             }
@@ -1641,6 +1688,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             this.seletedCatalogItemsadd = {};
             let minqty = '';
             let maxqty = '';
+           // this.item_id = 
             if (this.itemsforadd[ia].selected === true) {
                 minqty = (<HTMLInputElement>document.getElementById('minquty_' + this.itemsforadd[ia].itemId + '')).value;
                 maxqty = (<HTMLInputElement>document.getElementById('maxquty_' + this.itemsforadd[ia].itemId + '')).value;

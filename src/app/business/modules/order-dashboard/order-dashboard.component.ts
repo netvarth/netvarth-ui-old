@@ -40,7 +40,9 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     payment_status: 'all',
     orderNumber: '',
     orderStatus: 'all',
-    orderMode: 'all'
+    orderMode: 'all',
+    page_count: projectConstants.PERPAGING_LIMIT,
+    page: 1
   }; // same in resetFilter Fns
   filters = {
     first_name: false,
@@ -88,7 +90,14 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   ];
   allModeSelected = false;
   refreshTime: any;
+  pagination: any = {
+    startpageval: 1,
+    totalCnt: 0,
+    perPage: this.filter.page_count
+  };
+
   private subs=new SubSink();
+  
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
     public providerservices: ProviderServices,
@@ -108,6 +117,8 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
     const businessdetails = this.groupService.getitemFromGroupStorage('ynwbp');
     this.businessName = businessdetails.bn;
+    this.pagination.startpageval = this.groupService.getitemFromGroupStorage('paginationStart') || 1;
+
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.customerIdTooltip = this.customer_label + ' id';
     if (this.groupService.getitemFromGroupStorage('orderTab')) {
@@ -231,17 +242,36 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     this.loading = true;
     let filter = {};
     filter = this.setFilterForApi();
+    filter = this.setPaginationFilter(filter);
+
+    //if (from_oninit) { this.historyOrdersCount = result; }
     this.subs.sink=this.providerservices.getProviderHistoryOrders(filter).subscribe(data => {
       this.historyOrders = data;
+      console.log("History Orders :",this.historyOrders)
+
+      // this.historyOrdersCount = this.pagination.totalCnt;
+      // console.log(" historyOrdersCount :",this.historyOrdersCount)
+
       this.loading = false;
    
   });
+  }
+  
+  setPaginationFilter(api_filter) {
+    if (this.historyOrdersCount <= 10) {
+      this.pagination.startpageval = 1;
+    }
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
   }
   getProviderHistoryOrdersCount() {
     let filter = {};
     filter = this.setFilterForApi();
    this.subs.sink= this.providerservices.getProviderHistoryOrdersCount(filter).subscribe(data => {
       this.historyOrdersCount = data;
+      this.pagination.totalCnt = data;
+
     
   });
   }
@@ -291,9 +321,18 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
       payment_status: 'all',
       orderNumber: '',
       orderStatus: 'all',
-      orderMode: 'all'
+      orderMode: 'all',
+      page_count: projectConstants.PERPAGING_LIMIT,
+      page: 1
     };
   }
+  handle_pageclick(pg) {
+    this.pagination.startpageval = pg;
+    this.filter.page = pg;
+   // this.selectAll = true;
+    this.doSearch();
+  }
+
   doSearch() {
     this.setTabSelection(this.selectedTab);
   }
