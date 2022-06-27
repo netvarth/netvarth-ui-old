@@ -7,9 +7,9 @@
   </div>
 </section>
 <section class="card col-md-12">
-  <div class="col-md-12 btnClass">
+  <div class="row col-md-12 btnClass">
     <!----mat tab change to mat select start-->
-    <div class="statusSelectDiv">
+    <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6 statusSelectDiv">
       <div class="fieldPadding">
         <mat-select class="form-control" placeholder="New" #userTaskStatus [(value)]="statusFilter">
           <mat-option *ngFor="let stat of taskStatusList;let index=i" [value]="stat.id"
@@ -23,6 +23,11 @@
           </mat-option>
         </mat-select>
       </div>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6 ">
+      <span style="margin-left: 20px;" (click)="createTask('Create')" class=" btn btn-primary pull-right">
+        <span>Create Activity</span>&nbsp; <i class="fa fa-plus" aria-hidden="true"></i>
+      </span>
     </div>
     <!----mat tab change to mat select end-->
     <!-- <div class="webDisplay">
@@ -61,10 +66,6 @@
               style="cursor: pointer;"></i>
             <span>Filter</span>
           </span> &nbsp;&nbsp;&nbsp; -->
-          <span style="margin-left: 20px;" (click)="createTask('Create')" class=" btn btn-primary pull-right mb-2">
-
-            <span>Create Activity</span> <i class="fa fa-plus" aria-hidden="true"></i>
-          </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <div class="row">
             <div class="card p0 w-dta">
               <div class="table-responsive dash-list">
