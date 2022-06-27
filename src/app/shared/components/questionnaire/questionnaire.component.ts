@@ -140,19 +140,7 @@ export class QuestionnaireComponent implements OnInit {
       } else if (this.source === 'qnrDetails') {
         this.questions = this.questionnaireList.questions;
         this.groupQuestionsBySection();
-      }
-      // else if (this.source === 'proLead') {
-      //   this.questions = this.questionnaireList.labels;
-
-      //   this.groupQuestionsBySection();
-      // }
-      // else if (this.source === 'proLeadafter') {
-      //   this.questions = this.questionnaireList[0].labels;
-
-      //   this.groupQuestionsBySection();
-      // }
-      else if (!this.uuid) {
-
+      } else if (!this.uuid) {
         this.questions = this.questionnaireList.labels;
         this.groupQuestionsBySection();
       } else if (this.source === 'qnrView') {
@@ -195,7 +183,6 @@ export class QuestionnaireComponent implements OnInit {
       }
     }
     if (this.uuid) {
-
       if (this.questionnaireList.questionAnswers) {
         this.questions = this.questionnaireList.questionAnswers;
         this.qnrStatus = 'submitted';
@@ -212,23 +199,19 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   // *.component.ts
-asIsOrder(a, b) {
-  return 1;
-}
+  asIsOrder(a, b) {
+    return 1;
+  }
   groupQuestionsBySection() {
     if (this.source === 'customer-create' || this.source === 'qnrDetails' || this.source === 'onetime') {
       this.groupedQnr = this.sharedFunctionobj.groupBy(this.questions, 'sectionName');
-    } 
-    else if(this.source === 'proLead') {     
+    }
+    else if (this.source === 'proLead') {
       this.groupedQnr = this.questions.reduce(function (rv, x) {
         (rv[x.question['sequnceId']] = rv[x.question['sequnceId']] || []).push(x);
         return rv;
       }, {});
     } else {
-      // this.groupedQnr = this.questions.reduce(function (rv, x) {
-      //   (rv[x.question['sectionName']] = rv[x.question['sectionName']] || []).push(x);
-      //   return rv;
-      // }, {});
       this.groupedQnr = this.questions.reduce(function (rv, x) {
         (rv[x.question['sectionOrder']] = rv[x.question['sectionOrder']] || []).push(x);
         return rv;
@@ -246,7 +229,6 @@ asIsOrder(a, b) {
     }
   }
   getAnswers(answerData, type?) {
-
     this.answers = new Object();
     this.dataGridColumns = {};
     if (type === 'get') {
@@ -254,7 +236,6 @@ asIsOrder(a, b) {
       this.uploadedImages = [];
       this.uploadedFiles = [];
       for (let answ of answerData) {
-
         if (answ.answerLine) {
           if (answ.question.fieldDataType === 'fileUpload') {
             if (answ.answerLine.answer && answ.answerLine.answer[answ.question.fieldDataType] && answ.answerLine.answer[answ.question.fieldDataType].length > 0) {
@@ -440,7 +421,6 @@ asIsOrder(a, b) {
     return this.sharedFunctionobj.isNumeric(evt);
   }
   onSubmit(keytype?) {
-
     Object.keys(this.filestoUpload).forEach(key => {
       if (!this.answers[key]) {
         this.answers[key] = [];
@@ -583,18 +563,10 @@ asIsOrder(a, b) {
     });
     console.log(this.questionnaireList[0]);
     let postData;
-    // if (this.source === 'proLeadafter') {
-    //   postData = {
-    //     'questionnaireId': (this.questionnaireList[0].id) ? this.questionnaireList[0].id : this.questionnaireList[0].questionnaireId,
-    //     'answerLine': data
-    //   }
-    // }
-    // else {
-      postData = {
-        'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
-        'answerLine': data
-      }
-    // }
+    postData = {
+      'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
+      'answerLine': data
+    }
     console.log("Postdata:", postData);
     const passData = { 'answers': postData, 'files': this.selectedMessage, 'audioVideo': this.audioVideoFiles, 'filestoUpload': this.filestoUpload, 'dataGridColumnsAnswerList': this.dataGridColumnsAnswerList, 'comments': this.comments };
     if (keytype === 'inputChange') {
@@ -816,38 +788,6 @@ asIsOrder(a, b) {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
     });
   }
-  // resubmitProviderLeadQuestionnaire(body) {
-  //   this.providerService.resubmitProviderLeadQuestionnaire(body, this.uuid).subscribe(data => {
-  //     this.uploadAudioVideo(data, 'proLead');
-  //   }, error => {
-  //     this.buttonDisable = false;
-  //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-  //   });
-  // }
-  // submitProviderLeadQuestionnaire(body) {
-  //   this.providerService.submitProviderLeadQuestionnaire(body, this.uuid).subscribe(data => {
-  //     this.uploadAudioVideo(data, 'proLead');
-  //   }, error => {
-  //     this.buttonDisable = false;
-  //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-  //   });
-  // }
-  // resubmitProviderLeadafterQuestionnaire(body) {
-  //   this.providerService.resubmitProviderLeadafterQuestionnaire(body, this.uuid).subscribe(data => {
-  //     this.uploadAudioVideo(data, 'proLeadafter');
-  //   }, error => {
-  //     this.buttonDisable = false;
-  //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-  //   });
-  // }
-  // submitProviderLeadafterQuestionnaire(body) {
-  //   this.providerService.submitProviderLeadafterQuestionnaire(body, this.uuid).subscribe(data => {
-  //     this.uploadAudioVideo(data, 'proLeadafter');
-  //   }, error => {
-  //     this.buttonDisable = false;
-  //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-  //   });
-  // }
   resubmitProviderApptQuestionnaire(body) {
     this.providerService.resubmitProviderApptQuestionnaire(body, this.uuid).subscribe(data => {
       this.uploadAudioVideo(data, 'proAppt');
@@ -927,28 +867,7 @@ asIsOrder(a, b) {
                       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                       this.buttonDisable = false;
                     });
-              }
-              // else if (type === 'proLead') {
-              //   this.providerService.providerLeadQnrUploadStatusUpdate(this.uuid, postData)
-              //     .subscribe((data) => {
-              //       this.successGoback();
-              //     },
-              //       error => {
-              //         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-              //         this.buttonDisable = false;
-              //       });
-              // }
-              // else if (type === 'proLeadafter') {
-              //   this.providerService.providerLeadQnrafterUploadStatusUpdate(this.uuid, postData)
-              //     .subscribe((data) => {
-              //       this.successGoback();
-              //     },
-              //       error => {
-              //         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-              //         this.buttonDisable = false;
-              //       });
-              // }
-              else if (type === 'consOrder') {
+              } else if (type === 'consOrder') {
                 this.sharedService.consumerOrderQnrUploadStatusUpdate(this.uuid, this.accountId, postData)
                   .subscribe((data) => {
                     this.successGoback();
@@ -957,8 +876,7 @@ asIsOrder(a, b) {
                       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                       this.buttonDisable = false;
                     });
-              }
-              else if (type === 'consDonationDetails') {
+              } else if (type === 'consDonationDetails') {
                 this.sharedService.consumerDonationQnrUploadStatusUpdate(this.uuid, this.accountId, postData)
                   .subscribe((data) => {
                     this.successGoback();
@@ -976,8 +894,7 @@ asIsOrder(a, b) {
                       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                       this.buttonDisable = false;
                     });
-              }
-              else if (type === 'proOrder') {
+              } else if (type === 'proOrder') {
                 this.providerService.providerOrderQnrUploadStatusUpdate(this.uuid, postData)
                   .subscribe((data) => {
                     this.successGoback();
@@ -1032,20 +949,6 @@ asIsOrder(a, b) {
             this.submitProviderWaitlistQuestionnaire(dataToSend);
           }
         }
-        // else if (this.source === 'proLead') {
-        //   if (this.qnrStatus === 'submitted') {
-        //     this.resubmitProviderLeadQuestionnaire(dataToSend);
-        //   } else {
-        //     this.submitProviderLeadQuestionnaire(dataToSend);
-        //   }
-        // }
-        // else if (this.source === 'proLeadafter') {
-        //   if (this.qnrStatus === 'submitted') {
-        //     this.resubmitProviderLeadafterQuestionnaire(dataToSend);
-        //   } else {
-        //     this.submitProviderLeadafterQuestionnaire(dataToSend);
-        //   }
-        // }
         else if (this.source === 'proOrder') {
           if (this.qnrStatus === 'submitted') {
             this.resubmitProviderOrderQuestionnaire(dataToSend);
@@ -1081,15 +984,13 @@ asIsOrder(a, b) {
           } else {
             this.submitConsumerApptQuestionnaire(dataToSend);
           }
-        }
-        else if (this.source === 'consOrder') {
+        } else if (this.source === 'consOrder') {
           if (this.qnrStatus === 'submitted') {
             this.resubmitConsumerOrderQuestionnaire(dataToSend);
           } else {
             this.submitConsumerOrderQuestionnaire(dataToSend);
           }
-        }
-        else {
+        } else {
           if (this.qnrStatus === 'submitted') {
             this.resubmitConsumerDonationQuestionnaire(dataToSend);
           } else {
@@ -1378,7 +1279,6 @@ asIsOrder(a, b) {
     return date;
   }
   reverse(s) {
-    // date.split("/").reverse().join("-");
     return s.split("-").reverse().join("-");
   }
 }

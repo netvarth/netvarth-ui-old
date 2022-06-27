@@ -8,11 +8,11 @@
             <div class="panel-body no-padding"
                 *ngIf="!loading && ((!qParams.type && qnrStatus === 'released' && waitlistStatus != 'cancelled') || isBusinessOwner)">
                 <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 card">
-                    <div class="details-pad">
+                    <div class="details-pad" *ngIf="waitlist">
                         <div class="">
                             <div class="customer-details-head">
                                 <div>
-                                    <h2 *ngIf="!waitlist.provider">{{waitlist.providerAccount?.businessName}}
+                                    <h2 *ngIf="waitlist.providerAccount">{{waitlist.providerAccount?.businessName}}
                                     </h2>
                                     <h2 *ngIf="waitlist.provider">
                                         {{(waitlist.provider.businessName) ? waitlist.provider.businessName
@@ -35,10 +35,15 @@
                                     {{waitlist.appmtFor[0].firstName}}
                                     {{waitlist.appmtFor[0].lastName}}
                                 </h5>
+                                <h5
+                                    *ngIf="source == 'consOrder' && (waitlist.orderFor.firstName || waitlist.orderFor.lastName)">
+                                    {{waitlist.orderFor.firstName}}
+                                    {{waitlist.orderFor.lastName}}
+                                </h5>
                                 <div class="email" *ngIf="waitlist.token">
                                     <span class="value">Token: {{waitlist.token}}</span>
                                 </div>
-                                <div class="contact-no">
+                                <div class="contact-no" *ngIf="waitlist.service">
                                     <i class="fa fa-cogs icon"></i>
                                     <span class="value">{{waitlist.service.name}}</span>
                                 </div>
@@ -46,7 +51,7 @@
                                     <i class="fa fa-mobile icon"></i>
                                     <span class="value">{{waitlist.countryCode}} {{waitlist.waitlistPhoneNumber}}</span>
                                 </div>
-                                <div class="contact-no" *ngIf="source == 'consAppt' && waitlist.phoneNumber">
+                                <div class="contact-no" *ngIf="(source == 'consAppt' || source == 'consOrder') && waitlist.phoneNumber">
                                     <i class="fa fa-mobile icon"></i>
                                     <span class="value">{{waitlist.countryCode}} {{waitlist.phoneNumber}}</span>
                                 </div>
@@ -57,6 +62,10 @@
                                 <div class="email" *ngIf="source == 'consAppt' && waitlist.providerConsumer.email">
                                     <i class="fa fa-envelope icon"></i>
                                     <span class="value">{{waitlist.providerConsumer.email}}</span>
+                                </div>
+                                <div class="email" *ngIf="source == 'consOrder' && waitlist.email">
+                                    <i class="fa fa-envelope icon"></i>
+                                    <span class="value">{{waitlist.email}}</span>
                                 </div>
                                 <div class="email" *ngIf="source == 'consCheckin'">
                                     <i class="fa fa-calendar-o icon"></i>
@@ -69,13 +78,18 @@
                                     <span class="value">{{waitlist.appmtDate | date: newDateFormat }},
                                         {{getSingleTime(waitlist.appmtTime)}}</span>
                                 </div>
+                                <div class="email" *ngIf="source == 'consOrder'">
+                                    <i class="fa fa-calendar-o icon"></i>
+                                    <span class="value">{{waitlist.orderDate | date: newDateFormat }}
+                                        </span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="" *ngIf="questionnaire[0]">
                         <app-questionnaire [questionnaireList]="questionnaire[0]" [source]="source" [uuid]="qParams.uid"
                             [accountId]="qParams.accountId" [type]="type"
-                            [waitlistStatus]="(source == 'consCheckin') ? waitlist.waitlistStatus : waitlist.apptStatus"
+                            [waitlistStatus]="(source == 'consCheckin') ? waitlist.waitlistStatus : ((source == 'consOrder') ? waitlist.orderStatus:waitlist.apptStatus)"
                             (returnAnswers)="getQuestionAnswers($event)">
                         </app-questionnaire>
                     </div>

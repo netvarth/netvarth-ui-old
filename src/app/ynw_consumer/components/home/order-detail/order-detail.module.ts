@@ -16,6 +16,7 @@ import { ActionPopupModule } from "../action-popup/action-popup.module";
 import { CommunicationModule } from "../../../../shared/components/communication/communication.module";
 import { GalleryModule } from "../../../../shared/modules/gallery/gallery.module";
 import { QuestionnaireModule } from "../../../../../../src/app/shared/components/questionnaire/questionnaire.module";
+import { MatExpansionModule } from "@angular/material/expansion";
 
 const routes: Routes = [
     { path: '', component: OrderDetailComponent }
@@ -37,6 +38,7 @@ const routes: Routes = [
         CommunicationModule,
         QuestionnaireModule,
         GalleryModule,
+        MatExpansionModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     ],
     declarations: [

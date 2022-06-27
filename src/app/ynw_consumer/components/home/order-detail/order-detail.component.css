@@ -204,3 +204,13 @@
 .white-icon svg {
   fill: white;
 }
+
+.qnr-accord .mat-expansion-panel-header {
+    margin: 10px !important;
+    padding: 0 !important;
+}
+.qnrstatus {
+    margin-left: auto;
+    font-weight: bold;
+    font-size: 0.9rem;
+}

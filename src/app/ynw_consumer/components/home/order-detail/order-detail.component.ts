@@ -44,6 +44,7 @@ export class OrderDetailComponent implements OnInit,OnDestroy {
   elementType = 'url';
   dateFormatSp = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   display_dateFormat = projectConstants.DATE_FORMAT_WITH_MONTH;
+  questionnaire_heading = Messages.QUESTIONNAIRE_CONSUMER_HEADING;
   screenWidth: number;
   no_of_grids: any;
   showView = 'grid';

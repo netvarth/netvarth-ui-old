@@ -1,0 +1,172 @@
+<section class="content bus-page item-details-consumer" [ngClass]="accountProperties?accountProperties['theme']:''">
+    <div class="panel panel-default" *ngIf="loading" class="full-height">
+        <div class="child">
+            <app-common-innerloading-spinner>
+            </app-common-innerloading-spinner>
+        </div>
+    </div>
+    <div class="container" *ngIf="businessProfile && !loading">
+        <div class="row pad-bt-10 bus-page-header">
+            <div class="panel panel-default">
+                <!-- *ngIf="!loading" -->
+                <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <!-- (click)="goBack()" -->
+                        <!-- <a class="pull-left back-btn mgn-up-5" *ngIf="userId || back==='1'" ><i
+                                class="fa fa-arrow-left"></i></a> -->
+                        &nbsp;
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
+                        <!-- -->
+                        <app-header *ngIf="accountId && sharedFunctions.checkLogin()" [includedfrom]="'pdetails'" [accountId]="accountId"
+                            [customId]="businessCustomId" [showHeaderAction]="true"></app-header>
+                        <!--  -->
+                        <div class="view-booking" *ngIf="!businessCustomId && accountId && !sharedFunctions.checkLogin()">
+                            <!-- (click)="dashboardClicked()" -->
+                            <button class="pull-right btn btn-primary dashboard-btn">My
+                                Bookings</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Cover Foto -->
+                <div *ngIf="bgCover" class="cvr-ht"
+                    [ngStyle]="{ 'background-image': (!profileSettings || (profileSettings && profileSettings['showCoverPicture'])) ? 'url(' + bgCover + ')': ''}">
+                </div>
+                <div class="panel-body">
+                    <!-- *ngIf="!loading" -->
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-2 col-xs-12 col-sm-12 col-lg-2">
+                            <div class="" [ngClass]="{'cvr-dp-mgn': bgCover}">
+                                <img alt="Profile Image" src="{{bLogo}}" id="profile-image1"
+                                    class="img-circle img-responsive cvr-dp" [ngClass]="{'cvr-dp-bdr': bgCover}">
+                            </div>
+                        </div>
+                        <div class="col-lg-1 col-md-1"></div>
+                        <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8 mgn-bt-10 no-padding bus-title-content">
+                            <div class="col-md-10 col-xs-12 col-sm-12 col-lg-11 no-padding"
+                                *ngIf="(!profileSettings || (profileSettings && profileSettings['showSpecialization'] || profileSettings['showProfile']))">
+                                <div class="no-padding right-padding-md-15">
+                                    <h3 class="business-name" *ngIf="businessProfile.businessName">
+                                        {{businessProfile.businessName
+                                        | capitalizeFirst}}
+                                    </h3>
+                                    <h3 class="font_user_size business-user-name"
+                                        *ngIf="businessProfile.businessUserName">
+                                        {{businessProfile.businessUserName | capitalizeFirst}}
+                                    </h3>
+                                    <div class="col-lg-12 col-xs-12 col-md-12 col-sm-12 mgn-up-10"></div>
+                                    <div class="single-loc">
+                                        <h6 style="color: #747474;">About us </h6>
+                                        <p *ngIf="businessProfile && businessProfile.businessDesc">
+                                            <b>{{businessProfile.businessDesc |
+                                                capitalizeFirst}}</b> <br>
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="c-outer m0">
+                            <div class="c-body">
+                                <div class="title-gb m0 border-btm">
+                                    <h5 class="mgn-up-10">
+                                        <!-- <span class="pull-right mgn-rt-10" *ngIf="itemQuantity > 0"><i
+                                                class="fa fa-shopping-cart" (click)="checkout()"><sup class="blue">
+                                                    {{cartItems.length}}</sup></i></span> -->
+                                    </h5>
+                                </div>
+                                <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner> -->
+                                <!-- <div class="container"> -->
+                                <!-- <div class="row"> -->
+                                <div class="col-md-12 col-sm-12 col-xs-12" *ngIf="cartItem">
+                                    <div class="col-md-6 col-sm-12 col-xs-10 pad-25 no-padding-small mgn-bt-10"
+                                        *ngIf="cartItem.itemImages &&cartItem.itemImages.length> 0">
+                                        <owl-carousel [options]="{items: 1, dots: true, navigation: false}"
+                                            [carouselClasses]="['owl-theme', 'row', 'sliding']">
+                                            <div class="item" *ngFor="let image of cartItem.itemImages;let i = index">
+                                                <img [src]="image.url" class="img-responsive" />
+                                            </div>
+                                        </owl-carousel>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 col-xs-12 no-padding">
+                                        <div class="col-md-12 mgn-up-20">
+                                            <h2 class="m0">{{cartItem.displayName}}</h2>
+                                            <h5 class="m0">{{cartItem.itemNameInLocal}}</h5>
+                                            <p class="title-style" *ngIf="isPromotionalpriceFixed && cartItem.showPrice">
+                                                <span class="rupee-font"
+                                                    style=" font-size: x-large; text-decoration: line-through;">&#8377;{{cartItem.price}}</span>&nbsp;
+                                                <span class="rupee-font"
+                                                    style="font-size: xx-large">&#8377;{{cartItem.promotionalPrice}}</span>
+                                            </p>
+                                            <p class="title-style" *ngIf="isPromotionalpricePertage && cartItem.showPrice">
+                                                &nbsp;
+                                                <span class="rupee-font"
+                                                    style=" font-size: x-large; text-decoration: line-through;">&#8377;{{cartItem.price}}</span>&nbsp;
+                                                <span class="rupee-font" style="font-size: x-large">
+                                                    <sup>{{cartItem.promotionalPrcnt}}% OFF </sup></span>&nbsp;
+                                                <span class="rupee-font"
+                                                    style="font-size: xx-large">&#8377;{{cartItem.promotionalPrice}}</span>
+                                            </p>
+                                            <p class="title-style" *ngIf="isPrice && cartItem.showPrice">
+                                                <span class="rupee-font"
+                                                    style="font-size: xx-large">&#8377;{{cartItem.price}}</span>
+                                                &nbsp;
+                                            </p>
+                                            <p class="title-style" *ngIf="!cartItem.isStockAvailable">
+                                                <span style="font-size: x-large;color: red"><sup>*</sup>Out of
+                                                    stock</span> &nbsp;
+                                            </p>
+                                        </div>
+                                        <div class="col-md-12  mr-area">
+                                            <p class="m0 question-header">Description</p>
+                                            <p>{{cartItem.shortDesc}}</p>
+                                            <p *ngIf="cartItem.itemDesc" class="m0 question-header">Detail
+                                                Description</p>
+                                            <p>{{cartItem.itemDesc}}</p>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <p class="question-header m0">Quantity:</p>
+                                        </div>
+                                        <div class="col-md-12 pad-lt-25 mgn-bt-50">
+                                            <div class="btn-lt pull-left">
+                                                <button [ngClass]="{'disabled1': !cartItem.isStockAvailable}"
+                                                    (click)="decrement()">-</button>
+                                            </div>
+                                            <div class="count-o pull-left">
+                                                {{itemQuantity}}
+                                            </div>
+                                            <div class="btn-rt pull-left">
+                                                <button
+                                                    [ngClass]="{'disabled1': orderItem.maxqty === itemQuantity || !cartItem.isStockAvailable}"
+                                                    (click)="increment()">+</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12  mr-area">
+                                            <p class="m0 question-header">Minimum Qty</p>
+                                            <p>{{minQuantity}}</p>
+                                        </div>
+                                        <div class="col-md-12  mr-area">
+                                            <p class="m0 question-header">Maximum Qty</p>
+                                            <p>{{maxQuantity}}</p>
+                                        </div>
+                                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 no-padding">
+                                            <button class="btncheckout" (click)="checkout();" *ngIf="itemQuantity > 0">
+                                                Checkout</button>
+                                        </div>
+                                    </div>
+                                    <div>
+
+                                    </div>
+                                    <!-- </div> -->
+                                    <!-- </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

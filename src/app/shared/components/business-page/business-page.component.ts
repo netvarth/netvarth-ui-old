@@ -31,6 +31,7 @@ import { SubSink } from '../../../../../node_modules/subsink';
 import { AuthService } from '../../services/auth-service';
 import { TranslateService } from '@ngx-translate/core';
 import { CheckavailabilityComponent } from '../checkavailability/checkavailability.component';
+import { AccountService } from '../../services/account.service';
 
 @Component({
   selector: 'app-business-page',
@@ -331,6 +332,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     private s3Processor: S3UrlProcessor,
     private authService: AuthService,
     public translate: TranslateService,
+    private accountService: AccountService
     // private customAppSerice: CustomAppService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -617,7 +619,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   getAccountIdFromEncId(encId) {
     const _this = this;
     return new Promise(function (resolve, reject) {
-      _this.shared_services.getBusinessUniqueId(encId).subscribe(
+      _this.accountService.getBusinessUniqueId(encId).subscribe(
         (id) => {
           resolve(id);
         },

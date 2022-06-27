@@ -57,22 +57,30 @@ export class QuestionnaireLinkComponent implements OnInit {
     this.isBusinessOwner = this.localStorage.getitemfromLocalStorage('isBusinessOwner');
     this.isBusinessOwner = JSON.parse(this.isBusinessOwner);
     if (!this.isBusinessOwner) {
-      if (this.qParams.uid.split('_')[1] === 'appt') {
+      let bookingType = this.qParams.uid.split('_')[1];
+      if (bookingType === 'appt') {
         this.source = 'consAppt';
         this.getApptDetails();
-      } else {
+      } else if (bookingType === 'wl'){
         this.source = 'consCheckin';
         this.getCheckinDetails();
+      } else {
+        this.source = 'consOrder';
+        this.getOrderDetails();
       }
     } else {
       this.type = 'qnrLinkProvider';
       this.userType="provider";
-      if (this.qParams.uid.split('_')[1] === 'appt') {
+      let bookingType = this.qParams.uid.split('_')[1];
+      if (bookingType === 'appt') {
         this.source = 'consAppt';
         this.getProviderApptDetails();
-      } else {
+      } else if (bookingType === 'wl'){
         this.source = 'consCheckin';
         this.getProviderWaitlistDetail();
+      } else {
+        this.source = 'consOrder';
+        this.getProviderOrderDetail();
       }
     }
   }
@@ -98,6 +106,14 @@ export class QuestionnaireLinkComponent implements OnInit {
   // }
   getProviderWaitlistDetail() {
     this.providerServices.getProviderWaitlistDetailById(this.qParams.uid)
+      .subscribe(
+        data => {
+          this.waitlist = data;
+          this.getProviderWaitlistReleasedQnrs();
+        });
+  }
+  getProviderOrderDetail() {
+    this.providerServices.getProviderOrderDetailById(this.qParams.uid)
       .subscribe(
         data => {
           this.waitlist = data;
@@ -130,6 +146,20 @@ export class QuestionnaireLinkComponent implements OnInit {
       this.loading = false;
     });
   }
+  getOrderDetails () {
+    this.sharedServices.getOrderByConsumerUUID(this.qParams.uid, this.qParams.accountId).subscribe(
+      (data) => {
+        this.waitlist = data;
+        this.waitlistStatus = this.waitlist.orderStatus.toLowerCase();
+        this.getOrderReleasedQnrs();
+      },
+      error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.loading = false;
+        this.isPermitted = false;
+      }
+    );
+  }
   getCheckinDetails() {
     this.sharedServices.getCheckinByConsumerUUID(this.qParams.uid, this.qParams.accountId).subscribe(
       (data) => {
@@ -160,6 +190,20 @@ export class QuestionnaireLinkComponent implements OnInit {
   }
   getWaitlistReleasedQnrs() {
     this.sharedServices.getWaitlistQuestionnaireByUid(this.qParams.uid, this.qParams.accountId)
+      .subscribe(
+        (data: any) => {
+          this.getReleasedQnrs(data);
+          this.loading = false;
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.loading = false;
+          this.isPermitted = false;
+        }
+      );
+  }
+  getOrderReleasedQnrs() {
+    this.sharedServices.getOrderQuestionnaireByUid(this.qParams.uid, this.qParams.accountId)
       .subscribe(
         (data: any) => {
           this.getReleasedQnrs(data);
