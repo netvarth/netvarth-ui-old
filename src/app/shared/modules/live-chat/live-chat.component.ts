@@ -1,5 +1,5 @@
 import { ViewChild, OnInit, OnDestroy, ElementRef, Component, AfterViewInit, Renderer2, RendererFactory2, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { TwilioService } from '../../services/twilio-service';
 import { Location } from '@angular/common';
 import { interval as observableInterval, Subscription } from 'rxjs';
@@ -11,6 +11,7 @@ import * as Video from 'twilio-video';
 import { RequestDialogComponent } from '../request-dialog/request-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MediaService } from '../../services/media-service';
+import { LocalStorageService } from '../../services/local-storage.service';
 @Component({
     selector: 'app-live-chat',
     templateUrl: './live-chat.component.html',
@@ -64,7 +65,8 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         private cd: ChangeDetectorRef,
         private teleService: TeleBookingService,
         private dialog: MatDialog,
-        private mediaService: MediaService
+        private mediaService: MediaService,
+        private lStorageService: LocalStorageService
     ) {
         const _this = this;
         _this.twilioService.loading = false;
@@ -362,7 +364,16 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
                 _this.location.back();
             }, 3000);
         } else {
-            _this.router.navigate(['consumer']);
+            let queryParams = {};
+            const customId = this.lStorageService.getitemfromLocalStorage('customId');
+            if (customId) {
+                queryParams['customId'] = customId;
+                queryParams['accountId']= _this.account;
+            }
+            let navigationExtras: NavigationExtras = {
+                queryParams: queryParams
+            }
+            _this.router.navigate(['consumer'], navigationExtras);
         }
     }
     /**
