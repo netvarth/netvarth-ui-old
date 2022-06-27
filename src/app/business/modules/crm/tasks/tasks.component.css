@@ -1547,3 +1547,8 @@ td {
     color: #1D3E77 !important;
     gap: 10px;
 }
+
+.text-primary {
+    color: #1E4079 !important;
+    font-weight: bold !important;
+}

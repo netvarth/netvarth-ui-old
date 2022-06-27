@@ -1,11 +1,46 @@
 <section class="card">
-  <div class="title-gb no-padding">
-    <div class="dash-head">
-      <div class="arrowLeftIcon"> <i class="fa fa-arrow-left iconClr" aria-hidden="true" (click)="goback()"></i></div>
-      <div>{{headerName}}</div>
+  <div class="row">
+    <div class="col-md-4 col-lg-4">
+      <div class="dash-head">
+        <div class="arrowLeftIcon"> <i class="fa fa-arrow-left iconClr" aria-hidden="true" (click)="goback()"></i></div>
+        <div>{{headerName}}</div>
+      </div>
+    </div>
+
+    <div class="col-md-8 col-lg-8">
+      <div>
+        <span class="">
+          <span class="dropdown pull-right">
+            <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
+            <a href="#" class="dropdown-toggle navbar-item-color bold nav-lc-sh-icon" data-toggle="dropdown"
+              *ngIf="selected_location">
+              {{selected_location.place | capitalizeFirst}}
+            </a>
+            <span class="dropdown-menu">
+              <span>
+                <span *ngIf="selected_location" class="">
+                  <span *ngFor="let location of locations;let i = index"
+                    [ngClass]="{'active': (location.place === selected_location.place)}">
+                    <a class="pointer-cursor" (click)="onChangeLocationSelect(i)">
+                      <h6 *ngIf="location.place.length>='27'" class="p-1 mb-0 text-primary">
+                        {{ location.place.substring(0,24) | capitalizeFirst }}...</h6>
+                      <h6 class="p-1 mb-0 text-primary" *ngIf="location.place.length<'27'">{{ location.place |
+                        capitalizeFirst }}
+                      </h6>
+                    </a>
+                    <hr class="my-0 py-0">
+                  </span>
+                </span>
+              </span>
+            </span>
+          </span>
+        </span>
+      </div>
     </div>
   </div>
 </section>
+
+
 <section class="card col-md-12">
   <div class="row col-md-12 btnClass">
     <!----mat tab change to mat select start-->

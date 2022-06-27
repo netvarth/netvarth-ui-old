@@ -10,6 +10,8 @@ import { WordProcessor } from '../../../../../../src/app/shared/services/word-pr
 import { LocalStorageService } from '../../../../../../src/app/shared/services/local-storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CrmSelectMemberComponent } from '../../../../../../src/app/business/shared/crm-select-member/crm-select-member.component';
+import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
+import { ProviderServices } from '../../../../../../src/app/business/services/provider-services.service';
 
 @Component({
   selector: 'app-tasks',
@@ -64,6 +66,9 @@ export class TasksComponent implements OnInit {
     perPage: this.crmService.PERPAGING_LIMIT
   };
   checkBoxValueSelect: any;
+  selected_location: any;
+  locations: any;
+  tasks: any[];
   constructor(
     private locationobj: Location,
     public router: Router,
@@ -72,19 +77,59 @@ export class TasksComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private crmService: CrmService,
+    private groupService: GroupStorageService,
+    private providerServices: ProviderServices
+
 
   ) {
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
   }
 
   ngOnInit() {
+
     this.api_loading = false;
     this.getCategoryListData();
     this.getTaskTypeListData();
     this.getTaskmaster();
-    this.handleStatus()
+
+    const _this = this;
+    this.getLocationList().then(() => {
+      console.log("Locations:", this.locations);
+      this.selected_location = this.locations[0];
+      const filter = this.setFilter();
+      console.log('filter', filter)
+      _this.getNewTaskCount(filter).then(
+        (count) => {
+          if (count > 0) {
+            _this.getNewTask(filter);
+          } else {
+            _this.api_loading = false;
+          }
+        }
+      )
+    });
+
+    this.handleStatus();
 
   }
+
+
+  /**
+ * 
+ * @returns 
+ */
+  setFilter() {
+    let filter = this.handleTaskStatus(this.statusFilter);
+    filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
+    filter['count'] = this.pagination.perPage;
+    filter['location-eq'] = this.selected_location.id;
+    return filter;
+  }
+
+
+
+
+
   handleStatus() {
     const _this = this;
     const filter = this.handleTaskStatus(this.statusFilter);
@@ -156,10 +201,12 @@ export class TasksComponent implements OnInit {
   handleTaskStatus(statusValue: any) {
     console.log('statusValue', statusValue);
     let filter = {}
+    console.log("this.selected_location", this.selected_location)
+    // filter['location-eq'] = this.selected_location;
     filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
     filter['count'] = this.pagination.perPage;
-    console.log("filter['from']", filter['from'])
-    console.log("filter['count']", filter['count'])
+
+    console.log("filter", filter)
     if (statusValue === 0) {
       this.getTotalTaskActivity(filter)
     }
@@ -267,18 +314,40 @@ export class TasksComponent implements OnInit {
     }
 
   }
+
+  // getStatus() {
+  //   const _this = this;
+  //   return new Promise(function (resolve, reject) {
+  //     _this.crmService.getTaskStatus().subscribe((taskstatuses: any) => {
+  //       resolve(taskstatuses);
+  //     });
+  //   })
+  // }
+
+
   getNewTask(filter) {
-    this.crmService.getNewTask(filter)
-      .subscribe(
-        data => {
-          this.totalTaskActivityList = data;
+    console.log("filter", filter)
+    this.getNewTaskCount(filter).then(
+      (count) => {
+        if (count > 0) {
+          this.crmService.getNewTask(filter)
+            .subscribe(
+              data => {
+                this.totalTaskActivityList = data;
+                this.api_loading = false;
+                console.log('totalTaskActivityList', this.totalTaskActivityList)
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              }
+            );
+        } else {
+          this.totalTaskActivityList = [];
           this.api_loading = false;
-          console.log('totalTaskActivityList', this.totalTaskActivityList)
-        },
-        error => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
-      );
+      }
+    )
+
   }
   getNewTaskCount(filter) {
     return new Promise((resolve, reject) => {
@@ -405,17 +474,28 @@ export class TasksComponent implements OnInit {
     });
   }
   getCompletedTask(filter) {
-    this.crmService.getCompletedTask(filter)
-      .subscribe(
-        data => {
-          console.log('data', data)
-          this.totalTaskActivityList = data;
+    this.getCompletedTaskCount(filter).then(
+      (count) => {
+        console.log("taskcount", count)
+        if (count > 0) {
+          this.crmService.getCompletedTask(filter)
+            .subscribe(
+              data => {
+                console.log('data', data)
+                this.totalTaskActivityList = data;
+                this.api_loading = false;
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              }
+            );
+        } else {
+          this.totalTaskActivityList = [];
           this.api_loading = false;
-        },
-        error => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
-      );
+      }
+    )
+
   }
   getCompletedTaskCount(filter) {
     return new Promise((resolve, reject) => {
@@ -775,5 +855,91 @@ export class TasksComponent implements OnInit {
       console.log('resssssssss', res);
       this.ngOnInit()
     })
+  }
+
+
+
+
+
+
+  /**
+ * Router Navigations
+ */
+  gotoLocations() {
+    this.router.navigate(['provider', 'settings', 'general', 'locations']);
+  }
+  /**
+   * 
+   * @param event 
+   */
+  onChangeLocationSelect(event) {
+    const _this = this;
+    const value = event;
+    this.selected_location = this.locations[value];
+    console.log("this.selected_location", this.selected_location);
+    const filter = this.setFilter();
+    console.log("filter", filter)
+    if (this.statusFilter == 1) {
+      _this.getNewTaskCount(filter).then(
+        (count) => {
+          console.log("taskcount", count)
+          if (count > 0) {
+            _this.getNewTask(filter);
+          } else {
+            _this.api_loading = false;
+          }
+        }
+      )
+    }
+    else {
+      _this.getCompletedTaskCount(filter).then(
+        (count) => {
+          console.log("taskcount", count)
+          if (count > 0) {
+            _this.getCompletedTask(filter);
+          } else {
+            _this.api_loading = false;
+          }
+        }
+      )
+    }
+
+  }
+  /**
+   * 
+   * @returns 
+   */
+  getLocationList() {
+    const self = this;
+    const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    return new Promise<void>(function (resolve, reject) {
+      self.selected_location = null;
+      self.providerServices.getProviderLocations()
+        .subscribe(
+          (data: any) => {
+            const locations = data;
+            self.locations = [];
+            for (const loc of locations) {
+              if (loc.status === 'ACTIVE') {
+                if (loggedUser.accountType === 'BRANCH' && !loggedUser.adminPrivilege) {
+                  const userObject = loggedUser.bussLocs.filter(id => parseInt(id) === loc.id);
+                  if (userObject.length > 0) {
+                    self.locations.push(loc);
+                  }
+                } else {
+                  self.locations.push(loc);
+                }
+              }
+            }
+            resolve();
+          },
+          () => {
+            reject();
+          },
+          () => {
+          }
+        );
+    },
+    );
   }
 }
