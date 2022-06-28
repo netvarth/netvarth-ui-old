@@ -1203,6 +1203,7 @@ export class NewReportComponent implements OnInit {
     });
   }
   redirecToReports() {
+    this.provider_services.reportToCrm='FromReport'
     this.locationobj.back();
     // this.router.navigate(['provider', 'reports']);
   }

@@ -68,6 +68,7 @@ import { Subject } from 'rxjs';
       public sourcingChhannelCatList:any=[];
       sourcingChhannelCatListNew:any=[]
       errorMsg: string;
+      api_loading_SearchCustomer:boolean;
       constructor(
         private locationobj: Location,
         private router: Router,
@@ -139,126 +140,133 @@ import { Subject } from 'rxjs';
         }
       }
       searchCustomer() {
+        this.api_loading_SearchCustomer= true;
         console.log('this.customer_data',this.customer_data);
-        if(this.customer_data=[]){
-          this.inquiryFormPatchValue()
-        }
-        this.emptyFielderror = false;
-        if (this.createEnquiryForm.controls.enquiryDetails.value && this.createEnquiryForm.controls.enquiryDetails.value === '') {
-          this.emptyFielderror = true;
-        }
-    
-        else {
-          this.qParams = {};
-          let mode = 'id';
-          this.form_data = null;
-          let post_data = {};
-          const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
-          const isEmail = emailPattern.test(this.createEnquiryForm.controls.enquiryDetails.value);
-          if (isEmail) {
-            mode = 'email';
-            this.prefillnewCustomerwithfield = 'email';
-          } else {
-            const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
-            const isNumber = phonepattern.test(this.createEnquiryForm.controls.enquiryDetails.value);
-            const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
-            const isCount10 = phonecntpattern.test(this.createEnquiryForm.controls.enquiryDetails.value);
-            if (isNumber && isCount10) {
-              mode = 'phone';
-              this.prefillnewCustomerwithfield = 'phone';
-            } 
-            else if (isNumber && this.createEnquiryForm.controls.enquiryDetails.value.length >7) {
-              mode = 'phone';
-              this.prefillnewCustomerwithfield = 'phone';
-            } else if (isNumber && this.createEnquiryForm.controls.enquiryDetails.value.length <7 ) {
-              mode = 'id';
-              this.prefillnewCustomerwithfield = 'id';
-            }
+        setTimeout(() => {
+          this.api_loading_SearchCustomer=false;
+          if(this.customer_data=[]){
+            this.inquiryFormPatchValue()
           }
-         
-    
-          switch (mode) {
-            case 'phone':
-              post_data = {
-                'phoneNo-eq': this.createEnquiryForm.controls.enquiryDetails.value
-              };
-              this.qParams['phone'] = this.createEnquiryForm.controls.enquiryDetails.value;
-              break;
-            case 'email':
-              post_data = {
-                'email-eq': this.createEnquiryForm.controls.enquiryDetails.value
-              };
-              this.qParams['email'] = this.createEnquiryForm.controls.enquiryDetails.value;
-              break;
-            case 'id':
-              post_data['or=jaldeeId-eq'] = this.createEnquiryForm.controls.enquiryDetails.value + ',firstName-eq=' + this.createEnquiryForm.controls.enquiryDetails.value;
-              break;
+          this.emptyFielderror = false;
+          if (this.createEnquiryForm.controls.enquiryDetails.value && this.createEnquiryForm.controls.enquiryDetails.value === '') {
+            this.emptyFielderror = true;
           }
-    
-          this.provider_services.getCustomer(post_data)
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(
-              (data: any) => {
-                this.enquiryArr=data;
-                if(data.length===0){
-                  this.defaultPlaceHolder()
-                  this.errorMsg='Customer not found, Please create customer and continue';
-                  this.createEnquiryForm.patchValue({
-                    enquiryDetails:''
-                  })
-               }
-                this.customer_data = [];
-                if (data.length === 0) {
-                  this.show_customer = false;
-                  this.create_customer = true;
-                  this.defaultPlaceHolder()
-                  this.errorMsg='Customer not found, Please create customer and continue';
-                  this.disableFormControl()
-                  this.createEnquiryForm.patchValue({
-                    enquiryDetails:''
-                  })
-                } else {
-                  this.disableFormControl()
-                  this.inquiryFormPatchValue(data[0]);
-                  this.customerActivityText='View'
-                  if (data.length > 1) {
-                    this.customer_data = data[0];
-                    this.hideSearch = true;
-                  }else {
-                    this.customer_data = data[0];
-                    if(this.customer_data){
-                      this.hideSearch = true;
-                    }
-                  }
-                  this.disabledNextbtn = false;
-                  this.jaldeeId = this.customer_data.jaldeeId;
-                  this.show_customer = true;
-                  this.create_customer = false;
-               
-                  this.formMode = data.type;
-                  if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
-                    this.countryCode = this.customer_data.countryCode;
-                  } else {
-                    this.countryCode = '+91';
-                  }
-                  if (this.customer_data.email && this.customer_data.email !== 'null') {
-                    this.customer_email = this.customer_data.email;
-                  }
-    
-                  if (this.customer_data.jaldeeId && this.customer_data.jaldeeId !== 'null') {
-                    this.jaldeeId = this.customer_data.jaldeeId;
-                  }
-                  if (this.customer_data.firstName && this.customer_data.firstName !== 'null') {
-                    this.jaldeeId = this.customer_data.firstName;
-                  }
-    
-                }
-              },
-              error => {
-                this.wordProcessor.apiErrorAutoHide(this, error);
+      
+          else {
+            this.qParams = {};
+            let mode = 'id';
+            this.form_data = null;
+            let post_data = {};
+            const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+            const isEmail = emailPattern.test(this.createEnquiryForm.controls.enquiryDetails.value);
+            if (isEmail) {
+              mode = 'email';
+              this.prefillnewCustomerwithfield = 'email';
+            } else {
+              const phonepattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
+              const isNumber = phonepattern.test(this.createEnquiryForm.controls.enquiryDetails.value);
+              const phonecntpattern = new RegExp(projectConstantsLocal.VALIDATOR_PHONENUMBERCOUNT10);
+              const isCount10 = phonecntpattern.test(this.createEnquiryForm.controls.enquiryDetails.value);
+              if (isNumber && isCount10) {
+                mode = 'phone';
+                this.prefillnewCustomerwithfield = 'phone';
+              } 
+              else if (isNumber && this.createEnquiryForm.controls.enquiryDetails.value.length >7) {
+                mode = 'phone';
+                this.prefillnewCustomerwithfield = 'phone';
+              } else if (isNumber && this.createEnquiryForm.controls.enquiryDetails.value.length <7 ) {
+                mode = 'id';
+                this.prefillnewCustomerwithfield = 'id';
               }
-            );
-        }
+            }
+           
+      
+            switch (mode) {
+              case 'phone':
+                post_data = {
+                  'phoneNo-eq': this.createEnquiryForm.controls.enquiryDetails.value
+                };
+                this.qParams['phone'] = this.createEnquiryForm.controls.enquiryDetails.value;
+                break;
+              case 'email':
+                post_data = {
+                  'email-eq': this.createEnquiryForm.controls.enquiryDetails.value
+                };
+                this.qParams['email'] = this.createEnquiryForm.controls.enquiryDetails.value;
+                break;
+              case 'id':
+                post_data['or=jaldeeId-eq'] = this.createEnquiryForm.controls.enquiryDetails.value + ',firstName-eq=' + this.createEnquiryForm.controls.enquiryDetails.value;
+                break;
+            }
+      
+            this.provider_services.getCustomer(post_data)
+              .pipe(takeUntil(this.onDestroy$))
+              .subscribe(
+                (data: any) => {
+                  this.enquiryArr=data;
+                  if(data.length===0){
+                    this.defaultPlaceHolder()
+                    this.errorMsg='Customer not found, Please create customer and continue';
+                    this.createEnquiryForm.patchValue({
+                      enquiryDetails:''
+                    })
+                 }
+                  this.customer_data = [];
+                  if (data.length === 0) {
+                    this.show_customer = false;
+                    this.create_customer = true;
+                    this.defaultPlaceHolder()
+                    this.errorMsg='Customer not found, Please create customer and continue';
+                    this.disableFormControl()
+                    this.createEnquiryForm.patchValue({
+                      enquiryDetails:''
+                    })
+                  } else {
+                    this.disableFormControl()
+                    this.inquiryFormPatchValue(data[0]);
+                    this.customerActivityText='View'
+                    if (data.length > 1) {
+                      this.customer_data = data[0];
+                      this.hideSearch = true;
+                    }else {
+                      this.customer_data = data[0];
+                      if(this.customer_data){
+                        this.hideSearch = true;
+                      }
+                    }
+                    this.disabledNextbtn = false;
+                    this.jaldeeId = this.customer_data.jaldeeId;
+                    this.show_customer = true;
+                    this.create_customer = false;
+                 
+                    this.formMode = data.type;
+                    if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                      this.countryCode = this.customer_data.countryCode;
+                    } else {
+                      this.countryCode = '+91';
+                    }
+                    if (this.customer_data.email && this.customer_data.email !== 'null') {
+                      this.customer_email = this.customer_data.email;
+                    }
+      
+                    if (this.customer_data.jaldeeId && this.customer_data.jaldeeId !== 'null') {
+                      this.jaldeeId = this.customer_data.jaldeeId;
+                    }
+                    if (this.customer_data.firstName && this.customer_data.firstName !== 'null') {
+                      this.jaldeeId = this.customer_data.firstName;
+                    }
+      
+                  }
+                },
+                error => {
+                  this.wordProcessor.apiErrorAutoHide(this, error);
+                }
+              );
+          }
+        }, projectConstants.TIMEOUT_DELAY);
+        
+
+        
       }
       enquiryCategoryList(){
         this.crmService.getLeadTemplate().subscribe((category:any)=>{

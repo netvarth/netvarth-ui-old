@@ -9,6 +9,7 @@ export class ProviderServices {
 
   catalogPrefilledInput: any = [];
   taskstatus: string;
+  reportToCrm:any;
   constructor(private servicemeta: ServiceMeta) { }
   getProviderConfig() {
     return this.servicemeta.httpGet('accounts/conf');

@@ -39,8 +39,6 @@ export class CRMComponent implements OnInit {
    }
 
    initCRM() {
-   
-    // this.fnChangeBorder('A')
     if(this.wordProcessor.getSPTerminologyTerm('CRM')) {
       this.crmTitle = this.wordProcessor.getSPTerminologyTerm('CRM');
     } else {
@@ -50,6 +48,33 @@ export class CRMComponent implements OnInit {
    }
   ngOnInit(): void {
     this.bBorderBottomTYpeA=true;
+    this.userInfo()
+    const _this = this;
+    _this.providerServices.getBussinessProfile().subscribe(
+      (bProfile: any) => {
+        _this.crmService.getSPTerminologies(bProfile.uniqueId).then(
+          (terminology: any) => {
+              _this.wordProcessor.setSPTerminologies(terminology);
+              _this.initCRM();
+          } 
+        )
+      }
+    )
+    console.log('this.providerServices.reportToCrm',this.providerServices.reportToCrm)
+    if((this.providerServices && this.providerServices.reportToCrm )=== 'FromReport'){
+      this.fromReportToCrm()
+    }
+    
+  }
+  fromReportToCrm(){
+    if(this.providerServices && this.providerServices.reportToCrm){
+      this.fnChangeBorder('C')
+      this.bREportsFieldOpen=true;
+      this.bLosFieldOpen=false;
+    }
+    this.providerServices.reportToCrm=''
+  }
+  userInfo(){
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log(user)
     this.isadminPrivilege = user.adminPrivilege
@@ -217,17 +242,6 @@ export class CRMComponent implements OnInit {
         }
       ]
     }
-    const _this = this;
-    _this.providerServices.getBussinessProfile().subscribe(
-      (bProfile: any) => {
-        _this.crmService.getSPTerminologies(bProfile.uniqueId).then(
-          (terminology: any) => {
-              _this.wordProcessor.setSPTerminologies(terminology);
-              _this.initCRM();
-          } 
-        )
-      }
-    )
   }
   setStep(index: number) {
     console.log('index', index)
