@@ -7,7 +7,6 @@
   </div>
 </section>
 <section class="container card mt-4 mx-auto" *ngIf="taskDetails">
-  <!-- <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner> -->
   <div>
     <div stye="padding:10px">
       <div class="headerName">
@@ -40,12 +39,10 @@
               </div>
             </div>
             <div>
-              <!-- <div style="font-size: 12px;color: #000000;" >{{customerPhNo}}</div> -->
               <div style="font-size: 12px;color: #000000;" *ngIf="customerPhNo">{{customerPhNo}}</div>
             </div>
           </div>
         </div>
-        <!-- <hr /> -->
         <form [formGroup]="taskDetailsForm">
           <div>
             <!---activityu name start-->
@@ -103,7 +100,7 @@
               </div>
               <div class="fieldPadding">
                 <div>
-                  <div formControlName="selectMember" class="form-control"
+                  <div [formControlName]="selectMember" class="form-control"
                     style="display: flex;justify-content: space-between;">
                     <div>{{selectMember}}</div>
                     <div style="cursor: pointer;" (click)="selectMemberDialog(selectMember)"><i class="fa fa-user"
@@ -268,7 +265,7 @@
               </div>
               <div class="fieldPadding">
                 <!-- [disabled]="!editable" -->
-                <mat-select [disabled]="!editable" class="form-control" placeholder="Enter activity status" #taskStatus
+                <mat-select class="form-control" placeholder="Enter activity status" #taskStatus
                   formControlName="taskStatus" name="item">
                   <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id">
                     <!-- <div>
@@ -315,17 +312,21 @@
                     <div style="font-size: 12px;font-weight: bold;">Enter Result</div>
                     <div class="statusListClass">
                       <div *ngFor="let item of taskStatusList[0]">
-                        <div *ngIf="item.name==='Proceed'" class="statusClass1" (click)="selectStatus(item)" id="A">
-                          <div>{{item.name}}</div>
-                          <div>
+                        <div [ngClass]="{'cursorDiasable': api_loadingCompletedStatus}" *ngIf="item.name==='Proceed'" class="statusClass1" (click)="!api_loadingCompletedStatus && selectStatus(item)" id="A">
+                          <div >{{item.name}}</div>
+                          <div *ngIf="!api_loadingCompletedStatus">
                             <img class="imageStatus" src="/assets/images/crmImages/completed2.png" />
                           </div>
+                          <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loadingCompletedStatus">
+                          </app-common-innerloading-spinner>
                         </div>
-                        <div *ngIf="item.name==='Rejected'" class="statusClass3" (click)="selectStatus(item)" id="C">
+                        <div [ngClass]="{'cursorDiasable': api_loadingCancelledStatus}" *ngIf="item.name==='Rejected'" class="statusClass3" (click)="!api_loadingCancelledStatus && selectStatus(item)" id="C">
                           <div>{{item.name}}</div>
-                          <div>
+                          <div *ngIf="!api_loadingCancelledStatus">
                             <img class="imageStatus" src="/assets/images/crmImages/cancelled.png" />
                           </div>
+                          <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loadingCancelledStatus">
+                          </app-common-innerloading-spinner>
                         </div>
                       </div>
                     </div>
@@ -338,11 +339,12 @@
             <div style="text-align: center;margin-top: 15px;" class="forWeb" *ngIf="bTaskFollowUpResult">
               <ng-container>
                 <div class=" mgn-bt-20 mgn-up-10">
-                  <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goBack()">Cancel
+                  <button  [ngClass]="{'cursorDiasable': api_loadingSaveTask}" type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loadingSaveTask && goBack()">Cancel
                   </button>
-                  <button class="btn btn-primary font-weight-bold confirmBtn" [class.spinner]="api_loading"
-                    [class.disabled]="api_loading" [class.spinner-center]="api_loading" type="button"
-                    (click)="saveCreateTask()">Complete
+                  <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}" class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="saveCreateTask()">
+                    <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loadingSaveTask">
+                    </app-common-innerloading-spinner>
+                    <span *ngIf="!api_loadingSaveTask">Complete</span>
                   </button>
                 </div>
               </ng-container>
@@ -527,14 +529,12 @@
     <div style="text-align: center;margin-top: 15px;" class="forMobile" *ngIf="bTaskFollowUpResult">
       <ng-container>
         <div class=" mgn-bt-20 mgn-up-10">
-          <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goBack()">Cancel
+          <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loadingSaveTask && goBack()">Cancel
           </button>
           <button class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="saveCreateTask()">
             <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loadingSaveTask">
             </app-common-innerloading-spinner>
             <span *ngIf="!api_loadingSaveTask">Complete</span>
-
-
           </button>
         </div>
       </ng-container>

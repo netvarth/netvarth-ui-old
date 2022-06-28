@@ -552,6 +552,8 @@ textarea {
   color: #fff;
   font-weight: bold;
   font-size: 14px;
+  height: 35px;
+          width: 85px;
 }
 
 .confirmBtn {
@@ -561,6 +563,8 @@ textarea {
   border: 0px solid !important;
   padding: 6px 12px;
   color: #fff;
+  height: 35px;
+          width: 85px;
 }
 
 input:focus {
@@ -697,6 +701,8 @@ textarea .form-control {
   padding: 10px;
   flex-direction: row-reverse;
   cursor: pointer;
+  height: 45px;
+  width: 125px;
 }
 
 .statusClass2 {
@@ -711,6 +717,8 @@ textarea .form-control {
   flex-direction: row-reverse;
   /* border: 1px solid #D7FFE9; */
   cursor: pointer;
+  height: 45px;
+  width: 125px;
 }
 
 .statusClass3 {
@@ -724,6 +732,8 @@ textarea .form-control {
   border-radius: 11.9425px;
   /* border-radius: 11px; */
   cursor: pointer;
+  height: 45px;
+  width: 125px;
 }
 
 @media(max-width: 768px) {
@@ -747,3 +757,6 @@ textarea .form-control {
   text-align: center;
   background: #D9D8D8;
 }
+.cursorDiasable{
+  cursor: not-allowed;
+  }

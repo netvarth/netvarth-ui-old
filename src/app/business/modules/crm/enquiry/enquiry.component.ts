@@ -1,14 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { projectConstants } from '../../../../../../src/app/app.component';
 import { Location } from '@angular/common';
 import {  Router } from '@angular/router';
 import { CrmService } from '../crm.service';
 import { FormBuilder } from '@angular/forms';
-// import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../../src/app/shared/services/word-processor.service';
-// import { CrmSelectMemberComponent } from '../../../shared/crm-select-member/crm-select-member.component';
 import { projectConstantsLocal } from '../../../../../../src/app/shared/constants/project-constants';
 import { ProviderServices } from '../../../../../../src/app/business/services/provider-services.service';
 import { takeUntil } from 'rxjs/operators';
@@ -75,7 +73,6 @@ import { Subject } from 'rxjs';
         private router: Router,
          private crmService: CrmService,
          private createEnquiryFB: FormBuilder,
-        //  private dialog: MatDialog, 
         private snackbarService: SnackbarService,
          private groupService:GroupStorageService,
          private wordProcessor: WordProcessor,
@@ -103,20 +100,19 @@ import { Subject } from 'rxjs';
       this.enquiryCategoryList()
       this.getTemplateEnuiry()
       this.sourcingChannelCategory()
-        if(this.innerWidth<=768){
-          this.placeholderTruncate(this.customer_label)
-        }
-        else{
-          this.searchby = 'Search by ' + this.customer_label + ' id/name/email/phone number';
-        }
+      this.onReSize()
+    }
+    @HostListener('window:resize', ['$event'])
+    onReSize(){
+      this.innerWidth = window.innerWidth;
+      if(this.innerWidth<=768){
+        this.placeholderTruncate(this.customer_label)
+      }
+      else{
+        this.searchby = 'Search by ' + this.customer_label + ' id/name/email/phone number';
+      }
     }
     placeholderTruncate(value: string, completeWords = true,) {
-      let lastindex = 4;
-      if (completeWords) {
-        lastindex = value.substring(0, 4).lastIndexOf(' ');
-        console.log('lastindex',lastindex)
-      }
-      // console.log('value.substring(0, 4)',value.substring(0, 4))
       const labelTerm = value.substring(0, 4)
       // console.log('labelTerm',labelTerm)
       this.searchby = 'Search by ' + labelTerm+ ' id/name/phone #';

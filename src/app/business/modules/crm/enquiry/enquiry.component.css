@@ -187,3 +187,6 @@
     .errorClass{
       color: #f24949 !important;font-size: 12px;
     }
+    .cursorDiasable{
+      cursor: not-allowed;
+      }

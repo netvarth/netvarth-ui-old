@@ -131,10 +131,10 @@
                 <div style="text-align: center;margin-top: 15px;">
                     <ng-container >
                         <div class=" mgn-bt-20 mgn-up-10">
-                            <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()"
-                                >Cancel
+                            <button [ngClass]="{'cursorDiasable': api_loading}" type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loading && goback()"
+                                ><span *ngIf="!api_loading">Cancel</span>
                             </button>
-                            <button class="btn btn-primary font-weight-bold confirmBtn" type="button"  (click)="saveCreateEnquiry()">
+                            <button [ngClass]="{'cursorDiasable': api_loading}" class="btn btn-primary font-weight-bold confirmBtn" type="button"  (click)="!api_loading && saveCreateEnquiry()">
                                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading"></app-common-innerloading-spinner>
                                     <span *ngIf="!api_loading">Save</span>
                             </button>

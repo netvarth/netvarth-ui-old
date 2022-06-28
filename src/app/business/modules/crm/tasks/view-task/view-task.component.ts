@@ -212,6 +212,9 @@ export class ViewTaskComponent implements OnInit {
     }
   ]
   api_loadingSaveTask: boolean;
+  api_loadingCompletedStatus:boolean;
+  api_loadingCancelledStatus:boolean;
+
 
 
 
@@ -250,6 +253,7 @@ export class ViewTaskComponent implements OnInit {
       taskStatus: [],
       targetResult: [],
       targetPotential: [],
+      selectMember:[],
     })
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -418,10 +422,12 @@ export class ViewTaskComponent implements OnInit {
             this.bTaskStatus = true;
             this.taskDetailsForm.controls.taskStatus.value = this.taskDetails.status.id;
             this.editable = false;
+            this.taskDetailsForm.controls['taskStatus'].disable()
           }
           else {
             // this.editable=false;
-            this.bTaskStatus = false
+            this.bTaskStatus = false;
+            this.taskDetailsForm.controls['taskStatus'].disable()
           }
           if (this.taskDetails.targetPotential) {
             this.bTaskTargetPotential = true;
@@ -1031,15 +1037,16 @@ export class ViewTaskComponent implements OnInit {
         })
     }
     else if (status.name === 'Rejected') {
-      this.fiollowUpStatusCancelledToRejected = status.id
+      this.api_loadingCancelledStatus=true;
+      this.fiollowUpStatusCancelledToRejected = status.id;
       document.getElementById('A').style.boxShadow = "none";
-      // document.getElementById('B').style.boxShadow = "none";
       document.getElementById('C').style.boxShadow = "0px 4px 11px rgb(0 0 0 / 15%)";
       this.crmService.statusToRejectedFollowUP(this.enquiryId).subscribe((response) => {
         console.log('afterupdateFollowUpData', response);
         setTimeout(() => {
           this.taskDetailsForm.reset();
           this.snackbarService.openSnackBar('Successfully updated to ' + status.name.toLowerCase() + ' mode');
+          this.api_loadingCancelledStatus=false;
           this.router.navigate(['provider', 'crm']);
         }, projectConstants.TIMEOUT_DELAY);
       },
@@ -1050,9 +1057,9 @@ export class ViewTaskComponent implements OnInit {
         })
     }
     else if (status.name === 'Proceed') {
+      this.api_loadingCompletedStatus=true;
       this.followUpStatusComplToProceed = status.id
       document.getElementById('A').style.boxShadow = "0px 4px 11px rgb(0 0 0 / 15%)";
-      // document.getElementById('B').style.boxShadow = "none";
       document.getElementById('C').style.boxShadow = "none";
       console.log(' this.enquiryId', this.enquiryId)
       if (this.taskDetails.status.name != 'Proceed') {
@@ -1060,7 +1067,7 @@ export class ViewTaskComponent implements OnInit {
           setTimeout(() => {
             this.taskDetailsForm.reset();
             this.snackbarService.openSnackBar('Successfully updated');
-
+            this.api_loadingCompletedStatus=false;
             this.router.navigate(['provider', 'crm']);
           }, projectConstants.TIMEOUT_DELAY);
         },
@@ -1075,7 +1082,7 @@ export class ViewTaskComponent implements OnInit {
           setTimeout(() => {
             this.taskDetailsForm.reset();
             this.snackbarService.openSnackBar('Successfully updated');
-
+            this.api_loadingCompletedStatus=false;
             this.router.navigate(['provider', 'crm']);
           }, projectConstants.TIMEOUT_DELAY);
         },
