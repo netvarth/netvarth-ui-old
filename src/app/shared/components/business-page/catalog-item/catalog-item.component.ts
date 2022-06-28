@@ -324,6 +324,7 @@ export class CatalogItemComponent implements OnInit {
       disableClose: true,
       data: {
         type: origin,
+        mode: 'dialog',
         is_provider: false,
         test_account: is_test_account,
         moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
