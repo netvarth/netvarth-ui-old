@@ -137,7 +137,7 @@ export class PaymentLinkComponent implements OnInit {
     private activated_route: ActivatedRoute,
     public sharedfunctionObj: SharedFunctions,
     public sharedServices: SharedServices,
-    public razorpayService: RazorpayService,
+    private razorpayService: RazorpayService,
     private paytmService: PaytmService,
     // public winRef: WindowRefService,
     private wordProcessor: WordProcessor,
@@ -356,33 +356,33 @@ export class PaymentLinkComponent implements OnInit {
         });
   }
   paywithRazorpay(pData: any) {
-    const self = this;
-    self.isClickedOnce = false;
+    this.isClickedOnce = false;
     pData.paymentMode = this.selected_payment_mode;
-    self.razorpayService.payBillWithoutCredentials(pData).then(
-      (response: any) => {
-        if (response !== 'failure') {
-          self.paidStatus = 'true';
+    this.razorpayService.initializePayment(pData, this.accountId, this);
+    // self.razorpayService.payBillWithoutCredentials(pData).then(
+    //   (response: any) => {
+    //     if (response !== 'failure') {
+    //       self.paidStatus = 'true';
 
-          self.order_id = response.razorpay_order_id;
-          self.payment_id = response.razorpay_payment_id;
-          // this.razorpay_signature = response.razorpay_signature;
-          const razorpay_payload = {
+    //       self.order_id = response.razorpay_order_id;
+    //       self.payment_id = response.razorpay_payment_id;
+    //       // this.razorpay_signature = response.razorpay_signature;
+    //       const razorpay_payload = {
 
-            "paymentId": response.razorpay_payment_id,
-            "orderId": response.razorpay_order_id,
-            "signature": response.razorpay_signature
+    //         "paymentId": response.razorpay_payment_id,
+    //         "orderId": response.razorpay_order_id,
+    //         "signature": response.razorpay_signature
 
-          };
-          self.razorpayService.updateRazorPay(razorpay_payload, self.accountId, 'consumer').then((data) => {
-            console.log('successs');
+    //       };
+    //       self.razorpayService.updateRazorPay(razorpay_payload, self.accountId, 'consumer').then((data) => {
+    //         console.log('successs');
 
-          });
-        } else {
-          self.paidStatus = 'false';
-        }
-      }
-    );
+    //       });
+    //     } else {
+    //       self.paidStatus = 'false';
+    //     }
+    //   }
+    // );
   }
   payWithPayTM(pData: any, accountId: any) {
     this.isClickedOnce = true;

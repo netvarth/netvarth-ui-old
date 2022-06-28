@@ -21,58 +21,6 @@ export class RazorpayService {
   changePaidStatus(value: string) {
     this.paidStatus.next(value);
   }
-
-  payBillWithoutCredentials(pData) {
-    const self = this;
-
-    let prefillModel = {}
-
-    prefillModel['name'] = pData.consumerName;
-    prefillModel['email'] = pData.ConsumerEmail;
-    prefillModel['contact'] = pData.consumerPhoneumber;
-
-    let razorModel = {
-      prefill: prefillModel,
-      key: pData.razorpayId,
-      amount: pData.amount,
-      currency: 'INR',
-      order_id: pData.orderId,
-      name: pData.providerName,
-      description: pData.description,
-      mode: pData.paymentMode,
-      retry: false,
-      theme: {
-        color: '#F37254'
-      },
-      modal: {
-        // We should prevent closing of the form when esc key is pressed.
-        escape: false
-      },
-      notes: {
-        // include notes if any
-      }
-    }
-    let selectedmode = pData.paymentMode;
-    if (selectedmode === 'DC' || selectedmode === 'CC') {
-      selectedmode = 'CARD';
-    }
-    const hiddenObject = this.paymentModes.filter((mode) => mode.method !== selectedmode.toLowerCase());
-    razorModel['config'] = {
-      display: {
-        hide: hiddenObject
-      }
-    }
-    return new Promise(function (resolve) {
-      const options = razorModel;
-      options['handler'] = ((response, error) => {
-        options['response'] = response;
-
-        resolve(response);
-      });
-      const rzp = new self.nativeWindow.Razorpay(options);
-      rzp.open();
-    });
-  }
   onReloadPage() {
     window.location.reload();
   }
@@ -189,23 +137,14 @@ export class RazorpayService {
           STATUS: 'TXN_FAILURE',
           SRC: 'razorPay'
         }
-        failureResponse['error'] = response.error; 
+        failureResponse['error'] = response.error;
         referrer.transactionCompleted(failureResponse, null, accountId);
-        // alert(response.error.code);
-        // alert(response.error.description);
-        // alert(response.error.source);
-        // alert(response.error.step);
-        // alert(response.error.reason);
-        // alert(response.error.metadata.order_id);
-        // alert(response.error.metadata.payment_id);
       });
       razorInterval = setTimeout(() => {
         rzp.close();
         location.reload();
       }, 540000);
     };
-
-
   }
   get nativeWindow(): ICustomWindow {
     return this.getWindow();
