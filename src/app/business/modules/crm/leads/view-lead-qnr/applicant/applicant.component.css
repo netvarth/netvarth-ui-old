@@ -41,10 +41,10 @@
     color: rgb(109, 108, 108);
 }
 
-input[type="number"],
+/* input[type="number"],
 input[type="time"] {
     width: 100px !important;
-}
+} */
 
 .fieldPadding {
     padding: 5px;
@@ -90,10 +90,10 @@ textarea {
         display: none;
     }
 
-    input[type="number"],
+    /* input[type="number"],
     input[type="time"] {
         width: 80px !important;
-    }
+    } */
 
     .inputwithImg {
         width: 100% !important;

@@ -33,7 +33,7 @@
                 <div class="astericColor">*</div>
             </div>
             <div class="fieldPadding">
-                <input  class="form-control" formControlName="customerName" #applicantName  placeholder="Enter name" />
+                <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false"  class="form-control" formControlName="customerName" #applicantName  placeholder="Enter name" />
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="errorMessage"
                     errorMsg="{{errorMessage}}">
                 </app-field-error-display>
@@ -45,7 +45,7 @@
                 <div class="astericColor">*</div>
             </div>
             <div class="fieldPadding">
-                <input class="form-control" formControlName="permanentPhoneNumber" #applicantPhone type="tel"
+                <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false"  class="form-control" formControlName="permanentPhoneNumber" #applicantPhone type="tel"
                     placeholder="Enter number" />
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="errorMessage"
                     errorMsg="{{errorMessage}}">
@@ -75,7 +75,7 @@
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <input  class="form-control" formControlName="idValue" #idValue
+                    <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false"  class="form-control" formControlName="idValue" #idValue
   placeholder="Enter number" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
@@ -147,7 +147,7 @@
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <input  class="form-control" formControlName="idValue1" #idValue1
+                    <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false" class="form-control" formControlName="idValue1" #idValue1
   placeholder="Enter number" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
@@ -220,7 +220,7 @@
                     <!-- <div class="astericColor">*</div> -->
                 </div>
                 <div class="fieldPadding">
-                    <input  class="form-control" formControlName="idValue2" #idValue2
+                    <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false"  class="form-control" formControlName="idValue2" #idValue2
   placeholder="Enter number" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
@@ -354,7 +354,7 @@
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <input  class="form-control" formControlName="telephoneNumber" #telephoneNumber
+                    <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false"  class="form-control" formControlName="telephoneNumber" #telephoneNumber
                          maxlength="10" placeholder="Enter number" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
@@ -368,7 +368,7 @@
                 <div class="astericColor">*</div>
             </div>
             <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" #permanentAddress placeholder="" class="form-control"
+                <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false" (keyup)="resetErrors()" type="text" #permanentAddress placeholder="" class="form-control"
                     formControlName="permanentAddress" autocomplete="off" />
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="errorMessage"
                     errorMsg="{{errorMessage}}">
@@ -382,7 +382,7 @@
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <input  class="form-control" formControlName="permanentCity" #permanentCity
+                    <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false"  class="form-control" formControlName="permanentCity" #permanentCity
   placeholder="" />
          
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
@@ -417,8 +417,7 @@
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <input  class="form-control" formControlName="permanentPinCode" #permanentPinCode
-  placeholder="" />
+                    <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false"  [maxlength]="6"  class="form-control" formControlName="permanentPinCode" #permanentPinCode placeholder="" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
                     </app-field-error-display>
@@ -433,7 +432,7 @@
                     <!-- <input (keyup)="resetErrors()" type="date" #dob placeholder="" class="form-control"
                         formControlName="dob" autocomplete="off" /> -->
                             <div class="matDatePicker" >
-                                <input  formControlName="dob" class="form-control" type="text"  matInput
+                                <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false"  formControlName="dob" class="form-control" type="text"  matInput
                                     [matDatepicker]="picker"
                                      placeholder="Enter Date" #dob>
                                 <mat-datepicker-toggle matSuffix [for]="picker">
@@ -454,7 +453,7 @@
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <input  class="form-control" formControlName="relationName" #relationName
+                    <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false"   class="form-control" formControlName="relationName" #relationName
   placeholder="" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
@@ -484,7 +483,7 @@
                     <div>Nominee Name</div>
                 </div>
                 <div class="fieldPadding">
-                    <input  class="form-control" formControlName="nomineeName" #nomineeName
+                    <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false" class="form-control" formControlName="nomineeName" #nomineeName
   placeholder="Enter name" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
@@ -526,7 +525,7 @@
                     <div>Nominee Address</div>
                 </div>
                 <div class="fieldPadding">
-                    <input (keyup)="resetErrors()" type="text" #address placeholder="" class="form-control"
+                    <input  autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false" (keyup)="resetErrors()" type="text" #address placeholder="" class="form-control"
                         formControlName="address" autocomplete="off" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
@@ -540,7 +539,7 @@
                     <div>District</div>
                 </div>
                 <div class="fieldPadding">
-                    <input   class="form-control" formControlName="city" #city
+                    <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false"  class="form-control" formControlName="city" #city
   placeholder="" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
@@ -571,7 +570,7 @@
                     <div>Pin code</div>
                 </div>
                 <div class="fieldPadding">
-                    <input  class="form-control" formControlName="pin" #pin
+                    <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false" [maxlength]="6"  class="form-control" formControlName="pin" #pin
   placeholder="" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">

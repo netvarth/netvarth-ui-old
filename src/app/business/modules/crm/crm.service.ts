@@ -601,8 +601,8 @@ export class CrmService {
     const url ='provider/task/'+taskUid+'/status/closedwithnotes';
     return this.servicemeta.httpPut(url,notesData)
   }
-  proceedToLoginVerified(uid) {
-    const url ='provider/lead/questionnaire/proceed/'+uid;
+  proceedToLoginVerified(status,uid) {
+    const url ='provider/lead/questionnaire/proceed/'+status + '/' + uid;
     return this.servicemeta.httpPut(url)
   }
   proceedToRedirect(uid) {

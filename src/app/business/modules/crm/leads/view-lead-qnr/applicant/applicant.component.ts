@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output,Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FileService } from '../../../../../../shared/services/file-service';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
@@ -57,7 +57,8 @@ export class ApplicantComponent implements OnInit {
     private crmService: CrmService,
     private snackbarService: SnackbarService,
     private datePipe:DatePipe,
-    private teleService:TeleBookingService
+    private teleService:TeleBookingService,
+    private el: ElementRef, private renderer: Renderer2
   ) { }
 
   ngOnInit(): void {
@@ -308,7 +309,6 @@ export class ApplicantComponent implements OnInit {
         }
       ],
       // "panNumber": this.applicantForm.controls.panNumber.value,
-      // "panAttachments": this.fileDataPan,
     }
     if (this.applicant.validationIds && this.applicant.validationIds[0].attachments) {
       applicantInfo.validationIds[0].attachments = this.applicant.validationIds[0].attachments;
@@ -419,5 +419,18 @@ export class ApplicantComponent implements OnInit {
     setTimeout(() => {
       printWindow.close();
     }, 500);
+  }
+  handlePinCode(type){
+    console.log('type',type)
+    // if(type==='applicantPinCode'){
+      var events = 'ccp';
+      console.log('events',events,events.split)
+      events.split(' ').forEach(e => 
+        this.renderer.listen(this.el.nativeElement, e, (event) => {
+          console.log('this.renderer',this.renderer)
+        event.preventDefault();
+        })
+      );
+    // }
   }
 }

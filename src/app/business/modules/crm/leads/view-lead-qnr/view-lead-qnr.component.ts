@@ -418,7 +418,8 @@ export class ViewLeadQnrComponent implements OnInit {
   }
 
   updateQNRProceedStatus(uuid) {
-    this.providerServices.updateQNRProceedStatus(uuid)
+    console.log('this.leadInfo.status.name',this.leadInfo.status.name)
+    this.providerServices.updateQNRProceedStatus(this.leadInfo.status.id,uuid)
       .subscribe((data) => {
         this.router.navigate(['provider', 'crm']);
       },
@@ -544,7 +545,7 @@ export class ViewLeadQnrComponent implements OnInit {
       this.api_loading_UpdateKycProceed=true;
       this.submitQuestionnaire(this.leadInfo.uid);
     } else if (this.leadInfo.status.name === 'Login' ) {
-      this.crmService.proceedToLoginVerified(this.leadInfo.uid).subscribe((response) => {
+      this.crmService.proceedToLoginVerified(this.leadInfo.status.id ,this.leadInfo.uid).subscribe((response) => {
         this.api_loading_UpdateKycProceed=true;
         this.router.navigate(['provider', 'crm']);
       }, (error) => {

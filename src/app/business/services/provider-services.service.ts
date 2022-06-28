@@ -2594,8 +2594,8 @@ buildFilesParams(sdate, edate) {
     const url = 'provider/lead/questionnaire/change/' + status + '/' + uuid + '/' + id;
     return this.servicemeta.httpPut(url);
   }
-  updateQNRProceedStatus(uuid) {
-    const url = 'provider/lead/questionnaire/proceed/' + uuid;
+  updateQNRProceedStatus(status,uuid) {
+    const url = 'provider/lead/questionnaire/proceed/'+ status +'/'+ uuid;
     return this.servicemeta.httpPut(url);
   }
 } 
