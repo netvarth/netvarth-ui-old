@@ -69,6 +69,8 @@ export class TasksComponent implements OnInit {
   selected_location: any;
   locations: any;
   tasks: any[];
+  config: any;
+  taskCount: unknown;
   constructor(
     private locationobj: Location,
     public router: Router,
@@ -83,6 +85,11 @@ export class TasksComponent implements OnInit {
 
   ) {
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
+    this.config = {
+      itemsPerPage: 10,
+      currentPage: 1,
+      totalItems: 0
+    };
   }
 
   ngOnInit() {
@@ -101,6 +108,7 @@ export class TasksComponent implements OnInit {
       _this.getNewTaskCount(filter).then(
         (count) => {
           if (count > 0) {
+            this.config.totalItems = count;
             _this.getNewTask(filter);
           } else {
             _this.api_loading = false;
@@ -113,15 +121,17 @@ export class TasksComponent implements OnInit {
 
   }
 
-
+  pageChanged(event) {
+    this.config.currentPage = event;
+  }
   /**
  * 
  * @returns 
  */
   setFilter() {
     let filter = this.handleTaskStatus(this.statusFilter);
-    filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
-    filter['count'] = this.pagination.perPage;
+    // filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
+    // filter['count'] = this.pagination.perPage;
     filter['location-eq'] = this.selected_location.id;
     return filter;
   }
@@ -140,7 +150,9 @@ export class TasksComponent implements OnInit {
         _this.getNewTaskCount(filter).then(
           (count) => {
             console.log(" Task Count : ", count)
+            this.config.totalItems = count;
             if (count > 0) {
+              this.config.totalItems = count;
               _this.getNewTask(filter);
             } else {
               _this.api_loading = false;
@@ -203,8 +215,8 @@ export class TasksComponent implements OnInit {
     let filter = {}
     console.log("this.selected_location", this.selected_location)
     // filter['location-eq'] = this.selected_location;
-    filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
-    filter['count'] = this.pagination.perPage;
+    // filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
+    // filter['count'] = this.pagination.perPage;
 
     console.log("filter", filter)
     if (statusValue === 0) {
@@ -327,12 +339,14 @@ export class TasksComponent implements OnInit {
 
   getNewTask(filter) {
     console.log("filter", filter)
+    console.log('filter', filter)
     this.getNewTaskCount(filter).then(
       (count) => {
         if (count > 0) {
           this.crmService.getNewTask(filter)
             .subscribe(
               data => {
+                this.config.totalItems = count;
                 this.totalTaskActivityList = data;
                 this.api_loading = false;
                 console.log('totalTaskActivityList', this.totalTaskActivityList)
@@ -482,6 +496,7 @@ export class TasksComponent implements OnInit {
             .subscribe(
               data => {
                 console.log('data', data)
+                this.config.totalItems = count;
                 this.totalTaskActivityList = data;
                 this.api_loading = false;
               },
