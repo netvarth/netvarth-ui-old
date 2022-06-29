@@ -28,6 +28,7 @@ export class LeadsComponent implements OnInit {
   };
   api_loading = true;
   no_leads_cap = Messages.AUDIT_NO_LEADS_CAP;
+  config: any;
   constructor(
     private groupService: GroupStorageService,
     public router: Router,
@@ -41,6 +42,11 @@ export class LeadsComponent implements OnInit {
         this.type = qparams.type;
       }
     });
+    this.config = {
+      itemsPerPage: 10,
+      currentPage: 1,
+      totalItems: 0
+    };
   }
   /**
    * 
@@ -85,6 +91,7 @@ export class LeadsComponent implements OnInit {
         .subscribe(
           data => {
             _this.pagination.totalCnt = data;
+            this.config.totalItems = data;
             resolve(data);
           },
           error => {
@@ -129,8 +136,8 @@ export class LeadsComponent implements OnInit {
  */
   setFilter() {
     let filter = {}
-    filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
-    filter['count'] = this.pagination.perPage;
+    // filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
+    // filter['count'] = this.pagination.perPage;
     filter['location-eq'] = this.selected_location.id;
     switch (this.type) {
       case 'NEWLEAD':

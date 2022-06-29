@@ -8,6 +8,7 @@ import { CrmService } from "../crm.service";
 import { LeadsComponent } from "./leads.component";
 import { RouterModule, Routes } from "@angular/router";
 import { PagerModule } from "../../../../../../src/app/shared/modules/pager/pager.module";
+import { NgxPaginationModule } from "ngx-pagination";
 
 const routes: Routes = [
   { path: '', component: LeadsComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
         MatDialogModule,
         CapitalizeFirstPipeModule,
         LoadingSpinnerModule,
+        NgxPaginationModule,
         [RouterModule.forChild(routes)]
     ],
     exports: [LeadsComponent],
