@@ -5,6 +5,8 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { CrmService } from './crm.service';
 import { NavigationExtras, Router } from '@angular/router';
 import { GroupStorageService } from '../../../../../src/app/shared/services/group-storage.service';
+import { projectConstants } from '../../../../../src/app/app.component';
+
 
 @Component({
   selector: 'app-crm',
@@ -21,7 +23,7 @@ export class CRMComponent implements OnInit {
   public panelOpenState: false;
   
   public redirectionList: any = []
-  public api_loading: boolean = true;
+  public api_loading: boolean;
   public bLosFieldOpen:boolean=true;
   public bREportsFieldOpen:boolean=false;
   showActivity = true;
@@ -44,11 +46,24 @@ export class CRMComponent implements OnInit {
     } else {
       this.crmTitle = 'CRM';
     }
-    this.api_loading = false;
+    // this.api_loading = false;
    }
   ngOnInit(): void {
-    this.bBorderBottomTYpeA=true;
+    // this.bBorderBottomTYpeA=true;
+    this.api_loading=true
     this.userInfo()
+    if((this.providerServices && this.providerServices.reportToCrm )=== 'FromReport'){
+      setTimeout(() => {
+        this.fnChangeBorder('C');
+        this.providerServices.reportToCrm=''
+      }, projectConstants.TIMEOUT_DELAY);
+     
+    }
+    else{
+      setTimeout(() => {
+        this.fnChangeBorder('A')
+      }, projectConstants.TIMEOUT_DELAY);
+    }
     const _this = this;
     _this.providerServices.getBussinessProfile().subscribe(
       (bProfile: any) => {
@@ -60,17 +75,10 @@ export class CRMComponent implements OnInit {
         )
       }
     )
-    console.log('this.providerServices.reportToCrm',this.providerServices.reportToCrm)
-    if((this.providerServices && this.providerServices.reportToCrm )=== 'FromReport'){
-      this.fromReportToCrm()
-    }
-    
   }
   fromReportToCrm(){
     if(this.providerServices && this.providerServices.reportToCrm){
       this.fnChangeBorder('C')
-      this.bREportsFieldOpen=true;
-      this.bLosFieldOpen=false;
     }
     this.providerServices.reportToCrm=''
   }
@@ -389,18 +397,28 @@ export class CRMComponent implements OnInit {
     console.log('textValue', textValue)
   }
   fnChangeBorder(boxId) {
-    console.log('boxId', boxId)
+    // console.log('boxId', boxId)
     if (boxId === 'A') {
-      this.bREportsFieldOpen=false;
-      this.bLosFieldOpen=true;
-      this.bBorderBottomTYpeA=true;
+      this.api_loading=true;
+      setTimeout(() => {
+        this.api_loading=false;
+        this.bBorderBottomTYpeA=true;
+        this.bLosFieldOpen=true;
+        this.bREportsFieldOpen=false;
       this.bBorderBottomTypeC=false;
+      }, projectConstants.TIMEOUT_DELAY);
+      
     }
     else if (boxId === 'C') {
-      this.bREportsFieldOpen=true;
+      this.api_loading=true;
+      setTimeout(() => {
+        this.api_loading=false;
+        this.bBorderBottomTypeC=true;
+        this.bREportsFieldOpen=true;
       this.bLosFieldOpen=false;
-      this.bBorderBottomTypeC=true;
       this.bBorderBottomTYpeA=false;
+      }, projectConstants.TIMEOUT_DELAY);
+      
 
     }
   }

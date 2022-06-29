@@ -85,7 +85,7 @@
                             <div class="astericColor">*</div>
                         </div>
                         <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.location && taskMasterData.location.iseditable)}">
-                            <input (keyup)="resetErrors()" type="text" #taskLocation (ngModelChange)="handleTaskLocation(taskLocation.value)"
+                            <input (keyup)="resetErrors()" type="text" #taskLocation 
                             placeholder="Enter activity location"class="form-control widthWebKit" formControlName="taskLocation"autocomplete="off" [readonly]="!(taskMasterData && taskMasterData.location && taskMasterData.location.iseditable)" [value]="taskLocation.name" /> 
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                             </app-field-error-display>    
@@ -253,7 +253,7 @@
                     </div>
                     <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.priority && taskMasterData.priority.iseditable)}">
                         <mat-select class="form-control" placeholder="Select Priority" [disabled]="!(taskMasterData && taskMasterData.priority && taskMasterData.priority.iseditable)"
-                            #userTaskPriority formControlName="userTaskPriority" (ngModelChange)="handleTaskPrioritySelection(userTaskPriority.value,'taskPriority')">
+                            #userTaskPriority formControlName="userTaskPriority" >
                             <mat-option  *ngFor="let item of taskPriorityList[0];let index=i" [value]="item.id">
                                 <div>
                                     {{item.name}}
@@ -277,7 +277,7 @@
                         </div>
                         <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.status && taskMasterData.status.iseditable)}">
                             <mat-select class="form-control widthWebKit" placeholder="Enter activity status" [disabled]="!(taskMasterData && taskMasterData.status && taskMasterData.status.iseditable)"
-                                #taskStatus formControlName="taskStatus" name="item"  (selectionChange)="handleTaskStatus(taskStatus.value)">
+                                #taskStatus formControlName="taskStatus" name="item" >
                                 <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id"  >
                                     <div [ngStyle]="{'color': getColor(item.name)}">
                                         {{item.name | capitalizeFirst}}
@@ -298,7 +298,7 @@
                             <div>Target Potential</div>
                         </div>
                         <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.targetResult && taskMasterData.targetResult.iseditable)}">
-                            <input (keyup)="resetErrors()" type="text" #targetResult (ngModelChange)="handleTargetResult(targetResult.value)"
+                            <input (keyup)="resetErrors()" type="text" #targetResult
                             placeholder="Enter potential"class="form-control widthWebKit"formControlName="targetResult"  [readonly]="!(taskMasterData && taskMasterData.targetResult && taskMasterData.targetResult.iseditable)" autocomplete="off" /> 
                         </div>
                     </div>
@@ -308,7 +308,7 @@
                             <div>Business Potential</div>
                         </div>
                         <div class="fieldPadding" [ngClass]="{'highlight': !(taskMasterData && taskMasterData.targetPotential && taskMasterData.targetPotential.iseditable)}">
-                            <input  min="0" (keyup)="resetErrors()" type="text" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)"   [readonly]="!(taskMasterData && taskMasterData.targetPotential && taskMasterData.targetPotential.iseditable)"
+                            <input  min="0" (keyup)="resetErrors()" type="text" #targetPotential    [readonly]="!(taskMasterData && taskMasterData.targetPotential && taskMasterData.targetPotential.iseditable)"
                             placeholder="Enter ({{rupee_symbol}})"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
                         </div>
                     </div>               
@@ -320,16 +320,12 @@
             <div style="text-align: center;margin-top: 15px;">
                 <ng-container >
                     <div class=" mgn-bt-20 mgn-up-10">
-                        <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()"
+                        <button [ngClass]="{'cursorDiasable':  api_loading_CreateActivity}" type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loading_CreateActivity && goback()"
                             >Cancel
                         </button>
-                        <button [ngClass]="{
-                            'btn btn-primary font-weight-bold cancelBtn': !createTaskForm.valid,
-                            'btn btn-primary font-weight-bold confirmBtn': createTaskForm.valid
-                        }" 
-                            [class.spinner]="api_loading" 
-                            [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateTask()"
-                                >{{showCreateTaskButtonCaption()}}
+                        <button [ngClass]="{'cursorDiasable':  api_loading_CreateActivity}" type="button"  (click)="saveCreateTask()" class="btn btn-primary font-weight-bold confirmBtn">
+                            <app-common-innerloading-spinner  *ngIf="api_loading_CreateActivity"></app-common-innerloading-spinner>
+                           <span *ngIf="!api_loading_CreateActivity">Save</span>
                         </button>
                     </div>
                 </ng-container>
@@ -418,7 +414,7 @@
                             <div class="astericColor">*</div>
                         </div>
                         <div class="fieldPadding">
-                            <input (keyup)="resetErrors()"  type="text" #taskLocation (ngModelChange)="handleTaskLocation(taskLocation.value)"
+                            <input (keyup)="resetErrors()"  type="text" #taskLocation 
                             placeholder="Enter activity location"class="form-control widthWebKit" formControlName="taskLocation" autocomplete="off" [value]="taskLocation.name" /> 
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                             </app-field-error-display>    
@@ -565,7 +561,7 @@
                     </div>
                     <div class="fieldPadding">
                         <mat-select class="form-control" placeholder="Select Priority"
-                            #userTaskPriority formControlName="userTaskPriority" (ngModelChange)="handleTaskPrioritySelection(userTaskPriority.value,'taskPriority')">
+                            #userTaskPriority formControlName="userTaskPriority" >
                             <mat-option  *ngFor="let item of taskPriorityList[0];let index=i" [value]="item.id" >
                                 <div>
                                     {{item.name}}
@@ -588,7 +584,7 @@
                         </div>
                         <div class="fieldPadding">
                             <mat-select [disabled]="!editable" class="form-control widthWebKit" placeholder="Enter activity status"
-                                #taskStatus formControlName="taskStatus" name="item"  (selectionChange)="handleTaskStatus(taskStatus.value)">
+                                #taskStatus formControlName="taskStatus" name="item"  >
                                 <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id"  >
                                     <!-- <div>
                                         {{item.name | capitalizeFirst}}
@@ -611,7 +607,7 @@
                             <div>Target Potential</div>
                         </div>
                         <div class="fieldPadding">
-                            <input (keyup)="resetErrors()" type="text" #targetResult (ngModelChange)="handleTargetResult(targetResult.value)"
+                            <input (keyup)="resetErrors()" type="text" #targetResult 
                             placeholder="Enter potential"class="form-control widthWebKit"formControlName="targetResult"  autocomplete="off" /> 
                         </div>
                     </div>
@@ -621,25 +617,22 @@
                             <div>Business Potential</div>
                         </div>
                         <div class="fieldPadding" >
-                            <input min="0" (keyup)="resetErrors()" type="number" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)" 
+                            <input min="0" (keyup)="resetErrors()" type="number" #targetPotential  
                             placeholder="Enter ({{rupee_symbol}})"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
                         </div>
                     </div>               
                 </div>
             </div>
 
-
-
             <div style="text-align: center;margin-top: 15px;">
                 <ng-container >
                     <div class=" mgn-bt-20 mgn-up-10">
-                        <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()"
+                        <button [ngClass]="{'cursorDiasable':  api_loading_CreateActivity}" type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loading_CreateActivity && goback()"
                             >Cancel
                         </button>
-                        <button class="btn btn-primary font-weight-bold confirmBtn"
-                          [class.spinner]="api_loading" 
-                            [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateTask()"
-                                >{{showCreateTaskButtonCaption()}}
+                        <button [ngClass]="{'cursorDiasable':  api_loading_CreateActivity}" type="button"  (click)="saveCreateTask()" class="btn btn-primary font-weight-bold confirmBtn">
+                            <app-common-innerloading-spinner  *ngIf="api_loading_CreateActivity"></app-common-innerloading-spinner>
+                           <span *ngIf="!api_loading_CreateActivity">Save</span>
                         </button>
                     </div>
                 </ng-container>
@@ -731,7 +724,7 @@
                             <div class="astericColor">*</div>
                         </div>
                         <div class="fieldPadding">
-                            <input (keyup)="resetErrors()"  type="text" #taskLocation (ngModelChange)="handleTaskLocation(taskLocation.value)"
+                            <input (keyup)="resetErrors()"  type="text" #taskLocation 
                             placeholder="Enter activity location"class="form-control widthWebKit" formControlName="taskLocation" autocomplete="off" [value]="taskLocation.name" /> 
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError" errorMsg="{{taskError}}">
                             </app-field-error-display>    
@@ -878,7 +871,7 @@
                     </div>
                     <div class="fieldPadding">
                         <mat-select class="form-control" placeholder="Select Priority"
-                            #userTaskPriority formControlName="userTaskPriority" (ngModelChange)="handleTaskPrioritySelection(userTaskPriority.value,'taskPriority')">
+                            #userTaskPriority formControlName="userTaskPriority" >
                             <mat-option  *ngFor="let item of taskPriorityList[0];let index=i" [value]="item.id" >
                                 <div>
                                     {{item.name}}
@@ -901,7 +894,7 @@
                         </div>
                         <div class="fieldPadding">
                             <mat-select [disabled]="!editable" class="form-control widthWebKit" placeholder="Enter activity status"
-                                #taskStatus formControlName="taskStatus" name="item"  (selectionChange)="handleTaskStatus(taskStatus.value)">
+                                #taskStatus formControlName="taskStatus" name="item"  >
                                 <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id"  >
                                     <!-- <div>
                                         {{item.name | capitalizeFirst}}
@@ -925,7 +918,7 @@
                             <div>Target Potential</div>
                         </div>
                         <div class="fieldPadding">
-                            <input (keyup)="resetErrors()" type="text" #targetResult (ngModelChange)="handleTargetResult(targetResult.value)"
+                            <input (keyup)="resetErrors()" type="text" #targetResult 
                             placeholder="Enter potential"class="form-control widthWebKit"formControlName="targetResult"  autocomplete="off" /> 
                         </div>
                     </div>
@@ -935,7 +928,7 @@
                             <div>Business Potential</div>
                         </div>
                         <div class="fieldPadding" >
-                            <input min="0" (keyup)="resetErrors()" type="number" #targetPotential (ngModelChange)="handleTargetPotential(targetPotential.value)" 
+                            <input min="0" (keyup)="resetErrors()" type="number" #targetPotential 
                             placeholder="Enter ({{rupee_symbol}})"class="form-control widthWebKit"formControlName="targetPotential"autocomplete="off" />           
                         </div>
                     </div>               
@@ -947,18 +940,12 @@
             <div style="text-align: center;margin-top: 15px;">
                 <ng-container >
                     <div class=" mgn-bt-20 mgn-up-10">
-                        <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()"
+                        <button [ngClass]="{'cursorDiasable':  api_loading_CreateActivity}" type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loading_CreateActivity && goback()"
                             >Cancel
                         </button>
-                        <!-- [ngClass]="{
-                            'btn btn-primary font-weight-bold cancelBtn': !createTaskForm.valid,
-                            'btn btn-primary font-weight-bold confirmBtn': createTaskForm.valid
-                        }"  -->
-                        <button class="btn btn-primary font-weight-bold confirmBtn"
-                         
-                          [class.spinner]="api_loading" 
-                            [class.disabled]="api_loading" [class.spinner-center]="api_loading"  type="button"  (click)="saveCreateTask()"
-                                >{{showCreateTaskButtonCaption()}}
+                        <button [ngClass]="{'cursorDiasable':  api_loading_CreateActivity}" type="button"  (click)="saveCreateTask()" class="btn btn-primary font-weight-bold confirmBtn">
+                            <app-common-innerloading-spinner  *ngIf="api_loading_CreateActivity"></app-common-innerloading-spinner>
+                           <span *ngIf="!api_loading_CreateActivity">Save</span>
                         </button>
                     </div>
                 </ng-container>

@@ -446,7 +446,7 @@
               <div style="text-align: center;">
                 <ng-container>
                   <div>
-                    <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
+                    <button type="button" class="btn btn-primary font-weight-bold confirmBtnRemarks "
                       (click)="saveCreateNote(notesTextarea)">Add Remarks</button>
                   </div>
                 </ng-container>
@@ -458,7 +458,7 @@
               <div style="text-align: center;">
                 <ng-container>
                   <div>
-                    <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
+                    <button type="button" class="btn btn-primary font-weight-bold confirmBtnRemarks"
                       (click)="saveCreateNote(notesTextarea)">Add Remarks</button>
                   </div>
                 </ng-container>
@@ -529,9 +529,9 @@
     <div style="text-align: center;margin-top: 15px;" class="forMobile" *ngIf="bTaskFollowUpResult">
       <ng-container>
         <div class=" mgn-bt-20 mgn-up-10">
-          <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loadingSaveTask && goBack()">Cancel
+          <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}" type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loadingSaveTask && goBack()">Cancel
           </button>
-          <button class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="saveCreateTask()">
+          <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}" class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="saveCreateTask()">
             <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loadingSaveTask">
             </app-common-innerloading-spinner>
             <span *ngIf="!api_loadingSaveTask">Complete</span>

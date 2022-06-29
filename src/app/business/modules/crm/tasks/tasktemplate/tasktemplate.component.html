@@ -10,7 +10,8 @@
       </div>
     </div>
   </section>
-  <div style="margin:20px">
+  <app-common-innerloading-spinner  *ngIf="api_loading_Sel_Template"></app-common-innerloading-spinner>
+  <div style="margin:20px" *ngIf="!api_loading_Sel_Template">
     <section class="card">
         <div>
             <div>

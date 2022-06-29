@@ -2,9 +2,6 @@
     <div class="title-gb no-padding">
         <div class="mgn-up-15 dash-head">&nbsp;&nbsp;&nbsp;
             <div style="display:flex;gap:5px">
-                <!-- <div>
-                <i style="color:#1D3E77 !important" class="fa fa-arrow-left pointer-cursor" (click)="goback()"></i>
-            </div> -->
                 <div style="color: #1D3E77;">{{crmTitle}}</div>
             </div>
         </div>
@@ -35,8 +32,11 @@
         </div>
     </div>
     <!--three tab end-->
+   <div class="mgn-up-15">
+    <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+   </div>
     <!---mat pannel start-->
-    <div class="mgn-up-15" *ngIf="bLosFieldOpen">
+    <div class="mgn-up-15" *ngIf="bLosFieldOpen && !api_loading">
         <mat-accordion class="example-headers-align">
             <mat-expansion-panel (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
@@ -110,7 +110,7 @@
     </div>
     <!---mat pannel end-->
     <!----tempates strat-->
-    <div class="mgn-up-15" *ngIf="bLosFieldOpen">
+    <div class="mgn-up-15" *ngIf="bLosFieldOpen && !api_loading">
         <div>
             <!-- (click)="buttonClicked('LOS')" -->
             <div class="customCard" (click)="redirectionToEnquiry()">
@@ -216,7 +216,7 @@
 
     </div>
     <!----templates end-->
-    <div class="mgn-up-15" *ngIf="bREportsFieldOpen">
+    <div class="mgn-up-15" *ngIf="bREportsFieldOpen && !api_loading">
         <div class="threeTab">
             <div class="customCard" (click)="createActivity()">
                 <div class="eachTab">
